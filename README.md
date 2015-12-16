@@ -1,3 +1,3 @@
 # budgetcommons-dev-frontend
 
-pull into dev.budgetcommons.ca
+pull into www/dev.budgetcommons.ca
