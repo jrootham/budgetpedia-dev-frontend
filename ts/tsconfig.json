@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "outDir":"../testapp",
+        "module": "commonjs",
+        "jsx": "react",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true
+    }
+}
