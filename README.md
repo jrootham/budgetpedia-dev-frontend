@@ -1,3 +1,4 @@
 # budgetcommons-dev-frontend
 
-pull into www/dev.budgetcommons.ca
+clone this repo
+run `npm install` to install all necessary node modules
