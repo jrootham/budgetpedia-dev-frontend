@@ -19,4 +19,4 @@ class Demo extends React.Component<DemoProps, any> {
 	}
 }
 
-ReactDom.render(<Demo age={65} name="Henrik"/>, document.getElementById('container'));
+ReactDom.render(<Demo age={65} name="April"/>, document.getElementById('container'));

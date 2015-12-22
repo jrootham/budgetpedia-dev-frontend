@@ -11,6 +11,10 @@
   "dependencies": {
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
+    "browser-sync": "^2.10.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-util": "^3.0.7",
+    "lodash.assign": "^3.2.0",
     "material-ui": "^0.13.4",
     "react": "^0.14.3",
     "react-dnd": "^2.0.2",
@@ -19,7 +23,11 @@
     "react-flipcard": "^0.2.1",
     "react-grid-layout": "^0.8.5",
     "react-tap-event-plugin": "^0.2.1",
-    "typed-react": "^3.4.1"
+    "request": "^2.67.0",
+    "typed-react": "^3.4.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.6.1"
   },
   "devDependencies": {
     "gulp": "^3.9.0"

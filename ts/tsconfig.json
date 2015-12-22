@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir":"../testapp",
+        "outDir":"../src",
         "module": "commonjs",
         "jsx": "react",
         "declaration": false,

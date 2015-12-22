@@ -21,4 +21,4 @@ var Demo = (function (_super) {
     };
     return Demo;
 })(React.Component);
-ReactDom.render(React.createElement(Demo, {"age": 65, "name": "Henrik"}), document.getElementById('container'));
+ReactDom.render(React.createElement(Demo, {"age": 65, "name": "April"}), document.getElementById('container'));

@@ -1,6 +1,55 @@
+// gulpfile.js
+var watchify = require('watchify');
+var browserify = require('browserify');
 var gulp = require('gulp');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var gutil = require('gulp-util');
+// var sourcemaps = require('gulp-sourcemaps');
+var assign = require('lodash.assign');
+var browserSync = require('browser-sync').create();
 
-gulp.task('default', function() {
-  // place code for your default task here
-});
+// add custom browserify options here
+// var customOpts = {
+//   entries: ['./src/testtsx.js'],
+//   debug: true,
+//   // poll:100
+// };
+// watchify.args.poll = 100;
+// var opts = assign({poll:100,output:'bundle.js'}, watchify.args, customOpts);
+var b = watchify(browserify({
+  entries: ['./src/testtsx.js'],
+  // cache: {},
+  // packageCache: {},
+  output:'bundle.js',
+  delay: 100
+  }),{
+  ignoreWatch: ['**/node_modules/**'],
+  poll: 100
+}); 
 
+// add transformations here
+// i.e. b.transform(coffeeify);
+
+gulp.task('js', bundle); // so you can run `gulp js` to build the file
+gulp.task('default', bundle); // so you can run `gulp js` to build the file
+b.on('update', bundle); // on any dep update, runs the bundler
+b.on('log', gutil.log); // output build logs to terminal
+browserSync.init({
+  server: "./"
+});  // gutil.log.bind(gutil, 'running');
+function bundle() {
+  console.log('running');
+  return b.bundle()
+    // log errors if they happen
+    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+    .pipe(source('bundle.js'))
+    // optional, remove if you don't need to buffer file contents
+    // .pipe(buffer())
+    // optional, remove if you dont want sourcemaps
+    // .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
+    //    // Add transformation tasks to the pipeline here.
+    // .pipe(sourcemaps.write('./')) // writes .map file
+    .pipe(gulp.dest('./dist'))
+    .pipe(browserSync.stream({once: true}));;
+}
