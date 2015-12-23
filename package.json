@@ -12,6 +12,7 @@
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
     "browser-sync": "^2.10.1",
+    "glob": "^6.0.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
     "lodash.assign": "^3.2.0",

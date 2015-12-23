@@ -5,20 +5,14 @@ var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var gutil = require('gulp-util');
+var glob = require('glob');
 // var sourcemaps = require('gulp-sourcemaps');
 var assign = require('lodash.assign');
 var browserSync = require('browser-sync').create();
 
-// add custom browserify options here
-// var customOpts = {
-//   entries: ['./src/testtsx.js'],
-//   debug: true,
-//   // poll:100
-// };
-// watchify.args.poll = 100;
-// var opts = assign({poll:100,output:'bundle.js'}, watchify.args, customOpts);
 var b = watchify(browserify({
-  entries: ['./src/testtsx.js'],
+  // entries: ['./src/testtsx.js'],
+  entries:glob.sync('./src/*.js',{}),
   // cache: {},
   // packageCache: {},
   output:'bundle.js',
@@ -39,7 +33,6 @@ browserSync.init({
   server: "./"
 });  // gutil.log.bind(gutil, 'running');
 function bundle() {
-  console.log('running');
   return b.bundle()
     // log errors if they happen
     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
