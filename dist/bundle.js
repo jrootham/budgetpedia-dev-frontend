@@ -239,7 +239,11 @@ var tileData = [
 ReactDom.render(React.createElement(class_mainbar_1.MainBar, null), document.getElementById('container'));
 ReactDom.render(React.createElement(class_maintiles_1.MainTiles, {"tiledata": tileData}), document.getElementById('tiles'));
 
+<<<<<<< HEAD
+},{"./class_mainbar":2,"./class_maintiles":4,"react":419,"react-dom":237,"react-tap-event-plugin":263}],6:[function(require,module,exports){
+=======
 },{"./class_mainbar":2,"./class_maintiles":4,"react":284,"react-dom":96,"react-tap-event-plugin":122}],6:[function(require,module,exports){
+>>>>>>> master
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
