@@ -31,17 +31,16 @@ import MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert');
 export class MainBar extends React.Component<any, any>{
 	render() {
 		return <AppBar title={<span>Title</span>}
-/>
+		iconElementLeft = {<IconButton > <NavigationClose /></IconButton >}
+		iconElementRight = {
+					<IconMenu iconButtonElement= {
+						<IconButton > <MoreVertIcon /></IconButton >
+					}>
+			<MenuItem primaryText="Refresh" />
+			< MenuItem primaryText= "Help" />
+				<MenuItem primaryText="Sign out" />
+					</IconMenu >
+				}
+		/>
 	}
 }
-
-// iconElementLeft = {<IconButton > <NavigationClose /></IconButton >}
-// iconElementRight = {
-// 			<IconMenu iconButtonElement= {
-// 				<IconButton > <MoreVertIcon /></IconButton >
-// 			}>
-// 	<MenuItem primaryText="Refresh" />
-// 	< MenuItem primaryText= "Help" />
-// 		<MenuItem primaryText="Sign out" />
-// 			</IconMenu >
-// 		}
