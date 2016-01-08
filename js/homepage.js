@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDom = require('react-dom');
+var class_mainbar_1 = require('./class_mainbar');
 var class_maintiles_1 = require('./class_maintiles');
 var injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin();
@@ -42,5 +43,6 @@ var tileData = [
         content: "Sixth"
     },
 ];
+ReactDom.render(React.createElement(class_mainbar_1.MainBar, null), document.getElementById('container'));
 ReactDom.render(React.createElement(class_maintiles_1.MainTiles, {"tiledata": tileData}), document.getElementById('tiles'));
 //# sourceMappingURL=homepage.js.map

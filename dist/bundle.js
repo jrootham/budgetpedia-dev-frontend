@@ -188,6 +188,7 @@ exports.MainTiles = MainTiles;
 },{"./class_maintile":3,"react":419,"react-masonry-component":243}],5:[function(require,module,exports){
 var React = require('react');
 var ReactDom = require('react-dom');
+var class_mainbar_1 = require('./class_mainbar');
 var class_maintiles_1 = require('./class_maintiles');
 var injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin();
@@ -230,9 +231,10 @@ var tileData = [
         content: "Sixth"
     },
 ];
+ReactDom.render(React.createElement(class_mainbar_1.MainBar, null), document.getElementById('container'));
 ReactDom.render(React.createElement(class_maintiles_1.MainTiles, {"tiledata": tileData}), document.getElementById('tiles'));
 
-},{"./class_maintiles":4,"react":419,"react-dom":237,"react-tap-event-plugin":263}],6:[function(require,module,exports){
+},{"./class_mainbar":2,"./class_maintiles":4,"react":419,"react-dom":237,"react-tap-event-plugin":263}],6:[function(require,module,exports){
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

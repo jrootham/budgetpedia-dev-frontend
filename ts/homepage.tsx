@@ -55,6 +55,6 @@ var tileData = [
 	},
 ];
 
-// ReactDom.render(<MainBar />, document.getElementById('container'));
+ReactDom.render(<MainBar />, document.getElementById('container'));
 
 ReactDom.render(<MainTiles tiledata={tileData}/>, document.getElementById('tiles'));
