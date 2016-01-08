@@ -1,7 +1,8 @@
 /// <reference path="../typings/react/react.d.ts" />
 /// <reference path="../typings/react/react-dom.d.ts" />
-import * as React from 'react';
+// import * as React from 'react';
 import * as ReactDom from 'react-dom';
+import * as React from 'react';
 
 class DemoProps {
 	public name: string;
@@ -19,4 +20,4 @@ class Demo extends React.Component<DemoProps, any> {
 	}
 }
 
-ReactDom.render(<Demo age={65} name="April"/>, document.getElementById('container'));
+ReactDom.render(<Demo age={65} name="March"/>, document.getElementById('testcontainer'));

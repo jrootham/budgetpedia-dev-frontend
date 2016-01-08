@@ -3,8 +3,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var React = require('react');
 var ReactDom = require('react-dom');
+var React = require('react');
 var DemoProps = (function () {
     function DemoProps() {
     }
@@ -21,4 +21,5 @@ var Demo = (function (_super) {
     };
     return Demo;
 })(React.Component);
-ReactDom.render(React.createElement(Demo, {"age": 65, "name": "April"}), document.getElementById('container'));
+ReactDom.render(React.createElement(Demo, {"age": 65, "name": "March"}), document.getElementById('testcontainer'));
+//# sourceMappingURL=testtsx.js.map

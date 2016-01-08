@@ -11,8 +11,8 @@ var assign = require('lodash.assign');
 var browserSync = require('browser-sync').create();
 
 var b = watchify(browserify({
-  // entries: ['./src/testtsx.js'],
-  entries:glob.sync('./src/*.js',{}),
+  // entries: ['./js/testtsx.js'],
+  entries:glob.sync('./js/*.js',{}),
   // cache: {},
   // packageCache: {},
   output:'bundle.js',

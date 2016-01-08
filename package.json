@@ -11,26 +11,30 @@
   "dependencies": {
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
-    "browser-sync": "^2.10.1",
+    "browser-sync": "^2.11.0",
     "glob": "^6.0.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
     "lodash.assign": "^3.2.0",
-    "material-ui": "^0.13.4",
-    "react": "^0.14.3",
+    "material-ui": "^0.14.1",
+    "react": "^0.14.6",
     "react-dnd": "^2.0.2",
     "react-dnd-touch-backend": "^0.2.4",
     "react-dom": "^0.14.3",
     "react-flipcard": "^0.2.1",
-    "react-grid-layout": "^0.8.5",
+    "react-masonry-component": "^2.0.0",
+    "react-redux": "^4.0.6",
     "react-tap-event-plugin": "^0.2.1",
+    "redux": "^3.0.5",
     "request": "^2.67.0",
     "typed-react": "^3.4.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.6.1"
+    "watchify": "^3.6.1",
+    "when": "^3.7.6"
   },
   "devDependencies": {
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "redux-devtools": "^3.0.1"
   }
 }

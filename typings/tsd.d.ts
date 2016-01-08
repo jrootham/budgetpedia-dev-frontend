@@ -27,3 +27,7 @@
 /// <reference path="react/react-global.d.ts" />
 /// <reference path="react/react.d.ts" />
 /// <reference path="redux/redux.d.ts" />
+/// <reference path="es6-promise/es6-promise.d.ts" />
+/// <reference path="material-ui/material-ui.d.ts" />
+/// <reference path="react-datagrid/react-datagrid.d.ts" />
+/// <reference path="react-select/react-select.d.ts" />
