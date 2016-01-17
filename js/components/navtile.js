@@ -4,8 +4,8 @@ var FlipCard = require('react-flipcard');
 class NavTile extends React.Component {
     constructor() {
         super();
-        this.rawMarkup = () => {
-            return { __html: this.props.markup };
+        this.rawMarkup = (selector) => {
+            return { __html: this.props[selector] };
         };
         this.showBack = () => {
             this.setState({
@@ -32,7 +32,7 @@ class NavTile extends React.Component {
         this.state.elements = {};
     }
     render() {
-        return (React.createElement("div", {"style": this.props.style}, React.createElement(FlipCard, {"disabled": true, "flipped": this.state.isFlipped, "onFlip": this.handleOnFlip, "onKeyDown": this.handleKeyDown}, React.createElement("div", {"className": "TCFlipCard", "style": { border: '1px solid gray', backgroundColor: 'palegreen', padding: '3px' }}, React.createElement("div", {"dangerouslySetInnerHTML": this.rawMarkup()}), React.createElement("button", {"type": "button", "onClick": this.showBack}, "Show back"), React.createElement("div", null, React.createElement("small", null, "(manual flip) "))), React.createElement("div", {"className": "TCFlipCard", "style": { border: '1px solid gray', backgroundColor: 'palegoldenrod', padding: '3px' }}, React.createElement("div", {"dangerouslySetInnerHTML": this.rawMarkup()}), React.createElement("button", {"type": "button", "ref": (node) => { this.state.elements.backButton = node; }, "onClick": this.showFront}, "Show front")))));
+        return (React.createElement("div", {"style": this.props.style}, React.createElement(FlipCard, {"disabled": true, "flipped": this.state.isFlipped, "onFlip": this.handleOnFlip, "onKeyDown": this.handleKeyDown}, React.createElement("div", {"className": "TCFlipCard", "style": { border: '1px solid gray', backgroundColor: 'palegreen', padding: '3px' }}, React.createElement("div", {"dangerouslySetInnerHTML": this.rawMarkup('markup')}), React.createElement("button", {"type": "button", "onClick": this.showBack}, "Show back"), React.createElement("div", null, React.createElement("small", null, "(manual flip) "))), React.createElement("div", {"className": "TCFlipCard", "style": { border: '1px solid gray', backgroundColor: 'palegoldenrod', padding: '3px' }}, React.createElement("div", {"dangerouslySetInnerHTML": this.rawMarkup('help')}), React.createElement("button", {"type": "button", "ref": (node) => { this.state.elements.backButton = node; }, "onClick": this.showFront}, "Show front")))));
     }
 }
 exports.NavTile = NavTile;

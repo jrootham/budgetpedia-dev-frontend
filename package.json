@@ -28,8 +28,6 @@
     "request": "^2.67.0",
     "superagent": "^1.6.1",
     "typed-react": "^3.4.1",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
     "when": "^3.7.6"
   },
   "devDependencies": {
@@ -42,6 +40,8 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
     "redux-devtools": "^3.0.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.6.1"
   }
 }

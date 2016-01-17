@@ -113,8 +113,8 @@ var NavTile = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(NavTile).call(this));
 
-        _this.rawMarkup = function () {
-            return { __html: _this.props.markup };
+        _this.rawMarkup = function (selector) {
+            return { __html: _this.props[selector] };
         };
         _this.showBack = function () {
             _this.setState({
@@ -147,7 +147,7 @@ var NavTile = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            return React.createElement("div", { "style": this.props.style }, React.createElement(FlipCard, { "disabled": true, "flipped": this.state.isFlipped, "onFlip": this.handleOnFlip, "onKeyDown": this.handleKeyDown }, React.createElement("div", { "className": "TCFlipCard", "style": { border: '1px solid gray', backgroundColor: 'palegreen', padding: '3px' } }, React.createElement("div", { "dangerouslySetInnerHTML": this.rawMarkup() }), React.createElement("button", { "type": "button", "onClick": this.showBack }, "Show back"), React.createElement("div", null, React.createElement("small", null, "(manual flip) "))), React.createElement("div", { "className": "TCFlipCard", "style": { border: '1px solid gray', backgroundColor: 'palegoldenrod', padding: '3px' } }, React.createElement("div", { "dangerouslySetInnerHTML": this.rawMarkup() }), React.createElement("button", { "type": "button", "ref": function ref(node) {
+            return React.createElement("div", { "style": this.props.style }, React.createElement(FlipCard, { "disabled": true, "flipped": this.state.isFlipped, "onFlip": this.handleOnFlip, "onKeyDown": this.handleKeyDown }, React.createElement("div", { "className": "TCFlipCard", "style": { border: '1px solid gray', backgroundColor: 'palegreen', padding: '3px' } }, React.createElement("div", { "dangerouslySetInnerHTML": this.rawMarkup('markup') }), React.createElement("button", { "type": "button", "onClick": this.showBack }, "Show back"), React.createElement("div", null, React.createElement("small", null, "(manual flip) "))), React.createElement("div", { "className": "TCFlipCard", "style": { border: '1px solid gray', backgroundColor: 'palegoldenrod', padding: '3px' } }, React.createElement("div", { "dangerouslySetInnerHTML": this.rawMarkup('help') }), React.createElement("button", { "type": "button", "ref": function ref(node) {
                     _this2.state.elements.backButton = node;
                 }, "onClick": this.showFront }, "Show front"))));
         }
@@ -186,7 +186,7 @@ var NavTiles = function (_React$Component) {
         key: 'render',
         value: function render() {
             var tiles = this.props.tiles.map(function (data) {
-                return React.createElement(navtile_1.NavTile, { "key": data.id, "style": data.style, "markup": data.content });
+                return React.createElement(navtile_1.NavTile, { "key": data.id, "style": data.style, "markup": data.content, "help": data.help });
             });
             return React.createElement(GridList, null, tiles);
         }
@@ -384,7 +384,7 @@ var tileData = [{
     id: 7,
     style: defaultStyle,
     content: '<h3>Budget Timeline</h3>\n\t\t<p><em>[content pending]</em></p>',
-    help: '<h3>About Budget Timeline</h3>\n\t\t<p></p>',
+    help: '<h3>About Budget Timeline</h3>\n\t\t<p><em>[content pending]</em></p>',
     index: 1
 }, {
     id: 1,
@@ -396,13 +396,13 @@ var tileData = [{
     id: 2,
     style: defaultStyle,
     content: '<h3>Budget Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
-    help: '<h3></h3>\n\t\t<p><em>[content pending]</em></p>',
+    help: '<h3>About Budget Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
     index: 3
 }, {
     id: 8,
     style: defaultStyle,
     content: '<h3>Social Media Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
-    help: '<p><em>[content pending]</em></p>',
+    help: '<h3>About Social Media Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
     index: 4
 }];
 exports.initialstate = { maintiles: tileData };

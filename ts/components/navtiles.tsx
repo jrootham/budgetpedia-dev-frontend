@@ -36,7 +36,8 @@ class NavTiles extends React.Component<NavTilesProps, any>{
 	render() {
 		var tiles = this.props.tiles.map(function(data) {
 			// key attribute is required by ReactJS
-			return <NavTile key={data.id} style={data.style} markup={data.content}></NavTile>;
+			return <NavTile key={data.id} style={data.style} markup={data.content}
+			help={data.help}></NavTile>;
 		});
 
 		return (

@@ -23,8 +23,8 @@ export class NavTile extends React.Component<any, any> {
 		this.state.elements = {}; 
 	}
 	
-	rawMarkup = () =>  {
-		return { __html: this.props.markup };
+	rawMarkup = (selector) =>  {
+		return { __html: this.props[selector] };
 	}
 
 	showBack = () => {
@@ -65,12 +65,12 @@ export class NavTile extends React.Component<any, any> {
 				onKeyDown={this.handleKeyDown}
 				>
 			  <div className="TCFlipCard" style={{ border: '1px solid gray', backgroundColor:'palegreen',padding: '3px' }}>
-				<div dangerouslySetInnerHTML={ this.rawMarkup() }></div>
+				<div dangerouslySetInnerHTML={ this.rawMarkup('markup') }></div>
 	            <button type="button" onClick={this.showBack}>Show back</button>
 	            <div><small>(manual flip) </small></div>
 			  </div>
 			  <div className="TCFlipCard" style={{ border: '1px solid gray', backgroundColor: 'palegoldenrod', padding: '3px' }}>
-				<div dangerouslySetInnerHTML={ this.rawMarkup() }></div>
+				<div dangerouslySetInnerHTML={ this.rawMarkup('help') }></div>
 				<button type="button" ref={(node)=>{this.state.elements.backButton = node}} onClick={this.showFront}>Show front</button>
 			  </div>
 			</FlipCard>

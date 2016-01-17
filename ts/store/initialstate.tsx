@@ -39,7 +39,7 @@ let tileData = [
 		content: `<h3>Budget Timeline</h3>
 		<p><em>[content pending]</em></p>`,
 		help: `<h3>About Budget Timeline</h3>
-		<p></p>`,
+		<p><em>[content pending]</em></p>`,
 		index: 1,
 	},
 	{
@@ -56,7 +56,7 @@ let tileData = [
 		style: defaultStyle,
 		content: `<h3>Budget Resources</h3>
 		<p><em>[content pending]</em></p>`,
-		help: `<h3></h3>
+		help: `<h3>About Budget Resources</h3>
 		<p><em>[content pending]</em></p>`,
 		index: 3,
 	},
@@ -65,7 +65,8 @@ let tileData = [
 		style: defaultStyle,
 		content: `<h3>Social Media Resources</h3>
 		<p><em>[content pending]</em></p>`,
-		help: `<p><em>[content pending]</em></p>`,
+		help: `<h3>About Social Media Resources</h3>
+		<p><em>[content pending]</em></p>`,
 		index: 4,
 	},
 ];
