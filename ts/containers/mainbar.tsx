@@ -1,9 +1,9 @@
 // class_mainbar.tsx
 
-/// <reference path="../typings/react/react.d.ts" />
-/// <reference path="../typings/react/react-dom.d.ts" />
-/// <reference path="../typings/material-ui/material-ui.d.ts" />
-/// <reference path="../typings-custom/material-ui.d.ts" />
+/// <reference path="../../typings/material-ui/material-ui.d.ts" />
+/// <reference path="../../typings-custom/material-ui.d.ts" />
+
+'use strict'
 
 // required by bundler
 import * as React from 'react';
@@ -19,28 +19,22 @@ import MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert');
 
 // bundler has trouble with the following
 // import * as MaterialUI from 'material-ui';
-// import AppBar = MaterialUI.AppBar;
+// // import AppBar = MaterialUI.AppBar;
+// import AppBar = require('material-ui/lib/app-bar');
 // import IconButton = MaterialUI.IconButton;
 // import FlatButton = MaterialUI.FlatButton;
 // import NavigationMenu = MaterialUI.Icons.NavigationMenu;
 // import IconMenu = MaterialUI.IconMenu;
-// import MenuItem = MaterialUI.MenuItem;
+// // import MenuItem = MaterialUI.MenuItem;
+// import MenuItem = require('material-ui/lib/menus/menu-item');
 // import NavigationClose = MaterialUI.Icons.NavigationMenu;
 // import MoreVertIcon = MaterialUI.Icons.MoreVertIcon;
 
 export class MainBar extends React.Component<any, any>{
 	render() {
-		return <AppBar title={<span>Title</span>}
-		iconElementLeft = {<IconButton > <NavigationClose /></IconButton >}
-		iconElementRight = {
-					<IconMenu iconButtonElement= {
-						<IconButton > <MoreVertIcon /></IconButton >
-					}>
-			<MenuItem primaryText="Refresh" />
-			< MenuItem primaryText= "Help" />
-				<MenuItem primaryText="Sign out" />
-					</IconMenu >
-				}
+		return <AppBar style={{ position: "fixed" }} title={<span>Tribal Commons Group Information Manager</span>}
+			iconElementLeft={<IconButton><NavigationMenu /></IconButton>}
+			iconElementRight={<IconButton onTouchTap={()=>{alert('account options go here')}} iconStyle={{marginTop:"-6px", fontSize:"36px"}}><span className = "material-icons">account_circle</span></IconButton>}
 		/>
 	}
 }

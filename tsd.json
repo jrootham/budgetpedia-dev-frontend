@@ -36,10 +36,10 @@
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "react-redux/react-redux.d.ts": {
-      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+      "commit": "984a41af67d76b5134e0d4991a30f813dfb8561f"
     },
     "redux/redux.d.ts": {
-      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+      "commit": "984a41af67d76b5134e0d4991a30f813dfb8561f"
     },
     "react-day-picker/react-day-picker.d.ts": {
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
@@ -48,7 +48,7 @@
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "react/react.d.ts": {
-      "commit": "ba257a9b91bc0de1bdd9091b6723194c905a902a"
+      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
     },
     "react-swf/react-swf.d.ts": {
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
@@ -99,7 +99,7 @@
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "material-ui/material-ui.d.ts": {
-      "commit": "ba257a9b91bc0de1bdd9091b6723194c905a902a"
+      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
     }
   }
 }

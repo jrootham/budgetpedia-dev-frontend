@@ -1,0 +1,27 @@
+/*general.css*/
+body {
+	margin:0;
+}
+.ReactFlipCard {
+	display:block;
+	width:inherit;
+	height:inherit;
+}
+.ReactFlipCard__Flipper {
+	width:inherit;
+	height:inherit;
+}
+.ReactFlipCard__Front {
+	width:inherit;
+	height:inherit;
+	position:relative;
+}
+.ReactFlipCard__Back {
+	width:inherit;
+	height:inherit;
+	/*position:relative; -- causes strange bounce on flipping*/
+}
+.TCFlipCard {
+	width:inherit;
+	height:inherit;
+}

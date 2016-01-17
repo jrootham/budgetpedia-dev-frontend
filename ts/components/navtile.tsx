@@ -1,21 +1,22 @@
 // class_maintile.tsx
-/// <reference path="../typings-custom/react-flipcard.d.ts" />
+/// <reference path="../../typings-custom/react-flipcard.d.ts" />
+'use strict'
 
 // required by bundler
 import * as React from 'react';
 // import * as ReactDom from 'react-dom';
 import FlipCard = require('react-flipcard');
 
-interface MainTileProps extends React.Props<MainTile> {
+interface MainTileProps extends React.Props<NavTile> {
 	markup: string;
 	style?: Object;
 }
 
-interface MainTileState {
+interface NavTileState {
 	isFlipped:Boolean
 }
 
-export class MainTile extends React.Component<any, any> {
+export class NavTile extends React.Component<any, any> {
 	constructor() {
 		super();
 		this.state={ isFlipped: false };
@@ -63,13 +64,13 @@ export class MainTile extends React.Component<any, any> {
 				onFlip={this.handleOnFlip}
 				onKeyDown={this.handleKeyDown}
 				>
-			  <div style={{ width: '170px', border: '1px solid gray' }}>
-	            <div>Front</div>
+			  <div className="TCFlipCard" style={{ border: '1px solid gray', backgroundColor:'palegreen',padding: '3px' }}>
+				<div dangerouslySetInnerHTML={ this.rawMarkup() }></div>
 	            <button type="button" onClick={this.showBack}>Show back</button>
 	            <div><small>(manual flip) </small></div>
 			  </div>
-			  <div style={{ width: '170px',border:'1px solid gray' }}>
-	            <div>Back</div>
+			  <div className="TCFlipCard" style={{ border: '1px solid gray', backgroundColor: 'palegoldenrod', padding: '3px' }}>
+				<div dangerouslySetInnerHTML={ this.rawMarkup() }></div>
 				<button type="button" ref={(node)=>{this.state.elements.backButton = node}} onClick={this.showFront}>Show front</button>
 			  </div>
 			</FlipCard>
