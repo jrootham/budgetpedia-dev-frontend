@@ -267,7 +267,7 @@ var MainBar = function (_React$Component) {
     _createClass(MainBar, [{
         key: 'render',
         value: function render() {
-            return React.createElement(AppBar, { "style": { position: "fixed" }, "title": React.createElement("span", null, "Tribal Commons Group Information Manager"), "iconElementLeft": React.createElement(IconButton, null, React.createElement(NavigationMenu, null)), "iconElementRight": React.createElement(IconButton, { "onTouchTap": function onTouchTap() {
+            return React.createElement(AppBar, { "style": { position: "fixed" }, "title": React.createElement("span", null, "Budget Commons"), "iconElementLeft": React.createElement(IconButton, null, React.createElement(NavigationMenu, null)), "iconElementRight": React.createElement(IconButton, { "onTouchTap": function onTouchTap() {
                         alert('account options go here');
                     }, "iconStyle": { marginTop: "-6px", fontSize: "36px" } }, React.createElement("span", { "className": "material-icons" }, "account_circle")) });
         }

@@ -32,7 +32,7 @@ import MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert');
 
 export class MainBar extends React.Component<any, any>{
 	render() {
-		return <AppBar style={{ position: "fixed" }} title={<span>Tribal Commons Group Information Manager</span>}
+		return <AppBar style={{ position: "fixed" }} title={<span>Budget Commons</span>}
 			iconElementLeft={<IconButton><NavigationMenu /></IconButton>}
 			iconElementRight={<IconButton onTouchTap={()=>{alert('account options go here')}} iconStyle={{marginTop:"-6px", fontSize:"36px"}}><span className = "material-icons">account_circle</span></IconButton>}
 		/>
