@@ -2,15 +2,7 @@
 let mainElement = document.getElementById('main');
 let spacewidth = mainElement.getBoundingClientRect().width;
 let columns;
-if (spacewidth > 960) {
-    columns = 4;
-}
-else if (spacewidth > 600) {
-    columns = 3;
-}
-else {
-    columns = 2;
-}
+columns = 2;
 let defaultStyle = {
     width: ((spacewidth / columns) - 10) + 'px',
     height: '160px',
@@ -63,4 +55,7 @@ let tileData = [
         index: 4,
     },
 ];
-exports.initialstate = { maintiles: tileData };
+exports.initialstate = {
+    maintiles: tileData,
+    tilecols: columns,
+};

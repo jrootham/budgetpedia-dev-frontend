@@ -1,4 +1,4 @@
-// class_maintiles.tsx
+// navtiles.tsx
 
 /// <reference path="../../typings/material-ui/material-ui.d.ts" />
 /// <reference path="../../typings-custom/material-ui.d.ts" />
@@ -7,7 +7,7 @@
 'use strict'
 
 // required by bundler
-import * as React from 'react';
+import * as React from 'react'
 
 import GridList = require('material-ui/lib/grid-list/grid-list')
 import GridTile = require('material-ui/lib/grid-list/grid-tile')
@@ -15,7 +15,7 @@ import GridTile = require('material-ui/lib/grid-list/grid-tile')
 // import MasonryClass = require('react-masonry-component');
 // var Masonry = MasonryClass(React);
 
-import {NavTile} from "./navtile"
+import { NavTile } from "./navtile"
 
 interface NavTilesData {
 	id: number,
@@ -26,7 +26,8 @@ interface NavTilesData {
 
 interface NavTilesProps extends React.Props<NavTiles> {
 	tiles: Array<NavTilesData>,
-	style?: Object
+	tilecols?:number,
+	style?: Object,
 }
 
 // any, any required here to allow anticipated injection of maintiles by connect
@@ -36,15 +37,13 @@ class NavTiles extends React.Component<NavTilesProps, any>{
 	render() {
 		var tiles = this.props.tiles.map(function(data) {
 			// key attribute is required by ReactJS
-			return <NavTile key={data.id} style={data.style} markup={data.content}
+			return <NavTile key={ data.id } style={ data.style } markup={ data.content }
 			help={data.help}></NavTile>;
-		});
+		})
 
 		return (
-			<GridList >
-				{tiles}
-			</GridList>
-		);
+			<GridList cols={ this.props.tilecols } children={ tiles } />
+		)
 	}
 }
 

@@ -1,11 +1,12 @@
-// class_maintile.tsx
+// navtile.tsx
 /// <reference path="../../typings-custom/react-flipcard.d.ts" />
 'use strict'
 
 // required by bundler
-import * as React from 'react';
+import * as React from 'react'
 // import * as ReactDom from 'react-dom';
-import FlipCard = require('react-flipcard');
+import FlipCard = require('react-flipcard')
+import GridTile = require('material-ui/lib/grid-list/grid-tile')
 
 interface MainTileProps extends React.Props<NavTile> {
 	markup: string;
@@ -57,8 +58,8 @@ export class NavTile extends React.Component<any, any> {
 
 	render() {
 		return (
-			<div style={this.props.style}>
-			<FlipCard
+			<GridTile>
+			<FlipCard style={this.props.style}
 				disabled={true}
 				flipped={this.state.isFlipped}
 				onFlip={this.handleOnFlip}
@@ -74,7 +75,7 @@ export class NavTile extends React.Component<any, any> {
 				<button type="button" ref={(node)=>{this.state.elements.backButton = node}} onClick={this.showFront}>Show front</button>
 			  </div>
 			</FlipCard>
-			</div>
+			</GridTile>
 		)
 	}
 }

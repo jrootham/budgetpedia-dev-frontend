@@ -7,13 +7,15 @@ let mainElement = document.getElementById('main')
 let spacewidth: number = mainElement.getBoundingClientRect().width
 // console.log(spacewidth);
 let columns: number;
-if (spacewidth > 960) {
-	columns = 4
-} else if (spacewidth > 600) {
-	columns = 3
-} else {
-	columns = 2
-}
+// if (spacewidth > 960) {
+// 	columns = 4
+// } else if (spacewidth > 600) {
+// 	columns = 3
+// } else {
+// 	columns = 2
+// }
+
+columns = 2
 
 // test data, should come from database
 let defaultStyle = {
@@ -71,4 +73,7 @@ let tileData = [
 	},
 ];
 
-export var initialstate = { maintiles: tileData }
+export var initialstate = {
+	maintiles: tileData,
+	tilecols: columns,
+}

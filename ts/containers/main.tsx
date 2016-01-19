@@ -7,12 +7,10 @@
 
 // required by bundler
 import * as React from 'react'
-import {Component} from 'react'
+var { Component } = React
 
 import injectTapEventPlugin = require('react-tap-event-plugin')
-// doesn't work:
-// import * as TapPlugin from 'react-tap-event-plugin';
-// import injectTapEventPlugin = TapPlugin.injectTapEventPlugin;
+
 injectTapEventPlugin()
 
 // import * as ReactDom from 'react-dom'
@@ -20,21 +18,19 @@ import { render } from 'react-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
-import {MainBar} from './mainbar'
-import {MainTiles} from './maintiles' 
+import { MainBar } from './mainbar'
+import { MainTiles } from './maintiles' 
 
-import {mainReducer} from "../reducers/reducers"
-
-// console.log(store.getState())
+import { mainReducer } from "../reducers/reducers"
 
 export class Main extends Component<any, any> {
 
 	render() {
-		// store made available to children through connect decorator
+		// store made available to children through connect = injectStore
 		return (
-			<Provider store={ createStore(mainReducer) }>
+			<Provider store={ createStore ( mainReducer ) }>
 				<div >
-					<div style={{height:"64px"}} >
+					<div style={{ height:"64px" }} > {/* space for fixed appbar */}
 						<MainBar />
 					</div>
 					<div id="contentarea">

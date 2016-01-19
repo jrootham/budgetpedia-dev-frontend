@@ -4,6 +4,32 @@ import { combineReducers } from 'redux'
 // maintiles reducer
 import {initialstate} from "../store/initialstate"
 
+let tilecols = (state: any = initialstate.tilecols, action) => {
+	switch (action.type) {
+		case 'SET_TILECOLS': {
+
+			let mainElement = document.getElementById('main')
+
+			let spacewidth: number = mainElement.getBoundingClientRect().width
+
+			let columns: number;
+
+			if (spacewidth > 960) {
+				columns = 4
+			} else if (spacewidth > 600) {
+				columns = 3
+			} else {
+				columns = 2
+			}
+
+			return columns
+		}
+		default:
+			return state
+	}
+}
+
+// this is a notional reducer for experimentation
 let maintiles = (state: any = initialstate.maintiles, action) => {
 	switch (action.type) {
 		case 'ADD_TILE':
@@ -30,6 +56,6 @@ let maintiles = (state: any = initialstate.maintiles, action) => {
 	}
 }
 
-let mainReducer = combineReducers({ maintiles })
+let mainReducer = combineReducers({ maintiles, tilecols })
 
 export {mainReducer}

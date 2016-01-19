@@ -7,7 +7,7 @@ class NavTiles extends React.Component {
         var tiles = this.props.tiles.map(function (data) {
             return React.createElement(navtile_1.NavTile, {"key": data.id, "style": data.style, "markup": data.content, "help": data.help});
         });
-        return (React.createElement(GridList, null, tiles));
+        return (React.createElement(GridList, {"cols": this.props.tilecols, "children": tiles}));
     }
 }
 exports.NavTiles = NavTiles;
