@@ -43,7 +43,7 @@ export class MainBar extends React.Component<any, any> {
 				} 
 
 				title={
-					<span>Tribal Commons Group Information Manager</span>
+					<span>Budget Commons</span>
 				}
 
 				iconElementLeft={
