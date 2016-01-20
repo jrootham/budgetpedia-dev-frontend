@@ -171,11 +171,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('react');
+var Component = React.Component;
+
 var GridList = require('material-ui/lib/grid-list/grid-list');
 var navtile_1 = require("./navtile");
 
-var NavTiles = function (_React$Component) {
-    _inherits(NavTiles, _React$Component);
+var NavTiles = function (_Component) {
+    _inherits(NavTiles, _Component);
 
     function NavTiles() {
         _classCallCheck(this, NavTiles);
@@ -186,15 +188,19 @@ var NavTiles = function (_React$Component) {
     _createClass(NavTiles, [{
         key: 'render',
         value: function render() {
-            var tiles = this.props.tiles.map(function (data) {
+            var _props = this.props;
+            var tiles = _props.tiles;
+            var tilecols = _props.tilecols;
+
+            var tiles_ = tiles.map(function (data) {
                 return React.createElement(navtile_1.NavTile, { "key": data.id, "style": data.style, "markup": data.content, "help": data.help });
             });
-            return React.createElement(GridList, { "cols": this.props.tilecols, "children": tiles });
+            return React.createElement(GridList, { "children": tiles_, "cols": tilecols });
         }
     }]);
 
     return NavTiles;
-}(React.Component);
+}(Component);
 
 exports.NavTiles = NavTiles;
 
@@ -270,7 +276,7 @@ var MainBar = function (_React$Component) {
     _createClass(MainBar, [{
         key: 'render',
         value: function render() {
-            return React.createElement(AppBar, { "style": { position: "fixed" }, "title": React.createElement("span", null, "Tribal Commons Group Information Manager"), "iconElementLeft": React.createElement(IconButton, { "onTouchTap": function onTouchTap() {
+            return React.createElement(AppBar, { "style": { position: "fixed" }, "title": React.createElement("span", null, "Budget Commons"), "iconElementLeft": React.createElement(IconButton, { "onTouchTap": function onTouchTap() {
                         alert('menu list goes here');
                     } }, React.createElement(NavigationMenu, null)), "iconElementRight": React.createElement(IconButton, { "onTouchTap": function onTouchTap() {
                         alert('account options go here');
@@ -298,9 +304,12 @@ var React = require('react');
 var react_redux_1 = require('react-redux');
 var navtiles_1 = require("../components/navtiles");
 function mapStateToProps(state) {
+    var maintiles = state.maintiles;
+    var tilecols = state.tilecols;
+
     return {
-        maintiles: state.maintiles,
-        tilecols: state.tilecols
+        maintiles: maintiles,
+        tilecols: tilecols
     };
 }
 
@@ -308,23 +317,17 @@ var MainTilesClass = function (_React$Component) {
     _inherits(MainTilesClass, _React$Component);
 
     function MainTilesClass() {
-        var _Object$getPrototypeO;
-
         _classCallCheck(this, MainTilesClass);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(MainTilesClass)).call.apply(_Object$getPrototypeO, [this].concat(args)));
-
-        _this.handleResize = function () {
-            _this.props.dispatch({ type: "SET_TILECOLS" });
-        };
-        return _this;
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(MainTilesClass).apply(this, arguments));
     }
 
     _createClass(MainTilesClass, [{
+        key: 'handleResize',
+        value: function handleResize() {
+            this.props.dispatch({ type: "SET_TILECOLS" });
+        }
+    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
             this.props.dispatch({ type: "SET_TILECOLS" });
@@ -342,7 +345,11 @@ var MainTilesClass = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            return React.createElement(navtiles_1.NavTiles, { "tiles": this.props.maintiles, "tilecols": this.props.tilecols });
+            var _props = this.props;
+            var maintiles = _props.maintiles;
+            var tilecols = _props.tilecols;
+
+            return React.createElement(navtiles_1.NavTiles, { "tiles": maintiles, "tilecols": tilecols });
         }
     }]);
 

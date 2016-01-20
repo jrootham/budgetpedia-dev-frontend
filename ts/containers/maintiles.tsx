@@ -7,37 +7,63 @@ import { connect as injectStore} from 'react-redux'
 
 import { NavTiles } from "../components/navtiles"
 
-function mapStateToProps(state) {
+function mapStateToProps ( state ) {
+
+	let { maintiles, tilecols } = state
+
 	return { 
-		maintiles: state.maintiles,
-		tilecols:state.tilecols,
+
+		maintiles,
+		tilecols,
+
 	 }
+
 }
 
 class MainTilesClass extends React.Component<any, any> {
 
-	handleResize = () => { 
-		this.props.dispatch({ type: "SET_TILECOLS" }) 
+	handleResize() { 
+
+		this.props.dispatch ( { type: "SET_TILECOLS" } ) 
+
 	}
 
 	componentWillMount() {
+
 		// initialize
-		this.props.dispatch({type:"SET_TILECOLS"})
+		this.props.dispatch ( { type:"SET_TILECOLS" } )
+
 	}
 
 	componentDidMount() {
-		window.addEventListener('resize',this.handleResize)
+
+		window.addEventListener ( 'resize', this.handleResize )
+
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleResize)
+
+		window.removeEventListener ( 'resize', this.handleResize )
+
 	}
 
 	render() {
-		return <NavTiles tiles={this.props.maintiles} tilecols={this.props.tilecols}/>
+
+		let { maintiles, tilecols } = this.props
+
+		return (
+
+			<NavTiles 
+
+				tiles =		{ maintiles } 
+				tilecols =	{ tilecols }
+
+			/>
+		)
 	}
 }
 
+// dependency injection
 var MainTiles = injectStore ( mapStateToProps ) ( MainTilesClass )
 
 export { MainTiles }

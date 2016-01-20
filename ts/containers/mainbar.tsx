@@ -47,7 +47,8 @@ export class MainBar extends React.Component<any, any> {
 				}
 
 				iconElementLeft={
-					<IconButton  
+					
+					<IconButton
 						onTouchTap={
 							() => { alert('menu list goes here') } 
 						}
@@ -73,12 +74,13 @@ export class MainBar extends React.Component<any, any> {
 						<FontIcon 
 							className = "material-icons"
 						>
+
 							account_circle
+
 						</FontIcon>
 
 					</IconButton>
 				}
-
 			/>
 		)
 	} // render

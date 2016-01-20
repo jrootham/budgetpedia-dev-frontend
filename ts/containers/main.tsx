@@ -9,6 +9,7 @@
 import * as React from 'react'
 var { Component } = React
 
+// required by material-ui
 import injectTapEventPlugin = require('react-tap-event-plugin')
 
 injectTapEventPlugin()
