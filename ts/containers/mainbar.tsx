@@ -17,12 +17,18 @@
 
 'use strict'
 
+// import MUI = require('material-ui')
+// console.log(MUI)
+
 // required by bundler
 import * as React from 'react'
+import { connect as injectStore} from 'react-redux'
 
 import AppBar = require('material-ui/lib/app-bar')
 import IconButton = require('material-ui/lib/icon-button')
 import FontIcon = require('material-ui/lib/font-icon')
+// import Colors = require('material-ui/lib/styles/colors')
+// console.log(Colors)
 // import FlatButton = require('material-ui/lib/flat-button')
 
 // the following should be a font icon
@@ -33,8 +39,22 @@ import NavigationMenu = require('material-ui/lib/svg-icons/navigation/menu')
 // import IconMenu = require('material-ui/lib/menus/icon-menu')
 // import MenuItem = require('material-ui/lib/menus/menu-item')
 
-export class MainBar extends React.Component<any, any> {
+function mapStateToProps(state) {
+
+	let { appnavbar, theme } = state
+
+	return {
+
+		appnavbar,
+		theme,
+	}
+
+}
+
+class MainBarClass extends React.Component<any, any> {
 	render() {
+		let { appnavbar, theme } = this.props
+
 		return (
 			<AppBar 
 
@@ -43,7 +63,7 @@ export class MainBar extends React.Component<any, any> {
 				} 
 
 				title={
-					<span>Budget Commons</span>
+					<span>{appnavbar.title}</span>
 				}
 
 				iconElementLeft={
@@ -65,10 +85,6 @@ export class MainBar extends React.Component<any, any> {
 						onTouchTap={
 							() => { alert('account options go here') } 
 						}
-
-						iconStyle={
-							{ marginTop: "-6px", fontSize: "36px" }
-						}
 					>
 
 						<FontIcon 
@@ -81,7 +97,25 @@ export class MainBar extends React.Component<any, any> {
 
 					</IconButton>
 				}
-			/>
+			>
+				<div 
+					style={
+						{ position:"absolute",
+							bottom:0,
+							right:0,
+							fontSize:"small",
+							padding:"3px",
+							color:theme.palette.alternateTextColor,
+						}
+					}
+				>
+					{ appnavbar.username }
+				</div>
+			</AppBar>
 		)
 	} // render
 }
+
+var MainBar = injectStore(mapStateToProps)(MainBarClass)
+
+export { MainBar }

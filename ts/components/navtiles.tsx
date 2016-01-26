@@ -28,7 +28,10 @@ interface NavTilesProps extends React.Props< NavTiles > {
 
 	tiles: 		Array< NavTilesData >,
 	tilecols?:	number,
+	padding?: number,
 	style?: 	Object,
+	tilecolors: Object,
+	system: Object,
 
 }
 
@@ -36,7 +39,7 @@ class NavTiles extends Component< NavTilesProps, any > {
 
 	render() {
 
-		let { tiles, tilecols } = this.props
+		let { tiles, tilecols, padding, tilecolors, style, system } = this.props
 
 		let tiles_ = tiles.map ( function ( data ) {
 
@@ -45,9 +48,10 @@ class NavTiles extends Component< NavTilesProps, any > {
 				<NavTile 
 
 					key 	= { data.id } 
-					style 	= { data.style } 
 					markup 	= { data.content }
 					help 	= { data.help } 
+					tilecolors = { tilecolors }
+					system = { system }
 				>
 
 				</NavTile >
@@ -57,8 +61,10 @@ class NavTiles extends Component< NavTilesProps, any > {
 		return (
 			<GridList 
 
+				style		= { style }
 				children 	= { tiles_ } 
 				cols 		= { tilecols } 
+				padding		= { padding }
 
 			/>
 		)

@@ -4,24 +4,52 @@ body {
 }
 .ReactFlipCard {
 	display:block;
-	width:inherit;
-	height:inherit;
+	width:100%;
+	height:100%;
 }
 .ReactFlipCard__Flipper {
-	width:inherit;
-	height:inherit;
+	width:100%;
+	height:100%;
 }
 .ReactFlipCard__Front {
-	width:inherit;
-	height:inherit;
-	position:relative;
+	width:100%;
+	height:100%;
 }
 .ReactFlipCard__Back {
-	width:inherit;
-	height:inherit;
-	/*position:relative; -- causes strange bounce on flipping*/
+	width:100%;
+	height:100%;
 }
-.TCFlipCard {
-	width:inherit;
-	height:inherit;
+.flipcard-frame {
+	position:absolute;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+.flipcard-padding {
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	margin: 6px;
+}
+
+.flipcard-border {
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	position: absolute;
+	border:2px solid lightskyblue;
+	box-shadow: 4px 4px 4px #CCC;
+	border-radius: 6px;
+}
+.flipcard-content {
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	position: absolute;
+	overflow: auto;
+	padding:3px;
 }

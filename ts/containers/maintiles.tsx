@@ -4,17 +4,22 @@
 
 import * as React from 'react';
 import { connect as injectStore} from 'react-redux'
+import * as Actions from '../actions/actions'
 
 import { NavTiles } from "../components/navtiles"
 
 function mapStateToProps ( state ) {
 
-	let { maintiles, tilecols } = state
+	let { maintiles, maincols, mainpadding, theme, colors, system } = state
 
 	return { 
 
 		maintiles,
-		tilecols,
+		maincols,
+		mainpadding,
+		theme,
+		colors,
+		system,
 
 	 }
 
@@ -22,26 +27,26 @@ function mapStateToProps ( state ) {
 
 class MainTilesClass extends React.Component<any, any> {
 
-	handleResize() { 
+	handleResize = () => { 
 
-		this.props.dispatch ( { type: "SET_TILECOLS" } ) 
+		this.props.dispatch ( Actions.setTileCols() ) 
 
 	}
 
-	componentWillMount() {
+	componentWillMount = () => {
 
 		// initialize
-		this.props.dispatch ( { type:"SET_TILECOLS" } )
+		this.props.dispatch ( Actions.setTileCols() )
 
 	}
 
-	componentDidMount() {
+	componentDidMount = () => {
 
 		window.addEventListener ( 'resize', this.handleResize )
 
 	}
 
-	componentWillUnmount() {
+	componentWillUnmount = () => {
 
 		window.removeEventListener ( 'resize', this.handleResize )
 
@@ -49,14 +54,24 @@ class MainTilesClass extends React.Component<any, any> {
 
 	render() {
 
-		let { maintiles, tilecols } = this.props
+		let { maintiles, maincols, mainpadding, theme, colors, system } = this.props
 
 		return (
 
 			<NavTiles 
 
+				style = {{margin:0,fontFamily:theme.fontFamily}}
 				tiles =		{ maintiles } 
-				tilecols =	{ tilecols }
+				tilecols =	{ maincols }
+				padding = 	{ mainpadding }
+				tilecolors = {
+					{ 
+						front: colors.blue50,
+						back: colors.amber50,
+						helpbutton: theme.palette.primary3Color,
+					}
+				}
+				system = { system }
 
 			/>
 		)

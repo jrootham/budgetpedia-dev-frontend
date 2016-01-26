@@ -21,6 +21,7 @@ import { Provider } from 'react-redux'
 
 import { MainBar } from './mainbar'
 import { MainTiles } from './maintiles' 
+import { MainToolbar } from './maintoolbar'
 
 import { mainReducer } from "../reducers/reducers"
 
@@ -31,12 +32,15 @@ export class Main extends Component<any, any> {
 		return (
 			<Provider store={ createStore ( mainReducer ) }>
 				<div >
-					<div style={{ height:"64px" }} > {/* space for fixed appbar */}
-						<MainBar />
+					<MainBar />
+					<div style={{ height: "64px" }} > {/* space for top fixed appbar */}
 					</div>
 					<div id="contentarea">
 						<MainTiles />
 					</div>
+					<div style={{ height: "64px" }} > {/* space for bottom fixed toolbar */}
+					</div>
+					<MainToolbar />
 				</div>
 			</Provider>
 		)

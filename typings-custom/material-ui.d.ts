@@ -8,10 +8,10 @@
 // }
 
 declare namespace __MaterialUI {
-    import React = __React;
+    import React = __React
     export namespace Icons {
-        export import NavigationClose = __MaterialUI.NavigationClose;
-        export import MoreVertIcon = __MaterialUI.MoreVertIcon;
+        export import NavigationClose = __MaterialUI.NavigationClose
+        export import MoreVertIcon = __MaterialUI.MoreVertIcon
 	}
     interface NavigationCloseProps extends React.Props<NavigationClose> {
     }
@@ -21,7 +21,13 @@ declare namespace __MaterialUI {
     }
     export class MoreVertIcon extends React.Component<MoreVertIconProps, {}> {
     }
+    namespace Toolbar {
+        interface ToolbarGroupProps extends React.Props<ToolbarGroup> {
+            firstChild: boolean;
+        }
+    }
 }
+
 declare module 'material-ui/lib/svg-icons/navigation/close' {
     import NavigationClose = __MaterialUI.NavigationClose;
     export = NavigationClose;
@@ -30,3 +36,5 @@ declare module 'material-ui/lib/svg-icons/navigation/more-vert' {
     import MoreVertIcon = __MaterialUI.MoreVertIcon;
     export = MoreVertIcon;
 }
+
+

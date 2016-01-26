@@ -1,17 +1,21 @@
 'use strict';
-let mainElement = document.getElementById('main');
-let spacewidth = mainElement.getBoundingClientRect().width;
-let columns;
-columns = 2;
-let defaultStyle = {
-    width: ((spacewidth / columns) - 10) + 'px',
-    height: '160px',
-    margin: '10px 0 0 10px',
+var theme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
+var colors = require('material-ui/lib/styles/colors');
+let appnavbar = {
+    title: 'Toronto Budget Commons',
+    username: 'anonymous',
+    accountoptions: [],
+    menuoptions: [],
 };
-let tileData = [
+let toolsnavbar = {};
+let system = {
+    ischrome: /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
+};
+let maincols = 2;
+let mainpadding = 0;
+let maintiles = [
     {
         id: 6,
-        style: defaultStyle,
         content: `<h3>About Budget Commons</h3> 
 		<p><em>[content pending]</em></p>`,
         help: `<h3>History of the app</h3>
@@ -20,7 +24,6 @@ let tileData = [
     },
     {
         id: 7,
-        style: defaultStyle,
         content: `<h3>Budget Timeline</h3>
 		<p><em>[content pending]</em></p>`,
         help: `<h3>About Budget Timeline</h3>
@@ -29,7 +32,6 @@ let tileData = [
     },
     {
         id: 1,
-        style: defaultStyle,
         content: `<h3>Deputation Helper</h3>
 		<p><em>[content pending]</em></p>`,
         help: `<h3>About Deputation Helper</h3>
@@ -38,7 +40,6 @@ let tileData = [
     },
     {
         id: 2,
-        style: defaultStyle,
         content: `<h3>Budget Resources</h3>
 		<p><em>[content pending]</em></p>`,
         help: `<h3>About Budget Resources</h3>
@@ -47,7 +48,6 @@ let tileData = [
     },
     {
         id: 8,
-        style: defaultStyle,
         content: `<h3>Social Media Resources</h3>
 		<p><em>[content pending]</em></p>`,
         help: `<h3>About Social Media Resources</h3>
@@ -56,6 +56,12 @@ let tileData = [
     },
 ];
 exports.initialstate = {
-    maintiles: tileData,
-    tilecols: columns,
+    maintiles,
+    maincols,
+    mainpadding,
+    appnavbar,
+    toolsnavbar,
+    theme,
+    colors,
+    system,
 };

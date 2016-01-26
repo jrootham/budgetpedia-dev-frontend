@@ -1,19 +1,41 @@
 var redux_1 = require('redux');
+var Actions = require('../actions/actions');
 var initialstate_1 = require("../store/initialstate");
-let tilecols = (state = initialstate_1.initialstate.tilecols, action) => {
+let appnavbar = (state = initialstate_1.initialstate.appnavbar, action) => {
+    return state;
+};
+let toolsnavbar = (state = initialstate_1.initialstate.toolsnavbar, action) => {
+    return state;
+};
+let theme = (state = initialstate_1.initialstate.theme) => {
+    return state;
+};
+let system = (state = initialstate_1.initialstate.system) => {
+    return state;
+};
+let colors = (state = initialstate_1.initialstate.colors) => {
+    return state;
+};
+let mainpadding = (state = initialstate_1.initialstate.mainpadding, action) => {
+    return state;
+};
+let maincols = (state = initialstate_1.initialstate.maincols, action) => {
     switch (action.type) {
-        case 'SET_TILECOLS': {
+        case Actions.SET_TILECOLS: {
             let mainElement = document.getElementById('main');
-            let spacewidth = mainElement.getBoundingClientRect().width;
+            let elementwidth = mainElement.getBoundingClientRect().width;
             let columns;
-            if (spacewidth > 960) {
+            if (elementwidth > 960) {
                 columns = 4;
             }
-            else if (spacewidth > 600) {
+            else if (elementwidth > 600) {
                 columns = 3;
             }
-            else {
+            else if (elementwidth > 400) {
                 columns = 2;
+            }
+            else {
+                columns = 1;
             }
             return columns;
         }
@@ -23,16 +45,16 @@ let tilecols = (state = initialstate_1.initialstate.tilecols, action) => {
 };
 let maintiles = (state = initialstate_1.initialstate.maintiles, action) => {
     switch (action.type) {
-        case 'ADD_TILE':
+        case Actions.ADD_TILE:
             return [
                 ...state,
                 action.tile
             ];
-        case 'REMOVE_TILE':
+        case Actions.REMOVE_TILE:
             return state.filter((item) => {
                 return item.id != action.id;
             });
-        case 'UPDATE_TILE':
+        case Actions.UPDATE_TILE:
             return [
                 ...state.slice(0, action.index),
                 Object.assign({}, state[action.index], {
@@ -45,5 +67,13 @@ let maintiles = (state = initialstate_1.initialstate.maintiles, action) => {
             return state;
     }
 };
-let mainReducer = redux_1.combineReducers({ maintiles, tilecols });
+let mainReducer = redux_1.combineReducers({
+    maintiles,
+    maincols,
+    mainpadding,
+    appnavbar,
+    theme,
+    colors,
+    system
+});
 exports.mainReducer = mainReducer;
