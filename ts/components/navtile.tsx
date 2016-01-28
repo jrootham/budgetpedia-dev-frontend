@@ -17,19 +17,19 @@ import IconButton = require('material-ui/lib/icon-button')
 import Paper = require('material-ui/lib/paper')
 
 interface MainTileProps extends React.Props<NavTile> {
-	markup: string;
+    markup: string;
 }
 
 export class NavTile extends React.Component<any, any> {
 	constructor() {
 		super();
-		this.state={ 
+		this.state = { 
 			isFlipped: false,
 			elements: {},
 		}
 	}
 	
-	rawMarkup = (selector) => {
+	rawMarkup = ( selector ) => {
 		return { __html: this.props[selector] };
 	}
 	showBack = () => {
@@ -45,7 +45,7 @@ export class NavTile extends React.Component<any, any> {
 		let node = this.state.elements.backface
 		// backface visibility directive ignored in chrome with overflow set to auto
 		// https://code.google.com/p/chromium/issues/detail?id=363609
-		if (this.props.system.ischrome)
+		if ( this.props.system.ischrome )
 			node.style.display = 'none'
 		// node.style.overflow = 'hidden'
 		this.setState({
@@ -54,8 +54,8 @@ export class NavTile extends React.Component<any, any> {
 	}
 
 	handleOnFlip = (flipped) => {
-		if (this.props.system.ischrome) {
-			if (flipped) { // view backface
+		if ( this.props.system.ischrome ) {
+			if ( flipped ) { // view backface
 				this.state.elements.backface.style.overflow = 'auto'
 				this.state.elements.backface.style.display = 'block'
 				this.state.elements.frontface.style.display = 'none'
@@ -67,28 +67,29 @@ export class NavTile extends React.Component<any, any> {
 		}
 	}
 
-	handleKeyDown = (e) => {
+	handleKeyDown = ( e ) => {
 		if (this.state.isFlipped && e.keyCode === 27) {
 			this.showFront();
 		}
 	}
 
 	render() {
+		let tile = this
 		return (
 			<GridTile>
 			<FlipCard
-				disabled={true}
-				flipped={this.state.isFlipped}
-				onFlip={this.handleOnFlip}
-				onKeyDown={this.handleKeyDown}
-				style={{border:"none"}}
+				disabled = { true }
+				flipped = { tile.state.isFlipped }
+				onFlip = { tile.handleOnFlip }
+				onKeyDown = { tile.handleKeyDown }
+				style = {{ border:"none" }}
 				>
 				  <div className="flipcard-frame">
-					{ this.rawMarkup('help').__html? 
+					{ tile.rawMarkup('help').__html? 
 						<IconButton
 							style={{
 								borderRadius: '12px', 
-								backgroundColor: this.props.tilecolors.front, 
+								backgroundColor: tile.props.tilecolors.front, 
 								padding: 0, 
 								height: "24px", 
 								width: "24px", 
@@ -97,42 +98,56 @@ export class NavTile extends React.Component<any, any> {
 								right: 0, 
 								top: 0 
 							}}
-						onTouchTap={this.showBack}>
+						onTouchTap={tile.showBack}>
 						<FontIcon
 							className="material-icons"
-							color={this.props.tilecolors.helpbutton}
+							color = { tile.props.tilecolors.helpbutton }
 							>
 							help
 						</FontIcon>
 						</IconButton>:null
 					}
 					<div className = "flipcard-padding">
-					<div className = "flipcard-border" style={{ backgroundColor: this.props.tilecolors.front, }}>
+					<div className = "flipcard-border" 
+						style={{ 
+							backgroundColor: tile.props.tilecolors.front, 
+						}}>
 					<div className = "flipcard-content"
-						ref={(node) => { this.state.elements.frontface = node } }
+						ref={(node) => { tile.state.elements.frontface = node } }
 					>
-						<div dangerouslySetInnerHTML={ this.rawMarkup('markup') }></div>
+						<div dangerouslySetInnerHTML={ tile.rawMarkup('markup') }></div>
 			        </div></div></div>
 				  </div>
 				<div className="flipcard-frame"
-					onClick={ this.showFront }
+					onTouchTap={ tile.showFront }
 					>
 					<IconButton
-						style={{ backgroundColor: this.props.tilecolors.back, padding: 0, height: "24px", width: "24px", position: "absolute", zIndex: 2, right: 0, top: 0 }}
-						onTouchTap={ this.showFront }>
+						style={{ 
+							backgroundColor: tile.props.tilecolors.back, 
+							padding: 0, 
+							height: "24px", 
+							width: "24px", 
+							position: "absolute", 
+							zIndex: 2, 
+							right: 0, 
+							top: 0 
+						}}
+						onTouchTap={ tile.showFront }>
 						<FontIcon
 							className="material-icons"
-							color={this.props.tilecolors.helpbutton}
+							color={ tile.props.tilecolors.helpbutton }
 							>
 							flip_to_front
 							</FontIcon>
 						</IconButton>
 					<div className = "flipcard-padding">
-					<div className = "flipcard-border" style={{ backgroundColor: this.props.tilecolors.back, }}>
-					<div className = "flipcard-content"
-						ref={(node) => { this.state.elements.backface = node } }
-					>
-						<div dangerouslySetInnerHTML={ this.rawMarkup('help') }></div>
+					<div className = "flipcard-border" 
+						style={{ backgroundColor: tile.props.tilecolors.back, }}>
+                    <div className = "flipcard-content"
+                       ref={(node) => { tile.state.elements.backface = node } }
+                      >
+                        <div dangerouslySetInnerHTML={ tile.rawMarkup('help') }
+                        ></div>
 					</div></div></div>
 				</div>
 			</FlipCard>

@@ -173,11 +173,10 @@ var NavTile = function (_React$Component) {
     _createClass(NavTile, [{
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
-            return React.createElement(GridTile, null, React.createElement(FlipCard, { "disabled": true, "flipped": this.state.isFlipped, "onFlip": this.handleOnFlip, "onKeyDown": this.handleKeyDown, "style": { border: "none" } }, React.createElement("div", { "className": "flipcard-frame" }, this.rawMarkup('help').__html ? React.createElement(IconButton, { "style": {
+            var tile = this;
+            return React.createElement(GridTile, null, React.createElement(FlipCard, { "disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" } }, React.createElement("div", { "className": "flipcard-frame" }, tile.rawMarkup('help').__html ? React.createElement(IconButton, { "style": {
                     borderRadius: '12px',
-                    backgroundColor: this.props.tilecolors.front,
+                    backgroundColor: tile.props.tilecolors.front,
                     padding: 0,
                     height: "24px",
                     width: "24px",
@@ -185,11 +184,22 @@ var NavTile = function (_React$Component) {
                     zIndex: 2,
                     right: 0,
                     top: 0
-                }, "onTouchTap": this.showBack }, React.createElement(FontIcon, { "className": "material-icons", "color": this.props.tilecolors.helpbutton }, "help")) : null, React.createElement("div", { "className": "flipcard-padding" }, React.createElement("div", { "className": "flipcard-border", "style": { backgroundColor: this.props.tilecolors.front } }, React.createElement("div", { "className": "flipcard-content", "ref": function ref(node) {
-                    _this2.state.elements.frontface = node;
-                } }, React.createElement("div", { "dangerouslySetInnerHTML": this.rawMarkup('markup') }))))), React.createElement("div", { "className": "flipcard-frame", "onClick": this.showFront }, React.createElement(IconButton, { "style": { backgroundColor: this.props.tilecolors.back, padding: 0, height: "24px", width: "24px", position: "absolute", zIndex: 2, right: 0, top: 0 }, "onTouchTap": this.showFront }, React.createElement(FontIcon, { "className": "material-icons", "color": this.props.tilecolors.helpbutton }, "flip_to_front")), React.createElement("div", { "className": "flipcard-padding" }, React.createElement("div", { "className": "flipcard-border", "style": { backgroundColor: this.props.tilecolors.back } }, React.createElement("div", { "className": "flipcard-content", "ref": function ref(node) {
-                    _this2.state.elements.backface = node;
-                } }, React.createElement("div", { "dangerouslySetInnerHTML": this.rawMarkup('help') })))))));
+                }, "onTouchTap": tile.showBack }, React.createElement(FontIcon, { "className": "material-icons", "color": tile.props.tilecolors.helpbutton }, "help")) : null, React.createElement("div", { "className": "flipcard-padding" }, React.createElement("div", { "className": "flipcard-border", "style": {
+                    backgroundColor: tile.props.tilecolors.front
+                } }, React.createElement("div", { "className": "flipcard-content", "ref": function ref(node) {
+                    tile.state.elements.frontface = node;
+                } }, React.createElement("div", { "dangerouslySetInnerHTML": tile.rawMarkup('markup') }))))), React.createElement("div", { "className": "flipcard-frame", "onTouchTap": tile.showFront }, React.createElement(IconButton, { "style": {
+                    backgroundColor: tile.props.tilecolors.back,
+                    padding: 0,
+                    height: "24px",
+                    width: "24px",
+                    position: "absolute",
+                    zIndex: 2,
+                    right: 0,
+                    top: 0
+                }, "onTouchTap": tile.showFront }, React.createElement(FontIcon, { "className": "material-icons", "color": tile.props.tilecolors.helpbutton }, "flip_to_front")), React.createElement("div", { "className": "flipcard-padding" }, React.createElement("div", { "className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.back } }, React.createElement("div", { "className": "flipcard-content", "ref": function ref(node) {
+                    tile.state.elements.backface = node;
+                } }, React.createElement("div", { "dangerouslySetInnerHTML": tile.rawMarkup('help') })))))));
         }
     }]);
 
@@ -484,7 +494,18 @@ var MainToolbarClass = function (_React$Component) {
             var appnavbar = _props.appnavbar;
             var theme = _props.theme;
 
-            return React.createElement(Toolbar, { "style": { position: "fixed", bottom: 0, display: "flex", justifyContent: "center", borderTop: "2px solid silver" } }, React.createElement(ToolbarGroup, { "firstChild": false, "style": { float: "none", width: "60%", display: "flex", justifyContent: "space-around" } }, React.createElement(IconButton, null, React.createElement(FontIcon, { "className": "material-icons" }, "arrow_back")), React.createElement(IconButton, null, React.createElement(FontIcon, { "className": "material-icons" }, "radio_button_unchecked")), React.createElement(IconButton, null, React.createElement(FontIcon, { "className": "material-icons" }, "check_box_outline_blank"))));
+            return React.createElement(Toolbar, { "style": {
+                    position: "fixed",
+                    bottom: 0,
+                    display: "flex",
+                    justifyContent: "center",
+                    borderTop: "2px solid silver"
+                } }, React.createElement(ToolbarGroup, { "style": {
+                    float: "none",
+                    width: "60%",
+                    display: "flex",
+                    justifyContent: "space-around"
+                } }, React.createElement(IconButton, null, React.createElement(FontIcon, { "className": "material-icons" }, "arrow_back")), React.createElement(IconButton, null, React.createElement(FontIcon, { "className": "material-icons" }, "radio_button_unchecked")), React.createElement(IconButton, null, React.createElement(FontIcon, { "className": "material-icons" }, "check_box_outline_blank"))));
         }
     }]);
 

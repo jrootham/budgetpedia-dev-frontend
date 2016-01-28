@@ -11,7 +11,6 @@ var { Component } = React
 
 // required by material-ui
 import injectTapEventPlugin = require('react-tap-event-plugin')
-
 injectTapEventPlugin()
 
 // import * as ReactDom from 'react-dom'

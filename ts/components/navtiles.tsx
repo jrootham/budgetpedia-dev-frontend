@@ -2,7 +2,6 @@
 
 /// <reference path="../../typings/material-ui/material-ui.d.ts" />
 /// <reference path="../../typings-custom/material-ui.d.ts" />
-/// <reference path="../../typings-custom/react-masonry-component.d.ts" />
 
 'use strict'
 
@@ -28,10 +27,10 @@ interface NavTilesProps extends React.Props< NavTiles > {
 
 	tiles: 		Array< NavTilesData >,
 	tilecols?:	number,
-	padding?: number,
+	padding?: 	number,
 	style?: 	Object,
 	tilecolors: Object,
-	system: Object,
+	system: 	Object,
 
 }
 

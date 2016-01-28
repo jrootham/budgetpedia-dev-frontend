@@ -29,8 +29,19 @@ class MainToolbarClass extends React.Component<any, any> {
 		let { appnavbar, theme } = this.props
 
 		return (
-			<Toolbar style={{ position: "fixed", bottom: 0, display: "flex", justifyContent: "center", borderTop:"2px solid silver" }}>
-				<ToolbarGroup firstChild={false} style={{ float: "none", width: "60%", display: "flex", justifyContent: "space-around" }} >
+			<Toolbar style={{ 
+				position: "fixed", 
+				bottom: 0, 
+				display: "flex", 
+				justifyContent: "center", 
+				borderTop:"2px solid silver" 
+			}}>
+				<ToolbarGroup style={{ 
+					float: "none", 
+					width: "60%", 
+					display: "flex", 
+					justifyContent: "space-around" 
+				}} >
 	    			<IconButton><FontIcon className="material-icons">arrow_back</FontIcon></IconButton>
 					<IconButton><FontIcon className="material-icons">radio_button_unchecked</FontIcon></IconButton>
 					<IconButton><FontIcon className="material-icons">check_box_outline_blank</FontIcon></IconButton>

@@ -48,7 +48,7 @@
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "react/react.d.ts": {
-      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
+      "commit": "7fffbd3e040a93c244777e3be04cd6223ac69301"
     },
     "react-swf/react-swf.d.ts": {
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
@@ -99,7 +99,10 @@
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "material-ui/material-ui.d.ts": {
-      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
+      "commit": "7fffbd3e040a93c244777e3be04cd6223ac69301"
+    },
+    "promise/promise.d.ts": {
+      "commit": "7ce80dafc0df189d61950e80e04548d8304d1538"
     }
   }
 }

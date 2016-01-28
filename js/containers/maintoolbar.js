@@ -14,7 +14,18 @@ function mapStateToProps(state) {
 class MainToolbarClass extends React.Component {
     render() {
         let { appnavbar, theme } = this.props;
-        return (React.createElement(Toolbar, {"style": { position: "fixed", bottom: 0, display: "flex", justifyContent: "center", borderTop: "2px solid silver" }}, React.createElement(ToolbarGroup, {"firstChild": false, "style": { float: "none", width: "60%", display: "flex", justifyContent: "space-around" }}, React.createElement(IconButton, null, React.createElement(FontIcon, {"className": "material-icons"}, "arrow_back")), React.createElement(IconButton, null, React.createElement(FontIcon, {"className": "material-icons"}, "radio_button_unchecked")), React.createElement(IconButton, null, React.createElement(FontIcon, {"className": "material-icons"}, "check_box_outline_blank")))));
+        return (React.createElement(Toolbar, {"style": {
+            position: "fixed",
+            bottom: 0,
+            display: "flex",
+            justifyContent: "center",
+            borderTop: "2px solid silver"
+        }}, React.createElement(ToolbarGroup, {"style": {
+            float: "none",
+            width: "60%",
+            display: "flex",
+            justifyContent: "space-around"
+        }}, React.createElement(IconButton, null, React.createElement(FontIcon, {"className": "material-icons"}, "arrow_back")), React.createElement(IconButton, null, React.createElement(FontIcon, {"className": "material-icons"}, "radio_button_unchecked")), React.createElement(IconButton, null, React.createElement(FontIcon, {"className": "material-icons"}, "check_box_outline_blank")))));
     }
 }
 var MainToolbar = react_redux_1.connect(mapStateToProps)(MainToolbarClass);

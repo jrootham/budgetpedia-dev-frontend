@@ -63,7 +63,7 @@ class MainBarClass extends React.Component<any, any> {
 				} 
 
 				title={
-					<span>{appnavbar.title}</span>
+					<span>{ appnavbar.title }</span>
 				}
 
 				iconElementLeft={

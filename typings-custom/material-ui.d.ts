@@ -23,7 +23,7 @@ declare namespace __MaterialUI {
     }
     namespace Toolbar {
         interface ToolbarGroupProps extends React.Props<ToolbarGroup> {
-            firstChild: boolean;
+            firstChild?: boolean;
         }
     }
 }
@@ -37,4 +37,10 @@ declare module 'material-ui/lib/svg-icons/navigation/more-vert' {
     export = MoreVertIcon;
 }
 
+// for react-tap-event-plugin, allow div to hold onTouchTap
+declare module __React {
+    interface DOMAttributes {
+        onTouchTap?: Function,
+    }
+}
 
