@@ -1,6 +1,7 @@
 /// <reference path="../../typings/react/react.d.ts" />
 /// <reference path="../../typings/react/react-dom.d.ts" />
 /// <reference path="../../typings/react-redux/react-redux.d.ts" />
+/// <reference path="../../typings/redux-thunk/redux-thunk" />
 /// <reference path="../../typings-custom/react-tap-event-plugin.d.ts" />
 
 'use strict'
@@ -15,7 +16,8 @@ injectTapEventPlugin()
 
 // import * as ReactDom from 'react-dom'
 import { render } from 'react-dom'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk = require('redux-thunk')
 import { Provider } from 'react-redux'
 
 import { MainBar } from './mainbar'
@@ -24,12 +26,18 @@ import { MainToolbar } from './maintoolbar'
 
 import { mainReducer } from "../reducers/reducers"
 
+// create a store that has redux-thunk middleware enabled
+const createStoreWithMiddleware = applyMiddleware(
+	thunk
+)(createStore);
+
+
 export class Main extends Component<any, any> {
 
 	render() {
 		// store made available to children through connect = injectStore
 		return (
-			<Provider store={ createStore ( mainReducer ) }>
+			<Provider store={ createStoreWithMiddleware ( mainReducer ) }>
 				<div >
 					<MainBar />
 					<div style={{ height: "64px" }} > {/* space for top fixed appbar */}

@@ -31,3 +31,4 @@
 /// <reference path="react/react.d.ts" />
 /// <reference path="redux/redux.d.ts" />
 /// <reference path="promise/promise.d.ts" />
+/// <reference path="flux-standard-action/flux-standard-action.d.ts" />

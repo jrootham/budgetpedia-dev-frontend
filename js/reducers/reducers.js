@@ -1,6 +1,8 @@
 var redux_1 = require('redux');
 var Actions = require('../actions/actions');
 var initialstate_1 = require("../store/initialstate");
+var flux_standard_action_1 = require('flux-standard-action');
+var redux_actions_1 = require('redux-actions');
 let appnavbar = (state = initialstate_1.initialstate.appnavbar, action) => {
     return state;
 };
@@ -19,7 +21,10 @@ let colors = (state = initialstate_1.initialstate.colors) => {
 let mainpadding = (state = initialstate_1.initialstate.mainpadding, action) => {
     return state;
 };
-let maincols = (state = initialstate_1.initialstate.maincols, action) => {
+let maintiles = (state = initialstate_1.initialstate.maintiles, action) => {
+    return state;
+};
+let maincolsreducer = (state = initialstate_1.initialstate.maincols, action) => {
     switch (action.type) {
         case Actions.SET_TILECOLS: {
             let mainElement = document.getElementById('main');
@@ -43,37 +48,25 @@ let maincols = (state = initialstate_1.initialstate.maincols, action) => {
             return state;
     }
 };
-let maintiles = (state = initialstate_1.initialstate.maintiles, action) => {
-    switch (action.type) {
-        case Actions.ADD_TILE:
-            return [
-                ...state,
-                action.tile
-            ];
-        case Actions.REMOVE_TILE:
-            return state.filter((item) => {
-                return item.id != action.id;
-            });
-        case Actions.UPDATE_TILE:
-            return [
-                ...state.slice(0, action.index),
-                Object.assign({}, state[action.index], {
-                    content: action.content,
-                    help: action.help,
-                }),
-                ...state.slice(action.index + 1)
-            ];
-        default:
-            return state;
-    }
-};
-let mainReducer = redux_1.combineReducers({
-    maintiles,
+let maincols = redux_actions_1.handleActions({
+    [Actions.SET_TILECOLS]: maincolsreducer,
+}, initialstate_1.initialstate.maincols);
+let mainReducerCore = redux_1.combineReducers({
     maincols,
     mainpadding,
     appnavbar,
     theme,
     colors,
-    system
+    system,
+    maintiles,
 });
+let mainReducer = (state, action) => {
+    if (!flux_standard_action_1.isFSA(action)) {
+        console.error('non-FSA action', action);
+        throw 'non-FSA action, see console for details';
+    }
+    else {
+        return mainReducerCore(state, action);
+    }
+};
 exports.mainReducer = mainReducer;
