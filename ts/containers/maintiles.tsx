@@ -4,6 +4,7 @@
 
 import * as React from 'react';
 import { connect as injectStore} from 'react-redux'
+import { compose } from 'redux'
 import * as Actions from '../actions/actions'
 
 import { NavTiles } from "../components/navtiles"
@@ -72,6 +73,7 @@ class MainTilesClass extends React.Component<any, any> {
 					}
 				}
 				system = { system }
+                transitionTo = { compose(this.props.dispatch, Actions.transitionTo) }
 
 			/>
 		)

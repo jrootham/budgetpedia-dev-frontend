@@ -7,15 +7,20 @@ var IconButton = require('material-ui/lib/icon-button');
 class NavTile extends React.Component {
     constructor() {
         super();
+        this.transitionTo = () => {
+            this.props.transitionTo(this.props.route);
+        };
         this.rawMarkup = (selector) => {
             return { __html: this.props[selector] };
         };
-        this.showBack = () => {
+        this.showBack = (e) => {
+            e.stopPropagation();
             this.setState({
                 isFlipped: true
             });
         };
-        this.showFront = () => {
+        this.showFront = (e) => {
+            e.stopPropagation();
             let node = this.state.elements.backface;
             if (this.props.system.ischrome)
                 node.style.display = 'none';
@@ -39,7 +44,7 @@ class NavTile extends React.Component {
         };
         this.handleKeyDown = (e) => {
             if (this.state.isFlipped && e.keyCode === 27) {
-                this.showFront();
+                this.showFront(e);
             }
         };
         this.state = {
@@ -49,7 +54,7 @@ class NavTile extends React.Component {
     }
     render() {
         let tile = this;
-        return (React.createElement(GridTile, null, React.createElement(FlipCard, {"disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" }}, React.createElement("div", {"className": "flipcard-frame"}, tile.rawMarkup('help').__html ?
+        return (React.createElement(GridTile, null, React.createElement(FlipCard, {"disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" }}, React.createElement("div", {"className": "flipcard-frame", "onTouchTap": tile.transitionTo, "style": { cursor: 'pointer' }}, tile.rawMarkup('help').__html ?
             React.createElement(IconButton, {"style": {
                 borderRadius: '12px',
                 backgroundColor: tile.props.tilecolors.front,

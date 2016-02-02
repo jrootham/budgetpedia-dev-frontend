@@ -67,6 +67,7 @@ let maintiles: [Object] = [
 		help: `<h3>History of the app</h3>
 		<p><em>[content pending]</em></p>`,
 		index: 0,
+		route: 'about',
 	},
 	{
 		id: 7,
@@ -75,6 +76,7 @@ let maintiles: [Object] = [
 		help: `<h3>About Budget Timeline</h3>
 		<p><em>[content pending]</em></p>`,
 		index: 1,
+		route:'timeline',
 	},
 	{
 		id: 1,
@@ -83,6 +85,7 @@ let maintiles: [Object] = [
 		help: `<h3>About Deputation Helper</h3>
 		<p><em>[content pending]</em></p>`,
 		index: 2,
+		route:'deputations',
 	},
 	{
 		id: 2,
@@ -91,6 +94,7 @@ let maintiles: [Object] = [
 		help: `<h3>About Budget Resources</h3>
 		<p><em>[content pending]</em></p>`,
 		index: 3,
+		route:'resources',
 	},
 	{
 		id: 8,
@@ -99,6 +103,7 @@ let maintiles: [Object] = [
 		help: `<h3>About Social Media Resources</h3>
 		<p><em>[content pending]</em></p>`,
 		index: 4,
+		route:'socialresources',
 	},
 ];
 

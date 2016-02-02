@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react');
 var react_redux_1 = require('react-redux');
+var redux_1 = require('redux');
 var Actions = require('../actions/actions');
 var navtiles_1 = require("../components/navtiles");
 function mapStateToProps(state) {
@@ -36,7 +37,7 @@ class MainTilesClass extends React.Component {
             front: colors.blue50,
             back: colors.amber50,
             helpbutton: theme.palette.primary3Color,
-        }, "system": system}));
+        }, "system": system, "transitionTo": redux_1.compose(this.props.dispatch, Actions.transitionTo)}));
     }
 }
 var MainTiles = react_redux_1.connect(mapStateToProps)(MainTilesClass);

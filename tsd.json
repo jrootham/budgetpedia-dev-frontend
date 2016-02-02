@@ -39,7 +39,7 @@
       "commit": "984a41af67d76b5134e0d4991a30f813dfb8561f"
     },
     "redux/redux.d.ts": {
-      "commit": "984a41af67d76b5134e0d4991a30f813dfb8561f"
+      "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     },
     "react-day-picker/react-day-picker.d.ts": {
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
@@ -48,13 +48,13 @@
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "react/react.d.ts": {
-      "commit": "7fffbd3e040a93c244777e3be04cd6223ac69301"
+      "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     },
     "react-swf/react-swf.d.ts": {
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "react-router/react-router.d.ts": {
-      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+      "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     },
     "react-native/react-native.d.ts": {
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
@@ -63,13 +63,13 @@
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "react-router/history.d.ts": {
-      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+      "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     },
     "react/react-addons-create-fragment.d.ts": {
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "react/react-addons-transition-group.d.ts": {
-      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+      "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     },
     "react/react-addons-pure-render-mixin.d.ts": {
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
@@ -84,7 +84,7 @@
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "react/react-addons-css-transition-group.d.ts": {
-      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+      "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     },
     "react/react-addons-shallow-compare.d.ts": {
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
@@ -106,6 +106,9 @@
     },
     "flux-standard-action/flux-standard-action.d.ts": {
       "commit": "86dbea8fc37d9473fee465da4f0a21bea4f8cbd9"
+    },
+    "react-router-redux/react-router-redux.d.ts": {
+      "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     }
   }
 }

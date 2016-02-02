@@ -3,6 +3,7 @@ var Actions = require('../actions/actions');
 var initialstate_1 = require("../store/initialstate");
 var flux_standard_action_1 = require('flux-standard-action');
 var redux_actions_1 = require('redux-actions');
+var react_router_redux_1 = require('react-router-redux');
 let appnavbar = (state = initialstate_1.initialstate.appnavbar, action) => {
     return state;
 };
@@ -59,6 +60,7 @@ let mainReducerCore = redux_1.combineReducers({
     colors,
     system,
     maintiles,
+    routing: react_router_redux_1.routeReducer,
 });
 let mainReducer = (state, action) => {
     if (!flux_standard_action_1.isFSA(action)) {

@@ -32,3 +32,4 @@
 /// <reference path="redux/redux.d.ts" />
 /// <reference path="promise/promise.d.ts" />
 /// <reference path="flux-standard-action/flux-standard-action.d.ts" />
+/// <reference path="react-router-redux/react-router-redux.d.ts" />

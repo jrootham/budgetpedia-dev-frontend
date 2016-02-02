@@ -8,6 +8,7 @@ import * as Actions from '../actions/actions'
 import { initialstate } from "../store/initialstate"
 import { isFSA } from 'flux-standard-action'
 import { handleActions } from 'redux-actions'; // handleAction doesn't work with combineReducers
+import { syncHistory, routeReducer } from 'react-router-redux'
 
 let appnavbar = (state: any = initialstate.appnavbar, action) => {
 	return state
@@ -82,7 +83,8 @@ let mainReducerCore = combineReducers(
 		theme,
 		colors,
 		system,
-		maintiles, 
+		maintiles,
+        routing:routeReducer, 
 	}
 )
 

@@ -23,6 +23,7 @@
 // required by bundler
 import * as React from 'react'
 import { connect as injectStore} from 'react-redux'
+import * as Actions from '../actions/actions'
 
 import AppBar = require('material-ui/lib/app-bar')
 import IconButton = require('material-ui/lib/icon-button')
@@ -52,11 +53,20 @@ function mapStateToProps(state) {
 }
 
 class MainBarClass extends React.Component<any, any> {
-	render() {
+
+	transitionToHome = () => {
+		this.props.dispatch(Actions.transitionTo('/'))
+	}
+
+	render() { 
 		let { appnavbar, theme } = this.props
 
 		return (
 			<AppBar 
+
+				onTitleTouchTap = { this.transitionToHome }
+
+				titleStyle = {{cursor:'pointer'}}
 
 				style={
 					{ position: "fixed" }

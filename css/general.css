@@ -53,3 +53,26 @@ body {
 	overflow: auto;
 	padding:3px;
 }
+
+.mainpage-enter { opacity: 0; transition: opacity 300ms ease-in; }
+.mainpage-enter.mainpage-enter-active { opacity: 1; transition: opacity 300ms ease-in; }
+.mainpage-leave { opacity: 1; transition: opacity 300ms ease-in; }
+.mainpage-leave.mainpage-leave-active { opacity: 0; transition: opacity 300ms ease-in; }
+
+/*.mainpage-enter {
+  opacity: 0.01;
+}
+
+.mainpage-enter.mainpage-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.mainpage-leave {
+  opacity: 1;
+}
+*/
+.mainpage-leave.mainpage-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

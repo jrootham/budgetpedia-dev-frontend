@@ -28,11 +28,16 @@ export class NavTile extends React.Component<any, any> {
 			elements: {},
 		}
 	}
+
+	transitionTo = () => {
+        this.props.transitionTo(this.props.route)
+	}
 	
 	rawMarkup = ( selector ) => {
 		return { __html: this.props[selector] };
 	}
-	showBack = () => {
+	showBack = (e) => {
+		e.stopPropagation()
 		// let node = this.state.elements.frontface;
 		// node.style.display = 'none'
 		// node.style.overflow = 'hidden'
@@ -41,8 +46,9 @@ export class NavTile extends React.Component<any, any> {
 		});
 	}
 
-	showFront = () => {
-		let node = this.state.elements.backface
+	showFront = (e) => {
+        e.stopPropagation()
+        let node = this.state.elements.backface
 		// backface visibility directive ignored in chrome with overflow set to auto
 		// https://code.google.com/p/chromium/issues/detail?id=363609
 		if ( this.props.system.ischrome )
@@ -69,7 +75,7 @@ export class NavTile extends React.Component<any, any> {
 
 	handleKeyDown = ( e ) => {
 		if (this.state.isFlipped && e.keyCode === 27) {
-			this.showFront();
+			this.showFront(e);
 		}
 	}
 
@@ -84,8 +90,10 @@ export class NavTile extends React.Component<any, any> {
 				onKeyDown = { tile.handleKeyDown }
 				style = {{ border:"none" }}
 				>
-				  <div className="flipcard-frame">
-					{ tile.rawMarkup('help').__html? 
+				  <div className="flipcard-frame"
+                        onTouchTap={ tile.transitionTo }
+                        style={{cursor:'pointer'}}>
+						{ tile.rawMarkup('help').__html? 
 						<IconButton
 							style={{
 								borderRadius: '12px', 

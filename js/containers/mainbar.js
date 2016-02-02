@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react');
 var react_redux_1 = require('react-redux');
+var Actions = require('../actions/actions');
 var AppBar = require('material-ui/lib/app-bar');
 var IconButton = require('material-ui/lib/icon-button');
 var FontIcon = require('material-ui/lib/font-icon');
@@ -13,9 +14,15 @@ function mapStateToProps(state) {
     };
 }
 class MainBarClass extends React.Component {
+    constructor(...args) {
+        super(...args);
+        this.transitionToHome = () => {
+            this.props.dispatch(Actions.transitionTo('/'));
+        };
+    }
     render() {
         let { appnavbar, theme } = this.props;
-        return (React.createElement(AppBar, {"style": { position: "fixed" }, "title": React.createElement("span", null, appnavbar.title), "iconElementLeft": React.createElement(IconButton, {"onTouchTap": () => { alert('menu list goes here'); }}, React.createElement(NavigationMenu, null)), "iconElementRight": React.createElement(IconButton, {"onTouchTap": () => { alert('account options go here'); }}, React.createElement(FontIcon, {"className": "material-icons"}, "account_circle"))}, React.createElement("div", {"style": { position: "absolute",
+        return (React.createElement(AppBar, {"onTitleTouchTap": this.transitionToHome, "titleStyle": { cursor: 'pointer' }, "style": { position: "fixed" }, "title": React.createElement("span", null, appnavbar.title), "iconElementLeft": React.createElement(IconButton, {"onTouchTap": () => { alert('menu list goes here'); }}, React.createElement(NavigationMenu, null)), "iconElementRight": React.createElement(IconButton, {"onTouchTap": () => { alert('account options go here'); }}, React.createElement(FontIcon, {"className": "material-icons"}, "account_circle"))}, React.createElement("div", {"style": { position: "absolute",
             bottom: 0,
             right: 0,
             fontSize: "small",

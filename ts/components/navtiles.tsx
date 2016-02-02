@@ -20,6 +20,7 @@ interface NavTilesData {
 	style?: 	Object,
 	content: 	string,
 	help?: 		string,
+	route?:		string,
 
 }
 
@@ -31,6 +32,8 @@ interface NavTilesProps extends React.Props< NavTiles > {
 	style?: 	Object,
 	tilecolors: Object,
 	system: 	Object,
+	route?:		string,
+	transitionTo: Function,
 
 }
 
@@ -38,7 +41,7 @@ class NavTiles extends Component< NavTilesProps, any > {
 
 	render() {
 
-		let { tiles, tilecols, padding, tilecolors, style, system } = this.props
+		let { tiles, tilecols, padding, tilecolors, style, system, route, transitionTo } = this.props
 
 		let tiles_ = tiles.map ( function ( data ) {
 
@@ -51,6 +54,8 @@ class NavTiles extends Component< NavTilesProps, any > {
 					help 	= { data.help } 
 					tilecolors = { tilecolors }
 					system = { system }
+					route = { data.route }
+					transitionTo = { transitionTo }
 				>
 
 				</NavTile >

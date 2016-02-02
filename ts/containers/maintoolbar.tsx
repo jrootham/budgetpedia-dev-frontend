@@ -5,6 +5,7 @@
 
 import * as React from 'react';
 import { connect as injectStore} from 'react-redux'
+import * as Actions from '../actions/actions'
 
 import IconButton = require('material-ui/lib/icon-button')
 import FontIcon = require('material-ui/lib/font-icon')
@@ -25,7 +26,12 @@ function mapStateToProps(state) {
 }
 
 class MainToolbarClass extends React.Component<any, any> {
-	render() {
+
+    transitionToHome = () => {
+        this.props.dispatch(Actions.transitionTo('/'))
+    }
+
+    render() {
 		let { appnavbar, theme } = this.props
 
 		return (
@@ -43,7 +49,7 @@ class MainToolbarClass extends React.Component<any, any> {
 					justifyContent: "space-around" 
 				}} >
 	    			<IconButton><FontIcon className="material-icons">arrow_back</FontIcon></IconButton>
-					<IconButton><FontIcon className="material-icons">radio_button_unchecked</FontIcon></IconButton>
+                    <IconButton onTouchTap = { this.transitionToHome }><FontIcon className="material-icons">radio_button_unchecked</FontIcon></IconButton>
 					<IconButton><FontIcon className="material-icons">check_box_outline_blank</FontIcon></IconButton>
 				</ToolbarGroup>
     		</Toolbar>

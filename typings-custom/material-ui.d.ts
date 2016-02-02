@@ -26,6 +26,10 @@ declare namespace __MaterialUI {
             firstChild?: boolean;
         }
     }
+    interface AppBarProps extends React.Props<AppBar> {
+        onTitleTouchTap: Function,
+        titleStyle: Object,
+    }
 }
 
 declare module 'material-ui/lib/svg-icons/navigation/close' {
