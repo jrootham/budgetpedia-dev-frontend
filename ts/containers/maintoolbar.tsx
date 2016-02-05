@@ -51,7 +51,8 @@ class MainToolbarClass extends React.Component<any, any> {
 	    			<IconButton><FontIcon className="material-icons">arrow_back</FontIcon></IconButton>
                     <IconButton onTouchTap = { this.transitionToHome }><FontIcon className="material-icons">radio_button_unchecked</FontIcon></IconButton>
 					<IconButton><FontIcon className="material-icons">check_box_outline_blank</FontIcon></IconButton>
-				</ToolbarGroup>
+                    <IconButton><FontIcon className="material-icons">arrow_forward</FontIcon></IconButton>
+                    </ToolbarGroup>
     		</Toolbar>
 		)
 	} // render
