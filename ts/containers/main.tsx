@@ -38,6 +38,8 @@ import { Deputations } from '../features/containers/deputations'
 import { Resources } from '../features/containers/resources'
 import { SocialResources } from '../features/containers/socialresources'
 import { NoMatch } from '../features/containers/nomatch'
+import { ResetPassword } from '../features/containers/resetpassword'
+import { Register } from '../features/containers/register'
 
 const reduxRouterMiddleware = syncHistory(browserHistory)
 
@@ -93,7 +95,9 @@ export class Main extends Component<any, any> {
 							<Route path="deputations" component={ Deputations } />
 							<Route path="resources" component={ Resources } />
 							<Route path="socialresources" component={ SocialResources } />
-							<Route path="*" component={ NoMatch } />
+                            <Route path="resetpassword" component={ ResetPassword } />
+                            <Route path="register" component={ Register } />
+                            <Route path="*" component={ NoMatch } />
                         </Route>
                     </Router>
                     </ReactCSSTransitionGroup>

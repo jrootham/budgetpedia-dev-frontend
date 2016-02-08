@@ -12,7 +12,7 @@ declare namespace __MaterialUI {
     export namespace Icons {
         export import NavigationClose = __MaterialUI.NavigationClose
         export import MoreVertIcon = __MaterialUI.MoreVertIcon
-	}
+    }
     interface NavigationCloseProps extends React.Props<NavigationClose> {
     }
     export class NavigationClose extends React.Component<NavigationCloseProps, {}> {
@@ -20,6 +20,12 @@ declare namespace __MaterialUI {
     interface MoreVertIconProps extends React.Props<MoreVertIcon> {
     }
     export class MoreVertIcon extends React.Component<MoreVertIconProps, {}> {
+    }
+    namespace Menus {
+        interface IconMenuProps extends React.Props<IconMenu> {
+            targetOrigin?: Object,
+            anchorOrigin?: Object,
+        }
     }
     namespace Toolbar {
         interface ToolbarGroupProps extends React.Props<ToolbarGroup> {
@@ -30,8 +36,14 @@ declare namespace __MaterialUI {
         onTitleTouchTap: Function,
         titleStyle: Object,
     }
+    interface LeftNavProps extends React.Props<LeftNav> {
+        width?:number,
+        open:boolean,
+        onRequestChange?:Function,
+    }
+    export class Divider extends React.Component<any, {}> {
+    }
 }
-
 declare module 'material-ui/lib/svg-icons/navigation/close' {
     import NavigationClose = __MaterialUI.NavigationClose;
     export = NavigationClose;
@@ -41,6 +53,10 @@ declare module 'material-ui/lib/svg-icons/navigation/more-vert' {
     export = MoreVertIcon;
 }
 
+declare module 'material-ui/lib/divider' {
+    import Divider = __MaterialUI.Divider;
+    export = Divider;
+}
 // for react-tap-event-plugin, allow div to hold onTouchTap
 declare module __React {
     interface DOMAttributes {

@@ -32,7 +32,7 @@ class MainToolbarClass extends React.Component {
             width: "60%",
             display: "flex",
             justifyContent: "space-around"
-        }}, React.createElement(IconButton, null, React.createElement(FontIcon, {"className": "material-icons"}, "arrow_back")), React.createElement(IconButton, {"onTouchTap": this.transitionToHome}, React.createElement(FontIcon, {"className": "material-icons"}, "radio_button_unchecked")), React.createElement(IconButton, null, React.createElement(FontIcon, {"className": "material-icons"}, "check_box_outline_blank")))));
+        }}, React.createElement(IconButton, null, React.createElement(FontIcon, {"className": "material-icons"}, "arrow_back")), React.createElement(IconButton, {"onTouchTap": this.transitionToHome}, React.createElement(FontIcon, {"className": "material-icons"}, "radio_button_unchecked")), React.createElement(IconButton, null, React.createElement(FontIcon, {"className": "material-icons"}, "check_box_outline_blank")), React.createElement(IconButton, null, React.createElement(FontIcon, {"className": "material-icons"}, "arrow_forward")))));
     }
 }
 var MainToolbar = react_redux_1.connect(mapStateToProps)(MainToolbarClass);
