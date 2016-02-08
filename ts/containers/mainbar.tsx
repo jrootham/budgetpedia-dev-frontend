@@ -1,17 +1,17 @@
 // class_mainbar.tsx
 
 /*
-	TODO: 
-	- add name of user under account icon at right. Currently this causes styling problems
-		consider creating compound component for inclusion as iconElementRight
-	- add slide in menu on left attached to hamburger icon
-	- control account icon color by passed in property
-	- change username source to user object
+    TODO: 
+    - add name of user under account icon at right. Currently this causes styling problems
+        consider creating compound component for inclusion as iconElementRight
+    - add slide in menu on left attached to hamburger icon
+    - control account icon color by passed in property
+    - change username source to user object
 
-	NOTES:
-	- iconStyleRight does not work
-	- style on FontIcon does not work
-	- iconStyle on iconButton works
+    NOTES:
+    - iconStyleRight does not work
+    - style on FontIcon does not work
+    - iconStyle on iconButton works
 */
 
 /// <reference path="../../typings/material-ui/material-ui.d.ts" />
@@ -54,13 +54,13 @@ import NavigationMenu = require('material-ui/lib/svg-icons/navigation/menu')
 
 function mapStateToProps(state) {
 
-	let { appnavbar, theme } = state
+    let { appnavbar, theme } = state
 
-	return {
+    return {
 
-		appnavbar,
-		theme,
-	}
+        appnavbar,
+        theme,
+    }
 
 }
 
@@ -79,8 +79,8 @@ class MainBarClass extends React.Component<any, any> {
     handleMenuSidebarToggle = () => this.setState({ menusidebaropen: !this.state.menusidebaropen });
     
     transitionToHome = () => {
-		this.props.dispatch(Actions.transitionTo('/'))
-	}
+        this.props.dispatch(Actions.transitionTo('/'))
+    }
 
     transitionToRegister = () => {
         this.setState({ accountsidebaropen: false })
@@ -93,38 +93,38 @@ class MainBarClass extends React.Component<any, any> {
     }
     // {pattern = "/^[a-z0-9._%+-]+ @[a-z0-9.-]+\.[a-z]{2, 4}$/" }
 
-	render() { 
-		let { appnavbar, theme } = this.props
+    render() { 
+        let { appnavbar, theme } = this.props
 
-		return (
-			<AppBar 
+        return (
+            <AppBar 
 
-				onTitleTouchTap = { this.transitionToHome }
+                onTitleTouchTap = { this.transitionToHome }
 
-				titleStyle = {{cursor:'pointer'}}
+                titleStyle = {{cursor:'pointer'}}
 
-				style={
-					{ position: "fixed" }
-				} 
+                style={
+                    { position: "fixed" }
+                } 
 
-				title={
-					<span>{ appnavbar.title }</span>
-				}
+                title={
+                    <span>{ appnavbar.title }</span>
+                }
 
-				iconElementLeft={
-					
-					<IconButton
+                iconElementLeft={
+                    
+                    <IconButton
                     onTouchTap = {() => {this.handleMenuSidebarToggle() }}
-					>
+                    >
 
-						<NavigationMenu />
+                        <NavigationMenu />
 
-					</IconButton>
-				}
+                    </IconButton>
+                }
 
-				iconElementRight={
+                iconElementRight={
 
-					<IconButton
+                    <IconButton
                         onTouchTap= {() => {this.handleAccountSidebarToggle()}}
                         >
                         <FontIcon
@@ -134,22 +134,22 @@ class MainBarClass extends React.Component<any, any> {
                             >
                             account_circle
                         </FontIcon>
-                	</IconButton>
-				}
-			>
-				<div 
-					style={
-						{ position:"absolute",
-							bottom:0,
-							right:0,
-							fontSize:"small",
-							padding:"3px",
-							color:theme.palette.alternateTextColor,
-						}
-					}
-				>
-					{ appnavbar.username }
-				</div>
+                    </IconButton>
+                }
+            >
+                <div 
+                    style={
+                        { position:"absolute",
+                            bottom:0,
+                            right:0,
+                            fontSize:"small",
+                            padding:"3px",
+                            color:theme.palette.alternateTextColor,
+                        }
+                    }
+                >
+                    { appnavbar.username }
+                </div>
                 <LeftNav 
                     width={300} 
                     docked={false}
@@ -200,8 +200,8 @@ class MainBarClass extends React.Component<any, any> {
                     <div>Menu Sidebar</div>
                 </LeftNav>
              </AppBar>
-		)
-	} // render
+        )
+    } // render
 }
 
 var MainBar:typeof MainBarClass = injectStore(mapStateToProps)(MainBarClass)
