@@ -66,7 +66,6 @@ function mapStateToProps(state) {
 
 class MainBarClass extends React.Component<any, any> {
 
-
     constructor(props) {
         super(props);
         this.state = { 
@@ -97,28 +96,21 @@ class MainBarClass extends React.Component<any, any> {
         let { appnavbar, theme } = this.props
 
         return (
-            <AppBar 
-
+            <AppBar
                 onTitleTouchTap = { this.transitionToHome }
-
                 titleStyle = {{cursor:'pointer'}}
-
                 style={
                     { position: "fixed" }
-                } 
-
+                }
                 title={
                     <span>{ appnavbar.title }</span>
                 }
-
                 iconElementLeft={
                     
                     <IconButton
                     onTouchTap = {() => {this.handleMenuSidebarToggle() }}
                     >
-
                         <NavigationMenu />
-
                     </IconButton>
                 }
 
@@ -157,38 +149,38 @@ class MainBarClass extends React.Component<any, any> {
                     onRequestChange={open => this.setState({ accountsidebaropen:open, }) }
                     open={this.state.accountsidebaropen} >
                     <Card style={{margin:"5px"}}>
-                    <CardTitle title="Account Sign In" style={{paddingBottom:0}}/>
-                    <CardText>
-                    <TextField 
-                        hintText="enter unique email"
-                        floatingLabelText="Email Address"
-                        /><br />
-                    <TextField
-                        hintText="enter password"
-                        floatingLabelText="Password"
-                        type="password"
-                        /><br />
-                    </CardText>
-                    <CardActions style={{textAlign:"center"}}>
-                    <RaisedButton type="submit" label="Sign in" className="button-submit" primary={true} />
-                    </CardActions>
-                    <CardText>
-                    <a href="javascript:void(0);" 
-                        onTouchTap={this.transitionToResetPassword}>
-                        Forgot your password?
-                    </a>
-                    </CardText>
-                    <Divider/>
-                    <CardText>
-                        Not a member? Register:
-                    </CardText>
-                    <CardActions style={{ textAlign: "center" }}>
-                    <RaisedButton
-                        type="button" 
-                        label="Register" 
-                        onTouchTap={this.transitionToRegister}
-                    />
-                    </CardActions>
+                        <CardTitle title="Account Sign In" style={{paddingBottom:0}}/>
+                        <CardText>
+                            <TextField 
+                                hintText="enter unique email"
+                                floatingLabelText="Email Address"
+                                /><br />
+                            <TextField
+                                hintText="enter password"
+                                floatingLabelText="Password"
+                                type="password"
+                                /><br />
+                            </CardText>
+                            <CardActions style={{textAlign:"center"}}>
+                                <RaisedButton type="submit" label="Sign in" className="button-submit" primary={true} />
+                            </CardActions>
+                        <CardText>
+                        <a href="javascript:void(0);" 
+                            onTouchTap={this.transitionToResetPassword}>
+                            Forgot your password?
+                        </a>
+                        </CardText>
+                        <Divider/>
+                        <CardText>
+                            Not a member? Register:
+                        </CardText>
+                        <CardActions style={{ textAlign: "center" }}>
+                            <RaisedButton
+                                type="button"
+                                label="Register" 
+                                onTouchTap={this.transitionToRegister}
+                            />
+                        </CardActions>
                     </Card>
                 </LeftNav>
                 <LeftNav
