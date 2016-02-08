@@ -64,8 +64,6 @@ let maintiles: [Object] = [
 		id: 6,
 		content: `<h3>About Budget Commons</h3> 
 		<p><em>[content pending]</em></p>`,
-		help: `<h3>History of the app</h3>
-		<p><em>[content pending]</em></p>`,
 		index: 0,
 		route: 'about',
 	},

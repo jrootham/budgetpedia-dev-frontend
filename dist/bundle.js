@@ -427,7 +427,8 @@ var MainBarClass = function (_React$Component) {
                         _this2.handleMenuSidebarToggle();
                     } }, React.createElement(NavigationMenu, null)), "iconElementRight": React.createElement(IconButton, { "onTouchTap": function onTouchTap() {
                         _this2.handleAccountSidebarToggle();
-                    } }, React.createElement(FontIcon, { "className": "material-icons", "color": "white", "style": { cursor: "pointer" } }, "account_circle")) }, React.createElement("div", { "style": { position: "absolute",
+                    } }, React.createElement(FontIcon, { "className": "material-icons", "color": theme.palette.alternateTextColor, "style": { cursor: "pointer" } }, "account_circle")) }, React.createElement("div", { "style": {
+                    position: "absolute",
                     bottom: 0,
                     right: 0,
                     fontSize: "small",
@@ -1001,57 +1002,56 @@ exports.mainReducer = mainReducer;
 var theme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
 var colors = require('material-ui/lib/styles/colors');
 var appnavbar = {
-      title: 'Toronto Budget Commons',
-      username: 'anonymous',
-      accountoptions: [],
-      menuoptions: []
+    title: 'Toronto Budget Commons',
+    username: 'anonymous',
+    accountoptions: [],
+    menuoptions: []
 };
 var toolsnavbar = {};
 var system = {
-      ischrome: /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
+    ischrome: /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
 };
 var maincols = 2;
 var mainpadding = 0;
 var maintiles = [{
-      id: 6,
-      content: '<h3>About Budget Commons</h3> \n\t\t<p><em>[content pending]</em></p>',
-      help: '<h3>History of the app</h3>\n\t\t<p><em>[content pending]</em></p>',
-      index: 0,
-      route: 'about'
+    id: 6,
+    content: '<h3>About Budget Commons</h3> \n\t\t<p><em>[content pending]</em></p>',
+    index: 0,
+    route: 'about'
 }, {
-      id: 7,
-      content: '<h3>Budget Timeline</h3>\n\t\t<p><em>[content pending]</em></p>',
-      help: '<h3>About Budget Timeline</h3>\n\t\t<p><em>[content pending]</em></p>',
-      index: 1,
-      route: 'timeline'
+    id: 7,
+    content: '<h3>Budget Timeline</h3>\n\t\t<p><em>[content pending]</em></p>',
+    help: '<h3>About Budget Timeline</h3>\n\t\t<p><em>[content pending]</em></p>',
+    index: 1,
+    route: 'timeline'
 }, {
-      id: 1,
-      content: '<h3>Deputation Helper</h3>\n\t\t<p><em>[content pending]</em></p>',
-      help: '<h3>About Deputation Helper</h3>\n\t\t<p><em>[content pending]</em></p>',
-      index: 2,
-      route: 'deputations'
+    id: 1,
+    content: '<h3>Deputation Helper</h3>\n\t\t<p><em>[content pending]</em></p>',
+    help: '<h3>About Deputation Helper</h3>\n\t\t<p><em>[content pending]</em></p>',
+    index: 2,
+    route: 'deputations'
 }, {
-      id: 2,
-      content: '<h3>Budget Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
-      help: '<h3>About Budget Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
-      index: 3,
-      route: 'resources'
+    id: 2,
+    content: '<h3>Budget Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
+    help: '<h3>About Budget Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
+    index: 3,
+    route: 'resources'
 }, {
-      id: 8,
-      content: '<h3>Social Media Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
-      help: '<h3>About Social Media Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
-      index: 4,
-      route: 'socialresources'
+    id: 8,
+    content: '<h3>Social Media Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
+    help: '<h3>About Social Media Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
+    index: 4,
+    route: 'socialresources'
 }];
 exports.initialstate = {
-      maintiles: maintiles,
-      maincols: maincols,
-      mainpadding: mainpadding,
-      appnavbar: appnavbar,
-      toolsnavbar: toolsnavbar,
-      theme: theme,
-      colors: colors,
-      system: system
+    maintiles: maintiles,
+    maincols: maincols,
+    mainpadding: mainpadding,
+    appnavbar: appnavbar,
+    toolsnavbar: toolsnavbar,
+    theme: theme,
+    colors: colors,
+    system: system
 };
 
 },{"material-ui/lib/styles/colors":102,"material-ui/lib/styles/raw-themes/light-raw-theme":106}],20:[function(require,module,exports){

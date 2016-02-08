@@ -108,7 +108,7 @@ class MainBarClass extends React.Component<any, any> {
                 iconElementLeft={
                     
                     <IconButton
-                    onTouchTap = {() => {this.handleMenuSidebarToggle() }}
+                        onTouchTap = {() => {this.handleMenuSidebarToggle() }}
                     >
                         <NavigationMenu />
                     </IconButton>
@@ -118,10 +118,10 @@ class MainBarClass extends React.Component<any, any> {
 
                     <IconButton
                         onTouchTap= {() => {this.handleAccountSidebarToggle()}}
-                        >
+                    >
                         <FontIcon
                             className = "material-icons"
-                            color = "white"
+                            color = {theme.palette.alternateTextColor}
                             style = {{ cursor: "pointer" }}
                             >
                             account_circle
@@ -130,15 +130,14 @@ class MainBarClass extends React.Component<any, any> {
                 }
             >
                 <div 
-                    style={
-                        { position:"absolute",
-                            bottom:0,
-                            right:0,
-                            fontSize:"small",
-                            padding:"3px",
-                            color:theme.palette.alternateTextColor,
-                        }
-                    }
+                    style={{ 
+                        position:"absolute",
+                        bottom:0,
+                        right:0,
+                        fontSize:"small",
+                        padding:"3px",
+                        color:theme.palette.alternateTextColor,
+                    }}
                 >
                     { appnavbar.username }
                 </div>

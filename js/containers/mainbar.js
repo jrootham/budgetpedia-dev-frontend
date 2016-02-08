@@ -44,7 +44,8 @@ class MainBarClass extends React.Component {
     }
     render() {
         let { appnavbar, theme } = this.props;
-        return (React.createElement(AppBar, {"onTitleTouchTap": this.transitionToHome, "titleStyle": { cursor: 'pointer' }, "style": { position: "fixed" }, "title": React.createElement("span", null, appnavbar.title), "iconElementLeft": React.createElement(IconButton, {"onTouchTap": () => { this.handleMenuSidebarToggle(); }}, React.createElement(NavigationMenu, null)), "iconElementRight": React.createElement(IconButton, {"onTouchTap": () => { this.handleAccountSidebarToggle(); }}, React.createElement(FontIcon, {"className": "material-icons", "color": "white", "style": { cursor: "pointer" }}, "account_circle"))}, React.createElement("div", {"style": { position: "absolute",
+        return (React.createElement(AppBar, {"onTitleTouchTap": this.transitionToHome, "titleStyle": { cursor: 'pointer' }, "style": { position: "fixed" }, "title": React.createElement("span", null, appnavbar.title), "iconElementLeft": React.createElement(IconButton, {"onTouchTap": () => { this.handleMenuSidebarToggle(); }}, React.createElement(NavigationMenu, null)), "iconElementRight": React.createElement(IconButton, {"onTouchTap": () => { this.handleAccountSidebarToggle(); }}, React.createElement(FontIcon, {"className": "material-icons", "color": theme.palette.alternateTextColor, "style": { cursor: "pointer" }}, "account_circle"))}, React.createElement("div", {"style": {
+            position: "absolute",
             bottom: 0,
             right: 0,
             fontSize: "small",
