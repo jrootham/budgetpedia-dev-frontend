@@ -19,26 +19,25 @@
 
 'use strict'
 
-// import MUI = require('material-ui')
-// console.log(MUI)
-
-// required by bundler
-import * as React from 'react'
+import * as React from 'react' // required by bundler
 import { connect as injectStore} from 'react-redux'
 import * as Actions from '../actions/actions'
 
 import AppBar = require('material-ui/lib/app-bar')
-import IconMenu = require('material-ui/lib/menus/icon-menu')
-import MenuItem = require('material-ui/lib/menus/menu-item')
-import IconButton = require('material-ui/lib/icon-button')
-import FontIcon = require('material-ui/lib/font-icon')
 import LeftNav = require('material-ui/lib/left-nav')
-import TextField = require('material-ui/lib/text-field')
-import RaisedButton = require('material-ui/lib/raised-button')
-import CardTitle = require('material-ui/lib/card/card-title')
+
 import Card = require('material-ui/lib/card/card')
+import CardTitle = require('material-ui/lib/card/card-title')
 import CardText = require('material-ui/lib/card/card-text')
 import CardActions = require('material-ui/lib/card/card-actions')
+
+// import IconMenu = require('material-ui/lib/menus/icon-menu')
+import MenuItem = require('material-ui/lib/menus/menu-item')
+import IconButton = require('material-ui/lib/icon-button')
+import RaisedButton = require('material-ui/lib/raised-button')
+
+import FontIcon = require('material-ui/lib/font-icon')
+import TextField = require('material-ui/lib/text-field')
 import Divider = require('material-ui/lib/divider')
 // import Colors = require('material-ui/lib/styles/colors')
 // console.log(Colors)
@@ -46,11 +45,6 @@ import Divider = require('material-ui/lib/divider')
 
 // the following should be a font icon
 import NavigationMenu = require('material-ui/lib/svg-icons/navigation/menu')
-// import NavigationClose = require('material-ui/lib/svg-icons/navigation/close')
-// import MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
-
-// import IconMenu = require('material-ui/lib/menus/icon-menu')
-// import MenuItem = require('material-ui/lib/menus/menu-item')
 
 function mapStateToProps(state) {
 

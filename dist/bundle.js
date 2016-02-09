@@ -119,7 +119,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('react');
-var FlipCard = require('react-flipcard');
+var ReactFlipCard = require('react-flipcard');
 var GridTile = require('material-ui/lib/grid-list/grid-tile');
 var FontIcon = require('material-ui/lib/font-icon');
 var IconButton = require('material-ui/lib/icon-button');
@@ -130,58 +130,64 @@ var NavTile = function (_React$Component) {
     function NavTile() {
         _classCallCheck(this, NavTile);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(NavTile).call(this));
+        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(NavTile).call(this));
 
-        _this.transitionTo = function () {
-            _this.props.transitionTo(_this.props.route);
-        };
-        _this.rawMarkup = function (selector) {
-            return { __html: _this.props[selector] };
-        };
-        _this.showBack = function (e) {
+        _this2.transitionTo = function (e) {
+            if (e.target.tagName == 'A') return;
             e.stopPropagation();
-            _this.setState({
+            e.preventDefault();
+            var _this = _this2;
+            window.setTimeout(function () {
+                _this.props.transitionTo(_this.props.route);
+            }, 0);
+        };
+        _this2.rawMarkup = function (selector) {
+            return { __html: _this2.props[selector] };
+        };
+        _this2.showBack = function (e) {
+            e.stopPropagation();
+            _this2.setState({
                 isFlipped: true
             });
         };
-        _this.showFront = function (e) {
+        _this2.showFront = function (e) {
             e.stopPropagation();
-            var node = _this.state.elements.backface;
-            if (_this.props.system.ischrome) node.style.display = 'none';
-            _this.setState({
+            var node = _this2.state.elements.backface;
+            if (_this2.props.system.ischrome) node.style.display = 'none';
+            _this2.setState({
                 isFlipped: false
             });
         };
-        _this.handleOnFlip = function (flipped) {
-            if (_this.props.system.ischrome) {
+        _this2.handleOnFlip = function (flipped) {
+            if (_this2.props.system.ischrome) {
                 if (flipped) {
-                    _this.state.elements.backface.style.overflow = 'auto';
-                    _this.state.elements.backface.style.display = 'block';
-                    _this.state.elements.frontface.style.display = 'none';
+                    _this2.state.elements.backface.style.overflow = 'auto';
+                    _this2.state.elements.backface.style.display = 'block';
+                    _this2.state.elements.frontface.style.display = 'none';
                 } else {
-                    _this.state.elements.frontface.style.overflow = 'auto';
-                    _this.state.elements.frontface.style.display = 'block';
-                    _this.state.elements.backface.style.display = 'none';
+                    _this2.state.elements.frontface.style.overflow = 'auto';
+                    _this2.state.elements.frontface.style.display = 'block';
+                    _this2.state.elements.backface.style.display = 'none';
                 }
             }
         };
-        _this.handleKeyDown = function (e) {
-            if (_this.state.isFlipped && e.keyCode === 27) {
-                _this.showFront(e);
+        _this2.handleKeyDown = function (e) {
+            if (_this2.state.isFlipped && e.keyCode === 27) {
+                _this2.showFront(e);
             }
         };
-        _this.state = {
+        _this2.state = {
             isFlipped: false,
             elements: {}
         };
-        return _this;
+        return _this2;
     }
 
     _createClass(NavTile, [{
         key: 'render',
         value: function render() {
             var tile = this;
-            return React.createElement(GridTile, null, React.createElement(FlipCard, { "disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" } }, React.createElement("div", { "className": "flipcard-frame", "onTouchTap": tile.transitionTo, "style": { cursor: 'pointer' } }, tile.rawMarkup('help').__html ? React.createElement(IconButton, { "style": {
+            return React.createElement(GridTile, null, React.createElement(ReactFlipCard, { "disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" } }, React.createElement("div", { "className": "flipcard-frame", "onTouchTap": tile.transitionTo, "style": { cursor: 'pointer' } }, tile.rawMarkup('help').__html ? React.createElement(IconButton, { "style": {
                     borderRadius: '12px',
                     backgroundColor: tile.props.tilecolors.front,
                     padding: 0,
@@ -215,7 +221,7 @@ var NavTile = function (_React$Component) {
 
 exports.NavTile = NavTile;
 
-},{"material-ui/lib/font-icon":79,"material-ui/lib/grid-list/grid-tile":81,"material-ui/lib/icon-button":82,"react":388,"react-flipcard":149}],4:[function(require,module,exports){
+},{"material-ui/lib/font-icon":80,"material-ui/lib/grid-list/grid-tile":82,"material-ui/lib/icon-button":83,"react":388,"react-flipcard":150}],4:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -266,7 +272,7 @@ var NavTiles = function (_Component) {
 
 exports.NavTiles = NavTiles;
 
-},{"./navtile":3,"material-ui/lib/grid-list/grid-list":80,"react":388}],5:[function(require,module,exports){
+},{"./navtile":3,"material-ui/lib/grid-list/grid-list":81,"react":388}],5:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -346,7 +352,7 @@ var Main = function (_Component2) {
 
 exports.Main = Main;
 
-},{"../features/containers/about":9,"../features/containers/deputations":10,"../features/containers/nomatch":11,"../features/containers/register":12,"../features/containers/resetpassword":13,"../features/containers/resources":14,"../features/containers/socialresources":15,"../features/containers/timeline":16,"../reducers/reducers":18,"./mainbar":6,"./maintiles":7,"./maintoolbar":8,"react":388,"react-addons-css-transition-group":141,"react-redux":153,"react-router":188,"react-router-redux":160,"react-tap-event-plugin":222,"redux":397,"redux-thunk":395}],6:[function(require,module,exports){
+},{"../features/containers/about":9,"../features/containers/deputations":10,"../features/containers/nomatch":11,"../features/containers/register":12,"../features/containers/resetpassword":13,"../features/containers/resources":14,"../features/containers/socialresources":15,"../features/containers/timeline":16,"../reducers/reducers":18,"./mainbar":6,"./maintiles":7,"./maintoolbar":8,"react":388,"react-addons-css-transition-group":142,"react-redux":153,"react-router":188,"react-router-redux":160,"react-tap-event-plugin":222,"redux":397,"redux-thunk":395}],6:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -361,15 +367,15 @@ var React = require('react');
 var react_redux_1 = require('react-redux');
 var Actions = require('../actions/actions');
 var AppBar = require('material-ui/lib/app-bar');
-var IconButton = require('material-ui/lib/icon-button');
-var FontIcon = require('material-ui/lib/font-icon');
 var LeftNav = require('material-ui/lib/left-nav');
-var TextField = require('material-ui/lib/text-field');
-var RaisedButton = require('material-ui/lib/raised-button');
-var CardTitle = require('material-ui/lib/card/card-title');
 var Card = require('material-ui/lib/card/card');
+var CardTitle = require('material-ui/lib/card/card-title');
 var CardText = require('material-ui/lib/card/card-text');
 var CardActions = require('material-ui/lib/card/card-actions');
+var IconButton = require('material-ui/lib/icon-button');
+var RaisedButton = require('material-ui/lib/raised-button');
+var FontIcon = require('material-ui/lib/font-icon');
+var TextField = require('material-ui/lib/text-field');
 var Divider = require('material-ui/lib/divider');
 var NavigationMenu = require('material-ui/lib/svg-icons/navigation/menu');
 function mapStateToProps(state) {
@@ -448,7 +454,7 @@ var MainBarClass = function (_React$Component) {
 var MainBar = react_redux_1.connect(mapStateToProps)(MainBarClass);
 exports.MainBar = MainBar;
 
-},{"../actions/actions":2,"material-ui/lib/app-bar":67,"material-ui/lib/card/card":73,"material-ui/lib/card/card-actions":69,"material-ui/lib/card/card-text":71,"material-ui/lib/card/card-title":72,"material-ui/lib/divider":75,"material-ui/lib/font-icon":79,"material-ui/lib/icon-button":82,"material-ui/lib/left-nav":83,"material-ui/lib/raised-button":95,"material-ui/lib/svg-icons/navigation/menu":120,"material-ui/lib/text-field":121,"react":388,"react-redux":153}],7:[function(require,module,exports){
+},{"../actions/actions":2,"material-ui/lib/app-bar":68,"material-ui/lib/card/card":74,"material-ui/lib/card/card-actions":70,"material-ui/lib/card/card-text":72,"material-ui/lib/card/card-title":73,"material-ui/lib/divider":76,"material-ui/lib/font-icon":80,"material-ui/lib/icon-button":83,"material-ui/lib/left-nav":84,"material-ui/lib/raised-button":96,"material-ui/lib/svg-icons/navigation/menu":121,"material-ui/lib/text-field":122,"react":388,"react-redux":153}],7:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -612,7 +618,7 @@ var MainToolbarClass = function (_React$Component) {
 var MainToolbar = react_redux_1.connect(mapStateToProps)(MainToolbarClass);
 exports.MainToolbar = MainToolbar;
 
-},{"../actions/actions":2,"material-ui/lib/font-icon":79,"material-ui/lib/icon-button":82,"material-ui/lib/toolbar/toolbar":124,"material-ui/lib/toolbar/toolbar-group":123,"react":388,"react-redux":153}],9:[function(require,module,exports){
+},{"../actions/actions":2,"material-ui/lib/font-icon":80,"material-ui/lib/icon-button":83,"material-ui/lib/toolbar/toolbar":125,"material-ui/lib/toolbar/toolbar-group":124,"react":388,"react-redux":153}],9:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -900,7 +906,7 @@ var react_dom_1 = require('react-dom');
 var main_1 = require('./containers/main');
 react_dom_1.render(React.createElement(main_1.Main, null), document.getElementById('main'));
 
-},{"./containers/main":5,"react":388,"react-dom":145}],18:[function(require,module,exports){
+},{"./containers/main":5,"react":388,"react-dom":146}],18:[function(require,module,exports){
 'use strict';
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -996,7 +1002,7 @@ var mainReducer = function mainReducer(state, action) {
 };
 exports.mainReducer = mainReducer;
 
-},{"../actions/actions":2,"../store/initialstate":19,"flux-standard-action":21,"react-router-redux":160,"redux":397,"redux-actions":392}],19:[function(require,module,exports){
+},{"../actions/actions":2,"../store/initialstate":19,"flux-standard-action":22,"react-router-redux":160,"redux":397,"redux-actions":392}],19:[function(require,module,exports){
 'use strict';
 
 var theme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
@@ -1015,7 +1021,7 @@ var maincols = 2;
 var mainpadding = 0;
 var maintiles = [{
     id: 6,
-    content: '<h3>About Budget Commons</h3> \n\t\t<p><em>[content pending]</em></p>',
+    content: '<h3>About Budget Commons</h3> \n\t\t<p>Budget Commons is an initiative coming out of Toronto\'s civil society sector, \n\t\tspecifically <a target="_blank" href="http://civictech.ca">Civic Tech Toronto</a>, \n\t\tin collaboration with <a target="_blank" href="http://betterbudget.ca">Better Budget \n\t\tToronto<a>, among others.</p>',
     index: 0,
     route: 'about'
 }, {
@@ -1054,7 +1060,7 @@ exports.initialstate = {
     system: system
 };
 
-},{"material-ui/lib/styles/colors":102,"material-ui/lib/styles/raw-themes/light-raw-theme":106}],20:[function(require,module,exports){
+},{"material-ui/lib/styles/colors":103,"material-ui/lib/styles/raw-themes/light-raw-theme":107}],20:[function(require,module,exports){
 /*!
   * Bowser - a browser detector
   * https://github.com/ded/bowser
@@ -1348,6 +1354,56 @@ exports.initialstate = {
 });
 
 },{}],21:[function(require,module,exports){
+/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		// register as 'classnames', consistent with npm package name
+		define('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+},{}],22:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1373,7 +1429,7 @@ function isFSA(action) {
 function isError(action) {
   return action.error === true;
 }
-},{"lodash.isplainobject":22}],22:[function(require,module,exports){
+},{"lodash.isplainobject":23}],23:[function(require,module,exports){
 /**
  * lodash 3.2.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -1478,7 +1534,7 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"lodash._basefor":23,"lodash.isarguments":24,"lodash.keysin":25}],23:[function(require,module,exports){
+},{"lodash._basefor":24,"lodash.isarguments":25,"lodash.keysin":26}],24:[function(require,module,exports){
 /**
  * lodash 3.0.3 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -1528,7 +1584,7 @@ function createBaseFor(fromRight) {
 
 module.exports = baseFor;
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function (global){
 /**
  * lodash 3.0.5 (Custom Build) <https://lodash.com/>
@@ -1779,7 +1835,7 @@ function isObjectLike(value) {
 module.exports = isArguments;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * lodash 3.0.8 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -1913,7 +1969,7 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-},{"lodash.isarguments":24,"lodash.isarray":26}],26:[function(require,module,exports){
+},{"lodash.isarguments":25,"lodash.isarray":27}],27:[function(require,module,exports){
 /**
  * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -2095,7 +2151,7 @@ function isNative(value) {
 
 module.exports = isArray;
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2142,7 +2198,7 @@ exports['default'] = [_pluginsCalc2['default'], _pluginsCursor2['default'], _plu
 // this must be run AFTER the flexbox specs
 _pluginsFlex2['default']];
 module.exports = exports['default'];
-},{"./plugins/calc":30,"./plugins/cursor":31,"./plugins/flex":32,"./plugins/flexboxIE":33,"./plugins/flexboxOld":34,"./plugins/gradient":35,"./plugins/sizing":36,"./plugins/transition":37}],28:[function(require,module,exports){
+},{"./plugins/calc":31,"./plugins/cursor":32,"./plugins/flex":33,"./plugins/flexboxIE":34,"./plugins/flexboxOld":35,"./plugins/gradient":36,"./plugins/sizing":37,"./plugins/transition":38}],29:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2375,9 +2431,9 @@ var Prefixer = (function () {
 
 exports['default'] = Prefixer;
 module.exports = exports['default'];
-},{"./Plugins":27,"./caniuseData":29,"./utils/assign":38,"./utils/capitalizeString":40,"./utils/getBrowserInformation":41,"./utils/getPrefixedKeyframes":42,"./utils/warn":43}],29:[function(require,module,exports){
+},{"./Plugins":28,"./caniuseData":30,"./utils/assign":39,"./utils/capitalizeString":41,"./utils/getBrowserInformation":42,"./utils/getPrefixedKeyframes":43,"./utils/warn":44}],30:[function(require,module,exports){
 var caniuseData = {"chrome":{"transform":35,"transformOrigin":35,"transformOriginX":35,"transformOriginY":35,"backfaceVisibility":35,"perspective":35,"perspectiveOrigin":35,"transformStyle":35,"transformOriginZ":35,"animation":42,"animationDelay":42,"animationDirection":42,"animationFillMode":42,"animationDuration":42,"animationIterationCount":42,"animationName":42,"animationPlayState":42,"animationTimingFunction":42,"appearance":50,"userSelect":50,"fontKerning":32,"textEmphasisPosition":50,"textEmphasis":50,"textEmphasisStyle":50,"textEmphasisColor":50,"boxDecorationBreak":50,"clipPath":50,"maskImage":50,"maskMode":50,"maskRepeat":50,"maskPosition":50,"maskClip":50,"maskOrigin":50,"maskSize":50,"maskComposite":50,"mask":50,"maskBorderSource":50,"maskBorderMode":50,"maskBorderSlice":50,"maskBorderWidth":50,"maskBorderOutset":50,"maskBorderRepeat":50,"maskBorder":50,"maskType":50,"textDecorationStyle":50,"textDecorationSkip":50,"textDecorationLine":50,"textDecorationColor":50,"filter":50,"fontFeatureSettings":47,"breakAfter":50,"breakBefore":50,"breakInside":50,"columnCount":50,"columnFill":50,"columnGap":50,"columnRule":50,"columnRuleColor":50,"columnRuleStyle":50,"columnRuleWidth":50,"columns":50,"columnSpan":50,"columnWidth":50},"safari":{"flex":8,"flexBasis":8,"flexDirection":8,"flexGrow":8,"flexFlow":8,"flexShrink":8,"flexWrap":8,"alignContent":8,"alignItems":8,"alignSelf":8,"justifyContent":8,"order":8,"transition":6,"transitionDelay":6,"transitionDuration":6,"transitionProperty":6,"transitionTimingFunction":6,"transform":8,"transformOrigin":8,"transformOriginX":8,"transformOriginY":8,"backfaceVisibility":8,"perspective":8,"perspectiveOrigin":8,"transformStyle":8,"transformOriginZ":8,"animation":8,"animationDelay":8,"animationDirection":8,"animationFillMode":8,"animationDuration":8,"animationIterationCount":8,"animationName":8,"animationPlayState":8,"animationTimingFunction":8,"appearance":9.1,"userSelect":9.1,"backdropFilter":9.1,"fontKerning":9.1,"scrollSnapType":9.1,"scrollSnapPointsX":9.1,"scrollSnapPointsY":9.1,"scrollSnapDestination":9.1,"scrollSnapCoordinate":9.1,"textEmphasisPosition":7,"textEmphasis":7,"textEmphasisStyle":7,"textEmphasisColor":7,"boxDecorationBreak":9.1,"clipPath":9.1,"maskImage":9.1,"maskMode":9.1,"maskRepeat":9.1,"maskPosition":9.1,"maskClip":9.1,"maskOrigin":9.1,"maskSize":9.1,"maskComposite":9.1,"mask":9.1,"maskBorderSource":9.1,"maskBorderMode":9.1,"maskBorderSlice":9.1,"maskBorderWidth":9.1,"maskBorderOutset":9.1,"maskBorderRepeat":9.1,"maskBorder":9.1,"maskType":9.1,"textDecorationStyle":9.1,"textDecorationSkip":9.1,"textDecorationLine":9.1,"textDecorationColor":9.1,"shapeImageThreshold":9.1,"shapeImageMargin":9.1,"shapeImageOutside":9.1,"filter":9,"hyphens":9.1,"flowInto":9.1,"flowFrom":9.1,"breakBefore":8,"breakAfter":8,"breakInside":8,"regionFragment":9.1,"columnCount":8,"columnFill":8,"columnGap":8,"columnRule":8,"columnRuleColor":8,"columnRuleStyle":8,"columnRuleWidth":8,"columns":8,"columnSpan":8,"columnWidth":8},"firefox":{"appearance":46,"userSelect":46,"boxSizing":28,"textAlignLast":46,"textDecorationStyle":35,"textDecorationSkip":35,"textDecorationLine":35,"textDecorationColor":35,"tabSize":46,"hyphens":42,"fontFeatureSettings":33,"breakAfter":46,"breakBefore":46,"breakInside":46,"columnCount":46,"columnFill":46,"columnGap":46,"columnRule":46,"columnRuleColor":46,"columnRuleStyle":46,"columnRuleWidth":46,"columns":46,"columnSpan":46,"columnWidth":46},"opera":{"flex":16,"flexBasis":16,"flexDirection":16,"flexGrow":16,"flexFlow":16,"flexShrink":16,"flexWrap":16,"alignContent":16,"alignItems":16,"alignSelf":16,"justifyContent":16,"order":16,"transform":22,"transformOrigin":22,"transformOriginX":22,"transformOriginY":22,"backfaceVisibility":22,"perspective":22,"perspectiveOrigin":22,"transformStyle":22,"transformOriginZ":22,"animation":29,"animationDelay":29,"animationDirection":29,"animationFillMode":29,"animationDuration":29,"animationIterationCount":29,"animationName":29,"animationPlayState":29,"animationTimingFunction":29,"appearance":36,"userSelect":36,"fontKerning":19,"textEmphasisPosition":36,"textEmphasis":36,"textEmphasisStyle":36,"textEmphasisColor":36,"boxDecorationBreak":36,"clipPath":36,"maskImage":36,"maskMode":36,"maskRepeat":36,"maskPosition":36,"maskClip":36,"maskOrigin":36,"maskSize":36,"maskComposite":36,"mask":36,"maskBorderSource":36,"maskBorderMode":36,"maskBorderSlice":36,"maskBorderWidth":36,"maskBorderOutset":36,"maskBorderRepeat":36,"maskBorder":36,"maskType":36,"filter":36,"fontFeatureSettings":36,"breakAfter":36,"breakBefore":36,"breakInside":36,"columnCount":36,"columnFill":36,"columnGap":36,"columnRule":36,"columnRuleColor":36,"columnRuleStyle":36,"columnRuleWidth":36,"columns":36,"columnSpan":36,"columnWidth":36},"ie":{"gridArea":11,"gridGap":11,"gridColumnStart":11,"userSelect":11,"grid":11,"breakInside":11,"hyphens":11,"gridTemplateAreas":11,"breakAfter":11,"scrollSnapCoordinate":11,"gridRowStart":11,"gridAutoFlow":11,"scrollSnapDestination":11,"gridTemplate":11,"gridTemplateColumns":11,"transformOrigin":9,"gridAutoRows":11,"gridColumnEnd":11,"transformOriginY":9,"scrollSnapPointsY":11,"breakBefore":11,"gridRowGap":11,"scrollSnapPointsX":11,"regionFragment":11,"flexWrap":10,"wrapFlow":11,"gridRowEnd":11,"flex":10,"flexDirection":10,"flowInto":11,"touchAction":10,"gridColumn":11,"transform":9,"gridTemplateRows":11,"flexFlow":10,"transformOriginX":9,"flowFrom":11,"scrollSnapType":11,"wrapMargin":11,"gridColumnGap":11,"gridRow":11,"wrapThrough":11,"gridAutoColumns":11,"textSizeAdjust":11},"edge":{"userSelect":14,"wrapFlow":14,"wrapThrough":14,"wrapMargin":14,"scrollSnapType":14,"scrollSnapPointsX":14,"scrollSnapPointsY":14,"scrollSnapDestination":14,"scrollSnapCoordinate":14,"hyphens":14,"flowInto":14,"flowFrom":14,"breakBefore":14,"breakAfter":14,"breakInside":14,"regionFragment":14,"gridTemplateColumns":14,"gridTemplateRows":14,"gridTemplateAreas":14,"gridTemplate":14,"gridAutoColumns":14,"gridAutoRows":14,"gridAutoFlow":14,"grid":14,"gridRowStart":14,"gridColumnStart":14,"gridRowEnd":14,"gridRow":14,"gridColumn":14,"gridColumnEnd":14,"gridColumnGap":14,"gridRowGap":14,"gridArea":14,"gridGap":14},"ios_saf":{"flex":8.1,"flexBasis":8.1,"flexDirection":8.1,"flexGrow":8.1,"flexFlow":8.1,"flexShrink":8.1,"flexWrap":8.1,"alignContent":8.1,"alignItems":8.1,"alignSelf":8.1,"justifyContent":8.1,"order":8.1,"transition":6,"transitionDelay":6,"transitionDuration":6,"transitionProperty":6,"transitionTimingFunction":6,"transform":8.1,"transformOrigin":8.1,"transformOriginX":8.1,"transformOriginY":8.1,"backfaceVisibility":8.1,"perspective":8.1,"perspectiveOrigin":8.1,"transformStyle":8.1,"transformOriginZ":8.1,"animation":8.1,"animationDelay":8.1,"animationDirection":8.1,"animationFillMode":8.1,"animationDuration":8.1,"animationIterationCount":8.1,"animationName":8.1,"animationPlayState":8.1,"animationTimingFunction":8.1,"appearance":9.3,"userSelect":9.3,"backdropFilter":9.3,"fontKerning":9.3,"scrollSnapType":9.3,"scrollSnapPointsX":9.3,"scrollSnapPointsY":9.3,"scrollSnapDestination":9.3,"scrollSnapCoordinate":9.3,"boxDecorationBreak":9.3,"clipPath":9.3,"maskImage":9.3,"maskMode":9.3,"maskRepeat":9.3,"maskPosition":9.3,"maskClip":9.3,"maskOrigin":9.3,"maskSize":9.3,"maskComposite":9.3,"mask":9.3,"maskBorderSource":9.3,"maskBorderMode":9.3,"maskBorderSlice":9.3,"maskBorderWidth":9.3,"maskBorderOutset":9.3,"maskBorderRepeat":9.3,"maskBorder":9.3,"maskType":9.3,"textSizeAdjust":9.3,"textDecorationStyle":9.3,"textDecorationSkip":9.3,"textDecorationLine":9.3,"textDecorationColor":9.3,"shapeImageThreshold":9.3,"shapeImageMargin":9.3,"shapeImageOutside":9.3,"filter":9,"hyphens":9.3,"flowInto":9.3,"flowFrom":9.3,"breakBefore":8.1,"breakAfter":8.1,"breakInside":8.1,"regionFragment":9.3,"columnCount":8.1,"columnFill":8.1,"columnGap":8.1,"columnRule":8.1,"columnRuleColor":8.1,"columnRuleStyle":8.1,"columnRuleWidth":8.1,"columns":8.1,"columnSpan":8.1,"columnWidth":8.1},"android":{"borderImage":4.2,"borderImageOutset":4.2,"borderImageRepeat":4.2,"borderImageSlice":4.2,"borderImageSource":4.2,"borderImageWidth":4.2,"flex":4.2,"flexBasis":4.2,"flexDirection":4.2,"flexGrow":4.2,"flexFlow":4.2,"flexShrink":4.2,"flexWrap":4.2,"alignContent":4.2,"alignItems":4.2,"alignSelf":4.2,"justifyContent":4.2,"order":4.2,"transition":4.2,"transitionDelay":4.2,"transitionDuration":4.2,"transitionProperty":4.2,"transitionTimingFunction":4.2,"transform":4.4,"transformOrigin":4.4,"transformOriginX":4.4,"transformOriginY":4.4,"backfaceVisibility":4.4,"perspective":4.4,"perspectiveOrigin":4.4,"transformStyle":4.4,"transformOriginZ":4.4,"animation":4.4,"animationDelay":4.4,"animationDirection":4.4,"animationFillMode":4.4,"animationDuration":4.4,"animationIterationCount":4.4,"animationName":4.4,"animationPlayState":4.4,"animationTimingFunction":4.4,"appearance":46,"userSelect":46,"fontKerning":4.4,"textEmphasisPosition":46,"textEmphasis":46,"textEmphasisStyle":46,"textEmphasisColor":46,"boxDecorationBreak":46,"clipPath":46,"maskImage":46,"maskMode":46,"maskRepeat":46,"maskPosition":46,"maskClip":46,"maskOrigin":46,"maskSize":46,"maskComposite":46,"mask":46,"maskBorderSource":46,"maskBorderMode":46,"maskBorderSlice":46,"maskBorderWidth":46,"maskBorderOutset":46,"maskBorderRepeat":46,"maskBorder":46,"maskType":46,"filter":46,"fontFeatureSettings":46,"breakAfter":46,"breakBefore":46,"breakInside":46,"columnCount":46,"columnFill":46,"columnGap":46,"columnRule":46,"columnRuleColor":46,"columnRuleStyle":46,"columnRuleWidth":46,"columns":46,"columnSpan":46,"columnWidth":46},"and_chr":{"appearance":47,"userSelect":47,"textEmphasisPosition":47,"textEmphasis":47,"textEmphasisStyle":47,"textEmphasisColor":47,"boxDecorationBreak":47,"clipPath":47,"maskImage":47,"maskMode":47,"maskRepeat":47,"maskPosition":47,"maskClip":47,"maskOrigin":47,"maskSize":47,"maskComposite":47,"mask":47,"maskBorderSource":47,"maskBorderMode":47,"maskBorderSlice":47,"maskBorderWidth":47,"maskBorderOutset":47,"maskBorderRepeat":47,"maskBorder":47,"maskType":47,"textDecorationStyle":47,"textDecorationSkip":47,"textDecorationLine":47,"textDecorationColor":47,"filter":47,"fontFeatureSettings":47,"breakAfter":47,"breakBefore":47,"breakInside":47,"columnCount":47,"columnFill":47,"columnGap":47,"columnRule":47,"columnRuleColor":47,"columnRuleStyle":47,"columnRuleWidth":47,"columns":47,"columnSpan":47,"columnWidth":47},"and_uc":{"flex":9.9,"flexBasis":9.9,"flexDirection":9.9,"flexGrow":9.9,"flexFlow":9.9,"flexShrink":9.9,"flexWrap":9.9,"alignContent":9.9,"alignItems":9.9,"alignSelf":9.9,"justifyContent":9.9,"order":9.9,"transition":9.9,"transitionDelay":9.9,"transitionDuration":9.9,"transitionProperty":9.9,"transitionTimingFunction":9.9,"transform":9.9,"transformOrigin":9.9,"transformOriginX":9.9,"transformOriginY":9.9,"backfaceVisibility":9.9,"perspective":9.9,"perspectiveOrigin":9.9,"transformStyle":9.9,"transformOriginZ":9.9,"animation":9.9,"animationDelay":9.9,"animationDirection":9.9,"animationFillMode":9.9,"animationDuration":9.9,"animationIterationCount":9.9,"animationName":9.9,"animationPlayState":9.9,"animationTimingFunction":9.9,"appearance":9.9,"userSelect":9.9,"fontKerning":9.9,"textEmphasisPosition":9.9,"textEmphasis":9.9,"textEmphasisStyle":9.9,"textEmphasisColor":9.9,"maskImage":9.9,"maskMode":9.9,"maskRepeat":9.9,"maskPosition":9.9,"maskClip":9.9,"maskOrigin":9.9,"maskSize":9.9,"maskComposite":9.9,"mask":9.9,"maskBorderSource":9.9,"maskBorderMode":9.9,"maskBorderSlice":9.9,"maskBorderWidth":9.9,"maskBorderOutset":9.9,"maskBorderRepeat":9.9,"maskBorder":9.9,"maskType":9.9,"textSizeAdjust":9.9,"filter":9.9,"hyphens":9.9,"flowInto":9.9,"flowFrom":9.9,"breakBefore":9.9,"breakAfter":9.9,"breakInside":9.9,"regionFragment":9.9,"fontFeatureSettings":9.9,"columnCount":9.9,"columnFill":9.9,"columnGap":9.9,"columnRule":9.9,"columnRuleColor":9.9,"columnRuleStyle":9.9,"columnRuleWidth":9.9,"columns":9.9,"columnSpan":9.9,"columnWidth":9.9},"op_mini":{"borderImage":5,"borderImageOutset":5,"borderImageRepeat":5,"borderImageSlice":5,"borderImageSource":5,"borderImageWidth":5,"tabSize":5,"objectFit":5,"objectPosition":5}}; module.exports = caniuseData
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2410,7 +2466,7 @@ function calc(pluginInterface) {
 }
 
 module.exports = exports['default'];
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2449,7 +2505,7 @@ function cursor(pluginInterface) {
 }
 
 module.exports = exports['default'];
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2481,7 +2537,7 @@ function flex(pluginInterface) {
 }
 
 module.exports = exports['default'];
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2543,7 +2599,7 @@ function flexboxIE(pluginInterface) {
 }
 
 module.exports = exports['default'];
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2613,7 +2669,7 @@ function flexboxOld(pluginInterface) {
 }
 
 module.exports = exports['default'];
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2648,7 +2704,7 @@ function gradient(pluginInterface) {
 }
 
 module.exports = exports['default'];
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2700,7 +2756,7 @@ function sizing(pluginInterface) {
 }
 
 module.exports = exports['default'];
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2775,7 +2831,7 @@ function calc(pluginInterface) {
 }
 
 module.exports = exports['default'];
-},{"../utils/camelToDashCase":39,"../utils/capitalizeString":40}],38:[function(require,module,exports){
+},{"../utils/camelToDashCase":40,"../utils/capitalizeString":41}],39:[function(require,module,exports){
 // leight polyfill for Object.assign
 "use strict";
 
@@ -2793,7 +2849,7 @@ exports["default"] = function (base) {
 };
 
 module.exports = exports["default"];
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /**
  * Converts a camel-case string to a dash-case string
  * @param {string} str - str that gets converted to dash-case
@@ -2811,7 +2867,7 @@ exports['default'] = function (str) {
 };
 
 module.exports = exports['default'];
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 // helper to capitalize strings
 "use strict";
 
@@ -2824,7 +2880,7 @@ exports["default"] = function (str) {
 };
 
 module.exports = exports["default"];
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2980,7 +3036,7 @@ exports['default'] = function (userAgent) {
 };
 
 module.exports = exports['default'];
-},{"bowser":20}],42:[function(require,module,exports){
+},{"bowser":20}],43:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -3001,7 +3057,7 @@ exports['default'] = function (_ref) {
 };
 
 module.exports = exports['default'];
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 (function (process){
 // only throw warnings if devmode is enabled
 'use strict';
@@ -3018,7 +3074,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":1}],44:[function(require,module,exports){
+},{"_process":1}],45:[function(require,module,exports){
 /**
  * lodash 3.0.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -3049,7 +3105,7 @@ function arrayCopy(source, array) {
 
 module.exports = arrayCopy;
 
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 /**
  * lodash 3.0.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -3082,7 +3138,7 @@ function arrayEach(array, iteratee) {
 
 module.exports = arrayEach;
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -3116,9 +3172,9 @@ function baseCopy(source, props, object) {
 
 module.exports = baseCopy;
 
-},{}],47:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],48:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
+arguments[4][24][0].apply(exports,arguments)
+},{"dup":24}],49:[function(require,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -3185,7 +3241,7 @@ function identity(value) {
 
 module.exports = bindCallback;
 
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 /**
  * lodash 3.1.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -3239,7 +3295,7 @@ function createAssigner(assigner) {
 
 module.exports = createAssigner;
 
-},{"lodash._bindcallback":48,"lodash._isiterateecall":51,"lodash.restparam":60}],50:[function(require,module,exports){
+},{"lodash._bindcallback":49,"lodash._isiterateecall":52,"lodash.restparam":61}],51:[function(require,module,exports){
 /**
  * lodash 3.9.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -3378,7 +3434,7 @@ function isNative(value) {
 
 module.exports = getNative;
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 /**
  * lodash 3.0.9 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -3512,7 +3568,7 @@ function isObject(value) {
 
 module.exports = isIterateeCall;
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 /**
  * lodash 3.2.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -3581,7 +3637,7 @@ var flowRight = createFlow(true);
 
 module.exports = flowRight;
 
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 /**
  * lodash 3.0.6 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -3828,11 +3884,11 @@ function isObjectLike(value) {
 
 module.exports = isArguments;
 
-},{}],54:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"dup":26}],55:[function(require,module,exports){
-arguments[4][22][0].apply(exports,arguments)
-},{"dup":22,"lodash._basefor":47,"lodash.isarguments":53,"lodash.keysin":58}],56:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
+arguments[4][27][0].apply(exports,arguments)
+},{"dup":27}],56:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"dup":23,"lodash._basefor":48,"lodash.isarguments":54,"lodash.keysin":59}],57:[function(require,module,exports){
 /**
  * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -3972,7 +4028,7 @@ function isTypedArray(value) {
 
 module.exports = isTypedArray;
 
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 /**
  * lodash 3.1.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -4210,9 +4266,9 @@ function keysIn(object) {
 
 module.exports = keys;
 
-},{"lodash._getnative":50,"lodash.isarguments":53,"lodash.isarray":54}],58:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"dup":25,"lodash.isarguments":53,"lodash.isarray":54}],59:[function(require,module,exports){
+},{"lodash._getnative":51,"lodash.isarguments":54,"lodash.isarray":55}],59:[function(require,module,exports){
+arguments[4][26][0].apply(exports,arguments)
+},{"dup":26,"lodash.isarguments":54,"lodash.isarray":55}],60:[function(require,module,exports){
 /**
  * lodash 3.3.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -4480,7 +4536,7 @@ var merge = createAssigner(baseMerge);
 
 module.exports = merge;
 
-},{"lodash._arraycopy":44,"lodash._arrayeach":45,"lodash._createassigner":49,"lodash.isarguments":53,"lodash.isarray":54,"lodash.isplainobject":55,"lodash.istypedarray":56,"lodash.keys":57,"lodash.toplainobject":61}],60:[function(require,module,exports){
+},{"lodash._arraycopy":45,"lodash._arrayeach":46,"lodash._createassigner":50,"lodash.isarguments":54,"lodash.isarray":55,"lodash.isplainobject":56,"lodash.istypedarray":57,"lodash.keys":58,"lodash.toplainobject":62}],61:[function(require,module,exports){
 /**
  * lodash 3.6.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -4549,7 +4605,7 @@ function restParam(func, start) {
 
 module.exports = restParam;
 
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 /**
  * lodash 3.0.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -4590,7 +4646,7 @@ function toPlainObject(value) {
 
 module.exports = toPlainObject;
 
-},{"lodash._basecopy":46,"lodash.keysin":58}],62:[function(require,module,exports){
+},{"lodash._basecopy":47,"lodash.keysin":59}],63:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5153,7 +5209,7 @@ var TextField = _react2.default.createClass({
 exports.default = TextField;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"../enhanced-textarea":78,"../mixins/context-pure":89,"../mixins/style-propable":90,"../styles/getMuiTheme":103,"../styles/transitions":114,"../utils/color-manipulator":129,"../utils/unique-id":139,"./TextFieldHint":63,"./TextFieldLabel":64,"./TextFieldUnderline":65,"_process":1,"react":388,"react-dom":145,"warning":405}],63:[function(require,module,exports){
+},{"../enhanced-textarea":79,"../mixins/context-pure":90,"../mixins/style-propable":91,"../styles/getMuiTheme":104,"../styles/transitions":115,"../utils/color-manipulator":130,"../utils/unique-id":140,"./TextFieldHint":64,"./TextFieldLabel":65,"./TextFieldUnderline":66,"_process":1,"react":388,"react-dom":146,"warning":405}],64:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -5227,7 +5283,7 @@ TextFieldHint.defaultProps = defaultProps;
 
 exports.default = TextFieldHint;
 module.exports = exports['default'];
-},{"../styles/transitions":114,"../utils/styles":138,"react":388}],64:[function(require,module,exports){
+},{"../styles/transitions":115,"../utils/styles":139,"react":388}],65:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -5335,7 +5391,7 @@ TextFieldLabel.defaultProps = defaultProps;
 
 exports.default = TextFieldLabel;
 module.exports = exports['default'];
-},{"../styles/transitions":114,"../utils/styles":138,"react":388}],65:[function(require,module,exports){
+},{"../styles/transitions":115,"../utils/styles":139,"react":388}],66:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -5469,7 +5525,7 @@ TextFieldUnderline.defaultProps = defaultProps;
 
 exports.default = TextFieldUnderline;
 module.exports = exports['default'];
-},{"../styles/transitions":114,"../utils/styles":138,"react":388}],66:[function(require,module,exports){
+},{"../styles/transitions":115,"../utils/styles":139,"react":388}],67:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -5484,7 +5540,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = _TextField2.default;
 module.exports = exports['default'];
-},{"./TextField":62}],67:[function(require,module,exports){
+},{"./TextField":63}],68:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5853,7 +5909,7 @@ var AppBar = _react2.default.createClass({
 exports.default = AppBar;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./icon-button":82,"./mixins/style-propable":90,"./paper":94,"./styles/getMuiTheme":103,"./styles/typography":115,"./svg-icons/navigation/menu":120,"./utils/prop-types":136,"_process":1,"react":388,"warning":405}],68:[function(require,module,exports){
+},{"./icon-button":83,"./mixins/style-propable":91,"./paper":95,"./styles/getMuiTheme":104,"./styles/typography":116,"./svg-icons/navigation/menu":121,"./utils/prop-types":137,"_process":1,"react":388,"warning":405}],69:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -6003,7 +6059,7 @@ var BeforeAfterWrapper = _react2.default.createClass({
 
 exports.default = BeforeAfterWrapper;
 module.exports = exports['default'];
-},{"./mixins/style-propable":90,"./styles/getMuiTheme":103,"react":388}],69:[function(require,module,exports){
+},{"./mixins/style-propable":91,"./styles/getMuiTheme":104,"react":388}],70:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -6098,7 +6154,7 @@ var CardActions = _react2.default.createClass({
 
 exports.default = CardActions;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/getMuiTheme":103,"react":388}],70:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/getMuiTheme":104,"react":388}],71:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -6228,7 +6284,7 @@ var CardExpandable = _react2.default.createClass({
 
 exports.default = CardExpandable;
 module.exports = exports['default'];
-},{"../icon-button":82,"../mixins/context-pure":89,"../mixins/style-propable":90,"../styles/getMuiTheme":103,"../svg-icons/hardware/keyboard-arrow-down":118,"../svg-icons/hardware/keyboard-arrow-up":119,"react":388}],71:[function(require,module,exports){
+},{"../icon-button":83,"../mixins/context-pure":90,"../mixins/style-propable":91,"../styles/getMuiTheme":104,"../svg-icons/hardware/keyboard-arrow-down":119,"../svg-icons/hardware/keyboard-arrow-up":120,"react":388}],72:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -6318,7 +6374,7 @@ var CardText = _react2.default.createClass({
 
 exports.default = CardText;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/getMuiTheme":103,"react":388}],72:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/getMuiTheme":104,"react":388}],73:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -6447,7 +6503,7 @@ var CardTitle = _react2.default.createClass({
 
 exports.default = CardTitle;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles":104,"../styles/getMuiTheme":103,"react":388}],73:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles":105,"../styles/getMuiTheme":104,"react":388}],74:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -6594,7 +6650,7 @@ var Card = _react2.default.createClass({
 
 exports.default = Card;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../paper":94,"./card-expandable":70,"react":388}],74:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../paper":95,"./card-expandable":71,"react":388}],75:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -6657,7 +6713,7 @@ ClearFix.propTypes = {
 
 exports.default = ClearFix;
 module.exports = exports['default'];
-},{"./before-after-wrapper":68,"react":388}],75:[function(require,module,exports){
+},{"./before-after-wrapper":69,"react":388}],76:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -6735,7 +6791,7 @@ Divider = (0, _muiThemeable2.default)(Divider);
 
 exports.default = Divider;
 module.exports = exports['default'];
-},{"./muiThemeable":92,"./utils/styles":138,"react":388}],76:[function(require,module,exports){
+},{"./muiThemeable":93,"./utils/styles":139,"react":388}],77:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -7080,7 +7136,7 @@ var EnhancedButton = _react2.default.createClass({
 
 exports.default = EnhancedButton;
 module.exports = exports['default'];
-},{"./mixins/style-propable":90,"./ripples/focus-ripple":97,"./ripples/touch-ripple":98,"./styles/colors":102,"./styles/getMuiTheme":103,"./utils/children":128,"./utils/events":133,"./utils/key-code":134,"react":388,"react-addons-pure-render-mixin":142}],77:[function(require,module,exports){
+},{"./mixins/style-propable":91,"./ripples/focus-ripple":98,"./ripples/touch-ripple":99,"./styles/colors":103,"./styles/getMuiTheme":104,"./utils/children":129,"./utils/events":134,"./utils/key-code":135,"react":388,"react-addons-pure-render-mixin":143}],78:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -7557,7 +7613,7 @@ var EnhancedSwitch = _react2.default.createClass({
 exports.default = EnhancedSwitch;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./clearfix":74,"./mixins/style-propable":90,"./mixins/window-listenable":91,"./paper":94,"./ripples/focus-ripple":97,"./ripples/touch-ripple":98,"./styles/getMuiTheme":103,"./styles/transitions":114,"./utils/key-code":134,"./utils/unique-id":139,"_process":1,"react":388,"react-dom":145,"warning":405}],78:[function(require,module,exports){
+},{"./clearfix":75,"./mixins/style-propable":91,"./mixins/window-listenable":92,"./paper":95,"./ripples/focus-ripple":98,"./ripples/touch-ripple":99,"./styles/getMuiTheme":104,"./styles/transitions":115,"./utils/key-code":135,"./utils/unique-id":140,"_process":1,"react":388,"react-dom":146,"warning":405}],79:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -7759,7 +7815,7 @@ var EnhancedTextarea = _react2.default.createClass({
 
 exports.default = EnhancedTextarea;
 module.exports = exports['default'];
-},{"./mixins/style-propable":90,"./styles/getMuiTheme":103,"react":388,"react-dom":145}],79:[function(require,module,exports){
+},{"./mixins/style-propable":91,"./styles/getMuiTheme":104,"react":388,"react-dom":146}],80:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -7902,7 +7958,7 @@ var FontIcon = _react2.default.createClass({
 
 exports.default = FontIcon;
 module.exports = exports['default'];
-},{"./mixins/style-propable":90,"./styles/getMuiTheme":103,"./styles/transitions":114,"react":388}],80:[function(require,module,exports){
+},{"./mixins/style-propable":91,"./styles/getMuiTheme":104,"./styles/transitions":115,"react":388}],81:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -8046,7 +8102,7 @@ var GridList = _react2.default.createClass({
 
 exports.default = GridList;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/getMuiTheme":103,"react":388}],81:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/getMuiTheme":104,"react":388}],82:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -8341,7 +8397,7 @@ var GridTile = _react2.default.createClass({
 
 exports.default = GridTile;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/getMuiTheme":103,"react":388,"react-dom":145}],82:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/getMuiTheme":104,"react":388,"react-dom":146}],83:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -8675,7 +8731,7 @@ var IconButton = _react2.default.createClass({
 
 exports.default = IconButton;
 module.exports = exports['default'];
-},{"./enhanced-button":76,"./font-icon":79,"./mixins/context-pure":89,"./mixins/style-propable":90,"./styles/getMuiTheme":103,"./styles/transitions":114,"./tooltip":125,"./utils/children":128,"./utils/prop-types":136,"react":388}],83:[function(require,module,exports){
+},{"./enhanced-button":77,"./font-icon":80,"./mixins/context-pure":90,"./mixins/style-propable":91,"./styles/getMuiTheme":104,"./styles/transitions":115,"./tooltip":126,"./utils/children":129,"./utils/prop-types":137,"react":388}],84:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -9235,7 +9291,7 @@ var LeftNav = _react2.default.createClass({
 exports.default = LeftNav;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./menu/menu":86,"./mixins/style-propable":90,"./mixins/window-listenable":91,"./overlay":93,"./paper":94,"./styles/auto-prefix":99,"./styles/getMuiTheme":103,"./styles/transitions":114,"./utils/deprecatedPropType":131,"./utils/key-code":134,"_process":1,"react":388,"react-dom":145,"warning":405}],84:[function(require,module,exports){
+},{"./menu/menu":87,"./mixins/style-propable":91,"./mixins/window-listenable":92,"./overlay":94,"./paper":95,"./styles/auto-prefix":100,"./styles/getMuiTheme":104,"./styles/transitions":115,"./utils/deprecatedPropType":132,"./utils/key-code":135,"_process":1,"react":388,"react-dom":146,"warning":405}],85:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -9378,7 +9434,7 @@ var LinkMenuItem = _react2.default.createClass({
 
 exports.default = LinkMenuItem;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/getMuiTheme":103,"react":388}],85:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/getMuiTheme":104,"react":388}],86:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -9645,7 +9701,7 @@ var MenuItem = _react2.default.createClass({
 exports.default = MenuItem;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"../font-icon":79,"../mixins/style-propable":90,"../styles/getMuiTheme":103,"../toggle":122,"_process":1,"react":388,"warning":405}],86:[function(require,module,exports){
+},{"../font-icon":80,"../mixins/style-propable":91,"../styles/getMuiTheme":104,"../toggle":123,"_process":1,"react":388,"warning":405}],87:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -10301,7 +10357,7 @@ var Menu = _react2.default.createClass({
 exports.default = Menu;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"../mixins/click-awayable":88,"../mixins/style-propable":90,"../paper":94,"../styles/getMuiTheme":103,"../styles/transitions":114,"../utils/css-event":130,"../utils/key-code":134,"../utils/key-line":135,"./link-menu-item":84,"./menu-item":85,"./subheader-menu-item":87,"_process":1,"react":388,"react-dom":145,"warning":405}],87:[function(require,module,exports){
+},{"../mixins/click-awayable":89,"../mixins/style-propable":91,"../paper":95,"../styles/getMuiTheme":104,"../styles/transitions":115,"../utils/css-event":131,"../utils/key-code":135,"../utils/key-line":136,"./link-menu-item":85,"./menu-item":86,"./subheader-menu-item":88,"_process":1,"react":388,"react-dom":146,"warning":405}],88:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10413,7 +10469,7 @@ var SubheaderMenuItem = _react2.default.createClass({
 
 exports.default = SubheaderMenuItem;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/getMuiTheme":103,"../styles/typography":115,"react":388}],88:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/getMuiTheme":104,"../styles/typography":116,"react":388}],89:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10468,7 +10524,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{"../utils/dom":132,"../utils/events":133,"react-dom":145}],89:[function(require,module,exports){
+},{"../utils/dom":133,"../utils/events":134,"react-dom":146}],90:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10534,7 +10590,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{"../utils/shallow-equal":137}],90:[function(require,module,exports){
+},{"../utils/shallow-equal":138}],91:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10585,7 +10641,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{"../utils/styles":138,"react":388}],91:[function(require,module,exports){
+},{"../utils/styles":139,"react":388}],92:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10617,7 +10673,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{"../utils/events":133}],92:[function(require,module,exports){
+},{"../utils/events":134}],93:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -10660,7 +10716,7 @@ function muiThemeable(WrappedComponent) {
   return MuiComponent;
 }
 module.exports = exports['default'];
-},{"./styles/getMuiTheme":103,"react":388}],93:[function(require,module,exports){
+},{"./styles/getMuiTheme":104,"react":388}],94:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -10801,7 +10857,7 @@ var Overlay = _react2.default.createClass({
 
 exports.default = Overlay;
 module.exports = exports['default'];
-},{"./mixins/style-propable":90,"./styles/colors":102,"./styles/transitions":114,"react":388,"react-dom":145}],94:[function(require,module,exports){
+},{"./mixins/style-propable":91,"./styles/colors":103,"./styles/transitions":115,"react":388,"react-dom":146}],95:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -10941,7 +10997,7 @@ var Paper = _react2.default.createClass({
 
 exports.default = Paper;
 module.exports = exports['default'];
-},{"./mixins/style-propable":90,"./styles/getMuiTheme":103,"./styles/transitions":114,"./utils/prop-types":136,"react":388,"react-addons-pure-render-mixin":142}],95:[function(require,module,exports){
+},{"./mixins/style-propable":91,"./styles/getMuiTheme":104,"./styles/transitions":115,"./utils/prop-types":137,"react":388,"react-addons-pure-render-mixin":143}],96:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -11385,7 +11441,7 @@ var RaisedButton = _react2.default.createClass({
 
 exports.default = RaisedButton;
 module.exports = exports['default'];
-},{"./enhanced-button":76,"./mixins/style-propable":90,"./paper":94,"./styles/getMuiTheme":103,"./styles/transitions":114,"./styles/typography":115,"./utils/children":128,"./utils/color-manipulator":129,"react":388,"react-dom":145}],96:[function(require,module,exports){
+},{"./enhanced-button":77,"./mixins/style-propable":91,"./paper":95,"./styles/getMuiTheme":104,"./styles/transitions":115,"./styles/typography":116,"./utils/children":129,"./utils/color-manipulator":130,"react":388,"react-dom":146}],97:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -11514,7 +11570,7 @@ var CircleRipple = _react2.default.createClass({
 
 exports.default = CircleRipple;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/auto-prefix":99,"../styles/colors":102,"../styles/transitions":114,"react":388,"react-addons-pure-render-mixin":142,"react-dom":145}],97:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/auto-prefix":100,"../styles/colors":103,"../styles/transitions":115,"react":388,"react-addons-pure-render-mixin":143,"react-dom":146}],98:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11675,7 +11731,7 @@ var FocusRipple = _react2.default.createClass({
 
 exports.default = FocusRipple;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/auto-prefix":99,"../styles/colors":102,"../styles/transitions":114,"../transition-groups/scale-in":127,"react":388,"react-addons-pure-render-mixin":142,"react-dom":145}],98:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/auto-prefix":100,"../styles/colors":103,"../styles/transitions":115,"../transition-groups/scale-in":128,"react":388,"react-addons-pure-render-mixin":143,"react-dom":146}],99:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11884,7 +11940,7 @@ var TouchRipple = _react2.default.createClass({
 
 exports.default = TouchRipple;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../utils/dom":132,"./circle-ripple":96,"react":388,"react-addons-pure-render-mixin":142,"react-addons-transition-group":143,"react-addons-update":144,"react-dom":145}],99:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../utils/dom":133,"./circle-ripple":97,"react":388,"react-addons-pure-render-mixin":143,"react-addons-transition-group":144,"react-addons-update":145,"react-dom":146}],100:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12017,7 +12073,7 @@ exports.default = {
 };
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":1,"inline-style-prefixer":28,"warning":405}],100:[function(require,module,exports){
+},{"_process":1,"inline-style-prefixer":29,"warning":405}],101:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12058,7 +12114,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{"../../utils/color-manipulator":129,"../colors":102,"../spacing":107}],101:[function(require,module,exports){
+},{"../../utils/color-manipulator":130,"../colors":103,"../spacing":108}],102:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12106,7 +12162,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{"../../utils/color-manipulator":129,"../colors":102,"../spacing":107}],102:[function(require,module,exports){
+},{"../../utils/color-manipulator":130,"../colors":103,"../spacing":108}],103:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12400,7 +12456,7 @@ exports.default = {
   lightWhite: 'rgba(255, 255, 255, 0.54)'
 };
 module.exports = exports['default'];
-},{}],103:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12680,7 +12736,7 @@ function getMuiTheme(baseTheme, muiTheme) {
   return muiTheme;
 }
 module.exports = exports['default'];
-},{"../utils/color-manipulator":129,"./auto-prefix":99,"./baseThemes/lightBaseTheme":101,"./colors":102,"./transformers":112,"./zIndex":116,"lodash.flowright":52,"lodash.merge":59}],104:[function(require,module,exports){
+},{"../utils/color-manipulator":130,"./auto-prefix":100,"./baseThemes/lightBaseTheme":102,"./colors":103,"./transformers":113,"./zIndex":117,"lodash.flowright":53,"lodash.merge":60}],105:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12769,7 +12825,7 @@ exports.default = {
   getMuiTheme: _getMuiTheme2.default,
   ZIndex: _zIndex2.default
 };
-},{"./auto-prefix":99,"./baseThemes/darkBaseTheme":100,"./baseThemes/lightBaseTheme":101,"./colors":102,"./getMuiTheme":103,"./raw-themes/dark-raw-theme":105,"./raw-themes/light-raw-theme":106,"./spacing":107,"./theme-decorator":108,"./theme-manager":109,"./transitions":114,"./typography":115,"./zIndex":116}],105:[function(require,module,exports){
+},{"./auto-prefix":100,"./baseThemes/darkBaseTheme":101,"./baseThemes/lightBaseTheme":102,"./colors":103,"./getMuiTheme":104,"./raw-themes/dark-raw-theme":106,"./raw-themes/light-raw-theme":107,"./spacing":108,"./theme-decorator":109,"./theme-manager":110,"./transitions":115,"./typography":116,"./zIndex":117}],106:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12793,7 +12849,7 @@ exports.default = _darkBaseTheme2.default;
 // );
 
 module.exports = exports['default'];
-},{"../baseThemes/darkBaseTheme":100}],106:[function(require,module,exports){
+},{"../baseThemes/darkBaseTheme":101}],107:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12817,7 +12873,7 @@ exports.default = _lightBaseTheme2.default;
 // );
 
 module.exports = exports['default'];
-},{"../baseThemes/lightBaseTheme":101}],107:[function(require,module,exports){
+},{"../baseThemes/lightBaseTheme":102}],108:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12838,7 +12894,7 @@ exports.default = {
   desktopToolbarHeight: 56
 };
 module.exports = exports['default'];
-},{}],108:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12874,7 +12930,7 @@ exports.default = function (customTheme) {
 };
 
 module.exports = exports['default'];
-},{"react":388}],109:[function(require,module,exports){
+},{"react":388}],110:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12916,7 +12972,7 @@ exports.default = // deprecatedExport(
 //);
 
 module.exports = exports['default'];
-},{"./getMuiTheme":103,"lodash.merge":59,"react-addons-update":144}],110:[function(require,module,exports){
+},{"./getMuiTheme":104,"lodash.merge":60,"react-addons-update":145}],111:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12932,7 +12988,7 @@ exports.default = function (muiTheme) {
 };
 
 module.exports = exports['default'];
-},{}],111:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12962,7 +13018,7 @@ function callOnce() {
 }
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":1,"warning":405}],112:[function(require,module,exports){
+},{"_process":1,"warning":405}],113:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12987,7 +13043,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.autoprefixer = _autoprefixer2.default;
 exports.callOnce = _callOnce2.default;
 exports.rtl = _rtl2.default;
-},{"./autoprefixer":110,"./callOnce":111,"./rtl":113}],113:[function(require,module,exports){
+},{"./autoprefixer":111,"./callOnce":112,"./rtl":114}],114:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -13072,7 +13128,7 @@ function rtl(muiTheme) {
   }
 }
 module.exports = exports['default'];
-},{}],114:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -13109,7 +13165,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{}],115:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -13146,7 +13202,7 @@ var Typography = function Typography() {
 
 exports.default = new Typography();
 module.exports = exports['default'];
-},{"./colors":102}],116:[function(require,module,exports){
+},{"./colors":103}],117:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13165,7 +13221,7 @@ exports.default = {
   tooltip: 3000
 };
 module.exports = exports['default'];
-},{}],117:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -13329,7 +13385,7 @@ var SvgIcon = _react2.default.createClass({
 
 exports.default = SvgIcon;
 module.exports = exports['default'];
-},{"./mixins/style-propable":90,"./styles/getMuiTheme":103,"./styles/transitions":114,"react":388}],118:[function(require,module,exports){
+},{"./mixins/style-propable":91,"./styles/getMuiTheme":104,"./styles/transitions":115,"react":388}],119:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -13366,7 +13422,7 @@ var HardwareKeyboardArrowDown = _react2.default.createClass({
 
 exports.default = HardwareKeyboardArrowDown;
 module.exports = exports['default'];
-},{"../../svg-icon":117,"react":388,"react-addons-pure-render-mixin":142}],119:[function(require,module,exports){
+},{"../../svg-icon":118,"react":388,"react-addons-pure-render-mixin":143}],120:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -13403,7 +13459,7 @@ var HardwareKeyboardArrowUp = _react2.default.createClass({
 
 exports.default = HardwareKeyboardArrowUp;
 module.exports = exports['default'];
-},{"../../svg-icon":117,"react":388,"react-addons-pure-render-mixin":142}],120:[function(require,module,exports){
+},{"../../svg-icon":118,"react":388,"react-addons-pure-render-mixin":143}],121:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -13440,9 +13496,9 @@ var NavigationMenu = _react2.default.createClass({
 
 exports.default = NavigationMenu;
 module.exports = exports['default'];
-},{"../../svg-icon":117,"react":388,"react-addons-pure-render-mixin":142}],121:[function(require,module,exports){
-arguments[4][66][0].apply(exports,arguments)
-},{"./TextField":66,"dup":66}],122:[function(require,module,exports){
+},{"../../svg-icon":118,"react":388,"react-addons-pure-render-mixin":143}],122:[function(require,module,exports){
+arguments[4][67][0].apply(exports,arguments)
+},{"./TextField":67,"dup":67}],123:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -13711,7 +13767,7 @@ var Toggle = _react2.default.createClass({
 
 exports.default = Toggle;
 module.exports = exports['default'];
-},{"./enhanced-switch":77,"./mixins/style-propable":90,"./paper":94,"./styles/getMuiTheme":103,"./styles/transitions":114,"react":388}],123:[function(require,module,exports){
+},{"./enhanced-switch":78,"./mixins/style-propable":91,"./paper":95,"./styles/getMuiTheme":104,"./styles/transitions":115,"react":388}],124:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -13953,7 +14009,7 @@ var ToolbarGroup = _react2.default.createClass({
 
 exports.default = ToolbarGroup;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/colors":102,"../styles/getMuiTheme":103,"react":388}],124:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/colors":103,"../styles/getMuiTheme":104,"react":388}],125:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -14073,7 +14129,7 @@ var Toolbar = _react2.default.createClass({
 
 exports.default = Toolbar;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/getMuiTheme":103,"react":388}],125:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/getMuiTheme":104,"react":388}],126:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -14275,7 +14331,7 @@ var Tooltip = _react2.default.createClass({
 
 exports.default = Tooltip;
 module.exports = exports['default'];
-},{"./mixins/style-propable":90,"./styles/colors":102,"./styles/getMuiTheme":103,"./styles/transitions":114,"react":388,"react-dom":145}],126:[function(require,module,exports){
+},{"./mixins/style-propable":91,"./styles/colors":103,"./styles/getMuiTheme":104,"./styles/transitions":115,"react":388,"react-dom":146}],127:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -14436,7 +14492,7 @@ var ScaleInChild = _react2.default.createClass({
 
 exports.default = ScaleInChild;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/auto-prefix":99,"../styles/getMuiTheme":103,"../styles/transitions":114,"react":388,"react-addons-pure-render-mixin":142,"react-dom":145}],127:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/auto-prefix":100,"../styles/getMuiTheme":104,"../styles/transitions":115,"react":388,"react-addons-pure-render-mixin":143,"react-dom":146}],128:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -14566,7 +14622,7 @@ var ScaleIn = _react2.default.createClass({
 
 exports.default = ScaleIn;
 module.exports = exports['default'];
-},{"../mixins/style-propable":90,"../styles/getMuiTheme":103,"./scale-in-child":126,"react":388,"react-addons-pure-render-mixin":142,"react-addons-transition-group":143}],128:[function(require,module,exports){
+},{"../mixins/style-propable":91,"../styles/getMuiTheme":104,"./scale-in-child":127,"react":388,"react-addons-pure-render-mixin":143,"react-addons-transition-group":144}],129:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14617,7 +14673,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{"react":388,"react-addons-create-fragment":140}],129:[function(require,module,exports){
+},{"react":388,"react-addons-create-fragment":141}],130:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -14805,7 +14861,7 @@ exports.default = {
 };
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":1,"warning":405}],130:[function(require,module,exports){
+},{"_process":1,"warning":405}],131:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14863,7 +14919,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{"./events":133}],131:[function(require,module,exports){
+},{"./events":134}],132:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -14889,7 +14945,7 @@ function deprecated(propType, explanation) {
 }
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":1,"warning":405}],132:[function(require,module,exports){
+},{"_process":1,"warning":405}],133:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14962,7 +15018,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{}],133:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15003,7 +15059,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{}],134:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15020,7 +15076,7 @@ exports.default = {
   UP: 38
 };
 module.exports = exports['default'];
-},{}],135:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15040,7 +15096,7 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{}],136:[function(require,module,exports){
+},{}],137:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15077,7 +15133,7 @@ exports.default = {
 
 };
 module.exports = exports['default'];
-},{"react":388}],137:[function(require,module,exports){
+},{"react":388}],138:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -15113,7 +15169,7 @@ function shallowEqual(objA, objB) {
   return true;
 }
 module.exports = exports['default'];
-},{}],138:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -15285,7 +15341,7 @@ exports.default = {
   prepareStyles: prepareStyles
 };
 }).call(this,require('_process'))
-},{"../styles/auto-prefix":99,"_process":1,"react-addons-update":144,"warning":405}],139:[function(require,module,exports){
+},{"../styles/auto-prefix":100,"_process":1,"react-addons-update":145,"warning":405}],140:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15299,22 +15355,22 @@ exports.default = {
   }
 };
 module.exports = exports['default'];
-},{}],140:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 module.exports = require('react/lib/ReactFragment').create;
-},{"react/lib/ReactFragment":284}],141:[function(require,module,exports){
+},{"react/lib/ReactFragment":284}],142:[function(require,module,exports){
 module.exports = require('react/lib/ReactCSSTransitionGroup');
-},{"react/lib/ReactCSSTransitionGroup":249}],142:[function(require,module,exports){
+},{"react/lib/ReactCSSTransitionGroup":249}],143:[function(require,module,exports){
 module.exports = require('react/lib/ReactComponentWithPureRenderMixin');
-},{"react/lib/ReactComponentWithPureRenderMixin":257}],143:[function(require,module,exports){
+},{"react/lib/ReactComponentWithPureRenderMixin":257}],144:[function(require,module,exports){
 module.exports = require('react/lib/ReactTransitionGroup');
-},{"react/lib/ReactTransitionGroup":310}],144:[function(require,module,exports){
+},{"react/lib/ReactTransitionGroup":310}],145:[function(require,module,exports){
 module.exports = require('react/lib/update');
-},{"react/lib/update":358}],145:[function(require,module,exports){
+},{"react/lib/update":358}],146:[function(require,module,exports){
 'use strict';
 
 module.exports = require('react/lib/ReactDOM');
 
-},{"react/lib/ReactDOM":260}],146:[function(require,module,exports){
+},{"react/lib/ReactDOM":260}],147:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -15518,7 +15574,7 @@ exports['default'] = _react2['default'].createClass({
   }
 });
 module.exports = exports['default'];
-},{"../helpers/contains":147,"../helpers/injectStyle":148,"classnames":150,"react":388,"react-dom":145}],147:[function(require,module,exports){
+},{"../helpers/contains":148,"../helpers/injectStyle":149,"classnames":21,"react":388,"react-dom":146}],148:[function(require,module,exports){
 // Checks to see if a parent element contains a child element
 /* eslint no-param-reassign:0, no-cond-assign:0 */
 "use strict";
@@ -15531,7 +15587,7 @@ module.exports = function contains(parent, child) {
   } while (child && (child = child.parentNode));
   return false;
 };
-},{}],148:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -15551,61 +15607,11 @@ exports['default'] = function () {
 };
 
 module.exports = exports['default'];
-},{}],149:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./components/FlipCard');
-},{"./components/FlipCard":146}],150:[function(require,module,exports){
-/*!
-  Copyright (c) 2016 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				classes.push(classNames.apply(null, arg));
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if (typeof module !== 'undefined' && module.exports) {
-		module.exports = classNames;
-	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-		// register as 'classnames', consistent with npm package name
-		define('classnames', [], function () {
-			return classNames;
-		});
-	} else {
-		window.classNames = classNames;
-	}
-}());
-
-},{}],151:[function(require,module,exports){
+},{"./components/FlipCard":147}],151:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41216,7 +41222,7 @@ function handleAction(type, reducers) {
 }
 
 module.exports = exports['default'];
-},{"flux-standard-action":21}],391:[function(require,module,exports){
+},{"flux-standard-action":22}],391:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;

@@ -1,14 +1,21 @@
 'use strict';
 var React = require('react');
-var FlipCard = require('react-flipcard');
+var ReactFlipCard = require('react-flipcard');
 var GridTile = require('material-ui/lib/grid-list/grid-tile');
 var FontIcon = require('material-ui/lib/font-icon');
 var IconButton = require('material-ui/lib/icon-button');
 class NavTile extends React.Component {
     constructor() {
         super();
-        this.transitionTo = () => {
-            this.props.transitionTo(this.props.route);
+        this.transitionTo = (e) => {
+            if (e.target.tagName == 'A')
+                return;
+            e.stopPropagation();
+            e.preventDefault();
+            var _this = this;
+            window.setTimeout(function () {
+                _this.props.transitionTo(_this.props.route);
+            }, 0);
         };
         this.rawMarkup = (selector) => {
             return { __html: this.props[selector] };
@@ -54,7 +61,7 @@ class NavTile extends React.Component {
     }
     render() {
         let tile = this;
-        return (React.createElement(GridTile, null, React.createElement(FlipCard, {"disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" }}, React.createElement("div", {"className": "flipcard-frame", "onTouchTap": tile.transitionTo, "style": { cursor: 'pointer' }}, tile.rawMarkup('help').__html ?
+        return (React.createElement(GridTile, null, React.createElement(ReactFlipCard, {"disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" }}, React.createElement("div", {"className": "flipcard-frame", "onTouchTap": tile.transitionTo, "style": { cursor: 'pointer' }}, tile.rawMarkup('help').__html ?
             React.createElement(IconButton, {"style": {
                 borderRadius: '12px',
                 backgroundColor: tile.props.tilecolors.front,

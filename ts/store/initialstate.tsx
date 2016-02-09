@@ -56,14 +56,16 @@ let system = {
 	ischrome: /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
 }
 
-
 let maincols: number = 2 // default
 let mainpadding: number = 0
 let maintiles: [Object] = [
 	{
 		id: 6,
 		content: `<h3>About Budget Commons</h3> 
-		<p><em>[content pending]</em></p>`,
+		<p>Budget Commons is an initiative coming out of Toronto's civil society sector, 
+		specifically <a target="_blank" href="http://civictech.ca">Civic Tech Toronto</a>, 
+		in collaboration with <a target="_blank" href="http://betterbudget.ca">Better Budget 
+		Toronto<a>, among others.</p>`,
 		index: 0,
 		route: 'about',
 	},

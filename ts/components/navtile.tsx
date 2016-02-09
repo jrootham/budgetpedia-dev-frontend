@@ -10,14 +10,14 @@
 // required by bundler
 import * as React from 'react'
 // import * as ReactDom from 'react-dom';
-import FlipCard = require('react-flipcard')
+import ReactFlipCard = require('react-flipcard')
 import GridTile = require('material-ui/lib/grid-list/grid-tile')
 import FontIcon = require('material-ui/lib/font-icon')
 import IconButton = require('material-ui/lib/icon-button')
 import Paper = require('material-ui/lib/paper')
 
 interface MainTileProps extends React.Props<NavTile> {
-    markup: string;
+    markup: string
 }
 
 export class NavTile extends React.Component<any, any> {
@@ -29,8 +29,16 @@ export class NavTile extends React.Component<any, any> {
 		}
 	}
 
-	transitionTo = () => {
-        this.props.transitionTo(this.props.route)
+	transitionTo = (e) => {
+		if (e.target.tagName == 'A') return;
+		// used exclusively for transition
+        e.stopPropagation()
+        e.preventDefault()
+        var _this = this;
+        // wait for current js queue to clear
+        window.setTimeout(function(){ // prevent timing issues with ReactFlipCard rendering
+            _this.props.transitionTo(_this.props.route)
+        },0)
 	}
 	
 	rawMarkup = ( selector ) => {
@@ -83,7 +91,7 @@ export class NavTile extends React.Component<any, any> {
 		let tile = this
 		return (
 			<GridTile>
-			<FlipCard
+			<ReactFlipCard
 				disabled = { true }
 				flipped = { tile.state.isFlipped }
 				onFlip = { tile.handleOnFlip }
@@ -158,7 +166,7 @@ export class NavTile extends React.Component<any, any> {
                         ></div>
 					</div></div></div>
 				</div>
-			</FlipCard>
+			</ReactFlipCard>
 			</GridTile>
 		)
 	}
