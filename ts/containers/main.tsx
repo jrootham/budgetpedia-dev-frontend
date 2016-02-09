@@ -36,10 +36,11 @@ import { About } from '../features/containers/about'
 import { Timeline } from '../features/containers/timeline'
 import { Deputations } from '../features/containers/deputations'
 import { Resources } from '../features/containers/resources'
-import { SocialResources } from '../features/containers/socialresources'
+import { SocialMedia } from '../features/containers/socialmedia'
 import { NoMatch } from '../features/containers/nomatch'
 import { ResetPassword } from '../features/containers/resetpassword'
 import { Register } from '../features/containers/register'
+import { Newsletter } from '../features/containers/newsletter'
 import { JoinUs } from '../features/containers/joinus'
 import { Explorer } from '../features/containers/explorer'
 
@@ -97,10 +98,11 @@ export class Main extends Component<any, any> {
 							<Route path="deputations" component={ Deputations } />
                             <Route path="explorer" component={ Explorer } />
                             <Route path="resources" component={ Resources } />
-							<Route path="socialresources" component={ SocialResources } />
+							<Route path="socialmedia" component={ SocialMedia } />
                             <Route path="joinus" component={ JoinUs } />
                             <Route path="resetpassword" component={ ResetPassword } />
                             <Route path="register" component={ Register } />
+                            <Route path="newsletter" component={ Newsletter } />
                             <Route path="*" component={ NoMatch } />
                         </Route>
                     </Router>

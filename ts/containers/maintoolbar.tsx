@@ -48,10 +48,10 @@ class MainToolbarClass extends React.Component<any, any> {
 					display: "flex", 
 					justifyContent: "space-around" 
 				}} >
-	    			<IconButton><FontIcon className="material-icons">arrow_back</FontIcon></IconButton>
+	    			<IconButton disabled><FontIcon className="material-icons">arrow_back</FontIcon></IconButton>
                     <IconButton onTouchTap = { this.transitionToHome }><FontIcon className="material-icons">radio_button_unchecked</FontIcon></IconButton>
-					<IconButton><FontIcon className="material-icons">check_box_outline_blank</FontIcon></IconButton>
-                    <IconButton><FontIcon className="material-icons">arrow_forward</FontIcon></IconButton>
+					<IconButton disabled><FontIcon className="material-icons">check_box_outline_blank</FontIcon></IconButton>
+                    <IconButton disabled><FontIcon className="material-icons">arrow_forward</FontIcon></IconButton>
                     </ToolbarGroup>
     		</Toolbar>
 		)
