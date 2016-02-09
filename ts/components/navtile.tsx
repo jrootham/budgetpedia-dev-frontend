@@ -55,6 +55,7 @@ export class NavTile extends React.Component<any, any> {
     }
 
     showFront = (e) => {
+        if (e.target.tagName == 'A') return;
         e.stopPropagation()
         let node = this.state.elements.backface
         // backface visibility directive ignored in chrome with overflow set to auto
@@ -136,7 +137,7 @@ export class NavTile extends React.Component<any, any> {
                   </div>
                 <div className="flipcard-frame"
                     onTouchTap={ tile.showFront }
-                    >
+                    style={{ cursor: 'pointer' }}>
                     <IconButton
                         style={{ 
                             backgroundColor: tile.props.tilecolors.back, 

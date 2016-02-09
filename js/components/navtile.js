@@ -27,6 +27,8 @@ class NavTile extends React.Component {
             });
         };
         this.showFront = (e) => {
+            if (e.target.tagName == 'A')
+                return;
             e.stopPropagation();
             let node = this.state.elements.backface;
             if (this.props.system.ischrome)
@@ -74,7 +76,7 @@ class NavTile extends React.Component {
                 top: 0
             }, "onTouchTap": tile.showBack}, React.createElement(FontIcon, {"className": "material-icons", "color": tile.props.tilecolors.helpbutton}, "help")) : null, React.createElement("div", {"className": "flipcard-padding"}, React.createElement("div", {"className": "flipcard-border", "style": {
             backgroundColor: tile.props.tilecolors.front,
-        }}, React.createElement("div", {"className": "flipcard-content", "ref": (node) => { tile.state.elements.frontface = node; }}, React.createElement("div", {"dangerouslySetInnerHTML": tile.rawMarkup('markup')}))))), React.createElement("div", {"className": "flipcard-frame", "onTouchTap": tile.showFront}, React.createElement(IconButton, {"style": {
+        }}, React.createElement("div", {"className": "flipcard-content", "ref": (node) => { tile.state.elements.frontface = node; }}, React.createElement("div", {"dangerouslySetInnerHTML": tile.rawMarkup('markup')}))))), React.createElement("div", {"className": "flipcard-frame", "onTouchTap": tile.showFront, "style": { cursor: 'pointer' }}, React.createElement(IconButton, {"style": {
             backgroundColor: tile.props.tilecolors.back,
             padding: 0,
             height: "24px",
