@@ -51,7 +51,7 @@ let maincolsreducer = (state: any = initialstate.maincols, action) => {
             // breakpoints should be parameterized
             if (elementwidth > 960) {
                 columns = 4
-            } else if (elementwidth > 600) {
+            } else if (elementwidth > 680) {
                 columns = 3
             } else if (elementwidth > 400) {
                 columns = 2
