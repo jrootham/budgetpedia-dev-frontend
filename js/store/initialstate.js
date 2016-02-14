@@ -107,6 +107,13 @@ let maintiles = [
         index: 7,
         route: 'joinus',
     },
+    {
+        id: 12,
+        content: `<h3>Tell your story</h3>
+        <p><em>Under consideration</em></p>`,
+        index: 7,
+        route: 'stories',
+    },
 ];
 exports.initialstate = {
     maintiles,

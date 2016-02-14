@@ -42,6 +42,7 @@ import { ResetPassword } from '../features/containers/resetpassword'
 import { Register } from '../features/containers/register'
 import { Newsletter } from '../features/containers/newsletter'
 import { JoinUs } from '../features/containers/joinus'
+import { Stories } from '../features/containers/stories'
 import { Explorer } from '../features/containers/explorer'
 
 const reduxRouterMiddleware = syncHistory(browserHistory)
@@ -100,6 +101,7 @@ export class Main extends Component<any, any> {
                             <Route path="resources" component={ Resources } />
 							<Route path="socialmedia" component={ SocialMedia } />
                             <Route path="joinus" component={ JoinUs } />
+                            <Route path="stories" component={ Stories } />
                             <Route path="resetpassword" component={ ResetPassword } />
                             <Route path="register" component={ Register } />
                             <Route path="newsletter" component={ Newsletter } />

@@ -50,8 +50,49 @@ body {
 	right:0;
 	bottom:0;
 	position: absolute;
-	overflow: auto;
+	overflow: hidden;
 	padding:3px;
+}
+
+.flipcard-gradient {
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	height:60px;
+	width:100%;
+	border-radius: 0 0 6px 6px;
+	pointer-events: none;
+}
+.flipcard-gradient.front {
+	background: linear-gradient(to bottom, rgba(255,0,0,0),#e3f2fd);
+}
+.flipcard-gradient.back {
+	background: linear-gradient(to bottom, rgba(255,0,0,0),#fff8e1);
+}
+
+.flipcard-help-icon {
+    z-index: 2;
+    right: 0;
+    top: 0;
+    opacity: 0.8;
+    border-radius: 18px;
+}
+
+.flipcard-return-to-front-icon {
+    z-index: 2;
+    right: 0;
+    top: 0;
+    opacity: 0.8;
+    border-radius: 18px;
+}
+
+.flipcard-expand-icon {
+    z-index: 2;
+    left: calc(50% - 18px);
+    bottom: 0;
+    opacity: 0.8;
+    border-radius: 18px;
 }
 
 .mainpage-enter { opacity: 0; transition: opacity 300ms ease-in; }

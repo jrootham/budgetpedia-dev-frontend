@@ -9,7 +9,7 @@
 
 // required by bundler
 import * as React from 'react'
-// import * as ReactDom from 'react-dom';
+// import * as ReactDOM from 'react-dom';
 import ReactFlipCard = require('react-flipcard')
 import GridTile = require('material-ui/lib/grid-list/grid-tile')
 import FontIcon = require('material-ui/lib/font-icon')
@@ -26,6 +26,8 @@ export class NavTile extends React.Component<any, any> {
         this.state = { 
             isFlipped: false,
             elements: {},
+            expandiconfront:'expand_more',
+            expandiconback: 'expand_more',
         }
     }
 
@@ -44,7 +46,7 @@ export class NavTile extends React.Component<any, any> {
     rawMarkup = ( selector ) => {
         return { __html: this.props[selector] };
     }
-    showBack = (e) => {
+    showBack = e => {
         e.stopPropagation()
         // let node = this.state.elements.frontface;
         // node.style.display = 'none'
@@ -54,7 +56,7 @@ export class NavTile extends React.Component<any, any> {
         });
     }
 
-    showFront = (e) => {
+    showFront = e => {
         if (e.target.tagName == 'A') return;
         e.stopPropagation()
         let node = this.state.elements.backface
@@ -68,14 +70,40 @@ export class NavTile extends React.Component<any, any> {
         });
     }
 
+    expandFront = e => {
+        e.stopPropagation()
+        if (this.state.elements.frontface.style.overflow != 'auto') {
+            this.state.elements.frontface.style.overflow = 'auto'
+            this.state.elements.frontface.scrollTop = 100
+            this.setState({expandiconfront:'expand_less'})
+        } else {
+            this.state.elements.frontface.scrollTop = 0
+            this.state.elements.frontface.style.overflow = 'hidden'
+            this.setState({ expandiconfront: 'expand_more' })
+        }
+    }
+
+    expandBack = e => {
+        e.stopPropagation()
+        if (this.state.elements.backface.style.overflow != 'auto') {
+            this.state.elements.backface.style.overflow = 'auto'
+            this.state.elements.backface.scrollTop = 100
+            this.setState({ expandiconback: 'expand_less' })
+        } else {
+            this.state.elements.backface.scrollTop = 0
+            this.state.elements.backface.style.overflow = 'hidden'
+            this.setState({ expandiconback: 'expand_more' })
+        }
+    }
+
     handleOnFlip = (flipped) => {
         if ( this.props.system.ischrome ) {
             if ( flipped ) { // view backface
-                this.state.elements.backface.style.overflow = 'auto'
+                // this.state.elements.backface.style.overflow = 'auto'
                 this.state.elements.backface.style.display = 'block'
                 this.state.elements.frontface.style.display = 'none'
             } else {
-                this.state.elements.frontface.style.overflow = 'auto'
+                // this.state.elements.frontface.style.overflow = 'auto'
                 this.state.elements.frontface.style.display = 'block'
                 this.state.elements.backface.style.display = 'none'
             }
@@ -104,26 +132,41 @@ export class NavTile extends React.Component<any, any> {
                         style={{cursor:'pointer'}}>
                         { tile.rawMarkup('help').__html? 
                         <IconButton
+                            className = "flipcard-help-icon"
                             style={{
-                                borderRadius: '12px', 
                                 backgroundColor: tile.props.tilecolors.front, 
                                 padding: 0, 
                                 height: "36px", 
                                 width: "36px", 
                                 position: "absolute", 
-                                zIndex: 2, 
-                                right: 0, 
-                                top: 0 
                             }}
                         onTouchTap={tile.showBack}>
-                        <FontIcon
-                            className="material-icons"
-                            color = { tile.props.tilecolors.helpbutton }
-                            >
-                            help
-                        </FontIcon>
+                            <FontIcon
+                                className="material-icons"
+                                color = { tile.props.tilecolors.helpbutton }
+                                >
+                                help
+                            </FontIcon>
                         </IconButton>:null
                     }
+                    <IconButton
+                        className = "flipcard-expand-icon"
+                        style={{
+                            backgroundColor: tile.props.tilecolors.front,
+                            height: "36px",
+                            width: "36px",
+                            padding: "0",
+                            position:"absolute",
+                        }}
+                        onTouchTap={ tile.expandFront }>
+                        <FontIcon
+                            className="material-icons"
+                            color={ tile.props.tilecolors.helpbutton }
+                            ref={(node) => { tile.state.elements.expandiconfront = node } }
+                            >
+                            {this.state.expandiconfront}
+                        </FontIcon>
+                    </IconButton>
                     <div className = "flipcard-padding">
                     <div className = "flipcard-border" 
                         style={{ 
@@ -133,21 +176,22 @@ export class NavTile extends React.Component<any, any> {
                         ref={(node) => { tile.state.elements.frontface = node } }
                     >
                         <div dangerouslySetInnerHTML={ tile.rawMarkup('markup') }></div>
-                    </div></div></div>
+                    </div>
+                     <div className="flipcard-gradient front">
+                    </div>
+                    </div></div>
                   </div>
                 <div className="flipcard-frame"
                     onTouchTap={ tile.showFront }
                     style={{ cursor: 'pointer' }}>
                     <IconButton
+                        className = "flipcard-return-to-front-icon"
                         style={{ 
                             backgroundColor: tile.props.tilecolors.back, 
                             padding: 0, 
                             height: "36px", 
                             width: "36px", 
                             position: "absolute", 
-                            zIndex: 2, 
-                            right: 0, 
-                            top: 0 
                         }}
                         onTouchTap={ tile.showFront }>
                         <FontIcon
@@ -155,8 +199,26 @@ export class NavTile extends React.Component<any, any> {
                             color={ tile.props.tilecolors.helpbutton }
                             >
                             flip_to_front
-                            </FontIcon>
-                        </IconButton>
+                        </FontIcon>
+                    </IconButton>
+                    <IconButton
+                        className = "flipcard-expand-icon"
+                        style={{
+                            backgroundColor: tile.props.tilecolors.back,
+                            height: "36px",
+                            width: "36px",
+                            padding: "0",
+                            position: "absolute",
+                        }}
+                        onTouchTap={ tile.expandBack }>
+                        <FontIcon
+                            className="material-icons"
+                            color={ tile.props.tilecolors.helpbutton }
+                            ref={(node) => { tile.state.elements.expandiconback = node } }
+                            >
+                            {this.state.expandiconback}
+                        </FontIcon>
+                    </IconButton>
                     <div className = "flipcard-padding">
                     <div className = "flipcard-border" 
                         style={{ backgroundColor: tile.props.tilecolors.back, }}>
@@ -165,7 +227,10 @@ export class NavTile extends React.Component<any, any> {
                       >
                         <div dangerouslySetInnerHTML={ tile.rawMarkup('help') }
                         ></div>
-                    </div></div></div>
+                    </div>
+                     <div className="flipcard-gradient back">
+                        </div>
+                     </div></div>
                 </div>
             </ReactFlipCard>
             </GridTile>
