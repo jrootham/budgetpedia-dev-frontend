@@ -37,7 +37,7 @@ class MainTilesClass extends React.Component {
             front: colors.blue50,
             back: colors.amber50,
             helpbutton: theme.palette.primary3Color,
-        }, "system": system, "transitionTo": redux_1.compose(this.props.dispatch, Actions.transitionTo)}));
+        }, "system": system, "transitionTo": redux_1.compose(this.props.dispatch, Actions.transitionTo), "cellHeight": 200}));
     }
 }
 var MainTiles = react_redux_1.connect(mapStateToProps)(MainTilesClass);

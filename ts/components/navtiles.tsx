@@ -34,6 +34,7 @@ interface NavTilesProps extends React.Props< NavTiles > {
 	system: 	Object,
 	route?:		string,
 	transitionTo: Function,
+	cellHeight?: number,
 
 }
 
@@ -41,7 +42,7 @@ class NavTiles extends Component< NavTilesProps, any > {
 
 	render() {
 
-		let { tiles, tilecols, padding, tilecolors, style, system, route, transitionTo } = this.props
+		let { tiles, tilecols, padding, tilecolors, style, system, route, transitionTo, cellHeight } = this.props
 
 		let tiles_ = tiles.map ( function ( data ) {
 
@@ -69,6 +70,7 @@ class NavTiles extends Component< NavTilesProps, any > {
 				children 	= { tiles_ } 
 				cols 		= { tilecols } 
 				padding		= { padding }
+				cellHeight  = { cellHeight }
 
 			/>
 		)

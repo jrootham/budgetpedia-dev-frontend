@@ -74,10 +74,12 @@ export class NavTile extends React.Component<any, any> {
         e.stopPropagation()
         if (this.state.elements.frontface.style.overflow != 'auto') {
             this.state.elements.frontface.style.overflow = 'auto'
-            this.state.elements.frontface.scrollTop = 100
+            this.scroll(this.state.elements.frontface,0,160)
+            // this.state.elements.frontface.scrollTop = 100
             this.setState({expandiconfront:'expand_less'})
         } else {
-            this.state.elements.frontface.scrollTop = 0
+            this.scroll(this.state.elements.frontface, this.state.elements.frontface.scrollTop, 0)
+            // this.state.elements.frontface.scrollTop = 0
             this.state.elements.frontface.style.overflow = 'hidden'
             this.setState({ expandiconfront: 'expand_more' })
         }
@@ -85,15 +87,31 @@ export class NavTile extends React.Component<any, any> {
 
     expandBack = e => {
         e.stopPropagation()
-        if (this.state.elements.backface.style.overflow != 'auto') {
-            this.state.elements.backface.style.overflow = 'auto'
-            this.state.elements.backface.scrollTop = 100
+        if (this.state.elements.backface.style.overflow != 'scroll') {
+            this.state.elements.backface.style.overflow = 'scroll'
+            this.scroll(this.state.elements.backface, 0, 160)
+            // this.state.elements.backface.scrollTop = 100
             this.setState({ expandiconback: 'expand_less' })
         } else {
-            this.state.elements.backface.scrollTop = 0
+            this.scroll(this.state.elements.backface, this.state.elements.backface.scrollTop, 0)
+            // this.state.elements.backface.scrollTop = 0
             this.state.elements.backface.style.overflow = 'hidden'
             this.setState({ expandiconback: 'expand_more' })
         }
+    }
+
+    scroll = (element, from, to) => {
+        if (from == to) return
+        let top = from
+        let increment = (to > from)? 1: -1
+        let interval = setInterval(() => {
+            top += increment
+            element.scrollTop = top
+            if (Math.abs(top - to) < 1) {
+                clearInterval(interval)
+                // console.log('interval cleared')
+            }
+        },5)
     }
 
     handleOnFlip = (flipped) => {

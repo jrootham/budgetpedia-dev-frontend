@@ -74,6 +74,7 @@ class MainTilesClass extends React.Component<any, any> {
 				}
 				system = { system }
                 transitionTo = { compose(this.props.dispatch, Actions.transitionTo) }
+                cellHeight = { 200 }
 
 			/>
 		)

@@ -163,25 +163,37 @@ var NavTile = function (_React$Component) {
             e.stopPropagation();
             if (_this2.state.elements.frontface.style.overflow != 'auto') {
                 _this2.state.elements.frontface.style.overflow = 'auto';
-                _this2.state.elements.frontface.scrollTop = 100;
+                _this2.scroll(_this2.state.elements.frontface, 0, 160);
                 _this2.setState({ expandiconfront: 'expand_less' });
             } else {
-                _this2.state.elements.frontface.scrollTop = 0;
+                _this2.scroll(_this2.state.elements.frontface, _this2.state.elements.frontface.scrollTop, 0);
                 _this2.state.elements.frontface.style.overflow = 'hidden';
                 _this2.setState({ expandiconfront: 'expand_more' });
             }
         };
         _this2.expandBack = function (e) {
             e.stopPropagation();
-            if (_this2.state.elements.backface.style.overflow != 'auto') {
-                _this2.state.elements.backface.style.overflow = 'auto';
-                _this2.state.elements.backface.scrollTop = 100;
+            if (_this2.state.elements.backface.style.overflow != 'scroll') {
+                _this2.state.elements.backface.style.overflow = 'scroll';
+                _this2.scroll(_this2.state.elements.backface, 0, 160);
                 _this2.setState({ expandiconback: 'expand_less' });
             } else {
-                _this2.state.elements.backface.scrollTop = 0;
+                _this2.scroll(_this2.state.elements.backface, _this2.state.elements.backface.scrollTop, 0);
                 _this2.state.elements.backface.style.overflow = 'hidden';
                 _this2.setState({ expandiconback: 'expand_more' });
             }
+        };
+        _this2.scroll = function (element, from, to) {
+            if (from == to) return;
+            var top = from;
+            var increment = to > from ? 1 : -1;
+            var interval = setInterval(function () {
+                top += increment;
+                element.scrollTop = top;
+                if (Math.abs(top - to) < 1) {
+                    clearInterval(interval);
+                }
+            }, 5);
         };
         _this2.handleOnFlip = function (flipped) {
             if (_this2.props.system.ischrome) {
@@ -293,11 +305,12 @@ var NavTiles = function (_Component) {
             var system = _props.system;
             var route = _props.route;
             var transitionTo = _props.transitionTo;
+            var cellHeight = _props.cellHeight;
 
             var tiles_ = tiles.map(function (data) {
                 return React.createElement(navtile_1.NavTile, { "key": data.id, "markup": data.content, "help": data.help, "tilecolors": tilecolors, "system": system, "route": data.route, "transitionTo": transitionTo });
             });
-            return React.createElement(GridList, { "style": style, "children": tiles_, "cols": tilecols, "padding": padding });
+            return React.createElement(GridList, { "style": style, "children": tiles_, "cols": tilecols, "padding": padding, "cellHeight": cellHeight });
         }
     }]);
 
@@ -570,7 +583,7 @@ var MainTilesClass = function (_React$Component) {
                     front: colors.blue50,
                     back: colors.amber50,
                     helpbutton: theme.palette.primary3Color
-                }, "system": system, "transitionTo": redux_1.compose(this.props.dispatch, Actions.transitionTo) });
+                }, "system": system, "transitionTo": redux_1.compose(this.props.dispatch, Actions.transitionTo), "cellHeight": 200 });
         }
     }]);
 
