@@ -211,11 +211,33 @@ var NavTile = function (_React$Component) {
                 _this2.showFront(e);
             }
         };
+        _this2.isOverflowedFront = function () {
+            return _this2.state.isoverflowedfront;
+        };
+        _this2.isOverflowedBack = function () {
+            return _this2.state.isoverflowedback;
+        };
+        _this2.isOverflowed = function (element) {
+            return element.scrollHeight > element.clientHeight;
+        };
+        _this2.componentDidMount = function () {
+            var _this = _this2;
+            setTimeout(function () {
+                var isfrontoverflowed = _this.isOverflowed(_this.state.elements.frontface);
+                var isbackoverflowed = _this.isOverflowed(_this.state.elements.backface);
+                _this.setState({
+                    isoverflowedfront: isfrontoverflowed,
+                    isoverflowedback: isbackoverflowed
+                });
+            });
+        };
         _this2.state = {
             isFlipped: false,
             elements: {},
             expandiconfront: 'expand_more',
-            expandiconback: 'expand_more'
+            expandiconback: 'expand_more',
+            isoverflowedfront: false,
+            isoverflowedback: false
         };
         return _this2;
     }
@@ -230,7 +252,7 @@ var NavTile = function (_React$Component) {
                     height: "36px",
                     width: "36px",
                     position: "absolute"
-                }, "onTouchTap": tile.showBack }, React.createElement(FontIcon, { "className": "material-icons", "color": tile.props.tilecolors.helpbutton }, "help")) : null, React.createElement(IconButton, { "className": "flipcard-expand-icon", "style": {
+                }, "onTouchTap": tile.showBack }, React.createElement(FontIcon, { "className": "material-icons", "color": tile.props.tilecolors.helpbutton }, "help")) : null, this.isOverflowedFront() ? React.createElement(IconButton, { "className": "flipcard-expand-icon", "style": {
                     backgroundColor: tile.props.tilecolors.front,
                     height: "36px",
                     width: "36px",
@@ -238,11 +260,9 @@ var NavTile = function (_React$Component) {
                     position: "absolute"
                 }, "onTouchTap": tile.expandFront }, React.createElement(FontIcon, { "className": "material-icons", "color": tile.props.tilecolors.helpbutton, "ref": function ref(node) {
                     tile.state.elements.expandiconfront = node;
-                } }, this.state.expandiconfront)), React.createElement("div", { "className": "flipcard-padding" }, React.createElement("div", { "className": "flipcard-border", "style": {
-                    backgroundColor: tile.props.tilecolors.front
-                } }, React.createElement("div", { "className": "flipcard-content", "ref": function ref(node) {
+                } }, this.state.expandiconfront)) : null, React.createElement("div", { "className": "flipcard-padding" }, React.createElement("div", { "className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.front } }, React.createElement("div", { "className": "flipcard-content", "ref": function ref(node) {
                     tile.state.elements.frontface = node;
-                } }, React.createElement("div", { "dangerouslySetInnerHTML": tile.rawMarkup('markup') })), React.createElement("div", { "className": "flipcard-gradient front" })))), React.createElement("div", { "className": "flipcard-frame", "onTouchTap": tile.showFront, "style": { cursor: 'pointer' } }, React.createElement(IconButton, { "className": "flipcard-return-to-front-icon", "style": {
+                } }, React.createElement("div", { "dangerouslySetInnerHTML": tile.rawMarkup('markup') })), this.isOverflowedFront() ? React.createElement("div", { "className": "flipcard-gradient front" }) : null))), React.createElement("div", { "className": "flipcard-frame", "onTouchTap": tile.showFront, "style": { cursor: 'pointer' } }, React.createElement(IconButton, { "className": "flipcard-return-to-front-icon", "style": {
                     backgroundColor: tile.props.tilecolors.back,
                     padding: 0,
                     height: "36px",

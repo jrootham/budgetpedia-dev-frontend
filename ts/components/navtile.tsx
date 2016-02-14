@@ -28,6 +28,8 @@ export class NavTile extends React.Component<any, any> {
             elements: {},
             expandiconfront:'expand_more',
             expandiconback: 'expand_more',
+            isoverflowedfront:false,
+            isoverflowedback:false,
         }
     }
 
@@ -134,6 +136,30 @@ export class NavTile extends React.Component<any, any> {
         }
     }
 
+    isOverflowedFront = () => {
+        return this.state.isoverflowedfront
+    }
+
+    isOverflowedBack = () => {
+        return this.state.isoverflowedback
+    }
+
+    isOverflowed = element => {
+        return element.scrollHeight > element.clientHeight // || element.scrollWidth > element.clientWidth;
+    }
+
+    componentDidMount = () => {
+        let _this = this
+        setTimeout(() =>{
+            let isfrontoverflowed: boolean = _this.isOverflowed(_this.state.elements.frontface)
+            let isbackoverflowed:boolean = _this.isOverflowed(_this.state.elements.backface)
+            _this.setState({
+                isoverflowedfront:isfrontoverflowed,
+                isoverflowedback:isbackoverflowed,
+            })
+        })
+    }
+
     render() {
         let tile = this
         return (
@@ -145,7 +171,7 @@ export class NavTile extends React.Component<any, any> {
                 onKeyDown = { tile.handleKeyDown }
                 style = {{ border:"none" }}
                 >
-                  <div className="flipcard-frame"
+                    <div className="flipcard-frame"
                         onTouchTap={ tile.transitionTo }
                         style={{cursor:'pointer'}}>
                         { tile.rawMarkup('help').__html? 
@@ -158,7 +184,8 @@ export class NavTile extends React.Component<any, any> {
                                 width: "36px", 
                                 position: "absolute", 
                             }}
-                        onTouchTap={tile.showBack}>
+                            onTouchTap={tile.showBack}
+                         >
                             <FontIcon
                                 className="material-icons"
                                 color = { tile.props.tilecolors.helpbutton }
@@ -166,89 +193,94 @@ export class NavTile extends React.Component<any, any> {
                                 help
                             </FontIcon>
                         </IconButton>:null
-                    }
-                    <IconButton
-                        className = "flipcard-expand-icon"
-                        style={{
-                            backgroundColor: tile.props.tilecolors.front,
-                            height: "36px",
-                            width: "36px",
-                            padding: "0",
-                            position:"absolute",
-                        }}
-                        onTouchTap={ tile.expandFront }>
-                        <FontIcon
-                            className="material-icons"
-                            color={ tile.props.tilecolors.helpbutton }
-                            ref={(node) => { tile.state.elements.expandiconfront = node } }
+                        }
+                        { this.isOverflowedFront()?
+                        <IconButton
+                            className = "flipcard-expand-icon"
+                            style={{
+                                backgroundColor: tile.props.tilecolors.front,
+                                height: "36px",
+                                width: "36px",
+                                padding: "0",
+                                position:"absolute",
+                            }}
+                            onTouchTap={ tile.expandFront }>
+                            <FontIcon
+                                className="material-icons"
+                                color={ tile.props.tilecolors.helpbutton }
+                                ref={(node) => { tile.state.elements.expandiconfront = node } }
+                                >
+                                {this.state.expandiconfront}
+                            </FontIcon>
+                         </IconButton>:null
+                        }
+                        <div className = "flipcard-padding">
+                            <div className = "flipcard-border" 
+                                style={{ backgroundColor: tile.props.tilecolors.front, }}
                             >
-                            {this.state.expandiconfront}
-                        </FontIcon>
-                    </IconButton>
-                    <div className = "flipcard-padding">
-                    <div className = "flipcard-border" 
-                        style={{ 
-                            backgroundColor: tile.props.tilecolors.front, 
-                        }}>
-                    <div className = "flipcard-content"
-                        ref={(node) => { tile.state.elements.frontface = node } }
-                    >
-                        <div dangerouslySetInnerHTML={ tile.rawMarkup('markup') }></div>
-                    </div>
-                     <div className="flipcard-gradient front">
-                    </div>
-                    </div></div>
-                  </div>
-                <div className="flipcard-frame"
-                    onTouchTap={ tile.showFront }
-                    style={{ cursor: 'pointer' }}>
-                    <IconButton
-                        className = "flipcard-return-to-front-icon"
-                        style={{ 
-                            backgroundColor: tile.props.tilecolors.back, 
-                            padding: 0, 
-                            height: "36px", 
-                            width: "36px", 
-                            position: "absolute", 
-                        }}
-                        onTouchTap={ tile.showFront }>
-                        <FontIcon
-                            className="material-icons"
-                            color={ tile.props.tilecolors.helpbutton }
-                            >
-                            flip_to_front
-                        </FontIcon>
-                    </IconButton>
-                    <IconButton
-                        className = "flipcard-expand-icon"
-                        style={{
-                            backgroundColor: tile.props.tilecolors.back,
-                            height: "36px",
-                            width: "36px",
-                            padding: "0",
-                            position: "absolute",
-                        }}
-                        onTouchTap={ tile.expandBack }>
-                        <FontIcon
-                            className="material-icons"
-                            color={ tile.props.tilecolors.helpbutton }
-                            ref={(node) => { tile.state.elements.expandiconback = node } }
-                            >
-                            {this.state.expandiconback}
-                        </FontIcon>
-                    </IconButton>
-                    <div className = "flipcard-padding">
-                    <div className = "flipcard-border" 
-                        style={{ backgroundColor: tile.props.tilecolors.back, }}>
-                    <div className = "flipcard-content"
-                       ref={(node) => { tile.state.elements.backface = node } }
-                      >
-                        <div dangerouslySetInnerHTML={ tile.rawMarkup('help') }
-                        ></div>
-                    </div>
-                     <div className="flipcard-gradient back">
+                                <div className = "flipcard-content"
+                                    ref={(node) => { tile.state.elements.frontface = node } }
+                                >
+                                    <div dangerouslySetInnerHTML={ tile.rawMarkup('markup') }></div>
+                                </div>
+                                { this.isOverflowedFront() ?
+                                    <div className="flipcard-gradient front"></div>
+                                    : null
+                                }
+                            </div>
                         </div>
-                     </div></div>
+                    </div>
+                    <div className="flipcard-frame"
+                        onTouchTap={ tile.showFront }
+                        style={{ cursor: 'pointer' }}>
+                        <IconButton
+                            className = "flipcard-return-to-front-icon"
+                            style={{ 
+                                backgroundColor: tile.props.tilecolors.back, 
+                                padding: 0, 
+                                height: "36px", 
+                                width: "36px", 
+                                position: "absolute", 
+                            }}
+                            onTouchTap={ tile.showFront }>
+                            <FontIcon
+                                className="material-icons"
+                                color={ tile.props.tilecolors.helpbutton }
+                                >
+                                flip_to_front
+                            </FontIcon>
+                        </IconButton>
+                        <IconButton
+                            className = "flipcard-expand-icon"
+                            style={{
+                                backgroundColor: tile.props.tilecolors.back,
+                                height: "36px",
+                                width: "36px",
+                                padding: "0",
+                                position: "absolute",
+                            }}
+                            onTouchTap={ tile.expandBack }>
+                            <FontIcon
+                                className="material-icons"
+                                color={ tile.props.tilecolors.helpbutton }
+                                ref={(node) => { tile.state.elements.expandiconback = node } }
+                                >
+                                {this.state.expandiconback}
+                            </FontIcon>
+                        </IconButton>
+                        <div className = "flipcard-padding">
+                        <div className = "flipcard-border" 
+                            style={{ backgroundColor: tile.props.tilecolors.back, }}>
+                        <div className = "flipcard-content"
+                           ref={(node) => { tile.state.elements.backface = node } }
+                          >
+                            <div dangerouslySetInnerHTML={ tile.rawMarkup('help') }
+                            ></div>
+                        </div>
+                         <div className="flipcard-gradient back">
+                            </div>
+                         </div>
+                    </div>
                 </div>
             </ReactFlipCard>
             </GridTile>
