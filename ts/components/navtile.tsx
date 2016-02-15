@@ -3,7 +3,8 @@
 
 /*
     TODO: 
-    scroll amount on expand should be parameterized
+    - scroll amount on expand should be parameterized
+    - define NavTileProps
 */
 'use strict'
 
@@ -16,9 +17,9 @@ import FontIcon = require('material-ui/lib/font-icon')
 import IconButton = require('material-ui/lib/icon-button')
 import Paper = require('material-ui/lib/paper')
 
-interface MainTileProps extends React.Props<NavTile> {
-    markup: string
-}
+// interface NavTileProps extends React.Props<NavTile> {
+//     markup: string
+// }
 
 export class NavTile extends React.Component<any, any> {
     constructor() {
@@ -164,20 +165,26 @@ export class NavTile extends React.Component<any, any> {
     // wait for component to mount before measuring overflow state
     componentDidMount = () => {
         let _this = this
-        setTimeout( () => {
+
+        _this.forceUpdate() // in some circumstances this is required to draw expand icons
+        // ... when home route is chosen after route from tile to target page
+
+        setTimeout(() => {
             let isfrontoverflowed: boolean = _this.isOverflowed(_this.state.elements.frontface)
             let isbackoverflowed: boolean = _this.isOverflowed(_this.state.elements.backface)
             // set state, redrawing tile
             _this.setState({
-                isoverflowedfront:isfrontoverflowed,
-                isoverflowedback:isbackoverflowed,
+                isoverflowedfront: isfrontoverflowed,
+                isoverflowedback: isbackoverflowed,
             })
         })
     }
 
     render() {
         let tile = this
+
         // create tile components:
+        
         let helpicon = 
             <IconButton
                 key='helpicon'
@@ -189,11 +196,11 @@ export class NavTile extends React.Component<any, any> {
                     width: "36px",
                     position: "absolute",
                 }}
-                onTouchTap={tile.showBack}>
+                onTouchTap={tile.showBack} >
 
                 <FontIcon
                     className="material-icons"
-                    color = { tile.props.tilecolors.helpbutton }>
+                    color = { tile.props.tilecolors.helpbutton } >
 
                     help
 
@@ -211,11 +218,11 @@ export class NavTile extends React.Component<any, any> {
                     width: "36px",
                     position: "absolute",
                 }}
-                onTouchTap={ tile.showFront }>
+                onTouchTap={ tile.showFront } >
 
                 <FontIcon
                     className="material-icons"
-                    color={ tile.props.tilecolors.helpbutton }>
+                    color={ tile.props.tilecolors.helpbutton } >
 
                     flip_to_front
 
@@ -233,13 +240,13 @@ export class NavTile extends React.Component<any, any> {
                     padding: "0",
                     position: "absolute",
                 }}
-                onTouchTap={ tile.expandFront }>
+                onTouchTap={ tile.expandFront } >
 
                 <FontIcon
                     className="material-icons"
-                    color={ tile.props.tilecolors.helpbutton }>
+                    color={ tile.props.tilecolors.helpbutton } >
 
-                    {this.state.expandiconfront}
+                    {tile.state.expandiconfront}
 
                 </FontIcon>
 
@@ -255,13 +262,13 @@ export class NavTile extends React.Component<any, any> {
                     padding: "0",
                     position: "absolute",
                 }}
-                onTouchTap={ tile.expandBack }>
+                onTouchTap={ tile.expandBack } >
 
                 <FontIcon
                     className="material-icons"
-                    color={ tile.props.tilecolors.helpbutton }>
+                    color={ tile.props.tilecolors.helpbutton } >
 
-                    {this.state.expandiconback}
+                    {tile.state.expandiconback}
 
                 </FontIcon>
 
@@ -270,22 +277,22 @@ export class NavTile extends React.Component<any, any> {
         let frontflipcard = 
             <div className="flipcard-frame"
                 onTouchTap={ tile.transitionTo }
-                style={{ cursor: 'pointer' }}>
+                style={{ cursor: 'pointer' }} >
 
                 { tile.rawMarkup('help').__html ? helpicon : null }
-                { this.isOverflowedFront() ? frontexpandicon : null } 
+                { tile.isOverflowedFront() ? frontexpandicon : null } 
 
                 <div className = "flipcard-padding">
                     <div className = "flipcard-border"
-                        style={{ backgroundColor: tile.props.tilecolors.front, }}>
+                        style={{ backgroundColor: tile.props.tilecolors.front, }} >
 
                         <div className = "flipcard-content"
-                            ref={(node) => { tile.state.elements.frontface = node } }>
+                            ref={(node) => { tile.state.elements.frontface = node } } >
 
                             <div dangerouslySetInnerHTML={ tile.rawMarkup('markup') }></div>
 
                         </div>
-                        { this.isOverflowedFront() ?
+                        { tile.isOverflowedFront() ?
                             <div className="flipcard-gradient front"></div>
                             : null 
                         }
@@ -296,18 +303,20 @@ export class NavTile extends React.Component<any, any> {
         let backflipcard = 
             <div className="flipcard-frame"
                 onTouchTap={ tile.showFront }
-                style={{ cursor: 'pointer' }}>
+                style={{ cursor: 'pointer' }} >
 
                 { returnicon }
-                { this.isOverflowedBack() ? backexpandicon : null }
+                { tile.isOverflowedBack() ? backexpandicon : null }
 
                 <div className = "flipcard-padding">
                     <div className = "flipcard-border"
-                        style={{ backgroundColor: tile.props.tilecolors.back, }}>
+                        style={{ backgroundColor: tile.props.tilecolors.back, }} >
 
                         <div className = "flipcard-content"
-                            ref={(node) => { tile.state.elements.backface = node } }>
+                            ref={(node) => { tile.state.elements.backface = node } } >
+
                             <div dangerouslySetInnerHTML={ tile.rawMarkup('help') }></div>
+
                         </div>
                         <div className="flipcard-gradient back"></div>
 
@@ -323,7 +332,7 @@ export class NavTile extends React.Component<any, any> {
                     flipped = { tile.state.isFlipped }
                     onFlip = { tile.handleOnFlip }
                     onKeyDown = { tile.handleKeyDown }
-                    style = {{ border:"none" }}>
+                    style = {{ border:"none" }} >
 
                     { frontflipcard }
                     { backflipcard }
