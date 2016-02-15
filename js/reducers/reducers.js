@@ -52,6 +52,41 @@ let maincolsreducer = (state = initialstate_1.initialstate.maincols, action) => 
 let maincols = redux_actions_1.handleActions({
     [Actions.SET_TILECOLS]: maincolsreducer,
 }, initialstate_1.initialstate.maincols);
+let { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } = Actions;
+function auth(state = {
+        isFetching: false,
+        isAuthenticated: localStorage.getItem('id_token') ? true : false
+    }, action) {
+    switch (action.type) {
+        case LOGIN_REQUEST:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isAuthenticated: false,
+                user: action.payload.creds,
+                errorMessage: '',
+            });
+        case LOGIN_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: true,
+            });
+        case LOGIN_FAILURE:
+            console.log('login failure', action);
+            return Object.assign({}, state, {
+                isFetching: false,
+                errorMessage: action.payload.message,
+                user: null,
+            });
+        case LOGOUT_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: false,
+                user: null,
+            });
+        default:
+            return state;
+    }
+}
 let mainReducerCore = redux_1.combineReducers({
     maincols,
     mainpadding,
@@ -61,6 +96,7 @@ let mainReducerCore = redux_1.combineReducers({
     system,
     maintiles,
     routing: react_router_redux_1.routeReducer,
+    auth,
 });
 let mainReducer = (state, action) => {
     if (!flux_standard_action_1.isFSA(action)) {

@@ -22,6 +22,7 @@ class NavTile extends React.Component {
         };
         this.showBack = e => {
             e.stopPropagation();
+            e.preventDefault();
             this.setState({
                 isFlipped: true
             });
@@ -30,6 +31,7 @@ class NavTile extends React.Component {
             if (e.target.tagName == 'A')
                 return;
             e.stopPropagation();
+            e.preventDefault();
             let node = this.state.elements.backface;
             if (this.props.system.ischrome)
                 node.style.display = 'none';
@@ -39,6 +41,7 @@ class NavTile extends React.Component {
         };
         this.expandFront = e => {
             e.stopPropagation();
+            e.preventDefault();
             if (this.state.elements.frontface.style.overflow != 'auto') {
                 this.state.elements.frontface.style.overflow = 'auto';
                 this.scroll(this.state.elements.frontface, 0, 160);
@@ -52,6 +55,7 @@ class NavTile extends React.Component {
         };
         this.expandBack = e => {
             e.stopPropagation();
+            e.preventDefault();
             if (this.state.elements.backface.style.overflow != 'scroll') {
                 this.state.elements.backface.style.overflow = 'scroll';
                 this.scroll(this.state.elements.backface, 0, 160);

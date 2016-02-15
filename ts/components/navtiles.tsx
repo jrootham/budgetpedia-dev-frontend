@@ -1,3 +1,4 @@
+// copyright (c) 2015 Henrik Bechmann, Toronto, MIT Licence
 // navtiles.tsx
 
 /// <reference path="../../typings/material-ui/material-ui.d.ts" />
@@ -47,19 +48,14 @@ class NavTiles extends Component< NavTilesProps, any > {
 		let tiles_ = tiles.map ( function ( data ) {
 
 			return (
-
 				<NavTile 
-
 					key 	= { data.id } 
 					markup 	= { data.content }
 					help 	= { data.help } 
 					tilecolors = { tilecolors }
 					system = { system }
 					route = { data.route }
-					transitionTo = { transitionTo }
-				>
-
-				</NavTile >
+					transitionTo = { transitionTo } />
 			)
 		})
 
@@ -70,9 +66,7 @@ class NavTiles extends Component< NavTilesProps, any > {
 				children 	= { tiles_ } 
 				cols 		= { tilecols } 
 				padding		= { padding }
-				cellHeight  = { cellHeight }
-
-			/>
+				cellHeight  = { cellHeight } />
 		)
 	}
 }

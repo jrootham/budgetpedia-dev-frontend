@@ -29,10 +29,10 @@ class MainToolbarClass extends React.Component {
             borderTop: "2px solid silver"
         }}, React.createElement(ToolbarGroup, {"style": {
             float: "none",
-            width: "60%",
+            width: "70%",
             display: "flex",
             justifyContent: "space-around"
-        }}, React.createElement(IconButton, {"disabled": true}, React.createElement(FontIcon, {"className": "material-icons"}, "arrow_back")), React.createElement(IconButton, {"onTouchTap": this.transitionToHome}, React.createElement(FontIcon, {"className": "material-icons"}, "radio_button_unchecked")), React.createElement(IconButton, {"disabled": true}, React.createElement(FontIcon, {"className": "material-icons"}, "check_box_outline_blank")), React.createElement(IconButton, {"disabled": true}, React.createElement(FontIcon, {"className": "material-icons"}, "arrow_forward")))));
+        }}, React.createElement(IconButton, {"disabled": true}, React.createElement(FontIcon, {"className": "material-icons"}, "arrow_back")), React.createElement(IconButton, {"onTouchTap": this.transitionToHome}, React.createElement(FontIcon, {"className": "material-icons"}, "radio_button_unchecked")), React.createElement(IconButton, {"disabled": true}, React.createElement(FontIcon, {"className": "material-icons"}, "check_box_outline_blank")), React.createElement(IconButton, {"disabled": true}, React.createElement(FontIcon, {"className": "material-icons"}, "arrow_forward")), React.createElement(IconButton, {"disabled": true}, React.createElement(FontIcon, {"className": "material-icons"}, "help_outline")))));
     }
 }
 var MainToolbar = react_redux_1.connect(mapStateToProps)(MainToolbarClass);

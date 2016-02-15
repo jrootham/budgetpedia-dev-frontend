@@ -1,3 +1,4 @@
+// copyright (c) 2015 Henrik Bechmann, Toronto, MIT Licence
 // maintiles.tsx
 
 'use strict'

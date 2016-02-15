@@ -1,3 +1,4 @@
+// copyright (c) 2015 Henrik Bechmann, Toronto, MIT Licence
 // maintoolbar.tsx
 
 /// <reference path="../../typings-custom/material-ui.d.ts" />
@@ -44,7 +45,7 @@ class MainToolbarClass extends React.Component<any, any> {
 			}}>
 				<ToolbarGroup style={{ 
 					float: "none", 
-					width: "60%", 
+					width: "70%", 
 					display: "flex", 
 					justifyContent: "space-around" 
 				}} >
@@ -52,6 +53,7 @@ class MainToolbarClass extends React.Component<any, any> {
                     <IconButton onTouchTap = { this.transitionToHome }><FontIcon className="material-icons">radio_button_unchecked</FontIcon></IconButton>
 					<IconButton disabled><FontIcon className="material-icons">check_box_outline_blank</FontIcon></IconButton>
                     <IconButton disabled><FontIcon className="material-icons">arrow_forward</FontIcon></IconButton>
+                    <IconButton disabled><FontIcon className="material-icons">help_outline</FontIcon></IconButton>
                     </ToolbarGroup>
     		</Toolbar>
 		)

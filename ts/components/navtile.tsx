@@ -1,3 +1,4 @@
+// copyright (c) 2015 Henrik Bechmann, Toronto, MIT Licence
 // navtile.tsx
 ///<reference path="../../typings-custom/react-flipcard.d.ts" />
 
@@ -52,6 +53,7 @@ export class NavTile extends React.Component<any, any> {
 
     showBack = e => {
         e.stopPropagation()
+        e.preventDefault()
         this.setState({
             isFlipped: true
         });
@@ -61,6 +63,7 @@ export class NavTile extends React.Component<any, any> {
         if (e.target.tagName == 'A') return;
 
         e.stopPropagation()
+        e.preventDefault()
         let node = this.state.elements.backface
 
         if ( this.props.system.ischrome )
@@ -74,6 +77,7 @@ export class NavTile extends React.Component<any, any> {
     // toggle
     expandFront = e => {
         e.stopPropagation()
+        e.preventDefault()
 
         if (this.state.elements.frontface.style.overflow != 'auto') {
 
@@ -93,6 +97,7 @@ export class NavTile extends React.Component<any, any> {
     // toggle
     expandBack = e => {
         e.stopPropagation()
+        e.preventDefault()
         if (this.state.elements.backface.style.overflow != 'scroll') {
 
             this.state.elements.backface.style.overflow = 'scroll'
@@ -166,7 +171,7 @@ export class NavTile extends React.Component<any, any> {
     componentDidMount = () => {
         let _this = this
 
-        _this.forceUpdate() // in some circumstances this is required to draw expand icons
+        _this.forceUpdate() // in some circumstances this is required to draw backface expand icons
         // ... when home route is chosen after route from tile to target page
 
         setTimeout(() => {
@@ -179,6 +184,8 @@ export class NavTile extends React.Component<any, any> {
             })
         })
     }
+
+    // ---------------------------------------------- //
 
     render() {
         let tile = this
@@ -280,6 +287,7 @@ export class NavTile extends React.Component<any, any> {
                 style={{ cursor: 'pointer' }} >
 
                 { tile.rawMarkup('help').__html ? helpicon : null }
+
                 { tile.isOverflowedFront() ? frontexpandicon : null } 
 
                 <div className = "flipcard-padding">
@@ -306,6 +314,7 @@ export class NavTile extends React.Component<any, any> {
                 style={{ cursor: 'pointer' }} >
 
                 { returnicon }
+
                 { tile.isOverflowedBack() ? backexpandicon : null }
 
                 <div className = "flipcard-padding">
@@ -324,6 +333,7 @@ export class NavTile extends React.Component<any, any> {
                 </div>
             </div>
 
+        // mainline
         return (
 
             <GridTile>
@@ -335,6 +345,7 @@ export class NavTile extends React.Component<any, any> {
                     style = {{ border:"none" }} >
 
                     { frontflipcard }
+
                     { backflipcard }
 
                 </FlipCard>

@@ -61,7 +61,6 @@ declare module 'material-ui/lib/divider' {
 declare module __React {
     interface DOMAttributes {
         onTouchTap?: Function,
-        // innerHTML?:String,
     }
 }
 

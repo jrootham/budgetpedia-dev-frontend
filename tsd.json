@@ -48,7 +48,7 @@
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "react/react.d.ts": {
-      "commit": "3030a4be536b6530c06b80081f1333dc0de4d703"
+      "commit": "bcd5761826eb567876c197ccc6a87c4d05731054"
     },
     "react-swf/react-swf.d.ts": {
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
@@ -66,7 +66,7 @@
       "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     },
     "react/react-addons-create-fragment.d.ts": {
-      "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
+      "commit": "bcd5761826eb567876c197ccc6a87c4d05731054"
     },
     "react/react-addons-transition-group.d.ts": {
       "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
@@ -99,7 +99,7 @@
       "commit": "1da639a106527e0c4010b354a1efe52a3059a291"
     },
     "material-ui/material-ui.d.ts": {
-      "commit": "3030a4be536b6530c06b80081f1333dc0de4d703"
+      "commit": "c393f8974d44840a6c9cc6d5b5c0188a8f05143d"
     },
     "promise/promise.d.ts": {
       "commit": "7ce80dafc0df189d61950e80e04548d8304d1538"
@@ -109,6 +109,12 @@
     },
     "react-router-redux/react-router-redux.d.ts": {
       "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
+    },
+    "superagent/superagent.d.ts": {
+      "commit": "1a5b2a729d35b1d41e2d15818db013a3644c6ba4"
+    },
+    "node/node.d.ts": {
+      "commit": "1a5b2a729d35b1d41e2d15818db013a3644c6ba4"
     }
   }
 }
