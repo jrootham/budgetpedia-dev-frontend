@@ -65,10 +65,10 @@ body {
 	pointer-events: none;
 }
 .flipcard-gradient.front {
-	background: linear-gradient(to bottom, rgba(255,0,0,0),#e3f2fd);
+	background: linear-gradient(to bottom, rgba(255,255,255,0),#e3f2fd);
 }
 .flipcard-gradient.back {
-	background: linear-gradient(to bottom, rgba(255,0,0,0),#fff8e1);
+	background: linear-gradient(to bottom, rgba(255,255,255,0),#fff8e1);
 }
 
 .flipcard-help-icon {
