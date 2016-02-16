@@ -36,7 +36,7 @@ export class NavTile extends React.Component<any, any> {
     }
 
     transitionTo = (e) => {
-        if (e.target.tagName == 'A') return;
+        // if (e.target.tagName == 'A') return;
         // used exclusively for transition
         e.stopPropagation()
         e.preventDefault()
@@ -48,7 +48,10 @@ export class NavTile extends React.Component<any, any> {
     }
     
     rawMarkup = ( selector ) => {
-        return { __html: this.props[selector] };
+        if (this.props[selector])
+            return { __html: this.props[selector].body }
+        else
+            return {__html: ''}
     }
 
     showBack = e => {
@@ -60,7 +63,7 @@ export class NavTile extends React.Component<any, any> {
     }
 
     showFront = e => {
-        if (e.target.tagName == 'A') return;
+        // if (e.target.tagName == 'A') return;
 
         e.stopPropagation()
         e.preventDefault()
@@ -165,6 +168,12 @@ export class NavTile extends React.Component<any, any> {
     // utility
     isOverflowed = element => {
         return element.scrollHeight > element.clientHeight // || element.scrollWidth > element.clientWidth;
+    }
+
+    isHelpContent = () => {
+        let help = this.props.help
+        if (!help) return false
+        return (help.title || help.body)
     }
 
     // wait for component to mount before measuring overflow state
@@ -282,11 +291,9 @@ export class NavTile extends React.Component<any, any> {
             </IconButton>
 
         let frontflipcard = 
-            <div className="flipcard-frame"
-                onTouchTap={ tile.transitionTo }
-                style={{ cursor: 'pointer' }} >
+            <div className="flipcard-frame">
 
-                { tile.rawMarkup('help').__html ? helpicon : null }
+                { (tile.isHelpContent()) ? helpicon : null }
 
                 { tile.isOverflowedFront() ? frontexpandicon : null } 
 
@@ -296,6 +303,26 @@ export class NavTile extends React.Component<any, any> {
 
                         <div className = "flipcard-content"
                             ref={(node) => { tile.state.elements.frontface = node } } >
+                            <a style={{ 
+                                    padding:"3px 0 0 3px",
+                                    fontSize: "small", 
+                                    position:"absolute", 
+                                    top:0,
+                                    left:0,
+                                    fontStyle:"italic",
+                                }} 
+                                href="javascript:void(0)" 
+                                onTouchTap={ tile.transitionTo } >
+
+                                See more >>
+
+                            </a>
+                            <h3 onTouchTap={ tile.transitionTo }
+                                style={{ marginBottom: 0, cursor:"pointer", }} >
+
+                                {tile.props.markup.title}
+                                
+                            </h3>
 
                             <div dangerouslySetInnerHTML={ tile.rawMarkup('markup') }></div>
 
@@ -309,9 +336,7 @@ export class NavTile extends React.Component<any, any> {
             </div>
 
         let backflipcard = 
-            <div className="flipcard-frame"
-                onTouchTap={ tile.showFront }
-                style={{ cursor: 'pointer' }} >
+            <div className="flipcard-frame" >
 
                 { returnicon }
 
@@ -323,6 +348,27 @@ export class NavTile extends React.Component<any, any> {
 
                         <div className = "flipcard-content"
                             ref={(node) => { tile.state.elements.backface = node } } >
+                            <a style={{
+                                padding: "3px 0 0 3px",
+                                fontSize: "small",
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                fontStyle: "italic",
+                            }}
+                                href="#"
+                                onTouchTap={ tile.showFront } >
+
+                                Return >>
+
+                            </a>
+
+                            <h3 onTouchTap={ tile.showFront }
+                                style={{ marginBottom: 0, cursor:"pointer", }} >
+
+                                {tile.isHelpContent() ? tile.props.help.title:null }
+
+                            </h3>
 
                             <div dangerouslySetInnerHTML={ tile.rawMarkup('help') }></div>
 

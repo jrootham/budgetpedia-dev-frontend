@@ -207,7 +207,6 @@ var NavTile = function (_React$Component) {
         var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(NavTile).call(this));
 
         _this2.transitionTo = function (e) {
-            if (e.target.tagName == 'A') return;
             e.stopPropagation();
             e.preventDefault();
             var _this = _this2;
@@ -216,7 +215,7 @@ var NavTile = function (_React$Component) {
             }, 0);
         };
         _this2.rawMarkup = function (selector) {
-            return { __html: _this2.props[selector] };
+            if (_this2.props[selector]) return { __html: _this2.props[selector].body };else return { __html: '' };
         };
         _this2.showBack = function (e) {
             e.stopPropagation();
@@ -226,7 +225,6 @@ var NavTile = function (_React$Component) {
             });
         };
         _this2.showFront = function (e) {
-            if (e.target.tagName == 'A') return;
             e.stopPropagation();
             e.preventDefault();
             var node = _this2.state.elements.backface;
@@ -298,6 +296,11 @@ var NavTile = function (_React$Component) {
         _this2.isOverflowed = function (element) {
             return element.scrollHeight > element.clientHeight;
         };
+        _this2.isHelpContent = function () {
+            var help = _this2.props.help;
+            if (!help) return false;
+            return help.title || help.body;
+        };
         _this2.componentDidMount = function () {
             var _this = _this2;
             _this.forceUpdate();
@@ -353,12 +356,26 @@ var NavTile = function (_React$Component) {
                     padding: "0",
                     position: "absolute"
                 }, "onTouchTap": tile.expandBack }, React.createElement(FontIcon, { "className": "material-icons", "color": tile.props.tilecolors.helpbutton }, tile.state.expandiconback));
-            var frontflipcard = React.createElement("div", { "className": "flipcard-frame", "onTouchTap": tile.transitionTo, "style": { cursor: 'pointer' } }, tile.rawMarkup('help').__html ? helpicon : null, tile.isOverflowedFront() ? frontexpandicon : null, React.createElement("div", { "className": "flipcard-padding" }, React.createElement("div", { "className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.front } }, React.createElement("div", { "className": "flipcard-content", "ref": function ref(node) {
+            var frontflipcard = React.createElement("div", { "className": "flipcard-frame" }, tile.isHelpContent() ? helpicon : null, tile.isOverflowedFront() ? frontexpandicon : null, React.createElement("div", { "className": "flipcard-padding" }, React.createElement("div", { "className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.front } }, React.createElement("div", { "className": "flipcard-content", "ref": function ref(node) {
                     tile.state.elements.frontface = node;
-                } }, React.createElement("div", { "dangerouslySetInnerHTML": tile.rawMarkup('markup') })), tile.isOverflowedFront() ? React.createElement("div", { "className": "flipcard-gradient front" }) : null)));
-            var backflipcard = React.createElement("div", { "className": "flipcard-frame", "onTouchTap": tile.showFront, "style": { cursor: 'pointer' } }, returnicon, tile.isOverflowedBack() ? backexpandicon : null, React.createElement("div", { "className": "flipcard-padding" }, React.createElement("div", { "className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.back } }, React.createElement("div", { "className": "flipcard-content", "ref": function ref(node) {
+                } }, React.createElement("a", { "style": {
+                    padding: "3px 0 0 3px",
+                    fontSize: "small",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    fontStyle: "italic"
+                }, "href": "javascript:void(0)", "onTouchTap": tile.transitionTo }, "See more >>"), React.createElement("h3", { "onTouchTap": tile.transitionTo, "style": { marginBottom: 0, cursor: "pointer" } }, tile.props.markup.title), React.createElement("div", { "dangerouslySetInnerHTML": tile.rawMarkup('markup') })), tile.isOverflowedFront() ? React.createElement("div", { "className": "flipcard-gradient front" }) : null)));
+            var backflipcard = React.createElement("div", { "className": "flipcard-frame" }, returnicon, tile.isOverflowedBack() ? backexpandicon : null, React.createElement("div", { "className": "flipcard-padding" }, React.createElement("div", { "className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.back } }, React.createElement("div", { "className": "flipcard-content", "ref": function ref(node) {
                     tile.state.elements.backface = node;
-                } }, React.createElement("div", { "dangerouslySetInnerHTML": tile.rawMarkup('help') })), React.createElement("div", { "className": "flipcard-gradient back" }))));
+                } }, React.createElement("a", { "style": {
+                    padding: "3px 0 0 3px",
+                    fontSize: "small",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    fontStyle: "italic"
+                }, "href": "#", "onTouchTap": tile.showFront }, "Return >>"), React.createElement("h3", { "onTouchTap": tile.showFront, "style": { marginBottom: 0, cursor: "pointer" } }, tile.isHelpContent() ? tile.props.help.title : null), React.createElement("div", { "dangerouslySetInnerHTML": tile.rawMarkup('help') })), React.createElement("div", { "className": "flipcard-gradient back" }))));
             return React.createElement(GridTile, null, React.createElement(FlipCard, { "disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" } }, frontflipcard, backflipcard));
         }
     }]);
@@ -1427,51 +1444,90 @@ var maincols = 2;
 var mainpadding = 0;
 var maintiles = [{
     id: 6,
-    content: '<h3>About Budget Commons</h3> \n\t\t<p><em>Budget Commons</em> (this website) is a new, evolving initiative coming out of Toronto\'s \n\t\tcivil society sector, specifically <a target="_blank" href="http://civictech.ca">Civic Tech \n\t\tToronto</a>, in collaboration with <a target="_blank" href="http://betterbudget.ca">Better \n\t\tBudget Toronto<a>, among others. The purpose is to <em>support informed debate about the \n\t\tToronto Budget.</em></p>',
-    help: '<h3>Project Background</h3>\n\t\t<p>The <a href="http://civictech.ca/projects/#torontobudgetproject" target="_blank">\n\t\tToronto Budget Project</a> started in July 2015. Deliberations and consultations\n\t\tabout scope and direction continued until August of that year, and building of foundation\n\t\telements of the website began in December.</p>',
+    content: {
+        title: 'About Budget Commons',
+        body: '<p><em>Budget Commons</em> (this website) is a new, evolving initiative coming out of Toronto\'s \n        \t\tcivil society sector, specifically <a target="_blank" href="http://civictech.ca">Civic Tech \n        \t\tToronto</a>, in collaboration with <a target="_blank" href="http://betterbudget.ca">Better \n        \t\tBudget Toronto<a>, among others. The purpose is to <em>support informed debate about the \n        \t\tToronto Budget.</em></p>'
+    },
+    help: {
+        title: 'Project Background',
+        body: '<p>The <a href="http://civictech.ca/projects/#torontobudgetproject" target="_blank">\n        \t\tToronto Budget Project</a> started in July 2015. Deliberations and consultations\n        \t\tabout scope and direction continued until August of that year, and building of foundation\n        \t\telements of the website began in December.</p>'
+    },
     index: 0,
     route: 'about'
 }, {
     id: 7,
-    content: '<h3>The Budget Roadmap</h3>\n        <p><em>Under development.</em></p>\n\t\t<p>The budget roadmap is a compilation of annual budget events that lead to the adoption of the\n\t\tCity of Toronto Budget in February of each year. These events include:</p> \n\t\t<ul>\n\t\t<li>public events, some of which include public deputations</li> \n\t\t<li>internal city events</li>\n\t\t<li>councillor sponsored budget \'Town Halls\'</li>\n\t\t<li>a participatory budget process</li>\n\t\t<li>events hosted by civil society organizations</li>\n\t\t</ul>',
-    help: '<h3>About the Budget Roadmap</h3>\n\t\t<p>In principle the budget roadmap could encompass regional councils, as well as city ridings,\n\t\tinternal executive and staff consultations, and public committee meetings.The information  we \n\t\thave is taken from a variety of sources, including interviews with City staff.</p>\n        <p>This is the first feature we\'re implementing because being the simplest, it will give us\n        a chance to build the website foundation that wil be used by all future features as well.</p>',
+    content: {
+        title: 'The Budget Roadmap',
+        body: '<p><em>Under development.</em></p>\n        \t\t<p>The budget roadmap is a compilation of annual budget events that lead to the adoption of the\n        \t\tCity of Toronto Budget in February of each year. These events include:</p> \n        \t\t<ul>\n        \t\t<li>public events, some of which include public deputations</li> \n        \t\t<li>internal city events</li>\n        \t\t<li>councillor sponsored budget \'Town Halls\'</li>\n        \t\t<li>a participatory budget process</li>\n        \t\t<li>events hosted by civil society organizations</li>\n        \t\t</ul>'
+    },
+    help: {
+        title: 'About the Budget Roadmap',
+        body: '<p>In principle the budget roadmap could encompass regional councils, as well as city ridings,\n        \t\tinternal executive and staff consultations, and public committee meetings.The information  we \n        \t\thave is taken from a variety of sources, including interviews with City staff.</p>\n                <p>This is the first feature we\'re implementing because being the simplest, it will give us\n                a chance to build the website foundation that wil be used by all future features as well.</p>'
+    },
     index: 1,
     route: 'timeline'
 }, {
     id: 1,
-    content: '<h3>Deputation Helper</h3>\n        <p><em>In the planning stage.</em></p>\n\t\t<p>The City of Toronto mandates receiving brief (typicallty 3-5 minute) deputations from city\n        residents, usually late in the budget process. But there as so many more ways to make your voice\n        heard! For this deputation helper, we\'re hoping to help with the problem of scheduling, such\n        that people don\'t have to wait much of the day to give their brief presentations. But we\'ll also\n        offer other assists to help people collaborate on voicing their opinions.</p>',
+    content: {
+        title: 'Deputation Helper',
+        body: '<p><em>In the planning stage.</em></p>\n        \t\t<p>The City of Toronto mandates receiving brief (typicallty 3-5 minute) deputations from city\n                residents, usually late in the budget process. But there as so many more ways to make your voice\n                heard! For this deputation helper, we\'re hoping to help with the problem of scheduling, such\n                that people don\'t have to wait much of the day to give their brief presentations. But we\'ll also\n                offer other assists to help people collaborate on voicing their opinions.</p>'
+    },
     index: 2,
     route: 'deputations'
 }, {
     id: 9,
-    content: '<h3>Budget Explorer</h3>\n\t\t<p><em>To be developed after the deputation helper is underway.</em></p>\n        <p>The key to influencing the budget is understanding the budget, but that\'s a challenge with\n        such a large document. We\'re planning to apply interactive tools, better taxonomies (categories),\n        and lessons learned from excellent attempts elsewhere, to create a more individualized experience\n        to exploring the budget, and assembling information to support arguments.</p>',
+    content: {
+        title: 'Budget Explorer',
+        body: '<p><em>To be developed after the deputation helper is underway.</em></p>\n                <p>The key to influencing the budget is understanding the budget, but that\'s a challenge with\n                such a large document. We\'re planning to apply interactive tools, better taxonomies (categories),\n                and lessons learned from excellent attempts elsewhere, to create a more individualized experience\n                to exploring the budget, and assembling information to support arguments.</p>'
+    },
     index: 3,
     route: 'explorer'
 }, {
     id: 2,
-    content: '<h3>Community Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
-    help: '<h3>About Community Resources</h3>\n\t\t<p><em>[content pending]</em></p>',
+    content: {
+        title: 'Community Resources',
+        body: '<p><em>[content pending]</em></p>'
+    },
+    help: {
+        title: 'About Community Resources',
+        body: '<p><em>[content pending]</em></p>'
+    },
     index: 4,
     route: 'resources'
 }, {
     id: 8,
-    content: '<h3>Social Media</h3>\n\t\t<p><em>[content pending]</em></p>',
-    help: '<h3>About Social Media</h3>\n\t\t<p><em>[content pending]</em></p>',
+    content: {
+        title: 'Social Media',
+        body: '<p><em>[content pending]</em></p>'
+    },
+    help: {
+        title: 'About Social Media',
+        body: '<p><em>[content pending]</em></p>'
+    },
     index: 5,
     route: 'socialmedia'
 }, {
     id: 11,
-    content: '<h3>Newsletter</h3>\n\t\t<p><em>[content pending]</em></p>',
+    content: {
+        title: 'Newsletter',
+        body: '<p><em>[content pending]</em></p>'
+    },
     index: 6,
     route: 'newsletter'
 }, {
     id: 10,
-    content: '<h3>Join Us!</h3>\n\t\t<p><em>[content pending]</em></p>',
+    content: {
+        title: 'Join Us!',
+        body: '<p><em>[content pending]</em></p>'
+    },
     index: 7,
     route: 'joinus'
 }, {
     id: 12,
-    content: '<h3>Tell your story</h3>\n        <p><em>Under consideration</em></p>',
+    content: {
+        title: 'Tell your story',
+        body: '<p><em>Under consideration</em></p>'
+    },
     index: 7,
     route: 'stories'
 }];
