@@ -179,7 +179,7 @@ class NavTile extends React.Component {
             top: 0,
             left: 0,
             fontStyle: "italic",
-        }, "href": "#", "onTouchTap": tile.showFront}, "Return >>"), React.createElement("h3", {"onTouchTap": tile.showFront, "style": { marginBottom: 0, cursor: "pointer", }}, tile.isHelpContent() ? tile.props.help.title : null), React.createElement("div", {"dangerouslySetInnerHTML": tile.rawMarkup('help')})), React.createElement("div", {"className": "flipcard-gradient back"}))));
+        }, "href": "javascript:void(0)", "onTouchTap": tile.showFront}, "Return >>"), React.createElement("h3", {"onTouchTap": tile.showFront, "style": { marginBottom: 0, cursor: "pointer", }}, tile.isHelpContent() ? tile.props.help.title : null), React.createElement("div", {"dangerouslySetInnerHTML": tile.rawMarkup('help')})), React.createElement("div", {"className": "flipcard-gradient back"}))));
         return (React.createElement(GridTile, null, React.createElement(FlipCard, {"disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" }}, frontflipcard, backflipcard)));
     }
 }

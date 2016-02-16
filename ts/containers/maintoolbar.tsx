@@ -15,14 +15,14 @@ import ToolbarGroup = require('material-ui/lib/toolbar/toolbar-group')
 
 function mapStateToProps(state) {
 
-	let { toolsnavbar, theme } = state
+    let { toolsnavbar, theme } = state
 
-	return {
+    return {
 
-		toolsnavbar,
-		theme,
+        toolsnavbar,
+        theme,
 
-	}
+    }
 
 }
 
@@ -33,31 +33,31 @@ class MainToolbarClass extends React.Component<any, any> {
     }
 
     render() {
-		let { appnavbar, theme } = this.props
+        let { appnavbar, theme } = this.props
 
-		return (
-			<Toolbar style={{ 
-				position: "fixed", 
-				bottom: 0, 
-				display: "flex", 
-				justifyContent: "center", 
-				borderTop:"2px solid silver" 
-			}}>
-				<ToolbarGroup style={{ 
-					float: "none", 
-					width: "70%", 
-					display: "flex", 
-					justifyContent: "space-around" 
-				}} >
-	    			<IconButton disabled><FontIcon className="material-icons">arrow_back</FontIcon></IconButton>
+        return (
+            <Toolbar style={{ 
+                position: "fixed", 
+                bottom: 0, 
+                display: "flex", 
+                justifyContent: "center", 
+                borderTop:"2px solid silver" 
+            }}>
+                <ToolbarGroup style={{ 
+                    float: "none", 
+                    width: "70%", 
+                    display: "flex", 
+                    justifyContent: "space-around" 
+                }} >
+                    <IconButton disabled><FontIcon className="material-icons">arrow_back</FontIcon></IconButton>
                     <IconButton onTouchTap = { this.transitionToHome }><FontIcon className="material-icons">radio_button_unchecked</FontIcon></IconButton>
-					<IconButton disabled><FontIcon className="material-icons">check_box_outline_blank</FontIcon></IconButton>
-                    <IconButton disabled><FontIcon className="material-icons">arrow_forward</FontIcon></IconButton>
+                    <IconButton disabled><FontIcon className="material-icons">check_box_outline_blank</FontIcon></IconButton>
                     <IconButton disabled><FontIcon className="material-icons">help_outline</FontIcon></IconButton>
-                    </ToolbarGroup>
-    		</Toolbar>
-		)
-	} // render
+                    <IconButton disabled><FontIcon className="material-icons">arrow_forward</FontIcon></IconButton>
+                </ToolbarGroup>
+            </Toolbar>
+        )
+    } // render
 }
 
 var MainToolbar = injectStore(mapStateToProps)(MainToolbarClass)

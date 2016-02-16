@@ -375,7 +375,7 @@ var NavTile = function (_React$Component) {
                     top: 0,
                     left: 0,
                     fontStyle: "italic"
-                }, "href": "#", "onTouchTap": tile.showFront }, "Return >>"), React.createElement("h3", { "onTouchTap": tile.showFront, "style": { marginBottom: 0, cursor: "pointer" } }, tile.isHelpContent() ? tile.props.help.title : null), React.createElement("div", { "dangerouslySetInnerHTML": tile.rawMarkup('help') })), React.createElement("div", { "className": "flipcard-gradient back" }))));
+                }, "href": "javascript:void(0)", "onTouchTap": tile.showFront }, "Return >>"), React.createElement("h3", { "onTouchTap": tile.showFront, "style": { marginBottom: 0, cursor: "pointer" } }, tile.isHelpContent() ? tile.props.help.title : null), React.createElement("div", { "dangerouslySetInnerHTML": tile.rawMarkup('help') })), React.createElement("div", { "className": "flipcard-gradient back" }))));
             return React.createElement(GridTile, null, React.createElement(FlipCard, { "disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" } }, frontflipcard, backflipcard));
         }
     }]);
@@ -795,7 +795,7 @@ var MainToolbarClass = function (_React$Component) {
                     width: "70%",
                     display: "flex",
                     justifyContent: "space-around"
-                } }, React.createElement(IconButton, { "disabled": true }, React.createElement(FontIcon, { "className": "material-icons" }, "arrow_back")), React.createElement(IconButton, { "onTouchTap": this.transitionToHome }, React.createElement(FontIcon, { "className": "material-icons" }, "radio_button_unchecked")), React.createElement(IconButton, { "disabled": true }, React.createElement(FontIcon, { "className": "material-icons" }, "check_box_outline_blank")), React.createElement(IconButton, { "disabled": true }, React.createElement(FontIcon, { "className": "material-icons" }, "arrow_forward")), React.createElement(IconButton, { "disabled": true }, React.createElement(FontIcon, { "className": "material-icons" }, "help_outline"))));
+                } }, React.createElement(IconButton, { "disabled": true }, React.createElement(FontIcon, { "className": "material-icons" }, "arrow_back")), React.createElement(IconButton, { "onTouchTap": this.transitionToHome }, React.createElement(FontIcon, { "className": "material-icons" }, "radio_button_unchecked")), React.createElement(IconButton, { "disabled": true }, React.createElement(FontIcon, { "className": "material-icons" }, "check_box_outline_blank")), React.createElement(IconButton, { "disabled": true }, React.createElement(FontIcon, { "className": "material-icons" }, "help_outline")), React.createElement(IconButton, { "disabled": true }, React.createElement(FontIcon, { "className": "material-icons" }, "arrow_forward"))));
         }
     }]);
 

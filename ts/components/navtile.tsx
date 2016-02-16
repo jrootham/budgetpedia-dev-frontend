@@ -356,7 +356,7 @@ export class NavTile extends React.Component<any, any> {
                                 left: 0,
                                 fontStyle: "italic",
                             }}
-                                href="#"
+                                href="javascript:void(0)"
                                 onTouchTap={ tile.showFront } >
 
                                 Return >>
