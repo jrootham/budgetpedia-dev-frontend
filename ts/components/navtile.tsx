@@ -218,7 +218,7 @@ export class NavTile extends React.Component<any, any> {
                     className="material-icons"
                     color = { tile.props.tilecolors.helpbutton } >
 
-                    help
+                    help_outline
 
                 </FontIcon>
 
@@ -310,7 +310,8 @@ export class NavTile extends React.Component<any, any> {
                                     top:0,
                                     left:0,
                                     fontStyle:"italic",
-                                }} 
+                                    color: tile.props.tilecolors.helpbutton,
+                            }} 
                                 href="javascript:void(0)" 
                                 onTouchTap={ tile.transitionTo } >
 
@@ -318,7 +319,10 @@ export class NavTile extends React.Component<any, any> {
 
                             </a>
                             <h3 onTouchTap={ tile.transitionTo }
-                                style={{ marginBottom: 0, cursor:"pointer", }} >
+                                style={{ 
+                                    marginBottom: 0, 
+                                    cursor:"pointer", 
+                                }} >
 
                                 {tile.props.markup.title}
                                 
@@ -355,6 +359,7 @@ export class NavTile extends React.Component<any, any> {
                                 top: 0,
                                 left: 0,
                                 fontStyle: "italic",
+                                color: tile.props.tilecolors.helpbutton,
                             }}
                                 href="javascript:void(0)"
                                 onTouchTap={ tile.showFront } >

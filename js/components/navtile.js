@@ -140,7 +140,7 @@ class NavTile extends React.Component {
             height: "36px",
             width: "36px",
             position: "absolute",
-        }, "onTouchTap": tile.showBack}, React.createElement(FontIcon, {"className": "material-icons", "color": tile.props.tilecolors.helpbutton}, "help"));
+        }, "onTouchTap": tile.showBack}, React.createElement(FontIcon, {"className": "material-icons", "color": tile.props.tilecolors.helpbutton}, "help_outline"));
         let returnicon = React.createElement(IconButton, {"className": "flipcard-return-to-front-icon", "style": {
             backgroundColor: tile.props.tilecolors.back,
             padding: 0,
@@ -169,7 +169,11 @@ class NavTile extends React.Component {
             top: 0,
             left: 0,
             fontStyle: "italic",
-        }, "href": "javascript:void(0)", "onTouchTap": tile.transitionTo}, "See more >>"), React.createElement("h3", {"onTouchTap": tile.transitionTo, "style": { marginBottom: 0, cursor: "pointer", }}, tile.props.markup.title), React.createElement("div", {"dangerouslySetInnerHTML": tile.rawMarkup('markup')})), tile.isOverflowedFront() ?
+            color: tile.props.tilecolors.helpbutton,
+        }, "href": "javascript:void(0)", "onTouchTap": tile.transitionTo}, "See more >>"), React.createElement("h3", {"onTouchTap": tile.transitionTo, "style": {
+            marginBottom: 0,
+            cursor: "pointer",
+        }}, tile.props.markup.title), React.createElement("div", {"dangerouslySetInnerHTML": tile.rawMarkup('markup')})), tile.isOverflowedFront() ?
             React.createElement("div", {"className": "flipcard-gradient front"})
             : null)));
         let backflipcard = React.createElement("div", {"className": "flipcard-frame"}, returnicon, tile.isOverflowedBack() ? backexpandicon : null, React.createElement("div", {"className": "flipcard-padding"}, React.createElement("div", {"className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.back, }}, React.createElement("div", {"className": "flipcard-content", "ref": (node) => { tile.state.elements.backface = node; }}, React.createElement("a", {"style": {
@@ -179,6 +183,7 @@ class NavTile extends React.Component {
             top: 0,
             left: 0,
             fontStyle: "italic",
+            color: tile.props.tilecolors.helpbutton,
         }, "href": "javascript:void(0)", "onTouchTap": tile.showFront}, "Return >>"), React.createElement("h3", {"onTouchTap": tile.showFront, "style": { marginBottom: 0, cursor: "pointer", }}, tile.isHelpContent() ? tile.props.help.title : null), React.createElement("div", {"dangerouslySetInnerHTML": tile.rawMarkup('help')})), React.createElement("div", {"className": "flipcard-gradient back"}))));
         return (React.createElement(GridTile, null, React.createElement(FlipCard, {"disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" }}, frontflipcard, backflipcard)));
     }
