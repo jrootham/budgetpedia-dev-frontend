@@ -19,8 +19,22 @@ class BasicForm extends React.Component {
     render() {
         let basicform = this;
         let elements = basicform.props.elements;
-        let children = elements.map(attributes => {
-            return React.createElement(TextField, React.__spread({"ref": node => { basicform.textFields[attributes.key] = node; }}, attributes));
+        let children = elements.map(element => {
+            let attributes = {};
+            for (var name in element) {
+                if (['index'].indexOf(name) < 0)
+                    attributes[name] = element[name];
+            }
+            let istextbox = (attributes['rows'] && (attributes['rows'] > 1));
+            let display = istextbox
+                ? 'block'
+                : 'inline-block';
+            if (istextbox)
+                attributes['fullWidth'] = true;
+            return (React.createElement("div", {"className": "textfieldwrapper", "style": {
+                display: display,
+                marginRight: "5px"
+            }, "key": element.index}, React.createElement(TextField, React.__spread({"ref": node => { basicform.textFields[element.index] = node; }}, attributes))));
         });
         return (React.createElement("form", {"onSubmit": basicform.submit}, basicform.props.completionMessage
             ? React.createElement("p", {"style": { color: "green" }}, basicform.props.completionMessage)

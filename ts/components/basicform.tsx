@@ -28,11 +28,15 @@ export interface elementProps {
     floatingLabelText:string,
     error?: string,
     type?: string,
-    key:string,
+    // key:string,
+    index:string,
+    multiLine?: boolean,
+    rows?: number,
 
     minLength?:number,
     maxLength?:number,
     required?:boolean,
+    disabled?:boolean,
 }
 
 interface TextFields {
@@ -54,11 +58,37 @@ export class BasicForm extends React.Component<BasicFormProps, any> {
     render() {
         let basicform = this
         let elements = basicform.props.elements
-        let children = elements.map(attributes => {
+        // if rows > 1, make display = block
+        // filter out allocated attributes before applying to TextField
+        let children = elements.map(element => {
 
-            return <TextField 
-                ref = { node => {basicform.textFields[attributes.key]=node} } 
-                { ...attributes } />
+            let attributes:{[index:string]:any} = {}
+            for (var name in element) {
+                if (['index'].indexOf(name) < 0)
+                    attributes[name]=element[name]
+            }
+
+            let istextbox:boolean = (attributes['rows'] && (attributes['rows'] > 1))
+            let display = istextbox
+                ? 'block'
+                : 'inline-block'
+            if (istextbox)
+                attributes['fullWidth'] = true
+
+            return (
+                <div className = "textfieldwrapper"
+                    style={{
+                        display:display,
+                        marginRight:"5px"
+                    }} 
+                    key={element.index} >
+                    <TextField 
+                        ref = { node => {basicform.textFields[element.index]=node} } 
+                        { ...attributes } 
+                    />
+
+                </div>
+            )
         })
 
         return (

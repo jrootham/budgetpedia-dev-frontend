@@ -37,9 +37,9 @@ declare namespace __MaterialUI {
         titleStyle: Object,
     }
     interface TextFieldProps extends React.Props<TextField> {
-        minLength: number,
-        maxLength: number,
-        required: boolean,
+        minLength?: number,
+        maxLength?: number,
+        required?: boolean,
     }
     interface LeftNavProps extends React.Props<LeftNav> {
         width?:number,

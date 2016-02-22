@@ -230,10 +230,20 @@ var BasicForm = function (_React$Component) {
         value: function render() {
             var basicform = this;
             var elements = basicform.props.elements;
-            var children = elements.map(function (attributes) {
-                return React.createElement(TextField, React.__spread({ "ref": function ref(node) {
-                        basicform.textFields[attributes.key] = node;
-                    } }, attributes));
+            var children = elements.map(function (element) {
+                var attributes = {};
+                for (var name in element) {
+                    if (['index'].indexOf(name) < 0) attributes[name] = element[name];
+                }
+                var istextbox = attributes['rows'] && attributes['rows'] > 1;
+                var display = istextbox ? 'block' : 'inline-block';
+                if (istextbox) attributes['fullWidth'] = true;
+                return React.createElement("div", { "className": "textfieldwrapper", "style": {
+                        display: display,
+                        marginRight: "5px"
+                    }, "key": element.index }, React.createElement(TextField, React.__spread({ "ref": function ref(node) {
+                        basicform.textFields[element.index] = node;
+                    } }, attributes)));
             });
             return React.createElement("form", { "onSubmit": basicform.submit }, basicform.props.completionMessage ? React.createElement("p", { "style": { color: "green" } }, basicform.props.completionMessage) : null, basicform.props.warningMessage ? React.createElement("p", { "style": { color: "orange" } }, basicform.props.warningMessage) : null, basicform.props.errorMessage ? React.createElement("p", { "style": { color: "red" } }, basicform.props.errorMessage) : null, React.createElement(CardText, { "children": children }), React.createElement(CardActions, null, React.createElement(RaisedButton, { "type": "submit", "label": basicform.props.submitButtonLabel, "className": "button-submit", "primary": true })));
         }
@@ -666,13 +676,13 @@ var MainBarClass = function (_React$Component) {
                     zIndex: 2
                 }, "onTouchTap": appbar.close }, React.createElement(FontIcon, { "className": "material-icons", "color": theme.palette.primary3Color, "style": { cursor: "pointer" } }, "close"));
             var elements = [{
-                key: 'userid',
+                index: 'userid',
                 floatingLabelText: 'Email Address',
                 hintText: "enter unique email (required)",
                 type: 'email',
                 required: true
             }, {
-                key: 'password',
+                index: 'password',
                 floatingLabelText: 'Password',
                 hintText: "enter password (required)",
                 type: 'password',
@@ -681,7 +691,7 @@ var MainBarClass = function (_React$Component) {
                 required: true
             }];
             var loginform = React.createElement(basicform_1.BasicForm, { "submit": appbar.submitLogin, "elements": elements, "submitButtonLabel": 'Sign up', "errorMessage": appbar.props.auth.errorMessage });
-            var registerprompt = React.createElement("div", null, React.createElement(CardText, null, React.createElement("a", { "href": "javascript:void(0);", "onTouchTap": appbar.transitionToResetPassword }, "Forgot your password?")), React.createElement(Divider, null), React.createElement(CardText, null, "Not a member?Register:"), React.createElement(CardActions, null, React.createElement(RaisedButton, { "type": "button", "label": "Register", "onTouchTap": appbar.transitionToRegister })));
+            var registerprompt = React.createElement("div", null, React.createElement(CardText, null, React.createElement("a", { "href": "javascript:void(0);", "onTouchTap": appbar.transitionToResetPassword }, "Forgot your password?")), React.createElement(Divider, null), React.createElement(CardText, null, "Not a member? Register:"), React.createElement(CardActions, null, React.createElement(RaisedButton, { "type": "button", "label": "Register", "onTouchTap": appbar.transitionToRegister })));
             var loginsidebar = React.createElement(LeftNav, { "width": 300, "docked": false, "openRight": true, "onRequestChange": function onRequestChange(open) {
                     return appbar.setState({ accountsidebaropen: open });
                 }, "open": appbar.state.accountsidebaropen }, React.createElement(Card, { "style": { margin: "5px" } }, closeicon, React.createElement(CardTitle, { "title": "Account Sign In", "style": { paddingBottom: 0 } }), loginform, registerprompt));
@@ -924,7 +934,7 @@ var NoMatch = function (_Component) {
 exports.NoMatch = NoMatch;
 
 },{"react":396}],11:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -936,29 +946,98 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = require('react');
 var Component = React.Component;
+var PropTypes = React.PropTypes;
 
-var Register = function (_Component) {
-    _inherits(Register, _Component);
+var react_redux_1 = require('react-redux');
+var basicform_1 = require('../components/basicform');
 
-    function Register() {
-        _classCallCheck(this, Register);
+var RegisterClass = function (_Component) {
+    _inherits(RegisterClass, _Component);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(Register).apply(this, arguments));
+    function RegisterClass() {
+        var _Object$getPrototypeO;
+
+        _classCallCheck(this, RegisterClass);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(RegisterClass)).call.apply(_Object$getPrototypeO, [this].concat(args)));
+
+        _this.submitRegistration = function (elements) {
+            var creds = {};
+            for (var index in elements) {
+                creds[index] = elements[index].getValue();
+            }
+            console.log('creds', creds);
+        };
+        return _this;
     }
 
-    _createClass(Register, [{
-        key: "render",
+    _createClass(RegisterClass, [{
+        key: 'render',
         value: function render() {
-            return React.createElement("div", null, "Register Page");
+            var registerpage = this;
+            var elements = [{
+                index: 'userid',
+                floatingLabelText: 'Email Address',
+                hintText: "enter unique email (required)",
+                type: 'email',
+                required: true
+            }, {
+                index: 'username',
+                floatingLabelText: 'User Name',
+                hintText: "the name other members will see",
+                type: 'text',
+                required: true
+            }, {
+                index: 'firstname',
+                floatingLabelText: 'First Name',
+                hintText: "actual first or given name",
+                type: 'text',
+                required: true
+            }, {
+                index: 'lastname',
+                floatingLabelText: 'Last Name',
+                hintText: "actual last or family name",
+                type: 'text',
+                required: true
+            }, {
+                index: 'participation',
+                floatingLabelText: 'Participation',
+                defaultValue: 'General: Member',
+                type: 'text',
+                disabled: true
+            }, {
+                index: 'intro',
+                floatingLabelText: 'Introduction',
+                hintText: "something about yourself for other members (optional)",
+                multiLine: true,
+                rows: 4
+            }];
+            var registerform = React.createElement(basicform_1.BasicForm, { "submit": registerpage.submitRegistration, "elements": elements, "submitButtonLabel": 'Register', "errorMessage": registerpage.props.auth.errorMessage });
+            return React.createElement("div", null, React.createElement("h1", null, "Register"), registerform);
         }
     }]);
 
-    return Register;
+    return RegisterClass;
 }(Component);
 
+function mapStateToProps(state) {
+    var theme = state.theme;
+    var auth = state.auth;
+
+    return {
+        state: state,
+        auth: auth,
+        theme: theme
+    };
+}
+var Register = react_redux_1.connect(mapStateToProps)(RegisterClass);
 exports.Register = Register;
 
-},{"react":396}],12:[function(require,module,exports){
+},{"../components/basicform":3,"react":396,"react-redux":161}],12:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();

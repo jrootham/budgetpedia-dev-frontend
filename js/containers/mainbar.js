@@ -76,14 +76,14 @@ class MainBarClass extends React.Component {
         }, "onTouchTap": appbar.close}, React.createElement(FontIcon, {"className": "material-icons", "color": theme.palette.primary3Color, "style": { cursor: "pointer" }}, "close"));
         let elements = [
             {
-                key: 'userid',
+                index: 'userid',
                 floatingLabelText: 'Email Address',
                 hintText: "enter unique email (required)",
                 type: 'email',
                 required: true,
             },
             {
-                key: 'password',
+                index: 'password',
                 floatingLabelText: 'Password',
                 hintText: "enter password (required)",
                 type: 'password',
@@ -93,7 +93,7 @@ class MainBarClass extends React.Component {
             },
         ];
         let loginform = React.createElement(basicform_1.BasicForm, {"submit": appbar.submitLogin, "elements": elements, "submitButtonLabel": 'Sign up', "errorMessage": appbar.props.auth.errorMessage});
-        let registerprompt = React.createElement("div", null, React.createElement(CardText, null, React.createElement("a", {"href": "javascript:void(0);", "onTouchTap": appbar.transitionToResetPassword}, "Forgot your password?")), React.createElement(Divider, null), React.createElement(CardText, null, "Not a member?Register:"), React.createElement(CardActions, null, React.createElement(RaisedButton, {"type": "button", "label": "Register", "onTouchTap": appbar.transitionToRegister})));
+        let registerprompt = React.createElement("div", null, React.createElement(CardText, null, React.createElement("a", {"href": "javascript:void(0);", "onTouchTap": appbar.transitionToResetPassword}, "Forgot your password?")), React.createElement(Divider, null), React.createElement(CardText, null, "Not a member? Register:"), React.createElement(CardActions, null, React.createElement(RaisedButton, {"type": "button", "label": "Register", "onTouchTap": appbar.transitionToRegister})));
         let loginsidebar = React.createElement(LeftNav, {"width": 300, "docked": false, "openRight": true, "onRequestChange": open => appbar.setState({ accountsidebaropen: open, }), "open": appbar.state.accountsidebaropen}, React.createElement(Card, {"style": { margin: "5px" }}, closeicon, React.createElement(CardTitle, {"title": "Account Sign In", "style": { paddingBottom: 0 }}), loginform, registerprompt));
         let menusidebar = React.createElement(LeftNav, {"width": 300, "docked": false, "openRight": false, "onRequestChange": open => appbar.setState({ menusidebaropen: open, }), "open": this.state.menusidebaropen}, React.createElement("div", null, "Menu Sidebar"));
         let menuicon = React.createElement(IconButton, {"onTouchTap": () => { appbar.handleMenuSidebarToggle(); }}, React.createElement(FontIcon, {"className": "material-icons", "color": theme.palette.alternateTextColor, "style": { cursor: "pointer" }}, "menu"));
