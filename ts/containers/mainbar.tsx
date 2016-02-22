@@ -145,7 +145,6 @@ class MainBarClass extends React.Component<any, any> {
         // for login form below
         let elements:Array<elementProps> = [
             { 
-                // key: 'userid', 
                 index: 'userid',
                 floatingLabelText: 'Email Address',
                 hintText:"enter unique email (required)",
@@ -154,7 +153,6 @@ class MainBarClass extends React.Component<any, any> {
                 required: true,
             },
             {
-                // key: 'password',
                 index: 'password',
                 floatingLabelText: 'Password',
                 hintText:"enter password (required)",

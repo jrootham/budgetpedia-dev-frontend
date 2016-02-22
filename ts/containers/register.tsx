@@ -7,6 +7,8 @@ import { connect as injectStore} from 'react-redux'
 import * as Actions from '../actions/actions'
 
 import { BasicForm, elementProps } from '../components/basicform'
+import Card = require('material-ui/lib/card/card')
+import CardTitle = require('material-ui/lib/card/card-title')
 
 class RegisterClass extends Component<any, any> {
     // respond to login form; assume error correction
@@ -18,7 +20,7 @@ class RegisterClass extends Component<any, any> {
         }
         console.log('creds', creds)
 
-        // this.props.dispatch(Actions.registerUser(creds))
+        this.props.dispatch(Actions.registerUser(creds))
     }
     render() {
 
@@ -69,33 +71,34 @@ class RegisterClass extends Component<any, any> {
                 rows: 4,
             },
         ]
-        // TODO: change source of errormessage to props.register
         let registerform =
             <BasicForm
                 submit = { registerpage.submitRegistration }
                 elements = { elements }
                 submitButtonLabel = 'Register'
-                errorMessage = { registerpage.props.auth.errorMessage }
+                errorMessage = { registerpage.props.register.errorMessage }
                 />
 
-        return <div>
-            <h1>Register</h1>
+        return <Card style={{ margin: "5px" }} >
 
+            <CardTitle title = "Register" style={{ paddingBottom: 0 }} />
+            
             { registerform }
 
-        </div>
+        </Card>
     }
 }
 
 function mapStateToProps(state) {
 
-    let { theme, auth } = state
+    let { theme, auth, register } = state
 
     return {
 
         state,
         auth,
         theme,
+        register,
     }
 
 }

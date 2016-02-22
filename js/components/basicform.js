@@ -36,13 +36,13 @@ class BasicForm extends React.Component {
                 marginRight: "5px"
             }, "key": element.index}, React.createElement(TextField, React.__spread({"ref": node => { basicform.textFields[element.index] = node; }}, attributes))));
         });
-        return (React.createElement("form", {"onSubmit": basicform.submit}, basicform.props.completionMessage
+        return (React.createElement("form", {"onSubmit": basicform.submit}, React.createElement(CardText, null, basicform.props.completionMessage
             ? React.createElement("p", {"style": { color: "green" }}, basicform.props.completionMessage)
             : null, basicform.props.warningMessage
             ? React.createElement("p", {"style": { color: "orange" }}, basicform.props.warningMessage)
             : null, basicform.props.errorMessage
             ? React.createElement("p", {"style": { color: "red" }}, basicform.props.errorMessage)
-            : null, React.createElement(CardText, {"children": children}), React.createElement(CardActions, null, React.createElement(RaisedButton, {"type": "submit", "label": basicform.props.submitButtonLabel, "className": "button-submit", "primary": true}))));
+            : null, children), React.createElement(CardActions, null, React.createElement(RaisedButton, {"type": "submit", "label": basicform.props.submitButtonLabel, "className": "button-submit", "primary": true}))));
     }
 }
 exports.BasicForm = BasicForm;

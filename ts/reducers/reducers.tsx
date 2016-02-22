@@ -1,4 +1,4 @@
-// copyright (c) 2015 Henrik Bechmann, Toronto, MIT Licence
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // reducers.tsx
 
 ///<reference path="../../typings/flux-standard-action/flux-standard-action"/>
@@ -119,6 +119,43 @@ function auth(state = {
     }
 }
 
+let {
+    REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE,
+} = Actions
+
+// The auth reducer. The starting state sets authentication
+// based on a token being in local storage. In a real app,
+// we would also want a util to check if the token is expired.
+function register(state = {
+    isFetching: false,
+    isRegistered: false
+}, action) {
+    switch (action.type) {
+        case REGISTER_REQUEST:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isAuthenticated: false,
+                user: action.payload.creds,
+                errorMessage: '',
+            })
+        case REGISTER_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: true,
+            })
+        case REGISTER_FAILURE:
+            console.log('login failure', action)
+            return Object.assign({}, state, {
+                isFetching: false,
+                // isAuthenticated: false,
+                errorMessage: action.payload.message,
+                user: null,
+            })
+        default:
+            return state
+    }
+}
+
 let mainReducerCore = combineReducers(
 	{ 
 		maincols,
@@ -130,15 +167,20 @@ let mainReducerCore = combineReducers(
 		maintiles,
         routing:routeReducer, 
         auth,
+        register,
 	}
 )
 
 let mainReducer = (state,action) => {
 	if (!isFSA( action )) {
+
 		console.error('non-FSA action',action)
 		throw 'non-FSA action, see console for details'
+
 	} else {
+
 		return mainReducerCore(state,action)
+        
 	}
 }
 

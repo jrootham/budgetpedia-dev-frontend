@@ -94,22 +94,24 @@ export class BasicForm extends React.Component<BasicFormProps, any> {
         return (
         <form onSubmit = { basicform.submit } >
 
-            { basicform.props.completionMessage
-                ? <p style={{ color: "green" }}>{ basicform.props.completionMessage }</p>
-                : null
-            }
+            <CardText>
+                { basicform.props.completionMessage
+                    ? <p style={{ color: "green" }}>{ basicform.props.completionMessage }</p>
+                    : null
+                }
 
-            { basicform.props.warningMessage
-                ? <p style={{ color: "orange" }}>{ basicform.props.warningMessage }</p>
-                : null
-            }
+                { basicform.props.warningMessage
+                    ? <p style={{ color: "orange" }}>{ basicform.props.warningMessage }</p>
+                    : null
+                }
 
-            { basicform.props.errorMessage
-                ? <p style={{ color: "red" }}>{ basicform.props.errorMessage }</p>
-                : null
-            }
+                { basicform.props.errorMessage
+                    ? <p style={{ color: "red" }}>{ basicform.props.errorMessage }</p>
+                    : null
+                }
 
-            <CardText children = { children } />
+                { children }
+            </CardText>
 
             <CardActions>
 

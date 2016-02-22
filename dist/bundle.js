@@ -181,6 +181,57 @@ exports.logoutUser = function () {
         dispatch(receiveLogout());
     };
 };
+exports.REGISTER_REQUEST = 'REGISTER_REQUEST';
+exports.REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+exports.REGISTER_FAILURE = 'REGISTER_FAILURE';
+var requestRegister = redux_actions_1.createAction(exports.REGISTER_REQUEST, function (creds) {
+    return {
+        message: '',
+        creds: creds
+    };
+});
+var receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, function (user) {
+    return {
+        id_token: user.id_token
+    };
+});
+var registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, function (message) {
+    return {
+        message: message
+    };
+});
+exports.registerUser = function (creds) {
+    var config = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'userid=' + creds.userid + '&password=' + creds.password
+    };
+    return function (dispatch) {
+        dispatch(requestRegister(creds));
+        fetch('/api/login', config).then(function (response) {
+            console.log('response = ', response);
+            if (response.status >= 400) {
+                throw new Error("Response from server: " + response.statusText + ' (' + response.status + ')');
+            }
+            response.json().then(function (user) {
+                return { user: user, response: response };
+            });
+        }).then(function (_ref2) {
+            var user = _ref2.user;
+            var response = _ref2.response;
+
+            console.log('user block', user, response);
+            if (!response.ok) {
+                dispatch(loginError(user.message));
+            } else {
+                dispatch(receiveRegister(user));
+            }
+        }).catch(function (err) {
+            dispatch(registerError(err.message));
+            console.log('System Error: ', err.message);
+        });
+    };
+};
 
 },{"isomorphic-fetch":51,"react-router-redux":168,"redux-actions":400}],3:[function(require,module,exports){
 'use strict';
@@ -245,7 +296,7 @@ var BasicForm = function (_React$Component) {
                         basicform.textFields[element.index] = node;
                     } }, attributes)));
             });
-            return React.createElement("form", { "onSubmit": basicform.submit }, basicform.props.completionMessage ? React.createElement("p", { "style": { color: "green" } }, basicform.props.completionMessage) : null, basicform.props.warningMessage ? React.createElement("p", { "style": { color: "orange" } }, basicform.props.warningMessage) : null, basicform.props.errorMessage ? React.createElement("p", { "style": { color: "red" } }, basicform.props.errorMessage) : null, React.createElement(CardText, { "children": children }), React.createElement(CardActions, null, React.createElement(RaisedButton, { "type": "submit", "label": basicform.props.submitButtonLabel, "className": "button-submit", "primary": true })));
+            return React.createElement("form", { "onSubmit": basicform.submit }, React.createElement(CardText, null, basicform.props.completionMessage ? React.createElement("p", { "style": { color: "green" } }, basicform.props.completionMessage) : null, basicform.props.warningMessage ? React.createElement("p", { "style": { color: "orange" } }, basicform.props.warningMessage) : null, basicform.props.errorMessage ? React.createElement("p", { "style": { color: "red" } }, basicform.props.errorMessage) : null, children), React.createElement(CardActions, null, React.createElement(RaisedButton, { "type": "submit", "label": basicform.props.submitButtonLabel, "className": "button-submit", "primary": true })));
         }
     }]);
 
@@ -949,7 +1000,10 @@ var Component = React.Component;
 var PropTypes = React.PropTypes;
 
 var react_redux_1 = require('react-redux');
+var Actions = require('../actions/actions');
 var basicform_1 = require('../components/basicform');
+var Card = require('material-ui/lib/card/card');
+var CardTitle = require('material-ui/lib/card/card-title');
 
 var RegisterClass = function (_Component) {
     _inherits(RegisterClass, _Component);
@@ -971,6 +1025,7 @@ var RegisterClass = function (_Component) {
                 creds[index] = elements[index].getValue();
             }
             console.log('creds', creds);
+            _this.props.dispatch(Actions.registerUser(creds));
         };
         return _this;
     }
@@ -1016,8 +1071,8 @@ var RegisterClass = function (_Component) {
                 multiLine: true,
                 rows: 4
             }];
-            var registerform = React.createElement(basicform_1.BasicForm, { "submit": registerpage.submitRegistration, "elements": elements, "submitButtonLabel": 'Register', "errorMessage": registerpage.props.auth.errorMessage });
-            return React.createElement("div", null, React.createElement("h1", null, "Register"), registerform);
+            var registerform = React.createElement(basicform_1.BasicForm, { "submit": registerpage.submitRegistration, "elements": elements, "submitButtonLabel": 'Register', "errorMessage": registerpage.props.register.errorMessage });
+            return React.createElement(Card, { "style": { margin: "5px" } }, React.createElement(CardTitle, { "title": "Register", "style": { paddingBottom: 0 } }), registerform);
         }
     }]);
 
@@ -1027,17 +1082,19 @@ var RegisterClass = function (_Component) {
 function mapStateToProps(state) {
     var theme = state.theme;
     var auth = state.auth;
+    var register = state.register;
 
     return {
         state: state,
         auth: auth,
-        theme: theme
+        theme: theme,
+        register: register
     };
 }
 var Register = react_redux_1.connect(mapStateToProps)(RegisterClass);
 exports.Register = Register;
 
-},{"../components/basicform":3,"react":396,"react-redux":161}],12:[function(require,module,exports){
+},{"../actions/actions":2,"../components/basicform":3,"material-ui/lib/card/card":82,"material-ui/lib/card/card-title":81,"react":396,"react-redux":161}],12:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1566,6 +1623,41 @@ function auth() {
             return state;
     }
 }
+var REGISTER_REQUEST = Actions.REGISTER_REQUEST;
+var REGISTER_SUCCESS = Actions.REGISTER_SUCCESS;
+var REGISTER_FAILURE = Actions.REGISTER_FAILURE;
+
+function register() {
+    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+        isFetching: false,
+        isRegistered: false
+    } : arguments[0];
+    var action = arguments[1];
+
+    switch (action.type) {
+        case REGISTER_REQUEST:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isAuthenticated: false,
+                user: action.payload.creds,
+                errorMessage: ''
+            });
+        case REGISTER_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: true
+            });
+        case REGISTER_FAILURE:
+            console.log('login failure', action);
+            return Object.assign({}, state, {
+                isFetching: false,
+                errorMessage: action.payload.message,
+                user: null
+            });
+        default:
+            return state;
+    }
+}
 var mainReducerCore = redux_1.combineReducers({
     maincols: maincols,
     mainpadding: mainpadding,
@@ -1575,7 +1667,8 @@ var mainReducerCore = redux_1.combineReducers({
     system: system,
     maintiles: maintiles,
     routing: react_router_redux_1.routeReducer,
-    auth: auth
+    auth: auth,
+    register: register
 });
 var mainReducer = function mainReducer(state, action) {
     if (!flux_standard_action_1.isFSA(action)) {

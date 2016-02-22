@@ -87,6 +87,35 @@ function auth(state = {
             return state;
     }
 }
+let { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE, } = Actions;
+function register(state = {
+        isFetching: false,
+        isRegistered: false
+    }, action) {
+    switch (action.type) {
+        case REGISTER_REQUEST:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isAuthenticated: false,
+                user: action.payload.creds,
+                errorMessage: '',
+            });
+        case REGISTER_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: true,
+            });
+        case REGISTER_FAILURE:
+            console.log('login failure', action);
+            return Object.assign({}, state, {
+                isFetching: false,
+                errorMessage: action.payload.message,
+                user: null,
+            });
+        default:
+            return state;
+    }
+}
 let mainReducerCore = redux_1.combineReducers({
     maincols,
     mainpadding,
@@ -97,6 +126,7 @@ let mainReducerCore = redux_1.combineReducers({
     maintiles,
     routing: react_router_redux_1.routeReducer,
     auth,
+    register,
 });
 let mainReducer = (state, action) => {
     if (!flux_standard_action_1.isFSA(action)) {

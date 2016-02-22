@@ -150,6 +150,83 @@ export const logoutUser = () => {
     }
 }
 
-/*------------- register management -----------*/
+/*------------- registration management -----------*/
 
-// TBD
+export const REGISTER_REQUEST = 'REGISTER_REQUEST'
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
+export const REGISTER_FAILURE = 'REGISTER_FAILURE'
+
+let requestRegister = createAction(
+    REGISTER_REQUEST,
+    creds => {
+        return {
+            // isFetching: true,
+            // isAuthenticated: false,
+            message: '',
+            creds,
+        }
+    }
+)
+
+let receiveRegister = createAction(
+    REGISTER_SUCCESS,
+    user => {
+        return {
+            // isFetching: false,
+            // isAuthenticated: true,
+            id_token: user.id_token,
+        }
+    }
+)
+
+let registerError = createAction(
+    REGISTER_FAILURE,
+    message => {
+        return {
+            // isFetching: false,
+            // isAuthenticated: false,
+            message
+        }
+    }
+)
+
+// call the api
+export const registerUser = creds => {
+
+    let config = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `userid=${creds.userid}&password=${creds.password}`
+    }
+    return dispatch => {
+        dispatch(requestRegister(creds))
+        fetch('/api/login', config)
+            .then(response => {
+                console.log('response = ', response)
+                if (response.status >= 400) {
+                    throw new Error("Response from server: " +
+                        response.statusText + ' (' +
+                        response.status + ')')
+                }
+                response.json().then(user => ({ user, response }))
+            })
+            .then(({ user, response }) => {
+                console.log('user block', user, response)
+                if (!response.ok) {
+                    // If there was a problem, we want to
+                    // dispatch the error condition
+                    dispatch(loginError(user.message))
+                    // return Promise.reject(user) // ???
+                } else {
+                    // If login was successful, set the token in local storage
+                    // localStorage.setItem('id_token', user.id_token)
+                    // Dispatch the success action
+                    dispatch(receiveRegister(user))
+                }
+            })
+            .catch(err => {
+                dispatch(registerError(err.message))
+                console.log('System Error: ', err.message)
+            })
+    }
+}

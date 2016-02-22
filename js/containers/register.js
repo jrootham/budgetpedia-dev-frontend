@@ -1,7 +1,10 @@
 var React = require('react');
 var { Component, PropTypes } = React;
 var react_redux_1 = require('react-redux');
+var Actions = require('../actions/actions');
 var basicform_1 = require('../components/basicform');
+var Card = require('material-ui/lib/card/card');
+var CardTitle = require('material-ui/lib/card/card-title');
 class RegisterClass extends Component {
     constructor(...args) {
         super(...args);
@@ -11,6 +14,7 @@ class RegisterClass extends Component {
                 creds[index] = elements[index].getValue();
             }
             console.log('creds', creds);
+            this.props.dispatch(Actions.registerUser(creds));
         };
     }
     render() {
@@ -59,16 +63,17 @@ class RegisterClass extends Component {
                 rows: 4,
             },
         ];
-        let registerform = React.createElement(basicform_1.BasicForm, {"submit": registerpage.submitRegistration, "elements": elements, "submitButtonLabel": 'Register', "errorMessage": registerpage.props.auth.errorMessage});
-        return React.createElement("div", null, React.createElement("h1", null, "Register"), registerform);
+        let registerform = React.createElement(basicform_1.BasicForm, {"submit": registerpage.submitRegistration, "elements": elements, "submitButtonLabel": 'Register', "errorMessage": registerpage.props.register.errorMessage});
+        return React.createElement(Card, {"style": { margin: "5px" }}, React.createElement(CardTitle, {"title": "Register", "style": { paddingBottom: 0 }}), registerform);
     }
 }
 function mapStateToProps(state) {
-    let { theme, auth } = state;
+    let { theme, auth, register } = state;
     return {
         state,
         auth,
         theme,
+        register,
     };
 }
 var Register = react_redux_1.connect(mapStateToProps)(RegisterClass);

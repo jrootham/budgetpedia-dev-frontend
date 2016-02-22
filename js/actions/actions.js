@@ -86,3 +86,55 @@ exports.logoutUser = () => {
         dispatch(receiveLogout());
     };
 };
+exports.REGISTER_REQUEST = 'REGISTER_REQUEST';
+exports.REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+exports.REGISTER_FAILURE = 'REGISTER_FAILURE';
+let requestRegister = redux_actions_1.createAction(exports.REGISTER_REQUEST, creds => {
+    return {
+        message: '',
+        creds,
+    };
+});
+let receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, user => {
+    return {
+        id_token: user.id_token,
+    };
+});
+let registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, message => {
+    return {
+        message
+    };
+});
+exports.registerUser = creds => {
+    let config = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `userid=${creds.userid}&password=${creds.password}`
+    };
+    return dispatch => {
+        dispatch(requestRegister(creds));
+        fetch('/api/login', config)
+            .then(response => {
+            console.log('response = ', response);
+            if (response.status >= 400) {
+                throw new Error("Response from server: " +
+                    response.statusText + ' (' +
+                    response.status + ')');
+            }
+            response.json().then(user => ({ user, response }));
+        })
+            .then(({ user, response }) => {
+            console.log('user block', user, response);
+            if (!response.ok) {
+                dispatch(loginError(user.message));
+            }
+            else {
+                dispatch(receiveRegister(user));
+            }
+        })
+            .catch(err => {
+            dispatch(registerError(err.message));
+            console.log('System Error: ', err.message);
+        });
+    };
+};
