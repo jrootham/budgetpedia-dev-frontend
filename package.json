@@ -14,11 +14,12 @@
     "flux-standard-action": "^0.6.0",
     "history": "^1.17.0",
     "isomorphic-fetch": "^2.2.1",
+    "joi": "^8.0.1",
+    "joi-validation-strategy": "^0.3.3",
     "lodash.assign": "^3.2.0",
     "material-ui": "^0.14.4",
     "promise": "^7.1.1",
     "react": "^0.14.7",
-    "react-addons-create-fragment": "^0.14.7",
     "react-addons-css-transition-group": "^0.14.7",
     "react-addons-transition-group": "^0.14.6",
     "react-dnd": "^2.0.2",
@@ -29,12 +30,11 @@
     "react-router": "^2.0.0-rc5",
     "react-router-redux": "^2.1.0",
     "react-tap-event-plugin": "^0.2.1",
+    "react-validation-mixin": "^5.3.4",
     "redux": "^3.0.5",
     "redux-actions": "^0.9.1",
     "redux-router": "^0.1.0",
-    "redux-thunk": "^1.0.3",
-    "superagent": "^1.6.1",
-    "superagent-as-promised": "^3.2.1"
+    "redux-thunk": "^1.0.3"
   },
   "devDependencies": {
     "babelify": "^7.2.0",

@@ -16,6 +16,7 @@ exports.LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 exports.LOGIN_FAILURE = 'LOGIN_FAILURE';
 let requestLogin = redux_actions_1.createAction(exports.LOGIN_REQUEST, creds => {
     return {
+        message: '',
         creds,
     };
 });
@@ -41,14 +42,14 @@ exports.loginUser = creds => {
             .then(response => {
             console.log('response = ', response);
             if (response.status >= 400) {
-                throw new Error("Bad response from server: " +
+                throw new Error("Response from server: " +
                     response.statusText + ' (' +
                     response.status + ')');
             }
             response.json().then(user => ({ user, response }));
         })
             .then(({ user, response }) => {
-            console.log('user block');
+            console.log('user block', user, response);
             if (!response.ok) {
                 dispatch(loginError(user.message));
             }
@@ -59,7 +60,7 @@ exports.loginUser = creds => {
         })
             .catch(err => {
             dispatch(loginError(err.message));
-            console.log('Error: ', err.message);
+            console.log('System Error: ', err.message);
         });
     };
 };

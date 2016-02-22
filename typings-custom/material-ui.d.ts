@@ -36,6 +36,11 @@ declare namespace __MaterialUI {
         onTitleTouchTap: Function,
         titleStyle: Object,
     }
+    interface TextFieldProps extends React.Props<TextField> {
+        minLength: number,
+        maxLength: number,
+        required: boolean,
+    }
     interface LeftNavProps extends React.Props<LeftNav> {
         width?:number,
         open:boolean,

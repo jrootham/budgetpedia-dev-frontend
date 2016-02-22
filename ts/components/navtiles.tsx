@@ -1,4 +1,4 @@
-// copyright (c) 2015 Henrik Bechmann, Toronto, MIT Licence
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // navtiles.tsx
 
 /// <reference path="../../typings/material-ui/material-ui.d.ts" />

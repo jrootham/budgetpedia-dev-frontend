@@ -1,4 +1,4 @@
-// copyright (c) 2015 Henrik Bechmann, Toronto, MIT Licence
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // navtile.tsx
 ///<reference path="../../typings-custom/react-flipcard.d.ts" />
 
@@ -6,6 +6,7 @@
     TODO: 
     - scroll amount on expand should be parameterized
     - define NavTileProps
+    - BUG: rapid flipcard leads to both front and back being hidden -- tile becomes lost
 */
 'use strict'
 
@@ -18,21 +19,21 @@ import FontIcon = require('material-ui/lib/font-icon')
 import IconButton = require('material-ui/lib/icon-button')
 import Paper = require('material-ui/lib/paper')
 
-// interface NavTileProps extends React.Props<NavTile> {
-//     markup: string
-// }
-
 export class NavTile extends React.Component<any, any> {
     constructor() {
         super();
         this.state = { 
             isFlipped: false,
-            elements: {},
             expandiconfront:'expand_more',
             expandiconback: 'expand_more',
             isoverflowedfront:false,
             isoverflowedback:false,
         }
+    }
+
+    elements = {
+        frontface:null,
+        backface:null,
     }
 
     transitionTo = (e) => {
@@ -42,7 +43,7 @@ export class NavTile extends React.Component<any, any> {
         e.preventDefault()
         var _this = this;
         // wait for current js queue to clear
-        window.setTimeout(function(){ // prevent timing issues with FlipCard rendering
+        setTimeout(function(){ // prevent timing issues with FlipCard rendering
             _this.props.transitionTo(_this.props.route)
         },0)
     }
@@ -63,14 +64,12 @@ export class NavTile extends React.Component<any, any> {
     }
 
     showFront = e => {
-        // if (e.target.tagName == 'A') return;
-
         e.stopPropagation()
         e.preventDefault()
-        let node = this.state.elements.backface
-
-        if ( this.props.system.ischrome )
+        let node = this.elements.backface
+        if ( this.props.system.ischrome ) {
             node.style.display = 'none'
+        }
 
         this.setState({
             isFlipped: false
@@ -82,16 +81,16 @@ export class NavTile extends React.Component<any, any> {
         e.stopPropagation()
         e.preventDefault()
 
-        if (this.state.elements.frontface.style.overflow != 'auto') {
+        if (this.elements.frontface.style.overflow != 'auto') {
 
-            this.state.elements.frontface.style.overflow = 'auto'
-            this.scroll(this.state.elements.frontface,0,160)
+            this.elements.frontface.style.overflow = 'auto'
+            this.scroll(this.elements.frontface,0,160)
             this.setState({expandiconfront:'expand_less'})
 
         } else {
 
-            this.scroll(this.state.elements.frontface, this.state.elements.frontface.scrollTop, 0)
-            this.state.elements.frontface.style.overflow = 'hidden'
+            this.scroll(this.elements.frontface, this.elements.frontface.scrollTop, 0)
+            this.elements.frontface.style.overflow = 'hidden'
             this.setState({ expandiconfront: 'expand_more' })
 
         }
@@ -101,16 +100,16 @@ export class NavTile extends React.Component<any, any> {
     expandBack = e => {
         e.stopPropagation()
         e.preventDefault()
-        if (this.state.elements.backface.style.overflow != 'scroll') {
+        if (this.elements.backface.style.overflow != 'scroll') {
 
-            this.state.elements.backface.style.overflow = 'scroll'
-            this.scroll(this.state.elements.backface, 0, 160)
+            this.elements.backface.style.overflow = 'scroll'
+            this.scroll(this.elements.backface, 0, 160)
             this.setState({ expandiconback: 'expand_less' })
 
         } else {
 
-            this.scroll(this.state.elements.backface, this.state.elements.backface.scrollTop, 0)
-            this.state.elements.backface.style.overflow = 'hidden'
+            this.scroll(this.elements.backface, this.elements.backface.scrollTop, 0)
+            this.elements.backface.style.overflow = 'hidden'
             this.setState({ expandiconback: 'expand_more' })
 
         }
@@ -139,13 +138,13 @@ export class NavTile extends React.Component<any, any> {
 
             if ( flipped ) { // view backface
 
-                this.state.elements.backface.style.display = 'block'
-                this.state.elements.frontface.style.display = 'none'
+                this.elements.backface.style.display = 'block'
+                this.elements.frontface.style.display = 'none'
 
             } else {
 
-                this.state.elements.frontface.style.display = 'block'
-                this.state.elements.backface.style.display = 'none'
+                this.elements.frontface.style.display = 'block'
+                this.elements.backface.style.display = 'none'
 
             }
         }
@@ -184,8 +183,8 @@ export class NavTile extends React.Component<any, any> {
         // ... when home route is chosen after route from tile to target page
 
         setTimeout(() => {
-            let isfrontoverflowed: boolean = _this.isOverflowed(_this.state.elements.frontface)
-            let isbackoverflowed: boolean = _this.isOverflowed(_this.state.elements.backface)
+            let isfrontoverflowed: boolean = _this.isOverflowed(_this.elements.frontface)
+            let isbackoverflowed: boolean = _this.isOverflowed(_this.elements.backface)
             // set state, redrawing tile
             _this.setState({
                 isoverflowedfront: isfrontoverflowed,
@@ -297,12 +296,12 @@ export class NavTile extends React.Component<any, any> {
 
                 { tile.isOverflowedFront() ? frontexpandicon : null } 
 
-                <div className = "flipcard-padding">
+                <div className = "flipcard-padding"> 
                     <div className = "flipcard-border"
                         style={{ backgroundColor: tile.props.tilecolors.front, }} >
 
                         <div className = "flipcard-content"
-                            ref={(node) => { tile.state.elements.frontface = node } } >
+                            ref={(node) => { tile.elements.frontface = node} } >
                             <a style={{ 
                                     padding:"3px 0 0 3px",
                                     fontSize: "small", 
@@ -351,7 +350,7 @@ export class NavTile extends React.Component<any, any> {
                         style={{ backgroundColor: tile.props.tilecolors.back, }} >
 
                         <div className = "flipcard-content"
-                            ref={(node) => { tile.state.elements.backface = node } } >
+                            ref={(node) => { tile.elements.backface = node} } >
                             <a style={{
                                 padding: "3px 0 0 3px",
                                 fontSize: "small",

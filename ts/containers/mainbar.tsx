@@ -1,5 +1,6 @@
-// copyright (c) 2015 Henrik Bechmann, Toronto, MIT Licence
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // class_mainbar.tsx
+/// <reference path="../../typings/react/react.d.ts" />
 
 /*
     TODO: 
@@ -22,11 +23,14 @@
 'use strict'
 
 import * as React from 'react' // required by bundler
+var { Component, PropTypes } = React
 import { connect as injectStore} from 'react-redux'
 import * as Actions from '../actions/actions'
 
 import AppBar = require('material-ui/lib/app-bar')
 import LeftNav = require('material-ui/lib/left-nav')
+
+import { BasicForm, elementProps } from '../components/basicform'
 
 import Card = require('material-ui/lib/card/card')
 import CardTitle = require('material-ui/lib/card/card-title')
@@ -60,75 +64,72 @@ class MainBarClass extends React.Component<any, any> {
     handleAccountSidebarToggle = () => this.setState({ accountsidebaropen: !this.state.accountsidebaropen });
     handleMenuSidebarToggle = () => this.setState({ menusidebaropen: !this.state.menusidebaropen });
     
-    transitionToHome = () => {
-        this.setState({ accountsidebaropen: false })
-        this.props.dispatch(Actions.transitionTo('/'))
-    }
-
     close = () => {
         this.setState({ accountsidebaropen: false })
     }
 
-    transitionToRegister = () => {
-        this.setState({ accountsidebaropen: false })
-        this.props.dispatch(Actions.transitionTo('/register'))
+    transitionToHome = () => {
+        // consistent with other transition calls...
+        setTimeout(()=>{        
+            this.setState({ accountsidebaropen: false })
+            this.props.dispatch(Actions.transitionTo('/'))
+        })
     }
 
-    transitionToResetPassword = () => {
-        this.setState({ accountsidebaropen: false })
-        this.props.dispatch(Actions.transitionTo('/resetpassword'))
+    transitionToRegister = (e) => {
+        // avoid conflict with flipcard on home page
+        setTimeout(()=>{
+            this.setState({ accountsidebaropen: false })
+            this.props.dispatch(Actions.transitionTo('/register'))
+        })
     }
 
-    submitLogin = (e) => {
+    transitionToResetPassword = (e) => {
+        // avoid conflict with flipcard on home page
+        setTimeout(() => {
+            this.setState({ accountsidebaropen: false })
+            this.props.dispatch(Actions.transitionTo('/resetpassword'))
+        })
+    }
 
-        e.stopPropagation()
-        e.preventDefault()
+    // respond to login form; assume error correction
+    submitLogin = ( elements ) => {
 
-        let password=this.state.elements.password.getValue()
-        let userid=this.state.elements.userid.getValue()
-
-        let passworderror = !password
-        if (!passworderror)
-            passworderror = (password.length < 6 || password.length > 12)
-
-        let useriderror = !userid
-        if (!useriderror)
-            useriderror = !this.validateEmail(userid)
-
-        let dologin = !(useriderror || passworderror)
-
-        this.setState({ errors: { password: passworderror, userid: useriderror } })
-
-        if (dologin) {
-            let creds = {
-                password,
-                userid,
-            }
-            this.props.dispatch(Actions.loginUser(creds))
+        console.log('returned elements',elements)
+        let creds = {}
+        for (var index in elements) {
+            creds[index] = elements[index].getValue()
         }
+        console.log('creds',creds)
+
+        this.props.dispatch(Actions.loginUser(creds))
     }
-    validateEmail = email => {
-        // var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        let pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
-        let result = pattern.test(email)
-        return result
+
+    componentDidMount = () => {
+        let auth = this.props.auth
+        // console.log('state in mainbar', auth)
+        // close login sidebar after login
+        if (auth.isAuthenticated && (!auth.isFetching) && this.state.accountsidebaropen) {
+            this.setState({accountsidebaropen:false})
+        }
     }
 
     render() { 
-        let { appnavbar, theme } = this.props
+        let appbar = this
+        let { appnavbar, theme } = appbar.props
 
         let closeicon =
             <IconButton
                 style={{
-                       top:0,
-                       right:0,
+                    top:0,
+                    right:0,
                     padding: 0,
                     height: "36px",
                     width: "36px",
                     position: "absolute",
                     zIndex:2,
                 }}
-                onTouchTap={ this.close } >
+                onTouchTap={ appbar.close } >
 
                 <FontIcon
                     className="material-icons"
@@ -141,62 +142,40 @@ class MainBarClass extends React.Component<any, any> {
 
             </IconButton>
 
+        // for login form below
+        let elements:Array<elementProps> = [
+            { 
+                key: 'userid', 
+                floatingLabelText: 'Email Address',
+                hintText:"enter unique email (required)",
+                // defaultValue: 'henrik@bechmann.ca',
+                type: 'email',
+                required: true,
+            },
+            {
+                key: 'password',
+                floatingLabelText: 'Password',
+                hintText:"enter password (required)",
+                type: 'password',
+                maxLength:16,
+                minLength:6,
+                required: true,
+            },
+        ]
+
         let loginform = 
-            <form onSubmit={this.submitLogin} >
-
-                {this.props.auth.isFetching
-                    ? <p style={{ color: "green" }}>Checking credentials</p>
-                    : null
-                }
-
-                {this.props.auth.errorMessage
-                    ? <p style={{ color: "red" }}>{this.props.auth.errorMessage}</p>
-                    : null
-                }
-
-                <CardText>
-
-                    <TextField
-                        hintText="enter unique email (required)"
-                        floatingLabelText="Email Address"
-                        ref={node => { this.state.elements.userid = node } }
-                        errorText={
-                            this.state.errors.userid
-                                ? 'this field is required, and must be in valid email format'
-                                : ''
-                        } /><br />
-
-                    <TextField
-                        hintText="enter password (required)"
-                        floatingLabelText="Password"
-                        type="password"
-                        errorText={
-                            this.state.errors.password
-                                ? 'this field is required, and must be between 6 and 12 characters long'
-                                : ''
-                        }
-                        ref={node => { this.state.elements.password = node } }
-                        /><br />
-
-                </CardText>
-
-                <CardActions style={{ textAlign: "center" }} >
-
-                    <RaisedButton
-                        type="submit"
-                        label="Sign in"
-                        className="button-submit"
-                        primary={true} />
-
-                </CardActions>
-
-            </form>
+            <BasicForm 
+                submitLogin = { appbar.submitLogin }
+                elements = { elements }
+                submitButtonLabel = 'Sign up'
+                errorMessage = { appbar.props.auth.errorMessage } 
+            />
 
         let registerprompt = 
             <div>
                 <CardText>
                     <a href="javascript:void(0);"
-                        onTouchTap={this.transitionToResetPassword}>
+                        onTouchTap={appbar.transitionToResetPassword}>
                         Forgot your password?
                     </a>
                 </CardText>
@@ -207,12 +186,12 @@ class MainBarClass extends React.Component<any, any> {
                     Not a member?Register:
                 </CardText>
 
-                <CardActions style={{ textAlign: "center" }} >
+                <CardActions>
 
                     <RaisedButton
                         type="button"
                         label="Register"
-                        onTouchTap={this.transitionToRegister} />
+                        onTouchTap={appbar.transitionToRegister} />
 
                 </CardActions>
             </div>
@@ -222,8 +201,8 @@ class MainBarClass extends React.Component<any, any> {
                 width = { 300} 
                 docked = { false}
                 openRight = { true} 
-                onRequestChange = { open => this.setState({ accountsidebaropen: open, }) }
-                open = { this.state.accountsidebaropen } >
+                onRequestChange = { open => appbar.setState({ accountsidebaropen: open, }) }
+                open = { appbar.state.accountsidebaropen } >
 
                 <Card style={{ margin: "5px" }} >
 
@@ -243,7 +222,7 @@ class MainBarClass extends React.Component<any, any> {
                 width={300}
                 docked={false}
                 openRight={false}
-                onRequestChange={open => this.setState({ menusidebaropen: open, }) }
+                onRequestChange={open => appbar.setState({ menusidebaropen: open, }) }
                 open={this.state.menusidebaropen} >
 
                 <div>Menu Sidebar</div>
@@ -252,7 +231,7 @@ class MainBarClass extends React.Component<any, any> {
 
         let menuicon = 
             <IconButton
-                onTouchTap = {() => { this.handleMenuSidebarToggle() } } >
+                onTouchTap = {() => { appbar.handleMenuSidebarToggle() } } >
 
                 <FontIcon
                     className = "material-icons"
@@ -267,7 +246,7 @@ class MainBarClass extends React.Component<any, any> {
 
         let accounticon = 
             <IconButton
-                onTouchTap= {() => { this.handleAccountSidebarToggle() } } >
+                onTouchTap= {() => { appbar.handleAccountSidebarToggle() } } >
 
                 <FontIcon
                     className = "material-icons"
@@ -298,7 +277,7 @@ class MainBarClass extends React.Component<any, any> {
 
         return (
             <AppBar
-                onTitleTouchTap = { this.transitionToHome }
+                onTitleTouchTap = { appbar.transitionToHome }
                 titleStyle = {{cursor:'pointer'}}
                 style={ { position: "fixed" } }
                 title={ <span>{ appnavbar.title }</span> }

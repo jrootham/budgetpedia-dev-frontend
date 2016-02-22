@@ -7,11 +7,15 @@ var IconButton = require('material-ui/lib/icon-button');
 class NavTile extends React.Component {
     constructor() {
         super();
+        this.elements = {
+            frontface: null,
+            backface: null,
+        };
         this.transitionTo = (e) => {
             e.stopPropagation();
             e.preventDefault();
             var _this = this;
-            window.setTimeout(function () {
+            setTimeout(function () {
                 _this.props.transitionTo(_this.props.route);
             }, 0);
         };
@@ -31,9 +35,10 @@ class NavTile extends React.Component {
         this.showFront = e => {
             e.stopPropagation();
             e.preventDefault();
-            let node = this.state.elements.backface;
-            if (this.props.system.ischrome)
+            let node = this.elements.backface;
+            if (this.props.system.ischrome) {
                 node.style.display = 'none';
+            }
             this.setState({
                 isFlipped: false
             });
@@ -41,28 +46,28 @@ class NavTile extends React.Component {
         this.expandFront = e => {
             e.stopPropagation();
             e.preventDefault();
-            if (this.state.elements.frontface.style.overflow != 'auto') {
-                this.state.elements.frontface.style.overflow = 'auto';
-                this.scroll(this.state.elements.frontface, 0, 160);
+            if (this.elements.frontface.style.overflow != 'auto') {
+                this.elements.frontface.style.overflow = 'auto';
+                this.scroll(this.elements.frontface, 0, 160);
                 this.setState({ expandiconfront: 'expand_less' });
             }
             else {
-                this.scroll(this.state.elements.frontface, this.state.elements.frontface.scrollTop, 0);
-                this.state.elements.frontface.style.overflow = 'hidden';
+                this.scroll(this.elements.frontface, this.elements.frontface.scrollTop, 0);
+                this.elements.frontface.style.overflow = 'hidden';
                 this.setState({ expandiconfront: 'expand_more' });
             }
         };
         this.expandBack = e => {
             e.stopPropagation();
             e.preventDefault();
-            if (this.state.elements.backface.style.overflow != 'scroll') {
-                this.state.elements.backface.style.overflow = 'scroll';
-                this.scroll(this.state.elements.backface, 0, 160);
+            if (this.elements.backface.style.overflow != 'scroll') {
+                this.elements.backface.style.overflow = 'scroll';
+                this.scroll(this.elements.backface, 0, 160);
                 this.setState({ expandiconback: 'expand_less' });
             }
             else {
-                this.scroll(this.state.elements.backface, this.state.elements.backface.scrollTop, 0);
-                this.state.elements.backface.style.overflow = 'hidden';
+                this.scroll(this.elements.backface, this.elements.backface.scrollTop, 0);
+                this.elements.backface.style.overflow = 'hidden';
                 this.setState({ expandiconback: 'expand_more' });
             }
         };
@@ -82,12 +87,12 @@ class NavTile extends React.Component {
         this.handleOnFlip = flipped => {
             if (this.props.system.ischrome) {
                 if (flipped) {
-                    this.state.elements.backface.style.display = 'block';
-                    this.state.elements.frontface.style.display = 'none';
+                    this.elements.backface.style.display = 'block';
+                    this.elements.frontface.style.display = 'none';
                 }
                 else {
-                    this.state.elements.frontface.style.display = 'block';
-                    this.state.elements.backface.style.display = 'none';
+                    this.elements.frontface.style.display = 'block';
+                    this.elements.backface.style.display = 'none';
                 }
             }
         };
@@ -115,8 +120,8 @@ class NavTile extends React.Component {
             let _this = this;
             _this.forceUpdate();
             setTimeout(() => {
-                let isfrontoverflowed = _this.isOverflowed(_this.state.elements.frontface);
-                let isbackoverflowed = _this.isOverflowed(_this.state.elements.backface);
+                let isfrontoverflowed = _this.isOverflowed(_this.elements.frontface);
+                let isbackoverflowed = _this.isOverflowed(_this.elements.backface);
                 _this.setState({
                     isoverflowedfront: isfrontoverflowed,
                     isoverflowedback: isbackoverflowed,
@@ -125,7 +130,6 @@ class NavTile extends React.Component {
         };
         this.state = {
             isFlipped: false,
-            elements: {},
             expandiconfront: 'expand_more',
             expandiconback: 'expand_more',
             isoverflowedfront: false,
@@ -162,7 +166,7 @@ class NavTile extends React.Component {
             padding: "0",
             position: "absolute",
         }, "onTouchTap": tile.expandBack}, React.createElement(FontIcon, {"className": "material-icons", "color": tile.props.tilecolors.helpbutton}, tile.state.expandiconback));
-        let frontflipcard = React.createElement("div", {"className": "flipcard-frame"}, (tile.isHelpContent()) ? helpicon : null, tile.isOverflowedFront() ? frontexpandicon : null, React.createElement("div", {"className": "flipcard-padding"}, React.createElement("div", {"className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.front, }}, React.createElement("div", {"className": "flipcard-content", "ref": (node) => { tile.state.elements.frontface = node; }}, React.createElement("a", {"style": {
+        let frontflipcard = React.createElement("div", {"className": "flipcard-frame"}, (tile.isHelpContent()) ? helpicon : null, tile.isOverflowedFront() ? frontexpandicon : null, React.createElement("div", {"className": "flipcard-padding"}, React.createElement("div", {"className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.front, }}, React.createElement("div", {"className": "flipcard-content", "ref": (node) => { tile.elements.frontface = node; }}, React.createElement("a", {"style": {
             padding: "3px 0 0 3px",
             fontSize: "small",
             position: "absolute",
@@ -176,7 +180,7 @@ class NavTile extends React.Component {
         }}, tile.props.markup.title), React.createElement("div", {"dangerouslySetInnerHTML": tile.rawMarkup('markup')})), tile.isOverflowedFront() ?
             React.createElement("div", {"className": "flipcard-gradient front"})
             : null)));
-        let backflipcard = React.createElement("div", {"className": "flipcard-frame"}, returnicon, tile.isOverflowedBack() ? backexpandicon : null, React.createElement("div", {"className": "flipcard-padding"}, React.createElement("div", {"className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.back, }}, React.createElement("div", {"className": "flipcard-content", "ref": (node) => { tile.state.elements.backface = node; }}, React.createElement("a", {"style": {
+        let backflipcard = React.createElement("div", {"className": "flipcard-frame"}, returnicon, tile.isOverflowedBack() ? backexpandicon : null, React.createElement("div", {"className": "flipcard-padding"}, React.createElement("div", {"className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.back, }}, React.createElement("div", {"className": "flipcard-content", "ref": (node) => { tile.elements.backface = node; }}, React.createElement("a", {"style": {
             padding: "3px 0 0 3px",
             fontSize: "small",
             position: "absolute",

@@ -1,4 +1,4 @@
-// copyright (c) 2015 Henrik Bechmann, Toronto, MIT Licence
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 /// <reference path="../../typings/react/react.d.ts" />
 /// <reference path="../../typings/react/react-dom.d.ts" />
 /// <reference path="../../typings/react-redux/react-redux.d.ts" />

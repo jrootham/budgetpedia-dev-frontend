@@ -1,4 +1,4 @@
-// copyright (c) 2015 Henrik Bechmann, Toronto, MIT Licence
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // actions.tsx
 ///<reference path="../../typings/redux-actions/redux-actions.d.ts" />
 ///<reference path="../../typings-custom/isomorphic-fetch.d.ts" />
@@ -46,6 +46,7 @@ let requestLogin = createAction(
         return {
             // isFetching: true,
             // isAuthenticated: false,
+            message:'',
             creds,
         }
     }
@@ -87,14 +88,14 @@ export const loginUser = creds => {
             .then(response => {
                 console.log('response = ',response)
                 if (response.status >= 400) {
-                    throw new Error("Bad response from server: " + 
+                    throw new Error("Response from server: " + 
                         response.statusText + ' (' + 
                         response.status + ')')
                 }
                 response.json().then(user => ({ user, response }))
             })
             .then(({ user, response }) => {
-                console.log('user block')
+                console.log('user block', user, response)
                 if (!response.ok) {
                     // If there was a problem, we want to
                     // dispatch the error condition
@@ -109,7 +110,7 @@ export const loginUser = creds => {
             })
             .catch(err => { 
                 dispatch(loginError(err.message))
-                console.log('Error: ', err.message) 
+                console.log('System Error: ', err.message) 
             })
     }
 }
