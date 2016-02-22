@@ -216,10 +216,10 @@ var BasicForm = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(BasicForm)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
         _this.textFields = {};
-        _this.submitLogin = function (e) {
+        _this.submit = function (e) {
             e.stopPropagation();
             e.preventDefault();
-            _this.props.submitLogin(_this.textFields);
+            _this.props.submit(_this.textFields);
             return false;
         };
         return _this;
@@ -231,9 +231,11 @@ var BasicForm = function (_React$Component) {
             var basicform = this;
             var elements = basicform.props.elements;
             var children = elements.map(function (attributes) {
-                return React.createElement(TextField, React.__spread({}, attributes));
+                return React.createElement(TextField, React.__spread({ "ref": function ref(node) {
+                        basicform.textFields[attributes.key] = node;
+                    } }, attributes));
             });
-            return React.createElement("form", { "onSubmit": basicform.submitLogin }, basicform.props.completionMessage ? React.createElement("p", { "style": { color: "green" } }, basicform.props.completionMessage) : null, basicform.props.warningMessage ? React.createElement("p", { "style": { color: "orange" } }, basicform.props.warningMessage) : null, basicform.props.errorMessage ? React.createElement("p", { "style": { color: "red" } }, basicform.props.errorMessage) : null, React.createElement(CardText, { "children": children }), React.createElement(CardActions, null, React.createElement(RaisedButton, { "type": "submit", "label": basicform.props.submitButtonLabel, "className": "button-submit", "primary": true })));
+            return React.createElement("form", { "onSubmit": basicform.submit }, basicform.props.completionMessage ? React.createElement("p", { "style": { color: "green" } }, basicform.props.completionMessage) : null, basicform.props.warningMessage ? React.createElement("p", { "style": { color: "orange" } }, basicform.props.warningMessage) : null, basicform.props.errorMessage ? React.createElement("p", { "style": { color: "red" } }, basicform.props.errorMessage) : null, React.createElement(CardText, { "children": children }), React.createElement(CardActions, null, React.createElement(RaisedButton, { "type": "submit", "label": basicform.props.submitButtonLabel, "className": "button-submit", "primary": true })));
         }
     }]);
 
@@ -678,7 +680,7 @@ var MainBarClass = function (_React$Component) {
                 minLength: 6,
                 required: true
             }];
-            var loginform = React.createElement(basicform_1.BasicForm, { "submitLogin": appbar.submitLogin, "elements": elements, "submitButtonLabel": 'Sign up', "errorMessage": appbar.props.auth.errorMessage });
+            var loginform = React.createElement(basicform_1.BasicForm, { "submit": appbar.submitLogin, "elements": elements, "submitButtonLabel": 'Sign up', "errorMessage": appbar.props.auth.errorMessage });
             var registerprompt = React.createElement("div", null, React.createElement(CardText, null, React.createElement("a", { "href": "javascript:void(0);", "onTouchTap": appbar.transitionToResetPassword }, "Forgot your password?")), React.createElement(Divider, null), React.createElement(CardText, null, "Not a member?Register:"), React.createElement(CardActions, null, React.createElement(RaisedButton, { "type": "button", "label": "Register", "onTouchTap": appbar.transitionToRegister })));
             var loginsidebar = React.createElement(LeftNav, { "width": 300, "docked": false, "openRight": true, "onRequestChange": function onRequestChange(open) {
                     return appbar.setState({ accountsidebaropen: open });

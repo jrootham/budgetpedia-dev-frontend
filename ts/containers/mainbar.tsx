@@ -165,7 +165,7 @@ class MainBarClass extends React.Component<any, any> {
 
         let loginform = 
             <BasicForm 
-                submitLogin = { appbar.submitLogin }
+                submit = { appbar.submitLogin }
                 elements = { elements }
                 submitButtonLabel = 'Sign up'
                 errorMessage = { appbar.props.auth.errorMessage } 

@@ -14,7 +14,7 @@ import CardActions = require('material-ui/lib/card/card-actions')
 import RaisedButton = require('material-ui/lib/raised-button')
 
 interface BasicFormProps extends React.Props<BasicForm> {
-    submitLogin: Function,
+    submit: Function,
     elements:Array<elementProps>,
     submitButtonLabel: string,
     completionMessage?: string,
@@ -23,13 +23,13 @@ interface BasicFormProps extends React.Props<BasicForm> {
 }
 
 export interface elementProps {
-    value?:string,
     defaultValue?: string,
     hintText?:string,
     floatingLabelText:string,
     error?: string,
     type?: string,
     key:string,
+
     minLength?:number,
     maxLength?:number,
     required?:boolean,
@@ -43,38 +43,39 @@ export class BasicForm extends React.Component<BasicFormProps, any> {
 
     textFields: TextFields = {}
 
-    submitLogin = (e) => {
+    submit= (e) => {
         e.stopPropagation()
         e.preventDefault()
-        this.props.submitLogin(this.textFields)
+
+        this.props.submit(this.textFields)
         return false
     }
 
     render() {
         let basicform = this
         let elements = basicform.props.elements
-        // console.log('rendering',elements)
         let children = elements.map(attributes => {
 
-            return <TextField {...attributes} />
-
+            return <TextField 
+                ref = { node => {basicform.textFields[attributes.key]=node} } 
+                { ...attributes } />
         })
 
         return (
-        <form onSubmit={basicform.submitLogin} >
+        <form onSubmit = { basicform.submit } >
 
-            {basicform.props.completionMessage
-                ? <p style={{ color: "green" }}>{basicform.props.completionMessage}</p>
+            { basicform.props.completionMessage
+                ? <p style={{ color: "green" }}>{ basicform.props.completionMessage }</p>
                 : null
             }
 
-            {basicform.props.warningMessage
-                ? <p style={{ color: "orange" }}>{basicform.props.warningMessage}</p>
+            { basicform.props.warningMessage
+                ? <p style={{ color: "orange" }}>{ basicform.props.warningMessage }</p>
                 : null
             }
 
-            {basicform.props.errorMessage
-                ? <p style={{ color: "red" }}>{basicform.props.errorMessage}</p>
+            { basicform.props.errorMessage
+                ? <p style={{ color: "red" }}>{ basicform.props.errorMessage }</p>
                 : null
             }
 

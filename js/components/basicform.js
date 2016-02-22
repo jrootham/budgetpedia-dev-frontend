@@ -9,10 +9,10 @@ class BasicForm extends React.Component {
     constructor(...args) {
         super(...args);
         this.textFields = {};
-        this.submitLogin = (e) => {
+        this.submit = (e) => {
             e.stopPropagation();
             e.preventDefault();
-            this.props.submitLogin(this.textFields);
+            this.props.submit(this.textFields);
             return false;
         };
     }
@@ -20,9 +20,9 @@ class BasicForm extends React.Component {
         let basicform = this;
         let elements = basicform.props.elements;
         let children = elements.map(attributes => {
-            return React.createElement(TextField, React.__spread({}, attributes));
+            return React.createElement(TextField, React.__spread({"ref": node => { basicform.textFields[attributes.key] = node; }}, attributes));
         });
-        return (React.createElement("form", {"onSubmit": basicform.submitLogin}, basicform.props.completionMessage
+        return (React.createElement("form", {"onSubmit": basicform.submit}, basicform.props.completionMessage
             ? React.createElement("p", {"style": { color: "green" }}, basicform.props.completionMessage)
             : null, basicform.props.warningMessage
             ? React.createElement("p", {"style": { color: "orange" }}, basicform.props.warningMessage)
