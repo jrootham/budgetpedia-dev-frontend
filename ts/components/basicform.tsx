@@ -111,6 +111,7 @@ export class BasicForm extends React.Component<BasicFormProps, any> {
                 }
 
                 { children }
+                
             </CardText>
 
             <CardActions>
