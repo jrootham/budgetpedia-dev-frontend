@@ -15,6 +15,7 @@ var routes_1 = require('../features/routes');
 const reduxRouterMiddleware = react_router_redux_1.syncHistory(react_router_1.browserHistory);
 const createStoreWithMiddleware = redux_1.applyMiddleware(thunk, reduxRouterMiddleware)(redux_1.createStore);
 const store = createStoreWithMiddleware(reducers_1.mainReducer);
+console.log('state = ', store.getState());
 class Main extends Component {
     render() {
         return (React.createElement(react_redux_1.Provider, {"store": store}, React.createElement("div", null, React.createElement(mainbar_1.MainBar, null), React.createElement("div", {"style": { height: "64px" }}, " "), routes_1.routes, React.createElement("div", {"style": { height: "64px" }}, " "), React.createElement(maintoolbar_1.MainToolbar, null))));

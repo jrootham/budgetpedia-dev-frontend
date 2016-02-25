@@ -4,6 +4,9 @@
 /// <reference path="../../typings-custom/material-ui.d.ts" />
 /// <reference path="../../typings/material-ui/material-ui.d.ts" />
 
+// add scrolling prompt region above buttons, with:
+// http://stackoverflow.com/questions/19466750/scrolling-element-without-scrollbar-with-css
+
 import * as React from 'react';
 import { connect as injectStore} from 'react-redux'
 import * as Actions from '../actions/actions'

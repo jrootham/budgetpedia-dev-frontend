@@ -96,7 +96,7 @@ class NavTile extends React.Component {
                 }
             }
         };
-        this.handleKeyDown = (e) => {
+        this.handleKeyDown = e => {
             if (this.state.isFlipped && e.keyCode === 27) {
                 this.showFront(e);
             }
@@ -117,12 +117,12 @@ class NavTile extends React.Component {
             return (help.title || help.body);
         };
         this.componentDidMount = () => {
-            let _this = this;
-            _this.forceUpdate();
+            let component = this;
+            component.forceUpdate();
             setTimeout(() => {
-                let isfrontoverflowed = _this.isOverflowed(_this.elements.frontface);
-                let isbackoverflowed = _this.isOverflowed(_this.elements.backface);
-                _this.setState({
+                let isfrontoverflowed = component.isOverflowed(component.elements.frontface);
+                let isbackoverflowed = component.isOverflowed(component.elements.backface);
+                component.setState({
                     isoverflowedfront: isfrontoverflowed,
                     isoverflowedback: isbackoverflowed,
                 });

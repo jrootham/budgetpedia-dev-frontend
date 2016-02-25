@@ -12,15 +12,15 @@ import CardTitle = require('material-ui/lib/card/card-title')
 
 class RegisterClass extends Component<any, any> {
     // respond to login form; assume error correction
-    submitRegistration = (elements) => {
+    submitRegistration = elements => {
 
-        let creds = {}
+        let profile = {}
         for (var index in elements) {
-            creds[index] = elements[index].getValue()
+            profile[index] = elements[index].getValue()
         }
-        console.log('creds', creds)
+        console.log('profile', profile)
 
-        this.props.dispatch(Actions.registerUser(creds))
+        this.props.dispatch(Actions.registerUser(profile))
     }
     render() {
 
@@ -28,7 +28,7 @@ class RegisterClass extends Component<any, any> {
 
         let elements: Array<elementProps> = [
             {
-                index: 'userid',
+                index: 'email',
                 floatingLabelText: 'Email Address',
                 hintText: "enter unique email (required)",
                 // defaultValue: 'henrik@bechmann.ca',
@@ -36,8 +36,8 @@ class RegisterClass extends Component<any, any> {
                 required: true,
             },
             {
-                index: 'username',
-                floatingLabelText: 'User Name',
+                index: 'userhandle',
+                floatingLabelText: 'User Handle',
                 hintText: "the name other members will see",
                 type: 'text',
                 required: true,

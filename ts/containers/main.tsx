@@ -42,6 +42,8 @@ const createStoreWithMiddleware = applyMiddleware(
 
 const store = createStoreWithMiddleware(mainReducer)
 
+console.log('state = ',store.getState())
+
 export class Main extends Component<any, any> {
 
     render() {

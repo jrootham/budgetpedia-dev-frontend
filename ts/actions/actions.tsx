@@ -80,7 +80,7 @@ export const loginUser = creds => {
     let config = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `userid=${creds.userid}&password=${creds.password}`
+        body: `email=${creds.email}&password=${creds.password}`
     }
     return dispatch => {
         dispatch(requestLogin(creds))
@@ -150,7 +150,9 @@ export const logoutUser = () => {
     }
 }
 
-/*------------- registration management -----------*/
+//===================================================
+//------------- REGISTRATION MANAGEMENT -------------
+//===================================================
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
@@ -158,23 +160,23 @@ export const REGISTER_FAILURE = 'REGISTER_FAILURE'
 
 let requestRegister = createAction(
     REGISTER_REQUEST,
-    creds => {
+    profile => {
         return {
-            // isFetching: true,
-            // isAuthenticated: false,
+            isFetching: true,
+            isRegistered: false,
             message: '',
-            creds,
+            profile,
         }
     }
 )
 
 let receiveRegister = createAction(
     REGISTER_SUCCESS,
-    user => {
+    profile => {
         return {
-            // isFetching: false,
-            // isAuthenticated: true,
-            id_token: user.id_token,
+            isFetching: false,
+            isRegistered: true,
+            confirmationtoken: profile.confirmationtoken,
         }
     }
 )
@@ -191,16 +193,17 @@ let registerError = createAction(
 )
 
 // call the api
-export const registerUser = creds => {
+export const registerUser = profile => {
 
     let config = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `userid=${creds.userid}&password=${creds.password}`
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(profile),
+        timeout: 3000, // TODO: test this!
     }
     return dispatch => {
-        dispatch(requestRegister(creds))
-        fetch('/api/login', config)
+        dispatch(requestRegister(profile))
+        fetch('/api/register', config)
             .then(response => {
                 console.log('response = ', response)
                 if (response.status >= 400) {
@@ -208,20 +211,18 @@ export const registerUser = creds => {
                         response.statusText + ' (' +
                         response.status + ')')
                 }
-                response.json().then(user => ({ user, response }))
+                response.json().then(profile => ({ profile, response }))
             })
-            .then(({ user, response }) => {
-                console.log('user block', user, response)
+            .then(({ profile, response }) => {
+                console.log('user profile', profile, response)
                 if (!response.ok) {
                     // If there was a problem, we want to
                     // dispatch the error condition
-                    dispatch(loginError(user.message))
+                    dispatch(loginError(profile.message))
                     // return Promise.reject(user) // ???
                 } else {
-                    // If login was successful, set the token in local storage
-                    // localStorage.setItem('id_token', user.id_token)
                     // Dispatch the success action
-                    dispatch(receiveRegister(user))
+                    dispatch(receiveRegister(profile))
                 }
             })
             .catch(err => {

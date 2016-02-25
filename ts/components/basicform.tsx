@@ -47,7 +47,7 @@ export class BasicForm extends React.Component<BasicFormProps, any> {
 
     textFields: TextFields = {}
 
-    submit= (e) => {
+    submit= e => {
         e.stopPropagation()
         e.preventDefault()
 
@@ -61,20 +61,20 @@ export class BasicForm extends React.Component<BasicFormProps, any> {
         // if rows > 1, make display = block
         // filter out allocated attributes before applying to TextField
         let children = elements.map(element => {
-
+            // filter out element properties which are not TextField attributes
             let attributes:{[index:string]:any} = {}
             for (var name in element) {
                 if (['index'].indexOf(name) < 0)
                     attributes[name]=element[name]
             }
-
+            // make adjustments for textbox as block
             let istextbox:boolean = (attributes['rows'] && (attributes['rows'] > 1))
             let display = istextbox
                 ? 'block'
                 : 'inline-block'
             if (istextbox)
                 attributes['fullWidth'] = true
-
+            // generate component
             return (
                 <div className = "textfieldwrapper"
                     style={{
@@ -111,7 +111,6 @@ export class BasicForm extends React.Component<BasicFormProps, any> {
                 }
 
                 { children }
-                
             </CardText>
 
             <CardActions>

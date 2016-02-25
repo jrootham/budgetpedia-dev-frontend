@@ -57,7 +57,7 @@ class MainBarClass extends React.Component<any, any> {
             accountsidebaropen: false, 
             menusidebaropen: false,
             elements:{},
-            errors:{password:false,userid:false},
+            errors:{password:false,email:false},
         };
     }
 
@@ -145,7 +145,7 @@ class MainBarClass extends React.Component<any, any> {
         // for login form below
         let elements:Array<elementProps> = [
             { 
-                index: 'userid',
+                index: 'email',
                 floatingLabelText: 'Email Address',
                 hintText:"enter unique email (required)",
                 // defaultValue: 'henrik@bechmann.ca',

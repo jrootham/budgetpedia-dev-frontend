@@ -1,3 +1,4 @@
+'use strict';
 var redux_1 = require('redux');
 var Actions = require('../actions/actions');
 var initialstate_1 = require("../store/initialstate");
@@ -97,13 +98,14 @@ function register(state = {
             return Object.assign({}, state, {
                 isFetching: true,
                 isAuthenticated: false,
-                user: action.payload.creds,
+                user: action.payload.profile,
                 errorMessage: '',
             });
         case REGISTER_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: true,
+                user: null,
             });
         case REGISTER_FAILURE:
             console.log('login failure', action);

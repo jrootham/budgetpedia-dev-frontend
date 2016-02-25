@@ -133,7 +133,7 @@ export class NavTile extends React.Component<any, any> {
 
     // handle chrome bug
     handleOnFlip = flipped => {
-        // chrome doesn't respect backface-visibility in presence of overflow:auot
+        // chrome doesn't respect backface-visibility in presence of overflow:auto
         if ( this.props.system.ischrome ) {
 
             if ( flipped ) { // view backface
@@ -150,7 +150,7 @@ export class NavTile extends React.Component<any, any> {
         }
     }
 
-    handleKeyDown = ( e ) => {
+    handleKeyDown = e => {
         if (this.state.isFlipped && e.keyCode === 27) {
             this.showFront(e);
         }
@@ -177,16 +177,16 @@ export class NavTile extends React.Component<any, any> {
 
     // wait for component to mount before measuring overflow state
     componentDidMount = () => {
-        let _this = this
+        let component = this
 
-        _this.forceUpdate() // in some circumstances this is required to draw backface expand icons
+        component.forceUpdate() // in some circumstances this is required to draw backface expand icons
         // ... when home route is chosen after route from tile to target page
 
         setTimeout(() => {
-            let isfrontoverflowed: boolean = _this.isOverflowed(_this.elements.frontface)
-            let isbackoverflowed: boolean = _this.isOverflowed(_this.elements.backface)
+            let isfrontoverflowed: boolean = component.isOverflowed(component.elements.frontface)
+            let isbackoverflowed: boolean = component.isOverflowed(component.elements.backface)
             // set state, redrawing tile
-            _this.setState({
+            component.setState({
                 isoverflowedfront: isfrontoverflowed,
                 isoverflowedback: isbackoverflowed,
             })

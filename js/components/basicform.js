@@ -9,7 +9,7 @@ class BasicForm extends React.Component {
     constructor(...args) {
         super(...args);
         this.textFields = {};
-        this.submit = (e) => {
+        this.submit = e => {
             e.stopPropagation();
             e.preventDefault();
             this.props.submit(this.textFields);

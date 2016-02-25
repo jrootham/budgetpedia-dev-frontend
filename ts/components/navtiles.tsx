@@ -17,58 +17,58 @@ import { NavTile } from "./navtile"
 
 interface NavTilesData {
 
-	id: 		number,
-	style?: 	Object,
-	content: 	string,
-	help?: 		string,
-	route?:		string,
+    id:         number,
+    style?:     Object,
+    content:    string,
+    help?:      string,
+    route?:     string,
 
 }
 
 interface NavTilesProps extends React.Props< NavTiles > {
 
-	tiles: 		Array< NavTilesData >,
-	tilecols?:	number,
-	padding?: 	number,
-	style?: 	Object,
-	tilecolors: Object,
-	system: 	Object,
-	route?:		string,
-	transitionTo: Function,
-	cellHeight?: number,
+    tiles:      Array< NavTilesData >,
+    tilecols?:  number,
+    padding?:   number,
+    style?:     Object,
+    tilecolors: Object,
+    system:     Object,
+    route?:     string,
+    transitionTo: Function,
+    cellHeight?: number,
 
 }
 
 class NavTiles extends Component< NavTilesProps, any > {
 
-	render() {
+    render() {
 
-		let { tiles, tilecols, padding, tilecolors, style, system, route, transitionTo, cellHeight } = this.props
+        let { tiles, tilecols, padding, tilecolors, style, system, route, transitionTo, cellHeight } = this.props
 
-		let tiles_ = tiles.map ( function ( data ) {
+        let tiles_ = tiles.map ( function ( data ) {
 
-			return (
-				<NavTile 
-					key 	= { data.id } 
-					markup 	= { data.content }
-					help 	= { data.help } 
-					tilecolors = { tilecolors }
-					system = { system }
-					route = { data.route }
-					transitionTo = { transitionTo } />
-			)
-		})
+            return (
+                <NavTile 
+                    key     = { data.id } 
+                    markup  = { data.content }
+                    help    = { data.help } 
+                    tilecolors = { tilecolors }
+                    system = { system }
+                    route = { data.route }
+                    transitionTo = { transitionTo } />
+            )
+        })
 
-		return (
-			<GridList 
+        return (
+            <GridList 
 
-				style		= { style }
-				children 	= { tiles_ } 
-				cols 		= { tilecols } 
-				padding		= { padding }
-				cellHeight  = { cellHeight } />
-		)
-	}
+                style       = { style }
+                children    = { tiles_ } 
+                cols        = { tilecols } 
+                padding     = { padding }
+                cellHeight  = { cellHeight } />
+        )
+    }
 }
 
 export { NavTiles }

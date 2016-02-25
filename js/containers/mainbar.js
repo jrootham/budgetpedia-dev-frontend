@@ -59,7 +59,7 @@ class MainBarClass extends React.Component {
             accountsidebaropen: false,
             menusidebaropen: false,
             elements: {},
-            errors: { password: false, userid: false },
+            errors: { password: false, email: false },
         };
     }
     render() {
@@ -76,7 +76,7 @@ class MainBarClass extends React.Component {
         }, "onTouchTap": appbar.close}, React.createElement(FontIcon, {"className": "material-icons", "color": theme.palette.primary3Color, "style": { cursor: "pointer" }}, "close"));
         let elements = [
             {
-                index: 'userid',
+                index: 'email',
                 floatingLabelText: 'Email Address',
                 hintText: "enter unique email (required)",
                 type: 'email',

@@ -4,6 +4,8 @@
 ///<reference path="../../typings/flux-standard-action/flux-standard-action"/>
 ///<reference path="../../typings/redux-actions/redux-actions.d.ts" />
 
+'use strict'
+
 import { combineReducers } from 'redux'
 import * as Actions from '../actions/actions'
 import { initialstate } from "../store/initialstate"
@@ -12,31 +14,31 @@ import { handleActions } from 'redux-actions'; // handleAction doesn't work with
 import { syncHistory, routeReducer } from 'react-router-redux'
 
 let appnavbar = (state: any = initialstate.appnavbar, action) => {
-	return state
+    return state
 }
 
 let toolsnavbar = (state: any = initialstate.toolsnavbar, action) => {
-	return state
+    return state
 }
 
 let theme = (state: any = initialstate.theme) => {
-	return state
+    return state
 }
 
 let system = (state:any = initialstate.system) => {
-	return state
+    return state
 }
 
 let colors = (state: any = initialstate.colors) => {
-	return state
+    return state
 }
 
 let mainpadding = (state: any = initialstate.mainpadding, action) => {
-	return state
+    return state
 }
 
 let maintiles = (state:any = initialstate.maintiles,action) => {
-	return state
+    return state
 }
 
 let maincolsreducer = (state: any = initialstate.maincols, action) => {
@@ -135,13 +137,14 @@ function register(state = {
             return Object.assign({}, state, {
                 isFetching: true,
                 isAuthenticated: false,
-                user: action.payload.creds,
+                user: action.payload.profile,
                 errorMessage: '',
             })
         case REGISTER_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: true,
+                user:null,
             })
         case REGISTER_FAILURE:
             console.log('login failure', action)
@@ -157,31 +160,31 @@ function register(state = {
 }
 
 let mainReducerCore = combineReducers(
-	{ 
-		maincols,
-		mainpadding,
-		appnavbar, 
-		theme,
-		colors,
-		system,
-		maintiles,
+    { 
+        maincols,
+        mainpadding,
+        appnavbar, 
+        theme,
+        colors,
+        system,
+        maintiles,
         routing:routeReducer, 
         auth,
         register,
-	}
+    }
 )
 
 let mainReducer = (state,action) => {
-	if (!isFSA( action )) {
+    if (!isFSA( action )) {
 
-		console.error('non-FSA action',action)
-		throw 'non-FSA action, see console for details'
+        console.error('non-FSA action',action)
+        throw 'non-FSA action, see console for details'
 
-	} else {
+    } else {
 
-		return mainReducerCore(state,action)
+        return mainReducerCore(state,action)
         
-	}
+    }
 }
 
 export { mainReducer }

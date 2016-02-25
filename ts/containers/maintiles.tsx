@@ -12,74 +12,74 @@ import { NavTiles } from "../components/navtiles"
 
 function mapStateToProps ( state ) {
 
-	let { maintiles, maincols, mainpadding, theme, colors, system } = state
+    let { maintiles, maincols, mainpadding, theme, colors, system } = state
 
-	return { 
+    return { 
 
-		maintiles,
-		maincols,
-		mainpadding,
-		theme,
-		colors,
-		system,
+        maintiles,
+        maincols,
+        mainpadding,
+        theme,
+        colors,
+        system,
 
-	 }
+     }
 
 }
 
 class MainTilesClass extends React.Component<any, any> {
 
-	handleResize = () => { 
+    handleResize = () => { 
 
-		this.props.dispatch ( Actions.setTileCols() ) 
+        this.props.dispatch ( Actions.setTileCols() ) 
 
-	}
+    }
 
-	componentWillMount = () => {
+    componentWillMount = () => {
 
-		// initialize
-		this.props.dispatch ( Actions.setTileCols() )
+        // initialize
+        this.props.dispatch ( Actions.setTileCols() )
 
-	}
+    }
 
-	componentDidMount = () => {
+    componentDidMount = () => {
 
-		window.addEventListener ( 'resize', this.handleResize )
+        window.addEventListener ( 'resize', this.handleResize )
 
-	}
+    }
 
-	componentWillUnmount = () => {
+    componentWillUnmount = () => {
 
-		window.removeEventListener ( 'resize', this.handleResize )
+        window.removeEventListener ( 'resize', this.handleResize )
 
-	}
+    }
 
-	render() {
+    render() {
 
-		let { maintiles, maincols, mainpadding, theme, colors, system } = this.props
+        let { maintiles, maincols, mainpadding, theme, colors, system } = this.props
 
-		return (
+        return (
 
-			<NavTiles 
+            <NavTiles 
 
-				style = {{margin:0,fontFamily:theme.fontFamily}}
-				tiles =		{ maintiles } 
-				tilecols =	{ maincols }
-				padding = 	{ mainpadding }
-				tilecolors = {
-					{ 
-						front: colors.blue50,
-						back: colors.amber50,
-						helpbutton: theme.palette.primary3Color,
-					}
-				}
-				system = { system }
+                style = {{margin:0,fontFamily:theme.fontFamily}}
+                tiles =     { maintiles } 
+                tilecols =  { maincols }
+                padding =   { mainpadding }
+                tilecolors = {
+                    { 
+                        front: colors.blue50,
+                        back: colors.amber50,
+                        helpbutton: theme.palette.primary3Color,
+                    }
+                }
+                system = { system }
                 transitionTo = { compose(this.props.dispatch, Actions.transitionTo) }
                 cellHeight = { 200 }
 
-			/>
-		)
-	}
+            />
+        )
+    }
 }
 
 // dependency injection

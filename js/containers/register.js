@@ -8,28 +8,28 @@ var CardTitle = require('material-ui/lib/card/card-title');
 class RegisterClass extends Component {
     constructor(...args) {
         super(...args);
-        this.submitRegistration = (elements) => {
-            let creds = {};
+        this.submitRegistration = elements => {
+            let profile = {};
             for (var index in elements) {
-                creds[index] = elements[index].getValue();
+                profile[index] = elements[index].getValue();
             }
-            console.log('creds', creds);
-            this.props.dispatch(Actions.registerUser(creds));
+            console.log('profile', profile);
+            this.props.dispatch(Actions.registerUser(profile));
         };
     }
     render() {
         let registerpage = this;
         let elements = [
             {
-                index: 'userid',
+                index: 'email',
                 floatingLabelText: 'Email Address',
                 hintText: "enter unique email (required)",
                 type: 'email',
                 required: true,
             },
             {
-                index: 'username',
-                floatingLabelText: 'User Name',
+                index: 'userhandle',
+                floatingLabelText: 'User Handle',
                 hintText: "the name other members will see",
                 type: 'text',
                 required: true,

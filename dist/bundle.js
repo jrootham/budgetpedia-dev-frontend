@@ -37,7 +37,7 @@ exports.loginUser = function (creds) {
     var config = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'userid=' + creds.userid + '&password=' + creds.password
+        body: 'email=' + creds.email + '&password=' + creds.password
     };
     return function (dispatch) {
         dispatch(requestLogin(creds));
@@ -91,15 +91,19 @@ exports.logoutUser = function () {
 exports.REGISTER_REQUEST = 'REGISTER_REQUEST';
 exports.REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 exports.REGISTER_FAILURE = 'REGISTER_FAILURE';
-var requestRegister = redux_actions_1.createAction(exports.REGISTER_REQUEST, function (creds) {
+var requestRegister = redux_actions_1.createAction(exports.REGISTER_REQUEST, function (profile) {
     return {
+        isFetching: true,
+        isRegistered: false,
         message: '',
-        creds: creds
+        profile: profile
     };
 });
-var receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, function (user) {
+var receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, function (profile) {
     return {
-        id_token: user.id_token
+        isFetching: false,
+        isRegistered: true,
+        confirmationtoken: profile.confirmationtoken
     };
 });
 var registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, function (message) {
@@ -107,31 +111,32 @@ var registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, funct
         message: message
     };
 });
-exports.registerUser = function (creds) {
+exports.registerUser = function (profile) {
     var config = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'userid=' + creds.userid + '&password=' + creds.password
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(profile),
+        timeout: 3000
     };
     return function (dispatch) {
-        dispatch(requestRegister(creds));
-        fetch('/api/login', config).then(function (response) {
+        dispatch(requestRegister(profile));
+        fetch('/api/register', config).then(function (response) {
             console.log('response = ', response);
             if (response.status >= 400) {
                 throw new Error("Response from server: " + response.statusText + ' (' + response.status + ')');
             }
-            response.json().then(function (user) {
-                return { user: user, response: response };
+            response.json().then(function (profile) {
+                return { profile: profile, response: response };
             });
         }).then(function (_ref2) {
-            var user = _ref2.user;
+            var profile = _ref2.profile;
             var response = _ref2.response;
 
-            console.log('user block', user, response);
+            console.log('user profile', profile, response);
             if (!response.ok) {
-                dispatch(loginError(user.message));
+                dispatch(loginError(profile.message));
             } else {
-                dispatch(receiveRegister(user));
+                dispatch(receiveRegister(profile));
             }
         }).catch(function (err) {
             dispatch(registerError(err.message));
@@ -339,12 +344,12 @@ var NavTile = function (_React$Component) {
             return help.title || help.body;
         };
         _this2.componentDidMount = function () {
-            var _this = _this2;
-            _this.forceUpdate();
+            var component = _this2;
+            component.forceUpdate();
             setTimeout(function () {
-                var isfrontoverflowed = _this.isOverflowed(_this.elements.frontface);
-                var isbackoverflowed = _this.isOverflowed(_this.elements.backface);
-                _this.setState({
+                var isfrontoverflowed = component.isOverflowed(component.elements.frontface);
+                var isbackoverflowed = component.isOverflowed(component.elements.backface);
+                component.setState({
                     isoverflowedfront: isfrontoverflowed,
                     isoverflowedback: isbackoverflowed
                 });
@@ -506,6 +511,7 @@ var routes_1 = require('../features/routes');
 var reduxRouterMiddleware = react_router_redux_1.syncHistory(react_router_1.browserHistory);
 var createStoreWithMiddleware = redux_1.applyMiddleware(thunk, reduxRouterMiddleware)(redux_1.createStore);
 var store = createStoreWithMiddleware(reducers_1.mainReducer);
+console.log('state = ', store.getState());
 
 var Main = function (_Component) {
     _inherits(Main, _Component);
@@ -611,7 +617,7 @@ var MainBarClass = function (_React$Component) {
             accountsidebaropen: false,
             menusidebaropen: false,
             elements: {},
-            errors: { password: false, userid: false }
+            errors: { password: false, email: false }
         };
         return _this;
     }
@@ -634,7 +640,7 @@ var MainBarClass = function (_React$Component) {
                     zIndex: 2
                 }, "onTouchTap": appbar.close }, React.createElement(FontIcon, { "className": "material-icons", "color": theme.palette.primary3Color, "style": { cursor: "pointer" } }, "close"));
             var elements = [{
-                index: 'userid',
+                index: 'email',
                 floatingLabelText: 'Email Address',
                 hintText: "enter unique email (required)",
                 type: 'email',
@@ -927,12 +933,12 @@ var RegisterClass = function (_Component) {
         var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(RegisterClass)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
         _this.submitRegistration = function (elements) {
-            var creds = {};
+            var profile = {};
             for (var index in elements) {
-                creds[index] = elements[index].getValue();
+                profile[index] = elements[index].getValue();
             }
-            console.log('creds', creds);
-            _this.props.dispatch(Actions.registerUser(creds));
+            console.log('profile', profile);
+            _this.props.dispatch(Actions.registerUser(profile));
         };
         return _this;
     }
@@ -942,14 +948,14 @@ var RegisterClass = function (_Component) {
         value: function render() {
             var registerpage = this;
             var elements = [{
-                index: 'userid',
+                index: 'email',
                 floatingLabelText: 'Email Address',
                 hintText: "enter unique email (required)",
                 type: 'email',
                 required: true
             }, {
-                index: 'username',
-                floatingLabelText: 'User Name',
+                index: 'userhandle',
+                floatingLabelText: 'User Handle',
                 hintText: "the name other members will see",
                 type: 'text',
                 required: true
@@ -1546,13 +1552,14 @@ function register() {
             return Object.assign({}, state, {
                 isFetching: true,
                 isAuthenticated: false,
-                user: action.payload.creds,
+                user: action.payload.profile,
                 errorMessage: ''
             });
         case REGISTER_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: false,
-                isAuthenticated: true
+                isAuthenticated: true,
+                user: null
             });
         case REGISTER_FAILURE:
             console.log('login failure', action);

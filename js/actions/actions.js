@@ -34,7 +34,7 @@ exports.loginUser = creds => {
     let config = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `userid=${creds.userid}&password=${creds.password}`
+        body: `email=${creds.email}&password=${creds.password}`
     };
     return dispatch => {
         dispatch(requestLogin(creds));
@@ -89,15 +89,19 @@ exports.logoutUser = () => {
 exports.REGISTER_REQUEST = 'REGISTER_REQUEST';
 exports.REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 exports.REGISTER_FAILURE = 'REGISTER_FAILURE';
-let requestRegister = redux_actions_1.createAction(exports.REGISTER_REQUEST, creds => {
+let requestRegister = redux_actions_1.createAction(exports.REGISTER_REQUEST, profile => {
     return {
+        isFetching: true,
+        isRegistered: false,
         message: '',
-        creds,
+        profile,
     };
 });
-let receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, user => {
+let receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, profile => {
     return {
-        id_token: user.id_token,
+        isFetching: false,
+        isRegistered: true,
+        confirmationtoken: profile.confirmationtoken,
     };
 });
 let registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, message => {
@@ -105,15 +109,16 @@ let registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, messa
         message
     };
 });
-exports.registerUser = creds => {
+exports.registerUser = profile => {
     let config = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `userid=${creds.userid}&password=${creds.password}`
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(profile),
+        timeout: 3000,
     };
     return dispatch => {
-        dispatch(requestRegister(creds));
-        fetch('/api/login', config)
+        dispatch(requestRegister(profile));
+        fetch('/api/register', config)
             .then(response => {
             console.log('response = ', response);
             if (response.status >= 400) {
@@ -121,15 +126,15 @@ exports.registerUser = creds => {
                     response.statusText + ' (' +
                     response.status + ')');
             }
-            response.json().then(user => ({ user, response }));
+            response.json().then(profile => ({ profile, response }));
         })
-            .then(({ user, response }) => {
-            console.log('user block', user, response);
+            .then(({ profile, response }) => {
+            console.log('user profile', profile, response);
             if (!response.ok) {
-                dispatch(loginError(user.message));
+                dispatch(loginError(profile.message));
             }
             else {
-                dispatch(receiveRegister(user));
+                dispatch(receiveRegister(profile));
             }
         })
             .catch(err => {
