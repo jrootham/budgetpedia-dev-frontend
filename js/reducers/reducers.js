@@ -1,10 +1,10 @@
 'use strict';
-var redux_1 = require('redux');
-var Actions = require('../actions/actions');
-var initialstate_1 = require("../store/initialstate");
-var flux_standard_action_1 = require('flux-standard-action');
-var redux_actions_1 = require('redux-actions');
-var react_router_redux_1 = require('react-router-redux');
+const redux_1 = require('redux');
+const flux_standard_action_1 = require('flux-standard-action');
+const redux_actions_1 = require('redux-actions');
+const react_router_redux_1 = require('react-router-redux');
+const Actions = require('../actions/actions');
+const initialstate_1 = require("../store/initialstate");
 let appnavbar = (state = initialstate_1.initialstate.appnavbar, action) => {
     return state;
 };
@@ -108,7 +108,6 @@ function register(state = {
                 user: null,
             });
         case REGISTER_FAILURE:
-            console.log('login failure', action);
             return Object.assign({}, state, {
                 isFetching: false,
                 errorMessage: action.payload.message,
@@ -119,16 +118,16 @@ function register(state = {
     }
 }
 let mainReducerCore = redux_1.combineReducers({
-    maincols,
-    mainpadding,
-    appnavbar,
-    theme,
-    colors,
-    system,
-    maintiles,
-    routing: react_router_redux_1.routeReducer,
-    auth,
-    register,
+    maincols: maincols,
+    mainpadding: mainpadding,
+    appnavbar: appnavbar,
+    theme: theme,
+    colors: colors,
+    system: system,
+    maintiles: maintiles,
+    routing: react_router_redux_1.routerReducer,
+    auth: auth,
+    register: register,
 });
 let mainReducer = (state, action) => {
     if (!flux_standard_action_1.isFSA(action)) {

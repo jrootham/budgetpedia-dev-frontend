@@ -11,20 +11,20 @@ import ReactCSSTransitionGroup = require('react-addons-css-transition-group')
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 // import { syncHistory } from 'react-router-redux'
 
-import { MainTiles } from '../containers/maintiles'
-import { NoMatch } from '../containers/nomatch'
-import { ResetPassword } from '../containers/resetpassword'
-import { Register } from '../containers/register'
+import { MainTiles } from '../controllers/maintiles'
+import { NoMatch } from '../controllers/nomatch'
+import { ResetPassword } from '../controllers/resetpassword'
+import { Register } from '../controllers/register'
 
-import { About } from './containers/about'
-import { Timeline } from './containers/timeline'
-import { Deputations } from './containers/deputations'
-import { Resources } from './containers/resources'
-import { SocialMedia } from './containers/socialmedia'
-import { Newsletter } from './containers/newsletter'
-import { JoinUs } from './containers/joinus'
-import { Stories } from './containers/stories'
-import { Explorer } from './containers/explorer'
+import { About } from './controllers/about'
+import { Timeline } from './controllers/timeline'
+import { Deputations } from './controllers/deputations'
+import { Resources } from './controllers/resources'
+import { SocialMedia } from './controllers/socialmedia'
+import { Newsletter } from './controllers/newsletter'
+import { JoinUs } from './controllers/joinus'
+import { Stories } from './controllers/stories'
+import { Explorer } from './controllers/explorer'
 
 class App extends Component<any, any> {
     render() {

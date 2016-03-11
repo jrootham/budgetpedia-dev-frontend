@@ -1,7 +1,7 @@
 // typings-custom/material-ui.d.ts
 // follows pattern established in ../typings/material-ui/material-us.d.ts
 
-///<reference path='../typings/react/react.d.ts' />
+//<reference path='../typings/react/react.d.ts' />
 
 // the following not needed here, apparently repetative
 // declare module "material-ui" {

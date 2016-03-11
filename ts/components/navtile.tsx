@@ -1,6 +1,5 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // navtile.tsx
-///<reference path="../../typings-custom/react-flipcard.d.ts" />
 
 /*
     TODO: 

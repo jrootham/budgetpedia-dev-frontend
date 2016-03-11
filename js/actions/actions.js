@@ -1,6 +1,6 @@
-var redux_actions_1 = require('redux-actions');
-var react_router_redux_1 = require('react-router-redux');
-var fetch = require('isomorphic-fetch');
+"use strict";
+const redux_actions_1 = require('redux-actions');
+const react_router_redux_1 = require('react-router-redux');
 exports.SET_TILECOLS = 'SET_TILECOLS';
 exports.ADD_TILE = 'ADD_TILE';
 exports.REMOVE_TILE = 'REMOVE_TILE';
@@ -8,7 +8,7 @@ exports.UPDATE_TILE = 'UPDATE_TILE';
 exports.setTileCols = redux_actions_1.createAction(exports.SET_TILECOLS);
 exports.transitionTo = route => {
     return dispatch => {
-        dispatch(react_router_redux_1.routeActions.push(route));
+        dispatch(react_router_redux_1.routerActions.push(route));
     };
 };
 exports.LOGIN_REQUEST = 'LOGIN_REQUEST';
@@ -17,7 +17,7 @@ exports.LOGIN_FAILURE = 'LOGIN_FAILURE';
 let requestLogin = redux_actions_1.createAction(exports.LOGIN_REQUEST, creds => {
     return {
         message: '',
-        creds,
+        creds: creds,
     };
 });
 let receiveLogin = redux_actions_1.createAction(exports.LOGIN_SUCCESS, user => {
@@ -27,14 +27,14 @@ let receiveLogin = redux_actions_1.createAction(exports.LOGIN_SUCCESS, user => {
 });
 let loginError = redux_actions_1.createAction(exports.LOGIN_FAILURE, message => {
     return {
-        message
+        message: message
     };
 });
 exports.loginUser = creds => {
     let config = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `email=${creds.email}&password=${creds.password}`
+        headers: { "Content-Type": "application/x-www-form-urlencoded", },
+        body: `email=${creds.email}&password=${creds.password}`,
     };
     return dispatch => {
         dispatch(requestLogin(creds));
@@ -46,7 +46,7 @@ exports.loginUser = creds => {
                     response.statusText + ' (' +
                     response.status + ')');
             }
-            response.json().then(user => ({ user, response }));
+            return response.json().then(user => { return { user: user, response: response }; });
         })
             .then(({ user, response }) => {
             console.log('user block', user, response);
@@ -94,7 +94,7 @@ let requestRegister = redux_actions_1.createAction(exports.REGISTER_REQUEST, pro
         isFetching: true,
         isRegistered: false,
         message: '',
-        profile,
+        profile: profile,
     };
 });
 let receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, profile => {
@@ -106,7 +106,7 @@ let receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, pro
 });
 let registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, message => {
     return {
-        message
+        message: message
     };
 });
 exports.registerUser = profile => {
@@ -114,24 +114,26 @@ exports.registerUser = profile => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(profile),
-        timeout: 3000,
     };
     return dispatch => {
         dispatch(requestRegister(profile));
-        fetch('/api/register', config)
+        fetch('/api/register/new', config)
             .then(response => {
-            console.log('response = ', response);
+            console.log('request response = ', response);
             if (response.status >= 400) {
                 throw new Error("Response from server: " +
                     response.statusText + ' (' +
                     response.status + ')');
             }
-            response.json().then(profile => ({ profile, response }));
+            return response.json().then(profile => {
+                console.log('profile, response = ', profile, response);
+                return { profile: profile, response: response };
+            });
         })
             .then(({ profile, response }) => {
-            console.log('user profile', profile, response);
+            console.log('applicant profile', profile, response);
             if (!response.ok) {
-                dispatch(loginError(profile.message));
+                dispatch(registerError(profile.message));
             }
             else {
                 dispatch(receiveRegister(profile));

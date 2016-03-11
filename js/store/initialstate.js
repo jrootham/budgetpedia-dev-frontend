@@ -1,6 +1,6 @@
 'use strict';
-var theme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
-var colors = require('material-ui/lib/styles/colors');
+const theme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
+const colors = require('material-ui/lib/styles/colors');
 let appnavbar = {
     title: 'Toronto Budget Commons',
     username: 'anonymous',
@@ -142,12 +142,12 @@ let maintiles = [
     },
 ];
 exports.initialstate = {
-    maintiles,
-    maincols,
-    mainpadding,
-    appnavbar,
-    toolsnavbar,
-    theme,
-    colors,
-    system,
+    maintiles: maintiles,
+    maincols: maincols,
+    mainpadding: mainpadding,
+    appnavbar: appnavbar,
+    toolsnavbar: toolsnavbar,
+    theme: theme,
+    colors: colors,
+    system: system,
 };

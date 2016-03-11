@@ -1,7 +1,5 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // actions.tsx
-///<reference path="../../typings/redux-actions/redux-actions.d.ts" />
-///<reference path="../../typings-custom/isomorphic-fetch.d.ts" />
 
 import { createAction } from 'redux-actions';
 /*
@@ -15,8 +13,8 @@ import { createAction } from 'redux-actions';
     }
     createAction(type, payloadCreator = Identity, ?metaCreator)
 */
-import { routeActions } from 'react-router-redux'
-import fetch = require('isomorphic-fetch')
+import { routerActions } from 'react-router-redux'
+import fetch from 'isomorphic-fetch'
 
 /*------------- tile management -----------*/
 
@@ -30,7 +28,7 @@ export const setTileCols = createAction(SET_TILECOLS)
 
 export const transitionTo = route => {
     return dispatch => {
-        dispatch(routeActions.push(route))
+        dispatch(routerActions.push(route))
     }
 }
 
@@ -77,10 +75,10 @@ let loginError = createAction(
 // call the api
 export const loginUser = creds => {
 
-    let config = {
+    let config:RequestInit = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `email=${creds.email}&password=${creds.password}`
+        headers: { "Content-Type": "application/x-www-form-urlencoded", },
+        body: `email=${creds.email}&password=${creds.password}`,
     }
     return dispatch => {
         dispatch(requestLogin(creds))
@@ -92,7 +90,7 @@ export const loginUser = creds => {
                         response.statusText + ' (' + 
                         response.status + ')')
                 }
-                response.json().then(user => ({ user, response }))
+                return response.json().then(user => { return { user, response } })
             })
             .then(({ user, response }) => {
                 console.log('user block', user, response)
@@ -195,30 +193,33 @@ let registerError = createAction(
 // call the api
 export const registerUser = profile => {
 
-    let config = {
+    let config: RequestInit = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(profile),
-        timeout: 3000, // TODO: test this!
+        // timeout: 3000, // TODO: test this!
     }
     return dispatch => {
         dispatch(requestRegister(profile))
-        fetch('/api/register', config)
+        fetch('/api/register/new', config)
             .then(response => {
-                console.log('response = ', response)
+                console.log('request response = ', response)
                 if (response.status >= 400) {
                     throw new Error("Response from server: " +
                         response.statusText + ' (' +
                         response.status + ')')
                 }
-                response.json().then(profile => ({ profile, response }))
+                return response.json().then(profile => {
+                    console.log('profile, response = ', profile, response)
+                    return { profile, response }
+                })
             })
             .then(({ profile, response }) => {
-                console.log('user profile', profile, response)
+                console.log('applicant profile', profile, response)
                 if (!response.ok) {
                     // If there was a problem, we want to
                     // dispatch the error condition
-                    dispatch(loginError(profile.message))
+                    dispatch(registerError(profile.message))
                     // return Promise.reject(user) // ???
                 } else {
                     // Dispatch the success action

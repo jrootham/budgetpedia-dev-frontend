@@ -1,10 +1,10 @@
 'use strict';
-var React = require('react');
+const React = require('react');
 var { Component } = React;
-var TextField = require('material-ui/lib/text-field');
-var CardText = require('material-ui/lib/card/card-text');
-var CardActions = require('material-ui/lib/card/card-actions');
-var RaisedButton = require('material-ui/lib/raised-button');
+const TextField = require('material-ui/lib/text-field');
+const CardText = require('material-ui/lib/card/card-text');
+const CardActions = require('material-ui/lib/card/card-actions');
+const RaisedButton = require('material-ui/lib/raised-button');
 class BasicForm extends React.Component {
     constructor(...args) {
         super(...args);
@@ -31,18 +31,18 @@ class BasicForm extends React.Component {
                 : 'inline-block';
             if (istextbox)
                 attributes['fullWidth'] = true;
-            return (React.createElement("div", {"className": "textfieldwrapper", "style": {
+            return (React.createElement("div", {className: "textfieldwrapper", style: {
                 display: display,
                 marginRight: "5px"
-            }, "key": element.index}, React.createElement(TextField, React.__spread({"ref": node => { basicform.textFields[element.index] = node; }}, attributes))));
+            }, key: element.index}, React.createElement(TextField, React.__spread({ref: node => { basicform.textFields[element.index] = node; }}, attributes))));
         });
-        return (React.createElement("form", {"onSubmit": basicform.submit}, React.createElement(CardText, null, basicform.props.completionMessage
-            ? React.createElement("p", {"style": { color: "green" }}, basicform.props.completionMessage)
+        return (React.createElement("form", {onSubmit: basicform.submit}, React.createElement(CardText, null, basicform.props.completionMessage
+            ? React.createElement("p", {style: { color: "green" }}, basicform.props.completionMessage)
             : null, basicform.props.warningMessage
-            ? React.createElement("p", {"style": { color: "orange" }}, basicform.props.warningMessage)
+            ? React.createElement("p", {style: { color: "orange" }}, basicform.props.warningMessage)
             : null, basicform.props.errorMessage
-            ? React.createElement("p", {"style": { color: "red" }}, basicform.props.errorMessage)
-            : null, children), React.createElement(CardActions, null, React.createElement(RaisedButton, {"type": "submit", "label": basicform.props.submitButtonLabel, "className": "button-submit", "primary": true}))));
+            ? React.createElement("p", {style: { color: "red" }}, basicform.props.errorMessage)
+            : null, children), React.createElement(CardActions, null, React.createElement(RaisedButton, {type: "submit", label: basicform.props.submitButtonLabel, className: "button-submit", primary: true}))));
     }
 }
 exports.BasicForm = BasicForm;

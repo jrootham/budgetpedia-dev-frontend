@@ -1,17 +1,15 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // reducers.tsx
 
-///<reference path="../../typings/flux-standard-action/flux-standard-action"/>
-///<reference path="../../typings/redux-actions/redux-actions.d.ts" />
-
 'use strict'
 
 import { combineReducers } from 'redux'
-import * as Actions from '../actions/actions'
-import { initialstate } from "../store/initialstate"
 import { isFSA } from 'flux-standard-action'
 import { handleActions } from 'redux-actions'; // handleAction doesn't work with combineReducers
-import { syncHistory, routeReducer } from 'react-router-redux'
+import { routerReducer } from 'react-router-redux'
+// ==============================================
+import * as Actions from '../actions/actions'
+import { initialstate } from "../store/initialstate"
 
 let appnavbar = (state: any = initialstate.appnavbar, action) => {
     return state
@@ -53,19 +51,30 @@ let maincolsreducer = (state: any = initialstate.maincols, action) => {
 
             // breakpoints should be parameterized
             if (elementwidth > 960) {
+
                 columns = 4
+
             } else if (elementwidth > 680) {
+
                 columns = 3
+
             } else if (elementwidth > 400) {
+
                 columns = 2
+
             } else {
+
                 columns = 1
+
             }
 
             return columns
+
         }
         default:
+
             return state
+
     }
 }
 
@@ -91,18 +100,23 @@ function auth(state = {
 }, action) {
     switch (action.type) {
         case LOGIN_REQUEST:
+
             return Object.assign({}, state, {
-                    isFetching: true,
-                    isAuthenticated: false,
-                    user: action.payload.creds,
-                    errorMessage:'',
-                })
+                isFetching: true,
+                isAuthenticated: false,
+                user: action.payload.creds,
+                errorMessage:'',
+            })
+
         case LOGIN_SUCCESS:
+
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: true,
             })
+
         case LOGIN_FAILURE:
+
             console.log('login failure',action)
             return Object.assign({}, state, {
                 isFetching: false,
@@ -110,19 +124,25 @@ function auth(state = {
                 errorMessage: action.payload.message,
                 user:null,
             })
+
         case LOGOUT_SUCCESS:
+
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: false,
                 user:null,
             })
+
         default:
+
             return state
     }
 }
 
 let {
-    REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE,
+    REGISTER_REQUEST, 
+    REGISTER_SUCCESS, 
+    REGISTER_FAILURE,
 } = Actions
 
 // The auth reducer. The starting state sets authentication
@@ -133,6 +153,7 @@ function register(state = {
     isRegistered: false
 }, action) {
     switch (action.type) {
+
         case REGISTER_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
@@ -140,21 +161,26 @@ function register(state = {
                 user: action.payload.profile,
                 errorMessage: '',
             })
+
         case REGISTER_SUCCESS:
+
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: true,
                 user:null,
             })
+
         case REGISTER_FAILURE:
-            console.log('login failure', action)
+
             return Object.assign({}, state, {
                 isFetching: false,
                 // isAuthenticated: false,
                 errorMessage: action.payload.message,
                 user: null,
             })
+
         default:
+
             return state
     }
 }
@@ -168,7 +194,7 @@ let mainReducerCore = combineReducers(
         colors,
         system,
         maintiles,
-        routing:routeReducer, 
+        routing:routerReducer, 
         auth,
         register,
     }

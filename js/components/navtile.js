@@ -1,9 +1,9 @@
 'use strict';
-var React = require('react');
-var FlipCard = require('react-flipcard');
-var GridTile = require('material-ui/lib/grid-list/grid-tile');
-var FontIcon = require('material-ui/lib/font-icon');
-var IconButton = require('material-ui/lib/icon-button');
+const React = require('react');
+const FlipCard = require('react-flipcard');
+const GridTile = require('material-ui/lib/grid-list/grid-tile');
+const FontIcon = require('material-ui/lib/font-icon');
+const IconButton = require('material-ui/lib/icon-button');
 class NavTile extends React.Component {
     constructor() {
         super();
@@ -138,35 +138,35 @@ class NavTile extends React.Component {
     }
     render() {
         let tile = this;
-        let helpicon = React.createElement(IconButton, {"key": 'helpicon', "className": "flipcard-help-icon", "style": {
+        let helpicon = React.createElement(IconButton, {key: 'helpicon', className: "flipcard-help-icon", style: {
             backgroundColor: tile.props.tilecolors.front,
             padding: 0,
             height: "36px",
             width: "36px",
             position: "absolute",
-        }, "onTouchTap": tile.showBack}, React.createElement(FontIcon, {"className": "material-icons", "color": tile.props.tilecolors.helpbutton}, "help_outline"));
-        let returnicon = React.createElement(IconButton, {"className": "flipcard-return-to-front-icon", "style": {
+        }, onTouchTap: tile.showBack}, React.createElement(FontIcon, {className: "material-icons", color: tile.props.tilecolors.helpbutton}, "help_outline"));
+        let returnicon = React.createElement(IconButton, {className: "flipcard-return-to-front-icon", style: {
             backgroundColor: tile.props.tilecolors.back,
             padding: 0,
             height: "36px",
             width: "36px",
             position: "absolute",
-        }, "onTouchTap": tile.showFront}, React.createElement(FontIcon, {"className": "material-icons", "color": tile.props.tilecolors.helpbutton}, "flip_to_front"));
-        let frontexpandicon = React.createElement(IconButton, {"className": "flipcard-expand-icon", "style": {
+        }, onTouchTap: tile.showFront}, React.createElement(FontIcon, {className: "material-icons", color: tile.props.tilecolors.helpbutton}, "flip_to_front"));
+        let frontexpandicon = React.createElement(IconButton, {className: "flipcard-expand-icon", style: {
             backgroundColor: tile.props.tilecolors.front,
             height: "36px",
             width: "36px",
             padding: "0",
             position: "absolute",
-        }, "onTouchTap": tile.expandFront}, React.createElement(FontIcon, {"className": "material-icons", "color": tile.props.tilecolors.helpbutton}, tile.state.expandiconfront));
-        let backexpandicon = React.createElement(IconButton, {"className": "flipcard-expand-icon", "style": {
+        }, onTouchTap: tile.expandFront}, React.createElement(FontIcon, {className: "material-icons", color: tile.props.tilecolors.helpbutton}, tile.state.expandiconfront));
+        let backexpandicon = React.createElement(IconButton, {className: "flipcard-expand-icon", style: {
             backgroundColor: tile.props.tilecolors.back,
             height: "36px",
             width: "36px",
             padding: "0",
             position: "absolute",
-        }, "onTouchTap": tile.expandBack}, React.createElement(FontIcon, {"className": "material-icons", "color": tile.props.tilecolors.helpbutton}, tile.state.expandiconback));
-        let frontflipcard = React.createElement("div", {"className": "flipcard-frame"}, (tile.isHelpContent()) ? helpicon : null, tile.isOverflowedFront() ? frontexpandicon : null, React.createElement("div", {"className": "flipcard-padding"}, React.createElement("div", {"className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.front, }}, React.createElement("div", {"className": "flipcard-content", "ref": (node) => { tile.elements.frontface = node; }}, React.createElement("a", {"style": {
+        }, onTouchTap: tile.expandBack}, React.createElement(FontIcon, {className: "material-icons", color: tile.props.tilecolors.helpbutton}, tile.state.expandiconback));
+        let frontflipcard = React.createElement("div", {className: "flipcard-frame"}, (tile.isHelpContent()) ? helpicon : null, tile.isOverflowedFront() ? frontexpandicon : null, React.createElement("div", {className: "flipcard-padding"}, React.createElement("div", {className: "flipcard-border", style: { backgroundColor: tile.props.tilecolors.front, }}, React.createElement("div", {className: "flipcard-content", ref: (node) => { tile.elements.frontface = node; }}, React.createElement("a", {style: {
             padding: "3px 0 0 3px",
             fontSize: "small",
             position: "absolute",
@@ -174,13 +174,13 @@ class NavTile extends React.Component {
             left: 0,
             fontStyle: "italic",
             color: tile.props.tilecolors.helpbutton,
-        }, "href": "javascript:void(0)", "onTouchTap": tile.transitionTo}, "See more >>"), React.createElement("h3", {"onTouchTap": tile.transitionTo, "style": {
+        }, href: "javascript:void(0)", onTouchTap: tile.transitionTo}, "See more >>"), React.createElement("h3", {onTouchTap: tile.transitionTo, style: {
             marginBottom: 0,
             cursor: "pointer",
-        }}, tile.props.markup.title), React.createElement("div", {"dangerouslySetInnerHTML": tile.rawMarkup('markup')})), tile.isOverflowedFront() ?
-            React.createElement("div", {"className": "flipcard-gradient front"})
+        }}, tile.props.markup.title), React.createElement("div", {dangerouslySetInnerHTML: tile.rawMarkup('markup')})), tile.isOverflowedFront() ?
+            React.createElement("div", {className: "flipcard-gradient front"})
             : null)));
-        let backflipcard = React.createElement("div", {"className": "flipcard-frame"}, returnicon, tile.isOverflowedBack() ? backexpandicon : null, React.createElement("div", {"className": "flipcard-padding"}, React.createElement("div", {"className": "flipcard-border", "style": { backgroundColor: tile.props.tilecolors.back, }}, React.createElement("div", {"className": "flipcard-content", "ref": (node) => { tile.elements.backface = node; }}, React.createElement("a", {"style": {
+        let backflipcard = React.createElement("div", {className: "flipcard-frame"}, returnicon, tile.isOverflowedBack() ? backexpandicon : null, React.createElement("div", {className: "flipcard-padding"}, React.createElement("div", {className: "flipcard-border", style: { backgroundColor: tile.props.tilecolors.back, }}, React.createElement("div", {className: "flipcard-content", ref: (node) => { tile.elements.backface = node; }}, React.createElement("a", {style: {
             padding: "3px 0 0 3px",
             fontSize: "small",
             position: "absolute",
@@ -188,8 +188,8 @@ class NavTile extends React.Component {
             left: 0,
             fontStyle: "italic",
             color: tile.props.tilecolors.helpbutton,
-        }, "href": "javascript:void(0)", "onTouchTap": tile.showFront}, "Return >>"), React.createElement("h3", {"onTouchTap": tile.showFront, "style": { marginBottom: 0, cursor: "pointer", }}, tile.isHelpContent() ? tile.props.help.title : null), React.createElement("div", {"dangerouslySetInnerHTML": tile.rawMarkup('help')})), React.createElement("div", {"className": "flipcard-gradient back"}))));
-        return (React.createElement(GridTile, null, React.createElement(FlipCard, {"disabled": true, "flipped": tile.state.isFlipped, "onFlip": tile.handleOnFlip, "onKeyDown": tile.handleKeyDown, "style": { border: "none" }}, frontflipcard, backflipcard)));
+        }, href: "javascript:void(0)", onTouchTap: tile.showFront}, "Return >>"), React.createElement("h3", {onTouchTap: tile.showFront, style: { marginBottom: 0, cursor: "pointer", }}, tile.isHelpContent() ? tile.props.help.title : null), React.createElement("div", {dangerouslySetInnerHTML: tile.rawMarkup('help')})), React.createElement("div", {className: "flipcard-gradient back"}))));
+        return (React.createElement(GridTile, null, React.createElement(FlipCard, {disabled: true, flipped: tile.state.isFlipped, onFlip: tile.handleOnFlip, onKeyDown: tile.handleKeyDown, style: { border: "none" }}, frontflipcard, backflipcard)));
     }
 }
 exports.NavTile = NavTile;
