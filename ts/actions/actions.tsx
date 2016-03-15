@@ -203,27 +203,39 @@ export const registerUser = profile => {
         dispatch(requestRegister(profile))
         fetch('/api/register/new', config)
             .then(response => {
-                console.log('request response = ', response)
-                if (response.status >= 400) {
+                // console.log('request response = ', response)
+                if (response.status >= 500) {
                     throw new Error("Response from server: " +
                         response.statusText + ' (' +
                         response.status + ')')
                 }
-                return response.json().then(profile => {
-                    console.log('profile, response = ', profile, response)
-                    return { profile, response }
-                })
+                // console.log(response.toString())
+                return response.text()//.then(profile => {
+                //     console.log('profile, response = ', profile, response)
+                //     return { profile, response }
+                // })
             })
-            .then(({ profile, response }) => {
-                console.log('applicant profile', profile, response)
-                if (!response.ok) {
+            .then((text) => {
+                console.log('applicant profile',text)
+                let json, isJson
+                try {
+                    json = JSON.parse(text)
+                    isJson = true
+
+                } catch (e) {
+                    isJson = false
+                }
+                if (!isJson || !json.ok) {
                     // If there was a problem, we want to
                     // dispatch the error condition
-                    dispatch(registerError(profile.message))
+                    if (isJson)
+                        dispatch(registerError(json.message))
+                    else 
+                        dispatch(registerError(text))
                     // return Promise.reject(user) // ???
                 } else {
                     // Dispatch the success action
-                    dispatch(receiveRegister(profile))
+                    dispatch(receiveRegister(json))
                 }
             })
             .catch(err => {

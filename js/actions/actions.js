@@ -119,24 +119,31 @@ exports.registerUser = profile => {
         dispatch(requestRegister(profile));
         fetch('/api/register/new', config)
             .then(response => {
-            console.log('request response = ', response);
-            if (response.status >= 400) {
+            if (response.status >= 500) {
                 throw new Error("Response from server: " +
                     response.statusText + ' (' +
                     response.status + ')');
             }
-            return response.json().then(profile => {
-                console.log('profile, response = ', profile, response);
-                return { profile: profile, response: response };
-            });
+            return response.text();
         })
-            .then(({ profile, response }) => {
-            console.log('applicant profile', profile, response);
-            if (!response.ok) {
-                dispatch(registerError(profile.message));
+            .then((text) => {
+            console.log('applicant profile', text);
+            let json, isJson;
+            try {
+                json = JSON.parse(text);
+                isJson = true;
+            }
+            catch (e) {
+                isJson = false;
+            }
+            if (!isJson || !json.ok) {
+                if (isJson)
+                    dispatch(registerError(json.message));
+                else
+                    dispatch(registerError(text));
             }
             else {
-                dispatch(receiveRegister(profile));
+                dispatch(receiveRegister(json));
             }
         })
             .catch(err => {
