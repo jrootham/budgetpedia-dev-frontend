@@ -37,6 +37,7 @@ export interface elementProps {
     maxLength?:number,
     required?:boolean,
     disabled?:boolean,
+    errorText?:string,
 }
 
 interface TextFields {

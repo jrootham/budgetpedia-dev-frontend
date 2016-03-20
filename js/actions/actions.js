@@ -40,16 +40,16 @@ exports.loginUser = creds => {
         dispatch(requestLogin(creds));
         fetch('/api/login', config)
             .then(response => {
-            console.log('response = ', response);
             if (response.status >= 400) {
                 throw new Error("Response from server: " +
                     response.statusText + ' (' +
                     response.status + ')');
             }
-            return response.json().then(user => { return { user: user, response: response }; });
+            return response.json().then(user => {
+                return { user: user, response: response };
+            });
         })
             .then(({ user, response }) => {
-            console.log('user block', user, response);
             if (!response.ok) {
                 dispatch(loginError(user.message));
             }
@@ -60,7 +60,6 @@ exports.loginUser = creds => {
         })
             .catch(err => {
             dispatch(loginError(err.message));
-            console.log('System Error: ', err.message);
         });
     };
 };
@@ -104,9 +103,10 @@ let receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, pro
         confirmationtoken: profile.confirmationtoken,
     };
 });
-let registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, message => {
+let registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, (message, data) => {
     return {
-        message: message
+        message: message,
+        data: data,
     };
 });
 exports.registerUser = profile => {
@@ -138,7 +138,7 @@ exports.registerUser = profile => {
             }
             if (!isJson || !json.ok) {
                 if (isJson)
-                    dispatch(registerError(json.message));
+                    dispatch(registerError(json.message, json.data));
                 else
                     dispatch(registerError(text));
             }

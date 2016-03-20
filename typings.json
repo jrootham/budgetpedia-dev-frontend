@@ -1,10 +1,10 @@
 {
-  "name": "budgetcommons.ca",
+  "name": "tribalcommons.ca",
   "version": false,
   "ambientDependencies": {
     "flux-standard-action": "github:DefinitelyTyped/DefinitelyTyped/flux-standard-action/flux-standard-action.d.ts#86dbea8fc37d9473fee465da4f0a21bea4f8cbd9",
     "history": "github:DefinitelyTyped/DefinitelyTyped/react-router/history.d.ts#9f0f926a12026287b5a4a229e5672c01e7549313",
-    "isomorphic-fetch": "registry:dt/isomorphic-fetch#0.0.0+20160218094246",
+    "isomorphic-fetch": "registry:dt/isomorphic-fetch#0.0.0+20160316155526",
     "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#1a5b2a729d35b1d41e2d15818db013a3644c6ba4",
     "react": "github:DefinitelyTyped/DefinitelyTyped/react/react.d.ts#9f0f926a12026287b5a4a229e5672c01e7549313",
     "react-addons-create-fragment": "github:DefinitelyTyped/DefinitelyTyped/react/react-addons-create-fragment.d.ts#bcd5761826eb567876c197ccc6a87c4d05731054",

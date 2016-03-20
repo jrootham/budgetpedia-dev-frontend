@@ -21,7 +21,7 @@ import  thunkMiddleware from 'redux-thunk'
 import { mainReducer } from "../reducers/reducers"
 import { MainBar } from './mainbar'
 import { MainToolbar } from './maintoolbar'
-import { routes } from '../features/routes'
+import { routes } from '../apps/routes'
 
 const reduxRouterMiddleware = routerMiddleware( browserHistory )
 

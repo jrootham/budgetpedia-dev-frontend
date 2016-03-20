@@ -26,6 +26,8 @@ class RegisterClass extends Component<any, any> {
     render() {
 
         let registerpage = this
+        let fieldMessages = registerpage.props.register.fieldMessages || {}
+        console.log('fieldMessages = ',fieldMessages)
 
         let elements: Array<elementProps> = [
             {
@@ -35,6 +37,7 @@ class RegisterClass extends Component<any, any> {
                 // defaultValue: 'henrik@bechmann.ca',
                 type: 'email',
                 required: true,
+                errorText: fieldMessages['email'],
             },
             {
                 index: 'userhandle',
@@ -42,20 +45,15 @@ class RegisterClass extends Component<any, any> {
                 hintText: "the name other members will see",
                 type: 'text',
                 required: true,
+                errorText: fieldMessages['userhandle'],
             },
             {
-                index: 'firstname',
-                floatingLabelText: 'First Name',
-                hintText: "actual first or given name",
+                index: 'username',
+                floatingLabelText: 'User Name',
+                hintText: "actual name",
                 type: 'text',
                 required: true,
-            },
-            {
-                index: 'lastname',
-                floatingLabelText: 'Last Name',
-                hintText: "actual last or family name",
-                type: 'text',
-                required: true,
+                errorText: fieldMessages['username'],
             },
             {
                 index: 'participation',
@@ -70,6 +68,7 @@ class RegisterClass extends Component<any, any> {
                 hintText: "something about yourself for other members (optional)",
                 multiLine: true,
                 rows: 4,
+                errorText: fieldMessages['intro'],
             },
         ]
         let registerform =

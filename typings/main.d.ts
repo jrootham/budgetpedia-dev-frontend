@@ -1,4 +1,3 @@
-/// <reference path="main/ambient/es6-promise/index.d.ts" />
 /// <reference path="main/ambient/flux-standard-action/index.d.ts" />
 /// <reference path="main/ambient/history/index.d.ts" />
 /// <reference path="main/ambient/isomorphic-fetch/index.d.ts" />

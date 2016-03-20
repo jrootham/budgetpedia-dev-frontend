@@ -9,7 +9,7 @@ import { handleActions } from 'redux-actions'; // handleAction doesn't work with
 import { routerReducer } from 'react-router-redux'
 // ==============================================
 import * as Actions from '../actions/actions'
-import { initialstate } from "../store/initialstate"
+import { initialstate } from "../local/initialstate"
 
 let appnavbar = (state: any = initialstate.appnavbar, action) => {
     return state
@@ -159,7 +159,8 @@ function register(state = {
                 isFetching: true,
                 isAuthenticated: false,
                 user: action.payload.profile,
-                errorMessage: '',
+                errorMessage: null,
+                fieldMessages: null,
             })
 
         case REGISTER_SUCCESS:
@@ -172,9 +173,23 @@ function register(state = {
 
         case REGISTER_FAILURE:
 
+            console.log('register failure action = ', action)
+            let fieldMessages = {}
+            let data = action.payload.data || []
+            console.log('register failure data = ', data)
+            let i, message = null
+            for (i = 0; i < data.length; i++) {
+                // TODO: should map internal field name to field presentation title here
+                fieldMessages[data[i].key] = data[i].message
+            }
+            if (action.payload.data) {
+                action.payload.message = null
+            }
+            console.log('register failure fieldMessages = ', fieldMessages)
             return Object.assign({}, state, {
                 isFetching: false,
                 // isAuthenticated: false,
+                fieldMessages,
                 errorMessage: action.payload.message,
                 user: null,
             })

@@ -4,7 +4,7 @@ const flux_standard_action_1 = require('flux-standard-action');
 const redux_actions_1 = require('redux-actions');
 const react_router_redux_1 = require('react-router-redux');
 const Actions = require('../actions/actions');
-const initialstate_1 = require("../store/initialstate");
+const initialstate_1 = require("../local/initialstate");
 let appnavbar = (state = initialstate_1.initialstate.appnavbar, action) => {
     return state;
 };
@@ -99,7 +99,8 @@ function register(state = {
                 isFetching: true,
                 isAuthenticated: false,
                 user: action.payload.profile,
-                errorMessage: '',
+                errorMessage: null,
+                fieldMessages: null,
             });
         case REGISTER_SUCCESS:
             return Object.assign({}, state, {
@@ -108,8 +109,21 @@ function register(state = {
                 user: null,
             });
         case REGISTER_FAILURE:
+            console.log('register failure action = ', action);
+            let fieldMessages = {};
+            let data = action.payload.data || [];
+            console.log('register failure data = ', data);
+            let i, message = null;
+            for (i = 0; i < data.length; i++) {
+                fieldMessages[data[i].key] = data[i].message;
+            }
+            if (action.payload.data) {
+                action.payload.message = null;
+            }
+            console.log('register failure fieldMessages = ', fieldMessages);
             return Object.assign({}, state, {
                 isFetching: false,
+                fieldMessages: fieldMessages,
                 errorMessage: action.payload.message,
                 user: null,
             });

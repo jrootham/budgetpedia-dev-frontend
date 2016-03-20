@@ -14,7 +14,6 @@ import { createAction } from 'redux-actions';
     createAction(type, payloadCreator = Identity, ?metaCreator)
 */
 import { routerActions } from 'react-router-redux'
-import fetch from 'isomorphic-fetch'
 
 /*------------- tile management -----------*/
 
@@ -84,16 +83,20 @@ export const loginUser = creds => {
         dispatch(requestLogin(creds))
         fetch('/api/login', config)
             .then(response => {
-                console.log('response = ',response)
+                // console.log('response = ',response)
                 if (response.status >= 400) {
                     throw new Error("Response from server: " + 
                         response.statusText + ' (' + 
                         response.status + ')')
                 }
-                return response.json().then(user => { return { user, response } })
+                return response.json().then(
+                    user => { 
+                        return { user, response } 
+                    }
+                )
             })
             .then(({ user, response }) => {
-                console.log('user block', user, response)
+                // console.log('user block', user, response)
                 if (!response.ok) {
                     // If there was a problem, we want to
                     // dispatch the error condition
@@ -108,7 +111,7 @@ export const loginUser = creds => {
             })
             .catch(err => { 
                 dispatch(loginError(err.message))
-                console.log('System Error: ', err.message) 
+                // console.log('System Error: ', err.message) 
             })
     }
 }
@@ -181,11 +184,12 @@ let receiveRegister = createAction(
 
 let registerError = createAction(
     REGISTER_FAILURE,
-    message => {
+    (message, data?) => {
         return {
             // isFetching: false,
             // isAuthenticated: false,
-            message
+            message,
+            data,
         }
     }
 )
@@ -229,7 +233,8 @@ export const registerUser = profile => {
                     // If there was a problem, we want to
                     // dispatch the error condition
                     if (isJson)
-                        dispatch(registerError(json.message))
+                        // json.data = field level data
+                        dispatch(registerError(json.message,json.data))
                     else 
                         dispatch(registerError(text))
                     // return Promise.reject(user) // ???
