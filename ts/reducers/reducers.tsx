@@ -117,7 +117,7 @@ function auth(state = {
 
         case LOGIN_FAILURE:
 
-            console.log('login failure',action)
+            // console.log('login failure',action)
             return Object.assign({}, state, {
                 isFetching: false,
                 // isAuthenticated: false,
@@ -173,10 +173,10 @@ function register(state = {
 
         case REGISTER_FAILURE:
 
-            console.log('register failure action = ', action)
+            // console.log('register failure action = ', action)
             let fieldMessages = {}
             let data = action.payload.data || []
-            console.log('register failure data = ', data)
+            // console.log('register failure data = ', data)
             let i, message = null
             for (i = 0; i < data.length; i++) {
                 // TODO: should map internal field name to field presentation title here
@@ -185,7 +185,7 @@ function register(state = {
             if (action.payload.data) {
                 action.payload.message = null
             }
-            console.log('register failure fieldMessages = ', fieldMessages)
+            // console.log('register failure fieldMessages = ', fieldMessages)
             return Object.assign({}, state, {
                 isFetching: false,
                 // isAuthenticated: false,

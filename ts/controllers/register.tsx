@@ -19,7 +19,7 @@ class RegisterClass extends Component<any, any> {
         for (var index in elements) {
             profile[index] = elements[index].getValue()
         }
-        console.log('profile', profile)
+        // console.log('profile', profile)
 
         this.props.dispatch(Actions.registerUser(profile))
     }
@@ -27,7 +27,7 @@ class RegisterClass extends Component<any, any> {
 
         let registerpage = this
         let fieldMessages = registerpage.props.register.fieldMessages || {}
-        console.log('fieldMessages = ',fieldMessages)
+        // console.log('fieldMessages = ',fieldMessages)
 
         let elements: Array<elementProps> = [
             {

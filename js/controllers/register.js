@@ -15,14 +15,12 @@ class RegisterClass extends Component {
             for (var index in elements) {
                 profile[index] = elements[index].getValue();
             }
-            console.log('profile', profile);
             this.props.dispatch(Actions.registerUser(profile));
         };
     }
     render() {
         let registerpage = this;
         let fieldMessages = registerpage.props.register.fieldMessages || {};
-        console.log('fieldMessages = ', fieldMessages);
         let elements = [
             {
                 index: 'email',

@@ -109,20 +109,24 @@ var registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, funct
     };
 });
 exports.registerUser = function (profile) {
+    var data = {
+        profile: profile,
+        origin: location.origin
+    };
+    console.log('data at source = ', data);
     var config = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(profile)
+        body: JSON.stringify(data)
     };
     return function (dispatch) {
-        dispatch(requestRegister(profile));
+        dispatch(requestRegister(data));
         fetch('/api/register/new', config).then(function (response) {
             if (response.status >= 500) {
                 throw new Error("Response from server: " + response.statusText + ' (' + response.status + ')');
             }
             return response.text();
         }).then(function (text) {
-            console.log('applicant profile', text);
             var json = undefined,
                 isJson = undefined;
             try {
@@ -1307,7 +1311,6 @@ var RegisterClass = function (_Component) {
             for (var index in elements) {
                 profile[index] = elements[index].getValue();
             }
-            console.log('profile', profile);
             _this.props.dispatch(Actions.registerUser(profile));
         };
         return _this;
@@ -1318,7 +1321,6 @@ var RegisterClass = function (_Component) {
         value: function render() {
             var registerpage = this;
             var fieldMessages = registerpage.props.register.fieldMessages || {};
-            console.log('fieldMessages = ', fieldMessages);
             var elements = [{
                 index: 'email',
                 floatingLabelText: 'Email Address',
@@ -1640,7 +1642,6 @@ function auth() {
                 isAuthenticated: true
             });
         case LOGIN_FAILURE:
-            console.log('login failure', action);
             return Object.assign({}, state, {
                 isFetching: false,
                 errorMessage: action.payload.message,
@@ -1683,10 +1684,8 @@ function register() {
                 user: null
             });
         case REGISTER_FAILURE:
-            console.log('register failure action = ', action);
             var fieldMessages = {};
             var data = action.payload.data || [];
-            console.log('register failure data = ', data);
             var i = undefined,
                 message = null;
             for (i = 0; i < data.length; i++) {
@@ -1695,7 +1694,6 @@ function register() {
             if (action.payload.data) {
                 action.payload.message = null;
             }
-            console.log('register failure fieldMessages = ', fieldMessages);
             return Object.assign({}, state, {
                 isFetching: false,
                 fieldMessages: fieldMessages,

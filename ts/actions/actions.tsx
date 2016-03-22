@@ -197,14 +197,21 @@ let registerError = createAction(
 // call the api
 export const registerUser = profile => {
 
+    let data = {
+        profile,
+        origin: location.origin,
+    }
+
+    console.log('data at source = ', data)
+
     let config: RequestInit = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(profile),
+        body: JSON.stringify(data),
         // timeout: 3000, // TODO: test this!
     }
     return dispatch => {
-        dispatch(requestRegister(profile))
+        dispatch(requestRegister(data))
         fetch('/api/register/new', config)
             .then(response => {
                 // console.log('request response = ', response)
@@ -220,7 +227,7 @@ export const registerUser = profile => {
                 // })
             })
             .then((text) => {
-                console.log('applicant profile',text)
+                // console.log('applicant profile',text)
                 let json, isJson
                 try {
                     json = JSON.parse(text)

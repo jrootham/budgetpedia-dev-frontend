@@ -72,7 +72,6 @@ function auth(state = {
                 isAuthenticated: true,
             });
         case LOGIN_FAILURE:
-            console.log('login failure', action);
             return Object.assign({}, state, {
                 isFetching: false,
                 errorMessage: action.payload.message,
@@ -109,10 +108,8 @@ function register(state = {
                 user: null,
             });
         case REGISTER_FAILURE:
-            console.log('register failure action = ', action);
             let fieldMessages = {};
             let data = action.payload.data || [];
-            console.log('register failure data = ', data);
             let i, message = null;
             for (i = 0; i < data.length; i++) {
                 fieldMessages[data[i].key] = data[i].message;
@@ -120,7 +117,6 @@ function register(state = {
             if (action.payload.data) {
                 action.payload.message = null;
             }
-            console.log('register failure fieldMessages = ', fieldMessages);
             return Object.assign({}, state, {
                 isFetching: false,
                 fieldMessages: fieldMessages,

@@ -110,13 +110,18 @@ let registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, (mess
     };
 });
 exports.registerUser = profile => {
+    let data = {
+        profile: profile,
+        origin: location.origin,
+    };
+    console.log('data at source = ', data);
     let config = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(profile),
+        body: JSON.stringify(data),
     };
     return dispatch => {
-        dispatch(requestRegister(profile));
+        dispatch(requestRegister(data));
         fetch('/api/register/new', config)
             .then(response => {
             if (response.status >= 500) {
@@ -127,7 +132,6 @@ exports.registerUser = profile => {
             return response.text();
         })
             .then((text) => {
-            console.log('applicant profile', text);
             let json, isJson;
             try {
                 json = JSON.parse(text);
