@@ -6,7 +6,7 @@ const Actions = require('../actions/actions');
 const basicform_1 = require('../components/basicform');
 const Card = require('material-ui/lib/card/card');
 const CardTitle = require('material-ui/lib/card/card-title');
-const constants_1 = require('../constants/constants');
+const constants_1 = require('../local/constants');
 class RegisterClass extends Component {
     constructor(...args) {
         super(...args);
@@ -52,6 +52,22 @@ class RegisterClass extends Component {
                 defaultValue: constants_1.DEFAULT_PARTICIPATION,
                 type: 'text',
                 disabled: true,
+            },
+            {
+                index: 'password',
+                floatingLabelText: 'Password',
+                hintText: "between 6 and 12 characters",
+                type: 'password',
+                required: true,
+                errorText: fieldMessages['password'],
+            },
+            {
+                index: 'password2',
+                floatingLabelText: 'Password (Again)',
+                hintText: "between 6 and 12 characters",
+                type: 'password',
+                required: true,
+                errorText: fieldMessages['password2'],
             },
             {
                 index: 'intro',

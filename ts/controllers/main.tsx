@@ -27,7 +27,7 @@ const reduxRouterMiddleware = routerMiddleware( browserHistory )
 
 const store = createStore(
     mainReducer,
-    applyMiddleware( thunkMiddleware, reduxRouterMiddleware )
+    applyMiddleware(reduxRouterMiddleware, thunkMiddleware)
 )
 
 export class Main extends Component<any, any> {

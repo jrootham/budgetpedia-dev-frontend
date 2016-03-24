@@ -13,7 +13,7 @@ const mainbar_1 = require('./mainbar');
 const maintoolbar_1 = require('./maintoolbar');
 const routes_1 = require('../apps/routes');
 const reduxRouterMiddleware = react_router_redux_1.routerMiddleware(react_router_1.browserHistory);
-const store = redux_1.createStore(reducers_1.mainReducer, redux_1.applyMiddleware(redux_thunk_1.default, reduxRouterMiddleware));
+const store = redux_1.createStore(reducers_1.mainReducer, redux_1.applyMiddleware(reduxRouterMiddleware, redux_thunk_1.default));
 class Main extends Component {
     render() {
         return (React.createElement(react_redux_1.Provider, {store: store}, React.createElement("div", null, React.createElement(mainbar_1.MainBar, null), React.createElement("div", {style: { height: "64px" }}, " "), routes_1.routes, React.createElement("div", {style: { height: "64px" }}, " "), React.createElement(maintoolbar_1.MainToolbar, null))));

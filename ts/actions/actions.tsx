@@ -177,7 +177,7 @@ let receiveRegister = createAction(
         return {
             isFetching: false,
             isRegistered: true,
-            confirmationtoken: profile.confirmationtoken,
+            profile,
         }
     }
 )
@@ -187,7 +187,7 @@ let registerError = createAction(
     (message, data?) => {
         return {
             // isFetching: false,
-            // isAuthenticated: false,
+            // isRegistered: false,
             message,
             data,
         }
@@ -201,8 +201,6 @@ export const registerUser = profile => {
         profile,
         origin: location.origin,
     }
-
-    console.log('data at source = ', data)
 
     let config: RequestInit = {
         method: 'POST',
@@ -220,14 +218,11 @@ export const registerUser = profile => {
                         response.statusText + ' (' +
                         response.status + ')')
                 }
-                // console.log(response.toString())
-                return response.text()//.then(profile => {
-                //     console.log('profile, response = ', profile, response)
-                //     return { profile, response }
-                // })
+                return response.text().then(text => {
+                    return { text, response }
+                })
             })
-            .then((text) => {
-                // console.log('applicant profile',text)
+            .then(({text, response}) => {
                 let json, isJson
                 try {
                     json = JSON.parse(text)
@@ -236,23 +231,28 @@ export const registerUser = profile => {
                 } catch (e) {
                     isJson = false
                 }
-                if (!isJson || !json.ok) {
+                if (!isJson || !response.ok) {
                     // If there was a problem, we want to
                     // dispatch the error condition
-                    if (isJson)
+                    if (isJson) {
                         // json.data = field level data
-                        dispatch(registerError(json.message,json.data))
-                    else 
+                        dispatch(registerError(json.message, json.data))
+                    } else
                         dispatch(registerError(text))
                     // return Promise.reject(user) // ???
                 } else {
                     // Dispatch the success action
-                    dispatch(receiveRegister(json))
+                    dispatch(() => { 
+                        dispatch(receiveRegister(json))
+                        return Promise.resolve() // experimenting with thunks...
+                    }).then(() => {
+                        // switch to pending page
+                        dispatch(transitionTo('/register/pending'))
+                    })
                 }
             })
             .catch(err => {
                 dispatch(registerError(err.message))
-                console.log('System Error: ', err.message)
             })
     }
 }

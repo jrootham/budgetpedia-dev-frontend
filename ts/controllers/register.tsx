@@ -9,7 +9,7 @@ import * as Actions from '../actions/actions'
 import { BasicForm, elementProps } from '../components/basicform'
 import Card = require('material-ui/lib/card/card')
 import CardTitle = require('material-ui/lib/card/card-title')
-import { DEFAULT_PARTICIPATION } from '../constants/constants'
+import { DEFAULT_PARTICIPATION } from '../local/constants'
 
 class RegisterClass extends Component<any, any> {
     // respond to login form; assume error correction
@@ -61,6 +61,22 @@ class RegisterClass extends Component<any, any> {
                 defaultValue: DEFAULT_PARTICIPATION,
                 type: 'text',
                 disabled: true,
+            },
+            {
+                index: 'password',
+                floatingLabelText: 'Password',
+                hintText: "between 6 and 12 characters",
+                type: 'password',
+                required: true,
+                errorText: fieldMessages['password'],
+            },
+            {
+                index: 'password2',
+                floatingLabelText: 'Password (Again)',
+                hintText: "between 6 and 12 characters",
+                type: 'password',
+                required: true,
+                errorText: fieldMessages['password2'],
             },
             {
                 index: 'intro',

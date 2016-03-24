@@ -36,7 +36,7 @@ class BasicForm extends React.Component {
                 marginRight: "5px"
             }, key: element.index}, React.createElement(TextField, React.__spread({ref: node => { basicform.textFields[element.index] = node; }}, attributes))));
         });
-        return (React.createElement("form", {onSubmit: basicform.submit}, React.createElement(CardText, null, basicform.props.completionMessage
+        return (React.createElement("form", {onSubmit: basicform.submit, action: "javascript:void(0)"}, React.createElement(CardText, null, basicform.props.completionMessage
             ? React.createElement("p", {style: { color: "green" }}, basicform.props.completionMessage)
             : null, basicform.props.warningMessage
             ? React.createElement("p", {style: { color: "orange" }}, basicform.props.warningMessage)

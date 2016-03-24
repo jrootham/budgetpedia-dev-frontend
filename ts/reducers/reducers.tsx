@@ -157,7 +157,7 @@ function register(state = {
         case REGISTER_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
-                isAuthenticated: false,
+                isRegistered: false,
                 user: action.payload.profile,
                 errorMessage: null,
                 fieldMessages: null,
@@ -167,8 +167,8 @@ function register(state = {
 
             return Object.assign({}, state, {
                 isFetching: false,
-                isAuthenticated: true,
-                user:null,
+                isRegistered: true,
+                user:action.payload.profile,
             })
 
         case REGISTER_FAILURE:

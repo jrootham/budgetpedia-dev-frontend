@@ -100,7 +100,7 @@ let receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, pro
     return {
         isFetching: false,
         isRegistered: true,
-        confirmationtoken: profile.confirmationtoken,
+        profile: profile,
     };
 });
 let registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, (message, data) => {
@@ -114,7 +114,6 @@ exports.registerUser = profile => {
         profile: profile,
         origin: location.origin,
     };
-    console.log('data at source = ', data);
     let config = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -129,9 +128,11 @@ exports.registerUser = profile => {
                     response.statusText + ' (' +
                     response.status + ')');
             }
-            return response.text();
+            return response.text().then(text => {
+                return { text: text, response: response };
+            });
         })
-            .then((text) => {
+            .then(({ text, response }) => {
             let json, isJson;
             try {
                 json = JSON.parse(text);
@@ -140,19 +141,24 @@ exports.registerUser = profile => {
             catch (e) {
                 isJson = false;
             }
-            if (!isJson || !json.ok) {
-                if (isJson)
+            if (!isJson || !response.ok) {
+                if (isJson) {
                     dispatch(registerError(json.message, json.data));
+                }
                 else
                     dispatch(registerError(text));
             }
             else {
-                dispatch(receiveRegister(json));
+                dispatch(() => {
+                    dispatch(receiveRegister(json));
+                    return Promise.resolve();
+                }).then(() => {
+                    dispatch(exports.transitionTo('/register/pending'));
+                });
             }
         })
             .catch(err => {
             dispatch(registerError(err.message));
-            console.log('System Error: ', err.message);
         });
     };
 };

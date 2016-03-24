@@ -99,7 +99,7 @@ var receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, fun
     return {
         isFetching: false,
         isRegistered: true,
-        confirmationtoken: profile.confirmationtoken
+        profile: profile
     };
 });
 var registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, function (message, data) {
@@ -113,7 +113,6 @@ exports.registerUser = function (profile) {
         profile: profile,
         origin: location.origin
     };
-    console.log('data at source = ', data);
     var config = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -125,8 +124,13 @@ exports.registerUser = function (profile) {
             if (response.status >= 500) {
                 throw new Error("Response from server: " + response.statusText + ' (' + response.status + ')');
             }
-            return response.text();
-        }).then(function (text) {
+            return response.text().then(function (text) {
+                return { text: text, response: response };
+            });
+        }).then(function (_ref2) {
+            var text = _ref2.text;
+            var response = _ref2.response;
+
             var json = undefined,
                 isJson = undefined;
             try {
@@ -135,14 +139,20 @@ exports.registerUser = function (profile) {
             } catch (e) {
                 isJson = false;
             }
-            if (!isJson || !json.ok) {
-                if (isJson) dispatch(registerError(json.message, json.data));else dispatch(registerError(text));
+            if (!isJson || !response.ok) {
+                if (isJson) {
+                    dispatch(registerError(json.message, json.data));
+                } else dispatch(registerError(text));
             } else {
-                dispatch(receiveRegister(json));
+                dispatch(function () {
+                    dispatch(receiveRegister(json));
+                    return Promise.resolve();
+                }).then(function () {
+                    dispatch(exports.transitionTo('/register/pending'));
+                });
             }
         }).catch(function (err) {
             dispatch(registerError(err.message));
-            console.log('System Error: ', err.message);
         });
     };
 };
@@ -515,7 +525,7 @@ var App = function (_Component) {
 
 exports.routes = React.createElement(react_router_1.Router, { history: react_router_1.browserHistory }, React.createElement(react_router_1.Route, { path: "/", component: App }, React.createElement(react_router_1.IndexRoute, { component: maintiles_1.MainTiles }), React.createElement(react_router_1.Route, { path: "about", component: about_1.About }), React.createElement(react_router_1.Route, { path: "timeline", component: timeline_1.Timeline }), React.createElement(react_router_1.Route, { path: "deputations", component: deputations_1.Deputations }), React.createElement(react_router_1.Route, { path: "explorer", component: explorer_1.Explorer }), React.createElement(react_router_1.Route, { path: "resources", component: resources_1.Resources }), React.createElement(react_router_1.Route, { path: "socialmedia", component: socialmedia_1.SocialMedia }), React.createElement(react_router_1.Route, { path: "joinus", component: joinus_1.JoinUs }), React.createElement(react_router_1.Route, { path: "stories", component: stories_1.Stories }), React.createElement(react_router_1.Route, { path: "resetpassword", component: resetpassword_1.ResetPassword }), React.createElement(react_router_1.Route, { path: "register", component: register_1.Register }), React.createElement(react_router_1.Route, { path: "newsletter", component: newsletter_1.Newsletter }), React.createElement(react_router_1.Route, { path: "*", component: nomatch_1.NoMatch })));
 
-},{"../controllers/maintiles":18,"../controllers/nomatch":20,"../controllers/register":21,"../controllers/resetpassword":22,"./controllers/about":2,"./controllers/deputations":3,"./controllers/explorer":4,"./controllers/joinus":5,"./controllers/newsletter":6,"./controllers/resources":7,"./controllers/socialmedia":8,"./controllers/stories":9,"./controllers/timeline":10,"react":394,"react-addons-css-transition-group":198,"react-router":245}],12:[function(require,module,exports){
+},{"../controllers/maintiles":17,"../controllers/nomatch":19,"../controllers/register":20,"../controllers/resetpassword":21,"./controllers/about":2,"./controllers/deputations":3,"./controllers/explorer":4,"./controllers/joinus":5,"./controllers/newsletter":6,"./controllers/resources":7,"./controllers/socialmedia":8,"./controllers/stories":9,"./controllers/timeline":10,"react":394,"react-addons-css-transition-group":198,"react-router":245}],12:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -578,7 +588,7 @@ var BasicForm = function (_React$Component) {
                         basicform.textFields[element.index] = node;
                     } }, attributes)));
             });
-            return React.createElement("form", { onSubmit: basicform.submit }, React.createElement(CardText, null, basicform.props.completionMessage ? React.createElement("p", { style: { color: "green" } }, basicform.props.completionMessage) : null, basicform.props.warningMessage ? React.createElement("p", { style: { color: "orange" } }, basicform.props.warningMessage) : null, basicform.props.errorMessage ? React.createElement("p", { style: { color: "red" } }, basicform.props.errorMessage) : null, children), React.createElement(CardActions, null, React.createElement(RaisedButton, { type: "submit", label: basicform.props.submitButtonLabel, className: "button-submit", primary: true })));
+            return React.createElement("form", { onSubmit: basicform.submit, action: "javascript:void(0)" }, React.createElement(CardText, null, basicform.props.completionMessage ? React.createElement("p", { style: { color: "green" } }, basicform.props.completionMessage) : null, basicform.props.warningMessage ? React.createElement("p", { style: { color: "orange" } }, basicform.props.warningMessage) : null, basicform.props.errorMessage ? React.createElement("p", { style: { color: "red" } }, basicform.props.errorMessage) : null, children), React.createElement(CardActions, null, React.createElement(RaisedButton, { type: "submit", label: basicform.props.submitButtonLabel, className: "button-submit", primary: true })));
         }
     }]);
 
@@ -854,11 +864,6 @@ var NavTiles = function (_Component) {
 exports.NavTiles = NavTiles;
 
 },{"./navtile":13,"material-ui/lib/grid-list/grid-list":135,"react":394}],15:[function(require,module,exports){
-"use strict";
-
-exports.DEFAULT_PARTICIPATION = 'Budget Commons: Member';
-
-},{}],16:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -884,7 +889,7 @@ var mainbar_1 = require('./mainbar');
 var maintoolbar_1 = require('./maintoolbar');
 var routes_1 = require('../apps/routes');
 var reduxRouterMiddleware = react_router_redux_1.routerMiddleware(react_router_1.browserHistory);
-var store = redux_1.createStore(reducers_1.mainReducer, redux_1.applyMiddleware(redux_thunk_1.default, reduxRouterMiddleware));
+var store = redux_1.createStore(reducers_1.mainReducer, redux_1.applyMiddleware(reduxRouterMiddleware, redux_thunk_1.default));
 
 var Main = function (_Component) {
     _inherits(Main, _Component);
@@ -907,7 +912,7 @@ var Main = function (_Component) {
 
 exports.Main = Main;
 
-},{"../apps/routes":11,"../reducers/reducers":25,"./mainbar":17,"./maintoolbar":19,"react":394,"react-redux":209,"react-router":245,"react-router-redux":214,"react-tap-event-plugin":256,"redux":407,"redux-thunk":401}],17:[function(require,module,exports){
+},{"../apps/routes":11,"../reducers/reducers":25,"./mainbar":16,"./maintoolbar":18,"react":394,"react-redux":209,"react-router":245,"react-router-redux":214,"react-tap-event-plugin":256,"redux":407,"redux-thunk":401}],16:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1071,7 +1076,7 @@ function mapStateToProps(state) {
 var MainBar = react_redux_1.connect(mapStateToProps)(MainBarClass);
 exports.MainBar = MainBar;
 
-},{"../actions/actions":1,"../components/basicform":12,"material-ui/lib/app-bar":122,"material-ui/lib/card/card":128,"material-ui/lib/card/card-actions":124,"material-ui/lib/card/card-text":126,"material-ui/lib/card/card-title":127,"material-ui/lib/divider":130,"material-ui/lib/font-icon":134,"material-ui/lib/icon-button":137,"material-ui/lib/left-nav":138,"material-ui/lib/raised-button":150,"react":394,"react-redux":209}],18:[function(require,module,exports){
+},{"../actions/actions":1,"../components/basicform":12,"material-ui/lib/app-bar":122,"material-ui/lib/card/card":128,"material-ui/lib/card/card-actions":124,"material-ui/lib/card/card-text":126,"material-ui/lib/card/card-title":127,"material-ui/lib/divider":130,"material-ui/lib/font-icon":134,"material-ui/lib/icon-button":137,"material-ui/lib/left-nav":138,"material-ui/lib/raised-button":150,"react":394,"react-redux":209}],17:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1159,7 +1164,7 @@ var MainTilesClass = function (_React$Component) {
 var MainTiles = react_redux_1.connect(mapStateToProps)(MainTilesClass);
 exports.MainTiles = MainTiles;
 
-},{"../actions/actions":1,"../components/navtiles":14,"react":394,"react-redux":209,"redux":407}],19:[function(require,module,exports){
+},{"../actions/actions":1,"../components/navtiles":14,"react":394,"react-redux":209,"redux":407}],18:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1235,7 +1240,7 @@ var MainToolbarClass = function (_React$Component) {
 var MainToolbar = react_redux_1.connect(mapStateToProps)(MainToolbarClass);
 exports.MainToolbar = MainToolbar;
 
-},{"../actions/actions":1,"material-ui/lib/font-icon":134,"material-ui/lib/icon-button":137,"material-ui/lib/toolbar/toolbar":179,"material-ui/lib/toolbar/toolbar-group":178,"react":394,"react-redux":209}],20:[function(require,module,exports){
+},{"../actions/actions":1,"material-ui/lib/font-icon":134,"material-ui/lib/icon-button":137,"material-ui/lib/toolbar/toolbar":179,"material-ui/lib/toolbar/toolbar-group":178,"react":394,"react-redux":209}],19:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1270,7 +1275,7 @@ var NoMatch = function (_Component) {
 
 exports.NoMatch = NoMatch;
 
-},{"react":394}],21:[function(require,module,exports){
+},{"react":394}],20:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1290,7 +1295,7 @@ var Actions = require('../actions/actions');
 var basicform_1 = require('../components/basicform');
 var Card = require('material-ui/lib/card/card');
 var CardTitle = require('material-ui/lib/card/card-title');
-var constants_1 = require('../constants/constants');
+var constants_1 = require('../local/constants');
 
 var RegisterClass = function (_Component) {
     _inherits(RegisterClass, _Component);
@@ -1349,6 +1354,20 @@ var RegisterClass = function (_Component) {
                 type: 'text',
                 disabled: true
             }, {
+                index: 'password',
+                floatingLabelText: 'Password',
+                hintText: "between 6 and 12 characters",
+                type: 'password',
+                required: true,
+                errorText: fieldMessages['password']
+            }, {
+                index: 'password2',
+                floatingLabelText: 'Password (Again)',
+                hintText: "between 6 and 12 characters",
+                type: 'password',
+                required: true,
+                errorText: fieldMessages['password2']
+            }, {
                 index: 'intro',
                 floatingLabelText: 'Introduction',
                 hintText: "something about yourself for other members (optional)",
@@ -1379,7 +1398,7 @@ function mapStateToProps(state) {
 var Register = react_redux_1.connect(mapStateToProps)(RegisterClass);
 exports.Register = Register;
 
-},{"../actions/actions":1,"../components/basicform":12,"../constants/constants":15,"material-ui/lib/card/card":128,"material-ui/lib/card/card-title":127,"react":394,"react-redux":209}],22:[function(require,module,exports){
+},{"../actions/actions":1,"../components/basicform":12,"../local/constants":23,"material-ui/lib/card/card":128,"material-ui/lib/card/card-title":127,"react":394,"react-redux":209}],21:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1414,7 +1433,7 @@ var ResetPassword = function (_Component) {
 
 exports.ResetPassword = ResetPassword;
 
-},{"react":394}],23:[function(require,module,exports){
+},{"react":394}],22:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -1423,7 +1442,12 @@ var main_1 = require('./controllers/main');
 require('isomorphic-fetch');
 react_dom_1.render(React.createElement(main_1.Main, null), document.getElementById('main'));
 
-},{"./controllers/main":16,"isomorphic-fetch":95,"react":394,"react-dom":202}],24:[function(require,module,exports){
+},{"./controllers/main":15,"isomorphic-fetch":95,"react":394,"react-dom":202}],23:[function(require,module,exports){
+"use strict";
+
+exports.DEFAULT_PARTICIPATION = 'Budget Commons: Member';
+
+},{}],24:[function(require,module,exports){
 'use strict';
 
 var theme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
@@ -1672,7 +1696,7 @@ function register() {
         case REGISTER_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
-                isAuthenticated: false,
+                isRegistered: false,
                 user: action.payload.profile,
                 errorMessage: null,
                 fieldMessages: null
@@ -1680,8 +1704,8 @@ function register() {
         case REGISTER_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: false,
-                isAuthenticated: true,
-                user: null
+                isRegistered: true,
+                user: action.payload.profile
             });
         case REGISTER_FAILURE:
             var fieldMessages = {};
@@ -43284,4 +43308,4 @@ module.exports = warning;
   self.fetch.polyfill = true
 })(typeof self !== 'undefined' ? self : this);
 
-},{}]},{},[23]);
+},{}]},{},[22]);

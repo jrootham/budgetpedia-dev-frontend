@@ -93,7 +93,7 @@ export class BasicForm extends React.Component<BasicFormProps, any> {
         })
 
         return (
-        <form onSubmit = { basicform.submit } >
+        <form onSubmit = { basicform.submit } action="javascript:void(0)">
 
             <CardText>
                 { basicform.props.completionMessage
