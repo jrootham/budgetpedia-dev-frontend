@@ -176,7 +176,6 @@ function register(state = {
             // console.log('register failure action = ', action)
             let fieldMessages = {}
             let data = action.payload.data || []
-            // console.log('register failure data = ', data)
             let i, message = null
             for (i = 0; i < data.length; i++) {
                 // TODO: should map internal field name to field presentation title here
@@ -188,7 +187,6 @@ function register(state = {
             // console.log('register failure fieldMessages = ', fieldMessages)
             return Object.assign({}, state, {
                 isFetching: false,
-                // isAuthenticated: false,
                 fieldMessages,
                 errorMessage: action.payload.message,
                 user: null,
@@ -200,18 +198,66 @@ function register(state = {
     }
 }
 
+let {
+    REGISTER_CONFIRM_REQUEST, 
+    REGISTER_CONFIRM_SUCCESS, 
+    REGISTER_CONFIRM_FAILURE,
+} = Actions
+
+function registerconfirm(state = {
+    isFetching: false,
+    isConfirmed: false
+}, action) {
+
+    switch (action.type) {
+
+        case REGISTER_CONFIRM_REQUEST:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isConfirmed: false,
+                confirmtoken: action.payload.confirmtoken,
+                errorMessage: null,
+                user: null,
+            })
+
+        case REGISTER_CONFIRM_SUCCESS:
+
+            return Object.assign({}, state, {
+                isFetching: false,
+                isRegistered: true,
+                user: action.payload.profile,
+            })
+
+        case REGISTER_CONFIRM_FAILURE:
+
+            return Object.assign({}, state, {
+                isFetching: false,
+                errorMessage: action.payload.message || action.payload,
+                user: null,
+            })
+
+        default:
+
+            return state
+    }
+
+}
+
 let mainReducerCore = combineReducers(
     { 
+        maintiles,
         maincols,
         mainpadding,
-        appnavbar, 
+        appnavbar,
+        // toolsnavbar, 
         theme,
         colors,
         system,
-        maintiles,
+        
         routing:routerReducer, 
         auth,
         register,
+        registerconfirm,
     }
 )
 

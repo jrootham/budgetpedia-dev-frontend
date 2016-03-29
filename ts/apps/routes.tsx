@@ -15,6 +15,8 @@ import { MainTiles } from '../controllers/maintiles'
 import { NoMatch } from '../controllers/nomatch'
 import { ResetPassword } from '../controllers/resetpassword'
 import { Register } from '../controllers/register'
+import { RegisterPending } from '../controllers/registerpending'
+import { RegisterConfirm } from '../controllers/registerconfirm'
 
 import { About } from './controllers/about'
 import { Timeline } from './controllers/timeline'
@@ -61,6 +63,8 @@ export var routes =
             <Route path="stories" component={ Stories } />
             <Route path="resetpassword" component={ ResetPassword } />
             <Route path="register" component={ Register } />
+            <Route path="register/pending" component={ RegisterPending } />
+            <Route path="register/confirm" component={ RegisterConfirm } />
             <Route path="newsletter" component={ Newsletter } />
             <Route path="*" component={ NoMatch } />
         </Route>

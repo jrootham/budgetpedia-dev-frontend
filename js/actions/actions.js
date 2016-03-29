@@ -1,6 +1,7 @@
 "use strict";
 const redux_actions_1 = require('redux-actions');
 const react_router_redux_1 = require('react-router-redux');
+const utilities_1 = require('../utilities/utilities');
 exports.SET_TILECOLS = 'SET_TILECOLS';
 exports.ADD_TILE = 'ADD_TILE';
 exports.REMOVE_TILE = 'REMOVE_TILE';
@@ -90,16 +91,11 @@ exports.REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 exports.REGISTER_FAILURE = 'REGISTER_FAILURE';
 let requestRegister = redux_actions_1.createAction(exports.REGISTER_REQUEST, profile => {
     return {
-        isFetching: true,
-        isRegistered: false,
-        message: '',
         profile: profile,
     };
 });
 let receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, profile => {
     return {
-        isFetching: false,
-        isRegistered: true,
         profile: profile,
     };
 });
@@ -160,5 +156,82 @@ exports.registerUser = profile => {
             .catch(err => {
             dispatch(registerError(err.message));
         });
+    };
+};
+exports.REGISTER_CONFIRM_REQUEST = 'REGISTER_CONFIRM_REQUEST';
+exports.REGISTER_CONFIRM_SUCCESS = 'REGISTER_CONFIRM_SUCCESS';
+exports.REGISTER_CONFIRM_FAILURE = 'REGISTER_CONFIRM_FAILURE';
+let requestConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFIRM_REQUEST, confirmtoken => {
+    return {
+        confirmtoken: confirmtoken,
+    };
+});
+let receiveConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFIRM_SUCCESS, jwt => {
+    return {
+        jwt: jwt,
+    };
+});
+let registerConfirmError = redux_actions_1.createAction(exports.REGISTER_CONFIRM_FAILURE, (message) => {
+    return {
+        message: message,
+    };
+});
+exports.confirmUser = () => {
+    let uri = location.href;
+    let query = utilities_1.getQuery(uri);
+    let data = {
+        token: query['token']
+    };
+    return dispatch => {
+        if (!data.token) {
+            dispatch(registerConfirmError('No regitration token is available'));
+        }
+        else {
+            let config = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            };
+            dispatch(requestConfirmRegister(data));
+            fetch('/api/register/confirm', config)
+                .then(response => {
+                if (response.status >= 500) {
+                    throw new Error("Response from server: " +
+                        response.statusText + ' (' +
+                        response.status + ')');
+                }
+                return response.text().then(text => {
+                    return { text: text, response: response };
+                });
+            })
+                .then(({ text, response }) => {
+                let json, isJson;
+                try {
+                    json = JSON.parse(text);
+                    isJson = true;
+                    console.log('reply json', json);
+                }
+                catch (e) {
+                    isJson = false;
+                }
+                console.log('response = ', text, response);
+                if (!isJson || !response.ok) {
+                    if (isJson) {
+                        dispatch(registerConfirmError(json.message || json.error));
+                    }
+                    else
+                        dispatch(registerConfirmError(text));
+                }
+                else {
+                    dispatch(() => {
+                        dispatch(receiveConfirmRegister(json));
+                    });
+                }
+            })
+                .catch(err => {
+                console.log('err.message', err.message);
+                dispatch(registerConfirmError(err.message));
+            });
+        }
     };
 };

@@ -127,17 +127,48 @@ function register(state = {
             return state;
     }
 }
+let { REGISTER_CONFIRM_REQUEST, REGISTER_CONFIRM_SUCCESS, REGISTER_CONFIRM_FAILURE, } = Actions;
+function registerconfirm(state = {
+        isFetching: false,
+        isConfirmed: false
+    }, action) {
+    switch (action.type) {
+        case REGISTER_CONFIRM_REQUEST:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isConfirmed: false,
+                confirmtoken: action.payload.confirmtoken,
+                errorMessage: null,
+                user: null,
+            });
+        case REGISTER_CONFIRM_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isRegistered: true,
+                user: action.payload.profile,
+            });
+        case REGISTER_CONFIRM_FAILURE:
+            return Object.assign({}, state, {
+                isFetching: false,
+                errorMessage: action.payload.message || action.payload,
+                user: null,
+            });
+        default:
+            return state;
+    }
+}
 let mainReducerCore = redux_1.combineReducers({
+    maintiles: maintiles,
     maincols: maincols,
     mainpadding: mainpadding,
     appnavbar: appnavbar,
     theme: theme,
     colors: colors,
     system: system,
-    maintiles: maintiles,
     routing: react_router_redux_1.routerReducer,
     auth: auth,
     register: register,
+    registerconfirm: registerconfirm,
 });
 let mainReducer = (state, action) => {
     if (!flux_standard_action_1.isFSA(action)) {

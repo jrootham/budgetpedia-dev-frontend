@@ -9,7 +9,7 @@
 import * as React from 'react'
 import { render } from 'react-dom'
 import { Main } from './controllers/main'
-// install fetch as global function for browsers (ef Safari) that don't have it
+// install fetch as global function for browsers (eg Safari) that don't have it
 require('isomorphic-fetch')
 
 render(

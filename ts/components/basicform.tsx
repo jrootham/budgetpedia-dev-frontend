@@ -66,7 +66,7 @@ export class BasicForm extends React.Component<BasicFormProps, any> {
             let attributes:{[index:string]:any} = {}
             for (var name in element) {
                 if (['index'].indexOf(name) < 0)
-                    attributes[name]=element[name]
+                    attributes[name] = element[name]
             }
             // make adjustments for textbox as block
             let istextbox:boolean = (attributes['rows'] && (attributes['rows'] > 1))
@@ -84,7 +84,7 @@ export class BasicForm extends React.Component<BasicFormProps, any> {
                     }} 
                     key={element.index} >
                     <TextField 
-                        ref = { node => {basicform.textFields[element.index]=node} } 
+                        ref = { node => { basicform.textFields[ element.index ] = node } } 
                         { ...attributes } 
                     />
 

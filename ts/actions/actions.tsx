@@ -15,6 +15,8 @@ import { createAction } from 'redux-actions';
 */
 import { routerActions } from 'react-router-redux'
 
+import { getQuery } from '../utilities/utilities'
+
 /*------------- tile management -----------*/
 
 export const SET_TILECOLS = 'SET_TILECOLS'
@@ -163,9 +165,9 @@ let requestRegister = createAction(
     REGISTER_REQUEST,
     profile => {
         return {
-            isFetching: true,
-            isRegistered: false,
-            message: '',
+            // isFetching: true,
+            // isRegistered: false,
+            // message: '',
             profile,
         }
     }
@@ -175,8 +177,8 @@ let receiveRegister = createAction(
     REGISTER_SUCCESS,
     profile => {
         return {
-            isFetching: false,
-            isRegistered: true,
+            // isFetching: false,
+            // isRegistered: true,
             profile,
         }
     }
@@ -187,7 +189,6 @@ let registerError = createAction(
     (message, data?) => {
         return {
             // isFetching: false,
-            // isRegistered: false,
             message,
             data,
         }
@@ -255,4 +256,122 @@ export const registerUser = profile => {
                 dispatch(registerError(err.message))
             })
     }
+}
+
+//================================================================
+//------------- REGISTRATION CONFIMRATION MANAGEMENT -------------
+//================================================================
+
+export const REGISTER_CONFIRM_REQUEST = 'REGISTER_CONFIRM_REQUEST'
+export const REGISTER_CONFIRM_SUCCESS = 'REGISTER_CONFIRM_SUCCESS'
+export const REGISTER_CONFIRM_FAILURE = 'REGISTER_CONFIRM_FAILURE'
+
+let requestConfirmRegister = createAction(
+    REGISTER_CONFIRM_REQUEST,
+    confirmtoken => {
+        return {
+            // isFetching: true,
+            // isConfirmed: false,
+            // message: '',
+            confirmtoken,
+            // jwt:null,
+        }
+    }
+)
+
+let receiveConfirmRegister = createAction(
+    REGISTER_CONFIRM_SUCCESS,
+    jwt => {
+        return {
+            // isFetching: false,
+            // isConfirmed: true,
+            jwt,
+        }
+    }
+)
+
+let registerConfirmError = createAction(
+    REGISTER_CONFIRM_FAILURE,
+    (message) => {
+        return {
+            // isFetching: false,
+            // confirmtoken:null,
+            message,
+        }
+    }
+)
+
+export const confirmUser = () => {
+
+    let uri = location.href
+    let query = getQuery(uri)
+    let data = {
+        token: query['token']
+    }
+    // console.log('token = ', data.token)
+    return dispatch => {
+        if (!data.token) {
+            dispatch(registerConfirmError('No regitration token is available'))
+        } else {
+
+            let config: RequestInit = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+                // timeout: 3000, // TODO: test this!
+            }
+
+            dispatch(requestConfirmRegister(data))
+            fetch('/api/register/confirm', config)
+                .then(response => {
+                    // console.log('confirm request response = ', response)
+                    if (response.status >= 500) {
+                        throw new Error("Response from server: " +
+                            response.statusText + ' (' +
+                            response.status + ')')
+                    }
+                    return response.text().then(text => {
+                        return { text, response }
+                    })
+                })
+                .then(({text, response}) => {
+                    let json, isJson
+                    // console.log('reply text', text)
+                    try {
+                        json = JSON.parse(text)
+                        isJson = true
+                        console.log('reply json', json)
+                    } catch (e) {
+                        isJson = false
+                    }
+                    console.log('response = ',text, response)
+                    if (!isJson || !response.ok) {
+                        // If there was a problem, we want to
+                        // dispatch the error condition
+                        if (isJson) {
+                            // json.data = field level data
+                            dispatch(registerConfirmError(json.message || json.error))
+                        } else
+                            dispatch(registerConfirmError(text))
+                        // return Promise.reject(user) // ???
+                    } else {
+                        // Dispatch the success action
+                        dispatch(() => {
+                            dispatch(receiveConfirmRegister(json))
+                            // return Promise.resolve() // experimenting with thunks...
+                        })
+                        // .then(() => { // autologin
+
+                        // })
+                    }
+                })
+                .catch(err => {
+                    console.log('err.message',err.message)
+                    dispatch(registerConfirmError(err.message))
+                })
+
+        }
+
+    }
+    
 }
