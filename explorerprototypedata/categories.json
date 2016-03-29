@@ -1,0 +1,52 @@
+[
+{
+    "Department":"Shared Services",
+    "Category":"Public Works",
+    "Amount":null
+},
+{
+    "Department":"Shared Services",
+    "Category":"City Commons",
+    "Amount":null
+},
+{
+    "Department":"Shared Services",
+    "Category":"City Places",
+    "Amount":null
+},
+{
+    "Department":"Citizen Support Services",
+    "Category":"Emergency Services",
+    "Amount":null
+},
+{
+    "Department":"Citizen Support Services",
+    "Category":"Health & Welfare Services",
+    "Amount":null
+},
+{
+    "Department":"Citizen Support Services",
+    "Category":"Social Services",
+    "Amount":null
+},
+{
+    "Department":"Municipal Services",
+    "Category":"City Management",
+    "Amount":null
+},
+{
+    "Department":"Municipal Services",
+    "Category":"City Development Services",
+    "Amount":null
+},
+{
+    "Department":"Municipal Services",
+    "Category":"Internal Services",
+    "Amount":null
+},
+{
+    "Department":"Municipal Services",
+    "Category":"Corporate Accounts",
+    "Amount":null
+}
+]
