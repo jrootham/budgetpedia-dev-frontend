@@ -1,21 +1,15 @@
 // preprocess.js
 'use strict'
 var jsonfile = require('jsonfile')
-var fs = require('fs')
 var departments = require('./departments.json')
 var categories = require('./categories.json')
 var divisions = require('./programs.json')
 var expenditures = require('./expenditures.json')
 var expenditurenames = require('./expenditurenames.json')
 
-let budget = {}
-
 let expenditurebudget = expenditures.map( item => {
     let expenditurenameitem = expenditurenames.filter(nameitem => {
-        if (nameitem.Expenditure == item.Expenditure)
-            return true
-        else 
-            return false
+        return (nameitem.Expenditure == item.Expenditure)? true: false
     })
     expenditurenameitem = expenditurenameitem[0]
     item.Amount = parseInt(item.Amount)
@@ -25,10 +19,7 @@ let expenditurebudget = expenditures.map( item => {
 
 let divisionbudget = divisions.map( division => {
     let expenditureitems = expenditurebudget.filter (expenditureitem => {
-        if (expenditureitem.Division == division.Division)
-            return true
-        else
-            return false
+        return (expenditureitem.Division == division.Division)? true: false
     })
     expenditureitems = expenditureitems.map( item => {
         delete item.Division
@@ -40,10 +31,7 @@ let divisionbudget = divisions.map( division => {
 
 let categorybudget = categories.map( category => {
     let divisionitems = divisionbudget.filter ( divisionitem => {
-        if (divisionitem.Category == category.Category)
-            return true
-        else
-            return false
+        return (divisionitem.Category == category.Category)? true: false
     })
     divisionitems = divisionitems.map( item => {
         delete item.Category
@@ -59,10 +47,7 @@ let categorybudget = categories.map( category => {
 
 let departmentbudget = departments.map( department => {
     let categoryitems = categorybudget.filter ( categoryitem => {
-        if (categoryitem.Department == department.Department)
-            return true
-        else
-            return false
+        return (categoryitem.Department == department.Department)? true: false
     })
     categoryitems = categoryitems.map( item => {
         delete item.Department
