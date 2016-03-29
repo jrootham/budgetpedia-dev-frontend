@@ -1,6 +1,7 @@
 // preprocess.js
 'use strict'
 var jsonfile = require('jsonfile')
+var budgetroot = require('./budgetroot.json')
 var departments = require('./departments.json')
 var categories = require('./categories.json')
 var divisions = require('./programs.json')
@@ -61,6 +62,13 @@ let departmentbudget = departments.map( department => {
     return department
 })
 
+let budgettotal = departmentbudget.reduce((previousvalue, currentitem) => {
+    return previousvalue + currentitem.Amount
+},0)
+
+budgetroot.Departments = departmentbudget
+budgetroot.Amount = budgettotal
+
 jsonfile.spaces = 4
 
-jsonfile.writeFile('./budget.json',departmentbudget)
+jsonfile.writeFile('./budget.json', budgetroot)
