@@ -1,5 +1,5 @@
 {
-  "name": "tribalcommons.ca",
+  "name": "budgetcommons.ca",
   "version": false,
   "ambientDependencies": {
     "flux-standard-action": "github:DefinitelyTyped/DefinitelyTyped/flux-standard-action/flux-standard-action.d.ts#86dbea8fc37d9473fee465da4f0a21bea4f8cbd9",

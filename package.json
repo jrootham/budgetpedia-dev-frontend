@@ -28,6 +28,7 @@
     "react-dnd-touch-backend": "^0.2.4",
     "react-dom": "^0.14.7",
     "react-flipcard": "^0.2.1",
+    "react-google-charts": "^0.2.1",
     "react-redux": "^4.4.1",
     "react-router": "^2.0.1",
     "react-router-redux": "^4.0.0",
