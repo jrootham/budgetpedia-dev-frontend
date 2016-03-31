@@ -1,4 +1,5 @@
 'use strict';
+let budgetdata = require('../../explorerprototypedata/budget.json');
 const theme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
 const colors = require('material-ui/lib/styles/colors');
 let appnavbar = {
@@ -150,4 +151,5 @@ exports.initialstate = {
     theme: theme,
     colors: colors,
     system: system,
+    budgetdata: budgetdata,
 };

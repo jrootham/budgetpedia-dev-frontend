@@ -6,6 +6,8 @@
 
 /* ================= theme details: ==================== */
 
+let budgetdata = require('../../explorerprototypedata/budget.json')
+
 import theme = require('material-ui/lib/styles/raw-themes/light-raw-theme')
 
 // fontFamily: "Roboto, sans-serif"
@@ -196,4 +198,5 @@ export var initialstate = {
 	theme,
 	colors,
 	system,
+    budgetdata,
 }

@@ -5,6 +5,9 @@ const redux_actions_1 = require('redux-actions');
 const react_router_redux_1 = require('react-router-redux');
 const Actions = require('../actions/actions');
 const initialstate_1 = require("../local/initialstate");
+let budgetdata = (state = initialstate_1.initialstate.budgetdata, action) => {
+    return state;
+};
 let appnavbar = (state = initialstate_1.initialstate.appnavbar, action) => {
     return state;
 };
@@ -162,6 +165,7 @@ let mainReducerCore = redux_1.combineReducers({
     maincols: maincols,
     mainpadding: mainpadding,
     appnavbar: appnavbar,
+    budgetdata: budgetdata,
     theme: theme,
     colors: colors,
     system: system,

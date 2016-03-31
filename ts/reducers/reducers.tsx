@@ -11,6 +11,10 @@ import { routerReducer } from 'react-router-redux'
 import * as Actions from '../actions/actions'
 import { initialstate } from "../local/initialstate"
 
+let budgetdata = (state: any = initialstate.budgetdata, action) => {
+    return state
+}
+
 let appnavbar = (state: any = initialstate.appnavbar, action) => {
     return state
 }
@@ -249,6 +253,7 @@ let mainReducerCore = combineReducers(
         maincols,
         mainpadding,
         appnavbar,
+        budgetdata,
         // toolsnavbar, 
         theme,
         colors,
