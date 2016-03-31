@@ -1,3 +1,4 @@
+
 // tribes.tsx
 // required by bundler
 /// <reference path="../../../typings-custom/react-google-charts.d.ts" />
@@ -5,6 +6,9 @@ import * as React from 'react'
 import ChartObject = require('react-google-charts')
 var { Component } = React
 import { connect as injectStore} from 'react-redux'
+import Card = require('material-ui/lib/card/card')
+import CardTitle = require('material-ui/lib/card/card-title')
+import CardText = require('material-ui/lib/card/card-text')
 
 let Chart = ChartObject['Chart']
 
@@ -52,6 +56,7 @@ class ExplorerClass extends Component<any, any> {
             ['Administration', 2228.7, 2428.7, '$2,428.7M'],
         ]
         let columns = [
+            // type is required, else throws silent error
             { type:'string', label:"Department" }, 
             { type:'number', label:'2015'}, 
             { type:'number', label:'2016'}, 
@@ -72,7 +77,12 @@ class ExplorerClass extends Component<any, any> {
 
     }
     render() {
-        return <Chart
+        return <div>
+        <Card>
+        <hr />
+        <CardTitle>Show</CardTitle>
+        <CardText>Click or tap on any column to drill down</CardText>
+        <Chart
             chartType = "ColumnChart"
             rows = {this.state.rows}
             columns = {this.state.columns}
@@ -81,6 +91,16 @@ class ExplorerClass extends Component<any, any> {
             graph_id = "ColumnChart"
             chartEvents = {this.state.chart_events}
         />
+        </Card>
+        <Card>
+                <hr />
+                <CardTitle>Compare</CardTitle>
+        </Card>
+        <Card>
+                <hr />
+                <CardTitle>Show differences</CardTitle>
+        </Card>
+        </div>
     }
 
 }

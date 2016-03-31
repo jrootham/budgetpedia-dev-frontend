@@ -2043,6 +2043,9 @@ var ChartObject = require('react-google-charts');
 var Component = React.Component;
 
 var react_redux_1 = require('react-redux');
+var Card = require('material-ui/lib/card/card');
+var CardTitle = require('material-ui/lib/card/card-title');
+var CardText = require('material-ui/lib/card/card-text');
 var Chart = ChartObject['Chart'];
 
 var ExplorerClass = function (_Component) {
@@ -2096,7 +2099,7 @@ var ExplorerClass = function (_Component) {
     _createClass(ExplorerClass, [{
         key: 'render',
         value: function render() {
-            return React.createElement(Chart, { chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.chart_events });
+            return React.createElement("div", null, React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Show"), React.createElement(CardText, null, "Click or tap on any column to drill down"), React.createElement(Chart, { chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.chart_events })), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Show differences")));
         }
     }]);
 
@@ -2113,7 +2116,7 @@ function mapStateToProps(state) {
 var Explorer = react_redux_1.connect(mapStateToProps)(ExplorerClass);
 exports.Explorer = Explorer;
 
-},{"react":405,"react-google-charts":212,"react-redux":220}],6:[function(require,module,exports){
+},{"material-ui/lib/card/card":132,"material-ui/lib/card/card-text":130,"material-ui/lib/card/card-title":131,"react":405,"react-google-charts":212,"react-redux":220}],6:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();

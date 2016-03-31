@@ -3,6 +3,9 @@ const React = require('react');
 const ChartObject = require('react-google-charts');
 var { Component } = React;
 const react_redux_1 = require('react-redux');
+const Card = require('material-ui/lib/card/card');
+const CardTitle = require('material-ui/lib/card/card-title');
+const CardText = require('material-ui/lib/card/card-text');
 let Chart = ChartObject['Chart'];
 class ExplorerClass extends Component {
     constructor(props) {
@@ -62,7 +65,7 @@ class ExplorerClass extends Component {
         };
     }
     render() {
-        return React.createElement(Chart, {chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.chart_events});
+        return React.createElement("div", null, React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Show"), React.createElement(CardText, null, "Click or tap on any column to drill down"), React.createElement(Chart, {chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.chart_events})), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Show differences")));
     }
 }
 function mapStateToProps(state) {
