@@ -83,7 +83,7 @@ class ExplorerClass extends Component<any, any> {
         </Card>
         <Card>
         <hr />
-        <CardTitle>Show</CardTitle>
+        <CardTitle>Drill Down</CardTitle>
         <CardText>Click or tap on any column to drill down</CardText>
         <Chart
             chartType = "ColumnChart"
