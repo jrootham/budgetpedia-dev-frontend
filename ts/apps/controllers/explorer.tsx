@@ -79,6 +79,9 @@ class ExplorerClass extends Component<any, any> {
     render() {
         return <div>
         <Card>
+            <CardTitle>Dashboard</CardTitle>
+        </Card>
+        <Card>
         <hr />
         <CardTitle>Show</CardTitle>
         <CardText>Click or tap on any column to drill down</CardText>

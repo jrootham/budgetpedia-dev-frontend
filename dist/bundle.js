@@ -2099,7 +2099,7 @@ var ExplorerClass = function (_Component) {
     _createClass(ExplorerClass, [{
         key: 'render',
         value: function render() {
-            return React.createElement("div", null, React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Show"), React.createElement(CardText, null, "Click or tap on any column to drill down"), React.createElement(Chart, { chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.chart_events })), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Show differences")));
+            return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Show"), React.createElement(CardText, null, "Click or tap on any column to drill down"), React.createElement(Chart, { chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.chart_events })), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Show differences")));
         }
     }]);
 
