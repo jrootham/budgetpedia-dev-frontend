@@ -69,6 +69,8 @@ let budgettotal = departmentbudget.reduce((previousvalue, currentitem) => {
 budgetroot.Departments = departmentbudget
 budgetroot.Amount = budgettotal
 
+let series = [budgetroot]
+
 jsonfile.spaces = 4
 
-jsonfile.writeFile('./budget.json', budgetroot)
+jsonfile.writeFile('./budget.json', series)
