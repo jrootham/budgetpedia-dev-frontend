@@ -2073,8 +2073,12 @@ var ExplorerClass = function (_Component) {
                 legend: { position: 'bottom' }
             };
             var data = [['Department', '2015', '2016', { role: 'annotation' }], ['Shared Services', 3769.5, 3969.5, '$3,969.5M'], ['Support Services', 4393.2, 4593.2, '$4,593.2M'], ['Administration', 2228.7, 2428.7, '$2,428.7M']];
+            var columns = [{ type: 'string', label: "Department" }, { type: 'number', label: '2015' }, { type: 'number', label: '2016' }, { type: 'string', role: 'annotation' }];
+            var rows = [['Shared Services', 3769.5, 3969.5, '$3,969.5M'], ['Support Services', 4393.2, 4593.2, '$4,593.2M'], ['Administration', 2228.7, 2428.7, '$2,428.7M']];
             _this.setState({
                 data: data,
+                rows: rows,
+                columns: columns,
                 options: options,
                 chart_events: chart_events
             });
@@ -2092,7 +2096,7 @@ var ExplorerClass = function (_Component) {
     _createClass(ExplorerClass, [{
         key: 'render',
         value: function render() {
-            return React.createElement(Chart, { chartType: "ColumnChart", data: this.state.data, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.chart_events });
+            return React.createElement(Chart, { chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.chart_events });
         }
     }]);
 

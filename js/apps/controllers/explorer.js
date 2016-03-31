@@ -34,8 +34,21 @@ class ExplorerClass extends Component {
                 ['Support Services', 4393.2, 4593.2, '$4,593.2M'],
                 ['Administration', 2228.7, 2428.7, '$2,428.7M'],
             ];
+            let columns = [
+                { type: 'string', label: "Department" },
+                { type: 'number', label: '2015' },
+                { type: 'number', label: '2016' },
+                { type: 'string', role: 'annotation' }
+            ];
+            let rows = [
+                ['Shared Services', 3769.5, 3969.5, '$3,969.5M'],
+                ['Support Services', 4393.2, 4593.2, '$4,593.2M'],
+                ['Administration', 2228.7, 2428.7, '$2,428.7M']
+            ];
             this.setState({
                 data: data,
+                rows: rows,
+                columns: columns,
                 options: options,
                 chart_events: chart_events,
             });
@@ -49,7 +62,7 @@ class ExplorerClass extends Component {
         };
     }
     render() {
-        return React.createElement(Chart, {chartType: "ColumnChart", data: this.state.data, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.chart_events});
+        return React.createElement(Chart, {chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.chart_events});
     }
 }
 function mapStateToProps(state) {
