@@ -16,6 +16,8 @@ class ExplorerClass extends Component<any, any> {
             data: null,
             options: null,
             chart_events:null,
+            chartsdata: {seriesone:null,seriestwo:null,differences:null},
+            chartsmeta:{options:{},seriesone:{},seriestwo:{},differences:{}}
         };
     }
 
@@ -33,20 +35,21 @@ class ExplorerClass extends Component<any, any> {
         ]
 
         let options = {
-            title: "Toronto Budget 2016 $M (Total: $10,991.5M)",
+            title: "Toronto Budget 2015/2016 ($Millions) Total: $10,991.5M",
+            subtitle:"Something",
             hAxis: {title: 'Departments'},
-            vAxis: {title: 'Amount'},
+            vAxis: {title: 'Amount',minValue:0},
             bar: { groupWidth: "95%" },
-            width: 250,
-            height: 250,
-            legend: 'none',
+            width: 240, // 80 per column
+            height: 300,
+            legend: { position:'bottom'},
         }
 
         let data = [
-            ['Department', '2016',{role:'annotation'},{role: 'annotationText'}],
-            ['Shared Services', 3969.5, '$3,969.5M','Roads, Parks etc.'],
-            ['Support Services', 4593.2, '$4,593.2M','Police, Housing etc.'],
-            ['Administration', 2428.7, '$2,428.7M','City Hall etc.'],
+            ['Department', '2015','2016',{role:'annotation'}],
+            ['Shared Services', 3769.5, 3969.5, '$3,969.5M'],
+            ['Support Services', 4393.2, 4593.2, '$4,593.2M'],
+            ['Administration', 2228.7, 2428.7, '$2,428.7M'],
         ]
         this.setState({
             data,
