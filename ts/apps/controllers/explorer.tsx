@@ -17,30 +17,86 @@ class ExplorerClass extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
-            data: null,
-            options: null,
-            chart_events:null,
             chartsdata: {seriesone:null,seriestwo:null,differences:null},
             chartsmeta:{options:{},seriesone:{},seriestwo:{},differences:{}}
         };
     }
 
+    getChartData = (parms:Object) => {
+        let options = {}
+        let events = null
+        let rows = []
+        let columns = []
+        let budgetdata = this.props.budgetdata
+        let meta = budgetdata[0].Meta
+        let self = this
+
+        // capture range
+        let {parent, children, depth} = this.getChartParentAndChildren(parms['path'], meta, budgetdata)
+        options = {
+            title: parent[meta[depth].Name],
+            hAxis: { title: meta[depth].Children },
+            vAxis: { title: 'Amount', minValue:0 },
+            bar: { groupWidth: "95%" },
+            width: children.length * 80,// 80 per column
+            height: 300,
+        }
+        events = [
+            {
+                eventName: 'select',
+                callback: (Chart, e) => {
+                    let chart = Chart.chart
+                    let selection = chart.getSelection()
+                    self.updateCharts({ chart, selection })
+                    // Returns Chart so you can access props and  the ChartWrapper object from chart.wrapper 
+                    // console.log("selection",Chart,chart,selection);
+                }
+            }
+        ]
+
+        // console.log('return = ', options)
+        // console.log('chartdata = ', options, events, columns, rows, meta, budgetdata)
+        return { options, events, rows, columns }
+    }
+
+    updateCharts = data => {
+        console.log('updateCharts data = ', data)
+    }
+
+    getChartParentAndChildren = (path, meta, budgetdata) => {
+        let parent, children
+        let list = budgetdata
+        let depth = 0
+        for (depth; depth < path.length; depth++) {
+            let ref = path[depth]
+            parent = list[ref.parent]
+            list = parent[meta[depth].Children]
+        }
+        depth--
+        children = list
+
+        return {parent, children, depth}
+    }
+
     componentDidMount = () => {
-        var chart_events = [
+        var rootchartoptions = {
+            path:[{parent:0}]
+        }
+        var {options, events, rows, columns} = this.getChartData(rootchartoptions)
+        var testchart_events = [
             {
                 eventName: 'select',
                 callback: (Chart,e) => {
                     let chart = Chart.chart
                     let selection = chart.getSelection()
                     // Returns Chart so you can access props and  the ChartWrapper object from chart.wrapper 
-                    console.log("selection",Chart,chart,selection);
+                    // console.log("selection",Chart,chart,selection);
                 }
             }
         ]
 
-        let options = {
+        let testoptions = {
             title: "Toronto Budget 2015/2016 ($Millions) Total: $10,991.5M",
-            subtitle:"Something",
             hAxis: {title: 'Departments'},
             vAxis: {title: 'Amount',minValue:0},
             bar: { groupWidth: "95%" },
@@ -49,30 +105,23 @@ class ExplorerClass extends Component<any, any> {
             legend: { position:'bottom'},
         }
 
-        let data = [
-            ['Department', '2015','2016',{role:'annotation'}],
-            ['Shared Services', 3769.5, 3969.5, '$3,969.5M'],
-            ['Support Services', 4393.2, 4593.2, '$4,593.2M'],
-            ['Administration', 2228.7, 2428.7, '$2,428.7M'],
-        ]
-        let columns = [
+        let testcolumns = [
             // type is required, else throws silent error
             { type:'string', label:"Department" }, 
             { type:'number', label:'2015'}, 
             { type:'number', label:'2016'}, 
             { type:'string', role:'annotation' }
         ]
-        let rows = [
+        let testrows = [
             ['Shared Services', 3769.5, 3969.5, '$3,969.5M'],
             ['Support Services', 4393.2, 4593.2, '$4,593.2M'],
             ['Administration', 2228.7, 2428.7, '$2,428.7M']
         ]
         this.setState({
-            data,
-            rows,
-            columns,
-            options,
-            chart_events,
+            rows:testrows,
+            columns:testcolumns,
+            options:testoptions,
+            events:testchart_events,
         });
 
     }
@@ -92,7 +141,7 @@ class ExplorerClass extends Component<any, any> {
             // data = {this.state.data}
             options = { this.state.options }
             graph_id = "ColumnChart"
-            chartEvents = {this.state.chart_events}
+            chartEvents = {this.state.events}
         />
         </Card>
         <Card>

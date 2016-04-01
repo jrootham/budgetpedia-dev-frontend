@@ -2056,18 +2056,77 @@ var ExplorerClass = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ExplorerClass).call(this, props));
 
-        _this.componentDidMount = function () {
-            var chart_events = [{
+        _this.getChartData = function (parms) {
+            var options = {};
+            var events = null;
+            var rows = [];
+            var columns = [];
+            var budgetdata = _this.props.budgetdata;
+            var meta = budgetdata[0].Meta;
+            var self = _this;
+
+            var _this$getChartParentA = _this.getChartParentAndChildren(parms['path'], meta, budgetdata);
+
+            var parent = _this$getChartParentA.parent;
+            var children = _this$getChartParentA.children;
+            var depth = _this$getChartParentA.depth;
+
+            options = {
+                title: parent[meta[depth].Name],
+                hAxis: { title: meta[depth].Children },
+                vAxis: { title: 'Amount', minValue: 0 },
+                bar: { groupWidth: "95%" },
+                width: children.length * 80,
+                height: 300
+            };
+            events = [{
                 eventName: 'select',
                 callback: function callback(Chart, e) {
                     var chart = Chart.chart;
                     var selection = chart.getSelection();
-                    console.log("selection", Chart, chart, selection);
+                    self.updateCharts({ chart: chart, selection: selection });
                 }
             }];
-            var options = {
+            return { options: options, events: events, rows: rows, columns: columns };
+        };
+        _this.updateCharts = function (data) {
+            console.log('updateCharts data = ', data);
+        };
+        _this.getChartParentAndChildren = function (path, meta, budgetdata) {
+            var parent = undefined,
+                children = undefined;
+            var list = budgetdata;
+            var depth = 0;
+            for (depth; depth < path.length; depth++) {
+                var ref = path[depth];
+                parent = list[ref.parent];
+                list = parent[meta[depth].Children];
+            }
+            depth--;
+            children = list;
+            return { parent: parent, children: children, depth: depth };
+        };
+        _this.componentDidMount = function () {
+            var rootchartoptions = {
+                path: [{ parent: 0 }]
+            };
+
+            var _this$getChartData = _this.getChartData(rootchartoptions);
+
+            var options = _this$getChartData.options;
+            var events = _this$getChartData.events;
+            var rows = _this$getChartData.rows;
+            var columns = _this$getChartData.columns;
+
+            var testchart_events = [{
+                eventName: 'select',
+                callback: function callback(Chart, e) {
+                    var chart = Chart.chart;
+                    var selection = chart.getSelection();
+                }
+            }];
+            var testoptions = {
                 title: "Toronto Budget 2015/2016 ($Millions) Total: $10,991.5M",
-                subtitle: "Something",
                 hAxis: { title: 'Departments' },
                 vAxis: { title: 'Amount', minValue: 0 },
                 bar: { groupWidth: "95%" },
@@ -2075,21 +2134,16 @@ var ExplorerClass = function (_Component) {
                 height: 300,
                 legend: { position: 'bottom' }
             };
-            var data = [['Department', '2015', '2016', { role: 'annotation' }], ['Shared Services', 3769.5, 3969.5, '$3,969.5M'], ['Support Services', 4393.2, 4593.2, '$4,593.2M'], ['Administration', 2228.7, 2428.7, '$2,428.7M']];
-            var columns = [{ type: 'string', label: "Department" }, { type: 'number', label: '2015' }, { type: 'number', label: '2016' }, { type: 'string', role: 'annotation' }];
-            var rows = [['Shared Services', 3769.5, 3969.5, '$3,969.5M'], ['Support Services', 4393.2, 4593.2, '$4,593.2M'], ['Administration', 2228.7, 2428.7, '$2,428.7M']];
+            var testcolumns = [{ type: 'string', label: "Department" }, { type: 'number', label: '2015' }, { type: 'number', label: '2016' }, { type: 'string', role: 'annotation' }];
+            var testrows = [['Shared Services', 3769.5, 3969.5, '$3,969.5M'], ['Support Services', 4393.2, 4593.2, '$4,593.2M'], ['Administration', 2228.7, 2428.7, '$2,428.7M']];
             _this.setState({
-                data: data,
-                rows: rows,
-                columns: columns,
-                options: options,
-                chart_events: chart_events
+                rows: testrows,
+                columns: testcolumns,
+                options: testoptions,
+                events: testchart_events
             });
         };
         _this.state = {
-            data: null,
-            options: null,
-            chart_events: null,
             chartsdata: { seriesone: null, seriestwo: null, differences: null },
             chartsmeta: { options: {}, seriesone: {}, seriestwo: {}, differences: {} }
         };
@@ -2099,7 +2153,7 @@ var ExplorerClass = function (_Component) {
     _createClass(ExplorerClass, [{
         key: 'render',
         value: function render() {
-            return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Drill Down"), React.createElement(CardText, null, "Click or tap on any column to drill down"), React.createElement(Chart, { chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.chart_events })), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Show differences")));
+            return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Drill Down"), React.createElement(CardText, null, "Click or tap on any column to drill down"), React.createElement(Chart, { chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChart", chartEvents: this.state.events })), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement("hr", null), React.createElement(CardTitle, null, "Show differences")));
         }
     }]);
 
