@@ -94,35 +94,6 @@ class ExplorerClass extends Component {
                 }
             };
             var { options, events, rows, columns } = this.getChartData(rootchartoptions);
-            var testchart_events = [
-                {
-                    eventName: 'select',
-                    callback: (Chart, e) => {
-                        let chart = Chart.chart;
-                        let selection = chart.getSelection();
-                    }
-                }
-            ];
-            let testoptions = {
-                title: "Toronto Budget 2015/2016 ($Millions) Total: $10,991.5M",
-                hAxis: { title: 'Departments' },
-                vAxis: { title: 'Amount', minValue: 0 },
-                bar: { groupWidth: "95%" },
-                width: 240,
-                height: 300,
-                legend: { position: 'bottom' },
-            };
-            let testcolumns = [
-                { type: 'string', label: "Department" },
-                { type: 'number', label: '2015' },
-                { type: 'number', label: '2016' },
-                { type: 'string', role: 'annotation' }
-            ];
-            let testrows = [
-                ['Shared Services', 3769.5, 3969.5, '$3,969.5M'],
-                ['Support Services', 4393.2, 4593.2, '$4,593.2M'],
-                ['Administration', 2228.7, 2428.7, '$2,428.7M']
-            ];
             this.setState({
                 rows: rows,
                 columns: columns,

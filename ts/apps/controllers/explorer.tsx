@@ -1,5 +1,4 @@
-
-// tribes.tsx
+// explorer.tsx
 // required by bundler
 /// <reference path="../../../typings-custom/react-google-charts.d.ts" />
 /// <reference path="../../../typings-custom/format-number.d.ts" />
@@ -52,7 +51,7 @@ class ExplorerClass extends Component<any, any> {
             hAxis: { title: meta[depth].Children },
             vAxis: { title: 'Amount', minValue:0 },
             bar: { groupWidth: "95%" },
-            width: children.length * 120,// 80 per column
+            width: children.length * 120,// 120 per column
             height: 300,
             legend:'none',
         }
@@ -140,50 +139,11 @@ class ExplorerClass extends Component<any, any> {
         }
         var {options, events, rows, columns} = this.getChartData(rootchartoptions)
 
-        // =============================
-
-        var testchart_events = [
-            {
-                eventName: 'select',
-                callback: (Chart,e) => {
-                    let chart = Chart.chart
-                    let selection = chart.getSelection()
-                    // Returns Chart so you can access props and  the ChartWrapper object from chart.wrapper 
-                    // console.log("selection",Chart,chart,selection);
-                }
-            }
-        ]
-
-        let testoptions = {
-            title: "Toronto Budget 2015/2016 ($Millions) Total: $10,991.5M",
-            hAxis: {title: 'Departments'},
-            vAxis: {title: 'Amount',minValue:0},
-            bar: { groupWidth: "95%" },
-            width: 240, // 80 per column
-            height: 300,
-            legend: { position:'bottom'},
-        }
-
-        let testcolumns = [
-            // type is required, else throws silent error
-            { type:'string', label:"Department" }, 
-            { type:'number', label:'2015'}, 
-            { type:'number', label:'2016'}, 
-            { type:'string', role:'annotation' }
-        ]
-        let testrows = [
-            ['Shared Services', 3769.5, 3969.5, '$3,969.5M'],
-            ['Support Services', 4393.2, 4593.2, '$4,593.2M'],
-            ['Administration', 2228.7, 2428.7, '$2,428.7M']
-        ]
-
-        // =============================
-
         this.setState({
-            rows:rows,
-            columns:columns,
-            options:options,
-            events:events,
+            rows,
+            columns,
+            options,
+            events,
         });
 
     }
