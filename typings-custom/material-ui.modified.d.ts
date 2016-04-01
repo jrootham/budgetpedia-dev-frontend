@@ -225,6 +225,7 @@ declare namespace __MaterialUI {
         }
 
         interface CardTitleProps extends React.Props<CardTitle> {
+            actAsExpander?: boolean;
             expandable?: boolean;
             showExpandableButton?: boolean;
             title?: string | React.ReactElement<any>;
