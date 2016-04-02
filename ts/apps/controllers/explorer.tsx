@@ -1,3 +1,4 @@
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // explorer.tsx
 /// <reference path="../../../typings-custom/react-google-charts.d.ts" />
 /// <reference path="../../../typings-custom/format-number.d.ts" />
