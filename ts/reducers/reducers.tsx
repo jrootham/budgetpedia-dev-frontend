@@ -112,13 +112,17 @@ let homecolsreducer = (state: any = initialstate.homecols, action) => {
             // breakpoints should be parameterized
             if (elementwidth > 960) {
 
+                columns = 5
+                
+            } else if (elementwidth > 760) {
+
                 columns = 4
 
-            } else if (elementwidth > 680) {
+            } else if (elementwidth > 480) {
 
                 columns = 3
 
-            } else if (elementwidth > 400) {
+            } else if (elementwidth > 200) {
 
                 columns = 2
 

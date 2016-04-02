@@ -2492,7 +2492,7 @@ var AppTile = function (_React$Component) {
         key: 'render',
         value: function render() {
             var tile = this;
-            return React.createElement(GridTile, null, this.props.content.title);
+            return React.createElement(GridTile, { onTouchTap: tile.transitionTo, key: this.props.key, title: this.props.content.title, subtitle: this.props.content.subtitle }, React.createElement("img", { src: this.props.content.image }));
         }
     }]);
 
@@ -2542,7 +2542,7 @@ var AppTiles = function (_Component) {
             var cellHeight = _props.cellHeight;
 
             var tiles_ = tiles.map(function (data) {
-                return React.createElement(apptile_1.AppTile, { key: data.id, content: data.content, tilecolors: tilecolors, system: system, route: data.route, transitionTo: transitionTo });
+                return React.createElement(apptile_1.AppTile, { key: data.id, content: data.content, image: data.image, tilecolors: tilecolors, system: system, route: data.route, transitionTo: transitionTo });
             });
             return React.createElement(GridList, { style: style, children: tiles_, cols: tilecols, padding: padding, cellHeight: cellHeight });
         }
@@ -2699,11 +2699,11 @@ var HomeTilesClass = function (_React$Component) {
             var colors = _props.colors;
             var system = _props.system;
 
-            return React.createElement(apptiles_1.AppTiles, { style: { margin: 0, fontFamily: theme.fontFamily }, tiles: hometiles, tilecols: homecols, padding: homepadding, tilecolors: {
+            return React.createElement(apptiles_1.AppTiles, { style: { margin: "16px", fontFamily: theme.fontFamily }, tiles: hometiles, tilecols: homecols, padding: homepadding, tilecolors: {
                     front: colors.blue50,
                     back: colors.amber50,
                     helpbutton: theme.palette.primary3Color
-                }, system: system, transitionTo: redux_1.compose(this.props.dispatch, Actions.transitionTo), cellHeight: 200 });
+                }, system: system, transitionTo: redux_1.compose(this.props.dispatch, Actions.transitionTo), cellHeight: 180 });
         }
     }]);
 
@@ -3441,22 +3441,22 @@ var maintiles = [{
     route: 'stories'
 }];
 var homecols = 2;
-var homepadding = 0;
+var homepadding = 20;
 var hometiles = [{
     id: 6,
     content: {
-        title: 'About Budget Commons',
-        subtitle: '',
-        image: ''
+        title: 'About this Site',
+        subtitle: 'History and people',
+        image: '../../public/icons/ic_info_48px.svg'
     },
     index: 0,
     route: 'about'
 }, {
     id: 7,
     content: {
-        title: 'The Budget Roadmap',
-        subtitle: '',
-        image: ''
+        title: 'Budget Roadmap',
+        subtitle: 'About budget decisions',
+        image: '../../public/icons/ic_map_48px.svg'
     },
     index: 1,
     route: 'timeline'
@@ -3464,8 +3464,8 @@ var hometiles = [{
     id: 1,
     content: {
         title: 'Deputation Helper',
-        subtitle: '',
-        image: ''
+        subtitle: 'Have your say',
+        image: '../../public/icons/ic_insert_emoticon_48px.svg'
     },
     index: 2,
     route: 'deputations'
@@ -3473,17 +3473,17 @@ var hometiles = [{
     id: 9,
     content: {
         title: 'Budget Explorer',
-        subtitle: '',
-        image: ''
+        subtitle: 'Interactive tools',
+        image: '../../public/icons/ic_explore_48px.svg'
     },
     index: 3,
     route: 'explorer'
 }, {
     id: 2,
     content: {
-        title: 'Community Resources',
-        subtitle: '',
-        image: ''
+        title: 'Communities',
+        subtitle: 'Find birds of a feather',
+        image: '../../public/icons/ic_local_library_48px.svg'
     },
     index: 4,
     route: 'resources'
@@ -3491,8 +3491,8 @@ var hometiles = [{
     id: 8,
     content: {
         title: 'Social Media',
-        subtitle: '',
-        image: ''
+        subtitle: 'Public forums',
+        image: '../../public/icons/ic_thumb_up_48px.svg'
     },
     index: 5,
     route: 'socialmedia'
@@ -3500,8 +3500,8 @@ var hometiles = [{
     id: 11,
     content: {
         title: 'Newsletter',
-        subtitle: '',
-        image: ''
+        subtitle: 'News and notices',
+        image: '../../public/icons/ic_markunread_mailbox_48px.svg'
     },
     index: 6,
     route: 'newsletter'
@@ -3509,8 +3509,8 @@ var hometiles = [{
     id: 10,
     content: {
         title: 'Join Us!',
-        subtitle: '',
-        image: ''
+        subtitle: 'Join our team',
+        image: '../../public/icons/ic_group_48px.svg'
     },
     index: 7,
     route: 'joinus'
@@ -3518,8 +3518,8 @@ var hometiles = [{
     id: 12,
     content: {
         title: 'Tell your story',
-        subtitle: '',
-        image: ''
+        subtitle: 'Write for us',
+        image: '../../public/icons/ic_mode_edit_48px.svg'
     },
     index: 7,
     route: 'stories'
@@ -3644,10 +3644,12 @@ var homecolsreducer = function homecolsreducer() {
                 var elementwidth = mainElement.getBoundingClientRect().width;
                 var columns = undefined;
                 if (elementwidth > 960) {
+                    columns = 5;
+                } else if (elementwidth > 760) {
                     columns = 4;
-                } else if (elementwidth > 680) {
+                } else if (elementwidth > 480) {
                     columns = 3;
-                } else if (elementwidth > 400) {
+                } else if (elementwidth > 200) {
                     columns = 2;
                 } else {
                     columns = 1;

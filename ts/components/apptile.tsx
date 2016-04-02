@@ -46,8 +46,13 @@ export class AppTile extends React.Component<any, any> {
         // mainline
         return (
 
-            <GridTile>
-                {this.props.content.title}
+            <GridTile 
+                onTouchTap={ tile.transitionTo }
+                key = {this.props.key}
+                title = {this.props.content.title}
+                subtitle = {this.props.content.subtitle}>
+                <img src={this.props.content.image} />
+                
             </GridTile>
         )
     }

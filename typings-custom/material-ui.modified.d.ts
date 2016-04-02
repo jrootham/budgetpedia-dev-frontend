@@ -1555,6 +1555,7 @@ declare namespace __MaterialUI {
 
         interface GridTileProps extends React.Props<GridTile> {
             title?: string;
+            onTouchTap?: React.TouchEventHandler;
             subtitle?: __React.ReactNode;
             titlePosition?: string; //"top"|"bottom"
             titleBackground?: string;

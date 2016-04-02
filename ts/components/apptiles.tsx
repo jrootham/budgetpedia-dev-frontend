@@ -18,6 +18,7 @@ interface NavTilesData {
     content:    string,
     help?:      string,
     route?:     string,
+    image?:     string,
 
 }
 
@@ -47,6 +48,7 @@ class AppTiles extends Component< AppTilesProps, any > {
                 <AppTile 
                     key     = { data.id } 
                     content  = { data.content }
+                    image = {data.image}
                     tilecolors = { tilecolors }
                     system = { system }
                     route = { data.route }

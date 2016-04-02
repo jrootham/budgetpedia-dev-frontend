@@ -62,7 +62,7 @@ class HomeTilesClass extends React.Component<any, any> {
 
             <AppTiles 
 
-                style = {{margin:0,fontFamily:theme.fontFamily}}
+                style = {{margin:"16px",fontFamily:theme.fontFamily}}
                 tiles =     { hometiles } 
                 tilecols =  { homecols }
                 padding =   { homepadding }
@@ -75,8 +75,7 @@ class HomeTilesClass extends React.Component<any, any> {
                 }
                 system = { system }
                 transitionTo = { compose(this.props.dispatch, Actions.transitionTo) }
-                cellHeight = { 200 }
-
+                cellHeight = { 180 }
             />
         )
     }

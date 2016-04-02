@@ -190,15 +190,15 @@ let maintiles: [Object] = [
 ]
 
 let homecols: number = 2 // default
-let homepadding: number = 0
+let homepadding: number = 20
 
 let hometiles: [Object] = [
     {
         id: 6,
         content: {
-            title: `About Budget Commons`,
-            subtitle: ``,
-            image:'',
+            title: `About this Site`,
+            subtitle: `History and people`,
+            image: '../../public/icons/ic_info_48px.svg',
         },
         index: 0,
         route: 'about',
@@ -206,9 +206,9 @@ let hometiles: [Object] = [
     {
         id: 7,
         content: {
-            title: `The Budget Roadmap`,
-            subtitle: ``,
-            image: '',
+            title: `Budget Roadmap`,
+            subtitle: `About budget decisions`,
+            image: '../../public/icons/ic_map_48px.svg',
         },
         index: 1,
         route: 'timeline',
@@ -217,8 +217,8 @@ let hometiles: [Object] = [
         id: 1,
         content: {
             title: `Deputation Helper`,
-            subtitle: ``,
-            image: '',
+            subtitle: `Have your say`,
+            image: '../../public/icons/ic_insert_emoticon_48px.svg',
         },
         index: 2,
         route: 'deputations',
@@ -227,8 +227,8 @@ let hometiles: [Object] = [
         id: 9,
         content: {
             title: `Budget Explorer`,
-            subtitle: ``,
-            image: '',
+            subtitle: `Interactive tools`,
+            image: '../../public/icons/ic_explore_48px.svg',
         },
         index: 3,
         route: 'explorer',
@@ -236,9 +236,9 @@ let hometiles: [Object] = [
     {
         id: 2,
         content: {
-            title: `Community Resources`,
-            subtitle: ``,
-            image: '',
+            title: `Communities`,
+            subtitle: `Find birds of a feather`,
+            image: '../../public/icons/ic_local_library_48px.svg',
         },
         index: 4,
         route: 'resources',
@@ -247,8 +247,8 @@ let hometiles: [Object] = [
         id: 8,
         content: {
             title: `Social Media`,
-            subtitle: ``,
-            image: '',
+            subtitle: `Public forums`,
+            image: '../../public/icons/ic_thumb_up_48px.svg',
         },
         index: 5,
         route: 'socialmedia',
@@ -257,8 +257,8 @@ let hometiles: [Object] = [
         id: 11,
         content: {
             title: `Newsletter`,
-            subtitle: ``,
-            image: '',
+            subtitle: `News and notices`,
+            image: '../../public/icons/ic_markunread_mailbox_48px.svg',
         },
         index: 6,
         route: 'newsletter',
@@ -267,8 +267,8 @@ let hometiles: [Object] = [
         id: 10,
         content: {
             title: `Join Us!`,
-            subtitle: ``,
-            image: '',
+            subtitle: `Join our team`,
+            image: '../../public/icons/ic_group_48px.svg',
         },
         index: 7,
         route: 'joinus',
@@ -277,8 +277,8 @@ let hometiles: [Object] = [
         id: 12,
         content: {
             title: `Tell your story`,
-            subtitle: ``,
-            image: '',
+            subtitle: `Write for us`,
+            image: '../../public/icons/ic_mode_edit_48px.svg',
         },
         index: 7,
         route: 'stories',
