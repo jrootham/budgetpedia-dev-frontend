@@ -1,5 +1,4 @@
 // explorer.tsx
-// required by bundler
 /// <reference path="../../../typings-custom/react-google-charts.d.ts" />
 /// <reference path="../../../typings-custom/format-number.d.ts" />
 
@@ -78,7 +77,9 @@ class ExplorerClass extends Component<any, any> {
 
         rows = children.map(item => {
             let amount = parseInt(rounded(item.Amount/1000))
-            return [item[categorylabel],amount,amountformat(amount)]            
+            // TODO: add % of total to the annotation
+            let annotation = amountformat(amount)
+            return [item[categorylabel], amount, annotation]            
         })
 
         // console.log('return = ', options)
@@ -91,9 +92,8 @@ class ExplorerClass extends Component<any, any> {
     }
 
     getChartDatasets = (parms, meta, budgetdata) => {
-        let parent, children,
+        let parent, children, depth,
             path = parms['path'],
-            depth = 0,
             range = parms['range']
 
         let list = budgetdata.filter( item => {
@@ -101,12 +101,12 @@ class ExplorerClass extends Component<any, any> {
             return (item.Year == range.latestyear)? true: false
         })
 
-        for (depth; depth < path.length; depth++) {
+        for (depth = 0; depth < path.length; depth++) {
             let ref = path[depth]
             parent = list[ref.parent]
             list = parent[meta[depth].Children]
         }
-        depth--
+        depth-- // last successful reference
         children = list
 
         return {parent, children, depth}
@@ -123,13 +123,19 @@ class ExplorerClass extends Component<any, any> {
             else 
                 return 0
         })
-        let latestyear
 
-        if (this.props.budgetdata.length > 0)
-            latestyear = this.props.budgetdata[0].Year
-        else 
+        // initial graph always latest year, highest level
+        let latestyear
+        if (this.props.budgetdata.length > 0) {
+            // budgetdata is sorted ascending, take the last item
+            let ptr = this.props.budgetdata.length - 1
+            latestyear = this.props.budgetdata[ptr].Year
+        } else {
             latestyear = null
-        var rootchartoptions = {
+        }
+
+        // assemble parms to get initial dataset
+        let rootchartoptions = {
             path:[{parent:0}],
             range: {
                 latestyear,
@@ -137,13 +143,16 @@ class ExplorerClass extends Component<any, any> {
                 fullrange:false,
             }
         }
-        var {options, events, rows, columns} = this.getChartData(rootchartoptions)
 
+        // get initial dataset
+        let {options, events, rows, columns} = this.getChartData(rootchartoptions)
+
+        // make initial dataset available to chart
         this.setState({
-            rows,
-            columns,
             options,
             events,
+            rows,
+            columns,
         });
 
     }
@@ -153,24 +162,23 @@ class ExplorerClass extends Component<any, any> {
         <CardTitle>Dashboard</CardTitle>
         </Card>
         <Card initiallyExpanded>
-        <CardTitle 
-            actAsExpander={true}
-            showExpandableButton={true}>
-            Drill Down
-        </CardTitle>
-        <CardText expandable>
-        <p>Click or tap on any column to drill down</p>
-        <Chart
-            chartType = "ColumnChart"
-            rows = {this.state.rows}
-            columns = {this.state.columns}
-            // data = {this.state.data}
-            options = { this.state.options }
-            // used to create html element id attribute
-            graph_id = "ColumnChartID"
-            chartEvents = {this.state.events}
-        />
-        </CardText>
+            <CardTitle 
+                actAsExpander
+                showExpandableButton>
+                Drill Down
+            </CardTitle>
+            <CardText expandable>
+                <p>Click or tap on any column to drill down</p>
+                <Chart
+                    chartType = "ColumnChart"
+                    options = { this.state.options }
+                    chartEvents = {this.state.events}
+                    rows = {this.state.rows}
+                    columns = {this.state.columns}
+                    // used to create html element id attribute
+                    graph_id = "ColumnChartID"
+                />
+            </CardText>
         </Card>
         <Card>
                 <CardTitle>Compare</CardTitle>

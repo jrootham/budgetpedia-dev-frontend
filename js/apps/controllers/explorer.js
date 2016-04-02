@@ -49,7 +49,8 @@ class ExplorerClass extends Component {
             let rounded = format({ round: 0, integerSeparator: '' });
             rows = children.map(item => {
                 let amount = parseInt(rounded(item.Amount / 1000));
-                return [item[categorylabel], amount, amountformat(amount)];
+                let annotation = amountformat(amount);
+                return [item[categorylabel], amount, annotation];
             });
             console.log('chartdata = ', options, events, columns, rows);
             return { options: options, events: events, rows: rows, columns: columns };
@@ -58,11 +59,11 @@ class ExplorerClass extends Component {
             console.log('updateCharts data = ', data);
         };
         this.getChartDatasets = (parms, meta, budgetdata) => {
-            let parent, children, path = parms['path'], depth = 0, range = parms['range'];
+            let parent, children, depth, path = parms['path'], range = parms['range'];
             let list = budgetdata.filter(item => {
                 return (item.Year == range.latestyear) ? true : false;
             });
-            for (depth; depth < path.length; depth++) {
+            for (depth = 0; depth < path.length; depth++) {
                 let ref = path[depth];
                 parent = list[ref.parent];
                 list = parent[meta[depth].Children];
@@ -81,11 +82,14 @@ class ExplorerClass extends Component {
                     return 0;
             });
             let latestyear;
-            if (this.props.budgetdata.length > 0)
-                latestyear = this.props.budgetdata[0].Year;
-            else
+            if (this.props.budgetdata.length > 0) {
+                let ptr = this.props.budgetdata.length - 1;
+                latestyear = this.props.budgetdata[ptr].Year;
+            }
+            else {
                 latestyear = null;
-            var rootchartoptions = {
+            }
+            let rootchartoptions = {
                 path: [{ parent: 0 }],
                 range: {
                     latestyear: latestyear,
@@ -93,12 +97,12 @@ class ExplorerClass extends Component {
                     fullrange: false,
                 }
             };
-            var { options, events, rows, columns } = this.getChartData(rootchartoptions);
+            let { options, events, rows, columns } = this.getChartData(rootchartoptions);
             this.setState({
-                rows: rows,
-                columns: columns,
                 options: options,
                 events: events,
+                rows: rows,
+                columns: columns,
             });
         };
         this.state = {
@@ -107,7 +111,7 @@ class ExplorerClass extends Component {
         };
     }
     render() {
-        return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement(Chart, {chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChartID", chartEvents: this.state.events}))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")));
+        return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement(Chart, {chartType: "ColumnChart", options: this.state.options, chartEvents: this.state.events, rows: this.state.rows, columns: this.state.columns, graph_id: "ColumnChartID"}))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")));
     }
 }
 function mapStateToProps(state) {
