@@ -2102,7 +2102,8 @@ var ExplorerClass = function (_Component) {
             var rounded = format({ round: 0, integerSeparator: '' });
             rows = children.map(function (item) {
                 var amount = parseInt(rounded(item.Amount / 1000));
-                return [item[categorylabel], amount, amountformat(amount)];
+                var annotation = amountformat(amount);
+                return [item[categorylabel], amount, annotation];
             });
             console.log('chartdata = ', options, events, columns, rows);
             return { options: options, events: events, rows: rows, columns: columns };
@@ -2113,13 +2114,13 @@ var ExplorerClass = function (_Component) {
         _this.getChartDatasets = function (parms, meta, budgetdata) {
             var parent = undefined,
                 children = undefined,
+                depth = undefined,
                 path = parms['path'],
-                depth = 0,
                 range = parms['range'];
             var list = budgetdata.filter(function (item) {
                 return item.Year == range.latestyear ? true : false;
             });
-            for (depth; depth < path.length; depth++) {
+            for (depth = 0; depth < path.length; depth++) {
                 var ref = path[depth];
                 parent = list[ref.parent];
                 list = parent[meta[depth].Children];
@@ -2133,7 +2134,12 @@ var ExplorerClass = function (_Component) {
                 if (a.year > b.year) return 1;else if (a.year < b.year) return -1;else return 0;
             });
             var latestyear = undefined;
-            if (_this.props.budgetdata.length > 0) latestyear = _this.props.budgetdata[0].Year;else latestyear = null;
+            if (_this.props.budgetdata.length > 0) {
+                var ptr = _this.props.budgetdata.length - 1;
+                latestyear = _this.props.budgetdata[ptr].Year;
+            } else {
+                latestyear = null;
+            }
             var rootchartoptions = {
                 path: [{ parent: 0 }],
                 range: {
@@ -2150,29 +2156,11 @@ var ExplorerClass = function (_Component) {
             var rows = _this$getChartData.rows;
             var columns = _this$getChartData.columns;
 
-            var testchart_events = [{
-                eventName: 'select',
-                callback: function callback(Chart, e) {
-                    var chart = Chart.chart;
-                    var selection = chart.getSelection();
-                }
-            }];
-            var testoptions = {
-                title: "Toronto Budget 2015/2016 ($Millions) Total: $10,991.5M",
-                hAxis: { title: 'Departments' },
-                vAxis: { title: 'Amount', minValue: 0 },
-                bar: { groupWidth: "95%" },
-                width: 240,
-                height: 300,
-                legend: { position: 'bottom' }
-            };
-            var testcolumns = [{ type: 'string', label: "Department" }, { type: 'number', label: '2015' }, { type: 'number', label: '2016' }, { type: 'string', role: 'annotation' }];
-            var testrows = [['Shared Services', 3769.5, 3969.5, '$3,969.5M'], ['Support Services', 4393.2, 4593.2, '$4,593.2M'], ['Administration', 2228.7, 2428.7, '$2,428.7M']];
             _this.setState({
-                rows: rows,
-                columns: columns,
                 options: options,
-                events: events
+                events: events,
+                rows: rows,
+                columns: columns
             });
         };
         _this.state = {
@@ -2185,7 +2173,7 @@ var ExplorerClass = function (_Component) {
     _createClass(ExplorerClass, [{
         key: 'render',
         value: function render() {
-            return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement(Chart, { chartType: "ColumnChart", rows: this.state.rows, columns: this.state.columns, options: this.state.options, graph_id: "ColumnChartID", chartEvents: this.state.events }))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")));
+            return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement(Chart, { chartType: "ColumnChart", options: this.state.options, chartEvents: this.state.events, rows: this.state.rows, columns: this.state.columns, graph_id: "ColumnChartID" }))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")));
         }
     }]);
 
@@ -2974,7 +2962,7 @@ var MainBarClass = function (_React$Component) {
                 minLength: 6,
                 required: true
             }];
-            var loginform = React.createElement(basicform_1.BasicForm, { submit: appbar.submitLogin, elements: elements, submitButtonLabel: 'Sign up', errorMessage: appbar.props.auth.errorMessage });
+            var loginform = React.createElement(basicform_1.BasicForm, { submit: appbar.submitLogin, elements: elements, submitButtonLabel: 'Sign in', errorMessage: appbar.props.auth.errorMessage });
             var registerprompt = React.createElement("div", null, React.createElement(CardText, null, React.createElement("a", { href: "javascript:void(0);", onTouchTap: appbar.transitionToResetPassword }, "Forgot your password?")), React.createElement(Divider, null), React.createElement(CardText, null, "Not a member? Register:"), React.createElement(CardActions, null, React.createElement(RaisedButton, { type: "button", label: "Register", onTouchTap: appbar.transitionToRegister })));
             var loginsidebar = React.createElement(LeftNav, { width: 300, docked: false, openRight: true, onRequestChange: function onRequestChange(open) {
                     return appbar.setState({ accountsidebaropen: open });
