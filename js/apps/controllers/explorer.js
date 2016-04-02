@@ -111,7 +111,7 @@ class ExplorerClass extends Component {
         };
     }
     render() {
-        return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement(Chart, {chartType: "ColumnChart", options: this.state.options, chartEvents: this.state.events, rows: this.state.rows, columns: this.state.columns, graph_id: "ColumnChartID"}))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")));
+        return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement(Chart, {chartType: "ColumnChart", options: this.state.options, chartEvents: this.state.events, rows: this.state.rows, columns: this.state.columns, graph_id: "ColumnChartID"}))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")), React.createElement(Card, null, React.createElement(CardTitle, null, "Context")));
     }
 }
 function mapStateToProps(state) {

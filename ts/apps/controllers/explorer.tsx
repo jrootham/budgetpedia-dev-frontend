@@ -186,6 +186,9 @@ class ExplorerClass extends Component<any, any> {
         <Card>
                 <CardTitle>Show differences</CardTitle>
         </Card>
+        <Card>
+            <CardTitle>Context</CardTitle>
+        </Card>
         </div>
     }
 
