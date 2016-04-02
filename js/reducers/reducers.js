@@ -56,6 +56,39 @@ let maincolsreducer = (state = initialstate_1.initialstate.maincols, action) => 
 let maincols = redux_actions_1.handleActions({
     [Actions.SET_TILECOLS]: maincolsreducer,
 }, initialstate_1.initialstate.maincols);
+let homepadding = (state = initialstate_1.initialstate.homepadding, action) => {
+    return state;
+};
+let hometiles = (state = initialstate_1.initialstate.hometiles, action) => {
+    return state;
+};
+let homecolsreducer = (state = initialstate_1.initialstate.homecols, action) => {
+    switch (action.type) {
+        case Actions.SET_HOMETILECOLS: {
+            let mainElement = document.getElementById('main');
+            let elementwidth = mainElement.getBoundingClientRect().width;
+            let columns;
+            if (elementwidth > 960) {
+                columns = 4;
+            }
+            else if (elementwidth > 680) {
+                columns = 3;
+            }
+            else if (elementwidth > 400) {
+                columns = 2;
+            }
+            else {
+                columns = 1;
+            }
+            return columns;
+        }
+        default:
+            return state;
+    }
+};
+let homecols = redux_actions_1.handleActions({
+    [Actions.SET_HOMETILECOLS]: homecolsreducer,
+}, initialstate_1.initialstate.homecols);
 let { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } = Actions;
 function auth(state = {
         isFetching: false,
@@ -164,6 +197,9 @@ let mainReducerCore = redux_1.combineReducers({
     maintiles: maintiles,
     maincols: maincols,
     mainpadding: mainpadding,
+    hometiles: hometiles,
+    homecols: homecols,
+    homepadding: homepadding,
     appnavbar: appnavbar,
     budgetdata: budgetdata,
     theme: theme,

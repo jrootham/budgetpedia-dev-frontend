@@ -187,13 +187,112 @@ let maintiles: [Object] = [
         index: 7,
         route: 'stories',
     },
-];
+]
+
+let homecols: number = 2 // default
+let homepadding: number = 0
+
+let hometiles: [Object] = [
+    {
+        id: 6,
+        content: {
+            title: `About Budget Commons`,
+            subtitle: ``,
+            image:'',
+        },
+        index: 0,
+        route: 'about',
+    },
+    {
+        id: 7,
+        content: {
+            title: `The Budget Roadmap`,
+            subtitle: ``,
+            image: '',
+        },
+        index: 1,
+        route: 'timeline',
+    },
+    {
+        id: 1,
+        content: {
+            title: `Deputation Helper`,
+            subtitle: ``,
+            image: '',
+        },
+        index: 2,
+        route: 'deputations',
+    },
+    {
+        id: 9,
+        content: {
+            title: `Budget Explorer`,
+            subtitle: ``,
+            image: '',
+        },
+        index: 3,
+        route: 'explorer',
+    },
+    {
+        id: 2,
+        content: {
+            title: `Community Resources`,
+            subtitle: ``,
+            image: '',
+        },
+        index: 4,
+        route: 'resources',
+    },
+    {
+        id: 8,
+        content: {
+            title: `Social Media`,
+            subtitle: ``,
+            image: '',
+        },
+        index: 5,
+        route: 'socialmedia',
+    },
+    {
+        id: 11,
+        content: {
+            title: `Newsletter`,
+            subtitle: ``,
+            image: '',
+        },
+        index: 6,
+        route: 'newsletter',
+    },
+    {
+        id: 10,
+        content: {
+            title: `Join Us!`,
+            subtitle: ``,
+            image: '',
+        },
+        index: 7,
+        route: 'joinus',
+    },
+    {
+        id: 12,
+        content: {
+            title: `Tell your story`,
+            subtitle: ``,
+            image: '',
+        },
+        index: 7,
+        route: 'stories',
+    },
+]
 
 export var initialstate = {
 	maintiles,
 	maincols,
 	mainpadding,
-	appnavbar,
+    hometiles,
+    homecols,
+    homepadding,
+    appnavbar,
 	toolsnavbar,
 	theme,
 	colors,

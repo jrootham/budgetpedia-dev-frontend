@@ -11,7 +11,7 @@ import ReactCSSTransitionGroup = require('react-addons-css-transition-group')
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 // import { syncHistory } from 'react-router-redux'
 
-import { MainTiles } from '../controllers/maintiles'
+import { HomeTiles } from '../controllers/hometiles'
 import { NoMatch } from '../controllers/nomatch'
 import { ResetPassword } from '../controllers/resetpassword'
 import { Register } from '../controllers/register'
@@ -52,7 +52,7 @@ class App extends Component<any, any> {
 export var routes = 
     <Router history={ browserHistory }>
         <Route path="/" component={ App }>
-            <IndexRoute component={ MainTiles } />
+            <IndexRoute component={ HomeTiles } />
             <Route path="about" component={ About } />
             <Route path="timeline" component={ Timeline } />
             <Route path="deputations" component={ Deputations } />

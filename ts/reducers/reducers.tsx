@@ -39,7 +39,7 @@ let mainpadding = (state: any = initialstate.mainpadding, action) => {
     return state
 }
 
-let maintiles = (state:any = initialstate.maintiles,action) => {
+let maintiles = (state: any = initialstate.maintiles, action) => {
     return state
 }
 
@@ -90,6 +90,58 @@ let maincolsreducer = (state: any = initialstate.maincols, action) => {
 let maincols = handleActions({
     [Actions.SET_TILECOLS]: maincolsreducer,
 }, initialstate.maincols )
+
+let homepadding = (state: any = initialstate.homepadding, action) => {
+    return state
+}
+
+let hometiles = (state: any = initialstate.hometiles, action) => {
+    return state
+}
+
+let homecolsreducer = (state: any = initialstate.homecols, action) => {
+    switch (action.type) {
+        case Actions.SET_HOMETILECOLS: {
+
+            let mainElement = document.getElementById('main')
+
+            let elementwidth: number = mainElement.getBoundingClientRect().width
+
+            let columns: number;
+
+            // breakpoints should be parameterized
+            if (elementwidth > 960) {
+
+                columns = 4
+
+            } else if (elementwidth > 680) {
+
+                columns = 3
+
+            } else if (elementwidth > 400) {
+
+                columns = 2
+
+            } else {
+
+                columns = 1
+
+            }
+
+            return columns
+
+        }
+        default:
+
+            return state
+
+    }
+}
+
+let homecols = handleActions({
+    [Actions.SET_HOMETILECOLS]: homecolsreducer,
+}, initialstate.homecols)
+
 
 let {
     LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS
@@ -252,6 +304,9 @@ let mainReducerCore = combineReducers(
         maintiles,
         maincols,
         mainpadding,
+        hometiles,
+        homecols,
+        homepadding,
         appnavbar,
         budgetdata,
         // toolsnavbar, 
