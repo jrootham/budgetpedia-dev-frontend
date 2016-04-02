@@ -47,11 +47,13 @@ export class AppTile extends React.Component<any, any> {
         return (
 
             <GridTile 
+                style = {{textAlign: "center" }}
                 onTouchTap={ tile.transitionTo }
                 key = {this.props.key}
                 title = {this.props.content.title}
                 subtitle = {this.props.content.subtitle}>
-                <img src={this.props.content.image} />
+                <img src={this.props.content.image} style={{height:"120px"}}/>
+                <div style={{ position: "abolute", height: "30px", bottom: 0, width: "100%" }}></div>
                 
             </GridTile>
         )

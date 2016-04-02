@@ -13,7 +13,7 @@ class AppTile extends React.Component {
     }
     render() {
         let tile = this;
-        return (React.createElement(GridTile, {onTouchTap: tile.transitionTo, key: this.props.key, title: this.props.content.title, subtitle: this.props.content.subtitle}, React.createElement("img", {src: this.props.content.image})));
+        return (React.createElement(GridTile, {style: { textAlign: "center" }, onTouchTap: tile.transitionTo, key: this.props.key, title: this.props.content.title, subtitle: this.props.content.subtitle}, React.createElement("img", {src: this.props.content.image, style: { height: "120px" }}), React.createElement("div", {style: { position: "abolute", height: "30px", bottom: 0, width: "100%" }})));
     }
 }
 exports.AppTile = AppTile;
