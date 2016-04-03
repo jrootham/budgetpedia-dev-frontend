@@ -3497,7 +3497,7 @@ var hometiles = [{
     content: {
         title: 'Tell your story',
         subtitle: 'Write for us',
-        image: '../../public/icons/ic_mode_edit_48px.svg'
+        image: '../../public/icons/ic_keyboard_48px.svg'
     },
     index: 7,
     route: 'stories'
