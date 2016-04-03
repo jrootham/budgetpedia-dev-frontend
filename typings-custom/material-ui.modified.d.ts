@@ -5,7 +5,7 @@
 // Definitions by: Nathan Brown <https://github.com/ngbrown>, Oliver Herrmann <https://github.com/herrmanno>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
-//<reference path='../react/react.d.ts' />
+///<reference path='../typings/browser/ambient/react/index.d.ts' />
 
 declare module "material-ui" {
     export import AppBar = __MaterialUI.AppBar; // require('material-ui/lib/app-bar');
@@ -1519,6 +1519,7 @@ declare namespace __MaterialUI {
             disabled?: boolean;
             innerDivStyle?: React.CSSProperties;
             insetChildren?: boolean;
+            onTouchTap?: React.TouchEventHandler;
             leftIcon?: React.ReactElement<any>;
             primaryText?: string | React.ReactElement<any>;
             rightIcon?: React.ReactElement<any>;

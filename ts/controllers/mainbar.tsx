@@ -25,9 +25,11 @@ import * as React from 'react' // required by bundler
 var { Component, PropTypes } = React
 import { connect as injectStore} from 'react-redux'
 import * as Actions from '../actions/actions'
+import { compose } from 'redux'
 
 import AppBar = require('material-ui/lib/app-bar')
 import LeftNav = require('material-ui/lib/left-nav')
+// import AppTile = require('../components/apptile')
 
 import { BasicForm, elementProps } from '../components/basicform'
 
@@ -38,7 +40,7 @@ import CardActions = require('material-ui/lib/card/card-actions')
 
 // import IconMenu = require('material-ui/lib/menus/icon-menu')
 // import MenuItem = require('material-ui/lib/menus/menu-item')
-import MenuItem = require('material-ui/lib/menus/menu')
+import { MenuTile } from '../components/menutile'
 import IconButton = require('material-ui/lib/icon-button')
 import RaisedButton = require('material-ui/lib/raised-button')
 
@@ -59,6 +61,7 @@ class MainBarClass extends React.Component<any, any> {
             elements:{},
             errors:{password:false,email:false},
         };
+        console.log('props',props)
     }
 
     handleAccountSidebarToggle = () => this.setState({ accountsidebaropen: !this.state.accountsidebaropen });
@@ -70,26 +73,25 @@ class MainBarClass extends React.Component<any, any> {
 
     transitionToHome = () => {
         // consistent with other transition calls...
-        setTimeout(()=>{        
+        // setTimeout(()=>{        
             this.setState({ accountsidebaropen: false })
             this.props.dispatch(Actions.transitionTo('/'))
-        })
+        // })
     }
 
     transitionToRegister = (e) => {
-        // avoid conflict with flipcard on home page
-        setTimeout(()=>{
+        // setTimeout(()=>{
             this.setState({ accountsidebaropen: false })
             this.props.dispatch(Actions.transitionTo('/register'))
-        })
+        // })
     }
 
     transitionToResetPassword = (e) => {
         // avoid conflict with flipcard on home page
-        setTimeout(() => {
+        // setTimeout(() => {
             this.setState({ accountsidebaropen: false })
             this.props.dispatch(Actions.transitionTo('/resetpassword'))
-        })
+        // })
     }
 
     // respond to login form; assume error correction
@@ -117,6 +119,13 @@ class MainBarClass extends React.Component<any, any> {
     render() { 
         let appbar = this
         let { appnavbar, theme } = appbar.props
+        let hometiles = this.props.hometiles
+        let menutransition = (func) => {
+            this.setState({
+                menusidebaropen:false,
+            })
+            return func
+        }
 
         let closeicon =
             <IconButton
@@ -200,7 +209,7 @@ class MainBarClass extends React.Component<any, any> {
             <LeftNav
                 width = { 300} 
                 docked = { false}
-                openRight = { true} 
+                openRight = { true } 
                 onRequestChange = { open => appbar.setState({ accountsidebaropen: open, }) }
                 open = { appbar.state.accountsidebaropen } >
 
@@ -217,6 +226,18 @@ class MainBarClass extends React.Component<any, any> {
                 </Card>
             </LeftNav >
 
+        let transitionToFunc = compose(menutransition, this.props.dispatch, Actions.transitionTo)
+        let menuitems = hometiles.map(menutile =>{
+            return <MenuTile
+                transitionTo = { transitionToFunc }
+                key = { menutile.id}
+                primaryText = { menutile.content.title }
+                image = {menutile.content.image}
+                route = {menutile.route}
+                />
+
+        })
+
         let menusidebar = 
             <LeftNav
                 width={300}
@@ -225,7 +246,17 @@ class MainBarClass extends React.Component<any, any> {
                 onRequestChange={open => appbar.setState({ menusidebaropen: open, }) }
                 open={this.state.menusidebaropen} >
 
-                <div>Menu Sidebar</div>
+                <MenuTile 
+                    transitionTo = { transitionToFunc }
+                    key = {'home'}
+                    primaryText = "Budget Commons"
+                    image = '../../public/icons/ic_home_24px.svg'
+                    route = '/'
+                />
+
+                <Divider />
+
+                { menuitems }
 
             </LeftNav>
 
@@ -298,7 +329,7 @@ class MainBarClass extends React.Component<any, any> {
 
 function mapStateToProps(state) {
 
-    let { appnavbar, theme, auth } = state
+    let { appnavbar, theme, auth, hometiles } = state
 
     return {
 
@@ -306,6 +337,7 @@ function mapStateToProps(state) {
         auth,
         appnavbar,
         theme,
+        hometiles,
     }
 
 }
