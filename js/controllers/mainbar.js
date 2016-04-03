@@ -57,7 +57,6 @@ class MainBarClass extends React.Component {
             elements: {},
             errors: { password: false, email: false },
         };
-        console.log('props', props);
     }
     render() {
         let appbar = this;

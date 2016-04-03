@@ -1,27 +1,18 @@
-"use strict";
+'use strict';
 const React = require('react');
-const ChartObject = require('react-google-charts');
 var { Component } = React;
+const explorerchart_1 = require('../components/explorerchart');
 var format = require('format-number');
 const react_redux_1 = require('react-redux');
 const Card = require('material-ui/lib/card/card');
 const CardTitle = require('material-ui/lib/card/card-title');
 const CardText = require('material-ui/lib/card/card-text');
-let Chart = ChartObject['Chart'];
+const constants_1 = require('../constants');
 class ExplorerClass extends Component {
     constructor(props) {
         super(props);
-        this.getSelectEvent = (parms) => {
-            let self = this;
-            return (Chart, err) => {
-                let chart = Chart.chart;
-                let selection = chart.getSelection();
-                let chartparms = parms;
-                self.updateCharts({ chartparms: chartparms, chart: chart, selection: selection, err: err });
-            };
-        };
-        this.getChartData = (parms) => {
-            let options = {}, events = null, rows = [], columns = [], budgetdata = this.props.budgetdata, meta = budgetdata[0].Meta, self = this, range = parms['range'];
+        this.setChartData = (parms) => {
+            let options = {}, events = null, rows = [], columns = [], budgetdata = this.props.budgetdata, meta = budgetdata[0].Meta, self = this, range = parms.range;
             let { parent, children, depth } = this.getChartDatasets(parms, meta, budgetdata);
             options = {
                 title: parent[meta[depth].Name] + ' ($Thousands)',
@@ -35,7 +26,6 @@ class ExplorerClass extends Component {
             events = [
                 {
                     eventName: 'select',
-                    callback: this.getSelectEvent(parms)
                 }
             ];
             let year = range.latestyear;
@@ -52,14 +42,17 @@ class ExplorerClass extends Component {
                 let annotation = amountformat(amount);
                 return [item[categorylabel], amount, annotation];
             });
-            console.log('chartdata = ', options, events, columns, rows);
-            return { options: options, events: events, rows: rows, columns: columns };
+            let chartdata = parms.data;
+            chartdata.columns = columns;
+            chartdata.rows = rows;
+            chartdata.options = options;
+            chartdata.events = events;
+            return parms;
         };
         this.updateCharts = data => {
-            console.log('updateCharts data = ', data);
         };
         this.getChartDatasets = (parms, meta, budgetdata) => {
-            let parent, children, depth, path = parms['path'], range = parms['range'];
+            let parent, children, depth, path = parms.dataroot, range = parms.range;
             let list = budgetdata.filter(item => {
                 return (item.Year == range.latestyear) ? true : false;
             });
@@ -89,29 +82,51 @@ class ExplorerClass extends Component {
             else {
                 latestyear = null;
             }
-            let rootchartoptions = {
-                path: [{ parent: 0 }],
+            let rootchartparms = {
+                dataroot: [{ parent: 0 }],
+                chartlocation: {
+                    series: constants_1.ChartSeries.DrillDown,
+                    depth: 0
+                },
                 range: {
                     latestyear: latestyear,
                     earliestyear: null,
                     fullrange: false,
-                }
+                },
+                data: { chartType: "ColumnChart" }
             };
-            let { options, events, rows, columns } = this.getChartData(rootchartoptions);
+            rootchartparms = this.setChartData(rootchartparms);
+            let seriesdata = this.state.seriesdata;
+            let chartlocation = rootchartparms.chartlocation;
+            seriesdata[chartlocation.series][chartlocation.depth] = rootchartparms;
             this.setState({
-                options: options,
-                events: events,
-                rows: rows,
-                columns: columns,
+                seriesdata: seriesdata,
             });
         };
         this.state = {
-            chartsdata: { seriesone: null, seriestwo: null, differences: null },
-            chartsmeta: { options: {}, seriesone: {}, seriestwo: {}, differences: {} }
+            seriesdata: [[], [], [], []],
         };
     }
     render() {
-        return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement(Chart, {chartType: "ColumnChart", options: this.state.options, chartEvents: this.state.events, rows: this.state.rows, columns: this.state.columns, graph_id: "ColumnChartID"}))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")), React.createElement(Card, null, React.createElement(CardTitle, null, "Context")));
+        let explorer = this;
+        let seriesdatalist = explorer.state.seriesdata[0];
+        let charts = seriesdatalist.map((seriesdata, index) => {
+            let data = seriesdata.data;
+            let callback = (function (chartparms) {
+                let self = explorer;
+                return function (Chart, err) {
+                    let chart = Chart.chart;
+                    let selection = chart.getSelection();
+                    self.updateCharts({ chartparms: chartparms, chart: chart, selection: selection, err: err });
+                };
+            })(seriesdata);
+            data.events = data.events.map(eventdata => {
+                eventdata.callback = callback;
+                return eventdata;
+            });
+            return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ColumnChartID" + index});
+        });
+        return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, charts)))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")), React.createElement(Card, null, React.createElement(CardTitle, null, "Context")));
     }
 }
 function mapStateToProps(state) {

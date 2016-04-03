@@ -61,7 +61,6 @@ class MainBarClass extends React.Component<any, any> {
             elements:{},
             errors:{password:false,email:false},
         };
-        console.log('props',props)
     }
 
     handleAccountSidebarToggle = () => this.setState({ accountsidebaropen: !this.state.accountsidebaropen });

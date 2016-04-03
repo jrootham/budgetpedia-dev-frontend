@@ -6,7 +6,7 @@ const Actions = require('../actions/actions');
 const basicform_1 = require('../components/basicform');
 const Card = require('material-ui/lib/card/card');
 const CardTitle = require('material-ui/lib/card/card-title');
-const constants_1 = require('../local/constants');
+const constants_1 = require('../common/constants');
 class RegisterClass extends Component {
     constructor(...args) {
         super(...args);

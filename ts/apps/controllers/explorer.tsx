@@ -2,39 +2,52 @@
 // explorer.tsx
 /// <reference path="../../../typings-custom/react-google-charts.d.ts" />
 /// <reference path="../../../typings-custom/format-number.d.ts" />
-
+'use strict'
 import * as React from 'react'
-import ChartObject = require('react-google-charts')
 var { Component } = React
+import { ExplorerChart } from '../components/explorerchart'
 var format = require('format-number')
 import { connect as injectStore} from 'react-redux'
 import Card = require('material-ui/lib/card/card')
 import CardTitle = require('material-ui/lib/card/card-title')
 import CardText = require('material-ui/lib/card/card-text')
+import { ChartSeries } from '../constants'
 
-let Chart = ChartObject['Chart']
+interface chartParms {
+    name?: string,
+    chartlocation: {
+        series: number,
+        depth: number,
+    },
+    dataroot: [{ parent: number }],
+    range: {
+        latestyear:number,
+        earliestyear:number,
+        fullrange:boolean,
+    },
+    data?:{
+        chartType:string,
+        options?:{
+            [index:string]:any,
+        },
+        events?:{
+            [index:string]:any,
+        }[]
+        rows?:any[],
+        columns?:any[],
+    }
+}
 
 class ExplorerClass extends Component<any, any> {
 
     constructor(props) {
         super(props);
         this.state = {
-            chartsdata: {seriesone:null,seriestwo:null,differences:null},
-            chartsmeta:{options:{},seriesone:{},seriestwo:{},differences:{}}
+            seriesdata: [[],[],[],[]], // DrillDown, Compare, Differences, Context
         };
     }
 
-    getSelectEvent = (parms:Object) => {
-        let self = this
-        return (Chart, err) => {
-            let chart = Chart.chart
-            let selection = chart.getSelection()
-            let chartparms = parms
-            self.updateCharts({ chartparms, chart, selection, err })
-        }
-    }
-    // TODO: all needs to be generalized
-    getChartData = (parms:Object) => {
+    setChartData = (parms:chartParms):chartParms => {
         let options = {},
             events = null,
             rows = [],
@@ -42,7 +55,7 @@ class ExplorerClass extends Component<any, any> {
             budgetdata = this.props.budgetdata,
             meta = budgetdata[0].Meta,
             self = this,
-            range = parms['range']
+            range = parms.range
 
         // TODO: capture range, including years
         let {parent, children, depth} = this.getChartDatasets(parms, meta, budgetdata)
@@ -59,7 +72,7 @@ class ExplorerClass extends Component<any, any> {
         events = [
             {
                 eventName: 'select',
-                callback: this.getSelectEvent(parms)
+                // callback: this.getSelectEvent(parms)
             }
         ]
 
@@ -84,18 +97,23 @@ class ExplorerClass extends Component<any, any> {
         })
 
         // console.log('return = ', options)
-        console.log('chartdata = ', options, events, columns, rows)
-        return { options, events, rows, columns }
+        let chartdata = parms.data;
+        chartdata.columns = columns
+        chartdata.rows = rows
+        chartdata.options = options
+        chartdata.events = events
+        // console.log('chartdata = ', options, events, columns, rows)
+        return parms
     }
 
     updateCharts = data => {
-        console.log('updateCharts data = ', data)
+        // console.log('updateCharts data = ', data)
     }
 
     getChartDatasets = (parms, meta, budgetdata) => {
         let parent, children, depth,
-            path = parms['path'],
-            range = parms['range']
+            path = parms.dataroot,
+            range = parms.range
 
         let list = budgetdata.filter( item => {
             // TODO: needs to be enhanced to account for 2 year or multi-year scope
@@ -136,28 +154,73 @@ class ExplorerClass extends Component<any, any> {
         }
 
         // assemble parms to get initial dataset
-        let rootchartoptions = {
-            path:[{parent:0}],
+        let rootchartparms:chartParms = {
+            dataroot:[{parent:0}],
+            chartlocation: {
+                series:ChartSeries.DrillDown,
+                depth:0
+            },
             range: {
-                latestyear,
+                latestyear:latestyear,
                 earliestyear:null,
                 fullrange:false,
-            }
+            },
+            data: {chartType:"ColumnChart"}
         }
 
         // get initial dataset
-        let {options, events, rows, columns} = this.getChartData(rootchartoptions)
+        rootchartparms = this.setChartData(rootchartparms)
+
+        let seriesdata = this.state.seriesdata
+        let chartlocation = rootchartparms.chartlocation
+        seriesdata[chartlocation.series][chartlocation.depth] = rootchartparms
 
         // make initial dataset available to chart
         this.setState({
-            options,
-            events,
-            rows,
-            columns,
+            seriesdata,
         });
 
     }
     render() {
+
+        let explorer = this
+
+        let seriesdatalist = explorer.state.seriesdata[0]
+
+        let charts = seriesdatalist.map((seriesdata, index) => {
+
+            let data = seriesdata.data
+
+            // separate callback for each instance
+            let callback = (function(chartparms: chartParms) {
+                let self = explorer
+                return function(Chart, err) {
+                    let chart = Chart.chart
+                    let selection = chart.getSelection()
+                    self.updateCharts({ chartparms, chart, selection, err })
+                }
+            })(seriesdata)
+            // select event only for now
+            // TODO: use filter for 'select' instead of map
+            data.events = data.events.map( eventdata => {
+                eventdata.callback = callback
+                return eventdata
+            })
+
+            return <ExplorerChart
+                key = {index}
+                chartType = {data.chartType}
+                options = { data.options }
+                chartEvents = {data.events}
+                rows = {data.rows}
+                columns = {data.columns}
+                // used to create html element id attribute
+                graph_id = {"ColumnChartID" + index}
+                />
+        })
+
+
+
         return <div>
         <Card>
         <CardTitle>Dashboard</CardTitle>
@@ -170,15 +233,13 @@ class ExplorerClass extends Component<any, any> {
             </CardTitle>
             <CardText expandable>
                 <p>Click or tap on any column to drill down</p>
-                <Chart
-                    chartType = "ColumnChart"
-                    options = { this.state.options }
-                    chartEvents = {this.state.events}
-                    rows = {this.state.rows}
-                    columns = {this.state.columns}
-                    // used to create html element id attribute
-                    graph_id = "ColumnChartID"
-                />
+                <div style={{ whiteSpace: "nowrap" }}>
+                <div style={{ overflow: "scroll" }}>
+
+                    { charts }
+
+                </div>
+                </div>
             </CardText>
         </Card>
         <Card>

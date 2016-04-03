@@ -9,7 +9,7 @@ import * as Actions from '../actions/actions'
 import { BasicForm, elementProps } from '../components/basicform'
 import Card = require('material-ui/lib/card/card')
 import CardTitle = require('material-ui/lib/card/card-title')
-import { DEFAULT_PARTICIPATION } from '../local/constants'
+import { DEFAULT_PARTICIPATION } from '../common/constants'
 
 class RegisterClass extends Component<any, any> {
     // respond to login form; assume error correction
