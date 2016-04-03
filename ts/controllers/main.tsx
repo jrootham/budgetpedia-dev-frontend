@@ -42,13 +42,14 @@ export class Main extends Component<any, any> {
                     </div>
 
                     { routes }
-
-                    <div style={{ height: "64px" }} > {/* space for bottom fixed toolbar */}
-                    </div>
-                    <MainToolbar />
+                    
                 </div>
             </Provider>
         )
     }
     
 }
+
+// <div style={{ height: "64px" }} > {/* space for bottom fixed toolbar */}
+// </div>
+// <MainToolbar />
