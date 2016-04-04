@@ -9,14 +9,14 @@ module.exports=[
         "Meta": [
             {
                 "Name": "Budget",
-                "Children": "Departments"
+                "Children": "Types"
             },
             {
-                "Name": "Department",
-                "Children": "Categories"
+                "Name": "Type",
+                "Children": "Groups"
             },
             {
-                "Name": "Category",
+                "Name": "Group",
                 "Children": "Divisions"
             },
             {
@@ -28,13 +28,13 @@ module.exports=[
                 "Children": null
             }
         ],
-        "Departments": [
+        "Types": [
             {
-                "Department": "Shared Services",
+                "Type": "Shared Services",
                 "Amount": 3969515725,
-                "Categories": [
+                "Groups": [
                     {
-                        "Category": "Public Works",
+                        "Group": "Public Works",
                         "Amount": 3161053132,
                         "Divisions": [
                             {
@@ -220,7 +220,7 @@ module.exports=[
                         ]
                     },
                     {
-                        "Category": "City Commons",
+                        "Group": "City Commons",
                         "Amount": 695224764,
                         "Divisions": [
                             {
@@ -372,7 +372,7 @@ module.exports=[
                         ]
                     },
                     {
-                        "Category": "City Places",
+                        "Group": "City Places",
                         "Amount": 113237829,
                         "Divisions": [
                             {
@@ -496,11 +496,11 @@ module.exports=[
                 ]
             },
             {
-                "Department": "Citizen Support Services",
+                "Type": "Citizen Support Services",
                 "Amount": 4593274143,
-                "Categories": [
+                "Groups": [
                     {
-                        "Category": "Emergency Services",
+                        "Group": "Emergency Services",
                         "Amount": 1768547915,
                         "Divisions": [
                             {
@@ -604,7 +604,7 @@ module.exports=[
                         ]
                     },
                     {
-                        "Category": "Health & Welfare Services",
+                        "Group": "Health & Welfare Services",
                         "Amount": 2716823966,
                         "Divisions": [
                             {
@@ -780,7 +780,7 @@ module.exports=[
                         ]
                     },
                     {
-                        "Category": "Social Services",
+                        "Group": "Social Services",
                         "Amount": 107902262,
                         "Divisions": [
                             {
@@ -916,11 +916,11 @@ module.exports=[
                 ]
             },
             {
-                "Department": "Municipal Services",
+                "Type": "Municipal Services",
                 "Amount": 2428798130,
-                "Categories": [
+                "Groups": [
                     {
-                        "Category": "City Management",
+                        "Group": "City Management",
                         "Amount": 231832619,
                         "Divisions": [
                             {
@@ -1248,7 +1248,7 @@ module.exports=[
                         ]
                     },
                     {
-                        "Category": "City Development Services",
+                        "Group": "City Development Services",
                         "Amount": 258724980,
                         "Divisions": [
                             {
@@ -1472,7 +1472,7 @@ module.exports=[
                         ]
                     },
                     {
-                        "Category": "Internal Services",
+                        "Group": "Internal Services",
                         "Amount": 489340896,
                         "Divisions": [
                             {
@@ -1636,7 +1636,7 @@ module.exports=[
                         ]
                     },
                     {
-                        "Category": "Corporate Accounts",
+                        "Group": "Corporate Accounts",
                         "Amount": 1448899635,
                         "Divisions": [
                             {

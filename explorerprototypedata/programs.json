@@ -2,324 +2,324 @@
   {
     "Division":"311 Toronto",
     "Amount":17300638,
-    "Category":"City Development Services"
+    "Group":"City Development Services"
   },
   {
     "Division":"Affordable Housing Office",
     "Amount":2956572,
-    "Category":"Social Services"
+    "Group":"Social Services"
 
   },
   {
     "Division":"Arena Boards of Management",
     "Amount":8643855,
-    "Category":"City Commons"
+    "Group":"City Commons"
 
   },
   {
     "Division":"Association of Community Centres",
     "Amount":7920030,
-    "Category":"City Commons"
+    "Group":"City Commons"
 
   },
   {
     "Division":"Auditor General's Office",
     "Amount":4762566,
-    "Category":"City Management"
+    "Group":"City Management"
 
   },
   {
     "Division":"Capital & Corporate Financing",
     "Amount":722433555,
-    "Category":"Corporate Accounts"
+    "Group":"Corporate Accounts"
 
   },
   {
     "Division":"Children's Services",
     "Amount":450965107,
-    "Category":"Health & Welfare Services"
+    "Group":"Health & Welfare Services"
 
   },
   {
     "Division":"City Clerk's Office",
     "Amount":49713076,
-    "Category":"City Management"
+    "Group":"City Management"
 
   },
   {
     "Division":"City Council",
     "Amount":20953951,
-    "Category":"City Management"
+    "Group":"City Management"
 
   },
   {
     "Division":"City Manager's Office",
     "Amount":54760375,
-    "Category":"City Management"
+    "Group":"City Management"
 
   },
   {
     "Division":"City Planning",
     "Amount":43309766,
-    "Category":"City Development Services"
+    "Group":"City Development Services"
 
   },
   {
     "Division":"Court Services",
     "Amount":50079137,
-    "Category":"Social Services"
+    "Group":"Social Services"
 
   },
   {
     "Division":"Economic Development & Culture",
     "Amount":70164744,
-    "Category":"City Development Services"
+    "Group":"City Development Services"
 
   },
   {
     "Division":"Engineering & Construction Services",
     "Amount":69661726,
-    "Category":"Internal Services"
+    "Group":"Internal Services"
 
   },
   {
     "Division":"Exhibition Place",
     "Amount":36565904,
-    "Category":"City Places"
+    "Group":"City Places"
 
   },
   {
     "Division":"Facilities, Real Estate, Environment & Energy",
     "Amount":193120454,
-    "Category":"Internal Services"
+    "Group":"Internal Services"
 
   },
   {
     "Division":"Fire Services",
     "Amount":433233567,
-    "Category":"Emergency Services"
+    "Group":"Emergency Services"
 
   },
   {
     "Division":"Fleet Services",
     "Amount":51452143,
-    "Category":"Internal Services"
+    "Group":"Internal Services"
 
   },
   {
     "Division":"Heritage Toronto",
     "Amount":768379,
-    "Category":"City Development Services"
+    "Group":"City Development Services"
 
   },
   {
     "Division":"Information & Technology",
     "Amount":124877224,
-    "Category":"Internal Services"
+    "Group":"Internal Services"
 
   },
   {
     "Division":"Integrity Commissioner's Office",
     "Amount":479234,
-    "Category":"City Management"
+    "Group":"City Management"
 
   },
   {
     "Division":"Legal Services",
     "Amount":50229349,
-    "Category":"Internal Services"
+    "Group":"Internal Services"
 
   },
   {
     "Division":"Long Term Care Homes & Services",
     "Amount":252739720,
-    "Category":"Health & Welfare Services"
+    "Group":"Health & Welfare Services"
 
   },
   {
     "Division":"Mayor's Office",
     "Amount":2297110,
-    "Category":"City Management"
+    "Group":"City Management"
 
   },
   {
     "Division":"Municipal Licensing & Standards",
     "Amount":51573166,
-    "Category":"City Development Services"
+    "Group":"City Development Services"
 
   },
   {
     "Division":"Non-Program Expenditures",
     "Amount":624822611,
-    "Category":"Corporate Accounts"
+    "Group":"Corporate Accounts"
 
   },
   {
     "Division":"Non-Program Revenues",
     "Amount":60957469,
-    "Category":"Corporate Accounts"
+    "Group":"Corporate Accounts"
 
   },
   {
     "Division":"Office of the Chief Financial Officer",
     "Amount":16576993,
-    "Category":"City Management"
+    "Group":"City Management"
 
   },
   {
     "Division":"Office of the Lobbyist Registrar",
     "Amount":1143089,
-    "Category":"City Management"
+    "Group":"City Management"
 
   },
   {
     "Division":"Office of the Ombudsman",
     "Amount":1814559,
-    "Category":"City Management"
+    "Group":"City Management"
 
   },
   {
     "Division":"Office of the Treasurer",
     "Amount":77709666,
-    "Category":"City Management"
+    "Group":"City Management"
 
   },
   {
     "Division":"Parks, Forestry & Recreation",
     "Amount":445637483,
-    "Category":"City Commons"
+    "Group":"City Commons"
 
   },
   {
     "Division":"Policy, Planning, Finance & Administration",
     "Amount":21782925,
-    "Category":"City Development Services"
+    "Group":"City Development Services"
 
   },
   {
     "Division":"Property Tax",
     "Amount":40686000,
-    "Category":"Corporate Accounts"
+    "Group":"Corporate Accounts"
 
   },
   {
     "Division":"Shelter, Support & Housing Administration",
     "Amount":668803743,
-    "Category":"Health & Welfare Services"
+    "Group":"Health & Welfare Services"
 
   },
   {
     "Division":"Social Development, Finance & Administration",
     "Amount":51817153,
-    "Category":"Social Services"
+    "Group":"Social Services"
 
   },
   {
     "Division":"Solid Waste Management Services",
     "Amount":389009445,
-    "Category":"Public Works"
+    "Group":"Public Works"
 
   },
   {
     "Division":"Theatres",
     "Amount":23164341,
-    "Category":"City Places"
+    "Group":"City Places"
 
   },
   {
     "Division":"Toronto & Region Conservation Authority",
     "Amount":40519000,
-    "Category":"City Commons"
+    "Group":"City Commons"
 
   },
   {
     "Division":"Toronto Atmospheric Fund",
     "Amount":1622000,
-    "Category":"City Management"
+    "Group":"City Management"
 
   },
   {
     "Division":"Toronto Building",
     "Amount":53825362,
-    "Category":"City Development Services"
+    "Group":"City Development Services"
 
   },
   {
     "Division":"Toronto Employment & Social Services",
     "Amount":1103612067,
-    "Category":"Health & Welfare Services"
+    "Group":"Health & Welfare Services"
 
   },
   {
     "Division":"Toronto Paramedic Services",
     "Amount":201165372,
-    "Category":"Emergency Services"
+    "Group":"Emergency Services"
 
   },
   {
     "Division":"Toronto Parking Authority",
     "Amount":84742649,
-    "Category":"Public Works"
+    "Group":"Public Works"
 
   },
   {
     "Division":"Toronto Police Service",
     "Amount":1134148976,
-    "Category":"Emergency Services"
+    "Group":"Emergency Services"
 
   },
   {
     "Division":"Toronto Police Services Board",
     "Amount":3049400,
-    "Category":"Social Services"
+    "Group":"Social Services"
 
   },
   {
     "Division":"Toronto Public Health",
     "Amount":240703329,
-    "Category":"Health & Welfare Services"
+    "Group":"Health & Welfare Services"
 
   },
   {
     "Division":"Toronto Public Library",
     "Amount":192504396,
-    "Category":"City Commons"
+    "Group":"City Commons"
 
   },
   {
     "Division":"Toronto Transit Commission - Conventional",
     "Amount":1736305100,
-    "Category":"Public Works"
+    "Group":"Public Works"
 
   },
   {
     "Division":"Toronto Transit Commission - Wheel Trans",
     "Amount":123665900,
-    "Category":"Public Works"
+    "Group":"Public Works"
 
   },
   {
     "Division":"Toronto Water",
     "Amount":439488844,
-    "Category":"Public Works"
+    "Group":"Public Works"
 
   },
   {
     "Division":"Toronto Zoo",
     "Amount":51173068,
-    "Category":"City Places"
+    "Group":"City Places"
 
   },
   {
     "Division":"Transportation Services",
     "Amount":387841194,
-    "Category":"Public Works"
+    "Group":"Public Works"
 
   },
   {
     "Division":"Yonge-Dundas Square",
     "Amount":2334516,
-    "Category":"City Places"
+    "Group":"City Places"
 
   }
 ]

@@ -1,14 +1,14 @@
 [
 {
-    "Department":"Shared Services",
+    "Type":"Shared Services",
     "Amount":null
 },
 {
-    "Department":"Citizen Support Services",
+    "Type":"Citizen Support Services",
     "Amount":null
 },
 {
-    "Department":"Municipal Services",
+    "Type":"Municipal Services",
     "Amount":null
 }
 ]

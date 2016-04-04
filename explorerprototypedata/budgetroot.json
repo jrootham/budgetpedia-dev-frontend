@@ -5,9 +5,9 @@
     "Amount":null,
     "Status":"Errors",
     "Meta":[
-        {"Name":"Budget","Children":"Departments"},
-        {"Name":"Department","Children":"Categories"},
-        {"Name":"Category","Children":"Divisions"},
+        {"Name":"Budget","Children":"Types"},
+        {"Name":"Type","Children":"Groups"},
+        {"Name":"Group","Children":"Divisions"},
         {"Name":"Division","Children":"Expenditures"},
         {"Name":"Expenditure","Children":null}
     ]

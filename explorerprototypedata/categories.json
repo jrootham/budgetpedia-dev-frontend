@@ -1,52 +1,52 @@
 [
 {
-    "Department":"Shared Services",
-    "Category":"Public Works",
+    "Type":"Shared Services",
+    "Group":"Public Works",
     "Amount":null
 },
 {
-    "Department":"Shared Services",
-    "Category":"City Commons",
+    "Type":"Shared Services",
+    "Group":"City Commons",
     "Amount":null
 },
 {
-    "Department":"Shared Services",
-    "Category":"City Places",
+    "Type":"Shared Services",
+    "Group":"City Places",
     "Amount":null
 },
 {
-    "Department":"Citizen Support Services",
-    "Category":"Emergency Services",
+    "Type":"Citizen Support Services",
+    "Group":"Emergency Services",
     "Amount":null
 },
 {
-    "Department":"Citizen Support Services",
-    "Category":"Health & Welfare Services",
+    "Type":"Citizen Support Services",
+    "Group":"Health & Welfare Services",
     "Amount":null
 },
 {
-    "Department":"Citizen Support Services",
-    "Category":"Social Services",
+    "Type":"Citizen Support Services",
+    "Group":"Social Services",
     "Amount":null
 },
 {
-    "Department":"Municipal Services",
-    "Category":"City Management",
+    "Type":"Municipal Services",
+    "Group":"City Management",
     "Amount":null
 },
 {
-    "Department":"Municipal Services",
-    "Category":"City Development Services",
+    "Type":"Municipal Services",
+    "Group":"City Development Services",
     "Amount":null
 },
 {
-    "Department":"Municipal Services",
-    "Category":"Internal Services",
+    "Type":"Municipal Services",
+    "Group":"Internal Services",
     "Amount":null
 },
 {
-    "Department":"Municipal Services",
-    "Category":"Corporate Accounts",
+    "Type":"Municipal Services",
+    "Group":"Corporate Accounts",
     "Amount":null
 }
 ]

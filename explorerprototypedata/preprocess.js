@@ -32,10 +32,10 @@ let divisionbudget = divisions.map( division => {
 
 let categorybudget = categories.map( category => {
     let divisionitems = divisionbudget.filter ( divisionitem => {
-        return (divisionitem.Category == category.Category)? true: false
+        return (divisionitem.Group == category.Group)? true: false
     })
     divisionitems = divisionitems.map( item => {
-        delete item.Category
+        delete item.Group
         return item
     })
     let total = divisionitems.reduce((previousvalue, currentitem) => {
@@ -48,16 +48,16 @@ let categorybudget = categories.map( category => {
 
 let departmentbudget = departments.map( department => {
     let categoryitems = categorybudget.filter ( categoryitem => {
-        return (categoryitem.Department == department.Department)? true: false
+        return (categoryitem.Type == department.Type)? true: false
     })
     categoryitems = categoryitems.map( item => {
-        delete item.Department
+        delete item.Type
         return item
     })
     let total = categoryitems.reduce((previousvalue, currentitem) => {
         return previousvalue + currentitem.Amount
     },0)
-    department.Categories = categoryitems
+    department.Groups = categoryitems
     department.Amount = total
     return department
 })
@@ -66,7 +66,7 @@ let budgettotal = departmentbudget.reduce((previousvalue, currentitem) => {
     return previousvalue + currentitem.Amount
 },0)
 
-budgetroot.Departments = departmentbudget
+budgetroot.Types = departmentbudget
 budgetroot.Amount = budgettotal
 
 let series = [budgetroot]

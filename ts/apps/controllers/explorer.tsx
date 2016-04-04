@@ -127,6 +127,7 @@ class ExplorerClass extends Component<any, any> {
             selectionrow = selection.row
 
         let serieslist = seriesdata[series]
+        // TODO: abandon here if the next one exists and is the same
         serieslist.splice(sourcedepth + 1) // remove subsequent charts
         this.forceUpdate()
 
