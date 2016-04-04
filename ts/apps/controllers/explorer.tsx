@@ -213,24 +213,28 @@ class ExplorerClass extends Component<any, any> {
 
         let seriesdata = this.state.seriesdata
 
+        const getChartParms = (series):chartParms => {
+            return {
+                dataroot: [{ parent: 0 }],
+                chartlocation: {
+                    series,
+                    depth: 0
+                },
+                range: {
+                    latestyear: latestyear,
+                    earliestyear: null,
+                    fullrange: false,
+                },
+                data: { chartType: "ColumnChart" }
+            }
+
+        }
+
         // =================[ DRILLDOWN SEED ]=================
 
         // assemble parms to get initial dataset
-        let drilldownparms:chartParms = {
-            dataroot:[{parent:0}],
-            chartlocation: {
-                series:ChartSeries.DrillDown,
-                depth:0
-            },
-            range: {
-                latestyear:latestyear,
-                earliestyear:null,
-                fullrange:false,
-            },
-            data: {chartType:"ColumnChart"}
-        }
+        let drilldownparms:chartParms = getChartParms(ChartSeries.DrillDown)
 
-        // get initial dataset
         drilldownparms = this.setChartData(drilldownparms)
 
         let chartlocation = drilldownparms.chartlocation
@@ -239,25 +243,14 @@ class ExplorerClass extends Component<any, any> {
         // =================[ COMPARE SEED ]=================
 
         // assemble parms to get initial dataset
-        let compareparms: chartParms = {
-            dataroot: [{ parent: 0 }],
-            chartlocation: {
-                series: ChartSeries.Compare,
-                depth: 0
-            },
-            range: {
-                latestyear: latestyear,
-                earliestyear: null,
-                fullrange: false,
-            },
-            data: { chartType: "ColumnChart" }
-        }
+        let compareparms: chartParms = getChartParms(ChartSeries.Compare)
 
-        // get initial dataset
         compareparms = this.setChartData(compareparms)
 
         chartlocation = compareparms.chartlocation
         seriesdata[chartlocation.series][chartlocation.depth] = compareparms
+
+        // ================[ SAVE INITIALIZATION ]==================
 
         // make initial dataset available to chart
         this.setState({

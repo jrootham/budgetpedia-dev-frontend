@@ -2231,35 +2231,26 @@ var ExplorerClass = function (_Component) {
                 latestyear = null;
             }
             var seriesdata = _this.state.seriesdata;
-            var drilldownparms = {
-                dataroot: [{ parent: 0 }],
-                chartlocation: {
-                    series: constants_1.ChartSeries.DrillDown,
-                    depth: 0
-                },
-                range: {
-                    latestyear: latestyear,
-                    earliestyear: null,
-                    fullrange: false
-                },
-                data: { chartType: "ColumnChart" }
+            var getChartParms = function getChartParms(series) {
+                return {
+                    dataroot: [{ parent: 0 }],
+                    chartlocation: {
+                        series: series,
+                        depth: 0
+                    },
+                    range: {
+                        latestyear: latestyear,
+                        earliestyear: null,
+                        fullrange: false
+                    },
+                    data: { chartType: "ColumnChart" }
+                };
             };
+            var drilldownparms = getChartParms(constants_1.ChartSeries.DrillDown);
             drilldownparms = _this.setChartData(drilldownparms);
             var chartlocation = drilldownparms.chartlocation;
             seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms;
-            var compareparms = {
-                dataroot: [{ parent: 0 }],
-                chartlocation: {
-                    series: constants_1.ChartSeries.Compare,
-                    depth: 0
-                },
-                range: {
-                    latestyear: latestyear,
-                    earliestyear: null,
-                    fullrange: false
-                },
-                data: { chartType: "ColumnChart" }
-            };
+            var compareparms = getChartParms(constants_1.ChartSeries.Compare);
             compareparms = _this.setChartData(compareparms);
             chartlocation = compareparms.chartlocation;
             seriesdata[chartlocation.series][chartlocation.depth] = compareparms;
@@ -2925,7 +2916,7 @@ var Main = function (_Component) {
     _createClass(Main, [{
         key: 'render',
         value: function render() {
-            return React.createElement(react_redux_1.Provider, { store: store }, React.createElement("div", null, React.createElement(mainbar_1.MainBar, null), React.createElement("div", { style: { height: "64px" } }, " "), routes_1.routes));
+            return React.createElement(react_redux_1.Provider, { store: store }, React.createElement("div", null, React.createElement(mainbar_1.MainBar, null), React.createElement("div", { style: { height: "64px" } }, " "), React.createElement("div", null, "THIS IS THE DEVELOPER'S VERSION OF THIS SITE, AND MAY CHANGE OR BREAK" + ' ' + "AT ANY TIME. ALSO, IT LIKELY USES FAKE DATA."), routes_1.routes));
         }
     }]);
 

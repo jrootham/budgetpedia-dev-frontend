@@ -121,35 +121,26 @@ class ExplorerClass extends Component {
                 latestyear = null;
             }
             let seriesdata = this.state.seriesdata;
-            let drilldownparms = {
-                dataroot: [{ parent: 0 }],
-                chartlocation: {
-                    series: constants_1.ChartSeries.DrillDown,
-                    depth: 0
-                },
-                range: {
-                    latestyear: latestyear,
-                    earliestyear: null,
-                    fullrange: false,
-                },
-                data: { chartType: "ColumnChart" }
+            const getChartParms = (series) => {
+                return {
+                    dataroot: [{ parent: 0 }],
+                    chartlocation: {
+                        series: series,
+                        depth: 0
+                    },
+                    range: {
+                        latestyear: latestyear,
+                        earliestyear: null,
+                        fullrange: false,
+                    },
+                    data: { chartType: "ColumnChart" }
+                };
             };
+            let drilldownparms = getChartParms(constants_1.ChartSeries.DrillDown);
             drilldownparms = this.setChartData(drilldownparms);
             let chartlocation = drilldownparms.chartlocation;
             seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms;
-            let compareparms = {
-                dataroot: [{ parent: 0 }],
-                chartlocation: {
-                    series: constants_1.ChartSeries.Compare,
-                    depth: 0
-                },
-                range: {
-                    latestyear: latestyear,
-                    earliestyear: null,
-                    fullrange: false,
-                },
-                data: { chartType: "ColumnChart" }
-            };
+            let compareparms = getChartParms(constants_1.ChartSeries.Compare);
             compareparms = this.setChartData(compareparms);
             chartlocation = compareparms.chartlocation;
             seriesdata[chartlocation.series][chartlocation.depth] = compareparms;

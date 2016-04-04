@@ -40,6 +40,9 @@ export class Main extends Component<any, any> {
                     <MainBar />
                     <div style={{ height: "64px" }} > {/* space for top fixed appbar */}
                     </div>
+                    <div>THIS IS THE DEVELOPER'S VERSION OF THIS SITE, AND MAY CHANGE OR BREAK
+                        AT ANY TIME. ALSO, IT LIKELY USES FAKE DATA.
+                    </div>
 
                     { routes }
                     
