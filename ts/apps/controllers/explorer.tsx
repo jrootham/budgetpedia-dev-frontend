@@ -12,6 +12,7 @@ import Card = require('material-ui/lib/card/card')
 import CardTitle = require('material-ui/lib/card/card-title')
 import CardText = require('material-ui/lib/card/card-text')
 import { ChartSeries } from '../constants'
+import { categoryaliases } from '../constants'
 
 interface chartParms {
     name?: string,
@@ -65,10 +66,12 @@ class ExplorerClass extends Component<any, any> {
             parms.isError = true
             return parms
         }
+        let axistitle = meta[depth].Children
+        axistitle = categoryaliases[axistitle] || axistitle
         options = {
             title: parent[meta[depth].Name] + ' ($Thousands)',
             vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
-            hAxis: { title: meta[depth].Children, textStyle:{fontSize:8} },
+            hAxis: { title: axistitle, textStyle:{fontSize:8} },
             bar: { groupWidth: "95%" },
             // width: children.length * 120,// 120 per column
             height: 400,
@@ -144,7 +147,7 @@ class ExplorerClass extends Component<any, any> {
         let newchartparms: chartParms = {
             dataroot: newdataroot,
             chartlocation: {
-                series: ChartSeries.DrillDown,
+                series,
                 depth: sourcedepth + 1
             },
             range: newrange,
@@ -208,8 +211,12 @@ class ExplorerClass extends Component<any, any> {
             latestyear = null
         }
 
+        let seriesdata = this.state.seriesdata
+
+        // =================[ DRILLDOWN SEED ]=================
+
         // assemble parms to get initial dataset
-        let rootchartparms:chartParms = {
+        let drilldownparms:chartParms = {
             dataroot:[{parent:0}],
             chartlocation: {
                 series:ChartSeries.DrillDown,
@@ -224,11 +231,33 @@ class ExplorerClass extends Component<any, any> {
         }
 
         // get initial dataset
-        rootchartparms = this.setChartData(rootchartparms)
+        drilldownparms = this.setChartData(drilldownparms)
 
-        let seriesdata = this.state.seriesdata
-        let chartlocation = rootchartparms.chartlocation
-        seriesdata[chartlocation.series][chartlocation.depth] = rootchartparms
+        let chartlocation = drilldownparms.chartlocation
+        seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms
+
+        // =================[ COMPARE SEED ]=================
+
+        // assemble parms to get initial dataset
+        let compareparms: chartParms = {
+            dataroot: [{ parent: 0 }],
+            chartlocation: {
+                series: ChartSeries.Compare,
+                depth: 0
+            },
+            range: {
+                latestyear: latestyear,
+                earliestyear: null,
+                fullrange: false,
+            },
+            data: { chartType: "ColumnChart" }
+        }
+
+        // get initial dataset
+        compareparms = this.setChartData(compareparms)
+
+        chartlocation = compareparms.chartlocation
+        seriesdata[chartlocation.series][chartlocation.depth] = compareparms
 
         // make initial dataset available to chart
         this.setState({
@@ -240,41 +269,51 @@ class ExplorerClass extends Component<any, any> {
 
         let explorer = this
 
-        let seriesdatalist = explorer.state.seriesdata[0]
+        const getCharts = (datalist, series) => {
 
-        let charts = seriesdatalist.map((seriesdata, index) => {
+            let charts = datalist.map((seriesdata, index) => {
 
-            let data = seriesdata.data
+                let data = seriesdata.data
 
-            // separate callback for each instance
-            let callback = (function(chartparms: chartParms) {
-                let self = explorer
-                return function(Chart, err) {
-                    let chart = Chart.chart
-                    let selection = chart.getSelection()
-                    self.updateCharts({ chartparms, chart, selection, err })
-                }
-            })(seriesdata)
-            // select event only for now
-            // TODO: use filter for 'select' instead of map
-            data.events = data.events.map( eventdata => {
-                eventdata.callback = callback
-                return eventdata
+                // separate callback for each instance
+                let callback = (function(chartparms: chartParms) {
+                    let self = explorer
+                    return function(Chart, err) {
+                        let chart = Chart.chart
+                        let selection = chart.getSelection()
+                        self.updateCharts({ chartparms, chart, selection, err })
+                    }
+                })(seriesdata)
+                // select event only for now
+                // TODO: use filter for 'select' instead of map
+                data.events = data.events.map( eventdata => {
+                    eventdata.callback = callback
+                    return eventdata
+                })
+
+                return <ExplorerChart
+                    key = {index}
+                    chartType = {data.chartType}
+                    options = { data.options }
+                    chartEvents = {data.events}
+                    rows = {data.rows}
+                    columns = {data.columns}
+                    // used to create html element id attribute
+                    graph_id = {"ChartID" + series + '' + index}
+                    />
             })
 
-            return <ExplorerChart
-                key = {index}
-                chartType = {data.chartType}
-                options = { data.options }
-                chartEvents = {data.events}
-                rows = {data.rows}
-                columns = {data.columns}
-                // used to create html element id attribute
-                graph_id = {"ChartID" + index}
-                />
-        })
+            return charts
 
+        }
 
+        let seriesdatalist = explorer.state.seriesdata[ChartSeries.DrillDown]
+
+        let drilldowncharts = getCharts(seriesdatalist, ChartSeries.DrillDown)
+
+        seriesdatalist = explorer.state.seriesdata[ChartSeries.Compare]
+
+        let comparecharts = getCharts(seriesdatalist, ChartSeries.Compare)
 
         return <div>
         <Card>
@@ -291,7 +330,7 @@ class ExplorerClass extends Component<any, any> {
                 <div style={{ whiteSpace: "nowrap" }}>
                 <div style={{ overflow: "scroll" }}>
 
-                    { charts }
+                    { drilldowncharts }
 
                     <div style={{display:"inline-block",width:"500px"}}></div>
 
@@ -299,8 +338,24 @@ class ExplorerClass extends Component<any, any> {
                 </div>
             </CardText>
         </Card>
-        <Card>
-                <CardTitle>Compare</CardTitle>
+        <Card initiallyExpanded = {false}>
+            <CardTitle
+                actAsExpander
+                showExpandableButton>
+                Compare
+            </CardTitle>
+            <CardText expandable>
+                <p>Click or tap on any column to drill down</p>
+                <div style={{ whiteSpace: "nowrap" }}>
+                    <div style={{ overflow: "scroll" }}>
+
+                        { comparecharts }
+
+                        <div style={{ display: "inline-block", width: "500px" }}></div>
+
+                    </div>
+                </div>
+            </CardText>
         </Card>
         <Card>
                 <CardTitle>Show differences</CardTitle>

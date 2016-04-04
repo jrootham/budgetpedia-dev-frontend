@@ -2007,6 +2007,10 @@ exports.ExplorerChart = ExplorerChart;
     ChartSeries[ChartSeries["Context"] = 3] = "Context";
 })(exports.ChartSeries || (exports.ChartSeries = {}));
 var ChartSeries = exports.ChartSeries;
+exports.categoryaliases = {
+    'Types': 'Activity Types',
+    'Groups': 'Division Groupings'
+};
 
 },{}],5:[function(require,module,exports){
 "use strict";
@@ -2099,6 +2103,7 @@ var Card = require('material-ui/lib/card/card');
 var CardTitle = require('material-ui/lib/card/card-title');
 var CardText = require('material-ui/lib/card/card-text');
 var constants_1 = require('../constants');
+var constants_2 = require('../constants');
 
 var ExplorerClass = function (_Component) {
     _inherits(ExplorerClass, _Component);
@@ -2128,10 +2133,12 @@ var ExplorerClass = function (_Component) {
                 parms.isError = true;
                 return parms;
             }
+            var axistitle = meta[depth].Children;
+            axistitle = constants_2.categoryaliases[axistitle] || axistitle;
             options = {
                 title: parent[meta[depth].Name] + ' ($Thousands)',
                 vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
-                hAxis: { title: meta[depth].Children, textStyle: { fontSize: 8 } },
+                hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
                 bar: { groupWidth: "95%" },
                 height: 400,
                 width: 400,
@@ -2180,7 +2187,7 @@ var ExplorerClass = function (_Component) {
             var newchartparms = {
                 dataroot: newdataroot,
                 chartlocation: {
-                    series: constants_1.ChartSeries.DrillDown,
+                    series: series,
                     depth: sourcedepth + 1
                 },
                 range: newrange,
@@ -2223,7 +2230,8 @@ var ExplorerClass = function (_Component) {
             } else {
                 latestyear = null;
             }
-            var rootchartparms = {
+            var seriesdata = _this.state.seriesdata;
+            var drilldownparms = {
                 dataroot: [{ parent: 0 }],
                 chartlocation: {
                     series: constants_1.ChartSeries.DrillDown,
@@ -2236,10 +2244,25 @@ var ExplorerClass = function (_Component) {
                 },
                 data: { chartType: "ColumnChart" }
             };
-            rootchartparms = _this.setChartData(rootchartparms);
-            var seriesdata = _this.state.seriesdata;
-            var chartlocation = rootchartparms.chartlocation;
-            seriesdata[chartlocation.series][chartlocation.depth] = rootchartparms;
+            drilldownparms = _this.setChartData(drilldownparms);
+            var chartlocation = drilldownparms.chartlocation;
+            seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms;
+            var compareparms = {
+                dataroot: [{ parent: 0 }],
+                chartlocation: {
+                    series: constants_1.ChartSeries.Compare,
+                    depth: 0
+                },
+                range: {
+                    latestyear: latestyear,
+                    earliestyear: null,
+                    fullrange: false
+                },
+                data: { chartType: "ColumnChart" }
+            };
+            compareparms = _this.setChartData(compareparms);
+            chartlocation = compareparms.chartlocation;
+            seriesdata[chartlocation.series][chartlocation.depth] = compareparms;
             _this.setState({
                 seriesdata: seriesdata
             });
@@ -2254,24 +2277,30 @@ var ExplorerClass = function (_Component) {
         key: 'render',
         value: function render() {
             var explorer = this;
-            var seriesdatalist = explorer.state.seriesdata[0];
-            var charts = seriesdatalist.map(function (seriesdata, index) {
-                var data = seriesdata.data;
-                var callback = function (chartparms) {
-                    var self = explorer;
-                    return function (Chart, err) {
-                        var chart = Chart.chart;
-                        var selection = chart.getSelection();
-                        self.updateCharts({ chartparms: chartparms, chart: chart, selection: selection, err: err });
-                    };
-                }(seriesdata);
-                data.events = data.events.map(function (eventdata) {
-                    eventdata.callback = callback;
-                    return eventdata;
+            var getCharts = function getCharts(datalist, series) {
+                var charts = datalist.map(function (seriesdata, index) {
+                    var data = seriesdata.data;
+                    var callback = function (chartparms) {
+                        var self = explorer;
+                        return function (Chart, err) {
+                            var chart = Chart.chart;
+                            var selection = chart.getSelection();
+                            self.updateCharts({ chartparms: chartparms, chart: chart, selection: selection, err: err });
+                        };
+                    }(seriesdata);
+                    data.events = data.events.map(function (eventdata) {
+                        eventdata.callback = callback;
+                        return eventdata;
+                    });
+                    return React.createElement(explorerchart_1.ExplorerChart, { key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ChartID" + series + '' + index });
                 });
-                return React.createElement(explorerchart_1.ExplorerChart, { key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ChartID" + index });
-            });
-            return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, charts, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")), React.createElement(Card, null, React.createElement(CardTitle, null, "Context")));
+                return charts;
+            };
+            var seriesdatalist = explorer.state.seriesdata[constants_1.ChartSeries.DrillDown];
+            var drilldowncharts = getCharts(seriesdatalist, constants_1.ChartSeries.DrillDown);
+            seriesdatalist = explorer.state.seriesdata[constants_1.ChartSeries.Compare];
+            var comparecharts = getCharts(seriesdatalist, constants_1.ChartSeries.Compare);
+            return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))))), React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Compare"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, comparecharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))))), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")), React.createElement(Card, null, React.createElement(CardTitle, null, "Context")));
         }
     }]);
 
