@@ -2131,12 +2131,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = require('react');
 var Component = React.Component;
 
-var explorerchart_1 = require('../components/explorerchart');
 var format = require('format-number');
 var react_redux_1 = require('react-redux');
 var Card = require('material-ui/lib/card/card');
 var CardTitle = require('material-ui/lib/card/card-title');
 var CardText = require('material-ui/lib/card/card-text');
+var explorerchart_1 = require('../components/explorerchart');
 var constants_1 = require('../constants');
 var constants_2 = require('../constants');
 
@@ -2323,13 +2323,12 @@ var ExplorerClass = function (_Component) {
         key: 'render',
         value: function render() {
             var explorer = this;
-            var seriesdatalist;
             var dashboardsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard"));
-            seriesdatalist = explorer.state.seriesdata[constants_1.ChartSeries.DrillDown];
-            var drilldowncharts = explorer.getCharts(seriesdatalist, constants_1.ChartSeries.DrillDown);
+            var drilldownlist = explorer.state.seriesdata[constants_1.ChartSeries.DrillDown];
+            var drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
             var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
-            seriesdatalist = explorer.state.seriesdata[constants_1.ChartSeries.Compare];
-            var comparecharts = explorer.getCharts(seriesdatalist, constants_1.ChartSeries.Compare);
+            var comparelist = explorer.state.seriesdata[constants_1.ChartSeries.Compare];
+            var comparecharts = explorer.getCharts(comparelist, constants_1.ChartSeries.Compare);
             var comparesegment = React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Compare"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, comparecharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
             var differencessegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences"));
             var contextsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Context"));

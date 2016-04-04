@@ -1,16 +1,17 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // explorer.tsx
 /// <reference path="../../../typings-custom/react-google-charts.d.ts" />
-/// <reference path="../../../typings-custom/format-number.d.ts" />
+
 'use strict'
 import * as React from 'react'
 var { Component } = React
-import { ExplorerChart } from '../components/explorerchart'
 var format = require('format-number')
 import { connect as injectStore} from 'react-redux'
 import Card = require('material-ui/lib/card/card')
 import CardTitle = require('material-ui/lib/card/card-title')
 import CardText = require('material-ui/lib/card/card-text')
+
+import { ExplorerChart } from '../components/explorerchart'
 import { ChartSeries } from '../constants'
 import { categoryaliases } from '../constants'
 
@@ -168,7 +169,6 @@ class ExplorerClass extends Component<any, any> {
             data: { chartType: "ColumnChart" }
         }
 
-
         newchartparms = this.setChartData(newchartparms)
 
         if (newchartparms.isError) return
@@ -216,6 +216,9 @@ class ExplorerClass extends Component<any, any> {
         events = [
             {
                 eventName: 'select',
+                // callback created in immediately invoked function in
+                // order to set correct parms var in closure
+                // created in getCharts
                 // callback: this.getSelectEvent(parms)
             }
         ]
@@ -249,7 +252,6 @@ class ExplorerClass extends Component<any, any> {
         // console.log('chartdata = ', options, events, columns, rows)
         return parms
     }
-
 
     getChartDatasets = (parms, meta, budgetdata) => {
         let parent, children, depth,
@@ -315,8 +317,6 @@ class ExplorerClass extends Component<any, any> {
 
         let explorer = this
 
-        var seriesdatalist
-
         // ===========[ DASHBOARD ]=============
 
         let dashboardsegment = <Card>
@@ -325,9 +325,11 @@ class ExplorerClass extends Component<any, any> {
 
         </Card>
 
-        seriesdatalist = explorer.state.seriesdata[ ChartSeries.DrillDown ]
+        // ===========[ DRILLDOWN ]=============
 
-        let drilldowncharts = explorer.getCharts(seriesdatalist, ChartSeries.DrillDown)
+        let drilldownlist = explorer.state.seriesdata[ChartSeries.DrillDown]
+
+        let drilldowncharts = explorer.getCharts(drilldownlist, ChartSeries.DrillDown)
 
         let drilldownsegment = <Card initiallyExpanded >
 
@@ -356,9 +358,9 @@ class ExplorerClass extends Component<any, any> {
 
         // ===========[ COMPARE ]=============
 
-        seriesdatalist = explorer.state.seriesdata[ChartSeries.Compare]
+        let comparelist = explorer.state.seriesdata[ChartSeries.Compare]
 
-        let comparecharts = explorer.getCharts(seriesdatalist, ChartSeries.Compare)
+        let comparecharts = explorer.getCharts(comparelist, ChartSeries.Compare)
 
         let comparesegment = <Card initiallyExpanded = {false}>
 
