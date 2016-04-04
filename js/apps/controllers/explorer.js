@@ -12,6 +12,84 @@ const constants_2 = require('../constants');
 class ExplorerClass extends Component {
     constructor(props) {
         super(props);
+        this.componentDidMount = () => {
+            this.props.budgetdata.sort((a, b) => {
+                if (a.year > b.year)
+                    return 1;
+                else if (a.year < b.year)
+                    return -1;
+                else
+                    return 0;
+            });
+            var latestyear;
+            if (this.props.budgetdata.length > 0) {
+                let ptr = this.props.budgetdata.length - 1;
+                latestyear = this.props.budgetdata[ptr].Year;
+            }
+            else {
+                latestyear = null;
+            }
+            let seriesdata = this.state.seriesdata;
+            var chartlocation;
+            let drilldownparms = this.getSeedChartParms(constants_1.ChartSeries.DrillDown, latestyear);
+            drilldownparms = this.setChartData(drilldownparms);
+            chartlocation = drilldownparms.chartlocation;
+            seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms;
+            let compareparms = this.getSeedChartParms(constants_1.ChartSeries.Compare, latestyear);
+            compareparms = this.setChartData(compareparms);
+            chartlocation = compareparms.chartlocation;
+            seriesdata[chartlocation.series][chartlocation.depth] = compareparms;
+            this.setState({
+                seriesdata: seriesdata,
+            });
+        };
+        this.getSeedChartParms = (series, latestyear) => {
+            return {
+                dataroot: [{ parent: 0 }],
+                chartlocation: {
+                    series: series,
+                    depth: 0
+                },
+                range: {
+                    latestyear: latestyear,
+                    earliestyear: null,
+                    fullrange: false,
+                },
+                data: { chartType: "ColumnChart" }
+            };
+        };
+        this.updateChartsSelection = data => {
+            let seriesdata = this.state.seriesdata;
+            let sourceparms = data.chartparms, selectlocation = sourceparms.chartlocation, series = selectlocation.series, sourcedepth = selectlocation.depth, selection = data.selection[0], selectionrow = selection.row;
+            let serieslist = seriesdata[series];
+            serieslist.splice(sourcedepth + 1);
+            this.setState({
+                seriesdata: seriesdata,
+            });
+            let oldchartparms = seriesdata[series][sourcedepth];
+            let newdataroot = oldchartparms.dataroot.map(node => {
+                return Object.assign({}, node);
+            });
+            newdataroot.push({ parent: selectionrow });
+            let newrange = Object.assign({}, oldchartparms.range);
+            let newchartparms = {
+                dataroot: newdataroot,
+                chartlocation: {
+                    series: series,
+                    depth: sourcedepth + 1
+                },
+                range: newrange,
+                data: { chartType: "ColumnChart" }
+            };
+            newchartparms = this.setChartData(newchartparms);
+            if (newchartparms.isError)
+                return;
+            console.log('newchartparms = ', newchartparms);
+            seriesdata[series][sourcedepth + 1] = newchartparms;
+            this.setState({
+                seriesdata: seriesdata,
+            });
+        };
         this.setChartData = (parms) => {
             let options = {}, events = null, rows = [], columns = [], budgetdata = this.props.budgetdata, meta = budgetdata[0].Meta, self = this, range = parms.range;
             let { parent, children, depth } = this.getChartDatasets(parms, meta, budgetdata);
@@ -57,38 +135,6 @@ class ExplorerClass extends Component {
             chartdata.events = events;
             return parms;
         };
-        this.updateCharts = data => {
-            console.log('updateCharts data = ', data);
-            let seriesdata = this.state.seriesdata;
-            let sourceparms = data.chartparms, selectlocation = sourceparms.chartlocation, series = selectlocation.series, sourcedepth = selectlocation.depth, selection = data.selection[0], selectionrow = selection.row;
-            let serieslist = seriesdata[series];
-            serieslist.splice(sourcedepth + 1);
-            this.forceUpdate();
-            console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist);
-            let oldchartparms = seriesdata[series][sourcedepth];
-            let newdataroot = oldchartparms.dataroot.map(node => {
-                return Object.assign({}, node);
-            });
-            newdataroot.push({ parent: selectionrow });
-            let newrange = Object.assign({}, oldchartparms.range);
-            let newchartparms = {
-                dataroot: newdataroot,
-                chartlocation: {
-                    series: series,
-                    depth: sourcedepth + 1
-                },
-                range: newrange,
-                data: { chartType: "ColumnChart" }
-            };
-            newchartparms = this.setChartData(newchartparms);
-            if (newchartparms.isError)
-                return;
-            console.log('newchartparms = ', newchartparms);
-            seriesdata[series][sourcedepth + 1] = newchartparms;
-            this.setState({
-                seriesdata: seriesdata,
-            });
-        };
         this.getChartDatasets = (parms, meta, budgetdata) => {
             let parent, children, depth, path = parms.dataroot, range = parms.range;
             let list = budgetdata.filter(item => {
@@ -103,66 +149,15 @@ class ExplorerClass extends Component {
             children = list;
             return { parent: parent, children: children, depth: depth };
         };
-        this.componentDidMount = () => {
-            this.props.budgetdata.sort((a, b) => {
-                if (a.year > b.year)
-                    return 1;
-                else if (a.year < b.year)
-                    return -1;
-                else
-                    return 0;
-            });
-            let latestyear;
-            if (this.props.budgetdata.length > 0) {
-                let ptr = this.props.budgetdata.length - 1;
-                latestyear = this.props.budgetdata[ptr].Year;
-            }
-            else {
-                latestyear = null;
-            }
-            let seriesdata = this.state.seriesdata;
-            const getChartParms = (series) => {
-                return {
-                    dataroot: [{ parent: 0 }],
-                    chartlocation: {
-                        series: series,
-                        depth: 0
-                    },
-                    range: {
-                        latestyear: latestyear,
-                        earliestyear: null,
-                        fullrange: false,
-                    },
-                    data: { chartType: "ColumnChart" }
-                };
-            };
-            let drilldownparms = getChartParms(constants_1.ChartSeries.DrillDown);
-            drilldownparms = this.setChartData(drilldownparms);
-            let chartlocation = drilldownparms.chartlocation;
-            seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms;
-            let compareparms = getChartParms(constants_1.ChartSeries.Compare);
-            compareparms = this.setChartData(compareparms);
-            chartlocation = compareparms.chartlocation;
-            seriesdata[chartlocation.series][chartlocation.depth] = compareparms;
-            this.setState({
-                seriesdata: seriesdata,
-            });
-        };
-        this.state = {
-            seriesdata: [[], [], [], []],
-        };
-    }
-    render() {
-        let explorer = this;
-        const getCharts = (datalist, series) => {
+        this.getCharts = (datalist, series) => {
             let charts = datalist.map((seriesdata, index) => {
                 let data = seriesdata.data;
-                let callback = (function (chartparms) {
-                    let self = explorer;
+                let callback = ((chartparms) => {
+                    let self = this;
                     return function (Chart, err) {
                         let chart = Chart.chart;
                         let selection = chart.getSelection();
-                        self.updateCharts({ chartparms: chartparms, chart: chart, selection: selection, err: err });
+                        self.updateChartsSelection({ chartparms: chartparms, chart: chart, selection: selection, err: err });
                     };
                 })(seriesdata);
                 data.events = data.events.map(eventdata => {
@@ -173,11 +168,23 @@ class ExplorerClass extends Component {
             });
             return charts;
         };
-        let seriesdatalist = explorer.state.seriesdata[constants_1.ChartSeries.DrillDown];
-        let drilldowncharts = getCharts(seriesdatalist, constants_1.ChartSeries.DrillDown);
+        this.state = {
+            seriesdata: [[], [], [], []],
+        };
+    }
+    render() {
+        let explorer = this;
+        var seriesdatalist;
+        let dashboardsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard"));
+        seriesdatalist = explorer.state.seriesdata[constants_1.ChartSeries.DrillDown];
+        let drilldowncharts = explorer.getCharts(seriesdatalist, constants_1.ChartSeries.DrillDown);
+        let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, drilldowncharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
         seriesdatalist = explorer.state.seriesdata[constants_1.ChartSeries.Compare];
-        let comparecharts = getCharts(seriesdatalist, constants_1.ChartSeries.Compare);
-        return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, drilldowncharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))))), React.createElement(Card, {initiallyExpanded: false}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Compare"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, comparecharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))))), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")), React.createElement(Card, null, React.createElement(CardTitle, null, "Context")));
+        let comparecharts = explorer.getCharts(seriesdatalist, constants_1.ChartSeries.Compare);
+        let comparesegment = React.createElement(Card, {initiallyExpanded: false}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Compare"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, comparecharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
+        let differencessegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences"));
+        let contextsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Context"));
+        return React.createElement("div", null, dashboardsegment, drilldownsegment, comparesegment, differencessegment, contextsegment);
     }
 }
 function mapStateToProps(state) {

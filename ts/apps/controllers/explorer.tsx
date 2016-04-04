@@ -20,7 +20,7 @@ interface chartParms {
         series: number,
         depth: number,
     },
-    dataroot: [{ parent: number }],
+    dataroot: { parent: number }[],
     range: {
         latestyear:number,
         earliestyear:number,
@@ -49,7 +49,140 @@ class ExplorerClass extends Component<any, any> {
         };
     }
 
-    // returns false if fails
+    // initialize once - create seed drilldown and compare series
+    componentDidMount = () => {
+        // sort budget years
+        this.props.budgetdata.sort((a, b) => {
+            if (a.year > b.year)
+                return 1
+            else if (a.year < b.year)
+                return -1
+            else
+                return 0
+        })
+
+        // initial graph always latest year, highest level
+        var latestyear
+
+        if (this.props.budgetdata.length > 0) {
+            // budgetdata is sorted ascending, take the last item
+            let ptr = this.props.budgetdata.length - 1
+            latestyear = this.props.budgetdata[ptr].Year
+        } else {
+            latestyear = null
+        }
+
+        let seriesdata = this.state.seriesdata
+
+        var chartlocation
+
+        // =================[ DRILLDOWN SEED ]=================
+
+        // assemble parms to get initial dataset
+        let drilldownparms: chartParms = this.getSeedChartParms(ChartSeries.DrillDown, latestyear)
+
+        drilldownparms = this.setChartData(drilldownparms)
+
+        chartlocation = drilldownparms.chartlocation
+        seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms
+
+        // =================[ COMPARE SEED ]=================
+
+        // assemble parms to get initial dataset
+        let compareparms: chartParms = this.getSeedChartParms(ChartSeries.Compare, latestyear)
+
+        compareparms = this.setChartData(compareparms)
+
+        chartlocation = compareparms.chartlocation
+        seriesdata[chartlocation.series][chartlocation.depth] = compareparms
+
+        // ================[ SAVE INITIALIZATION ]==================
+
+        // make initial dataset available to chart
+        this.setState({
+            seriesdata,
+        });
+
+    }
+
+    getSeedChartParms = (series, latestyear): chartParms => {
+        return {
+            dataroot: [{ parent: 0 }],
+            chartlocation: {
+                series,
+                depth: 0
+            },
+            range: {
+                latestyear: latestyear,
+                earliestyear: null,
+                fullrange: false,
+            },
+            data: { chartType: "ColumnChart" }
+        }
+
+    }
+
+    // response to user selection of a chart component (such as a column )
+    // called by chart callback
+    updateChartsSelection = data => {
+        // console.log('updateCharts data = ', data)
+
+        let seriesdata = this.state.seriesdata
+
+        let sourceparms = data.chartparms,
+            selectlocation = sourceparms.chartlocation,
+            series = selectlocation.series,
+            sourcedepth = selectlocation.depth,
+            selection = data.selection[0],
+            selectionrow = selection.row
+
+        let serieslist = seriesdata[series]
+        // TODO: abandon here if the next one exists and is the same
+        serieslist.splice(sourcedepth + 1) // remove subsequent charts
+
+        // trigger update to avoid google charts use of cached versions for new charts
+        // cached versions keep obsolete chart titles, even if new title fed in through new options
+        this.setState({
+            seriesdata,
+        });
+        // TODO: better to use forceUpdate vs setState?
+        // this.forceUpdate()
+
+        // console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist)
+
+        let oldchartparms = seriesdata[series][sourcedepth]
+        let newdataroot = oldchartparms.dataroot.map(node => {
+            return Object.assign({}, node)
+        })
+        newdataroot.push({ parent: selectionrow })
+
+        let newrange = Object.assign({}, oldchartparms.range)
+
+        let newchartparms: chartParms = {
+            dataroot: newdataroot,
+            chartlocation: {
+                series,
+                depth: sourcedepth + 1
+            },
+            range: newrange,
+            data: { chartType: "ColumnChart" }
+        }
+
+
+        newchartparms = this.setChartData(newchartparms)
+
+        if (newchartparms.isError) return
+
+        console.log('newchartparms = ', newchartparms)
+
+        seriesdata[series][sourcedepth + 1] = newchartparms
+
+        this.setState({
+            seriesdata,
+        })
+    }
+
+    // returns parms.isError = true if fails
     setChartData = (parms:chartParms):chartParms => {
         let options = {},
             events = null,
@@ -62,7 +195,7 @@ class ExplorerClass extends Component<any, any> {
 
         // TODO: capture range, including years
         let {parent, children, depth} = this.getChartDatasets(parms, meta, budgetdata)
-        if ((depth +1) >= meta.length) {
+        if ((depth +1) >= meta.length) { // no more data to show
             parms.isError = true
             return parms
         }
@@ -71,7 +204,7 @@ class ExplorerClass extends Component<any, any> {
         options = {
             title: parent[meta[depth].Name] + ' ($Thousands)',
             vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
-            hAxis: { title: axistitle, textStyle:{fontSize:8} },
+            hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
             bar: { groupWidth: "95%" },
             // width: children.length * 120,// 120 per column
             height: 400,
@@ -117,56 +250,6 @@ class ExplorerClass extends Component<any, any> {
         return parms
     }
 
-    updateCharts = data => {
-        console.log('updateCharts data = ', data)
-
-        let seriesdata = this.state.seriesdata
-
-        let sourceparms = data.chartparms,
-            selectlocation = sourceparms.chartlocation,
-            series = selectlocation.series,
-            sourcedepth = selectlocation.depth,
-            selection = data.selection[0],
-            selectionrow = selection.row
-
-        let serieslist = seriesdata[series]
-        // TODO: abandon here if the next one exists and is the same
-        serieslist.splice(sourcedepth + 1) // remove subsequent charts
-        this.forceUpdate()
-
-        console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist)
-
-        let oldchartparms = seriesdata[series][sourcedepth]
-        let newdataroot = oldchartparms.dataroot.map(node => {
-            return Object.assign({},node)
-        })
-        newdataroot.push({parent:selectionrow})
-
-        let newrange = Object.assign({},oldchartparms.range)
-
-        let newchartparms: chartParms = {
-            dataroot: newdataroot,
-            chartlocation: {
-                series,
-                depth: sourcedepth + 1
-            },
-            range: newrange,
-            data: { chartType: "ColumnChart" }
-        }
-
-
-        newchartparms = this.setChartData(newchartparms)
-
-        if (newchartparms.isError) return
-
-        console.log('newchartparms = ', newchartparms)
-
-        seriesdata[series][sourcedepth + 1] = newchartparms
-
-        this.setState({
-            seriesdata,
-        })
-    }
 
     getChartDatasets = (parms, meta, budgetdata) => {
         let parent, children, depth,
@@ -189,155 +272,106 @@ class ExplorerClass extends Component<any, any> {
         return {parent, children, depth}
     }
 
-    // initialize once
-    componentDidMount = () => {
-        // sort budget years
-        this.props.budgetdata.sort((a, b) => {
-            if ( a.year > b.year )
-                return 1
-            else if ( a.year < b.year )
-                return -1
-            else 
-                return 0
+    // get React components to render
+    getCharts = (datalist, series) => {
+
+        let charts = datalist.map((seriesdata, index) => {
+
+            let data = seriesdata.data
+
+            // separate callback for each instance
+            let callback = ((chartparms: chartParms) => {
+                let self = this
+                return function(Chart, err) {
+                    let chart = Chart.chart
+                    let selection = chart.getSelection()
+                    self.updateChartsSelection({ chartparms, chart, selection, err })
+                }
+            })(seriesdata)
+            // select event only for now
+            // TODO: use filter for 'select' instead of map
+            data.events = data.events.map(eventdata => {
+                eventdata.callback = callback
+                return eventdata
+            })
+
+            return <ExplorerChart
+                key = {index}
+                chartType = {data.chartType}
+                options = { data.options }
+                chartEvents = {data.events}
+                rows = {data.rows}
+                columns = {data.columns}
+                // used to create html element id attribute
+                graph_id = {"ChartID" + series + '' + index}
+                />
         })
 
-        // initial graph always latest year, highest level
-        let latestyear
-        if (this.props.budgetdata.length > 0) {
-            // budgetdata is sorted ascending, take the last item
-            let ptr = this.props.budgetdata.length - 1
-            latestyear = this.props.budgetdata[ptr].Year
-        } else {
-            latestyear = null
-        }
-
-        let seriesdata = this.state.seriesdata
-
-        const getChartParms = (series):chartParms => {
-            return {
-                dataroot: [{ parent: 0 }],
-                chartlocation: {
-                    series,
-                    depth: 0
-                },
-                range: {
-                    latestyear: latestyear,
-                    earliestyear: null,
-                    fullrange: false,
-                },
-                data: { chartType: "ColumnChart" }
-            }
-
-        }
-
-        // =================[ DRILLDOWN SEED ]=================
-
-        // assemble parms to get initial dataset
-        let drilldownparms:chartParms = getChartParms(ChartSeries.DrillDown)
-
-        drilldownparms = this.setChartData(drilldownparms)
-
-        let chartlocation = drilldownparms.chartlocation
-        seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms
-
-        // =================[ COMPARE SEED ]=================
-
-        // assemble parms to get initial dataset
-        let compareparms: chartParms = getChartParms(ChartSeries.Compare)
-
-        compareparms = this.setChartData(compareparms)
-
-        chartlocation = compareparms.chartlocation
-        seriesdata[chartlocation.series][chartlocation.depth] = compareparms
-
-        // ================[ SAVE INITIALIZATION ]==================
-
-        // make initial dataset available to chart
-        this.setState({
-            seriesdata,
-        });
+        return charts
 
     }
+
     render() {
 
         let explorer = this
 
-        const getCharts = (datalist, series) => {
+        var seriesdatalist
 
-            let charts = datalist.map((seriesdata, index) => {
+        // ===========[ DASHBOARD ]=============
 
-                let data = seriesdata.data
+        let dashboardsegment = <Card>
 
-                // separate callback for each instance
-                let callback = (function(chartparms: chartParms) {
-                    let self = explorer
-                    return function(Chart, err) {
-                        let chart = Chart.chart
-                        let selection = chart.getSelection()
-                        self.updateCharts({ chartparms, chart, selection, err })
-                    }
-                })(seriesdata)
-                // select event only for now
-                // TODO: use filter for 'select' instead of map
-                data.events = data.events.map( eventdata => {
-                    eventdata.callback = callback
-                    return eventdata
-                })
+            <CardTitle>Dashboard</CardTitle>
 
-                return <ExplorerChart
-                    key = {index}
-                    chartType = {data.chartType}
-                    options = { data.options }
-                    chartEvents = {data.events}
-                    rows = {data.rows}
-                    columns = {data.columns}
-                    // used to create html element id attribute
-                    graph_id = {"ChartID" + series + '' + index}
-                    />
-            })
+        </Card>
 
-            return charts
+        seriesdatalist = explorer.state.seriesdata[ ChartSeries.DrillDown ]
 
-        }
+        let drilldowncharts = explorer.getCharts(seriesdatalist, ChartSeries.DrillDown)
 
-        let seriesdatalist = explorer.state.seriesdata[ChartSeries.DrillDown]
+        let drilldownsegment = <Card initiallyExpanded >
 
-        let drilldowncharts = getCharts(seriesdatalist, ChartSeries.DrillDown)
+            <CardTitle
+                actAsExpander
+                showExpandableButton >
+
+                Drill Down
+
+            </CardTitle>
+
+            <CardText expandable >
+
+                <p>Click or tap on any column to drill down</p>
+                <div style={{ whiteSpace: "nowrap" }}>
+                    <div style={{ overflow: "scroll" }}>
+
+                        { drilldowncharts }
+
+                        <div style={{ display: "inline-block", width: "500px" }}></div>
+
+                    </div>
+                </div>
+            </CardText>
+        </Card >
+
+        // ===========[ COMPARE ]=============
 
         seriesdatalist = explorer.state.seriesdata[ChartSeries.Compare]
 
-        let comparecharts = getCharts(seriesdatalist, ChartSeries.Compare)
+        let comparecharts = explorer.getCharts(seriesdatalist, ChartSeries.Compare)
 
-        return <div>
-        <Card>
-        <CardTitle>Dashboard</CardTitle>
-        </Card>
-        <Card initiallyExpanded>
-            <CardTitle 
-                actAsExpander
-                showExpandableButton>
-                Drill Down
-            </CardTitle>
-            <CardText expandable>
-                <p>Click or tap on any column to drill down</p>
-                <div style={{ whiteSpace: "nowrap" }}>
-                <div style={{ overflow: "scroll" }}>
+        let comparesegment = <Card initiallyExpanded = {false}>
 
-                    { drilldowncharts }
-
-                    <div style={{display:"inline-block",width:"500px"}}></div>
-
-                </div>
-                </div>
-            </CardText>
-        </Card>
-        <Card initiallyExpanded = {false}>
             <CardTitle
                 actAsExpander
-                showExpandableButton>
+                showExpandableButton >
+
                 Compare
+
             </CardTitle>
-            <CardText expandable>
+
+            <CardText expandable >
+
                 <p>Click or tap on any column to drill down</p>
                 <div style={{ whiteSpace: "nowrap" }}>
                     <div style={{ overflow: "scroll" }}>
@@ -350,12 +384,35 @@ class ExplorerClass extends Component<any, any> {
                 </div>
             </CardText>
         </Card>
-        <Card>
-                <CardTitle>Show differences</CardTitle>
+
+        // ===========[ DIFFERENCES ]=============
+
+        let differencessegment = <Card>
+
+            <CardTitle>Show differences</CardTitle>
+
         </Card>
-        <Card>
+
+        // ===========[ CONTEXT ]=============
+
+        let contextsegment = <Card>
+
             <CardTitle>Context</CardTitle>
+
         </Card>
+
+        return <div>
+
+            { dashboardsegment }
+
+            { drilldownsegment }
+
+            { comparesegment }
+
+            { differencessegment }
+
+            { contextsegment }
+
         </div>
     }
 

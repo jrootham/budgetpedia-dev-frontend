@@ -2148,6 +2148,82 @@ var ExplorerClass = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ExplorerClass).call(this, props));
 
+        _this.componentDidMount = function () {
+            _this.props.budgetdata.sort(function (a, b) {
+                if (a.year > b.year) return 1;else if (a.year < b.year) return -1;else return 0;
+            });
+            var latestyear;
+            if (_this.props.budgetdata.length > 0) {
+                var ptr = _this.props.budgetdata.length - 1;
+                latestyear = _this.props.budgetdata[ptr].Year;
+            } else {
+                latestyear = null;
+            }
+            var seriesdata = _this.state.seriesdata;
+            var chartlocation;
+            var drilldownparms = _this.getSeedChartParms(constants_1.ChartSeries.DrillDown, latestyear);
+            drilldownparms = _this.setChartData(drilldownparms);
+            chartlocation = drilldownparms.chartlocation;
+            seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms;
+            var compareparms = _this.getSeedChartParms(constants_1.ChartSeries.Compare, latestyear);
+            compareparms = _this.setChartData(compareparms);
+            chartlocation = compareparms.chartlocation;
+            seriesdata[chartlocation.series][chartlocation.depth] = compareparms;
+            _this.setState({
+                seriesdata: seriesdata
+            });
+        };
+        _this.getSeedChartParms = function (series, latestyear) {
+            return {
+                dataroot: [{ parent: 0 }],
+                chartlocation: {
+                    series: series,
+                    depth: 0
+                },
+                range: {
+                    latestyear: latestyear,
+                    earliestyear: null,
+                    fullrange: false
+                },
+                data: { chartType: "ColumnChart" }
+            };
+        };
+        _this.updateChartsSelection = function (data) {
+            var seriesdata = _this.state.seriesdata;
+            var sourceparms = data.chartparms,
+                selectlocation = sourceparms.chartlocation,
+                series = selectlocation.series,
+                sourcedepth = selectlocation.depth,
+                selection = data.selection[0],
+                selectionrow = selection.row;
+            var serieslist = seriesdata[series];
+            serieslist.splice(sourcedepth + 1);
+            _this.setState({
+                seriesdata: seriesdata
+            });
+            var oldchartparms = seriesdata[series][sourcedepth];
+            var newdataroot = oldchartparms.dataroot.map(function (node) {
+                return Object.assign({}, node);
+            });
+            newdataroot.push({ parent: selectionrow });
+            var newrange = Object.assign({}, oldchartparms.range);
+            var newchartparms = {
+                dataroot: newdataroot,
+                chartlocation: {
+                    series: series,
+                    depth: sourcedepth + 1
+                },
+                range: newrange,
+                data: { chartType: "ColumnChart" }
+            };
+            newchartparms = _this.setChartData(newchartparms);
+            if (newchartparms.isError) return;
+            console.log('newchartparms = ', newchartparms);
+            seriesdata[series][sourcedepth + 1] = newchartparms;
+            _this.setState({
+                seriesdata: seriesdata
+            });
+        };
         _this.setChartData = function (parms) {
             var options = {},
                 events = null,
@@ -2200,42 +2276,6 @@ var ExplorerClass = function (_Component) {
             chartdata.events = events;
             return parms;
         };
-        _this.updateCharts = function (data) {
-            console.log('updateCharts data = ', data);
-            var seriesdata = _this.state.seriesdata;
-            var sourceparms = data.chartparms,
-                selectlocation = sourceparms.chartlocation,
-                series = selectlocation.series,
-                sourcedepth = selectlocation.depth,
-                selection = data.selection[0],
-                selectionrow = selection.row;
-            var serieslist = seriesdata[series];
-            serieslist.splice(sourcedepth + 1);
-            _this.forceUpdate();
-            console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist);
-            var oldchartparms = seriesdata[series][sourcedepth];
-            var newdataroot = oldchartparms.dataroot.map(function (node) {
-                return Object.assign({}, node);
-            });
-            newdataroot.push({ parent: selectionrow });
-            var newrange = Object.assign({}, oldchartparms.range);
-            var newchartparms = {
-                dataroot: newdataroot,
-                chartlocation: {
-                    series: series,
-                    depth: sourcedepth + 1
-                },
-                range: newrange,
-                data: { chartType: "ColumnChart" }
-            };
-            newchartparms = _this.setChartData(newchartparms);
-            if (newchartparms.isError) return;
-            console.log('newchartparms = ', newchartparms);
-            seriesdata[series][sourcedepth + 1] = newchartparms;
-            _this.setState({
-                seriesdata: seriesdata
-            });
-        };
         _this.getChartDatasets = function (parms, meta, budgetdata) {
             var parent = undefined,
                 children = undefined,
@@ -2254,44 +2294,24 @@ var ExplorerClass = function (_Component) {
             children = list;
             return { parent: parent, children: children, depth: depth };
         };
-        _this.componentDidMount = function () {
-            _this.props.budgetdata.sort(function (a, b) {
-                if (a.year > b.year) return 1;else if (a.year < b.year) return -1;else return 0;
+        _this.getCharts = function (datalist, series) {
+            var charts = datalist.map(function (seriesdata, index) {
+                var data = seriesdata.data;
+                var callback = function (chartparms) {
+                    var self = _this;
+                    return function (Chart, err) {
+                        var chart = Chart.chart;
+                        var selection = chart.getSelection();
+                        self.updateChartsSelection({ chartparms: chartparms, chart: chart, selection: selection, err: err });
+                    };
+                }(seriesdata);
+                data.events = data.events.map(function (eventdata) {
+                    eventdata.callback = callback;
+                    return eventdata;
+                });
+                return React.createElement(explorerchart_1.ExplorerChart, { key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ChartID" + series + '' + index });
             });
-            var latestyear = undefined;
-            if (_this.props.budgetdata.length > 0) {
-                var ptr = _this.props.budgetdata.length - 1;
-                latestyear = _this.props.budgetdata[ptr].Year;
-            } else {
-                latestyear = null;
-            }
-            var seriesdata = _this.state.seriesdata;
-            var getChartParms = function getChartParms(series) {
-                return {
-                    dataroot: [{ parent: 0 }],
-                    chartlocation: {
-                        series: series,
-                        depth: 0
-                    },
-                    range: {
-                        latestyear: latestyear,
-                        earliestyear: null,
-                        fullrange: false
-                    },
-                    data: { chartType: "ColumnChart" }
-                };
-            };
-            var drilldownparms = getChartParms(constants_1.ChartSeries.DrillDown);
-            drilldownparms = _this.setChartData(drilldownparms);
-            var chartlocation = drilldownparms.chartlocation;
-            seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms;
-            var compareparms = getChartParms(constants_1.ChartSeries.Compare);
-            compareparms = _this.setChartData(compareparms);
-            chartlocation = compareparms.chartlocation;
-            seriesdata[chartlocation.series][chartlocation.depth] = compareparms;
-            _this.setState({
-                seriesdata: seriesdata
-            });
+            return charts;
         };
         _this.state = {
             seriesdata: [[], [], [], []]
@@ -2303,30 +2323,17 @@ var ExplorerClass = function (_Component) {
         key: 'render',
         value: function render() {
             var explorer = this;
-            var getCharts = function getCharts(datalist, series) {
-                var charts = datalist.map(function (seriesdata, index) {
-                    var data = seriesdata.data;
-                    var callback = function (chartparms) {
-                        var self = explorer;
-                        return function (Chart, err) {
-                            var chart = Chart.chart;
-                            var selection = chart.getSelection();
-                            self.updateCharts({ chartparms: chartparms, chart: chart, selection: selection, err: err });
-                        };
-                    }(seriesdata);
-                    data.events = data.events.map(function (eventdata) {
-                        eventdata.callback = callback;
-                        return eventdata;
-                    });
-                    return React.createElement(explorerchart_1.ExplorerChart, { key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ChartID" + series + '' + index });
-                });
-                return charts;
-            };
-            var seriesdatalist = explorer.state.seriesdata[constants_1.ChartSeries.DrillDown];
-            var drilldowncharts = getCharts(seriesdatalist, constants_1.ChartSeries.DrillDown);
+            var seriesdatalist;
+            var dashboardsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard"));
+            seriesdatalist = explorer.state.seriesdata[constants_1.ChartSeries.DrillDown];
+            var drilldowncharts = explorer.getCharts(seriesdatalist, constants_1.ChartSeries.DrillDown);
+            var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
             seriesdatalist = explorer.state.seriesdata[constants_1.ChartSeries.Compare];
-            var comparecharts = getCharts(seriesdatalist, constants_1.ChartSeries.Compare);
-            return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))))), React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Compare"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, comparecharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))))), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")), React.createElement(Card, null, React.createElement(CardTitle, null, "Context")));
+            var comparecharts = explorer.getCharts(seriesdatalist, constants_1.ChartSeries.Compare);
+            var comparesegment = React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Compare"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, comparecharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
+            var differencessegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences"));
+            var contextsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Context"));
+            return React.createElement("div", null, dashboardsegment, drilldownsegment, comparesegment, differencessegment, contextsegment);
         }
     }]);
 
