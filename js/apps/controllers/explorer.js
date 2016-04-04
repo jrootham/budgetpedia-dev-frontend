@@ -14,14 +14,19 @@ class ExplorerClass extends Component {
         this.setChartData = (parms) => {
             let options = {}, events = null, rows = [], columns = [], budgetdata = this.props.budgetdata, meta = budgetdata[0].Meta, self = this, range = parms.range;
             let { parent, children, depth } = this.getChartDatasets(parms, meta, budgetdata);
+            if ((depth + 1) >= meta.length) {
+                parms.isError = true;
+                return parms;
+            }
             options = {
                 title: parent[meta[depth].Name] + ' ($Thousands)',
-                hAxis: { title: meta[depth].Children },
-                vAxis: { title: 'Amount', minValue: 0 },
+                vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
+                hAxis: { title: meta[depth].Children, textStyle: { fontSize: 8 } },
                 bar: { groupWidth: "95%" },
-                width: children.length * 120,
-                height: 300,
+                height: 400,
+                width: 400,
                 legend: 'none',
+                annotations: { alwaysOutside: true }
             };
             events = [
                 {
@@ -50,6 +55,36 @@ class ExplorerClass extends Component {
             return parms;
         };
         this.updateCharts = data => {
+            console.log('updateCharts data = ', data);
+            let seriesdata = this.state.seriesdata;
+            let sourceparms = data.chartparms, selectlocation = sourceparms.chartlocation, series = selectlocation.series, sourcedepth = selectlocation.depth, selection = data.selection[0], selectionrow = selection.row;
+            let serieslist = seriesdata[series];
+            serieslist.splice(sourcedepth + 1);
+            this.forceUpdate();
+            console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist);
+            let oldchartparms = seriesdata[series][sourcedepth];
+            let newdataroot = oldchartparms.dataroot.map(node => {
+                return Object.assign({}, node);
+            });
+            newdataroot.push({ parent: selectionrow });
+            let newrange = Object.assign({}, oldchartparms.range);
+            let newchartparms = {
+                dataroot: newdataroot,
+                chartlocation: {
+                    series: constants_1.ChartSeries.DrillDown,
+                    depth: sourcedepth + 1
+                },
+                range: newrange,
+                data: { chartType: "ColumnChart" }
+            };
+            newchartparms = this.setChartData(newchartparms);
+            if (newchartparms.isError)
+                return;
+            console.log('newchartparms = ', newchartparms);
+            seriesdata[series][sourcedepth + 1] = newchartparms;
+            this.setState({
+                seriesdata: seriesdata,
+            });
         };
         this.getChartDatasets = (parms, meta, budgetdata) => {
             let parent, children, depth, path = parms.dataroot, range = parms.range;
@@ -124,9 +159,9 @@ class ExplorerClass extends Component {
                 eventdata.callback = callback;
                 return eventdata;
             });
-            return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ColumnChartID" + index});
+            return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ChartID" + index});
         });
-        return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, charts)))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")), React.createElement(Card, null, React.createElement(CardTitle, null, "Context")));
+        return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, charts, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")), React.createElement(Card, null, React.createElement(CardTitle, null, "Context")));
     }
 }
 function mapStateToProps(state) {

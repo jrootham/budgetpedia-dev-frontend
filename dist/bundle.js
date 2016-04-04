@@ -1988,7 +1988,7 @@ var ExplorerChart = function (_Component) {
     _createClass(ExplorerChart, [{
         key: 'render',
         value: function render() {
-            return React.createElement("div", { style: { display: "inline-block" } }, React.createElement(Chart, { chartType: this.props.chartType, options: this.props.options, chartEvents: this.props.chartEvents, rows: this.props.rows, columns: this.props.columns, graph_id: this.props.graph_id }));
+            return React.createElement("div", { style: { display: "inline-block", padding: "10px", backgroundColor: "Beige" } }, React.createElement(Chart, { chartType: this.props.chartType, options: this.props.options, chartEvents: this.props.chartEvents, rows: this.props.rows, columns: this.props.columns, graph_id: this.props.graph_id }));
         }
     }]);
 
@@ -2124,14 +2124,19 @@ var ExplorerClass = function (_Component) {
             var children = _this$getChartDataset.children;
             var depth = _this$getChartDataset.depth;
 
+            if (depth + 1 >= meta.length) {
+                parms.isError = true;
+                return parms;
+            }
             options = {
                 title: parent[meta[depth].Name] + ' ($Thousands)',
-                hAxis: { title: meta[depth].Children },
-                vAxis: { title: 'Amount', minValue: 0 },
+                vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
+                hAxis: { title: meta[depth].Children, textStyle: { fontSize: 8 } },
                 bar: { groupWidth: "95%" },
-                width: children.length * 120,
-                height: 300,
-                legend: 'none'
+                height: 400,
+                width: 400,
+                legend: 'none',
+                annotations: { alwaysOutside: true }
             };
             events = [{
                 eventName: 'select'
@@ -2153,7 +2158,42 @@ var ExplorerClass = function (_Component) {
             chartdata.events = events;
             return parms;
         };
-        _this.updateCharts = function (data) {};
+        _this.updateCharts = function (data) {
+            console.log('updateCharts data = ', data);
+            var seriesdata = _this.state.seriesdata;
+            var sourceparms = data.chartparms,
+                selectlocation = sourceparms.chartlocation,
+                series = selectlocation.series,
+                sourcedepth = selectlocation.depth,
+                selection = data.selection[0],
+                selectionrow = selection.row;
+            var serieslist = seriesdata[series];
+            serieslist.splice(sourcedepth + 1);
+            _this.forceUpdate();
+            console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist);
+            var oldchartparms = seriesdata[series][sourcedepth];
+            var newdataroot = oldchartparms.dataroot.map(function (node) {
+                return Object.assign({}, node);
+            });
+            newdataroot.push({ parent: selectionrow });
+            var newrange = Object.assign({}, oldchartparms.range);
+            var newchartparms = {
+                dataroot: newdataroot,
+                chartlocation: {
+                    series: constants_1.ChartSeries.DrillDown,
+                    depth: sourcedepth + 1
+                },
+                range: newrange,
+                data: { chartType: "ColumnChart" }
+            };
+            newchartparms = _this.setChartData(newchartparms);
+            if (newchartparms.isError) return;
+            console.log('newchartparms = ', newchartparms);
+            seriesdata[series][sourcedepth + 1] = newchartparms;
+            _this.setState({
+                seriesdata: seriesdata
+            });
+        };
         _this.getChartDatasets = function (parms, meta, budgetdata) {
             var parent = undefined,
                 children = undefined,
@@ -2229,9 +2269,9 @@ var ExplorerClass = function (_Component) {
                     eventdata.callback = callback;
                     return eventdata;
                 });
-                return React.createElement(explorerchart_1.ExplorerChart, { key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ColumnChartID" + index });
+                return React.createElement(explorerchart_1.ExplorerChart, { key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ChartID" + index });
             });
-            return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, charts)))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")), React.createElement(Card, null, React.createElement(CardTitle, null, "Context")));
+            return React.createElement("div", null, React.createElement(Card, null, React.createElement(CardTitle, null, "Dashboard")), React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, charts, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))))), React.createElement(Card, null, React.createElement(CardTitle, null, "Compare")), React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences")), React.createElement(Card, null, React.createElement(CardTitle, null, "Context")));
         }
     }]);
 

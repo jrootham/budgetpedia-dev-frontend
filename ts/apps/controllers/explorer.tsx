@@ -35,7 +35,8 @@ interface chartParms {
         }[]
         rows?:any[],
         columns?:any[],
-    }
+    },
+    isError?:boolean
 }
 
 class ExplorerClass extends Component<any, any> {
@@ -47,6 +48,7 @@ class ExplorerClass extends Component<any, any> {
         };
     }
 
+    // returns false if fails
     setChartData = (parms:chartParms):chartParms => {
         let options = {},
             events = null,
@@ -59,14 +61,20 @@ class ExplorerClass extends Component<any, any> {
 
         // TODO: capture range, including years
         let {parent, children, depth} = this.getChartDatasets(parms, meta, budgetdata)
+        if ((depth +1) >= meta.length) {
+            parms.isError = true
+            return parms
+        }
         options = {
             title: parent[meta[depth].Name] + ' ($Thousands)',
-            hAxis: { title: meta[depth].Children },
-            vAxis: { title: 'Amount', minValue:0 },
+            vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
+            hAxis: { title: meta[depth].Children, textStyle:{fontSize:8} },
             bar: { groupWidth: "95%" },
-            width: children.length * 120,// 120 per column
-            height: 300,
+            // width: children.length * 120,// 120 per column
+            height: 400,
+            width: 400,
             legend:'none',
+            annotations: { alwaysOutside: true }
         }
         // TODO: watch for memory leaks when the chart is destroyed
         events = [
@@ -107,7 +115,53 @@ class ExplorerClass extends Component<any, any> {
     }
 
     updateCharts = data => {
-        // console.log('updateCharts data = ', data)
+        console.log('updateCharts data = ', data)
+
+        let seriesdata = this.state.seriesdata
+
+        let sourceparms = data.chartparms,
+            selectlocation = sourceparms.chartlocation,
+            series = selectlocation.series,
+            sourcedepth = selectlocation.depth,
+            selection = data.selection[0],
+            selectionrow = selection.row
+
+        let serieslist = seriesdata[series]
+        serieslist.splice(sourcedepth + 1) // remove subsequent charts
+        this.forceUpdate()
+
+        console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist)
+
+        let oldchartparms = seriesdata[series][sourcedepth]
+        let newdataroot = oldchartparms.dataroot.map(node => {
+            return Object.assign({},node)
+        })
+        newdataroot.push({parent:selectionrow})
+
+        let newrange = Object.assign({},oldchartparms.range)
+
+        let newchartparms: chartParms = {
+            dataroot: newdataroot,
+            chartlocation: {
+                series: ChartSeries.DrillDown,
+                depth: sourcedepth + 1
+            },
+            range: newrange,
+            data: { chartType: "ColumnChart" }
+        }
+
+
+        newchartparms = this.setChartData(newchartparms)
+
+        if (newchartparms.isError) return
+
+        console.log('newchartparms = ', newchartparms)
+
+        seriesdata[series][sourcedepth + 1] = newchartparms
+
+        this.setState({
+            seriesdata,
+        })
     }
 
     getChartDatasets = (parms, meta, budgetdata) => {
@@ -215,7 +269,7 @@ class ExplorerClass extends Component<any, any> {
                 rows = {data.rows}
                 columns = {data.columns}
                 // used to create html element id attribute
-                graph_id = {"ColumnChartID" + index}
+                graph_id = {"ChartID" + index}
                 />
         })
 
@@ -237,6 +291,8 @@ class ExplorerClass extends Component<any, any> {
                 <div style={{ overflow: "scroll" }}>
 
                     { charts }
+
+                    <div style={{display:"inline-block",width:"500px"}}></div>
 
                 </div>
                 </div>

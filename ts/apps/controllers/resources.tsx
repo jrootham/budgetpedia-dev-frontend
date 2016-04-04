@@ -1,4 +1,4 @@
-// tribes.tsx
+// resources.tsx
 // required by bundler
 import * as React from 'react'
 var { Component } = React
