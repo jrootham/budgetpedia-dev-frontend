@@ -3,10 +3,10 @@
 import * as React from 'react'
 var { Component } = React
 
-class About extends Component<any, any> {
+class Demos extends Component<any, any> {
     render() {
-        return <div>About Page</div>
+        return <div>Demos Page</div>
     }
 }
 
-export { About }
+export { Demos }

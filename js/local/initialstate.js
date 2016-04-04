@@ -232,8 +232,18 @@ let hometiles = [
             subtitle: `Write for us`,
             image: '../../public/icons/ic_keyboard_48px.svg',
         },
-        index: 7,
+        index: 8,
         route: 'stories',
+    },
+    {
+        id: 13,
+        content: {
+            title: `Get a demo`,
+            subtitle: `Resources & training`,
+            image: '../../public/icons/ic_record_voice_over_48px.svg',
+        },
+        index: 9,
+        route: 'demos',
     },
 ];
 exports.initialstate = {
