@@ -408,6 +408,14 @@ class ExplorerClass extends Component<any, any> {
 
         </Card>
 
+        // ===========[ CONTEXT ]=============
+
+        let staffingsegment = <Card>
+
+            <CardTitle>Staffing</CardTitle>
+
+        </Card>
+
         return <div>
 
             { dashboardsegment }
@@ -417,6 +425,8 @@ class ExplorerClass extends Component<any, any> {
             { comparesegment }
 
             { differencessegment }
+
+            { staffingsegment }
 
             { contextsegment }
 

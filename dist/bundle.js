@@ -2333,7 +2333,8 @@ var ExplorerClass = function (_Component) {
             var comparesegment = React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Compare"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, comparecharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
             var differencessegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences"));
             var contextsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Context"));
-            return React.createElement("div", null, dashboardsegment, drilldownsegment, comparesegment, differencessegment, contextsegment);
+            var staffingsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Staffing"));
+            return React.createElement("div", null, dashboardsegment, drilldownsegment, comparesegment, differencessegment, staffingsegment, contextsegment);
         }
     }]);
 
