@@ -12,6 +12,9 @@ const constants_2 = require('../constants');
 class ExplorerClass extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            seriesdata: [[], [], [], []],
+        };
         this.componentDidMount = () => {
             this.props.budgetdata.sort((a, b) => {
                 if (a.year > b.year)
@@ -167,9 +170,6 @@ class ExplorerClass extends Component {
                 return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ChartID" + series + '' + index});
             });
             return charts;
-        };
-        this.state = {
-            seriesdata: [[], [], [], []],
         };
     }
     render() {

@@ -5,7 +5,7 @@
 /// <reference path="../typings-custom/material-ui.extended.d.ts" />
 /// <reference path="../typings-custom/material-ui.modified.d.ts" />
 /// <reference path="../typings-custom/redux-thunk.modified.d.ts" />
-/// <reference path="../typings-custom/format-number.d.ts" />
+// <reference path="../typings-custom/format-number.d.ts" />
 
 import * as React from 'react'
 import { render } from 'react-dom'

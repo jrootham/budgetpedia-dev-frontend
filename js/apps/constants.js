@@ -8,5 +8,6 @@
 var ChartSeries = exports.ChartSeries;
 exports.categoryaliases = {
     'Types': 'Activity Types',
-    'Groups': 'Division Groupings'
+    'Groups': 'Division Groupings',
+    'Expenditures': 'Expenditure Categories'
 };

@@ -5,6 +5,7 @@
 'use strict'
 import * as React from 'react'
 var { Component } = React
+// doesn't require .d.ts...! (reference available in index.tsx)
 var format = require('format-number')
 import { connect as injectStore} from 'react-redux'
 import Card = require('material-ui/lib/card/card')
@@ -45,11 +46,15 @@ class ExplorerClass extends Component<any, any> {
 
     constructor(props) {
         super(props);
-        this.state = {
-            seriesdata: [[],[],[],[]], // DrillDown, Compare, Differences, Context
-        };
+        // this.state = {
+        //     seriesdata: [[],[],[],[]], // DrillDown, Compare, Differences, Context
+        // }
     }
 
+    state = {
+        seriesdata: [[], [], [], []], // DrillDown, Compare, Differences, Context
+    }
+    
     // initialize once - create seed drilldown and compare series
     componentDidMount = () => {
         // sort budget years

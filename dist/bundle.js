@@ -2009,7 +2009,8 @@ exports.ExplorerChart = ExplorerChart;
 var ChartSeries = exports.ChartSeries;
 exports.categoryaliases = {
     'Types': 'Activity Types',
-    'Groups': 'Division Groupings'
+    'Groups': 'Division Groupings',
+    'Expenditures': 'Expenditure Categories'
 };
 
 },{}],5:[function(require,module,exports){
@@ -2148,6 +2149,9 @@ var ExplorerClass = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ExplorerClass).call(this, props));
 
+        _this.state = {
+            seriesdata: [[], [], [], []]
+        };
         _this.componentDidMount = function () {
             _this.props.budgetdata.sort(function (a, b) {
                 if (a.year > b.year) return 1;else if (a.year < b.year) return -1;else return 0;
@@ -2312,9 +2316,6 @@ var ExplorerClass = function (_Component) {
                 return React.createElement(explorerchart_1.ExplorerChart, { key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ChartID" + series + '' + index });
             });
             return charts;
-        };
-        _this.state = {
-            seriesdata: [[], [], [], []]
         };
         return _this;
     }
