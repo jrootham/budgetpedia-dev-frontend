@@ -24,25 +24,25 @@ interface chartParms {
     },
     dataroot: { parent: number }[],
     range: {
-        latestyear:number,
-        earliestyear:number,
-        fullrange:boolean,
+        latestyear: number,
+        earliestyear: number,
+        fullrange: boolean,
     },
     data?:{
-        chartType:string,
+        chartType: string,
         options?:{
-            [index:string]:any,
+            [ index: string ]: any,
         },
         events?:{
-            [index:string]:any,
+            [ index: string ]: any,
         }[]
-        rows?:any[],
-        columns?:any[],
+        rows?: any[],
+        columns?: any[],
     },
-    isError?:boolean
+    isError?: boolean
 }
 
-class ExplorerClass extends Component<any, any> {
+class ExplorerClass extends Component< any, any > {
 
     constructor(props) {
         super(props);
@@ -59,9 +59,9 @@ class ExplorerClass extends Component<any, any> {
     componentDidMount = () => {
         // sort budget years
         this.props.budgetdata.sort((a, b) => {
-            if (a.year > b.year)
+            if (a.Year > b.Year)
                 return 1
-            else if (a.year < b.year)
+            else if (a.Year < b.Year)
                 return -1
             else
                 return 0
@@ -85,22 +85,22 @@ class ExplorerClass extends Component<any, any> {
         // =================[ DRILLDOWN SEED ]=================
 
         // assemble parms to get initial dataset
-        let drilldownparms: chartParms = this.getSeedChartParms(ChartSeries.DrillDown, latestyear)
+        let drilldownparms: chartParms = this.getSeedChartParms( ChartSeries.DrillDown, latestyear )
 
-        drilldownparms = this.setChartData(drilldownparms)
+        drilldownparms = this.setChartData( drilldownparms )
 
         chartlocation = drilldownparms.chartlocation
-        seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms
+        seriesdata[ chartlocation.series ][ chartlocation.depth ] = drilldownparms
 
         // =================[ COMPARE SEED ]=================
 
         // assemble parms to get initial dataset
-        let compareparms: chartParms = this.getSeedChartParms(ChartSeries.Compare, latestyear)
+        let compareparms: chartParms = this.getSeedChartParms( ChartSeries.Compare, latestyear )
 
-        compareparms = this.setChartData(compareparms)
+        compareparms = this.setChartData( compareparms )
 
         chartlocation = compareparms.chartlocation
-        seriesdata[chartlocation.series][chartlocation.depth] = compareparms
+        seriesdata[ chartlocation.series ][ chartlocation.depth ] = compareparms
 
         // ================[ SAVE INITIALIZATION ]==================
 
@@ -111,7 +111,7 @@ class ExplorerClass extends Component<any, any> {
 
     }
 
-    getSeedChartParms = (series, latestyear): chartParms => {
+    getSeedChartParms = ( series, latestyear ): chartParms => {
         return {
             dataroot: [{ parent: 0 }],
             chartlocation: {
@@ -144,7 +144,7 @@ class ExplorerClass extends Component<any, any> {
 
         let serieslist = seriesdata[series]
         // TODO: abandon here if the next one exists and is the same
-        serieslist.splice(sourcedepth + 1) // remove subsequent charts
+        serieslist.splice( sourcedepth + 1 ) // remove subsequent charts
 
         // trigger update to avoid google charts use of cached versions for new charts
         // cached versions keep obsolete chart titles, even if new title fed in through new options
@@ -156,13 +156,13 @@ class ExplorerClass extends Component<any, any> {
 
         // console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist)
 
-        let oldchartparms = seriesdata[series][sourcedepth]
-        let newdataroot = oldchartparms.dataroot.map(node => {
-            return Object.assign({}, node)
+        let oldchartparms = seriesdata[ series ][ sourcedepth ]
+        let newdataroot = oldchartparms.dataroot.map( node => {
+            return Object.assign( {}, node )
         })
-        newdataroot.push({ parent: selectionrow })
+        newdataroot.push( { parent: selectionrow } )
 
-        let newrange = Object.assign({}, oldchartparms.range)
+        let newrange = Object.assign( {}, oldchartparms.range )
 
         let newchartparms: chartParms = {
             dataroot: newdataroot,
@@ -174,13 +174,13 @@ class ExplorerClass extends Component<any, any> {
             data: { chartType: "ColumnChart" }
         }
 
-        newchartparms = this.setChartData(newchartparms)
+        newchartparms = this.setChartData( newchartparms )
 
         if (newchartparms.isError) return
 
-        console.log('newchartparms = ', newchartparms)
+        console.log( 'newchartparms = ', newchartparms )
 
-        seriesdata[series][sourcedepth + 1] = newchartparms
+        seriesdata[ series ][ sourcedepth + 1 ] = newchartparms
 
         this.setState({
             seriesdata,
@@ -289,7 +289,7 @@ class ExplorerClass extends Component<any, any> {
             // separate callback for each instance
             let callback = ((chartparms: chartParms) => {
                 let self = this
-                return function(Chart, err) {
+                return (Chart, err) => {
                     let chart = Chart.chart
                     let selection = chart.getSelection()
                     self.updateChartsSelection({ chartparms, chart, selection, err })
@@ -408,7 +408,7 @@ class ExplorerClass extends Component<any, any> {
 
         </Card>
 
-        // ===========[ CONTEXT ]=============
+        // ===========[ STAFFING ]=============
 
         let staffingsegment = <Card>
 
@@ -435,7 +435,7 @@ class ExplorerClass extends Component<any, any> {
 
 }
 
-function mapStateToProps(state) {
+let mapStateToProps = (state) => {
 
     let { budgetdata } = state
 
@@ -447,7 +447,7 @@ function mapStateToProps(state) {
 
 }
 
-var Explorer: typeof ExplorerClass = injectStore(mapStateToProps)(ExplorerClass)
+let Explorer: typeof ExplorerClass = injectStore(mapStateToProps)(ExplorerClass)
 
 export { Explorer }
 

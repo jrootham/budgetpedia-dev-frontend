@@ -238,13 +238,23 @@ let hometiles: [Object] = [
         route: 'explorer',
     },
     {
+        id: 14,
+        content: {
+            title: `Activist Pathways`,
+            subtitle: `How to Make Change`,
+            image: '../../public/icons/ic_directions_walk_48px.svg',
+        },
+        index: 4,
+        route: 'pathways',
+    },
+    {
         id: 2,
         content: {
             title: `Communities`,
             subtitle: `Find birds of a feather`,
             image: '../../public/icons/ic_local_library_48px.svg',
         },
-        index: 4,
+        index: 5,
         route: 'resources',
     },
     {
@@ -254,7 +264,7 @@ let hometiles: [Object] = [
             subtitle: `Public forums`,
             image: '../../public/icons/ic_thumb_up_48px.svg',
         },
-        index: 5,
+        index: 6,
         route: 'socialmedia',
     },
     {
@@ -264,7 +274,7 @@ let hometiles: [Object] = [
             subtitle: `News and notices`,
             image: '../../public/icons/ic_markunread_mailbox_48px.svg',
         },
-        index: 6,
+        index: 7,
         route: 'newsletter',
     },
     {
@@ -274,7 +284,7 @@ let hometiles: [Object] = [
             subtitle: `Join our team`,
             image: '../../public/icons/ic_group_48px.svg',
         },
-        index: 7,
+        index: 8,
         route: 'joinus',
     },
     {
@@ -284,7 +294,7 @@ let hometiles: [Object] = [
             subtitle: `Write for us`,
             image: '../../public/icons/ic_keyboard_48px.svg',
         },
-        index: 8,
+        index: 9,
         route: 'stories',
     },
     {
@@ -294,7 +304,7 @@ let hometiles: [Object] = [
             subtitle: `Resources & training`,
             image: '../../public/icons/ic_record_voice_over_48px.svg',
         },
-        index: 9,
+        index: 10,
         route: 'demos',
     },
 ]

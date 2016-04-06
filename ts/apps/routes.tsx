@@ -28,6 +28,7 @@ import { JoinUs } from './controllers/joinus'
 import { Stories } from './controllers/stories'
 import { Explorer } from './controllers/explorer'
 import { Demos } from './controllers/demos'
+import { Pathways } from './controllers/pathways'
 
 class App extends Component<any, any> {
     render() {
@@ -64,6 +65,7 @@ export var routes =
             <Route path="joinus" component={ JoinUs } />
             <Route path="stories" component={ Stories } />
             <Route path="demos" component={ Demos } />
+            <Route path="pathways" component={ Pathways } />
             <Route path="resetpassword" component={ ResetPassword } />
             <Route path="register" component={ Register } />
             <Route path="register/pending" component={ RegisterPending } />

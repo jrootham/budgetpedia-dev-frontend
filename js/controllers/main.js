@@ -15,7 +15,7 @@ const reduxRouterMiddleware = react_router_redux_1.routerMiddleware(react_router
 const store = redux_1.createStore(reducers_1.mainReducer, redux_1.applyMiddleware(reduxRouterMiddleware, redux_thunk_1.default));
 class Main extends Component {
     render() {
-        return (React.createElement(react_redux_1.Provider, {store: store}, React.createElement("div", null, React.createElement(mainbar_1.MainBar, null), React.createElement("div", {style: { height: "64px" }}, " "), React.createElement("div", null, "THIS IS THE DEVELOPER'S VERSION OF THIS SITE, AND MAY CHANGE OR BREAK" + ' ' + "AT ANY TIME. ALSO, IT LIKELY USES FAKE DATA."), routes_1.routes)));
+        return (React.createElement(react_redux_1.Provider, {store: store}, React.createElement("div", null, React.createElement(mainbar_1.MainBar, null), React.createElement("div", {style: { height: "64px" }}, " "), React.createElement("div", null, "THIS IS THE DEVELOPER'S VERSION OF THIS SITE (FOR PROTOTYPING)," + ' ' + "AND MAY CHANGE OR BREAK AT ANY TIME. ALSO, IT LIKELY USES FAKE DATA."), routes_1.routes)));
     }
 }
 exports.Main = Main;

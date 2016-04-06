@@ -17,9 +17,9 @@ class ExplorerClass extends Component {
         };
         this.componentDidMount = () => {
             this.props.budgetdata.sort((a, b) => {
-                if (a.year > b.year)
+                if (a.Year > b.Year)
                     return 1;
-                else if (a.year < b.year)
+                else if (a.Year < b.Year)
                     return -1;
                 else
                     return 0;
@@ -157,7 +157,7 @@ class ExplorerClass extends Component {
                 let data = seriesdata.data;
                 let callback = ((chartparms) => {
                     let self = this;
-                    return function (Chart, err) {
+                    return (Chart, err) => {
                         let chart = Chart.chart;
                         let selection = chart.getSelection();
                         self.updateChartsSelection({ chartparms: chartparms, chart: chart, selection: selection, err: err });
@@ -187,11 +187,11 @@ class ExplorerClass extends Component {
         return React.createElement("div", null, dashboardsegment, drilldownsegment, comparesegment, differencessegment, staffingsegment, contextsegment);
     }
 }
-function mapStateToProps(state) {
+let mapStateToProps = (state) => {
     let { budgetdata } = state;
     return {
         budgetdata: budgetdata,
     };
-}
-var Explorer = react_redux_1.connect(mapStateToProps)(ExplorerClass);
+};
+let Explorer = react_redux_1.connect(mapStateToProps)(ExplorerClass);
 exports.Explorer = Explorer;
