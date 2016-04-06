@@ -348,7 +348,13 @@ class ExplorerClass extends Component< any, any > {
 
             <CardText expandable >
 
-                <p>Click or tap on any column to drill down</p>
+                <p>Click or tap on any column to drill down. 
+                    <span style={{fontStyle:'italic'}}>
+                    pending: Charts by Activity Composition or Expenditure Categories; 
+                    Activity Composition by Budget or Staffing; 
+                    Staffing by Positions or Budget
+                    </span>
+                 </p>
                 <div style={{ whiteSpace: "nowrap" }}>
                     <div style={{ overflow: "scroll" }}>
 
