@@ -3655,7 +3655,7 @@ var hometiles = [{
     id: 14,
     content: {
         title: 'Activist Pathways',
-        subtitle: 'How to Make Change',
+        subtitle: 'How to make change',
         image: '../../public/icons/ic_directions_walk_48px.svg'
     },
     index: 4,
