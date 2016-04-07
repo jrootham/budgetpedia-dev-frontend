@@ -372,7 +372,7 @@ module.exports=[
                         ]
                     },
                     {
-                        "Group": "City Places",
+                        "Group": "Public Destinations",
                         "Amount": 113237829,
                         "Divisions": [
                             {

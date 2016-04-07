@@ -85,7 +85,7 @@
   {
     "Division":"Exhibition Place",
     "Amount":36565904,
-    "Group":"City Places"
+    "Group":"Public Destinations"
 
   },
   {
@@ -223,7 +223,7 @@
   {
     "Division":"Theatres",
     "Amount":23164341,
-    "Group":"City Places"
+    "Group":"Public Destinations"
 
   },
   {
@@ -307,7 +307,7 @@
   {
     "Division":"Toronto Zoo",
     "Amount":51173068,
-    "Group":"City Places"
+    "Group":"Public Destinations"
 
   },
   {
@@ -319,7 +319,7 @@
   {
     "Division":"Yonge-Dundas Square",
     "Amount":2334516,
-    "Group":"City Places"
+    "Group":"Public Destinations"
 
   }
 ]
