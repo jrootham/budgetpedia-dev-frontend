@@ -183,8 +183,7 @@ class ExplorerClass extends Component {
         let comparesegment = React.createElement(Card, {initiallyExpanded: false}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Compare"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, comparecharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
         let differencessegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences"));
         let contextsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Context"));
-        let staffingsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Staffing"));
-        return React.createElement("div", null, dashboardsegment, drilldownsegment, comparesegment, differencessegment, staffingsegment, contextsegment);
+        return React.createElement("div", null, dashboardsegment, drilldownsegment, comparesegment, differencessegment, contextsegment);
     }
 }
 let mapStateToProps = (state) => {

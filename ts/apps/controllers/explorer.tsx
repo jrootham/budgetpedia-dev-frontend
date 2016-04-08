@@ -46,11 +46,9 @@ class ExplorerClass extends Component< any, any > {
 
     constructor(props) {
         super(props);
-        // this.state = {
-        //     seriesdata: [[],[],[],[]], // DrillDown, Compare, Differences, Context
-        // }
     }
 
+    // should be in global state to allow for re-creation after return visit
     state = {
         seriesdata: [[], [], [], []], // DrillDown, Compare, Differences, Context
     }
@@ -82,7 +80,8 @@ class ExplorerClass extends Component< any, any > {
 
         var chartlocation
 
-        // =================[ DRILLDOWN SEED ]=================
+        // ====================================================
+        // -----------------[ DRILLDOWN SEED ]-----------------
 
         // assemble parms to get initial dataset
         let drilldownparms: chartParms = this.getSeedChartParms( ChartSeries.DrillDown, latestyear )
@@ -92,7 +91,8 @@ class ExplorerClass extends Component< any, any > {
         chartlocation = drilldownparms.chartlocation
         seriesdata[ chartlocation.series ][ chartlocation.depth ] = drilldownparms
 
-        // =================[ COMPARE SEED ]=================
+        // ====================================================
+        // -----------------[ COMPARE SEED ]-------------------
 
         // assemble parms to get initial dataset
         let compareparms: chartParms = this.getSeedChartParms( ChartSeries.Compare, latestyear )
@@ -102,7 +102,8 @@ class ExplorerClass extends Component< any, any > {
         chartlocation = compareparms.chartlocation
         seriesdata[ chartlocation.series ][ chartlocation.depth ] = compareparms
 
-        // ================[ SAVE INITIALIZATION ]==================
+        // ====================================================
+        // -------------[ SAVE INITIALIZATION ]----------------
 
         // make initial dataset available to chart
         this.setState({
@@ -322,7 +323,8 @@ class ExplorerClass extends Component< any, any > {
 
         let explorer = this
 
-        // ===========[ DASHBOARD ]=============
+        // ============================================
+        // -----------[ DASHBOARD SEGMENT]-------------
 
         let dashboardsegment = <Card>
 
@@ -330,7 +332,8 @@ class ExplorerClass extends Component< any, any > {
 
         </Card>
 
-        // ===========[ DRILLDOWN ]=============
+        // ============================================
+        // -----------[ DRILLDOWN SEGMENT]-------------
 
         let drilldownlist = explorer.state.seriesdata[ChartSeries.DrillDown]
 
@@ -367,7 +370,8 @@ class ExplorerClass extends Component< any, any > {
             </CardText>
         </Card >
 
-        // ===========[ COMPARE ]=============
+        // =============================================
+        // --------------[ COMPARE SEGMENT]-------------
 
         let comparelist = explorer.state.seriesdata[ChartSeries.Compare]
 
@@ -398,7 +402,8 @@ class ExplorerClass extends Component< any, any > {
             </CardText>
         </Card>
 
-        // ===========[ DIFFERENCES ]=============
+        // ===============================================
+        // -----------[ DIFFERENCES SEGMENT ]-------------
 
         let differencessegment = <Card>
 
@@ -406,19 +411,12 @@ class ExplorerClass extends Component< any, any > {
 
         </Card>
 
-        // ===========[ CONTEXT ]=============
+        // ===========================================
+        // -----------[ CONTEXT SEGMENT ]-------------
 
         let contextsegment = <Card>
 
             <CardTitle>Context</CardTitle>
-
-        </Card>
-
-        // ===========[ STAFFING ]=============
-
-        let staffingsegment = <Card>
-
-            <CardTitle>Staffing</CardTitle>
 
         </Card>
 
@@ -431,8 +429,6 @@ class ExplorerClass extends Component< any, any > {
             { comparesegment }
 
             { differencessegment }
-
-            { staffingsegment }
 
             { contextsegment }
 

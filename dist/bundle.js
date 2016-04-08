@@ -2333,8 +2333,7 @@ var ExplorerClass = function (_Component) {
             var comparesegment = React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Compare"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, comparecharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
             var differencessegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences"));
             var contextsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Context"));
-            var staffingsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Staffing"));
-            return React.createElement("div", null, dashboardsegment, drilldownsegment, comparesegment, differencessegment, staffingsegment, contextsegment);
+            return React.createElement("div", null, dashboardsegment, drilldownsegment, comparesegment, differencessegment, contextsegment);
         }
     }]);
 
@@ -3132,14 +3131,14 @@ var MainBarClass = function (_React$Component) {
             }];
             var loginform = React.createElement(basicform_1.BasicForm, { submit: appbar.submitLogin, elements: elements, submitButtonLabel: 'Sign in', errorMessage: appbar.props.auth.errorMessage });
             var registerprompt = React.createElement("div", null, React.createElement(CardText, null, React.createElement("a", { href: "javascript:void(0);", onTouchTap: appbar.transitionToResetPassword }, "Forgot your password?")), React.createElement(Divider, null), React.createElement(CardText, null, "Not a member? Register:"), React.createElement(CardActions, null, React.createElement(RaisedButton, { type: "button", label: "Register", onTouchTap: appbar.transitionToRegister })));
-            var loginsidebar = React.createElement(LeftNav, { width: 300, docked: false, openRight: true, onRequestChange: function onRequestChange(open) {
+            var loginsidebar = React.createElement(LeftNav, { width: 300, disableSwipeToOpen: true, docked: false, openRight: true, onRequestChange: function onRequestChange(open) {
                     return appbar.setState({ accountsidebaropen: open });
                 }, open: appbar.state.accountsidebaropen }, React.createElement(Card, { style: { margin: "5px" } }, closeicon, React.createElement(CardTitle, { title: "Account Sign In", style: { paddingBottom: 0 } }), loginform, registerprompt));
             var transitionToFunc = redux_1.compose(menutransition, this.props.dispatch, Actions.transitionTo);
             var menuitems = hometiles.map(function (menutile) {
                 return React.createElement(menutile_1.MenuTile, { transitionTo: transitionToFunc, key: menutile.id, primaryText: menutile.content.title, image: menutile.content.image, route: menutile.route });
             });
-            var menusidebar = React.createElement(LeftNav, { width: 300, docked: false, openRight: false, onRequestChange: function onRequestChange(open) {
+            var menusidebar = React.createElement(LeftNav, { width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: function onRequestChange(open) {
                     return appbar.setState({ menusidebaropen: open });
                 }, open: this.state.menusidebaropen }, React.createElement(menutile_1.MenuTile, { transitionTo: transitionToFunc, key: 'home', primaryText: "Budget Commons", image: '../../public/icons/ic_home_24px.svg', route: '/' }), React.createElement(Divider, null), menuitems);
             var menuicon = React.createElement(IconButton, { onTouchTap: function onTouchTap() {

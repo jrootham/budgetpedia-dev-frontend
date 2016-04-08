@@ -207,6 +207,7 @@ class MainBarClass extends React.Component<any, any> {
         let loginsidebar = 
             <LeftNav
                 width = { 300} 
+                disableSwipeToOpen
                 docked = { false}
                 openRight = { true } 
                 onRequestChange = { open => appbar.setState({ accountsidebaropen: open, }) }
@@ -242,6 +243,7 @@ class MainBarClass extends React.Component<any, any> {
                 width={300}
                 docked={false}
                 openRight={false}
+                disableSwipeToOpen
                 onRequestChange={open => appbar.setState({ menusidebaropen: open, }) }
                 open={this.state.menusidebaropen} >
 
