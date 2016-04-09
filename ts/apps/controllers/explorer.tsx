@@ -11,6 +11,8 @@ import { connect as injectStore} from 'react-redux'
 import Card = require('material-ui/lib/card/card')
 import CardTitle = require('material-ui/lib/card/card-title')
 import CardText = require('material-ui/lib/card/card-text')
+import RadioButton = require('material-ui/lib/radio-button')
+import RadioButtonGroup = require('material-ui/lib/radio-button-group')
 
 import { ExplorerChart } from '../components/explorerchart'
 import { ChartSeries } from '../constants'
@@ -51,6 +53,7 @@ class ExplorerClass extends Component< any, any > {
     // should be in global state to allow for re-creation after return visit
     state = {
         seriesdata: [[], [], [], []], // DrillDown, Compare, Differences, Context
+        dataselection:"expenses"
     }
     
     // initialize once - create seed drilldown and compare series
@@ -351,14 +354,73 @@ class ExplorerClass extends Component< any, any > {
 
             <CardText expandable >
 
-                <p>Click or tap on any column to drill down. 
-                    <span style={{fontStyle:'italic'}}>
-                    pending: Charts by Activity Composition or Expenditure Categories; 
-                    Activity Composition by Budget or Staffing; 
-                    Staffing by Positions or Budget
-                    </span>
-                 </p>
-                <div style={{ whiteSpace: "nowrap" }}>
+                <p>
+                    Click or tap on any column to drill down. 
+                </p>
+                <RadioButtonGroup
+                    style={{display:'inline-block'}}
+                    name="dataselection" 
+                    defaultSelected={explorer.state.dataselection}
+                    onChange={(ev, selection) => {
+                        explorer.setState({
+                            dataselection: selection,
+                        })
+                    } }>
+                    <RadioButton 
+                        value="expenses" 
+                        label="Expenses" 
+                        iconStyle={{marginRight:"4px"}}
+                        labelStyle={{width:"auto",marginRight:"24px"}}
+                        style={{ display: 'inline-block', width:'auto' }} />
+                    <RadioButton 
+                        value="revenues" 
+                        label="Revenues" 
+                        iconStyle={{ marginRight: "4px" }}
+                        labelStyle={{ width: "auto", marginRight: "24px" }}
+                        style={{ display: 'inline-block', width: 'auto' }} />
+                    <RadioButton 
+                        value="staffing" 
+                        label="Staffing" 
+                        iconStyle={{ marginRight: "4px" }}
+                        labelStyle={{ width: "auto", marginRight: "24px" }}
+                        style={{ display: 'inline-block', width: 'auto' }} />
+                </RadioButtonGroup>
+                <RadioButtonGroup
+                    style={{ display: (explorer.state.dataselection != "staffing") ? 'inline-block' : 'none', backgroundColor: "#eee" }}
+                    name="activities"
+                    defaultSelected="activities">
+                    <RadioButton 
+                        value="activities" 
+                        label = "Activities" 
+                        iconStyle={{ marginRight: "4px" }}
+                        labelStyle={{ width: "auto", marginRight: "24px" }}
+                        style={{ display: 'inline-block', width: 'auto' }} />
+                    <RadioButton 
+                        value="categories" 
+                        label = "Categories" 
+                        iconStyle={{ marginRight: "4px" }}
+                        labelStyle={{ width: "auto", marginRight: "24px" }}
+                        style={{ display: 'inline-block', width: 'auto' }} />
+                </RadioButtonGroup>
+                <RadioButtonGroup
+                    style={{ display: (explorer.state.dataselection=="staffing")?'inline-block':'none', backgroundColor: "#eee" }}
+                    name="staffing"
+                    defaultSelected="positions"
+                    >
+                    <RadioButton 
+                        value="positions" 
+                        label = "Positions" 
+                        iconStyle={{ marginRight: "4px" }}
+                        labelStyle={{ width: "auto", marginRight: "24px" }}
+                        style={{ display: 'inline-block', width: 'auto' }} />
+                    <RadioButton 
+                        value="budget" 
+                        label = "Budget" 
+                        iconStyle={{ marginRight: "4px" }}
+                        labelStyle={{ width: "auto", marginRight: "24px" }}
+                        style={{ display: 'inline-block', width: 'auto' }} />
+                    </RadioButtonGroup>
+                    <div style={{ whiteSpace: "nowrap" }}>
                     <div style={{ overflow: "scroll" }}>
 
                         { drilldowncharts }

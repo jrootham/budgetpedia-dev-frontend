@@ -5,10 +5,14 @@ import * as React from 'react'
 var { Component } = React
 import ChartObject = require('react-google-charts')
 let Chart = ChartObject['Chart']
+import FontIcon = require('material-ui/lib/font-icon')
 
 class ExplorerChart extends Component<any, any> {
     render() {
-        return <div style={{ display: "inline-block", padding:"10px",backgroundColor: "Beige" }}>
+        return <div style={{ position:"relative", display: "inline-block", padding:"10px",backgroundColor: "Beige" }}>
+            <div style={{ position: "absolute", top:0,left:0,zIndex:1000, padding:"3px"}}>
+            <FontIcon className="material-icons">insert_chart</FontIcon><FontIcon className="material-icons">pie_chart</FontIcon>
+            </div>
             <Chart
                 chartType = {this.props.chartType}
                 options = { this.props.options }
