@@ -11,7 +11,11 @@ class ExplorerChart extends Component<any, any> {
     render() {
         return <div style={{ position:"relative", display: "inline-block", padding:"10px",backgroundColor: "Beige" }}>
             <div style={{ position: "absolute", top:0,left:0,zIndex:1000, padding:"3px"}}>
-            <FontIcon className="material-icons">insert_chart</FontIcon><FontIcon className="material-icons">pie_chart</FontIcon>
+                <FontIcon className="material-icons">insert_chart</FontIcon>
+                <FontIcon className="material-icons">pie_chart</FontIcon>
+            </div>
+            <div style={{ position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" }}>
+                <FontIcon className="material-icons">info_outline</FontIcon>
             </div>
             <Chart
                 chartType = {this.props.chartType}
