@@ -45,19 +45,19 @@ class ExplorerClass extends Component {
             }
             let seriesdata = this.state.seriesdata;
             var chartlocation;
-            let drilldownparms = this.getSeedChartParms(constants_1.ChartSeries.DrillDown, latestyear);
-            drilldownparms = this.setChartData(drilldownparms);
+            let drilldownparms = this.initSeedChartParms(constants_1.ChartSeries.DrillDown, latestyear);
+            drilldownparms = this.addChartData(drilldownparms);
             chartlocation = drilldownparms.chartlocation;
             seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms;
-            let compareparms = this.getSeedChartParms(constants_1.ChartSeries.Compare, latestyear);
-            compareparms = this.setChartData(compareparms);
+            let compareparms = this.initSeedChartParms(constants_1.ChartSeries.Compare, latestyear);
+            compareparms = this.addChartData(compareparms);
             chartlocation = compareparms.chartlocation;
             seriesdata[chartlocation.series][chartlocation.depth] = compareparms;
             this.setState({
                 seriesdata: seriesdata,
             });
         };
-        this.getSeedChartParms = (series, latestyear) => {
+        this.initSeedChartParms = (series, latestyear) => {
             return {
                 dataroot: [{ parent: 0 }],
                 chartlocation: {
@@ -80,14 +80,14 @@ class ExplorerClass extends Component {
             this.setState({
                 seriesdata: seriesdata,
             });
-            let oldchartparms = seriesdata[series][sourcedepth];
-            let newdataroot = oldchartparms.dataroot.map(node => {
+            let parentchartparms = seriesdata[series][sourcedepth];
+            let childdataroot = parentchartparms.dataroot.map(node => {
                 return Object.assign({}, node);
             });
-            newdataroot.push({ parent: selectionrow });
-            let newrange = Object.assign({}, oldchartparms.range);
+            childdataroot.push({ parent: selectionrow });
+            let newrange = Object.assign({}, parentchartparms.range);
             let newchartparms = {
-                dataroot: newdataroot,
+                dataroot: childdataroot,
                 chartlocation: {
                     series: series,
                     depth: sourcedepth + 1
@@ -95,7 +95,7 @@ class ExplorerClass extends Component {
                 range: newrange,
                 data: { chartType: "ColumnChart" }
             };
-            newchartparms = this.setChartData(newchartparms);
+            newchartparms = this.addChartData(newchartparms);
             if (newchartparms.isError)
                 return;
             console.log('newchartparms = ', newchartparms);
@@ -104,7 +104,7 @@ class ExplorerClass extends Component {
                 seriesdata: seriesdata,
             });
         };
-        this.setChartData = (parms) => {
+        this.addChartData = (parms) => {
             let options = {}, events = null, rows = [], columns = [], budgetdata = this.props.budgetdata, meta = budgetdata[0].Meta, self = this, range = parms.range;
             let { parent, children, depth } = this.getChartDatasets(parms, meta, budgetdata);
             if ((depth + 1) >= meta.length) {

@@ -96,9 +96,9 @@ class ExplorerClass extends Component< any, any > {
         // -----------------[ DRILLDOWN SEED ]-----------------
 
         // assemble parms to get initial dataset
-        let drilldownparms: chartParms = this.getSeedChartParms( ChartSeries.DrillDown, latestyear )
+        let drilldownparms: chartParms = this.initSeedChartParms( ChartSeries.DrillDown, latestyear )
 
-        drilldownparms = this.setChartData( drilldownparms )
+        drilldownparms = this.addChartData( drilldownparms )
 
         chartlocation = drilldownparms.chartlocation
         seriesdata[ chartlocation.series ][ chartlocation.depth ] = drilldownparms
@@ -107,9 +107,9 @@ class ExplorerClass extends Component< any, any > {
         // -----------------[ COMPARE SEED ]-------------------
 
         // assemble parms to get initial dataset
-        let compareparms: chartParms = this.getSeedChartParms( ChartSeries.Compare, latestyear )
+        let compareparms: chartParms = this.initSeedChartParms( ChartSeries.Compare, latestyear )
 
-        compareparms = this.setChartData( compareparms )
+        compareparms = this.addChartData( compareparms )
 
         chartlocation = compareparms.chartlocation
         seriesdata[ chartlocation.series ][ chartlocation.depth ] = compareparms
@@ -124,7 +124,7 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
-    getSeedChartParms = ( series, latestyear ): chartParms => {
+    initSeedChartParms = ( series, latestyear ): chartParms => {
         return {
             dataroot: [{ parent: 0 }],
             chartlocation: {
@@ -169,16 +169,16 @@ class ExplorerClass extends Component< any, any > {
 
         // console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist)
 
-        let oldchartparms = seriesdata[ series ][ sourcedepth ]
-        let newdataroot = oldchartparms.dataroot.map( node => {
+        let parentchartparms = seriesdata[ series ][ sourcedepth ]
+        let childdataroot = parentchartparms.dataroot.map( node => {
             return Object.assign( {}, node )
         })
-        newdataroot.push( { parent: selectionrow } )
+        childdataroot.push( { parent: selectionrow } )
 
-        let newrange = Object.assign( {}, oldchartparms.range )
+        let newrange = Object.assign( {}, parentchartparms.range )
 
         let newchartparms: chartParms = {
-            dataroot: newdataroot,
+            dataroot: childdataroot,
             chartlocation: {
                 series,
                 depth: sourcedepth + 1
@@ -187,11 +187,11 @@ class ExplorerClass extends Component< any, any > {
             data: { chartType: "ColumnChart" }
         }
 
-        newchartparms = this.setChartData( newchartparms )
+        newchartparms = this.addChartData( newchartparms )
 
         if (newchartparms.isError) return
 
-        console.log( 'newchartparms = ', newchartparms )
+        // console.log( 'newchartparms = ', newchartparms )
 
         seriesdata[ series ][ sourcedepth + 1 ] = newchartparms
 
@@ -201,7 +201,7 @@ class ExplorerClass extends Component< any, any > {
     }
 
     // returns parms.isError = true if fails
-    setChartData = (parms:chartParms):chartParms => {
+    addChartData = (parms:chartParms):chartParms => {
         let options = {},
             events = null,
             rows = [],
