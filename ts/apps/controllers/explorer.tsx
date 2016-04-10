@@ -1,6 +1,7 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // explorer.tsx
 /// <reference path="../../../typings-custom/react-google-charts.d.ts" />
+/// <reference path="../../../typings-custom/react-slider.d.ts" />
 
 'use strict'
 import * as React from 'react'
@@ -14,6 +15,10 @@ import CardText = require('material-ui/lib/card/card-text')
 import RadioButton = require('material-ui/lib/radio-button')
 import RadioButtonGroup = require('material-ui/lib/radio-button-group')
 import FontIcon = require('material-ui/lib/font-icon')
+import Divider = require('material-ui/lib/divider')
+import Checkbox = require('material-ui/lib/checkbox')
+import RaisedButton = require('material-ui/lib/raised-button')
+import ReactSlider = require('react-slider')
 
 import { ExplorerChart } from '../components/explorerchart'
 import { ChartSeries } from '../constants'
@@ -54,7 +59,10 @@ class ExplorerClass extends Component< any, any > {
     // should be in global state to allow for re-creation after return visit
     state = {
         seriesdata: [[], [], [], []], // DrillDown, Compare, Differences, Context
-        dataselection:"expenses"
+        dataselection:"expenses",
+        slider: {singlevalue:[2015],doublevalue:[2005,2015]},
+        yearselection:"one",
+        viewselection:"activities",
     }
     
     // initialize once - create seed drilldown and compare series
@@ -329,11 +337,121 @@ class ExplorerClass extends Component< any, any > {
 
         // ============================================
         // -----------[ DASHBOARD SEGMENT]-------------
+        let singleslider = (explorer.state.yearselection == 'one')?
+            <ReactSlider 
+                className="horizontal-slider" 
+                defaultValue={explorer.state.slider.singlevalue} 
+                min={ 2003 } 
+                max={ 2016 } 
+                onChange = {(value) => {
+                    explorer.setState({
+                        slider: Object.assign(explorer.state.slider, { 
+                            singlevalue: [value] 
+                        })
+                    })
+                }}>
+                <div >{explorer.state.slider.singlevalue[0]}</div>
+            </ReactSlider > :''
+        let doubleslider = (explorer.state.yearselection != 'one') ?
+            <ReactSlider
+                className="horizontal-slider"
+                defaultValue={explorer.state.slider.doublevalue}
+                min={ 2003 }
+                max={ 2016 }
+                withBars={(explorer.state.yearselection == 'all') ? true : false}
+                onChange = {(value) => {
+                    explorer.setState({
+                        slider: Object.assign(explorer.state.slider,{ 
+                            doublevalue: value 
+                        })
+                    })
+                } }>
+                <div >{explorer.state.slider.doublevalue[0]}</div>
+                <div >{explorer.state.slider.doublevalue[1]}</div>
+            </ReactSlider>:''
+        let dashboardsegment = <Card initiallyExpanded={false}>
 
-        let dashboardsegment = <Card>
-
-            <CardTitle>Dashboard</CardTitle>
-
+            <CardTitle
+                actAsExpander
+                showExpandableButton >
+                Dashboard
+            </CardTitle>
+            <CardText expandable >
+                <div style={{fontStyle:'italic'}} > These dashboard controls are not yet functional </div>
+                <div style={{ display: 'inline-block', verticalAlign: "bottom", height: "24px", marginRight:"24px" }} > 
+                    Viewpoint: 
+                </div>
+                <RadioButtonGroup
+                    style={{
+                        display: (explorer.state.dataselection != "staffing") ? 'inline-block' : 'none',
+                    }}
+                    name="viewselection"
+                    defaultSelected="activities">
+                    <RadioButton
+                        value="activities"
+                        label = "Activities"
+                        iconStyle={{ marginRight: "4px" }}
+                        labelStyle={{ width: "auto", marginRight: "24px" }}
+                        style={{ display: 'inline-block', width: 'auto' }} />
+                    <RadioButton
+                        value="organization"
+                        label = "Organization"
+                        iconStyle={{ marginRight: "4px" }}
+                        labelStyle={{ width: "auto", marginRight: "24px" }}
+                        style={{ display: 'inline-block', width: 'auto' }} />
+                </RadioButtonGroup> <br />
+            <Divider />
+            <Checkbox 
+                label="Inflation adjusted"
+                defaultChecked
+             />
+            <Divider />
+            <div style={{ display: 'inline-block', verticalAlign: "bottom", height:"24px", marginRight:"24px" }} > 
+                Years: 
+            </div>
+            <RadioButtonGroup
+                style={{ display: 'inline-block' }}
+                name="yearselection"
+                defaultSelected={explorer.state.yearselection}
+                onChange={(ev, selection) => {
+                    explorer.setState({yearselection:selection})
+                } }>
+                <RadioButton
+                    value="one"
+                    label="One"
+                    iconStyle={{ marginRight: "4px" }}
+                    labelStyle={{ width: "auto", marginRight: "24px" }}
+                    style={{ display: 'inline-block', width: 'auto' }} />
+                <RadioButton
+                    value="two"
+                    label="Two (side-by-side)"
+                    iconStyle={{ marginRight: "4px" }}
+                    labelStyle={{ width: "auto", marginRight: "24px" }}
+                    style={{ display: 'inline-block', width: 'auto' }} />
+                <RadioButton
+                    value="all"
+                    label="All (timelines)"
+                    iconStyle={{ marginRight: "4px" }}
+                    labelStyle={{ width: "auto", marginRight: "24px" }}
+                    style={{ display: 'inline-block', width: 'auto' }} />
+            </RadioButtonGroup>
+            { singleslider }
+            { doubleslider }
+            <div style={{ display: (explorer.state.yearselection == 'all') ? 'inline' : 'none' }} >
+                <Checkbox 
+                    label="Year-over-year change, rather than actuals"
+                    defaultChecked = {false}
+                    />
+            </div>
+            <Divider />
+            <RaisedButton
+                style = {{marginRight:"24px"}}
+                type="button"
+                label="Download" />
+            <RaisedButton
+                type="button"
+                label="Reset" />
+            </CardText>
         </Card>
 
         // ============================================
@@ -387,7 +505,8 @@ class ExplorerClass extends Component< any, any > {
                         style={{ display: 'inline-block', width: 'auto' }} />
                 </RadioButtonGroup>
                 <RadioButtonGroup
-                    style={{ display: (explorer.state.dataselection != "staffing") ? 'inline-block' : 'none', backgroundColor: "#eee" }}
+                    style={{ display: (explorer.state.dataselection != "staffing") ? 'inline-block' : 'none', 
+                        backgroundColor: "#eee" }}
                     name="activities"
                     defaultSelected="activities">
                     <RadioButton 
@@ -404,7 +523,8 @@ class ExplorerClass extends Component< any, any > {
                         style={{ display: 'inline-block', width: 'auto' }} />
                 </RadioButtonGroup>
                 <RadioButtonGroup
-                    style={{ display: (explorer.state.dataselection=="staffing")?'inline-block':'none', backgroundColor: "#eee" }}
+                    style={{ display: (explorer.state.dataselection == "staffing") ? 'inline-block' : 'none', 
+                        backgroundColor: "#eee" }}
                     name="staffing"
                     defaultSelected="positions"
                     >
