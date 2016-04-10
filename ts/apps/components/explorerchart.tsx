@@ -26,6 +26,9 @@ class ExplorerChart extends Component<any, any> {
                 // used to create and cache html element id attribute
                 graph_id = {this.props.graph_id}
                 />
+            <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}>
+                <FontIcon className="material-icons">view_list</FontIcon>
+            </div>
         </div>
     }
 }

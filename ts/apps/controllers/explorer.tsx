@@ -13,6 +13,7 @@ import CardTitle = require('material-ui/lib/card/card-title')
 import CardText = require('material-ui/lib/card/card-text')
 import RadioButton = require('material-ui/lib/radio-button')
 import RadioButtonGroup = require('material-ui/lib/radio-button-group')
+import FontIcon = require('material-ui/lib/font-icon')
 
 import { ExplorerChart } from '../components/explorerchart'
 import { ChartSeries } from '../constants'
@@ -420,7 +421,8 @@ class ExplorerClass extends Component< any, any > {
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
                     </RadioButtonGroup>
-                    <div style={{ whiteSpace: "nowrap" }}>
+                    <FontIcon className="material-icons">cloud_download</FontIcon>
+                <div style={{ whiteSpace: "nowrap" }}>
                     <div style={{ overflow: "scroll" }}>
 
                         { drilldowncharts }
