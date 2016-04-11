@@ -497,6 +497,12 @@ class ExplorerClass extends Component< any, any > {
                         iconStyle={{ marginRight: "4px" }}
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
+                    <RadioButton
+                        value="net"
+                        label="Net"
+                        iconStyle={{ marginRight: "4px" }}
+                        labelStyle={{ width: "auto", marginRight: "24px" }}
+                        style={{ display: 'inline-block', width: 'auto' }} />
                     <RadioButton 
                         value="staffing" 
                         label="Staffing" 
