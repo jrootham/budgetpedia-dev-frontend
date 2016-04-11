@@ -217,7 +217,7 @@ class MainBarClass extends React.Component<any, any> {
 
                     { closeicon }
 
-                    <CardTitle title="Account Sign In" style={{ paddingBottom: 0 }} />
+                    <CardTitle title="Member Sign In" style={{ paddingBottom: 0 }} />
 
                     { loginform }
 

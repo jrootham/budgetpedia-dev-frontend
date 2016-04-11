@@ -2234,7 +2234,6 @@ var ExplorerClass = function (_Component) {
             };
             newchartparms = _this.addChartData(newchartparms);
             if (newchartparms.isError) return;
-            console.log('newchartparms = ', newchartparms);
             seriesdata[series][sourcedepth + 1] = newchartparms;
             _this.setState({
                 seriesdata: seriesdata
@@ -3169,7 +3168,7 @@ var MainBarClass = function (_React$Component) {
             var registerprompt = React.createElement("div", null, React.createElement(CardText, null, React.createElement("a", { href: "javascript:void(0);", onTouchTap: appbar.transitionToResetPassword }, "Forgot your password?")), React.createElement(Divider, null), React.createElement(CardText, null, "Not a member? Register:"), React.createElement(CardActions, null, React.createElement(RaisedButton, { type: "button", label: "Register", onTouchTap: appbar.transitionToRegister })));
             var loginsidebar = React.createElement(LeftNav, { width: 300, disableSwipeToOpen: true, docked: false, openRight: true, onRequestChange: function onRequestChange(open) {
                     return appbar.setState({ accountsidebaropen: open });
-                }, open: appbar.state.accountsidebaropen }, React.createElement(Card, { style: { margin: "5px" } }, closeicon, React.createElement(CardTitle, { title: "Account Sign In", style: { paddingBottom: 0 } }), loginform, registerprompt));
+                }, open: appbar.state.accountsidebaropen }, React.createElement(Card, { style: { margin: "5px" } }, closeicon, React.createElement(CardTitle, { title: "Member Sign In", style: { paddingBottom: 0 } }), loginform, registerprompt));
             var transitionToFunc = redux_1.compose(menutransition, this.props.dispatch, Actions.transitionTo);
             var menuitems = hometiles.map(function (menutile) {
                 return React.createElement(menutile_1.MenuTile, { transitionTo: transitionToFunc, key: menutile.id, primaryText: menutile.content.title, image: menutile.content.image, route: menutile.route });

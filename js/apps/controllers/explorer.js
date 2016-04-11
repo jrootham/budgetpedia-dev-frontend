@@ -98,7 +98,6 @@ class ExplorerClass extends Component {
             newchartparms = this.addChartData(newchartparms);
             if (newchartparms.isError)
                 return;
-            console.log('newchartparms = ', newchartparms);
             seriesdata[series][sourcedepth + 1] = newchartparms;
             this.setState({
                 seriesdata: seriesdata,
