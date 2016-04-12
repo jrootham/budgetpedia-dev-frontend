@@ -29,6 +29,7 @@ import { Stories } from './controllers/stories'
 import { Explorer } from './controllers/explorer'
 import { Demos } from './controllers/demos'
 import { Pathways } from './controllers/pathways'
+import { Communities } from './controllers/communities'
 
 class App extends Component<any, any> {
     render() {
@@ -59,9 +60,10 @@ export var routes =
             <Route path="timeline" component={ Timeline } />
             <Route path="deputations" component={ Deputations } />
             <Route path="explorer" component={ Explorer } />
-            <Route path="resources" component={ Resources } />
+            <Route path="communities" component={ Communities } />
             <Route path="socialmedia" component={ SocialMedia } />
             <Route path="newsletter" component={ Newsletter } />
+            <Route path="resources" component={ Resources } />
             <Route path="joinus" component={ JoinUs } />
             <Route path="stories" component={ Stories } />
             <Route path="demos" component={ Demos } />

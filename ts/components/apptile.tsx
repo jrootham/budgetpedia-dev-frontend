@@ -35,6 +35,8 @@ export class AppTile extends React.Component<any, any> {
                 key = {this.props.key}
                 title = {this.props.content.title}
                 subtitle = {this.props.content.subtitle}>
+                <div style={{position:"absolute",top:0,left:0,color:"silver",fontStyle:"italic",fontSize:"smaller"}} >
+                {this.props.content.category}</div>
                 <img src={this.props.content.image} style={{height:"120px"}}/>
                 <div style={{ position: "abolute", height: "30px", bottom: 0, width: "100%" }}></div>
                 
