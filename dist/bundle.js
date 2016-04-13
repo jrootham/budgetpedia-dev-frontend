@@ -921,7 +921,7 @@ module.exports=[
                 "Groups": [
                     {
                         "Group": "City Management",
-                        "Amount": 231832619,
+                        "Amount": 230210619,
                         "Divisions": [
                             {
                                 "Division": "Auditor General's Office",
@@ -1226,30 +1226,12 @@ module.exports=[
                                         "Amount": 2371023
                                     }
                                 ]
-                            },
-                            {
-                                "Division": "Toronto Atmospheric Fund",
-                                "Amount": 1622000,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 20000
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1102000
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 500000
-                                    }
-                                ]
                             }
                         ]
                     },
                     {
                         "Group": "City Development Services",
-                        "Amount": 258724980,
+                        "Amount": 260346980,
                         "Divisions": [
                             {
                                 "Division": "311 Toronto",
@@ -1432,6 +1414,24 @@ module.exports=[
                                     {
                                         "Expenditure": "Inter-Divisional Charges (700A)",
                                         "Amount": 868577
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "Toronto Atmospheric Fund",
+                                "Amount": 1622000,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 20000
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 1102000
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 500000
                                     }
                                 ]
                             },
