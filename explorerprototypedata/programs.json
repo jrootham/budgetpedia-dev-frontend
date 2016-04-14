@@ -2,12 +2,12 @@
   {
     "Division":"311 Toronto",
     "Amount":17300638,
-    "Group":"City Development Services"
+    "Group":"Development & Control"
   },
   {
     "Division":"Affordable Housing Office",
     "Amount":2956572,
-    "Group":"Social Services"
+    "Group":"Social Development & Control"
 
   },
   {
@@ -25,7 +25,7 @@
   {
     "Division":"Auditor General's Office",
     "Amount":4762566,
-    "Group":"City Management"
+    "Group":"Compliance Offices"
 
   },
   {
@@ -43,37 +43,37 @@
   {
     "Division":"City Clerk's Office",
     "Amount":49713076,
-    "Group":"City Management"
+    "Group":"Corporate Management"
 
   },
   {
     "Division":"City Council",
     "Amount":20953951,
-    "Group":"City Management"
+    "Group":"Corporate Management"
 
   },
   {
     "Division":"City Manager's Office",
     "Amount":54760375,
-    "Group":"City Management"
+    "Group":"Corporate Management"
 
   },
   {
     "Division":"City Planning",
     "Amount":43309766,
-    "Group":"City Development Services"
+    "Group":"Development & Control"
 
   },
   {
     "Division":"Court Services",
     "Amount":50079137,
-    "Group":"Social Services"
+    "Group":"Emergency Services"
 
   },
   {
     "Division":"Economic Development & Culture",
     "Amount":70164744,
-    "Group":"City Development Services"
+    "Group":"Development & Control"
 
   },
   {
@@ -109,7 +109,7 @@
   {
     "Division":"Heritage Toronto",
     "Amount":768379,
-    "Group":"City Development Services"
+    "Group":"Development & Control"
 
   },
   {
@@ -121,7 +121,7 @@
   {
     "Division":"Integrity Commissioner's Office",
     "Amount":479234,
-    "Group":"City Management"
+    "Group":"Compliance Offices"
 
   },
   {
@@ -139,13 +139,13 @@
   {
     "Division":"Mayor's Office",
     "Amount":2297110,
-    "Group":"City Management"
+    "Group":"Corporate Management"
 
   },
   {
     "Division":"Municipal Licensing & Standards",
     "Amount":51573166,
-    "Group":"City Development Services"
+    "Group":"Development & Control"
 
   },
   {
@@ -163,25 +163,25 @@
   {
     "Division":"Office of the Chief Financial Officer",
     "Amount":16576993,
-    "Group":"City Management"
+    "Group":"Corporate Management"
 
   },
   {
     "Division":"Office of the Lobbyist Registrar",
     "Amount":1143089,
-    "Group":"City Management"
+    "Group":"Compliance Offices"
 
   },
   {
     "Division":"Office of the Ombudsman",
     "Amount":1814559,
-    "Group":"City Management"
+    "Group":"Compliance Offices"
 
   },
   {
     "Division":"Office of the Treasurer",
     "Amount":77709666,
-    "Group":"City Management"
+    "Group":"Corporate Management"
 
   },
   {
@@ -193,7 +193,7 @@
   {
     "Division":"Policy, Planning, Finance & Administration",
     "Amount":21782925,
-    "Group":"City Development Services"
+    "Group":"Development & Control"
 
   },
   {
@@ -211,7 +211,7 @@
   {
     "Division":"Social Development, Finance & Administration",
     "Amount":51817153,
-    "Group":"Social Services"
+    "Group":"Social Development & Control"
 
   },
   {
@@ -235,13 +235,13 @@
   {
     "Division":"Toronto Atmospheric Fund",
     "Amount":1622000,
-    "Group":"City Development Services"
+    "Group":"Development & Control"
 
   },
   {
     "Division":"Toronto Building",
     "Amount":53825362,
-    "Group":"City Development Services"
+    "Group":"Development & Control"
 
   },
   {
@@ -271,7 +271,7 @@
   {
     "Division":"Toronto Police Services Board",
     "Amount":3049400,
-    "Group":"Social Services"
+    "Group":"Social Development & Control"
 
   },
   {

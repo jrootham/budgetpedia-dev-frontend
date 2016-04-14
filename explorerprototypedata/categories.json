@@ -26,17 +26,22 @@
 },
 {
     "Type":"Citizen Support Services",
-    "Group":"Social Services",
+    "Group":"Social Development & Control",
     "Amount":null
 },
 {
     "Type":"Municipal Services",
-    "Group":"City Management",
+    "Group":"Corporate Management",
     "Amount":null
 },
 {
     "Type":"Municipal Services",
-    "Group":"City Development Services",
+    "Group":"Compliance Offices",
+    "Amount":null
+},
+{
+    "Type":"Municipal Services",
+    "Group":"Development & Control",
     "Amount":null
 },
 {
