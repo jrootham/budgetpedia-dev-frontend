@@ -317,6 +317,28 @@
                                 ]
                             },
                             {
+                                "Division": "Toronto & Region Conservation Authority",
+                                "Amount": 40519000,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 33120000
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 4211000
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 1252000
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 1936000
+                                    }
+                                ]
+                            },
+                            {
                                 "Division": "Toronto Public Library",
                                 "Amount": 192504396,
                                 "Expenditures": [
@@ -343,28 +365,6 @@
                                     {
                                         "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
                                         "Amount": 892981
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto & Region Conservation Authority",
-                                "Amount": 40519000,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 33120000
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 4211000
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 1252000
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1936000
                                     }
                                 ]
                             }
