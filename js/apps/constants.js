@@ -7,7 +7,7 @@
 })(exports.ChartSeries || (exports.ChartSeries = {}));
 var ChartSeries = exports.ChartSeries;
 exports.categoryaliases = {
-    'Types': 'Activity Types',
-    'Groups': 'Division Groupings',
+    'Types': 'Division Activity Types',
+    'Groups': 'Division Activity Clusters',
     'Expenditures': 'Expenditure Categories'
 };
