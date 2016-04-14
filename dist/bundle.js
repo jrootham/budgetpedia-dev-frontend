@@ -2015,8 +2015,9 @@ exports.ExplorerChart = ExplorerChart;
 })(exports.ChartSeries || (exports.ChartSeries = {}));
 var ChartSeries = exports.ChartSeries;
 exports.categoryaliases = {
-    'Types': 'Division Activity Types',
-    'Groups': 'Division Activity Clusters',
+    'Types': 'Program Activity Types',
+    'Groups': 'Program Activity Clusters',
+    'Divisions': 'Programs',
     'Expenditures': 'Expenditure Categories'
 };
 
