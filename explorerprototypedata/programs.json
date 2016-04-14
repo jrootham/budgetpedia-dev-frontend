@@ -119,6 +119,24 @@
     "Group":"Development & Control"
   },
   {
+    "Division":"Municipal Licensing & Standards",
+    "Amount":51573166,
+    "Group":"Development & Control"
+
+  },
+  {
+    "Division":"Toronto Building",
+    "Amount":53825362,
+    "Group":"Development & Control"
+
+  },
+  {
+    "Division":"Heritage Toronto",
+    "Amount":768379,
+    "Group":"Development & Control"
+
+  },
+  {
     "Division":"City Planning",
     "Amount":43309766,
     "Group":"Development & Control"
@@ -139,24 +157,6 @@
   {
     "Division":"Toronto Atmospheric Fund",
     "Amount":1622000,
-    "Group":"Development & Control"
-
-  },
-  {
-    "Division":"Municipal Licensing & Standards",
-    "Amount":51573166,
-    "Group":"Development & Control"
-
-  },
-  {
-    "Division":"Toronto Building",
-    "Amount":53825362,
-    "Group":"Development & Control"
-
-  },
-  {
-    "Division":"Heritage Toronto",
-    "Amount":768379,
     "Group":"Development & Control"
 
   },
