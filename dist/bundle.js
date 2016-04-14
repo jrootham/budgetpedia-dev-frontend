@@ -72,28 +72,36 @@ module.exports=[
                                 ]
                             },
                             {
-                                "Division": "Toronto Parking Authority",
-                                "Amount": 84742649,
+                                "Division": "Toronto Water",
+                                "Amount": 439488844,
                                 "Expenditures": [
                                     {
                                         "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 24178665
+                                        "Amount": 169746315
                                     },
                                     {
                                         "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 9439174
+                                        "Amount": 107740492
                                     },
                                     {
                                         "Expenditure": "Equipment (300A)",
-                                        "Amount": 7298985
+                                        "Amount": 3157160
                                     },
                                     {
                                         "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 24983563
+                                        "Amount": 56770392
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 9645738
                                     },
                                     {
                                         "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 18842262
+                                        "Amount": 20072618
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 72356129
                                     }
                                 ]
                             },
@@ -150,40 +158,6 @@ module.exports=[
                                 ]
                             },
                             {
-                                "Division": "Toronto Water",
-                                "Amount": 439488844,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 169746315
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 107740492
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 3157160
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 56770392
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 9645738
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 20072618
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 72356129
-                                    }
-                                ]
-                            },
-                            {
                                 "Division": "Transportation Services",
                                 "Amount": 387841194,
                                 "Expenditures": [
@@ -216,6 +190,32 @@ module.exports=[
                                         "Amount": 15428196
                                     }
                                 ]
+                            },
+                            {
+                                "Division": "Toronto Parking Authority",
+                                "Amount": 84742649,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 24178665
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 9439174
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 7298985
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 24983563
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 18842262
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -223,6 +223,40 @@ module.exports=[
                         "Group": "City Commons",
                         "Amount": 695224764,
                         "Divisions": [
+                            {
+                                "Division": "Parks, Forestry & Recreation",
+                                "Amount": 445637483,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 292290321
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 38526293
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 2802140
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 68882015
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 11155236
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 10038516
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 21942962
+                                    }
+                                ]
+                            },
                             {
                                 "Division": "Arena Boards of Management",
                                 "Amount": 8643855,
@@ -284,62 +318,6 @@ module.exports=[
                                 ]
                             },
                             {
-                                "Division": "Parks, Forestry & Recreation",
-                                "Amount": 445637483,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 292290321
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 38526293
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 2802140
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 68882015
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 11155236
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 10038516
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 21942962
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto & Region Conservation Authority",
-                                "Amount": 40519000,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 33120000
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 4211000
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 1252000
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1936000
-                                    }
-                                ]
-                            },
-                            {
                                 "Division": "Toronto Public Library",
                                 "Amount": 192504396,
                                 "Expenditures": [
@@ -366,6 +344,28 @@ module.exports=[
                                     {
                                         "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
                                         "Amount": 892981
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "Toronto & Region Conservation Authority",
+                                "Amount": 40519000,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 33120000
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 4211000
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 1252000
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 1936000
                                     }
                                 ]
                             }
@@ -504,40 +504,6 @@ module.exports=[
                         "Amount": 1818627052,
                         "Divisions": [
                             {
-                                "Division": "Court Services",
-                                "Amount": 50079137,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 19044827
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 127300
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 60250
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 9942866
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 84376
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 1813550
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 19005968
-                                    }
-                                ]
-                            },
-                            {
                                 "Division": "Fire Services",
                                 "Amount": 433233567,
                                 "Expenditures": [
@@ -634,6 +600,40 @@ module.exports=[
                                         "Amount": 20240400
                                     }
                                 ]
+                            },
+                            {
+                                "Division": "Court Services",
+                                "Amount": 50079137,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 19044827
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 127300
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 60250
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 9942866
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 84376
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 1813550
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 19005968
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -641,6 +641,40 @@ module.exports=[
                         "Group": "Health & Welfare Services",
                         "Amount": 2716823966,
                         "Divisions": [
+                            {
+                                "Division": "Toronto Public Health",
+                                "Amount": 240703329,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 180285090
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 3767031
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 998476
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 30671326
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 1289419
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 8537753
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 15154235
+                                    }
+                                ]
+                            },
                             {
                                 "Division": "Children's Services",
                                 "Amount": 450965107,
@@ -776,40 +810,6 @@ module.exports=[
                                         "Amount": 18231723
                                     }
                                 ]
-                            },
-                            {
-                                "Division": "Toronto Public Health",
-                                "Amount": 240703329,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 180285090
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 3767031
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 998476
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 30671326
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 1289419
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 8537753
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 15154235
-                                    }
-                                ]
                             }
                         ]
                     },
@@ -817,36 +817,6 @@ module.exports=[
                         "Group": "Social Development & Control",
                         "Amount": 57823125,
                         "Divisions": [
-                            {
-                                "Division": "Affordable Housing Office",
-                                "Amount": 2956572,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 2283011
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 11551
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 2500
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 165211
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 5647
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 488651
-                                    }
-                                ]
-                            },
                             {
                                 "Division": "Social Development, Finance & Administration",
                                 "Amount": 51817153,
@@ -878,6 +848,36 @@ module.exports=[
                                     {
                                         "Expenditure": "Inter-Divisional Charges (700A)",
                                         "Amount": 308435
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "Affordable Housing Office",
+                                "Amount": 2956572,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 2283011
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 11551
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 2500
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 165211
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 5647
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 488651
                                     }
                                 ]
                             },
@@ -924,40 +924,6 @@ module.exports=[
                         "Amount": 222011171,
                         "Divisions": [
                             {
-                                "Division": "City Clerk's Office",
-                                "Amount": 49713076,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 39232601
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 1073584
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 86735
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 7697802
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 464633
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 32771
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 1124950
-                                    }
-                                ]
-                            },
-                            {
                                 "Division": "City Council",
                                 "Amount": 20953951,
                                 "Expenditures": [
@@ -984,6 +950,28 @@ module.exports=[
                                     {
                                         "Expenditure": "Inter-Divisional Charges (700A)",
                                         "Amount": 253279
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "Mayor's Office",
+                                "Amount": 2297110,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 2200854
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 4800
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 84409
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 7047
                                     }
                                 ]
                             },
@@ -1018,28 +1006,6 @@ module.exports=[
                                 ]
                             },
                             {
-                                "Division": "Mayor's Office",
-                                "Amount": 2297110,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 2200854
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 4800
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 84409
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 7047
-                                    }
-                                ]
-                            },
-                            {
                                 "Division": "Office of the Chief Financial Officer",
                                 "Amount": 16576993,
                                 "Expenditures": [
@@ -1070,6 +1036,40 @@ module.exports=[
                                     {
                                         "Expenditure": "Inter-Divisional Charges (700A)",
                                         "Amount": 231879
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "City Clerk's Office",
+                                "Amount": 49713076,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 39232601
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 1073584
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 86735
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 7697802
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 464633
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 32771
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 1124950
                                     }
                                 ]
                             },
@@ -1144,36 +1144,6 @@ module.exports=[
                                 ]
                             },
                             {
-                                "Division": "Integrity Commissioner's Office",
-                                "Amount": 479234,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 455221
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 1576
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 53
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 17618
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 4365
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 400
-                                    }
-                                ]
-                            },
-                            {
                                 "Division": "Office of the Lobbyist Registrar",
                                 "Amount": 1143089,
                                 "Expenditures": [
@@ -1230,6 +1200,200 @@ module.exports=[
                                     {
                                         "Expenditure": "Inter-Divisional Charges (700A)",
                                         "Amount": 12405
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "Integrity Commissioner's Office",
+                                "Amount": 479234,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 455221
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 1576
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 53
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 17618
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 4365
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 400
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "Group": "Internal Services",
+                        "Amount": 489340896,
+                        "Divisions": [
+                            {
+                                "Division": "Facilities, Real Estate, Environment & Energy",
+                                "Amount": 193120454,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 95517376
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 32270498
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 642462
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 54595179
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 2384530
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 6082177
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 1628232
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "Engineering & Construction Services",
+                                "Amount": 69661726,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 60440935
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 481840
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 506590
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 3588778
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 797047
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 3846536
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "Information & Technology",
+                                "Amount": 124877224,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 96805726
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 115083
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 905416
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 26439243
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 126565
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 396
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 484794
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "Legal Services",
+                                "Amount": 50229349,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 41505475
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 442011
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 63558
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 1410603
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 69502
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 6738200
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "Fleet Services",
+                                "Amount": 51452143,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 18224638
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 23280335
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 58743
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 6781305
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 2476289
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 630831
                                     }
                                 ]
                             }
@@ -1338,62 +1502,6 @@ module.exports=[
                                 ]
                             },
                             {
-                                "Division": "Heritage Toronto",
-                                "Amount": 768379,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 540926
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 67887
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 158300
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 1266
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Municipal Licensing & Standards",
-                                "Amount": 51573166,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 42364943
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 1196761
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 506781
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1781319
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 308148
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 291200
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 5124013
-                                    }
-                                ]
-                            },
-                            {
                                 "Division": "Policy, Planning, Finance & Administration",
                                 "Amount": 21782925,
                                 "Expenditures": [
@@ -1442,6 +1550,40 @@ module.exports=[
                                 ]
                             },
                             {
+                                "Division": "Municipal Licensing & Standards",
+                                "Amount": 51573166,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 42364943
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 1196761
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 506781
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 1781319
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 308148
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 291200
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 5124013
+                                    }
+                                ]
+                            },
+                            {
                                 "Division": "Toronto Building",
                                 "Amount": 53825362,
                                 "Expenditures": [
@@ -1474,168 +1616,26 @@ module.exports=[
                                         "Amount": 921355
                                     }
                                 ]
-                            }
-                        ]
-                    },
-                    {
-                        "Group": "Internal Services",
-                        "Amount": 489340896,
-                        "Divisions": [
-                            {
-                                "Division": "Engineering & Construction Services",
-                                "Amount": 69661726,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 60440935
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 481840
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 506590
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 3588778
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 797047
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 3846536
-                                    }
-                                ]
                             },
                             {
-                                "Division": "Facilities, Real Estate, Environment & Energy",
-                                "Amount": 193120454,
+                                "Division": "Heritage Toronto",
+                                "Amount": 768379,
                                 "Expenditures": [
                                     {
                                         "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 95517376
+                                        "Amount": 540926
                                     },
                                     {
                                         "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 32270498
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 642462
+                                        "Amount": 67887
                                     },
                                     {
                                         "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 54595179
+                                        "Amount": 158300
                                     },
                                     {
                                         "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 2384530
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 6082177
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 1628232
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Fleet Services",
-                                "Amount": 51452143,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 18224638
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 23280335
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 58743
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 6781305
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 2476289
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 630831
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Information & Technology",
-                                "Amount": 124877224,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 96805726
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 115083
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 905416
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 26439243
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 126565
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 396
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 484794
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Legal Services",
-                                "Amount": 50229349,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 41505475
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 442011
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 63558
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1410603
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 69502
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 6738200
+                                        "Amount": 1266
                                     }
                                 ]
                             }
