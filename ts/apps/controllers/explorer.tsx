@@ -386,16 +386,16 @@ class ExplorerClass extends Component< any, any > {
                         display: (explorer.state.dataselection != "staffing") ? 'inline-block' : 'none',
                     }}
                     name="viewselection"
-                    defaultSelected="activities">
+                    defaultSelected="functional">
                     <RadioButton
-                        value="activities"
-                        label = "Activities"
+                        value="functional"
+                        label = "Functional"
                         iconStyle={{ marginRight: "4px" }}
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
                     <RadioButton
-                        value="organization"
-                        label = "Organization"
+                        value="structural"
+                        label = "Structural"
                         iconStyle={{ marginRight: "4px" }}
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
