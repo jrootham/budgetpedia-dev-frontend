@@ -143,6 +143,12 @@
 
   },
   {
+    "Division":"Social Development, Finance & Administration",
+    "Amount":51817153,
+    "Group":"Planning & Development Services"
+
+  },
+  {
     "Division":"Policy, Planning, Finance & Administration",
     "Amount":21782925,
     "Group":"Planning & Development Services"
@@ -302,12 +308,6 @@
     "Division":"Toronto Parking Authority",
     "Amount":84742649,
     "Group":"Transportation & Transit Services"
-
-  },
-  {
-    "Division":"Social Development, Finance & Administration",
-    "Amount":51817153,
-    "Group":"Planning & Development Services"
 
   },
   {

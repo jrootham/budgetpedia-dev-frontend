@@ -46,17 +46,17 @@
 },
 {
     "Type":"Municipal Services",
-    "Group":"Internal Services",
-    "Amount":null
-},
-{
-    "Type":"Municipal Services",
     "Group":"Maintenance & Standards Services",
     "Amount":null
 },
 {
     "Type":"Municipal Services",
     "Group":"Planning & Development Services",
+    "Amount":null
+},
+{
+    "Type":"Municipal Services",
+    "Group":"Internal Services",
     "Amount":null
 },
 {
