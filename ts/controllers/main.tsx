@@ -22,6 +22,7 @@ import { mainReducer } from "../reducers/reducers"
 import { MainBar } from './mainbar'
 import { MainToolbar } from './maintoolbar'
 import { routes } from '../apps/routes'
+import * as Actions from '../actions/actions'
 
 const reduxRouterMiddleware = routerMiddleware( browserHistory )
 

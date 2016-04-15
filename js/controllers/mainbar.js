@@ -61,6 +61,7 @@ class MainBarClass extends React.Component {
     render() {
         let appbar = this;
         let { appnavbar, theme } = appbar.props;
+        let fieldMessages = appbar.props.auth.fieldMessages || {};
         let hometiles = this.props.hometiles;
         let menutransition = (func) => {
             this.setState({
@@ -84,6 +85,7 @@ class MainBarClass extends React.Component {
                 hintText: "enter unique email (required)",
                 type: 'email',
                 required: true,
+                errorText: fieldMessages['email'],
             },
             {
                 index: 'password',
@@ -93,6 +95,7 @@ class MainBarClass extends React.Component {
                 maxLength: 16,
                 minLength: 6,
                 required: true,
+                errorText: fieldMessages['password'],
             },
         ];
         let loginform = React.createElement(basicform_1.BasicForm, {submit: appbar.submitLogin, elements: elements, submitButtonLabel: 'Sign in', errorMessage: appbar.props.auth.errorMessage});

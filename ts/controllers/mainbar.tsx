@@ -118,6 +118,7 @@ class MainBarClass extends React.Component<any, any> {
     render() { 
         let appbar = this
         let { appnavbar, theme } = appbar.props
+        let fieldMessages = appbar.props.auth.fieldMessages || {}
         let hometiles = this.props.hometiles
         let menutransition = (func) => {
             this.setState({
@@ -159,6 +160,7 @@ class MainBarClass extends React.Component<any, any> {
                 // defaultValue: 'henrik@bechmann.ca',
                 type: 'email',
                 required: true,
+                errorText: fieldMessages['email'],
             },
             {
                 index: 'password',
@@ -168,6 +170,7 @@ class MainBarClass extends React.Component<any, any> {
                 maxLength:16,
                 minLength:6,
                 required: true,
+                errorText: fieldMessages['password'],
             },
         ]
 

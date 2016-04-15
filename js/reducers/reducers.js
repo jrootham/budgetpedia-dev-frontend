@@ -103,6 +103,7 @@ function auth(state = {
                 isFetching: true,
                 isAuthenticated: false,
                 user: action.payload.creds,
+                fieldMessages: null,
                 errorMessage: '',
             });
         case LOGIN_SUCCESS:
@@ -111,8 +112,18 @@ function auth(state = {
                 isAuthenticated: true,
             });
         case LOGIN_FAILURE:
+            let fieldMessages = {};
+            let data = action.payload.data || [];
+            let i, message = null;
+            for (i = 0; i < data.length; i++) {
+                fieldMessages[data[i].key] = data[i].message;
+            }
+            if (action.payload.data) {
+                action.payload.message = null;
+            }
             return Object.assign({}, state, {
                 isFetching: false,
+                fieldMessages: fieldMessages,
                 errorMessage: action.payload.message,
                 user: null,
             });

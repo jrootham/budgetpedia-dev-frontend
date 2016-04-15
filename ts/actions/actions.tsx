@@ -49,6 +49,7 @@ let requestLogin = createAction(
             // isFetching: true,
             // isAuthenticated: false,
             message:'',
+            data:null,
             creds,
         }
     }
@@ -67,11 +68,12 @@ let receiveLogin = createAction(
 
 let loginError = createAction(
     LOGIN_FAILURE,
-    message => {
+    (message, data?) => {
         return {
             // isFetching: false,
             // isAuthenticated: false,
-            message
+            message,
+            data,
         }
     }
 )
@@ -86,37 +88,45 @@ export const loginUser = creds => {
     }
     return dispatch => {
         dispatch(requestLogin(creds))
-        fetch('/api/login', config)
+        fetch('/api/login/credentials', config)
             .then(response => {
-                // console.log('response = ',response)
-                if (response.status >= 400) {
-                    throw new Error("Response from server: " + 
-                        response.statusText + ' (' + 
+                // console.log('request response = ', response)
+                if (response.status >= 500) {
+                    throw new Error("Response from server: " +
+                        response.statusText + ' (' +
                         response.status + ')')
                 }
-                return response.json().then(
-                    user => { 
-                        return { user, response } 
-                    }
-                )
+                return response.text().then(text => {
+                    return { text, response }
+                })
             })
-            .then(({ user, response }) => {
-                // console.log('user block', user, response)
-                if (!response.ok) {
+            .then(({text, response}) => {
+                let json, isJson
+                try {
+                    json = JSON.parse(text)
+                    isJson = true
+
+                } catch (e) {
+                    isJson = false
+                }
+                if (!isJson || !response.ok) {
                     // If there was a problem, we want to
                     // dispatch the error condition
-                    dispatch(loginError(user.message))
+                    if (isJson) {
+                        // json.data = field level data
+                        dispatch(loginError(json.message, json.data))
+                    } else
+                        dispatch(loginError(text))
                     // return Promise.reject(user) // ???
                 } else {
-                    // If login was successful, set the token in local storage
-                    localStorage.setItem('id_token', user.id_token)
                     // Dispatch the success action
-                    dispatch(receiveLogin(user))
+                    dispatch(() => {
+                        dispatch(receiveLogin(json))
+                    })
                 }
             })
-            .catch(err => { 
+            .catch(err => {
                 dispatch(loginError(err.message))
-                // console.log('System Error: ', err.message) 
             })
     }
 }

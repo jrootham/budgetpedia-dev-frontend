@@ -165,6 +165,7 @@ function auth(state = {
                 isFetching: true,
                 isAuthenticated: false,
                 user: action.payload.creds,
+                fieldMessages: null,
                 errorMessage:'',
             })
 
@@ -176,13 +177,22 @@ function auth(state = {
             })
 
         case LOGIN_FAILURE:
+            let fieldMessages = {}
+            let data = action.payload.data || []
+            let i, message = null
+            for (i = 0; i < data.length; i++) {
+                // TODO: should map internal field name to field presentation title here
+                fieldMessages[data[i].key] = data[i].message
+            }
+            if (action.payload.data) {
+                action.payload.message = null
+            }
 
-            // console.log('login failure',action)
             return Object.assign({}, state, {
                 isFetching: false,
-                // isAuthenticated: false,
+                fieldMessages,
                 errorMessage: action.payload.message,
-                user:null,
+                user: null,
             })
 
         case LOGOUT_SUCCESS:

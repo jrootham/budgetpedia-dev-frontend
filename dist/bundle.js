@@ -1761,6 +1761,7 @@ exports.LOGIN_FAILURE = 'LOGIN_FAILURE';
 var requestLogin = redux_actions_1.createAction(exports.LOGIN_REQUEST, function (creds) {
     return {
         message: '',
+        data: null,
         creds: creds
     };
 });
@@ -1769,9 +1770,10 @@ var receiveLogin = redux_actions_1.createAction(exports.LOGIN_SUCCESS, function 
         id_token: user.id_token
     };
 });
-var loginError = redux_actions_1.createAction(exports.LOGIN_FAILURE, function (message) {
+var loginError = redux_actions_1.createAction(exports.LOGIN_FAILURE, function (message, data) {
     return {
-        message: message
+        message: message,
+        data: data
     };
 });
 exports.loginUser = function (creds) {
@@ -1782,22 +1784,33 @@ exports.loginUser = function (creds) {
     };
     return function (dispatch) {
         dispatch(requestLogin(creds));
-        fetch('/api/login', config).then(function (response) {
-            if (response.status >= 400) {
+        fetch('/api/login/credentials', config).then(function (response) {
+            if (response.status >= 500) {
                 throw new Error("Response from server: " + response.statusText + ' (' + response.status + ')');
             }
-            return response.json().then(function (user) {
-                return { user: user, response: response };
+            return response.text().then(function (text) {
+                return { text: text, response: response };
             });
         }).then(function (_ref) {
-            var user = _ref.user;
+            var text = _ref.text;
             var response = _ref.response;
 
-            if (!response.ok) {
-                dispatch(loginError(user.message));
+            var json = undefined,
+                isJson = undefined;
+            try {
+                json = JSON.parse(text);
+                isJson = true;
+            } catch (e) {
+                isJson = false;
+            }
+            if (!isJson || !response.ok) {
+                if (isJson) {
+                    dispatch(loginError(json.message, json.data));
+                } else dispatch(loginError(text));
             } else {
-                localStorage.setItem('id_token', user.id_token);
-                dispatch(receiveLogin(user));
+                dispatch(function () {
+                    dispatch(receiveLogin(json));
+                });
             }
         }).catch(function (err) {
             dispatch(loginError(err.message));
@@ -3176,6 +3189,7 @@ var MainBarClass = function (_React$Component) {
             var appnavbar = _appbar$props.appnavbar;
             var theme = _appbar$props.theme;
 
+            var fieldMessages = appbar.props.auth.fieldMessages || {};
             var hometiles = this.props.hometiles;
             var menutransition = function menutransition(func) {
                 _this2.setState({
@@ -3197,7 +3211,8 @@ var MainBarClass = function (_React$Component) {
                 floatingLabelText: 'Email Address',
                 hintText: "enter unique email (required)",
                 type: 'email',
-                required: true
+                required: true,
+                errorText: fieldMessages['email']
             }, {
                 index: 'password',
                 floatingLabelText: 'Password',
@@ -3205,7 +3220,8 @@ var MainBarClass = function (_React$Component) {
                 type: 'password',
                 maxLength: 16,
                 minLength: 6,
-                required: true
+                required: true,
+                errorText: fieldMessages['password']
             }];
             var loginform = React.createElement(basicform_1.BasicForm, { submit: appbar.submitLogin, elements: elements, submitButtonLabel: 'Sign in', errorMessage: appbar.props.auth.errorMessage });
             var registerprompt = React.createElement("div", null, React.createElement(CardText, null, React.createElement("a", { href: "javascript:void(0);", onTouchTap: appbar.transitionToResetPassword }, "Forgot your password?")), React.createElement(Divider, null), React.createElement(CardText, null, "Not a member? Register:"), React.createElement(CardActions, null, React.createElement(RaisedButton, { type: "button", label: "Register", onTouchTap: appbar.transitionToRegister })));
@@ -3968,6 +3984,7 @@ function auth() {
                 isFetching: true,
                 isAuthenticated: false,
                 user: action.payload.creds,
+                fieldMessages: null,
                 errorMessage: ''
             });
         case LOGIN_SUCCESS:
@@ -3976,8 +3993,19 @@ function auth() {
                 isAuthenticated: true
             });
         case LOGIN_FAILURE:
+            var fieldMessages = {};
+            var data = action.payload.data || [];
+            var i = undefined,
+                message = null;
+            for (i = 0; i < data.length; i++) {
+                fieldMessages[data[i].key] = data[i].message;
+            }
+            if (action.payload.data) {
+                action.payload.message = null;
+            }
             return Object.assign({}, state, {
                 isFetching: false,
+                fieldMessages: fieldMessages,
                 errorMessage: action.payload.message,
                 user: null
             });

@@ -20,6 +20,7 @@ exports.LOGIN_FAILURE = 'LOGIN_FAILURE';
 let requestLogin = redux_actions_1.createAction(exports.LOGIN_REQUEST, creds => {
     return {
         message: '',
+        data: null,
         creds: creds,
     };
 });
@@ -28,9 +29,10 @@ let receiveLogin = redux_actions_1.createAction(exports.LOGIN_SUCCESS, user => {
         id_token: user.id_token,
     };
 });
-let loginError = redux_actions_1.createAction(exports.LOGIN_FAILURE, message => {
+let loginError = redux_actions_1.createAction(exports.LOGIN_FAILURE, (message, data) => {
     return {
-        message: message
+        message: message,
+        data: data,
     };
 });
 exports.loginUser = creds => {
@@ -41,24 +43,37 @@ exports.loginUser = creds => {
     };
     return dispatch => {
         dispatch(requestLogin(creds));
-        fetch('/api/login', config)
+        fetch('/api/login/credentials', config)
             .then(response => {
-            if (response.status >= 400) {
+            if (response.status >= 500) {
                 throw new Error("Response from server: " +
                     response.statusText + ' (' +
                     response.status + ')');
             }
-            return response.json().then(user => {
-                return { user: user, response: response };
+            return response.text().then(text => {
+                return { text: text, response: response };
             });
         })
-            .then(({ user, response }) => {
-            if (!response.ok) {
-                dispatch(loginError(user.message));
+            .then(({ text, response }) => {
+            let json, isJson;
+            try {
+                json = JSON.parse(text);
+                isJson = true;
+            }
+            catch (e) {
+                isJson = false;
+            }
+            if (!isJson || !response.ok) {
+                if (isJson) {
+                    dispatch(loginError(json.message, json.data));
+                }
+                else
+                    dispatch(loginError(text));
             }
             else {
-                localStorage.setItem('id_token', user.id_token);
-                dispatch(receiveLogin(user));
+                dispatch(() => {
+                    dispatch(receiveLogin(json));
+                });
             }
         })
             .catch(err => {
