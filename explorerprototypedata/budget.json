@@ -30,11 +30,11 @@
         "Types": [
             {
                 "Type": "Shared Services",
-                "Amount": 3969515725,
+                "Amount": 3971906104,
                 "Groups": [
                     {
-                        "Group": "Public Works",
-                        "Amount": 3161053132,
+                        "Group": "Waste & Water Services",
+                        "Amount": 828498289,
                         "Divisions": [
                             {
                                 "Division": "Solid Waste Management Services",
@@ -103,7 +103,13 @@
                                         "Amount": 72356129
                                     }
                                 ]
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "Group": "Transportation & Transit Services",
+                        "Amount": 2332554843,
+                        "Divisions": [
                             {
                                 "Division": "Toronto Transit Commission - Conventional",
                                 "Amount": 1736305100,
@@ -371,8 +377,8 @@
                         ]
                     },
                     {
-                        "Group": "Public Destinations",
-                        "Amount": 113237829,
+                        "Group": "Specialized Commons Services",
+                        "Amount": 115628208,
                         "Divisions": [
                             {
                                 "Division": "Exhibition Place",
@@ -489,6 +495,46 @@
                                         "Amount": 2773
                                     }
                                 ]
+                            },
+                            {
+                                "Division": "Heritage Toronto",
+                                "Amount": 768379,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 540926
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 67887
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 158300
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 1266
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "Toronto Atmospheric Fund",
+                                "Amount": 1622000,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 20000
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 1102000
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 500000
+                                    }
+                                ]
                             }
                         ]
                     }
@@ -496,11 +542,11 @@
             },
             {
                 "Type": "Citizen Support Services",
-                "Amount": 4593274143,
+                "Amount": 4541456990,
                 "Groups": [
                     {
                         "Group": "Emergency Services",
-                        "Amount": 1818627052,
+                        "Amount": 1821676452,
                         "Divisions": [
                             {
                                 "Division": "Fire Services",
@@ -633,12 +679,42 @@
                                         "Amount": 19005968
                                     }
                                 ]
+                            },
+                            {
+                                "Division": "Toronto Police Services Board",
+                                "Amount": 3049400,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 963200
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 7600
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 900
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 821700
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Capital (505A)",
+                                        "Amount": 610600
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 645400
+                                    }
+                                ]
                             }
                         ]
                     },
                     {
                         "Group": "Health & Welfare Services",
-                        "Amount": 2716823966,
+                        "Amount": 1795280503,
                         "Divisions": [
                             {
                                 "Division": "Toronto Public Health",
@@ -709,6 +785,46 @@
                                 ]
                             },
                             {
+                                "Division": "Toronto Employment & Social Services",
+                                "Amount": 1103612067,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 192098141
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 14297326
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 281318
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 90255066
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 5635197
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 782813295
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 18231723
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "Group": "Housing & Home Care",
+                        "Amount": 924500035,
+                        "Divisions": [
+                            {
                                 "Division": "Long Term Care Homes & Services",
                                 "Amount": 252739720,
                                 "Expenditures": [
@@ -777,80 +893,6 @@
                                 ]
                             },
                             {
-                                "Division": "Toronto Employment & Social Services",
-                                "Amount": 1103612067,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 192098141
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 14297326
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 281318
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 90255066
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 5635197
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 782813295
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 18231723
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "Group": "Social Development & Control",
-                        "Amount": 57823125,
-                        "Divisions": [
-                            {
-                                "Division": "Social Development, Finance & Administration",
-                                "Amount": 51817153,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 15182548
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 91559
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 17609
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 3442099
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 121704
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 32653200
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 308435
-                                    }
-                                ]
-                            },
-                            {
                                 "Division": "Affordable Housing Office",
                                 "Amount": 2956572,
                                 "Expenditures": [
@@ -879,36 +921,6 @@
                                         "Amount": 488651
                                     }
                                 ]
-                            },
-                            {
-                                "Division": "Toronto Police Services Board",
-                                "Amount": 3049400,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 963200
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 7600
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 900
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 821700
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Capital (505A)",
-                                        "Amount": 610600
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 645400
-                                    }
-                                ]
                             }
                         ]
                     }
@@ -916,7 +928,7 @@
             },
             {
                 "Type": "Municipal Services",
-                "Amount": 2428798130,
+                "Amount": 2478224904,
                 "Groups": [
                     {
                         "Group": "Corporate Management",
@@ -1399,8 +1411,8 @@
                         ]
                     },
                     {
-                        "Group": "Development & Control",
-                        "Amount": 260346980,
+                        "Group": "Maintenance & Standards Services",
+                        "Amount": 122699166,
                         "Divisions": [
                             {
                                 "Division": "311 Toronto",
@@ -1499,29 +1511,13 @@
                                         "Amount": 921355
                                     }
                                 ]
-                            },
-                            {
-                                "Division": "Heritage Toronto",
-                                "Amount": 768379,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 540926
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 67887
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 158300
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 1266
-                                    }
-                                ]
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "Group": "Planning & Development Services",
+                        "Amount": 187074588,
+                        "Divisions": [
                             {
                                 "Division": "City Planning",
                                 "Amount": 43309766,
@@ -1621,20 +1617,36 @@
                                 ]
                             },
                             {
-                                "Division": "Toronto Atmospheric Fund",
-                                "Amount": 1622000,
+                                "Division": "Social Development, Finance & Administration",
+                                "Amount": 51817153,
                                 "Expenditures": [
                                     {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 15182548
+                                    },
+                                    {
                                         "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 20000
+                                        "Amount": 91559
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 17609
                                     },
                                     {
                                         "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1102000
+                                        "Amount": 3442099
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 121704
                                     },
                                     {
                                         "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 500000
+                                        "Amount": 32653200
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 308435
                                     }
                                 ]
                             }

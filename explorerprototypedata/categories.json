@@ -1,7 +1,12 @@
 [
 {
     "Type":"Shared Services",
-    "Group":"Public Works",
+    "Group":"Waste & Water Services",
+    "Amount":null
+},
+{
+    "Type":"Shared Services",
+    "Group":"Transportation & Transit Services",
     "Amount":null
 },
 {
@@ -11,7 +16,7 @@
 },
 {
     "Type":"Shared Services",
-    "Group":"Public Destinations",
+    "Group":"Specialized Commons Services",
     "Amount":null
 },
 {
@@ -26,7 +31,7 @@
 },
 {
     "Type":"Citizen Support Services",
-    "Group":"Social Development & Control",
+    "Group":"Housing & Home Care",
     "Amount":null
 },
 {
@@ -46,7 +51,12 @@
 },
 {
     "Type":"Municipal Services",
-    "Group":"Development & Control",
+    "Group":"Maintenance & Standards Services",
+    "Amount":null
+},
+{
+    "Type":"Municipal Services",
+    "Group":"Planning & Development Services",
     "Amount":null
 },
 {

@@ -116,48 +116,36 @@
   {
     "Division":"311 Toronto",
     "Amount":17300638,
-    "Group":"Development & Control"
+    "Group":"Maintenance & Standards Services"
   },
   {
     "Division":"Municipal Licensing & Standards",
     "Amount":51573166,
-    "Group":"Development & Control"
+    "Group":"Maintenance & Standards Services"
 
   },
   {
     "Division":"Toronto Building",
     "Amount":53825362,
-    "Group":"Development & Control"
-
-  },
-  {
-    "Division":"Heritage Toronto",
-    "Amount":768379,
-    "Group":"Development & Control"
+    "Group":"Maintenance & Standards Services"
 
   },
   {
     "Division":"City Planning",
     "Amount":43309766,
-    "Group":"Development & Control"
+    "Group":"Planning & Development Services"
 
   },
   {
     "Division":"Economic Development & Culture",
     "Amount":70164744,
-    "Group":"Development & Control"
+    "Group":"Planning & Development Services"
 
   },
   {
     "Division":"Policy, Planning, Finance & Administration",
     "Amount":21782925,
-    "Group":"Development & Control"
-
-  },
-  {
-    "Division":"Toronto Atmospheric Fund",
-    "Amount":1622000,
-    "Group":"Development & Control"
+    "Group":"Planning & Development Services"
 
   },
   {
@@ -199,13 +187,13 @@
   {
     "Division":"Long Term Care Homes & Services",
     "Amount":252739720,
-    "Group":"Health & Welfare Services"
+    "Group":"Housing & Home Care"
 
   },
   {
     "Division":"Shelter, Support & Housing Administration",
     "Amount":668803743,
-    "Group":"Health & Welfare Services"
+    "Group":"Housing & Home Care"
 
   },
   {
@@ -247,79 +235,91 @@
   {
     "Division":"Exhibition Place",
     "Amount":36565904,
-    "Group":"Public Destinations"
+    "Group":"Specialized Commons Services"
 
   },
   {
     "Division":"Theatres",
     "Amount":23164341,
-    "Group":"Public Destinations"
+    "Group":"Specialized Commons Services"
 
   },
   {
     "Division":"Toronto Zoo",
     "Amount":51173068,
-    "Group":"Public Destinations"
+    "Group":"Specialized Commons Services"
 
   },
   {
     "Division":"Yonge-Dundas Square",
     "Amount":2334516,
-    "Group":"Public Destinations"
+    "Group":"Specialized Commons Services"
+
+  },
+  {
+    "Division":"Heritage Toronto",
+    "Amount":768379,
+    "Group":"Specialized Commons Services"
+
+  },
+  {
+    "Division":"Toronto Atmospheric Fund",
+    "Amount":1622000,
+    "Group":"Specialized Commons Services"
 
   },
   {
     "Division":"Solid Waste Management Services",
     "Amount":389009445,
-    "Group":"Public Works"
+    "Group":"Waste & Water Services"
 
   },
   {
     "Division":"Toronto Water",
     "Amount":439488844,
-    "Group":"Public Works"
+    "Group":"Waste & Water Services"
 
   },
   {
     "Division":"Toronto Transit Commission - Conventional",
     "Amount":1736305100,
-    "Group":"Public Works"
+    "Group":"Transportation & Transit Services"
 
   },
   {
     "Division":"Toronto Transit Commission - Wheel Trans",
     "Amount":123665900,
-    "Group":"Public Works"
+    "Group":"Transportation & Transit Services"
 
   },
   {
     "Division":"Transportation Services",
     "Amount":387841194,
-    "Group":"Public Works"
+    "Group":"Transportation & Transit Services"
 
   },
   {
     "Division":"Toronto Parking Authority",
     "Amount":84742649,
-    "Group":"Public Works"
+    "Group":"Transportation & Transit Services"
 
   },
   {
     "Division":"Social Development, Finance & Administration",
     "Amount":51817153,
-    "Group":"Social Development & Control"
+    "Group":"Planning & Development Services"
 
   },
   {
     "Division":"Affordable Housing Office",
     "Amount":2956572,
-    "Group":"Social Development & Control"
+    "Group":"Housing & Home Care"
 
   },
   {
     "Division":"Toronto Police Services Board",
     "Amount":3049400,
-    "Group":"Social Development & Control"
+    "Group":"Emergency Services"
 
   }
 ]
