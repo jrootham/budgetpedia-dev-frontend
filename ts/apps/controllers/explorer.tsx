@@ -58,7 +58,7 @@ class ExplorerClass extends Component< any, any > {
 
     // should be in global state to allow for re-creation after return visit
     state = {
-        seriesdata: [[], [], [], []], // DrillDown, Compare, Differences, Context
+        seriesdata: [ [], [], [], [], [] ], // DrillDown, Compare, Differences, Context, Build
         dataselection:"expenses",
         slider: {singlevalue:[2015],doublevalue:[2005,2015]},
         yearselection:"one",
@@ -616,6 +616,15 @@ class ExplorerClass extends Component< any, any > {
 
         </Card>
 
+        // ===========================================
+        // -----------[ BUILD SEGMENT ]-------------
+
+        let buildsegment = <Card>
+
+            <CardTitle>Build</CardTitle>
+
+        </Card>
+
         return <div>
 
             { dashboardsegment }
@@ -627,6 +636,8 @@ class ExplorerClass extends Component< any, any > {
             { differencessegment }
 
             { contextsegment }
+
+            { buildsegment }
 
         </div>
     }

@@ -103,11 +103,15 @@ function auth(state = {
                 isFetching: true,
                 isAuthenticated: false,
                 user: action.payload.creds,
+                token: null,
                 fieldMessages: null,
                 errorMessage: '',
             });
         case LOGIN_SUCCESS:
             return Object.assign({}, state, {
+                user: null,
+                token: action.payload.token,
+                profile: action.payload.profile,
                 isFetching: false,
                 isAuthenticated: true,
             });
@@ -126,6 +130,7 @@ function auth(state = {
                 fieldMessages: fieldMessages,
                 errorMessage: action.payload.message,
                 user: null,
+                token: null,
             });
         case LOGOUT_SUCCESS:
             return Object.assign({}, state, {

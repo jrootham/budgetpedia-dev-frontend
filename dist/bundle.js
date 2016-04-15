@@ -1767,7 +1767,8 @@ var requestLogin = redux_actions_1.createAction(exports.LOGIN_REQUEST, function 
 });
 var receiveLogin = redux_actions_1.createAction(exports.LOGIN_SUCCESS, function (user) {
     return {
-        id_token: user.id_token
+        token: user.token,
+        profile: user.profile
     };
 });
 var loginError = redux_actions_1.createAction(exports.LOGIN_FAILURE, function (message, data) {
@@ -1808,6 +1809,7 @@ exports.loginUser = function (creds) {
                     dispatch(loginError(json.message, json.data));
                 } else dispatch(loginError(text));
             } else {
+                localStorage.setItem('jsonwebtoken', json.token);
                 dispatch(function () {
                     dispatch(receiveLogin(json));
                 });
@@ -1835,7 +1837,7 @@ var receiveLogout = redux_actions_1.createAction(exports.LOGOUT_SUCCESS, functio
 exports.logoutUser = function () {
     return function (dispatch) {
         dispatch(requestLogout());
-        localStorage.removeItem('id_token');
+        localStorage.removeItem('jsonwebtoken');
         dispatch(receiveLogout());
     };
 };
@@ -2213,7 +2215,7 @@ var ExplorerClass = function (_Component) {
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ExplorerClass).call(this, props));
 
         _this.state = {
-            seriesdata: [[], [], [], []],
+            seriesdata: [[], [], [], [], []],
             dataselection: "expenses",
             slider: { singlevalue: [2015], doublevalue: [2005, 2015] },
             yearselection: "one",
@@ -2423,7 +2425,8 @@ var ExplorerClass = function (_Component) {
             var comparesegment = React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Compare"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, comparecharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
             var differencessegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences"));
             var contextsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Context"));
-            return React.createElement("div", null, dashboardsegment, drilldownsegment, comparesegment, differencessegment, contextsegment);
+            var buildsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Build"));
+            return React.createElement("div", null, dashboardsegment, drilldownsegment, comparesegment, differencessegment, contextsegment, buildsegment);
         }
     }]);
 
@@ -3984,11 +3987,15 @@ function auth() {
                 isFetching: true,
                 isAuthenticated: false,
                 user: action.payload.creds,
+                token: null,
                 fieldMessages: null,
                 errorMessage: ''
             });
         case LOGIN_SUCCESS:
             return Object.assign({}, state, {
+                user: null,
+                token: action.payload.token,
+                profile: action.payload.profile,
                 isFetching: false,
                 isAuthenticated: true
             });
@@ -4007,7 +4014,8 @@ function auth() {
                 isFetching: false,
                 fieldMessages: fieldMessages,
                 errorMessage: action.payload.message,
-                user: null
+                user: null,
+                token: null
             });
         case LOGOUT_SUCCESS:
             return Object.assign({}, state, {

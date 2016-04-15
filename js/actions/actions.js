@@ -26,7 +26,8 @@ let requestLogin = redux_actions_1.createAction(exports.LOGIN_REQUEST, creds => 
 });
 let receiveLogin = redux_actions_1.createAction(exports.LOGIN_SUCCESS, user => {
     return {
-        id_token: user.id_token,
+        token: user.token,
+        profile: user.profile,
     };
 });
 let loginError = redux_actions_1.createAction(exports.LOGIN_FAILURE, (message, data) => {
@@ -71,6 +72,7 @@ exports.loginUser = creds => {
                     dispatch(loginError(text));
             }
             else {
+                localStorage.setItem('jsonwebtoken', json.token);
                 dispatch(() => {
                     dispatch(receiveLogin(json));
                 });
@@ -99,7 +101,7 @@ let receiveLogout = redux_actions_1.createAction(exports.LOGOUT_SUCCESS, () => {
 exports.logoutUser = () => {
     return dispatch => {
         dispatch(requestLogout());
-        localStorage.removeItem('id_token');
+        localStorage.removeItem('jsonwebtoken');
         dispatch(receiveLogout());
     };
 };

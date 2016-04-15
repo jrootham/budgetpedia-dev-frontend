@@ -61,7 +61,8 @@ let receiveLogin = createAction(
         return {
             // isFetching: false,
             // isAuthenticated: true,
-            id_token: user.id_token,
+            token: user.token,
+            profile: user.profile,
         }
     }
 )
@@ -119,6 +120,8 @@ export const loginUser = creds => {
                         dispatch(loginError(text))
                     // return Promise.reject(user) // ???
                 } else {
+                    // save token
+                    localStorage.setItem('jsonwebtoken',json.token)
                     // Dispatch the success action
                     dispatch(() => {
                         dispatch(receiveLogin(json))
@@ -161,7 +164,7 @@ let receiveLogout = createAction(
 export const logoutUser = () => {
     return dispatch => {
         dispatch(requestLogout())
-        localStorage.removeItem('id_token')
+        localStorage.removeItem('jsonwebtoken')
         dispatch(receiveLogout())
     }
 }
