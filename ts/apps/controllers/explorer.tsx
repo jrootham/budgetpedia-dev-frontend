@@ -220,7 +220,7 @@ class ExplorerClass extends Component< any, any > {
         let axistitle = meta[depth].Children
         axistitle = categoryaliases[axistitle] || axistitle
         options = {
-            title: parent[meta[depth].Name] + ' ($Thousands)',
+            title: parent[meta[depth].Name], // + ' ($Thousands)',
             vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
             hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
             bar: { groupWidth: "95%" },
@@ -396,6 +396,12 @@ class ExplorerClass extends Component< any, any > {
                     <RadioButton
                         value="structural"
                         label = "Structural"
+                        iconStyle={{ marginRight: "4px" }}
+                        labelStyle={{ width: "auto", marginRight: "24px" }}
+                        style={{ display: 'inline-block', width: 'auto' }} />
+                    <RadioButton
+                        value="auditor"
+                        label = "Auditor"
                         iconStyle={{ marginRight: "4px" }}
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
