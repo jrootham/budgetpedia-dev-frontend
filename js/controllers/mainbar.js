@@ -43,7 +43,15 @@ class MainBarClass extends React.Component {
                 creds[index] = elements[index].getValue();
             }
             console.log('creds', creds);
-            this.props.dispatch(Actions.loginUser(creds));
+            let appbar = this;
+            let callback = (result) => {
+                if (result) {
+                    appbar.setState({
+                        accountsidebaropen: false
+                    });
+                }
+            };
+            this.props.dispatch(Actions.loginUser(creds, callback));
         };
         this.componentDidMount = () => {
             let auth = this.props.auth;
@@ -60,7 +68,7 @@ class MainBarClass extends React.Component {
     }
     render() {
         let appbar = this;
-        let { appnavbar, theme } = appbar.props;
+        let { appnavbar, theme, auth } = appbar.props;
         let fieldMessages = appbar.props.auth.fieldMessages || {};
         let hometiles = this.props.hometiles;
         let menutransition = (func) => {
@@ -115,7 +123,7 @@ class MainBarClass extends React.Component {
             fontSize: "small",
             padding: "3px",
             color: theme.palette.alternateTextColor,
-        }}, appnavbar.username);
+        }}, auth.isAuthenticated ? auth.profile.userhandle : appnavbar.username);
         return (React.createElement(AppBar, {onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: accounticon}, username, loginsidebar, menusidebar));
     }
 }

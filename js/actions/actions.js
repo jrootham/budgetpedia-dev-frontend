@@ -36,7 +36,7 @@ let loginError = redux_actions_1.createAction(exports.LOGIN_FAILURE, (message, d
         data: data,
     };
 });
-exports.loginUser = creds => {
+exports.loginUser = (creds, callback) => {
     let config = {
         method: 'POST',
         headers: { "Content-Type": "application/x-www-form-urlencoded", },
@@ -76,6 +76,7 @@ exports.loginUser = creds => {
                 dispatch(() => {
                     dispatch(receiveLogin(json));
                 });
+                callback(true);
             }
         })
             .catch(err => {

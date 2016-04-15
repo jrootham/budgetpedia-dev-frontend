@@ -1777,7 +1777,7 @@ var loginError = redux_actions_1.createAction(exports.LOGIN_FAILURE, function (m
         data: data
     };
 });
-exports.loginUser = function (creds) {
+exports.loginUser = function (creds, callback) {
     var config = {
         method: 'POST',
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -1813,6 +1813,7 @@ exports.loginUser = function (creds) {
                 dispatch(function () {
                     dispatch(receiveLogin(json));
                 });
+                callback(true);
             }
         }).catch(function (err) {
             dispatch(loginError(err.message));
@@ -3165,7 +3166,15 @@ var MainBarClass = function (_React$Component) {
                 creds[index] = elements[index].getValue();
             }
             console.log('creds', creds);
-            _this.props.dispatch(Actions.loginUser(creds));
+            var appbar = _this;
+            var callback = function callback(result) {
+                if (result) {
+                    appbar.setState({
+                        accountsidebaropen: false
+                    });
+                }
+            };
+            _this.props.dispatch(Actions.loginUser(creds, callback));
         };
         _this.componentDidMount = function () {
             var auth = _this.props.auth;
@@ -3191,6 +3200,7 @@ var MainBarClass = function (_React$Component) {
             var _appbar$props = appbar.props;
             var appnavbar = _appbar$props.appnavbar;
             var theme = _appbar$props.theme;
+            var auth = _appbar$props.auth;
 
             var fieldMessages = appbar.props.auth.fieldMessages || {};
             var hometiles = this.props.hometiles;
@@ -3251,7 +3261,7 @@ var MainBarClass = function (_React$Component) {
                     fontSize: "small",
                     padding: "3px",
                     color: theme.palette.alternateTextColor
-                } }, appnavbar.username);
+                } }, auth.isAuthenticated ? auth.profile.userhandle : appnavbar.username);
             return React.createElement(AppBar, { onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: accounticon }, username, loginsidebar, menusidebar);
         }
     }]);

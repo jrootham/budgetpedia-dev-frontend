@@ -103,7 +103,16 @@ class MainBarClass extends React.Component<any, any> {
         }
         console.log('creds',creds)
 
-        this.props.dispatch(Actions.loginUser(creds))
+        let appbar = this
+        let callback = (result) => {
+            if (result) {
+                appbar.setState({
+                    accountsidebaropen: false
+                })
+            }
+        }
+
+        this.props.dispatch(Actions.loginUser(creds,callback))
     }
 
     componentDidMount = () => {
@@ -117,7 +126,7 @@ class MainBarClass extends React.Component<any, any> {
 
     render() { 
         let appbar = this
-        let { appnavbar, theme } = appbar.props
+        let { appnavbar, theme, auth } = appbar.props
         let fieldMessages = appbar.props.auth.fieldMessages || {}
         let hometiles = this.props.hometiles
         let menutransition = (func) => {
@@ -304,7 +313,7 @@ class MainBarClass extends React.Component<any, any> {
                 color: theme.palette.alternateTextColor,
             }} >
 
-                { appnavbar.username }
+                { auth.isAuthenticated? auth.profile.userhandle: appnavbar.username }
 
             </div>
 

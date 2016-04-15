@@ -80,7 +80,7 @@ let loginError = createAction(
 )
 
 // call the api
-export const loginUser = creds => {
+export const loginUser = (creds, callback) => {
 
     let config:RequestInit = {
         method: 'POST',
@@ -126,6 +126,7 @@ export const loginUser = creds => {
                     dispatch(() => {
                         dispatch(receiveLogin(json))
                     })
+                    callback(true) // take success action, like close login form
                 }
             })
             .catch(err => {
