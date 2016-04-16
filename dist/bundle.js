@@ -860,6 +860,36 @@ module.exports=[
                                 ]
                             },
                             {
+                                "Division": "Affordable Housing Office",
+                                "Amount": 2956572,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 2283011
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 11551
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 2500
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 165211
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 5647
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 488651
+                                    }
+                                ]
+                            },
+                            {
                                 "Division": "Toronto Employment & Social Services",
                                 "Amount": 1103612067,
                                 "Expenditures": [
@@ -890,36 +920,6 @@ module.exports=[
                                     {
                                         "Expenditure": "Inter-Divisional Charges (700A)",
                                         "Amount": 18231723
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Affordable Housing Office",
-                                "Amount": 2956572,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 2283011
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 11551
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 2500
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 165211
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 5647
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 488651
                                     }
                                 ]
                             }
