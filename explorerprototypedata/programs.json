@@ -90,6 +90,12 @@
 
   },
   {
+    "Division":"City Clerk's Office",
+    "Amount":49713076,
+    "Group":"Corporate Management"
+
+  },
+  {
     "Division":"City Manager's Office",
     "Amount":54760375,
     "Group":"Corporate Management"
@@ -98,12 +104,6 @@
   {
     "Division":"Office of the Chief Financial Officer",
     "Amount":16576993,
-    "Group":"Corporate Management"
-
-  },
-  {
-    "Division":"City Clerk's Office",
-    "Amount":49713076,
     "Group":"Corporate Management"
 
   },

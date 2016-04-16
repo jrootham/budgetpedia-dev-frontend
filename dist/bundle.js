@@ -988,6 +988,40 @@ module.exports=[
                                 ]
                             },
                             {
+                                "Division": "City Clerk's Office",
+                                "Amount": 49713076,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 39232601
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 1073584
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 86735
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 7697802
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 464633
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 32771
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 1124950
+                                    }
+                                ]
+                            },
+                            {
                                 "Division": "City Manager's Office",
                                 "Amount": 54760375,
                                 "Expenditures": [
@@ -1048,40 +1082,6 @@ module.exports=[
                                     {
                                         "Expenditure": "Inter-Divisional Charges (700A)",
                                         "Amount": 231879
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "City Clerk's Office",
-                                "Amount": 49713076,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 39232601
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 1073584
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 86735
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 7697802
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 464633
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 32771
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 1124950
                                     }
                                 ]
                             },
