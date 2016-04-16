@@ -378,8 +378,8 @@ module.exports=[
                         ]
                     },
                     {
-                        "Group": "Specialized Commons Services",
-                        "Amount": 115628208,
+                        "Group": "Public Destinations",
+                        "Amount": 113237829,
                         "Divisions": [
                             {
                                 "Division": "Exhibition Place",
@@ -496,7 +496,13 @@ module.exports=[
                                         "Amount": 2773
                                     }
                                 ]
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "Group": "Specialized Commons Services",
+                        "Amount": 2390379,
+                        "Divisions": [
                             {
                                 "Division": "Heritage Toronto",
                                 "Amount": 768379,
@@ -715,7 +721,7 @@ module.exports=[
                     },
                     {
                         "Group": "Health & Welfare Services",
-                        "Amount": 1795280503,
+                        "Amount": 2719780538,
                         "Divisions": [
                             {
                                 "Division": "Toronto Public Health",
@@ -786,46 +792,6 @@ module.exports=[
                                 ]
                             },
                             {
-                                "Division": "Toronto Employment & Social Services",
-                                "Amount": 1103612067,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 192098141
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 14297326
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 281318
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 90255066
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 5635197
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 782813295
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 18231723
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "Group": "Housing & Home Care",
-                        "Amount": 924500035,
-                        "Divisions": [
-                            {
                                 "Division": "Long Term Care Homes & Services",
                                 "Amount": 252739720,
                                 "Expenditures": [
@@ -890,6 +856,40 @@ module.exports=[
                                     {
                                         "Expenditure": "Inter-Divisional Charges (700A)",
                                         "Amount": 1190423
+                                    }
+                                ]
+                            },
+                            {
+                                "Division": "Toronto Employment & Social Services",
+                                "Amount": 1103612067,
+                                "Expenditures": [
+                                    {
+                                        "Expenditure": "Salaries And Benefits (100A)",
+                                        "Amount": 192098141
+                                    },
+                                    {
+                                        "Expenditure": "Materials & Supplies (200A)",
+                                        "Amount": 14297326
+                                    },
+                                    {
+                                        "Expenditure": "Equipment (300A)",
+                                        "Amount": 281318
+                                    },
+                                    {
+                                        "Expenditure": "Service And Rent (400A)",
+                                        "Amount": 90255066
+                                    },
+                                    {
+                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
+                                        "Amount": 5635197
+                                    },
+                                    {
+                                        "Expenditure": "Other Expenditures (650A)",
+                                        "Amount": 782813295
+                                    },
+                                    {
+                                        "Expenditure": "Inter-Divisional Charges (700A)",
+                                        "Amount": 18231723
                                     }
                                 ]
                             },

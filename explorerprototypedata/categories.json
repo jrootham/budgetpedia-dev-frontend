@@ -16,6 +16,11 @@
 },
 {
     "Type":"Shared Services",
+    "Group":"Public Destinations",
+    "Amount":null
+},
+{
+    "Type":"Shared Services",
     "Group":"Specialized Commons Services",
     "Amount":null
 },
@@ -27,11 +32,6 @@
 {
     "Type":"Citizen Support Services",
     "Group":"Health & Welfare Services",
-    "Amount":null
-},
-{
-    "Type":"Citizen Support Services",
-    "Group":"Housing & Home Care",
     "Amount":null
 },
 {

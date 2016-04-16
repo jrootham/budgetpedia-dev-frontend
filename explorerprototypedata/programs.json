@@ -1,5 +1,29 @@
 [
   {
+    "Division":"Auditor General's Office",
+    "Amount":4762566,
+    "Group":"Accountability Offices"
+
+  },
+  {
+    "Division":"Office of the Lobbyist Registrar",
+    "Amount":1143089,
+    "Group":"Accountability Offices"
+
+  },
+  {
+    "Division":"Office of the Ombudsman",
+    "Amount":1814559,
+    "Group":"Accountability Offices"
+
+  },
+  {
+    "Division":"Integrity Commissioner's Office",
+    "Amount":479234,
+    "Group":"Accountability Offices"
+
+  },
+  {
     "Division":"Parks, Forestry & Recreation",
     "Amount":445637483,
     "Group":"City Commons"
@@ -27,30 +51,6 @@
     "Division":"Toronto Public Library",
     "Amount":192504396,
     "Group":"City Commons"
-
-  },
-  {
-    "Division":"Auditor General's Office",
-    "Amount":4762566,
-    "Group":"Accountability Offices"
-
-  },
-  {
-    "Division":"Office of the Lobbyist Registrar",
-    "Amount":1143089,
-    "Group":"Accountability Offices"
-
-  },
-  {
-    "Division":"Office of the Ombudsman",
-    "Amount":1814559,
-    "Group":"Accountability Offices"
-
-  },
-  {
-    "Division":"Integrity Commissioner's Office",
-    "Amount":479234,
-    "Group":"Accountability Offices"
 
   },
   {
@@ -114,6 +114,102 @@
 
   },
   {
+    "Division":"Fire Services",
+    "Amount":433233567,
+    "Group":"Emergency Services"
+
+  },
+  {
+    "Division":"Toronto Paramedic Services",
+    "Amount":201165372,
+    "Group":"Emergency Services"
+
+  },
+  {
+    "Division":"Toronto Police Service",
+    "Amount":1134148976,
+    "Group":"Emergency Services"
+
+  },
+  {
+    "Division":"Court Services",
+    "Amount":50079137,
+    "Group":"Emergency Services"
+
+  },
+  {
+    "Division":"Toronto Police Services Board",
+    "Amount":3049400,
+    "Group":"Emergency Services"
+
+  },
+  {
+    "Division":"Toronto Public Health",
+    "Amount":240703329,
+    "Group":"Health & Welfare Services"
+
+  },
+  {
+    "Division":"Children's Services",
+    "Amount":450965107,
+    "Group":"Health & Welfare Services"
+
+  },
+  {
+    "Division":"Long Term Care Homes & Services",
+    "Amount":252739720,
+    "Group":"Health & Welfare Services"
+
+  },
+  {
+    "Division":"Shelter, Support & Housing Administration",
+    "Amount":668803743,
+    "Group":"Health & Welfare Services"
+
+  },
+  {
+    "Division":"Toronto Employment & Social Services",
+    "Amount":1103612067,
+    "Group":"Health & Welfare Services"
+
+  },
+  {
+    "Division":"Affordable Housing Office",
+    "Amount":2956572,
+    "Group":"Health & Welfare Services"
+
+  },
+  {
+    "Division":"Facilities, Real Estate, Environment & Energy",
+    "Amount":193120454,
+    "Group":"Internal Services"
+
+  },
+  {
+    "Division":"Engineering & Construction Services",
+    "Amount":69661726,
+    "Group":"Internal Services"
+
+  },
+  {
+    "Division":"Information & Technology",
+    "Amount":124877224,
+    "Group":"Internal Services"
+
+  },
+  {
+    "Division":"Legal Services",
+    "Amount":50229349,
+    "Group":"Internal Services"
+
+  },
+  {
+    "Division":"Fleet Services",
+    "Amount":51452143,
+    "Group":"Internal Services"
+
+  },
+  {
     "Division":"311 Toronto",
     "Amount":17300638,
     "Group":"Maintenance & Standards Services"
@@ -155,111 +251,27 @@
 
   },
   {
-    "Division":"Fire Services",
-    "Amount":433233567,
-    "Group":"Emergency Services"
-
-  },
-  {
-    "Division":"Toronto Paramedic Services",
-    "Amount":201165372,
-    "Group":"Emergency Services"
-
-  },
-  {
-    "Division":"Toronto Police Service",
-    "Amount":1134148976,
-    "Group":"Emergency Services"
-
-  },
-  {
-    "Division":"Court Services",
-    "Amount":50079137,
-    "Group":"Emergency Services"
-
-  },
-  {
-    "Division":"Toronto Public Health",
-    "Amount":240703329,
-    "Group":"Health & Welfare Services"
-
-  },
-  {
-    "Division":"Children's Services",
-    "Amount":450965107,
-    "Group":"Health & Welfare Services"
-
-  },
-  {
-    "Division":"Long Term Care Homes & Services",
-    "Amount":252739720,
-    "Group":"Housing & Home Care"
-
-  },
-  {
-    "Division":"Shelter, Support & Housing Administration",
-    "Amount":668803743,
-    "Group":"Housing & Home Care"
-
-  },
-  {
-    "Division":"Toronto Employment & Social Services",
-    "Amount":1103612067,
-    "Group":"Health & Welfare Services"
-
-  },
-  {
-    "Division":"Facilities, Real Estate, Environment & Energy",
-    "Amount":193120454,
-    "Group":"Internal Services"
-
-  },
-  {
-    "Division":"Engineering & Construction Services",
-    "Amount":69661726,
-    "Group":"Internal Services"
-
-  },
-  {
-    "Division":"Information & Technology",
-    "Amount":124877224,
-    "Group":"Internal Services"
-
-  },
-  {
-    "Division":"Legal Services",
-    "Amount":50229349,
-    "Group":"Internal Services"
-
-  },
-  {
-    "Division":"Fleet Services",
-    "Amount":51452143,
-    "Group":"Internal Services"
-
-  },
-  {
     "Division":"Exhibition Place",
     "Amount":36565904,
-    "Group":"Specialized Commons Services"
+    "Group":"Public Destinations"
 
   },
   {
     "Division":"Theatres",
     "Amount":23164341,
-    "Group":"Specialized Commons Services"
+    "Group":"Public Destinations"
 
   },
   {
     "Division":"Toronto Zoo",
     "Amount":51173068,
-    "Group":"Specialized Commons Services"
+    "Group":"Public Destinations"
 
   },
   {
     "Division":"Yonge-Dundas Square",
     "Amount":2334516,
-    "Group":"Specialized Commons Services"
+    "Group":"Public Destinations"
 
   },
   {
@@ -274,19 +286,7 @@
     "Group":"Specialized Commons Services"
 
   },
-  {
-    "Division":"Solid Waste Management Services",
-    "Amount":389009445,
-    "Group":"Waste & Water Services"
-
-  },
-  {
-    "Division":"Toronto Water",
-    "Amount":439488844,
-    "Group":"Waste & Water Services"
-
-  },
-  {
+{
     "Division":"Toronto Transit Commission - Conventional",
     "Amount":1736305100,
     "Group":"Transportation & Transit Services"
@@ -311,15 +311,15 @@
 
   },
   {
-    "Division":"Affordable Housing Office",
-    "Amount":2956572,
-    "Group":"Housing & Home Care"
+    "Division":"Solid Waste Management Services",
+    "Amount":389009445,
+    "Group":"Waste & Water Services"
 
   },
   {
-    "Division":"Toronto Police Services Board",
-    "Amount":3049400,
-    "Group":"Emergency Services"
+    "Division":"Toronto Water",
+    "Amount":439488844,
+    "Group":"Waste & Water Services"
 
   }
 ]
