@@ -217,6 +217,9 @@ export const autoLoginUser = (token, callback) => {
                     // dispatch the error condition
                     if (isJson) {
                         // json.data = field level data
+                        if (json.statusCode == 422) { // should not keep web token for item not found
+                            localStorage.removeItem('jsonwebtoken')
+                        }
                         dispatch(autoLoginError(json.message, json.data))
                     } else
                         dispatch(autoLoginError(text))

@@ -133,6 +133,9 @@ exports.autoLoginUser = (token, callback) => {
             }
             if (!isJson || !response.ok) {
                 if (isJson) {
+                    if (json.statusCode == 422) {
+                        localStorage.removeItem('jsonwebtoken');
+                    }
                     dispatch(autoLoginError(json.message, json.data));
                 }
                 else
