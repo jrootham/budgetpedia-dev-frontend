@@ -17,6 +17,7 @@ import { routerActions } from 'react-router-redux'
 
 import { getQuery } from '../utilities/utilities'
 
+//===============================================
 /*------------- tile management -----------*/
 
 export const SET_TILECOLS = 'SET_TILECOLS'
@@ -36,6 +37,7 @@ export const transitionTo = route => {
     }
 }
 
+//===============================================
 /*------------- login management -----------*/
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
@@ -135,6 +137,106 @@ export const loginUser = (creds, callback) => {
     }
 }
 
+//===============================================
+/*------------- auto login management -----------*/
+
+export const AUTO_LOGIN_REQUEST = 'AUTO_LOGIN_REQUEST'
+export const AUTO_LOGIN_SUCCESS = 'AUTO_LOGIN_SUCCESS'
+export const AUTO_LOGIN_FAILURE = 'AUTO_LOGIN_FAILURE'
+
+let requestAutoLogin = createAction(
+    AUTO_LOGIN_REQUEST,
+    creds => {
+        return {
+            // isFetching: true,
+            // isAuthenticated: false,
+            message: '',
+            data: null,
+            creds,
+        }
+    }
+)
+
+let receiveAutoLogin = createAction(
+    AUTO_LOGIN_SUCCESS,
+    user => {
+        return {
+            // isFetching: false,
+            // isAuthenticated: true,
+            token: user.token,
+            profile: user.profile,
+        }
+    }
+)
+
+let autoLoginError = createAction(
+    AUTO_LOGIN_FAILURE,
+    (message, data?) => {
+        return {
+            // isFetching: false,
+            // isAuthenticated: false,
+            // message,
+            // data,
+        }
+    }
+)
+
+// call the api
+export const autoLoginUser = (token, callback) => {
+
+    let config: RequestInit = {
+        method: 'POST',
+        headers: { "Content-Type": "application/x-www-form-urlencoded", },
+        body: `token=${token}`,
+    }
+    return dispatch => {
+        dispatch(requestAutoLogin(token))
+        fetch('/api/login/token', config)
+            .then(response => {
+                // console.log('request response = ', response)
+                if (response.status >= 500) {
+                    throw new Error("Response from server: " +
+                        response.statusText + ' (' +
+                        response.status + ')')
+                }
+                return response.text().then(text => {
+                    return { text, response }
+                })
+            })
+            .then(({text, response}) => {
+                let json, isJson
+                try {
+                    json = JSON.parse(text)
+                    isJson = true
+
+                } catch (e) {
+                    isJson = false
+                }
+                if (!isJson || !response.ok) {
+                    // If there was a problem, we want to
+                    // dispatch the error condition
+                    if (isJson) {
+                        // json.data = field level data
+                        dispatch(autoLoginError(json.message, json.data))
+                    } else
+                        dispatch(autoLoginError(text))
+                } else {
+                    // update token
+                    localStorage.setItem('jsonwebtoken', json.token)
+                    // Dispatch the success action
+                    dispatch(() => {
+                        dispatch(receiveAutoLogin(json))
+                    })
+                    callback(true) // take success action
+                }
+            })
+            .catch(err => {
+                dispatch(autoLoginError(err.message))
+            })
+    }
+}
+
+//===============================================
 /*------------- logout management -----------*/
 
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
@@ -172,7 +274,6 @@ export const logoutUser = () => {
 
 //===================================================
 //------------- REGISTRATION MANAGEMENT -------------
-//===================================================
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
@@ -277,7 +378,6 @@ export const registerUser = profile => {
 
 //================================================================
 //------------- REGISTRATION CONFIMRATION MANAGEMENT -------------
-//================================================================
 
 export const REGISTER_CONFIRM_REQUEST = 'REGISTER_CONFIRM_REQUEST'
 export const REGISTER_CONFIRM_SUCCESS = 'REGISTER_CONFIRM_SUCCESS'

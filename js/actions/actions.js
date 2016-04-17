@@ -84,6 +84,73 @@ exports.loginUser = (creds, callback) => {
         });
     };
 };
+exports.AUTO_LOGIN_REQUEST = 'AUTO_LOGIN_REQUEST';
+exports.AUTO_LOGIN_SUCCESS = 'AUTO_LOGIN_SUCCESS';
+exports.AUTO_LOGIN_FAILURE = 'AUTO_LOGIN_FAILURE';
+let requestAutoLogin = redux_actions_1.createAction(exports.AUTO_LOGIN_REQUEST, creds => {
+    return {
+        message: '',
+        data: null,
+        creds: creds,
+    };
+});
+let receiveAutoLogin = redux_actions_1.createAction(exports.AUTO_LOGIN_SUCCESS, user => {
+    return {
+        token: user.token,
+        profile: user.profile,
+    };
+});
+let autoLoginError = redux_actions_1.createAction(exports.AUTO_LOGIN_FAILURE, (message, data) => {
+    return {};
+});
+exports.autoLoginUser = (token, callback) => {
+    let config = {
+        method: 'POST',
+        headers: { "Content-Type": "application/x-www-form-urlencoded", },
+        body: `token=${token}`,
+    };
+    return dispatch => {
+        dispatch(requestAutoLogin(token));
+        fetch('/api/login/token', config)
+            .then(response => {
+            if (response.status >= 500) {
+                throw new Error("Response from server: " +
+                    response.statusText + ' (' +
+                    response.status + ')');
+            }
+            return response.text().then(text => {
+                return { text: text, response: response };
+            });
+        })
+            .then(({ text, response }) => {
+            let json, isJson;
+            try {
+                json = JSON.parse(text);
+                isJson = true;
+            }
+            catch (e) {
+                isJson = false;
+            }
+            if (!isJson || !response.ok) {
+                if (isJson) {
+                    dispatch(autoLoginError(json.message, json.data));
+                }
+                else
+                    dispatch(autoLoginError(text));
+            }
+            else {
+                localStorage.setItem('jsonwebtoken', json.token);
+                dispatch(() => {
+                    dispatch(receiveAutoLogin(json));
+                });
+                callback(true);
+            }
+        })
+            .catch(err => {
+            dispatch(autoLoginError(err.message));
+        });
+    };
+};
 exports.LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 exports.LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 exports.LOGOUT_FAILURE = 'LOGOUT_FAILURE';

@@ -31,6 +31,19 @@ const store = createStore(
     applyMiddleware(reduxRouterMiddleware, thunkMiddleware)
 )
 
+let state = store.getState()
+let auth = state.auth
+var token
+if (!auth.isAuthenticated) {
+    token = localStorage.getItem('jsonwebtoken')
+    if (token) {
+        let callback = result => {
+            // no action required
+        }
+        store.dispatch(Actions.autoLoginUser(token,callback))
+    }
+}
+
 export class Main extends Component<any, any> {
 
     render() {

@@ -92,13 +92,14 @@ let homecolsreducer = (state = initialstate_1.initialstate.homecols, action) => 
 let homecols = redux_actions_1.handleActions({
     [Actions.SET_HOMETILECOLS]: homecolsreducer,
 }, initialstate_1.initialstate.homecols);
-let { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } = Actions;
+let { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, AUTO_LOGIN_REQUEST, AUTO_LOGIN_SUCCESS, AUTO_LOGIN_FAILURE, } = Actions;
 function auth(state = {
         isFetching: false,
         isAuthenticated: localStorage.getItem('id_token') ? true : false
     }, action) {
     switch (action.type) {
         case LOGIN_REQUEST:
+        case AUTO_LOGIN_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
                 isAuthenticated: false,
@@ -108,6 +109,7 @@ function auth(state = {
                 errorMessage: '',
             });
         case LOGIN_SUCCESS:
+        case AUTO_LOGIN_SUCCESS:
             return Object.assign({}, state, {
                 user: null,
                 token: action.payload.token,
@@ -115,6 +117,8 @@ function auth(state = {
                 isFetching: false,
                 isAuthenticated: true,
             });
+        case AUTO_LOGIN_FAILURE:
+            return state;
         case LOGIN_FAILURE:
             let fieldMessages = {};
             let data = action.payload.data || [];

@@ -1832,6 +1832,68 @@ exports.loginUser = function (creds, callback) {
         });
     };
 };
+exports.AUTO_LOGIN_REQUEST = 'AUTO_LOGIN_REQUEST';
+exports.AUTO_LOGIN_SUCCESS = 'AUTO_LOGIN_SUCCESS';
+exports.AUTO_LOGIN_FAILURE = 'AUTO_LOGIN_FAILURE';
+var requestAutoLogin = redux_actions_1.createAction(exports.AUTO_LOGIN_REQUEST, function (creds) {
+    return {
+        message: '',
+        data: null,
+        creds: creds
+    };
+});
+var receiveAutoLogin = redux_actions_1.createAction(exports.AUTO_LOGIN_SUCCESS, function (user) {
+    return {
+        token: user.token,
+        profile: user.profile
+    };
+});
+var autoLoginError = redux_actions_1.createAction(exports.AUTO_LOGIN_FAILURE, function (message, data) {
+    return {};
+});
+exports.autoLoginUser = function (token, callback) {
+    var config = {
+        method: 'POST',
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: 'token=' + token
+    };
+    return function (dispatch) {
+        dispatch(requestAutoLogin(token));
+        fetch('/api/login/token', config).then(function (response) {
+            if (response.status >= 500) {
+                throw new Error("Response from server: " + response.statusText + ' (' + response.status + ')');
+            }
+            return response.text().then(function (text) {
+                return { text: text, response: response };
+            });
+        }).then(function (_ref2) {
+            var text = _ref2.text;
+            var response = _ref2.response;
+
+            var json = undefined,
+                isJson = undefined;
+            try {
+                json = JSON.parse(text);
+                isJson = true;
+            } catch (e) {
+                isJson = false;
+            }
+            if (!isJson || !response.ok) {
+                if (isJson) {
+                    dispatch(autoLoginError(json.message, json.data));
+                } else dispatch(autoLoginError(text));
+            } else {
+                localStorage.setItem('jsonwebtoken', json.token);
+                dispatch(function () {
+                    dispatch(receiveAutoLogin(json));
+                });
+                callback(true);
+            }
+        }).catch(function (err) {
+            dispatch(autoLoginError(err.message));
+        });
+    };
+};
 exports.LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 exports.LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 exports.LOGOUT_FAILURE = 'LOGOUT_FAILURE';
@@ -1892,9 +1954,9 @@ exports.registerUser = function (profile) {
             return response.text().then(function (text) {
                 return { text: text, response: response };
             });
-        }).then(function (_ref2) {
-            var text = _ref2.text;
-            var response = _ref2.response;
+        }).then(function (_ref3) {
+            var text = _ref3.text;
+            var response = _ref3.response;
 
             var json = undefined,
                 isJson = undefined;
@@ -1962,9 +2024,9 @@ exports.confirmUser = function () {
                 return response.text().then(function (text) {
                     return { text: text, response: response };
                 });
-            }).then(function (_ref3) {
-                var text = _ref3.text;
-                var response = _ref3.response;
+            }).then(function (_ref4) {
+                var text = _ref4.text;
+                var response = _ref4.response;
 
                 var json = undefined,
                     isJson = undefined;
@@ -3087,8 +3149,19 @@ var redux_thunk_1 = require('redux-thunk');
 var reducers_1 = require("../reducers/reducers");
 var mainbar_1 = require('./mainbar');
 var routes_1 = require('../apps/routes');
+var Actions = require('../actions/actions');
 var reduxRouterMiddleware = react_router_redux_1.routerMiddleware(react_router_1.browserHistory);
 var store = redux_1.createStore(reducers_1.mainReducer, redux_1.applyMiddleware(reduxRouterMiddleware, redux_thunk_1.default));
+var state = store.getState();
+var auth = state.auth;
+var token;
+if (!auth.isAuthenticated) {
+    token = localStorage.getItem('jsonwebtoken');
+    if (token) {
+        var callback = function callback(result) {};
+        store.dispatch(Actions.autoLoginUser(token, callback));
+    }
+}
 
 var Main = function (_Component) {
     _inherits(Main, _Component);
@@ -3111,7 +3184,7 @@ var Main = function (_Component) {
 
 exports.Main = Main;
 
-},{"../apps/routes":17,"../reducers/reducers":33,"./mainbar":25,"react":426,"react-redux":240,"react-router":276,"react-router-redux":245,"react-tap-event-plugin":288,"redux":439,"redux-thunk":433}],25:[function(require,module,exports){
+},{"../actions/actions":2,"../apps/routes":17,"../reducers/reducers":33,"./mainbar":25,"react":426,"react-redux":240,"react-router":276,"react-router-redux":245,"react-tap-event-plugin":288,"redux":439,"redux-thunk":433}],25:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3995,6 +4068,9 @@ var LOGIN_REQUEST = Actions.LOGIN_REQUEST;
 var LOGIN_SUCCESS = Actions.LOGIN_SUCCESS;
 var LOGIN_FAILURE = Actions.LOGIN_FAILURE;
 var LOGOUT_SUCCESS = Actions.LOGOUT_SUCCESS;
+var AUTO_LOGIN_REQUEST = Actions.AUTO_LOGIN_REQUEST;
+var AUTO_LOGIN_SUCCESS = Actions.AUTO_LOGIN_SUCCESS;
+var AUTO_LOGIN_FAILURE = Actions.AUTO_LOGIN_FAILURE;
 
 function auth() {
     var state = arguments.length <= 0 || arguments[0] === undefined ? {
@@ -4005,6 +4081,7 @@ function auth() {
 
     switch (action.type) {
         case LOGIN_REQUEST:
+        case AUTO_LOGIN_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
                 isAuthenticated: false,
@@ -4014,6 +4091,7 @@ function auth() {
                 errorMessage: ''
             });
         case LOGIN_SUCCESS:
+        case AUTO_LOGIN_SUCCESS:
             return Object.assign({}, state, {
                 user: null,
                 token: action.payload.token,
@@ -4021,6 +4099,8 @@ function auth() {
                 isFetching: false,
                 isAuthenticated: true
             });
+        case AUTO_LOGIN_FAILURE:
+            return state;
         case LOGIN_FAILURE:
             var fieldMessages = {};
             var data = action.payload.data || [];

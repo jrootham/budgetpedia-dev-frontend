@@ -148,7 +148,8 @@ let homecols = handleActions({
 
 
 let {
-    LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS
+    LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS,
+    AUTO_LOGIN_REQUEST, AUTO_LOGIN_SUCCESS, AUTO_LOGIN_FAILURE,
 } = Actions
 
 // The auth reducer. The starting state sets authentication
@@ -160,6 +161,7 @@ function auth(state = {
 }, action) {
     switch (action.type) {
         case LOGIN_REQUEST:
+        case AUTO_LOGIN_REQUEST:
 
             return Object.assign({}, state, {
                 isFetching: true,
@@ -171,6 +173,7 @@ function auth(state = {
             })
 
         case LOGIN_SUCCESS:
+        case AUTO_LOGIN_SUCCESS:
 
             return Object.assign({}, state, {
                 user: null,
@@ -179,6 +182,9 @@ function auth(state = {
                 isFetching: false,
                 isAuthenticated: true,
             })
+
+        case AUTO_LOGIN_FAILURE:
+            return state // take no action
 
         case LOGIN_FAILURE:
             let fieldMessages = {}
