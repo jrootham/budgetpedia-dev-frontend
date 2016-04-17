@@ -1,6 +1,11 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // register.tsx
 
+/*
+    TODO: autologin after successful registration
+
+*/
+
 import * as React from 'react' // required by bundler
 var { Component } = React
 import { connect as injectStore} from 'react-redux'
@@ -25,7 +30,7 @@ class RegisterConfirmClass extends Component<any, any> {
             ? 
             <div>
                 <p>
-                    {auth.user.username}, your registation has been confirmed, and you are logged in.
+                    {auth.profile.username}, your registation has been confirmed, and you are logged in.
                 </p>
             </div >
             : registerconfirm.isConfirmed
@@ -35,7 +40,7 @@ class RegisterConfirmClass extends Component<any, any> {
                     Thanks for confirming your registration, {registerconfirm.user.username}!
                 </p>
                 <p>
-                    Automatic login did not occur, however. Please try logging in again.
+                    Automatic login did not occur, however. Please try logging in.
                 </p>
             </div>
             : 

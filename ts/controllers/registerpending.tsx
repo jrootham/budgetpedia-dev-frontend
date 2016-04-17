@@ -22,7 +22,7 @@ class RegisterPendingClass extends Component<any, any> {
             ? 
             <div>
                 <p>
-                    {auth.user.username}, you're already registered.
+                    {auth.profile.username}, you're already registered and logged in.
                 </p>
             </div >
             : register.isRegistered
@@ -33,7 +33,7 @@ class RegisterPendingClass extends Component<any, any> {
                 </p>
                 <p>
                     An email has been sent to
-                    the address you used to register. Please follow the instructions in this email
+                    the email address you used to register. Please follow the instructions in this email
                     to authenticate and complete your registration.
                 </p>
             </div>

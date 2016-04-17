@@ -1,6 +1,11 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // register.tsx
 
+/*
+    TODO:
+    - disallow registration while logged in. test this
+*/
+
 import * as React from 'react' // required by bundler
 var { Component, PropTypes } = React
 import { connect as injectStore} from 'react-redux'
@@ -28,6 +33,7 @@ class RegisterClass extends Component<any, any> {
         let registerpage = this
         let fieldMessages = registerpage.props.register.fieldMessages || {}
         // console.log('fieldMessages = ',fieldMessages)
+        let disabled = registerpage.props.auth.isAuthenticated
 
         let elements: Array<elementProps> = [
             {
@@ -38,6 +44,7 @@ class RegisterClass extends Component<any, any> {
                 type: 'email',
                 required: true,
                 errorText: fieldMessages['email'],
+                disabled,
             },
             {
                 index: 'userhandle',
@@ -46,6 +53,7 @@ class RegisterClass extends Component<any, any> {
                 type: 'text',
                 required: true,
                 errorText: fieldMessages['userhandle'],
+                disabled,
             },
             {
                 index: 'username',
@@ -54,6 +62,7 @@ class RegisterClass extends Component<any, any> {
                 type: 'text',
                 required: true,
                 errorText: fieldMessages['username'],
+                disabled
             },
             {
                 index: 'participation',
@@ -69,6 +78,7 @@ class RegisterClass extends Component<any, any> {
                 type: 'password',
                 required: true,
                 errorText: fieldMessages['password'],
+                disabled,
             },
             {
                 index: 'password2',
@@ -77,6 +87,7 @@ class RegisterClass extends Component<any, any> {
                 type: 'password',
                 required: true,
                 errorText: fieldMessages['password2'],
+                disabled
             },
             {
                 index: 'intro',
@@ -85,6 +96,7 @@ class RegisterClass extends Component<any, any> {
                 multiLine: true,
                 rows: 4,
                 errorText: fieldMessages['intro'],
+                disabled
             },
         ]
         let registerform =
@@ -98,8 +110,11 @@ class RegisterClass extends Component<any, any> {
         return <Card style={{ margin: "5px" }} >
 
             <CardTitle title = "Register" style={{ paddingBottom: 0 }} />
-            
-            { registerform }
+
+            {registerpage.props.auth.isAuthenticated
+                ? <p>Cannot register while logged in. Please log out to register a new membership.</p>
+                : registerform
+            }
 
         </Card>
     }

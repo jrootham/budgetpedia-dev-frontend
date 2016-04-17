@@ -170,6 +170,7 @@ function auth(state = {
                 token: null,
                 fieldMessages: null,
                 errorMessage:'',
+                profile: null,
             })
 
         case LOGIN_SUCCESS:
@@ -211,7 +212,7 @@ function auth(state = {
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: false,
-                user:null,
+                profile:null,
             })
 
         default:

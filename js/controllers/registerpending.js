@@ -12,10 +12,10 @@ class RegisterPendingClass extends Component {
         let register = registerpendingpage.props.register;
         let registerpending = auth.isAuthenticated
             ?
-                React.createElement("div", null, React.createElement("p", null, auth.user.username, ", you're already registered."))
+                React.createElement("div", null, React.createElement("p", null, auth.profile.username, ", you're already registered and logged in."))
             : register.isRegistered
                 ?
-                    React.createElement("div", null, React.createElement("p", null, "Thanks for registering, ", register.user.username, "!"), React.createElement("p", null, "An email has been sent to" + ' ' + "the address you used to register. Please follow the instructions in this email" + ' ' + "to authenticate and complete your registration."))
+                    React.createElement("div", null, React.createElement("p", null, "Thanks for registering, ", register.user.username, "!"), React.createElement("p", null, "An email has been sent to" + ' ' + "the email address you used to register. Please follow the instructions in this email" + ' ' + "to authenticate and complete your registration."))
                 :
                     React.createElement("div", null, React.createElement("p", null, "No registration data is available."));
         return React.createElement(Card, {style: { margin: "5px" }}, React.createElement(CardTitle, {title: "Registration Pending", style: { paddingBottom: 0 }}), React.createElement(CardText, null, registerpending));

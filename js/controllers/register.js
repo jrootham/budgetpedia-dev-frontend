@@ -21,6 +21,7 @@ class RegisterClass extends Component {
     render() {
         let registerpage = this;
         let fieldMessages = registerpage.props.register.fieldMessages || {};
+        let disabled = registerpage.props.auth.isAuthenticated;
         let elements = [
             {
                 index: 'email',
@@ -29,6 +30,7 @@ class RegisterClass extends Component {
                 type: 'email',
                 required: true,
                 errorText: fieldMessages['email'],
+                disabled: disabled,
             },
             {
                 index: 'userhandle',
@@ -37,6 +39,7 @@ class RegisterClass extends Component {
                 type: 'text',
                 required: true,
                 errorText: fieldMessages['userhandle'],
+                disabled: disabled,
             },
             {
                 index: 'username',
@@ -45,6 +48,7 @@ class RegisterClass extends Component {
                 type: 'text',
                 required: true,
                 errorText: fieldMessages['username'],
+                disabled: disabled
             },
             {
                 index: 'participation',
@@ -60,6 +64,7 @@ class RegisterClass extends Component {
                 type: 'password',
                 required: true,
                 errorText: fieldMessages['password'],
+                disabled: disabled,
             },
             {
                 index: 'password2',
@@ -68,6 +73,7 @@ class RegisterClass extends Component {
                 type: 'password',
                 required: true,
                 errorText: fieldMessages['password2'],
+                disabled: disabled
             },
             {
                 index: 'intro',
@@ -76,10 +82,13 @@ class RegisterClass extends Component {
                 multiLine: true,
                 rows: 4,
                 errorText: fieldMessages['intro'],
+                disabled: disabled
             },
         ];
         let registerform = React.createElement(basicform_1.BasicForm, {submit: registerpage.submitRegistration, elements: elements, submitButtonLabel: 'Register', errorMessage: registerpage.props.register.errorMessage});
-        return React.createElement(Card, {style: { margin: "5px" }}, React.createElement(CardTitle, {title: "Register", style: { paddingBottom: 0 }}), registerform);
+        return React.createElement(Card, {style: { margin: "5px" }}, React.createElement(CardTitle, {title: "Register", style: { paddingBottom: 0 }}), registerpage.props.auth.isAuthenticated
+            ? React.createElement("p", null, "Cannot register while logged in. Please log out to register a new membership.")
+            : registerform);
     }
 }
 function mapStateToProps(state) {

@@ -3460,27 +3460,31 @@ var RegisterClass = function (_Component) {
         value: function render() {
             var registerpage = this;
             var fieldMessages = registerpage.props.register.fieldMessages || {};
+            var disabled = registerpage.props.auth.isAuthenticated;
             var elements = [{
                 index: 'email',
                 floatingLabelText: 'Email Address',
                 hintText: "enter unique email (required)",
                 type: 'email',
                 required: true,
-                errorText: fieldMessages['email']
+                errorText: fieldMessages['email'],
+                disabled: disabled
             }, {
                 index: 'userhandle',
                 floatingLabelText: 'User Handle',
                 hintText: "the name other members will see",
                 type: 'text',
                 required: true,
-                errorText: fieldMessages['userhandle']
+                errorText: fieldMessages['userhandle'],
+                disabled: disabled
             }, {
                 index: 'username',
                 floatingLabelText: 'User Name',
                 hintText: "actual name",
                 type: 'text',
                 required: true,
-                errorText: fieldMessages['username']
+                errorText: fieldMessages['username'],
+                disabled: disabled
             }, {
                 index: 'participation',
                 floatingLabelText: 'Participation',
@@ -3493,24 +3497,27 @@ var RegisterClass = function (_Component) {
                 hintText: "between 6 and 12 characters",
                 type: 'password',
                 required: true,
-                errorText: fieldMessages['password']
+                errorText: fieldMessages['password'],
+                disabled: disabled
             }, {
                 index: 'password2',
                 floatingLabelText: 'Password (Again)',
                 hintText: "between 6 and 12 characters",
                 type: 'password',
                 required: true,
-                errorText: fieldMessages['password2']
+                errorText: fieldMessages['password2'],
+                disabled: disabled
             }, {
                 index: 'intro',
                 floatingLabelText: 'Introduction',
                 hintText: "something about yourself for other members (optional)",
                 multiLine: true,
                 rows: 4,
-                errorText: fieldMessages['intro']
+                errorText: fieldMessages['intro'],
+                disabled: disabled
             }];
             var registerform = React.createElement(basicform_1.BasicForm, { submit: registerpage.submitRegistration, elements: elements, submitButtonLabel: 'Register', errorMessage: registerpage.props.register.errorMessage });
-            return React.createElement(Card, { style: { margin: "5px" } }, React.createElement(CardTitle, { title: "Register", style: { paddingBottom: 0 } }), registerform);
+            return React.createElement(Card, { style: { margin: "5px" } }, React.createElement(CardTitle, { title: "Register", style: { paddingBottom: 0 } }), registerpage.props.auth.isAuthenticated ? React.createElement("p", null, "Cannot register while logged in. Please log out to register a new membership.") : registerform);
         }
     }]);
 
@@ -3635,7 +3642,7 @@ var RegisterPendingClass = function (_Component) {
             var registerpendingpage = this;
             var auth = registerpendingpage.props.auth;
             var register = registerpendingpage.props.register;
-            var registerpending = auth.isAuthenticated ? React.createElement("div", null, React.createElement("p", null, auth.user.username, ", you're already registered.")) : register.isRegistered ? React.createElement("div", null, React.createElement("p", null, "Thanks for registering, ", register.user.username, "!"), React.createElement("p", null, "An email has been sent to" + ' ' + "the address you used to register. Please follow the instructions in this email" + ' ' + "to authenticate and complete your registration.")) : React.createElement("div", null, React.createElement("p", null, "No registration data is available."));
+            var registerpending = auth.isAuthenticated ? React.createElement("div", null, React.createElement("p", null, auth.profile.username, ", you're already registered and logged in.")) : register.isRegistered ? React.createElement("div", null, React.createElement("p", null, "Thanks for registering, ", register.user.username, "!"), React.createElement("p", null, "An email has been sent to" + ' ' + "the email address you used to register. Please follow the instructions in this email" + ' ' + "to authenticate and complete your registration.")) : React.createElement("div", null, React.createElement("p", null, "No registration data is available."));
             return React.createElement(Card, { style: { margin: "5px" } }, React.createElement(CardTitle, { title: "Registration Pending", style: { paddingBottom: 0 } }), React.createElement(CardText, null, registerpending));
         }
     }]);
@@ -4091,7 +4098,8 @@ function auth() {
                 user: action.payload.creds,
                 token: null,
                 fieldMessages: null,
-                errorMessage: ''
+                errorMessage: '',
+                profile: null
             });
         case LOGIN_SUCCESS:
         case AUTO_LOGIN_SUCCESS:
@@ -4126,7 +4134,7 @@ function auth() {
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: false,
-                user: null
+                profile: null
             });
         default:
             return state;
