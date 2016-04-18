@@ -17,7 +17,7 @@ import CardTitle = require('material-ui/lib/card/card-title')
 
 class RegisterConfirmClass extends Component<any, any> {
 
-    componentDidMount = () => {
+    componentWillMount = () => {
         this.props.dispatch(Actions.confirmUser())
     }
     render() {
@@ -26,29 +26,39 @@ class RegisterConfirmClass extends Component<any, any> {
         let auth = registerconfirmpage.props.auth
         let registerconfirm = registerconfirmpage.props.registerconfirm
         let registerconfirmview = 
-            auth.isAuthenticated
-            ? 
             <div>
-                <p>
-                    {auth.profile.username}, your registation has been confirmed, and you are logged in.
-                </p>
-            </div >
-            : registerconfirm.isConfirmed
-            ? 
-            <div>
-                <p>
-                    Thanks for confirming your registration, {registerconfirm.user.username}!
-                </p>
-                <p>
-                    Automatic login did not occur, however. Please try logging in.
-                </p>
-            </div>
-            : 
-            <div>
-                <p>
-                    The registration confirmation did not succeed, with the following error message: 
-                    <span style={{fontStyle:"italic"}}>{registerconfirm.errorMessage}</span>
-                </p>
+                {(registerconfirm.isFetching || registerconfirm.isConfirmed)
+                ? 
+                <div>
+                    <p>
+                        Confirming registration...
+                    </p>
+                </div>
+                :''} 
+                { registerconfirm.isConfirmed
+                    ? <div><p>
+                        Registration succeeded {registerconfirm.user.username}!
+                    </p></div>
+                    :''
+                }
+                { registerconfirm.errorMessage
+                    ?
+                <div>
+                    <p>
+                        The registration confirmation returned the following error message: 
+                        <span style={{fontStyle:"italic"}}>{registerconfirm.errorMessage}</span>
+                    </p>
+                </div>:''
+                }
+                {(registerconfirm.isConfirmed && auth.isAuthenticated)
+                ?
+                <div>
+                    <p>
+                        {auth.profile.username}, you have been automatically logged in.
+                    </p>
+                </div >
+                : ''
+                }
             </div>
         return <Card style={{ margin: "5px" }} >
 
@@ -70,7 +80,6 @@ function mapStateToProps(state) {
 
         state,
         auth,
-        register,
         registerconfirm,
         
     }

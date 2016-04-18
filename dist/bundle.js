@@ -1998,14 +1998,14 @@ exports.registerUser = function (profile) {
 exports.REGISTER_CONFIRM_REQUEST = 'REGISTER_CONFIRM_REQUEST';
 exports.REGISTER_CONFIRM_SUCCESS = 'REGISTER_CONFIRM_SUCCESS';
 exports.REGISTER_CONFIRM_FAILURE = 'REGISTER_CONFIRM_FAILURE';
-var requestConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFIRM_REQUEST, function (confirmtoken) {
+var requestConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFIRM_REQUEST, function (data) {
     return {
-        confirmtoken: confirmtoken
+        confirmtoken: data.token
     };
 });
-var receiveConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFIRM_SUCCESS, function (jwt) {
+var receiveConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFIRM_SUCCESS, function (data) {
     return {
-        jwt: jwt
+        data: data
     };
 });
 var registerConfirmError = redux_actions_1.createAction(exports.REGISTER_CONFIRM_FAILURE, function (message) {
@@ -2019,9 +2019,9 @@ exports.confirmUser = function () {
     var data = {
         token: query['token']
     };
-    return function (dispatch) {
+    return function (dispatch, getState) {
         if (!data.token) {
-            dispatch(registerConfirmError('No regitration token is available'));
+            dispatch(registerConfirmError('No registration token is available'));
         } else {
             var config = {
                 method: 'POST',
@@ -2056,9 +2056,13 @@ exports.confirmUser = function () {
                         dispatch(registerConfirmError(text));
                     }
                 } else {
-                    dispatch(function () {
-                        dispatch(receiveConfirmRegister(json));
-                    });
+                    dispatch(receiveConfirmRegister(json));
+                    var state = getState();
+                    var token = state.registerconfirm.confirmtoken;
+                    console.log('autologin after confirm', token);
+                    if (token) {
+                        dispatch(exports.autoLoginUser(token, function (result) {}));
+                    }
                 }
             }).catch(function (err) {
                 console.log('err.message', err.message);
@@ -3583,7 +3587,7 @@ var RegisterConfirmClass = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(RegisterConfirmClass)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
-        _this.componentDidMount = function () {
+        _this.componentWillMount = function () {
             _this.props.dispatch(Actions.confirmUser());
         };
         return _this;
@@ -3595,7 +3599,7 @@ var RegisterConfirmClass = function (_Component) {
             var registerconfirmpage = this;
             var auth = registerconfirmpage.props.auth;
             var registerconfirm = registerconfirmpage.props.registerconfirm;
-            var registerconfirmview = auth.isAuthenticated ? React.createElement("div", null, React.createElement("p", null, auth.profile.username, ", your registation has been confirmed, and you are logged in.")) : registerconfirm.isConfirmed ? React.createElement("div", null, React.createElement("p", null, "Thanks for confirming your registration, ", registerconfirm.user.username, "!"), React.createElement("p", null, "Automatic login did not occur, however. Please try logging in.")) : React.createElement("div", null, React.createElement("p", null, "The registration confirmation did not succeed, with the following error message:", React.createElement("span", { style: { fontStyle: "italic" } }, registerconfirm.errorMessage)));
+            var registerconfirmview = React.createElement("div", null, registerconfirm.isFetching || registerconfirm.isConfirmed ? React.createElement("div", null, React.createElement("p", null, "Confirming registration...")) : '', registerconfirm.isConfirmed ? React.createElement("div", null, React.createElement("p", null, "Registration succeeded ", registerconfirm.user.username, "!")) : '', registerconfirm.errorMessage ? React.createElement("div", null, React.createElement("p", null, "The registration confirmation returned the following error message:", React.createElement("span", { style: { fontStyle: "italic" } }, registerconfirm.errorMessage))) : '', registerconfirm.isConfirmed && auth.isAuthenticated ? React.createElement("div", null, React.createElement("p", null, auth.profile.username, ", you have been automatically logged in.")) : '');
             return React.createElement(Card, { style: { margin: "5px" } }, React.createElement(CardTitle, { title: "Registration Confirmation", style: { paddingBottom: 0 } }), React.createElement(CardText, null, registerconfirmview));
         }
     }]);
@@ -3611,7 +3615,6 @@ function mapStateToProps(state) {
     return {
         state: state,
         auth: auth,
-        register: register,
         registerconfirm: registerconfirm
     };
 }
@@ -4212,17 +4215,17 @@ function registerconfirm() {
         case REGISTER_CONFIRM_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
-                isRegistered: false,
+                isConfirmed: false,
                 confirmtoken: action.payload.confirmtoken,
                 errorMessage: null,
                 user: null
             });
         case REGISTER_CONFIRM_SUCCESS:
+            console.log('register confirm success', action);
             return Object.assign({}, state, {
                 isFetching: false,
-                isRegistered: true,
-                user: action.payload.profile,
-                confirmtoken: null
+                isConfirmed: true,
+                user: action.payload.data
             });
         case REGISTER_CONFIRM_FAILURE:
             return Object.assign({}, state, {

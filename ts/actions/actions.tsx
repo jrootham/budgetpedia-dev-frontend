@@ -374,24 +374,18 @@ export const REGISTER_CONFIRM_FAILURE = 'REGISTER_CONFIRM_FAILURE'
 
 let requestConfirmRegister = createAction(
     REGISTER_CONFIRM_REQUEST,
-    confirmtoken => {
+    data => {
         return {
-            // isFetching: true,
-            // isConfirmed: false,
-            // message: '',
-            confirmtoken,
-            // jwt:null,
+            confirmtoken:data.token,
         }
     }
 )
 
 let receiveConfirmRegister = createAction(
     REGISTER_CONFIRM_SUCCESS,
-    jwt => {
+    data => {
         return {
-            // isFetching: false,
-            // isConfirmed: true,
-            jwt,
+            data,
         }
     }
 )
@@ -400,8 +394,6 @@ let registerConfirmError = createAction(
     REGISTER_CONFIRM_FAILURE,
     (message) => {
         return {
-            // isFetching: false,
-            // confirmtoken:null,
             message,
         }
     }
@@ -415,9 +407,9 @@ export const confirmUser = () => {
         token: query['token']
     }
     // console.log('token = ', data.token)
-    return dispatch => {
+    return (dispatch,getState) => {
         if (!data.token) {
-            dispatch(registerConfirmError('No regitration token is available'))
+            dispatch(registerConfirmError('No registration token is available'))
         } else {
 
             let config: RequestInit = {
@@ -459,11 +451,17 @@ export const confirmUser = () => {
                         }
                     } else {
                         // Dispatch the success action
-                        dispatch(() => {
-
+                        // dispatch(() => {
                             dispatch(receiveConfirmRegister(json))
-
-                        })
+                        // })
+                        let state = getState()
+                        let token = state.registerconfirm.confirmtoken
+                        console.log('autologin after confirm', token)
+                        if (token) {
+                            // dispatch(() => {
+                                dispatch(autoLoginUser(token, result => { }))
+                            // })
+                        }
                     }
                 })
                 .catch(err => {

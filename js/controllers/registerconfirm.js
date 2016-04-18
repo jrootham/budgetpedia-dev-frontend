@@ -9,7 +9,7 @@ const CardTitle = require('material-ui/lib/card/card-title');
 class RegisterConfirmClass extends Component {
     constructor(...args) {
         super(...args);
-        this.componentDidMount = () => {
+        this.componentWillMount = () => {
             this.props.dispatch(Actions.confirmUser());
         };
     }
@@ -17,14 +17,17 @@ class RegisterConfirmClass extends Component {
         let registerconfirmpage = this;
         let auth = registerconfirmpage.props.auth;
         let registerconfirm = registerconfirmpage.props.registerconfirm;
-        let registerconfirmview = auth.isAuthenticated
+        let registerconfirmview = React.createElement("div", null, (registerconfirm.isFetching || registerconfirm.isConfirmed)
             ?
-                React.createElement("div", null, React.createElement("p", null, auth.profile.username, ", your registation has been confirmed, and you are logged in."))
-            : registerconfirm.isConfirmed
-                ?
-                    React.createElement("div", null, React.createElement("p", null, "Thanks for confirming your registration, ", registerconfirm.user.username, "!"), React.createElement("p", null, "Automatic login did not occur, however. Please try logging in."))
-                :
-                    React.createElement("div", null, React.createElement("p", null, "The registration confirmation did not succeed, with the following error message:", React.createElement("span", {style: { fontStyle: "italic" }}, registerconfirm.errorMessage)));
+                React.createElement("div", null, React.createElement("p", null, "Confirming registration..."))
+            : '', registerconfirm.isConfirmed
+            ? React.createElement("div", null, React.createElement("p", null, "Registration succeeded ", registerconfirm.user.username, "!"))
+            : '', registerconfirm.errorMessage
+            ?
+                React.createElement("div", null, React.createElement("p", null, "The registration confirmation returned the following error message:", React.createElement("span", {style: { fontStyle: "italic" }}, registerconfirm.errorMessage))) : '', (registerconfirm.isConfirmed && auth.isAuthenticated)
+            ?
+                React.createElement("div", null, React.createElement("p", null, auth.profile.username, ", you have been automatically logged in."))
+            : '');
         return React.createElement(Card, {style: { margin: "5px" }}, React.createElement(CardTitle, {title: "Registration Confirmation", style: { paddingBottom: 0 }}), React.createElement(CardText, null, registerconfirmview));
     }
 }
@@ -33,7 +36,6 @@ function mapStateToProps(state) {
     return {
         state: state,
         auth: auth,
-        register: register,
         registerconfirm: registerconfirm,
     };
 }

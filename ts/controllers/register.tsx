@@ -111,7 +111,7 @@ class RegisterClass extends Component<any, any> {
 
             <CardTitle title = "Register" style={{ paddingBottom: 0 }} />
 
-            {registerpage.props.auth.isAuthenticated
+            { registerpage.props.auth.isAuthenticated
                 ? <p>Cannot register while logged in. Please log out to register a new membership.</p>
                 : registerform
             }

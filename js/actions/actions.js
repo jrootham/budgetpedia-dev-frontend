@@ -257,14 +257,14 @@ exports.registerUser = profile => {
 exports.REGISTER_CONFIRM_REQUEST = 'REGISTER_CONFIRM_REQUEST';
 exports.REGISTER_CONFIRM_SUCCESS = 'REGISTER_CONFIRM_SUCCESS';
 exports.REGISTER_CONFIRM_FAILURE = 'REGISTER_CONFIRM_FAILURE';
-let requestConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFIRM_REQUEST, confirmtoken => {
+let requestConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFIRM_REQUEST, data => {
     return {
-        confirmtoken: confirmtoken,
+        confirmtoken: data.token,
     };
 });
-let receiveConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFIRM_SUCCESS, jwt => {
+let receiveConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFIRM_SUCCESS, data => {
     return {
-        jwt: jwt,
+        data: data,
     };
 });
 let registerConfirmError = redux_actions_1.createAction(exports.REGISTER_CONFIRM_FAILURE, (message) => {
@@ -278,9 +278,9 @@ exports.confirmUser = () => {
     let data = {
         token: query['token']
     };
-    return dispatch => {
+    return (dispatch, getState) => {
         if (!data.token) {
-            dispatch(registerConfirmError('No regitration token is available'));
+            dispatch(registerConfirmError('No registration token is available'));
         }
         else {
             let config = {
@@ -319,9 +319,13 @@ exports.confirmUser = () => {
                     }
                 }
                 else {
-                    dispatch(() => {
-                        dispatch(receiveConfirmRegister(json));
-                    });
+                    dispatch(receiveConfirmRegister(json));
+                    let state = getState();
+                    let token = state.registerconfirm.confirmtoken;
+                    console.log('autologin after confirm', token);
+                    if (token) {
+                        dispatch(exports.autoLoginUser(token, result => { }));
+                    }
                 }
             })
                 .catch(err => {

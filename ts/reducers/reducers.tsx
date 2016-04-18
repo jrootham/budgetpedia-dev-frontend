@@ -307,7 +307,7 @@ function registerconfirm(state = {
         case REGISTER_CONFIRM_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
-                isRegistered: false,
+                isConfirmed: false,
                 confirmtoken: action.payload.confirmtoken,
                 errorMessage: null,
                 user: null,
@@ -315,11 +315,11 @@ function registerconfirm(state = {
 
         case REGISTER_CONFIRM_SUCCESS:
 
+            console.log('register confirm success',action)
             return Object.assign({}, state, {
                 isFetching: false,
-                isRegistered: true,
-                user: action.payload.profile,
-                confirmtoken: null,
+                isConfirmed: true,
+                user: action.payload.data,
             })
 
         case REGISTER_CONFIRM_FAILURE:
