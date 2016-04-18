@@ -11,11 +11,13 @@ const Card = require('material-ui/lib/card/card');
 const CardTitle = require('material-ui/lib/card/card-title');
 const CardText = require('material-ui/lib/card/card-text');
 const CardActions = require('material-ui/lib/card/card-actions');
+const MenuItem = require('material-ui/lib/menus/menu-item');
 const menutile_1 = require('../components/menutile');
 const IconButton = require('material-ui/lib/icon-button');
 const RaisedButton = require('material-ui/lib/raised-button');
 const FontIcon = require('material-ui/lib/font-icon');
 const Divider = require('material-ui/lib/divider');
+const IconMenu = require('material-ui/lib/menus/icon-menu');
 class MainBarClass extends React.Component {
     constructor(props) {
         super(props);
@@ -36,13 +38,14 @@ class MainBarClass extends React.Component {
             this.setState({ accountsidebaropen: false });
             this.props.dispatch(Actions.transitionTo('/resetpassword'));
         };
+        this.transitionToProfile = (e) => {
+            this.props.dispatch(Actions.transitionTo('/userprofile'));
+        };
         this.submitLogin = (elements) => {
-            console.log('returned elements', elements);
             let creds = {};
             for (var index in elements) {
                 creds[index] = elements[index].getValue();
             }
-            console.log('creds', creds);
             let appbar = this;
             let callback = (result) => {
                 if (result) {
@@ -52,6 +55,9 @@ class MainBarClass extends React.Component {
                 }
             };
             this.props.dispatch(Actions.loginUser(creds, callback));
+        };
+        this.logout = () => {
+            this.props.dispatch(Actions.logoutUser());
         };
         this.componentDidMount = () => {
             let auth = this.props.auth;
@@ -115,6 +121,7 @@ class MainBarClass extends React.Component {
         });
         let menusidebar = React.createElement(LeftNav, {width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: open => appbar.setState({ menusidebaropen: open, }), open: this.state.menusidebaropen}, React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: 'home', primaryText: "Budget Commons", image: '../../public/icons/ic_home_24px.svg', route: '/'}), React.createElement(Divider, null), menuitems);
         let menuicon = React.createElement(IconButton, {onTouchTap: () => { appbar.handleMenuSidebarToggle(); }}, React.createElement(FontIcon, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "menu"));
+        let accountmenu = React.createElement(IconMenu, {iconButtonElement: React.createElement(IconButton, null, React.createElement(FontIcon, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "account_circle")), targetOrigin: { horizontal: 'right', vertical: 'top' }, anchorOrigin: { horizontal: 'right', vertical: 'top' }}, React.createElement(MenuItem, {onTouchTap: appbar.transitionToProfile, primaryText: "Profile"}), React.createElement(MenuItem, {onTouchTap: appbar.logout, primaryText: "Sign out"}));
         let accounticon = React.createElement(IconButton, {onTouchTap: () => { appbar.handleAccountSidebarToggle(); }}, React.createElement(FontIcon, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "account_circle"));
         let username = React.createElement("div", {style: {
             position: "absolute",
@@ -124,7 +131,9 @@ class MainBarClass extends React.Component {
             padding: "3px",
             color: theme.palette.alternateTextColor,
         }}, auth.isAuthenticated ? auth.profile.userhandle : appnavbar.username);
-        return (React.createElement(AppBar, {onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: accounticon}, username, loginsidebar, menusidebar));
+        return (React.createElement(AppBar, {onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated
+            ? accountmenu
+            : accounticon}, username, loginsidebar, menusidebar));
     }
 }
 function mapStateToProps(state) {

@@ -163,20 +163,13 @@ exports.LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 exports.LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 exports.LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 let requestLogout = redux_actions_1.createAction(exports.LOGOUT_REQUEST, () => {
-    return {
-        isFetching: true,
-        isAuthenticated: true
-    };
+    return {};
 });
 let receiveLogout = redux_actions_1.createAction(exports.LOGOUT_SUCCESS, () => {
-    return {
-        isFetching: false,
-        isAuthenticated: false
-    };
+    return {};
 });
 exports.logoutUser = () => {
     return dispatch => {
-        dispatch(requestLogout());
         localStorage.removeItem('jsonwebtoken');
         dispatch(receiveLogout());
     };

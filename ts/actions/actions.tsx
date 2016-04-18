@@ -239,8 +239,6 @@ let requestLogout = createAction(
     LOGOUT_REQUEST,
     () => {
         return {
-            isFetching: true,
-            isAuthenticated: true
         }
     }
 )
@@ -248,17 +246,13 @@ let requestLogout = createAction(
 let receiveLogout = createAction(
     LOGOUT_SUCCESS,
     () => {
-        return {
-            isFetching: false,
-            isAuthenticated: false
-        }
+        return {}
     }
 )
 
 // Logs the user out
 export const logoutUser = () => {
     return dispatch => {
-        dispatch(requestLogout())
         localStorage.removeItem('jsonwebtoken')
         dispatch(receiveLogout())
     }

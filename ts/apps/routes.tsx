@@ -17,6 +17,7 @@ import { ResetPassword } from '../controllers/resetpassword'
 import { Register } from '../controllers/register'
 import { RegisterPending } from '../controllers/registerpending'
 import { RegisterConfirm } from '../controllers/registerconfirm'
+import { UserProfile } from '../controllers/userprofile'
 
 import { About } from './controllers/about'
 import { Timeline } from './controllers/timeline'
@@ -72,6 +73,7 @@ export var routes =
             <Route path="register" component={ Register } />
             <Route path="register/pending" component={ RegisterPending } />
             <Route path="register/confirm" component={ RegisterConfirm } />
+            <Route path="userprofile" component={ UserProfile } />
             <Route path="*" component={ NoMatch } />
         </Route>
     </Router>

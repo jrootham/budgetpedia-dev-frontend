@@ -218,6 +218,7 @@ function auth(state = {
                 isFetching: false,
                 isAuthenticated: false,
                 profile:null,
+                token: null,
             })
 
         default:

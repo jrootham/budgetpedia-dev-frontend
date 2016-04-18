@@ -38,16 +38,14 @@ import CardTitle = require('material-ui/lib/card/card-title')
 import CardText = require('material-ui/lib/card/card-text')
 import CardActions = require('material-ui/lib/card/card-actions')
 
-// import IconMenu = require('material-ui/lib/menus/icon-menu')
-// import MenuItem = require('material-ui/lib/menus/menu-item')
+import MenuItem = require('material-ui/lib/menus/menu-item')
 import { MenuTile } from '../components/menutile'
 import IconButton = require('material-ui/lib/icon-button')
 import RaisedButton = require('material-ui/lib/raised-button')
-
 import FontIcon = require('material-ui/lib/font-icon')
 import TextField = require('material-ui/lib/text-field')
 import Divider = require('material-ui/lib/divider')
-// import Colors = require('material-ui/lib/styles/colors')
+import IconMenu = require('material-ui/lib/menus/icon-menu')
 // console.log(Colors)
 // import FlatButton = require('material-ui/lib/flat-button')
 
@@ -79,29 +77,30 @@ class MainBarClass extends React.Component<any, any> {
     }
 
     transitionToRegister = (e) => {
-        // setTimeout(()=>{
-            this.setState({ accountsidebaropen: false })
-            this.props.dispatch(Actions.transitionTo('/register'))
-        // })
+
+        this.setState({ accountsidebaropen: false })
+        this.props.dispatch(Actions.transitionTo('/register'))
+
     }
 
     transitionToResetPassword = (e) => {
-        // avoid conflict with flipcard on home page
-        // setTimeout(() => {
-            this.setState({ accountsidebaropen: false })
-            this.props.dispatch(Actions.transitionTo('/resetpassword'))
-        // })
+
+        this.setState({ accountsidebaropen: false })
+        this.props.dispatch(Actions.transitionTo('/resetpassword'))
+
+    }
+
+    transitionToProfile = (e) => {
+        this.props.dispatch(Actions.transitionTo('/userprofile'))
     }
 
     // respond to login form; assume error correction
     submitLogin = ( elements ) => {
 
-        console.log('returned elements',elements)
         let creds = {}
         for (var index in elements) {
             creds[index] = elements[index].getValue()
         }
-        console.log('creds',creds)
 
         let appbar = this
         let callback = (result) => {
@@ -113,6 +112,10 @@ class MainBarClass extends React.Component<any, any> {
         }
 
         this.props.dispatch(Actions.loginUser(creds,callback))
+    }
+
+    logout = () => {
+        this.props.dispatch(Actions.logoutUser())
     }
 
     componentDidMount = () => {
@@ -288,6 +291,31 @@ class MainBarClass extends React.Component<any, any> {
 
             </IconButton>
 
+        let accountmenu = 
+            <IconMenu
+                iconButtonElement={
+                    <IconButton>
+                        <FontIcon
+                            className = "material-icons"
+                            color = {theme.palette.alternateTextColor}
+                            style = {{ cursor: "pointer" }} >
+
+                            account_circle
+
+                        </FontIcon>
+                    </IconButton>
+                }
+                targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                >
+                <MenuItem 
+                    onTouchTap = { appbar.transitionToProfile }
+                    primaryText = "Profile" />
+                <MenuItem 
+                    onTouchTap = { appbar.logout }
+                    primaryText = "Sign out" />
+            </IconMenu>
+
         let accounticon = 
             <IconButton
                 onTouchTap= {() => { appbar.handleAccountSidebarToggle() } } >
@@ -327,7 +355,10 @@ class MainBarClass extends React.Component<any, any> {
                 title={ <span>{ appnavbar.title }</span> }
 
                 iconElementLeft={ menuicon }
-                iconElementRight={ accounticon } >
+                iconElementRight={ 
+                    appbar.props.auth.isAuthenticated
+                    ? accountmenu
+                    : accounticon } >
 
                 { username }
 
