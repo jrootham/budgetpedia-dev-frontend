@@ -95,7 +95,7 @@ let homecols = redux_actions_1.handleActions({
 let { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, AUTO_LOGIN_REQUEST, AUTO_LOGIN_SUCCESS, AUTO_LOGIN_FAILURE, } = Actions;
 function auth(state = {
         isFetching: false,
-        isAuthenticated: localStorage.getItem('id_token') ? true : false
+        isAuthenticated: false,
     }, action) {
     switch (action.type) {
         case LOGIN_REQUEST:
@@ -196,7 +196,7 @@ function registerconfirm(state = {
         case REGISTER_CONFIRM_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
-                isConfirmed: false,
+                isRegistered: false,
                 confirmtoken: action.payload.confirmtoken,
                 errorMessage: null,
                 user: null,
@@ -206,12 +206,12 @@ function registerconfirm(state = {
                 isFetching: false,
                 isRegistered: true,
                 user: action.payload.profile,
+                confirmtoken: null,
             });
         case REGISTER_CONFIRM_FAILURE:
             return Object.assign({}, state, {
                 isFetching: false,
                 errorMessage: action.payload.message || action.payload,
-                user: null,
             });
         default:
             return state;

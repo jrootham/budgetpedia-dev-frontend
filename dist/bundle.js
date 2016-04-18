@@ -1772,8 +1772,6 @@ exports.LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 exports.LOGIN_FAILURE = 'LOGIN_FAILURE';
 var requestLogin = redux_actions_1.createAction(exports.LOGIN_REQUEST, function (creds) {
     return {
-        message: '',
-        data: null,
         creds: creds
     };
 });
@@ -1819,7 +1817,10 @@ exports.loginUser = function (creds, callback) {
             if (!isJson || !response.ok) {
                 if (isJson) {
                     dispatch(loginError(json.message, json.data));
-                } else dispatch(loginError(text));
+                } else {
+                    dispatch(loginError(text));
+                }
+                callback(false);
             } else {
                 localStorage.setItem('jsonwebtoken', json.token);
                 dispatch(function () {
@@ -1829,6 +1830,7 @@ exports.loginUser = function (creds, callback) {
             }
         }).catch(function (err) {
             dispatch(loginError(err.message));
+            callback(false);
         });
     };
 };
@@ -1837,8 +1839,6 @@ exports.AUTO_LOGIN_SUCCESS = 'AUTO_LOGIN_SUCCESS';
 exports.AUTO_LOGIN_FAILURE = 'AUTO_LOGIN_FAILURE';
 var requestAutoLogin = redux_actions_1.createAction(exports.AUTO_LOGIN_REQUEST, function (creds) {
     return {
-        message: '',
-        data: null,
         creds: creds
     };
 });
@@ -1849,7 +1849,10 @@ var receiveAutoLogin = redux_actions_1.createAction(exports.AUTO_LOGIN_SUCCESS, 
     };
 });
 var autoLoginError = redux_actions_1.createAction(exports.AUTO_LOGIN_FAILURE, function (message, data) {
-    return {};
+    return {
+        message: message,
+        data: data
+    };
 });
 exports.autoLoginUser = function (token, callback) {
     var config = {
@@ -1884,7 +1887,10 @@ exports.autoLoginUser = function (token, callback) {
                         localStorage.removeItem('jsonwebtoken');
                     }
                     dispatch(autoLoginError(json.message, json.data));
-                } else dispatch(autoLoginError(text));
+                } else {
+                    dispatch(autoLoginError(text));
+                }
+                callback(false);
             } else {
                 localStorage.setItem('jsonwebtoken', json.token);
                 dispatch(function () {
@@ -1894,6 +1900,7 @@ exports.autoLoginUser = function (token, callback) {
             }
         }).catch(function (err) {
             dispatch(autoLoginError(err.message));
+            callback(false);
         });
     };
 };
@@ -1972,7 +1979,9 @@ exports.registerUser = function (profile) {
             if (!isJson || !response.ok) {
                 if (isJson) {
                     dispatch(registerError(json.message, json.data));
-                } else dispatch(registerError(text));
+                } else {
+                    dispatch(registerError(text));
+                }
             } else {
                 dispatch(function () {
                     dispatch(receiveRegister(json));
@@ -2040,11 +2049,12 @@ exports.confirmUser = function () {
                 } catch (e) {
                     isJson = false;
                 }
-                console.log('response = ', text, response);
                 if (!isJson || !response.ok) {
                     if (isJson) {
                         dispatch(registerConfirmError(json.message || json.error));
-                    } else dispatch(registerConfirmError(text));
+                    } else {
+                        dispatch(registerConfirmError(text));
+                    }
                 } else {
                     dispatch(function () {
                         dispatch(receiveConfirmRegister(json));
@@ -3585,7 +3595,7 @@ var RegisterConfirmClass = function (_Component) {
             var registerconfirmpage = this;
             var auth = registerconfirmpage.props.auth;
             var registerconfirm = registerconfirmpage.props.registerconfirm;
-            var registerconfirmview = auth.isAuthenticated ? React.createElement("div", null, React.createElement("p", null, auth.user.username, ", your registation has been confirmed, and you are logged in.")) : registerconfirm.isConfirmed ? React.createElement("div", null, React.createElement("p", null, "Thanks for confirming your registration, ", registerconfirm.user.username, "!"), React.createElement("p", null, "Automatic login did not occur, however. Please try logging in again.")) : React.createElement("div", null, React.createElement("p", null, "The registration confirmation did not succeed, with the following error message:", React.createElement("span", { style: { fontStyle: "italic" } }, registerconfirm.errorMessage)));
+            var registerconfirmview = auth.isAuthenticated ? React.createElement("div", null, React.createElement("p", null, auth.profile.username, ", your registation has been confirmed, and you are logged in.")) : registerconfirm.isConfirmed ? React.createElement("div", null, React.createElement("p", null, "Thanks for confirming your registration, ", registerconfirm.user.username, "!"), React.createElement("p", null, "Automatic login did not occur, however. Please try logging in.")) : React.createElement("div", null, React.createElement("p", null, "The registration confirmation did not succeed, with the following error message:", React.createElement("span", { style: { fontStyle: "italic" } }, registerconfirm.errorMessage)));
             return React.createElement(Card, { style: { margin: "5px" } }, React.createElement(CardTitle, { title: "Registration Confirmation", style: { paddingBottom: 0 } }), React.createElement(CardText, null, registerconfirmview));
         }
     }]);
@@ -4085,7 +4095,7 @@ var AUTO_LOGIN_FAILURE = Actions.AUTO_LOGIN_FAILURE;
 function auth() {
     var state = arguments.length <= 0 || arguments[0] === undefined ? {
         isFetching: false,
-        isAuthenticated: localStorage.getItem('id_token') ? true : false
+        isAuthenticated: false
     } : arguments[0];
     var action = arguments[1];
 
@@ -4202,7 +4212,7 @@ function registerconfirm() {
         case REGISTER_CONFIRM_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
-                isConfirmed: false,
+                isRegistered: false,
                 confirmtoken: action.payload.confirmtoken,
                 errorMessage: null,
                 user: null
@@ -4211,13 +4221,13 @@ function registerconfirm() {
             return Object.assign({}, state, {
                 isFetching: false,
                 isRegistered: true,
-                user: action.payload.profile
+                user: action.payload.profile,
+                confirmtoken: null
             });
         case REGISTER_CONFIRM_FAILURE:
             return Object.assign({}, state, {
                 isFetching: false,
-                errorMessage: action.payload.message || action.payload,
-                user: null
+                errorMessage: action.payload.message || action.payload
             });
         default:
             return state;

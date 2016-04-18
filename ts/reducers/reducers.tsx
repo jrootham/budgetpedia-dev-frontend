@@ -43,6 +43,9 @@ let maintiles = (state: any = initialstate.maintiles, action) => {
     return state
 }
 
+// ========================================================================
+// -----------------------[ SET TILE COLUMNS ]-----------------------------
+
 let maincolsreducer = (state: any = initialstate.maincols, action) => {
     switch (action.type) {
         case Actions.SET_TILECOLS: {
@@ -146,6 +149,8 @@ let homecols = handleActions({
     [Actions.SET_HOMETILECOLS]: homecolsreducer,
 }, initialstate.homecols)
 
+// ==================================================================
+// -------------------[ LOGIN AND AUTO-LOGIN ]-----------------------
 
 let {
     LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS,
@@ -157,7 +162,7 @@ let {
 // we would also want a util to check if the token is expired.
 function auth(state = {
     isFetching: false,
-    isAuthenticated: localStorage.getItem('id_token') ? true : false
+    isAuthenticated: false,
 }, action) {
     switch (action.type) {
         case LOGIN_REQUEST:
@@ -166,11 +171,11 @@ function auth(state = {
             return Object.assign({}, state, {
                 isFetching: true,
                 isAuthenticated: false,
-                user: action.payload.creds,
+                user: action.payload.creds, // user requesting authentication
                 token: null,
                 fieldMessages: null,
                 errorMessage:'',
-                profile: null,
+                profile: null, // profile of authenticated user
             })
 
         case LOGIN_SUCCESS:
@@ -220,6 +225,9 @@ function auth(state = {
             return state
     }
 }
+
+// =======================================================================
+// -----------------------------[ registration ]--------------------------
 
 let {
     REGISTER_REQUEST, 
@@ -280,6 +288,9 @@ function register(state = {
     }
 }
 
+// ===========================================================================================
+// --------------------------------[ registration confirmation ]------------------------------
+
 let {
     REGISTER_CONFIRM_REQUEST, 
     REGISTER_CONFIRM_SUCCESS, 
@@ -296,7 +307,7 @@ function registerconfirm(state = {
         case REGISTER_CONFIRM_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
-                isConfirmed: false,
+                isRegistered: false,
                 confirmtoken: action.payload.confirmtoken,
                 errorMessage: null,
                 user: null,
@@ -308,6 +319,7 @@ function registerconfirm(state = {
                 isFetching: false,
                 isRegistered: true,
                 user: action.payload.profile,
+                confirmtoken: null,
             })
 
         case REGISTER_CONFIRM_FAILURE:
@@ -315,7 +327,6 @@ function registerconfirm(state = {
             return Object.assign({}, state, {
                 isFetching: false,
                 errorMessage: action.payload.message || action.payload,
-                user: null,
             })
 
         default:

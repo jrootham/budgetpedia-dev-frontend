@@ -19,8 +19,6 @@ exports.LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 exports.LOGIN_FAILURE = 'LOGIN_FAILURE';
 let requestLogin = redux_actions_1.createAction(exports.LOGIN_REQUEST, creds => {
     return {
-        message: '',
-        data: null,
         creds: creds,
     };
 });
@@ -68,8 +66,10 @@ exports.loginUser = (creds, callback) => {
                 if (isJson) {
                     dispatch(loginError(json.message, json.data));
                 }
-                else
+                else {
                     dispatch(loginError(text));
+                }
+                callback(false);
             }
             else {
                 localStorage.setItem('jsonwebtoken', json.token);
@@ -81,6 +81,7 @@ exports.loginUser = (creds, callback) => {
         })
             .catch(err => {
             dispatch(loginError(err.message));
+            callback(false);
         });
     };
 };
@@ -89,8 +90,6 @@ exports.AUTO_LOGIN_SUCCESS = 'AUTO_LOGIN_SUCCESS';
 exports.AUTO_LOGIN_FAILURE = 'AUTO_LOGIN_FAILURE';
 let requestAutoLogin = redux_actions_1.createAction(exports.AUTO_LOGIN_REQUEST, creds => {
     return {
-        message: '',
-        data: null,
         creds: creds,
     };
 });
@@ -101,7 +100,10 @@ let receiveAutoLogin = redux_actions_1.createAction(exports.AUTO_LOGIN_SUCCESS, 
     };
 });
 let autoLoginError = redux_actions_1.createAction(exports.AUTO_LOGIN_FAILURE, (message, data) => {
-    return {};
+    return {
+        message: message,
+        data: data,
+    };
 });
 exports.autoLoginUser = (token, callback) => {
     let config = {
@@ -138,8 +140,10 @@ exports.autoLoginUser = (token, callback) => {
                     }
                     dispatch(autoLoginError(json.message, json.data));
                 }
-                else
+                else {
                     dispatch(autoLoginError(text));
+                }
+                callback(false);
             }
             else {
                 localStorage.setItem('jsonwebtoken', json.token);
@@ -151,6 +155,7 @@ exports.autoLoginUser = (token, callback) => {
         })
             .catch(err => {
             dispatch(autoLoginError(err.message));
+            callback(false);
         });
     };
 };
@@ -231,8 +236,9 @@ exports.registerUser = profile => {
                 if (isJson) {
                     dispatch(registerError(json.message, json.data));
                 }
-                else
+                else {
                     dispatch(registerError(text));
+                }
             }
             else {
                 dispatch(() => {
@@ -304,13 +310,13 @@ exports.confirmUser = () => {
                 catch (e) {
                     isJson = false;
                 }
-                console.log('response = ', text, response);
                 if (!isJson || !response.ok) {
                     if (isJson) {
                         dispatch(registerConfirmError(json.message || json.error));
                     }
-                    else
+                    else {
                         dispatch(registerConfirmError(text));
+                    }
                 }
                 else {
                     dispatch(() => {

@@ -48,10 +48,6 @@ let requestLogin = createAction(
     LOGIN_REQUEST,
     creds => { 
         return {
-            // isFetching: true,
-            // isAuthenticated: false,
-            message:'',
-            data:null,
             creds,
         }
     }
@@ -61,8 +57,6 @@ let receiveLogin = createAction(
     LOGIN_SUCCESS,
     user => {
         return {
-            // isFetching: false,
-            // isAuthenticated: true,
             token: user.token,
             profile: user.profile,
         }
@@ -73,8 +67,6 @@ let loginError = createAction(
     LOGIN_FAILURE,
     (message, data?) => {
         return {
-            // isFetching: false,
-            // isAuthenticated: false,
             message,
             data,
         }
@@ -118,9 +110,10 @@ export const loginUser = (creds, callback) => {
                     if (isJson) {
                         // json.data = field level data
                         dispatch(loginError(json.message, json.data))
-                    } else
+                    } else {
                         dispatch(loginError(text))
-                    // return Promise.reject(user) // ???
+                    }
+                    callback(false)
                 } else {
                     // save token
                     localStorage.setItem('jsonwebtoken',json.token)
@@ -133,6 +126,7 @@ export const loginUser = (creds, callback) => {
             })
             .catch(err => {
                 dispatch(loginError(err.message))
+                callback(false)
             })
     }
 }
@@ -148,10 +142,6 @@ let requestAutoLogin = createAction(
     AUTO_LOGIN_REQUEST,
     creds => {
         return {
-            // isFetching: true,
-            // isAuthenticated: false,
-            message: '',
-            data: null,
             creds,
         }
     }
@@ -161,8 +151,6 @@ let receiveAutoLogin = createAction(
     AUTO_LOGIN_SUCCESS,
     user => {
         return {
-            // isFetching: false,
-            // isAuthenticated: true,
             token: user.token,
             profile: user.profile,
         }
@@ -173,10 +161,8 @@ let autoLoginError = createAction(
     AUTO_LOGIN_FAILURE,
     (message, data?) => {
         return {
-            // isFetching: false,
-            // isAuthenticated: false,
-            // message,
-            // data,
+            message,
+            data,
         }
     }
 )
@@ -221,8 +207,10 @@ export const autoLoginUser = (token, callback) => {
                             localStorage.removeItem('jsonwebtoken')
                         }
                         dispatch(autoLoginError(json.message, json.data))
-                    } else
+                    } else {
                         dispatch(autoLoginError(text))
+                    }
+                    callback(false)
                 } else {
                     // update token
                     localStorage.setItem('jsonwebtoken', json.token)
@@ -235,6 +223,7 @@ export const autoLoginUser = (token, callback) => {
             })
             .catch(err => {
                 dispatch(autoLoginError(err.message))
+                callback(false) // take fail action
             })
     }
 }
@@ -286,9 +275,6 @@ let requestRegister = createAction(
     REGISTER_REQUEST,
     profile => {
         return {
-            // isFetching: true,
-            // isRegistered: false,
-            // message: '',
             profile,
         }
     }
@@ -298,8 +284,6 @@ let receiveRegister = createAction(
     REGISTER_SUCCESS,
     profile => {
         return {
-            // isFetching: false,
-            // isRegistered: true,
             profile,
         }
     }
@@ -309,7 +293,6 @@ let registerError = createAction(
     REGISTER_FAILURE,
     (message, data?) => {
         return {
-            // isFetching: false,
             message,
             data,
         }
@@ -359,8 +342,9 @@ export const registerUser = profile => {
                     if (isJson) {
                         // json.data = field level data
                         dispatch(registerError(json.message, json.data))
-                    } else
+                    } else {
                         dispatch(registerError(text))
+                    }
                     // return Promise.reject(user) // ???
                 } else {
                     // Dispatch the success action
@@ -374,7 +358,9 @@ export const registerUser = profile => {
                 }
             })
             .catch(err => {
+
                 dispatch(registerError(err.message))
+
             })
     }
 }
@@ -438,13 +424,12 @@ export const confirmUser = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
-                // timeout: 3000, // TODO: test this!
             }
 
             dispatch(requestConfirmRegister(data))
             fetch('/api/register/confirm', config)
                 .then(response => {
-                    // console.log('confirm request response = ', response)
+
                     if (response.status >= 500) {
                         throw new Error("Response from server: " +
                             response.statusText + ' (' +
@@ -456,7 +441,6 @@ export const confirmUser = () => {
                 })
                 .then(({text, response}) => {
                     let json, isJson
-                    // console.log('reply text', text)
                     try {
                         json = JSON.parse(text)
                         isJson = true
@@ -464,32 +448,30 @@ export const confirmUser = () => {
                     } catch (e) {
                         isJson = false
                     }
-                    console.log('response = ',text, response)
                     if (!isJson || !response.ok) {
                         // If there was a problem, we want to
                         // dispatch the error condition
                         if (isJson) {
                             // json.data = field level data
                             dispatch(registerConfirmError(json.message || json.error))
-                        } else
+                        } else {
                             dispatch(registerConfirmError(text))
-                        // return Promise.reject(user) // ???
+                        }
                     } else {
                         // Dispatch the success action
                         dispatch(() => {
-                            dispatch(receiveConfirmRegister(json))
-                            // return Promise.resolve() // experimenting with thunks...
-                        })
-                        // .then(() => { // autologin
 
-                        // })
+                            dispatch(receiveConfirmRegister(json))
+
+                        })
                     }
                 })
                 .catch(err => {
+
                     console.log('err.message',err.message)
                     dispatch(registerConfirmError(err.message))
-                })
 
+                })
         }
 
     }
