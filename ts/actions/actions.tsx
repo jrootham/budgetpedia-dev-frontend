@@ -366,7 +366,7 @@ export const registerUser = profile => {
 }
 
 //================================================================
-//------------- REGISTRATION CONFIMRATION MANAGEMENT -------------
+//------------- REGISTRATION CONFIRMATION MANAGEMENT -------------
 
 export const REGISTER_CONFIRM_REQUEST = 'REGISTER_CONFIRM_REQUEST'
 export const REGISTER_CONFIRM_SUCCESS = 'REGISTER_CONFIRM_SUCCESS'
@@ -451,16 +451,13 @@ export const confirmUser = () => {
                         }
                     } else {
                         // Dispatch the success action
-                        // dispatch(() => {
-                            dispatch(receiveConfirmRegister(json))
-                        // })
+                        dispatch(receiveConfirmRegister(json))
+
+                        // auto-login
                         let state = getState()
                         let token = state.registerconfirm.confirmtoken
-                        console.log('autologin after confirm', token)
                         if (token) {
-                            // dispatch(() => {
-                                dispatch(autoLoginUser(token, result => { }))
-                            // })
+                            dispatch(autoLoginUser(token, result => { }))
                         }
                     }
                 })

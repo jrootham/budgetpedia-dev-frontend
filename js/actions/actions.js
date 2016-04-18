@@ -322,7 +322,6 @@ exports.confirmUser = () => {
                     dispatch(receiveConfirmRegister(json));
                     let state = getState();
                     let token = state.registerconfirm.confirmtoken;
-                    console.log('autologin after confirm', token);
                     if (token) {
                         dispatch(exports.autoLoginUser(token, result => { }));
                     }
