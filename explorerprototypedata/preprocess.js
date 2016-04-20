@@ -1,12 +1,12 @@
 // preprocess.js
 'use strict'
 var jsonfile = require('jsonfile')
-var budgetroot = require('./budgetroot.json')
-var departments = require('./departments.json')
-var categories = require('./categories.json')
-var divisions = require('./programs.json')
-var expenditures = require('./expenditures.json')
-var expenditurenames = require('./expenditurenames.json')
+var budgetroot = require('./2016_data/budgetroot.json')
+var departments = require('./2016_data/departments.json')
+var categories = require('./2016_data/categories.json')
+var divisions = require('./2016_data/programs.json')
+var expenditures = require('./2016_data/expenditures.json')
+var expenditurenames = require('./2016_data/expenditurenames.json')
 
 let expenditurebudget = expenditures.map( item => {
     let expenditurenameitem = expenditurenames.filter(nameitem => {
