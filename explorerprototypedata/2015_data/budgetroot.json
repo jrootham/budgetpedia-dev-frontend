@@ -1,0 +1,103 @@
+{
+    "SeriesTypes":
+    {
+        "BudgetExpenses":
+        {
+            "Action":"Expenses",
+            "Level":4,
+        },
+        "BudgetRevenues": 
+        {
+            "Action":"Revenues",
+            "Level":4,
+        },
+        "BudgetStaffing": 
+        {
+            "Action":"Staffing",
+            "Level":3,
+        }
+    },
+    "Programs" : 
+    {
+
+    },
+    "Expenditures":{
+
+    },
+    "Taxonomies": 
+    {
+        "Name":"Taxonomies",
+        "Alias":"Viewpoints",
+        "Instance": 
+        {    
+            "Name":"Taxonomy",
+            "Alias":"Viewpoint",
+        },
+        "Instances":
+        [
+            {
+                "Index":0,
+                "Code":"FUNCTIONAL",
+                "Name":"Functional",
+                "Alias":"Program Activity Types",
+                "Instance":{
+                    "Name":"Type",
+                    "Alias":"Program Activity Type",
+                },
+                "Meta":
+                [
+                    {
+                        "Name":"Clusters",
+                        "Alias":"Program Clusters",
+                        "Instance":{
+                            "Name":"Cluster",
+                            "Alias":"Program Cluster",
+                        }
+                    },
+                    {
+                        "Name":"Programs",
+                        "Instance":{
+                            "Name":"Program",
+                        }
+                    },
+                ],
+                "Instances": 
+                [
+                    {
+                        "Index":0,
+                        "Code":"SHARED",
+                        "Name":"Shared Services",
+                        "Instances":
+                        [
+                            {
+
+                            }
+                        ],
+                    },
+                    {
+                        "Index":1,
+                        "Code":"SUPPORT",
+                        "Name":"Citizen Support Services",
+                        "Instances":
+                        [
+                            {
+
+                            }
+                        ],
+                    },
+                    {
+                        "Index":2,
+                        "Code":"MUNICIPAL",
+                        "Name":"Municipal Services",
+                        "Instances":
+                        [
+                            {
+
+                            }
+                        ],
+                    },
+                ],
+            },
+        ],
+    }
+}
