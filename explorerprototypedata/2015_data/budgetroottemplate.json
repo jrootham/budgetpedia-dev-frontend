@@ -1,0 +1,575 @@
+{
+    "DataSeries":
+    {
+        "BudgetExpenses":
+        {
+            "Action":"Expenses",
+            "Baseline":"Programs",
+            "Components":"Expenditures",
+            "Items":
+            {
+                "311SERVICE":{},
+                "AFFORDHOUSING":{},
+                "ARENABOARDS":{},
+                "ASSNOFCOMMCENT":{},
+                "AUDITORGEN":{},
+                "CAPCORPFIN":{},
+                "CHILDSERV":{},
+                "CITYCLERK":{},
+                "COUNCIL":{},
+                "CITYMANAGER":{},
+                "CITYPLAN":{},
+                "COURTSERV":{},
+                "ECONDEVCULT":{},
+                "ENGCONST":{},
+                "EXPLACE":{},
+                "FACILITIESREAL":{},
+                "FIRESERV":{},
+                "FLEETSERV":{},
+                "HERITAGE":{},
+                "IT":{},
+                "INTEGCOMMIS":{},
+                "LEGALSERV":{},
+                "LONGCARE":{},
+                "MAYOR":{},
+                "MUNLIC":{},
+                "NONPROGEXP":{},
+                "NONPROGREV":{},
+                "CFO":{},
+                "LOBBYREG":{},
+                "OMBUDSMAN":{},
+                "TREASURER":{},
+                "PFR":{},
+                "POLICYPLAN":{},
+                "PROPERTYTAX":{},
+                "SHELTERADMIN":{},
+                "SOCIALDEV":{},
+                "WASTE":{},
+                "THEATRES":{},
+                "TOCONSERV":{},
+                "TOATMOSPHERE":{},
+                "TOBUILDING":{},
+                "TOEMPLOYMENT":{},
+                "TOPARAMEDIC":{},
+                "TOPARKING":{},
+                "POLICE":{},
+                "POLICEBRD":{},
+                "PUBHEALTH":{},
+                "TPL":{},
+                "TTC":{},
+                "TTCTRANS":{},
+                "WATER":{},
+                "ZOO":{},
+                "TRANSPORT":{},
+                "YONGEDUNDAS":{}
+            }
+        },
+        "BudgetRevenues":
+        {
+            "Action":"Revenues",
+            "Baseline":"Programs",
+            "Components":"Expenditures",
+            "Items":
+            {
+                "311SERVICE":{},
+                "AFFORDHOUSING":{},
+                "ARENABOARDS":{},
+                "ASSNOFCOMMCENT":{},
+                "AUDITORGEN":{},
+                "CAPCORPFIN":{},
+                "CHILDSERV":{},
+                "CITYCLERK":{},
+                "COUNCIL":{},
+                "CITYMANAGER":{},
+                "CITYPLAN":{},
+                "COURTSERV":{},
+                "ECONDEVCULT":{},
+                "ENGCONST":{},
+                "EXPLACE":{},
+                "FACILITIESREAL":{},
+                "FIRESERV":{},
+                "FLEETSERV":{},
+                "HERITAGE":{},
+                "IT":{},
+                "INTEGCOMMIS":{},
+                "LEGALSERV":{},
+                "LONGCARE":{},
+                "MAYOR":{},
+                "MUNLIC":{},
+                "NONPROGEXP":{},
+                "NONPROGREV":{},
+                "CFO":{},
+                "LOBBYREG":{},
+                "OMBUDSMAN":{},
+                "TREASURER":{},
+                "PFR":{},
+                "POLICYPLAN":{},
+                "PROPERTYTAX":{},
+                "SHELTERADMIN":{},
+                "SOCIALDEV":{},
+                "WASTE":{},
+                "THEATRES":{},
+                "TOCONSERV":{},
+                "TOATMOSPHERE":{},
+                "TOBUILDING":{},
+                "TOEMPLOYMENT":{},
+                "TOPARAMEDIC":{},
+                "TOPARKING":{},
+                "POLICE":{},
+                "POLICEBRD":{},
+                "PUBHEALTH":{},
+                "TPL":{},
+                "TTC":{},
+                "TTCTRANS":{},
+                "WATER":{},
+                "ZOO":{},
+                "TRANSPORT":{},
+                "YONGEDUNDAS":{}
+            }
+        },
+        "BudgetStaffing":
+        {
+            "Action":"Staffing",
+            "Baseline":"Programs",
+            "Components":"FulltimeParttime",
+            "Items":
+            {
+                "311SERVICE":{},
+                "AFFORDHOUSING":{},
+                "ARENABOARDS":{},
+                "ASSNOFCOMMCENT":{},
+                "AUDITORGEN":{},
+                "CAPCORPFIN":{},
+                "CHILDSERV":{},
+                "CITYCLERK":{},
+                "COUNCIL":{},
+                "CITYMANAGER":{},
+                "CITYPLAN":{},
+                "COURTSERV":{},
+                "ECONDEVCULT":{},
+                "ENGCONST":{},
+                "EXPLACE":{},
+                "FACILITIESREAL":{},
+                "FIRESERV":{},
+                "FLEETSERV":{},
+                "HERITAGE":{},
+                "IT":{},
+                "INTEGCOMMIS":{},
+                "LEGALSERV":{},
+                "LONGCARE":{},
+                "MAYOR":{},
+                "MUNLIC":{},
+                "NONPROGEXP":{},
+                "NONPROGREV":{},
+                "CFO":{},
+                "LOBBYREG":{},
+                "OMBUDSMAN":{},
+                "TREASURER":{},
+                "PFR":{},
+                "POLICYPLAN":{},
+                "PROPERTYTAX":{},
+                "SHELTERADMIN":{},
+                "SOCIALDEV":{},
+                "WASTE":{},
+                "THEATRES":{},
+                "TOCONSERV":{},
+                "TOATMOSPHERE":{},
+                "TOBUILDING":{},
+                "TOEMPLOYMENT":{},
+                "TOPARAMEDIC":{},
+                "TOPARKING":{},
+                "POLICE":{},
+                "POLICEBRD":{},
+                "PUBHEALTH":{},
+                "TPL":{},
+                "TTC":{},
+                "TTCTRANS":{},
+                "WATER":{},
+                "ZOO":{},
+                "TRANSPORT":{},
+                "YONGEDUNDAS":{}
+            }
+        }
+    },
+    "Lookups":{
+        "Programs" : 
+        {
+            "311SERVICE":"311 Toronto",
+            "AFFORDHOUSING":"Affordable Housing Office",
+            "ARENABOARDS":"Arena Boards of Management",
+            "ASSNOFCOMMCENT":"Association of Community Centres",
+            "AUDITORGEN":"Auditor General's Office",
+            "CAPCORPFIN":"Capital & Corporate Financing",
+            "CHILDSERV":"Children's Services",
+            "CITYCLERK":"City Clerk's Office",
+            "COUNCIL":"City Council",
+            "CITYMANAGER":"City Manager's Office",
+            "CITYPLAN":"City Planning",
+            "COURTSERV":"Court Services",
+            "ECONDEVCULT":"Economic Development & Culture",
+            "ENGCONST":"Engineering & Construction Services",
+            "EXPLACE":"Exhibition Place",
+            "FACILITIESREAL":"Facilities, Real Estate, Environment & Energy",
+            "FIRESERV":"Fire Services",
+            "FLEETSERV":"Fleet Services",
+            "HERITAGE":"Heritage Toronto",
+            "IT":"Information & Technology",
+            "INTEGCOMMIS":"Integrity Commissioner's Office",
+            "LEGALSERV":"Legal Services",
+            "LONGCARE":"Long Term Care Homes & Services",
+            "MAYOR":"Mayor's Office",
+            "MUNLIC":"Municipal Licensing & Standards",
+            "NONPROGEXP":"Non-Program Expenditures",
+            "NONPROGREV":"Non-Program Revenues",
+            "CFO":"Office of the Chief Financial Officer",
+            "LOBBYREG":"Office of the Lobbyist Registrar",
+            "OMBUDSMAN":"Office of the Ombudsman",
+            "TREASURER":"Office of the Treasurer",
+            "PFR":"Parks, Forestry & Recreation",
+            "POLICYPLAN":"Policy, Planning, Finance & Administration",
+            "PROPERTYTAX":"Property Tax",
+            "SHELTERADMIN":"Shelter, Support & Housing Administration",
+            "SOCIALDEV":"Social Development, Finance & Administration",
+            "WASTE":"Solid Waste Management Services",
+            "THEATRES":"Theatres",
+            "TOCONSERV":"Toronto & Region Conservation Authority",
+            "TOATMOSPHERE":"Toronto Atmospheric Fund",
+            "TOBUILDING":"Toronto Building",
+            "TOEMPLOYMENT":"Toronto Employment & Social Services",
+            "TOPARAMEDIC":"Toronto Paramedic Services",
+            "TOPARKING":"Toronto Parking Authority",
+            "POLICE":"Toronto Police Service",
+            "POLICEBRD":"Toronto Police Services Board",
+            "PUBHEALTH":"Toronto Public Health",
+            "TPL":"Toronto Public Library",
+            "TTC":"Toronto Transit Commission - Conventional",
+            "TTCTRANS":"Toronto Transit Commission - Wheel Trans",
+            "WATER":"Toronto Water",
+            "ZOO":"Toronto Zoo",
+            "TRANSPORT":"Transportation Services",
+            "YONGEDUNDAS":"Yonge-Dundas Square"
+        },
+        "Expenditures":{
+        },
+        "FulltimeParttime":
+        {
+            "FULL":"Full Time",
+            "PART":"Part Time"
+        }
+    },
+    "Viewpoints":
+    {
+        "FUNCTIONAL":
+        {
+            "Index":0,
+            "Lookups":
+            {
+                "SHARED":"Shared Services",
+                "WASTEWATER":"Waste & Water Services",
+                "TRANSTRANSIT":"Transportation & Transit Services",
+                "COMMONS":"City Commons",
+                "DESTINATIONS":"Public Destinations",
+                "SPECIALCOMMONS":"Specialized Commons Services",
+                "SUPPORT":"Citizen Support Services",
+                "EMERGSERV":"Emergency Services",
+                "HEALTHWELFARE":"Health & Welfare Services",
+                "MUNICIPAL":"Municipal Services",
+                "CORPMANAGEMENT":"Corporate Management",
+                "ACCOUNTABILITY":"Accountability Offices",
+                "MAINTSTANDARDS":"Maintenance & Standards Services",
+                "PLANNINGDEV":"Planning & Development Services",
+                "INTERNALSERV":"Internal Services",
+                "CORPORATEACCOUNTS":"Corporate Accounts"
+            },
+            "Meta":
+            [
+                {
+                    "Name":"Functional",
+                    "Alias":"Program Activity Types",
+                    "Instance":{
+                        "Name":"Type",
+                        "Alias":"Program Activity Type"
+                    }
+                },
+                {
+                    "Name":"Clusters",
+                    "Alias":"Program Clusters",
+                    "Instance":{
+                        "Name":"Cluster",
+                        "Alias":"Program Cluster"
+                    }
+                },
+                {
+                    "Name":"Programs",
+                    "Instance":{
+                        "Name":"Program"
+                    }
+                }
+            ],
+            "Components": 
+            {
+                "SHARED":
+                {
+                    "Index":0,
+                    "Components":
+                    {
+                        "WASTEWATER":
+                        {
+                            "Index":0,
+                            "Components":{
+                                "WASTE":{
+                                    "Index":0
+                                },
+                                "WATER":{
+                                    "Index":1
+                                }
+                            }
+                        },
+                        "TRANSTRANSIT":
+                        {
+                            "Index":1,
+                            "Components":{
+                                "TTC":{
+                                    "Index":0
+                                },
+                                "TTCTRANS":{
+                                    "Index":1
+                                },
+                                "TRANSPORT": {
+                                    "Index":2
+                                },
+                                "TOPARKING": {
+                                    "Index":3
+                                }
+                            }
+                        },
+                        "COMMONS":
+                        {
+                            "Index":2,
+                            "Components":{
+                                "PFR":{
+                                    "Index":0
+                                },
+                                "ARENABOARDS":{
+                                    "Index":1
+                                },
+                                "ASSNOFCOMMCENT":{
+                                    "Index":2
+                                },
+                                "TOCONSERV":{
+                                    "Index":3
+                                },
+                                "TPL":{
+                                    "Index":4
+                                }
+                            }
+                        },
+                        "DESTINATIONS":
+                        {
+                            "Index":3,
+                            "Components":{
+                                "EXPLACE":{
+                                    "Index":0
+                                },
+                                "THEATRES":{
+                                    "Index":1
+                                },
+                                "ZOO":{
+                                    "Index":2
+                                },
+                                "YONGEDUNDAS":{
+                                    "Index":3
+                                }
+                            }
+                        },
+                        "SPECIALCOMMONS":
+                        {
+                            "Index":4,
+                            "Components":{
+                                "HERITAGE":{
+                                    "Index":0
+                                },
+                                "TOATMOSPHERE":{
+                                    "Index":1
+                                }
+                            }
+                        }
+                    }
+                },
+                "SUPPORT":
+                {
+                    "Index":1,
+                    "Components":
+                    {
+                        "EMERGSERV":
+                        {
+                            "Index":0,
+                            "Components":{
+                                "FIRESERV":{
+                                    "Index":0
+                                },
+                                "TOPARAMEDIC":{
+                                    "Index":1
+                                },
+                                "POLICE":{
+                                    "Index":2
+                                },
+                                "COURTSERV":{
+                                    "Index":2
+                                },
+                                "POLICE":{
+                                    "Index":3
+                                }
+                            }
+                        },
+                        "HEALTHWELFARE":
+                        {
+                            "Index":1,
+                            "Components":{
+                                "PUBHEALTH":{
+                                    "Index":0
+                                },
+                                "CHILDSERV":{
+                                    "Index":1
+                                },
+                                "LONGCARE":{
+                                    "Index":2
+                                },
+                                "SHELTERADMIN":{
+                                    "Index":3
+                                },
+                                "AFFORDHOUSING":{
+                                    "Index":4
+                                },
+                                "TOEMPLOYMENT":{
+                                    "Index":5
+                                }
+                            }
+                        }
+                    }
+                },
+                "MUNICIPAL":
+                {
+                    "Index":2,
+                    "Components":
+                    {
+                        "CORPMANAGEMENT":
+                        {   
+                            "Index":0,
+                            "Components":{
+                                "COUNCIL":{
+                                    "Index":0
+                                },
+                                "MAYOR":{
+                                    "Index":1
+                                },
+                                "CITYCLERK":{
+                                    "Index":2
+                                },
+                                "CITYMANAGER":{
+                                    "Index":3
+                                },
+                                "CFO":{
+                                    "Index":4
+                                },
+                                "TREASURER":{
+                                    "Index":5
+                                }
+                            }
+                        },
+                        "ACCOUNTABILITY":
+                        {
+                            "Index":1,
+                            "Components":{
+                                "AUDITORGEN":{
+                                    "Index":0
+                                },
+                                "LOBBYREG":{
+                                    "Index":1
+                                },
+                                "OMBUDSMAN":{
+                                    "Index":2
+                                },
+                                "INTEGCOMMIS":{
+                                    "Index":3
+                                }
+                            }
+                        },
+                        "MAINTSTANDARDS":
+                        {
+                            "Index":2,
+                            "Components":{
+                                "311SERVICE":{
+                                    "Index":0
+                                },
+                                "MUNLIC":{
+                                    "Index":1
+                                },
+                                "TOBUILDING":{
+                                    "Index":2
+                                }
+                            }
+                        },
+                        "PLANNINGDEVELOPMENT":
+                        {
+                            "Index":3,
+                            "Components":{
+                                "CITYPLAN":{
+                                    "Index":0
+                                },
+                                "POLICYPLAN":{
+                                    "Index":1
+                                },
+                                "ECONDEVCULT":{
+                                    "Index":2
+                                },
+                                "SOCIALDEV":{
+                                    "Index":3
+                                }
+                            }
+                        },
+                        "INTERNALSERV":
+                        {
+                            "Index":4,
+                            "Components":{
+                                "FACILITIESREAL":{
+                                    "Index":0
+                                },
+                                "ENGCONST":{
+                                    "Index":1
+                                },
+                                "IT":{
+                                    "Index":2
+                                },
+                                "FLEETSERV":{
+                                    "Index":3
+                                },
+                                "LEGALSERV":{
+                                    "Index":4
+                                },
+                            }
+                        },
+                        "CORPORATEACCOUNTS":
+                        {
+                            "Index":5,
+                            "Components":{
+                                "CAPCORPFIN":{
+                                    "Index":0
+                                },
+                                "NONPROGEXP":{
+                                    "Index":1
+                                },
+                                "NONPROGREV":{
+                                    "Index":2
+                                },
+                                "PROPERTYTAX":{
+                                    "Index":3
+                                },
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
