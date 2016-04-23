@@ -1,8 +1,6 @@
 {
-    "DataSeries":
-    {
-        "BudgetExpenses":
-        {
+    "DataSeries": {
+        "BudgetExpenses": {
             "Action":"Expenses",
             "Baseline":"Programs",
             "Components":"Expenditures",
@@ -64,8 +62,7 @@
                 "YONGEDUNDAS":{}
             }
         },
-        "BudgetRevenues":
-        {
+        "BudgetRevenues": {
             "Action":"Revenues",
             "Baseline":"Programs",
             "Components":"Expenditures",
@@ -127,8 +124,7 @@
                 "YONGEDUNDAS":{}
             }
         },
-        "BudgetStaffing":
-        {
+        "BudgetStaffing": {
             "Action":"Staffing",
             "Baseline":"Programs",
             "Components":"FulltimeParttime",
@@ -192,8 +188,7 @@
         }
     },
     "Lookups":{
-        "Programs" : 
-        {
+        "Programs": {
             "311SERVICE":"311 Toronto",
             "AFFORDHOUSING":"Affordable Housing Office",
             "ARENABOARDS":"Arena Boards of Management",
@@ -249,18 +244,32 @@
             "TRANSPORT":"Transportation Services",
             "YONGEDUNDAS":"Yonge-Dundas Square"
         },
-        "Expenditures":{
+        "Expenditures": {
+            "100A":"Salaries And Benefits",
+            "200A":"Materials & Supplies",
+            "300A":"Equipment",
+            "400A":"Service And Rent",
+            "505A":"Contribution To Capital",
+            "510A":"Contribution To Reserves/Reserve Funds",
+            "650A":"Other Expenditures",
+            "700A":"Inter-Divisional Charges",
+            "750A":"Inter-Divisional Recoveries",
+            "805A":"Provincial Subsidies",
+            "810A":"Federal Subsidies",
+            "820A":"Other Subsidies",
+            "850A":"User Fees & Donations",
+            "860A":"Licences & Permits Revenue",
+            "920A":"Transfers From Capital",
+            "930A":"Contribution From Reserves/Reserve Funds",
+            "940A":"Property Tax"
         },
-        "FulltimeParttime":
-        {
+        "FulltimeParttime": {
             "FULL":"Full Time",
             "PART":"Part Time"
         }
     },
-    "Viewpoints":
-    {
-        "FUNCTIONAL":
-        {
+    "Viewpoints": {
+        "FUNCTIONAL": {
             "Index":0,
             "Lookups":
             {
@@ -566,6 +575,293 @@
                                     "Index":3
                                 },
                             }
+                        }
+                    }
+                }
+            }
+        },
+        "STRUCTURAL": {
+            "Index":1,
+            "Lookups": {
+                "ADMINOPS":"Administrative Operartions",
+                "COUNCILOPS":"Council Operations",
+                "COUNCILOFFICES":"Council Offices",
+                "ACCOUNTABILITYAPPEAL2":"Accountability & Appeal Offices",
+                "MANAGEMENTOPS":"Management Operations",
+                "AGENCIES":"Agencies",
+                "POLICESERV":"Police Services",
+                "TRANSITSERV":"Transit Services",
+                "SMALLER":"Smaller Agencies",
+                "DESTINATIONS2":"Public Destinations",
+                "CITIZENOPS":"Citizen Centered Operations",
+                "CITIZENSERVICESA":"Citizen-Centered Services \"A\"",
+                "FIELDSERVICESA":"Field Services",
+                "ADMINSERVICESA":"Administrative Services",
+                "CITIZENSERVICESB":"Citizen-Centered Services \"B\"",
+                "FIELDSERVICESB":"Field Services",
+                "ADMINSERVICESB":"Administrative Services",
+                "RATESUPPORTED":"Rate Supported Services",
+                "CORPORATEACCOUNTS2":"Corporate Accounts"
+            },
+            "Components":{
+                "ADMINOPS":{
+                    "Index":0,
+                    "Components":{
+                        "COUNCILOPS":{
+                            "Index":0,
+                            "Components":
+                            {
+                                "COUNCILOFFICES":{
+                                    "Index":0,
+                                    "Components": {
+                                        "COUNCIL":{
+                                            "Index":0
+                                        },
+                                        "MAYOR":{
+                                            "Index":1
+                                        },
+                                        "CITYCLERK":{
+                                            "Index":2
+                                        },
+                                        "LEGALSERV":{
+                                            "Index":3
+                                        }
+                                    }
+                                },
+                                "ACCOUNTABILITYAPPEAL2":{
+                                    "Index":1,
+                                    "Components":
+                                    {
+                                        "AUDITORGEN":{
+                                            "Index":0
+                                        },
+                                        "INTEGCOMMIS":{
+                                            "Index":1
+                                        },
+                                        "LOBBYREG":{
+                                            "Index":2
+                                        },
+                                        "OMBUDSMAN":{
+                                            "Index":3
+                                        },
+                                        "LOCALAPPEAL":{
+                                            "Index":4
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "MANAGEMENTOPS":{
+                            "Index":1,
+                            "Compponents":{
+                                "CITYMANAGER":{
+                                    "Index":0
+                                },
+                                "CFO":{
+                                    "Index":1
+                                },
+                                "TREASURER":{
+                                    "Index":2
+                                },
+                                "FACILITIESREAL":{
+                                    "Index":3
+                                },
+                                "FLEETSERV":{
+                                    "Index":4
+                                },
+                                "IT":{
+                                    "Index":5
+                                },
+                                "311SERVICE":{
+                                    "Index":6
+                                }
+                            }
+                        }
+                    }
+                },
+                "AGENCIES":{
+                    "Index":1,
+                    "Components":{
+                        "POLICESERV":{
+                            "Index":0,
+                            "Components":{
+                                "POLICE":{
+                                    "Index":0
+                                },
+                                "POLICEBRD":{
+                                    "Index":1
+                                }
+                            }
+                        },
+                        "TRANSITSERV":{
+                            "Index":1,
+                            "Components":{
+                                "TTC":{
+                                    "Index":0
+                                },
+                                "TTCTRANS":{
+                                    "Index":1
+                                }
+                        },
+                        "HEALTH":{
+                            "Index":2
+                        },
+                        "LIBRARY":{
+                            "Index":3
+                        },
+                        "SMALLER":{
+                            "Index":4,
+                            "Components":{
+                                "ASSNOFCOMMCENT":{
+                                    "Index":0
+                                },
+                                "ARENABOARDS":{
+                                    "Index":2
+                                },
+                                "HERITAGE":{
+                                    "Index":1
+                                },
+                                "TOCONSERV":{
+                                    "Index":3
+                                },
+                                "DESTINATIONS2":{
+                                    "Index":4,
+                                    "Components":{
+                                        "EXPLACE":{
+                                            "Index":0
+                                        },
+                                        "THEATRES":{
+                                            "Index":1
+                                        },
+                                        "ZOO":{
+                                            "Index":2
+                                        },
+                                        "YONGEDUNDAS":{
+                                            "Index":3
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "CITIZENOPS": {
+                    "Index":2,
+                    "Components":{
+                        "CITIZENSERVICESA":{
+                            "Index":0,
+                            "Components": 
+                            {
+                                "FIELDSERVICESA":{
+                                    "Index":0,
+                                    "Components": {
+                                        "CHILDSERV":{
+                                            "Index":0
+                                        },
+                                        "COURTSERV":{
+                                            "Index":1
+                                        },
+                                        "TOPARAMEDIC":{
+                                            "Index":2
+                                        },
+                                        "PFR":{
+                                            "Index":3
+                                        },
+                                        "LONGCARE":{
+                                            "Index":4
+                                        },
+                                        "SHELTERADMIN":{
+                                            "Index":5
+                                        }
+                                    }
+                                },
+                                "ADMINSERVICESA":{
+                                    "Index":1,
+                                    "Components":{
+                                        "ECONDEVCULT":{
+                                            "Index":0
+                                        },
+                                        "SOCIALDEV":{
+                                            "Index":1
+                                        },
+                                        "TOEMPLOYMENT":{
+                                            "Index":2
+                                        },
+                                        "AFFORDHOUSING":{
+                                            "Index":3
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "CITIZENSERVICESB": {
+                            "Index":1,
+                            "Components":
+                            {
+                                "FIELDSERVICESB":{
+                                    "Index":0,
+                                    "Components": {
+                                        "FIRESERV":{
+                                            "Index":0
+                                        },
+                                        "TRANSPORT":{
+                                            "Index":0
+                                        },
+                                        "ENGCONST":{
+                                            "Index":0
+                                        }
+                                    }
+                                },
+                                "ADMINSERVICESB":{
+                                    "Index":1,
+                                    "Components":{
+
+                                        "CITYPLAN":{
+                                            "Index":0
+                                        },
+                                        "MUNLIC":{
+                                            "Index":0
+                                        },
+                                        "POLICYPLAN":{
+                                            "Index":0
+                                        },
+                                        "TOBUILDING":{
+                                            "Index":0
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "RATESUPPORTED": {
+                            "Index":2,
+                            "Components": {
+                                "WASTE": {
+                                    "Index":0
+                                },
+                                "WATER": {
+                                    "Index":1
+                                },
+                                "TOPARKING": {
+                                    "Index":2
+                                }
+                            }
+                        }
+                    }
+                },
+                "CORPORATEACCOUNTS2":{
+                    "Index":3,
+                    "Components": {
+                        "CAPCORPFIN":{
+                            "Index":0
+                        },
+                        "NONPROGEXP": {
+                            "Index":1
+                        },
+                        "NONPROGREV": {
+                            "Index":2
+                        },
+                        "PROPERTYTAX": {
+                            "Index":3
                         }
                     }
                 }
