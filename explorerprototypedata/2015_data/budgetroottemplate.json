@@ -812,33 +812,45 @@
                             "Index":1,
                             "Meta":"CLUSTER",
                             "Components":{
-                                "CITYMANAGER":{
+                                "MANAGEMENTOFFICES":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Meta":"SUBCLUSTER",
+                                    "Components": {
+                                        "CITYMANAGER":{
+                                            "Index":0,
+                                            "Meta":"BASELINE"
+                                        },
+                                        "CFO":{
+                                            "Index":1,
+                                            "Meta":"BASELINE"
+                                        },
+                                        "TREASURER":{
+                                            "Index":2,
+                                            "Meta":"BASELINE"
+                                        }
+                                    }
                                 },
-                                "CFO":{
-                                    "Index":1,
-                                    "Meta":"BASELINE"
-                                },
-                                "TREASURER":{
-                                    "Index":2,
-                                    "Meta":"BASELINE"
-                                },
-                                "FACILITIES":{
-                                    "Index":3,
-                                    "Meta":"BASELINE"
-                                },
-                                "FLEET":{
-                                    "Index":4,
-                                    "Meta":"BASELINE"
-                                },
-                                "IT":{
-                                    "Index":5,
-                                    "Meta":"BASELINE"
-                                },
-                                "311SERVICE":{
-                                    "Index":6,
-                                    "Meta":"BASELINE"
+                                "MANAGEMENTSERVICES":{
+                                    "Index":0,
+                                    "Meta":"SUBCLUSTER",
+                                    "Components": {
+                                        "FACILITIES":{
+                                            "Index":3,
+                                            "Meta":"BASELINE"
+                                        },
+                                        "FLEET":{
+                                            "Index":4,
+                                            "Meta":"BASELINE"
+                                        },
+                                        "IT":{
+                                            "Index":5,
+                                            "Meta":"BASELINE"
+                                        },
+                                        "311SERVICE":{
+                                            "Index":6,
+                                            "Meta":"BASELINE"
+                                        }
+                                    }
                                 }
                             }
                         }
