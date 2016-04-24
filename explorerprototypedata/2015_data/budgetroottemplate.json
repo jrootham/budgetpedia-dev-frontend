@@ -689,6 +689,8 @@
                     "DESTINATIONS2":"Public Destinations",
                     "FIELDSERVICESA":"Field Services",
                     "FIELDSERVICESB":"Field Services",
+                    "MANAGEMENTOFFICES":"Management Offices",
+                    "MANAGEMENTSERVICES":"Management Services",
                     "MANAGEMENTOPS":"Management Operations",
                     "POLICESERV":"Police Services",
                     "RATESUPPORTED":"Rate Supported Services",
