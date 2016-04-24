@@ -294,7 +294,7 @@
                     "CORPORATEACCOUNTS":"Corporate Accounts"
                 }
             },
-            "MetaData": {   
+            "Configuration": {   
                 "ROOT":
                 {
                     "Name":"Functional",
@@ -335,115 +335,115 @@
                     "Instance":{
                         "Name":"Program"
                     }
-                },
+                }
             },
-            "Meta":"ROOT",
+            "Config":"ROOT",
             "Components": {
                 "SHARED":
                 {
                     "Index":0,
-                    "Meta":"TYPE",
+                    "Config":"TYPE",
                     "Components":
                     {
                         "WASTEWATER":
                         {
                             "Index":0,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "SOLIDWASTE":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "WATER":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         },
                         "TRANSTRANSIT":
                         {
                             "Index":1,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "TTCCONV":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "TTCWHEEL":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "TRANSPORTATION": {
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "PARKING": {
                                     "Index":3,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         },
                         "COMMONS":
                         {
                             "Index":2,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "PARKS":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "ARENAS":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "COMMCENTRES":{
                                     "Index":2
                                 },
                                 "REGIONCONSERV":{
                                     "Index":3,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "LIBRARY":{
                                     "Index":4,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         },
                         "DESTINATIONS":
                         {
                             "Index":3,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "EXHIBPLACE":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "THEATRES":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "ZOO":{
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "YONGEDUNDAS":{
                                     "Index":3,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         },
                         "SPECIALCOMMONS":
                         {
                             "Index":4,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "HERITAGE":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "ATMOSPHERE":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         }
@@ -452,64 +452,64 @@
                 "SUPPORT":
                 {
                     "Index":1,
-                    "Meta":"TYPE",
+                    "Config":"TYPE",
                     "Components":
                     {
                         "EMERGSERV":
                         {
                             "Index":0,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "FIRE":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "PARAMEDIC":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "POLICE":{
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "COURTSERV":{
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "POLICEBOARD":{
                                     "Index":3,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         },
                         "HEALTHWELFARE":
                         {
                             "Index":1,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "PUBLICHEALTH":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "CHILDSERV":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "LONGTERMHOME":{
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "SHELTERADMIN":{
                                     "Index":3,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "AFFHOUSING":{
                                     "Index":4,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "SOCIALSERV":{
                                     "Index":5,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         }
@@ -518,152 +518,152 @@
                 "MUNICIPAL":
                 {
                     "Index":2,
-                    "Meta":"TYPE",
+                    "Config":"TYPE",
                     "Components":
                     {
                         "CORPMANAGEMENT":
                         {   
                             "Index":0,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "COUNCIL":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "MAYOR":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "CLERK":{
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "CITYMANAGER":{
                                     "Index":3,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "CFO":{
                                     "Index":4,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "TREASURER":{
                                     "Index":5,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         },
                         "ACCOUNTABILITY":
                         {
                             "Index":1,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "AUDITGEN":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "LOBBYREG":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "OMBUDSMAN":{
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "INTEGRITYCOMM":{
                                     "Index":3,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         },
                         "MAINTSTANDARDS":
                         {
                             "Index":2,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "311SERVICE":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "LICENCING":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "BUILDING":{
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         },
                         "PLANNINGDEVELOPMENT":
                         {
                             "Index":3,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "PLANNING":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "POLICYADMIN":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "ECONDEV":{
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "SOCIALDEV":{
                                     "Index":3,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         },
                         "INTERNALSERV":
                         {
                             "Index":4,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "FACILITIES":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "ENGINEERING":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "IT":{
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "FLEET":{
                                     "Index":3,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "LEGAL":{
                                     "Index":4,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                             }
                         },
                         "CORPORATEACCOUNTS":
                         {
                             "Index":5,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "CORPFINANCING":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "CORPEXPENDITURES":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "CORPREVENUES":{
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "PROPERTYTAX":{
                                     "Index":3,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                             }
                         }
@@ -698,7 +698,7 @@
                     "TRANSITSERV":"Transit Services"
                 }
             },
-            "MetaData": {   
+            "Configuration": {   
                 "ROOT":
                 {
                     "Name":"Structural",
@@ -748,63 +748,63 @@
                     }
                 },
             },
-            "Meta":"ROOT",
+            "Config":"ROOT",
             "Components": {
                 "ADMINOPS": {
                     "Index":0,
-                    "Meta":"STRUCTURE",
+                    "Config":"STRUCTURE",
                     "Components": {
                         "COUNCILOPS": {
                             "Index":0,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":
                             {
                                 "COUNCILOFFICES":{
                                     "Index":0,
-                                    "Meta":"SUBCLUSTER",
+                                    "Config":"SUBCLUSTER",
                                     "Components": {
                                         "COUNCIL":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "MAYOR":{
                                             "Index":1,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "CLERK":{
                                             "Index":2,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "LEGAL":{
                                             "Index":3,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         }
                                     }
                                 },
                                 "ACCOUNTABILITYAPPEAL2":{
                                     "Index":1,
-                                    "Meta":"SUBCLUSTER",
+                                    "Config":"SUBCLUSTER",
                                     "Components":
                                     {
                                         "AUDITGEN":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "INTEGRITYCOMM":{
                                             "Index":1,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "LOBBYREG":{
                                             "Index":2,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "OMBUDSMAN":{
                                             "Index":3,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "LOCALAPPEAL":{
                                             "Index":4,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         }
                                     }
                                 }
@@ -812,45 +812,45 @@
                         },
                         "MANAGEMENTOPS":{
                             "Index":1,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "MANAGEMENTOFFICES":{
                                     "Index":0,
-                                    "Meta":"SUBCLUSTER",
+                                    "Config":"SUBCLUSTER",
                                     "Components": {
                                         "CITYMANAGER":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "CFO":{
                                             "Index":1,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "TREASURER":{
                                             "Index":2,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         }
                                     }
                                 },
                                 "MANAGEMENTSERVICES":{
                                     "Index":0,
-                                    "Meta":"SUBCLUSTER",
+                                    "Config":"SUBCLUSTER",
                                     "Components": {
                                         "FACILITIES":{
                                             "Index":3,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "FLEET":{
                                             "Index":4,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "IT":{
                                             "Index":5,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "311SERVICE":{
                                             "Index":6,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         }
                                     }
                                 }
@@ -860,86 +860,86 @@
                 },
                 "AGENCIES":{
                     "Index":1,
-                    "Meta":"STRUCTURE",
+                    "Config":"STRUCTURE",
                     "Components":{
                         "POLICESERV":{
                             "Index":0,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "POLICE":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "POLICEBOARD":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                             }
                         },
                         "TRANSITSERV":{
                             "Index":1,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "TTCCONV":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "TTCWHEEL":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 }
                         },
                         "HEALTH":{
                             "Index":2,
-                            "Meta":"BASELINE"
+                            "Config":"BASELINE"
                         },
                         "LIBRARY":{
                             "Index":3,
-                            "Meta":"BASELINE"
+                            "Config":"BASELINE"
                         },
                         "PARKING": {
                             "Index":2,
-                            "Meta":"BASELINE"
+                            "Config":"BASELINE"
                         },
                         "SMALLER":{
                             "Index":4,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":{
                                 "COMMCENTRES":{
                                     "Index":0,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "ARENAS":{
                                     "Index":2,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "HERITAGE":{
                                     "Index":1,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "REGIONCONSERV":{
                                     "Index":3,
-                                    "Meta":"BASELINE"
+                                    "Config":"BASELINE"
                                 },
                                 "DESTINATIONS2":{
                                     "Index":4,
-                                    "Meta":"SUBCLUSTER",
+                                    "Config":"SUBCLUSTER",
                                     "Components":{
                                         "EXHIBPLACE":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "THEATRES":{
                                             "Index":1,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "ZOO":{
                                             "Index":2,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "YONGEDUNDAS":{
                                             "Index":3,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         }
                                     }
                                 }
@@ -949,62 +949,62 @@
                 },
                 "CITIZENOPS": {
                     "Index":2,
-                    "Meta":"STRUCTURE",
+                    "Config":"STRUCTURE",
                     "Components":{
                         "CITIZENSERVICESA": {
                             "Index":0,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components": 
                             {
                                 "FIELDSERVICESA":{
                                     "Index":0,
-                                    "Meta":"SUBCLUSTER",
+                                    "Config":"SUBCLUSTER",
                                     "Components": {
                                         "CHILDSERV":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "COURTSERV":{
                                             "Index":1,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "PARAMEDIC":{
                                             "Index":2,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "PARKS":{
                                             "Index":3,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "LONGTERMHOME":{
                                             "Index":4,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         }
                                     }
                                 },
                                 "CORESERVICESA":{
                                     "Index":1,
-                                    "Meta":"SUBCLUSTER",
+                                    "Config":"SUBCLUSTER",
                                     "Components":{
                                         "ECONDEV":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "SOCIALDEV":{
                                             "Index":1,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "SOCIALSERV":{
                                             "Index":2,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "SHELTERADMIN":{
                                             "Index":5,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "AFFHOUSING":{
                                             "Index":3,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         }
                                     }
                                 }
@@ -1012,54 +1012,54 @@
                         },
                         "CITIZENSERVICESB": {
                             "Index":1,
-                            "Meta":"CLUSTER",
+                            "Config":"CLUSTER",
                             "Components":
                             {
                                 "FIELDSERVICESB":{
                                     "Index":0,
-                                    "Meta":"SUBCLUSTER",
+                                    "Config":"SUBCLUSTER",
                                     "Components": {
                                         "SOLIDWASTE": {
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "WATER": {
                                             "Index":1,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "FIRE":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "TRANSPORTATION":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         }
                                     }
                                 },
                                 "CORESERVICESB":{
                                     "Index":1,
-                                    "Meta":"SUBCLUSTER",
+                                    "Config":"SUBCLUSTER",
                                     "Components":{
                                         "ENGINEERING":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "PLANNING":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "LICENCING":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "POLICYADMIN":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         },
                                         "BUILDING":{
                                             "Index":0,
-                                            "Meta":"BASELINE"
+                                            "Config":"BASELINE"
                                         }
                                     }
                                 }
@@ -1069,23 +1069,23 @@
                 },
                 "CORPORATEACCOUNTS2":{
                     "Index":3,
-                    "Meta":"CLUSTER",
+                    "Config":"CLUSTER",
                     "Components": {
                         "CORPFINANCING":{
                             "Index":0,
-                            "Meta":"BASELINE"
+                            "Config":"BASELINE"
                         },
                         "CORPEXPENDITURES": {
                             "Index":1,
-                            "Meta":"BASELINE"
+                            "Config":"BASELINE"
                         },
                         "CORPREVENUES": {
                             "Index":2,
-                            "Meta":"BASELINE"
+                            "Config":"BASELINE"
                         },
                         "PROPERTYTAX": {
                             "Index":3,
-                            "Meta":"BASELINE"
+                            "Config":"BASELINE"
                         }
                     }
                 }
