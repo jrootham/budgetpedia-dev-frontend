@@ -677,12 +677,12 @@
                 "Categories":{
                     "ACCOUNTABILITYAPPEAL2":"Accountability & Appeal Offices",
                     "ADMINOPS":"Administrative Operartions",
-                    "ADMINSERVICESA":"Administrative Services",
-                    "ADMINSERVICESB":"Administrative Services",
                     "AGENCIES":"Agencies",
                     "CITIZENOPS":"Citizen Centered Operations",
                     "CITIZENSERVICESA":"Citizen-Centered Services \"A\"",
                     "CITIZENSERVICESB":"Citizen-Centered Services \"B\"",
+                    "CORESERVICESA":"Core Administrative Services",
+                    "CORESERVICESB":"Core Administrative Services",
                     "CORPORATEACCOUNTS2":"Corporate Accounts",
                     "COUNCILOFFICES":"Council Offices",
                     "COUNCILOPS":"Council Operations",
@@ -968,7 +968,7 @@
                                         }
                                     }
                                 },
-                                "ADMINSERVICESA":{
+                                "CORESERVICESA":{
                                     "Index":1,
                                     "Meta":"SUBCLUSTER",
                                     "Components":{
@@ -1023,7 +1023,7 @@
                                         }
                                     }
                                 },
-                                "ADMINSERVICESB":{
+                                "CORESERVICESB":{
                                     "Index":1,
                                     "Meta":"SUBCLUSTER",
                                     "Components":{
