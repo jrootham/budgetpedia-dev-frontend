@@ -121,7 +121,7 @@ POLICYADMIN,"Policy, Planning, Finance & Administration",920A,Transfers From Cap
 POLICYADMIN,"Policy, Planning, Finance & Administration",930A,Contribution From Reserves/Reserve Funds,Revenues,-875
 POLICYADMIN,"Policy, Planning, Finance & Administration",940A,Sundry and Other Revenues,Revenues,-231165
 PROPERTYTAX,Property Tax,940A,Property Tax,Revenues,-3848634765
-PROPERTYTAX,Property Tax,,Special Levy for Scarborough Subway (Reserve Contribution),Revenues,-24846399
+PROPERTYTAX,Property Tax,940A,Special Levy for Scarborough Subway (Reserve Contribution),Revenues,-24846399
 SHELTERADMIN,"Shelter, Support & Housing Administration",750A,Inter-Divisional Recoveries,Revenues,-11250
 SHELTERADMIN,"Shelter, Support & Housing Administration",805A,Provincial Subsidies,Revenues,-147308363
 SHELTERADMIN,"Shelter, Support & Housing Administration",810A,Federal Subsidies,Revenues,-157339042

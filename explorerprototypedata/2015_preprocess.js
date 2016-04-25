@@ -74,7 +74,14 @@ for (var line of records) {
             Components:{}
         }
         yearobj.Amount += amount
-        yearobj.Components[expenditure] = {Amount:amount}
+        // some accounts may be incorrectly duplicated
+        let yearaccount = yearobj.Components[expenditure] || {}
+        if (yearaccount.Amount) {
+            yearaccount.Amount += amount
+        } else {
+            yearaccount.Amount = amount
+        }
+        yearobj.Components[expenditure] = yearaccount
         years[year] = yearobj
         item.years = years
         // console.log(item)
@@ -109,7 +116,14 @@ for (var line of records) {
             Components:{}
         }
         yearobj.Amount += amount
-        yearobj.Components[expenditure] = {Amount:amount}
+        // some accounts may be incorrectly duplicated
+        let yearaccount = yearobj.Components[expenditure] || {}
+        if (yearaccount.Amount) {
+            yearaccount.Amount += amount
+        } else {
+            yearaccount.Amount = amount
+        }
+        yearobj.Components[expenditure] = yearaccount
         years[year] = yearobj
         item.years = years
         // console.log(item)
