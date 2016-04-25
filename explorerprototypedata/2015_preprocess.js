@@ -84,7 +84,7 @@ for (var line of records) {
 // console.log(budgetstaffing)
 
 // =============================================================================
-// ----------------------------[ IMPORT EXPENSE DATA ]-------------------------
+// ----------------------------[ IMPORT REVENUE DATA ]-------------------------
 
 var filetext = fs.readFileSync('./2015_data/2015.revenues.expenditures.csv','utf8')
 
