@@ -695,7 +695,7 @@
                     "MANAGEMENTOPS":"Management Operations",
                     "POLICESERV":"Police Services",
                     "RATESUPPORTED":"Rate Supported Services",
-                    "SMALLER":"Smaller Agencies",
+                    "SPECIALIZED":"Specialized Agencies",
                     "TRANSITSERV":"Transit Services"
                 }
             },
@@ -906,7 +906,7 @@
                             "Index":2,
                             "Config":"BASELINE"
                         },
-                        "SMALLER":{
+                        "SPECIALIZED":{
                             "Index":4,
                             "Config":"CLUSTER",
                             "Components":{
@@ -1058,11 +1058,11 @@
                                             "Index":1,
                                             "Config":"BASELINE"
                                         },
-                                        "LICENCING":{
+                                        "POLICYADMIN":{
                                             "Index":2,
                                             "Config":"BASELINE"
                                         },
-                                        "POLICYADMIN":{
+                                        "LICENCING":{
                                             "Index":3,
                                             "Config":"BASELINE"
                                         },
