@@ -26,7 +26,9 @@ import { categoryaliases } from '../constants'
 
 interface chartParms {
     name?: string,
-    chartlocation: {
+    viewpoint:string,
+    dataseries:string,
+    location: {
         series: number,
         depth: number,
     },
@@ -57,62 +59,50 @@ class ExplorerClass extends Component< any, any > {
     }
 
     // should be in global state to allow for re-creation after return visit
+    // TODO: Take state initialization from external source
     state = {
-        seriesdata: [ [], [], [], [], [] ], // DrillDown, Compare, Differences, Context, Build
+        seriesdata: [ [], [] ], // DrillDown, Compare (Later: Differences, Context, Build)
         dataselection:"expenses",
         slider: {singlevalue:[2015],doublevalue:[2005,2015]},
         yearselection:"one",
         viewselection:"activities",
+        userselections:{
+            latestyear:2015,
+            viewpoint:"FUNCTIONAL",
+            dataseries:"BudgetExpenses",
+        }
     }
     
     // initialize once - create seed drilldown and compare series
     componentDidMount = () => {
-        // sort budget years
-        this.props.budgetdata.sort((a, b) => {
-            if (a.Year > b.Year)
-                return 1
-            else if (a.Year < b.Year)
-                return -1
-            else
-                return 0
-        })
 
-        // initial graph always latest year, highest level
-        var latestyear
-
-        if (this.props.budgetdata.length > 0) {
-            // budgetdata is sorted ascending, take the last item
-            let ptr = this.props.budgetdata.length - 1
-            latestyear = this.props.budgetdata[ptr].Year
-        } else {
-            latestyear = null
-        }
+        var userselections = this.state.userselections
 
         let seriesdata = this.state.seriesdata
 
         var chartlocation
 
-        // ====================================================
-        // -----------------[ DRILLDOWN SEED ]-----------------
+        // ========================================================
+        // -----------------[ THE DRILLDOWN SEED ]-----------------
 
         // assemble parms to get initial dataset
-        let drilldownparms: chartParms = this.initSeedChartParms( ChartSeries.DrillDown, latestyear )
+        let drilldownchartparms: chartParms = this.initSeedChartParms( ChartSeries.DrillDown, userselections )
 
-        drilldownparms = this.addChartData( drilldownparms )
+        drilldownchartparms = this.addChartSpecs( drilldownchartparms )
 
-        chartlocation = drilldownparms.chartlocation
-        seriesdata[ chartlocation.series ][ chartlocation.depth ] = drilldownparms
+        chartlocation = drilldownchartparms.location
+        seriesdata[ chartlocation.series ][ chartlocation.depth ] = drilldownchartparms
 
-        // ====================================================
-        // -----------------[ COMPARE SEED ]-------------------
+        // ========================================================
+        // -----------------[ THE COMPARE SEED ]-------------------
 
         // assemble parms to get initial dataset
-        let compareparms: chartParms = this.initSeedChartParms( ChartSeries.Compare, latestyear )
+        let comparechartparms: chartParms = this.initSeedChartParms( ChartSeries.Compare, userselections )
 
-        compareparms = this.addChartData( compareparms )
+        comparechartparms = this.addChartSpecs( comparechartparms )
 
-        chartlocation = compareparms.chartlocation
-        seriesdata[ chartlocation.series ][ chartlocation.depth ] = compareparms
+        chartlocation = comparechartparms.location
+        seriesdata[ chartlocation.series ][ chartlocation.depth ] = comparechartparms
 
         // ====================================================
         // -------------[ SAVE INITIALIZATION ]----------------
@@ -124,15 +114,20 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
-    initSeedChartParms = ( series, latestyear ): chartParms => {
+    // ================================================================
+    // -------------------[ INITIALIZE SEED CHART ]--------------------
+
+    initSeedChartParms = ( series, userselections ): chartParms => {
         return {
+            viewpoint:userselections.viewpoint,
+            dataseries:userselections.dataseries,
             dataroot: [{ parent: 0 }],
-            chartlocation: {
+            location: {
                 series,
                 depth: 0
             },
             range: {
-                latestyear: latestyear,
+                latestyear: userselections.latestyear,
                 earliestyear: null,
                 fullrange: false,
             },
@@ -141,78 +136,28 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
-    // response to user selection of a chart component (such as a column )
-    // called by chart callback
-    updateChartsSelection = data => {
-        // console.log('updateCharts data = ', data)
-
-        let seriesdata = this.state.seriesdata
-
-        let sourceparms = data.chartparms,
-            selectlocation = sourceparms.chartlocation,
-            series = selectlocation.series,
-            sourcedepth = selectlocation.depth,
-            selection = data.selection[0],
-            selectionrow = selection.row
-
-        let serieslist = seriesdata[series]
-        // TODO: abandon here if the next one exists and is the same
-        serieslist.splice( sourcedepth + 1 ) // remove subsequent charts
-
-        // trigger update to avoid google charts use of cached versions for new charts
-        // cached versions keep obsolete chart titles, even if new title fed in through new options
-        this.setState({
-            seriesdata,
-        });
-        // TODO: better to use forceUpdate vs setState?
-        // this.forceUpdate()
-
-        // console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist)
-
-        let parentchartparms = seriesdata[ series ][ sourcedepth ]
-        let childdataroot = parentchartparms.dataroot.map( node => {
-            return Object.assign( {}, node )
-        })
-        childdataroot.push( { parent: selectionrow } )
-
-        let newrange = Object.assign( {}, parentchartparms.range )
-
-        let newchartparms: chartParms = {
-            dataroot: childdataroot,
-            chartlocation: {
-                series,
-                depth: sourcedepth + 1
-            },
-            range: newrange,
-            data: { chartType: "ColumnChart" }
-        }
-
-        newchartparms = this.addChartData( newchartparms )
-
-        if (newchartparms.isError) return
-
-        // console.log( 'newchartparms = ', newchartparms )
-
-        seriesdata[ series ][ sourcedepth + 1 ] = newchartparms
-
-        this.setState({
-            seriesdata,
-        })
-    }
+    // ===============================================================
+    // ------------------[ ADD CHART SPECS ]--------------------------
+    /*
+        add columns, rows, options, and events to the parms 
+        object's data property
+    */
 
     // returns parms.isError = true if fails
-    addChartData = (parms:chartParms):chartParms => {
+    addChartSpecs = (parms:chartParms):chartParms => {
         let options = {},
             events = null,
             rows = [],
             columns = [],
             budgetdata = this.props.budgetdata,
-            meta = budgetdata[0].Meta,
+            viewpointdata = budgetdata.Viewpoints[parms.viewpoint],
+            // meta = budgetdata[0].Meta,
             self = this,
-            range = parms.range
+            range = parms.range,
+            meta = []
 
         // TODO: capture range, including years
-        let {parent, children, depth} = this.getChartDatasets(parms, meta, budgetdata)
+        let {parent, children, depth} = this.getChartDatasets(parms, budgetdata)
         if ((depth +1) >= meta.length) { // no more data to show
             parms.isError = true
             return parms
@@ -271,10 +216,78 @@ class ExplorerClass extends Component< any, any > {
         return parms
     }
 
-    getChartDatasets = (parms, meta, budgetdata) => {
+    // response to user selection of a chart component (such as a column )
+    // called by chart callback
+    updateChartsSelection = data => {
+        // console.log('updateCharts data = ', data)
+
+        let seriesdata = this.state.seriesdata
+
+        let sourcechartparms = data.chartparms,
+            selectchartlocation = sourcechartparms.location,
+            series = selectchartlocation.series,
+            sourcedepth = selectchartlocation.depth,
+            selection = data.selection[0],
+            selectionrow = selection.row,
+            viewpoint = sourcechartparms.viewpoint,
+            dataseries = sourcechartparms.dataseries
+
+        let serieslist = seriesdata[series]
+        // TODO: abandon here if the next one exists and is the same
+        serieslist.splice(sourcedepth + 1) // remove subsequent charts
+
+        // trigger update to avoid google charts use of cached versions for new charts
+        // cached versions keep obsolete chart titles, even if new title fed in through new options
+        this.setState({
+            seriesdata,
+        });
+        // TODO: better to use forceUpdate vs setState?
+        // this.forceUpdate()
+
+        // console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist)
+
+        let parentchartparms = seriesdata[series][sourcedepth]
+        let childdataroot = parentchartparms.dataroot.map(node => {
+            return Object.assign({}, node)
+        })
+        childdataroot.push({ parent: selectionrow })
+
+        let newrange = Object.assign({}, parentchartparms.range)
+
+        let newchartparms: chartParms = {
+            viewpoint,
+            dataseries,
+            dataroot: childdataroot,
+            location: {
+                series,
+                depth: sourcedepth + 1
+            },
+            range: newrange,
+            data: { chartType: "ColumnChart" }
+        }
+
+        newchartparms = this.addChartSpecs(newchartparms)
+
+        if (newchartparms.isError) return
+
+        // console.log( 'newchartparms = ', newchartparms )
+
+        seriesdata[series][sourcedepth + 1] = newchartparms
+
+        this.setState({
+            seriesdata,
+        })
+    }
+
+    // ==================================================================
+    // --------------------[ GET CHART DATA ]----------------------------
+
+    getChartDatasets = (parms, budgetdata) => {
         let parent, children, depth,
             path = parms.dataroot,
             range = parms.range
+
+        let meta = {}
 
         let list = budgetdata.filter( item => {
             // TODO: needs to be enhanced to account for 2 year or multi-year scope

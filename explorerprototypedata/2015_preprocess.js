@@ -33,16 +33,16 @@ for (var line of records) {
     } else {
         // decompose
         let years = item.years || {}
-        years[year] =
-            {
-                Amount:total,
-                Components:{
-                    FULL:{Amount:perm},
-                    PART:{Amount:temp}
-                }
-            }
+        years[year] = total
+        let components = item.Components || {
+            FULL:{years:{}},
+            PART:{years:{}},
+        }
+        components.FULL.years[year]=perm
+        components.PART.years[year]=temp
         // re-assemble
         item.years = years
+        item.Components = components
     }
 }
 
@@ -68,22 +68,22 @@ for (var line of records) {
     } else {
         // decompose
         let years = item.years || {}
-        let yearobj = years[year] || {
-            Amount:0,
-            Components:{}
-        }
-        yearobj.Amount += amount
+        if (!years[year]) years[year] = 0
+        let components = item.Components || {}
+
+        years[year] += amount
+
         // some accounts may be incorrectly duplicated
-        let yearaccount = yearobj.Components[expenditure] || {}
-        if (yearaccount.Amount) {
-            yearaccount.Amount += amount
+        let yearaccount = components[expenditure] || {years:{}}
+        if (yearaccount.years[year]) {
+            yearaccount.years[year] += amount
         } else {
-            yearaccount.Amount = amount
+            yearaccount.years[year] = amount
         }
         // re-assemble
-        yearobj.Components[expenditure] = yearaccount
-        years[year] = yearobj
+        components[expenditure] = yearaccount
         item.years = years
+        item.Components = components
     }
 }
 
@@ -112,22 +112,22 @@ for (var line of records) {
     } else {
         // decompose
         let years = item.years || {}
-        let yearobj = years[year] || {
-            Amount:0,
-            Components:{}
-        }
-        yearobj.Amount += amount
+        if (!years[year]) years[year] = 0
+        let components = item.Components || {}
+
+        years[year] += amount
+
         // some accounts may be incorrectly duplicated
-        let yearaccount = yearobj.Components[expenditure] || {}
-        if (yearaccount.Amount) {
-            yearaccount.Amount += amount
+        let yearaccount = components[expenditure] || {years:{}}
+        if (yearaccount.years[year]) {
+            yearaccount.years[year] += amount
         } else {
-            yearaccount.Amount = amount
+            yearaccount.years[year] = amount
         }
         // re-assemble
-        yearobj.Components[expenditure] = yearaccount
-        years[year] = yearobj
+        components[expenditure] = yearaccount
         item.years = years
+        item.Components = components
     }
 }
 

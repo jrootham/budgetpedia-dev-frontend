@@ -20,92 +20,53 @@ class ExplorerClass extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            seriesdata: [[], [], [], [], []],
+            seriesdata: [[], []],
             dataselection: "expenses",
             slider: { singlevalue: [2015], doublevalue: [2005, 2015] },
             yearselection: "one",
             viewselection: "activities",
+            userselections: {
+                latestyear: 2015,
+                viewpoint: "FUNCTIONAL",
+                dataseries: "BudgetExpenses",
+            }
         };
         this.componentDidMount = () => {
-            this.props.budgetdata.sort((a, b) => {
-                if (a.Year > b.Year)
-                    return 1;
-                else if (a.Year < b.Year)
-                    return -1;
-                else
-                    return 0;
-            });
-            var latestyear;
-            if (this.props.budgetdata.length > 0) {
-                let ptr = this.props.budgetdata.length - 1;
-                latestyear = this.props.budgetdata[ptr].Year;
-            }
-            else {
-                latestyear = null;
-            }
+            var userselections = this.state.userselections;
             let seriesdata = this.state.seriesdata;
             var chartlocation;
-            let drilldownparms = this.initSeedChartParms(constants_1.ChartSeries.DrillDown, latestyear);
-            drilldownparms = this.addChartData(drilldownparms);
-            chartlocation = drilldownparms.chartlocation;
-            seriesdata[chartlocation.series][chartlocation.depth] = drilldownparms;
-            let compareparms = this.initSeedChartParms(constants_1.ChartSeries.Compare, latestyear);
-            compareparms = this.addChartData(compareparms);
-            chartlocation = compareparms.chartlocation;
-            seriesdata[chartlocation.series][chartlocation.depth] = compareparms;
+            let drilldownchartparms = this.initSeedChartParms(constants_1.ChartSeries.DrillDown, userselections);
+            drilldownchartparms = this.addChartSpecs(drilldownchartparms);
+            chartlocation = drilldownchartparms.location;
+            seriesdata[chartlocation.series][chartlocation.depth] = drilldownchartparms;
+            let comparechartparms = this.initSeedChartParms(constants_1.ChartSeries.Compare, userselections);
+            comparechartparms = this.addChartSpecs(comparechartparms);
+            chartlocation = comparechartparms.location;
+            seriesdata[chartlocation.series][chartlocation.depth] = comparechartparms;
             this.setState({
                 seriesdata: seriesdata,
             });
         };
-        this.initSeedChartParms = (series, latestyear) => {
+        this.initSeedChartParms = (series, userselections) => {
             return {
+                viewpoint: userselections.viewpoint,
+                dataseries: userselections.dataseries,
                 dataroot: [{ parent: 0 }],
-                chartlocation: {
+                location: {
                     series: series,
                     depth: 0
                 },
                 range: {
-                    latestyear: latestyear,
+                    latestyear: userselections.latestyear,
                     earliestyear: null,
                     fullrange: false,
                 },
                 data: { chartType: "ColumnChart" }
             };
         };
-        this.updateChartsSelection = data => {
-            let seriesdata = this.state.seriesdata;
-            let sourceparms = data.chartparms, selectlocation = sourceparms.chartlocation, series = selectlocation.series, sourcedepth = selectlocation.depth, selection = data.selection[0], selectionrow = selection.row;
-            let serieslist = seriesdata[series];
-            serieslist.splice(sourcedepth + 1);
-            this.setState({
-                seriesdata: seriesdata,
-            });
-            let parentchartparms = seriesdata[series][sourcedepth];
-            let childdataroot = parentchartparms.dataroot.map(node => {
-                return Object.assign({}, node);
-            });
-            childdataroot.push({ parent: selectionrow });
-            let newrange = Object.assign({}, parentchartparms.range);
-            let newchartparms = {
-                dataroot: childdataroot,
-                chartlocation: {
-                    series: series,
-                    depth: sourcedepth + 1
-                },
-                range: newrange,
-                data: { chartType: "ColumnChart" }
-            };
-            newchartparms = this.addChartData(newchartparms);
-            if (newchartparms.isError)
-                return;
-            seriesdata[series][sourcedepth + 1] = newchartparms;
-            this.setState({
-                seriesdata: seriesdata,
-            });
-        };
-        this.addChartData = (parms) => {
-            let options = {}, events = null, rows = [], columns = [], budgetdata = this.props.budgetdata, meta = budgetdata[0].Meta, self = this, range = parms.range;
-            let { parent, children, depth } = this.getChartDatasets(parms, meta, budgetdata);
+        this.addChartSpecs = (parms) => {
+            let options = {}, events = null, rows = [], columns = [], budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[parms.viewpoint], self = this, range = parms.range, meta = [];
+            let { parent, children, depth } = this.getChartDatasets(parms, budgetdata);
             if ((depth + 1) >= meta.length) {
                 parms.isError = true;
                 return parms;
@@ -148,8 +109,42 @@ class ExplorerClass extends Component {
             chartdata.events = events;
             return parms;
         };
-        this.getChartDatasets = (parms, meta, budgetdata) => {
+        this.updateChartsSelection = data => {
+            let seriesdata = this.state.seriesdata;
+            let sourcechartparms = data.chartparms, selectchartlocation = sourcechartparms.location, series = selectchartlocation.series, sourcedepth = selectchartlocation.depth, selection = data.selection[0], selectionrow = selection.row, viewpoint = sourcechartparms.viewpoint, dataseries = sourcechartparms.dataseries;
+            let serieslist = seriesdata[series];
+            serieslist.splice(sourcedepth + 1);
+            this.setState({
+                seriesdata: seriesdata,
+            });
+            let parentchartparms = seriesdata[series][sourcedepth];
+            let childdataroot = parentchartparms.dataroot.map(node => {
+                return Object.assign({}, node);
+            });
+            childdataroot.push({ parent: selectionrow });
+            let newrange = Object.assign({}, parentchartparms.range);
+            let newchartparms = {
+                viewpoint: viewpoint,
+                dataseries: dataseries,
+                dataroot: childdataroot,
+                location: {
+                    series: series,
+                    depth: sourcedepth + 1
+                },
+                range: newrange,
+                data: { chartType: "ColumnChart" }
+            };
+            newchartparms = this.addChartSpecs(newchartparms);
+            if (newchartparms.isError)
+                return;
+            seriesdata[series][sourcedepth + 1] = newchartparms;
+            this.setState({
+                seriesdata: seriesdata,
+            });
+        };
+        this.getChartDatasets = (parms, budgetdata) => {
             let parent, children, depth, path = parms.dataroot, range = parms.range;
+            let meta = {};
             let list = budgetdata.filter(item => {
                 return (item.Year == range.latestyear) ? true : false;
             });

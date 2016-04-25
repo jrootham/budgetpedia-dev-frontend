@@ -1,1753 +1,4279 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-module.exports=[
-    {
-        "Year": 2016,
-        "Budget": "2016 Staff Recommended Expenditures",
-        "Source": "2016_Recommend.xlsx (toronto.ca/open)",
-        "Amount": 10991587998,
-        "Status": "Errors",
-        "Meta": [
-            {
-                "Name": "Budget",
-                "Children": "Types"
-            },
-            {
-                "Name": "Type",
-                "Children": "Groups"
-            },
-            {
-                "Name": "Group",
-                "Children": "Divisions"
-            },
-            {
-                "Name": "Division",
-                "Children": "Expenditures"
-            },
-            {
-                "Name": "Expenditure",
-                "Children": null
+module.exports={
+    "DataSeries": {
+        "BudgetExpenses": {
+            "Action": "Expenses",
+            "Baseline": "Programs",
+            "Components": "Expenditures",
+            "Items": {
+                "311SERVICE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 17092675,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 15371796
+                                },
+                                "200A": {
+                                    "Amount": 16258
+                                },
+                                "300A": {
+                                    "Amount": 25357
+                                },
+                                "400A": {
+                                    "Amount": 1461339
+                                },
+                                "510A": {
+                                    "Amount": 25905
+                                },
+                                "700A": {
+                                    "Amount": 192020
+                                }
+                            }
+                        }
+                    }
+                },
+                "AFFHOUSING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 2763451,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 2244944
+                                },
+                                "200A": {
+                                    "Amount": 12923
+                                },
+                                "300A": {
+                                    "Amount": 2044
+                                },
+                                "400A": {
+                                    "Amount": 168672
+                                },
+                                "510A": {
+                                    "Amount": 5647
+                                },
+                                "700A": {
+                                    "Amount": 329221
+                                }
+                            }
+                        }
+                    }
+                },
+                "ARENAS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 8400403,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 4348489
+                                },
+                                "200A": {
+                                    "Amount": 2147208
+                                },
+                                "300A": {
+                                    "Amount": 43508
+                                },
+                                "400A": {
+                                    "Amount": 1031504
+                                },
+                                "505A": {
+                                    "Amount": 559519
+                                },
+                                "510A": {
+                                    "Amount": 270175
+                                }
+                            }
+                        }
+                    }
+                },
+                "ATMOSPHERE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 2575000,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 953000
+                                },
+                                "200A": {
+                                    "Amount": 20000
+                                },
+                                "400A": {
+                                    "Amount": 1102000
+                                },
+                                "650A": {
+                                    "Amount": 500000
+                                }
+                            }
+                        }
+                    }
+                },
+                "AUDITGEN": {
+                    "years": {
+                        "2015": {
+                            "Amount": 4717334,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 4520927
+                                },
+                                "200A": {
+                                    "Amount": 15950
+                                },
+                                "300A": {
+                                    "Amount": 8121
+                                },
+                                "400A": {
+                                    "Amount": 142383
+                                },
+                                "510A": {
+                                    "Amount": 7681
+                                },
+                                "700A": {
+                                    "Amount": 22272
+                                }
+                            }
+                        }
+                    }
+                },
+                "BUILDINGS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 50445337,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 44512469
+                                },
+                                "200A": {
+                                    "Amount": 202876
+                                },
+                                "300A": {
+                                    "Amount": 286047
+                                },
+                                "400A": {
+                                    "Amount": 1206912
+                                },
+                                "510A": {
+                                    "Amount": 3303580
+                                },
+                                "650A": {
+                                    "Amount": 278488
+                                },
+                                "700A": {
+                                    "Amount": 654965
+                                }
+                            }
+                        }
+                    }
+                },
+                "CFO": {
+                    "years": {
+                        "2015": {
+                            "Amount": 16558562,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 15431315
+                                },
+                                "200A": {
+                                    "Amount": 66041
+                                },
+                                "300A": {
+                                    "Amount": 9246
+                                },
+                                "400A": {
+                                    "Amount": 710987
+                                },
+                                "510A": {
+                                    "Amount": 77406
+                                },
+                                "650A": {
+                                    "Amount": 500
+                                },
+                                "700A": {
+                                    "Amount": 263067
+                                }
+                            }
+                        }
+                    }
+                },
+                "CHILDSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 452480205,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 86275556
+                                },
+                                "200A": {
+                                    "Amount": 2522376
+                                },
+                                "300A": {
+                                    "Amount": 725526
+                                },
+                                "400A": {
+                                    "Amount": 356236607
+                                },
+                                "510A": {
+                                    "Amount": 1280749
+                                },
+                                "650A": {
+                                    "Amount": 715176
+                                },
+                                "700A": {
+                                    "Amount": 4724215
+                                }
+                            }
+                        }
+                    }
+                },
+                "CITYMANAGER": {
+                    "years": {
+                        "2015": {
+                            "Amount": 55757201,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 50442411
+                                },
+                                "200A": {
+                                    "Amount": 195103
+                                },
+                                "300A": {
+                                    "Amount": 115286
+                                },
+                                "400A": {
+                                    "Amount": 4640064
+                                },
+                                "510A": {
+                                    "Amount": 107750
+                                },
+                                "700A": {
+                                    "Amount": 256587
+                                }
+                            }
+                        }
+                    }
+                },
+                "CLERK": {
+                    "years": {
+                        "2015": {
+                            "Amount": 49258541,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 39264578
+                                },
+                                "200A": {
+                                    "Amount": 1343848
+                                },
+                                "300A": {
+                                    "Amount": 69057
+                                },
+                                "400A": {
+                                    "Amount": 7001637
+                                },
+                                "510A": {
+                                    "Amount": 464633
+                                },
+                                "650A": {
+                                    "Amount": 32517
+                                },
+                                "700A": {
+                                    "Amount": 1082271
+                                }
+                            }
+                        }
+                    }
+                },
+                "COMMCENTRES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 7900060,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 6620822
+                                },
+                                "200A": {
+                                    "Amount": 449823
+                                },
+                                "300A": {
+                                    "Amount": 3337
+                                },
+                                "400A": {
+                                    "Amount": 789847
+                                },
+                                "510A": {
+                                    "Amount": 29231
+                                },
+                                "650A": {
+                                    "Amount": 7000
+                                }
+                            }
+                        }
+                    }
+                },
+                "CORPEXPENDITURES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 608194188,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 55041113
+                                },
+                                "200A": {
+                                    "Amount": 1125600
+                                },
+                                "400A": {
+                                    "Amount": 307964120
+                                },
+                                "510A": {
+                                    "Amount": 76162600
+                                },
+                                "650A": {
+                                    "Amount": 149396573
+                                },
+                                "700A": {
+                                    "Amount": 18504182
+                                }
+                            }
+                        }
+                    }
+                },
+                "CORPFINANCING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 701532019,
+                            "Components": {
+                                "505A": {
+                                    "Amount": 227642150
+                                },
+                                "510A": {
+                                    "Amount": 18911638
+                                },
+                                "650A": {
+                                    "Amount": 454045125
+                                },
+                                "700A": {
+                                    "Amount": 933106
+                                }
+                            }
+                        }
+                    }
+                },
+                "CORPREVENUES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 116920960,
+                            "Components": {
+                                "400A": {
+                                    "Amount": 5767329
+                                },
+                                "510A": {
+                                    "Amount": 107481000
+                                },
+                                "650A": {
+                                    "Amount": 304500
+                                },
+                                "700A": {
+                                    "Amount": 3368131
+                                }
+                            }
+                        }
+                    }
+                },
+                "COUNCIL": {
+                    "years": {
+                        "2015": {
+                            "Amount": 20822628,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 18672088
+                                },
+                                "200A": {
+                                    "Amount": 1253604
+                                },
+                                "300A": {
+                                    "Amount": 182000
+                                },
+                                "400A": {
+                                    "Amount": 371500
+                                },
+                                "510A": {
+                                    "Amount": 99217
+                                },
+                                "700A": {
+                                    "Amount": 244219
+                                }
+                            }
+                        }
+                    }
+                },
+                "COURTSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 49531095,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 19782539
+                                },
+                                "200A": {
+                                    "Amount": 157746
+                                },
+                                "300A": {
+                                    "Amount": 105375
+                                },
+                                "400A": {
+                                    "Amount": 8147390
+                                },
+                                "510A": {
+                                    "Amount": 84376
+                                },
+                                "650A": {
+                                    "Amount": 1820187
+                                },
+                                "700A": {
+                                    "Amount": 19433482
+                                }
+                            }
+                        }
+                    }
+                },
+                "ECONDEV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 77653131,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 28715391
+                                },
+                                "200A": {
+                                    "Amount": 1443392
+                                },
+                                "300A": {
+                                    "Amount": 127604
+                                },
+                                "400A": {
+                                    "Amount": 14890084
+                                },
+                                "510A": {
+                                    "Amount": 964012
+                                },
+                                "650A": {
+                                    "Amount": 30911122
+                                },
+                                "700A": {
+                                    "Amount": 601526
+                                }
+                            }
+                        }
+                    }
+                },
+                "ENGINEERING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 66838967,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 58244161
+                                },
+                                "200A": {
+                                    "Amount": 392605
+                                },
+                                "300A": {
+                                    "Amount": 255308
+                                },
+                                "400A": {
+                                    "Amount": 3342054
+                                },
+                                "510A": {
+                                    "Amount": 797047
+                                },
+                                "700A": {
+                                    "Amount": 3807792
+                                }
+                            }
+                        }
+                    }
+                },
+                "EXHIBPLACE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 38178608,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 33109005
+                                },
+                                "200A": {
+                                    "Amount": 3658325
+                                },
+                                "300A": {
+                                    "Amount": 176840
+                                },
+                                "400A": {
+                                    "Amount": 13739282
+                                },
+                                "510A": {
+                                    "Amount": 2097145
+                                },
+                                "650A": {
+                                    "Amount": -14601989
+                                }
+                            }
+                        }
+                    }
+                },
+                "FACILITIES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 189876418,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 94290567
+                                },
+                                "200A": {
+                                    "Amount": 30446859
+                                },
+                                "300A": {
+                                    "Amount": 543894
+                                },
+                                "400A": {
+                                    "Amount": 54589232
+                                },
+                                "510A": {
+                                    "Amount": 2096530
+                                },
+                                "650A": {
+                                    "Amount": 6460904
+                                },
+                                "700A": {
+                                    "Amount": 1448432
+                                }
+                            }
+                        }
+                    }
+                },
+                "FIRE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 432888712,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 400338209
+                                },
+                                "200A": {
+                                    "Amount": 7836460
+                                },
+                                "300A": {
+                                    "Amount": 1028345
+                                },
+                                "400A": {
+                                    "Amount": 6413115
+                                },
+                                "510A": {
+                                    "Amount": 9583968
+                                },
+                                "700A": {
+                                    "Amount": 7688615
+                                }
+                            }
+                        }
+                    }
+                },
+                "FLEET": {
+                    "years": {
+                        "2015": {
+                            "Amount": 50708982,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 17472775
+                                },
+                                "200A": {
+                                    "Amount": 24234118
+                                },
+                                "300A": {
+                                    "Amount": 116437
+                                },
+                                "400A": {
+                                    "Amount": 7643296
+                                },
+                                "510A": {
+                                    "Amount": 660028
+                                },
+                                "700A": {
+                                    "Amount": 582328
+                                }
+                            }
+                        }
+                    }
+                },
+                "HERITAGE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 761466,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 550300
+                                },
+                                "200A": {
+                                    "Amount": 70400
+                                },
+                                "400A": {
+                                    "Amount": 133500
+                                },
+                                "510A": {
+                                    "Amount": 1266
+                                },
+                                "650A": {
+                                    "Amount": 6000
+                                }
+                            }
+                        }
+                    }
+                },
+                "INTEGRITYCOMM": {
+                    "years": {
+                        "2015": {
+                            "Amount": 427769,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 387754
+                                },
+                                "200A": {
+                                    "Amount": 1556
+                                },
+                                "300A": {
+                                    "Amount": 6452
+                                },
+                                "400A": {
+                                    "Amount": 27242
+                                },
+                                "510A": {
+                                    "Amount": 4365
+                                },
+                                "700A": {
+                                    "Amount": 400
+                                }
+                            }
+                        }
+                    }
+                },
+                "IT": {
+                    "years": {
+                        "2015": {
+                            "Amount": 121541046,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 94653797
+                                },
+                                "200A": {
+                                    "Amount": 122495
+                                },
+                                "300A": {
+                                    "Amount": 1243247
+                                },
+                                "400A": {
+                                    "Amount": 24903595
+                                },
+                                "510A": {
+                                    "Amount": 126565
+                                },
+                                "650A": {
+                                    "Amount": 396
+                                },
+                                "700A": {
+                                    "Amount": 490951
+                                }
+                            }
+                        }
+                    }
+                },
+                "LEGAL": {
+                    "years": {
+                        "2015": {
+                            "Amount": 49567888,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 40463694
+                                },
+                                "200A": {
+                                    "Amount": 407331
+                                },
+                                "300A": {
+                                    "Amount": 109558
+                                },
+                                "400A": {
+                                    "Amount": 1410603
+                                },
+                                "510A": {
+                                    "Amount": 69502
+                                },
+                                "700A": {
+                                    "Amount": 7107200
+                                }
+                            }
+                        }
+                    }
+                },
+                "LIBRARY": {
+                    "years": {
+                        "2015": {
+                            "Amount": 188708307,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 141221781
+                                },
+                                "200A": {
+                                    "Amount": 26496300
+                                },
+                                "300A": {
+                                    "Amount": 566799
+                                },
+                                "400A": {
+                                    "Amount": 18152446
+                                },
+                                "505A": {
+                                    "Amount": 1378000
+                                },
+                                "510A": {
+                                    "Amount": 892981
+                                }
+                            }
+                        }
+                    }
+                },
+                "LICENCING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 50858462,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 42021565
+                                },
+                                "200A": {
+                                    "Amount": 1118858
+                                },
+                                "300A": {
+                                    "Amount": 407381
+                                },
+                                "400A": {
+                                    "Amount": 1744319
+                                },
+                                "510A": {
+                                    "Amount": 749348
+                                },
+                                "650A": {
+                                    "Amount": 250000
+                                },
+                                "700A": {
+                                    "Amount": 4566991
+                                }
+                            }
+                        }
+                    }
+                },
+                "LOBBYREG": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1124105,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 1036130
+                                },
+                                "200A": {
+                                    "Amount": 7517
+                                },
+                                "300A": {
+                                    "Amount": 280
+                                },
+                                "400A": {
+                                    "Amount": 78000
+                                },
+                                "510A": {
+                                    "Amount": 1578
+                                },
+                                "700A": {
+                                    "Amount": 600
+                                }
+                            }
+                        }
+                    }
+                },
+                "LOCALAPPEAL": {},
+                "LONGTERMHOME": {
+                    "years": {
+                        "2015": {
+                            "Amount": 242138627,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 197781300
+                                },
+                                "200A": {
+                                    "Amount": 18590200
+                                },
+                                "300A": {
+                                    "Amount": 2873400
+                                },
+                                "400A": {
+                                    "Amount": 20187422
+                                },
+                                "510A": {
+                                    "Amount": 1901532
+                                },
+                                "650A": {
+                                    "Amount": 114850
+                                },
+                                "700A": {
+                                    "Amount": 689923
+                                }
+                            }
+                        }
+                    }
+                },
+                "MAYOR": {
+                    "years": {
+                        "2015": {
+                            "Amount": 2297110,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 2199586
+                                },
+                                "200A": {
+                                    "Amount": 5000
+                                },
+                                "400A": {
+                                    "Amount": 87524
+                                },
+                                "700A": {
+                                    "Amount": 5000
+                                }
+                            }
+                        }
+                    }
+                },
+                "OMBUDSMAN": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1755386,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 1493782
+                                },
+                                "200A": {
+                                    "Amount": 12569
+                                },
+                                "300A": {
+                                    "Amount": 13468
+                                },
+                                "400A": {
+                                    "Amount": 221685
+                                },
+                                "510A": {
+                                    "Amount": 2082
+                                },
+                                "700A": {
+                                    "Amount": 11800
+                                }
+                            }
+                        }
+                    }
+                },
+                "PARAMEDIC": {
+                    "years": {
+                        "2015": {
+                            "Amount": 198108999,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 164585965
+                                },
+                                "200A": {
+                                    "Amount": 6466792
+                                },
+                                "300A": {
+                                    "Amount": 1013209
+                                },
+                                "400A": {
+                                    "Amount": 9875558
+                                },
+                                "505A": {
+                                    "Amount": 756000
+                                },
+                                "510A": {
+                                    "Amount": 5966232
+                                },
+                                "650A": {
+                                    "Amount": 8937
+                                },
+                                "700A": {
+                                    "Amount": 9436306
+                                }
+                            }
+                        }
+                    }
+                },
+                "PARKING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 134229440,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 23278828
+                                },
+                                "200A": {
+                                    "Amount": 9203872
+                                },
+                                "300A": {
+                                    "Amount": 7370051
+                                },
+                                "400A": {
+                                    "Amount": 23006365
+                                },
+                                "650A": {
+                                    "Amount": 71370324
+                                }
+                            }
+                        }
+                    }
+                },
+                "PARKS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 438176476,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 288071988
+                                },
+                                "200A": {
+                                    "Amount": 37019576
+                                },
+                                "300A": {
+                                    "Amount": 3416294
+                                },
+                                "400A": {
+                                    "Amount": 67650366
+                                },
+                                "510A": {
+                                    "Amount": 10416236
+                                },
+                                "650A": {
+                                    "Amount": 10087526
+                                },
+                                "700A": {
+                                    "Amount": 21514490
+                                }
+                            }
+                        }
+                    }
+                },
+                "PLANNING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 43076088,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 39656303
+                                },
+                                "200A": {
+                                    "Amount": 187728
+                                },
+                                "300A": {
+                                    "Amount": 163544
+                                },
+                                "400A": {
+                                    "Amount": 1572966
+                                },
+                                "510A": {
+                                    "Amount": 81224
+                                },
+                                "650A": {
+                                    "Amount": 400700
+                                },
+                                "700A": {
+                                    "Amount": 1013623
+                                }
+                            }
+                        }
+                    }
+                },
+                "POLICE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1172316989,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 1028821700
+                                },
+                                "200A": {
+                                    "Amount": 19807600
+                                },
+                                "300A": {
+                                    "Amount": 3105400
+                                },
+                                "400A": {
+                                    "Amount": 62565888
+                                },
+                                "510A": {
+                                    "Amount": 37797489
+                                },
+                                "700A": {
+                                    "Amount": 20218912
+                                }
+                            }
+                        }
+                    }
+                },
+                "POLICEBOARD": {
+                    "years": {
+                        "2015": {
+                            "Amount": 3115800,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 969200
+                                },
+                                "200A": {
+                                    "Amount": 7300
+                                },
+                                "400A": {
+                                    "Amount": 883300
+                                },
+                                "505A": {
+                                    "Amount": 610600
+                                },
+                                "700A": {
+                                    "Amount": 645400
+                                }
+                            }
+                        }
+                    }
+                },
+                "POLICYADMIN": {
+                    "years": {
+                        "2015": {
+                            "Amount": 21956972,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 18994536
+                                },
+                                "200A": {
+                                    "Amount": 1092616
+                                },
+                                "300A": {
+                                    "Amount": 87989
+                                },
+                                "400A": {
+                                    "Amount": 881232
+                                },
+                                "510A": {
+                                    "Amount": 125721
+                                },
+                                "700A": {
+                                    "Amount": 774878
+                                }
+                            }
+                        }
+                    }
+                },
+                "PROPERTYTAX": {
+                    "years": {
+                        "2015": {
+                            "Amount": 24846399,
+                            "Components": {
+                                "510A": {
+                                    "Amount": 24846399
+                                }
+                            }
+                        }
+                    }
+                },
+                "PUBLICHEALTH": {
+                    "years": {
+                        "2015": {
+                            "Amount": 253979470,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 181685344
+                                },
+                                "200A": {
+                                    "Amount": 3767314
+                                },
+                                "300A": {
+                                    "Amount": 1520758
+                                },
+                                "400A": {
+                                    "Amount": 40090641
+                                },
+                                "510A": {
+                                    "Amount": 1487521
+                                },
+                                "650A": {
+                                    "Amount": 8537753
+                                },
+                                "700A": {
+                                    "Amount": 16890139
+                                }
+                            }
+                        }
+                    }
+                },
+                "REGIONCONSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 39919000,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 32520000
+                                },
+                                "200A": {
+                                    "Amount": 4211000
+                                },
+                                "300A": {
+                                    "Amount": 1252000
+                                },
+                                "400A": {
+                                    "Amount": 1936000
+                                }
+                            }
+                        }
+                    }
+                },
+                "SHELTERADMIN": {
+                    "years": {
+                        "2015": {
+                            "Amount": 662409271,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 68280876
+                                },
+                                "200A": {
+                                    "Amount": 4238261
+                                },
+                                "300A": {
+                                    "Amount": 173051
+                                },
+                                "400A": {
+                                    "Amount": 70154451
+                                },
+                                "510A": {
+                                    "Amount": 4841870
+                                },
+                                "650A": {
+                                    "Amount": 513551595
+                                },
+                                "700A": {
+                                    "Amount": 1169167
+                                }
+                            }
+                        }
+                    }
+                },
+                "SOCIALDEV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 49007718,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 14694532
+                                },
+                                "200A": {
+                                    "Amount": 92479
+                                },
+                                "300A": {
+                                    "Amount": 17609
+                                },
+                                "400A": {
+                                    "Amount": 4713298
+                                },
+                                "510A": {
+                                    "Amount": 121704
+                                },
+                                "650A": {
+                                    "Amount": 29060900
+                                },
+                                "700A": {
+                                    "Amount": 307196
+                                }
+                            }
+                        }
+                    }
+                },
+                "SOCIALSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1113252892,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 187755901
+                                },
+                                "200A": {
+                                    "Amount": 14773718
+                                },
+                                "300A": {
+                                    "Amount": 876541
+                                },
+                                "400A": {
+                                    "Amount": 91476581
+                                },
+                                "510A": {
+                                    "Amount": 7828197
+                                },
+                                "650A": {
+                                    "Amount": 786426895
+                                },
+                                "700A": {
+                                    "Amount": 24115059
+                                }
+                            }
+                        }
+                    }
+                },
+                "SOLIDWASTE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 370785148,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 93897682
+                                },
+                                "200A": {
+                                    "Amount": 5508906
+                                },
+                                "300A": {
+                                    "Amount": 387100
+                                },
+                                "400A": {
+                                    "Amount": 125369831
+                                },
+                                "510A": {
+                                    "Amount": 37469158
+                                },
+                                "650A": {
+                                    "Amount": 73035119
+                                },
+                                "700A": {
+                                    "Amount": 35117352
+                                }
+                            }
+                        }
+                    }
+                },
+                "THEATRES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 23323671,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 10652574
+                                },
+                                "200A": {
+                                    "Amount": 2032922
+                                },
+                                "300A": {
+                                    "Amount": 436163
+                                },
+                                "400A": {
+                                    "Amount": 6606268
+                                },
+                                "505A": {
+                                    "Amount": 952151
+                                },
+                                "510A": {
+                                    "Amount": 1708104
+                                },
+                                "650A": {
+                                    "Amount": 935489
+                                }
+                            }
+                        }
+                    }
+                },
+                "TRANSPORTATION": {
+                    "years": {
+                        "2015": {
+                            "Amount": 350356541,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 99098510
+                                },
+                                "200A": {
+                                    "Amount": 42961268
+                                },
+                                "300A": {
+                                    "Amount": 601528
+                                },
+                                "400A": {
+                                    "Amount": 168520132
+                                },
+                                "510A": {
+                                    "Amount": 23841701
+                                },
+                                "650A": {
+                                    "Amount": 795009
+                                },
+                                "700A": {
+                                    "Amount": 14538393
+                                }
+                            }
+                        }
+                    }
+                },
+                "TREASURER": {
+                    "years": {
+                        "2015": {
+                            "Amount": 76837594,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 64410453
+                                },
+                                "200A": {
+                                    "Amount": 296975
+                                },
+                                "300A": {
+                                    "Amount": 114130
+                                },
+                                "400A": {
+                                    "Amount": 8103462
+                                },
+                                "510A": {
+                                    "Amount": 128997
+                                },
+                                "650A": {
+                                    "Amount": 1482918
+                                },
+                                "700A": {
+                                    "Amount": 2300659
+                                }
+                            }
+                        }
+                    }
+                },
+                "TTCCONV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1693820299,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 1212667300
+                                },
+                                "200A": {
+                                    "Amount": 318563899
+                                },
+                                "300A": {
+                                    "Amount": 32345400
+                                },
+                                "400A": {
+                                    "Amount": 78515300
+                                },
+                                "505A": {
+                                    "Amount": 13936000
+                                },
+                                "650A": {
+                                    "Amount": 34216000
+                                },
+                                "700A": {
+                                    "Amount": 3576400
+                                }
+                            }
+                        }
+                    }
+                },
+                "TTCWHEEL": {
+                    "years": {
+                        "2015": {
+                            "Amount": 115313100,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 57920300
+                                },
+                                "200A": {
+                                    "Amount": 14507100
+                                },
+                                "400A": {
+                                    "Amount": 42200900
+                                },
+                                "650A": {
+                                    "Amount": 684800
+                                }
+                            }
+                        }
+                    }
+                },
+                "WATER": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1096654889,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 171294425
+                                },
+                                "200A": {
+                                    "Amount": 101530390
+                                },
+                                "300A": {
+                                    "Amount": 2343378
+                                },
+                                "400A": {
+                                    "Amount": 67032605
+                                },
+                                "510A": {
+                                    "Amount": 667049840
+                                },
+                                "650A": {
+                                    "Amount": 19958366
+                                },
+                                "700A": {
+                                    "Amount": 67445885
+                                }
+                            }
+                        }
+                    }
+                },
+                "YONGEDUNDAS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 2265946,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 569957
+                                },
+                                "200A": {
+                                    "Amount": 189493
+                                },
+                                "300A": {
+                                    "Amount": 40000
+                                },
+                                "400A": {
+                                    "Amount": 1463723
+                                },
+                                "510A": {
+                                    "Amount": 2773
+                                }
+                            }
+                        }
+                    }
+                },
+                "ZOO": {
+                    "years": {
+                        "2015": {
+                            "Amount": 50594167,
+                            "Components": {
+                                "100A": {
+                                    "Amount": 28944770
+                                },
+                                "200A": {
+                                    "Amount": 8137539
+                                },
+                                "300A": {
+                                    "Amount": 335899
+                                },
+                                "400A": {
+                                    "Amount": 12135532
+                                },
+                                "510A": {
+                                    "Amount": 1040427
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        ],
-        "Types": [
-            {
-                "Type": "Shared Services",
-                "Amount": 3971906104,
-                "Groups": [
-                    {
-                        "Group": "Waste & Water Services",
-                        "Amount": 828498289,
-                        "Divisions": [
-                            {
-                                "Division": "Solid Waste Management Services",
-                                "Amount": 389009445,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 92632475
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 6055092
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 295680
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 129761524
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 41439090
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 84166926
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 34658659
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto Water",
-                                "Amount": 439488844,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 169746315
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 107740492
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 3157160
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 56770392
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 9645738
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 20072618
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 72356129
-                                    }
-                                ]
+        },
+        "BudgetRevenues": {
+            "Action": "Revenues",
+            "Baseline": "Programs",
+            "Components": "Expenditures",
+            "Items": {
+                "311SERVICE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 7844066,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 5293589
+                                },
+                                "920A": {
+                                    "Amount": 2550477
+                                }
                             }
-                        ]
-                    },
-                    {
-                        "Group": "Transportation & Transit Services",
-                        "Amount": 2332554843,
-                        "Divisions": [
-                            {
-                                "Division": "Toronto Transit Commission - Conventional",
-                                "Amount": 1736305100,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 1268661900
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 306969099
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 33449400
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 88898800
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 34645100
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 3680800
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto Transit Commission - Wheel Trans",
-                                "Amount": 123665900,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 57658500
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 13861000
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 51236700
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 909700
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Transportation Services",
-                                "Amount": 387841194,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 97636588
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 45046169
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 766675
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 207727708
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 20441701
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 794159
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 15428196
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto Parking Authority",
-                                "Amount": 84742649,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 24178665
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 9439174
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 7298985
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 24983563
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 18842262
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "Group": "City Commons",
-                        "Amount": 695224764,
-                        "Divisions": [
-                            {
-                                "Division": "Parks, Forestry & Recreation",
-                                "Amount": 445637483,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 292290321
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 38526293
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 2802140
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 68882015
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 11155236
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 10038516
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 21942962
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Arena Boards of Management",
-                                "Amount": 8643855,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 4478873
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 2224298
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 44733
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1079405
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Capital (505A)",
-                                        "Amount": 546370
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 270175
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Association of Community Centres",
-                                "Amount": 7920030,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 6787008
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 464950
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 3406
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 628436
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 29231
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 7000
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto & Region Conservation Authority",
-                                "Amount": 40519000,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 33120000
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 4211000
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 1252000
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1936000
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto Public Library",
-                                "Amount": 192504396,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 143007823
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 27498775
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 566927
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 19159890
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Capital (505A)",
-                                        "Amount": 1378000
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 892981
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "Group": "Public Destinations",
-                        "Amount": 113237829,
-                        "Divisions": [
-                            {
-                                "Division": "Exhibition Place",
-                                "Amount": 36565904,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 31140242
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 3168444
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 177840
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 13069816
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 2039352
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": null
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Theatres",
-                                "Amount": 23164341,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 11725491
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 2188982
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 826141
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 4847552
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Capital (505A)",
-                                        "Amount": 1074368
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 1766657
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 735150
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto Zoo",
-                                "Amount": 51173068,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 29266577
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 7818696
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 335899
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 12779653
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 972242
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Yonge-Dundas Square",
-                                "Amount": 2334516,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 582305
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 192925
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 40000
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1516512
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 2773
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "Group": "Specialized Commons Services",
-                        "Amount": 2390379,
-                        "Divisions": [
-                            {
-                                "Division": "Heritage Toronto",
-                                "Amount": 768379,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 540926
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 67887
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 158300
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 1266
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto Atmospheric Fund",
-                                "Amount": 1622000,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 20000
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1102000
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 500000
-                                    }
-                                ]
-                            }
-                        ]
+                        }
                     }
-                ]
-            },
-            {
-                "Type": "Citizen Support Services",
-                "Amount": 4541456990,
-                "Groups": [
-                    {
-                        "Group": "Emergency Services",
-                        "Amount": 1821676452,
-                        "Divisions": [
-                            {
-                                "Division": "Fire Services",
-                                "Amount": 433233567,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 400000092
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 9018747
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 896763
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 6437335
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 8856708
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 8023922
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto Paramedic Services",
-                                "Amount": 201165372,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 167096637
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 6255784
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 1136422
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 9566943
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Capital (505A)",
-                                        "Amount": 600000
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 6921232
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 8937
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 9579416
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto Police Service",
-                                "Amount": 1134148976,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 1011506700
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 18518400
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 2157800
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 43303788
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 38421889
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 20240400
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Court Services",
-                                "Amount": 50079137,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 19044827
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 127300
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 60250
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 9942866
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 84376
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 1813550
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 19005968
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto Police Services Board",
-                                "Amount": 3049400,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 963200
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 7600
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 900
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 821700
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Capital (505A)",
-                                        "Amount": 610600
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 645400
-                                    }
-                                ]
+                },
+                "AFFHOUSING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1569495,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 125076
+                                },
+                                "805A": {
+                                    "Amount": 1045419
+                                },
+                                "930A": {
+                                    "Amount": 399000
+                                }
                             }
-                        ]
-                    },
-                    {
-                        "Group": "Health & Welfare Services",
-                        "Amount": 2719780538,
-                        "Divisions": [
-                            {
-                                "Division": "Toronto Public Health",
-                                "Amount": 240703329,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 180285090
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 3767031
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 998476
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 30671326
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 1289419
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 8537753
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 15154235
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Children's Services",
-                                "Amount": 450965107,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 84323714
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 2639108
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 741512
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 356457032
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 1280749
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 726600
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 4796392
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Long Term Care Homes & Services",
-                                "Amount": 252739720,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 206804901
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 19819750
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 2877500
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 20612507
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 1901532
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 98300
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 625230
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Shelter, Support & Housing Administration",
-                                "Amount": 668803743,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 70651484
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 4150310
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 243264
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 74026838
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 2367865
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 516173558
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 1190423
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Affordable Housing Office",
-                                "Amount": 2956572,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 2283011
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 11551
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 2500
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 165211
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 5647
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 488651
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto Employment & Social Services",
-                                "Amount": 1103612067,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 192098141
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 14297326
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 281318
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 90255066
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 5635197
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 782813295
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 18231723
-                                    }
-                                ]
-                            }
-                        ]
+                        }
                     }
-                ]
-            },
-            {
-                "Type": "Municipal Services",
-                "Amount": 2478224904,
-                "Groups": [
-                    {
-                        "Group": "Corporate Management",
-                        "Amount": 222011171,
-                        "Divisions": [
-                            {
-                                "Division": "City Council",
-                                "Amount": 20953951,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 18622473
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 1281482
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 102000
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 595500
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 99217
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 253279
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Mayor's Office",
-                                "Amount": 2297110,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 2200854
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 4800
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 84409
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 7047
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "City Clerk's Office",
-                                "Amount": 49713076,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 39232601
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 1073584
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 86735
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 7697802
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 464633
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 32771
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 1124950
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "City Manager's Office",
-                                "Amount": 54760375,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 49676242
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 186538
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 101779
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 4446976
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 91085
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 257755
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Office of the Chief Financial Officer",
-                                "Amount": 16576993,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 15528918
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 51041
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 6746
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 680503
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 77406
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 500
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 231879
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Office of the Treasurer",
-                                "Amount": 77709666,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 65375290
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 220997
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 114399
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 8016042
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 128997
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 1482918
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 2371023
-                                    }
-                                ]
+                },
+                "ARENAS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 8407168,
+                            "Components": {
+                                "850A": {
+                                    "Amount": 7382943
+                                },
+                                "940A": {
+                                    "Amount": 1024225
+                                }
                             }
-                        ]
-                    },
-                    {
-                        "Group": "Accountability Offices",
-                        "Amount": 8199448,
-                        "Divisions": [
-                            {
-                                "Division": "Auditor General's Office",
-                                "Amount": 4762566,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 4572464
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 16189
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 47126
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 96833
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 7681
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 22272
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Office of the Lobbyist Registrar",
-                                "Amount": 1143089,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 1053367
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 7611
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 286
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 79647
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 1578
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 600
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Office of the Ombudsman",
-                                "Amount": 1814559,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 1553735
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 12718
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 7222
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 226396
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 2082
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 12405
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Integrity Commissioner's Office",
-                                "Amount": 479234,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 455221
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 1576
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 53
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 17618
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 4365
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 400
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "Group": "Maintenance & Standards Services",
-                        "Amount": 122699166,
-                        "Divisions": [
-                            {
-                                "Division": "311 Toronto",
-                                "Amount": 17300638,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 15412799
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 9589
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 25357
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1632711
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 25905
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 194277
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Municipal Licensing & Standards",
-                                "Amount": 51573166,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 42364943
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 1196761
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 506781
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1781319
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 308148
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 291200
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 5124013
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Toronto Building",
-                                "Amount": 53825362,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 46187468
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 152876
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 563547
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1177880
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 4423748
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 398488
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 921355
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "Group": "Planning & Development Services",
-                        "Amount": 187074588,
-                        "Divisions": [
-                            {
-                                "Division": "City Planning",
-                                "Amount": 43309766,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 40045949
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 171728
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 163544
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1552966
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 81224
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 420700
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 873655
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Policy, Planning, Finance & Administration",
-                                "Amount": 21782925,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 18940318
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 969385
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 213893
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 665031
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 125721
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 868577
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Economic Development & Culture",
-                                "Amount": 70164744,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 28331247
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 1231031
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 127604
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 7837651
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 964012
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 31069235
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 603964
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Social Development, Finance & Administration",
-                                "Amount": 51817153,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 15182548
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 91559
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 17609
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 3442099
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 121704
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 32653200
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 308435
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "Group": "Internal Services",
-                        "Amount": 489340896,
-                        "Divisions": [
-                            {
-                                "Division": "Facilities, Real Estate, Environment & Energy",
-                                "Amount": 193120454,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 95517376
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 32270498
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 642462
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 54595179
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 2384530
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 6082177
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 1628232
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Engineering & Construction Services",
-                                "Amount": 69661726,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 60440935
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 481840
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 506590
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 3588778
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 797047
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 3846536
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Information & Technology",
-                                "Amount": 124877224,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 96805726
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 115083
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 905416
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 26439243
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 126565
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 396
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 484794
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Fleet Services",
-                                "Amount": 51452143,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 18224638
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 23280335
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 58743
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 6781305
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 2476289
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 630831
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Legal Services",
-                                "Amount": 50229349,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 41505475
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 442011
-                                    },
-                                    {
-                                        "Expenditure": "Equipment (300A)",
-                                        "Amount": 63558
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 1410603
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 69502
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 6738200
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "Group": "Corporate Accounts",
-                        "Amount": 1448899635,
-                        "Divisions": [
-                            {
-                                "Division": "Capital & Corporate Financing",
-                                "Amount": 722433555,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Contribution To Capital (505A)",
-                                        "Amount": 216379465
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 18911638
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 486164265
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 978187
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Non-Program Expenditures",
-                                "Amount": 624822611,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Salaries And Benefits (100A)",
-                                        "Amount": 51917168
-                                    },
-                                    {
-                                        "Expenditure": "Materials & Supplies (200A)",
-                                        "Amount": 180000
-                                    },
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 343588003
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 77132600
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 133226169
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 18778671
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Non-Program Revenues",
-                                "Amount": 60957469,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Service And Rent (400A)",
-                                        "Amount": 5747145
-                                    },
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 49380000
-                                    },
-                                    {
-                                        "Expenditure": "Other Expenditures (650A)",
-                                        "Amount": 310590
-                                    },
-                                    {
-                                        "Expenditure": "Inter-Divisional Charges (700A)",
-                                        "Amount": 5519734
-                                    }
-                                ]
-                            },
-                            {
-                                "Division": "Property Tax",
-                                "Amount": 40686000,
-                                "Expenditures": [
-                                    {
-                                        "Expenditure": "Contribution To Reserves/Reserve Funds (510A)",
-                                        "Amount": 40686000
-                                    }
-                                ]
-                            }
-                        ]
+                        }
                     }
-                ]
+                },
+                "ATMOSPHERE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 2575000,
+                            "Components": {
+                                "850A": {
+                                    "Amount": 650000
+                                },
+                                "940A": {
+                                    "Amount": 1925000
+                                }
+                            }
+                        }
+                    }
+                },
+                "AUDITGEN": {},
+                "BUILDINGS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 61199885,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 923845
+                                },
+                                "850A": {
+                                    "Amount": 1628951
+                                },
+                                "860A": {
+                                    "Amount": 58172825
+                                },
+                                "920A": {
+                                    "Amount": 434264
+                                },
+                                "940A": {
+                                    "Amount": 40000
+                                }
+                            }
+                        }
+                    }
+                },
+                "CFO": {
+                    "years": {
+                        "2015": {
+                            "Amount": 6780704,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 2707488
+                                },
+                                "920A": {
+                                    "Amount": 1925285
+                                },
+                                "930A": {
+                                    "Amount": 2080839
+                                },
+                                "940A": {
+                                    "Amount": 67092
+                                }
+                            }
+                        }
+                    }
+                },
+                "CHILDSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 375718177,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 9475000
+                                },
+                                "805A": {
+                                    "Amount": 329669770
+                                },
+                                "850A": {
+                                    "Amount": 19169600
+                                },
+                                "920A": {
+                                    "Amount": 1764361
+                                },
+                                "930A": {
+                                    "Amount": 15639446
+                                }
+                            }
+                        }
+                    }
+                },
+                "CITYMANAGER": {
+                    "years": {
+                        "2015": {
+                            "Amount": 8375681,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 4862408
+                                },
+                                "920A": {
+                                    "Amount": 2323394
+                                },
+                                "930A": {
+                                    "Amount": 1001133
+                                },
+                                "940A": {
+                                    "Amount": 188746
+                                }
+                            }
+                        }
+                    }
+                },
+                "CLERK": {
+                    "years": {
+                        "2015": {
+                            "Amount": 17415217,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 8766500
+                                },
+                                "850A": {
+                                    "Amount": 580287
+                                },
+                                "920A": {
+                                    "Amount": 1351000
+                                },
+                                "930A": {
+                                    "Amount": 5779510
+                                },
+                                "940A": {
+                                    "Amount": 937920
+                                }
+                            }
+                        }
+                    }
+                },
+                "COMMCENTRES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 423213,
+                            "Components": {
+                                "850A": {
+                                    "Amount": 252713
+                                },
+                                "930A": {
+                                    "Amount": 169000
+                                },
+                                "940A": {
+                                    "Amount": 1500
+                                }
+                            }
+                        }
+                    }
+                },
+                "CORPEXPENDITURES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 168452744,
+                            "Components": {
+                                "850A": {
+                                    "Amount": 1952942
+                                },
+                                "930A": {
+                                    "Amount": 159878514
+                                },
+                                "940A": {
+                                    "Amount": 6621288
+                                }
+                            }
+                        }
+                    }
+                },
+                "CORPFINANCING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 58405898,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 2777457
+                                },
+                                "805A": {
+                                    "Amount": 1431000
+                                },
+                                "930A": {
+                                    "Amount": 51873000
+                                },
+                                "940A": {
+                                    "Amount": 2324441
+                                }
+                            }
+                        }
+                    }
+                },
+                "CORPREVENUES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1222776625,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 35299700
+                                },
+                                "805A": {
+                                    "Amount": 42978535
+                                },
+                                "850A": {
+                                    "Amount": 1994876
+                                },
+                                "860A": {
+                                    "Amount": 4002823
+                                },
+                                "930A": {
+                                    "Amount": 91600000
+                                },
+                                "940A": {
+                                    "Amount": 1046900691
+                                }
+                            }
+                        }
+                    }
+                },
+                "COUNCIL": {
+                    "years": {
+                        "2015": {
+                            "Amount": 130000,
+                            "Components": {
+                                "930A": {
+                                    "Amount": 130000
+                                }
+                            }
+                        }
+                    }
+                },
+                "COURTSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 54583733,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 6918834
+                                },
+                                "850A": {
+                                    "Amount": 281999
+                                },
+                                "940A": {
+                                    "Amount": 47382900
+                                }
+                            }
+                        }
+                    }
+                },
+                "ECONDEV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 23744266,
+                            "Components": {
+                                "805A": {
+                                    "Amount": 2775200
+                                },
+                                "810A": {
+                                    "Amount": 1686672
+                                },
+                                "820A": {
+                                    "Amount": 37000
+                                },
+                                "850A": {
+                                    "Amount": 2406616
+                                },
+                                "860A": {
+                                    "Amount": 735406
+                                },
+                                "920A": {
+                                    "Amount": 1036000
+                                },
+                                "930A": {
+                                    "Amount": 8909517
+                                },
+                                "940A": {
+                                    "Amount": 6157855
+                                }
+                            }
+                        }
+                    }
+                },
+                "ENGINEERING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 59293971,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 175570
+                                },
+                                "850A": {
+                                    "Amount": 5292538
+                                },
+                                "860A": {
+                                    "Amount": 1620000
+                                },
+                                "920A": {
+                                    "Amount": 49248456
+                                },
+                                "940A": {
+                                    "Amount": 2957407
+                                }
+                            }
+                        }
+                    }
+                },
+                "EXHIBPLACE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 38430916,
+                            "Components": {
+                                "850A": {
+                                    "Amount": 35146509
+                                },
+                                "930A": {
+                                    "Amount": 3284407
+                                }
+                            }
+                        }
+                    }
+                },
+                "FACILITIES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 123559063,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 50194952
+                                },
+                                "805A": {
+                                    "Amount": 250000
+                                },
+                                "810A": {
+                                    "Amount": 220480
+                                },
+                                "850A": {
+                                    "Amount": 43046355
+                                },
+                                "920A": {
+                                    "Amount": 9849244
+                                },
+                                "930A": {
+                                    "Amount": 11945307
+                                },
+                                "940A": {
+                                    "Amount": 8052725
+                                }
+                            }
+                        }
+                    }
+                },
+                "FIRE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 17000186,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 247406
+                                },
+                                "805A": {
+                                    "Amount": 400000
+                                },
+                                "850A": {
+                                    "Amount": 13563515
+                                },
+                                "920A": {
+                                    "Amount": 231765
+                                },
+                                "930A": {
+                                    "Amount": 404000
+                                },
+                                "940A": {
+                                    "Amount": 2153500
+                                }
+                            }
+                        }
+                    }
+                },
+                "FLEET": {
+                    "years": {
+                        "2015": {
+                            "Amount": 50708980,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 47687225
+                                },
+                                "920A": {
+                                    "Amount": 116482
+                                },
+                                "930A": {
+                                    "Amount": 121000
+                                },
+                                "940A": {
+                                    "Amount": 2784273
+                                }
+                            }
+                        }
+                    }
+                },
+                "HERITAGE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 449500,
+                            "Components": {
+                                "805A": {
+                                    "Amount": 36200
+                                },
+                                "810A": {
+                                    "Amount": 70000
+                                },
+                                "850A": {
+                                    "Amount": 192500
+                                },
+                                "940A": {
+                                    "Amount": 150800
+                                }
+                            }
+                        }
+                    }
+                },
+                "INTEGRITYCOMM": {},
+                "IT": {
+                    "years": {
+                        "2015": {
+                            "Amount": 49242309,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 13508878
+                                },
+                                "850A": {
+                                    "Amount": 186103
+                                },
+                                "920A": {
+                                    "Amount": 30600915
+                                },
+                                "930A": {
+                                    "Amount": 4220064
+                                },
+                                "940A": {
+                                    "Amount": 726349
+                                }
+                            }
+                        }
+                    }
+                },
+                "LEGAL": {
+                    "years": {
+                        "2015": {
+                            "Amount": 29261228,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 22162478
+                                },
+                                "850A": {
+                                    "Amount": 2529571
+                                },
+                                "920A": {
+                                    "Amount": 1162621
+                                },
+                                "930A": {
+                                    "Amount": 300000
+                                },
+                                "940A": {
+                                    "Amount": 3106558
+                                }
+                            }
+                        }
+                    }
+                },
+                "LIBRARY": {
+                    "years": {
+                        "2015": {
+                            "Amount": 16516100,
+                            "Components": {
+                                "805A": {
+                                    "Amount": 5695400
+                                },
+                                "810A": {
+                                    "Amount": 20000
+                                },
+                                "850A": {
+                                    "Amount": 5031700
+                                },
+                                "920A": {
+                                    "Amount": 312000
+                                },
+                                "930A": {
+                                    "Amount": 3559400
+                                },
+                                "940A": {
+                                    "Amount": 1897600
+                                }
+                            }
+                        }
+                    }
+                },
+                "LICENCING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 29819236,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 1541461
+                                },
+                                "850A": {
+                                    "Amount": 3590964
+                                },
+                                "860A": {
+                                    "Amount": 24357930
+                                },
+                                "930A": {
+                                    "Amount": 10000
+                                },
+                                "940A": {
+                                    "Amount": 318881
+                                }
+                            }
+                        }
+                    }
+                },
+                "LOBBYREG": {},
+                "LOCALAPPEAL": {},
+                "LONGTERMHOME": {
+                    "years": {
+                        "2015": {
+                            "Amount": 195942621,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 72800
+                                },
+                                "805A": {
+                                    "Amount": 146819121
+                                },
+                                "850A": {
+                                    "Amount": 48652700
+                                },
+                                "920A": {
+                                    "Amount": 260000
+                                },
+                                "940A": {
+                                    "Amount": 138000
+                                }
+                            }
+                        }
+                    }
+                },
+                "MAYOR": {},
+                "OMBUDSMAN": {},
+                "PARAMEDIC": {
+                    "years": {
+                        "2015": {
+                            "Amount": 123412374,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 894158
+                                },
+                                "805A": {
+                                    "Amount": 118547465
+                                },
+                                "850A": {
+                                    "Amount": 1141716
+                                },
+                                "920A": {
+                                    "Amount": 75000
+                                },
+                                "930A": {
+                                    "Amount": 409503
+                                },
+                                "940A": {
+                                    "Amount": 2344532
+                                }
+                            }
+                        }
+                    }
+                },
+                "PARKING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 134229440,
+                            "Components": {
+                                "850A": {
+                                    "Amount": 128878837
+                                },
+                                "930A": {
+                                    "Amount": 770000
+                                },
+                                "940A": {
+                                    "Amount": 4580603
+                                }
+                            }
+                        }
+                    }
+                },
+                "PARKS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 129966794,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 7561289
+                                },
+                                "805A": {
+                                    "Amount": 789972
+                                },
+                                "810A": {
+                                    "Amount": 3500000
+                                },
+                                "850A": {
+                                    "Amount": 76683270
+                                },
+                                "860A": {
+                                    "Amount": 8325925
+                                },
+                                "920A": {
+                                    "Amount": 6532799
+                                },
+                                "930A": {
+                                    "Amount": 22867536
+                                },
+                                "940A": {
+                                    "Amount": 3706003
+                                }
+                            }
+                        }
+                    }
+                },
+                "PLANNING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 27477221,
+                            "Components": {
+                                "850A": {
+                                    "Amount": 24205978
+                                },
+                                "920A": {
+                                    "Amount": 2372893
+                                },
+                                "940A": {
+                                    "Amount": 898350
+                                }
+                            }
+                        }
+                    }
+                },
+                "POLICE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 192654100,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 9956100
+                                },
+                                "805A": {
+                                    "Amount": 112245200
+                                },
+                                "850A": {
+                                    "Amount": 47018800
+                                },
+                                "930A": {
+                                    "Amount": 22534000
+                                },
+                                "940A": {
+                                    "Amount": 900000
+                                }
+                            }
+                        }
+                    }
+                },
+                "POLICEBOARD": {
+                    "years": {
+                        "2015": {
+                            "Amount": 750000,
+                            "Components": {
+                                "930A": {
+                                    "Amount": 750000
+                                }
+                            }
+                        }
+                    }
+                },
+                "POLICYADMIN": {
+                    "years": {
+                        "2015": {
+                            "Amount": 12214286,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 9367334
+                                },
+                                "805A": {
+                                    "Amount": 225000
+                                },
+                                "920A": {
+                                    "Amount": 2389912
+                                },
+                                "930A": {
+                                    "Amount": 875
+                                },
+                                "940A": {
+                                    "Amount": 231165
+                                }
+                            }
+                        }
+                    }
+                },
+                "PROPERTYTAX": {
+                    "years": {
+                        "2015": {
+                            "Amount": 3873481164,
+                            "Components": {
+                                "940A": {
+                                    "Amount": 3873481164
+                                }
+                            }
+                        }
+                    }
+                },
+                "PUBLICHEALTH": {
+                    "years": {
+                        "2015": {
+                            "Amount": 197051997,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 10541886
+                                },
+                                "805A": {
+                                    "Amount": 179589213
+                                },
+                                "810A": {
+                                    "Amount": 387429
+                                },
+                                "850A": {
+                                    "Amount": 1021746
+                                },
+                                "920A": {
+                                    "Amount": 3638536
+                                },
+                                "930A": {
+                                    "Amount": 174281
+                                },
+                                "940A": {
+                                    "Amount": 1698906
+                                }
+                            }
+                        }
+                    }
+                },
+                "REGIONCONSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 36463000,
+                            "Components": {
+                                "805A": {
+                                    "Amount": 1835000
+                                },
+                                "850A": {
+                                    "Amount": 24799000
+                                },
+                                "930A": {
+                                    "Amount": 4598000
+                                },
+                                "940A": {
+                                    "Amount": 5231000
+                                }
+                            }
+                        }
+                    }
+                },
+                "SHELTERADMIN": {
+                    "years": {
+                        "2015": {
+                            "Amount": 340926443,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 11250
+                                },
+                                "805A": {
+                                    "Amount": 147308363
+                                },
+                                "810A": {
+                                    "Amount": 157339042
+                                },
+                                "820A": {
+                                    "Amount": -1
+                                },
+                                "850A": {
+                                    "Amount": 472800
+                                },
+                                "920A": {
+                                    "Amount": 169289
+                                },
+                                "930A": {
+                                    "Amount": 35588655
+                                },
+                                "940A": {
+                                    "Amount": 37045
+                                }
+                            }
+                        }
+                    }
+                },
+                "SOCIALDEV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 18045552,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 498300
+                                },
+                                "805A": {
+                                    "Amount": 4876422
+                                },
+                                "810A": {
+                                    "Amount": 2039101
+                                },
+                                "930A": {
+                                    "Amount": 10523580
+                                },
+                                "940A": {
+                                    "Amount": 108149
+                                }
+                            }
+                        }
+                    }
+                },
+                "SOCIALSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 956823649,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 354355
+                                },
+                                "805A": {
+                                    "Amount": 916636763
+                                },
+                                "820A": {
+                                    "Amount": 6799500
+                                },
+                                "930A": {
+                                    "Amount": 15233031
+                                },
+                                "940A": {
+                                    "Amount": 17800000
+                                }
+                            }
+                        }
+                    }
+                },
+                "SOLIDWASTE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 370785149,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 5984239
+                                },
+                                "805A": {
+                                    "Amount": 22015403
+                                },
+                                "850A": {
+                                    "Amount": 272189187
+                                },
+                                "920A": {
+                                    "Amount": 3327207
+                                },
+                                "940A": {
+                                    "Amount": 67269113
+                                }
+                            }
+                        }
+                    }
+                },
+                "THEATRES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 17978443,
+                            "Components": {
+                                "850A": {
+                                    "Amount": 12827713
+                                },
+                                "930A": {
+                                    "Amount": 2062340
+                                },
+                                "940A": {
+                                    "Amount": 3088390
+                                }
+                            }
+                        }
+                    }
+                },
+                "TRANSPORTATION": {
+                    "years": {
+                        "2015": {
+                            "Amount": 142839627,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 8728149
+                                },
+                                "850A": {
+                                    "Amount": 37562485
+                                },
+                                "860A": {
+                                    "Amount": 6176070
+                                },
+                                "920A": {
+                                    "Amount": 26997481
+                                },
+                                "930A": {
+                                    "Amount": 22414099
+                                },
+                                "940A": {
+                                    "Amount": 40961343
+                                }
+                            }
+                        }
+                    }
+                },
+                "TREASURER": {
+                    "years": {
+                        "2015": {
+                            "Amount": 46909953,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 25310556
+                                },
+                                "850A": {
+                                    "Amount": 11935933
+                                },
+                                "920A": {
+                                    "Amount": 4584859
+                                },
+                                "930A": {
+                                    "Amount": 1677671
+                                },
+                                "940A": {
+                                    "Amount": 3400934
+                                }
+                            }
+                        }
+                    }
+                },
+                "TTCCONV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1220089500,
+                            "Components": {
+                                "850A": {
+                                    "Amount": 1206687700
+                                },
+                                "930A": {
+                                    "Amount": 9897500
+                                },
+                                "940A": {
+                                    "Amount": 3504300
+                                }
+                            }
+                        }
+                    }
+                },
+                "TTCWHEEL": {
+                    "years": {
+                        "2015": {
+                            "Amount": 6514300,
+                            "Components": {
+                                "850A": {
+                                    "Amount": 6214300
+                                },
+                                "930A": {
+                                    "Amount": 300000
+                                }
+                            }
+                        }
+                    }
+                },
+                "WATER": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1081135049,
+                            "Components": {
+                                "750A": {
+                                    "Amount": 25000
+                                },
+                                "850A": {
+                                    "Amount": 39831361
+                                },
+                                "920A": {
+                                    "Amount": 2667146
+                                },
+                                "930A": {
+                                    "Amount": 195000
+                                },
+                                "940A": {
+                                    "Amount": 1038416542
+                                }
+                            }
+                        }
+                    }
+                },
+                "YONGEDUNDAS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1872649,
+                            "Components": {
+                                "850A": {
+                                    "Amount": 1000000
+                                },
+                                "860A": {
+                                    "Amount": 345000
+                                },
+                                "940A": {
+                                    "Amount": 527649
+                                }
+                            }
+                        }
+                    }
+                },
+                "ZOO": {
+                    "years": {
+                        "2015": {
+                            "Amount": 38855103,
+                            "Components": {
+                                "805A": {
+                                    "Amount": 1011500
+                                },
+                                "850A": {
+                                    "Amount": 36565403
+                                },
+                                "920A": {
+                                    "Amount": 171000
+                                },
+                                "930A": {
+                                    "Amount": 386000
+                                },
+                                "940A": {
+                                    "Amount": 721200
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        ]
+        },
+        "BudgetStaffing": {
+            "Action": "Staffing",
+            "Baseline": "Programs",
+            "Components": "FulltimeParttime",
+            "Items": {
+                "311SERVICE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 157,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 137
+                                },
+                                "PART": {
+                                    "Amount": 20
+                                }
+                            }
+                        }
+                    }
+                },
+                "AFFHOUSING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 19,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 15
+                                },
+                                "PART": {
+                                    "Amount": 4
+                                }
+                            }
+                        }
+                    }
+                },
+                "ARENAS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 66.6,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 43.2
+                                },
+                                "PART": {
+                                    "Amount": 23.4
+                                }
+                            }
+                        }
+                    }
+                },
+                "ATMOSPHERE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 8,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 8
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "AUDITGEN": {
+                    "years": {
+                        "2015": {
+                            "Amount": 29.5,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 29.5
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "BUILDINGS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 440,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 433
+                                },
+                                "PART": {
+                                    "Amount": 7
+                                }
+                            }
+                        }
+                    }
+                },
+                "CFO": {
+                    "years": {
+                        "2015": {
+                            "Amount": 102,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 101
+                                },
+                                "PART": {
+                                    "Amount": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "CHILDSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 967.6,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 729.9
+                                },
+                                "PART": {
+                                    "Amount": 237.7
+                                }
+                            }
+                        }
+                    }
+                },
+                "CITYMANAGER": {
+                    "years": {
+                        "2015": {
+                            "Amount": 424.5,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 415.5
+                                },
+                                "PART": {
+                                    "Amount": 9
+                                }
+                            }
+                        }
+                    }
+                },
+                "CLERK": {
+                    "years": {
+                        "2015": {
+                            "Amount": 403.9,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 396.3
+                                },
+                                "PART": {
+                                    "Amount": 7.6
+                                }
+                            }
+                        }
+                    }
+                },
+                "COMMCENTRES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 77.9,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 77.9
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "CORPEXPENDITURES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 394,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 394
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "CORPFINANCING": {
+                    "years": {
+                        "2015": {
+                            "Amount": null,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": null
+                                },
+                                "PART": {
+                                    "Amount": null
+                                }
+                            }
+                        }
+                    }
+                },
+                "CORPREVENUES": {
+                    "years": {
+                        "2015": {
+                            "Amount": null,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": null
+                                },
+                                "PART": {
+                                    "Amount": null
+                                }
+                            }
+                        }
+                    }
+                },
+                "COUNCIL": {
+                    "years": {
+                        "2015": {
+                            "Amount": 176,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 44
+                                },
+                                "PART": {
+                                    "Amount": 132
+                                }
+                            }
+                        }
+                    }
+                },
+                "COURTSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 282,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 282
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "ECONDEV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 300.6,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 231
+                                },
+                                "PART": {
+                                    "Amount": 69.6
+                                }
+                            }
+                        }
+                    }
+                },
+                "ENGINEERING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 133,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 127.5
+                                },
+                                "PART": {
+                                    "Amount": 5.5
+                                }
+                            }
+                        }
+                    }
+                },
+                "EXHIBPLACE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 390,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 379
+                                },
+                                "PART": {
+                                    "Amount": 11
+                                }
+                            }
+                        }
+                    }
+                },
+                "FACILITIES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 925.5,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 891.2
+                                },
+                                "PART": {
+                                    "Amount": 34.3
+                                }
+                            }
+                        }
+                    }
+                },
+                "FIRE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 3154.8,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 3149.5
+                                },
+                                "PART": {
+                                    "Amount": 5.3
+                                }
+                            }
+                        }
+                    }
+                },
+                "FLEET": {
+                    "years": {
+                        "2015": {
+                            "Amount": 176,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 175
+                                },
+                                "PART": {
+                                    "Amount": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "HERITAGE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 7,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 7
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "INTEGRITYCOMM": {
+                    "years": {
+                        "2015": {
+                            "Amount": 4,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 4
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "IT": {
+                    "years": {
+                        "2015": {
+                            "Amount": 587,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 584
+                                },
+                                "PART": {
+                                    "Amount": 3
+                                }
+                            }
+                        }
+                    }
+                },
+                "LEGAL": {
+                    "years": {
+                        "2015": {
+                            "Amount": 301.4,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 268.4
+                                },
+                                "PART": {
+                                    "Amount": 33
+                                }
+                            }
+                        }
+                    }
+                },
+                "LIBRARY": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1736.3,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 1736.3
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "LICENCING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 460,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 459
+                                },
+                                "PART": {
+                                    "Amount": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "LOBBYREG": {
+                    "years": {
+                        "2015": {
+                            "Amount": 8.3,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 8
+                                },
+                                "PART": {
+                                    "Amount": 0.3
+                                }
+                            }
+                        }
+                    }
+                },
+                "LOCALAPPEAL": {
+                    "years": {
+                        "2015": {
+                            "Amount": null,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": null
+                                },
+                                "PART": {
+                                    "Amount": null
+                                }
+                            }
+                        }
+                    }
+                },
+                "LONGTERMHOME": {
+                    "years": {
+                        "2015": {
+                            "Amount": 2225.9,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 2225.9
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "MAYOR": {
+                    "years": {
+                        "2015": {
+                            "Amount": 20,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 1
+                                },
+                                "PART": {
+                                    "Amount": 19
+                                }
+                            }
+                        }
+                    }
+                },
+                "OMBUDSMAN": {
+                    "years": {
+                        "2015": {
+                            "Amount": 17,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 17
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "PARAMEDIC": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1391.3,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 1376.5
+                                },
+                                "PART": {
+                                    "Amount": 14.8
+                                }
+                            }
+                        }
+                    }
+                },
+                "PARKING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 299.4,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 246.1
+                                },
+                                "PART": {
+                                    "Amount": 53.3
+                                }
+                            }
+                        }
+                    }
+                },
+                "PARKS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 4435.8,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 1876.2
+                                },
+                                "PART": {
+                                    "Amount": 2559.6
+                                }
+                            }
+                        }
+                    }
+                },
+                "PLANNING": {
+                    "years": {
+                        "2015": {
+                            "Amount": 360,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 347
+                                },
+                                "PART": {
+                                    "Amount": 13
+                                }
+                            }
+                        }
+                    }
+                },
+                "POLICE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 7883,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 7672
+                                },
+                                "PART": {
+                                    "Amount": 211
+                                }
+                            }
+                        }
+                    }
+                },
+                "POLICEBOARD": {
+                    "years": {
+                        "2015": {
+                            "Amount": 7,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 7
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "POLICYADMIN": {
+                    "years": {
+                        "2015": {
+                            "Amount": 199.4,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 192
+                                },
+                                "PART": {
+                                    "Amount": 7.4
+                                }
+                            }
+                        }
+                    }
+                },
+                "PROPERTYTAX": {
+                    "years": {
+                        "2015": {
+                            "Amount": null,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": null
+                                },
+                                "PART": {
+                                    "Amount": null
+                                }
+                            }
+                        }
+                    }
+                },
+                "PUBLICHEALTH": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1838.6,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 1794
+                                },
+                                "PART": {
+                                    "Amount": 44.6
+                                }
+                            }
+                        }
+                    }
+                },
+                "REGIONCONSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": null,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": null
+                                },
+                                "PART": {
+                                    "Amount": null
+                                }
+                            }
+                        }
+                    }
+                },
+                "SHELTERADMIN": {
+                    "years": {
+                        "2015": {
+                            "Amount": 707.2,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 568
+                                },
+                                "PART": {
+                                    "Amount": 139.2
+                                }
+                            }
+                        }
+                    }
+                },
+                "SOCIALDEV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 127.5,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 120.5
+                                },
+                                "PART": {
+                                    "Amount": 7
+                                }
+                            }
+                        }
+                    }
+                },
+                "SOCIALSERV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 2082,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 2024
+                                },
+                                "PART": {
+                                    "Amount": 58
+                                }
+                            }
+                        }
+                    }
+                },
+                "SOLIDWASTE": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1081.7,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 964
+                                },
+                                "PART": {
+                                    "Amount": 117.7
+                                }
+                            }
+                        }
+                    }
+                },
+                "THEATRES": {
+                    "years": {
+                        "2015": {
+                            "Amount": 163.1,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 85.9
+                                },
+                                "PART": {
+                                    "Amount": 77.2
+                                }
+                            }
+                        }
+                    }
+                },
+                "TRANSPORTATION": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1033.8,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 1001.1
+                                },
+                                "PART": {
+                                    "Amount": 32.7
+                                }
+                            }
+                        }
+                    }
+                },
+                "TREASURER": {
+                    "years": {
+                        "2015": {
+                            "Amount": 693,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 662
+                                },
+                                "PART": {
+                                    "Amount": 31
+                                }
+                            }
+                        }
+                    }
+                },
+                "TTCCONV": {
+                    "years": {
+                        "2015": {
+                            "Amount": 11756,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 11747
+                                },
+                                "PART": {
+                                    "Amount": 9
+                                }
+                            }
+                        }
+                    }
+                },
+                "TTCWHEEL": {
+                    "years": {
+                        "2015": {
+                            "Amount": 562,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 562
+                                },
+                                "PART": {
+                                    "Amount": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "WATER": {
+                    "years": {
+                        "2015": {
+                            "Amount": 1710.3,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 1640
+                                },
+                                "PART": {
+                                    "Amount": 70.3
+                                }
+                            }
+                        }
+                    }
+                },
+                "YONGEDUNDAS": {
+                    "years": {
+                        "2015": {
+                            "Amount": 6.5,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 6
+                                },
+                                "PART": {
+                                    "Amount": 0.5
+                                }
+                            }
+                        }
+                    }
+                },
+                "ZOO": {
+                    "years": {
+                        "2015": {
+                            "Amount": 402.5,
+                            "Components": {
+                                "FULL": {
+                                    "Amount": 278
+                                },
+                                "PART": {
+                                    "Amount": 124.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "Lookups": {
+        "Programs": {
+            "311SERVICE": "311 Toronto",
+            "AFFHOUSING": "Affordable Housing Office",
+            "ARENAS": "Arena Boards of Management",
+            "ATMOSPHERE": "Toronto Atmospheric Fund",
+            "AUDITGEN": "Auditor General's Office",
+            "BUILDINGS": "Toronto Building",
+            "CFO": "Office of the Chief Financial Officer",
+            "CHILDSERV": "Children's Services",
+            "CITYMANAGER": "City Manager's Office",
+            "CLERK": "City Clerk's Office",
+            "COMMCENTRES": "Association of Community Centres",
+            "CORPEXPENDITURES": "Non-Program Expenditures",
+            "CORPFINANCING": "Capital & Corporate Financing",
+            "CORPREVENUES": "Non-Program Revenues",
+            "COUNCIL": "City Council",
+            "COURTSERV": "Court Services",
+            "ECONDEV": "Economic Development & Culture",
+            "ENGINEERING": "Engineering & Construction Services",
+            "EXHIBPLACE": "Exhibition Place",
+            "FACILITIES": "Facilities, Real Estate, Environment & Energy",
+            "FIRE": "Fire Services",
+            "FLEET": "Fleet Services",
+            "HERITAGE": "Heritage Toronto",
+            "INTEGRITYCOMM": "Integrity Commissioner's Office",
+            "IT": "Information & Technology",
+            "LEGAL": "Legal Services",
+            "LIBRARY": "Toronto Public Library",
+            "LICENCING": "Municipal Licensing & Standards",
+            "LOBBYREG": "Office of the Lobbyist Registrar",
+            "LOCALAPPEAL": "Local Appeal Body",
+            "LONGTERMHOME": "Long Term Care Homes & Services",
+            "MAYOR": "Mayor's Office",
+            "OMBUDSMAN": "Office of the Ombudsman",
+            "PARAMEDIC": "Toronto Paramedic Services",
+            "PARKING": "Toronto Parking Authority",
+            "PARKS": "Parks, Forestry & Recreation",
+            "PLANNING": "City Planning",
+            "POLICE": "Toronto Police Service",
+            "POLICEBOARD": "Toronto Police Services Board",
+            "POLICYADMIN": "Policy, Planning, Finance & Administration",
+            "PROPERTYTAX": "Property Tax",
+            "PUBLICHEALTH": "Toronto Public Health",
+            "REGIONCONSERV": "Toronto & Region Conservation Authority",
+            "SHELTERADMIN": "Shelter, Support & Housing Administration",
+            "SOCIALDEV": "Social Development, Finance & Administration",
+            "SOCIALSERV": "Toronto Employment & Social Services",
+            "SOLIDWASTE": "Solid Waste Management Services",
+            "THEATRES": "Theatres",
+            "TRANSPORTATION": "Transportation Services",
+            "TREASURER": "Office of the Treasurer",
+            "TTCCONV": "Toronto Transit Commission - Conventional",
+            "TTCWHEEL": "Toronto Transit Commission - Wheel Trans",
+            "WATER": "Toronto Water",
+            "YONGEDUNDAS": "Yonge-Dundas Square",
+            "ZOO": "Toronto Zoo"
+        },
+        "Expenditures": {
+            "100A": "Salaries And Benefits",
+            "200A": "Materials & Supplies",
+            "300A": "Equipment",
+            "400A": "Service And Rent",
+            "505A": "Contribution To Capital",
+            "510A": "Contribution To Reserves/Reserve Funds",
+            "650A": "Other Expenditures",
+            "700A": "Inter-Divisional Charges",
+            "750A": "Inter-Divisional Recoveries",
+            "805A": "Provincial Subsidies",
+            "810A": "Federal Subsidies",
+            "820A": "Other Subsidies",
+            "850A": "User Fees & Donations",
+            "860A": "Licences & Permits Revenue",
+            "920A": "Transfers From Capital",
+            "930A": "Contribution From Reserves/Reserve Funds",
+            "940A": "Property Tax"
+        },
+        "FulltimeParttime": {
+            "FULL": "Full Time",
+            "PART": "Part Time"
+        }
+    },
+    "Viewpoints": {
+        "FUNCTIONAL": {
+            "Index": 0,
+            "Lookups": {
+                "Categories": {
+                    "SHARED": "Shared Services",
+                    "WASTEWATER": "Waste & Water Services",
+                    "TRANSTRANSIT": "Transportation & Transit Services",
+                    "COMMONS": "City Commons",
+                    "DESTINATIONS": "Public Destinations",
+                    "SPECIALCOMMONS": "Specialized Commons Services",
+                    "SUPPORT": "Citizen Support Services",
+                    "EMERGSERV": "Emergency Services",
+                    "HEALTHWELFARE": "Health & Welfare Services",
+                    "MUNICIPAL": "Municipal Services",
+                    "CORPMANAGEMENT": "Corporate Management",
+                    "ACCOUNTABILITY": "Accountability Offices",
+                    "MAINTSTANDARDS": "Maintenance & Standards Services",
+                    "PLANNINGDEV": "Planning & Development Services",
+                    "INTERNALSERV": "Internal Services",
+                    "CORPORATEACCOUNTS": "Corporate Accounts"
+                }
+            },
+            "Configuration": {
+                "ROOT": {
+                    "Name": "Functional",
+                    "Alias": "Program Activity Types",
+                    "DataSeries": {
+                        "default": "BudgetExpenses",
+                        "list": [
+                            "BudgetExpenses",
+                            "BudgetRevenues",
+                            "BudgetStaffing"
+                        ]
+                    },
+                    "Instance": {
+                        "Name": "Type",
+                        "Alias": "Program Activity Type"
+                    }
+                },
+                "TYPE": {
+                    "Name": "Functional",
+                    "Alias": "Program Activity Types",
+                    "Instance": {
+                        "Name": "Type",
+                        "Alias": "Program Activity Type"
+                    }
+                },
+                "CLUSTER": {
+                    "Name": "Clusters",
+                    "Alias": "Program Clusters",
+                    "Instance": {
+                        "Name": "Cluster",
+                        "Alias": "Program Cluster"
+                    }
+                },
+                "BASELINE": {
+                    "Name": "Programs",
+                    "Baseline": "Programs",
+                    "Instance": {
+                        "Name": "Program"
+                    }
+                }
+            },
+            "Config": "ROOT",
+            "Components": {
+                "SHARED": {
+                    "Index": 0,
+                    "Config": "TYPE",
+                    "Components": {
+                        "WASTEWATER": {
+                            "Index": 0,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "SOLIDWASTE": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "WATER": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "TRANSTRANSIT": {
+                            "Index": 1,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "TTCCONV": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "TTCWHEEL": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "TRANSPORTATION": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                },
+                                "PARKING": {
+                                    "Index": 3,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "COMMONS": {
+                            "Index": 2,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "PARKS": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "ARENAS": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "COMMCENTRES": {
+                                    "Index": 2
+                                },
+                                "REGIONCONSERV": {
+                                    "Index": 3,
+                                    "Config": "BASELINE"
+                                },
+                                "LIBRARY": {
+                                    "Index": 4,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "DESTINATIONS": {
+                            "Index": 3,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "EXHIBPLACE": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "THEATRES": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "ZOO": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                },
+                                "YONGEDUNDAS": {
+                                    "Index": 3,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "SPECIALCOMMONS": {
+                            "Index": 4,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "HERITAGE": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "ATMOSPHERE": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        }
+                    }
+                },
+                "SUPPORT": {
+                    "Index": 1,
+                    "Config": "TYPE",
+                    "Components": {
+                        "EMERGSERV": {
+                            "Index": 0,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "FIRE": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "PARAMEDIC": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "POLICE": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                },
+                                "COURTSERV": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                },
+                                "POLICEBOARD": {
+                                    "Index": 3,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "HEALTHWELFARE": {
+                            "Index": 1,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "PUBLICHEALTH": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "CHILDSERV": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "LONGTERMHOME": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                },
+                                "SHELTERADMIN": {
+                                    "Index": 3,
+                                    "Config": "BASELINE"
+                                },
+                                "AFFHOUSING": {
+                                    "Index": 4,
+                                    "Config": "BASELINE"
+                                },
+                                "SOCIALSERV": {
+                                    "Index": 5,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        }
+                    }
+                },
+                "MUNICIPAL": {
+                    "Index": 2,
+                    "Config": "TYPE",
+                    "Components": {
+                        "CORPMANAGEMENT": {
+                            "Index": 0,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "COUNCIL": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "MAYOR": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "CLERK": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                },
+                                "CITYMANAGER": {
+                                    "Index": 3,
+                                    "Config": "BASELINE"
+                                },
+                                "CFO": {
+                                    "Index": 4,
+                                    "Config": "BASELINE"
+                                },
+                                "TREASURER": {
+                                    "Index": 5,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "ACCOUNTABILITY": {
+                            "Index": 1,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "AUDITGEN": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "LOBBYREG": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "OMBUDSMAN": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                },
+                                "INTEGRITYCOMM": {
+                                    "Index": 3,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "MAINTSTANDARDS": {
+                            "Index": 2,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "311SERVICE": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "LICENCING": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "BUILDINGS": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "PLANNINGDEVELOPMENT": {
+                            "Index": 3,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "PLANNING": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "POLICYADMIN": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "ECONDEV": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                },
+                                "SOCIALDEV": {
+                                    "Index": 3,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "INTERNALSERV": {
+                            "Index": 4,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "FACILITIES": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "ENGINEERING": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "IT": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                },
+                                "FLEET": {
+                                    "Index": 3,
+                                    "Config": "BASELINE"
+                                },
+                                "LEGAL": {
+                                    "Index": 4,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "CORPORATEACCOUNTS": {
+                            "Index": 5,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "CORPFINANCING": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "CORPEXPENDITURES": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "CORPREVENUES": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                },
+                                "PROPERTYTAX": {
+                                    "Index": 3,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "STRUCTURAL": {
+            "Index": 1,
+            "Lookups": {
+                "Categories": {
+                    "ACCOUNTABILITYAPPEAL2": "Accountability & Appeal Offices",
+                    "ADMINOPS": "Administrative Operartions",
+                    "AGENCIES": "Agencies",
+                    "CITIZENOPS": "Citizen Centered Operations",
+                    "CITIZENSERVICESA": "Citizen-Centered Services \"A\"",
+                    "CITIZENSERVICESB": "Citizen-Centered Services \"B\"",
+                    "CORESERVICESA": "Core Administrative Services",
+                    "CORESERVICESB": "Core Administrative Services",
+                    "CORPORATEACCOUNTS2": "Corporate Accounts",
+                    "COUNCILOFFICES": "Council Offices",
+                    "COUNCILOPS": "Council Operations",
+                    "DESTINATIONS2": "Public Destinations",
+                    "FIELDSERVICESA": "Field Services",
+                    "FIELDSERVICESB": "Field Services",
+                    "MANAGEMENTOFFICES": "Management Offices",
+                    "CORPORATESERVICES": "Corporate Services",
+                    "MANAGEMENTOPS": "Management Operations",
+                    "POLICESERV": "Police Services",
+                    "RATESUPPORTED": "Rate Supported Services",
+                    "SPECIALIZED": "Specialized Agencies",
+                    "TRANSITSERV": "Transit Services"
+                }
+            },
+            "Configuration": {
+                "ROOT": {
+                    "Name": "Structural",
+                    "Alias": "Organizational Structure Types",
+                    "DataSeries": {
+                        "default": "BudgetExpenses",
+                        "list": [
+                            "BudgetExpenses",
+                            "BudgetRevenues",
+                            "BudgetStaffing"
+                        ]
+                    },
+                    "Instance": {
+                        "Name": "Type",
+                        "Alias": "Program Structure Type"
+                    }
+                },
+                "STRUCTURE": {
+                    "Name": "Structural",
+                    "Alias": "Organizational Structure Types",
+                    "Instance": {
+                        "Name": "Type",
+                        "Alias": "Program Structure Type"
+                    }
+                },
+                "CLUSTER": {
+                    "Name": "Clusters",
+                    "Alias": "Program Clusters",
+                    "Instance": {
+                        "Name": "Cluster",
+                        "Alias": "Program Cluster"
+                    }
+                },
+                "SUBCLUSTER": {
+                    "Name": "Clusters",
+                    "Alias": "Program Sub-Clusters",
+                    "Instance": {
+                        "Name": "Sub-cluster",
+                        "Alias": "Program sub-cluster"
+                    }
+                },
+                "BASELINE": {
+                    "Name": "Programs",
+                    "Instance": {
+                        "Name": "Program"
+                    }
+                }
+            },
+            "Config": "ROOT",
+            "Components": {
+                "ADMINOPS": {
+                    "Index": 0,
+                    "Config": "STRUCTURE",
+                    "Components": {
+                        "COUNCILOPS": {
+                            "Index": 0,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "COUNCILOFFICES": {
+                                    "Index": 0,
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "COUNCIL": {
+                                            "Index": 0,
+                                            "Config": "BASELINE"
+                                        },
+                                        "MAYOR": {
+                                            "Index": 1,
+                                            "Config": "BASELINE"
+                                        },
+                                        "CLERK": {
+                                            "Index": 2,
+                                            "Config": "BASELINE"
+                                        },
+                                        "LEGAL": {
+                                            "Index": 3,
+                                            "Config": "BASELINE"
+                                        }
+                                    }
+                                },
+                                "ACCOUNTABILITYAPPEAL2": {
+                                    "Index": 1,
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "AUDITGEN": {
+                                            "Index": 0,
+                                            "Config": "BASELINE"
+                                        },
+                                        "INTEGRITYCOMM": {
+                                            "Index": 1,
+                                            "Config": "BASELINE"
+                                        },
+                                        "LOBBYREG": {
+                                            "Index": 2,
+                                            "Config": "BASELINE"
+                                        },
+                                        "OMBUDSMAN": {
+                                            "Index": 3,
+                                            "Config": "BASELINE"
+                                        },
+                                        "LOCALAPPEAL": {
+                                            "Index": 4,
+                                            "Config": "BASELINE"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "MANAGEMENTOPS": {
+                            "Index": 1,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "MANAGEMENTOFFICES": {
+                                    "Index": 0,
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "CITYMANAGER": {
+                                            "Index": 0,
+                                            "Config": "BASELINE"
+                                        },
+                                        "CFO": {
+                                            "Index": 1,
+                                            "Config": "BASELINE"
+                                        },
+                                        "TREASURER": {
+                                            "Index": 2,
+                                            "Config": "BASELINE"
+                                        }
+                                    }
+                                },
+                                "CORPORATESERVICES": {
+                                    "Index": 0,
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "FACILITIES": {
+                                            "Index": 3,
+                                            "Config": "BASELINE"
+                                        },
+                                        "FLEET": {
+                                            "Index": 4,
+                                            "Config": "BASELINE"
+                                        },
+                                        "IT": {
+                                            "Index": 5,
+                                            "Config": "BASELINE"
+                                        },
+                                        "311SERVICE": {
+                                            "Index": 6,
+                                            "Config": "BASELINE"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "AGENCIES": {
+                    "Index": 1,
+                    "Config": "STRUCTURE",
+                    "Components": {
+                        "POLICESERV": {
+                            "Index": 0,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "POLICE": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "POLICEBOARD": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "TRANSITSERV": {
+                            "Index": 1,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "TTCCONV": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "TTCWHEEL": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                }
+                            }
+                        },
+                        "HEALTH": {
+                            "Index": 2,
+                            "Config": "BASELINE"
+                        },
+                        "LIBRARY": {
+                            "Index": 3,
+                            "Config": "BASELINE"
+                        },
+                        "PARKING": {
+                            "Index": 2,
+                            "Config": "BASELINE"
+                        },
+                        "SPECIALIZED": {
+                            "Index": 4,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "COMMCENTRES": {
+                                    "Index": 0,
+                                    "Config": "BASELINE"
+                                },
+                                "ARENAS": {
+                                    "Index": 2,
+                                    "Config": "BASELINE"
+                                },
+                                "HERITAGE": {
+                                    "Index": 1,
+                                    "Config": "BASELINE"
+                                },
+                                "REGIONCONSERV": {
+                                    "Index": 3,
+                                    "Config": "BASELINE"
+                                },
+                                "DESTINATIONS2": {
+                                    "Index": 4,
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "EXHIBPLACE": {
+                                            "Index": 0,
+                                            "Config": "BASELINE"
+                                        },
+                                        "THEATRES": {
+                                            "Index": 1,
+                                            "Config": "BASELINE"
+                                        },
+                                        "ZOO": {
+                                            "Index": 2,
+                                            "Config": "BASELINE"
+                                        },
+                                        "YONGEDUNDAS": {
+                                            "Index": 3,
+                                            "Config": "BASELINE"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "CITIZENOPS": {
+                    "Index": 2,
+                    "Config": "STRUCTURE",
+                    "Components": {
+                        "CITIZENSERVICESA": {
+                            "Index": 0,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "FIELDSERVICESA": {
+                                    "Index": 0,
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "CHILDSERV": {
+                                            "Index": 0,
+                                            "Config": "BASELINE"
+                                        },
+                                        "COURTSERV": {
+                                            "Index": 1,
+                                            "Config": "BASELINE"
+                                        },
+                                        "PARAMEDIC": {
+                                            "Index": 2,
+                                            "Config": "BASELINE"
+                                        },
+                                        "PARKS": {
+                                            "Index": 3,
+                                            "Config": "BASELINE"
+                                        },
+                                        "LONGTERMHOME": {
+                                            "Index": 4,
+                                            "Config": "BASELINE"
+                                        }
+                                    }
+                                },
+                                "CORESERVICESA": {
+                                    "Index": 1,
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "ECONDEV": {
+                                            "Index": 0,
+                                            "Config": "BASELINE"
+                                        },
+                                        "SOCIALDEV": {
+                                            "Index": 1,
+                                            "Config": "BASELINE"
+                                        },
+                                        "SOCIALSERV": {
+                                            "Index": 2,
+                                            "Config": "BASELINE"
+                                        },
+                                        "SHELTERADMIN": {
+                                            "Index": 3,
+                                            "Config": "BASELINE"
+                                        },
+                                        "AFFHOUSING": {
+                                            "Index": 4,
+                                            "Config": "BASELINE"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "CITIZENSERVICESB": {
+                            "Index": 1,
+                            "Config": "CLUSTER",
+                            "Components": {
+                                "FIELDSERVICESB": {
+                                    "Index": 0,
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "SOLIDWASTE": {
+                                            "Index": 0,
+                                            "Config": "BASELINE"
+                                        },
+                                        "WATER": {
+                                            "Index": 1,
+                                            "Config": "BASELINE"
+                                        },
+                                        "FIRE": {
+                                            "Index": 2,
+                                            "Config": "BASELINE"
+                                        },
+                                        "TRANSPORTATION": {
+                                            "Index": 3,
+                                            "Config": "BASELINE"
+                                        }
+                                    }
+                                },
+                                "CORESERVICESB": {
+                                    "Index": 1,
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "ENGINEERING": {
+                                            "Index": 0,
+                                            "Config": "BASELINE"
+                                        },
+                                        "PLANNING": {
+                                            "Index": 1,
+                                            "Config": "BASELINE"
+                                        },
+                                        "POLICYADMIN": {
+                                            "Index": 2,
+                                            "Config": "BASELINE"
+                                        },
+                                        "LICENCING": {
+                                            "Index": 3,
+                                            "Config": "BASELINE"
+                                        },
+                                        "BUILDINGS": {
+                                            "Index": 4,
+                                            "Config": "BASELINE"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "CORPORATEACCOUNTS2": {
+                    "Index": 3,
+                    "Config": "CLUSTER",
+                    "Components": {
+                        "CORPFINANCING": {
+                            "Index": 0,
+                            "Config": "BASELINE"
+                        },
+                        "CORPEXPENDITURES": {
+                            "Index": 1,
+                            "Config": "BASELINE"
+                        },
+                        "CORPREVENUES": {
+                            "Index": 2,
+                            "Config": "BASELINE"
+                        },
+                        "PROPERTYTAX": {
+                            "Index": 3,
+                            "Config": "BASELINE"
+                        }
+                    }
+                }
+            }
+        }
     }
-]
+}
 
 },{}],2:[function(require,module,exports){
 "use strict";
@@ -3758,7 +6284,7 @@ react_dom_1.render(React.createElement(main_1.Main, null), document.getElementBy
 },{"./controllers/main":24,"isomorphic-fetch":105,"react":428,"react-dom":233}],33:[function(require,module,exports){
 'use strict';
 
-var budgetdata = require('../../explorerprototypedata/budget.json');
+var budgetdata = require('../../explorerprototypedata/2015budget.json');
 var theme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
 var colors = require('material-ui/lib/styles/colors');
 var appnavbar = {
@@ -4000,7 +6526,7 @@ exports.initialstate = {
     budgetdata: budgetdata
 };
 
-},{"../../explorerprototypedata/budget.json":1,"material-ui/lib/styles/colors":182,"material-ui/lib/styles/raw-themes/light-raw-theme":186}],34:[function(require,module,exports){
+},{"../../explorerprototypedata/2015budget.json":1,"material-ui/lib/styles/colors":182,"material-ui/lib/styles/raw-themes/light-raw-theme":186}],34:[function(require,module,exports){
 'use strict';
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
