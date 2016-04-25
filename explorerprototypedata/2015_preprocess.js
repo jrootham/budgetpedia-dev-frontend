@@ -19,7 +19,6 @@ var budgetstaffing = budgetroot.DataSeries.BudgetStaffing.Items
 
 for (var line of records) {
     let code = line[0],
-        desc = line[1],
         perm = line[2],
         temp = line[3],
         total = line[4]
@@ -32,6 +31,7 @@ for (var line of records) {
     if (!item) {
         console.log('code not found: ', code)
     } else {
+        // decompose
         let years = item.years || {}
         years[year] =
             {
@@ -41,12 +41,10 @@ for (var line of records) {
                     PART:{Amount:temp}
                 }
             }
+        // re-assemble
         item.years = years
-        // console.log(item)
     }
 }
-
-// console.log(budgetstaffing)
 
 // =============================================================================
 // ----------------------------[ IMPORT EXPENSE DATA ]-------------------------
@@ -68,6 +66,7 @@ for (var line of records) {
     if (!item) {
         console.log('expense program code not found: ', program)
     } else {
+        // decompose
         let years = item.years || {}
         let yearobj = years[year] || {
             Amount:0,
@@ -81,14 +80,12 @@ for (var line of records) {
         } else {
             yearaccount.Amount = amount
         }
+        // re-assemble
         yearobj.Components[expenditure] = yearaccount
         years[year] = yearobj
         item.years = years
-        // console.log(item)
     }
 }
-
-// console.log(budgetstaffing)
 
 // =============================================================================
 // ----------------------------[ IMPORT REVENUE DATA ]-------------------------
@@ -104,12 +101,16 @@ for (var line of records) {
         expenditure = line[2],
         amount = line[5]
 
-    if (amount === '') amount = null
+    if (amount === '') 
+        amount = null
+    else 
+        amount = -amount // normalize
 
     let item = budgetrevenues[program]
     if (!item) {
         console.log('revenue program code not found: ', program)
     } else {
+        // decompose
         let years = item.years || {}
         let yearobj = years[year] || {
             Amount:0,
@@ -123,14 +124,12 @@ for (var line of records) {
         } else {
             yearaccount.Amount = amount
         }
+        // re-assemble
         yearobj.Components[expenditure] = yearaccount
         years[year] = yearobj
         item.years = years
-        // console.log(item)
     }
 }
-
-// console.log(budgetstaffing)
 
 // ======================================================================
 // -------------------------[ SAVE OUTPUT JSON FILE ]--------------------

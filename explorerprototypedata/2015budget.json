@@ -1480,13 +1480,13 @@
                 "311SERVICE": {
                     "years": {
                         "2015": {
-                            "Amount": -7844066,
+                            "Amount": 7844066,
                             "Components": {
                                 "750A": {
-                                    "Amount": -5293589
+                                    "Amount": 5293589
                                 },
                                 "920A": {
-                                    "Amount": -2550477
+                                    "Amount": 2550477
                                 }
                             }
                         }
@@ -1495,16 +1495,16 @@
                 "AFFHOUSING": {
                     "years": {
                         "2015": {
-                            "Amount": -1569495,
+                            "Amount": 1569495,
                             "Components": {
                                 "750A": {
-                                    "Amount": -125076
+                                    "Amount": 125076
                                 },
                                 "805A": {
-                                    "Amount": -1045419
+                                    "Amount": 1045419
                                 },
                                 "930A": {
-                                    "Amount": -399000
+                                    "Amount": 399000
                                 }
                             }
                         }
@@ -1513,13 +1513,13 @@
                 "ARENAS": {
                     "years": {
                         "2015": {
-                            "Amount": -8407168,
+                            "Amount": 8407168,
                             "Components": {
                                 "850A": {
-                                    "Amount": -7382943
+                                    "Amount": 7382943
                                 },
                                 "940A": {
-                                    "Amount": -1024225
+                                    "Amount": 1024225
                                 }
                             }
                         }
@@ -1528,13 +1528,13 @@
                 "ATMOSPHERE": {
                     "years": {
                         "2015": {
-                            "Amount": -2575000,
+                            "Amount": 2575000,
                             "Components": {
                                 "850A": {
-                                    "Amount": -650000
+                                    "Amount": 650000
                                 },
                                 "940A": {
-                                    "Amount": -1925000
+                                    "Amount": 1925000
                                 }
                             }
                         }
@@ -1544,22 +1544,22 @@
                 "BUILDINGS": {
                     "years": {
                         "2015": {
-                            "Amount": -61199885,
+                            "Amount": 61199885,
                             "Components": {
                                 "750A": {
-                                    "Amount": -923845
+                                    "Amount": 923845
                                 },
                                 "850A": {
-                                    "Amount": -1628951
+                                    "Amount": 1628951
                                 },
                                 "860A": {
-                                    "Amount": -58172825
+                                    "Amount": 58172825
                                 },
                                 "920A": {
-                                    "Amount": -434264
+                                    "Amount": 434264
                                 },
                                 "940A": {
-                                    "Amount": -40000
+                                    "Amount": 40000
                                 }
                             }
                         }
@@ -1568,19 +1568,19 @@
                 "CFO": {
                     "years": {
                         "2015": {
-                            "Amount": -6780704,
+                            "Amount": 6780704,
                             "Components": {
                                 "750A": {
-                                    "Amount": -2707488
+                                    "Amount": 2707488
                                 },
                                 "920A": {
-                                    "Amount": -1925285
+                                    "Amount": 1925285
                                 },
                                 "930A": {
-                                    "Amount": -2080839
+                                    "Amount": 2080839
                                 },
                                 "940A": {
-                                    "Amount": -67092
+                                    "Amount": 67092
                                 }
                             }
                         }
@@ -1589,22 +1589,22 @@
                 "CHILDSERV": {
                     "years": {
                         "2015": {
-                            "Amount": -375718177,
+                            "Amount": 375718177,
                             "Components": {
                                 "750A": {
-                                    "Amount": -9475000
+                                    "Amount": 9475000
                                 },
                                 "805A": {
-                                    "Amount": -329669770
+                                    "Amount": 329669770
                                 },
                                 "850A": {
-                                    "Amount": -19169600
+                                    "Amount": 19169600
                                 },
                                 "920A": {
-                                    "Amount": -1764361
+                                    "Amount": 1764361
                                 },
                                 "930A": {
-                                    "Amount": -15639446
+                                    "Amount": 15639446
                                 }
                             }
                         }
@@ -1613,19 +1613,19 @@
                 "CITYMANAGER": {
                     "years": {
                         "2015": {
-                            "Amount": -8375681,
+                            "Amount": 8375681,
                             "Components": {
                                 "750A": {
-                                    "Amount": -4862408
+                                    "Amount": 4862408
                                 },
                                 "920A": {
-                                    "Amount": -2323394
+                                    "Amount": 2323394
                                 },
                                 "930A": {
-                                    "Amount": -1001133
+                                    "Amount": 1001133
                                 },
                                 "940A": {
-                                    "Amount": -188746
+                                    "Amount": 188746
                                 }
                             }
                         }
@@ -1634,22 +1634,22 @@
                 "CLERK": {
                     "years": {
                         "2015": {
-                            "Amount": -17415217,
+                            "Amount": 17415217,
                             "Components": {
                                 "750A": {
-                                    "Amount": -8766500
+                                    "Amount": 8766500
                                 },
                                 "850A": {
-                                    "Amount": -580287
+                                    "Amount": 580287
                                 },
                                 "920A": {
-                                    "Amount": -1351000
+                                    "Amount": 1351000
                                 },
                                 "930A": {
-                                    "Amount": -5779510
+                                    "Amount": 5779510
                                 },
                                 "940A": {
-                                    "Amount": -937920
+                                    "Amount": 937920
                                 }
                             }
                         }
@@ -1658,16 +1658,16 @@
                 "COMMCENTRES": {
                     "years": {
                         "2015": {
-                            "Amount": -423213,
+                            "Amount": 423213,
                             "Components": {
                                 "850A": {
-                                    "Amount": -252713
+                                    "Amount": 252713
                                 },
                                 "930A": {
-                                    "Amount": -169000
+                                    "Amount": 169000
                                 },
                                 "940A": {
-                                    "Amount": -1500
+                                    "Amount": 1500
                                 }
                             }
                         }
@@ -1676,16 +1676,16 @@
                 "CORPEXPENDITURES": {
                     "years": {
                         "2015": {
-                            "Amount": -168452744,
+                            "Amount": 168452744,
                             "Components": {
                                 "850A": {
-                                    "Amount": -1952942
+                                    "Amount": 1952942
                                 },
                                 "930A": {
-                                    "Amount": -159878514
+                                    "Amount": 159878514
                                 },
                                 "940A": {
-                                    "Amount": -6621288
+                                    "Amount": 6621288
                                 }
                             }
                         }
@@ -1694,19 +1694,19 @@
                 "CORPFINANCING": {
                     "years": {
                         "2015": {
-                            "Amount": -58405898,
+                            "Amount": 58405898,
                             "Components": {
                                 "750A": {
-                                    "Amount": -2777457
+                                    "Amount": 2777457
                                 },
                                 "805A": {
-                                    "Amount": -1431000
+                                    "Amount": 1431000
                                 },
                                 "930A": {
-                                    "Amount": -51873000
+                                    "Amount": 51873000
                                 },
                                 "940A": {
-                                    "Amount": -2324441
+                                    "Amount": 2324441
                                 }
                             }
                         }
@@ -1715,25 +1715,25 @@
                 "CORPREVENUES": {
                     "years": {
                         "2015": {
-                            "Amount": -1222776625,
+                            "Amount": 1222776625,
                             "Components": {
                                 "750A": {
-                                    "Amount": -35299700
+                                    "Amount": 35299700
                                 },
                                 "805A": {
-                                    "Amount": -42978535
+                                    "Amount": 42978535
                                 },
                                 "850A": {
-                                    "Amount": -1994876
+                                    "Amount": 1994876
                                 },
                                 "860A": {
-                                    "Amount": -4002823
+                                    "Amount": 4002823
                                 },
                                 "930A": {
-                                    "Amount": -91600000
+                                    "Amount": 91600000
                                 },
                                 "940A": {
-                                    "Amount": -1046900691
+                                    "Amount": 1046900691
                                 }
                             }
                         }
@@ -1742,10 +1742,10 @@
                 "COUNCIL": {
                     "years": {
                         "2015": {
-                            "Amount": -130000,
+                            "Amount": 130000,
                             "Components": {
                                 "930A": {
-                                    "Amount": -130000
+                                    "Amount": 130000
                                 }
                             }
                         }
@@ -1754,16 +1754,16 @@
                 "COURTSERV": {
                     "years": {
                         "2015": {
-                            "Amount": -54583733,
+                            "Amount": 54583733,
                             "Components": {
                                 "750A": {
-                                    "Amount": -6918834
+                                    "Amount": 6918834
                                 },
                                 "850A": {
-                                    "Amount": -281999
+                                    "Amount": 281999
                                 },
                                 "940A": {
-                                    "Amount": -47382900
+                                    "Amount": 47382900
                                 }
                             }
                         }
@@ -1772,31 +1772,31 @@
                 "ECONDEV": {
                     "years": {
                         "2015": {
-                            "Amount": -23744266,
+                            "Amount": 23744266,
                             "Components": {
                                 "805A": {
-                                    "Amount": -2775200
+                                    "Amount": 2775200
                                 },
                                 "810A": {
-                                    "Amount": -1686672
+                                    "Amount": 1686672
                                 },
                                 "820A": {
-                                    "Amount": -37000
+                                    "Amount": 37000
                                 },
                                 "850A": {
-                                    "Amount": -2406616
+                                    "Amount": 2406616
                                 },
                                 "860A": {
-                                    "Amount": -735406
+                                    "Amount": 735406
                                 },
                                 "920A": {
-                                    "Amount": -1036000
+                                    "Amount": 1036000
                                 },
                                 "930A": {
-                                    "Amount": -8909517
+                                    "Amount": 8909517
                                 },
                                 "940A": {
-                                    "Amount": -6157855
+                                    "Amount": 6157855
                                 }
                             }
                         }
@@ -1805,22 +1805,22 @@
                 "ENGINEERING": {
                     "years": {
                         "2015": {
-                            "Amount": -59293971,
+                            "Amount": 59293971,
                             "Components": {
                                 "750A": {
-                                    "Amount": -175570
+                                    "Amount": 175570
                                 },
                                 "850A": {
-                                    "Amount": -5292538
+                                    "Amount": 5292538
                                 },
                                 "860A": {
-                                    "Amount": -1620000
+                                    "Amount": 1620000
                                 },
                                 "920A": {
-                                    "Amount": -49248456
+                                    "Amount": 49248456
                                 },
                                 "940A": {
-                                    "Amount": -2957407
+                                    "Amount": 2957407
                                 }
                             }
                         }
@@ -1829,13 +1829,13 @@
                 "EXHIBPLACE": {
                     "years": {
                         "2015": {
-                            "Amount": -38430916,
+                            "Amount": 38430916,
                             "Components": {
                                 "850A": {
-                                    "Amount": -35146509
+                                    "Amount": 35146509
                                 },
                                 "930A": {
-                                    "Amount": -3284407
+                                    "Amount": 3284407
                                 }
                             }
                         }
@@ -1844,28 +1844,28 @@
                 "FACILITIES": {
                     "years": {
                         "2015": {
-                            "Amount": -123559063,
+                            "Amount": 123559063,
                             "Components": {
                                 "750A": {
-                                    "Amount": -50194952
+                                    "Amount": 50194952
                                 },
                                 "805A": {
-                                    "Amount": -250000
+                                    "Amount": 250000
                                 },
                                 "810A": {
-                                    "Amount": -220480
+                                    "Amount": 220480
                                 },
                                 "850A": {
-                                    "Amount": -43046355
+                                    "Amount": 43046355
                                 },
                                 "920A": {
-                                    "Amount": -9849244
+                                    "Amount": 9849244
                                 },
                                 "930A": {
-                                    "Amount": -11945307
+                                    "Amount": 11945307
                                 },
                                 "940A": {
-                                    "Amount": -8052725
+                                    "Amount": 8052725
                                 }
                             }
                         }
@@ -1874,25 +1874,25 @@
                 "FIRE": {
                     "years": {
                         "2015": {
-                            "Amount": -17000186,
+                            "Amount": 17000186,
                             "Components": {
                                 "750A": {
-                                    "Amount": -247406
+                                    "Amount": 247406
                                 },
                                 "805A": {
-                                    "Amount": -400000
+                                    "Amount": 400000
                                 },
                                 "850A": {
-                                    "Amount": -13563515
+                                    "Amount": 13563515
                                 },
                                 "920A": {
-                                    "Amount": -231765
+                                    "Amount": 231765
                                 },
                                 "930A": {
-                                    "Amount": -404000
+                                    "Amount": 404000
                                 },
                                 "940A": {
-                                    "Amount": -2153500
+                                    "Amount": 2153500
                                 }
                             }
                         }
@@ -1901,19 +1901,19 @@
                 "FLEET": {
                     "years": {
                         "2015": {
-                            "Amount": -50708980,
+                            "Amount": 50708980,
                             "Components": {
                                 "750A": {
-                                    "Amount": -47687225
+                                    "Amount": 47687225
                                 },
                                 "920A": {
-                                    "Amount": -116482
+                                    "Amount": 116482
                                 },
                                 "930A": {
-                                    "Amount": -121000
+                                    "Amount": 121000
                                 },
                                 "940A": {
-                                    "Amount": -2784273
+                                    "Amount": 2784273
                                 }
                             }
                         }
@@ -1922,19 +1922,19 @@
                 "HERITAGE": {
                     "years": {
                         "2015": {
-                            "Amount": -449500,
+                            "Amount": 449500,
                             "Components": {
                                 "805A": {
-                                    "Amount": -36200
+                                    "Amount": 36200
                                 },
                                 "810A": {
-                                    "Amount": -70000
+                                    "Amount": 70000
                                 },
                                 "850A": {
-                                    "Amount": -192500
+                                    "Amount": 192500
                                 },
                                 "940A": {
-                                    "Amount": -150800
+                                    "Amount": 150800
                                 }
                             }
                         }
@@ -1944,22 +1944,22 @@
                 "IT": {
                     "years": {
                         "2015": {
-                            "Amount": -49242309,
+                            "Amount": 49242309,
                             "Components": {
                                 "750A": {
-                                    "Amount": -13508878
+                                    "Amount": 13508878
                                 },
                                 "850A": {
-                                    "Amount": -186103
+                                    "Amount": 186103
                                 },
                                 "920A": {
-                                    "Amount": -30600915
+                                    "Amount": 30600915
                                 },
                                 "930A": {
-                                    "Amount": -4220064
+                                    "Amount": 4220064
                                 },
                                 "940A": {
-                                    "Amount": -726349
+                                    "Amount": 726349
                                 }
                             }
                         }
@@ -1968,22 +1968,22 @@
                 "LEGAL": {
                     "years": {
                         "2015": {
-                            "Amount": -29261228,
+                            "Amount": 29261228,
                             "Components": {
                                 "750A": {
-                                    "Amount": -22162478
+                                    "Amount": 22162478
                                 },
                                 "850A": {
-                                    "Amount": -2529571
+                                    "Amount": 2529571
                                 },
                                 "920A": {
-                                    "Amount": -1162621
+                                    "Amount": 1162621
                                 },
                                 "930A": {
-                                    "Amount": -300000
+                                    "Amount": 300000
                                 },
                                 "940A": {
-                                    "Amount": -3106558
+                                    "Amount": 3106558
                                 }
                             }
                         }
@@ -1992,25 +1992,25 @@
                 "LIBRARY": {
                     "years": {
                         "2015": {
-                            "Amount": -16516100,
+                            "Amount": 16516100,
                             "Components": {
                                 "805A": {
-                                    "Amount": -5695400
+                                    "Amount": 5695400
                                 },
                                 "810A": {
-                                    "Amount": -20000
+                                    "Amount": 20000
                                 },
                                 "850A": {
-                                    "Amount": -5031700
+                                    "Amount": 5031700
                                 },
                                 "920A": {
-                                    "Amount": -312000
+                                    "Amount": 312000
                                 },
                                 "930A": {
-                                    "Amount": -3559400
+                                    "Amount": 3559400
                                 },
                                 "940A": {
-                                    "Amount": -1897600
+                                    "Amount": 1897600
                                 }
                             }
                         }
@@ -2019,22 +2019,22 @@
                 "LICENCING": {
                     "years": {
                         "2015": {
-                            "Amount": -29819236,
+                            "Amount": 29819236,
                             "Components": {
                                 "750A": {
-                                    "Amount": -1541461
+                                    "Amount": 1541461
                                 },
                                 "850A": {
-                                    "Amount": -3590964
+                                    "Amount": 3590964
                                 },
                                 "860A": {
-                                    "Amount": -24357930
+                                    "Amount": 24357930
                                 },
                                 "930A": {
-                                    "Amount": -10000
+                                    "Amount": 10000
                                 },
                                 "940A": {
-                                    "Amount": -318881
+                                    "Amount": 318881
                                 }
                             }
                         }
@@ -2045,22 +2045,22 @@
                 "LONGTERMHOME": {
                     "years": {
                         "2015": {
-                            "Amount": -195942621,
+                            "Amount": 195942621,
                             "Components": {
                                 "750A": {
-                                    "Amount": -72800
+                                    "Amount": 72800
                                 },
                                 "805A": {
-                                    "Amount": -146819121
+                                    "Amount": 146819121
                                 },
                                 "850A": {
-                                    "Amount": -48652700
+                                    "Amount": 48652700
                                 },
                                 "920A": {
-                                    "Amount": -260000
+                                    "Amount": 260000
                                 },
                                 "940A": {
-                                    "Amount": -138000
+                                    "Amount": 138000
                                 }
                             }
                         }
@@ -2071,25 +2071,25 @@
                 "PARAMEDIC": {
                     "years": {
                         "2015": {
-                            "Amount": -123412374,
+                            "Amount": 123412374,
                             "Components": {
                                 "750A": {
-                                    "Amount": -894158
+                                    "Amount": 894158
                                 },
                                 "805A": {
-                                    "Amount": -118547465
+                                    "Amount": 118547465
                                 },
                                 "850A": {
-                                    "Amount": -1141716
+                                    "Amount": 1141716
                                 },
                                 "920A": {
-                                    "Amount": -75000
+                                    "Amount": 75000
                                 },
                                 "930A": {
-                                    "Amount": -409503
+                                    "Amount": 409503
                                 },
                                 "940A": {
-                                    "Amount": -2344532
+                                    "Amount": 2344532
                                 }
                             }
                         }
@@ -2098,16 +2098,16 @@
                 "PARKING": {
                     "years": {
                         "2015": {
-                            "Amount": -134229440,
+                            "Amount": 134229440,
                             "Components": {
                                 "850A": {
-                                    "Amount": -128878837
+                                    "Amount": 128878837
                                 },
                                 "930A": {
-                                    "Amount": -770000
+                                    "Amount": 770000
                                 },
                                 "940A": {
-                                    "Amount": -4580603
+                                    "Amount": 4580603
                                 }
                             }
                         }
@@ -2116,31 +2116,31 @@
                 "PARKS": {
                     "years": {
                         "2015": {
-                            "Amount": -129966794,
+                            "Amount": 129966794,
                             "Components": {
                                 "750A": {
-                                    "Amount": -7561289
+                                    "Amount": 7561289
                                 },
                                 "805A": {
-                                    "Amount": -789972
+                                    "Amount": 789972
                                 },
                                 "810A": {
-                                    "Amount": -3500000
+                                    "Amount": 3500000
                                 },
                                 "850A": {
-                                    "Amount": -76683270
+                                    "Amount": 76683270
                                 },
                                 "860A": {
-                                    "Amount": -8325925
+                                    "Amount": 8325925
                                 },
                                 "920A": {
-                                    "Amount": -6532799
+                                    "Amount": 6532799
                                 },
                                 "930A": {
-                                    "Amount": -22867536
+                                    "Amount": 22867536
                                 },
                                 "940A": {
-                                    "Amount": -3706003
+                                    "Amount": 3706003
                                 }
                             }
                         }
@@ -2149,16 +2149,16 @@
                 "PLANNING": {
                     "years": {
                         "2015": {
-                            "Amount": -27477221,
+                            "Amount": 27477221,
                             "Components": {
                                 "850A": {
-                                    "Amount": -24205978
+                                    "Amount": 24205978
                                 },
                                 "920A": {
-                                    "Amount": -2372893
+                                    "Amount": 2372893
                                 },
                                 "940A": {
-                                    "Amount": -898350
+                                    "Amount": 898350
                                 }
                             }
                         }
@@ -2167,22 +2167,22 @@
                 "POLICE": {
                     "years": {
                         "2015": {
-                            "Amount": -192654100,
+                            "Amount": 192654100,
                             "Components": {
                                 "750A": {
-                                    "Amount": -9956100
+                                    "Amount": 9956100
                                 },
                                 "805A": {
-                                    "Amount": -112245200
+                                    "Amount": 112245200
                                 },
                                 "850A": {
-                                    "Amount": -47018800
+                                    "Amount": 47018800
                                 },
                                 "930A": {
-                                    "Amount": -22534000
+                                    "Amount": 22534000
                                 },
                                 "940A": {
-                                    "Amount": -900000
+                                    "Amount": 900000
                                 }
                             }
                         }
@@ -2191,10 +2191,10 @@
                 "POLICEBOARD": {
                     "years": {
                         "2015": {
-                            "Amount": -750000,
+                            "Amount": 750000,
                             "Components": {
                                 "930A": {
-                                    "Amount": -750000
+                                    "Amount": 750000
                                 }
                             }
                         }
@@ -2203,22 +2203,22 @@
                 "POLICYADMIN": {
                     "years": {
                         "2015": {
-                            "Amount": -12214286,
+                            "Amount": 12214286,
                             "Components": {
                                 "750A": {
-                                    "Amount": -9367334
+                                    "Amount": 9367334
                                 },
                                 "805A": {
-                                    "Amount": -225000
+                                    "Amount": 225000
                                 },
                                 "920A": {
-                                    "Amount": -2389912
+                                    "Amount": 2389912
                                 },
                                 "930A": {
-                                    "Amount": -875
+                                    "Amount": 875
                                 },
                                 "940A": {
-                                    "Amount": -231165
+                                    "Amount": 231165
                                 }
                             }
                         }
@@ -2227,10 +2227,10 @@
                 "PROPERTYTAX": {
                     "years": {
                         "2015": {
-                            "Amount": -3873481164,
+                            "Amount": 3873481164,
                             "Components": {
                                 "940A": {
-                                    "Amount": -3873481164
+                                    "Amount": 3873481164
                                 }
                             }
                         }
@@ -2239,28 +2239,28 @@
                 "PUBLICHEALTH": {
                     "years": {
                         "2015": {
-                            "Amount": -197051997,
+                            "Amount": 197051997,
                             "Components": {
                                 "750A": {
-                                    "Amount": -10541886
+                                    "Amount": 10541886
                                 },
                                 "805A": {
-                                    "Amount": -179589213
+                                    "Amount": 179589213
                                 },
                                 "810A": {
-                                    "Amount": -387429
+                                    "Amount": 387429
                                 },
                                 "850A": {
-                                    "Amount": -1021746
+                                    "Amount": 1021746
                                 },
                                 "920A": {
-                                    "Amount": -3638536
+                                    "Amount": 3638536
                                 },
                                 "930A": {
-                                    "Amount": -174281
+                                    "Amount": 174281
                                 },
                                 "940A": {
-                                    "Amount": -1698906
+                                    "Amount": 1698906
                                 }
                             }
                         }
@@ -2269,19 +2269,19 @@
                 "REGIONCONSERV": {
                     "years": {
                         "2015": {
-                            "Amount": -36463000,
+                            "Amount": 36463000,
                             "Components": {
                                 "805A": {
-                                    "Amount": -1835000
+                                    "Amount": 1835000
                                 },
                                 "850A": {
-                                    "Amount": -24799000
+                                    "Amount": 24799000
                                 },
                                 "930A": {
-                                    "Amount": -4598000
+                                    "Amount": 4598000
                                 },
                                 "940A": {
-                                    "Amount": -5231000
+                                    "Amount": 5231000
                                 }
                             }
                         }
@@ -2290,31 +2290,31 @@
                 "SHELTERADMIN": {
                     "years": {
                         "2015": {
-                            "Amount": -340926443,
+                            "Amount": 340926443,
                             "Components": {
                                 "750A": {
-                                    "Amount": -11250
+                                    "Amount": 11250
                                 },
                                 "805A": {
-                                    "Amount": -147308363
+                                    "Amount": 147308363
                                 },
                                 "810A": {
-                                    "Amount": -157339042
+                                    "Amount": 157339042
                                 },
                                 "820A": {
-                                    "Amount": 1
+                                    "Amount": -1
                                 },
                                 "850A": {
-                                    "Amount": -472800
+                                    "Amount": 472800
                                 },
                                 "920A": {
-                                    "Amount": -169289
+                                    "Amount": 169289
                                 },
                                 "930A": {
-                                    "Amount": -35588655
+                                    "Amount": 35588655
                                 },
                                 "940A": {
-                                    "Amount": -37045
+                                    "Amount": 37045
                                 }
                             }
                         }
@@ -2323,22 +2323,22 @@
                 "SOCIALDEV": {
                     "years": {
                         "2015": {
-                            "Amount": -18045552,
+                            "Amount": 18045552,
                             "Components": {
                                 "750A": {
-                                    "Amount": -498300
+                                    "Amount": 498300
                                 },
                                 "805A": {
-                                    "Amount": -4876422
+                                    "Amount": 4876422
                                 },
                                 "810A": {
-                                    "Amount": -2039101
+                                    "Amount": 2039101
                                 },
                                 "930A": {
-                                    "Amount": -10523580
+                                    "Amount": 10523580
                                 },
                                 "940A": {
-                                    "Amount": -108149
+                                    "Amount": 108149
                                 }
                             }
                         }
@@ -2347,22 +2347,22 @@
                 "SOCIALSERV": {
                     "years": {
                         "2015": {
-                            "Amount": -956823649,
+                            "Amount": 956823649,
                             "Components": {
                                 "750A": {
-                                    "Amount": -354355
+                                    "Amount": 354355
                                 },
                                 "805A": {
-                                    "Amount": -916636763
+                                    "Amount": 916636763
                                 },
                                 "820A": {
-                                    "Amount": -6799500
+                                    "Amount": 6799500
                                 },
                                 "930A": {
-                                    "Amount": -15233031
+                                    "Amount": 15233031
                                 },
                                 "940A": {
-                                    "Amount": -17800000
+                                    "Amount": 17800000
                                 }
                             }
                         }
@@ -2371,22 +2371,22 @@
                 "SOLIDWASTE": {
                     "years": {
                         "2015": {
-                            "Amount": -370785149,
+                            "Amount": 370785149,
                             "Components": {
                                 "750A": {
-                                    "Amount": -5984239
+                                    "Amount": 5984239
                                 },
                                 "805A": {
-                                    "Amount": -22015403
+                                    "Amount": 22015403
                                 },
                                 "850A": {
-                                    "Amount": -272189187
+                                    "Amount": 272189187
                                 },
                                 "920A": {
-                                    "Amount": -3327207
+                                    "Amount": 3327207
                                 },
                                 "940A": {
-                                    "Amount": -67269113
+                                    "Amount": 67269113
                                 }
                             }
                         }
@@ -2395,16 +2395,16 @@
                 "THEATRES": {
                     "years": {
                         "2015": {
-                            "Amount": -17978443,
+                            "Amount": 17978443,
                             "Components": {
                                 "850A": {
-                                    "Amount": -12827713
+                                    "Amount": 12827713
                                 },
                                 "930A": {
-                                    "Amount": -2062340
+                                    "Amount": 2062340
                                 },
                                 "940A": {
-                                    "Amount": -3088390
+                                    "Amount": 3088390
                                 }
                             }
                         }
@@ -2413,25 +2413,25 @@
                 "TRANSPORTATION": {
                     "years": {
                         "2015": {
-                            "Amount": -142839627,
+                            "Amount": 142839627,
                             "Components": {
                                 "750A": {
-                                    "Amount": -8728149
+                                    "Amount": 8728149
                                 },
                                 "850A": {
-                                    "Amount": -37562485
+                                    "Amount": 37562485
                                 },
                                 "860A": {
-                                    "Amount": -6176070
+                                    "Amount": 6176070
                                 },
                                 "920A": {
-                                    "Amount": -26997481
+                                    "Amount": 26997481
                                 },
                                 "930A": {
-                                    "Amount": -22414099
+                                    "Amount": 22414099
                                 },
                                 "940A": {
-                                    "Amount": -40961343
+                                    "Amount": 40961343
                                 }
                             }
                         }
@@ -2440,22 +2440,22 @@
                 "TREASURER": {
                     "years": {
                         "2015": {
-                            "Amount": -46909953,
+                            "Amount": 46909953,
                             "Components": {
                                 "750A": {
-                                    "Amount": -25310556
+                                    "Amount": 25310556
                                 },
                                 "850A": {
-                                    "Amount": -11935933
+                                    "Amount": 11935933
                                 },
                                 "920A": {
-                                    "Amount": -4584859
+                                    "Amount": 4584859
                                 },
                                 "930A": {
-                                    "Amount": -1677671
+                                    "Amount": 1677671
                                 },
                                 "940A": {
-                                    "Amount": -3400934
+                                    "Amount": 3400934
                                 }
                             }
                         }
@@ -2464,16 +2464,16 @@
                 "TTCCONV": {
                     "years": {
                         "2015": {
-                            "Amount": -1220089500,
+                            "Amount": 1220089500,
                             "Components": {
                                 "850A": {
-                                    "Amount": -1206687700
+                                    "Amount": 1206687700
                                 },
                                 "930A": {
-                                    "Amount": -9897500
+                                    "Amount": 9897500
                                 },
                                 "940A": {
-                                    "Amount": -3504300
+                                    "Amount": 3504300
                                 }
                             }
                         }
@@ -2482,13 +2482,13 @@
                 "TTCWHEEL": {
                     "years": {
                         "2015": {
-                            "Amount": -6514300,
+                            "Amount": 6514300,
                             "Components": {
                                 "850A": {
-                                    "Amount": -6214300
+                                    "Amount": 6214300
                                 },
                                 "930A": {
-                                    "Amount": -300000
+                                    "Amount": 300000
                                 }
                             }
                         }
@@ -2497,22 +2497,22 @@
                 "WATER": {
                     "years": {
                         "2015": {
-                            "Amount": -1081135049,
+                            "Amount": 1081135049,
                             "Components": {
                                 "750A": {
-                                    "Amount": -25000
+                                    "Amount": 25000
                                 },
                                 "850A": {
-                                    "Amount": -39831361
+                                    "Amount": 39831361
                                 },
                                 "920A": {
-                                    "Amount": -2667146
+                                    "Amount": 2667146
                                 },
                                 "930A": {
-                                    "Amount": -195000
+                                    "Amount": 195000
                                 },
                                 "940A": {
-                                    "Amount": -1038416542
+                                    "Amount": 1038416542
                                 }
                             }
                         }
@@ -2521,16 +2521,16 @@
                 "YONGEDUNDAS": {
                     "years": {
                         "2015": {
-                            "Amount": -1872649,
+                            "Amount": 1872649,
                             "Components": {
                                 "850A": {
-                                    "Amount": -1000000
+                                    "Amount": 1000000
                                 },
                                 "860A": {
-                                    "Amount": -345000
+                                    "Amount": 345000
                                 },
                                 "940A": {
-                                    "Amount": -527649
+                                    "Amount": 527649
                                 }
                             }
                         }
@@ -2539,22 +2539,22 @@
                 "ZOO": {
                     "years": {
                         "2015": {
-                            "Amount": -38855103,
+                            "Amount": 38855103,
                             "Components": {
                                 "805A": {
-                                    "Amount": -1011500
+                                    "Amount": 1011500
                                 },
                                 "850A": {
-                                    "Amount": -36565403
+                                    "Amount": 36565403
                                 },
                                 "920A": {
-                                    "Amount": -171000
+                                    "Amount": 171000
                                 },
                                 "930A": {
-                                    "Amount": -386000
+                                    "Amount": 386000
                                 },
                                 "940A": {
-                                    "Amount": -721200
+                                    "Amount": 721200
                                 }
                             }
                         }
