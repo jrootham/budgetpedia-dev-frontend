@@ -691,7 +691,7 @@
                     "FIELDSERVICESA":"Field Services",
                     "FIELDSERVICESB":"Field Services",
                     "MANAGEMENTOFFICES":"Management Offices",
-                    "MANAGEMENTSERVICES":"Management Services",
+                    "CORPORATESERVICES":"Corporate Services",
                     "MANAGEMENTOPS":"Management Operations",
                     "POLICESERV":"Police Services",
                     "RATESUPPORTED":"Rate Supported Services",
@@ -836,7 +836,7 @@
                                         }
                                     }
                                 },
-                                "MANAGEMENTSERVICES":{
+                                "CORPORATESERVICES":{
                                     "Index":0,
                                     "Config":"SUBCLUSTER",
                                     "Components": {
