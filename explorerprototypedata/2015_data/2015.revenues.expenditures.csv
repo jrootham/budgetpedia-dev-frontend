@@ -1,4 +1,3 @@
-,Program,Category,Category Name,Expense/Revenue,Sum - 2015
 311SERVICE,311 Toronto,750A,Inter-Divisional Recoveries,Revenues,-5293589
 311SERVICE,311 Toronto,920A,Transfers From Capital,Revenues,-2550477
 AFFHOUSING,Affordable Housing Office,750A,Inter-Divisional Recoveries,Revenues,-125076
@@ -150,11 +149,11 @@ REGIONCONSERV,Toronto & Region Conservation Authority,930A,Contribution From Res
 REGIONCONSERV,Toronto & Region Conservation Authority,940A,Sundry and Other Revenues,Revenues,-5231000
 ATMOSPHERE,Toronto Atmospheric Fund,850A,User Fees & Donations,Revenues,-650000
 ATMOSPHERE,Toronto Atmospheric Fund,940A,Sundry and Other Revenues,Revenues,-1925000
-BUILDING,Toronto Building,750A,Inter-Divisional Recoveries,Revenues,-923845
-BUILDING,Toronto Building,850A,User Fees & Donations,Revenues,-1628951
-BUILDING,Toronto Building,860A,Licences & Permits Revenue,Revenues,-58172825
-BUILDING,Toronto Building,920A,Transfers From Capital,Revenues,-434264
-BUILDING,Toronto Building,940A,Sundry and Other Revenues,Revenues,-40000
+BUILDINGS,Toronto Building,750A,Inter-Divisional Recoveries,Revenues,-923845
+BUILDINGS,Toronto Building,850A,User Fees & Donations,Revenues,-1628951
+BUILDINGS,Toronto Building,860A,Licences & Permits Revenue,Revenues,-58172825
+BUILDINGS,Toronto Building,920A,Transfers From Capital,Revenues,-434264
+BUILDINGS,Toronto Building,940A,Sundry and Other Revenues,Revenues,-40000
 SOCIALSERV,Toronto Employment & Social Services,750A,Inter-Divisional Recoveries,Revenues,-354355
 SOCIALSERV,Toronto Employment & Social Services,805A,Provincial Subsidies,Revenues,-916636763
 SOCIALSERV,Toronto Employment & Social Services,820A,Other Subsidies,Revenues,-6799500
@@ -212,4 +211,3 @@ TRANSPORTATION,Transportation Services,940A,Sundry and Other Revenues,Revenues,-
 YONGEDUNDAS,Yonge-Dundas Square,850A,User Fees & Donations,Revenues,-1000000
 YONGEDUNDAS,Yonge-Dundas Square,860A,Licences & Permits Revenue,Revenues,-345000
 YONGEDUNDAS,Yonge-Dundas Square,940A,Sundry and Other Revenues,Revenues,-527649
-,Total Result,,,,-11599101769

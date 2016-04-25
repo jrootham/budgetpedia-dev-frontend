@@ -61,6 +61,7 @@
                 "WATER":{},
                 "YONGEDUNDAS":{},
                 "ZOO":{}
+            }
         },
         "BudgetRevenues": {
             "Action":"Revenues",
@@ -196,7 +197,7 @@
             "ARENAS":"Arena Boards of Management",
             "ATMOSPHERE":"Toronto Atmospheric Fund",
             "AUDITGEN":"Auditor General's Office",
-            "BUILDING":"Toronto Building",
+            "BUILDINGS":"Toronto Building",
             "CFO":"Office of the Chief Financial Officer",
             "CHILDSERV":"Children's Services",
             "CITYMANAGER":"City Manager's Office",
@@ -588,7 +589,7 @@
                                     "Index":1,
                                     "Config":"BASELINE"
                                 },
-                                "BUILDING":{
+                                "BUILDINGS":{
                                     "Index":2,
                                     "Config":"BASELINE"
                                 }
@@ -641,7 +642,7 @@
                                 "LEGAL":{
                                     "Index":4,
                                     "Config":"BASELINE"
-                                },
+                                }
                             }
                         },
                         "CORPORATEACCOUNTS":
@@ -664,7 +665,7 @@
                                 "PROPERTYTAX":{
                                     "Index":3,
                                     "Config":"BASELINE"
-                                },
+                                }
                             }
                         }
                     }
@@ -746,14 +747,17 @@
                     "Instance":{
                         "Name":"Program"
                     }
-                },
+                }
             },
             "Config":"ROOT",
-            "Components": {
-                "ADMINOPS": {
+            "Components": 
+            {
+                "ADMINOPS": 
+                {
                     "Index":0,
                     "Config":"STRUCTURE",
-                    "Components": {
+                    "Components": 
+                    {
                         "COUNCILOPS": {
                             "Index":0,
                             "Config":"CLUSTER",
@@ -888,6 +892,7 @@
                                     "Index":1,
                                     "Config":"BASELINE"
                                 }
+                            }
                         },
                         "HEALTH":{
                             "Index":2,
@@ -947,11 +952,14 @@
                         }
                     }
                 },
-                "CITIZENOPS": {
+                "CITIZENOPS": 
+                {
                     "Index":2,
                     "Config":"STRUCTURE",
-                    "Components":{
-                        "CITIZENSERVICESA": {
+                    "Components":
+                    {
+                        "CITIZENSERVICESA": 
+                        {
                             "Index":0,
                             "Config":"CLUSTER",
                             "Components": 
@@ -999,23 +1007,24 @@
                                             "Config":"BASELINE"
                                         },
                                         "SHELTERADMIN":{
-                                            "Index":5,
+                                            "Index":3,
                                             "Config":"BASELINE"
                                         },
                                         "AFFHOUSING":{
-                                            "Index":3,
+                                            "Index":4,
                                             "Config":"BASELINE"
                                         }
                                     }
                                 }
                             }
                         },
-                        "CITIZENSERVICESB": {
+                        "CITIZENSERVICESB": 
+                        {
                             "Index":1,
                             "Config":"CLUSTER",
                             "Components":
                             {
-                                "FIELDSERVICESB":{
+                                "FIELDSERVICESB": {
                                     "Index":0,
                                     "Config":"SUBCLUSTER",
                                     "Components": {
@@ -1028,16 +1037,16 @@
                                             "Config":"BASELINE"
                                         },
                                         "FIRE":{
-                                            "Index":0,
+                                            "Index":2,
                                             "Config":"BASELINE"
                                         },
                                         "TRANSPORTATION":{
-                                            "Index":0,
+                                            "Index":3,
                                             "Config":"BASELINE"
                                         }
                                     }
                                 },
-                                "CORESERVICESB":{
+                                "CORESERVICESB": {
                                     "Index":1,
                                     "Config":"SUBCLUSTER",
                                     "Components":{
@@ -1046,19 +1055,19 @@
                                             "Config":"BASELINE"
                                         },
                                         "PLANNING":{
-                                            "Index":0,
+                                            "Index":1,
                                             "Config":"BASELINE"
                                         },
                                         "LICENCING":{
-                                            "Index":0,
+                                            "Index":2,
                                             "Config":"BASELINE"
                                         },
                                         "POLICYADMIN":{
-                                            "Index":0,
+                                            "Index":3,
                                             "Config":"BASELINE"
                                         },
-                                        "BUILDING":{
-                                            "Index":0,
+                                        "BUILDINGS":{
+                                            "Index":4,
                                             "Config":"BASELINE"
                                         }
                                     }

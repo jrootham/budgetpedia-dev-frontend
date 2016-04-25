@@ -1,4 +1,3 @@
-,Program,Category,Category Name,Expense/Revenue,Sum - 2015
 311SERVICE,311 Toronto,100A,Salaries And Benefits,Expenses,15371796
 311SERVICE,311 Toronto,200A,Materials & Supplies,Expenses,16258
 311SERVICE,311 Toronto,300A,Equipment,Expenses,25357
@@ -239,13 +238,13 @@ ATMOSPHERE,Toronto Atmospheric Fund,100A,Salaries And Benefits,Expenses,953000
 ATMOSPHERE,Toronto Atmospheric Fund,200A,Materials & Supplies,Expenses,20000
 ATMOSPHERE,Toronto Atmospheric Fund,400A,Service And Rent,Expenses,1102000
 ATMOSPHERE,Toronto Atmospheric Fund,650A,Other Expenditures,Expenses,500000
-BUILDING,Toronto Building,100A,Salaries And Benefits,Expenses,44512469
-BUILDING,Toronto Building,200A,Materials & Supplies,Expenses,202876
-BUILDING,Toronto Building,300A,Equipment,Expenses,286047
-BUILDING,Toronto Building,400A,Service And Rent,Expenses,1206912
-BUILDING,Toronto Building,510A,Contribution To Reserves/Reserve Funds,Expenses,3303580
-BUILDING,Toronto Building,650A,Other Expenditures,Expenses,278488
-BUILDING,Toronto Building,700A,Inter-Divisional Charges,Expenses,654965
+BUILDINGS,Toronto Building,100A,Salaries And Benefits,Expenses,44512469
+BUILDINGS,Toronto Building,200A,Materials & Supplies,Expenses,202876
+BUILDINGS,Toronto Building,300A,Equipment,Expenses,286047
+BUILDINGS,Toronto Building,400A,Service And Rent,Expenses,1206912
+BUILDINGS,Toronto Building,510A,Contribution To Reserves/Reserve Funds,Expenses,3303580
+BUILDINGS,Toronto Building,650A,Other Expenditures,Expenses,278488
+BUILDINGS,Toronto Building,700A,Inter-Divisional Charges,Expenses,654965
 SOCIALSERV,Toronto Employment & Social Services,100A,Salaries And Benefits,Expenses,187755901
 SOCIALSERV,Toronto Employment & Social Services,200A,Materials & Supplies,Expenses,14773718
 SOCIALSERV,Toronto Employment & Social Services,300A,Equipment,Expenses,876541
@@ -325,4 +324,3 @@ YONGEDUNDAS,Yonge-Dundas Square,200A,Materials & Supplies,Expenses,189493
 YONGEDUNDAS,Yonge-Dundas Square,300A,Equipment,Expenses,40000
 YONGEDUNDAS,Yonge-Dundas Square,400A,Service And Rent,Expenses,1463723
 YONGEDUNDAS,Yonge-Dundas Square,510A,Contribution To Reserves/Reserve Funds,Expenses,2773
-,Total Result,,,,11614621518
