@@ -135,6 +135,7 @@ class ExplorerClass extends Component< any, any > {
         let rootcomponent = {"ROOT":viewpoint}
 
         // set years, and Aggregates by years
+        // initiates recursion
         this.setComponentSummaries(rootcomponent, items)
 
         console.log('writing viewpoint ',viewpoint)
@@ -173,7 +174,7 @@ class ExplorerClass extends Component< any, any > {
                         component.Aggregates = componentSummaries.Aggregates
 
                     // aggregate the returned summaries for the caller
-                    this.aggregateReturnSummaries(cumulatingSummaries,componentSummaries)
+                    this.aggregateComponentSummaries(cumulatingSummaries,componentSummaries)
                 }
 
             // for baseline items, fetch the baseline amounts from the dataseries itemlist
@@ -195,7 +196,7 @@ class ExplorerClass extends Component< any, any > {
                 componentSummaries.years = item.years
 
                 // then aggregate the summaries to the cumulating summaries
-                this.aggregateReturnSummaries(cumulatingSummaries,componentSummaries)
+                this.aggregateComponentSummaries(cumulatingSummaries,componentSummaries)
 
             }
         }
@@ -203,15 +204,16 @@ class ExplorerClass extends Component< any, any > {
         return cumulatingSummaries
     }
 
-    aggregateReturnSummaries = (cumulatingSummaries, componentSummaries) => {
+    aggregateComponentSummaries = (cumulatingSummaries, componentSummaries) => {
 
         // if years have been collected, add them to the total
         if (componentSummaries.years) {
+
             let years = componentSummaries.years
             for (let yearname in years) {
 
                 let yearvalue = years[yearname]
-                
+
                 if (cumulatingSummaries.years[yearname])
                     cumulatingSummaries.years[yearname] += yearvalue
                 else
@@ -220,12 +222,14 @@ class ExplorerClass extends Component< any, any > {
         }
         // if Aggregates have been collected, add them to the totals
         if (componentSummaries.Aggregates) {
+
             let Aggregates = componentSummaries.Aggregates
             for (let aggregatename in Aggregates) {
 
                 let Aggregate = Aggregates[aggregatename]
                 // collect year values for the Aggregates if they exist
                 if (Aggregate.years) {
+
                     let years = Aggregate.years
 
                     for (let yearname in years) {

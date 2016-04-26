@@ -5855,7 +5855,7 @@ var ExplorerClass = function (_Component) {
                         var componentSummaries = _this.setComponentSummaries(component.Components, items);
                         if (componentSummaries.years) component.years = componentSummaries.years;
                         if (componentSummaries.Aggregates) component.Aggregates = componentSummaries.Aggregates;
-                        _this.aggregateReturnSummaries(cumulatingSummaries, componentSummaries);
+                        _this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
                     }
                 } else {
                     var item = items[componentname];
@@ -5864,12 +5864,12 @@ var ExplorerClass = function (_Component) {
                     var componentSummaries = { years: {}, Aggregates: {} };
                     componentSummaries.Aggregates = item.Components;
                     componentSummaries.years = item.years;
-                    _this.aggregateReturnSummaries(cumulatingSummaries, componentSummaries);
+                    _this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
                 }
             }
             return cumulatingSummaries;
         };
-        _this.aggregateReturnSummaries = function (cumulatingSummaries, componentSummaries) {
+        _this.aggregateComponentSummaries = function (cumulatingSummaries, componentSummaries) {
             if (componentSummaries.years) {
                 var years = componentSummaries.years;
                 for (var yearname in years) {

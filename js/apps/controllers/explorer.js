@@ -73,7 +73,7 @@ class ExplorerClass extends Component {
                             component.years = componentSummaries.years;
                         if (componentSummaries.Aggregates)
                             component.Aggregates = componentSummaries.Aggregates;
-                        this.aggregateReturnSummaries(cumulatingSummaries, componentSummaries);
+                        this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
                     }
                 }
                 else {
@@ -85,12 +85,12 @@ class ExplorerClass extends Component {
                     let componentSummaries = { years: {}, Aggregates: {} };
                     componentSummaries.Aggregates = item.Components;
                     componentSummaries.years = item.years;
-                    this.aggregateReturnSummaries(cumulatingSummaries, componentSummaries);
+                    this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
                 }
             }
             return cumulatingSummaries;
         };
-        this.aggregateReturnSummaries = (cumulatingSummaries, componentSummaries) => {
+        this.aggregateComponentSummaries = (cumulatingSummaries, componentSummaries) => {
             if (componentSummaries.years) {
                 let years = componentSummaries.years;
                 for (let yearname in years) {
