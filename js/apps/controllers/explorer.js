@@ -35,6 +35,7 @@ class ExplorerClass extends Component {
             var userselections = this.state.userselections;
             let seriesdata = this.state.seriesdata;
             var chartlocation;
+            this.setViewpointAmounts(this.state.userselections.viewpoint, this.state.userselections.dataseries, this.props.budgetdata);
             let drilldownchartparms = this.initSeedChartParms(constants_1.ChartSeries.DrillDown, userselections);
             drilldownchartparms = this.addChartSpecs(drilldownchartparms);
             chartlocation = drilldownchartparms.location;
@@ -46,6 +47,78 @@ class ExplorerClass extends Component {
             this.setState({
                 seriesdata: seriesdata,
             });
+        };
+        this.setViewpointAmounts = (viewpointname, dataseriesname, budgetdata) => {
+            let viewpoint = budgetdata.Viewpoints[viewpointname];
+            let items = budgetdata.DataSeries[dataseriesname].Items;
+            let rootcomponent = { "ROOT": viewpoint };
+            this.setComponentSummaries(rootcomponent, items);
+            console.log('writing viewpoint ', viewpoint);
+        };
+        this.setComponentSummaries = (components, items) => {
+            let cumulatingSummaries = {
+                years: {},
+                Aggregates: {},
+            };
+            for (let componentname in components) {
+                let component = components[componentname];
+                if (component.years)
+                    delete component.years;
+                if (component.Aggregates)
+                    delete component.Aggregates;
+                if (component.Config != "BASELINE") {
+                    if (component.Components) {
+                        let componentSummaries = this.setComponentSummaries(component.Components, items);
+                        if (componentSummaries.years)
+                            component.years = componentSummaries.years;
+                        if (componentSummaries.Aggregates)
+                            component.Aggregates = componentSummaries.Aggregates;
+                        this.aggregateReturnSummaries(cumulatingSummaries, componentSummaries);
+                    }
+                }
+                else {
+                    let item = items[componentname];
+                    if (item.years)
+                        component.years = item.years;
+                    if (item.Components)
+                        component.Components = item.Components;
+                    let componentSummaries = { years: {}, Aggregates: {} };
+                    componentSummaries.Aggregates = item.Components;
+                    componentSummaries.years = item.years;
+                    this.aggregateReturnSummaries(cumulatingSummaries, componentSummaries);
+                }
+            }
+            return cumulatingSummaries;
+        };
+        this.aggregateReturnSummaries = (cumulatingSummaries, componentSummaries) => {
+            if (componentSummaries.years) {
+                let years = componentSummaries.years;
+                for (let yearname in years) {
+                    let yearvalue = years[yearname];
+                    if (cumulatingSummaries.years[yearname])
+                        cumulatingSummaries.years[yearname] += yearvalue;
+                    else
+                        cumulatingSummaries.years[yearname] = yearvalue;
+                }
+            }
+            if (componentSummaries.Aggregates) {
+                let Aggregates = componentSummaries.Aggregates;
+                for (let aggregatename in Aggregates) {
+                    let Aggregate = Aggregates[aggregatename];
+                    if (Aggregate.years) {
+                        let years = Aggregate.years;
+                        for (let yearname in years) {
+                            let yearvalue = years[yearname];
+                            let cumulatingAggregate = cumulatingSummaries.Aggregates[aggregatename] || { years: {} };
+                            if (cumulatingAggregate.years[yearname])
+                                cumulatingAggregate.years[yearname] += yearvalue;
+                            else
+                                cumulatingAggregate.years[yearname] = yearvalue;
+                            cumulatingSummaries.Aggregates[aggregatename] = cumulatingAggregate;
+                        }
+                    }
+                }
+            }
         };
         this.initSeedChartParms = (series, userselections) => {
             return {

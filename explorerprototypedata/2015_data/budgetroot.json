@@ -398,7 +398,8 @@
                                     "Config":"BASELINE"
                                 },
                                 "COMMCENTRES":{
-                                    "Index":2
+                                    "Index":2,
+                                    "Config": "BASELINE"
                                 },
                                 "REGIONCONSERV":{
                                     "Index":3,

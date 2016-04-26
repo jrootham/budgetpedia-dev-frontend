@@ -52,6 +52,11 @@ interface chartParms {
     isError?: boolean
 }
 
+interface ComponentSummaries {
+    years?: any,
+    Aggregates?: any,
+}
+
 class ExplorerClass extends Component< any, any > {
 
     constructor(props) {
@@ -81,6 +86,12 @@ class ExplorerClass extends Component< any, any > {
         let seriesdata = this.state.seriesdata
 
         var chartlocation
+
+        this.setViewpointAmounts(
+            this.state.userselections.viewpoint,
+            this.state.userselections.dataseries,
+            this.props.budgetdata
+        )
 
         // ========================================================
         // -----------------[ THE DRILLDOWN SEED ]-----------------
@@ -112,6 +123,128 @@ class ExplorerClass extends Component< any, any > {
             seriesdata,
         });
 
+    }
+
+    // starts with hash of components, 
+    // recursively descends to BASELINE items, then leaves 
+    // summaries by year, and Aggregates by year on ascent
+    setViewpointAmounts = (viewpointname, dataseriesname, budgetdata) => {
+        let viewpoint = budgetdata.Viewpoints[viewpointname]
+        let items = budgetdata.DataSeries[dataseriesname].Items
+
+        let rootcomponent = {"ROOT":viewpoint}
+
+        // set years, and Aggregates by years
+        this.setComponentSummaries(rootcomponent, items)
+
+        console.log('writing viewpoint ',viewpoint)
+
+    }
+
+    setComponentSummaries = (components, items):ComponentSummaries => {
+        // cumulate summaries for this level
+        let cumulatingSummaries:ComponentSummaries = {
+            years:{},
+            Aggregates:{},
+        }
+
+        // for every component at this level
+        for ( let componentname in components ) {
+            // isolate a component
+            let component = components[componentname]
+
+            // remove any previous aggregations
+            if (component.years) delete component.years
+            if (component.Aggregates) delete component.Aggregates
+
+            // for non-baseline items, recurse to collect aggregations
+            if (component.Config != "BASELINE") {
+
+                // if no components found, loop
+                if (component.Components) {
+
+                    // get child component summaries recursively
+                    let componentSummaries = this.setComponentSummaries(component.Components, items)
+
+                    // save data for reference for chart-making
+                    if (componentSummaries.years)
+                        component.years = componentSummaries.years
+                    if (componentSummaries.Aggregates)
+                        component.Aggregates = componentSummaries.Aggregates
+
+                    // aggregate the returned summaries for the caller
+                    this.aggregateReturnSummaries(cumulatingSummaries,componentSummaries)
+                }
+
+            // for baseline items, fetch the baseline amounts from the dataseries itemlist
+            } else {
+
+                // fetch the data from the dataseries itemlist
+                let item = items[componentname]
+
+                // save the data for chart-making
+                if (item.years)
+                    component.years = item.years
+                if (item.Components)
+                    component.Components = item.Components
+
+                // accumulate the data for the caller
+                // first set componentSummaries as usual
+                let componentSummaries = {years:{},Aggregates:{}}
+                componentSummaries.Aggregates = item.Components
+                componentSummaries.years = item.years
+
+                // then aggregate the summaries to the cumulating summaries
+                this.aggregateReturnSummaries(cumulatingSummaries,componentSummaries)
+
+            }
+        }
+
+        return cumulatingSummaries
+    }
+
+    aggregateReturnSummaries = (cumulatingSummaries, componentSummaries) => {
+
+        // if years have been collected, add them to the total
+        if (componentSummaries.years) {
+            let years = componentSummaries.years
+            for (let yearname in years) {
+
+                let yearvalue = years[yearname]
+                
+                if (cumulatingSummaries.years[yearname])
+                    cumulatingSummaries.years[yearname] += yearvalue
+                else
+                    cumulatingSummaries.years[yearname] = yearvalue
+            }
+        }
+        // if Aggregates have been collected, add them to the totals
+        if (componentSummaries.Aggregates) {
+            let Aggregates = componentSummaries.Aggregates
+            for (let aggregatename in Aggregates) {
+
+                let Aggregate = Aggregates[aggregatename]
+                // collect year values for the Aggregates if they exist
+                if (Aggregate.years) {
+                    let years = Aggregate.years
+
+                    for (let yearname in years) {
+
+                        let yearvalue = years[yearname]
+                        let cumulatingAggregate = cumulatingSummaries.Aggregates[aggregatename] || {years:{}}
+
+                        if (cumulatingAggregate.years[yearname])
+                            cumulatingAggregate.years[yearname] += yearvalue
+                        else
+                            cumulatingAggregate.years[yearname] = yearvalue
+
+                        // re-assemble
+                        cumulatingSummaries.Aggregates[aggregatename] = cumulatingAggregate
+                    }
+
+                }
+            }
+        }
     }
 
     // ================================================================
