@@ -3,6 +3,7 @@
         "BudgetExpenses": {
             "Action": "Expenses",
             "Baseline": "Programs",
+            "Units": "DOLLAR",
             "Components": "Expenditures",
             "Items": {
                 "311SERVICE": {
@@ -2019,6 +2020,7 @@
         "BudgetRevenues": {
             "Action": "Revenues",
             "Baseline": "Programs",
+            "Units": "DOLLAR",
             "Components": "Expenditures",
             "Items": {
                 "311SERVICE": {
@@ -3435,6 +3437,7 @@
         "BudgetStaffing": {
             "Action": "Staffing",
             "Baseline": "Programs",
+            "Units": "FTE",
             "Components": "FulltimeParttime",
             "Items": {
                 "311SERVICE": {

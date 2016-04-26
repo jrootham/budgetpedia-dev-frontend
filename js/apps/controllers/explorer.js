@@ -50,9 +50,12 @@ class ExplorerClass extends Component {
         };
         this.setViewpointAmounts = (viewpointname, dataseriesname, budgetdata) => {
             let viewpoint = budgetdata.Viewpoints[viewpointname];
+            if (viewpoint.currentdataseries && (viewpoint.currentdataseries == dataseriesname))
+                return;
             let items = budgetdata.DataSeries[dataseriesname].Items;
             let rootcomponent = { "ROOT": viewpoint };
             this.setComponentSummaries(rootcomponent, items);
+            viewpoint.currentdataseries = dataseriesname;
             console.log('writing viewpoint ', viewpoint);
         };
         this.setComponentSummaries = (components, items) => {

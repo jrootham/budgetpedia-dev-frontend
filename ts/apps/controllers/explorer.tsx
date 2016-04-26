@@ -130,6 +130,10 @@ class ExplorerClass extends Component< any, any > {
     // summaries by year, and Aggregates by year on ascent
     setViewpointAmounts = (viewpointname, dataseriesname, budgetdata) => {
         let viewpoint = budgetdata.Viewpoints[viewpointname]
+
+        if (viewpoint.currentdataseries && (viewpoint.currentdataseries == dataseriesname))
+            return
+
         let items = budgetdata.DataSeries[dataseriesname].Items
 
         let rootcomponent = {"ROOT":viewpoint}
@@ -137,6 +141,8 @@ class ExplorerClass extends Component< any, any > {
         // set years, and Aggregates by years
         // initiates recursion
         this.setComponentSummaries(rootcomponent, items)
+
+        viewpoint.currentdataseries = dataseriesname
 
         console.log('writing viewpoint ',viewpoint)
 
