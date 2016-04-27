@@ -20,32 +20,34 @@ class ExplorerClass extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            seriesdata: [[], []],
-            dataselection: "expenses",
-            slider: { singlevalue: [2015], doublevalue: [2005, 2015] },
+            chartmatrix: [[], []],
+            datafacet: "expenses",
+            yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] },
             yearselection: "one",
             viewselection: "activities",
             userselections: {
                 latestyear: 2015,
                 viewpoint: "FUNCTIONAL",
                 dataseries: "BudgetExpenses",
+                charttype: "ColumnChart",
             }
         };
         this.componentDidMount = () => {
-            var userselections = this.state.userselections;
-            let seriesdata = this.state.seriesdata;
-            var chartlocation;
+            let userselections = this.state.userselections, chartmatrix = this.state.chartmatrix;
+            var matrixlocation, parmsObj;
             this.setViewpointAmounts(this.state.userselections.viewpoint, this.state.userselections.dataseries, this.props.budgetdata);
-            let drilldownchartparms = this.initSeedChartParms(constants_1.ChartSeries.DrillDown, userselections);
-            drilldownchartparms = this.addChartSpecs(drilldownchartparms);
-            chartlocation = drilldownchartparms.location;
-            seriesdata[chartlocation.series][chartlocation.depth] = drilldownchartparms;
-            let comparechartparms = this.initSeedChartParms(constants_1.ChartSeries.Compare, userselections);
-            comparechartparms = this.addChartSpecs(comparechartparms);
-            chartlocation = comparechartparms.location;
-            seriesdata[chartlocation.series][chartlocation.depth] = comparechartparms;
+            let drilldownchartconfig = this.initRootChartConfig(constants_1.ChartSeries.DrillDown, userselections);
+            parmsObj = this.getChartParms(drilldownchartconfig);
+            drilldownchartconfig.chartparms = parmsObj.chartParms;
+            matrixlocation = drilldownchartconfig.matrixlocation;
+            chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig;
+            let comparechartconfig = this.initRootChartConfig(constants_1.ChartSeries.Compare, userselections);
+            parmsObj = this.getChartParms(comparechartconfig);
+            comparechartconfig.chartparms = parmsObj.chartParms;
+            matrixlocation = comparechartconfig.matrixlocation;
+            chartmatrix[matrixlocation.row][matrixlocation.column] = comparechartconfig;
             this.setState({
-                seriesdata: seriesdata,
+                chartmatrix: chartmatrix,
             });
         };
         this.setViewpointAmounts = (viewpointname, dataseriesname, budgetdata) => {
@@ -65,31 +67,33 @@ class ExplorerClass extends Component {
             };
             for (let componentname in components) {
                 let component = components[componentname];
+                let componentSummaries = null;
                 if (component.years)
                     delete component.years;
                 if (component.Aggregates)
                     delete component.Aggregates;
                 if (component.Config != "BASELINE") {
                     if (component.Components) {
-                        let componentSummaries = this.setComponentSummaries(component.Components, items);
+                        componentSummaries = this.setComponentSummaries(component.Components, items);
                         if (componentSummaries.years)
                             component.years = componentSummaries.years;
                         if (componentSummaries.Aggregates)
                             component.Aggregates = componentSummaries.Aggregates;
-                        this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
                     }
                 }
                 else {
                     let item = items[componentname];
-                    if (item.years)
-                        component.years = item.years;
-                    if (item.Components)
-                        component.Components = item.Components;
-                    let componentSummaries = { years: {}, Aggregates: {} };
-                    componentSummaries.Aggregates = item.Components;
-                    componentSummaries.years = item.years;
-                    this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
+                    componentSummaries = {
+                        years: item.Components,
+                        Aggregates: item.years,
+                    };
+                    if (componentSummaries.years)
+                        component.years = componentSummaries.years;
+                    if (componentSummaries.Aggregates)
+                        component.Components = componentSummaries.Aggregates;
                 }
+                if (componentSummaries)
+                    this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
             }
             return cumulatingSummaries;
         };
@@ -123,29 +127,30 @@ class ExplorerClass extends Component {
                 }
             }
         };
-        this.initSeedChartParms = (series, userselections) => {
+        this.initRootChartConfig = (matrixrow, userselections) => {
             return {
                 viewpoint: userselections.viewpoint,
                 dataseries: userselections.dataseries,
-                dataroot: [{ parent: 0 }],
-                location: {
-                    series: series,
-                    depth: 0
+                datapath: [{ parent: 0 }],
+                matrixlocation: {
+                    row: matrixrow,
+                    column: 0
                 },
                 range: {
                     latestyear: userselections.latestyear,
                     earliestyear: null,
                     fullrange: false,
                 },
-                data: { chartType: "ColumnChart" }
+                charttype: userselections.charttype
             };
         };
-        this.addChartSpecs = (parms) => {
-            let options = {}, events = null, rows = [], columns = [], budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[parms.viewpoint], self = this, range = parms.range, meta = [];
-            let { parent, children, depth } = this.getChartDatasets(parms, budgetdata);
+        this.getChartParms = (chartConfig) => {
+            let parmsObj = { isError: false, chartParms: null };
+            let options = {}, events = null, rows = [], columns = [], budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[chartConfig.viewpoint], self = this, range = chartConfig.range, meta = [];
+            let { parent, children, depth } = this.getChartDatasets(chartConfig, budgetdata);
             if ((depth + 1) >= meta.length) {
-                parms.isError = true;
-                return parms;
+                parmsObj.isError = true;
+                return parmsObj;
             }
             let axistitle = meta[depth].Children;
             axistitle = constants_2.categoryaliases[axistitle] || axistitle;
@@ -178,48 +183,51 @@ class ExplorerClass extends Component {
                 let annotation = amountformat(amount);
                 return [item[categorylabel], amount, annotation];
             });
-            let chartdata = parms.data;
+            let chartdata = chartConfig.chartparms;
             chartdata.columns = columns;
             chartdata.rows = rows;
             chartdata.options = options;
             chartdata.events = events;
-            return parms;
+            chartdata.chartType = chartConfig.charttype;
+            parmsObj.chartParms = chartdata;
+            return parmsObj;
         };
-        this.updateChartsSelection = data => {
-            let seriesdata = this.state.seriesdata;
-            let sourcechartparms = data.chartparms, selectchartlocation = sourcechartparms.location, series = selectchartlocation.series, sourcedepth = selectchartlocation.depth, selection = data.selection[0], selectionrow = selection.row, viewpoint = sourcechartparms.viewpoint, dataseries = sourcechartparms.dataseries;
-            let serieslist = seriesdata[series];
-            serieslist.splice(sourcedepth + 1);
+        this.updateChartsSelection = config => {
+            let chartmatrix = this.state.chartmatrix;
+            let sourcechartconfig = config.chartconfig, selectmatrixlocation = sourcechartconfig.matrixlocation, matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column, selection = config.selection[0], selectionrow = selection.row, viewpoint = sourcechartconfig.viewpoint, dataseries = sourcechartconfig.dataseries;
+            let serieslist = chartmatrix[matrixrow];
+            serieslist.splice(matrixcolumn + 1);
             this.setState({
-                seriesdata: seriesdata,
+                chartmatrix: chartmatrix,
             });
-            let parentchartparms = seriesdata[series][sourcedepth];
-            let childdataroot = parentchartparms.dataroot.map(node => {
+            let parentchartconfig = chartmatrix[matrixrow][matrixcolumn];
+            let childdataroot = parentchartconfig.datapath.map(node => {
                 return Object.assign({}, node);
             });
             childdataroot.push({ parent: selectionrow });
-            let newrange = Object.assign({}, parentchartparms.range);
-            let newchartparms = {
+            let newrange = Object.assign({}, parentchartconfig.range);
+            let newchartconfig = {
                 viewpoint: viewpoint,
                 dataseries: dataseries,
-                dataroot: childdataroot,
-                location: {
-                    series: series,
-                    depth: sourcedepth + 1
+                datapath: childdataroot,
+                matrixlocation: {
+                    row: matrixrow,
+                    column: matrixcolumn + 1
                 },
                 range: newrange,
-                data: { chartType: "ColumnChart" }
+                chartparms: { chartType: "ColumnChart" }
             };
-            newchartparms = this.addChartSpecs(newchartparms);
-            if (newchartparms.isError)
+            let parmsObj = this.getChartParms(newchartconfig);
+            if (parmsObj.isError)
                 return;
-            seriesdata[series][sourcedepth + 1] = newchartparms;
+            newchartconfig.chartparms = parmsObj.chartParms;
+            chartmatrix[matrixrow][matrixcolumn + 1] = newchartconfig;
             this.setState({
-                seriesdata: seriesdata,
+                chartmatrix: chartmatrix,
             });
         };
         this.getChartDatasets = (parms, budgetdata) => {
-            let parent, children, depth, path = parms.dataroot, range = parms.range;
+            let parent, children, depth, path = parms.datapath, range = parms.range;
             let meta = {};
             let list = budgetdata.filter(item => {
                 return (item.Year == range.latestyear) ? true : false;
@@ -233,22 +241,22 @@ class ExplorerClass extends Component {
             children = list;
             return { parent: parent, children: children, depth: depth };
         };
-        this.getCharts = (datalist, series) => {
-            let charts = datalist.map((seriesdata, index) => {
-                let data = seriesdata.data;
-                let callback = ((chartparms) => {
+        this.getCharts = (matrixcolumn, series) => {
+            let charts = matrixcolumn.map((matrixcell, index) => {
+                let chartparms = matrixcell.chartparms;
+                let callback = ((chartconfig) => {
                     let self = this;
                     return (Chart, err) => {
                         let chart = Chart.chart;
                         let selection = chart.getSelection();
-                        self.updateChartsSelection({ chartparms: chartparms, chart: chart, selection: selection, err: err });
+                        self.updateChartsSelection({ chartconfig: chartconfig, chart: chart, selection: selection, err: err });
                     };
-                })(seriesdata);
-                data.events = data.events.map(eventdata => {
+                })(matrixcell);
+                chartparms.events = chartparms.events.map(eventdata => {
                     eventdata.callback = callback;
                     return eventdata;
                 });
-                return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: data.chartType, options: data.options, chartEvents: data.events, rows: data.rows, columns: data.columns, graph_id: "ChartID" + series + '' + index});
+                return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + series + '' + index});
             });
             return charts;
         };
@@ -256,36 +264,36 @@ class ExplorerClass extends Component {
     render() {
         let explorer = this;
         let singleslider = (explorer.state.yearselection == 'one') ?
-            React.createElement(ReactSlider, {className: "horizontal-slider", defaultValue: explorer.state.slider.singlevalue, min: 2003, max: 2016, onChange: (value) => {
+            React.createElement(ReactSlider, {className: "horizontal-slider", defaultValue: explorer.state.yearslider.singlevalue, min: 2003, max: 2016, onChange: (value) => {
                 explorer.setState({
-                    slider: Object.assign(explorer.state.slider, {
+                    yearslider: Object.assign(explorer.state.yearslider, {
                         singlevalue: [value]
                     })
                 });
-            }}, React.createElement("div", null, explorer.state.slider.singlevalue[0])) : '';
+            }}, React.createElement("div", null, explorer.state.yearslider.singlevalue[0])) : '';
         let doubleslider = (explorer.state.yearselection != 'one') ?
-            React.createElement(ReactSlider, {className: "horizontal-slider", defaultValue: explorer.state.slider.doublevalue, min: 2003, max: 2016, withBars: (explorer.state.yearselection == 'all') ? true : false, onChange: (value) => {
+            React.createElement(ReactSlider, {className: "horizontal-slider", defaultValue: explorer.state.yearslider.doublevalue, min: 2003, max: 2016, withBars: (explorer.state.yearselection == 'all') ? true : false, onChange: (value) => {
                 explorer.setState({
-                    slider: Object.assign(explorer.state.slider, {
+                    yearslider: Object.assign(explorer.state.yearslider, {
                         doublevalue: value
                     })
                 });
-            }}, React.createElement("div", null, explorer.state.slider.doublevalue[0]), React.createElement("div", null, explorer.state.slider.doublevalue[1])) : '';
+            }}, React.createElement("div", null, explorer.state.yearslider.doublevalue[0]), React.createElement("div", null, explorer.state.yearslider.doublevalue[1])) : '';
         let dashboardsegment = React.createElement(Card, {initiallyExpanded: false}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Dashboard"), React.createElement(CardText, {expandable: true}, React.createElement("div", {style: { fontStyle: 'italic' }}, " These dashboard controls are not yet functional "), React.createElement("div", {style: { display: 'inline-block', verticalAlign: "bottom", height: "24px", marginRight: "24px" }}, "Viewpoint:"), React.createElement(RadioButtonGroup, {style: {
-            display: (explorer.state.dataselection != "staffing") ? 'inline-block' : 'none',
+            display: (explorer.state.datafacet != "staffing") ? 'inline-block' : 'none',
         }, name: "viewselection", defaultSelected: "functional"}, React.createElement(RadioButton, {value: "functional", label: "Functional", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "structural", label: "Structural", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "auditor", label: "Auditor", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), " ", React.createElement("br", null), React.createElement(Divider, null), React.createElement(Checkbox, {label: "Inflation adjusted", defaultChecked: true}), React.createElement(Divider, null), React.createElement("div", {style: { display: 'inline-block', verticalAlign: "bottom", height: "24px", marginRight: "24px" }}, "Years:"), React.createElement(RadioButtonGroup, {style: { display: 'inline-block' }, name: "yearselection", defaultSelected: explorer.state.yearselection, onChange: (ev, selection) => {
             explorer.setState({ yearselection: selection });
         }}, React.createElement(RadioButton, {value: "one", label: "One", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "two", label: "Two (side-by-side)", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "all", label: "All (timelines)", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), singleslider, doubleslider, React.createElement("div", {style: { display: (explorer.state.yearselection == 'all') ? 'inline' : 'none' }}, React.createElement(Checkbox, {label: "Year-over-year change, rather than actuals", defaultChecked: false})), React.createElement(Divider, null), React.createElement(RaisedButton, {style: { marginRight: "24px" }, type: "button", label: "Download"}), React.createElement(RaisedButton, {type: "button", label: "Reset"})));
-        let drilldownlist = explorer.state.seriesdata[constants_1.ChartSeries.DrillDown];
+        let drilldownlist = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
         let drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
-        let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down."), React.createElement(RadioButtonGroup, {style: { display: 'inline-block' }, name: "dataselection", defaultSelected: explorer.state.dataselection, onChange: (ev, selection) => {
+        let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down."), React.createElement(RadioButtonGroup, {style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: (ev, selection) => {
             explorer.setState({
-                dataselection: selection,
+                datafacet: selection,
             });
-        }}, React.createElement(RadioButton, {value: "expenses", label: "Expenses", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "revenues", label: "Revenues", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "net", label: "Net", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "staffing", label: "Staffing", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), React.createElement(RadioButtonGroup, {style: { display: (explorer.state.dataselection != "staffing") ? 'inline-block' : 'none',
-            backgroundColor: "#eee" }, name: "activities", defaultSelected: "activities"}, React.createElement(RadioButton, {value: "activities", label: "Activities", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "categories", label: "Categories", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), React.createElement(RadioButtonGroup, {style: { display: (explorer.state.dataselection == "staffing") ? 'inline-block' : 'none',
+        }}, React.createElement(RadioButton, {value: "expenses", label: "Expenses", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "revenues", label: "Revenues", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "net", label: "Net", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "staffing", label: "Staffing", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), React.createElement(RadioButtonGroup, {style: { display: (explorer.state.datafacet != "staffing") ? 'inline-block' : 'none',
+            backgroundColor: "#eee" }, name: "activities", defaultSelected: "activities"}, React.createElement(RadioButton, {value: "activities", label: "Activities", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "categories", label: "Categories", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), React.createElement(RadioButtonGroup, {style: { display: (explorer.state.datafacet == "staffing") ? 'inline-block' : 'none',
             backgroundColor: "#eee" }, name: "staffing", defaultSelected: "positions"}, React.createElement(RadioButton, {value: "positions", label: "Positions", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "budget", label: "Budget", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), React.createElement(FontIcon, {className: "material-icons"}, "cloud_download"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, drilldowncharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
-        let comparelist = explorer.state.seriesdata[constants_1.ChartSeries.Compare];
+        let comparelist = explorer.state.chartmatrix[constants_1.ChartSeries.Compare];
         let comparecharts = explorer.getCharts(comparelist, constants_1.ChartSeries.Compare);
         let comparesegment = React.createElement(Card, {initiallyExpanded: false}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Compare"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, comparecharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
         let differencessegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences"));

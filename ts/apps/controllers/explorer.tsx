@@ -24,21 +24,22 @@ import { ExplorerChart } from '../components/explorerchart'
 import { ChartSeries } from '../constants'
 import { categoryaliases } from '../constants'
 
-interface chartParms {
+interface ChartConfig {
     name?: string,
     viewpoint:string,
     dataseries:string,
-    location: {
-        series: number,
-        depth: number,
+    matrixlocation: {
+        row: number,
+        column: number,
     },
-    dataroot: { parent: number }[],
+    datapath: { parent: number }[],
     range: {
         latestyear: number,
         earliestyear: number,
         fullrange: boolean,
     },
-    data?:{
+    charttype?:string,
+    chartparms?:{
         chartType: string,
         options?:{
             [ index: string ]: any,
@@ -59,6 +60,8 @@ interface ComponentSummaries {
 
 class ExplorerClass extends Component< any, any > {
 
+    // ---------------------[ INITIALIZE ]--------------------------------
+
     constructor(props) {
         super(props);
     }
@@ -66,26 +69,30 @@ class ExplorerClass extends Component< any, any > {
     // should be in global state to allow for re-creation after return visit
     // TODO: Take state initialization from external source
     state = {
-        seriesdata: [ [], [] ], // DrillDown, Compare (Later: Differences, Context, Build)
-        dataselection:"expenses",
-        slider: {singlevalue:[2015],doublevalue:[2005,2015]},
+        chartmatrix: [ [], [] ], // DrillDown, Compare (Later: Differences, Context, Build)
+        datafacet:"expenses",
+        yearslider: {singlevalue:[2015],doublevalue:[2005,2015]},
         yearselection:"one",
         viewselection:"activities",
         userselections:{
             latestyear:2015,
             viewpoint:"FUNCTIONAL",
             dataseries:"BudgetExpenses",
+            charttype: "ColumnChart",
         }
     }
     
-    // initialize once - create seed drilldown and compare series
+    // initialize once - create root drilldown and compare series
     componentDidMount = () => {
 
-        var userselections = this.state.userselections
+        let userselections = this.state.userselections,
+            chartmatrix = this.state.chartmatrix
 
-        let seriesdata = this.state.seriesdata
+        var matrixlocation, 
+            parmsObj
 
-        var chartlocation
+
+        // ------------------------[ POPULATE VIEWPOINT WITH VALUES ]-----------------------
 
         this.setViewpointAmounts(
             this.state.userselections.viewpoint,
@@ -93,37 +100,46 @@ class ExplorerClass extends Component< any, any > {
             this.props.budgetdata
         )
 
-        // ========================================================
-        // -----------------[ THE DRILLDOWN SEED ]-----------------
+        // -----------------[ THE DRILLDOWN ROOT ]-----------------
 
         // assemble parms to get initial dataset
-        let drilldownchartparms: chartParms = this.initSeedChartParms( ChartSeries.DrillDown, userselections )
+        let drilldownchartconfig: ChartConfig = 
+            this.initRootChartConfig(ChartSeries.DrillDown, userselections)
 
-        drilldownchartparms = this.addChartSpecs( drilldownchartparms )
+        parmsObj = this.getChartParms( drilldownchartconfig )
 
-        chartlocation = drilldownchartparms.location
-        seriesdata[ chartlocation.series ][ chartlocation.depth ] = drilldownchartparms
+        // ** assume no error ??
+        drilldownchartconfig.chartparms = parmsObj.chartParms
 
-        // ========================================================
-        // -----------------[ THE COMPARE SEED ]-------------------
+        matrixlocation = drilldownchartconfig.matrixlocation
+        chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = drilldownchartconfig
+
+        // -----------------[ THE COMPARE ROOT ]-------------------
 
         // assemble parms to get initial dataset
-        let comparechartparms: chartParms = this.initSeedChartParms( ChartSeries.Compare, userselections )
+        let comparechartconfig: ChartConfig = this.initRootChartConfig( ChartSeries.Compare, userselections )
 
-        comparechartparms = this.addChartSpecs( comparechartparms )
+        parmsObj = this.getChartParms( comparechartconfig )
 
-        chartlocation = comparechartparms.location
-        seriesdata[ chartlocation.series ][ chartlocation.depth ] = comparechartparms
+        // ** assume no error ??
+        comparechartconfig.chartparms = parmsObj.chartParms
 
-        // ====================================================
+        matrixlocation = comparechartconfig.matrixlocation
+        chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = comparechartconfig
+
         // -------------[ SAVE INITIALIZATION ]----------------
 
         // make initial dataset available to chart
         this.setState({
-            seriesdata,
+            chartmatrix,
         });
 
     }
+
+    // =====================================================================================
+    // -----------------------[ CHART CREATION UTILITIES ]----------------------------------
+
+    // -------------------[ SET VIEWPOINT HIERARCHY NODE AMOUNTS ]-----------
 
     // starts with hash of components, 
     // recursively descends to BASELINE items, then leaves 
@@ -142,6 +158,7 @@ class ExplorerClass extends Component< any, any > {
         // initiates recursion
         this.setComponentSummaries(rootcomponent, items)
 
+        // create sentinel to prevent unnucessary processing
         viewpoint.currentdataseries = dataseriesname
 
         console.log('writing viewpoint ',viewpoint)
@@ -157,10 +174,13 @@ class ExplorerClass extends Component< any, any > {
 
         // for every component at this level
         for ( let componentname in components ) {
-            // isolate a component
+
+            // isolate the component...
             let component = components[componentname]
 
-            // remove any previous aggregations
+            let componentSummaries = null
+
+            // remove any previous aggregations...
             if (component.years) delete component.years
             if (component.Aggregates) delete component.Aggregates
 
@@ -171,16 +191,14 @@ class ExplorerClass extends Component< any, any > {
                 if (component.Components) {
 
                     // get child component summaries recursively
-                    let componentSummaries = this.setComponentSummaries(component.Components, items)
+                    componentSummaries = this.setComponentSummaries(component.Components, items)
 
-                    // save data for reference for chart-making
+                    // capture data for chart-making
                     if (componentSummaries.years)
                         component.years = componentSummaries.years
                     if (componentSummaries.Aggregates)
                         component.Aggregates = componentSummaries.Aggregates
 
-                    // aggregate the returned summaries for the caller
-                    this.aggregateComponentSummaries(cumulatingSummaries,componentSummaries)
                 }
 
             // for baseline items, fetch the baseline amounts from the dataseries itemlist
@@ -189,22 +207,23 @@ class ExplorerClass extends Component< any, any > {
                 // fetch the data from the dataseries itemlist
                 let item = items[componentname]
 
-                // save the data for chart-making
-                if (item.years)
-                    component.years = item.years
-                if (item.Components)
-                    component.Components = item.Components
-
-                // accumulate the data for the caller
                 // first set componentSummaries as usual
-                let componentSummaries = {years:{},Aggregates:{}}
-                componentSummaries.Aggregates = item.Components
-                componentSummaries.years = item.years
+                componentSummaries = { 
+                    years: item.Components, 
+                    Aggregates: item.years, 
+                }
 
-                // then aggregate the summaries to the cumulating summaries
-                this.aggregateComponentSummaries(cumulatingSummaries,componentSummaries)
+                // capture data for chart-making
+                if (componentSummaries.years)
+                    component.years = componentSummaries.years
+                if (componentSummaries.Aggregates)
+                    component.Components = componentSummaries.Aggregates
 
             }
+
+            // aggregate the collected summaries for the caller
+            if (componentSummaries)
+                this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries)
         }
 
         return cumulatingSummaries
@@ -216,23 +235,31 @@ class ExplorerClass extends Component< any, any > {
         if (componentSummaries.years) {
 
             let years = componentSummaries.years
+
+            // for each year...
             for (let yearname in years) {
 
                 let yearvalue = years[yearname]
 
+                // accumulate the value...
                 if (cumulatingSummaries.years[yearname])
                     cumulatingSummaries.years[yearname] += yearvalue
                 else
                     cumulatingSummaries.years[yearname] = yearvalue
             }
         }
+
         // if Aggregates have been collected, add them to the totals
         if (componentSummaries.Aggregates) {
 
             let Aggregates = componentSummaries.Aggregates
+
+            // for each aggreate...
             for (let aggregatename in Aggregates) {
 
                 let Aggregate = Aggregates[aggregatename]
+
+                // for each aggregate year...
                 // collect year values for the Aggregates if they exist
                 if (Aggregate.years) {
 
@@ -240,8 +267,10 @@ class ExplorerClass extends Component< any, any > {
 
                     for (let yearname in years) {
 
+                        // accumulate the year value...
                         let yearvalue = years[yearname]
-                        let cumulatingAggregate = cumulatingSummaries.Aggregates[aggregatename] || {years:{}}
+                        let cumulatingAggregate = 
+                            cumulatingSummaries.Aggregates[aggregatename] || {years:{}}
 
                         if (cumulatingAggregate.years[yearname])
                             cumulatingAggregate.years[yearname] += yearvalue
@@ -257,53 +286,52 @@ class ExplorerClass extends Component< any, any > {
         }
     }
 
-    // ================================================================
-    // -------------------[ INITIALIZE SEED CHART ]--------------------
+    // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
 
-    initSeedChartParms = ( series, userselections ): chartParms => {
+    initRootChartConfig = ( matrixrow, userselections ): ChartConfig => {
         return {
             viewpoint:userselections.viewpoint,
             dataseries:userselections.dataseries,
-            dataroot: [{ parent: 0 }],
-            location: {
-                series,
-                depth: 0
+            datapath: [{ parent: 0 }],
+            matrixlocation: {
+                row:matrixrow,
+                column: 0
             },
             range: {
                 latestyear: userselections.latestyear,
                 earliestyear: null,
                 fullrange: false,
             },
-            data: { chartType: "ColumnChart" }
+            charttype: userselections.charttype
         }
 
     }
 
-    // ===============================================================
-    // ------------------[ ADD CHART SPECS ]--------------------------
+    // ------------------[ GET CHART PARMS ]--------------------------
     /*
-        add columns, rows, options, and events to the parms 
+        return columns, rows, options, and events to the parms 
         object's data property
     */
 
-    // returns parms.isError = true if fails
-    addChartSpecs = (parms:chartParms):chartParms => {
+    // returns parmsObj.isError = true if fails
+    getChartParms = (chartConfig:ChartConfig) => {
+        let parmsObj = {isError:false,chartParms:null}
         let options = {},
             events = null,
             rows = [],
             columns = [],
             budgetdata = this.props.budgetdata,
-            viewpointdata = budgetdata.Viewpoints[parms.viewpoint],
+            viewpointdata = budgetdata.Viewpoints[chartConfig.viewpoint],
             // meta = budgetdata[0].Meta,
             self = this,
-            range = parms.range,
+            range = chartConfig.range,
             meta = []
 
         // TODO: capture range, including years
-        let {parent, children, depth} = this.getChartDatasets(parms, budgetdata)
+        let {parent, children, depth} = this.getChartDatasets(chartConfig, budgetdata)
         if ((depth +1) >= meta.length) { // no more data to show
-            parms.isError = true
-            return parms
+            parmsObj.isError = true
+            return parmsObj
         }
         let axistitle = meta[depth].Children
         axistitle = categoryaliases[axistitle] || axistitle
@@ -350,84 +378,89 @@ class ExplorerClass extends Component< any, any > {
         })
 
         // console.log('return = ', options)
-        let chartdata = parms.data;
+        let chartdata = chartConfig.chartparms;
         chartdata.columns = columns
         chartdata.rows = rows
         chartdata.options = options
         chartdata.events = events
+        chartdata.chartType = chartConfig.charttype
+        parmsObj.chartParms = chartdata
         // console.log('chartdata = ', options, events, columns, rows)
-        return parms
+        return parmsObj
     }
+
+    // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
 
     // response to user selection of a chart component (such as a column )
     // called by chart callback
-    updateChartsSelection = data => {
+    updateChartsSelection = config => {
         // console.log('updateCharts data = ', data)
 
-        let seriesdata = this.state.seriesdata
+        let chartmatrix = this.state.chartmatrix
 
-        let sourcechartparms = data.chartparms,
-            selectchartlocation = sourcechartparms.location,
-            series = selectchartlocation.series,
-            sourcedepth = selectchartlocation.depth,
-            selection = data.selection[0],
+        let sourcechartconfig = config.chartconfig,
+            selectmatrixlocation = sourcechartconfig.matrixlocation,
+            matrixrow = selectmatrixlocation.row,
+            matrixcolumn = selectmatrixlocation.column,
+            selection = config.selection[0],
             selectionrow = selection.row,
-            viewpoint = sourcechartparms.viewpoint,
-            dataseries = sourcechartparms.dataseries
+            viewpoint = sourcechartconfig.viewpoint,
+            dataseries = sourcechartconfig.dataseries
 
-        let serieslist = seriesdata[series]
+        let serieslist = chartmatrix[matrixrow]
         // TODO: abandon here if the next one exists and is the same
-        serieslist.splice(sourcedepth + 1) // remove subsequent charts
+        serieslist.splice(matrixcolumn + 1) // remove subsequent charts
 
         // trigger update to avoid google charts use of cached versions for new charts
         // cached versions keep obsolete chart titles, even if new title fed in through new options
         this.setState({
-            seriesdata,
+            chartmatrix,
         });
         // TODO: better to use forceUpdate vs setState?
         // this.forceUpdate()
 
         // console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist)
 
-        let parentchartparms = seriesdata[series][sourcedepth]
-        let childdataroot = parentchartparms.dataroot.map(node => {
+        let parentchartconfig = chartmatrix[matrixrow][matrixcolumn]
+        let childdataroot = parentchartconfig.datapath.map(node => {
             return Object.assign({}, node)
         })
         childdataroot.push({ parent: selectionrow })
 
-        let newrange = Object.assign({}, parentchartparms.range)
+        let newrange = Object.assign({}, parentchartconfig.range)
 
-        let newchartparms: chartParms = {
+        let newchartconfig: ChartConfig = {
             viewpoint,
             dataseries,
-            dataroot: childdataroot,
-            location: {
-                series,
-                depth: sourcedepth + 1
+            datapath: childdataroot,
+            matrixlocation: {
+                row: matrixrow,
+                column: matrixcolumn + 1
             },
             range: newrange,
-            data: { chartType: "ColumnChart" }
+            chartparms: { chartType: "ColumnChart" }
         }
 
-        newchartparms = this.addChartSpecs(newchartparms)
+        let parmsObj = this.getChartParms(newchartconfig)
 
-        if (newchartparms.isError) return
+        if (parmsObj.isError) return
 
-        // console.log( 'newchartparms = ', newchartparms )
+        newchartconfig.chartparms = parmsObj.chartParms
 
-        seriesdata[series][sourcedepth + 1] = newchartparms
+        // console.log( 'newchartconfig = ', newchartconfig )
+
+        chartmatrix[matrixrow][matrixcolumn + 1] = newchartconfig
 
         this.setState({
-            seriesdata,
+            chartmatrix,
         })
     }
 
-    // ==================================================================
     // --------------------[ GET CHART DATA ]----------------------------
 
     getChartDatasets = (parms, budgetdata) => {
         let parent, children, depth,
-            path = parms.dataroot,
+            path = parms.datapath,
             range = parms.range
 
         let meta = {}
@@ -449,35 +482,35 @@ class ExplorerClass extends Component< any, any > {
     }
 
     // get React components to render
-    getCharts = (datalist, series) => {
+    getCharts = (matrixcolumn, series) => {
 
-        let charts = datalist.map((seriesdata, index) => {
+        let charts = matrixcolumn.map((matrixcell, index) => {
 
-            let data = seriesdata.data
+            let chartparms = matrixcell.chartparms
 
             // separate callback for each instance
-            let callback = ((chartparms: chartParms) => {
+            let callback = ((chartconfig: ChartConfig) => {
                 let self = this
                 return (Chart, err) => {
                     let chart = Chart.chart
                     let selection = chart.getSelection()
-                    self.updateChartsSelection({ chartparms, chart, selection, err })
+                    self.updateChartsSelection({ chartconfig, chart, selection, err })
                 }
-            })(seriesdata)
+            })(matrixcell)
             // select event only for now
             // TODO: use filter for 'select' instead of map
-            data.events = data.events.map(eventdata => {
+            chartparms.events = chartparms.events.map(eventdata => {
                 eventdata.callback = callback
                 return eventdata
             })
 
             return <ExplorerChart
                 key = {index}
-                chartType = {data.chartType}
-                options = { data.options }
-                chartEvents = {data.events}
-                rows = {data.rows}
-                columns = {data.columns}
+                chartType = {chartparms.chartType}
+                options = { chartparms.options }
+                chartEvents = {chartparms.events}
+                rows = {chartparms.rows}
+                columns = {chartparms.columns}
                 // used to create html element id attribute
                 graph_id = {"ChartID" + series + '' + index}
                 />
@@ -487,43 +520,46 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
+    // ===================================================================
+    // ---------------------------[ RENDER ]------------------------------ 
+
     render() {
 
         let explorer = this
 
-        // ============================================
         // -----------[ DASHBOARD SEGMENT]-------------
+
         let singleslider = (explorer.state.yearselection == 'one')?
             <ReactSlider 
                 className="horizontal-slider" 
-                defaultValue={explorer.state.slider.singlevalue} 
+                defaultValue={explorer.state.yearslider.singlevalue} 
                 min={ 2003 } 
                 max={ 2016 } 
                 onChange = {(value) => {
                     explorer.setState({
-                        slider: Object.assign(explorer.state.slider, { 
+                        yearslider: Object.assign(explorer.state.yearslider, { 
                             singlevalue: [value] 
                         })
                     })
                 }}>
-                <div >{explorer.state.slider.singlevalue[0]}</div>
+                <div >{explorer.state.yearslider.singlevalue[0]}</div>
             </ReactSlider > :''
         let doubleslider = (explorer.state.yearselection != 'one') ?
             <ReactSlider
                 className="horizontal-slider"
-                defaultValue={explorer.state.slider.doublevalue}
+                defaultValue={explorer.state.yearslider.doublevalue}
                 min={ 2003 }
                 max={ 2016 }
                 withBars={(explorer.state.yearselection == 'all') ? true : false}
                 onChange = {(value) => {
                     explorer.setState({
-                        slider: Object.assign(explorer.state.slider,{ 
+                        yearslider: Object.assign(explorer.state.yearslider,{ 
                             doublevalue: value 
                         })
                     })
                 } }>
-                <div >{explorer.state.slider.doublevalue[0]}</div>
-                <div >{explorer.state.slider.doublevalue[1]}</div>
+                <div >{explorer.state.yearslider.doublevalue[0]}</div>
+                <div >{explorer.state.yearslider.doublevalue[1]}</div>
             </ReactSlider>:''
         let dashboardsegment = <Card initiallyExpanded={false}>
 
@@ -539,7 +575,7 @@ class ExplorerClass extends Component< any, any > {
                 </div>
                 <RadioButtonGroup
                     style={{
-                        display: (explorer.state.dataselection != "staffing") ? 'inline-block' : 'none',
+                        display: (explorer.state.datafacet != "staffing") ? 'inline-block' : 'none',
                     }}
                     name="viewselection"
                     defaultSelected="functional">
@@ -616,10 +652,9 @@ class ExplorerClass extends Component< any, any > {
             </CardText>
         </Card>
 
-        // ============================================
         // -----------[ DRILLDOWN SEGMENT]-------------
 
-        let drilldownlist = explorer.state.seriesdata[ChartSeries.DrillDown]
+        let drilldownlist = explorer.state.chartmatrix[ChartSeries.DrillDown]
 
         let drilldowncharts = explorer.getCharts(drilldownlist, ChartSeries.DrillDown)
 
@@ -640,11 +675,11 @@ class ExplorerClass extends Component< any, any > {
                 </p>
                 <RadioButtonGroup
                     style={{display:'inline-block'}}
-                    name="dataselection" 
-                    defaultSelected={explorer.state.dataselection}
+                    name="datafacet" 
+                    defaultSelected={explorer.state.datafacet}
                     onChange={(ev, selection) => {
                         explorer.setState({
-                            dataselection: selection,
+                            datafacet: selection,
                         })
                     } }>
                     <RadioButton 
@@ -673,7 +708,7 @@ class ExplorerClass extends Component< any, any > {
                         style={{ display: 'inline-block', width: 'auto' }} />
                 </RadioButtonGroup>
                 <RadioButtonGroup
-                    style={{ display: (explorer.state.dataselection != "staffing") ? 'inline-block' : 'none', 
+                    style={{ display: (explorer.state.datafacet != "staffing") ? 'inline-block' : 'none', 
                         backgroundColor: "#eee" }}
                     name="activities"
                     defaultSelected="activities">
@@ -691,7 +726,7 @@ class ExplorerClass extends Component< any, any > {
                         style={{ display: 'inline-block', width: 'auto' }} />
                 </RadioButtonGroup>
                 <RadioButtonGroup
-                    style={{ display: (explorer.state.dataselection == "staffing") ? 'inline-block' : 'none', 
+                    style={{ display: (explorer.state.datafacet == "staffing") ? 'inline-block' : 'none', 
                         backgroundColor: "#eee" }}
                     name="staffing"
                     defaultSelected="positions"
@@ -722,10 +757,9 @@ class ExplorerClass extends Component< any, any > {
             </CardText>
         </Card >
 
-        // =============================================
         // --------------[ COMPARE SEGMENT]-------------
 
-        let comparelist = explorer.state.seriesdata[ChartSeries.Compare]
+        let comparelist = explorer.state.chartmatrix[ChartSeries.Compare]
 
         let comparecharts = explorer.getCharts(comparelist, ChartSeries.Compare)
 
@@ -754,7 +788,6 @@ class ExplorerClass extends Component< any, any > {
             </CardText>
         </Card>
 
-        // ===============================================
         // -----------[ DIFFERENCES SEGMENT ]-------------
 
         let differencessegment = <Card>
@@ -763,7 +796,6 @@ class ExplorerClass extends Component< any, any > {
 
         </Card>
 
-        // ===========================================
         // -----------[ CONTEXT SEGMENT ]-------------
 
         let contextsegment = <Card>
@@ -772,7 +804,6 @@ class ExplorerClass extends Component< any, any > {
 
         </Card>
 
-        // ===========================================
         // -----------[ BUILD SEGMENT ]-------------
 
         let buildsegment = <Card>
@@ -780,6 +811,8 @@ class ExplorerClass extends Component< any, any > {
             <CardTitle>Build</CardTitle>
 
         </Card>
+
+        // -----------[ COMBINE SEGMENTS ]---------------
 
         return <div>
 
@@ -799,6 +832,9 @@ class ExplorerClass extends Component< any, any > {
     }
 
 }
+
+// ====================================================================================
+// ------------------------------[ INJECT DATA STORE ]---------------------------------
 
 let mapStateToProps = (state) => {
 
