@@ -34,16 +34,16 @@ class ExplorerClass extends Component {
         };
         this.componentDidMount = () => {
             let userselections = this.state.userselections, chartmatrix = this.state.chartmatrix;
-            var matrixlocation, parmsObj;
+            var matrixlocation, chartParmsObj;
             this.setViewpointAmounts(this.state.userselections.viewpoint, this.state.userselections.dataseries, this.props.budgetdata);
             let drilldownchartconfig = this.initRootChartConfig(constants_1.ChartSeries.DrillDown, userselections);
-            parmsObj = this.getChartParms(drilldownchartconfig);
-            drilldownchartconfig.chartparms = parmsObj.chartParms;
+            chartParmsObj = this.getChartParms(drilldownchartconfig);
+            drilldownchartconfig.chartparms = chartParmsObj.chartParms;
             matrixlocation = drilldownchartconfig.matrixlocation;
             chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig;
             let comparechartconfig = this.initRootChartConfig(constants_1.ChartSeries.Compare, userselections);
-            parmsObj = this.getChartParms(comparechartconfig);
-            comparechartconfig.chartparms = parmsObj.chartParms;
+            chartParmsObj = this.getChartParms(comparechartconfig);
+            comparechartconfig.chartparms = chartParmsObj.chartParms;
             matrixlocation = comparechartconfig.matrixlocation;
             chartmatrix[matrixlocation.row][matrixlocation.column] = comparechartconfig;
             this.setState({
@@ -131,7 +131,7 @@ class ExplorerClass extends Component {
             return {
                 viewpoint: userselections.viewpoint,
                 dataseries: userselections.dataseries,
-                datapath: [{ parent: 0 }],
+                datapath: [],
                 matrixlocation: {
                     row: matrixrow,
                     column: 0
@@ -145,17 +145,18 @@ class ExplorerClass extends Component {
             };
         };
         this.getChartParms = (chartConfig) => {
-            let parmsObj = { isError: false, chartParms: null };
-            let options = {}, events = null, rows = [], columns = [], budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[chartConfig.viewpoint], self = this, range = chartConfig.range, meta = [];
-            let { parent, children, depth } = this.getChartDatasets(chartConfig, budgetdata);
-            if ((depth + 1) >= meta.length) {
-                parmsObj.isError = true;
-                return parmsObj;
+            let chartParmsObj = { isError: false, chartParms: null };
+            let options, events, rows, columns;
+            let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[chartConfig.viewpoint], range = chartConfig.range;
+            let { parent, children, depth, error } = this.getChartDatasets(chartConfig, budgetdata);
+            if (error) {
+                chartParmsObj.isError = true;
+                return chartParmsObj;
             }
-            let axistitle = meta[depth].Children;
+            let axistitle = '';
             axistitle = constants_2.categoryaliases[axistitle] || axistitle;
             options = {
-                title: parent[meta[depth].Name],
+                title: '',
                 vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
                 hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
                 bar: { groupWidth: "95%" },
@@ -167,10 +168,19 @@ class ExplorerClass extends Component {
             events = [
                 {
                     eventName: 'select',
+                    callback: ((chartconfig) => {
+                        let self = this;
+                        return (Chart, err) => {
+                            let chart = Chart.chart;
+                            let selection = chart.getSelection();
+                            let context = { chartconfig: chartconfig, chart: chart, selection: selection, err: err };
+                            self.updateChartsSelection(context);
+                        };
+                    })(chartConfig)
                 }
             ];
             let year = range.latestyear;
-            let categorylabel = meta[depth + 1].Name;
+            let categorylabel = '';
             columns = [
                 { type: 'string', label: categorylabel },
                 { type: 'number', label: year.toString() },
@@ -189,12 +199,12 @@ class ExplorerClass extends Component {
             chartdata.options = options;
             chartdata.events = events;
             chartdata.chartType = chartConfig.charttype;
-            parmsObj.chartParms = chartdata;
-            return parmsObj;
+            chartParmsObj.chartParms = chartdata;
+            return chartParmsObj;
         };
-        this.updateChartsSelection = config => {
+        this.updateChartsSelection = (context) => {
             let chartmatrix = this.state.chartmatrix;
-            let sourcechartconfig = config.chartconfig, selectmatrixlocation = sourcechartconfig.matrixlocation, matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column, selection = config.selection[0], selectionrow = selection.row, viewpoint = sourcechartconfig.viewpoint, dataseries = sourcechartconfig.dataseries;
+            let sourcechartconfig = context.chartconfig, selectmatrixlocation = sourcechartconfig.matrixlocation, matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column, selection = context.selection[0], selectionrow = selection.row, viewpoint = sourcechartconfig.viewpoint, dataseries = sourcechartconfig.dataseries;
             let serieslist = chartmatrix[matrixrow];
             serieslist.splice(matrixcolumn + 1);
             this.setState({
@@ -217,17 +227,17 @@ class ExplorerClass extends Component {
                 range: newrange,
                 chartparms: { chartType: "ColumnChart" }
             };
-            let parmsObj = this.getChartParms(newchartconfig);
-            if (parmsObj.isError)
+            let chartParmsObj = this.getChartParms(newchartconfig);
+            if (chartParmsObj.isError)
                 return;
-            newchartconfig.chartparms = parmsObj.chartParms;
+            newchartconfig.chartparms = chartParmsObj.chartParms;
             chartmatrix[matrixrow][matrixcolumn + 1] = newchartconfig;
             this.setState({
                 chartmatrix: chartmatrix,
             });
         };
         this.getChartDatasets = (parms, budgetdata) => {
-            let parent, children, depth, path = parms.datapath, range = parms.range;
+            let parent, children, depth, error, path = parms.datapath, range = parms.range;
             let meta = {};
             let list = budgetdata.filter(item => {
                 return (item.Year == range.latestyear) ? true : false;
@@ -239,24 +249,13 @@ class ExplorerClass extends Component {
             }
             depth--;
             children = list;
-            return { parent: parent, children: children, depth: depth };
+            error = false;
+            return { parent: parent, children: children, depth: depth, error: error };
         };
-        this.getCharts = (matrixcolumn, series) => {
-            let charts = matrixcolumn.map((matrixcell, index) => {
-                let chartparms = matrixcell.chartparms;
-                let callback = ((chartconfig) => {
-                    let self = this;
-                    return (Chart, err) => {
-                        let chart = Chart.chart;
-                        let selection = chart.getSelection();
-                        self.updateChartsSelection({ chartconfig: chartconfig, chart: chart, selection: selection, err: err });
-                    };
-                })(matrixcell);
-                chartparms.events = chartparms.events.map(eventdata => {
-                    eventdata.callback = callback;
-                    return eventdata;
-                });
-                return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + series + '' + index});
+        this.getCharts = (matrixcolumn, matrixrow) => {
+            let charts = matrixcolumn.map((chartconfig, index) => {
+                let chartparms = chartconfig.chartparms;
+                return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + matrixrow + '' + index});
             });
             return charts;
         };

@@ -32,7 +32,7 @@ interface ChartConfig {
         row: number,
         column: number,
     },
-    datapath: { parent: number }[],
+    datapath: string[],
     range: {
         latestyear: number,
         earliestyear: number,
@@ -58,6 +58,13 @@ interface ComponentSummaries {
     Aggregates?: any,
 }
 
+interface ChartSelectionContext {
+    chartconfig:ChartConfig, 
+    chart:any, 
+    selection:any[], 
+    err:any,
+}
+
 class ExplorerClass extends Component< any, any > {
 
     // ---------------------[ INITIALIZE ]--------------------------------
@@ -66,8 +73,9 @@ class ExplorerClass extends Component< any, any > {
         super(props);
     }
 
-    // should be in global state to allow for re-creation after return visit
+    // TODO: these values should be in global state to allow for re-creation after return visit
     // TODO: Take state initialization from external source
+    // charts exist in a matrix (row/column) which contain a chartconfig object
     state = {
         chartmatrix: [ [], [] ], // DrillDown, Compare (Later: Differences, Context, Build)
         datafacet:"expenses",
@@ -89,7 +97,7 @@ class ExplorerClass extends Component< any, any > {
             chartmatrix = this.state.chartmatrix
 
         var matrixlocation, 
-            parmsObj
+            chartParmsObj
 
 
         // ------------------------[ POPULATE VIEWPOINT WITH VALUES ]-----------------------
@@ -106,10 +114,10 @@ class ExplorerClass extends Component< any, any > {
         let drilldownchartconfig: ChartConfig = 
             this.initRootChartConfig(ChartSeries.DrillDown, userselections)
 
-        parmsObj = this.getChartParms( drilldownchartconfig )
+        chartParmsObj = this.getChartParms( drilldownchartconfig )
 
         // ** assume no error ??
-        drilldownchartconfig.chartparms = parmsObj.chartParms
+        drilldownchartconfig.chartparms = chartParmsObj.chartParms
 
         matrixlocation = drilldownchartconfig.matrixlocation
         chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = drilldownchartconfig
@@ -119,10 +127,10 @@ class ExplorerClass extends Component< any, any > {
         // assemble parms to get initial dataset
         let comparechartconfig: ChartConfig = this.initRootChartConfig( ChartSeries.Compare, userselections )
 
-        parmsObj = this.getChartParms( comparechartconfig )
+        chartParmsObj = this.getChartParms( comparechartconfig )
 
         // ** assume no error ??
-        comparechartconfig.chartparms = parmsObj.chartParms
+        comparechartconfig.chartparms = chartParmsObj.chartParms
 
         matrixlocation = comparechartconfig.matrixlocation
         chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = comparechartconfig
@@ -292,7 +300,7 @@ class ExplorerClass extends Component< any, any > {
         return {
             viewpoint:userselections.viewpoint,
             dataseries:userselections.dataseries,
-            datapath: [{ parent: 0 }],
+            datapath: [], // get data from root viewpoint object
             matrixlocation: {
                 row:matrixrow,
                 column: 0
@@ -309,34 +317,29 @@ class ExplorerClass extends Component< any, any > {
 
     // ------------------[ GET CHART PARMS ]--------------------------
     /*
-        return columns, rows, options, and events to the parms 
-        object's data property
+        return chartType, columns, rows, options, and events
     */
 
-    // returns parmsObj.isError = true if fails
-    getChartParms = (chartConfig:ChartConfig) => {
-        let parmsObj = {isError:false,chartParms:null}
-        let options = {},
-            events = null,
-            rows = [],
-            columns = [],
-            budgetdata = this.props.budgetdata,
+    // returns chartParmsObj.isError = true if fails
+    // TODO: capture range, including years
+    getChartParms = (chartConfig: ChartConfig) => {
+        let chartParmsObj = {isError:false,chartParms:null}
+        let options, events, rows, columns
+        let budgetdata = this.props.budgetdata,
             viewpointdata = budgetdata.Viewpoints[chartConfig.viewpoint],
-            // meta = budgetdata[0].Meta,
-            self = this,
-            range = chartConfig.range,
-            meta = []
+            range = chartConfig.range
 
-        // TODO: capture range, including years
-        let {parent, children, depth} = this.getChartDatasets(chartConfig, budgetdata)
-        if ((depth +1) >= meta.length) { // no more data to show
-            parmsObj.isError = true
-            return parmsObj
+        let {parent, children, depth, error} = this.getChartDatasets(chartConfig, budgetdata)
+
+        if (error) { // no more data to show
+            chartParmsObj.isError = true
+            return chartParmsObj
         }
-        let axistitle = meta[depth].Children
+        // let axistitle = meta[depth].Children
+        let axistitle = ''
         axistitle = categoryaliases[axistitle] || axistitle
         options = {
-            title: parent[meta[depth].Name], // + ' ($Thousands)',
+            title: '', // parent[meta[depth].Name], // + ' ($Thousands)',
             vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
             hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
             bar: { groupWidth: "95%" },
@@ -350,15 +353,20 @@ class ExplorerClass extends Component< any, any > {
         events = [
             {
                 eventName: 'select',
-                // callback created in immediately invoked function in
-                // order to set correct parms var in closure
-                // created in getCharts
-                // callback: this.getSelectEvent(parms)
+                callback: ((chartconfig: ChartConfig) => {
+                    let self = this
+                    return (Chart, err) => {
+                        let chart = Chart.chart
+                        let selection = chart.getSelection()
+                        let context: ChartSelectionContext = { chartconfig, chart, selection, err }
+                        self.updateChartsSelection(context)
+                    }
+                })(chartConfig)
             }
         ]
 
         let year = range.latestyear
-        let categorylabel = meta[depth + 1].Name
+        let categorylabel = '' // meta[depth + 1].Name
 
         columns = [
             // type is required, else throws silent error
@@ -384,25 +392,25 @@ class ExplorerClass extends Component< any, any > {
         chartdata.options = options
         chartdata.events = events
         chartdata.chartType = chartConfig.charttype
-        parmsObj.chartParms = chartdata
+        chartParmsObj.chartParms = chartdata
         // console.log('chartdata = ', options, events, columns, rows)
-        return parmsObj
+        return chartParmsObj
     }
 
     // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
 
     // response to user selection of a chart component (such as a column )
     // called by chart callback
-    updateChartsSelection = config => {
+    updateChartsSelection = (context:ChartSelectionContext) => {
         // console.log('updateCharts data = ', data)
 
         let chartmatrix = this.state.chartmatrix
 
-        let sourcechartconfig = config.chartconfig,
+        let sourcechartconfig = context.chartconfig,
             selectmatrixlocation = sourcechartconfig.matrixlocation,
             matrixrow = selectmatrixlocation.row,
             matrixcolumn = selectmatrixlocation.column,
-            selection = config.selection[0],
+            selection = context.selection[0],
             selectionrow = selection.row,
             viewpoint = sourcechartconfig.viewpoint,
             dataseries = sourcechartconfig.dataseries
@@ -441,11 +449,11 @@ class ExplorerClass extends Component< any, any > {
             chartparms: { chartType: "ColumnChart" }
         }
 
-        let parmsObj = this.getChartParms(newchartconfig)
+        let chartParmsObj = this.getChartParms(newchartconfig)
 
-        if (parmsObj.isError) return
+        if (chartParmsObj.isError) return
 
-        newchartconfig.chartparms = parmsObj.chartParms
+        newchartconfig.chartparms = chartParmsObj.chartParms
 
         // console.log( 'newchartconfig = ', newchartconfig )
 
@@ -459,7 +467,7 @@ class ExplorerClass extends Component< any, any > {
     // --------------------[ GET CHART DATA ]----------------------------
 
     getChartDatasets = (parms, budgetdata) => {
-        let parent, children, depth,
+        let parent, children, depth, error,
             path = parms.datapath,
             range = parms.range
 
@@ -477,32 +485,17 @@ class ExplorerClass extends Component< any, any > {
         }
         depth-- // last successful reference
         children = list
+        error = false
 
-        return {parent, children, depth}
+        return {parent, children, depth, error}
     }
 
     // get React components to render
-    getCharts = (matrixcolumn, series) => {
+    getCharts = (matrixcolumn, matrixrow) => {
 
-        let charts = matrixcolumn.map((matrixcell, index) => {
+        let charts = matrixcolumn.map((chartconfig, index) => {
 
-            let chartparms = matrixcell.chartparms
-
-            // separate callback for each instance
-            let callback = ((chartconfig: ChartConfig) => {
-                let self = this
-                return (Chart, err) => {
-                    let chart = Chart.chart
-                    let selection = chart.getSelection()
-                    self.updateChartsSelection({ chartconfig, chart, selection, err })
-                }
-            })(matrixcell)
-            // select event only for now
-            // TODO: use filter for 'select' instead of map
-            chartparms.events = chartparms.events.map(eventdata => {
-                eventdata.callback = callback
-                return eventdata
-            })
+            let chartparms = chartconfig.chartparms
 
             return <ExplorerChart
                 key = {index}
@@ -512,7 +505,7 @@ class ExplorerClass extends Component< any, any > {
                 rows = {chartparms.rows}
                 columns = {chartparms.columns}
                 // used to create html element id attribute
-                graph_id = {"ChartID" + series + '' + index}
+                graph_id = {"ChartID" + matrixrow + '' + index}
                 />
         })
 
