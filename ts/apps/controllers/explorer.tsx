@@ -177,6 +177,20 @@ class ExplorerClass extends Component< any, any > {
 
         let itemseries = budgetdata.DataSeries[dataseriesname]
 
+        let baselinecat = itemseries.Baseline // use for system lookups
+        let baselinelookups = budgetdata.Lookups[baselinecat]
+        let componentcat = itemseries.Components
+        let componentlookups = budgetdata.Lookups[componentcat]
+        let categorylookups = viewpoint.Lookups.Categories
+
+        let lookups = {
+            baselinelookups,
+            componentlookups,
+            categorylookups,
+        }
+
+        console.log('lookups',lookups,componentcat)
+
         let items = itemseries.Items
 
         let isInflationAdjusted = !!itemseries.InflationAdjusted
@@ -185,7 +199,8 @@ class ExplorerClass extends Component< any, any > {
 
         // set years, and Aggregates by years
         // initiates recursion
-        this.setComponentSummaries(rootcomponent, items, isInflationAdjusted)
+        this.setComponentSummaries(rootcomponent, items, isInflationAdjusted,
+            lookups)
 
         // create sentinel to prevent unnucessary processing
         viewpoint.currentdataseries = dataseriesname
@@ -194,7 +209,10 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
-    setComponentSummaries = (components, items, isInflationAdjusted):ComponentSummaries => {
+    // this is recursive, with "BASELINE" component at the leaf,
+    // or with absence of Components property at leaf
+    setComponentSummaries = (components, items, isInflationAdjusted,
+        lookups):ComponentSummaries => {
         // cumulate summaries for this level
         let cumulatingSummaries:ComponentSummaries = {
             years:{},
@@ -219,14 +237,29 @@ class ExplorerClass extends Component< any, any > {
                 // if no components found, loop
                 if (component.Components) {
 
+                    let sorted = this.getIndexSortedComponents(
+                        component.Components,lookups)
+
+                    component.SortedComponents = sorted
+
                     // get child component summaries recursively
-                    componentSummaries = this.setComponentSummaries(component.Components, items, isInflationAdjusted)
+                    componentSummaries = this.setComponentSummaries(
+                        component.Components, items, isInflationAdjusted,
+                        lookups)
 
                     // capture data for chart-making
                     if (componentSummaries.years)
                         component.years = componentSummaries.years
-                    if (componentSummaries.Aggregates)
+                    if (componentSummaries.Aggregates) {
                         component.Aggregates = componentSummaries.Aggregates
+                        if (component.Aggregates) {
+                            let sorted = this.getNameSortedComponents(
+                                component.Aggregates, lookups)
+
+                            component.SortedAggregates = sorted
+                        }
+
+                    }
 
                 }
 
@@ -257,7 +290,7 @@ class ExplorerClass extends Component< any, any > {
                         Aggregates: item.Components, 
                     }
                 }
-                console.log('componentSummaries',componentSummaries)
+                // console.log('componentSummaries',componentSummaries)
                 // capture data for chart-making
                 if (componentSummaries.years) {
                     component.years = componentSummaries.years
@@ -266,17 +299,85 @@ class ExplorerClass extends Component< any, any > {
                     component.Components = componentSummaries.Aggregates
                 }
 
+                if (component.Components) {
+                    let sorted = this.getNameSortedComponents(
+                        component.Components, lookups)
+
+                    component.SortedComponents = sorted
+                }
+
             }
 
             // aggregate the collected summaries for the caller
-            if (componentSummaries)
+            if (componentSummaries) {
                 this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries)
+            }
         }
 
         return cumulatingSummaries
     }
 
-    aggregateComponentSummaries = (cumulatingSummaries, componentSummaries) => {
+    getIndexSortedComponents = (components, lookups) => {
+        let sorted = []
+        let catlookups = lookups.categorylookups
+        for (let componentname in components) {
+            let component = components[componentname]
+            let config = component.Config
+            let name = (config == 'BASELINE')
+                ? lookups.baselinelookups[componentname]
+                : catlookups[componentname]
+            let item = {
+                Code: componentname,
+                Index: component.Index,
+                Name: name || 'unknown name'
+            }
+            sorted.push(item)
+        }
+        sorted.sort( (a,b) => {
+            let value
+            if (a.Index < b.Index )
+                value = -1
+            else if (a.Index > b.Index)
+                value = 1
+            else 
+                value = 0
+            return value
+        })
+
+        return sorted
+
+    }
+
+    getNameSortedComponents = (components, lookups) => {
+        let sorted = []
+        let complookups = lookups.componentlookups
+        for (let componentname in components) {
+            let component = components[componentname]
+            let config = component.Config
+            let name = complookups[componentname]
+            let item = {
+                Code: componentname,
+                Name: name || 'unknown name'
+            }
+            sorted.push(item)
+        }
+        sorted.sort((a, b) => {
+            let value
+            if (a.Name < b.Name)
+                value = -1
+            else if (a.Name > b.Name)
+                value = 1
+            else
+                value = 0
+            return value
+        })
+
+        return sorted
+
+    }
+    aggregateComponentSummaries = (
+        cumulatingSummaries:ComponentSummaries, 
+        componentSummaries:ComponentSummaries) => {
 
         // if years have been collected, add them to the total
         if (componentSummaries.years) {

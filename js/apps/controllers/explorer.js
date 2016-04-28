@@ -59,14 +59,25 @@ class ExplorerClass extends Component {
             if (viewpoint.currentdataseries && (viewpoint.currentdataseries == dataseriesname))
                 return;
             let itemseries = budgetdata.DataSeries[dataseriesname];
+            let baselinecat = itemseries.Baseline;
+            let baselinelookups = budgetdata.Lookups[baselinecat];
+            let componentcat = itemseries.Components;
+            let componentlookups = budgetdata.Lookups[componentcat];
+            let categorylookups = viewpoint.Lookups.Categories;
+            let lookups = {
+                baselinelookups: baselinelookups,
+                componentlookups: componentlookups,
+                categorylookups: categorylookups,
+            };
+            console.log('lookups', lookups, componentcat);
             let items = itemseries.Items;
             let isInflationAdjusted = !!itemseries.InflationAdjusted;
             let rootcomponent = { "ROOT": viewpoint };
-            this.setComponentSummaries(rootcomponent, items, isInflationAdjusted);
+            this.setComponentSummaries(rootcomponent, items, isInflationAdjusted, lookups);
             viewpoint.currentdataseries = dataseriesname;
             console.log('viewpoint ', viewpoint);
         };
-        this.setComponentSummaries = (components, items, isInflationAdjusted) => {
+        this.setComponentSummaries = (components, items, isInflationAdjusted, lookups) => {
             let cumulatingSummaries = {
                 years: {},
                 Aggregates: {},
@@ -80,11 +91,18 @@ class ExplorerClass extends Component {
                     delete component.Aggregates;
                 if (component.Config != "BASELINE") {
                     if (component.Components) {
-                        componentSummaries = this.setComponentSummaries(component.Components, items, isInflationAdjusted);
+                        let sorted = this.getIndexSortedComponents(component.Components, lookups);
+                        component.SortedComponents = sorted;
+                        componentSummaries = this.setComponentSummaries(component.Components, items, isInflationAdjusted, lookups);
                         if (componentSummaries.years)
                             component.years = componentSummaries.years;
-                        if (componentSummaries.Aggregates)
+                        if (componentSummaries.Aggregates) {
                             component.Aggregates = componentSummaries.Aggregates;
+                            if (component.Aggregates) {
+                                let sorted = this.getNameSortedComponents(component.Aggregates, lookups);
+                                component.SortedAggregates = sorted;
+                            }
+                        }
                     }
                 }
                 else {
@@ -110,18 +128,75 @@ class ExplorerClass extends Component {
                             Aggregates: item.Components,
                         };
                     }
-                    console.log('componentSummaries', componentSummaries);
                     if (componentSummaries.years) {
                         component.years = componentSummaries.years;
                     }
                     if (componentSummaries.Aggregates) {
                         component.Components = componentSummaries.Aggregates;
                     }
+                    if (component.Components) {
+                        let sorted = this.getNameSortedComponents(component.Components, lookups);
+                        component.SortedComponents = sorted;
+                    }
                 }
-                if (componentSummaries)
+                if (componentSummaries) {
                     this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
+                }
             }
             return cumulatingSummaries;
+        };
+        this.getIndexSortedComponents = (components, lookups) => {
+            let sorted = [];
+            let catlookups = lookups.categorylookups;
+            for (let componentname in components) {
+                let component = components[componentname];
+                let config = component.Config;
+                let name = (config == 'BASELINE')
+                    ? lookups.baselinelookups[componentname]
+                    : catlookups[componentname];
+                let item = {
+                    Code: componentname,
+                    Index: component.Index,
+                    Name: name || 'unknown name'
+                };
+                sorted.push(item);
+            }
+            sorted.sort((a, b) => {
+                let value;
+                if (a.Index < b.Index)
+                    value = -1;
+                else if (a.Index > b.Index)
+                    value = 1;
+                else
+                    value = 0;
+                return value;
+            });
+            return sorted;
+        };
+        this.getNameSortedComponents = (components, lookups) => {
+            let sorted = [];
+            let complookups = lookups.componentlookups;
+            for (let componentname in components) {
+                let component = components[componentname];
+                let config = component.Config;
+                let name = complookups[componentname];
+                let item = {
+                    Code: componentname,
+                    Name: name || 'unknown name'
+                };
+                sorted.push(item);
+            }
+            sorted.sort((a, b) => {
+                let value;
+                if (a.Name < b.Name)
+                    value = -1;
+                else if (a.Name > b.Name)
+                    value = 1;
+                else
+                    value = 0;
+                return value;
+            });
+            return sorted;
         };
         this.aggregateComponentSummaries = (cumulatingSummaries, componentSummaries) => {
             if (componentSummaries.years) {

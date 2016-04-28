@@ -9467,14 +9467,25 @@ var ExplorerClass = function (_Component) {
             var viewpoint = budgetdata.Viewpoints[viewpointname];
             if (viewpoint.currentdataseries && viewpoint.currentdataseries == dataseriesname) return;
             var itemseries = budgetdata.DataSeries[dataseriesname];
+            var baselinecat = itemseries.Baseline;
+            var baselinelookups = budgetdata.Lookups[baselinecat];
+            var componentcat = itemseries.Components;
+            var componentlookups = budgetdata.Lookups[componentcat];
+            var categorylookups = viewpoint.Lookups.Categories;
+            var lookups = {
+                baselinelookups: baselinelookups,
+                componentlookups: componentlookups,
+                categorylookups: categorylookups
+            };
+            console.log('lookups', lookups, componentcat);
             var items = itemseries.Items;
             var isInflationAdjusted = !!itemseries.InflationAdjusted;
             var rootcomponent = { "ROOT": viewpoint };
-            _this.setComponentSummaries(rootcomponent, items, isInflationAdjusted);
+            _this.setComponentSummaries(rootcomponent, items, isInflationAdjusted, lookups);
             viewpoint.currentdataseries = dataseriesname;
             console.log('viewpoint ', viewpoint);
         };
-        _this.setComponentSummaries = function (components, items, isInflationAdjusted) {
+        _this.setComponentSummaries = function (components, items, isInflationAdjusted, lookups) {
             var cumulatingSummaries = {
                 years: {},
                 Aggregates: {}
@@ -9486,9 +9497,17 @@ var ExplorerClass = function (_Component) {
                 if (component.Aggregates) delete component.Aggregates;
                 if (component.Config != "BASELINE") {
                     if (component.Components) {
-                        componentSummaries = _this.setComponentSummaries(component.Components, items, isInflationAdjusted);
+                        var sorted = _this.getIndexSortedComponents(component.Components, lookups);
+                        component.SortedComponents = sorted;
+                        componentSummaries = _this.setComponentSummaries(component.Components, items, isInflationAdjusted, lookups);
                         if (componentSummaries.years) component.years = componentSummaries.years;
-                        if (componentSummaries.Aggregates) component.Aggregates = componentSummaries.Aggregates;
+                        if (componentSummaries.Aggregates) {
+                            component.Aggregates = componentSummaries.Aggregates;
+                            if (component.Aggregates) {
+                                var _sorted = _this.getNameSortedComponents(component.Aggregates, lookups);
+                                component.SortedAggregates = _sorted;
+                            }
+                        }
                     }
                 } else {
                     var item = items[componentname];
@@ -9511,17 +9530,63 @@ var ExplorerClass = function (_Component) {
                             Aggregates: item.Components
                         };
                     }
-                    console.log('componentSummaries', componentSummaries);
                     if (componentSummaries.years) {
                         component.years = componentSummaries.years;
                     }
                     if (componentSummaries.Aggregates) {
                         component.Components = componentSummaries.Aggregates;
                     }
+                    if (component.Components) {
+                        var sorted = _this.getNameSortedComponents(component.Components, lookups);
+                        component.SortedComponents = sorted;
+                    }
                 }
-                if (componentSummaries) _this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
+                if (componentSummaries) {
+                    _this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
+                }
             }
             return cumulatingSummaries;
+        };
+        _this.getIndexSortedComponents = function (components, lookups) {
+            var sorted = [];
+            var catlookups = lookups.categorylookups;
+            for (var componentname in components) {
+                var component = components[componentname];
+                var config = component.Config;
+                var name = config == 'BASELINE' ? lookups.baselinelookups[componentname] : catlookups[componentname];
+                var item = {
+                    Code: componentname,
+                    Index: component.Index,
+                    Name: name || 'unknown name'
+                };
+                sorted.push(item);
+            }
+            sorted.sort(function (a, b) {
+                var value = undefined;
+                if (a.Index < b.Index) value = -1;else if (a.Index > b.Index) value = 1;else value = 0;
+                return value;
+            });
+            return sorted;
+        };
+        _this.getNameSortedComponents = function (components, lookups) {
+            var sorted = [];
+            var complookups = lookups.componentlookups;
+            for (var componentname in components) {
+                var component = components[componentname];
+                var config = component.Config;
+                var name = complookups[componentname];
+                var item = {
+                    Code: componentname,
+                    Name: name || 'unknown name'
+                };
+                sorted.push(item);
+            }
+            sorted.sort(function (a, b) {
+                var value = undefined;
+                if (a.Name < b.Name) value = -1;else if (a.Name > b.Name) value = 1;else value = 0;
+                return value;
+            });
+            return sorted;
         };
         _this.aggregateComponentSummaries = function (cumulatingSummaries, componentSummaries) {
             if (componentSummaries.years) {
