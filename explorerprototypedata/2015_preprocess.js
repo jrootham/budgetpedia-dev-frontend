@@ -67,23 +67,44 @@ for (var line of records) {
         console.log('expense program code not found: ', program)
     } else {
         // decompose
-        let years = item.years || {}
-        if (!years[year]) years[year] = 0
-        let components = item.Components || {}
+        let nominaldata = item.Nominal || {years:{}, Components:{}}
+        let adjusteddata = item.Adjusted || {years:{}, Components:{}}
 
-        years[year] += amount
+        // ------------------[ ITEM ]----------------
+        let nominalyears = nominaldata.years
+        if (!nominalyears[year]) nominalyears[year] = 0
+        nominalyears[year] += amount
 
-        // some accounts may be incorrectly duplicated
-        let yearaccount = components[expenditure] || {years:{}}
-        if (yearaccount.years[year]) {
-            yearaccount.years[year] += amount
+        let adjustedyears = adjusteddata.years
+        if (!adjustedyears[year]) adjustedyears[year] = 0
+        adjustedyears[year] += amount
+
+        // -------------------[ COMPONENTS ]------------------
+
+        let nominalcomponents = nominaldata.Components
+        let nominalcompexp = nominalcomponents[expenditure] || {years:{}}
+        let nominalyearaccount = nominalcompexp.years[year]
+        if (nominalyearaccount) {
+            nominalyearaccount += amount
         } else {
-            yearaccount.years[year] = amount
+            nominalyearaccount = amount
         }
-        // re-assemble
-        components[expenditure] = yearaccount
-        item.years = years
-        item.Components = components
+        nominalcompexp.years[year] = nominalyearaccount
+        nominalcomponents[expenditure] = nominalcompexp
+
+        let adjustedcomponents = adjusteddata.Components
+        let adjustedcompexp = adjustedcomponents[expenditure] || {years:{}}
+        let adjustedyearaccount = adjustedcompexp.years[year]
+        if (adjustedyearaccount) {
+            adjustedyearaccount += amount
+        } else {
+            adjustedyearaccount = amount
+        }
+        adjustedcompexp.years[year] = adjustedyearaccount
+        adjustedcomponents[expenditure] = adjustedcompexp
+
+        item.Nominal = nominaldata
+        item.Adjusted = adjusteddata
     }
 }
 
@@ -111,23 +132,60 @@ for (var line of records) {
         console.log('revenue program code not found: ', program)
     } else {
         // decompose
-        let years = item.years || {}
-        if (!years[year]) years[year] = 0
-        let components = item.Components || {}
+        let nominaldata = item.Nominal || {years:{}, Components:{}}
+        let adjusteddata = item.Adjusted || {years:{}, Components:{}}
 
-        years[year] += amount
+        // ------------------[ ITEM ]----------------
 
-        // some accounts may be incorrectly duplicated
-        let yearaccount = components[expenditure] || {years:{}}
-        if (yearaccount.years[year]) {
-            yearaccount.years[year] += amount
+        // update nominaldata.years
+
+        // nominal...
+        let nominalyears = nominaldata.years
+        if (!nominalyears[year]) nominalyears[year] = 0
+        nominalyears[year] += amount
+
+        // updaet adjusteddata.years
+
+        // adjusted...
+        let adjustedyears = adjusteddata.years
+        if (!adjustedyears[year]) adjustedyears[year] = 0
+        adjustedyears[year] += amount
+
+        // -------------------[ COMPONENTS ]------------------
+
+        // update nominaldata.Components
+
+        // nominal: decompose...
+        let nominalcomponents = nominaldata.Components
+        let nominalcompyears = nominalcomponents[expenditure] || {years:{}}
+        let nominalyearaccount = nominalcompyears.years[year]
+        if (nominalyearaccount) {
+            nominalyearaccount += amount
         } else {
-            yearaccount.years[year] = amount
+            nominalyearaccount = amount
         }
+        // nominal: re-assemble...
+        nominalcompyears.years[year] = nominalyearaccount
+        nominalcomponents[expenditure] = nominalcompyears
+
+        // update adjusteddata.Components
+
+        // adjusted: decompose
+        let adjustedcomponents = adjusteddata.Components
+        let adjustedcompyears = adjustedcomponents[expenditure] || {years:{}}
+        let adjustedyearaccount = adjustedcompyears.years[year]
+        if (adjustedyearaccount) {
+            adjustedyearaccount += amount
+        } else {
+            adjustedyearaccount = amount
+        }
+        // adjusted: re-assemble
+        adjustedcompyears.years[year] = adjustedyearaccount
+        adjustedcomponents[expenditure] = adjustedcompyears
+
         // re-assemble
-        components[expenditure] = yearaccount
-        item.years = years
-        item.Components = components
+        item.Nominal = nominaldata
+        item.Adjusted = adjusteddata
     }
 }
 

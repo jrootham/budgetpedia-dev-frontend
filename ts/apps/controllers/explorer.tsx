@@ -97,6 +97,7 @@ class ExplorerClass extends Component< any, any > {
             viewpoint:"FUNCTIONAL",
             dataseries:"BudgetExpenses",
             charttype: "ColumnChart",
+            inflationadjusted:true,
         }
     }
     
@@ -174,22 +175,26 @@ class ExplorerClass extends Component< any, any > {
         if (viewpoint.currentdataseries && (viewpoint.currentdataseries == dataseriesname))
             return
 
-        let items = budgetdata.DataSeries[dataseriesname].Items
+        let itemseries = budgetdata.DataSeries[dataseriesname]
+
+        let items = itemseries.Items
+
+        let isInflationAdjusted = !!itemseries.InflationAdjusted
 
         let rootcomponent = {"ROOT":viewpoint}
 
         // set years, and Aggregates by years
         // initiates recursion
-        this.setComponentSummaries(rootcomponent, items)
+        this.setComponentSummaries(rootcomponent, items, isInflationAdjusted)
 
         // create sentinel to prevent unnucessary processing
         viewpoint.currentdataseries = dataseriesname
 
-        console.log('writing viewpoint ',viewpoint)
+        console.log('viewpoint ',viewpoint)
 
     }
 
-    setComponentSummaries = (components, items):ComponentSummaries => {
+    setComponentSummaries = (components, items, isInflationAdjusted):ComponentSummaries => {
         // cumulate summaries for this level
         let cumulatingSummaries:ComponentSummaries = {
             years:{},
@@ -215,7 +220,7 @@ class ExplorerClass extends Component< any, any > {
                 if (component.Components) {
 
                     // get child component summaries recursively
-                    componentSummaries = this.setComponentSummaries(component.Components, items)
+                    componentSummaries = this.setComponentSummaries(component.Components, items, isInflationAdjusted)
 
                     // capture data for chart-making
                     if (componentSummaries.years)
@@ -232,16 +237,34 @@ class ExplorerClass extends Component< any, any > {
                 let item = items[componentname]
 
                 // first set componentSummaries as usual
-                componentSummaries = { 
-                    years: item.Components, 
-                    Aggregates: item.years, 
-                }
+                if (isInflationAdjusted) {
+                    console.log('isInflationAdjusted',isInflationAdjusted)
+                    if (this.state.userselections.inflationadjusted) {
+                        componentSummaries = {
+                            years: item.Adjusted.years,
+                            Aggregates: item.Adjusted.Components,
+                        }
+                    } else {
+                        componentSummaries = {
+                            years: item.Nominal.years,
+                            Aggregates: item.Nominal.Components,
+                        }
+                    }
 
+                } else {
+                    componentSummaries = { 
+                        years: item.years, 
+                        Aggregates: item.Components, 
+                    }
+                }
+                console.log('componentSummaries',componentSummaries)
                 // capture data for chart-making
-                if (componentSummaries.years)
+                if (componentSummaries.years) {
                     component.years = componentSummaries.years
-                if (componentSummaries.Aggregates)
+                }
+                if (componentSummaries.Aggregates) {
                     component.Components = componentSummaries.Aggregates
+                }
 
             }
 
@@ -353,8 +376,10 @@ class ExplorerClass extends Component< any, any > {
             viewpointdata = budgetdata.Viewpoints[viewpointindex],
             path = chartConfig.datapath,
             yearscope = chartConfig.yearscope,
-            year = yearscope.latestyear
+            year = yearscope.latestyear,
+            isError = false
 
+        // collect viewpoint node and its components as data sources for the graph
         let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata)
 
         // chartparm:
@@ -409,13 +434,14 @@ class ExplorerClass extends Component< any, any > {
         // TODO: sort components into index order
         // chartparm:
         let rows = components.map(item => {
+            // TODO: get determination of amount processing from Unit value
             let amount = parseInt(rounded(item.Amount/1000))
             // TODO: add % of total to the annotation
             let annotation = amountformat(amount)
             return [item[categorylabel], amount, annotation]            
         })
 
-        let chartdata:ChartParms = {
+        let chartParms:ChartParms = {
 
             columns,
             rows,
@@ -426,8 +452,8 @@ class ExplorerClass extends Component< any, any > {
         }
 
         let chartParmsObj = { 
-            isError: false, 
-            chartParms: chartdata 
+            isError, 
+            chartParms,
         }
 
         return chartParmsObj

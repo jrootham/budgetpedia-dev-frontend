@@ -5,6 +5,7 @@
             "Baseline":"Programs",
             "Units":"DOLLAR",
             "Components":"Expenditures",
+            "InflationAdjusted":true,
             "Items":
             {
                 "311SERVICE":{},
@@ -69,6 +70,7 @@
             "Baseline":"Programs",
             "Units":"DOLLAR",
             "Components":"Expenditures",
+            "InflationAdjusted":true,
             "Items":
             {
                 "311SERVICE":{},

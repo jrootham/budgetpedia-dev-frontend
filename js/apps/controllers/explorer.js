@@ -29,6 +29,7 @@ class ExplorerClass extends Component {
                 viewpoint: "FUNCTIONAL",
                 dataseries: "BudgetExpenses",
                 charttype: "ColumnChart",
+                inflationadjusted: true,
             }
         };
         this.componentDidMount = () => {
@@ -57,13 +58,15 @@ class ExplorerClass extends Component {
             let viewpoint = budgetdata.Viewpoints[viewpointname];
             if (viewpoint.currentdataseries && (viewpoint.currentdataseries == dataseriesname))
                 return;
-            let items = budgetdata.DataSeries[dataseriesname].Items;
+            let itemseries = budgetdata.DataSeries[dataseriesname];
+            let items = itemseries.Items;
+            let isInflationAdjusted = !!itemseries.InflationAdjusted;
             let rootcomponent = { "ROOT": viewpoint };
-            this.setComponentSummaries(rootcomponent, items);
+            this.setComponentSummaries(rootcomponent, items, isInflationAdjusted);
             viewpoint.currentdataseries = dataseriesname;
-            console.log('writing viewpoint ', viewpoint);
+            console.log('viewpoint ', viewpoint);
         };
-        this.setComponentSummaries = (components, items) => {
+        this.setComponentSummaries = (components, items, isInflationAdjusted) => {
             let cumulatingSummaries = {
                 years: {},
                 Aggregates: {},
@@ -77,7 +80,7 @@ class ExplorerClass extends Component {
                     delete component.Aggregates;
                 if (component.Config != "BASELINE") {
                     if (component.Components) {
-                        componentSummaries = this.setComponentSummaries(component.Components, items);
+                        componentSummaries = this.setComponentSummaries(component.Components, items, isInflationAdjusted);
                         if (componentSummaries.years)
                             component.years = componentSummaries.years;
                         if (componentSummaries.Aggregates)
@@ -86,14 +89,34 @@ class ExplorerClass extends Component {
                 }
                 else {
                     let item = items[componentname];
-                    componentSummaries = {
-                        years: item.Components,
-                        Aggregates: item.years,
-                    };
-                    if (componentSummaries.years)
+                    if (isInflationAdjusted) {
+                        console.log('isInflationAdjusted', isInflationAdjusted);
+                        if (this.state.userselections.inflationadjusted) {
+                            componentSummaries = {
+                                years: item.Adjusted.years,
+                                Aggregates: item.Adjusted.Components,
+                            };
+                        }
+                        else {
+                            componentSummaries = {
+                                years: item.Nominal.years,
+                                Aggregates: item.Nominal.Components,
+                            };
+                        }
+                    }
+                    else {
+                        componentSummaries = {
+                            years: item.years,
+                            Aggregates: item.Components,
+                        };
+                    }
+                    console.log('componentSummaries', componentSummaries);
+                    if (componentSummaries.years) {
                         component.years = componentSummaries.years;
-                    if (componentSummaries.Aggregates)
+                    }
+                    if (componentSummaries.Aggregates) {
                         component.Components = componentSummaries.Aggregates;
+                    }
                 }
                 if (componentSummaries)
                     this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
@@ -148,7 +171,7 @@ class ExplorerClass extends Component {
             };
         };
         this.getChartParms = (chartConfig) => {
-            let budgetdata = this.props.budgetdata, viewpointindex = chartConfig.viewpoint, viewpointdata = budgetdata.Viewpoints[viewpointindex], path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
+            let budgetdata = this.props.budgetdata, viewpointindex = chartConfig.viewpoint, viewpointdata = budgetdata.Viewpoints[viewpointindex], path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear, isError = false;
             let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata);
             let chartType = chartConfig.charttype;
             let axistitle = '';
@@ -189,7 +212,7 @@ class ExplorerClass extends Component {
                 let annotation = amountformat(amount);
                 return [item[categorylabel], amount, annotation];
             });
-            let chartdata = {
+            let chartParms = {
                 columns: columns,
                 rows: rows,
                 options: options,
@@ -197,8 +220,8 @@ class ExplorerClass extends Component {
                 chartType: chartType,
             };
             let chartParmsObj = {
-                isError: false,
-                chartParms: chartdata
+                isError: isError,
+                chartParms: chartParms,
             };
             return chartParmsObj;
         };
