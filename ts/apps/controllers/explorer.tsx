@@ -80,7 +80,7 @@ class ExplorerClass extends Component< any, any > {
         chartmatrix: [ [], [] ], // DrillDown, Compare (Later: Differences, Context, Build)
         datafacet:"expenses",
         yearslider: {singlevalue:[2015],doublevalue:[2005,2015]},
-        yearselection:"one",
+        yearscope:"one",
         viewselection:"activities",
         userselections:{
             latestyear:2015,
@@ -116,11 +116,14 @@ class ExplorerClass extends Component< any, any > {
 
         chartParmsObj = this.getChartParms( drilldownchartconfig )
 
-        // ** assume no error ??
-        drilldownchartconfig.chartparms = chartParmsObj.chartParms
+        if (!chartParmsObj.error) {
 
-        matrixlocation = drilldownchartconfig.matrixlocation
-        chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = drilldownchartconfig
+            drilldownchartconfig.chartparms = chartParmsObj.chartParms
+
+            matrixlocation = drilldownchartconfig.matrixlocation
+            chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = drilldownchartconfig
+
+        }
 
         // -----------------[ THE COMPARE ROOT ]-------------------
 
@@ -129,11 +132,14 @@ class ExplorerClass extends Component< any, any > {
 
         chartParmsObj = this.getChartParms( comparechartconfig )
 
-        // ** assume no error ??
-        comparechartconfig.chartparms = chartParmsObj.chartParms
+        if (!chartParmsObj.error) {
 
-        matrixlocation = comparechartconfig.matrixlocation
-        chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = comparechartconfig
+            comparechartconfig.chartparms = chartParmsObj.chartParms
+
+            matrixlocation = comparechartconfig.matrixlocation
+            chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = comparechartconfig
+
+        }
 
         // -------------[ SAVE INITIALIZATION ]----------------
 
@@ -393,8 +399,9 @@ class ExplorerClass extends Component< any, any > {
         chartdata.events = events
         chartdata.chartType = chartConfig.charttype
         chartParmsObj.chartParms = chartdata
-        // console.log('chartdata = ', options, events, columns, rows)
+
         return chartParmsObj
+
     }
 
     // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
@@ -522,7 +529,7 @@ class ExplorerClass extends Component< any, any > {
 
         // -----------[ DASHBOARD SEGMENT]-------------
 
-        let singleslider = (explorer.state.yearselection == 'one')?
+        let singleslider = (explorer.state.yearscope == 'one')?
             <ReactSlider 
                 className="horizontal-slider" 
                 defaultValue={explorer.state.yearslider.singlevalue} 
@@ -537,13 +544,13 @@ class ExplorerClass extends Component< any, any > {
                 }}>
                 <div >{explorer.state.yearslider.singlevalue[0]}</div>
             </ReactSlider > :''
-        let doubleslider = (explorer.state.yearselection != 'one') ?
+        let doubleslider = (explorer.state.yearscope != 'one') ?
             <ReactSlider
                 className="horizontal-slider"
                 defaultValue={explorer.state.yearslider.doublevalue}
                 min={ 2003 }
                 max={ 2016 }
-                withBars={(explorer.state.yearselection == 'all') ? true : false}
+                withBars={(explorer.state.yearscope == 'all') ? true : false}
                 onChange = {(value) => {
                     explorer.setState({
                         yearslider: Object.assign(explorer.state.yearslider,{ 
@@ -602,10 +609,10 @@ class ExplorerClass extends Component< any, any > {
             </div>
             <RadioButtonGroup
                 style={{ display: 'inline-block' }}
-                name="yearselection"
-                defaultSelected={explorer.state.yearselection}
+                name="yearscope"
+                defaultSelected={explorer.state.yearscope}
                 onChange={(ev, selection) => {
-                    explorer.setState({yearselection:selection})
+                    explorer.setState({yearscope:selection})
                 } }>
                 <RadioButton
                     value="one"
@@ -628,7 +635,7 @@ class ExplorerClass extends Component< any, any > {
             </RadioButtonGroup>
             { singleslider }
             { doubleslider }
-            <div style={{ display: (explorer.state.yearselection == 'all') ? 'inline' : 'none' }} >
+            <div style={{ display: (explorer.state.yearscope == 'all') ? 'inline' : 'none' }} >
                 <Checkbox 
                     label="Year-over-year change, rather than actuals"
                     defaultChecked = {false}
