@@ -15,7 +15,6 @@ const RaisedButton = require('material-ui/lib/raised-button');
 const ReactSlider = require('react-slider');
 const explorerchart_1 = require('../components/explorerchart');
 const constants_1 = require('../constants');
-const constants_2 = require('../constants');
 class ExplorerClass extends Component {
     constructor(props) {
         super(props);
@@ -38,14 +37,18 @@ class ExplorerClass extends Component {
             this.setViewpointAmounts(this.state.userselections.viewpoint, this.state.userselections.dataseries, this.props.budgetdata);
             let drilldownchartconfig = this.initRootChartConfig(constants_1.ChartSeries.DrillDown, userselections);
             chartParmsObj = this.getChartParms(drilldownchartconfig);
-            drilldownchartconfig.chartparms = chartParmsObj.chartParms;
-            matrixlocation = drilldownchartconfig.matrixlocation;
-            chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig;
+            if (!chartParmsObj.error) {
+                drilldownchartconfig.chartparms = chartParmsObj.chartParms;
+                matrixlocation = drilldownchartconfig.matrixlocation;
+                chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig;
+            }
             let comparechartconfig = this.initRootChartConfig(constants_1.ChartSeries.Compare, userselections);
             chartParmsObj = this.getChartParms(comparechartconfig);
-            comparechartconfig.chartparms = chartParmsObj.chartParms;
-            matrixlocation = comparechartconfig.matrixlocation;
-            chartmatrix[matrixlocation.row][matrixlocation.column] = comparechartconfig;
+            if (!chartParmsObj.error) {
+                comparechartconfig.chartparms = chartParmsObj.chartParms;
+                matrixlocation = comparechartconfig.matrixlocation;
+                chartmatrix[matrixlocation.row][matrixlocation.column] = comparechartconfig;
+            }
             this.setState({
                 chartmatrix: chartmatrix,
             });
@@ -136,7 +139,7 @@ class ExplorerClass extends Component {
                     row: matrixrow,
                     column: 0
                 },
-                range: {
+                yearscope: {
                     latestyear: userselections.latestyear,
                     earliestyear: null,
                     fullrange: false,
@@ -145,17 +148,11 @@ class ExplorerClass extends Component {
             };
         };
         this.getChartParms = (chartConfig) => {
-            let chartParmsObj = { isError: false, chartParms: null };
-            let options, events, rows, columns;
-            let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[chartConfig.viewpoint], range = chartConfig.range;
-            let { parent, children, depth, error } = this.getChartDatasets(chartConfig, budgetdata);
-            if (error) {
-                chartParmsObj.isError = true;
-                return chartParmsObj;
-            }
+            let budgetdata = this.props.budgetdata, viewpointindex = chartConfig.viewpoint, viewpointdata = budgetdata.Viewpoints[viewpointindex], path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
+            let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata);
+            let chartType = chartConfig.charttype;
             let axistitle = '';
-            axistitle = constants_2.categoryaliases[axistitle] || axistitle;
-            options = {
+            let options = {
                 title: '',
                 vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
                 hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
@@ -165,7 +162,7 @@ class ExplorerClass extends Component {
                 legend: 'none',
                 annotations: { alwaysOutside: true }
             };
-            events = [
+            let events = [
                 {
                     eventName: 'select',
                     callback: ((chartconfig) => {
@@ -179,28 +176,40 @@ class ExplorerClass extends Component {
                     })(chartConfig)
                 }
             ];
-            let year = range.latestyear;
             let categorylabel = '';
-            columns = [
+            let columns = [
                 { type: 'string', label: categorylabel },
                 { type: 'number', label: year.toString() },
                 { type: 'string', role: 'annotation' }
             ];
             let amountformat = format({ prefix: "$", suffix: "T" });
             let rounded = format({ round: 0, integerSeparator: '' });
-            rows = children.map(item => {
+            let rows = components.map(item => {
                 let amount = parseInt(rounded(item.Amount / 1000));
                 let annotation = amountformat(amount);
                 return [item[categorylabel], amount, annotation];
             });
-            let chartdata = chartConfig.chartparms;
-            chartdata.columns = columns;
-            chartdata.rows = rows;
-            chartdata.options = options;
-            chartdata.events = events;
-            chartdata.chartType = chartConfig.charttype;
-            chartParmsObj.chartParms = chartdata;
+            let chartdata = {
+                columns: columns,
+                rows: rows,
+                options: options,
+                events: events,
+                chartType: chartType,
+            };
+            let chartParmsObj = {
+                isError: false,
+                chartParms: chartdata
+            };
             return chartParmsObj;
+        };
+        this.getNodeDatasets = (viewpointindex, path, budgetdata) => {
+            let node = budgetdata.Viewpoints[viewpointindex];
+            let components = node.Components;
+            for (let index of path) {
+                node = components.Component[index];
+                components = node.Components;
+            }
+            return { node: node, components: components };
         };
         this.updateChartsSelection = (context) => {
             let chartmatrix = this.state.chartmatrix;
@@ -214,8 +223,7 @@ class ExplorerClass extends Component {
             let childdataroot = parentchartconfig.datapath.map(node => {
                 return Object.assign({}, node);
             });
-            childdataroot.push({ parent: selectionrow });
-            let newrange = Object.assign({}, parentchartconfig.range);
+            let newrange = Object.assign({}, parentchartconfig.yearscope);
             let newchartconfig = {
                 viewpoint: viewpoint,
                 dataseries: dataseries,
@@ -224,33 +232,16 @@ class ExplorerClass extends Component {
                     row: matrixrow,
                     column: matrixcolumn + 1
                 },
-                range: newrange,
+                yearscope: newrange,
                 chartparms: { chartType: "ColumnChart" }
             };
             let chartParmsObj = this.getChartParms(newchartconfig);
             if (chartParmsObj.isError)
                 return;
-            newchartconfig.chartparms = chartParmsObj.chartParms;
             chartmatrix[matrixrow][matrixcolumn + 1] = newchartconfig;
             this.setState({
                 chartmatrix: chartmatrix,
             });
-        };
-        this.getChartDatasets = (parms, budgetdata) => {
-            let parent, children, depth, error, path = parms.datapath, range = parms.range;
-            let meta = {};
-            let list = budgetdata.filter(item => {
-                return (item.Year == range.latestyear) ? true : false;
-            });
-            for (depth = 0; depth < path.length; depth++) {
-                let ref = path[depth];
-                parent = list[ref.parent];
-                list = parent[meta[depth].Children];
-            }
-            depth--;
-            children = list;
-            error = false;
-            return { parent: parent, children: children, depth: depth, error: error };
         };
         this.getCharts = (matrixcolumn, matrixrow) => {
             let charts = matrixcolumn.map((chartconfig, index) => {
