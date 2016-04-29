@@ -89,14 +89,16 @@ class ExplorerClass extends Component {
                     delete component.Aggregates;
                 if (component.Config != "BASELINE") {
                     if (component.Components) {
-                        let sorted = this.getIndexSortedComponents(component.Components, lookups);
-                        component.SortedComponents = sorted;
+                        if (!component.SortedComponents) {
+                            let sorted = this.getIndexSortedComponents(component.Components, lookups);
+                            component.SortedComponents = sorted;
+                        }
                         componentSummaries = this.setComponentSummaries(component.Components, items, isInflationAdjusted, lookups);
                         if (componentSummaries.years)
                             component.years = componentSummaries.years;
                         if (componentSummaries.Aggregates) {
                             component.Aggregates = componentSummaries.Aggregates;
-                            if (component.Aggregates) {
+                            if (component.Aggregates && !component.SortedAggregates) {
                                 let sorted = this.getNameSortedComponents(component.Aggregates, lookups);
                                 component.SortedAggregates = sorted;
                             }
@@ -131,7 +133,7 @@ class ExplorerClass extends Component {
                     if (componentSummaries.Aggregates) {
                         component.Components = componentSummaries.Aggregates;
                     }
-                    if (component.Components) {
+                    if (component.Components && !component.SortedComponents) {
                         let sorted = this.getNameSortedComponents(component.Components, lookups);
                         component.SortedComponents = sorted;
                     }

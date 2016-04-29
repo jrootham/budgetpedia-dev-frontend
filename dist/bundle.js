@@ -9501,15 +9501,17 @@ var ExplorerClass = function (_Component) {
                 if (component.Aggregates) delete component.Aggregates;
                 if (component.Config != "BASELINE") {
                     if (component.Components) {
-                        var sorted = _this.getIndexSortedComponents(component.Components, lookups);
-                        component.SortedComponents = sorted;
+                        if (!component.SortedComponents) {
+                            var sorted = _this.getIndexSortedComponents(component.Components, lookups);
+                            component.SortedComponents = sorted;
+                        }
                         componentSummaries = _this.setComponentSummaries(component.Components, items, isInflationAdjusted, lookups);
                         if (componentSummaries.years) component.years = componentSummaries.years;
                         if (componentSummaries.Aggregates) {
                             component.Aggregates = componentSummaries.Aggregates;
-                            if (component.Aggregates) {
-                                var _sorted = _this.getNameSortedComponents(component.Aggregates, lookups);
-                                component.SortedAggregates = _sorted;
+                            if (component.Aggregates && !component.SortedAggregates) {
+                                var sorted = _this.getNameSortedComponents(component.Aggregates, lookups);
+                                component.SortedAggregates = sorted;
                             }
                         }
                     }
@@ -9539,7 +9541,7 @@ var ExplorerClass = function (_Component) {
                     if (componentSummaries.Aggregates) {
                         component.Components = componentSummaries.Aggregates;
                     }
-                    if (component.Components) {
+                    if (component.Components && !component.SortedComponents) {
                         var sorted = _this.getNameSortedComponents(component.Components, lookups);
                         component.SortedComponents = sorted;
                     }

@@ -239,10 +239,12 @@ class ExplorerClass extends Component< any, any > {
                 // if no components found, loop
                 if (component.Components) {
 
-                    let sorted = this.getIndexSortedComponents(
-                        component.Components,lookups)
-
-                    component.SortedComponents = sorted
+                    if (!component.SortedComponents) {
+                        let sorted = this.getIndexSortedComponents(
+                            component.Components,lookups)
+    
+                        component.SortedComponents = sorted
+                    }
 
                     // get child component summaries recursively
                     componentSummaries = this.setComponentSummaries(
@@ -254,7 +256,7 @@ class ExplorerClass extends Component< any, any > {
                         component.years = componentSummaries.years
                     if (componentSummaries.Aggregates) {
                         component.Aggregates = componentSummaries.Aggregates
-                        if (component.Aggregates) {
+                        if (component.Aggregates && !component.SortedAggregates) {
                             let sorted = this.getNameSortedComponents(
                                 component.Aggregates, lookups)
 
@@ -301,7 +303,7 @@ class ExplorerClass extends Component< any, any > {
                     component.Components = componentSummaries.Aggregates
                 }
 
-                if (component.Components) {
+                if (component.Components && !component.SortedComponents) {
                     let sorted = this.getNameSortedComponents(
                         component.Components, lookups)
 
