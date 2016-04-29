@@ -323,7 +323,15 @@ class ExplorerClass extends Component {
         };
         this.updateChartsSelection = (context) => {
             let userselections = this.state.userselections;
-            let selection = context.selection[0], selectionrow = selection.row, chart = context.chart;
+            let selection = context.selection[0];
+            let selectionrow;
+            if (selection) {
+                selectionrow = selection.row;
+            }
+            else {
+                selectionrow = null;
+            }
+            let chart = context.chart;
             let chartconfig = context.chartconfig, selectmatrixlocation = chartconfig.matrixlocation;
             let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
             let chartmatrix = this.state.chartmatrix, serieslist = chartmatrix[matrixrow];
@@ -332,6 +340,12 @@ class ExplorerClass extends Component {
             this.setState({
                 chartmatrix: chartmatrix,
             });
+            if (!selection) {
+                delete chartconfig.chartselection;
+                delete chartconfig.chart;
+                this.updateSelections(chartmatrix, matrixrow);
+                return;
+            }
             let childdataroot = chartconfig.datapath.slice();
             let { node, components } = this.getNodeDatasets(userselections.viewpoint, childdataroot, this.props.budgetdata);
             if (!node.Components) {
@@ -372,11 +386,11 @@ class ExplorerClass extends Component {
             newchartconfig.chartparms = chartParmsObj.chartParms;
             let newmatrixcolumn = matrixcolumn + 1;
             chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig;
+            this.setState({
+                chartmatrix: chartmatrix,
+            });
             chartconfig.chartselection = context.selection,
-                chartconfig.chart = chart,
-                this.setState({
-                    chartmatrix: chartmatrix,
-                });
+                chartconfig.chart = chart;
             this.updateSelections(chartmatrix, matrixrow);
         };
         this.updateSelections = (chartmatrix, matrixrow) => {

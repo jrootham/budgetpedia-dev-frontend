@@ -633,13 +633,21 @@ class ExplorerClass extends Component< any, any > {
         let userselections = this.state.userselections
 
         // unpack context
-        let selection = context.selection[0],
-            selectionrow = selection.row,
-            chart = context.chart
+        let selection = context.selection[0]
+
+        let selectionrow
+        if (selection) {
+            selectionrow = selection.row
+        } else {
+            selectionrow = null
+        }
+
+        let chart = context.chart
 
         // unpack chartconfig
         let chartconfig = context.chartconfig,
             selectmatrixlocation = chartconfig.matrixlocation
+
 
         // unpack location
         let matrixrow = selectmatrixlocation.row,
@@ -662,6 +670,13 @@ class ExplorerClass extends Component< any, any > {
         this.setState({
             chartmatrix,
         });
+
+        if (!selection) { // deselected
+            delete chartconfig.chartselection
+            delete chartconfig.chart
+            this.updateSelections(chartmatrix, matrixrow)
+            return
+        }
         // TODO: better to use forceUpdate vs setState?
         // this.forceUpdate()
 
@@ -721,12 +736,12 @@ class ExplorerClass extends Component< any, any > {
         let newmatrixcolumn = matrixcolumn + 1
         chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig
 
-        chartconfig.chartselection = context.selection,
-        chartconfig.chart = chart,
-
         this.setState({
             chartmatrix,
         })
+
+        chartconfig.chartselection = context.selection,
+        chartconfig.chart = chart
 
         this.updateSelections(chartmatrix,matrixrow)
 

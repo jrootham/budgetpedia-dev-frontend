@@ -9739,9 +9739,14 @@ var ExplorerClass = function (_Component) {
         };
         _this.updateChartsSelection = function (context) {
             var userselections = _this.state.userselections;
-            var selection = context.selection[0],
-                selectionrow = selection.row,
-                chart = context.chart;
+            var selection = context.selection[0];
+            var selectionrow = undefined;
+            if (selection) {
+                selectionrow = selection.row;
+            } else {
+                selectionrow = null;
+            }
+            var chart = context.chart;
             var chartconfig = context.chartconfig,
                 selectmatrixlocation = chartconfig.matrixlocation;
             var matrixrow = selectmatrixlocation.row,
@@ -9754,6 +9759,12 @@ var ExplorerClass = function (_Component) {
             _this.setState({
                 chartmatrix: chartmatrix
             });
+            if (!selection) {
+                delete chartconfig.chartselection;
+                delete chartconfig.chart;
+                _this.updateSelections(chartmatrix, matrixrow);
+                return;
+            }
             var childdataroot = chartconfig.datapath.slice();
 
             var _this$getNodeDatasets2 = _this.getNodeDatasets(userselections.viewpoint, childdataroot, _this.props.budgetdata);
@@ -9796,9 +9807,10 @@ var ExplorerClass = function (_Component) {
             newchartconfig.chartparms = chartParmsObj.chartParms;
             var newmatrixcolumn = matrixcolumn + 1;
             chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig;
-            chartconfig.chartselection = context.selection, chartconfig.chart = chart, _this.setState({
+            _this.setState({
                 chartmatrix: chartmatrix
             });
+            chartconfig.chartselection = context.selection, chartconfig.chart = chart;
             _this.updateSelections(chartmatrix, matrixrow);
         };
         _this.updateSelections = function (chartmatrix, matrixrow) {
