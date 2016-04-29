@@ -189,7 +189,7 @@ class ExplorerClass extends Component< any, any > {
             categorylookups,
         }
 
-        console.log('lookups',lookups,componentcat)
+        // console.log('lookups',lookups, componentcat)
 
         let items = itemseries.Items
 
@@ -375,6 +375,7 @@ class ExplorerClass extends Component< any, any > {
         return sorted
 
     }
+
     aggregateComponentSummaries = (
         cumulatingSummaries:ComponentSummaries, 
         componentSummaries:ComponentSummaries) => {
@@ -464,10 +465,12 @@ class ExplorerClass extends Component< any, any > {
     // TODO: capture yearscope, including years
     /*
         todo: 
-            axistitle,
-            categorylabel,
-            title,
-            rows,
+            !axistitle,
+            !categorylabel,
+            !title,
+            !rows,
+
+        review variable declarations; remove unneccessary
 
     */
     getChartParms = (chartConfig: ChartConfig) => {
@@ -478,7 +481,11 @@ class ExplorerClass extends Component< any, any > {
             path = chartConfig.datapath,
             yearscope = chartConfig.yearscope,
             year = yearscope.latestyear,
-            isError = false
+            isError = false,
+            userselections = this.state.userselections,
+            dataseriesname = userselections.dataseries
+
+        let itemseries = budgetdata.DataSeries[dataseriesname]
 
         // collect viewpoint node and its components as data sources for the graph
         let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata)
@@ -487,12 +494,12 @@ class ExplorerClass extends Component< any, any > {
         let chartType = chartConfig.charttype
 
         // let axistitle = meta[depth].Children
-        let axistitle = ''
+        let axistitle = viewpointdata.Configuration[viewpointdata.Config].Alias
         // axistitle = categoryaliases[axistitle] || axistitle
 
         // chartparm:
         let options = {
-            title: '', // parent[meta[depth].Name], // + ' ($Thousands)',
+            title: itemseries.Title, // parent[meta[depth].Name], // + ' ($Thousands)',
             vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
             hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
             bar: { groupWidth: "95%" },
@@ -502,6 +509,8 @@ class ExplorerClass extends Component< any, any > {
             legend:'none',
             annotations: { alwaysOutside: true }
         }
+
+        // console.log('options',options)
         // TODO: watch for memory leaks when the chart is destroyed
         // chartparm:
         let events = [
@@ -519,7 +528,7 @@ class ExplorerClass extends Component< any, any > {
             }
         ]
 
-        let categorylabel = '' // meta[depth + 1].Name
+        let categorylabel = 'Component' // meta[depth + 1].Name
 
         // chartparm:
         let columns = [
@@ -534,12 +543,12 @@ class ExplorerClass extends Component< any, any > {
 
         // TODO: sort components into index order
         // chartparm:
-        let rows = components.map(item => {
+        let rows = node.SortedComponents.map(item => {
             // TODO: get determination of amount processing from Unit value
-            let amount = parseInt(rounded(item.Amount/1000))
+            let amount = parseInt(rounded(components[item.Code].years[year]/1000))
             // TODO: add % of total to the annotation
             let annotation = amountformat(amount)
-            return [item[categorylabel], amount, annotation]            
+            return [item.Name, amount, annotation]            
         })
 
         let chartParms:ChartParms = {

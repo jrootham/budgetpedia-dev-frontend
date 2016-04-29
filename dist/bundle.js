@@ -6,6 +6,7 @@ module.exports={
             "Baseline": "Programs",
             "Units": "DOLLAR",
             "Components": "Expenditures",
+            "Title": "2015 Council Approved Gross Operating Expenditures",
             "InflationAdjusted": true,
             "Items": {
                 "311SERVICE": {
@@ -4140,6 +4141,7 @@ module.exports={
             "Baseline": "Programs",
             "Units": "DOLLAR",
             "Components": "Expenditures",
+            "Title": "2015 Council Approved Gross Operating Revenue",
             "InflationAdjusted": true,
             "Items": {
                 "311SERVICE": {
@@ -7059,6 +7061,7 @@ module.exports={
             "Baseline": "Programs",
             "Units": "FTE",
             "Components": "FulltimeParttime",
+            "Title": "2015 Council Approved Staff Positions",
             "Items": {
                 "311SERVICE": {
                     "years": {
@@ -9477,7 +9480,6 @@ var ExplorerClass = function (_Component) {
                 componentlookups: componentlookups,
                 categorylookups: categorylookups
             };
-            console.log('lookups', lookups, componentcat);
             var items = itemseries.Items;
             var isInflationAdjusted = !!itemseries.InflationAdjusted;
             var rootcomponent = { "ROOT": viewpoint };
@@ -9636,7 +9638,10 @@ var ExplorerClass = function (_Component) {
                 path = chartConfig.datapath,
                 yearscope = chartConfig.yearscope,
                 year = yearscope.latestyear,
-                isError = false;
+                isError = false,
+                userselections = _this.state.userselections,
+                dataseriesname = userselections.dataseries;
+            var itemseries = budgetdata.DataSeries[dataseriesname];
 
             var _this$getNodeDatasets = _this.getNodeDatasets(viewpointindex, path, budgetdata);
 
@@ -9644,9 +9649,9 @@ var ExplorerClass = function (_Component) {
             var components = _this$getNodeDatasets.components;
 
             var chartType = chartConfig.charttype;
-            var axistitle = '';
+            var axistitle = viewpointdata.Configuration[viewpointdata.Config].Alias;
             var options = {
-                title: '',
+                title: itemseries.Title,
                 vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
                 hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
                 bar: { groupWidth: "95%" },
@@ -9667,14 +9672,14 @@ var ExplorerClass = function (_Component) {
                     };
                 }(chartConfig)
             }];
-            var categorylabel = '';
+            var categorylabel = 'Component';
             var columns = [{ type: 'string', label: categorylabel }, { type: 'number', label: year.toString() }, { type: 'string', role: 'annotation' }];
             var amountformat = format({ prefix: "$", suffix: "T" });
             var rounded = format({ round: 0, integerSeparator: '' });
-            var rows = components.map(function (item) {
-                var amount = parseInt(rounded(item.Amount / 1000));
+            var rows = node.SortedComponents.map(function (item) {
+                var amount = parseInt(rounded(components[item.Code].years[year] / 1000));
                 var annotation = amountformat(amount);
-                return [item[categorylabel], amount, annotation];
+                return [item.Name, amount, annotation];
             });
             var chartParms = {
                 columns: columns,

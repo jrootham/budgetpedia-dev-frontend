@@ -5,6 +5,7 @@
             "Baseline":"Programs",
             "Units":"DOLLAR",
             "Components":"Expenditures",
+            "Title":"2015 Council Approved Gross Operating Expenditures",
             "InflationAdjusted":true,
             "Items":
             {
@@ -70,6 +71,7 @@
             "Baseline":"Programs",
             "Units":"DOLLAR",
             "Components":"Expenditures",
+            "Title":"2015 Council Approved Gross Operating Revenue",
             "InflationAdjusted":true,
             "Items":
             {
@@ -135,6 +137,7 @@
             "Baseline":"Programs",
             "Units":"FTE",
             "Components":"FulltimeParttime",
+            "Title":"2015 Council Approved Staff Positions",
             "Items":
             {
                 "311SERVICE":{},
