@@ -5,6 +5,7 @@ module.exports={
             "Action": "Expenses",
             "Baseline": "Programs",
             "Units": "DOLLAR",
+            "UnitsAlias": "$Thousands",
             "Components": "Expenditures",
             "Title": "2015 Council Approved Gross Operating Expenditures",
             "InflationAdjusted": true,
@@ -4140,6 +4141,7 @@ module.exports={
             "Action": "Revenues",
             "Baseline": "Programs",
             "Units": "DOLLAR",
+            "UnitsAlias": "$Thousands",
             "Components": "Expenditures",
             "Title": "2015 Council Approved Gross Operating Revenue",
             "InflationAdjusted": true,
@@ -7060,6 +7062,7 @@ module.exports={
             "Action": "Staffing",
             "Baseline": "Programs",
             "Units": "FTE",
+            "UnitsAlias": "Level (FTE)",
             "Components": "FulltimeParttime",
             "Title": "2015 Council Approved Staff Positions",
             "Items": {
@@ -9641,7 +9644,9 @@ var ExplorerClass = function (_Component) {
                 isError = false,
                 userselections = _this.state.userselections,
                 dataseriesname = userselections.dataseries;
-            var itemseries = budgetdata.DataSeries[dataseriesname];
+            var itemseries = budgetdata.DataSeries[dataseriesname],
+                units = itemseries.Units,
+                vertlabel = itemseries.UnitsAlias;
 
             var _this$getNodeDatasets = _this.getNodeDatasets(viewpointindex, path, budgetdata);
 
@@ -9652,7 +9657,7 @@ var ExplorerClass = function (_Component) {
             var axistitle = viewpointdata.Configuration[viewpointdata.Config].Alias;
             var options = {
                 title: itemseries.Title,
-                vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
+                vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
                 hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
                 bar: { groupWidth: "95%" },
                 height: 400,
@@ -9677,7 +9682,12 @@ var ExplorerClass = function (_Component) {
             var amountformat = format({ prefix: "$", suffix: "T" });
             var rounded = format({ round: 0, integerSeparator: '' });
             var rows = node.SortedComponents.map(function (item) {
-                var amount = parseInt(rounded(components[item.Code].years[year] / 1000));
+                var amount = undefined;
+                if (units == 'DOLLAR') {
+                    amount = parseInt(rounded(components[item.Code].years[year] / 1000));
+                } else {
+                    amount = components[item.Code].years[year];
+                }
                 var annotation = amountformat(amount);
                 return [item.Name, amount, annotation];
             });

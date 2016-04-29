@@ -4,6 +4,7 @@
             "Action": "Expenses",
             "Baseline": "Programs",
             "Units": "DOLLAR",
+            "UnitsAlias": "$Thousands",
             "Components": "Expenditures",
             "Title": "2015 Council Approved Gross Operating Expenditures",
             "InflationAdjusted": true,
@@ -4139,6 +4140,7 @@
             "Action": "Revenues",
             "Baseline": "Programs",
             "Units": "DOLLAR",
+            "UnitsAlias": "$Thousands",
             "Components": "Expenditures",
             "Title": "2015 Council Approved Gross Operating Revenue",
             "InflationAdjusted": true,
@@ -7059,6 +7061,7 @@
             "Action": "Staffing",
             "Baseline": "Programs",
             "Units": "FTE",
+            "UnitsAlias": "Level (FTE)",
             "Components": "FulltimeParttime",
             "Title": "2015 Council Approved Staff Positions",
             "Items": {

@@ -485,7 +485,9 @@ class ExplorerClass extends Component< any, any > {
             userselections = this.state.userselections,
             dataseriesname = userselections.dataseries
 
-        let itemseries = budgetdata.DataSeries[dataseriesname]
+        let itemseries = budgetdata.DataSeries[dataseriesname],
+            units = itemseries.Units,
+            vertlabel = itemseries.UnitsAlias
 
         // collect viewpoint node and its components as data sources for the graph
         let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata)
@@ -500,7 +502,7 @@ class ExplorerClass extends Component< any, any > {
         // chartparm:
         let options = {
             title: itemseries.Title, // parent[meta[depth].Name], // + ' ($Thousands)',
-            vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
+            vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
             hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
             bar: { groupWidth: "95%" },
             // width: children.length * 120,// 120 per column
@@ -528,7 +530,7 @@ class ExplorerClass extends Component< any, any > {
             }
         ]
 
-        let categorylabel = 'Component' // meta[depth + 1].Name
+        let categorylabel = 'Component'
 
         // chartparm:
         let columns = [
@@ -545,7 +547,12 @@ class ExplorerClass extends Component< any, any > {
         // chartparm:
         let rows = node.SortedComponents.map(item => {
             // TODO: get determination of amount processing from Unit value
-            let amount = parseInt(rounded(components[item.Code].years[year]/1000))
+            let amount
+            if (units == 'DOLLAR') {
+                amount = parseInt(rounded(components[item.Code].years[year]/1000))
+            } else {
+                amount = components[item.Code].years[year]
+            }
             // TODO: add % of total to the annotation
             let annotation = amountformat(amount)
             return [item.Name, amount, annotation]            

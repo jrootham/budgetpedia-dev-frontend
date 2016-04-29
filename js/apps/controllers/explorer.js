@@ -246,13 +246,13 @@ class ExplorerClass extends Component {
         };
         this.getChartParms = (chartConfig) => {
             let budgetdata = this.props.budgetdata, viewpointindex = chartConfig.viewpoint, viewpointdata = budgetdata.Viewpoints[viewpointindex], path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear, isError = false, userselections = this.state.userselections, dataseriesname = userselections.dataseries;
-            let itemseries = budgetdata.DataSeries[dataseriesname];
+            let itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel = itemseries.UnitsAlias;
             let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata);
             let chartType = chartConfig.charttype;
             let axistitle = viewpointdata.Configuration[viewpointdata.Config].Alias;
             let options = {
                 title: itemseries.Title,
-                vAxis: { title: 'Amount', minValue: 0, textStyle: { fontSize: 8 } },
+                vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
                 hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
                 bar: { groupWidth: "95%" },
                 height: 400,
@@ -283,7 +283,13 @@ class ExplorerClass extends Component {
             let amountformat = format({ prefix: "$", suffix: "T" });
             let rounded = format({ round: 0, integerSeparator: '' });
             let rows = node.SortedComponents.map(item => {
-                let amount = parseInt(rounded(components[item.Code].years[year] / 1000));
+                let amount;
+                if (units == 'DOLLAR') {
+                    amount = parseInt(rounded(components[item.Code].years[year] / 1000));
+                }
+                else {
+                    amount = components[item.Code].years[year];
+                }
                 let annotation = amountformat(amount);
                 return [item.Name, amount, annotation];
             });
