@@ -9488,7 +9488,6 @@ var ExplorerClass = function (_Component) {
             var rootcomponent = { "ROOT": viewpoint };
             _this.setComponentSummaries(rootcomponent, items, isInflationAdjusted, lookups);
             viewpoint.currentdataseries = dataseriesname;
-            console.log('viewpoint ', viewpoint);
         };
         _this.setComponentSummaries = function (components, items, isInflationAdjusted, lookups) {
             var cumulatingSummaries = {
@@ -9517,7 +9516,6 @@ var ExplorerClass = function (_Component) {
                 } else {
                     var item = items[componentname];
                     if (isInflationAdjusted) {
-                        console.log('isInflationAdjusted', isInflationAdjusted);
                         if (_this.state.userselections.inflationadjusted) {
                             componentSummaries = {
                                 years: item.Adjusted.years,

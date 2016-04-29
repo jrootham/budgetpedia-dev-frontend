@@ -22,6 +22,7 @@ import ReactSlider = require('react-slider')
 
 import { ExplorerChart } from '../components/explorerchart'
 import { ChartSeries } from '../constants'
+
 // import { categoryaliases } from '../constants'
 
 interface ChartConfig {
@@ -205,7 +206,8 @@ class ExplorerClass extends Component< any, any > {
         // create sentinel to prevent unnucessary processing
         viewpoint.currentdataseries = dataseriesname
 
-        console.log('viewpoint ',viewpoint)
+        // let text = JSON.stringify(viewpoint, null, 4) + '\n'
+        // console.log(text)
 
     }
 
@@ -271,7 +273,7 @@ class ExplorerClass extends Component< any, any > {
 
                 // first set componentSummaries as usual
                 if (isInflationAdjusted) {
-                    console.log('isInflationAdjusted',isInflationAdjusted)
+                    // console.log('isInflationAdjusted',isInflationAdjusted)
                     if (this.state.userselections.inflationadjusted) {
                         componentSummaries = {
                             years: item.Adjusted.years,

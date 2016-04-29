@@ -74,7 +74,6 @@ class ExplorerClass extends Component {
             let rootcomponent = { "ROOT": viewpoint };
             this.setComponentSummaries(rootcomponent, items, isInflationAdjusted, lookups);
             viewpoint.currentdataseries = dataseriesname;
-            console.log('viewpoint ', viewpoint);
         };
         this.setComponentSummaries = (components, items, isInflationAdjusted, lookups) => {
             let cumulatingSummaries = {
@@ -107,7 +106,6 @@ class ExplorerClass extends Component {
                 else {
                     let item = items[componentname];
                     if (isInflationAdjusted) {
-                        console.log('isInflationAdjusted', isInflationAdjusted);
                         if (this.state.userselections.inflationadjusted) {
                             componentSummaries = {
                                 years: item.Adjusted.years,
