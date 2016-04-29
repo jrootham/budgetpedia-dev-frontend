@@ -512,7 +512,8 @@ class ExplorerClass extends Component< any, any > {
         let chartType = chartConfig.charttype
 
         // 2. chart options:
-        let axistitle = viewpointdata.Configuration[viewpointdata.Config].Alias
+        let titleref = viewpointdata.Configuration[node.Config]
+        let axistitle = titleref.Alias || titleref.Name
 
         let options = {
             title: itemseries.Title, // parent[meta[depth].Name], // + ' ($Thousands)',
@@ -628,21 +629,27 @@ class ExplorerClass extends Component< any, any > {
 
         // console.log('updateCharts context = ', context)
 
+        // user selections
         let userselections = this.state.userselections
 
+        // unpack context
         let selection = context.selection[0],
             selectionrow = selection.row,
             chart = context.chart
 
+        // unpack chartconfig
         let chartconfig = context.chartconfig,
             selectmatrixlocation = chartconfig.matrixlocation
 
+        // unpack location
         let matrixrow = selectmatrixlocation.row,
             matrixcolumn = selectmatrixlocation.column
 
+        // acquire serieslist from matrix
         let chartmatrix = this.state.chartmatrix,
             serieslist = chartmatrix[matrixrow]
 
+        // get taxonomy references
         let viewpoint = chartconfig.viewpoint,
             dataseries = chartconfig.dataseries
 
@@ -666,12 +673,23 @@ class ExplorerClass extends Component< any, any > {
         let { node, components } = this.getNodeDatasets(
             userselections.viewpoint, childdataroot, this.props.budgetdata)
 
+        if (!node.Components) {
+            this.updateSelections(chartmatrix, matrixrow)
+            return
+        }
+
         let code = null
         if (node && node.SortedComponents && node.SortedComponents[selectionrow])
             code = node.SortedComponents[selectionrow].Code
         if (code)
             childdataroot.push(code)
         else {
+            this.updateSelections(chartmatrix, matrixrow)
+            return
+        }
+
+        let newnode = node.Components[code]
+        if (!newnode.Components) {
             this.updateSelections(chartmatrix, matrixrow)
             return
         }

@@ -8110,7 +8110,7 @@ module.exports={
                 }
             },
             "Configuration": {
-                "ROOT": {
+                "TYPES": {
                     "Name": "Functional",
                     "Alias": "Program Activity Types",
                     "DataSeries": {
@@ -8126,14 +8126,6 @@ module.exports={
                         "Alias": "Program Activity Type"
                     }
                 },
-                "TYPE": {
-                    "Name": "Functional",
-                    "Alias": "Program Activity Types",
-                    "Instance": {
-                        "Name": "Type",
-                        "Alias": "Program Activity Type"
-                    }
-                },
                 "CLUSTER": {
                     "Name": "Clusters",
                     "Alias": "Program Clusters",
@@ -8142,23 +8134,29 @@ module.exports={
                         "Alias": "Program Cluster"
                     }
                 },
-                "BASELINE": {
+                "PROGRAMS": {
                     "Name": "Programs",
                     "Baseline": "Programs",
                     "Instance": {
                         "Name": "Program"
                     }
+                },
+                "BASELINE": {
+                    "Name": "Expenditure Categories",
+                    "Instance": {
+                        "Name": "Expenditure Category"
+                    }
                 }
             },
-            "Config": "ROOT",
+            "Config": "TYPES",
             "Components": {
                 "SHARED": {
                     "Index": 0,
-                    "Config": "TYPE",
+                    "Config": "CLUSTER",
                     "Components": {
                         "WASTEWATER": {
                             "Index": 0,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "SOLIDWASTE": {
                                     "Index": 0,
@@ -8172,7 +8170,7 @@ module.exports={
                         },
                         "TRANSTRANSIT": {
                             "Index": 1,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "TTCCONV": {
                                     "Index": 0,
@@ -8194,7 +8192,7 @@ module.exports={
                         },
                         "COMMONS": {
                             "Index": 2,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "PARKS": {
                                     "Index": 0,
@@ -8220,7 +8218,7 @@ module.exports={
                         },
                         "DESTINATIONS": {
                             "Index": 3,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "EXHIBPLACE": {
                                     "Index": 0,
@@ -8242,7 +8240,7 @@ module.exports={
                         },
                         "SPECIALCOMMONS": {
                             "Index": 4,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "HERITAGE": {
                                     "Index": 0,
@@ -8258,11 +8256,11 @@ module.exports={
                 },
                 "SUPPORT": {
                     "Index": 1,
-                    "Config": "TYPE",
+                    "Config": "CLUSTER",
                     "Components": {
                         "EMERGSERV": {
                             "Index": 0,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "FIRE": {
                                     "Index": 0,
@@ -8288,7 +8286,7 @@ module.exports={
                         },
                         "HEALTHWELFARE": {
                             "Index": 1,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "PUBLICHEALTH": {
                                     "Index": 0,
@@ -8320,11 +8318,11 @@ module.exports={
                 },
                 "MUNICIPAL": {
                     "Index": 2,
-                    "Config": "TYPE",
+                    "Config": "CLUSTER",
                     "Components": {
                         "CORPMANAGEMENT": {
                             "Index": 0,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "COUNCIL": {
                                     "Index": 0,
@@ -8354,7 +8352,7 @@ module.exports={
                         },
                         "ACCOUNTABILITY": {
                             "Index": 1,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "AUDITGEN": {
                                     "Index": 0,
@@ -8376,7 +8374,7 @@ module.exports={
                         },
                         "MAINTSTANDARDS": {
                             "Index": 2,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "311SERVICE": {
                                     "Index": 0,
@@ -8394,7 +8392,7 @@ module.exports={
                         },
                         "PLANNINGDEV": {
                             "Index": 3,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "PLANNING": {
                                     "Index": 0,
@@ -8416,7 +8414,7 @@ module.exports={
                         },
                         "INTERNALSERV": {
                             "Index": 4,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "FACILITIES": {
                                     "Index": 0,
@@ -8442,7 +8440,7 @@ module.exports={
                         },
                         "CORPORATEACCOUNTS": {
                             "Index": 5,
-                            "Config": "CLUSTER",
+                            "Config": "PROGRAMS",
                             "Components": {
                                 "CORPFINANCING": {
                                     "Index": 0,
@@ -9654,7 +9652,8 @@ var ExplorerClass = function (_Component) {
             var components = _this$getNodeDatasets.components;
 
             var chartType = chartConfig.charttype;
-            var axistitle = viewpointdata.Configuration[viewpointdata.Config].Alias;
+            var titleref = viewpointdata.Configuration[node.Config];
+            var axistitle = titleref.Alias || titleref.Name;
             var options = {
                 title: itemseries.Title,
                 vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
@@ -9762,9 +9761,18 @@ var ExplorerClass = function (_Component) {
             var node = _this$getNodeDatasets2.node;
             var components = _this$getNodeDatasets2.components;
 
+            if (!node.Components) {
+                _this.updateSelections(chartmatrix, matrixrow);
+                return;
+            }
             var code = null;
             if (node && node.SortedComponents && node.SortedComponents[selectionrow]) code = node.SortedComponents[selectionrow].Code;
             if (code) childdataroot.push(code);else {
+                _this.updateSelections(chartmatrix, matrixrow);
+                return;
+            }
+            var newnode = node.Components[code];
+            if (!newnode.Components) {
                 _this.updateSelections(chartmatrix, matrixrow);
                 return;
             }

@@ -251,7 +251,8 @@ class ExplorerClass extends Component {
             let isError = false;
             let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata);
             let chartType = chartConfig.charttype;
-            let axistitle = viewpointdata.Configuration[viewpointdata.Config].Alias;
+            let titleref = viewpointdata.Configuration[node.Config];
+            let axistitle = titleref.Alias || titleref.Name;
             let options = {
                 title: itemseries.Title,
                 vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
@@ -333,12 +334,21 @@ class ExplorerClass extends Component {
             });
             let childdataroot = chartconfig.datapath.slice();
             let { node, components } = this.getNodeDatasets(userselections.viewpoint, childdataroot, this.props.budgetdata);
+            if (!node.Components) {
+                this.updateSelections(chartmatrix, matrixrow);
+                return;
+            }
             let code = null;
             if (node && node.SortedComponents && node.SortedComponents[selectionrow])
                 code = node.SortedComponents[selectionrow].Code;
             if (code)
                 childdataroot.push(code);
             else {
+                this.updateSelections(chartmatrix, matrixrow);
+                return;
+            }
+            let newnode = node.Components[code];
+            if (!newnode.Components) {
                 this.updateSelections(chartmatrix, matrixrow);
                 return;
             }

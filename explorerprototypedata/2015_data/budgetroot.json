@@ -307,7 +307,7 @@
                 }
             },
             "Configuration": {   
-                "ROOT":
+                "TYPES":
                 {
                     "Name":"Functional",
                     "Alias":"Program Activity Types",
@@ -324,15 +324,6 @@
                         "Alias":"Program Activity Type"
                     }
                 },
-                "TYPE":
-                {
-                    "Name":"Functional",
-                    "Alias":"Program Activity Types",
-                    "Instance":{
-                        "Name":"Type",
-                        "Alias":"Program Activity Type"
-                    }
-                },
                 "CLUSTER":{
                     "Name":"Clusters",
                     "Alias":"Program Clusters",
@@ -341,26 +332,32 @@
                         "Alias":"Program Cluster"
                     }
                 },
-                "BASELINE":{
+                "PROGRAMS":{
                     "Name":"Programs",
                     "Baseline":"Programs",
                     "Instance":{
                         "Name":"Program"
                     }
+                },
+                "BASELINE":{
+                    "Name":"Expenditure Categories",
+                    "Instance":{
+                        "Name":"Expenditure Category"
+                    }
                 }
             },
-            "Config":"ROOT",
+            "Config":"TYPES",
             "Components": {
                 "SHARED":
                 {
                     "Index":0,
-                    "Config":"TYPE",
+                    "Config":"CLUSTER",
                     "Components":
                     {
                         "WASTEWATER":
                         {
                             "Index":0,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "SOLIDWASTE":{
                                     "Index":0,
@@ -375,7 +372,7 @@
                         "TRANSTRANSIT":
                         {
                             "Index":1,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "TTCCONV":{
                                     "Index":0,
@@ -398,7 +395,7 @@
                         "COMMONS":
                         {
                             "Index":2,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "PARKS":{
                                     "Index":0,
@@ -425,7 +422,7 @@
                         "DESTINATIONS":
                         {
                             "Index":3,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "EXHIBPLACE":{
                                     "Index":0,
@@ -448,7 +445,7 @@
                         "SPECIALCOMMONS":
                         {
                             "Index":4,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "HERITAGE":{
                                     "Index":0,
@@ -465,13 +462,13 @@
                 "SUPPORT":
                 {
                     "Index":1,
-                    "Config":"TYPE",
+                    "Config":"CLUSTER",
                     "Components":
                     {
                         "EMERGSERV":
                         {
                             "Index":0,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "FIRE":{
                                     "Index":0,
@@ -498,7 +495,7 @@
                         "HEALTHWELFARE":
                         {
                             "Index":1,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "PUBLICHEALTH":{
                                     "Index":0,
@@ -531,13 +528,13 @@
                 "MUNICIPAL":
                 {
                     "Index":2,
-                    "Config":"TYPE",
+                    "Config":"CLUSTER",
                     "Components":
                     {
                         "CORPMANAGEMENT":
                         {   
                             "Index":0,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "COUNCIL":{
                                     "Index":0,
@@ -568,7 +565,7 @@
                         "ACCOUNTABILITY":
                         {
                             "Index":1,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "AUDITGEN":{
                                     "Index":0,
@@ -591,7 +588,7 @@
                         "MAINTSTANDARDS":
                         {
                             "Index":2,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "311SERVICE":{
                                     "Index":0,
@@ -610,7 +607,7 @@
                         "PLANNINGDEV":
                         {
                             "Index":3,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "PLANNING":{
                                     "Index":0,
@@ -633,7 +630,7 @@
                         "INTERNALSERV":
                         {
                             "Index":4,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "FACILITIES":{
                                     "Index":0,
@@ -660,7 +657,7 @@
                         "CORPORATEACCOUNTS":
                         {
                             "Index":5,
-                            "Config":"CLUSTER",
+                            "Config":"PROGRAMS",
                             "Components":{
                                 "CORPFINANCING":{
                                     "Index":0,
