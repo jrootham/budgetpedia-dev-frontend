@@ -33,6 +33,8 @@ interface ChartConfig {
         row: number,
         column: number,
     },
+    chartselection?: any[],
+    chart?:any,
     datapath: string[],
     yearscope: {
         latestyear: number,
@@ -41,7 +43,7 @@ interface ChartConfig {
     },
     charttype?:string,
     chartparms?:{
-        chartType: string,
+        chartType?: string,
         options?:{
             [ index: string ]: any,
         },
@@ -62,6 +64,11 @@ interface ChartParms {
     rows?: any[],
     columns?: any[],
     events?: any[],
+}
+
+interface ChartParmsObj {
+    isError: Boolean,
+    chartParms?:ChartParms,
 }
 
 interface ComponentSummaries {
@@ -321,6 +328,8 @@ class ExplorerClass extends Component< any, any > {
         return cumulatingSummaries
     }
 
+    // -----------------------[ RETURN SORTED COMPONENT LIST ]------------------------
+
     getIndexSortedComponents = (components, lookups) => {
         let sorted = []
         let catlookups = lookups.categorylookups
@@ -379,6 +388,9 @@ class ExplorerClass extends Component< any, any > {
         return sorted
 
     }
+
+    // -----------------------[ SUMMARIZE COMPONENT DATA ]-----------------------
+    // summarize the componentSummaries into the cumumlatingSummaries
 
     aggregateComponentSummaries = (
         cumulatingSummaries:ComponentSummaries, 
@@ -461,49 +473,47 @@ class ExplorerClass extends Component< any, any > {
     }
 
     // ------------------[ GET CHART PARMS ]--------------------------
-    /*
-        return chartType, columns, rows, options, and events
-    */
+    // return chartType, columns, rows, options, and events
 
     // returns chartParmsObj.isError = true if fails
-    // TODO: capture yearscope, including years
-    /*
-        todo: 
-            !axistitle,
-            !categorylabel,
-            !title,
-            !rows,
+    // TODO: handle yearscope, including multiple years
 
-        review variable declarations; remove unneccessary
-
-    */
     getChartParms = (chartConfig: ChartConfig) => {
 
-        let budgetdata = this.props.budgetdata,
-            viewpointindex = chartConfig.viewpoint,
-            viewpointdata = budgetdata.Viewpoints[viewpointindex],
+        // -------------------[ INIT VARS ]---------------------
+
+        // unpack chartConfig & derivatives
+        let viewpointindex = chartConfig.viewpoint,
             path = chartConfig.datapath,
             yearscope = chartConfig.yearscope,
-            year = yearscope.latestyear,
-            isError = false,
-            userselections = this.state.userselections,
+            year = yearscope.latestyear
+
+        // unpack userselections
+        let userselections = this.state.userselections,
             dataseriesname = userselections.dataseries
 
-        let itemseries = budgetdata.DataSeries[dataseriesname],
+        // unpack budgetdata
+        let budgetdata = this.props.budgetdata,
+            viewpointdata = budgetdata.Viewpoints[viewpointindex],
+            itemseries = budgetdata.DataSeries[dataseriesname],
             units = itemseries.Units,
             vertlabel = itemseries.UnitsAlias
+
+        // provide basis for error handling
+        let isError = false
+
+        // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
         // collect viewpoint node and its components as data sources for the graph
         let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata)
 
-        // chartparm:
+        // ---------------------[ COLLECT CHART PARMS ]---------------------
+        // 1. chart type:
         let chartType = chartConfig.charttype
 
-        // let axistitle = meta[depth].Children
+        // 2. chart options:
         let axistitle = viewpointdata.Configuration[viewpointdata.Config].Alias
-        // axistitle = categoryaliases[axistitle] || axistitle
 
-        // chartparm:
         let options = {
             title: itemseries.Title, // parent[meta[depth].Name], // + ' ($Thousands)',
             vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
@@ -518,7 +528,9 @@ class ExplorerClass extends Component< any, any > {
 
         // console.log('options',options)
         // TODO: watch for memory leaks when the chart is destroyed
-        // chartparm:
+        // TODO: replace chartconfig with matrix co-ordinates to avoid
+        // need to update chart by destroying chart (thus closure) before replacing it
+        // 3. chart events:
         let events = [
             {
                 eventName: 'select',
@@ -534,9 +546,9 @@ class ExplorerClass extends Component< any, any > {
             }
         ]
 
-        let categorylabel = 'Component'
+        // 4. chart columns:
+        let categorylabel = 'Component' // TODO: rationalize this!
 
-        // chartparm:
         let columns = [
             // type is required, else throws silent error
             { type: 'string', label: categorylabel },
@@ -544,11 +556,13 @@ class ExplorerClass extends Component< any, any > {
             { type: 'string', role: 'annotation' }
         ]
 
-        let amountformat = format({prefix:"$",suffix:"T"})
-        let rounded = format({round:0, integerSeparator:''})
+        // 5. chart rows:
+        let thousandsformat = format({ prefix: "$", suffix: "T" })
+        let rounded = format({ round: 0, integerSeparator: '' })
 
-        // TODO: sort components into index order
-        // chartparm:
+        if (!node.SortedComponents) {
+            return { isError: true, chartParms:{} }
+        }
         let rows = node.SortedComponents.map(item => {
             // TODO: get determination of amount processing from Unit value
             let amount
@@ -558,9 +572,11 @@ class ExplorerClass extends Component< any, any > {
                 amount = components[item.Code].years[year]
             }
             // TODO: add % of total to the annotation
-            let annotation = amountformat(amount)
+            let annotation = thousandsformat(amount)
             return [item.Name, amount, annotation]            
         })
+
+        // --------------------[ ASSEMBLE PARMS PACK ]----------------
 
         let chartParms:ChartParms = {
 
@@ -572,6 +588,11 @@ class ExplorerClass extends Component< any, any > {
 
         }
 
+        // ------------------[ ASSEMBLE RETURN PACK ]-------------------
+        /* 
+            provides for error flag 
+        */
+
         let chartParmsObj = { 
             isError, 
             chartParms,
@@ -581,7 +602,7 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
-    // --------------------[ GET CHART DATA ]----------------------------
+    // --------------------[ GET CHART DATA NODES ]----------------------------
 
     getNodeDatasets = (viewpointindex, path , budgetdata) => {
 
@@ -591,7 +612,7 @@ class ExplorerClass extends Component< any, any > {
 
         for (let index of path) {
 
-            node = components.Component[index]
+            node = components[index]
 
             components = node.Components
         }
@@ -604,25 +625,33 @@ class ExplorerClass extends Component< any, any > {
     // response to user selection of a chart component (such as a column )
     // called by chart callback
     updateChartsSelection = (context:ChartSelectionContext) => {
-        // console.log('updateCharts data = ', data)
 
-        let chartmatrix = this.state.chartmatrix
+        // console.log('updateCharts context = ', context)
 
-        let sourcechartconfig = context.chartconfig,
-            selectmatrixlocation = sourcechartconfig.matrixlocation,
-            matrixrow = selectmatrixlocation.row,
-            matrixcolumn = selectmatrixlocation.column,
-            selection = context.selection[0],
+        let userselections = this.state.userselections
+
+        let selection = context.selection[0],
             selectionrow = selection.row,
-            viewpoint = sourcechartconfig.viewpoint,
-            dataseries = sourcechartconfig.dataseries
+            chart = context.chart
 
-        let serieslist = chartmatrix[matrixrow]
+        let chartconfig = context.chartconfig,
+            selectmatrixlocation = chartconfig.matrixlocation
+
+        let matrixrow = selectmatrixlocation.row,
+            matrixcolumn = selectmatrixlocation.column
+
+        let chartmatrix = this.state.chartmatrix,
+            serieslist = chartmatrix[matrixrow]
+
+        let viewpoint = chartconfig.viewpoint,
+            dataseries = chartconfig.dataseries
+
         // TODO: abandon here if the next one exists and is the same
         serieslist.splice(matrixcolumn + 1) // remove subsequent charts
 
         // trigger update to avoid google charts use of cached versions for new charts
-        // cached versions keep obsolete chart titles, even if new title fed in through new options
+        // cached versions keep obsolete chart titles, and closures,
+        // even if new title fed in through new options
         this.setState({
             chartmatrix,
         });
@@ -631,13 +660,23 @@ class ExplorerClass extends Component< any, any > {
 
         // console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist)
 
-        let parentchartconfig:ChartConfig = chartmatrix[matrixrow][matrixcolumn]
-        let childdataroot = parentchartconfig.datapath.map(node => {
-            return Object.assign({}, node)
-        })
-        // childdataroot.push({ parent: selectionrow })
+        // let chartconfig:ChartConfig = context.chartconfig // chartmatrix[matrixrow][matrixcolumn]
+        // copy path
+        let childdataroot = chartconfig.datapath.slice() 
+        let { node, components } = this.getNodeDatasets(
+            userselections.viewpoint, childdataroot, this.props.budgetdata)
 
-        let newrange = Object.assign({}, parentchartconfig.yearscope)
+        let code = null
+        if (node && node.SortedComponents && node.SortedComponents[selectionrow])
+            code = node.SortedComponents[selectionrow].Code
+        if (code)
+            childdataroot.push(code)
+        else {
+            this.updateSelections(chartmatrix, matrixrow)
+            return
+        }
+
+        let newrange = Object.assign({}, chartconfig.yearscope)
 
         let newchartconfig: ChartConfig = {
             viewpoint,
@@ -648,22 +687,41 @@ class ExplorerClass extends Component< any, any > {
                 column: matrixcolumn + 1
             },
             yearscope: newrange,
-            chartparms: { chartType: "ColumnChart" }
+            charttype:userselections.charttype,
         }
 
         let chartParmsObj = this.getChartParms(newchartconfig)
 
-        if (chartParmsObj.isError) return
+        if (chartParmsObj.isError) {
+            this.updateSelections(chartmatrix, matrixrow)
+            return
+        }
 
-        // newchartconfig.chartparms = chartParmsObj.chartParms
+        newchartconfig.chartparms = chartParmsObj.chartParms
 
         // console.log( 'newchartconfig = ', newchartconfig )
+        let newmatrixcolumn = matrixcolumn + 1
+        chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig
 
-        chartmatrix[matrixrow][matrixcolumn + 1] = newchartconfig
+        chartconfig.chartselection = context.selection,
+        chartconfig.chart = chart,
 
         this.setState({
             chartmatrix,
         })
+
+        this.updateSelections(chartmatrix,matrixrow)
+
+    }
+
+    // update the visual cue for selection that led to user array of graphs
+    updateSelections = (chartmatrix,matrixrow) => {
+        for (let config of chartmatrix[matrixrow]) {
+            let chart = config.chart
+            let selection = config.chartselection
+            if (chart)
+                chart.setSelection(selection)
+        }
     }
 
     // get React components to render

@@ -8391,7 +8391,7 @@
                                 }
                             }
                         },
-                        "PLANNINGDEVELOPMENT": {
+                        "PLANNINGDEV": {
                             "Index": 3,
                             "Config": "CLUSTER",
                             "Components": {

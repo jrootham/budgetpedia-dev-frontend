@@ -8392,7 +8392,7 @@ module.exports={
                                 }
                             }
                         },
-                        "PLANNINGDEVELOPMENT": {
+                        "PLANNINGDEV": {
                             "Index": 3,
                             "Config": "CLUSTER",
                             "Components": {
@@ -9635,18 +9635,18 @@ var ExplorerClass = function (_Component) {
             };
         };
         _this.getChartParms = function (chartConfig) {
-            var budgetdata = _this.props.budgetdata,
-                viewpointindex = chartConfig.viewpoint,
-                viewpointdata = budgetdata.Viewpoints[viewpointindex],
+            var viewpointindex = chartConfig.viewpoint,
                 path = chartConfig.datapath,
                 yearscope = chartConfig.yearscope,
-                year = yearscope.latestyear,
-                isError = false,
-                userselections = _this.state.userselections,
+                year = yearscope.latestyear;
+            var userselections = _this.state.userselections,
                 dataseriesname = userselections.dataseries;
-            var itemseries = budgetdata.DataSeries[dataseriesname],
+            var budgetdata = _this.props.budgetdata,
+                viewpointdata = budgetdata.Viewpoints[viewpointindex],
+                itemseries = budgetdata.DataSeries[dataseriesname],
                 units = itemseries.Units,
                 vertlabel = itemseries.UnitsAlias;
+            var isError = false;
 
             var _this$getNodeDatasets = _this.getNodeDatasets(viewpointindex, path, budgetdata);
 
@@ -9679,8 +9679,11 @@ var ExplorerClass = function (_Component) {
             }];
             var categorylabel = 'Component';
             var columns = [{ type: 'string', label: categorylabel }, { type: 'number', label: year.toString() }, { type: 'string', role: 'annotation' }];
-            var amountformat = format({ prefix: "$", suffix: "T" });
+            var thousandsformat = format({ prefix: "$", suffix: "T" });
             var rounded = format({ round: 0, integerSeparator: '' });
+            if (!node.SortedComponents) {
+                return { isError: true, chartParms: {} };
+            }
             var rows = node.SortedComponents.map(function (item) {
                 var amount = undefined;
                 if (units == 'DOLLAR') {
@@ -9688,7 +9691,7 @@ var ExplorerClass = function (_Component) {
                 } else {
                     amount = components[item.Code].years[year];
                 }
-                var annotation = amountformat(amount);
+                var annotation = thousandsformat(amount);
                 return [item.Name, amount, annotation];
             });
             var chartParms = {
@@ -9715,7 +9718,7 @@ var ExplorerClass = function (_Component) {
                 for (var _iterator = path[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var index = _step.value;
 
-                    node = components.Component[index];
+                    node = components[index];
                     components = node.Components;
                 }
             } catch (err) {
@@ -9736,25 +9739,36 @@ var ExplorerClass = function (_Component) {
             return { node: node, components: components };
         };
         _this.updateChartsSelection = function (context) {
-            var chartmatrix = _this.state.chartmatrix;
-            var sourcechartconfig = context.chartconfig,
-                selectmatrixlocation = sourcechartconfig.matrixlocation,
-                matrixrow = selectmatrixlocation.row,
-                matrixcolumn = selectmatrixlocation.column,
-                selection = context.selection[0],
+            var userselections = _this.state.userselections;
+            var selection = context.selection[0],
                 selectionrow = selection.row,
-                viewpoint = sourcechartconfig.viewpoint,
-                dataseries = sourcechartconfig.dataseries;
-            var serieslist = chartmatrix[matrixrow];
+                chart = context.chart;
+            var chartconfig = context.chartconfig,
+                selectmatrixlocation = chartconfig.matrixlocation;
+            var matrixrow = selectmatrixlocation.row,
+                matrixcolumn = selectmatrixlocation.column;
+            var chartmatrix = _this.state.chartmatrix,
+                serieslist = chartmatrix[matrixrow];
+            var viewpoint = chartconfig.viewpoint,
+                dataseries = chartconfig.dataseries;
             serieslist.splice(matrixcolumn + 1);
             _this.setState({
                 chartmatrix: chartmatrix
             });
-            var parentchartconfig = chartmatrix[matrixrow][matrixcolumn];
-            var childdataroot = parentchartconfig.datapath.map(function (node) {
-                return Object.assign({}, node);
-            });
-            var newrange = Object.assign({}, parentchartconfig.yearscope);
+            var childdataroot = chartconfig.datapath.slice();
+
+            var _this$getNodeDatasets2 = _this.getNodeDatasets(userselections.viewpoint, childdataroot, _this.props.budgetdata);
+
+            var node = _this$getNodeDatasets2.node;
+            var components = _this$getNodeDatasets2.components;
+
+            var code = null;
+            if (node && node.SortedComponents && node.SortedComponents[selectionrow]) code = node.SortedComponents[selectionrow].Code;
+            if (code) childdataroot.push(code);else {
+                _this.updateSelections(chartmatrix, matrixrow);
+                return;
+            }
+            var newrange = Object.assign({}, chartconfig.yearscope);
             var newchartconfig = {
                 viewpoint: viewpoint,
                 dataseries: dataseries,
@@ -9764,14 +9778,48 @@ var ExplorerClass = function (_Component) {
                     column: matrixcolumn + 1
                 },
                 yearscope: newrange,
-                chartparms: { chartType: "ColumnChart" }
+                charttype: userselections.charttype
             };
             var chartParmsObj = _this.getChartParms(newchartconfig);
-            if (chartParmsObj.isError) return;
-            chartmatrix[matrixrow][matrixcolumn + 1] = newchartconfig;
-            _this.setState({
+            if (chartParmsObj.isError) {
+                _this.updateSelections(chartmatrix, matrixrow);
+                return;
+            }
+            newchartconfig.chartparms = chartParmsObj.chartParms;
+            var newmatrixcolumn = matrixcolumn + 1;
+            chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig;
+            chartconfig.chartselection = context.selection, chartconfig.chart = chart, _this.setState({
                 chartmatrix: chartmatrix
             });
+            _this.updateSelections(chartmatrix, matrixrow);
+        };
+        _this.updateSelections = function (chartmatrix, matrixrow) {
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = chartmatrix[matrixrow][Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var config = _step2.value;
+
+                    var chart = config.chart;
+                    var selection = config.chartselection;
+                    if (chart) chart.setSelection(selection);
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
         };
         _this.getCharts = function (matrixcolumn, matrixrow) {
             var charts = matrixcolumn.map(function (chartconfig, index) {

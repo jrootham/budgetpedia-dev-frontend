@@ -245,8 +245,10 @@ class ExplorerClass extends Component {
             };
         };
         this.getChartParms = (chartConfig) => {
-            let budgetdata = this.props.budgetdata, viewpointindex = chartConfig.viewpoint, viewpointdata = budgetdata.Viewpoints[viewpointindex], path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear, isError = false, userselections = this.state.userselections, dataseriesname = userselections.dataseries;
-            let itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel = itemseries.UnitsAlias;
+            let viewpointindex = chartConfig.viewpoint, path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
+            let userselections = this.state.userselections, dataseriesname = userselections.dataseries;
+            let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel = itemseries.UnitsAlias;
+            let isError = false;
             let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata);
             let chartType = chartConfig.charttype;
             let axistitle = viewpointdata.Configuration[viewpointdata.Config].Alias;
@@ -280,8 +282,11 @@ class ExplorerClass extends Component {
                 { type: 'number', label: year.toString() },
                 { type: 'string', role: 'annotation' }
             ];
-            let amountformat = format({ prefix: "$", suffix: "T" });
+            let thousandsformat = format({ prefix: "$", suffix: "T" });
             let rounded = format({ round: 0, integerSeparator: '' });
+            if (!node.SortedComponents) {
+                return { isError: true, chartParms: {} };
+            }
             let rows = node.SortedComponents.map(item => {
                 let amount;
                 if (units == 'DOLLAR') {
@@ -290,7 +295,7 @@ class ExplorerClass extends Component {
                 else {
                     amount = components[item.Code].years[year];
                 }
-                let annotation = amountformat(amount);
+                let annotation = thousandsformat(amount);
                 return [item.Name, amount, annotation];
             });
             let chartParms = {
@@ -310,24 +315,34 @@ class ExplorerClass extends Component {
             let node = budgetdata.Viewpoints[viewpointindex];
             let components = node.Components;
             for (let index of path) {
-                node = components.Component[index];
+                node = components[index];
                 components = node.Components;
             }
             return { node: node, components: components };
         };
         this.updateChartsSelection = (context) => {
-            let chartmatrix = this.state.chartmatrix;
-            let sourcechartconfig = context.chartconfig, selectmatrixlocation = sourcechartconfig.matrixlocation, matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column, selection = context.selection[0], selectionrow = selection.row, viewpoint = sourcechartconfig.viewpoint, dataseries = sourcechartconfig.dataseries;
-            let serieslist = chartmatrix[matrixrow];
+            let userselections = this.state.userselections;
+            let selection = context.selection[0], selectionrow = selection.row, chart = context.chart;
+            let chartconfig = context.chartconfig, selectmatrixlocation = chartconfig.matrixlocation;
+            let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
+            let chartmatrix = this.state.chartmatrix, serieslist = chartmatrix[matrixrow];
+            let viewpoint = chartconfig.viewpoint, dataseries = chartconfig.dataseries;
             serieslist.splice(matrixcolumn + 1);
             this.setState({
                 chartmatrix: chartmatrix,
             });
-            let parentchartconfig = chartmatrix[matrixrow][matrixcolumn];
-            let childdataroot = parentchartconfig.datapath.map(node => {
-                return Object.assign({}, node);
-            });
-            let newrange = Object.assign({}, parentchartconfig.yearscope);
+            let childdataroot = chartconfig.datapath.slice();
+            let { node, components } = this.getNodeDatasets(userselections.viewpoint, childdataroot, this.props.budgetdata);
+            let code = null;
+            if (node && node.SortedComponents && node.SortedComponents[selectionrow])
+                code = node.SortedComponents[selectionrow].Code;
+            if (code)
+                childdataroot.push(code);
+            else {
+                this.updateSelections(chartmatrix, matrixrow);
+                return;
+            }
+            let newrange = Object.assign({}, chartconfig.yearscope);
             let newchartconfig = {
                 viewpoint: viewpoint,
                 dataseries: dataseries,
@@ -337,15 +352,30 @@ class ExplorerClass extends Component {
                     column: matrixcolumn + 1
                 },
                 yearscope: newrange,
-                chartparms: { chartType: "ColumnChart" }
+                charttype: userselections.charttype,
             };
             let chartParmsObj = this.getChartParms(newchartconfig);
-            if (chartParmsObj.isError)
+            if (chartParmsObj.isError) {
+                this.updateSelections(chartmatrix, matrixrow);
                 return;
-            chartmatrix[matrixrow][matrixcolumn + 1] = newchartconfig;
-            this.setState({
-                chartmatrix: chartmatrix,
-            });
+            }
+            newchartconfig.chartparms = chartParmsObj.chartParms;
+            let newmatrixcolumn = matrixcolumn + 1;
+            chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig;
+            chartconfig.chartselection = context.selection,
+                chartconfig.chart = chart,
+                this.setState({
+                    chartmatrix: chartmatrix,
+                });
+            this.updateSelections(chartmatrix, matrixrow);
+        };
+        this.updateSelections = (chartmatrix, matrixrow) => {
+            for (let config of chartmatrix[matrixrow]) {
+                let chart = config.chart;
+                let selection = config.chartselection;
+                if (chart)
+                    chart.setSelection(selection);
+            }
         };
         this.getCharts = (matrixcolumn, matrixrow) => {
             let charts = matrixcolumn.map((chartconfig, index) => {
