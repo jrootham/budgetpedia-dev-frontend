@@ -8096,7 +8096,7 @@ module.exports={
                     "TRANSTRANSIT": "Transportation & Transit Services",
                     "COMMONS": "City Commons",
                     "DESTINATIONS": "Public Destinations",
-                    "SPECIALCOMMONS": "Specialized Commons Services",
+                    "CONSERVATION": "Conservation & Heritage",
                     "SUPPORT": "Citizen Support Services",
                     "EMERGSERV": "Emergency Services",
                     "WELLBEING": "Wellbeing Services",
@@ -8107,7 +8107,8 @@ module.exports={
                     "MAINTSTANDARDS": "Maintenance & Standards Services",
                     "PLANNINGDEV": "Planning & Development Services",
                     "INTERNALSERV": "Internal Services",
-                    "CORPORATEACCOUNTS": "Corporate Accounts"
+                    "CORPORATEACCOUNTS": "Corporate Accounts",
+                    "PARKSACTIVITIES": "Parks & Activity Centres"
                 }
             },
             "Configuration": {
@@ -8134,6 +8135,13 @@ module.exports={
                         "Name": "Cluster"
                     }
                 },
+                "SUBCLUSTER": {
+                    "Name": "Sub-clusters",
+                    "Alias": "Program Sub-clusters",
+                    "Instance": {
+                        "Name": "Sub-cluster"
+                    }
+                },
                 "PROGRAMS": {
                     "Name": "Programs",
                     "Baseline": "Programs",
@@ -8148,107 +8156,116 @@ module.exports={
                     }
                 }
             },
-            "Config": "TYPES",
+            "Contents": "TYPES",
             "Components": {
                 "SHARED": {
                     "Index": 0,
-                    "Config": "CLUSTER",
+                    "Contents": "CLUSTER",
                     "Components": {
                         "WASTEWATER": {
                             "Index": 0,
-                            "Config": "PROGRAMS",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "SOLIDWASTE": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "WATER": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         },
                         "TRANSTRANSIT": {
                             "Index": 1,
-                            "Config": "PROGRAMS",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "TTCCONV": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "TTCWHEEL": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "TRANSPORTATION": {
                                     "Index": 2,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "PARKING": {
                                     "Index": 3,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         },
                         "COMMONS": {
                             "Index": 2,
-                            "Config": "PROGRAMS",
+                            "Contents": "PROGRAMS",
                             "Components": {
-                                "PARKS": {
+                                "PARKSACTIVITIES": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
-                                },
-                                "ARENAS": {
-                                    "Index": 1,
-                                    "Config": "BASELINE"
-                                },
-                                "COMMCENTRES": {
-                                    "Index": 2,
-                                    "Config": "BASELINE"
-                                },
-                                "REGIONCONSERV": {
-                                    "Index": 3,
-                                    "Config": "BASELINE"
+                                    "Contents": "PROGRAMS",
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "PARKS": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "ARENAS": {
+                                            "Index": 1,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "COMMCENTRES": {
+                                            "Index": 2,
+                                            "Contents": "BASELINE"
+                                        }
+                                    }
                                 },
                                 "LIBRARY": {
-                                    "Index": 4,
-                                    "Config": "BASELINE"
-                                }
-                            }
-                        },
-                        "DESTINATIONS": {
-                            "Index": 3,
-                            "Config": "PROGRAMS",
-                            "Components": {
-                                "EXHIBPLACE": {
-                                    "Index": 0,
-                                    "Config": "BASELINE"
-                                },
-                                "THEATRES": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
-                                "ZOO": {
+                                "DESTINATIONS": {
                                     "Index": 2,
-                                    "Config": "BASELINE"
+                                    "Contents": "PROGRAMS",
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "EXHIBPLACE": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "THEATRES": {
+                                            "Index": 1,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "ZOO": {
+                                            "Index": 2,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "YONGEDUNDAS": {
+                                            "Index": 3,
+                                            "Contents": "BASELINE"
+                                        }
+                                    }
                                 },
-                                "YONGEDUNDAS": {
+                                "CONSERVATION": {
                                     "Index": 3,
-                                    "Config": "BASELINE"
-                                }
-                            }
-                        },
-                        "SPECIALCOMMONS": {
-                            "Index": 4,
-                            "Config": "PROGRAMS",
-                            "Components": {
-                                "HERITAGE": {
-                                    "Index": 0,
-                                    "Config": "BASELINE"
-                                },
-                                "ATMOSPHERE": {
-                                    "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "PROGRAMS",
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "REGIONCONSERV": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "ATMOSPHERE": {
+                                            "Index": 1,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "HERITAGE": {
+                                            "Index": 2,
+                                            "Contents": "BASELINE"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -8256,67 +8273,67 @@ module.exports={
                 },
                 "SUPPORT": {
                     "Index": 1,
-                    "Config": "CLUSTER",
+                    "Contents": "CLUSTER",
                     "Components": {
                         "EMERGSERV": {
                             "Index": 0,
-                            "Config": "PROGRAMS",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "FIRE": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "PARAMEDIC": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "POLICE": {
                                     "Index": 2,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "COURTSERV": {
                                     "Index": 2,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "POLICEBOARD": {
                                     "Index": 3,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         },
                         "WELLBEING": {
                             "Index": 1,
-                            "Config": "PROGRAMS",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "PUBLICHEALTH": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "CHILDSERV": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "LONGTERMHOME": {
                                     "Index": 2,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         },
                         "WELFARE": {
                             "Index": 1,
-                            "Config": "PROGRAMS",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "SHELTERADMIN": {
                                     "Index": 3,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "AFFHOUSING": {
                                     "Index": 4,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "SOCIALSERV": {
                                     "Index": 5,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         }
@@ -8324,145 +8341,146 @@ module.exports={
                 },
                 "MUNICIPAL": {
                     "Index": 2,
-                    "Config": "CLUSTER",
+                    "Contents": "CLUSTER",
                     "Components": {
                         "CORPMANAGEMENT": {
                             "Index": 0,
-                            "Config": "PROGRAMS",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "COUNCIL": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "MAYOR": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
+                                },
+                                "ACCOUNTABILITY": {
+                                    "Index": 1,
+                                    "Contents": "PROGRAMS",
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "AUDITGEN": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "LOBBYREG": {
+                                            "Index": 1,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "OMBUDSMAN": {
+                                            "Index": 2,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "INTEGRITYCOMM": {
+                                            "Index": 3,
+                                            "Contents": "BASELINE"
+                                        }
+                                    }
                                 },
                                 "CLERK": {
                                     "Index": 2,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "CITYMANAGER": {
                                     "Index": 3,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "CFO": {
                                     "Index": 4,
-                                    "Config": "BASELINE"
-                                }
-                            }
-                        },
-                        "ACCOUNTABILITY": {
-                            "Index": 1,
-                            "Config": "PROGRAMS",
-                            "Components": {
-                                "AUDITGEN": {
-                                    "Index": 0,
-                                    "Config": "BASELINE"
-                                },
-                                "LOBBYREG": {
-                                    "Index": 1,
-                                    "Config": "BASELINE"
-                                },
-                                "OMBUDSMAN": {
-                                    "Index": 2,
-                                    "Config": "BASELINE"
-                                },
-                                "INTEGRITYCOMM": {
-                                    "Index": 3,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         },
                         "MAINTSTANDARDS": {
                             "Index": 2,
-                            "Config": "PROGRAMS",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "311SERVICE": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "LICENCING": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "BUILDINGS": {
                                     "Index": 2,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         },
                         "PLANNINGDEV": {
                             "Index": 3,
-                            "Config": "PROGRAMS",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "PLANNING": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "POLICYADMIN": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "ECONDEV": {
                                     "Index": 2,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "SOCIALDEV": {
                                     "Index": 3,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         },
                         "INTERNALSERV": {
                             "Index": 4,
-                            "Config": "PROGRAMS",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "FACILITIES": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "ENGINEERING": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "IT": {
                                     "Index": 2,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "FLEET": {
                                     "Index": 3,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "TREASURER": {
                                     "Index": 4,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "LEGAL": {
                                     "Index": 5,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         },
                         "CORPORATEACCOUNTS": {
                             "Index": 5,
-                            "Config": "PROGRAMS",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "CORPFINANCING": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "CORPEXPENDITURES": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "CORPREVENUES": {
                                     "Index": 2,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "PROPERTYTAX": {
                                     "Index": 3,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         }
@@ -8545,61 +8563,61 @@ module.exports={
                     }
                 }
             },
-            "Config": "ROOT",
+            "Contents": "ROOT",
             "Components": {
                 "ADMINOPS": {
                     "Index": 0,
-                    "Config": "STRUCTURE",
+                    "Contents": "STRUCTURE",
                     "Components": {
                         "COUNCILOPS": {
                             "Index": 0,
-                            "Config": "CLUSTER",
+                            "Contents": "CLUSTER",
                             "Components": {
                                 "COUNCILOFFICES": {
                                     "Index": 0,
-                                    "Config": "SUBCLUSTER",
+                                    "Contents": "SUBCLUSTER",
                                     "Components": {
                                         "COUNCIL": {
                                             "Index": 0,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "MAYOR": {
                                             "Index": 1,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "CLERK": {
                                             "Index": 2,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "LEGAL": {
                                             "Index": 3,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         }
                                     }
                                 },
                                 "ACCOUNTABILITYAPPEAL2": {
                                     "Index": 1,
-                                    "Config": "SUBCLUSTER",
+                                    "Contents": "SUBCLUSTER",
                                     "Components": {
                                         "AUDITGEN": {
                                             "Index": 0,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "INTEGRITYCOMM": {
                                             "Index": 1,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "LOBBYREG": {
                                             "Index": 2,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "OMBUDSMAN": {
                                             "Index": 3,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "LOCALAPPEAL": {
                                             "Index": 4,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         }
                                     }
                                 }
@@ -8607,45 +8625,45 @@ module.exports={
                         },
                         "MANAGEMENTOPS": {
                             "Index": 1,
-                            "Config": "CLUSTER",
+                            "Contents": "CLUSTER",
                             "Components": {
                                 "MANAGEMENTOFFICES": {
                                     "Index": 0,
-                                    "Config": "SUBCLUSTER",
+                                    "Contents": "SUBCLUSTER",
                                     "Components": {
                                         "CITYMANAGER": {
                                             "Index": 0,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "CFO": {
                                             "Index": 1,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "TREASURER": {
                                             "Index": 2,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         }
                                     }
                                 },
                                 "CORPORATESERVICES": {
                                     "Index": 0,
-                                    "Config": "SUBCLUSTER",
+                                    "Contents": "SUBCLUSTER",
                                     "Components": {
                                         "FACILITIES": {
                                             "Index": 3,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "FLEET": {
                                             "Index": 4,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "IT": {
                                             "Index": 5,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "311SERVICE": {
                                             "Index": 6,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         }
                                     }
                                 }
@@ -8655,87 +8673,87 @@ module.exports={
                 },
                 "AGENCIES": {
                     "Index": 1,
-                    "Config": "STRUCTURE",
+                    "Contents": "STRUCTURE",
                     "Components": {
                         "POLICESERV": {
                             "Index": 0,
-                            "Config": "CLUSTER",
+                            "Contents": "CLUSTER",
                             "Components": {
                                 "POLICE": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "POLICEBOARD": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         },
                         "TRANSITSERV": {
                             "Index": 1,
-                            "Config": "CLUSTER",
+                            "Contents": "CLUSTER",
                             "Components": {
                                 "TTCCONV": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "TTCWHEEL": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 }
                             }
                         },
                         "HEALTH": {
                             "Index": 2,
-                            "Config": "BASELINE"
+                            "Contents": "BASELINE"
                         },
                         "LIBRARY": {
                             "Index": 3,
-                            "Config": "BASELINE"
+                            "Contents": "BASELINE"
                         },
                         "PARKING": {
                             "Index": 2,
-                            "Config": "BASELINE"
+                            "Contents": "BASELINE"
                         },
                         "SPECIALIZED": {
                             "Index": 4,
-                            "Config": "CLUSTER",
+                            "Contents": "CLUSTER",
                             "Components": {
                                 "COMMCENTRES": {
                                     "Index": 0,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "ARENAS": {
                                     "Index": 2,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "HERITAGE": {
                                     "Index": 1,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "REGIONCONSERV": {
                                     "Index": 3,
-                                    "Config": "BASELINE"
+                                    "Contents": "BASELINE"
                                 },
                                 "DESTINATIONS2": {
                                     "Index": 4,
-                                    "Config": "SUBCLUSTER",
+                                    "Contents": "SUBCLUSTER",
                                     "Components": {
                                         "EXHIBPLACE": {
                                             "Index": 0,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "THEATRES": {
                                             "Index": 1,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "ZOO": {
                                             "Index": 2,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "YONGEDUNDAS": {
                                             "Index": 3,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         }
                                     }
                                 }
@@ -8745,61 +8763,61 @@ module.exports={
                 },
                 "CITIZENOPS": {
                     "Index": 2,
-                    "Config": "STRUCTURE",
+                    "Contents": "STRUCTURE",
                     "Components": {
                         "CITIZENSERVICESA": {
                             "Index": 0,
-                            "Config": "CLUSTER",
+                            "Contents": "CLUSTER",
                             "Components": {
                                 "FIELDSERVICESA": {
                                     "Index": 0,
-                                    "Config": "SUBCLUSTER",
+                                    "Contents": "SUBCLUSTER",
                                     "Components": {
                                         "CHILDSERV": {
                                             "Index": 0,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "COURTSERV": {
                                             "Index": 1,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "PARAMEDIC": {
                                             "Index": 2,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "PARKS": {
                                             "Index": 3,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "LONGTERMHOME": {
                                             "Index": 4,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         }
                                     }
                                 },
                                 "CORESERVICESA": {
                                     "Index": 1,
-                                    "Config": "SUBCLUSTER",
+                                    "Contents": "SUBCLUSTER",
                                     "Components": {
                                         "ECONDEV": {
                                             "Index": 0,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "SOCIALDEV": {
                                             "Index": 1,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "SOCIALSERV": {
                                             "Index": 2,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "SHELTERADMIN": {
                                             "Index": 3,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "AFFHOUSING": {
                                             "Index": 4,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         }
                                     }
                                 }
@@ -8807,53 +8825,53 @@ module.exports={
                         },
                         "CITIZENSERVICESB": {
                             "Index": 1,
-                            "Config": "CLUSTER",
+                            "Contents": "CLUSTER",
                             "Components": {
                                 "FIELDSERVICESB": {
                                     "Index": 0,
-                                    "Config": "SUBCLUSTER",
+                                    "Contents": "SUBCLUSTER",
                                     "Components": {
                                         "SOLIDWASTE": {
                                             "Index": 0,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "WATER": {
                                             "Index": 1,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "FIRE": {
                                             "Index": 2,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "TRANSPORTATION": {
                                             "Index": 3,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         }
                                     }
                                 },
                                 "CORESERVICESB": {
                                     "Index": 1,
-                                    "Config": "SUBCLUSTER",
+                                    "Contents": "SUBCLUSTER",
                                     "Components": {
                                         "ENGINEERING": {
                                             "Index": 0,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "PLANNING": {
                                             "Index": 1,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "POLICYADMIN": {
                                             "Index": 2,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "LICENCING": {
                                             "Index": 3,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         },
                                         "BUILDINGS": {
                                             "Index": 4,
-                                            "Config": "BASELINE"
+                                            "Contents": "BASELINE"
                                         }
                                     }
                                 }
@@ -8863,23 +8881,23 @@ module.exports={
                 },
                 "CORPORATEACCOUNTS2": {
                     "Index": 3,
-                    "Config": "CLUSTER",
+                    "Contents": "CLUSTER",
                     "Components": {
                         "CORPFINANCING": {
                             "Index": 0,
-                            "Config": "BASELINE"
+                            "Contents": "BASELINE"
                         },
                         "CORPEXPENDITURES": {
                             "Index": 1,
-                            "Config": "BASELINE"
+                            "Contents": "BASELINE"
                         },
                         "CORPREVENUES": {
                             "Index": 2,
-                            "Config": "BASELINE"
+                            "Contents": "BASELINE"
                         },
                         "PROPERTYTAX": {
                             "Index": 3,
-                            "Config": "BASELINE"
+                            "Contents": "BASELINE"
                         }
                     }
                 }
@@ -9498,7 +9516,7 @@ var ExplorerClass = function (_Component) {
                 var componentSummaries = null;
                 if (component.years) delete component.years;
                 if (component.Aggregates) delete component.Aggregates;
-                if (component.Config != "BASELINE") {
+                if (component.Contents != "BASELINE") {
                     if (component.Components) {
                         var sorted = _this.getIndexSortedComponents(component.Components, lookups);
                         component.SortedComponents = sorted;
@@ -9554,7 +9572,7 @@ var ExplorerClass = function (_Component) {
             var catlookups = lookups.categorylookups;
             for (var componentname in components) {
                 var component = components[componentname];
-                var config = component.Config;
+                var config = component.Contents;
                 var name = config == 'BASELINE' ? lookups.baselinelookups[componentname] : catlookups[componentname];
                 var item = {
                     Code: componentname,
@@ -9575,7 +9593,7 @@ var ExplorerClass = function (_Component) {
             var complookups = lookups.componentlookups;
             for (var componentname in components) {
                 var component = components[componentname];
-                var config = component.Config;
+                var config = component.Contents;
                 var name = complookups[componentname];
                 var item = {
                     Code: componentname,
@@ -9644,21 +9662,22 @@ var ExplorerClass = function (_Component) {
                 units = itemseries.Units,
                 vertlabel = itemseries.UnitsAlias + ' (Expenses)';
             var isError = false;
+            var thousandsformat = format({ prefix: "$", suffix: "T" });
+            var rounded = format({ round: 0, integerSeparator: '' });
 
             var _this$getNodeDatasets = _this.getNodeDatasets(viewpointindex, path);
 
             var node = _this$getNodeDatasets.node;
             var components = _this$getNodeDatasets.components;
 
-            var thousandsformat = format({ prefix: "$", suffix: "T" });
-            var rounded = format({ round: 0, integerSeparator: '' });
             var chartType = chartConfig.charttype;
-            var titleref = viewpointdata.Configuration[node.Config];
+            var titleref = viewpointdata.Configuration[node.Contents];
             var axistitle = titleref.Alias || titleref.Name;
             var title = undefined;
             if (chartConfig.parentdata) {
                 var parentnode = chartConfig.parentdata.node;
-                var category = viewpointdata.Configuration[parentnode.Config].Instance;
+                var configindex = node.Config || parentnode.Contents;
+                var category = viewpointdata.Configuration[configindex].Instance;
                 var catname = category.Alias || category.Name;
                 title = catname + ': ' + chartConfig.parentdata.Name;
             } else {

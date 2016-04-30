@@ -244,7 +244,7 @@ class ExplorerClass extends Component< any, any > {
             if (component.Aggregates) delete component.Aggregates
 
             // for non-baseline items, recurse to collect aggregations
-            if (component.Config != "BASELINE") {
+            if (component.Contents != "BASELINE") {
 
                 // if no components found, loop
                 if (component.Components) {
@@ -338,7 +338,7 @@ class ExplorerClass extends Component< any, any > {
         let catlookups = lookups.categorylookups
         for (let componentname in components) {
             let component = components[componentname]
-            let config = component.Config
+            let config = component.Contents
             let name = (config == 'BASELINE')
                 ? lookups.baselinelookups[componentname]
                 : catlookups[componentname]
@@ -369,7 +369,7 @@ class ExplorerClass extends Component< any, any > {
         let complookups = lookups.componentlookups
         for (let componentname in components) {
             let component = components[componentname]
-            let config = component.Config
+            let config = component.Contents
             let name = complookups[componentname]
             let item = {
                 Code: componentname,
@@ -522,14 +522,15 @@ class ExplorerClass extends Component< any, any > {
 
         // 2. chart options:
         // get axis title
-        let titleref = viewpointdata.Configuration[node.Config]
+        let titleref = viewpointdata.Configuration[node.Contents]
         let axistitle = titleref.Alias || titleref.Name
 
         // assemble chart title
         let title
         if (chartConfig.parentdata) {
             let parentnode = chartConfig.parentdata.node
-            let category = viewpointdata.Configuration[parentnode.Config].Instance
+            let configindex = node.Config || parentnode.Contents
+            let category = viewpointdata.Configuration[configindex].Instance
             let catname = category.Alias || category.Name
             title = catname + ': ' + chartConfig.parentdata.Name
         }

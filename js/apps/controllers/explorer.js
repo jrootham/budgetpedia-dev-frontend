@@ -81,7 +81,7 @@ class ExplorerClass extends Component {
                     delete component.years;
                 if (component.Aggregates)
                     delete component.Aggregates;
-                if (component.Config != "BASELINE") {
+                if (component.Contents != "BASELINE") {
                     if (component.Components) {
                         let sorted = this.getIndexSortedComponents(component.Components, lookups);
                         component.SortedComponents = sorted;
@@ -141,7 +141,7 @@ class ExplorerClass extends Component {
             let catlookups = lookups.categorylookups;
             for (let componentname in components) {
                 let component = components[componentname];
-                let config = component.Config;
+                let config = component.Contents;
                 let name = (config == 'BASELINE')
                     ? lookups.baselinelookups[componentname]
                     : catlookups[componentname];
@@ -169,7 +169,7 @@ class ExplorerClass extends Component {
             let complookups = lookups.componentlookups;
             for (let componentname in components) {
                 let component = components[componentname];
-                let config = component.Config;
+                let config = component.Contents;
                 let name = complookups[componentname];
                 let item = {
                     Code: componentname,
@@ -241,16 +241,17 @@ class ExplorerClass extends Component {
             let userselections = this.state.userselections, dataseriesname = userselections.dataseries;
             let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel = itemseries.UnitsAlias + ' (Expenses)';
             let isError = false;
-            let { node, components } = this.getNodeDatasets(viewpointindex, path);
             let thousandsformat = format({ prefix: "$", suffix: "T" });
             let rounded = format({ round: 0, integerSeparator: '' });
+            let { node, components } = this.getNodeDatasets(viewpointindex, path);
             let chartType = chartConfig.charttype;
-            let titleref = viewpointdata.Configuration[node.Config];
+            let titleref = viewpointdata.Configuration[node.Contents];
             let axistitle = titleref.Alias || titleref.Name;
             let title;
             if (chartConfig.parentdata) {
                 let parentnode = chartConfig.parentdata.node;
-                let category = viewpointdata.Configuration[parentnode.Config].Instance;
+                let configindex = node.Config || parentnode.Contents;
+                let category = viewpointdata.Configuration[configindex].Instance;
                 let catname = category.Alias || category.Name;
                 title = catname + ': ' + chartConfig.parentdata.Name;
             }
