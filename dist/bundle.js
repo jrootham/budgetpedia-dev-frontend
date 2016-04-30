@@ -9227,7 +9227,15 @@ var ExplorerChart = function (_Component) {
     _createClass(ExplorerChart, [{
         key: 'render',
         value: function render() {
-            return React.createElement("div", { style: { position: "relative", display: "inline-block", padding: "10px", backgroundColor: "Beige" } }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart"), React.createElement(FontIcon, { className: "material-icons" }, "pie_chart")), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline")), React.createElement(Chart, { chartType: this.props.chartType, options: this.props.options, chartEvents: this.props.chartEvents, rows: this.props.rows, columns: this.props.columns, graph_id: this.props.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(FontIcon, { className: "material-icons" }, "view_list")));
+            return React.createElement("div", { style: { position: "relative", display: "inline-block", padding: "10px", backgroundColor: "Beige" } }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart"), React.createElement(FontIcon, { className: "material-icons" }, "pie_chart")), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline")), React.createElement(Chart, { chartType: this.props.chartType, options: this.props.options, chartEvents: this.props.chartEvents, rows: this.props.rows, columns: this.props.columns, graph_id: this.props.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(FontIcon, { className: "material-icons" }, "view_list")), React.createElement("div", { style: {
+                    position: "absolute",
+                    bottom: "60px",
+                    top: "60px",
+                    width: "30px",
+                    whiteSpace: "normal",
+                    right: 0,
+                    zIndex: 1000,
+                    padding: "3px" } }, React.createElement(FontIcon, { className: "material-icons" }, "attach_money"), React.createElement(FontIcon, { className: "material-icons" }, "receipt"), React.createElement(FontIcon, { className: "material-icons" }, "people")));
         }
     }]);
 
@@ -9469,7 +9477,7 @@ var ExplorerClass = function (_Component) {
         };
         _this.setViewpointAmounts = function (viewpointname, dataseriesname, budgetdata) {
             var viewpoint = budgetdata.Viewpoints[viewpointname];
-            if (viewpoint.currentdataseries && viewpoint.currentdataseries == dataseriesname) return;
+            if (viewpoint.currentdataseries == dataseriesname) return;
             var itemseries = budgetdata.DataSeries[dataseriesname];
             var baselinecat = itemseries.Baseline;
             var baselinelookups = budgetdata.Lookups[baselinecat];
@@ -9499,17 +9507,15 @@ var ExplorerClass = function (_Component) {
                 if (component.Aggregates) delete component.Aggregates;
                 if (component.Config != "BASELINE") {
                     if (component.Components) {
-                        if (!component.SortedComponents) {
-                            var sorted = _this.getIndexSortedComponents(component.Components, lookups);
-                            component.SortedComponents = sorted;
-                        }
+                        var sorted = _this.getIndexSortedComponents(component.Components, lookups);
+                        component.SortedComponents = sorted;
                         componentSummaries = _this.setComponentSummaries(component.Components, items, isInflationAdjusted, lookups);
                         if (componentSummaries.years) component.years = componentSummaries.years;
                         if (componentSummaries.Aggregates) {
                             component.Aggregates = componentSummaries.Aggregates;
-                            if (component.Aggregates && !component.SortedAggregates) {
-                                var sorted = _this.getNameSortedComponents(component.Aggregates, lookups);
-                                component.SortedAggregates = sorted;
+                            if (component.Aggregates) {
+                                var _sorted = _this.getNameSortedComponents(component.Aggregates, lookups);
+                                component.SortedAggregates = _sorted;
                             }
                         }
                     }
@@ -9539,7 +9545,7 @@ var ExplorerClass = function (_Component) {
                     if (componentSummaries.Aggregates) {
                         component.Components = componentSummaries.Aggregates;
                     }
-                    if (component.Components && !component.SortedComponents) {
+                    if (component.Components) {
                         var sorted = _this.getNameSortedComponents(component.Components, lookups);
                         component.SortedComponents = sorted;
                     }
@@ -9891,13 +9897,13 @@ var ExplorerClass = function (_Component) {
                 } }, React.createElement(RadioButton, { value: "one", label: "One", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "two", label: "Two (side-by-side)", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "all", label: "All (timelines)", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } })), singleslider, doubleslider, React.createElement("div", { style: { display: explorer.state.yearscope == 'all' ? 'inline' : 'none' } }, React.createElement(Checkbox, { label: "Year-over-year change, rather than actuals", defaultChecked: false })), React.createElement(Divider, null), React.createElement(RaisedButton, { style: { marginRight: "24px" }, type: "button", label: "Download" }), React.createElement(RaisedButton, { type: "button", label: "Reset" })));
             var drilldownlist = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
             var drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
-            var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down."), React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: function onChange(ev, selection) {
+            var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down."), React.createElement("div", { style: { display: "none" } }, React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: function onChange(ev, selection) {
                     explorer.setState({
                         datafacet: selection
                     });
                 } }, React.createElement(RadioButton, { value: "expenses", label: "Expenses", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "revenues", label: "Revenues", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "net", label: "Net", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "staffing", label: "Staffing", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } })), React.createElement(RadioButtonGroup, { style: { display: explorer.state.datafacet != "staffing" ? 'inline-block' : 'none',
                     backgroundColor: "#eee" }, name: "activities", defaultSelected: "activities" }, React.createElement(RadioButton, { value: "activities", label: "Activities", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "categories", label: "Categories", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } })), React.createElement(RadioButtonGroup, { style: { display: explorer.state.datafacet == "staffing" ? 'inline-block' : 'none',
-                    backgroundColor: "#eee" }, name: "staffing", defaultSelected: "positions" }, React.createElement(RadioButton, { value: "positions", label: "Positions", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "budget", label: "Budget", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } })), React.createElement(FontIcon, { className: "material-icons" }, "cloud_download"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
+                    backgroundColor: "#eee" }, name: "staffing", defaultSelected: "positions" }, React.createElement(RadioButton, { value: "positions", label: "Positions", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "budget", label: "Budget", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } })), React.createElement(FontIcon, { className: "material-icons" }, "cloud_download")), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
             var comparelist = explorer.state.chartmatrix[constants_1.ChartSeries.Compare];
             var comparecharts = explorer.getCharts(comparelist, constants_1.ChartSeries.Compare);
             var comparesegment = React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Compare"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, comparecharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));

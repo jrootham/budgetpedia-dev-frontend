@@ -181,7 +181,8 @@ class ExplorerClass extends Component< any, any > {
     setViewpointAmounts = (viewpointname, dataseriesname, budgetdata) => {
         let viewpoint = budgetdata.Viewpoints[viewpointname]
 
-        if (viewpoint.currentdataseries && (viewpoint.currentdataseries == dataseriesname))
+        // already done if currentdataseries matches request
+        if (viewpoint.currentdataseries == dataseriesname)
             return
 
         let itemseries = budgetdata.DataSeries[dataseriesname]
@@ -247,12 +248,12 @@ class ExplorerClass extends Component< any, any > {
                 // if no components found, loop
                 if (component.Components) {
 
-                    if (!component.SortedComponents) {
+                    // if (!component.SortedComponents) {
                         let sorted = this.getIndexSortedComponents(
                             component.Components,lookups)
     
                         component.SortedComponents = sorted
-                    }
+                    // }
 
                     // get child component summaries recursively
                     componentSummaries = this.setComponentSummaries(
@@ -264,7 +265,7 @@ class ExplorerClass extends Component< any, any > {
                         component.years = componentSummaries.years
                     if (componentSummaries.Aggregates) {
                         component.Aggregates = componentSummaries.Aggregates
-                        if (component.Aggregates && !component.SortedAggregates) {
+                        if (component.Aggregates) {// && !component.SortedAggregates) {
                             let sorted = this.getNameSortedComponents(
                                 component.Aggregates, lookups)
 
@@ -311,7 +312,7 @@ class ExplorerClass extends Component< any, any > {
                     component.Components = componentSummaries.Aggregates
                 }
 
-                if (component.Components && !component.SortedComponents) {
+                if (component.Components) { // && !component.SortedComponents) {
                     let sorted = this.getNameSortedComponents(
                         component.Components, lookups)
 
@@ -953,6 +954,7 @@ class ExplorerClass extends Component< any, any > {
                 <p>
                     Click or tap on any column to drill down. 
                 </p>
+                <div style={{display:"none"}}>
                 <RadioButtonGroup
                     style={{display:'inline-block'}}
                     name="datafacet" 
@@ -1025,6 +1027,7 @@ class ExplorerClass extends Component< any, any > {
                         style={{ display: 'inline-block', width: 'auto' }} />
                     </RadioButtonGroup>
                     <FontIcon className="material-icons">cloud_download</FontIcon>
+                </div>
                 <div style={{ whiteSpace: "nowrap" }}>
                     <div style={{ overflow: "scroll" }}>
 

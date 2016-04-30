@@ -29,6 +29,20 @@ class ExplorerChart extends Component<any, any> {
             <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}>
                 <FontIcon className="material-icons">view_list</FontIcon>
             </div>
+            <div style={{ 
+                position: "absolute", 
+                bottom: "60px",
+                top:"60px",
+                width:"30px",
+                whiteSpace:"normal", 
+                right: 0, 
+                zIndex: 1000, 
+                padding: "3px" }
+            }>
+                <FontIcon className="material-icons">attach_money</FontIcon>
+                <FontIcon className="material-icons">receipt</FontIcon>
+                <FontIcon className="material-icons">people</FontIcon>
+            </div>
         </div>
     }
 }
