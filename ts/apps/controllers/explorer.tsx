@@ -36,6 +36,7 @@ interface ChartConfig {
     chartselection?: any[],
     chart?:any,
     datapath: string[],
+    parentdata?:any,
     yearscope: {
         latestyear: number,
         earliestyear: number,
@@ -507,6 +508,9 @@ class ExplorerClass extends Component< any, any > {
         // collect viewpoint node and its components as data sources for the graph
         let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata)
 
+        let thousandsformat = format({ prefix: "$", suffix: "T" })
+        let rounded = format({ round: 0, integerSeparator: '' })
+
         // ---------------------[ COLLECT CHART PARMS ]---------------------
         // 1. chart type:
         let chartType = chartConfig.charttype
@@ -515,8 +519,22 @@ class ExplorerClass extends Component< any, any > {
         let titleref = viewpointdata.Configuration[node.Config]
         let axistitle = titleref.Alias || titleref.Name
 
+        let title
+        if (chartConfig.parentdata)
+            title = chartConfig.parentdata.Name
+        else
+            title = itemseries.Title
+
+        let titleamount = node.years[year]
+        if (units == 'DOLLAR') {
+            titleamount = parseInt(rounded(titleamount / 1000))
+        } else {
+            titleamount = titleamount
+        }
+        title += ' (Total: ' + thousandsformat(titleamount) + ')'
+
         let options = {
-            title: itemseries.Title, // parent[meta[depth].Name], // + ' ($Thousands)',
+            title: title,
             vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
             hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
             bar: { groupWidth: "95%" },
@@ -558,9 +576,6 @@ class ExplorerClass extends Component< any, any > {
         ]
 
         // 5. chart rows:
-        let thousandsformat = format({ prefix: "$", suffix: "T" })
-        let rounded = format({ round: 0, integerSeparator: '' })
-
         if (!node.SortedComponents) {
             return { isError: true, chartParms:{} }
         }
@@ -694,8 +709,12 @@ class ExplorerClass extends Component< any, any > {
         }
 
         let code = null
-        if (node && node.SortedComponents && node.SortedComponents[selectionrow])
-            code = node.SortedComponents[selectionrow].Code
+        let parentdata = null
+        if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
+            parentdata = node.SortedComponents[selectionrow]
+            parentdata.node = node
+            code = parentdata.Code
+        }
         if (code)
             childdataroot.push(code)
         else {
@@ -719,6 +738,7 @@ class ExplorerClass extends Component< any, any > {
                 row: matrixrow,
                 column: matrixcolumn + 1
             },
+            parentdata: parentdata,
             yearscope: newrange,
             charttype:userselections.charttype,
         }

@@ -250,11 +250,26 @@ class ExplorerClass extends Component {
             let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel = itemseries.UnitsAlias;
             let isError = false;
             let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata);
+            let thousandsformat = format({ prefix: "$", suffix: "T" });
+            let rounded = format({ round: 0, integerSeparator: '' });
             let chartType = chartConfig.charttype;
             let titleref = viewpointdata.Configuration[node.Config];
             let axistitle = titleref.Alias || titleref.Name;
+            let title;
+            if (chartConfig.parentdata)
+                title = chartConfig.parentdata.Name;
+            else
+                title = itemseries.Title;
+            let titleamount = node.years[year];
+            if (units == 'DOLLAR') {
+                titleamount = parseInt(rounded(titleamount / 1000));
+            }
+            else {
+                titleamount = titleamount;
+            }
+            title += ' (Total: ' + thousandsformat(titleamount) + ')';
             let options = {
-                title: itemseries.Title,
+                title: title,
                 vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
                 hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
                 bar: { groupWidth: "95%" },
@@ -283,8 +298,6 @@ class ExplorerClass extends Component {
                 { type: 'number', label: year.toString() },
                 { type: 'string', role: 'annotation' }
             ];
-            let thousandsformat = format({ prefix: "$", suffix: "T" });
-            let rounded = format({ round: 0, integerSeparator: '' });
             if (!node.SortedComponents) {
                 return { isError: true, chartParms: {} };
             }
@@ -353,8 +366,12 @@ class ExplorerClass extends Component {
                 return;
             }
             let code = null;
-            if (node && node.SortedComponents && node.SortedComponents[selectionrow])
-                code = node.SortedComponents[selectionrow].Code;
+            let parentdata = null;
+            if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
+                parentdata = node.SortedComponents[selectionrow];
+                parentdata.node = node;
+                code = parentdata.Code;
+            }
             if (code)
                 childdataroot.push(code);
             else {
@@ -375,6 +392,7 @@ class ExplorerClass extends Component {
                     row: matrixrow,
                     column: matrixcolumn + 1
                 },
+                parentdata: parentdata,
                 yearscope: newrange,
                 charttype: userselections.charttype,
             };

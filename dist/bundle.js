@@ -9651,11 +9651,22 @@ var ExplorerClass = function (_Component) {
             var node = _this$getNodeDatasets.node;
             var components = _this$getNodeDatasets.components;
 
+            var thousandsformat = format({ prefix: "$", suffix: "T" });
+            var rounded = format({ round: 0, integerSeparator: '' });
             var chartType = chartConfig.charttype;
             var titleref = viewpointdata.Configuration[node.Config];
             var axistitle = titleref.Alias || titleref.Name;
+            var title = undefined;
+            if (chartConfig.parentdata) title = chartConfig.parentdata.Name;else title = itemseries.Title;
+            var titleamount = node.years[year];
+            if (units == 'DOLLAR') {
+                titleamount = parseInt(rounded(titleamount / 1000));
+            } else {
+                titleamount = titleamount;
+            }
+            title += ' (Total: ' + thousandsformat(titleamount) + ')';
             var options = {
-                title: itemseries.Title,
+                title: title,
                 vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
                 hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
                 bar: { groupWidth: "95%" },
@@ -9678,8 +9689,6 @@ var ExplorerClass = function (_Component) {
             }];
             var categorylabel = 'Component';
             var columns = [{ type: 'string', label: categorylabel }, { type: 'number', label: year.toString() }, { type: 'string', role: 'annotation' }];
-            var thousandsformat = format({ prefix: "$", suffix: "T" });
-            var rounded = format({ round: 0, integerSeparator: '' });
             if (!node.SortedComponents) {
                 return { isError: true, chartParms: {} };
             }
@@ -9777,7 +9786,12 @@ var ExplorerClass = function (_Component) {
                 return;
             }
             var code = null;
-            if (node && node.SortedComponents && node.SortedComponents[selectionrow]) code = node.SortedComponents[selectionrow].Code;
+            var parentdata = null;
+            if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
+                parentdata = node.SortedComponents[selectionrow];
+                parentdata.node = node;
+                code = parentdata.Code;
+            }
             if (code) childdataroot.push(code);else {
                 _this.updateSelections(chartmatrix, matrixrow);
                 return;
@@ -9796,6 +9810,7 @@ var ExplorerClass = function (_Component) {
                     row: matrixrow,
                     column: matrixcolumn + 1
                 },
+                parentdata: parentdata,
                 yearscope: newrange,
                 charttype: userselections.charttype
             };
