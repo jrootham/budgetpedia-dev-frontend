@@ -8108,7 +8108,8 @@ module.exports={
                     "PLANNINGDEV": "Planning & Development Services",
                     "INTERNALSERV": "Internal Services",
                     "CORPORATEACCOUNTS": "Corporate Accounts",
-                    "PARKSACTIVITIES": "Parks & Activity Centres"
+                    "PARKSACTIVITIES": "Parks & Activity Centres",
+                    "POLICECOURT": "Police & Court Services"
                 }
             },
             "Configuration": {
@@ -8287,17 +8288,24 @@ module.exports={
                                     "Index": 1,
                                     "Contents": "BASELINE"
                                 },
-                                "POLICE": {
+                                "POLICECOURT": {
                                     "Index": 2,
-                                    "Contents": "BASELINE"
-                                },
-                                "COURTSERV": {
-                                    "Index": 2,
-                                    "Contents": "BASELINE"
-                                },
-                                "POLICEBOARD": {
-                                    "Index": 3,
-                                    "Contents": "BASELINE"
+                                    "Contents": "PROGRAMS",
+                                    "Config": "SUBCLUSTER",
+                                    "Components": {
+                                        "POLICE": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "COURTSERV": {
+                                            "Index": 1,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "POLICEBOARD": {
+                                            "Index": 2,
+                                            "Contents": "BASELINE"
+                                        }
+                                    }
                                 }
                             }
                         },
