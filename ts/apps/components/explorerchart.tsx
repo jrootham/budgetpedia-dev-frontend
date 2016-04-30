@@ -12,12 +12,25 @@ class ExplorerChart extends Component<any, any> {
     render() {
         return <div style={{ position:"relative", display: "inline-block", padding:"10px",backgroundColor: "Beige" }}>
             <div style={{ position: "absolute", top:0,left:0,zIndex:1000, padding:"3px"}}>
-                <IconButton disabled><FontIcon className="material-icons">insert_chart</FontIcon></IconButton>
-                <IconButton disabled><FontIcon className="material-icons">pie_chart</FontIcon></IconButton>
+                <IconButton 
+                    tooltip="Column Chart" 
+                    tooltipPosition="bottom-center" 
+                    style={{ backgroundColor: "lightgreen" }}>
+                    <FontIcon className="material-icons">insert_chart</FontIcon>
+                </IconButton>
+                <IconButton 
+                    tooltip="Donut Pie Chart" 
+                    tooltipPosition="bottom-center" >
+                    <FontIcon className="material-icons">donut_small</FontIcon>
+                </IconButton>
+                <IconButton 
+                    tooltip="Timeline" 
+                    tooltipPosition="bottom-center" >
+                    <FontIcon className="material-icons">timeline</FontIcon>
+                </IconButton>
             </div>
             <div style={{ position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" }}>
                 <IconButton disabled><FontIcon className="material-icons">info_outline</FontIcon></IconButton>
-                <IconButton><FontIcon className="material-icons">help_outline</FontIcon></IconButton>
             </div>
             <Chart
                 chartType = {this.props.chartType}
@@ -30,20 +43,6 @@ class ExplorerChart extends Component<any, any> {
                 />
             <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}>
                 <IconButton disabled><FontIcon className="material-icons">view_list</FontIcon></IconButton>
-            </div>
-            <div style={{ 
-                position: "absolute", 
-                bottom: "60px",
-                top:"60px",
-                width:"45px",
-                whiteSpace:"normal", 
-                right: 0, 
-                zIndex: 1000, 
-                padding: "3px" }
-            }>
-                <IconButton style={{backgroundColor:'lightgreen'}}><FontIcon className="material-icons">attach_money</FontIcon></IconButton>
-                <IconButton><FontIcon className="material-icons">receipt</FontIcon></IconButton>
-                <IconButton><FontIcon className="material-icons">people</FontIcon></IconButton >
             </div>
         </div>
     }

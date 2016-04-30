@@ -9227,15 +9227,7 @@ var ExplorerChart = function (_Component) {
     _createClass(ExplorerChart, [{
         key: 'render',
         value: function render() {
-            return React.createElement("div", { style: { position: "relative", display: "inline-block", padding: "10px", backgroundColor: "Beige" } }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart")), React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "pie_chart"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline")), React.createElement(IconButton, null, React.createElement(FontIcon, { className: "material-icons" }, "help_outline"))), React.createElement(Chart, { chartType: this.props.chartType, options: this.props.options, chartEvents: this.props.chartEvents, rows: this.props.rows, columns: this.props.columns, graph_id: this.props.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))), React.createElement("div", { style: {
-                    position: "absolute",
-                    bottom: "60px",
-                    top: "60px",
-                    width: "45px",
-                    whiteSpace: "normal",
-                    right: 0,
-                    zIndex: 1000,
-                    padding: "3px" } }, React.createElement(IconButton, { style: { backgroundColor: 'lightgreen' } }, React.createElement(FontIcon, { className: "material-icons" }, "attach_money")), React.createElement(IconButton, null, React.createElement(FontIcon, { className: "material-icons" }, "receipt")), React.createElement(IconButton, null, React.createElement(FontIcon, { className: "material-icons" }, "people"))));
+            return React.createElement("div", { style: { position: "relative", display: "inline-block", padding: "10px", backgroundColor: "Beige" } }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "bottom-center", style: { backgroundColor: "lightgreen" } }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart")), React.createElement(IconButton, { tooltip: "Donut Pie Chart", tooltipPosition: "bottom-center" }, React.createElement(FontIcon, { className: "material-icons" }, "donut_small")), React.createElement(IconButton, { tooltip: "Timeline", tooltipPosition: "bottom-center" }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: this.props.chartType, options: this.props.options, chartEvents: this.props.chartEvents, rows: this.props.rows, columns: this.props.columns, graph_id: this.props.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))));
         }
     }]);
 
@@ -9423,6 +9415,7 @@ var CardText = require('material-ui/lib/card/card-text');
 var RadioButton = require('material-ui/lib/radio-button');
 var RadioButtonGroup = require('material-ui/lib/radio-button-group');
 var FontIcon = require('material-ui/lib/font-icon');
+var IconButton = require('material-ui/lib/icon-button');
 var Divider = require('material-ui/lib/divider');
 var Checkbox = require('material-ui/lib/checkbox');
 var RaisedButton = require('material-ui/lib/raised-button');
@@ -9645,7 +9638,7 @@ var ExplorerClass = function (_Component) {
                 vertlabel = itemseries.UnitsAlias;
             var isError = false;
 
-            var _this$getNodeDatasets = _this.getNodeDatasets(viewpointindex, path, budgetdata);
+            var _this$getNodeDatasets = _this.getNodeDatasets(viewpointindex, path);
 
             var node = _this$getNodeDatasets.node;
             var components = _this$getNodeDatasets.components;
@@ -9661,7 +9654,9 @@ var ExplorerClass = function (_Component) {
                 var category = viewpointdata.Configuration[parentnode.Config].Instance;
                 var catname = category.Alias || category.Name;
                 title = catname + ': ' + chartConfig.parentdata.Name;
-            } else title = itemseries.Title;
+            } else {
+                title = itemseries.Title;
+            }
             var titleamount = node.years[year];
             if (units == 'DOLLAR') {
                 titleamount = parseInt(rounded(titleamount / 1000));
@@ -9719,7 +9714,8 @@ var ExplorerClass = function (_Component) {
             };
             return chartParmsObj;
         };
-        _this.getNodeDatasets = function (viewpointindex, path, budgetdata) {
+        _this.getNodeDatasets = function (viewpointindex, path) {
+            var budgetdata = _this.props.budgetdata;
             var node = budgetdata.Viewpoints[viewpointindex];
             var components = node.Components;
             var _iteratorNormalCompletion = true;
@@ -9780,7 +9776,7 @@ var ExplorerClass = function (_Component) {
             }
             var childdataroot = chartconfig.datapath.slice();
 
-            var _this$getNodeDatasets2 = _this.getNodeDatasets(userselections.viewpoint, childdataroot, _this.props.budgetdata);
+            var _this$getNodeDatasets2 = _this.getNodeDatasets(userselections.viewpoint, childdataroot);
 
             var node = _this$getNodeDatasets2.node;
             var components = _this$getNodeDatasets2.components;
@@ -9888,14 +9884,13 @@ var ExplorerClass = function (_Component) {
                         })
                     });
                 } }, React.createElement("div", null, explorer.state.yearslider.doublevalue[0]), React.createElement("div", null, explorer.state.yearslider.doublevalue[1])) : '';
-            var dashboardsegment = React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Dashboard"), React.createElement(CardText, { expandable: true }, React.createElement("div", { style: { fontStyle: 'italic' } }, " These dashboard controls are not yet functional "), React.createElement("div", { style: { display: 'inline-block', verticalAlign: "bottom", height: "24px", marginRight: "24px" } }, "Viewpoint:"), React.createElement(RadioButtonGroup, { style: {
-                    display: explorer.state.datafacet != "staffing" ? 'inline-block' : 'none'
-                }, name: "viewselection", defaultSelected: "functional" }, React.createElement(RadioButton, { value: "functional", label: "Functional", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "structural", label: "Structural", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "auditor", label: "Auditor", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } })), " ", React.createElement("br", null), React.createElement(Divider, null), React.createElement(Checkbox, { label: "Inflation adjusted", defaultChecked: true }), React.createElement(Divider, null), React.createElement("div", { style: { display: 'inline-block', verticalAlign: "bottom", height: "24px", marginRight: "24px" } }, "Years:"), React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "yearscope", defaultSelected: explorer.state.yearscope, onChange: function onChange(ev, selection) {
+            var dashboardsegment = React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Dashboard"), React.createElement(CardText, { expandable: true }, React.createElement("div", { style: { fontStyle: 'italic' } }, " These dashboard controls are not yet functional "), React.createElement(Divider, null), React.createElement(Checkbox, { label: "Inflation adjusted", defaultChecked: true }), React.createElement(Divider, null), React.createElement("div", { style: { display: 'inline-block', verticalAlign: "bottom", height: "24px", marginRight: "24px" } }, "Years:"), React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "yearscope", defaultSelected: explorer.state.yearscope, onChange: function onChange(ev, selection) {
                     explorer.setState({ yearscope: selection });
                 } }, React.createElement(RadioButton, { value: "one", label: "One", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "two", label: "Two (side-by-side)", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "all", label: "All (timelines)", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } })), singleslider, doubleslider, React.createElement("div", { style: { display: explorer.state.yearscope == 'all' ? 'inline' : 'none' } }, React.createElement(Checkbox, { label: "Year-over-year change, rather than actuals", defaultChecked: false })), React.createElement(Divider, null), React.createElement(RaisedButton, { style: { marginRight: "24px" }, type: "button", label: "Download" }), React.createElement(RaisedButton, { type: "button", label: "Reset" })));
             var drilldownlist = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
             var drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
-            var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down."), React.createElement("div", { style: { display: "none" } }, React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: function onChange(ev, selection) {
+            var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down.", React.createElement(IconButton, { tooltip: "help", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "help_outline"))), React.createElement("div", { style: {
+                    padding: "3px" } }, React.createElement("span", null, "Viewpoints: "), React.createElement(IconButton, { tooltip: "Functional", tooltipPosition: "top-center", style: { backgroundColor: 'lightgreen' } }, React.createElement(FontIcon, { className: "material-icons" }, "directions_walk")), React.createElement(IconButton, { tooltip: "Structural", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", style: { backgroundColor: 'lightgreen' } }, React.createElement(FontIcon, { className: "material-icons" }, "attach_money")), React.createElement(IconButton, { tooltip: "Revenues", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "receipt")), React.createElement(IconButton, { tooltip: "Staffing", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { display: "none" } }, React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: function onChange(ev, selection) {
                     explorer.setState({
                         datafacet: selection
                     });
@@ -9925,7 +9920,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var Explorer = react_redux_1.connect(mapStateToProps)(ExplorerClass);
 exports.Explorer = Explorer;
 
-},{"../components/explorerchart":3,"../constants":4,"format-number":69,"material-ui/lib/card/card":141,"material-ui/lib/card/card-text":139,"material-ui/lib/card/card-title":140,"material-ui/lib/checkbox":142,"material-ui/lib/divider":144,"material-ui/lib/font-icon":148,"material-ui/lib/radio-button":173,"material-ui/lib/radio-button-group":172,"material-ui/lib/raised-button":174,"react":428,"react-redux":242,"react-slider":285}],10:[function(require,module,exports){
+},{"../components/explorerchart":3,"../constants":4,"format-number":69,"material-ui/lib/card/card":141,"material-ui/lib/card/card-text":139,"material-ui/lib/card/card-title":140,"material-ui/lib/checkbox":142,"material-ui/lib/divider":144,"material-ui/lib/font-icon":148,"material-ui/lib/icon-button":151,"material-ui/lib/radio-button":173,"material-ui/lib/radio-button-group":172,"material-ui/lib/raised-button":174,"react":428,"react-redux":242,"react-slider":285}],10:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();

@@ -15,6 +15,7 @@ import CardText = require('material-ui/lib/card/card-text')
 import RadioButton = require('material-ui/lib/radio-button')
 import RadioButtonGroup = require('material-ui/lib/radio-button-group')
 import FontIcon = require('material-ui/lib/font-icon')
+import IconButton = require('material-ui/lib/icon-button')
 import Divider = require('material-ui/lib/divider')
 import Checkbox = require('material-ui/lib/checkbox')
 import RaisedButton = require('material-ui/lib/raised-button')
@@ -507,7 +508,7 @@ class ExplorerClass extends Component< any, any > {
         // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
         // collect viewpoint node and its components as data sources for the graph
-        let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata)
+        let { node, components } = this.getNodeDatasets(viewpointindex, path )
 
         let thousandsformat = format({ prefix: "$", suffix: "T" })
         let rounded = format({ round: 0, integerSeparator: '' })
@@ -517,9 +518,11 @@ class ExplorerClass extends Component< any, any > {
         let chartType = chartConfig.charttype
 
         // 2. chart options:
+        // get axis title
         let titleref = viewpointdata.Configuration[node.Config]
         let axistitle = titleref.Alias || titleref.Name
 
+        // assemble chart title
         let title
         if (chartConfig.parentdata) {
             let parentnode = chartConfig.parentdata.node
@@ -527,8 +530,9 @@ class ExplorerClass extends Component< any, any > {
             let catname = category.Alias || category.Name
             title = catname + ': ' + chartConfig.parentdata.Name
         }
-        else
+        else {
             title = itemseries.Title
+        }
 
         let titleamount = node.years[year]
         if (units == 'DOLLAR') {
@@ -553,7 +557,7 @@ class ExplorerClass extends Component< any, any > {
         // console.log('options',options)
         // TODO: watch for memory leaks when the chart is destroyed
         // TODO: replace chartconfig with matrix co-ordinates to avoid
-        // need to update chart by destroying chart (thus closure) before replacing it
+        //     need to update chart by destroying chart (thus closure) before replacing it
         // 3. chart events:
         let events = [
             {
@@ -625,7 +629,9 @@ class ExplorerClass extends Component< any, any > {
 
     // --------------------[ GET CHART DATA NODES ]----------------------------
 
-    getNodeDatasets = (viewpointindex, path , budgetdata) => {
+    getNodeDatasets = ( viewpointindex, path ) => {
+
+        let budgetdata = this.props.budgetdata
 
         let node = budgetdata.Viewpoints[viewpointindex]
 
@@ -706,7 +712,7 @@ class ExplorerClass extends Component< any, any > {
         // copy path
         let childdataroot = chartconfig.datapath.slice() 
         let { node, components } = this.getNodeDatasets(
-            userselections.viewpoint, childdataroot, this.props.budgetdata)
+            userselections.viewpoint, childdataroot)
 
         if (!node.Components) {
             this.updateSelections(chartmatrix, matrixrow)
@@ -855,34 +861,6 @@ class ExplorerClass extends Component< any, any > {
             </CardTitle>
             <CardText expandable >
                 <div style={{fontStyle:'italic'}} > These dashboard controls are not yet functional </div>
-                <div style={{ display: 'inline-block', verticalAlign: "bottom", height: "24px", marginRight:"24px" }} > 
-                    Viewpoint: 
-                </div>
-                <RadioButtonGroup
-                    style={{
-                        display: (explorer.state.datafacet != "staffing") ? 'inline-block' : 'none',
-                    }}
-                    name="viewselection"
-                    defaultSelected="functional">
-                    <RadioButton
-                        value="functional"
-                        label = "Functional"
-                        iconStyle={{ marginRight: "4px" }}
-                        labelStyle={{ width: "auto", marginRight: "24px" }}
-                        style={{ display: 'inline-block', width: 'auto' }} />
-                    <RadioButton
-                        value="structural"
-                        label = "Structural"
-                        iconStyle={{ marginRight: "4px" }}
-                        labelStyle={{ width: "auto", marginRight: "24px" }}
-                        style={{ display: 'inline-block', width: 'auto' }} />
-                    <RadioButton
-                        value="auditor"
-                        label = "Auditor"
-                        iconStyle={{ marginRight: "4px" }}
-                        labelStyle={{ width: "auto", marginRight: "24px" }}
-                        style={{ display: 'inline-block', width: 'auto' }} />
-                </RadioButtonGroup> <br />
             <Divider />
             <Checkbox 
                 label="Inflation adjusted"
@@ -956,9 +934,20 @@ class ExplorerClass extends Component< any, any > {
             <CardText expandable >
 
                 <p>
-                    Click or tap on any column to drill down. 
+                    Click or tap on any column to drill down.<IconButton tooltip="help"tooltipPosition="top-center" ><FontIcon className="material-icons">help_outline</FontIcon></IconButton>
                 </p>
-                <div style={{display:"none"}}>
+                <div style={{
+                    padding: "3px"}}>
+                    <span>Viewpoints: </span> 
+                    <IconButton tooltip="Functional" tooltipPosition="top-center" style={{ backgroundColor: 'lightgreen' }}><FontIcon className="material-icons">directions_walk</FontIcon></IconButton>
+                    <IconButton tooltip="Structural" tooltipPosition="top-center" ><FontIcon className="material-icons">layers</FontIcon></IconButton>
+                    <span>Facets: </span>
+                    <IconButton tooltip="Expenses" tooltipPosition="top-center" style={{ backgroundColor: 'lightgreen' }}><FontIcon className="material-icons">attach_money</FontIcon></IconButton>
+                    <IconButton tooltip="Revenues"tooltipPosition="top-center" ><FontIcon className="material-icons">receipt</FontIcon></IconButton>
+                    <IconButton tooltip="Staffing"tooltipPosition="top-center" ><FontIcon className="material-icons">people</FontIcon></IconButton >
+                </div>
+
+                <div style={{ display: "none" }}>
                 <RadioButtonGroup
                     style={{display:'inline-block'}}
                     name="datafacet" 

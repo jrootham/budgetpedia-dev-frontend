@@ -9,6 +9,7 @@ const CardText = require('material-ui/lib/card/card-text');
 const RadioButton = require('material-ui/lib/radio-button');
 const RadioButtonGroup = require('material-ui/lib/radio-button-group');
 const FontIcon = require('material-ui/lib/font-icon');
+const IconButton = require('material-ui/lib/icon-button');
 const Divider = require('material-ui/lib/divider');
 const Checkbox = require('material-ui/lib/checkbox');
 const RaisedButton = require('material-ui/lib/raised-button');
@@ -240,7 +241,7 @@ class ExplorerClass extends Component {
             let userselections = this.state.userselections, dataseriesname = userselections.dataseries;
             let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel = itemseries.UnitsAlias;
             let isError = false;
-            let { node, components } = this.getNodeDatasets(viewpointindex, path, budgetdata);
+            let { node, components } = this.getNodeDatasets(viewpointindex, path);
             let thousandsformat = format({ prefix: "$", suffix: "T" });
             let rounded = format({ round: 0, integerSeparator: '' });
             let chartType = chartConfig.charttype;
@@ -253,8 +254,9 @@ class ExplorerClass extends Component {
                 let catname = category.Alias || category.Name;
                 title = catname + ': ' + chartConfig.parentdata.Name;
             }
-            else
+            else {
                 title = itemseries.Title;
+            }
             let titleamount = node.years[year];
             if (units == 'DOLLAR') {
                 titleamount = parseInt(rounded(titleamount / 1000));
@@ -320,7 +322,8 @@ class ExplorerClass extends Component {
             };
             return chartParmsObj;
         };
-        this.getNodeDatasets = (viewpointindex, path, budgetdata) => {
+        this.getNodeDatasets = (viewpointindex, path) => {
+            let budgetdata = this.props.budgetdata;
             let node = budgetdata.Viewpoints[viewpointindex];
             let components = node.Components;
             for (let index of path) {
@@ -355,7 +358,7 @@ class ExplorerClass extends Component {
                 return;
             }
             let childdataroot = chartconfig.datapath.slice();
-            let { node, components } = this.getNodeDatasets(userselections.viewpoint, childdataroot, this.props.budgetdata);
+            let { node, components } = this.getNodeDatasets(userselections.viewpoint, childdataroot);
             if (!node.Components) {
                 this.updateSelections(chartmatrix, matrixrow);
                 return;
@@ -440,14 +443,13 @@ class ExplorerClass extends Component {
                     })
                 });
             }}, React.createElement("div", null, explorer.state.yearslider.doublevalue[0]), React.createElement("div", null, explorer.state.yearslider.doublevalue[1])) : '';
-        let dashboardsegment = React.createElement(Card, {initiallyExpanded: false}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Dashboard"), React.createElement(CardText, {expandable: true}, React.createElement("div", {style: { fontStyle: 'italic' }}, " These dashboard controls are not yet functional "), React.createElement("div", {style: { display: 'inline-block', verticalAlign: "bottom", height: "24px", marginRight: "24px" }}, "Viewpoint:"), React.createElement(RadioButtonGroup, {style: {
-            display: (explorer.state.datafacet != "staffing") ? 'inline-block' : 'none',
-        }, name: "viewselection", defaultSelected: "functional"}, React.createElement(RadioButton, {value: "functional", label: "Functional", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "structural", label: "Structural", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "auditor", label: "Auditor", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), " ", React.createElement("br", null), React.createElement(Divider, null), React.createElement(Checkbox, {label: "Inflation adjusted", defaultChecked: true}), React.createElement(Divider, null), React.createElement("div", {style: { display: 'inline-block', verticalAlign: "bottom", height: "24px", marginRight: "24px" }}, "Years:"), React.createElement(RadioButtonGroup, {style: { display: 'inline-block' }, name: "yearscope", defaultSelected: explorer.state.yearscope, onChange: (ev, selection) => {
+        let dashboardsegment = React.createElement(Card, {initiallyExpanded: false}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Dashboard"), React.createElement(CardText, {expandable: true}, React.createElement("div", {style: { fontStyle: 'italic' }}, " These dashboard controls are not yet functional "), React.createElement(Divider, null), React.createElement(Checkbox, {label: "Inflation adjusted", defaultChecked: true}), React.createElement(Divider, null), React.createElement("div", {style: { display: 'inline-block', verticalAlign: "bottom", height: "24px", marginRight: "24px" }}, "Years:"), React.createElement(RadioButtonGroup, {style: { display: 'inline-block' }, name: "yearscope", defaultSelected: explorer.state.yearscope, onChange: (ev, selection) => {
             explorer.setState({ yearscope: selection });
         }}, React.createElement(RadioButton, {value: "one", label: "One", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "two", label: "Two (side-by-side)", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "all", label: "All (timelines)", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), singleslider, doubleslider, React.createElement("div", {style: { display: (explorer.state.yearscope == 'all') ? 'inline' : 'none' }}, React.createElement(Checkbox, {label: "Year-over-year change, rather than actuals", defaultChecked: false})), React.createElement(Divider, null), React.createElement(RaisedButton, {style: { marginRight: "24px" }, type: "button", label: "Download"}), React.createElement(RaisedButton, {type: "button", label: "Reset"})));
         let drilldownlist = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
         let drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
-        let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down."), React.createElement("div", {style: { display: "none" }}, React.createElement(RadioButtonGroup, {style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: (ev, selection) => {
+        let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down.", React.createElement(IconButton, {tooltip: "help", tooltipPosition: "top-center"}, React.createElement(FontIcon, {className: "material-icons"}, "help_outline"))), React.createElement("div", {style: {
+            padding: "3px" }}, React.createElement("span", null, "Viewpoints: "), React.createElement(IconButton, {tooltip: "Functional", tooltipPosition: "top-center", style: { backgroundColor: 'lightgreen' }}, React.createElement(FontIcon, {className: "material-icons"}, "directions_walk")), React.createElement(IconButton, {tooltip: "Structural", tooltipPosition: "top-center"}, React.createElement(FontIcon, {className: "material-icons"}, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, {tooltip: "Expenses", tooltipPosition: "top-center", style: { backgroundColor: 'lightgreen' }}, React.createElement(FontIcon, {className: "material-icons"}, "attach_money")), React.createElement(IconButton, {tooltip: "Revenues", tooltipPosition: "top-center"}, React.createElement(FontIcon, {className: "material-icons"}, "receipt")), React.createElement(IconButton, {tooltip: "Staffing", tooltipPosition: "top-center"}, React.createElement(FontIcon, {className: "material-icons"}, "people"))), React.createElement("div", {style: { display: "none" }}, React.createElement(RadioButtonGroup, {style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: (ev, selection) => {
             explorer.setState({
                 datafacet: selection,
             });
