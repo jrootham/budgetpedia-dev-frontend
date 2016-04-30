@@ -146,7 +146,7 @@ class ExplorerClass extends Component< any, any > {
         }
 
         // -----------------[ THE COMPARE ROOT ]-------------------
-
+/*
         // assemble parms to get initial dataset
         let comparechartconfig: ChartConfig = this.initRootChartConfig( ChartSeries.Compare, userselections )
 
@@ -160,7 +160,7 @@ class ExplorerClass extends Component< any, any > {
             chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = comparechartconfig
 
         }
-
+*/
         // -------------[ SAVE INITIALIZATION ]----------------
 
         // make initial dataset available to chart
@@ -521,8 +521,12 @@ class ExplorerClass extends Component< any, any > {
         let axistitle = titleref.Alias || titleref.Name
 
         let title
-        if (chartConfig.parentdata)
-            title = chartConfig.parentdata.Name
+        if (chartConfig.parentdata) {
+            let parentnode = chartConfig.parentdata.node
+            let category = viewpointdata.Configuration[parentnode.Config].Instance
+            let catname = category.Alias || category.Name
+            title = catname + ': ' + chartConfig.parentdata.Name
+        }
         else
             title = itemseries.Title
 

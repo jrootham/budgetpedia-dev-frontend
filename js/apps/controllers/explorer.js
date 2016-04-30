@@ -43,13 +43,6 @@ class ExplorerClass extends Component {
                 matrixlocation = drilldownchartconfig.matrixlocation;
                 chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig;
             }
-            let comparechartconfig = this.initRootChartConfig(constants_1.ChartSeries.Compare, userselections);
-            chartParmsObj = this.getChartParms(comparechartconfig);
-            if (!chartParmsObj.error) {
-                comparechartconfig.chartparms = chartParmsObj.chartParms;
-                matrixlocation = comparechartconfig.matrixlocation;
-                chartmatrix[matrixlocation.row][matrixlocation.column] = comparechartconfig;
-            }
             this.setState({
                 chartmatrix: chartmatrix,
             });
@@ -254,8 +247,12 @@ class ExplorerClass extends Component {
             let titleref = viewpointdata.Configuration[node.Config];
             let axistitle = titleref.Alias || titleref.Name;
             let title;
-            if (chartConfig.parentdata)
-                title = chartConfig.parentdata.Name;
+            if (chartConfig.parentdata) {
+                let parentnode = chartConfig.parentdata.node;
+                let category = viewpointdata.Configuration[parentnode.Config].Instance;
+                let catname = category.Alias || category.Name;
+                title = catname + ': ' + chartConfig.parentdata.Name;
+            }
             else
                 title = itemseries.Title;
             let titleamount = node.years[year];

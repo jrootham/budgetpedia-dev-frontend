@@ -8123,15 +8123,14 @@ module.exports={
                     },
                     "Instance": {
                         "Name": "Type",
-                        "Alias": "Program Activity Type"
+                        "Alias": "Activity Type"
                     }
                 },
                 "CLUSTER": {
                     "Name": "Clusters",
                     "Alias": "Program Clusters",
                     "Instance": {
-                        "Name": "Cluster",
-                        "Alias": "Program Cluster"
+                        "Name": "Cluster"
                     }
                 },
                 "PROGRAMS": {
@@ -9465,13 +9464,6 @@ var ExplorerClass = function (_Component) {
                 matrixlocation = drilldownchartconfig.matrixlocation;
                 chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig;
             }
-            var comparechartconfig = _this.initRootChartConfig(constants_1.ChartSeries.Compare, userselections);
-            chartParmsObj = _this.getChartParms(comparechartconfig);
-            if (!chartParmsObj.error) {
-                comparechartconfig.chartparms = chartParmsObj.chartParms;
-                matrixlocation = comparechartconfig.matrixlocation;
-                chartmatrix[matrixlocation.row][matrixlocation.column] = comparechartconfig;
-            }
             _this.setState({
                 chartmatrix: chartmatrix
             });
@@ -9664,7 +9656,12 @@ var ExplorerClass = function (_Component) {
             var titleref = viewpointdata.Configuration[node.Config];
             var axistitle = titleref.Alias || titleref.Name;
             var title = undefined;
-            if (chartConfig.parentdata) title = chartConfig.parentdata.Name;else title = itemseries.Title;
+            if (chartConfig.parentdata) {
+                var parentnode = chartConfig.parentdata.node;
+                var category = viewpointdata.Configuration[parentnode.Config].Instance;
+                var catname = category.Alias || category.Name;
+                title = catname + ': ' + chartConfig.parentdata.Name;
+            } else title = itemseries.Title;
             var titleamount = node.years[year];
             if (units == 'DOLLAR') {
                 titleamount = parseInt(rounded(titleamount / 1000));

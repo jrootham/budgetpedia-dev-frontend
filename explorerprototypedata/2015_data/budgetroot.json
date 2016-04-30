@@ -321,15 +321,14 @@
                     },
                     "Instance":{
                         "Name":"Type",
-                        "Alias":"Program Activity Type"
+                        "Alias":"Activity Type"
                     }
                 },
                 "CLUSTER":{
                     "Name":"Clusters",
                     "Alias":"Program Clusters",
                     "Instance":{
-                        "Name":"Cluster",
-                        "Alias":"Program Cluster"
+                        "Name":"Cluster"
                     }
                 },
                 "PROGRAMS":{
