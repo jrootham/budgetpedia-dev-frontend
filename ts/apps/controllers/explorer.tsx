@@ -479,6 +479,8 @@ class ExplorerClass extends Component< any, any > {
     // return chartType, columns, rows, options, and events
 
     // returns chartParmsObj.isError = true if fails
+    // returns inputs required for a chart, based on Chart Configuration
+
     // TODO: handle yearscope, including multiple years
 
     getChartParms = (chartConfig: ChartConfig) => {
@@ -500,18 +502,19 @@ class ExplorerClass extends Component< any, any > {
             viewpointdata = budgetdata.Viewpoints[viewpointindex],
             itemseries = budgetdata.DataSeries[dataseriesname],
             units = itemseries.Units,
-            vertlabel = itemseries.UnitsAlias
+            vertlabel = itemseries.UnitsAlias + ' (Expenses)'
 
         // provide basis for error handling
         let isError = false
 
-        // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
-
-        // collect viewpoint node and its components as data sources for the graph
-        let { node, components } = this.getNodeDatasets(viewpointindex, path )
-
+        // utility functions for number formatting
         let thousandsformat = format({ prefix: "$", suffix: "T" })
         let rounded = format({ round: 0, integerSeparator: '' })
+
+        // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
+
+        // collect chart node and its components as data sources for the graph
+        let { node, components } = this.getNodeDatasets(viewpointindex, path )
 
         // ---------------------[ COLLECT CHART PARMS ]---------------------
         // 1. chart type:

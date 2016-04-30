@@ -239,7 +239,7 @@ class ExplorerClass extends Component {
         this.getChartParms = (chartConfig) => {
             let viewpointindex = chartConfig.viewpoint, path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
             let userselections = this.state.userselections, dataseriesname = userselections.dataseries;
-            let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel = itemseries.UnitsAlias;
+            let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel = itemseries.UnitsAlias + ' (Expenses)';
             let isError = false;
             let { node, components } = this.getNodeDatasets(viewpointindex, path);
             let thousandsformat = format({ prefix: "$", suffix: "T" });

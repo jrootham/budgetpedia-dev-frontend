@@ -8099,7 +8099,8 @@ module.exports={
                     "SPECIALCOMMONS": "Specialized Commons Services",
                     "SUPPORT": "Citizen Support Services",
                     "EMERGSERV": "Emergency Services",
-                    "HEALTHWELFARE": "Health & Welfare Services",
+                    "WELLBEING": "Wellbeing Services",
+                    "WELFARE": "Welfare Services",
                     "MUNICIPAL": "Municipal Services",
                     "CORPMANAGEMENT": "Corporate Management",
                     "ACCOUNTABILITY": "Accountability Offices",
@@ -8283,7 +8284,7 @@ module.exports={
                                 }
                             }
                         },
-                        "HEALTHWELFARE": {
+                        "WELLBEING": {
                             "Index": 1,
                             "Config": "PROGRAMS",
                             "Components": {
@@ -8298,7 +8299,13 @@ module.exports={
                                 "LONGTERMHOME": {
                                     "Index": 2,
                                     "Config": "BASELINE"
-                                },
+                                }
+                            }
+                        },
+                        "WELFARE": {
+                            "Index": 1,
+                            "Config": "PROGRAMS",
+                            "Components": {
                                 "SHELTERADMIN": {
                                     "Index": 3,
                                     "Config": "BASELINE"
@@ -8341,10 +8348,6 @@ module.exports={
                                 },
                                 "CFO": {
                                     "Index": 4,
-                                    "Config": "BASELINE"
-                                },
-                                "TREASURER": {
-                                    "Index": 5,
                                     "Config": "BASELINE"
                                 }
                             }
@@ -8431,8 +8434,12 @@ module.exports={
                                     "Index": 3,
                                     "Config": "BASELINE"
                                 },
-                                "LEGAL": {
+                                "TREASURER": {
                                     "Index": 4,
+                                    "Config": "BASELINE"
+                                },
+                                "LEGAL": {
+                                    "Index": 5,
                                     "Config": "BASELINE"
                                 }
                             }
@@ -9635,7 +9642,7 @@ var ExplorerClass = function (_Component) {
                 viewpointdata = budgetdata.Viewpoints[viewpointindex],
                 itemseries = budgetdata.DataSeries[dataseriesname],
                 units = itemseries.Units,
-                vertlabel = itemseries.UnitsAlias;
+                vertlabel = itemseries.UnitsAlias + ' (Expenses)';
             var isError = false;
 
             var _this$getNodeDatasets = _this.getNodeDatasets(viewpointindex, path);
