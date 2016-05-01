@@ -543,16 +543,16 @@
                             "Index":1,
                             "Contents":"PROGRAMS",
                             "Components":{
+                                "SOCIALSERV":{
+                                    "Index":0,
+                                    "Contents":"BASELINE"
+                                },
                                 "SHELTERADMIN":{
-                                    "Index":3,
+                                    "Index":1,
                                     "Contents":"BASELINE"
                                 },
                                 "AFFHOUSING":{
-                                    "Index":4,
-                                    "Contents":"BASELINE"
-                                },
-                                "SOCIALSERV":{
-                                    "Index":5,
+                                    "Index":2,
                                     "Contents":"BASELINE"
                                 }
                             }
