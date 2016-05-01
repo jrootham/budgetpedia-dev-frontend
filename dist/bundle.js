@@ -8509,7 +8509,7 @@ module.exports={
             "Lookups": {
                 "Categories": {
                     "ACCOUNTABILITYAPPEAL2": "Accountability & Appeal Offices",
-                    "ADMINOPS": "Administrative Operartions",
+                    "ADMINOPS": "Core Administrative Operartions",
                     "AGENCIES": "Agencies",
                     "CITIZENOPS": "Citizen Centered Operations",
                     "CITIZENSERVICESA": "Citizen-Centered Services \"A\"",
@@ -8683,102 +8683,8 @@ module.exports={
                         }
                     }
                 },
-                "AGENCIES": {
-                    "Index": 1,
-                    "Contents": "STRUCTURE",
-                    "Components": {
-                        "POLICESERV": {
-                            "Index": 0,
-                            "Contents": "CLUSTER",
-                            "Components": {
-                                "POLICE": {
-                                    "Index": 0,
-                                    "Contents": "BASELINE"
-                                },
-                                "POLICEBOARD": {
-                                    "Index": 1,
-                                    "Contents": "BASELINE"
-                                }
-                            }
-                        },
-                        "TRANSITSERV": {
-                            "Index": 1,
-                            "Contents": "CLUSTER",
-                            "Components": {
-                                "TTCCONV": {
-                                    "Index": 0,
-                                    "Contents": "BASELINE"
-                                },
-                                "TTCWHEEL": {
-                                    "Index": 1,
-                                    "Contents": "BASELINE"
-                                }
-                            }
-                        },
-                        "PUBLICHEALTH": {
-                            "Index": 2,
-                            "Contents": "BASELINE"
-                        },
-                        "LIBRARY": {
-                            "Index": 3,
-                            "Contents": "BASELINE"
-                        },
-                        "PARKING": {
-                            "Index": 2,
-                            "Contents": "BASELINE"
-                        },
-                        "SPECIALIZED": {
-                            "Index": 4,
-                            "Contents": "CLUSTER",
-                            "Components": {
-                                "COMMCENTRES": {
-                                    "Index": 0,
-                                    "Contents": "BASELINE"
-                                },
-                                "ARENAS": {
-                                    "Index": 1,
-                                    "Contents": "BASELINE"
-                                },
-                                "HERITAGE": {
-                                    "Index": 2,
-                                    "Contents": "BASELINE"
-                                },
-                                "REGIONCONSERV": {
-                                    "Index": 3,
-                                    "Contents": "BASELINE"
-                                },
-                                "ATMOSPHERE": {
-                                    "Index": 4,
-                                    "Contents": "BASELINE"
-                                },
-                                "DESTINATIONS2": {
-                                    "Index": 5,
-                                    "Contents": "SUBCLUSTER",
-                                    "Components": {
-                                        "EXHIBPLACE": {
-                                            "Index": 0,
-                                            "Contents": "BASELINE"
-                                        },
-                                        "THEATRES": {
-                                            "Index": 1,
-                                            "Contents": "BASELINE"
-                                        },
-                                        "ZOO": {
-                                            "Index": 2,
-                                            "Contents": "BASELINE"
-                                        },
-                                        "YONGEDUNDAS": {
-                                            "Index": 3,
-                                            "Contents": "BASELINE"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 "CITIZENOPS": {
-                    "Index": 2,
+                    "Index": 1,
                     "Contents": "STRUCTURE",
                     "Components": {
                         "CITIZENSERVICESA": {
@@ -8887,6 +8793,100 @@ module.exports={
                                         },
                                         "BUILDINGS": {
                                             "Index": 4,
+                                            "Contents": "BASELINE"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "AGENCIES": {
+                    "Index": 2,
+                    "Contents": "STRUCTURE",
+                    "Components": {
+                        "POLICESERV": {
+                            "Index": 0,
+                            "Contents": "CLUSTER",
+                            "Components": {
+                                "POLICE": {
+                                    "Index": 0,
+                                    "Contents": "BASELINE"
+                                },
+                                "POLICEBOARD": {
+                                    "Index": 1,
+                                    "Contents": "BASELINE"
+                                }
+                            }
+                        },
+                        "TRANSITSERV": {
+                            "Index": 1,
+                            "Contents": "CLUSTER",
+                            "Components": {
+                                "TTCCONV": {
+                                    "Index": 0,
+                                    "Contents": "BASELINE"
+                                },
+                                "TTCWHEEL": {
+                                    "Index": 1,
+                                    "Contents": "BASELINE"
+                                }
+                            }
+                        },
+                        "PUBLICHEALTH": {
+                            "Index": 2,
+                            "Contents": "BASELINE"
+                        },
+                        "LIBRARY": {
+                            "Index": 3,
+                            "Contents": "BASELINE"
+                        },
+                        "PARKING": {
+                            "Index": 2,
+                            "Contents": "BASELINE"
+                        },
+                        "SPECIALIZED": {
+                            "Index": 4,
+                            "Contents": "CLUSTER",
+                            "Components": {
+                                "COMMCENTRES": {
+                                    "Index": 0,
+                                    "Contents": "BASELINE"
+                                },
+                                "ARENAS": {
+                                    "Index": 1,
+                                    "Contents": "BASELINE"
+                                },
+                                "HERITAGE": {
+                                    "Index": 2,
+                                    "Contents": "BASELINE"
+                                },
+                                "REGIONCONSERV": {
+                                    "Index": 3,
+                                    "Contents": "BASELINE"
+                                },
+                                "ATMOSPHERE": {
+                                    "Index": 4,
+                                    "Contents": "BASELINE"
+                                },
+                                "DESTINATIONS2": {
+                                    "Index": 5,
+                                    "Contents": "SUBCLUSTER",
+                                    "Components": {
+                                        "EXHIBPLACE": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "THEATRES": {
+                                            "Index": 1,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "ZOO": {
+                                            "Index": 2,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "YONGEDUNDAS": {
+                                            "Index": 3,
                                             "Contents": "BASELINE"
                                         }
                                     }
