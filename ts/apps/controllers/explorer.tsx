@@ -101,7 +101,6 @@ class ExplorerClass extends Component< any, any > {
         datafacet:"expenses",
         yearslider: {singlevalue:[2015],doublevalue:[2005,2015]},
         yearscope:"one",
-        viewselection:"activities",
         userselections:{
             latestyear:2015,
             viewpoint:"FUNCTIONAL",
@@ -120,14 +119,9 @@ class ExplorerClass extends Component< any, any > {
         var matrixlocation, 
             chartParmsObj
 
-
         // ------------------------[ POPULATE VIEWPOINT WITH VALUES ]-----------------------
 
-        this.setViewpointAmounts(
-            this.state.userselections.viewpoint,
-            this.state.userselections.dataseries,
-            this.props.budgetdata
-        )
+        this.setViewpointAmounts()
 
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
 
@@ -179,7 +173,10 @@ class ExplorerClass extends Component< any, any > {
     // starts with hash of components, 
     // recursively descends to BASELINE items, then leaves 
     // summaries by year, and Aggregates by year on ascent
-    setViewpointAmounts = (viewpointname, dataseriesname, budgetdata) => {
+    setViewpointAmounts = () => {
+        let viewpointname = this.state.userselections.viewpoint
+        let dataseriesname = this.state.userselections.dataseries
+        let budgetdata = this.props.budgetdata
         let viewpoint = budgetdata.Viewpoints[viewpointname]
 
         // already done if currentdataseries matches request
@@ -282,19 +279,23 @@ class ExplorerClass extends Component< any, any > {
 
                 // fetch the data from the dataseries itemlist
                 let item = items[componentname]
-
+                if (!item) console.error('failed to find item for ',componentname)
                 // first set componentSummaries as usual
                 if (isInflationAdjusted) {
                     // console.log('isInflationAdjusted',isInflationAdjusted)
                     if (this.state.userselections.inflationadjusted) {
-                        componentSummaries = {
-                            years: item.Adjusted.years,
-                            Aggregates: item.Adjusted.Components,
+                        if (item.Adjusted){
+                            componentSummaries = {
+                                years: item.Adjusted.years,
+                                Aggregates: item.Adjusted.Components,
+                            }
                         }
                     } else {
-                        componentSummaries = {
-                            years: item.Nominal.years,
-                            Aggregates: item.Nominal.Components,
+                        if (item.Nominal) {
+                            componentSummaries = {
+                                years: item.Nominal.years,
+                                Aggregates: item.Nominal.Components,
+                            }
                         }
                     }
 
@@ -306,13 +307,14 @@ class ExplorerClass extends Component< any, any > {
                 }
                 // console.log('componentSummaries',componentSummaries)
                 // capture data for chart-making
-                if (componentSummaries.years) {
-                    component.years = componentSummaries.years
+                if (componentSummaries) {
+                    if (componentSummaries.years) {
+                        component.years = componentSummaries.years
+                    }
+                    if (componentSummaries.Aggregates) {
+                        component.Components = componentSummaries.Aggregates
+                    }
                 }
-                if (componentSummaries.Aggregates) {
-                    component.Components = componentSummaries.Aggregates
-                }
-
                 if (component.Components) { // && !component.SortedComponents) {
                     let sorted = this.getNameSortedComponents(
                         component.Components, lookups)
@@ -487,6 +489,7 @@ class ExplorerClass extends Component< any, any > {
 
         // -------------------[ INIT VARS ]---------------------
 
+        console.log('getChartParms chartConfig ',chartConfig)
         // unpack chartConfig & derivatives
         let viewpointindex = chartConfig.viewpoint,
             path = chartConfig.datapath,
@@ -513,6 +516,7 @@ class ExplorerClass extends Component< any, any > {
 
         // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
+        console.log('getChartParms 2 viewpointindex, path',viewpointindex,path)
         // collect chart node and its components as data sources for the graph
         let { node, components } = this.getNodeDatasets(viewpointindex, path )
 
@@ -645,6 +649,8 @@ class ExplorerClass extends Component< any, any > {
 
             node = components[index]
 
+            if (!node) console.error('component node not found',components,viewpointindex,path)
+
             components = node.Components
         }
 
@@ -657,7 +663,7 @@ class ExplorerClass extends Component< any, any > {
     // called by chart callback
     updateChartsSelection = (context:ChartSelectionContext) => {
 
-        // console.log('updateCharts context = ', context)
+        console.log('updateCharts context = ', context)
 
         // user selections
         let userselections = this.state.userselections
@@ -714,7 +720,8 @@ class ExplorerClass extends Component< any, any > {
 
         // let chartconfig:ChartConfig = context.chartconfig // chartmatrix[matrixrow][matrixcolumn]
         // copy path
-        let childdataroot = chartconfig.datapath.slice() 
+        let childdataroot = chartconfig.datapath.slice()
+        console.log('updateCharts',userselections,childdataroot)
         let { node, components } = this.getNodeDatasets(
             userselections.viewpoint, childdataroot)
 
@@ -943,8 +950,53 @@ class ExplorerClass extends Component< any, any > {
                 <div style={{
                     padding: "3px"}}>
                     <span>Viewpoints: </span> 
-                    <IconButton tooltip="Functional" tooltipPosition="top-center" style={{ backgroundColor: 'lightgreen' }}><FontIcon className="material-icons">directions_walk</FontIcon></IconButton>
-                    <IconButton tooltip="Structural" tooltipPosition="top-center" ><FontIcon className="material-icons">layers</FontIcon></IconButton>
+                    <IconButton 
+                        tooltip="Functional" 
+                        tooltipPosition="top-center"
+                        onTouchTap= {
+                            e => {
+                                let userselections = this.state.userselections
+                                userselections.viewpoint = 'FUNCTIONAL'
+                                let chartmatrix = [[], []]
+                                this.setState({
+                                    userselections,
+                                    chartmatrix,
+                                })
+                                this.componentDidMount()
+                            }
+                        } 
+                        style={
+                            { backgroundColor: (this.state.userselections.viewpoint == 'FUNCTIONAL')
+                                ?'lightgreen'
+                                :'transparent' }
+                        }>
+                        <FontIcon className="material-icons">directions_walk</FontIcon>
+                    </IconButton>
+                    <IconButton 
+                        tooltip="Structural" 
+                        tooltipPosition="top-center" 
+                        onTouchTap= {
+                            e => {
+                                let userselections = this.state.userselections
+                                userselections.viewpoint = 'STRUCTURAL'
+                                let chartmatrix = [[], []]
+                                this.setState({
+                                    userselections,
+                                    chartmatrix,
+                                })
+                                this.componentDidMount()
+                            }
+                        }
+                        style={
+                            {
+                                backgroundColor: (this.state.userselections.viewpoint == 'STRUCTURAL')
+                                    ? 'lightgreen'
+                                    : 'transparent'
+                            }
+                        }>
+                        >
+                        <FontIcon className="material-icons">layers</FontIcon>
+                    </IconButton>
                     <span>Facets: </span>
                     <IconButton tooltip="Expenses" tooltipPosition="top-center" style={{ backgroundColor: 'lightgreen' }}><FontIcon className="material-icons">attach_money</FontIcon></IconButton>
                     <IconButton tooltip="Revenues"tooltipPosition="top-center" ><FontIcon className="material-icons">receipt</FontIcon></IconButton>

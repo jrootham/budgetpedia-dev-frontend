@@ -849,10 +849,6 @@
                                         "OMBUDSMAN":{
                                             "Index":3,
                                             "Contents":"BASELINE"
-                                        },
-                                        "LOCALAPPEAL":{
-                                            "Index":4,
-                                            "Contents":"BASELINE"
                                         }
                                     }
                                 }
@@ -938,7 +934,7 @@
                                 }
                             }
                         },
-                        "HEALTH":{
+                        "PUBLICHEALTH":{
                             "Index":2,
                             "Contents":"BASELINE"
                         },

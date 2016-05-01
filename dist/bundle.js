@@ -8622,10 +8622,6 @@ module.exports={
                                         "OMBUDSMAN": {
                                             "Index": 3,
                                             "Contents": "BASELINE"
-                                        },
-                                        "LOCALAPPEAL": {
-                                            "Index": 4,
-                                            "Contents": "BASELINE"
                                         }
                                     }
                                 }
@@ -8711,7 +8707,7 @@ module.exports={
                                 }
                             }
                         },
-                        "HEALTH": {
+                        "PUBLICHEALTH": {
                             "Index": 2,
                             "Contents": "BASELINE"
                         },
@@ -9469,7 +9465,6 @@ var ExplorerClass = function (_Component) {
             datafacet: "expenses",
             yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] },
             yearscope: "one",
-            viewselection: "activities",
             userselections: {
                 latestyear: 2015,
                 viewpoint: "FUNCTIONAL",
@@ -9482,7 +9477,7 @@ var ExplorerClass = function (_Component) {
             var userselections = _this.state.userselections,
                 chartmatrix = _this.state.chartmatrix;
             var matrixlocation, chartParmsObj;
-            _this.setViewpointAmounts(_this.state.userselections.viewpoint, _this.state.userselections.dataseries, _this.props.budgetdata);
+            _this.setViewpointAmounts();
             var drilldownchartconfig = _this.initRootChartConfig(constants_1.ChartSeries.DrillDown, userselections);
             chartParmsObj = _this.getChartParms(drilldownchartconfig);
             if (!chartParmsObj.error) {
@@ -9494,7 +9489,10 @@ var ExplorerClass = function (_Component) {
                 chartmatrix: chartmatrix
             });
         };
-        _this.setViewpointAmounts = function (viewpointname, dataseriesname, budgetdata) {
+        _this.setViewpointAmounts = function () {
+            var viewpointname = _this.state.userselections.viewpoint;
+            var dataseriesname = _this.state.userselections.dataseries;
+            var budgetdata = _this.props.budgetdata;
             var viewpoint = budgetdata.Viewpoints[viewpointname];
             if (viewpoint.currentdataseries == dataseriesname) return;
             var itemseries = budgetdata.DataSeries[dataseriesname];
@@ -9540,17 +9538,22 @@ var ExplorerClass = function (_Component) {
                     }
                 } else {
                     var item = items[componentname];
+                    if (!item) console.error('failed to find item for ', componentname);
                     if (isInflationAdjusted) {
                         if (_this.state.userselections.inflationadjusted) {
-                            componentSummaries = {
-                                years: item.Adjusted.years,
-                                Aggregates: item.Adjusted.Components
-                            };
+                            if (item.Adjusted) {
+                                componentSummaries = {
+                                    years: item.Adjusted.years,
+                                    Aggregates: item.Adjusted.Components
+                                };
+                            }
                         } else {
-                            componentSummaries = {
-                                years: item.Nominal.years,
-                                Aggregates: item.Nominal.Components
-                            };
+                            if (item.Nominal) {
+                                componentSummaries = {
+                                    years: item.Nominal.years,
+                                    Aggregates: item.Nominal.Components
+                                };
+                            }
                         }
                     } else {
                         componentSummaries = {
@@ -9558,11 +9561,13 @@ var ExplorerClass = function (_Component) {
                             Aggregates: item.Components
                         };
                     }
-                    if (componentSummaries.years) {
-                        component.years = componentSummaries.years;
-                    }
-                    if (componentSummaries.Aggregates) {
-                        component.Components = componentSummaries.Aggregates;
+                    if (componentSummaries) {
+                        if (componentSummaries.years) {
+                            component.years = componentSummaries.years;
+                        }
+                        if (componentSummaries.Aggregates) {
+                            component.Components = componentSummaries.Aggregates;
+                        }
                     }
                     if (component.Components) {
                         var sorted = _this.getNameSortedComponents(component.Components, lookups);
@@ -9658,6 +9663,7 @@ var ExplorerClass = function (_Component) {
             };
         };
         _this.getChartParms = function (chartConfig) {
+            console.log('getChartParms chartConfig ', chartConfig);
             var viewpointindex = chartConfig.viewpoint,
                 path = chartConfig.datapath,
                 yearscope = chartConfig.yearscope,
@@ -9672,6 +9678,7 @@ var ExplorerClass = function (_Component) {
             var isError = false;
             var thousandsformat = format({ prefix: "$", suffix: "T" });
             var rounded = format({ round: 0, integerSeparator: '' });
+            console.log('getChartParms 2 viewpointindex, path', viewpointindex, path);
 
             var _this$getNodeDatasets = _this.getNodeDatasets(viewpointindex, path);
 
@@ -9761,6 +9768,7 @@ var ExplorerClass = function (_Component) {
                     var index = _step.value;
 
                     node = components[index];
+                    if (!node) console.error('component node not found', components, viewpointindex, path);
                     components = node.Components;
                 }
             } catch (err) {
@@ -9781,6 +9789,7 @@ var ExplorerClass = function (_Component) {
             return { node: node, components: components };
         };
         _this.updateChartsSelection = function (context) {
+            console.log('updateCharts context = ', context);
             var userselections = _this.state.userselections;
             var selection = context.selection[0];
             var selectionrow = undefined;
@@ -9809,6 +9818,7 @@ var ExplorerClass = function (_Component) {
                 return;
             }
             var childdataroot = chartconfig.datapath.slice();
+            console.log('updateCharts', userselections, childdataroot);
 
             var _this$getNodeDatasets2 = _this.getNodeDatasets(userselections.viewpoint, childdataroot);
 
@@ -9903,6 +9913,8 @@ var ExplorerClass = function (_Component) {
     _createClass(ExplorerClass, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var explorer = this;
             var singleslider = explorer.state.yearscope == 'one' ? React.createElement(ReactSlider, { className: "horizontal-slider", defaultValue: explorer.state.yearslider.singlevalue, min: 2003, max: 2016, onChange: function onChange(value) {
                     explorer.setState({
@@ -9924,7 +9936,27 @@ var ExplorerClass = function (_Component) {
             var drilldownlist = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
             var drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
             var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down.", React.createElement(IconButton, { tooltip: "help", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "help_outline"))), React.createElement("div", { style: {
-                    padding: "3px" } }, React.createElement("span", null, "Viewpoints: "), React.createElement(IconButton, { tooltip: "Functional", tooltipPosition: "top-center", style: { backgroundColor: 'lightgreen' } }, React.createElement(FontIcon, { className: "material-icons" }, "directions_walk")), React.createElement(IconButton, { tooltip: "Structural", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", style: { backgroundColor: 'lightgreen' } }, React.createElement(FontIcon, { className: "material-icons" }, "attach_money")), React.createElement(IconButton, { tooltip: "Revenues", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "receipt")), React.createElement(IconButton, { tooltip: "Staffing", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { display: "none" } }, React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: function onChange(ev, selection) {
+                    padding: "3px" } }, React.createElement("span", null, "Viewpoints: "), React.createElement(IconButton, { tooltip: "Functional", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
+                    var userselections = _this2.state.userselections;
+                    userselections.viewpoint = 'FUNCTIONAL';
+                    var chartmatrix = [[], []];
+                    _this2.setState({
+                        userselections: userselections,
+                        chartmatrix: chartmatrix
+                    });
+                    _this2.componentDidMount();
+                }, style: { backgroundColor: this.state.userselections.viewpoint == 'FUNCTIONAL' ? 'lightgreen' : 'transparent' } }, React.createElement(FontIcon, { className: "material-icons" }, "directions_walk")), React.createElement(IconButton, { tooltip: "Structural", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
+                    var userselections = _this2.state.userselections;
+                    userselections.viewpoint = 'STRUCTURAL';
+                    var chartmatrix = [[], []];
+                    _this2.setState({
+                        userselections: userselections,
+                        chartmatrix: chartmatrix
+                    });
+                    _this2.componentDidMount();
+                }, style: {
+                    backgroundColor: this.state.userselections.viewpoint == 'STRUCTURAL' ? 'lightgreen' : 'transparent'
+                } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", style: { backgroundColor: 'lightgreen' } }, React.createElement(FontIcon, { className: "material-icons" }, "attach_money")), React.createElement(IconButton, { tooltip: "Revenues", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "receipt")), React.createElement(IconButton, { tooltip: "Staffing", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { display: "none" } }, React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: function onChange(ev, selection) {
                     explorer.setState({
                         datafacet: selection
                     });
