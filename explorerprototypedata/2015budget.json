@@ -8101,14 +8101,15 @@
                     "WELLBEING": "Health & Education Services",
                     "WELFARE": "Income & Housing Services",
                     "MUNICIPAL": "Municipal Services",
-                    "CORPMANAGEMENT": "Corporate Management",
+                    "CORPMANAGEMENT": "Corporate Leadership",
                     "ACCOUNTABILITY": "Accountability Offices",
                     "MAINTSTANDARDS": "Maintenance & Standards Services",
                     "PLANNINGDEV": "Planning & Development Services",
                     "INTERNALSERV": "Internal Services",
                     "CORPORATEACCOUNTS": "Corporate Accounts",
                     "PARKSACTIVITIES": "Parks & Activity Centres",
-                    "POLICECOURT": "Police & Court Services"
+                    "POLICECOURT": "Police & Court Services",
+                    "CITYMANAGEMENT": "General Management"
                 }
             },
             "Configuration": {
@@ -8350,92 +8351,99 @@
                     "Index": 2,
                     "Contents": "CLUSTER",
                     "Components": {
-                        "CORPMANAGEMENT": {
+                        "CITYMANAGEMENT": {
                             "Index": 0,
-                            "Contents": "PROGRAMS",
+                            "Contents": "SUBCLUSTER",
+                            "Config": "CLUSTER",
                             "Components": {
-                                "COUNCIL": {
+                                "CORPMANAGEMENT": {
                                     "Index": 0,
-                                    "Contents": "BASELINE"
-                                },
-                                "MAYOR": {
-                                    "Index": 1,
-                                    "Contents": "BASELINE"
-                                },
-                                "ACCOUNTABILITY": {
-                                    "Index": 1,
                                     "Contents": "PROGRAMS",
-                                    "Config": "SUBCLUSTER",
                                     "Components": {
-                                        "AUDITGEN": {
+                                        "COUNCIL": {
                                             "Index": 0,
                                             "Contents": "BASELINE"
                                         },
-                                        "LOBBYREG": {
+                                        "MAYOR": {
                                             "Index": 1,
                                             "Contents": "BASELINE"
                                         },
-                                        "OMBUDSMAN": {
+                                        "CLERK": {
                                             "Index": 2,
                                             "Contents": "BASELINE"
                                         },
-                                        "INTEGRITYCOMM": {
+                                        "CITYMANAGER": {
                                             "Index": 3,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "CFO": {
+                                            "Index": 4,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "ACCOUNTABILITY": {
+                                            "Index": 5,
+                                            "Contents": "PROGRAMS",
+                                            "Config": "SUBCLUSTER",
+                                            "Components": {
+                                                "AUDITGEN": {
+                                                    "Index": 0,
+                                                    "Contents": "BASELINE"
+                                                },
+                                                "LOBBYREG": {
+                                                    "Index": 1,
+                                                    "Contents": "BASELINE"
+                                                },
+                                                "OMBUDSMAN": {
+                                                    "Index": 2,
+                                                    "Contents": "BASELINE"
+                                                },
+                                                "INTEGRITYCOMM": {
+                                                    "Index": 3,
+                                                    "Contents": "BASELINE"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "MAINTSTANDARDS": {
+                                    "Index": 1,
+                                    "Contents": "PROGRAMS",
+                                    "Components": {
+                                        "311SERVICE": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "LICENCING": {
+                                            "Index": 1,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "BUILDINGS": {
+                                            "Index": 2,
                                             "Contents": "BASELINE"
                                         }
                                     }
                                 },
-                                "CLERK": {
-                                    "Index": 2,
-                                    "Contents": "BASELINE"
-                                },
-                                "CITYMANAGER": {
+                                "PLANNINGDEV": {
                                     "Index": 3,
-                                    "Contents": "BASELINE"
-                                },
-                                "CFO": {
-                                    "Index": 4,
-                                    "Contents": "BASELINE"
-                                }
-                            }
-                        },
-                        "MAINTSTANDARDS": {
-                            "Index": 2,
-                            "Contents": "PROGRAMS",
-                            "Components": {
-                                "311SERVICE": {
-                                    "Index": 0,
-                                    "Contents": "BASELINE"
-                                },
-                                "LICENCING": {
-                                    "Index": 1,
-                                    "Contents": "BASELINE"
-                                },
-                                "BUILDINGS": {
-                                    "Index": 2,
-                                    "Contents": "BASELINE"
-                                }
-                            }
-                        },
-                        "PLANNINGDEV": {
-                            "Index": 3,
-                            "Contents": "PROGRAMS",
-                            "Components": {
-                                "PLANNING": {
-                                    "Index": 0,
-                                    "Contents": "BASELINE"
-                                },
-                                "POLICYADMIN": {
-                                    "Index": 1,
-                                    "Contents": "BASELINE"
-                                },
-                                "ECONDEV": {
-                                    "Index": 2,
-                                    "Contents": "BASELINE"
-                                },
-                                "SOCIALDEV": {
-                                    "Index": 3,
-                                    "Contents": "BASELINE"
+                                    "Contents": "PROGRAMS",
+                                    "Components": {
+                                        "PLANNING": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "POLICYADMIN": {
+                                            "Index": 1,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "ECONDEV": {
+                                            "Index": 2,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "SOCIALDEV": {
+                                            "Index": 3,
+                                            "Contents": "BASELINE"
+                                        }
+                                    }
                                 }
                             }
                         },
