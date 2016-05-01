@@ -247,14 +247,12 @@ class ExplorerClass extends Component {
             };
         };
         this.getChartParms = (chartConfig) => {
-            console.log('getChartParms chartConfig ', chartConfig);
             let viewpointindex = chartConfig.viewpoint, path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
             let userselections = this.state.userselections, dataseriesname = userselections.dataseries;
             let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel = itemseries.UnitsAlias + ' (Expenses)';
             let isError = false;
             let thousandsformat = format({ prefix: "$", suffix: "T" });
             let rounded = format({ round: 0, integerSeparator: '' });
-            console.log('getChartParms 2 viewpointindex, path', viewpointindex, path);
             let { node, components } = this.getNodeDatasets(viewpointindex, path);
             let chartType = chartConfig.charttype;
             let titleref = viewpointdata.Configuration[node.Contents];
@@ -348,7 +346,6 @@ class ExplorerClass extends Component {
             return { node: node, components: components };
         };
         this.updateChartsSelection = (context) => {
-            console.log('updateCharts context = ', context);
             let userselections = this.state.userselections;
             let selection = context.selection[0];
             let selectionrow;
@@ -374,7 +371,6 @@ class ExplorerClass extends Component {
                 return;
             }
             let childdataroot = chartconfig.datapath.slice();
-            console.log('updateCharts', userselections, childdataroot);
             let { node, components } = this.getNodeDatasets(userselections.viewpoint, childdataroot);
             if (!node.Components) {
                 this.updateSelections(chartmatrix, matrixrow);
@@ -411,6 +407,7 @@ class ExplorerClass extends Component {
                 yearscope: newrange,
                 charttype: userselections.charttype,
             };
+            console.log('before getChartParms');
             let chartParmsObj = this.getChartParms(newchartconfig);
             if (chartParmsObj.isError) {
                 this.updateSelections(chartmatrix, matrixrow);
@@ -422,6 +419,7 @@ class ExplorerClass extends Component {
             this.setState({
                 chartmatrix: chartmatrix,
             });
+            console.log('after setState');
             chartconfig.chartselection = context.selection,
                 chartconfig.chart = chart;
             this.updateSelections(chartmatrix, matrixrow);
@@ -474,8 +472,10 @@ class ExplorerClass extends Component {
                 userselections: userselections,
                 chartmatrix: chartmatrix,
             });
-            this.forceUpdate();
-            this.componentDidMount();
+            let self = this;
+            setTimeout(() => {
+                self.componentDidMount();
+            });
         }, style: { backgroundColor: (this.state.userselections.viewpoint == 'FUNCTIONAL')
                 ? 'lightgreen'
                 : 'transparent' }}, React.createElement(FontIcon, {className: "material-icons"}, "directions_walk")), React.createElement(IconButton, {tooltip: "Structural", tooltipPosition: "top-center", onTouchTap: e => {
@@ -486,8 +486,10 @@ class ExplorerClass extends Component {
                 userselections: userselections,
                 chartmatrix: chartmatrix,
             });
-            this.forceUpdate();
-            this.componentDidMount();
+            let self = this;
+            setTimeout(() => {
+                self.componentDidMount();
+            });
         }, style: {
             backgroundColor: (this.state.userselections.viewpoint == 'STRUCTURAL')
                 ? 'lightgreen'

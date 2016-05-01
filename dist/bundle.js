@@ -9663,7 +9663,6 @@ var ExplorerClass = function (_Component) {
             };
         };
         _this.getChartParms = function (chartConfig) {
-            console.log('getChartParms chartConfig ', chartConfig);
             var viewpointindex = chartConfig.viewpoint,
                 path = chartConfig.datapath,
                 yearscope = chartConfig.yearscope,
@@ -9678,7 +9677,6 @@ var ExplorerClass = function (_Component) {
             var isError = false;
             var thousandsformat = format({ prefix: "$", suffix: "T" });
             var rounded = format({ round: 0, integerSeparator: '' });
-            console.log('getChartParms 2 viewpointindex, path', viewpointindex, path);
 
             var _this$getNodeDatasets = _this.getNodeDatasets(viewpointindex, path);
 
@@ -9789,7 +9787,6 @@ var ExplorerClass = function (_Component) {
             return { node: node, components: components };
         };
         _this.updateChartsSelection = function (context) {
-            console.log('updateCharts context = ', context);
             var userselections = _this.state.userselections;
             var selection = context.selection[0];
             var selectionrow = undefined;
@@ -9818,7 +9815,6 @@ var ExplorerClass = function (_Component) {
                 return;
             }
             var childdataroot = chartconfig.datapath.slice();
-            console.log('updateCharts', userselections, childdataroot);
 
             var _this$getNodeDatasets2 = _this.getNodeDatasets(userselections.viewpoint, childdataroot);
 
@@ -9858,6 +9854,7 @@ var ExplorerClass = function (_Component) {
                 yearscope: newrange,
                 charttype: userselections.charttype
             };
+            console.log('before getChartParms');
             var chartParmsObj = _this.getChartParms(newchartconfig);
             if (chartParmsObj.isError) {
                 _this.updateSelections(chartmatrix, matrixrow);
@@ -9869,6 +9866,7 @@ var ExplorerClass = function (_Component) {
             _this.setState({
                 chartmatrix: chartmatrix
             });
+            console.log('after setState');
             chartconfig.chartselection = context.selection, chartconfig.chart = chart;
             _this.updateSelections(chartmatrix, matrixrow);
         };
@@ -9944,8 +9942,10 @@ var ExplorerClass = function (_Component) {
                         userselections: userselections,
                         chartmatrix: chartmatrix
                     });
-                    _this2.forceUpdate();
-                    _this2.componentDidMount();
+                    var self = _this2;
+                    setTimeout(function () {
+                        self.componentDidMount();
+                    });
                 }, style: { backgroundColor: this.state.userselections.viewpoint == 'FUNCTIONAL' ? 'lightgreen' : 'transparent' } }, React.createElement(FontIcon, { className: "material-icons" }, "directions_walk")), React.createElement(IconButton, { tooltip: "Structural", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
                     var userselections = _this2.state.userselections;
                     userselections.viewpoint = 'STRUCTURAL';
@@ -9954,8 +9954,10 @@ var ExplorerClass = function (_Component) {
                         userselections: userselections,
                         chartmatrix: chartmatrix
                     });
-                    _this2.forceUpdate();
-                    _this2.componentDidMount();
+                    var self = _this2;
+                    setTimeout(function () {
+                        self.componentDidMount();
+                    });
                 }, style: {
                     backgroundColor: this.state.userselections.viewpoint == 'STRUCTURAL' ? 'lightgreen' : 'transparent'
                 } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", style: { backgroundColor: 'lightgreen' } }, React.createElement(FontIcon, { className: "material-icons" }, "attach_money")), React.createElement(IconButton, { tooltip: "Revenues", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "receipt")), React.createElement(IconButton, { tooltip: "Staffing", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { display: "none" } }, React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: function onChange(ev, selection) {

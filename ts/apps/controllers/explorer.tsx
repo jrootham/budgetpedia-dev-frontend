@@ -489,7 +489,7 @@ class ExplorerClass extends Component< any, any > {
 
         // -------------------[ INIT VARS ]---------------------
 
-        console.log('getChartParms chartConfig ',chartConfig)
+        // console.log('getChartParms chartConfig ',chartConfig)
         // unpack chartConfig & derivatives
         let viewpointindex = chartConfig.viewpoint,
             path = chartConfig.datapath,
@@ -516,7 +516,7 @@ class ExplorerClass extends Component< any, any > {
 
         // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
-        console.log('getChartParms 2 viewpointindex, path',viewpointindex,path)
+        // console.log('getChartParms 2 viewpointindex, path',viewpointindex,path)
         // collect chart node and its components as data sources for the graph
         let { node, components } = this.getNodeDatasets(viewpointindex, path )
 
@@ -571,11 +571,13 @@ class ExplorerClass extends Component< any, any > {
             {
                 eventName: 'select',
                 callback: ((chartconfig: ChartConfig) => {
+                    // console.log('inside callback',chartconfig)
                     let self = this
                     return (Chart, err) => {
                         let chart = Chart.chart
                         let selection = chart.getSelection()
                         let context: ChartSelectionContext = { chartconfig, chart, selection, err }
+                        // console.log('inside trigger, context', context)
                         self.updateChartsSelection(context)
                     }
                 })(chartConfig)
@@ -663,7 +665,7 @@ class ExplorerClass extends Component< any, any > {
     // called by chart callback
     updateChartsSelection = (context:ChartSelectionContext) => {
 
-        console.log('updateCharts context = ', context)
+        // console.log('updateCharts context = ', context)
 
         // user selections
         let userselections = this.state.userselections
@@ -721,7 +723,7 @@ class ExplorerClass extends Component< any, any > {
         // let chartconfig:ChartConfig = context.chartconfig // chartmatrix[matrixrow][matrixcolumn]
         // copy path
         let childdataroot = chartconfig.datapath.slice()
-        console.log('updateCharts',userselections,childdataroot)
+        // console.log('updateCharts',userselections,childdataroot)
         let { node, components } = this.getNodeDatasets(
             userselections.viewpoint, childdataroot)
 
@@ -764,7 +766,7 @@ class ExplorerClass extends Component< any, any > {
             yearscope: newrange,
             charttype:userselections.charttype,
         }
-
+        console.log('before getChartParms')
         let chartParmsObj = this.getChartParms(newchartconfig)
 
         if (chartParmsObj.isError) {
@@ -782,6 +784,7 @@ class ExplorerClass extends Component< any, any > {
             chartmatrix,
         })
 
+        console.log('after setState')
         chartconfig.chartselection = context.selection,
         chartconfig.chart = chart
 
@@ -962,8 +965,10 @@ class ExplorerClass extends Component< any, any > {
                                     userselections,
                                     chartmatrix,
                                 })
-                                this.forceUpdate()
-                                this.componentDidMount()
+                                let self = this
+                                setTimeout(() => {
+                                    self.componentDidMount()
+                                })
                             }
                         } 
                         style={
@@ -985,8 +990,10 @@ class ExplorerClass extends Component< any, any > {
                                     userselections,
                                     chartmatrix,
                                 })
-                                this.forceUpdate()
-                                this.componentDidMount()
+                                let self = this
+                                setTimeout(() => {
+                                    self.componentDidMount()
+                                })
                             }
                         }
                         style={
