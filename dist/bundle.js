@@ -8736,19 +8736,23 @@ module.exports={
                                     "Contents": "BASELINE"
                                 },
                                 "ARENAS": {
-                                    "Index": 2,
+                                    "Index": 1,
                                     "Contents": "BASELINE"
                                 },
                                 "HERITAGE": {
-                                    "Index": 1,
+                                    "Index": 2,
                                     "Contents": "BASELINE"
                                 },
                                 "REGIONCONSERV": {
                                     "Index": 3,
                                     "Contents": "BASELINE"
                                 },
-                                "DESTINATIONS2": {
+                                "ATMOSPHERE": {
                                     "Index": 4,
+                                    "Contents": "BASELINE"
+                                },
+                                "DESTINATIONS2": {
+                                    "Index": 5,
                                     "Contents": "SUBCLUSTER",
                                     "Components": {
                                         "EXHIBPLACE": {
