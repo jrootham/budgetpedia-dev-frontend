@@ -8102,7 +8102,7 @@ module.exports={
                     "WELLBEING": "Health & Education Services",
                     "WELFARE": "Income & Housing Services",
                     "MUNICIPAL": "Municipal Services",
-                    "CORPMANAGEMENT": "Corporate Management",
+                    "CORPMANAGEMENT": "Corporate Leadership",
                     "ACCOUNTABILITY": "Accountability Offices",
                     "MAINTSTANDARDS": "Maintenance & Standards Services",
                     "PLANNINGDEV": "Planning & Development Services",
@@ -8110,7 +8110,7 @@ module.exports={
                     "CORPORATEACCOUNTS": "Corporate Accounts",
                     "PARKSACTIVITIES": "Parks & Activity Centres",
                     "POLICECOURT": "Police & Court Services",
-                    "CITYMANAGEMENT": "City Management"
+                    "CITYMANAGEMENT": "General Management"
                 }
             },
             "Configuration": {
