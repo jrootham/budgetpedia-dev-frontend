@@ -8099,8 +8099,8 @@ module.exports={
                     "CONSERVATION": "Conservation & Heritage",
                     "SUPPORT": "Citizen Support Services",
                     "EMERGSERV": "Emergency Services",
-                    "WELLBEING": "Wellbeing Services",
-                    "WELFARE": "Welfare Services",
+                    "WELLBEING": "Health & Education Services",
+                    "WELFARE": "Income & Housing Services",
                     "MUNICIPAL": "Municipal Services",
                     "CORPMANAGEMENT": "Corporate Management",
                     "ACCOUNTABILITY": "Accountability Offices",
@@ -8318,11 +8318,11 @@ module.exports={
                                     "Contents": "BASELINE"
                                 },
                                 "CHILDSERV": {
-                                    "Index": 1,
+                                    "Index": 2,
                                     "Contents": "BASELINE"
                                 },
                                 "LONGTERMHOME": {
-                                    "Index": 2,
+                                    "Index": 1,
                                     "Contents": "BASELINE"
                                 }
                             }
