@@ -8369,8 +8369,20 @@ module.exports={
                                             "Index": 1,
                                             "Contents": "BASELINE"
                                         },
-                                        "ACCOUNTABILITY": {
+                                        "CLERK": {
                                             "Index": 2,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "CITYMANAGER": {
+                                            "Index": 3,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "CFO": {
+                                            "Index": 4,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "ACCOUNTABILITY": {
+                                            "Index": 5,
                                             "Contents": "PROGRAMS",
                                             "Config": "SUBCLUSTER",
                                             "Components": {
@@ -8391,18 +8403,6 @@ module.exports={
                                                     "Contents": "BASELINE"
                                                 }
                                             }
-                                        },
-                                        "CLERK": {
-                                            "Index": 3,
-                                            "Contents": "BASELINE"
-                                        },
-                                        "CITYMANAGER": {
-                                            "Index": 4,
-                                            "Contents": "BASELINE"
-                                        },
-                                        "CFO": {
-                                            "Index": 5,
-                                            "Contents": "BASELINE"
                                         }
                                     }
                                 },
