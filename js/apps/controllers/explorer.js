@@ -407,7 +407,6 @@ class ExplorerClass extends Component {
                 yearscope: newrange,
                 charttype: userselections.charttype,
             };
-            console.log('before getChartParms');
             let chartParmsObj = this.getChartParms(newchartconfig);
             if (chartParmsObj.isError) {
                 this.updateSelections(chartmatrix, matrixrow);
@@ -419,7 +418,6 @@ class ExplorerClass extends Component {
             this.setState({
                 chartmatrix: chartmatrix,
             });
-            console.log('after setState');
             chartconfig.chartselection = context.selection,
                 chartconfig.chart = chart;
             this.updateSelections(chartmatrix, matrixrow);

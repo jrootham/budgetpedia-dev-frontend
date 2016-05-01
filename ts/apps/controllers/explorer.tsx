@@ -183,6 +183,8 @@ class ExplorerClass extends Component< any, any > {
         if (viewpoint.currentdataseries == dataseriesname)
             return
 
+        // console.log('setting viewpoint amounts')
+
         let itemseries = budgetdata.DataSeries[dataseriesname]
 
         let baselinecat = itemseries.Baseline // use for system lookups
@@ -766,7 +768,7 @@ class ExplorerClass extends Component< any, any > {
             yearscope: newrange,
             charttype:userselections.charttype,
         }
-        console.log('before getChartParms')
+        // console.log('before getChartParms')
         let chartParmsObj = this.getChartParms(newchartconfig)
 
         if (chartParmsObj.isError) {
@@ -784,7 +786,7 @@ class ExplorerClass extends Component< any, any > {
             chartmatrix,
         })
 
-        console.log('after setState')
+        // console.log('after setState')
         chartconfig.chartselection = context.selection,
         chartconfig.chart = chart
 

@@ -9854,7 +9854,6 @@ var ExplorerClass = function (_Component) {
                 yearscope: newrange,
                 charttype: userselections.charttype
             };
-            console.log('before getChartParms');
             var chartParmsObj = _this.getChartParms(newchartconfig);
             if (chartParmsObj.isError) {
                 _this.updateSelections(chartmatrix, matrixrow);
@@ -9866,7 +9865,6 @@ var ExplorerClass = function (_Component) {
             _this.setState({
                 chartmatrix: chartmatrix
             });
-            console.log('after setState');
             chartconfig.chartselection = context.selection, chartconfig.chart = chart;
             _this.updateSelections(chartmatrix, matrixrow);
         };
