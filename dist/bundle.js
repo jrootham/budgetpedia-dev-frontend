@@ -8109,7 +8109,8 @@ module.exports={
                     "INTERNALSERV": "Internal Services",
                     "CORPORATEACCOUNTS": "Corporate Accounts",
                     "PARKSACTIVITIES": "Parks & Activity Centres",
-                    "POLICECOURT": "Police & Court Services"
+                    "POLICECOURT": "Police & Court Services",
+                    "CITYMANAGEMENT": "City Management"
                 }
             },
             "Configuration": {
@@ -8351,97 +8352,104 @@ module.exports={
                     "Index": 2,
                     "Contents": "CLUSTER",
                     "Components": {
-                        "CORPMANAGEMENT": {
+                        "CITYMANAGEMENT": {
                             "Index": 0,
-                            "Contents": "PROGRAMS",
+                            "Contents": "SUBCLUSTER",
+                            "Config": "CLUSTER",
                             "Components": {
-                                "COUNCIL": {
+                                "CORPMANAGEMENT": {
                                     "Index": 0,
-                                    "Contents": "BASELINE"
-                                },
-                                "MAYOR": {
-                                    "Index": 1,
-                                    "Contents": "BASELINE"
-                                },
-                                "ACCOUNTABILITY": {
-                                    "Index": 1,
                                     "Contents": "PROGRAMS",
-                                    "Config": "SUBCLUSTER",
                                     "Components": {
-                                        "AUDITGEN": {
+                                        "COUNCIL": {
                                             "Index": 0,
                                             "Contents": "BASELINE"
                                         },
-                                        "LOBBYREG": {
+                                        "MAYOR": {
                                             "Index": 1,
                                             "Contents": "BASELINE"
                                         },
-                                        "OMBUDSMAN": {
+                                        "ACCOUNTABILITY": {
                                             "Index": 2,
+                                            "Contents": "PROGRAMS",
+                                            "Config": "SUBCLUSTER",
+                                            "Components": {
+                                                "AUDITGEN": {
+                                                    "Index": 0,
+                                                    "Contents": "BASELINE"
+                                                },
+                                                "LOBBYREG": {
+                                                    "Index": 1,
+                                                    "Contents": "BASELINE"
+                                                },
+                                                "OMBUDSMAN": {
+                                                    "Index": 2,
+                                                    "Contents": "BASELINE"
+                                                },
+                                                "INTEGRITYCOMM": {
+                                                    "Index": 3,
+                                                    "Contents": "BASELINE"
+                                                }
+                                            }
+                                        },
+                                        "CLERK": {
+                                            "Index": 3,
                                             "Contents": "BASELINE"
                                         },
-                                        "INTEGRITYCOMM": {
-                                            "Index": 3,
+                                        "CITYMANAGER": {
+                                            "Index": 4,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "CFO": {
+                                            "Index": 5,
                                             "Contents": "BASELINE"
                                         }
                                     }
                                 },
-                                "CLERK": {
-                                    "Index": 2,
-                                    "Contents": "BASELINE"
-                                },
-                                "CITYMANAGER": {
-                                    "Index": 3,
-                                    "Contents": "BASELINE"
-                                },
-                                "CFO": {
-                                    "Index": 4,
-                                    "Contents": "BASELINE"
-                                }
-                            }
-                        },
-                        "MAINTSTANDARDS": {
-                            "Index": 2,
-                            "Contents": "PROGRAMS",
-                            "Components": {
-                                "311SERVICE": {
-                                    "Index": 0,
-                                    "Contents": "BASELINE"
-                                },
-                                "LICENCING": {
+                                "MAINTSTANDARDS": {
                                     "Index": 1,
-                                    "Contents": "BASELINE"
+                                    "Contents": "PROGRAMS",
+                                    "Components": {
+                                        "311SERVICE": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "LICENCING": {
+                                            "Index": 1,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "BUILDINGS": {
+                                            "Index": 2,
+                                            "Contents": "BASELINE"
+                                        }
+                                    }
                                 },
-                                "BUILDINGS": {
+                                "PLANNINGDEV": {
                                     "Index": 2,
-                                    "Contents": "BASELINE"
-                                }
-                            }
-                        },
-                        "PLANNINGDEV": {
-                            "Index": 3,
-                            "Contents": "PROGRAMS",
-                            "Components": {
-                                "PLANNING": {
-                                    "Index": 0,
-                                    "Contents": "BASELINE"
-                                },
-                                "POLICYADMIN": {
-                                    "Index": 1,
-                                    "Contents": "BASELINE"
-                                },
-                                "ECONDEV": {
-                                    "Index": 2,
-                                    "Contents": "BASELINE"
-                                },
-                                "SOCIALDEV": {
-                                    "Index": 3,
-                                    "Contents": "BASELINE"
+                                    "Contents": "PROGRAMS",
+                                    "Components": {
+                                        "PLANNING": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "POLICYADMIN": {
+                                            "Index": 1,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "ECONDEV": {
+                                            "Index": 2,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "SOCIALDEV": {
+                                            "Index": 3,
+                                            "Contents": "BASELINE"
+                                        }
+                                    }
                                 }
                             }
                         },
                         "INTERNALSERV": {
-                            "Index": 4,
+                            "Index": 1,
                             "Contents": "PROGRAMS",
                             "Components": {
                                 "FACILITIES": {
@@ -8471,7 +8479,7 @@ module.exports={
                             }
                         },
                         "CORPORATEACCOUNTS": {
-                            "Index": 5,
+                            "Index": 2,
                             "Contents": "PROGRAMS",
                             "Components": {
                                 "CORPFINANCING": {
