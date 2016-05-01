@@ -8099,8 +8099,8 @@ module.exports={
                     "CONSERVATION": "Conservation & Heritage",
                     "SUPPORT": "Citizen Support Services",
                     "EMERGSERV": "Emergency Services",
-                    "WELLBEING": "Wellbeing Services",
-                    "WELFARE": "Welfare Services",
+                    "WELLBEING": "Health & Education Services",
+                    "WELFARE": "Income & Housing Services",
                     "MUNICIPAL": "Municipal Services",
                     "CORPMANAGEMENT": "Corporate Management",
                     "ACCOUNTABILITY": "Accountability Offices",
@@ -8317,11 +8317,11 @@ module.exports={
                                     "Index": 0,
                                     "Contents": "BASELINE"
                                 },
-                                "CHILDSERV": {
+                                "LONGTERMHOME": {
                                     "Index": 1,
                                     "Contents": "BASELINE"
                                 },
-                                "LONGTERMHOME": {
+                                "CHILDSERV": {
                                     "Index": 2,
                                     "Contents": "BASELINE"
                                 }
@@ -9944,6 +9944,7 @@ var ExplorerClass = function (_Component) {
                         userselections: userselections,
                         chartmatrix: chartmatrix
                     });
+                    _this2.forceUpdate();
                     _this2.componentDidMount();
                 }, style: { backgroundColor: this.state.userselections.viewpoint == 'FUNCTIONAL' ? 'lightgreen' : 'transparent' } }, React.createElement(FontIcon, { className: "material-icons" }, "directions_walk")), React.createElement(IconButton, { tooltip: "Structural", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
                     var userselections = _this2.state.userselections;
@@ -9953,6 +9954,7 @@ var ExplorerClass = function (_Component) {
                         userselections: userselections,
                         chartmatrix: chartmatrix
                     });
+                    _this2.forceUpdate();
                     _this2.componentDidMount();
                 }, style: {
                     backgroundColor: this.state.userselections.viewpoint == 'STRUCTURAL' ? 'lightgreen' : 'transparent'

@@ -962,6 +962,7 @@ class ExplorerClass extends Component< any, any > {
                                     userselections,
                                     chartmatrix,
                                 })
+                                this.forceUpdate()
                                 this.componentDidMount()
                             }
                         } 
@@ -984,6 +985,7 @@ class ExplorerClass extends Component< any, any > {
                                     userselections,
                                     chartmatrix,
                                 })
+                                this.forceUpdate()
                                 this.componentDidMount()
                             }
                         }

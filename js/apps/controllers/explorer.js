@@ -474,6 +474,7 @@ class ExplorerClass extends Component {
                 userselections: userselections,
                 chartmatrix: chartmatrix,
             });
+            this.forceUpdate();
             this.componentDidMount();
         }, style: { backgroundColor: (this.state.userselections.viewpoint == 'FUNCTIONAL')
                 ? 'lightgreen'
@@ -485,6 +486,7 @@ class ExplorerClass extends Component {
                 userselections: userselections,
                 chartmatrix: chartmatrix,
             });
+            this.forceUpdate();
             this.componentDidMount();
         }, style: {
             backgroundColor: (this.state.userselections.viewpoint == 'STRUCTURAL')
