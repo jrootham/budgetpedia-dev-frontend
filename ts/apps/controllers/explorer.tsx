@@ -591,7 +591,7 @@ class ExplorerClass extends Component< any, any > {
                         let selection = chart.getSelection()
                         let context: ChartSelectionContext = { chartconfig, chart, selection, err }
 
-                        self.generateChartsSelection(context)
+                        self.onChartsSelection(context)
                     }
                 })(chartConfig)
             }
@@ -681,7 +681,9 @@ class ExplorerClass extends Component< any, any > {
 
     // response to user selection of a chart component (such as a column )
     // called by chart callback
-    generateChartsSelection = (context:ChartSelectionContext) => {
+    // TODO: the context object should include matrix location of 
+    // chartconfig, not the chartconfig itself
+    onChartsSelection = (context:ChartSelectionContext) => {
 
         // user selections
         let userselections = this.state.userselections
@@ -731,9 +733,6 @@ class ExplorerClass extends Component< any, any > {
             this.updateSelections(chartmatrix, matrixrow)
             return
         }
-        // TODO: better to use forceUpdate vs setState?
-        // this.forceUpdate()
-
         // let chartconfig:ChartConfig = context.chartconfig // chartmatrix[matrixrow][matrixcolumn]
         // copy path
         let childdataroot = chartconfig.datapath.slice()
@@ -913,6 +912,7 @@ class ExplorerClass extends Component< any, any > {
                 }}>
                 <div >{explorer.state.yearslider.singlevalue[0]}</div>
             </ReactSlider > :''
+
         let doubleslider = (explorer.state.yearscope != 'one') ?
             <ReactSlider
                 className="horizontal-slider"
@@ -930,6 +930,7 @@ class ExplorerClass extends Component< any, any > {
                 <div >{explorer.state.yearslider.doublevalue[0]}</div>
                 <div >{explorer.state.yearslider.doublevalue[1]}</div>
             </ReactSlider>:''
+
         let dashboardsegment = <Card initiallyExpanded={false}>
 
             <CardTitle
@@ -974,23 +975,30 @@ class ExplorerClass extends Component< any, any > {
                     labelStyle={{ width: "auto", marginRight: "24px" }}
                     style={{ display: 'inline-block', width: 'auto' }} />
             </RadioButtonGroup>
+
             { singleslider }
+
             { doubleslider }
+
             <div style={{ display: (explorer.state.yearscope == 'all') ? 'inline' : 'none' }} >
                 <Checkbox 
                     label="Year-over-year change, rather than actuals"
                     defaultChecked = {false}
                     />
             </div>
+
             <Divider />
+
             <RaisedButton
                 style = {{marginRight:"24px"}}
                 type="button"
                 label="Download" />
+
             <RaisedButton
                 type="button"
                 label="Reset" />
             </CardText>
+
         </Card>
 
         // -----------[ DRILLDOWN SEGMENT]-------------
@@ -999,7 +1007,8 @@ class ExplorerClass extends Component< any, any > {
 
         let drilldowncharts = explorer.getCharts(drilldownlist, ChartSeries.DrillDown)
 
-        let drilldownsegment = <Card initiallyExpanded >
+        let drilldownsegment = 
+        <Card initiallyExpanded >
 
             <CardTitle
                 actAsExpander
@@ -1017,6 +1026,7 @@ class ExplorerClass extends Component< any, any > {
                 <div style={{
                     padding: "3px"}}>
                     <span>Viewpoints: </span> 
+
                     <IconButton 
                         tooltip="Functional" 
                         tooltipPosition="top-center"
@@ -1032,6 +1042,7 @@ class ExplorerClass extends Component< any, any > {
                         }>
                         <FontIcon className="material-icons">directions_walk</FontIcon>
                     </IconButton>
+
                     <IconButton 
                         tooltip="Structural" 
                         tooltipPosition="top-center" 
@@ -1050,7 +1061,9 @@ class ExplorerClass extends Component< any, any > {
                         >
                         <FontIcon className="material-icons">layers</FontIcon>
                     </IconButton>
+
                     <span>Facets: </span>
+
                     <IconButton 
                         tooltip="Expenses" 
                         tooltipPosition="top-center" 
@@ -1068,6 +1081,7 @@ class ExplorerClass extends Component< any, any > {
                         }>
                         <FontIcon className="material-icons">attach_money</FontIcon>
                     </IconButton>
+
                     <IconButton 
                         tooltip="Revenues" 
                         tooltipPosition="top-center" 
@@ -1085,6 +1099,7 @@ class ExplorerClass extends Component< any, any > {
                         }>
                         <FontIcon className="material-icons">receipt</FontIcon>
                     </IconButton>
+
                     <IconButton 
                         tooltip="Staffing"
                         tooltipPosition="top-center" 
@@ -1103,9 +1118,11 @@ class ExplorerClass extends Component< any, any > {
                         >
                         <FontIcon className="material-icons">people</FontIcon>
                     </IconButton >
+
                 </div>
 
                 <div style={{ display: "none" }}>
+
                 <RadioButtonGroup
                     style={{display:'inline-block'}}
                     name="datafacet" 
@@ -1115,70 +1132,84 @@ class ExplorerClass extends Component< any, any > {
                             datafacet: selection,
                         })
                     } }>
+
                     <RadioButton 
                         value="expenses" 
                         label="Expenses" 
                         iconStyle={{marginRight:"4px"}}
                         labelStyle={{width:"auto",marginRight:"24px"}}
                         style={{ display: 'inline-block', width:'auto' }} />
+
                     <RadioButton 
                         value="revenues" 
                         label="Revenues" 
                         iconStyle={{ marginRight: "4px" }}
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
+
                     <RadioButton
                         value="net"
                         label="Net"
                         iconStyle={{ marginRight: "4px" }}
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
+
                     <RadioButton 
                         value="staffing" 
                         label="Staffing" 
                         iconStyle={{ marginRight: "4px" }}
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
+
                 </RadioButtonGroup>
+
                 <RadioButtonGroup
                     style={{ display: (explorer.state.datafacet != "staffing") ? 'inline-block' : 'none', 
                         backgroundColor: "#eee" }}
                     name="activities"
                     defaultSelected="activities">
+
                     <RadioButton 
                         value="activities" 
                         label = "Activities" 
                         iconStyle={{ marginRight: "4px" }}
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
+
                     <RadioButton 
                         value="categories" 
                         label = "Categories" 
                         iconStyle={{ marginRight: "4px" }}
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
+
                 </RadioButtonGroup>
+
                 <RadioButtonGroup
                     style={{ display: (explorer.state.datafacet == "staffing") ? 'inline-block' : 'none', 
                         backgroundColor: "#eee" }}
                     name="staffing"
-                    defaultSelected="positions"
-                    >
+                    defaultSelected="positions" >
+
                     <RadioButton 
                         value="positions" 
                         label = "Positions" 
                         iconStyle={{ marginRight: "4px" }}
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
+
                     <RadioButton 
                         value="budget" 
                         label = "Budget" 
                         iconStyle={{ marginRight: "4px" }}
                         labelStyle={{ width: "auto", marginRight: "24px" }}
                         style={{ display: 'inline-block', width: 'auto' }} />
-                    </RadioButtonGroup>
-                    <FontIcon className="material-icons">cloud_download</FontIcon>
+                </RadioButtonGroup>
+
+                <FontIcon className="material-icons">cloud_download</FontIcon>
+
                 </div>
+
                 <div style={{ whiteSpace: "nowrap" }}>
                     <div style={{ overflow: "scroll" }}>
 
@@ -1188,7 +1219,9 @@ class ExplorerClass extends Component< any, any > {
 
                     </div>
                 </div>
+
             </CardText>
+
         </Card >
 
         // --------------[ COMPARE SEGMENT]-------------
@@ -1211,6 +1244,7 @@ class ExplorerClass extends Component< any, any > {
 
                 <p>Click or tap on any column to drill down</p>
                 <div style={{ whiteSpace: "nowrap" }}>
+
                     <div style={{ overflow: "scroll" }}>
 
                         { comparecharts }
@@ -1218,8 +1252,11 @@ class ExplorerClass extends Component< any, any > {
                         <div style={{ display: "inline-block", width: "500px" }}></div>
 
                     </div>
+
                 </div>
+
             </CardText>
+            
         </Card>
 
         // -----------[ DIFFERENCES SEGMENT ]-------------

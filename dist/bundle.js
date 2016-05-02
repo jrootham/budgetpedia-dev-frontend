@@ -8509,7 +8509,7 @@ module.exports={
             "Lookups": {
                 "Categories": {
                     "ACCOUNTABILITYAPPEAL2": "Accountability & Appeal Offices",
-                    "ADMINOPS": "Core Administrative Operartions",
+                    "ADMINOPS": "Core Administrative Operations",
                     "AGENCIES": "Agencies",
                     "CITIZENOPS": "Citizen Centered Operations",
                     "CITIZENSERVICESA": "Citizen-Centered Services \"A\"",
@@ -9736,7 +9736,7 @@ var ExplorerClass = function (_Component) {
                         var chart = Chart.chart;
                         var selection = chart.getSelection();
                         var context = { chartconfig: chartconfig, chart: chart, selection: selection, err: err };
-                        self.generateChartsSelection(context);
+                        self.onChartsSelection(context);
                     };
                 }(chartConfig)
             }];
@@ -9806,7 +9806,7 @@ var ExplorerClass = function (_Component) {
 
             return { node: node, components: components };
         };
-        _this.generateChartsSelection = function (context) {
+        _this.onChartsSelection = function (context) {
             var userselections = _this.state.userselections;
             var selection = context.selection[0];
             var selectionrow = undefined;

@@ -308,7 +308,7 @@ class ExplorerClass extends Component {
                             let chart = Chart.chart;
                             let selection = chart.getSelection();
                             let context = { chartconfig: chartconfig, chart: chart, selection: selection, err: err };
-                            self.generateChartsSelection(context);
+                            self.onChartsSelection(context);
                         };
                     })(chartConfig)
                 }
@@ -364,7 +364,7 @@ class ExplorerClass extends Component {
             }
             return { node: node, components: components };
         };
-        this.generateChartsSelection = (context) => {
+        this.onChartsSelection = (context) => {
             let userselections = this.state.userselections;
             let selection = context.selection[0];
             let selectionrow;
