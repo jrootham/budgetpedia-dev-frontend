@@ -8517,14 +8517,13 @@ module.exports={
                     "CORESERVICESA": "Core Administrative Services",
                     "CORESERVICESB": "Core Administrative Services",
                     "CORPORATEACCOUNTS2": "Corporate Accounts",
-                    "COUNCILOFFICES": "Council Offices",
-                    "COUNCILOPS": "Council Operations",
+                    "COUNCILOPS": "Council Domain",
                     "DESTINATIONS2": "Public Destinations",
                     "FIELDSERVICESA": "Field Services",
                     "FIELDSERVICESB": "Field Services",
                     "MANAGEMENTOFFICES": "Management Offices",
                     "CORPORATESERVICES": "Corporate Services",
-                    "MANAGEMENTOPS": "Management Operations",
+                    "MANAGEMENTOPS": "City Manager Domain",
                     "POLICESERV": "Police Services",
                     "RATESUPPORTED": "Rate Supported Services",
                     "SPECIALIZED": "Specialized Agencies",
@@ -8589,30 +8588,24 @@ module.exports={
                             "Index": 0,
                             "Contents": "CLUSTER",
                             "Components": {
-                                "COUNCILOFFICES": {
+                                "COUNCIL": {
                                     "Index": 0,
-                                    "Contents": "SUBCLUSTER",
-                                    "Components": {
-                                        "COUNCIL": {
-                                            "Index": 0,
-                                            "Contents": "BASELINE"
-                                        },
-                                        "MAYOR": {
-                                            "Index": 1,
-                                            "Contents": "BASELINE"
-                                        },
-                                        "CLERK": {
-                                            "Index": 2,
-                                            "Contents": "BASELINE"
-                                        },
-                                        "LEGAL": {
-                                            "Index": 3,
-                                            "Contents": "BASELINE"
-                                        }
-                                    }
+                                    "Contents": "BASELINE"
+                                },
+                                "MAYOR": {
+                                    "Index": 1,
+                                    "Contents": "BASELINE"
+                                },
+                                "CLERK": {
+                                    "Index": 2,
+                                    "Contents": "BASELINE"
+                                },
+                                "LEGAL": {
+                                    "Index": 3,
+                                    "Contents": "BASELINE"
                                 },
                                 "ACCOUNTABILITYAPPEAL2": {
-                                    "Index": 1,
+                                    "Index": 4,
                                     "Contents": "SUBCLUSTER",
                                     "Components": {
                                         "AUDITGEN": {
