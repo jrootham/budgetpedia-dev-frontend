@@ -614,8 +614,8 @@ class ExplorerClass extends Component< any, any > {
                 amount = parseInt(rounded(amount/1000))
                 annotation = thousandsformat(amount)
             } else if (units == 'FTE') {
-                amount = parseInt(singlerounded(amount))
                 annotation = staffrounded(amount)
+                amount = parseInt(singlerounded(amount))
             } else {
                 amount = components[item.Code].years[year]
                 annotation = amount
