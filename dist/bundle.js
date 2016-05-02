@@ -9992,6 +9992,9 @@ var ExplorerClass = function (_Component) {
                 _this.setState({
                     chartmatrix: chartmatrix
                 });
+                for (var row = 0; row < chartmatrix.length; row++) {
+                    _this.updateSelections(chartmatrix, row);
+                }
             });
         };
         _this.getCharts = function (matrixcolumn, matrixrow) {

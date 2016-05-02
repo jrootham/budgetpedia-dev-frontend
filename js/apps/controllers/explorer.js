@@ -482,6 +482,9 @@ class ExplorerClass extends Component {
                 this.setState({
                     chartmatrix: chartmatrix,
                 });
+                for (let row = 0; row < chartmatrix.length; row++) {
+                    this.updateSelections(chartmatrix, row);
+                }
             });
         };
         this.getCharts = (matrixcolumn, matrixrow) => {

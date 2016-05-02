@@ -854,13 +854,14 @@ class ExplorerClass extends Component< any, any > {
                 cellconfig.dataseries = seriesname
             }
         }
-        setTimeout(()=>{
+        setTimeout(() => {
             this.setState({
                 chartmatrix,
             })
-            // this.forceUpdate()
+            for (let row = 0; row < chartmatrix.length; row++) {
+                this.updateSelections(chartmatrix, row)
+            }
         })
-
     }
 
     // -------------------[ RENDER METHODS ]---------------------
