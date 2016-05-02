@@ -20,12 +20,12 @@ class ExplorerChart extends Component<any, any> {
                 </IconButton>
                 <IconButton 
                     tooltip="Donut Pie Chart" 
-                    tooltipPosition="bottom-center" >
+                    tooltipPosition="bottom-center" disabled>
                     <FontIcon className="material-icons">donut_small</FontIcon>
                 </IconButton>
                 <IconButton 
                     tooltip="Timeline" 
-                    tooltipPosition="bottom-center" >
+                    tooltipPosition="bottom-center" disabled>
                     <FontIcon className="material-icons">timeline</FontIcon>
                 </IconButton>
             </div>
