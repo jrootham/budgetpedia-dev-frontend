@@ -113,10 +113,15 @@ class ExplorerClass extends Component< any, any > {
     // initialize once - create root drilldown and compare series
     componentDidMount = () => {
 
+        this.initializeChartSeries()
+
+    }
+
+    initializeChartSeries = () => {
         let userselections = this.state.userselections,
             chartmatrix = this.state.chartmatrix
 
-        var matrixlocation, 
+        var matrixlocation,
             chartParmsObj
 
         // ------------------------[ POPULATE VIEWPOINT WITH VALUES ]-----------------------
@@ -126,36 +131,36 @@ class ExplorerClass extends Component< any, any > {
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
 
         // assemble parms to get initial dataset
-        let drilldownchartconfig: ChartConfig = 
+        let drilldownchartconfig: ChartConfig =
             this.initRootChartConfig(ChartSeries.DrillDown, userselections)
 
-        chartParmsObj = this.getChartParms( drilldownchartconfig )
+        chartParmsObj = this.getChartParms(drilldownchartconfig)
 
         if (!chartParmsObj.error) {
 
             drilldownchartconfig.chartparms = chartParmsObj.chartParms
 
             matrixlocation = drilldownchartconfig.matrixlocation
-            chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = drilldownchartconfig
+            chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig
 
         }
 
         // -----------------[ THE COMPARE ROOT ]-------------------
-/*
-        // assemble parms to get initial dataset
-        let comparechartconfig: ChartConfig = this.initRootChartConfig( ChartSeries.Compare, userselections )
-
-        chartParmsObj = this.getChartParms( comparechartconfig )
-
-        if (!chartParmsObj.error) {
-
-            comparechartconfig.chartparms = chartParmsObj.chartParms
-
-            matrixlocation = comparechartconfig.matrixlocation
-            chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = comparechartconfig
-
-        }
-*/
+        /*
+                // assemble parms to get initial dataset
+                let comparechartconfig: ChartConfig = this.initRootChartConfig( ChartSeries.Compare, userselections )
+        
+                chartParmsObj = this.getChartParms( comparechartconfig )
+        
+                if (!chartParmsObj.error) {
+        
+                    comparechartconfig.chartparms = chartParmsObj.chartParms
+        
+                    matrixlocation = comparechartconfig.matrixlocation
+                    chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = comparechartconfig
+        
+                }
+        */
         // -------------[ SAVE INITIALIZATION ]----------------
 
         // make initial dataset available to chart
@@ -183,8 +188,6 @@ class ExplorerClass extends Component< any, any > {
         if (viewpoint.currentdataseries == dataseriesname)
             return
 
-        // console.log('setting viewpoint amounts')
-
         let itemseries = budgetdata.DataSeries[dataseriesname]
 
         let baselinecat = itemseries.Baseline // use for system lookups
@@ -198,8 +201,6 @@ class ExplorerClass extends Component< any, any > {
             componentlookups,
             categorylookups,
         }
-
-        // console.log('lookups',lookups, componentcat)
 
         let items = itemseries.Items
 
@@ -216,7 +217,6 @@ class ExplorerClass extends Component< any, any > {
         viewpoint.currentdataseries = dataseriesname
 
         // let text = JSON.stringify(viewpoint, null, 4) + '\n'
-        // console.log(text)
 
     }
 
@@ -284,7 +284,6 @@ class ExplorerClass extends Component< any, any > {
                 if (!item) console.error('failed to find item for ',componentname)
                 // first set componentSummaries as usual
                 if (isInflationAdjusted) {
-                    // console.log('isInflationAdjusted',isInflationAdjusted)
                     if (this.state.userselections.inflationadjusted) {
                         if (item.Adjusted){
                             componentSummaries = {
@@ -307,7 +306,6 @@ class ExplorerClass extends Component< any, any > {
                         Aggregates: item.Components, 
                     }
                 }
-                // console.log('componentSummaries',componentSummaries)
                 // capture data for chart-making
                 if (componentSummaries) {
                     if (componentSummaries.years) {
@@ -397,6 +395,7 @@ class ExplorerClass extends Component< any, any > {
     }
 
     // -----------------------[ SUMMARIZE COMPONENT DATA ]-----------------------
+
     // summarize the componentSummaries into the cumumlatingSummaries
 
     aggregateComponentSummaries = (
@@ -491,7 +490,6 @@ class ExplorerClass extends Component< any, any > {
 
         // -------------------[ INIT VARS ]---------------------
 
-        // console.log('getChartParms chartConfig ',chartConfig)
         // unpack chartConfig & derivatives
         let viewpointindex = chartConfig.viewpoint,
             path = chartConfig.datapath,
@@ -507,7 +505,14 @@ class ExplorerClass extends Component< any, any > {
             viewpointdata = budgetdata.Viewpoints[viewpointindex],
             itemseries = budgetdata.DataSeries[dataseriesname],
             units = itemseries.Units,
-            vertlabel = itemseries.UnitsAlias + ' (Expenses)'
+            vertlabel
+            vertlabel = itemseries.UnitsAlias
+            if (units != 'FTE') {
+                if (dataseriesname == 'BudgetExpenses')
+                    vertlabel += ' (Expenses)'
+                else 
+                    vertlabel += ' (Revenues)'
+            }
 
         // provide basis for error handling
         let isError = false
@@ -515,10 +520,11 @@ class ExplorerClass extends Component< any, any > {
         // utility functions for number formatting
         let thousandsformat = format({ prefix: "$", suffix: "T" })
         let rounded = format({ round: 0, integerSeparator: '' })
+        let singlerounded = format({round :1, integerSeparator:'' })
+        let staffrounded = format({ round: 1, integerSeparator: ',' })
 
         // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
-        // console.log('getChartParms 2 viewpointindex, path',viewpointindex,path)
         // collect chart node and its components as data sources for the graph
         let { node, components } = this.getNodeDatasets(viewpointindex, path )
 
@@ -547,15 +553,16 @@ class ExplorerClass extends Component< any, any > {
         let titleamount = node.years[year]
         if (units == 'DOLLAR') {
             titleamount = parseInt(rounded(titleamount / 1000))
+            titleamount = thousandsformat(titleamount)
         } else {
-            titleamount = titleamount
+            titleamount = staffrounded(titleamount)
         }
-        title += ' (Total: ' + thousandsformat(titleamount) + ')'
+        title += ' (Total: ' + titleamount + ')'
 
         let options = {
             title: title,
             vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
-            hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
+            hAxis: { title: axistitle, textStyle: { fontSize: 9 } },
             bar: { groupWidth: "95%" },
             // width: children.length * 120,// 120 per column
             height: 400,
@@ -564,7 +571,6 @@ class ExplorerClass extends Component< any, any > {
             annotations: { alwaysOutside: true }
         }
 
-        // console.log('options',options)
         // TODO: watch for memory leaks when the chart is destroyed
         // TODO: replace chartconfig with matrix co-ordinates to avoid
         //     need to update chart by destroying chart (thus closure) before replacing it
@@ -573,14 +579,14 @@ class ExplorerClass extends Component< any, any > {
             {
                 eventName: 'select',
                 callback: ((chartconfig: ChartConfig) => {
-                    // console.log('inside callback',chartconfig)
+
                     let self = this
                     return (Chart, err) => {
                         let chart = Chart.chart
                         let selection = chart.getSelection()
                         let context: ChartSelectionContext = { chartconfig, chart, selection, err }
-                        // console.log('inside trigger, context', context)
-                        self.updateChartsSelection(context)
+
+                        self.generateChartsSelection(context)
                     }
                 })(chartConfig)
             }
@@ -602,14 +608,19 @@ class ExplorerClass extends Component< any, any > {
         }
         let rows = node.SortedComponents.map(item => {
             // TODO: get determination of amount processing from Unit value
-            let amount
+            let amount = components[item.Code].years[year]
+            let annotation
             if (units == 'DOLLAR') {
-                amount = parseInt(rounded(components[item.Code].years[year]/1000))
+                amount = parseInt(rounded(amount/1000))
+                annotation = thousandsformat(amount)
+            } else if (units == 'FTE') {
+                amount = parseInt(singlerounded(amount))
+                annotation = staffrounded(amount)
             } else {
                 amount = components[item.Code].years[year]
+                annotation = amount
             }
             // TODO: add % of total to the annotation
-            let annotation = thousandsformat(amount)
             return [item.Name, amount, annotation]            
         })
 
@@ -665,9 +676,7 @@ class ExplorerClass extends Component< any, any > {
 
     // response to user selection of a chart component (such as a column )
     // called by chart callback
-    updateChartsSelection = (context:ChartSelectionContext) => {
-
-        // console.log('updateCharts context = ', context)
+    generateChartsSelection = (context:ChartSelectionContext) => {
 
         // user selections
         let userselections = this.state.userselections
@@ -720,12 +729,10 @@ class ExplorerClass extends Component< any, any > {
         // TODO: better to use forceUpdate vs setState?
         // this.forceUpdate()
 
-        // console.log('series, sourcedepth, selectionrow, serieslist', series, sourcedepth, selectionrow, serieslist)
-
         // let chartconfig:ChartConfig = context.chartconfig // chartmatrix[matrixrow][matrixcolumn]
         // copy path
         let childdataroot = chartconfig.datapath.slice()
-        // console.log('updateCharts',userselections,childdataroot)
+
         let { node, components } = this.getNodeDatasets(
             userselections.viewpoint, childdataroot)
 
@@ -768,7 +775,7 @@ class ExplorerClass extends Component< any, any > {
             yearscope: newrange,
             charttype:userselections.charttype,
         }
-        // console.log('before getChartParms')
+
         let chartParmsObj = this.getChartParms(newchartconfig)
 
         if (chartParmsObj.isError) {
@@ -778,7 +785,6 @@ class ExplorerClass extends Component< any, any > {
 
         newchartconfig.chartparms = chartParmsObj.chartParms
 
-        // console.log( 'newchartconfig = ', newchartconfig )
         let newmatrixcolumn = matrixcolumn + 1
         chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig
 
@@ -786,7 +792,6 @@ class ExplorerClass extends Component< any, any > {
             chartmatrix,
         })
 
-        // console.log('after setState')
         chartconfig.chartselection = context.selection,
         chartconfig.chart = chart
 
@@ -803,6 +808,57 @@ class ExplorerClass extends Component< any, any > {
                 chart.setSelection(selection)
         }
     }
+
+    // ---------------------[ CONTROL ACTIONS ]------------------
+
+    switchViewpoint = viewpointname => {
+
+        let userselections = this.state.userselections
+        userselections.viewpoint = viewpointname
+        let chartmatrix = [[], []]
+        this.setState({
+            userselections,
+            chartmatrix,
+        })
+        let self = this
+        // defer initialization until after update 
+        // triggered by setState, to make sure previous
+        // chart is destroyed; otherwise previous viewpoint 
+        // settings are retuained in error
+        setTimeout(() => {
+            self.initializeChartSeries()
+        })
+
+    }
+
+    switchDataSeries = seriesname => {
+
+        let userselections = this.state.userselections
+        userselections.dataseries = seriesname
+        let chartmatrix = this.state.chartmatrix
+        this.setState({
+            userselections,
+            // chartmatrix:[[],[]]
+        })
+        this.setViewpointAmounts()
+        for (let matrixseries of chartmatrix) {
+            let cellconfig:ChartConfig
+            for ( cellconfig of matrixseries ) {
+                let chartParmsObj = this.getChartParms(cellconfig)
+                cellconfig.chartparms = chartParmsObj.chartParms
+                cellconfig.dataseries = seriesname
+            }
+        }
+        setTimeout(()=>{
+            this.setState({
+                chartmatrix,
+            })
+            // this.forceUpdate()
+        })
+
+    }
+
+    // -------------------[ RENDER METHODS ]---------------------
 
     // get React components to render
     getCharts = (matrixcolumn, matrixrow) => {
@@ -960,17 +1016,7 @@ class ExplorerClass extends Component< any, any > {
                         tooltipPosition="top-center"
                         onTouchTap= {
                             e => {
-                                let userselections = this.state.userselections
-                                userselections.viewpoint = 'FUNCTIONAL'
-                                let chartmatrix = [[], []]
-                                this.setState({
-                                    userselections,
-                                    chartmatrix,
-                                })
-                                let self = this
-                                setTimeout(() => {
-                                    self.componentDidMount()
-                                })
+                                this.switchViewpoint('FUNCTIONAL')
                             }
                         } 
                         style={
@@ -985,17 +1031,7 @@ class ExplorerClass extends Component< any, any > {
                         tooltipPosition="top-center" 
                         onTouchTap= {
                             e => {
-                                let userselections = this.state.userselections
-                                userselections.viewpoint = 'STRUCTURAL'
-                                let chartmatrix = [[], []]
-                                this.setState({
-                                    userselections,
-                                    chartmatrix,
-                                })
-                                let self = this
-                                setTimeout(() => {
-                                    self.componentDidMount()
-                                })
+                                this.switchViewpoint('STRUCTURAL')
                             }
                         }
                         style={
@@ -1009,9 +1045,58 @@ class ExplorerClass extends Component< any, any > {
                         <FontIcon className="material-icons">layers</FontIcon>
                     </IconButton>
                     <span>Facets: </span>
-                    <IconButton tooltip="Expenses" tooltipPosition="top-center" style={{ backgroundColor: 'lightgreen' }}><FontIcon className="material-icons">attach_money</FontIcon></IconButton>
-                    <IconButton tooltip="Revenues"tooltipPosition="top-center" ><FontIcon className="material-icons">receipt</FontIcon></IconButton>
-                    <IconButton tooltip="Staffing"tooltipPosition="top-center" ><FontIcon className="material-icons">people</FontIcon></IconButton >
+                    <IconButton 
+                        tooltip="Expenses" 
+                        tooltipPosition="top-center" 
+                        onTouchTap= {
+                            e => {
+                                this.switchDataSeries('BudgetExpenses')
+                            }
+                        }
+                        style={
+                            {
+                                backgroundColor: (this.state.userselections.dataseries == 'BudgetExpenses')
+                                    ? 'lightgreen'
+                                    : 'transparent'
+                            }
+                        }>
+                        <FontIcon className="material-icons">attach_money</FontIcon>
+                    </IconButton>
+                    <IconButton 
+                        tooltip="Revenues" 
+                        tooltipPosition="top-center" 
+                        onTouchTap= {
+                            e => {
+                                this.switchDataSeries('BudgetRevenues')
+                            }
+                        }
+                        style={
+                            {
+                                backgroundColor: (this.state.userselections.dataseries == 'BudgetRevenues')
+                                    ? 'lightgreen'
+                                    : 'transparent'
+                            }
+                        }>
+                        <FontIcon className="material-icons">receipt</FontIcon>
+                    </IconButton>
+                    <IconButton 
+                        tooltip="Staffing"
+                        tooltipPosition="top-center" 
+                        onTouchTap= {
+                            e => {
+                                this.switchDataSeries('BudgetStaffing')
+                            }
+                        }
+                        style={
+                            {
+                                backgroundColor: (this.state.userselections.dataseries == 'BudgetStaffing')
+                                    ? 'lightgreen'
+                                    : 'transparent'
+                            }
+                        }>
+                        >
+                        <FontIcon className="material-icons">people</FontIcon>
+                    </IconButton >
                 </div>
 
                 <div style={{ display: "none" }}>

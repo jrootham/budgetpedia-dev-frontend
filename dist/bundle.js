@@ -9479,6 +9479,9 @@ var ExplorerClass = function (_Component) {
             }
         };
         _this.componentDidMount = function () {
+            _this.initializeChartSeries();
+        };
+        _this.initializeChartSeries = function () {
             var userselections = _this.state.userselections,
                 chartmatrix = _this.state.chartmatrix;
             var matrixlocation, chartParmsObj;
@@ -9678,10 +9681,16 @@ var ExplorerClass = function (_Component) {
                 viewpointdata = budgetdata.Viewpoints[viewpointindex],
                 itemseries = budgetdata.DataSeries[dataseriesname],
                 units = itemseries.Units,
-                vertlabel = itemseries.UnitsAlias + ' (Expenses)';
+                vertlabel = undefined;
+            vertlabel = itemseries.UnitsAlias;
+            if (units != 'FTE') {
+                if (dataseriesname == 'BudgetExpenses') vertlabel += ' (Expenses)';else vertlabel += ' (Revenues)';
+            }
             var isError = false;
             var thousandsformat = format({ prefix: "$", suffix: "T" });
             var rounded = format({ round: 0, integerSeparator: '' });
+            var singlerounded = format({ round: 1, integerSeparator: '' });
+            var staffrounded = format({ round: 1, integerSeparator: ',' });
 
             var _this$getNodeDatasets = _this.getNodeDatasets(viewpointindex, path);
 
@@ -9704,14 +9713,15 @@ var ExplorerClass = function (_Component) {
             var titleamount = node.years[year];
             if (units == 'DOLLAR') {
                 titleamount = parseInt(rounded(titleamount / 1000));
+                titleamount = thousandsformat(titleamount);
             } else {
-                titleamount = titleamount;
+                titleamount = staffrounded(titleamount);
             }
-            title += ' (Total: ' + thousandsformat(titleamount) + ')';
+            title += ' (Total: ' + titleamount + ')';
             var options = {
                 title: title,
                 vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
-                hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
+                hAxis: { title: axistitle, textStyle: { fontSize: 9 } },
                 bar: { groupWidth: "95%" },
                 height: 400,
                 width: 400,
@@ -9726,7 +9736,7 @@ var ExplorerClass = function (_Component) {
                         var chart = Chart.chart;
                         var selection = chart.getSelection();
                         var context = { chartconfig: chartconfig, chart: chart, selection: selection, err: err };
-                        self.updateChartsSelection(context);
+                        self.generateChartsSelection(context);
                     };
                 }(chartConfig)
             }];
@@ -9736,13 +9746,18 @@ var ExplorerClass = function (_Component) {
                 return { isError: true, chartParms: {} };
             }
             var rows = node.SortedComponents.map(function (item) {
-                var amount = undefined;
+                var amount = components[item.Code].years[year];
+                var annotation = undefined;
                 if (units == 'DOLLAR') {
-                    amount = parseInt(rounded(components[item.Code].years[year] / 1000));
+                    amount = parseInt(rounded(amount / 1000));
+                    annotation = thousandsformat(amount);
+                } else if (units == 'FTE') {
+                    amount = parseInt(singlerounded(amount));
+                    annotation = staffrounded(amount);
                 } else {
                     amount = components[item.Code].years[year];
+                    annotation = amount;
                 }
-                var annotation = thousandsformat(amount);
                 return [item.Name, amount, annotation];
             });
             var chartParms = {
@@ -9791,7 +9806,7 @@ var ExplorerClass = function (_Component) {
 
             return { node: node, components: components };
         };
-        _this.updateChartsSelection = function (context) {
+        _this.generateChartsSelection = function (context) {
             var userselections = _this.state.userselections;
             var selection = context.selection[0];
             var selectionrow = undefined;
@@ -9901,6 +9916,84 @@ var ExplorerClass = function (_Component) {
                 }
             }
         };
+        _this.switchViewpoint = function (viewpointname) {
+            var userselections = _this.state.userselections;
+            userselections.viewpoint = viewpointname;
+            var chartmatrix = [[], []];
+            _this.setState({
+                userselections: userselections,
+                chartmatrix: chartmatrix
+            });
+            var self = _this;
+            setTimeout(function () {
+                self.initializeChartSeries();
+            });
+        };
+        _this.switchDataSeries = function (seriesname) {
+            var userselections = _this.state.userselections;
+            userselections.dataseries = seriesname;
+            var chartmatrix = _this.state.chartmatrix;
+            _this.setState({
+                userselections: userselections
+            });
+            _this.setViewpointAmounts();
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
+
+            try {
+                for (var _iterator3 = chartmatrix[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                    var matrixseries = _step3.value;
+
+                    var cellconfig = undefined;
+                    var _iteratorNormalCompletion4 = true;
+                    var _didIteratorError4 = false;
+                    var _iteratorError4 = undefined;
+
+                    try {
+                        for (var _iterator4 = matrixseries[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                            cellconfig = _step4.value;
+
+                            var chartParmsObj = _this.getChartParms(cellconfig);
+                            cellconfig.chartparms = chartParmsObj.chartParms;
+                            cellconfig.dataseries = seriesname;
+                        }
+                    } catch (err) {
+                        _didIteratorError4 = true;
+                        _iteratorError4 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                                _iterator4.return();
+                            }
+                        } finally {
+                            if (_didIteratorError4) {
+                                throw _iteratorError4;
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
+                    }
+                } finally {
+                    if (_didIteratorError3) {
+                        throw _iteratorError3;
+                    }
+                }
+            }
+
+            setTimeout(function () {
+                _this.setState({
+                    chartmatrix: chartmatrix
+                });
+            });
+        };
         _this.getCharts = function (matrixcolumn, matrixrow) {
             var charts = matrixcolumn.map(function (chartconfig, index) {
                 var chartparms = chartconfig.chartparms;
@@ -9938,32 +10031,24 @@ var ExplorerClass = function (_Component) {
             var drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
             var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down.", React.createElement(IconButton, { tooltip: "help", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "help_outline"))), React.createElement("div", { style: {
                     padding: "3px" } }, React.createElement("span", null, "Viewpoints: "), React.createElement(IconButton, { tooltip: "Functional", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
-                    var userselections = _this2.state.userselections;
-                    userselections.viewpoint = 'FUNCTIONAL';
-                    var chartmatrix = [[], []];
-                    _this2.setState({
-                        userselections: userselections,
-                        chartmatrix: chartmatrix
-                    });
-                    var self = _this2;
-                    setTimeout(function () {
-                        self.componentDidMount();
-                    });
+                    _this2.switchViewpoint('FUNCTIONAL');
                 }, style: { backgroundColor: this.state.userselections.viewpoint == 'FUNCTIONAL' ? 'lightgreen' : 'transparent' } }, React.createElement(FontIcon, { className: "material-icons" }, "directions_walk")), React.createElement(IconButton, { tooltip: "Structural", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
-                    var userselections = _this2.state.userselections;
-                    userselections.viewpoint = 'STRUCTURAL';
-                    var chartmatrix = [[], []];
-                    _this2.setState({
-                        userselections: userselections,
-                        chartmatrix: chartmatrix
-                    });
-                    var self = _this2;
-                    setTimeout(function () {
-                        self.componentDidMount();
-                    });
+                    _this2.switchViewpoint('STRUCTURAL');
                 }, style: {
                     backgroundColor: this.state.userselections.viewpoint == 'STRUCTURAL' ? 'lightgreen' : 'transparent'
-                } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", style: { backgroundColor: 'lightgreen' } }, React.createElement(FontIcon, { className: "material-icons" }, "attach_money")), React.createElement(IconButton, { tooltip: "Revenues", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "receipt")), React.createElement(IconButton, { tooltip: "Staffing", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { display: "none" } }, React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: function onChange(ev, selection) {
+                } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
+                    _this2.switchDataSeries('BudgetExpenses');
+                }, style: {
+                    backgroundColor: this.state.userselections.dataseries == 'BudgetExpenses' ? 'lightgreen' : 'transparent'
+                } }, React.createElement(FontIcon, { className: "material-icons" }, "attach_money")), React.createElement(IconButton, { tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
+                    _this2.switchDataSeries('BudgetRevenues');
+                }, style: {
+                    backgroundColor: this.state.userselections.dataseries == 'BudgetRevenues' ? 'lightgreen' : 'transparent'
+                } }, React.createElement(FontIcon, { className: "material-icons" }, "receipt")), React.createElement(IconButton, { tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
+                    _this2.switchDataSeries('BudgetStaffing');
+                }, style: {
+                    backgroundColor: this.state.userselections.dataseries == 'BudgetStaffing' ? 'lightgreen' : 'transparent'
+                } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { display: "none" } }, React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: function onChange(ev, selection) {
                     explorer.setState({
                         datafacet: selection
                     });
@@ -35703,6 +35788,7 @@ var Chart = React.createClass({
 				});
 			}
 		} else {
+			this.wrapper.setOptions(this.props.options);
 			if (this.props.data !== null) {
 				this.wrapper.setDataTable(this.props.data);
 				this.data_table = this.wrapper.getDataTable();
@@ -35856,7 +35942,6 @@ var Chart = React.createClass({
 });
 
 module.exports = Chart;
-
 },{"../constants/DEFAULT_CHART_COLORS":237,"./GoogleChartLoader":236,"react":428}],236:[function(require,module,exports){
 //GoogleChartLoader Singleton
 

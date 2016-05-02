@@ -33,6 +33,9 @@ class ExplorerClass extends Component {
             }
         };
         this.componentDidMount = () => {
+            this.initializeChartSeries();
+        };
+        this.initializeChartSeries = () => {
             let userselections = this.state.userselections, chartmatrix = this.state.chartmatrix;
             var matrixlocation, chartParmsObj;
             this.setViewpointAmounts();
@@ -249,10 +252,19 @@ class ExplorerClass extends Component {
         this.getChartParms = (chartConfig) => {
             let viewpointindex = chartConfig.viewpoint, path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
             let userselections = this.state.userselections, dataseriesname = userselections.dataseries;
-            let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel = itemseries.UnitsAlias + ' (Expenses)';
+            let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel;
+            vertlabel = itemseries.UnitsAlias;
+            if (units != 'FTE') {
+                if (dataseriesname == 'BudgetExpenses')
+                    vertlabel += ' (Expenses)';
+                else
+                    vertlabel += ' (Revenues)';
+            }
             let isError = false;
             let thousandsformat = format({ prefix: "$", suffix: "T" });
             let rounded = format({ round: 0, integerSeparator: '' });
+            let singlerounded = format({ round: 1, integerSeparator: '' });
+            let staffrounded = format({ round: 1, integerSeparator: ',' });
             let { node, components } = this.getNodeDatasets(viewpointindex, path);
             let chartType = chartConfig.charttype;
             let titleref = viewpointdata.Configuration[node.Contents];
@@ -271,15 +283,16 @@ class ExplorerClass extends Component {
             let titleamount = node.years[year];
             if (units == 'DOLLAR') {
                 titleamount = parseInt(rounded(titleamount / 1000));
+                titleamount = thousandsformat(titleamount);
             }
             else {
-                titleamount = titleamount;
+                titleamount = staffrounded(titleamount);
             }
-            title += ' (Total: ' + thousandsformat(titleamount) + ')';
+            title += ' (Total: ' + titleamount + ')';
             let options = {
                 title: title,
                 vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
-                hAxis: { title: axistitle, textStyle: { fontSize: 8 } },
+                hAxis: { title: axistitle, textStyle: { fontSize: 9 } },
                 bar: { groupWidth: "95%" },
                 height: 400,
                 width: 400,
@@ -295,7 +308,7 @@ class ExplorerClass extends Component {
                             let chart = Chart.chart;
                             let selection = chart.getSelection();
                             let context = { chartconfig: chartconfig, chart: chart, selection: selection, err: err };
-                            self.updateChartsSelection(context);
+                            self.generateChartsSelection(context);
                         };
                     })(chartConfig)
                 }
@@ -310,14 +323,20 @@ class ExplorerClass extends Component {
                 return { isError: true, chartParms: {} };
             }
             let rows = node.SortedComponents.map(item => {
-                let amount;
+                let amount = components[item.Code].years[year];
+                let annotation;
                 if (units == 'DOLLAR') {
-                    amount = parseInt(rounded(components[item.Code].years[year] / 1000));
+                    amount = parseInt(rounded(amount / 1000));
+                    annotation = thousandsformat(amount);
+                }
+                else if (units == 'FTE') {
+                    amount = parseInt(singlerounded(amount));
+                    annotation = staffrounded(amount);
                 }
                 else {
                     amount = components[item.Code].years[year];
+                    annotation = amount;
                 }
-                let annotation = thousandsformat(amount);
                 return [item.Name, amount, annotation];
             });
             let chartParms = {
@@ -345,7 +364,7 @@ class ExplorerClass extends Component {
             }
             return { node: node, components: components };
         };
-        this.updateChartsSelection = (context) => {
+        this.generateChartsSelection = (context) => {
             let userselections = this.state.userselections;
             let selection = context.selection[0];
             let selectionrow;
@@ -430,6 +449,41 @@ class ExplorerClass extends Component {
                     chart.setSelection(selection);
             }
         };
+        this.switchViewpoint = viewpointname => {
+            let userselections = this.state.userselections;
+            userselections.viewpoint = viewpointname;
+            let chartmatrix = [[], []];
+            this.setState({
+                userselections: userselections,
+                chartmatrix: chartmatrix,
+            });
+            let self = this;
+            setTimeout(() => {
+                self.initializeChartSeries();
+            });
+        };
+        this.switchDataSeries = seriesname => {
+            let userselections = this.state.userselections;
+            userselections.dataseries = seriesname;
+            let chartmatrix = this.state.chartmatrix;
+            this.setState({
+                userselections: userselections,
+            });
+            this.setViewpointAmounts();
+            for (let matrixseries of chartmatrix) {
+                let cellconfig;
+                for (cellconfig of matrixseries) {
+                    let chartParmsObj = this.getChartParms(cellconfig);
+                    cellconfig.chartparms = chartParmsObj.chartParms;
+                    cellconfig.dataseries = seriesname;
+                }
+            }
+            setTimeout(() => {
+                this.setState({
+                    chartmatrix: chartmatrix,
+                });
+            });
+        };
         this.getCharts = (matrixcolumn, matrixrow) => {
             let charts = matrixcolumn.map((chartconfig, index) => {
                 let chartparms = chartconfig.chartparms;
@@ -463,36 +517,34 @@ class ExplorerClass extends Component {
         let drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
         let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down.", React.createElement(IconButton, {tooltip: "help", tooltipPosition: "top-center"}, React.createElement(FontIcon, {className: "material-icons"}, "help_outline"))), React.createElement("div", {style: {
             padding: "3px" }}, React.createElement("span", null, "Viewpoints: "), React.createElement(IconButton, {tooltip: "Functional", tooltipPosition: "top-center", onTouchTap: e => {
-            let userselections = this.state.userselections;
-            userselections.viewpoint = 'FUNCTIONAL';
-            let chartmatrix = [[], []];
-            this.setState({
-                userselections: userselections,
-                chartmatrix: chartmatrix,
-            });
-            let self = this;
-            setTimeout(() => {
-                self.componentDidMount();
-            });
+            this.switchViewpoint('FUNCTIONAL');
         }, style: { backgroundColor: (this.state.userselections.viewpoint == 'FUNCTIONAL')
                 ? 'lightgreen'
                 : 'transparent' }}, React.createElement(FontIcon, {className: "material-icons"}, "directions_walk")), React.createElement(IconButton, {tooltip: "Structural", tooltipPosition: "top-center", onTouchTap: e => {
-            let userselections = this.state.userselections;
-            userselections.viewpoint = 'STRUCTURAL';
-            let chartmatrix = [[], []];
-            this.setState({
-                userselections: userselections,
-                chartmatrix: chartmatrix,
-            });
-            let self = this;
-            setTimeout(() => {
-                self.componentDidMount();
-            });
+            this.switchViewpoint('STRUCTURAL');
         }, style: {
             backgroundColor: (this.state.userselections.viewpoint == 'STRUCTURAL')
                 ? 'lightgreen'
                 : 'transparent'
-        }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, {tooltip: "Expenses", tooltipPosition: "top-center", style: { backgroundColor: 'lightgreen' }}, React.createElement(FontIcon, {className: "material-icons"}, "attach_money")), React.createElement(IconButton, {tooltip: "Revenues", tooltipPosition: "top-center"}, React.createElement(FontIcon, {className: "material-icons"}, "receipt")), React.createElement(IconButton, {tooltip: "Staffing", tooltipPosition: "top-center"}, React.createElement(FontIcon, {className: "material-icons"}, "people"))), React.createElement("div", {style: { display: "none" }}, React.createElement(RadioButtonGroup, {style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: (ev, selection) => {
+        }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, {tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: e => {
+            this.switchDataSeries('BudgetExpenses');
+        }, style: {
+            backgroundColor: (this.state.userselections.dataseries == 'BudgetExpenses')
+                ? 'lightgreen'
+                : 'transparent'
+        }}, React.createElement(FontIcon, {className: "material-icons"}, "attach_money")), React.createElement(IconButton, {tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: e => {
+            this.switchDataSeries('BudgetRevenues');
+        }, style: {
+            backgroundColor: (this.state.userselections.dataseries == 'BudgetRevenues')
+                ? 'lightgreen'
+                : 'transparent'
+        }}, React.createElement(FontIcon, {className: "material-icons"}, "receipt")), React.createElement(IconButton, {tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: e => {
+            this.switchDataSeries('BudgetStaffing');
+        }, style: {
+            backgroundColor: (this.state.userselections.dataseries == 'BudgetStaffing')
+                ? 'lightgreen'
+                : 'transparent'
+        }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "people"))), React.createElement("div", {style: { display: "none" }}, React.createElement(RadioButtonGroup, {style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: (ev, selection) => {
             explorer.setState({
                 datafacet: selection,
             });
