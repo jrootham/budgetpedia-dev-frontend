@@ -21,7 +21,6 @@ class ExplorerClass extends Component {
         super(props);
         this.state = {
             chartmatrix: [[], []],
-            datafacet: "expenses",
             yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] },
             yearscope: "one",
             userselections: {
@@ -308,7 +307,7 @@ class ExplorerClass extends Component {
                             let chart = Chart.chart;
                             let selection = chart.getSelection();
                             let context = { chartconfig: chartconfig, chart: chart, selection: selection, err: err };
-                            self.onChartsSelection(context);
+                            self.onChartComponentSelection(context);
                         };
                     })(chartConfig)
                 }
@@ -323,7 +322,15 @@ class ExplorerClass extends Component {
                 return { isError: true, chartParms: {} };
             }
             let rows = node.SortedComponents.map(item => {
-                let amount = components[item.Code].years[year];
+                let component = components[item.Code];
+                if (!component) {
+                    console.error('component not found for (components, item, item.Code) ', components, item.Code, item);
+                }
+                let amount;
+                if (component.years)
+                    amount = components[item.Code].years[year];
+                else
+                    amount = null;
                 let annotation;
                 if (units == 'DOLLAR') {
                     amount = parseInt(rounded(amount / 1000));
@@ -364,7 +371,7 @@ class ExplorerClass extends Component {
             }
             return { node: node, components: components };
         };
-        this.onChartsSelection = (context) => {
+        this.onChartComponentSelection = (context) => {
             let userselections = this.state.userselections;
             let selection = context.selection[0];
             let selectionrow;
@@ -386,13 +393,13 @@ class ExplorerClass extends Component {
             if (!selection) {
                 delete chartconfig.chartselection;
                 delete chartconfig.chart;
-                this.updateSelections(chartmatrix, matrixrow);
+                this.updateChartSelections(chartmatrix, matrixrow);
                 return;
             }
             let childdataroot = chartconfig.datapath.slice();
             let { node, components } = this.getNodeDatasets(userselections.viewpoint, childdataroot);
             if (!node.Components) {
-                this.updateSelections(chartmatrix, matrixrow);
+                this.updateChartSelections(chartmatrix, matrixrow);
                 return;
             }
             let code = null;
@@ -405,12 +412,12 @@ class ExplorerClass extends Component {
             if (code)
                 childdataroot.push(code);
             else {
-                this.updateSelections(chartmatrix, matrixrow);
+                this.updateChartSelections(chartmatrix, matrixrow);
                 return;
             }
             let newnode = node.Components[code];
             if (!newnode.Components) {
-                this.updateSelections(chartmatrix, matrixrow);
+                this.updateChartSelections(chartmatrix, matrixrow);
                 return;
             }
             let newrange = Object.assign({}, chartconfig.yearscope);
@@ -428,7 +435,7 @@ class ExplorerClass extends Component {
             };
             let chartParmsObj = this.getChartParms(newchartconfig);
             if (chartParmsObj.isError) {
-                this.updateSelections(chartmatrix, matrixrow);
+                this.updateChartSelections(chartmatrix, matrixrow);
                 return;
             }
             newchartconfig.chartparms = chartParmsObj.chartParms;
@@ -439,9 +446,9 @@ class ExplorerClass extends Component {
             });
             chartconfig.chartselection = context.selection,
                 chartconfig.chart = chart;
-            this.updateSelections(chartmatrix, matrixrow);
+            this.updateChartSelections(chartmatrix, matrixrow);
         };
-        this.updateSelections = (chartmatrix, matrixrow) => {
+        this.updateChartSelections = (chartmatrix, matrixrow) => {
             for (let config of chartmatrix[matrixrow]) {
                 let chart = config.chart;
                 let selection = config.chartselection;
@@ -483,7 +490,7 @@ class ExplorerClass extends Component {
                     chartmatrix: chartmatrix,
                 });
                 for (let row = 0; row < chartmatrix.length; row++) {
-                    this.updateSelections(chartmatrix, row);
+                    this.updateChartSelections(chartmatrix, row);
                 }
             });
         };
@@ -547,13 +554,7 @@ class ExplorerClass extends Component {
             backgroundColor: (this.state.userselections.dataseries == 'BudgetStaffing')
                 ? 'lightgreen'
                 : 'transparent'
-        }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "people"))), React.createElement("div", {style: { display: "none" }}, React.createElement(RadioButtonGroup, {style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: (ev, selection) => {
-            explorer.setState({
-                datafacet: selection,
-            });
-        }}, React.createElement(RadioButton, {value: "expenses", label: "Expenses", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "revenues", label: "Revenues", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "net", label: "Net", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "staffing", label: "Staffing", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), React.createElement(RadioButtonGroup, {style: { display: (explorer.state.datafacet != "staffing") ? 'inline-block' : 'none',
-            backgroundColor: "#eee" }, name: "activities", defaultSelected: "activities"}, React.createElement(RadioButton, {value: "activities", label: "Activities", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "categories", label: "Categories", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), React.createElement(RadioButtonGroup, {style: { display: (explorer.state.datafacet == "staffing") ? 'inline-block' : 'none',
-            backgroundColor: "#eee" }, name: "staffing", defaultSelected: "positions"}, React.createElement(RadioButton, {value: "positions", label: "Positions", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "budget", label: "Budget", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), React.createElement(FontIcon, {className: "material-icons"}, "cloud_download")), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, drilldowncharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
+        }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "people"))), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, drilldowncharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
         let comparelist = explorer.state.chartmatrix[constants_1.ChartSeries.Compare];
         let comparecharts = explorer.getCharts(comparelist, constants_1.ChartSeries.Compare);
         let comparesegment = React.createElement(Card, {initiallyExpanded: false}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Compare"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, comparecharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));

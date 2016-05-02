@@ -98,7 +98,6 @@ class ExplorerClass extends Component< any, any > {
     // charts exist in a matrix (row/column) which contain a chartconfig object
     state = {
         chartmatrix: [ [], [] ], // DrillDown, Compare (Later: Differences, Context, Build)
-        datafacet:"expenses",
         yearslider: {singlevalue:[2015],doublevalue:[2005,2015]},
         yearscope:"one",
         userselections:{
@@ -450,8 +449,8 @@ class ExplorerClass extends Component< any, any > {
 
                         // re-assemble
                         cumulatingSummaries.Aggregates[aggregatename] = cumulatingAggregate
-                    }
 
+                    }
                 }
             }
         }
@@ -480,6 +479,8 @@ class ExplorerClass extends Component< any, any > {
 
     // ------------------[ GET CHART PARMS ]--------------------------
     // return chartType, columns, rows, options, and events
+    // these are the actual parameters passed to the react google charts components
+    // see notes 1 .. 5 below
 
     // returns chartParmsObj.isError = true if fails
     // returns inputs required for a chart, based on Chart Configuration
@@ -559,6 +560,8 @@ class ExplorerClass extends Component< any, any > {
         }
         title += ' (Total: ' + titleamount + ')'
 
+        // TODO: animation breaks draswing; probably conflict with react render
+        //    needs to be investigated
         let options = {
             // animation:{
             //     startup: true,
@@ -591,7 +594,7 @@ class ExplorerClass extends Component< any, any > {
                         let selection = chart.getSelection()
                         let context: ChartSelectionContext = { chartconfig, chart, selection, err }
 
-                        self.onChartsSelection(context)
+                        self.onChartComponentSelection(context)
                     }
                 })(chartConfig)
             }
@@ -613,7 +616,15 @@ class ExplorerClass extends Component< any, any > {
         }
         let rows = node.SortedComponents.map(item => {
             // TODO: get determination of amount processing from Unit value
-            let amount = components[item.Code].years[year]
+            let component = components[item.Code]
+            if (!component) {
+                console.error('component not found for (components, item, item.Code) ',components, item.Code, item)
+            }
+            let amount
+            if (component.years)
+                amount = components[item.Code].years[year]
+            else 
+                amount = null
             let annotation
             if (units == 'DOLLAR') {
                 amount = parseInt(rounded(amount/1000))
@@ -683,7 +694,7 @@ class ExplorerClass extends Component< any, any > {
     // called by chart callback
     // TODO: the context object should include matrix location of 
     // chartconfig, not the chartconfig itself
-    onChartsSelection = (context:ChartSelectionContext) => {
+    onChartComponentSelection = (context:ChartSelectionContext) => {
 
         // user selections
         let userselections = this.state.userselections
@@ -730,7 +741,7 @@ class ExplorerClass extends Component< any, any > {
         if (!selection) { // deselected
             delete chartconfig.chartselection
             delete chartconfig.chart
-            this.updateSelections(chartmatrix, matrixrow)
+            this.updateChartSelections(chartmatrix, matrixrow)
             return
         }
         // let chartconfig:ChartConfig = context.chartconfig // chartmatrix[matrixrow][matrixcolumn]
@@ -741,7 +752,7 @@ class ExplorerClass extends Component< any, any > {
             userselections.viewpoint, childdataroot)
 
         if (!node.Components) {
-            this.updateSelections(chartmatrix, matrixrow)
+            this.updateChartSelections(chartmatrix, matrixrow)
             return
         }
 
@@ -755,13 +766,13 @@ class ExplorerClass extends Component< any, any > {
         if (code)
             childdataroot.push(code)
         else {
-            this.updateSelections(chartmatrix, matrixrow)
+            this.updateChartSelections(chartmatrix, matrixrow)
             return
         }
 
         let newnode = node.Components[code]
         if (!newnode.Components) {
-            this.updateSelections(chartmatrix, matrixrow)
+            this.updateChartSelections(chartmatrix, matrixrow)
             return
         }
 
@@ -783,7 +794,7 @@ class ExplorerClass extends Component< any, any > {
         let chartParmsObj = this.getChartParms(newchartconfig)
 
         if (chartParmsObj.isError) {
-            this.updateSelections(chartmatrix, matrixrow)
+            this.updateChartSelections(chartmatrix, matrixrow)
             return
         }
 
@@ -799,12 +810,12 @@ class ExplorerClass extends Component< any, any > {
         chartconfig.chartselection = context.selection,
         chartconfig.chart = chart
 
-        this.updateSelections(chartmatrix,matrixrow)
+        this.updateChartSelections(chartmatrix,matrixrow)
 
     }
 
     // update the visual cue for selection that led to user array of graphs
-    updateSelections = (chartmatrix,matrixrow) => {
+    updateChartSelections = (chartmatrix,matrixrow) => {
         for (let config of chartmatrix[matrixrow]) {
             let chart = config.chart
             let selection = config.chartselection
@@ -858,7 +869,7 @@ class ExplorerClass extends Component< any, any > {
                 chartmatrix,
             })
             for (let row = 0; row < chartmatrix.length; row++) {
-                this.updateSelections(chartmatrix, row)
+                this.updateChartSelections(chartmatrix, row)
             }
         })
     }
@@ -1118,95 +1129,6 @@ class ExplorerClass extends Component< any, any > {
                         >
                         <FontIcon className="material-icons">people</FontIcon>
                     </IconButton >
-
-                </div>
-
-                <div style={{ display: "none" }}>
-
-                <RadioButtonGroup
-                    style={{display:'inline-block'}}
-                    name="datafacet" 
-                    defaultSelected={explorer.state.datafacet}
-                    onChange={(ev, selection) => {
-                        explorer.setState({
-                            datafacet: selection,
-                        })
-                    } }>
-
-                    <RadioButton 
-                        value="expenses" 
-                        label="Expenses" 
-                        iconStyle={{marginRight:"4px"}}
-                        labelStyle={{width:"auto",marginRight:"24px"}}
-                        style={{ display: 'inline-block', width:'auto' }} />
-
-                    <RadioButton 
-                        value="revenues" 
-                        label="Revenues" 
-                        iconStyle={{ marginRight: "4px" }}
-                        labelStyle={{ width: "auto", marginRight: "24px" }}
-                        style={{ display: 'inline-block', width: 'auto' }} />
-
-                    <RadioButton
-                        value="net"
-                        label="Net"
-                        iconStyle={{ marginRight: "4px" }}
-                        labelStyle={{ width: "auto", marginRight: "24px" }}
-                        style={{ display: 'inline-block', width: 'auto' }} />
-
-                    <RadioButton 
-                        value="staffing" 
-                        label="Staffing" 
-                        iconStyle={{ marginRight: "4px" }}
-                        labelStyle={{ width: "auto", marginRight: "24px" }}
-                        style={{ display: 'inline-block', width: 'auto' }} />
-
-                </RadioButtonGroup>
-
-                <RadioButtonGroup
-                    style={{ display: (explorer.state.datafacet != "staffing") ? 'inline-block' : 'none', 
-                        backgroundColor: "#eee" }}
-                    name="activities"
-                    defaultSelected="activities">
-
-                    <RadioButton 
-                        value="activities" 
-                        label = "Activities" 
-                        iconStyle={{ marginRight: "4px" }}
-                        labelStyle={{ width: "auto", marginRight: "24px" }}
-                        style={{ display: 'inline-block', width: 'auto' }} />
-
-                    <RadioButton 
-                        value="categories" 
-                        label = "Categories" 
-                        iconStyle={{ marginRight: "4px" }}
-                        labelStyle={{ width: "auto", marginRight: "24px" }}
-                        style={{ display: 'inline-block', width: 'auto' }} />
-
-                </RadioButtonGroup>
-
-                <RadioButtonGroup
-                    style={{ display: (explorer.state.datafacet == "staffing") ? 'inline-block' : 'none', 
-                        backgroundColor: "#eee" }}
-                    name="staffing"
-                    defaultSelected="positions" >
-
-                    <RadioButton 
-                        value="positions" 
-                        label = "Positions" 
-                        iconStyle={{ marginRight: "4px" }}
-                        labelStyle={{ width: "auto", marginRight: "24px" }}
-                        style={{ display: 'inline-block', width: 'auto' }} />
-
-                    <RadioButton 
-                        value="budget" 
-                        label = "Budget" 
-                        iconStyle={{ marginRight: "4px" }}
-                        labelStyle={{ width: "auto", marginRight: "24px" }}
-                        style={{ display: 'inline-block', width: 'auto' }} />
-                </RadioButtonGroup>
-
-                <FontIcon className="material-icons">cloud_download</FontIcon>
 
                 </div>
 

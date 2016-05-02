@@ -9467,7 +9467,6 @@ var ExplorerClass = function (_Component) {
 
         _this.state = {
             chartmatrix: [[], []],
-            datafacet: "expenses",
             yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] },
             yearscope: "one",
             userselections: {
@@ -9736,7 +9735,7 @@ var ExplorerClass = function (_Component) {
                         var chart = Chart.chart;
                         var selection = chart.getSelection();
                         var context = { chartconfig: chartconfig, chart: chart, selection: selection, err: err };
-                        self.onChartsSelection(context);
+                        self.onChartComponentSelection(context);
                     };
                 }(chartConfig)
             }];
@@ -9746,7 +9745,12 @@ var ExplorerClass = function (_Component) {
                 return { isError: true, chartParms: {} };
             }
             var rows = node.SortedComponents.map(function (item) {
-                var amount = components[item.Code].years[year];
+                var component = components[item.Code];
+                if (!component) {
+                    console.error('component not found for (components, item, item.Code) ', components, item.Code, item);
+                }
+                var amount = undefined;
+                if (component.years) amount = components[item.Code].years[year];else amount = null;
                 var annotation = undefined;
                 if (units == 'DOLLAR') {
                     amount = parseInt(rounded(amount / 1000));
@@ -9806,7 +9810,7 @@ var ExplorerClass = function (_Component) {
 
             return { node: node, components: components };
         };
-        _this.onChartsSelection = function (context) {
+        _this.onChartComponentSelection = function (context) {
             var userselections = _this.state.userselections;
             var selection = context.selection[0];
             var selectionrow = undefined;
@@ -9831,7 +9835,7 @@ var ExplorerClass = function (_Component) {
             if (!selection) {
                 delete chartconfig.chartselection;
                 delete chartconfig.chart;
-                _this.updateSelections(chartmatrix, matrixrow);
+                _this.updateChartSelections(chartmatrix, matrixrow);
                 return;
             }
             var childdataroot = chartconfig.datapath.slice();
@@ -9842,7 +9846,7 @@ var ExplorerClass = function (_Component) {
             var components = _this$getNodeDatasets2.components;
 
             if (!node.Components) {
-                _this.updateSelections(chartmatrix, matrixrow);
+                _this.updateChartSelections(chartmatrix, matrixrow);
                 return;
             }
             var code = null;
@@ -9853,12 +9857,12 @@ var ExplorerClass = function (_Component) {
                 code = parentdata.Code;
             }
             if (code) childdataroot.push(code);else {
-                _this.updateSelections(chartmatrix, matrixrow);
+                _this.updateChartSelections(chartmatrix, matrixrow);
                 return;
             }
             var newnode = node.Components[code];
             if (!newnode.Components) {
-                _this.updateSelections(chartmatrix, matrixrow);
+                _this.updateChartSelections(chartmatrix, matrixrow);
                 return;
             }
             var newrange = Object.assign({}, chartconfig.yearscope);
@@ -9876,7 +9880,7 @@ var ExplorerClass = function (_Component) {
             };
             var chartParmsObj = _this.getChartParms(newchartconfig);
             if (chartParmsObj.isError) {
-                _this.updateSelections(chartmatrix, matrixrow);
+                _this.updateChartSelections(chartmatrix, matrixrow);
                 return;
             }
             newchartconfig.chartparms = chartParmsObj.chartParms;
@@ -9886,9 +9890,9 @@ var ExplorerClass = function (_Component) {
                 chartmatrix: chartmatrix
             });
             chartconfig.chartselection = context.selection, chartconfig.chart = chart;
-            _this.updateSelections(chartmatrix, matrixrow);
+            _this.updateChartSelections(chartmatrix, matrixrow);
         };
-        _this.updateSelections = function (chartmatrix, matrixrow) {
+        _this.updateChartSelections = function (chartmatrix, matrixrow) {
             var _iteratorNormalCompletion2 = true;
             var _didIteratorError2 = false;
             var _iteratorError2 = undefined;
@@ -9993,7 +9997,7 @@ var ExplorerClass = function (_Component) {
                     chartmatrix: chartmatrix
                 });
                 for (var row = 0; row < chartmatrix.length; row++) {
-                    _this.updateSelections(chartmatrix, row);
+                    _this.updateChartSelections(chartmatrix, row);
                 }
             });
         };
@@ -10051,13 +10055,7 @@ var ExplorerClass = function (_Component) {
                     _this2.switchDataSeries('BudgetStaffing');
                 }, style: {
                     backgroundColor: this.state.userselections.dataseries == 'BudgetStaffing' ? 'lightgreen' : 'transparent'
-                } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { display: "none" } }, React.createElement(RadioButtonGroup, { style: { display: 'inline-block' }, name: "datafacet", defaultSelected: explorer.state.datafacet, onChange: function onChange(ev, selection) {
-                    explorer.setState({
-                        datafacet: selection
-                    });
-                } }, React.createElement(RadioButton, { value: "expenses", label: "Expenses", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "revenues", label: "Revenues", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "net", label: "Net", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "staffing", label: "Staffing", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } })), React.createElement(RadioButtonGroup, { style: { display: explorer.state.datafacet != "staffing" ? 'inline-block' : 'none',
-                    backgroundColor: "#eee" }, name: "activities", defaultSelected: "activities" }, React.createElement(RadioButton, { value: "activities", label: "Activities", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "categories", label: "Categories", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } })), React.createElement(RadioButtonGroup, { style: { display: explorer.state.datafacet == "staffing" ? 'inline-block' : 'none',
-                    backgroundColor: "#eee" }, name: "staffing", defaultSelected: "positions" }, React.createElement(RadioButton, { value: "positions", label: "Positions", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } }), React.createElement(RadioButton, { value: "budget", label: "Budget", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' } })), React.createElement(FontIcon, { className: "material-icons" }, "cloud_download")), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
+                } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
             var comparelist = explorer.state.chartmatrix[constants_1.ChartSeries.Compare];
             var comparecharts = explorer.getCharts(comparelist, constants_1.ChartSeries.Compare);
             var comparesegment = React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Compare"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, comparecharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
