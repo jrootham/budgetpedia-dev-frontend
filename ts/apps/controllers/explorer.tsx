@@ -1,5 +1,14 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // explorer.tsx
+
+/*
+    TODO: 
+    - do systematic check for error handling requirements; protect against 
+        unexpected data (extrenal)
+    - consider creating an instance around 'node' for the key abstraction
+        - include getChartParms -> node.getChartParms
+*/
+
 /// <reference path="../../../typings-custom/react-google-charts.d.ts" />
 /// <reference path="../../../typings-custom/react-slider.d.ts" />
 
@@ -79,7 +88,7 @@ interface ComponentSummaries {
 }
 
 interface ChartSelectionContext {
-    chartconfig:ChartConfig, 
+    configlocation:any, 
     chart:any, 
     selection:any[], 
     err:any,
@@ -583,20 +592,21 @@ class ExplorerClass extends Component< any, any > {
         // TODO: replace chartconfig with matrix co-ordinates to avoid
         //     need to update chart by destroying chart (thus closure) before replacing it
         // 3. chart events:
+        let configlocation = Object.assign({},chartConfig.matrixlocation)
         let events = [
             {
                 eventName: 'select',
-                callback: ((chartconfig: ChartConfig) => {
+                callback: ((configLocation) => {
 
                     let self = this
                     return (Chart, err) => {
                         let chart = Chart.chart
                         let selection = chart.getSelection()
-                        let context: ChartSelectionContext = { chartconfig, chart, selection, err }
+                        let context: ChartSelectionContext = { configlocation:configLocation, chart, selection, err }
 
                         self.onChartComponentSelection(context)
                     }
-                })(chartConfig)
+                })(configlocation)
             }
         ]
 
@@ -712,9 +722,7 @@ class ExplorerClass extends Component< any, any > {
         let chart = context.chart
 
         // unpack chartconfig
-        let chartconfig = context.chartconfig,
-            selectmatrixlocation = chartconfig.matrixlocation
-
+        let selectmatrixlocation = context.configlocation
 
         // unpack location
         let matrixrow = selectmatrixlocation.row,
@@ -724,6 +732,8 @@ class ExplorerClass extends Component< any, any > {
         let chartmatrix = this.state.chartmatrix,
             serieslist = chartmatrix[matrixrow]
 
+        let chartconfig = chartmatrix[matrixrow][matrixcolumn]
+
         // get taxonomy references
         let viewpoint = chartconfig.viewpoint,
             dataseries = chartconfig.dataseries
@@ -731,9 +741,7 @@ class ExplorerClass extends Component< any, any > {
         // TODO: abandon here if the next one exists and is the same
         serieslist.splice(matrixcolumn + 1) // remove subsequent charts
 
-        // trigger update to avoid google charts use of cached versions for new charts
-        // cached versions keep obsolete chart titles, and closures,
-        // even if new title fed in through new options
+        // trigger update to avoid google charts use of cached versions
         this.setState({
             chartmatrix,
         });
@@ -826,23 +834,24 @@ class ExplorerClass extends Component< any, any > {
 
     // ---------------------[ CONTROL ACTIONS ]------------------
 
-    switchViewpoint = viewpointname => {
+    switchViewpoint = (viewpointname, seriesref) => {
 
         let userselections = this.state.userselections
+        let chartmatrix = this.state.chartmatrix
+        let chartseries = chartmatrix[seriesref]
+        chartseries.splice(0) // remove subsequent charts
         userselections.viewpoint = viewpointname
-        let chartmatrix = [[], []]
         this.setState({
             userselections,
             chartmatrix,
         })
-        let self = this
         // defer initialization until after update 
         // triggered by setState, to make sure previous
         // chart is destroyed; otherwise previous viewpoint 
-        // settings are retuained in error
-        setTimeout(() => {
-            self.initializeChartSeries()
-        })
+        // settings are retained in error
+        // setTimeout(() => {
+        this.initializeChartSeries()
+        // })
 
     }
 
@@ -853,7 +862,6 @@ class ExplorerClass extends Component< any, any > {
         let chartmatrix = this.state.chartmatrix
         this.setState({
             userselections,
-            // chartmatrix:[[],[]]
         })
         this.setViewpointAmounts()
         for (let matrixseries of chartmatrix) {
@@ -1043,7 +1051,7 @@ class ExplorerClass extends Component< any, any > {
                         tooltipPosition="top-center"
                         onTouchTap= {
                             e => {
-                                this.switchViewpoint('FUNCTIONAL')
+                                this.switchViewpoint('FUNCTIONAL',ChartSeries.DrillDown)
                             }
                         } 
                         style={
@@ -1059,7 +1067,7 @@ class ExplorerClass extends Component< any, any > {
                         tooltipPosition="top-center" 
                         onTouchTap= {
                             e => {
-                                this.switchViewpoint('STRUCTURAL')
+                                this.switchViewpoint('STRUCTURAL', ChartSeries.DrillDown)
                             }
                         }
                         style={

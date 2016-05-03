@@ -298,18 +298,19 @@ class ExplorerClass extends Component {
                 legend: 'none',
                 annotations: { alwaysOutside: true }
             };
+            let configlocation = Object.assign({}, chartConfig.matrixlocation);
             let events = [
                 {
                     eventName: 'select',
-                    callback: ((chartconfig) => {
+                    callback: ((configLocation) => {
                         let self = this;
                         return (Chart, err) => {
                             let chart = Chart.chart;
                             let selection = chart.getSelection();
-                            let context = { chartconfig: chartconfig, chart: chart, selection: selection, err: err };
+                            let context = { configlocation: configLocation, chart: chart, selection: selection, err: err };
                             self.onChartComponentSelection(context);
                         };
-                    })(chartConfig)
+                    })(configlocation)
                 }
             ];
             let categorylabel = 'Component';
@@ -382,9 +383,10 @@ class ExplorerClass extends Component {
                 selectionrow = null;
             }
             let chart = context.chart;
-            let chartconfig = context.chartconfig, selectmatrixlocation = chartconfig.matrixlocation;
+            let selectmatrixlocation = context.configlocation;
             let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
             let chartmatrix = this.state.chartmatrix, serieslist = chartmatrix[matrixrow];
+            let chartconfig = chartmatrix[matrixrow][matrixcolumn];
             let viewpoint = chartconfig.viewpoint, dataseries = chartconfig.dataseries;
             serieslist.splice(matrixcolumn + 1);
             this.setState({
@@ -456,18 +458,17 @@ class ExplorerClass extends Component {
                     chart.setSelection(selection);
             }
         };
-        this.switchViewpoint = viewpointname => {
+        this.switchViewpoint = (viewpointname, seriesref) => {
             let userselections = this.state.userselections;
+            let chartmatrix = this.state.chartmatrix;
+            let chartseries = chartmatrix[seriesref];
+            chartseries.splice(0);
             userselections.viewpoint = viewpointname;
-            let chartmatrix = [[], []];
             this.setState({
                 userselections: userselections,
                 chartmatrix: chartmatrix,
             });
-            let self = this;
-            setTimeout(() => {
-                self.initializeChartSeries();
-            });
+            this.initializeChartSeries();
         };
         this.switchDataSeries = seriesname => {
             let userselections = this.state.userselections;
@@ -527,11 +528,11 @@ class ExplorerClass extends Component {
         let drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
         let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down.", React.createElement(IconButton, {tooltip: "help", tooltipPosition: "top-center"}, React.createElement(FontIcon, {className: "material-icons"}, "help_outline"))), React.createElement("div", {style: {
             padding: "3px" }}, React.createElement("span", null, "Viewpoints: "), React.createElement(IconButton, {tooltip: "Functional", tooltipPosition: "top-center", onTouchTap: e => {
-            this.switchViewpoint('FUNCTIONAL');
+            this.switchViewpoint('FUNCTIONAL', constants_1.ChartSeries.DrillDown);
         }, style: { backgroundColor: (this.state.userselections.viewpoint == 'FUNCTIONAL')
                 ? 'lightgreen'
                 : 'transparent' }}, React.createElement(FontIcon, {className: "material-icons"}, "directions_walk")), React.createElement(IconButton, {tooltip: "Structural", tooltipPosition: "top-center", onTouchTap: e => {
-            this.switchViewpoint('STRUCTURAL');
+            this.switchViewpoint('STRUCTURAL', constants_1.ChartSeries.DrillDown);
         }, style: {
             backgroundColor: (this.state.userselections.viewpoint == 'STRUCTURAL')
                 ? 'lightgreen'

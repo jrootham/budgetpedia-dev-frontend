@@ -7062,7 +7062,7 @@ module.exports={
             "Action": "Staffing",
             "Baseline": "Programs",
             "Units": "FTE",
-            "UnitsAlias": "Level (FTE)",
+            "UnitsAlias": "Staffing Level (FTE)",
             "Components": "FulltimeParttime",
             "Title": "2015 Council Approved Staff Positions",
             "Items": {
@@ -9727,17 +9727,18 @@ var ExplorerClass = function (_Component) {
                 legend: 'none',
                 annotations: { alwaysOutside: true }
             };
+            var configlocation = Object.assign({}, chartConfig.matrixlocation);
             var events = [{
                 eventName: 'select',
-                callback: function (chartconfig) {
+                callback: function (configLocation) {
                     var self = _this;
                     return function (Chart, err) {
                         var chart = Chart.chart;
                         var selection = chart.getSelection();
-                        var context = { chartconfig: chartconfig, chart: chart, selection: selection, err: err };
+                        var context = { configlocation: configLocation, chart: chart, selection: selection, err: err };
                         self.onChartComponentSelection(context);
                     };
-                }(chartConfig)
+                }(configlocation)
             }];
             var categorylabel = 'Component';
             var columns = [{ type: 'string', label: categorylabel }, { type: 'number', label: year.toString() }, { type: 'string', role: 'annotation' }];
@@ -9820,12 +9821,12 @@ var ExplorerClass = function (_Component) {
                 selectionrow = null;
             }
             var chart = context.chart;
-            var chartconfig = context.chartconfig,
-                selectmatrixlocation = chartconfig.matrixlocation;
+            var selectmatrixlocation = context.configlocation;
             var matrixrow = selectmatrixlocation.row,
                 matrixcolumn = selectmatrixlocation.column;
             var chartmatrix = _this.state.chartmatrix,
                 serieslist = chartmatrix[matrixrow];
+            var chartconfig = chartmatrix[matrixrow][matrixcolumn];
             var viewpoint = chartconfig.viewpoint,
                 dataseries = chartconfig.dataseries;
             serieslist.splice(matrixcolumn + 1);
@@ -9920,18 +9921,17 @@ var ExplorerClass = function (_Component) {
                 }
             }
         };
-        _this.switchViewpoint = function (viewpointname) {
+        _this.switchViewpoint = function (viewpointname, seriesref) {
             var userselections = _this.state.userselections;
+            var chartmatrix = _this.state.chartmatrix;
+            var chartseries = chartmatrix[seriesref];
+            chartseries.splice(0);
             userselections.viewpoint = viewpointname;
-            var chartmatrix = [[], []];
             _this.setState({
                 userselections: userselections,
                 chartmatrix: chartmatrix
             });
-            var self = _this;
-            setTimeout(function () {
-                self.initializeChartSeries();
-            });
+            _this.initializeChartSeries();
         };
         _this.switchDataSeries = function (seriesname) {
             var userselections = _this.state.userselections;
@@ -10038,9 +10038,9 @@ var ExplorerClass = function (_Component) {
             var drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
             var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down.", React.createElement(IconButton, { tooltip: "help", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "help_outline"))), React.createElement("div", { style: {
                     padding: "3px" } }, React.createElement("span", null, "Viewpoints: "), React.createElement(IconButton, { tooltip: "Functional", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
-                    _this2.switchViewpoint('FUNCTIONAL');
+                    _this2.switchViewpoint('FUNCTIONAL', constants_1.ChartSeries.DrillDown);
                 }, style: { backgroundColor: this.state.userselections.viewpoint == 'FUNCTIONAL' ? 'lightgreen' : 'transparent' } }, React.createElement(FontIcon, { className: "material-icons" }, "directions_walk")), React.createElement(IconButton, { tooltip: "Structural", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
-                    _this2.switchViewpoint('STRUCTURAL');
+                    _this2.switchViewpoint('STRUCTURAL', constants_1.ChartSeries.DrillDown);
                 }, style: {
                     backgroundColor: this.state.userselections.viewpoint == 'STRUCTURAL' ? 'lightgreen' : 'transparent'
                 } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {

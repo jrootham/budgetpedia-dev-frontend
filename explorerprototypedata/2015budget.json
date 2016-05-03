@@ -7061,7 +7061,7 @@
             "Action": "Staffing",
             "Baseline": "Programs",
             "Units": "FTE",
-            "UnitsAlias": "Level (FTE)",
+            "UnitsAlias": "Staffing Level (FTE)",
             "Components": "FulltimeParttime",
             "Title": "2015 Council Approved Staff Positions",
             "Items": {
