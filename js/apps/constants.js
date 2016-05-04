@@ -12,3 +12,8 @@ exports.categoryaliases = {
     'Divisions': 'Programs',
     'Expenditures': 'Expenditure Categories'
 };
+exports.ChartTypeCodes = {
+    'PieChart': 'DonutChart',
+    'ColumnChart': 'ColumnChart',
+    'LineChart': 'Timelines'
+};

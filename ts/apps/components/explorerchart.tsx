@@ -8,24 +8,67 @@ let Chart = ChartObject['Chart']
 import IconButton = require('material-ui/lib/icon-button')
 import FontIcon = require('material-ui/lib/font-icon')
 
-class ExplorerChart extends Component<any, any> {
+interface ExploreChartProps {
+    chartType: string,
+    options: any,
+    chartEvents: any[],
+    rows: any[],
+    columns: any[],
+    graph_id: string,
+    settings: any,
+}
+
+class ExplorerChart extends Component<ExploreChartProps, any> {
+
+    onChangeChartType = chartType => {
+        this.props.settings.onChartType(this.props.settings.location, chartType)
+    }
+
     render() {
         return <div style={{ position:"relative", display: "inline-block", padding:"10px",backgroundColor: "Beige" }}>
             <div style={{ position: "absolute", top:0,left:0,zIndex:1000, padding:"3px"}}>
                 <IconButton 
                     tooltip="Column Chart" 
                     tooltipPosition="bottom-center" 
-                    style={{ backgroundColor: "lightgreen" }}>
+                    style={
+                        { backgroundColor: (this.props.settings.chartCode == "ColumnChart")
+                            ? "lightgreen"
+                            : "transparent" 
+                        }
+                    }
+                    onTouchTap={ e =>{
+                        this.onChangeChartType('ColumnChart')
+                    }}>
                     <FontIcon className="material-icons">insert_chart</FontIcon>
                 </IconButton>
                 <IconButton 
                     tooltip="Donut Pie Chart" 
-                    tooltipPosition="bottom-center" disabled>
+                    tooltipPosition="bottom-center"
+                    style={
+                        {
+                            backgroundColor: (this.props.settings.chartCode == "DonutChart")
+                                ? "lightgreen"
+                                : "transparent"
+                        }
+                    }
+                    onTouchTap={ e => {
+                        this.onChangeChartType('DonutChart')
+                    } }>
                     <FontIcon className="material-icons">donut_small</FontIcon>
                 </IconButton>
                 <IconButton 
                     tooltip="Timeline" 
-                    tooltipPosition="bottom-center" disabled>
+                    tooltipPosition="bottom-center"
+                    style={
+                        {
+                            backgroundColor: (this.props.settings.chartCode == "TimeLine")
+                                ? "lightgreen"
+                                : "transparent"
+                        }
+                    }
+                    onTouchTap={ e => {
+                        this.onChangeChartType('Timeline')
+                    } }>
                     <FontIcon className="material-icons">timeline</FontIcon>
                 </IconButton>
             </div>

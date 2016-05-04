@@ -9253,15 +9253,39 @@ var ExplorerChart = function (_Component) {
     _inherits(ExplorerChart, _Component);
 
     function ExplorerChart() {
+        var _Object$getPrototypeO;
+
         _classCallCheck(this, ExplorerChart);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(ExplorerChart).apply(this, arguments));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ExplorerChart)).call.apply(_Object$getPrototypeO, [this].concat(args)));
+
+        _this.onChangeChartType = function (chartType) {
+            _this.props.settings.onChartType(_this.props.settings.location, chartType);
+        };
+        return _this;
     }
 
     _createClass(ExplorerChart, [{
         key: 'render',
         value: function render() {
-            return React.createElement("div", { style: { position: "relative", display: "inline-block", padding: "10px", backgroundColor: "Beige" } }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "bottom-center", style: { backgroundColor: "lightgreen" } }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart")), React.createElement(IconButton, { tooltip: "Donut Pie Chart", tooltipPosition: "bottom-center", disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "donut_small")), React.createElement(IconButton, { tooltip: "Timeline", tooltipPosition: "bottom-center", disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: this.props.chartType, options: this.props.options, chartEvents: this.props.chartEvents, rows: this.props.rows, columns: this.props.columns, graph_id: this.props.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))));
+            var _this2 = this;
+
+            return React.createElement("div", { style: { position: "relative", display: "inline-block", padding: "10px", backgroundColor: "Beige" } }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "bottom-center", style: { backgroundColor: this.props.settings.chartCode == "ColumnChart" ? "lightgreen" : "transparent"
+                }, onTouchTap: function onTouchTap(e) {
+                    _this2.onChangeChartType('ColumnChart');
+                } }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart")), React.createElement(IconButton, { tooltip: "Donut Pie Chart", tooltipPosition: "bottom-center", style: {
+                    backgroundColor: this.props.settings.chartCode == "DonutChart" ? "lightgreen" : "transparent"
+                }, onTouchTap: function onTouchTap(e) {
+                    _this2.onChangeChartType('DonutChart');
+                } }, React.createElement(FontIcon, { className: "material-icons" }, "donut_small")), React.createElement(IconButton, { tooltip: "Timeline", tooltipPosition: "bottom-center", style: {
+                    backgroundColor: this.props.settings.chartCode == "TimeLine" ? "lightgreen" : "transparent"
+                }, onTouchTap: function onTouchTap(e) {
+                    _this2.onChangeChartType('Timeline');
+                } }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: this.props.chartType, options: this.props.options, chartEvents: this.props.chartEvents, rows: this.props.rows, columns: this.props.columns, graph_id: this.props.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))));
         }
     }]);
 
@@ -9285,6 +9309,11 @@ exports.categoryaliases = {
     'Groups': 'Program Activity Clusters',
     'Divisions': 'Programs',
     'Expenditures': 'Expenditure Categories'
+};
+exports.ChartTypeCodes = {
+    'PieChart': 'DonutChart',
+    'ColumnChart': 'ColumnChart',
+    'LineChart': 'Timelines'
 };
 
 },{}],5:[function(require,module,exports){
@@ -9456,6 +9485,7 @@ var RaisedButton = require('material-ui/lib/raised-button');
 var ReactSlider = require('react-slider');
 var explorerchart_1 = require('../components/explorerchart');
 var constants_1 = require('../constants');
+var constants_2 = require('../constants');
 
 var ExplorerClass = function (_Component) {
     _inherits(ExplorerClass, _Component);
@@ -9653,6 +9683,7 @@ var ExplorerClass = function (_Component) {
             }
         };
         _this.initRootChartConfig = function (matrixrow, userselections) {
+            var chartCode = constants_2.ChartTypeCodes[userselections.charttype];
             return {
                 viewpoint: userselections.viewpoint,
                 dataseries: userselections.dataseries,
@@ -9666,7 +9697,8 @@ var ExplorerClass = function (_Component) {
                     earliestyear: null,
                     fullrange: false
                 },
-                charttype: userselections.charttype
+                charttype: userselections.charttype,
+                chartCode: chartCode
             };
         };
         _this.getChartParms = function (chartConfig) {
@@ -10001,10 +10033,18 @@ var ExplorerClass = function (_Component) {
                 }
             });
         };
+        _this.onChartType = function (location, chartType) {
+            console.log('onChartType');
+        };
         _this.getCharts = function (matrixcolumn, matrixrow) {
             var charts = matrixcolumn.map(function (chartconfig, index) {
                 var chartparms = chartconfig.chartparms;
-                return React.createElement(explorerchart_1.ExplorerChart, { key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + matrixrow + '' + index });
+                var settings = {
+                    location: chartconfig.matrixlocation,
+                    onChartType: _this.onChartType,
+                    chartCode: chartconfig.chartCode
+                };
+                return React.createElement(explorerchart_1.ExplorerChart, { key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + matrixrow + '' + index, settings: settings });
             });
             return charts;
         };

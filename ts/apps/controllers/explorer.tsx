@@ -32,6 +32,7 @@ import ReactSlider = require('react-slider')
 
 import { ExplorerChart } from '../components/explorerchart'
 import { ChartSeries } from '../constants'
+import {ChartTypeCodes} from '../constants'
 
 // import { categoryaliases } from '../constants'
 
@@ -53,6 +54,7 @@ interface ChartConfig {
         fullrange: boolean,
     },
     charttype?:string,
+    chartCode?:string,
     chartparms?:{
         chartType?: string,
         options?:{
@@ -468,6 +470,7 @@ class ExplorerClass extends Component< any, any > {
     // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
 
     initRootChartConfig = ( matrixrow, userselections ): ChartConfig => {
+        let chartCode = ChartTypeCodes[userselections.charttype]
         return {
             viewpoint:userselections.viewpoint,
             dataseries:userselections.dataseries,
@@ -481,7 +484,8 @@ class ExplorerClass extends Component< any, any > {
                 earliestyear: null,
                 fullrange: false,
             },
-            charttype: userselections.charttype
+            charttype: userselections.charttype,
+            chartCode,
         }
 
     }
@@ -882,14 +886,25 @@ class ExplorerClass extends Component< any, any > {
         })
     }
 
+    onChartType = (location, chartType) => {
+        console.log('onChartType')
+        // TODO set chartconfig codeType
+    }
+
     // -------------------[ RENDER METHODS ]---------------------
 
     // get React components to render
     getCharts = (matrixcolumn, matrixrow) => {
 
-        let charts = matrixcolumn.map((chartconfig, index) => {
+        let charts = matrixcolumn.map((chartconfig:ChartConfig, index) => {
 
             let chartparms = chartconfig.chartparms
+
+            let settings = { 
+                location: chartconfig.matrixlocation,
+                onChartType: this.onChartType,
+                chartCode:chartconfig.chartCode,
+            }
 
             return <ExplorerChart
                 key = {index}
@@ -899,7 +914,8 @@ class ExplorerClass extends Component< any, any > {
                 rows = {chartparms.rows}
                 columns = {chartparms.columns}
                 // used to create html element id attribute
-                graph_id = {"ChartID" + matrixrow + '' + index}
+                graph_id = { "ChartID" + matrixrow + '' + index }
+                settings = { settings }
                 />
         })
 

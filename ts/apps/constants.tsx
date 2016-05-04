@@ -6,3 +6,8 @@ export var categoryaliases = {
     'Divisions':'Programs',
     'Expenditures':'Expenditure Categories'
 }
+export var ChartTypeCodes = {
+    'PieChart':'DonutChart',
+    'ColumnChart':'ColumnChart',
+    'LineChart':'Timelines'
+}

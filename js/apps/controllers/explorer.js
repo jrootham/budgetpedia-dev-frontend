@@ -16,6 +16,7 @@ const RaisedButton = require('material-ui/lib/raised-button');
 const ReactSlider = require('react-slider');
 const explorerchart_1 = require('../components/explorerchart');
 const constants_1 = require('../constants');
+const constants_2 = require('../constants');
 class ExplorerClass extends Component {
     constructor(props) {
         super(props);
@@ -232,6 +233,7 @@ class ExplorerClass extends Component {
             }
         };
         this.initRootChartConfig = (matrixrow, userselections) => {
+            let chartCode = constants_2.ChartTypeCodes[userselections.charttype];
             return {
                 viewpoint: userselections.viewpoint,
                 dataseries: userselections.dataseries,
@@ -245,7 +247,8 @@ class ExplorerClass extends Component {
                     earliestyear: null,
                     fullrange: false,
                 },
-                charttype: userselections.charttype
+                charttype: userselections.charttype,
+                chartCode: chartCode,
             };
         };
         this.getChartParms = (chartConfig) => {
@@ -495,10 +498,18 @@ class ExplorerClass extends Component {
                 }
             });
         };
+        this.onChartType = (location, chartType) => {
+            console.log('onChartType');
+        };
         this.getCharts = (matrixcolumn, matrixrow) => {
             let charts = matrixcolumn.map((chartconfig, index) => {
                 let chartparms = chartconfig.chartparms;
-                return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + matrixrow + '' + index});
+                let settings = {
+                    location: chartconfig.matrixlocation,
+                    onChartType: this.onChartType,
+                    chartCode: chartconfig.chartCode,
+                };
+                return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + matrixrow + '' + index, settings: settings});
             });
             return charts;
         };
