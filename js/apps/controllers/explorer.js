@@ -17,6 +17,8 @@ const ReactSlider = require('react-slider');
 const explorerchart_1 = require('../components/explorerchart');
 const constants_1 = require('../constants');
 const constants_2 = require('../constants');
+const setviewpointamounts_1 = require('./explorer/setviewpointamounts');
+const getchartparms_1 = require('./explorer/getchartparms');
 class ExplorerClass extends Component {
     constructor(props) {
         super(props);
@@ -38,9 +40,12 @@ class ExplorerClass extends Component {
         this.initializeChartSeries = () => {
             let userselections = this.state.userselections, chartmatrix = this.state.chartmatrix;
             var matrixlocation, chartParmsObj;
-            this.setViewpointAmounts();
+            let viewpointname = this.state.userselections.viewpoint;
+            let dataseriesname = this.state.userselections.dataseries;
+            let budgetdata = this.props.budgetdata;
+            setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, this.state.userselections.inflationadjusted);
             let drilldownchartconfig = this.initRootChartConfig(constants_1.ChartSeries.DrillDown, userselections);
-            chartParmsObj = this.getChartParms(drilldownchartconfig);
+            chartParmsObj = getchartparms_1.getChartParms(drilldownchartconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix);
             if (!chartParmsObj.error) {
                 drilldownchartconfig.chartparms = chartParmsObj.chartParms;
                 matrixlocation = drilldownchartconfig.matrixlocation;
@@ -49,188 +54,6 @@ class ExplorerClass extends Component {
             this.setState({
                 chartmatrix: chartmatrix,
             });
-        };
-        this.setViewpointAmounts = () => {
-            let viewpointname = this.state.userselections.viewpoint;
-            let dataseriesname = this.state.userselections.dataseries;
-            let budgetdata = this.props.budgetdata;
-            let viewpoint = budgetdata.Viewpoints[viewpointname];
-            if (viewpoint.currentdataseries == dataseriesname)
-                return;
-            let itemseries = budgetdata.DataSeries[dataseriesname];
-            let baselinecat = itemseries.Baseline;
-            let baselinelookups = budgetdata.Lookups[baselinecat];
-            let componentcat = itemseries.Components;
-            let componentlookups = budgetdata.Lookups[componentcat];
-            let categorylookups = viewpoint.Lookups.Categories;
-            let lookups = {
-                baselinelookups: baselinelookups,
-                componentlookups: componentlookups,
-                categorylookups: categorylookups,
-            };
-            let items = itemseries.Items;
-            let isInflationAdjusted = !!itemseries.InflationAdjusted;
-            let rootcomponent = { "ROOT": viewpoint };
-            this.setComponentSummaries(rootcomponent, items, isInflationAdjusted, lookups);
-            viewpoint.currentdataseries = dataseriesname;
-        };
-        this.setComponentSummaries = (components, items, isInflationAdjusted, lookups) => {
-            let cumulatingSummaries = {
-                years: {},
-                Aggregates: {},
-            };
-            for (let componentname in components) {
-                let component = components[componentname];
-                let componentSummaries = null;
-                if (component.years)
-                    delete component.years;
-                if (component.Aggregates)
-                    delete component.Aggregates;
-                if (component.Contents != "BASELINE") {
-                    if (component.Components) {
-                        let sorted = this.getIndexSortedComponents(component.Components, lookups);
-                        component.SortedComponents = sorted;
-                        componentSummaries = this.setComponentSummaries(component.Components, items, isInflationAdjusted, lookups);
-                        if (componentSummaries.years)
-                            component.years = componentSummaries.years;
-                        if (componentSummaries.Aggregates) {
-                            component.Aggregates = componentSummaries.Aggregates;
-                            if (component.Aggregates) {
-                                let sorted = this.getNameSortedComponents(component.Aggregates, lookups);
-                                component.SortedAggregates = sorted;
-                            }
-                        }
-                    }
-                }
-                else {
-                    let item = items[componentname];
-                    if (!item)
-                        console.error('failed to find item for ', componentname);
-                    if (isInflationAdjusted) {
-                        if (this.state.userselections.inflationadjusted) {
-                            if (item.Adjusted) {
-                                componentSummaries = {
-                                    years: item.Adjusted.years,
-                                    Aggregates: item.Adjusted.Components,
-                                };
-                            }
-                        }
-                        else {
-                            if (item.Nominal) {
-                                componentSummaries = {
-                                    years: item.Nominal.years,
-                                    Aggregates: item.Nominal.Components,
-                                };
-                            }
-                        }
-                    }
-                    else {
-                        componentSummaries = {
-                            years: item.years,
-                            Aggregates: item.Components,
-                        };
-                    }
-                    if (componentSummaries) {
-                        if (componentSummaries.years) {
-                            component.years = componentSummaries.years;
-                        }
-                        if (componentSummaries.Aggregates) {
-                            component.Components = componentSummaries.Aggregates;
-                        }
-                    }
-                    if (component.Components) {
-                        let sorted = this.getNameSortedComponents(component.Components, lookups);
-                        component.SortedComponents = sorted;
-                    }
-                }
-                if (componentSummaries) {
-                    this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
-                }
-            }
-            return cumulatingSummaries;
-        };
-        this.getIndexSortedComponents = (components, lookups) => {
-            let sorted = [];
-            let catlookups = lookups.categorylookups;
-            for (let componentname in components) {
-                let component = components[componentname];
-                let config = component.Contents;
-                let name = (config == 'BASELINE')
-                    ? lookups.baselinelookups[componentname]
-                    : catlookups[componentname];
-                let item = {
-                    Code: componentname,
-                    Index: component.Index,
-                    Name: name || 'unknown name'
-                };
-                sorted.push(item);
-            }
-            sorted.sort((a, b) => {
-                let value;
-                if (a.Index < b.Index)
-                    value = -1;
-                else if (a.Index > b.Index)
-                    value = 1;
-                else
-                    value = 0;
-                return value;
-            });
-            return sorted;
-        };
-        this.getNameSortedComponents = (components, lookups) => {
-            let sorted = [];
-            let complookups = lookups.componentlookups;
-            for (let componentname in components) {
-                let component = components[componentname];
-                let config = component.Contents;
-                let name = complookups[componentname];
-                let item = {
-                    Code: componentname,
-                    Name: name || 'unknown name'
-                };
-                sorted.push(item);
-            }
-            sorted.sort((a, b) => {
-                let value;
-                if (a.Name < b.Name)
-                    value = -1;
-                else if (a.Name > b.Name)
-                    value = 1;
-                else
-                    value = 0;
-                return value;
-            });
-            return sorted;
-        };
-        this.aggregateComponentSummaries = (cumulatingSummaries, componentSummaries) => {
-            if (componentSummaries.years) {
-                let years = componentSummaries.years;
-                for (let yearname in years) {
-                    let yearvalue = years[yearname];
-                    if (cumulatingSummaries.years[yearname])
-                        cumulatingSummaries.years[yearname] += yearvalue;
-                    else
-                        cumulatingSummaries.years[yearname] = yearvalue;
-                }
-            }
-            if (componentSummaries.Aggregates) {
-                let Aggregates = componentSummaries.Aggregates;
-                for (let aggregatename in Aggregates) {
-                    let Aggregate = Aggregates[aggregatename];
-                    if (Aggregate.years) {
-                        let years = Aggregate.years;
-                        for (let yearname in years) {
-                            let yearvalue = years[yearname];
-                            let cumulatingAggregate = cumulatingSummaries.Aggregates[aggregatename] || { years: {} };
-                            if (cumulatingAggregate.years[yearname])
-                                cumulatingAggregate.years[yearname] += yearvalue;
-                            else
-                                cumulatingAggregate.years[yearname] = yearvalue;
-                            cumulatingSummaries.Aggregates[aggregatename] = cumulatingAggregate;
-                        }
-                    }
-                }
-            }
         };
         this.initRootChartConfig = (matrixrow, userselections) => {
             let chartCode = constants_2.ChartTypeCodes[userselections.charttype];
@@ -251,216 +74,6 @@ class ExplorerClass extends Component {
                 chartCode: chartCode,
             };
         };
-        this.getChartParms = (chartConfig) => {
-            let viewpointindex = chartConfig.viewpoint, path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
-            let userselections = this.state.userselections, dataseriesname = userselections.dataseries;
-            let budgetdata = this.props.budgetdata, viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel;
-            vertlabel = itemseries.UnitsAlias;
-            if (units != 'FTE') {
-                if (dataseriesname == 'BudgetExpenses')
-                    vertlabel += ' (Expenses)';
-                else
-                    vertlabel += ' (Revenues)';
-            }
-            let isError = false;
-            let thousandsformat = format({ prefix: "$", suffix: "T" });
-            let rounded = format({ round: 0, integerSeparator: '' });
-            let singlerounded = format({ round: 1, integerSeparator: '' });
-            let staffrounded = format({ round: 1, integerSeparator: ',' });
-            let { node, components } = this.getNodeDatasets(viewpointindex, path);
-            let chartType = chartConfig.charttype;
-            let titleref = viewpointdata.Configuration[node.Contents];
-            let axistitle = titleref.Alias || titleref.Name;
-            let title;
-            if (chartConfig.parentdata) {
-                let parentnode = chartConfig.parentdata.node;
-                let configindex = node.Config || parentnode.Contents;
-                let category = viewpointdata.Configuration[configindex].Instance;
-                let catname = category.Alias || category.Name;
-                title = catname + ': ' + chartConfig.parentdata.Name;
-            }
-            else {
-                title = itemseries.Title;
-            }
-            let titleamount = node.years[year];
-            if (units == 'DOLLAR') {
-                titleamount = parseInt(rounded(titleamount / 1000));
-                titleamount = thousandsformat(titleamount);
-            }
-            else {
-                titleamount = staffrounded(titleamount);
-            }
-            title += ' (Total: ' + titleamount + ')';
-            let options = {
-                title: title,
-                vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
-                hAxis: { title: axistitle, textStyle: { fontSize: 9 } },
-                bar: { groupWidth: "95%" },
-                height: 400,
-                width: 400,
-                legend: 'none',
-                annotations: { alwaysOutside: true }
-            };
-            let configlocation = Object.assign({}, chartConfig.matrixlocation);
-            let events = [
-                {
-                    eventName: 'select',
-                    callback: ((configLocation) => {
-                        let self = this;
-                        return (Chart, err) => {
-                            let chart = Chart.chart;
-                            let selection = chart.getSelection();
-                            let context = { configlocation: configLocation, chart: chart, selection: selection, err: err };
-                            self.onChartComponentSelection(context);
-                        };
-                    })(configlocation)
-                }
-            ];
-            let categorylabel = 'Component';
-            let columns = [
-                { type: 'string', label: categorylabel },
-                { type: 'number', label: year.toString() },
-                { type: 'string', role: 'annotation' }
-            ];
-            if (!node.SortedComponents) {
-                return { isError: true, chartParms: {} };
-            }
-            let rows = node.SortedComponents.map(item => {
-                let component = components[item.Code];
-                if (!component) {
-                    console.error('component not found for (components, item, item.Code) ', components, item.Code, item);
-                }
-                let amount;
-                if (component.years)
-                    amount = components[item.Code].years[year];
-                else
-                    amount = null;
-                let annotation;
-                if (units == 'DOLLAR') {
-                    amount = parseInt(rounded(amount / 1000));
-                    annotation = thousandsformat(amount);
-                }
-                else if (units == 'FTE') {
-                    annotation = staffrounded(amount);
-                    amount = parseInt(singlerounded(amount));
-                }
-                else {
-                    amount = components[item.Code].years[year];
-                    annotation = amount;
-                }
-                return [item.Name, amount, annotation];
-            });
-            let chartParms = {
-                columns: columns,
-                rows: rows,
-                options: options,
-                events: events,
-                chartType: chartType,
-            };
-            let chartParmsObj = {
-                isError: isError,
-                chartParms: chartParms,
-            };
-            return chartParmsObj;
-        };
-        this.getNodeDatasets = (viewpointindex, path) => {
-            let budgetdata = this.props.budgetdata;
-            let node = budgetdata.Viewpoints[viewpointindex];
-            let components = node.Components;
-            for (let index of path) {
-                node = components[index];
-                if (!node)
-                    console.error('component node not found', components, viewpointindex, path);
-                components = node.Components;
-            }
-            return { node: node, components: components };
-        };
-        this.onChartComponentSelection = (context) => {
-            let userselections = this.state.userselections;
-            let selection = context.selection[0];
-            let selectionrow;
-            if (selection) {
-                selectionrow = selection.row;
-            }
-            else {
-                selectionrow = null;
-            }
-            let chart = context.chart;
-            let selectmatrixlocation = context.configlocation;
-            let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
-            let chartmatrix = this.state.chartmatrix, serieslist = chartmatrix[matrixrow];
-            let chartconfig = chartmatrix[matrixrow][matrixcolumn];
-            let viewpoint = chartconfig.viewpoint, dataseries = chartconfig.dataseries;
-            serieslist.splice(matrixcolumn + 1);
-            this.setState({
-                chartmatrix: chartmatrix,
-            });
-            if (!selection) {
-                delete chartconfig.chartselection;
-                delete chartconfig.chart;
-                this.updateChartSelections(chartmatrix, matrixrow);
-                return;
-            }
-            let childdataroot = chartconfig.datapath.slice();
-            let { node, components } = this.getNodeDatasets(userselections.viewpoint, childdataroot);
-            if (!node.Components) {
-                this.updateChartSelections(chartmatrix, matrixrow);
-                return;
-            }
-            let code = null;
-            let parentdata = null;
-            if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
-                parentdata = node.SortedComponents[selectionrow];
-                parentdata.node = node;
-                code = parentdata.Code;
-            }
-            if (code)
-                childdataroot.push(code);
-            else {
-                this.updateChartSelections(chartmatrix, matrixrow);
-                return;
-            }
-            let newnode = node.Components[code];
-            if (!newnode.Components) {
-                this.updateChartSelections(chartmatrix, matrixrow);
-                return;
-            }
-            let newrange = Object.assign({}, chartconfig.yearscope);
-            let newchartconfig = {
-                viewpoint: viewpoint,
-                dataseries: dataseries,
-                datapath: childdataroot,
-                matrixlocation: {
-                    row: matrixrow,
-                    column: matrixcolumn + 1
-                },
-                parentdata: parentdata,
-                yearscope: newrange,
-                charttype: userselections.charttype,
-            };
-            let chartParmsObj = this.getChartParms(newchartconfig);
-            if (chartParmsObj.isError) {
-                this.updateChartSelections(chartmatrix, matrixrow);
-                return;
-            }
-            newchartconfig.chartparms = chartParmsObj.chartParms;
-            let newmatrixcolumn = matrixcolumn + 1;
-            chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig;
-            this.setState({
-                chartmatrix: chartmatrix,
-            });
-            chartconfig.chartselection = context.selection,
-                chartconfig.chart = chart;
-            this.updateChartSelections(chartmatrix, matrixrow);
-        };
-        this.updateChartSelections = (chartmatrix, matrixrow) => {
-            for (let config of chartmatrix[matrixrow]) {
-                let chart = config.chart;
-                let selection = config.chartselection;
-                if (chart)
-                    chart.setSelection(selection);
-            }
-        };
         this.switchViewpoint = (viewpointname, seriesref) => {
             let userselections = this.state.userselections;
             let chartmatrix = this.state.chartmatrix;
@@ -480,11 +93,14 @@ class ExplorerClass extends Component {
             this.setState({
                 userselections: userselections,
             });
-            this.setViewpointAmounts();
+            let viewpointname = this.state.userselections.viewpoint;
+            let dataseriesname = this.state.userselections.dataseries;
+            let budgetdata = this.props.budgetdata;
+            setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, this.state.userselections.inflationadjusted);
             for (let matrixseries of chartmatrix) {
                 let cellconfig;
                 for (cellconfig of matrixseries) {
-                    let chartParmsObj = this.getChartParms(cellconfig);
+                    let chartParmsObj = getchartparms_1.getChartParms(cellconfig, userselections, budgetdata, this.setState, chartmatrix);
                     cellconfig.chartparms = chartParmsObj.chartParms;
                     cellconfig.dataseries = seriesname;
                 }
@@ -494,11 +110,11 @@ class ExplorerClass extends Component {
                     chartmatrix: chartmatrix,
                 });
                 for (let row = 0; row < chartmatrix.length; row++) {
-                    this.updateChartSelections(chartmatrix, row);
+                    getchartparms_1.updateChartSelections(chartmatrix, row);
                 }
             });
         };
-        this.onChartType = (location, chartType) => {
+        this.switchChartType = (location, chartType) => {
             console.log('onChartType');
         };
         this.getCharts = (matrixcolumn, matrixrow) => {
@@ -506,7 +122,7 @@ class ExplorerClass extends Component {
                 let chartparms = chartconfig.chartparms;
                 let settings = {
                     location: chartconfig.matrixlocation,
-                    onChartType: this.onChartType,
+                    onChartType: this.switchChartType,
                     chartCode: chartconfig.chartCode,
                 };
                 return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + matrixrow + '' + index, settings: settings});

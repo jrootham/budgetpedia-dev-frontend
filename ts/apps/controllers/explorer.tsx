@@ -32,69 +32,17 @@ import ReactSlider = require('react-slider')
 
 import { ExplorerChart } from '../components/explorerchart'
 import { ChartSeries } from '../constants'
-import {ChartTypeCodes} from '../constants'
+import { ChartTypeCodes } from '../constants'
 
+import { setViewpointAmounts } from './explorer/setviewpointamounts'
+import { getChartParms, updateChartSelections } from './explorer/getchartparms'
+
+import {
+    ChartConfig,
+    ChartParms,
+    ChartSelectionContext
+} from './explorer/interfaces'
 // import { categoryaliases } from '../constants'
-
-interface ChartConfig {
-    name?: string,
-    viewpoint:string,
-    dataseries:string,
-    matrixlocation: {
-        row: number,
-        column: number,
-    },
-    chartselection?: any[],
-    chart?:any,
-    datapath: string[],
-    parentdata?:any,
-    yearscope: {
-        latestyear: number,
-        earliestyear: number,
-        fullrange: boolean,
-    },
-    charttype?:string,
-    chartCode?:string,
-    chartparms?:{
-        chartType?: string,
-        options?:{
-            [ index: string ]: any,
-        },
-        events?:{
-            [ index: string ]: any,
-        }[]
-        rows?: any[],
-        columns?: any[],
-    },
-    isError?: boolean
-}
-
-interface ChartParms {
-    chartType?: string,
-    options?: {
-        [indes:string]:any
-    },
-    rows?: any[],
-    columns?: any[],
-    events?: any[],
-}
-
-interface ChartParmsObj {
-    isError: Boolean,
-    chartParms?:ChartParms,
-}
-
-interface ComponentSummaries {
-    years?: any,
-    Aggregates?: any,
-}
-
-interface ChartSelectionContext {
-    configlocation:any, 
-    chart:any, 
-    selection:any[], 
-    err:any,
-}
 
 class ExplorerClass extends Component< any, any > {
 
@@ -136,7 +84,11 @@ class ExplorerClass extends Component< any, any > {
 
         // ------------------------[ POPULATE VIEWPOINT WITH VALUES ]-----------------------
 
-        this.setViewpointAmounts()
+        let viewpointname = userselections.viewpoint
+        let dataseriesname = userselections.dataseries
+        let budgetdata = this.props.budgetdata
+        setViewpointAmounts(viewpointname, dataseriesname, budgetdata,
+            userselections.inflationadjusted)
 
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
 
@@ -144,7 +96,7 @@ class ExplorerClass extends Component< any, any > {
         let drilldownchartconfig: ChartConfig =
             this.initRootChartConfig(ChartSeries.DrillDown, userselections)
 
-        chartParmsObj = this.getChartParms(drilldownchartconfig)
+        chartParmsObj = getChartParms(drilldownchartconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix)
 
         if (!chartParmsObj.error) {
 
@@ -183,290 +135,6 @@ class ExplorerClass extends Component< any, any > {
     // =====================================================================================
     // -----------------------[ CHART CREATION UTILITIES ]----------------------------------
 
-    // -------------------[ SET VIEWPOINT HIERARCHY NODE AMOUNTS ]-----------
-
-    // starts with hash of components, 
-    // recursively descends to BASELINE items, then leaves 
-    // summaries by year, and Aggregates by year on ascent
-    setViewpointAmounts = () => {
-        let viewpointname = this.state.userselections.viewpoint
-        let dataseriesname = this.state.userselections.dataseries
-        let budgetdata = this.props.budgetdata
-        let viewpoint = budgetdata.Viewpoints[viewpointname]
-
-        // already done if currentdataseries matches request
-        if (viewpoint.currentdataseries == dataseriesname)
-            return
-
-        let itemseries = budgetdata.DataSeries[dataseriesname]
-
-        let baselinecat = itemseries.Baseline // use for system lookups
-        let baselinelookups = budgetdata.Lookups[baselinecat]
-        let componentcat = itemseries.Components
-        let componentlookups = budgetdata.Lookups[componentcat]
-        let categorylookups = viewpoint.Lookups.Categories
-
-        let lookups = {
-            baselinelookups,
-            componentlookups,
-            categorylookups,
-        }
-
-        let items = itemseries.Items
-
-        let isInflationAdjusted = !!itemseries.InflationAdjusted
-
-        let rootcomponent = {"ROOT":viewpoint}
-
-        // set years, and Aggregates by years
-        // initiates recursion
-        this.setComponentSummaries(rootcomponent, items, isInflationAdjusted,
-            lookups)
-
-        // create sentinel to prevent unnucessary processing
-        viewpoint.currentdataseries = dataseriesname
-
-        // let text = JSON.stringify(viewpoint, null, 4) + '\n'
-
-    }
-
-    // this is recursive, with "BASELINE" component at the leaf,
-    // or with absence of Components property at leaf
-    setComponentSummaries = (components, items, isInflationAdjusted,
-        lookups):ComponentSummaries => {
-        // cumulate summaries for this level
-        let cumulatingSummaries:ComponentSummaries = {
-            years:{},
-            Aggregates:{},
-        }
-
-        // for every component at this level
-        for ( let componentname in components ) {
-
-            // isolate the component...
-            let component = components[componentname]
-
-            let componentSummaries = null
-
-            // remove any previous aggregations...
-            if (component.years) delete component.years
-            if (component.Aggregates) delete component.Aggregates
-
-            // for non-baseline items, recurse to collect aggregations
-            if (component.Contents != "BASELINE") {
-
-                // if no components found, loop
-                if (component.Components) {
-
-                    // if (!component.SortedComponents) {
-                        let sorted = this.getIndexSortedComponents(
-                            component.Components,lookups)
-    
-                        component.SortedComponents = sorted
-                    // }
-
-                    // get child component summaries recursively
-                    componentSummaries = this.setComponentSummaries(
-                        component.Components, items, isInflationAdjusted,
-                        lookups)
-
-                    // capture data for chart-making
-                    if (componentSummaries.years)
-                        component.years = componentSummaries.years
-                    if (componentSummaries.Aggregates) {
-                        component.Aggregates = componentSummaries.Aggregates
-                        if (component.Aggregates) {// && !component.SortedAggregates) {
-                            let sorted = this.getNameSortedComponents(
-                                component.Aggregates, lookups)
-
-                            component.SortedAggregates = sorted
-                        }
-
-                    }
-
-                }
-
-            // for baseline items, fetch the baseline amounts from the dataseries itemlist
-            } else {
-
-                // fetch the data from the dataseries itemlist
-                let item = items[componentname]
-                if (!item) console.error('failed to find item for ',componentname)
-                // first set componentSummaries as usual
-                if (isInflationAdjusted) {
-                    if (this.state.userselections.inflationadjusted) {
-                        if (item.Adjusted){
-                            componentSummaries = {
-                                years: item.Adjusted.years,
-                                Aggregates: item.Adjusted.Components,
-                            }
-                        }
-                    } else {
-                        if (item.Nominal) {
-                            componentSummaries = {
-                                years: item.Nominal.years,
-                                Aggregates: item.Nominal.Components,
-                            }
-                        }
-                    }
-
-                } else {
-                    componentSummaries = { 
-                        years: item.years, 
-                        Aggregates: item.Components, 
-                    }
-                }
-                // capture data for chart-making
-                if (componentSummaries) {
-                    if (componentSummaries.years) {
-                        component.years = componentSummaries.years
-                    }
-                    if (componentSummaries.Aggregates) {
-                        component.Components = componentSummaries.Aggregates
-                    }
-                }
-                if (component.Components) { // && !component.SortedComponents) {
-                    let sorted = this.getNameSortedComponents(
-                        component.Components, lookups)
-
-                    component.SortedComponents = sorted
-                }
-
-            }
-
-            // aggregate the collected summaries for the caller
-            if (componentSummaries) {
-                this.aggregateComponentSummaries(cumulatingSummaries, componentSummaries)
-            }
-        }
-
-        return cumulatingSummaries
-    }
-
-    // -----------------------[ RETURN SORTED COMPONENT LIST ]------------------------
-
-    getIndexSortedComponents = (components, lookups) => {
-        let sorted = []
-        let catlookups = lookups.categorylookups
-        for (let componentname in components) {
-            let component = components[componentname]
-            let config = component.Contents
-            let name = (config == 'BASELINE')
-                ? lookups.baselinelookups[componentname]
-                : catlookups[componentname]
-            let item = {
-                Code: componentname,
-                Index: component.Index,
-                Name: name || 'unknown name'
-            }
-            sorted.push(item)
-        }
-        sorted.sort( (a,b) => {
-            let value
-            if (a.Index < b.Index )
-                value = -1
-            else if (a.Index > b.Index)
-                value = 1
-            else 
-                value = 0
-            return value
-        })
-
-        return sorted
-
-    }
-
-    getNameSortedComponents = (components, lookups) => {
-        let sorted = []
-        let complookups = lookups.componentlookups
-        for (let componentname in components) {
-            let component = components[componentname]
-            let config = component.Contents
-            let name = complookups[componentname]
-            let item = {
-                Code: componentname,
-                Name: name || 'unknown name'
-            }
-            sorted.push(item)
-        }
-        sorted.sort((a, b) => {
-            let value
-            if (a.Name < b.Name)
-                value = -1
-            else if (a.Name > b.Name)
-                value = 1
-            else
-                value = 0
-            return value
-        })
-
-        return sorted
-
-    }
-
-    // -----------------------[ SUMMARIZE COMPONENT DATA ]-----------------------
-
-    // summarize the componentSummaries into the cumumlatingSummaries
-
-    aggregateComponentSummaries = (
-        cumulatingSummaries:ComponentSummaries, 
-        componentSummaries:ComponentSummaries) => {
-
-        // if years have been collected, add them to the total
-        if (componentSummaries.years) {
-
-            let years = componentSummaries.years
-
-            // for each year...
-            for (let yearname in years) {
-
-                let yearvalue = years[yearname]
-
-                // accumulate the value...
-                if (cumulatingSummaries.years[yearname])
-                    cumulatingSummaries.years[yearname] += yearvalue
-                else
-                    cumulatingSummaries.years[yearname] = yearvalue
-            }
-        }
-
-        // if Aggregates have been collected, add them to the totals
-        if (componentSummaries.Aggregates) {
-
-            let Aggregates = componentSummaries.Aggregates
-
-            // for each aggreate...
-            for (let aggregatename in Aggregates) {
-
-                let Aggregate = Aggregates[aggregatename]
-
-                // for each aggregate year...
-                // collect year values for the Aggregates if they exist
-                if (Aggregate.years) {
-
-                    let years = Aggregate.years
-
-                    for (let yearname in years) {
-
-                        // accumulate the year value...
-                        let yearvalue = years[yearname]
-                        let cumulatingAggregate = 
-                            cumulatingSummaries.Aggregates[aggregatename] || {years:{}}
-
-                        if (cumulatingAggregate.years[yearname])
-                            cumulatingAggregate.years[yearname] += yearvalue
-                        else
-                            cumulatingAggregate.years[yearname] = yearvalue
-
-                        // re-assemble
-                        cumulatingSummaries.Aggregates[aggregatename] = cumulatingAggregate
-
-                    }
-                }
-            }
-        }
-    }
-
     // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
 
     initRootChartConfig = ( matrixrow, userselections ): ChartConfig => {
@@ -490,351 +158,9 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
-    // ------------------[ GET CHART PARMS ]--------------------------
-    // return chartType, columns, rows, options, and events
-    // these are the actual parameters passed to the react google charts components
-    // see notes 1 .. 5 below
-
-    // returns chartParmsObj.isError = true if fails
-    // returns inputs required for a chart, based on Chart Configuration
-
-    // TODO: handle yearscope, including multiple years
-
-    getChartParms = (chartConfig: ChartConfig) => {
-
-        // -------------------[ INIT VARS ]---------------------
-
-        // unpack chartConfig & derivatives
-        let viewpointindex = chartConfig.viewpoint,
-            path = chartConfig.datapath,
-            yearscope = chartConfig.yearscope,
-            year = yearscope.latestyear
-
-        // unpack userselections
-        let userselections = this.state.userselections,
-            dataseriesname = userselections.dataseries
-
-        // unpack budgetdata
-        let budgetdata = this.props.budgetdata,
-            viewpointdata = budgetdata.Viewpoints[viewpointindex],
-            itemseries = budgetdata.DataSeries[dataseriesname],
-            units = itemseries.Units,
-            vertlabel
-            vertlabel = itemseries.UnitsAlias
-            if (units != 'FTE') {
-                if (dataseriesname == 'BudgetExpenses')
-                    vertlabel += ' (Expenses)'
-                else 
-                    vertlabel += ' (Revenues)'
-            }
-
-        // provide basis for error handling
-        let isError = false
-
-        // utility functions for number formatting
-        let thousandsformat = format({ prefix: "$", suffix: "T" })
-        let rounded = format({ round: 0, integerSeparator: '' })
-        let singlerounded = format({round :1, integerSeparator:'' })
-        let staffrounded = format({ round: 1, integerSeparator: ',' })
-
-        // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
-
-        // collect chart node and its components as data sources for the graph
-        let { node, components } = this.getNodeDatasets(viewpointindex, path )
-
-        // ---------------------[ COLLECT CHART PARMS ]---------------------
-        // 1. chart type:
-        let chartType = chartConfig.charttype
-
-        // 2. chart options:
-        // get axis title
-        let titleref = viewpointdata.Configuration[node.Contents]
-        let axistitle = titleref.Alias || titleref.Name
-
-        // assemble chart title
-        let title
-        if (chartConfig.parentdata) {
-            let parentnode = chartConfig.parentdata.node
-            let configindex = node.Config || parentnode.Contents
-            let category = viewpointdata.Configuration[configindex].Instance
-            let catname = category.Alias || category.Name
-            title = catname + ': ' + chartConfig.parentdata.Name
-        }
-        else {
-            title = itemseries.Title
-        }
-
-        let titleamount = node.years[year]
-        if (units == 'DOLLAR') {
-            titleamount = parseInt(rounded(titleamount / 1000))
-            titleamount = thousandsformat(titleamount)
-        } else {
-            titleamount = staffrounded(titleamount)
-        }
-        title += ' (Total: ' + titleamount + ')'
-
-        // TODO: animation breaks draswing; probably conflict with react render
-        //    needs to be investigated
-        let options = {
-            // animation:{
-            //     startup: true,
-            //     duration: 1000,
-            //     easing: 'out',
-            // },
-            title: title,
-            vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
-            hAxis: { title: axistitle, textStyle: { fontSize: 9 } },
-            bar: { groupWidth: "95%" },
-            // width: children.length * 120,// 120 per column
-            height: 400,
-            width: 400,
-            legend:'none',
-            annotations: { alwaysOutside: true }
-        }
-
-        // TODO: watch for memory leaks when the chart is destroyed
-        // TODO: replace chartconfig with matrix co-ordinates to avoid
-        //     need to update chart by destroying chart (thus closure) before replacing it
-        // 3. chart events:
-        let configlocation = Object.assign({},chartConfig.matrixlocation)
-        let events = [
-            {
-                eventName: 'select',
-                callback: ((configLocation) => {
-
-                    let self = this
-                    return (Chart, err) => {
-                        let chart = Chart.chart
-                        let selection = chart.getSelection()
-                        let context: ChartSelectionContext = { configlocation:configLocation, chart, selection, err }
-
-                        self.onChartComponentSelection(context)
-                    }
-                })(configlocation)
-            }
-        ]
-
-        // 4. chart columns:
-        let categorylabel = 'Component' // TODO: rationalize this!
-
-        let columns = [
-            // type is required, else throws silent error
-            { type: 'string', label: categorylabel },
-            { type: 'number', label: year.toString() },
-            { type: 'string', role: 'annotation' }
-        ]
-
-        // 5. chart rows:
-        if (!node.SortedComponents) {
-            return { isError: true, chartParms:{} }
-        }
-        let rows = node.SortedComponents.map(item => {
-            // TODO: get determination of amount processing from Unit value
-            let component = components[item.Code]
-            if (!component) {
-                console.error('component not found for (components, item, item.Code) ',components, item.Code, item)
-            }
-            let amount
-            if (component.years)
-                amount = components[item.Code].years[year]
-            else 
-                amount = null
-            let annotation
-            if (units == 'DOLLAR') {
-                amount = parseInt(rounded(amount/1000))
-                annotation = thousandsformat(amount)
-            } else if (units == 'FTE') {
-                annotation = staffrounded(amount)
-                amount = parseInt(singlerounded(amount))
-            } else {
-                amount = components[item.Code].years[year]
-                annotation = amount
-            }
-            // TODO: add % of total to the annotation
-            return [item.Name, amount, annotation]            
-        })
-
-        // --------------------[ ASSEMBLE PARMS PACK ]----------------
-
-        let chartParms:ChartParms = {
-
-            columns,
-            rows,
-            options,
-            events,
-            chartType,
-
-        }
-
-        // ------------------[ ASSEMBLE RETURN PACK ]-------------------
-        /* 
-            provides for error flag 
-        */
-
-        let chartParmsObj = { 
-            isError, 
-            chartParms,
-        }
-
-        return chartParmsObj
-
-    }
-
     // --------------------[ GET CHART DATA NODES ]----------------------------
 
-    getNodeDatasets = ( viewpointindex, path ) => {
 
-        let budgetdata = this.props.budgetdata
-
-        let node = budgetdata.Viewpoints[viewpointindex]
-
-        let components = node.Components
-
-        for (let index of path) {
-
-            node = components[index]
-
-            if (!node) console.error('component node not found',components,viewpointindex,path)
-
-            components = node.Components
-        }
-
-        return { node, components }
-    }
-
-    // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
-
-    // response to user selection of a chart component (such as a column )
-    // called by chart callback
-    // TODO: the context object should include matrix location of 
-    // chartconfig, not the chartconfig itself
-    onChartComponentSelection = (context:ChartSelectionContext) => {
-
-        // user selections
-        let userselections = this.state.userselections
-
-        // unpack context
-        let selection = context.selection[0]
-
-        let selectionrow
-        if (selection) {
-            selectionrow = selection.row
-        } else {
-            selectionrow = null
-        }
-
-        let chart = context.chart
-
-        // unpack chartconfig
-        let selectmatrixlocation = context.configlocation
-
-        // unpack location
-        let matrixrow = selectmatrixlocation.row,
-            matrixcolumn = selectmatrixlocation.column
-
-        // acquire serieslist from matrix
-        let chartmatrix = this.state.chartmatrix,
-            serieslist = chartmatrix[matrixrow]
-
-        let chartconfig = chartmatrix[matrixrow][matrixcolumn]
-
-        // get taxonomy references
-        let viewpoint = chartconfig.viewpoint,
-            dataseries = chartconfig.dataseries
-
-        // TODO: abandon here if the next one exists and is the same
-        serieslist.splice(matrixcolumn + 1) // remove subsequent charts
-
-        // trigger update to avoid google charts use of cached versions
-        this.setState({
-            chartmatrix,
-        });
-
-        if (!selection) { // deselected
-            delete chartconfig.chartselection
-            delete chartconfig.chart
-            this.updateChartSelections(chartmatrix, matrixrow)
-            return
-        }
-        // let chartconfig:ChartConfig = context.chartconfig // chartmatrix[matrixrow][matrixcolumn]
-        // copy path
-        let childdataroot = chartconfig.datapath.slice()
-
-        let { node, components } = this.getNodeDatasets(
-            userselections.viewpoint, childdataroot)
-
-        if (!node.Components) {
-            this.updateChartSelections(chartmatrix, matrixrow)
-            return
-        }
-
-        let code = null
-        let parentdata = null
-        if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
-            parentdata = node.SortedComponents[selectionrow]
-            parentdata.node = node
-            code = parentdata.Code
-        }
-        if (code)
-            childdataroot.push(code)
-        else {
-            this.updateChartSelections(chartmatrix, matrixrow)
-            return
-        }
-
-        let newnode = node.Components[code]
-        if (!newnode.Components) {
-            this.updateChartSelections(chartmatrix, matrixrow)
-            return
-        }
-
-        let newrange = Object.assign({}, chartconfig.yearscope)
-
-        let newchartconfig: ChartConfig = {
-            viewpoint,
-            dataseries,
-            datapath: childdataroot,
-            matrixlocation: {
-                row: matrixrow,
-                column: matrixcolumn + 1
-            },
-            parentdata: parentdata,
-            yearscope: newrange,
-            charttype:userselections.charttype,
-        }
-
-        let chartParmsObj = this.getChartParms(newchartconfig)
-
-        if (chartParmsObj.isError) {
-            this.updateChartSelections(chartmatrix, matrixrow)
-            return
-        }
-
-        newchartconfig.chartparms = chartParmsObj.chartParms
-
-        let newmatrixcolumn = matrixcolumn + 1
-        chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig
-
-        this.setState({
-            chartmatrix,
-        })
-
-        chartconfig.chartselection = context.selection,
-        chartconfig.chart = chart
-
-        this.updateChartSelections(chartmatrix,matrixrow)
-
-    }
-
-    // update the visual cue for selection that led to user array of graphs
-    updateChartSelections = (chartmatrix,matrixrow) => {
-        for (let config of chartmatrix[matrixrow]) {
-            let chart = config.chart
-            let selection = config.chartselection
-            if (chart)
-                chart.setSelection(selection)
-        }
-    }
 
     // ---------------------[ CONTROL ACTIONS ]------------------
 
@@ -867,11 +193,15 @@ class ExplorerClass extends Component< any, any > {
         this.setState({
             userselections,
         })
-        this.setViewpointAmounts()
+        let viewpointname = this.state.userselections.viewpoint
+        let dataseriesname = this.state.userselections.dataseries
+        let budgetdata = this.props.budgetdata
+        setViewpointAmounts(viewpointname, dataseriesname, budgetdata,
+            this.state.userselections.inflationadjusted)
         for (let matrixseries of chartmatrix) {
             let cellconfig:ChartConfig
             for ( cellconfig of matrixseries ) {
-                let chartParmsObj = this.getChartParms(cellconfig)
+                let chartParmsObj = getChartParms(cellconfig, userselections, budgetdata, this.setState, chartmatrix)
                 cellconfig.chartparms = chartParmsObj.chartParms
                 cellconfig.dataseries = seriesname
             }
@@ -881,12 +211,12 @@ class ExplorerClass extends Component< any, any > {
                 chartmatrix,
             })
             for (let row = 0; row < chartmatrix.length; row++) {
-                this.updateChartSelections(chartmatrix, row)
+                updateChartSelections(chartmatrix, row)
             }
         })
     }
 
-    onChartType = (location, chartType) => {
+    switchChartType = (location, chartType) => {
         console.log('onChartType')
         // TODO set chartconfig codeType
     }
@@ -902,7 +232,7 @@ class ExplorerClass extends Component< any, any > {
 
             let settings = { 
                 location: chartconfig.matrixlocation,
-                onChartType: this.onChartType,
+                onChartType: this.switchChartType,
                 chartCode:chartconfig.chartCode,
             }
 
