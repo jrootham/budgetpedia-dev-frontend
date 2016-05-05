@@ -20,8 +20,8 @@ interface ExploreChartProps {
 
 class ExplorerChart extends Component<ExploreChartProps, any> {
 
-    onChangeChartType = chartType => {
-        this.props.settings.onChartType(this.props.settings.location, chartType)
+    onChangeChartCode = chartCode => {
+        this.props.settings.onChartCode(this.props.settings.location, chartCode)
     }
 
     render() {
@@ -37,7 +37,7 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                         }
                     }
                     onTouchTap={ e =>{
-                        this.onChangeChartType('ColumnChart')
+                        this.onChangeChartCode('ColumnChart')
                     }}>
                     <FontIcon className="material-icons">insert_chart</FontIcon>
                 </IconButton>
@@ -52,7 +52,7 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                         }
                     }
                     onTouchTap={ e => {
-                        this.onChangeChartType('DonutChart')
+                        this.onChangeChartCode('DonutChart')
                     } }>
                     <FontIcon className="material-icons">donut_small</FontIcon>
                 </IconButton>
@@ -66,8 +66,9 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                                 : "transparent"
                         }
                     }
+                    disabled
                     onTouchTap={ e => {
-                        this.onChangeChartType('Timeline')
+                        this.onChangeChartCode('Timeline')
                     } }>
                     <FontIcon className="material-icons">timeline</FontIcon>
                 </IconButton>

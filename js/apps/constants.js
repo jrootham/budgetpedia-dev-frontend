@@ -17,3 +17,8 @@ exports.ChartTypeCodes = {
     'ColumnChart': 'ColumnChart',
     'LineChart': 'Timelines'
 };
+let ChartCodeTypes = {};
+exports.ChartCodeTypes = ChartCodeTypes;
+for (let chartType in exports.ChartTypeCodes) {
+    ChartCodeTypes[exports.ChartTypeCodes[chartType]] = chartType;
+}

@@ -86,7 +86,7 @@ class ExplorerClass extends Component {
             });
             this.initializeChartSeries();
         };
-        this.switchDataSeries = seriesname => {
+        this.switchDataSeries = (seriesname, seriesref) => {
             let userselections = this.state.userselections;
             userselections.dataseries = seriesname;
             let chartmatrix = this.state.chartmatrix;
@@ -97,45 +97,60 @@ class ExplorerClass extends Component {
             let dataseriesname = this.state.userselections.dataseries;
             let budgetdata = this.props.budgetdata;
             setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, this.state.userselections.inflationadjusted);
-            for (let matrixseries of chartmatrix) {
-                let cellconfig;
-                let cellptr;
-                for (cellptr = 0; cellptr < matrixseries.length; cellptr++) {
-                    cellconfig = matrixseries[cellptr];
-                    let chartParmsObj = getchartparms_1.getChartParms(cellconfig, userselections, budgetdata, this.setState, chartmatrix);
-                    if (chartParmsObj.isError) {
-                        matrixseries.splice(cellptr);
-                        if (cellptr > 0) {
-                            let parentconfig = matrixseries[cellptr - 1];
-                            parentconfig.chartselection = null;
-                            parentconfig.chart = null;
-                        }
+            let matrixseries = chartmatrix[seriesref];
+            let cellconfig;
+            let cellptr;
+            for (cellptr = 0; cellptr < matrixseries.length; cellptr++) {
+                cellconfig = matrixseries[cellptr];
+                let chartParmsObj = getchartparms_1.getChartParms(cellconfig, userselections, budgetdata, this.setState, chartmatrix);
+                if (chartParmsObj.isError) {
+                    matrixseries.splice(cellptr);
+                    if (cellptr > 0) {
+                        let parentconfig = matrixseries[cellptr - 1];
+                        parentconfig.chartselection = null;
+                        parentconfig.chart = null;
                     }
-                    else {
-                        cellconfig.chartparms = chartParmsObj.chartParms;
-                        cellconfig.dataseries = seriesname;
-                    }
+                }
+                else {
+                    cellconfig.chartparms = chartParmsObj.chartParms;
+                    cellconfig.dataseries = seriesname;
                 }
             }
             setTimeout(() => {
                 this.setState({
                     chartmatrix: chartmatrix,
                 });
-                for (let row = 0; row < chartmatrix.length; row++) {
-                    updatechartselections_1.updateChartSelections(chartmatrix, row);
-                }
+                updatechartselections_1.updateChartSelections(chartmatrix, seriesref);
             });
         };
-        this.switchChartType = (location, chartType) => {
-            console.log('onChartType');
+        this.switchChartCode = (location, chartCode) => {
+            let chartType = constants_2.ChartCodeTypes[chartCode];
+            let chartmatrix = this.state.chartmatrix;
+            let chartConfig = chartmatrix[location.row][location.column];
+            let oldChartType = chartConfig.charttype;
+            chartConfig.charttype = chartType;
+            let chartParmsObj = getchartparms_1.getChartParms(chartConfig, this.state.userselections, this.props.budgetdata, this.setState.bind(this), chartmatrix);
+            console.log('chartParmsObj', chartParmsObj);
+            if (!chartParmsObj.isError) {
+                chartConfig.chartparms = chartParmsObj.chartParms;
+            }
+            else {
+                chartConfig.charttype = oldChartType;
+            }
+            setTimeout(() => {
+                this.setState({
+                    chartmatrix: chartmatrix,
+                });
+                updatechartselections_1.updateChartSelections(chartmatrix, location.row);
+            });
         };
         this.getCharts = (matrixcolumn, matrixrow) => {
             let charts = matrixcolumn.map((chartconfig, index) => {
                 let chartparms = chartconfig.chartparms;
                 let settings = {
                     location: chartconfig.matrixlocation,
-                    onChartType: this.switchChartType,
-                    chartCode: chartconfig.chartCode,
+                    onChartCode: this.switchChartCode,
+                    chartCode: chartparms.chartCode,
                 };
                 return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + matrixrow + '' + index, settings: settings});
             });
@@ -177,19 +192,19 @@ class ExplorerClass extends Component {
                 ? 'lightgreen'
                 : 'transparent'
         }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, {tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: e => {
-            this.switchDataSeries('BudgetExpenses');
+            this.switchDataSeries('BudgetExpenses', constants_1.ChartSeries.DrillDown);
         }, style: {
             backgroundColor: (this.state.userselections.dataseries == 'BudgetExpenses')
                 ? 'lightgreen'
                 : 'transparent'
         }}, React.createElement(FontIcon, {className: "material-icons"}, "attach_money")), React.createElement(IconButton, {tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: e => {
-            this.switchDataSeries('BudgetRevenues');
+            this.switchDataSeries('BudgetRevenues', constants_1.ChartSeries.DrillDown);
         }, style: {
             backgroundColor: (this.state.userselections.dataseries == 'BudgetRevenues')
                 ? 'lightgreen'
                 : 'transparent'
         }}, React.createElement(FontIcon, {className: "material-icons"}, "receipt")), React.createElement(IconButton, {tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: e => {
-            this.switchDataSeries('BudgetStaffing');
+            this.switchDataSeries('BudgetStaffing', constants_1.ChartSeries.DrillDown);
         }, style: {
             backgroundColor: (this.state.userselections.dataseries == 'BudgetStaffing')
                 ? 'lightgreen'

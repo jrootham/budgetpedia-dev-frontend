@@ -9263,8 +9263,8 @@ var ExplorerChart = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ExplorerChart)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
-        _this.onChangeChartType = function (chartType) {
-            _this.props.settings.onChartType(_this.props.settings.location, chartType);
+        _this.onChangeChartCode = function (chartCode) {
+            _this.props.settings.onChartCode(_this.props.settings.location, chartCode);
         };
         return _this;
     }
@@ -9276,15 +9276,15 @@ var ExplorerChart = function (_Component) {
 
             return React.createElement("div", { style: { position: "relative", display: "inline-block", padding: "10px", backgroundColor: "Beige" } }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "bottom-center", style: { backgroundColor: this.props.settings.chartCode == "ColumnChart" ? "lightgreen" : "transparent"
                 }, onTouchTap: function onTouchTap(e) {
-                    _this2.onChangeChartType('ColumnChart');
+                    _this2.onChangeChartCode('ColumnChart');
                 } }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart")), React.createElement(IconButton, { tooltip: "Donut Pie Chart", tooltipPosition: "bottom-center", style: {
                     backgroundColor: this.props.settings.chartCode == "DonutChart" ? "lightgreen" : "transparent"
                 }, onTouchTap: function onTouchTap(e) {
-                    _this2.onChangeChartType('DonutChart');
+                    _this2.onChangeChartCode('DonutChart');
                 } }, React.createElement(FontIcon, { className: "material-icons" }, "donut_small")), React.createElement(IconButton, { tooltip: "Timeline", tooltipPosition: "bottom-center", style: {
                     backgroundColor: this.props.settings.chartCode == "TimeLine" ? "lightgreen" : "transparent"
-                }, onTouchTap: function onTouchTap(e) {
-                    _this2.onChangeChartType('Timeline');
+                }, disabled: true, onTouchTap: function onTouchTap(e) {
+                    _this2.onChangeChartCode('Timeline');
                 } }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: this.props.chartType, options: this.props.options, chartEvents: this.props.chartEvents, rows: this.props.rows, columns: this.props.columns, graph_id: this.props.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))));
         }
     }]);
@@ -9315,6 +9315,11 @@ exports.ChartTypeCodes = {
     'ColumnChart': 'ColumnChart',
     'LineChart': 'Timelines'
 };
+var ChartCodeTypes = {};
+exports.ChartCodeTypes = ChartCodeTypes;
+for (var chartType in exports.ChartTypeCodes) {
+    ChartCodeTypes[exports.ChartTypeCodes[chartType]] = chartType;
+}
 
 },{}],5:[function(require,module,exports){
 "use strict";
@@ -9562,7 +9567,7 @@ var ExplorerClass = function (_Component) {
             });
             _this.initializeChartSeries();
         };
-        _this.switchDataSeries = function (seriesname) {
+        _this.switchDataSeries = function (seriesname, seriesref) {
             var userselections = _this.state.userselections;
             userselections.dataseries = seriesname;
             var chartmatrix = _this.state.chartmatrix;
@@ -9573,66 +9578,58 @@ var ExplorerClass = function (_Component) {
             var dataseriesname = _this.state.userselections.dataseries;
             var budgetdata = _this.props.budgetdata;
             setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, _this.state.userselections.inflationadjusted);
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = chartmatrix[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var matrixseries = _step.value;
-
-                    var cellconfig = undefined;
-                    var cellptr = undefined;
-                    for (cellptr = 0; cellptr < matrixseries.length; cellptr++) {
-                        cellconfig = matrixseries[cellptr];
-                        var chartParmsObj = getchartparms_1.getChartParms(cellconfig, userselections, budgetdata, _this.setState, chartmatrix);
-                        if (chartParmsObj.isError) {
-                            matrixseries.splice(cellptr);
-                            if (cellptr > 0) {
-                                var parentconfig = matrixseries[cellptr - 1];
-                                parentconfig.chartselection = null;
-                                parentconfig.chart = null;
-                            }
-                        } else {
-                            cellconfig.chartparms = chartParmsObj.chartParms;
-                            cellconfig.dataseries = seriesname;
-                        }
+            var matrixseries = chartmatrix[seriesref];
+            var cellconfig = undefined;
+            var cellptr = undefined;
+            for (cellptr = 0; cellptr < matrixseries.length; cellptr++) {
+                cellconfig = matrixseries[cellptr];
+                var chartParmsObj = getchartparms_1.getChartParms(cellconfig, userselections, budgetdata, _this.setState, chartmatrix);
+                if (chartParmsObj.isError) {
+                    matrixseries.splice(cellptr);
+                    if (cellptr > 0) {
+                        var parentconfig = matrixseries[cellptr - 1];
+                        parentconfig.chartselection = null;
+                        parentconfig.chart = null;
                     }
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
+                } else {
+                    cellconfig.chartparms = chartParmsObj.chartParms;
+                    cellconfig.dataseries = seriesname;
                 }
             }
-
             setTimeout(function () {
                 _this.setState({
                     chartmatrix: chartmatrix
                 });
-                for (var row = 0; row < chartmatrix.length; row++) {
-                    updatechartselections_1.updateChartSelections(chartmatrix, row);
-                }
+                updatechartselections_1.updateChartSelections(chartmatrix, seriesref);
             });
         };
-        _this.switchChartType = function (location, chartType) {
-            console.log('onChartType');
+        _this.switchChartCode = function (location, chartCode) {
+            var chartType = constants_2.ChartCodeTypes[chartCode];
+            var chartmatrix = _this.state.chartmatrix;
+            var chartConfig = chartmatrix[location.row][location.column];
+            var oldChartType = chartConfig.charttype;
+            chartConfig.charttype = chartType;
+            var chartParmsObj = getchartparms_1.getChartParms(chartConfig, _this.state.userselections, _this.props.budgetdata, _this.setState.bind(_this), chartmatrix);
+            console.log('chartParmsObj', chartParmsObj);
+            if (!chartParmsObj.isError) {
+                chartConfig.chartparms = chartParmsObj.chartParms;
+            } else {
+                chartConfig.charttype = oldChartType;
+            }
+            setTimeout(function () {
+                _this.setState({
+                    chartmatrix: chartmatrix
+                });
+                updatechartselections_1.updateChartSelections(chartmatrix, location.row);
+            });
         };
         _this.getCharts = function (matrixcolumn, matrixrow) {
             var charts = matrixcolumn.map(function (chartconfig, index) {
                 var chartparms = chartconfig.chartparms;
                 var settings = {
                     location: chartconfig.matrixlocation,
-                    onChartType: _this.switchChartType,
-                    chartCode: chartconfig.chartCode
+                    onChartCode: _this.switchChartCode,
+                    chartCode: chartparms.chartCode
                 };
                 return React.createElement(explorerchart_1.ExplorerChart, { key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + matrixrow + '' + index, settings: settings });
             });
@@ -9674,15 +9671,15 @@ var ExplorerClass = function (_Component) {
                 }, style: {
                     backgroundColor: this.state.userselections.viewpoint == 'STRUCTURAL' ? 'lightgreen' : 'transparent'
                 } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
-                    _this2.switchDataSeries('BudgetExpenses');
+                    _this2.switchDataSeries('BudgetExpenses', constants_1.ChartSeries.DrillDown);
                 }, style: {
                     backgroundColor: this.state.userselections.dataseries == 'BudgetExpenses' ? 'lightgreen' : 'transparent'
                 } }, React.createElement(FontIcon, { className: "material-icons" }, "attach_money")), React.createElement(IconButton, { tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
-                    _this2.switchDataSeries('BudgetRevenues');
+                    _this2.switchDataSeries('BudgetRevenues', constants_1.ChartSeries.DrillDown);
                 }, style: {
                     backgroundColor: this.state.userselections.dataseries == 'BudgetRevenues' ? 'lightgreen' : 'transparent'
                 } }, React.createElement(FontIcon, { className: "material-icons" }, "receipt")), React.createElement(IconButton, { tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
-                    _this2.switchDataSeries('BudgetStaffing');
+                    _this2.switchDataSeries('BudgetStaffing', constants_1.ChartSeries.DrillDown);
                 }, style: {
                     backgroundColor: this.state.userselections.dataseries == 'BudgetStaffing' ? 'lightgreen' : 'transparent'
                 } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
@@ -9714,6 +9711,7 @@ exports.Explorer = Explorer;
 
 var format = require('format-number');
 var updatechartselections_1 = require('./updatechartselections');
+var constants_1 = require('../../constants');
 var getChartParms = function getChartParms(chartConfig, userselections, budgetdata, setState, chartmatrix) {
     var viewpointindex = chartConfig.viewpoint,
         path = chartConfig.datapath,
@@ -9810,12 +9808,14 @@ var getChartParms = function getChartParms(chartConfig, userselections, budgetda
         }
         return [item.Name, amount, annotation];
     });
+    var chartCode = constants_1.ChartTypeCodes[chartType];
     var chartParms = {
         columns: columns,
         rows: rows,
         options: options,
         events: events,
-        chartType: chartType
+        chartType: chartType,
+        chartCode: chartCode
     };
     var chartParmsObj = {
         isError: isError,
@@ -9937,7 +9937,7 @@ var getNodeDatasets = function getNodeDatasets(viewpointindex, path, budgetdata)
     return { node: node, components: components };
 };
 
-},{"./updatechartselections":12,"format-number":72}],11:[function(require,module,exports){
+},{"../../constants":4,"./updatechartselections":12,"format-number":72}],11:[function(require,module,exports){
 "use strict";
 
 var setViewpointAmounts = function setViewpointAmounts(viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) {
@@ -35843,6 +35843,7 @@ var Chart = React.createClass({
 			}
 		} else {
 			this.wrapper.setOptions(this.props.options);
+			this.wrapper.setChartType(this.props.chartType)
 			if (this.props.data !== null) {
 				this.wrapper.setDataTable(this.props.data);
 				this.data_table = this.wrapper.getDataTable();

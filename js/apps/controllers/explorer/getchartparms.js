@@ -1,6 +1,7 @@
 "use strict";
 var format = require('format-number');
 const updatechartselections_1 = require('./updatechartselections');
+const constants_1 = require('../../constants');
 let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmatrix) => {
     let viewpointindex = chartConfig.viewpoint, path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
     let dataseriesname = userselections.dataseries;
@@ -105,12 +106,14 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
         }
         return [item.Name, amount, annotation];
     });
+    let chartCode = constants_1.ChartTypeCodes[chartType];
     let chartParms = {
         columns: columns,
         rows: rows,
         options: options,
         events: events,
         chartType: chartType,
+        chartCode: chartCode,
     };
     let chartParmsObj = {
         isError: isError,

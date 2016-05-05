@@ -11,3 +11,11 @@ export var ChartTypeCodes = {
     'ColumnChart':'ColumnChart',
     'LineChart':'Timelines'
 }
+
+let ChartCodeTypes = {}
+
+for (let chartType in ChartTypeCodes) {
+    ChartCodeTypes[ChartTypeCodes[chartType]] = chartType
+}
+
+export { ChartCodeTypes }

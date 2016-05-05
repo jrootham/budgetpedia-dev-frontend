@@ -29,6 +29,7 @@ interface YearScope {
 
 interface ChartParms {
     chartType?: string,
+    chartCode?: string,
     options?: {
         [index: string]: any,
     },

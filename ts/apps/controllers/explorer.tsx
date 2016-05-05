@@ -40,7 +40,7 @@ import ReactSlider = require('react-slider')
 
 import { ExplorerChart } from '../components/explorerchart'
 import { ChartSeries } from '../constants'
-import { ChartTypeCodes } from '../constants'
+import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
 import { setViewpointAmounts } from './explorer/setviewpointamounts'
 import { getChartParms } from './explorer/getchartparms'
@@ -49,7 +49,8 @@ import { updateChartSelections } from './explorer/updatechartselections'
 import {
     ChartConfig,
     ChartParms,
-    ChartSelectionContext
+    ChartSelectionContext,
+    MatrixLocation
 } from './explorer/interfaces'
 // import { categoryaliases } from '../constants'
 
@@ -106,7 +107,8 @@ class ExplorerClass extends Component< any, any > {
         let drilldownchartconfig: ChartConfig =
             this.initRootChartConfig(ChartSeries.DrillDown, userselections)
 
-        chartParmsObj = getChartParms(drilldownchartconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix)
+        chartParmsObj = getChartParms(
+            drilldownchartconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix)
 
         if (!chartParmsObj.error) {
 
@@ -189,8 +191,7 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
-    // TODO: add seriesref like switchViewpoint
-    switchDataSeries = seriesname => {
+    switchDataSeries = (seriesname,seriesref) => {
 
         let userselections = this.state.userselections
         userselections.dataseries = seriesname
@@ -203,40 +204,58 @@ class ExplorerClass extends Component< any, any > {
         let budgetdata = this.props.budgetdata
         setViewpointAmounts(viewpointname, dataseriesname, budgetdata,
             this.state.userselections.inflationadjusted)
-        for (let matrixseries of chartmatrix) {
-            let cellconfig:ChartConfig
-            let cellptr: number
-            for (cellptr = 0; cellptr < matrixseries.length; cellptr++ ) {
-                cellconfig = matrixseries[cellptr]
-                let chartParmsObj = getChartParms(cellconfig, userselections, budgetdata, this.setState, chartmatrix)
-                if (chartParmsObj.isError) {
-                    matrixseries.splice(cellptr)
-                    if (cellptr > 0) { // unset the selection of the parent
-                        let parentconfig:ChartConfig = matrixseries[cellptr - 1]
-                        // disable reselection
-                        parentconfig.chartselection = null
-                        parentconfig.chart = null
-                    }
-                } else {
-                    cellconfig.chartparms = chartParmsObj.chartParms
-                    cellconfig.dataseries = seriesname
+        let matrixseries = chartmatrix[seriesref]
+        let cellconfig:ChartConfig
+        let cellptr: number
+        for (cellptr = 0; cellptr < matrixseries.length; cellptr++ ) {
+            cellconfig = matrixseries[cellptr]
+            let chartParmsObj = getChartParms(cellconfig, userselections, budgetdata, this.setState, chartmatrix)
+            if (chartParmsObj.isError) {
+                matrixseries.splice(cellptr)
+                if (cellptr > 0) { // unset the selection of the parent
+                    let parentconfig:ChartConfig = matrixseries[cellptr - 1]
+                    // disable reselection
+                    parentconfig.chartselection = null
+                    parentconfig.chart = null
                 }
+            } else {
+                cellconfig.chartparms = chartParmsObj.chartParms
+                cellconfig.dataseries = seriesname
             }
         }
         setTimeout(() => {
             this.setState({
                 chartmatrix,
             })
-            for (let row = 0; row < chartmatrix.length; row++) {
-                updateChartSelections(chartmatrix, row)
-            }
+            updateChartSelections(chartmatrix, seriesref)
         })
     }
 
     // TODO: belongs with explorerchart controller?
-    switchChartType = (location, chartType) => {
-        console.log('onChartType')
-        // TODO set chartconfig codeType
+    switchChartCode = (location:MatrixLocation, chartCode) => {
+        let chartType = ChartCodeTypes[chartCode]
+        let chartmatrix = this.state.chartmatrix
+        let chartConfig:ChartConfig = chartmatrix[location.row][location.column]
+        let oldChartType = chartConfig.charttype
+        chartConfig.charttype = chartType
+        let chartParmsObj = getChartParms(
+            chartConfig, 
+            this.state.userselections, 
+            this.props.budgetdata, 
+            this.setState.bind(this), 
+            chartmatrix)
+        console.log('chartParmsObj',chartParmsObj)
+        if (!chartParmsObj.isError) {
+            chartConfig.chartparms = chartParmsObj.chartParms
+        } else {
+            chartConfig.charttype = oldChartType
+        }
+        setTimeout(() => {
+            this.setState({
+                chartmatrix,
+            })
+            updateChartSelections(chartmatrix, location.row)
+        })
     }
 
     // ============================================================
@@ -251,8 +270,8 @@ class ExplorerClass extends Component< any, any > {
 
             let settings = { 
                 location: chartconfig.matrixlocation,
-                onChartType: this.switchChartType,
-                chartCode:chartconfig.chartCode,
+                onChartCode: this.switchChartCode,
+                chartCode:chartparms.chartCode,
             }
 
             return <ExplorerChart
@@ -453,7 +472,7 @@ class ExplorerClass extends Component< any, any > {
                         tooltipPosition="top-center" 
                         onTouchTap= {
                             e => {
-                                this.switchDataSeries('BudgetExpenses')
+                                this.switchDataSeries('BudgetExpenses', ChartSeries.DrillDown)
                             }
                         }
                         style={
@@ -471,7 +490,7 @@ class ExplorerClass extends Component< any, any > {
                         tooltipPosition="top-center" 
                         onTouchTap= {
                             e => {
-                                this.switchDataSeries('BudgetRevenues')
+                                this.switchDataSeries('BudgetRevenues', ChartSeries.DrillDown)
                             }
                         }
                         style={
@@ -489,7 +508,7 @@ class ExplorerClass extends Component< any, any > {
                         tooltipPosition="top-center" 
                         onTouchTap= {
                             e => {
-                                this.switchDataSeries('BudgetStaffing')
+                                this.switchDataSeries('BudgetStaffing', ChartSeries.DrillDown)
                             }
                         }
                         style={

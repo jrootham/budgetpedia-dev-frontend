@@ -18,7 +18,8 @@ import {
     ChartSelectionContext
 } from './interfaces'
 
-import {updateChartSelections} from './updatechartselections'
+import { updateChartSelections } from './updatechartselections'
+import { ChartTypeCodes } from '../../constants'
 
 let getChartParms = (
     chartConfig: ChartConfig, 
@@ -178,6 +179,8 @@ let getChartParms = (
         return [item.Name, amount, annotation]
     })
 
+    let chartCode:string = ChartTypeCodes[chartType]
+
     // --------------------[ ASSEMBLE PARMS PACK ]----------------
 
     let chartParms: ChartParms = {
@@ -187,6 +190,7 @@ let getChartParms = (
         options,
         events,
         chartType,
+        chartCode,
 
     }
     // ------------------[ ASSEMBLE RETURN PACK ]-------------------
