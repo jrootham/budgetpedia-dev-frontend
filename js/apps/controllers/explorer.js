@@ -1,7 +1,6 @@
 'use strict';
 const React = require('react');
 var { Component } = React;
-var format = require('format-number');
 const react_redux_1 = require('react-redux');
 const Card = require('material-ui/lib/card/card');
 const CardTitle = require('material-ui/lib/card/card-title');
@@ -19,6 +18,7 @@ const constants_1 = require('../constants');
 const constants_2 = require('../constants');
 const setviewpointamounts_1 = require('./explorer/setviewpointamounts');
 const getchartparms_1 = require('./explorer/getchartparms');
+const updatechartselections_1 = require('./explorer/updatechartselections');
 class ExplorerClass extends Component {
     constructor(props) {
         super(props);
@@ -40,10 +40,10 @@ class ExplorerClass extends Component {
         this.initializeChartSeries = () => {
             let userselections = this.state.userselections, chartmatrix = this.state.chartmatrix;
             var matrixlocation, chartParmsObj;
-            let viewpointname = this.state.userselections.viewpoint;
-            let dataseriesname = this.state.userselections.dataseries;
+            let viewpointname = userselections.viewpoint;
+            let dataseriesname = userselections.dataseries;
             let budgetdata = this.props.budgetdata;
-            setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, this.state.userselections.inflationadjusted);
+            setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
             let drilldownchartconfig = this.initRootChartConfig(constants_1.ChartSeries.DrillDown, userselections);
             chartParmsObj = getchartparms_1.getChartParms(drilldownchartconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix);
             if (!chartParmsObj.error) {
@@ -99,10 +99,22 @@ class ExplorerClass extends Component {
             setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, this.state.userselections.inflationadjusted);
             for (let matrixseries of chartmatrix) {
                 let cellconfig;
-                for (cellconfig of matrixseries) {
+                let cellptr;
+                for (cellptr = 0; cellptr < matrixseries.length; cellptr++) {
+                    cellconfig = matrixseries[cellptr];
                     let chartParmsObj = getchartparms_1.getChartParms(cellconfig, userselections, budgetdata, this.setState, chartmatrix);
-                    cellconfig.chartparms = chartParmsObj.chartParms;
-                    cellconfig.dataseries = seriesname;
+                    if (chartParmsObj.isError) {
+                        matrixseries.splice(cellptr);
+                        if (cellptr > 0) {
+                            let parentconfig = matrixseries[cellptr - 1];
+                            parentconfig.chartselection = null;
+                            parentconfig.chart = null;
+                        }
+                    }
+                    else {
+                        cellconfig.chartparms = chartParmsObj.chartParms;
+                        cellconfig.dataseries = seriesname;
+                    }
                 }
             }
             setTimeout(() => {
@@ -110,7 +122,7 @@ class ExplorerClass extends Component {
                     chartmatrix: chartmatrix,
                 });
                 for (let row = 0; row < chartmatrix.length; row++) {
-                    getchartparms_1.updateChartSelections(chartmatrix, row);
+                    updatechartselections_1.updateChartSelections(chartmatrix, row);
                 }
             });
         };

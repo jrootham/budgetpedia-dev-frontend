@@ -1,5 +1,5 @@
 "use strict";
-exports.setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) => {
+let setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) => {
     let viewpoint = budgetdata.Viewpoints[viewpointname];
     if (viewpoint.currentdataseries == dataseriesname)
         return;
@@ -20,6 +20,7 @@ exports.setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsI
     setComponentSummaries(rootcomponent, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
     viewpoint.currentdataseries = dataseriesname;
 };
+exports.setViewpointAmounts = setViewpointAmounts;
 let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) => {
     let cumulatingSummaries = {
         years: {},
@@ -83,6 +84,13 @@ let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wa
                 if (componentSummaries.Aggregates) {
                     component.Components = componentSummaries.Aggregates;
                 }
+            }
+            else {
+                if (component.Components)
+                    delete component.SortedComponents;
+                delete component.Components;
+                if (component.years)
+                    delete component.years;
             }
             if (component.Components) {
                 let sorted = getNameSortedComponents(component.Components, lookups);

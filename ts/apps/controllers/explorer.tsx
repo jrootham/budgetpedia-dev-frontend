@@ -7,6 +7,15 @@
         unexpected data (extrenal)
     - consider creating an instance around 'node' for the key abstraction
         - include getChartParms -> node.getChartParms
+    - move state to central store
+    ? Classes:
+        BudgetData = budgetdata -- package of dataseries, lookup, and viewpoint data
+        BudgetExplorer (set of BudgetNodes)
+        BudgetNode (derive from chartconfig) Node within Hierarchy
+        BedgetChart (derive from chartcomfig) - presentation of BudgetNode
+        BudgetInfo explanation of budget node
+        BudgetPath series of drilldown budgetnodes
+        BudgetMatrix complete set of budget paths for BudgetExplorer
 */
 
 /// <reference path="../../../typings-custom/react-google-charts.d.ts" />
@@ -16,7 +25,6 @@
 import * as React from 'react'
 var { Component } = React
 // doesn't require .d.ts...! (reference available in index.tsx)
-var format = require('format-number')
 import { connect as injectStore} from 'react-redux'
 import Card = require('material-ui/lib/card/card')
 import CardTitle = require('material-ui/lib/card/card-title')
@@ -35,7 +43,8 @@ import { ChartSeries } from '../constants'
 import { ChartTypeCodes } from '../constants'
 
 import { setViewpointAmounts } from './explorer/setviewpointamounts'
-import { getChartParms, updateChartSelections } from './explorer/getchartparms'
+import { getChartParms } from './explorer/getchartparms'
+import { updateChartSelections } from './explorer/updatechartselections'
 
 import {
     ChartConfig,
@@ -46,7 +55,8 @@ import {
 
 class ExplorerClass extends Component< any, any > {
 
-    // ---------------------[ INITIALIZE ]--------------------------------
+    // ============================================================
+    // ---------------------[ INITIALIZE ]-------------------------
 
     constructor(props) {
         super(props);
@@ -132,9 +142,6 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
-    // =====================================================================================
-    // -----------------------[ CHART CREATION UTILITIES ]----------------------------------
-
     // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
 
     initRootChartConfig = ( matrixrow, userselections ): ChartConfig => {
@@ -158,11 +165,8 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
-    // --------------------[ GET CHART DATA NODES ]----------------------------
-
-
-
-    // ---------------------[ CONTROL ACTIONS ]------------------
+    // ============================================================
+    // ---------------------[ CONTROL RESPONSES ]------------------
 
     switchViewpoint = (viewpointname, seriesref) => {
 
@@ -185,6 +189,7 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
+    // TODO: add seriesref like switchViewpoint
     switchDataSeries = seriesname => {
 
         let userselections = this.state.userselections
@@ -200,10 +205,22 @@ class ExplorerClass extends Component< any, any > {
             this.state.userselections.inflationadjusted)
         for (let matrixseries of chartmatrix) {
             let cellconfig:ChartConfig
-            for ( cellconfig of matrixseries ) {
+            let cellptr: number
+            for (cellptr = 0; cellptr < matrixseries.length; cellptr++ ) {
+                cellconfig = matrixseries[cellptr]
                 let chartParmsObj = getChartParms(cellconfig, userselections, budgetdata, this.setState, chartmatrix)
-                cellconfig.chartparms = chartParmsObj.chartParms
-                cellconfig.dataseries = seriesname
+                if (chartParmsObj.isError) {
+                    matrixseries.splice(cellptr)
+                    if (cellptr > 0) { // unset the selection of the parent
+                        let parentconfig:ChartConfig = matrixseries[cellptr - 1]
+                        // disable reselection
+                        parentconfig.chartselection = null
+                        parentconfig.chart = null
+                    }
+                } else {
+                    cellconfig.chartparms = chartParmsObj.chartParms
+                    cellconfig.dataseries = seriesname
+                }
             }
         }
         setTimeout(() => {
@@ -216,11 +233,13 @@ class ExplorerClass extends Component< any, any > {
         })
     }
 
+    // TODO: belongs with explorerchart controller?
     switchChartType = (location, chartType) => {
         console.log('onChartType')
         // TODO set chartconfig codeType
     }
 
+    // ============================================================
     // -------------------[ RENDER METHODS ]---------------------
 
     // get React components to render

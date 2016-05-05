@@ -18,7 +18,11 @@ import {
     ChartSelectionContext
 } from './interfaces'
 
-export let getChartParms = (chartConfig: ChartConfig, userselections, budgetdata, setState, chartmatrix) => {
+import {updateChartSelections} from './updatechartselections'
+
+let getChartParms = (
+    chartConfig: ChartConfig, 
+    userselections, budgetdata, setState, chartmatrix) => {
 
     // -------------------[ INIT VARS ]---------------------
 
@@ -79,8 +83,10 @@ export let getChartParms = (chartConfig: ChartConfig, userselections, budgetdata
     else {
         title = itemseries.Title
     }
-
-    let titleamount = node.years[year]
+    let titleamount = null
+    if (node.years) {
+        titleamount = node.years[year]
+    }
     if (units == 'DOLLAR') {
         titleamount = parseInt(rounded(titleamount / 1000))
         titleamount = thousandsformat(titleamount)
@@ -162,7 +168,10 @@ export let getChartParms = (chartConfig: ChartConfig, userselections, budgetdata
             annotation = staffrounded(amount)
             amount = parseInt(singlerounded(amount))
         } else {
-            amount = components[item.Code].years[year]
+            if (components[item.Code] && components[item.Code].years)
+                amount = components[item.Code].years[year]
+            else 
+                amount = null
             annotation = amount
         }
         // TODO: add % of total to the annotation
@@ -315,16 +324,6 @@ let onChartComponentSelection = (
 
 }
 
-// update the visual cue for selection that led to user array of graphs
-export let updateChartSelections = (chartmatrix, matrixrow) => {
-    for (let config of chartmatrix[matrixrow]) {
-        let chart = config.chart
-        let selection = config.chartselection
-        if (chart)
-            chart.setSelection(selection)
-    }
-}
-
 let getNodeDatasets = (viewpointindex, path, budgetdata) => {
 
     let node = budgetdata.Viewpoints[viewpointindex]
@@ -342,3 +341,6 @@ let getNodeDatasets = (viewpointindex, path, budgetdata) => {
 
     return { node, components }
 }
+
+export { getChartParms }
+

@@ -1,6 +1,11 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // setviewpointamounts.tsx
 
+// TODO:
+//    BUG: mayor's office revenues are absent from dataset,
+//        but instead of showing up as no chart, subchart contains
+//        previous structure from either expenses or staff
+
 import {
     ComponentSummaries
 } from './interfaces'
@@ -10,7 +15,7 @@ import {
 // starts with hash of components, 
 // recursively descends to BASELINE items, then leaves 
 // summaries by year, and Aggregates by year on ascent
-export let setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) => {
+let setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) => {
     let viewpoint = budgetdata.Viewpoints[viewpointname]
 
     // already done if currentdataseries matches request
@@ -128,7 +133,6 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
                         }
                     }
                 }
-
             } else {
                 componentSummaries = {
                     years: item.years,
@@ -139,10 +143,16 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
             if (componentSummaries) {
                 if (componentSummaries.years) {
                     component.years = componentSummaries.years
-                }
+                } 
                 if (componentSummaries.Aggregates) {
                     component.Components = componentSummaries.Aggregates
-                }
+                } 
+            } else {
+                if (component.Components)
+                    delete component.SortedComponents
+                    delete component.Components
+                if (component.years)
+                    delete component.years
             }
             if (component.Components) { // && !component.SortedComponents) {
                 let sorted = getNameSortedComponents(
@@ -286,3 +296,4 @@ let aggregateComponentSummaries = (
     }
 }
 
+export { setViewpointAmounts }

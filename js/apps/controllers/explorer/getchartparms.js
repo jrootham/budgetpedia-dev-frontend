@@ -1,6 +1,7 @@
 "use strict";
 var format = require('format-number');
-exports.getChartParms = (chartConfig, userselections, budgetdata, setState, chartmatrix) => {
+const updatechartselections_1 = require('./updatechartselections');
+let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmatrix) => {
     let viewpointindex = chartConfig.viewpoint, path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
     let dataseriesname = userselections.dataseries;
     let viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel;
@@ -31,7 +32,10 @@ exports.getChartParms = (chartConfig, userselections, budgetdata, setState, char
     else {
         title = itemseries.Title;
     }
-    let titleamount = node.years[year];
+    let titleamount = null;
+    if (node.years) {
+        titleamount = node.years[year];
+    }
     if (units == 'DOLLAR') {
         titleamount = parseInt(rounded(titleamount / 1000));
         titleamount = thousandsformat(titleamount);
@@ -93,7 +97,10 @@ exports.getChartParms = (chartConfig, userselections, budgetdata, setState, char
             amount = parseInt(singlerounded(amount));
         }
         else {
-            amount = components[item.Code].years[year];
+            if (components[item.Code] && components[item.Code].years)
+                amount = components[item.Code].years[year];
+            else
+                amount = null;
             annotation = amount;
         }
         return [item.Name, amount, annotation];
@@ -111,6 +118,7 @@ exports.getChartParms = (chartConfig, userselections, budgetdata, setState, char
     };
     return chartParmsObj;
 };
+exports.getChartParms = getChartParms;
 let onChartComponentSelection = (context, userselections, budgetdata, setState, chartmatrix) => {
     let selection = context.selection[0];
     let selectionrow;
@@ -133,13 +141,13 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
     if (!selection) {
         delete chartconfig.chartselection;
         delete chartconfig.chart;
-        exports.updateChartSelections(chartmatrix, matrixrow);
+        updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
     let childdataroot = chartconfig.datapath.slice();
     let { node, components } = getNodeDatasets(userselections.viewpoint, childdataroot, budgetdata);
     if (!node.Components) {
-        exports.updateChartSelections(chartmatrix, matrixrow);
+        updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
     let code = null;
@@ -152,12 +160,12 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
     if (code)
         childdataroot.push(code);
     else {
-        exports.updateChartSelections(chartmatrix, matrixrow);
+        updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
     let newnode = node.Components[code];
     if (!newnode.Components) {
-        exports.updateChartSelections(chartmatrix, matrixrow);
+        updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
     let newrange = Object.assign({}, chartconfig.yearscope);
@@ -173,9 +181,9 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         yearscope: newrange,
         charttype: userselections.charttype,
     };
-    let chartParmsObj = exports.getChartParms(newchartconfig, userselections, budgetdata, setState, chartmatrix);
+    let chartParmsObj = getChartParms(newchartconfig, userselections, budgetdata, setState, chartmatrix);
     if (chartParmsObj.isError) {
-        exports.updateChartSelections(chartmatrix, matrixrow);
+        updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
     newchartconfig.chartparms = chartParmsObj.chartParms;
@@ -186,15 +194,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
     });
     chartconfig.chartselection = context.selection,
         chartconfig.chart = chart;
-    exports.updateChartSelections(chartmatrix, matrixrow);
-};
-exports.updateChartSelections = (chartmatrix, matrixrow) => {
-    for (let config of chartmatrix[matrixrow]) {
-        let chart = config.chart;
-        let selection = config.chartselection;
-        if (chart)
-            chart.setSelection(selection);
-    }
+    updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
 };
 let getNodeDatasets = (viewpointindex, path, budgetdata) => {
     let node = budgetdata.Viewpoints[viewpointindex];
