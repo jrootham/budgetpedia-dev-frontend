@@ -9825,6 +9825,7 @@ var getChartParms = function getChartParms(chartConfig, userselections, budgetda
 };
 exports.getChartParms = getChartParms;
 var onChartComponentSelection = function onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix) {
+    console.log('context.selection', context.selection);
     var selection = context.selection[0];
     var selectionrow = undefined;
     if (selection) {
@@ -35843,12 +35844,20 @@ var Chart = React.createClass({
 			}
 		} else {
 			this.wrapper.setOptions(this.props.options);
-			this.wrapper.setChartType(this.props.chartType)
 			if (this.props.data !== null) {
 				this.wrapper.setDataTable(this.props.data);
 				this.data_table = this.wrapper.getDataTable();
 			} else {
 				this.update_data_table();
+			}
+			if (this.wrapper.getChartType() != this.props.chartType) {
+				google.visualization.events.removeAllListeners(this.wrapper)
+				this.wrapper.setChartType(this.props.chartType)
+				var self = this
+				google.visualization.events.addOneTimeListener(this.wrapper, 'ready', function () {
+					self.chart = self.wrapper.getChart();
+					self.listen_to_chart_events.call(this);
+				});
 			}
 		}
 		this.wrapper.draw();

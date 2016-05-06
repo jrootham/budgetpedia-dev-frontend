@@ -216,6 +216,7 @@ let getChartParms = (
 let onChartComponentSelection = (
         context: ChartSelectionContext, userselections, budgetdata, setState, chartmatrix) => {
 
+    console.log('context.selection',context.selection)
     // unpack context
     let selection = context.selection[0]
 
