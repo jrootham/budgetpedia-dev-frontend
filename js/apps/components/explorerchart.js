@@ -1,8 +1,7 @@
 'use strict';
 const React = require('react');
 var { Component } = React;
-const ChartObject = require('react-google-charts');
-let Chart = ChartObject['Chart'];
+var Chart = require('../../../forked/react-google-charts/Chart.js');
 const IconButton = require('material-ui/lib/icon-button');
 const FontIcon = require('material-ui/lib/font-icon');
 class ExplorerChart extends Component {

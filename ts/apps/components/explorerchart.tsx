@@ -1,10 +1,10 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // explorerchart.tsx
+
 'use strict'
 import * as React from 'react'
 var { Component } = React
-import ChartObject = require('react-google-charts')
-let Chart = ChartObject['Chart']
+var Chart = require('../../../forked/react-google-charts/Chart.js')
 import IconButton = require('material-ui/lib/icon-button')
 import FontIcon = require('material-ui/lib/font-icon')
 

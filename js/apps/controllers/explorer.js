@@ -130,19 +130,16 @@ class ExplorerClass extends Component {
             let oldChartType = chartConfig.charttype;
             chartConfig.charttype = chartType;
             let chartParmsObj = getchartparms_1.getChartParms(chartConfig, this.state.userselections, this.props.budgetdata, this.setState.bind(this), chartmatrix);
-            console.log('chartParmsObj', chartParmsObj);
             if (!chartParmsObj.isError) {
                 chartConfig.chartparms = chartParmsObj.chartParms;
             }
             else {
                 chartConfig.charttype = oldChartType;
             }
-            setTimeout(() => {
-                this.setState({
-                    chartmatrix: chartmatrix,
-                });
-                updatechartselections_1.updateChartSelections(chartmatrix, location.row);
+            this.setState({
+                chartmatrix: chartmatrix,
             });
+            updatechartselections_1.updateChartSelections(chartmatrix, location.row);
         };
         this.getCharts = (matrixcolumn, matrixrow) => {
             let charts = matrixcolumn.map((chartconfig, index) => {

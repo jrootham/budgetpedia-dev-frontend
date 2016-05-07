@@ -24,6 +24,7 @@
     "lodash": "^4.9.0",
     "lodash.assign": "^4.0.7",
     "material-ui": "^0.14.4",
+    "q": "^1.4.1",
     "react": "^0.14.8",
     "react-addons-css-transition-group": "^0.14.8",
     "react-addons-transition-group": "^0.14.8",
@@ -42,6 +43,7 @@
     "redux-actions": "^0.9.1",
     "redux-devtools": "^3.2.0",
     "redux-thunk": "^2.0.1",
+    "scriptjs": "^2.5.8",
     "watchify": "^3.7.0",
     "when": "^3.7.7"
   },

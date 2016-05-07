@@ -244,18 +244,17 @@ class ExplorerClass extends Component< any, any > {
             this.props.budgetdata, 
             this.setState.bind(this), 
             chartmatrix)
-        console.log('chartParmsObj',chartParmsObj)
         if (!chartParmsObj.isError) {
             chartConfig.chartparms = chartParmsObj.chartParms
         } else {
             chartConfig.charttype = oldChartType
         }
-        setTimeout(() => {
+        // setTimeout(() => {
             this.setState({
                 chartmatrix,
             })
             updateChartSelections(chartmatrix, location.row)
-        })
+        // })
     }
 
     // ============================================================

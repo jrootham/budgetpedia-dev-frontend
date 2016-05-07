@@ -123,7 +123,6 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
 };
 exports.getChartParms = getChartParms;
 let onChartComponentSelection = (context, userselections, budgetdata, setState, chartmatrix) => {
-    console.log('context.selection', context.selection);
     let selection = context.selection[0];
     let selectionrow;
     if (selection) {
