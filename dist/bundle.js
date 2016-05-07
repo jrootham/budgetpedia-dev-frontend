@@ -10093,6 +10093,29 @@ var getChartParms = function getChartParms(chartConfig, userselections, budgetda
         titleamount = staffrounded(titleamount);
     }
     title += ' (Total: ' + titleamount + ')';
+    var legendvalue = undefined;
+    var chartheight = undefined;
+    var charttop = undefined;
+    switch (chartType) {
+        case "ColumnChart":
+            legendvalue = "none";
+            chartheight = 'auto';
+            charttop = 'auto';
+            break;
+        case "PieChart":
+            legendvalue = {
+                position: "top",
+                textStyle: {
+                    fontSize: 9
+                },
+                maxLines: 4
+            };
+            chartheight = '70%';
+            charttop = '30%';
+            break;
+        default:
+            break;
+    }
     var options = {
         title: title,
         vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
@@ -10100,8 +10123,13 @@ var getChartParms = function getChartParms(chartConfig, userselections, budgetda
         bar: { groupWidth: "95%" },
         height: 400,
         width: 400,
-        legend: 'none',
-        annotations: { alwaysOutside: true }
+        legend: legendvalue,
+        annotations: { alwaysOutside: true },
+        pieHole: 0.4,
+        chartArea: {
+            height: chartheight,
+            top: charttop
+        }
     };
     var configlocation = Object.assign({}, chartConfig.matrixlocation);
     var events = [{

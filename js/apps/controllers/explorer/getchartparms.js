@@ -45,6 +45,29 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
         titleamount = staffrounded(titleamount);
     }
     title += ' (Total: ' + titleamount + ')';
+    let legendvalue;
+    let chartheight;
+    let charttop;
+    switch (chartType) {
+        case "ColumnChart":
+            legendvalue = "none";
+            chartheight = 'auto';
+            charttop = 'auto';
+            break;
+        case "PieChart":
+            legendvalue = {
+                position: "top",
+                textStyle: {
+                    fontSize: 9
+                },
+                maxLines: 4
+            };
+            chartheight = '70%';
+            charttop = '30%';
+            break;
+        default:
+            break;
+    }
     let options = {
         title: title,
         vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
@@ -52,8 +75,13 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
         bar: { groupWidth: "95%" },
         height: 400,
         width: 400,
-        legend: 'none',
-        annotations: { alwaysOutside: true }
+        legend: legendvalue,
+        annotations: { alwaysOutside: true },
+        pieHole: 0.4,
+        chartArea: {
+            height: chartheight,
+            top: charttop
+        }
     };
     let configlocation = Object.assign({}, chartConfig.matrixlocation);
     let events = [

@@ -96,6 +96,32 @@ let getChartParms = (
     }
     title += ' (Total: ' + titleamount + ')'
 
+    let legendvalue
+    let chartheight
+    let charttop
+    switch (chartType) {
+        case "ColumnChart":
+            legendvalue = "none"
+            chartheight ='auto'
+            charttop = 'auto'
+            break;
+        
+        case "PieChart":
+            legendvalue = {
+                position:"top",
+                textStyle: {
+                    fontSize:9
+                },
+                maxLines:4
+            }
+            chartheight = '70%'
+            charttop = '30%'
+            break;
+        default:
+            // code...
+            break;
+    }
+
     // TODO: animation breaks draswing; probably conflict with react render
     //    needs to be investigated
     let options = {
@@ -111,8 +137,13 @@ let getChartParms = (
         // width: children.length * 120,// 120 per column
         height: 400,
         width: 400,
-        legend: 'none',
-        annotations: { alwaysOutside: true }
+        legend: legendvalue,
+        annotations: { alwaysOutside: true },
+        pieHole: 0.4,
+        chartArea:{
+            height:chartheight,
+            top:charttop
+        }
     }
 
     // TODO: watch for memory leaks when the chart is destroyed
