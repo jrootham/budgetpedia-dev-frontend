@@ -48,7 +48,7 @@ interface ChartParmsObj {
 
 interface ComponentSummaries {
     years?: any,
-    Aggregates?: any,
+    Categories?: any,
 }
 
 interface ChartSelectionContext {

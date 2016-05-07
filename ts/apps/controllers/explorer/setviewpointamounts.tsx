@@ -14,7 +14,7 @@ import {
 
 // starts with hash of components, 
 // recursively descends to BASELINE items, then leaves 
-// summaries by year, and Aggregates by year on ascent
+// summaries by year, and Categories by year on ascent
 let setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) => {
     let viewpoint = budgetdata.Viewpoints[viewpointname]
 
@@ -42,7 +42,7 @@ let setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsInfla
 
     let rootcomponent = { "ROOT": viewpoint }
 
-    // set years, and Aggregates by years
+    // set years, and Categories by years
     // initiates recursion
     setComponentSummaries(rootcomponent, items, isInflationAdjusted,
         lookups, wantsInflationAdjusted)
@@ -61,7 +61,7 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
     // cumulate summaries for this level
     let cumulatingSummaries: ComponentSummaries = {
         years: {},
-        Aggregates: {},
+        Categories: {},
     }
 
     // for every component at this level
@@ -74,7 +74,7 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
 
         // remove any previous aggregations...
         if (component.years) delete component.years
-        if (component.Aggregates) delete component.Aggregates
+        if (component.Categories) delete component.Categories
 
         // for non-baseline items, recurse to collect aggregations
         if (component.Contents != "BASELINE") {
@@ -97,13 +97,13 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
                 // capture data for chart-making
                 if (componentSummaries.years)
                     component.years = componentSummaries.years
-                if (componentSummaries.Aggregates) {
-                    component.Aggregates = componentSummaries.Aggregates
-                    if (component.Aggregates) {// && !component.SortedAggregates) {
+                if (componentSummaries.Categories) {
+                    component.Categories = componentSummaries.Categories
+                    if (component.Categories) {// && !component.SortedCategories) {
                         let sorted = getNameSortedComponents(
-                            component.Aggregates, lookups)
+                            component.Categories, lookups)
 
-                        component.SortedAggregates = sorted
+                        component.SortedCategories = sorted
                     }
 
                 }
@@ -122,21 +122,21 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
                     if (item.Adjusted) {
                         componentSummaries = {
                             years: item.Adjusted.years,
-                            Aggregates: item.Adjusted.Components,
+                            Categories: item.Adjusted.Components,
                         }
                     }
                 } else {
                     if (item.Nominal) {
                         componentSummaries = {
                             years: item.Nominal.years,
-                            Aggregates: item.Nominal.Components,
+                            Categories: item.Nominal.Components,
                         }
                     }
                 }
             } else {
                 componentSummaries = {
                     years: item.years,
-                    Aggregates: item.Components,
+                    Categories: item.Components,
                 }
             }
             // capture data for chart-making
@@ -144,8 +144,8 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
                 if (componentSummaries.years) {
                     component.years = componentSummaries.years
                 } 
-                if (componentSummaries.Aggregates) {
-                    component.Components = componentSummaries.Aggregates
+                if (componentSummaries.Categories) {
+                    component.Components = componentSummaries.Categories
                 } 
             } else {
                 if (component.Components)
@@ -259,36 +259,36 @@ let aggregateComponentSummaries = (
         }
     }
 
-    // if Aggregates have been collected, add them to the totals
-    if (componentSummaries.Aggregates) {
+    // if Categories have been collected, add them to the totals
+    if (componentSummaries.Categories) {
 
-        let Aggregates = componentSummaries.Aggregates
+        let Categories = componentSummaries.Categories
 
         // for each aggreate...
-        for (let aggregatename in Aggregates) {
+        for (let categoryname in Categories) {
 
-            let Aggregate = Aggregates[aggregatename]
+            let Category = Categories[categoryname]
 
-            // for each aggregate year...
-            // collect year values for the Aggregates if they exist
-            if (Aggregate.years) {
+            // for each category year...
+            // collect year values for the Categories if they exist
+            if (Category.years) {
 
-                let years = Aggregate.years
+                let years = Category.years
 
                 for (let yearname in years) {
 
                     // accumulate the year value...
                     let yearvalue = years[yearname]
-                    let cumulatingAggregate =
-                        cumulatingSummaries.Aggregates[aggregatename] || { years: {} }
+                    let cumulatingCategory =
+                        cumulatingSummaries.Categories[categoryname] || { years: {} }
 
-                    if (cumulatingAggregate.years[yearname])
-                        cumulatingAggregate.years[yearname] += yearvalue
+                    if (cumulatingCategory.years[yearname])
+                        cumulatingCategory.years[yearname] += yearvalue
                     else
-                        cumulatingAggregate.years[yearname] = yearvalue
+                        cumulatingCategory.years[yearname] = yearvalue
 
                     // re-assemble
-                    cumulatingSummaries.Aggregates[aggregatename] = cumulatingAggregate
+                    cumulatingSummaries.Categories[categoryname] = cumulatingCategory
 
                 }
             }

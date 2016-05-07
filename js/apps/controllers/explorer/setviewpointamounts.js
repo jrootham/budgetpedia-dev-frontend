@@ -24,15 +24,15 @@ exports.setViewpointAmounts = setViewpointAmounts;
 let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) => {
     let cumulatingSummaries = {
         years: {},
-        Aggregates: {},
+        Categories: {},
     };
     for (let componentname in components) {
         let component = components[componentname];
         let componentSummaries = null;
         if (component.years)
             delete component.years;
-        if (component.Aggregates)
-            delete component.Aggregates;
+        if (component.Categories)
+            delete component.Categories;
         if (component.Contents != "BASELINE") {
             if (component.Components) {
                 let sorted = getIndexSortedComponents(component.Components, lookups);
@@ -40,11 +40,11 @@ let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wa
                 componentSummaries = setComponentSummaries(component.Components, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
                 if (componentSummaries.years)
                     component.years = componentSummaries.years;
-                if (componentSummaries.Aggregates) {
-                    component.Aggregates = componentSummaries.Aggregates;
-                    if (component.Aggregates) {
-                        let sorted = getNameSortedComponents(component.Aggregates, lookups);
-                        component.SortedAggregates = sorted;
+                if (componentSummaries.Categories) {
+                    component.Categories = componentSummaries.Categories;
+                    if (component.Categories) {
+                        let sorted = getNameSortedComponents(component.Categories, lookups);
+                        component.SortedCategories = sorted;
                     }
                 }
             }
@@ -58,7 +58,7 @@ let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wa
                     if (item.Adjusted) {
                         componentSummaries = {
                             years: item.Adjusted.years,
-                            Aggregates: item.Adjusted.Components,
+                            Categories: item.Adjusted.Components,
                         };
                     }
                 }
@@ -66,7 +66,7 @@ let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wa
                     if (item.Nominal) {
                         componentSummaries = {
                             years: item.Nominal.years,
-                            Aggregates: item.Nominal.Components,
+                            Categories: item.Nominal.Components,
                         };
                     }
                 }
@@ -74,15 +74,15 @@ let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wa
             else {
                 componentSummaries = {
                     years: item.years,
-                    Aggregates: item.Components,
+                    Categories: item.Components,
                 };
             }
             if (componentSummaries) {
                 if (componentSummaries.years) {
                     component.years = componentSummaries.years;
                 }
-                if (componentSummaries.Aggregates) {
-                    component.Components = componentSummaries.Aggregates;
+                if (componentSummaries.Categories) {
+                    component.Components = componentSummaries.Categories;
                 }
             }
             else {
@@ -167,20 +167,20 @@ let aggregateComponentSummaries = (cumulatingSummaries, componentSummaries) => {
                 cumulatingSummaries.years[yearname] = yearvalue;
         }
     }
-    if (componentSummaries.Aggregates) {
-        let Aggregates = componentSummaries.Aggregates;
-        for (let aggregatename in Aggregates) {
-            let Aggregate = Aggregates[aggregatename];
-            if (Aggregate.years) {
-                let years = Aggregate.years;
+    if (componentSummaries.Categories) {
+        let Categories = componentSummaries.Categories;
+        for (let categoryname in Categories) {
+            let Category = Categories[categoryname];
+            if (Category.years) {
+                let years = Category.years;
                 for (let yearname in years) {
                     let yearvalue = years[yearname];
-                    let cumulatingAggregate = cumulatingSummaries.Aggregates[aggregatename] || { years: {} };
-                    if (cumulatingAggregate.years[yearname])
-                        cumulatingAggregate.years[yearname] += yearvalue;
+                    let cumulatingCategory = cumulatingSummaries.Categories[categoryname] || { years: {} };
+                    if (cumulatingCategory.years[yearname])
+                        cumulatingCategory.years[yearname] += yearvalue;
                     else
-                        cumulatingAggregate.years[yearname] = yearvalue;
-                    cumulatingSummaries.Aggregates[aggregatename] = cumulatingAggregate;
+                        cumulatingCategory.years[yearname] = yearvalue;
+                    cumulatingSummaries.Categories[categoryname] = cumulatingCategory;
                 }
             }
         }

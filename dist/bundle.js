@@ -10326,24 +10326,24 @@ exports.setViewpointAmounts = setViewpointAmounts;
 var setComponentSummaries = function setComponentSummaries(components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) {
     var cumulatingSummaries = {
         years: {},
-        Aggregates: {}
+        Categories: {}
     };
     for (var componentname in components) {
         var component = components[componentname];
         var componentSummaries = null;
         if (component.years) delete component.years;
-        if (component.Aggregates) delete component.Aggregates;
+        if (component.Categories) delete component.Categories;
         if (component.Contents != "BASELINE") {
             if (component.Components) {
                 var sorted = getIndexSortedComponents(component.Components, lookups);
                 component.SortedComponents = sorted;
                 componentSummaries = setComponentSummaries(component.Components, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
                 if (componentSummaries.years) component.years = componentSummaries.years;
-                if (componentSummaries.Aggregates) {
-                    component.Aggregates = componentSummaries.Aggregates;
-                    if (component.Aggregates) {
-                        var _sorted = getNameSortedComponents(component.Aggregates, lookups);
-                        component.SortedAggregates = _sorted;
+                if (componentSummaries.Categories) {
+                    component.Categories = componentSummaries.Categories;
+                    if (component.Categories) {
+                        var _sorted = getNameSortedComponents(component.Categories, lookups);
+                        component.SortedCategories = _sorted;
                     }
                 }
             }
@@ -10355,29 +10355,29 @@ var setComponentSummaries = function setComponentSummaries(components, items, is
                     if (item.Adjusted) {
                         componentSummaries = {
                             years: item.Adjusted.years,
-                            Aggregates: item.Adjusted.Components
+                            Categories: item.Adjusted.Components
                         };
                     }
                 } else {
                     if (item.Nominal) {
                         componentSummaries = {
                             years: item.Nominal.years,
-                            Aggregates: item.Nominal.Components
+                            Categories: item.Nominal.Components
                         };
                     }
                 }
             } else {
                 componentSummaries = {
                     years: item.years,
-                    Aggregates: item.Components
+                    Categories: item.Components
                 };
             }
             if (componentSummaries) {
                 if (componentSummaries.years) {
                     component.years = componentSummaries.years;
                 }
-                if (componentSummaries.Aggregates) {
-                    component.Components = componentSummaries.Aggregates;
+                if (componentSummaries.Categories) {
+                    component.Components = componentSummaries.Categories;
                 }
             } else {
                 if (component.Components) delete component.SortedComponents;
@@ -10444,17 +10444,17 @@ var aggregateComponentSummaries = function aggregateComponentSummaries(cumulatin
             if (cumulatingSummaries.years[yearname]) cumulatingSummaries.years[yearname] += yearvalue;else cumulatingSummaries.years[yearname] = yearvalue;
         }
     }
-    if (componentSummaries.Aggregates) {
-        var Aggregates = componentSummaries.Aggregates;
-        for (var aggregatename in Aggregates) {
-            var Aggregate = Aggregates[aggregatename];
-            if (Aggregate.years) {
-                var years = Aggregate.years;
+    if (componentSummaries.Categories) {
+        var Categories = componentSummaries.Categories;
+        for (var categoryname in Categories) {
+            var Category = Categories[categoryname];
+            if (Category.years) {
+                var years = Category.years;
                 for (var yearname in years) {
                     var yearvalue = years[yearname];
-                    var cumulatingAggregate = cumulatingSummaries.Aggregates[aggregatename] || { years: {} };
-                    if (cumulatingAggregate.years[yearname]) cumulatingAggregate.years[yearname] += yearvalue;else cumulatingAggregate.years[yearname] = yearvalue;
-                    cumulatingSummaries.Aggregates[aggregatename] = cumulatingAggregate;
+                    var cumulatingCategory = cumulatingSummaries.Categories[categoryname] || { years: {} };
+                    if (cumulatingCategory.years[yearname]) cumulatingCategory.years[yearname] += yearvalue;else cumulatingCategory.years[yearname] = yearvalue;
+                    cumulatingSummaries.Categories[categoryname] = cumulatingCategory;
                 }
             }
         }
