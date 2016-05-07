@@ -63,7 +63,7 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
                 return (Chart, err) => {
                     let chart = Chart.chart;
                     let selection = chart.getSelection();
-                    let context = { configlocation: configLocation, chart: chart, selection: selection, err: err };
+                    let context = { configlocation: configLocation, Chart: Chart, selection: selection, err: err };
                     onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix);
                 };
             })(configlocation)
@@ -131,7 +131,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
     else {
         selectionrow = null;
     }
-    let chart = context.chart;
+    let chart = context.Chart.chart;
     let selectmatrixlocation = context.configlocation;
     let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrix[matrixrow];
@@ -195,8 +195,9 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
     setState({
         chartmatrix: chartmatrix,
     });
-    chartconfig.chartselection = context.selection,
-        chartconfig.chart = chart;
+    chartconfig.chartselection = context.selection;
+    chartconfig.chart = chart;
+    chartconfig.Chart = context.Chart;
     updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
 };
 let getNodeDatasets = (viewpointindex, path, budgetdata) => {

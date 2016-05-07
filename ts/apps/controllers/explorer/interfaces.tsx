@@ -7,6 +7,7 @@ interface ChartConfig {
     matrixlocation: MatrixLocation,
     chartselection?: any[],
     chart?: any,
+    Chart?:any,
     datapath: string[],
     parentdata?: any,
     yearscope: YearScope,
@@ -52,7 +53,7 @@ interface ComponentSummaries {
 
 interface ChartSelectionContext {
     configlocation: any,
-    chart: any,
+    Chart: any,
     selection: any[],
     err: any,
 }

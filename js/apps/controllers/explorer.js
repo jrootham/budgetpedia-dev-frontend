@@ -116,10 +116,10 @@ class ExplorerClass extends Component {
                     cellconfig.dataseries = seriesname;
                 }
             }
+            this.setState({
+                chartmatrix: chartmatrix,
+            });
             setTimeout(() => {
-                this.setState({
-                    chartmatrix: chartmatrix,
-                });
                 updatechartselections_1.updateChartSelections(chartmatrix, seriesref);
             });
         };
@@ -139,7 +139,18 @@ class ExplorerClass extends Component {
             this.setState({
                 chartmatrix: chartmatrix,
             });
-            updatechartselections_1.updateChartSelections(chartmatrix, location.row);
+            setTimeout(() => {
+                if (chartConfig.chart) {
+                    chartConfig.chart = chartConfig.Chart.chart;
+                    if (chartConfig.charttype == "PieChart") {
+                        chartConfig.chartselection[0].column = null;
+                    }
+                    else {
+                        chartConfig.chartselection[0].column = 1;
+                    }
+                }
+                updatechartselections_1.updateChartSelections(chartmatrix, location.row);
+            });
         };
         this.getCharts = (matrixcolumn, matrixrow) => {
             let charts = matrixcolumn.map((chartconfig, index) => {

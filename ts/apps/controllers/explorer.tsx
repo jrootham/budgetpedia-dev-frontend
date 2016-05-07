@@ -223,10 +223,10 @@ class ExplorerClass extends Component< any, any > {
                 cellconfig.dataseries = seriesname
             }
         }
+        this.setState({
+            chartmatrix,
+        })
         setTimeout(() => {
-            this.setState({
-                chartmatrix,
-            })
             updateChartSelections(chartmatrix, seriesref)
         })
     }
@@ -249,12 +249,25 @@ class ExplorerClass extends Component< any, any > {
         } else {
             chartConfig.charttype = oldChartType
         }
-        // setTimeout(() => {
-            this.setState({
-                chartmatrix,
-            })
+        this.setState({
+            chartmatrix,
+        })
+        setTimeout(() => {
+            if (chartConfig.chart) {
+                // refresh to new chart created with switch
+                chartConfig.chart = chartConfig.Chart.chart
+                // it turns out that "PieChart" needs column set to null
+                // for setSelection to work
+                if (chartConfig.charttype == "PieChart") {
+                    chartConfig.chartselection[0].column = null
+                } else {
+                    // "ColumnChart" doesn't seem to care about column value,
+                    // but we set it back to original (presumed) for consistency
+                    chartConfig.chartselection[0].column = 1
+                }
+            }
             updateChartSelections(chartmatrix, location.row)
-        // })
+        })
     }
 
     // ============================================================

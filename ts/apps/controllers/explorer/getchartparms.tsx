@@ -128,7 +128,7 @@ let getChartParms = (
                 return (Chart, err) => {
                     let chart = Chart.chart
                     let selection = chart.getSelection()
-                    let context: ChartSelectionContext = { configlocation: configLocation, chart, selection, err }
+                    let context: ChartSelectionContext = { configlocation: configLocation, Chart, selection, err }
 
                     onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix)
                 }
@@ -226,7 +226,7 @@ let onChartComponentSelection = (
         selectionrow = null
     }
 
-    let chart = context.chart
+    let chart = context.Chart.chart
 
     // unpack chartconfig
     let selectmatrixlocation = context.configlocation
@@ -321,8 +321,9 @@ let onChartComponentSelection = (
         chartmatrix,
     })
 
-    chartconfig.chartselection = context.selection,
-        chartconfig.chart = chart
+    chartconfig.chartselection = context.selection
+    chartconfig.chart = chart
+    chartconfig.Chart = context.Chart
 
     updateChartSelections(chartmatrix, matrixrow)
 

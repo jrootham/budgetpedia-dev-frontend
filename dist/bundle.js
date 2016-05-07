@@ -9921,10 +9921,10 @@ var ExplorerClass = function (_Component) {
                     cellconfig.dataseries = seriesname;
                 }
             }
+            _this.setState({
+                chartmatrix: chartmatrix
+            });
             setTimeout(function () {
-                _this.setState({
-                    chartmatrix: chartmatrix
-                });
                 updatechartselections_1.updateChartSelections(chartmatrix, seriesref);
             });
         };
@@ -9943,7 +9943,17 @@ var ExplorerClass = function (_Component) {
             _this.setState({
                 chartmatrix: chartmatrix
             });
-            updatechartselections_1.updateChartSelections(chartmatrix, location.row);
+            setTimeout(function () {
+                if (chartConfig.chart) {
+                    chartConfig.chart = chartConfig.Chart.chart;
+                    if (chartConfig.charttype == "PieChart") {
+                        chartConfig.chartselection[0].column = null;
+                    } else {
+                        chartConfig.chartselection[0].column = 1;
+                    }
+                }
+                updatechartselections_1.updateChartSelections(chartmatrix, location.row);
+            });
         };
         _this.getCharts = function (matrixcolumn, matrixrow) {
             var charts = matrixcolumn.map(function (chartconfig, index) {
@@ -10100,7 +10110,7 @@ var getChartParms = function getChartParms(chartConfig, userselections, budgetda
             return function (Chart, err) {
                 var chart = Chart.chart;
                 var selection = chart.getSelection();
-                var context = { configlocation: configLocation, chart: chart, selection: selection, err: err };
+                var context = { configlocation: configLocation, Chart: Chart, selection: selection, err: err };
                 onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix);
             };
         }(configlocation)
@@ -10154,7 +10164,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
     } else {
         selectionrow = null;
     }
-    var chart = context.chart;
+    var chart = context.Chart.chart;
     var selectmatrixlocation = context.configlocation;
     var matrixrow = selectmatrixlocation.row,
         matrixcolumn = selectmatrixlocation.column;
@@ -10223,7 +10233,9 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
     setState({
         chartmatrix: chartmatrix
     });
-    chartconfig.chartselection = context.selection, chartconfig.chart = chart;
+    chartconfig.chartselection = context.selection;
+    chartconfig.chart = chart;
+    chartconfig.Chart = context.Chart;
     updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
 };
 var getNodeDatasets = function getNodeDatasets(viewpointindex, path, budgetdata) {
@@ -10435,7 +10447,9 @@ var updateChartSelections = function updateChartSelections(chartmatrix, matrixro
 
             var chart = config.chart;
             var selection = config.chartselection;
-            if (chart) chart.setSelection(selection);
+            if (chart) {
+                chart.setSelection(selection);
+            }
         }
     } catch (err) {
         _didIteratorError = true;
