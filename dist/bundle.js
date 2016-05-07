@@ -4142,7 +4142,7 @@ module.exports={
             "Baseline": "Programs",
             "Units": "DOLLAR",
             "UnitsAlias": "$Thousands",
-            "Components": "Expenditures",
+            "Components": "Revenues",
             "Title": "2015 Council Approved Gross Operating Revenue",
             "InflationAdjusted": true,
             "Items": {
@@ -7063,7 +7063,7 @@ module.exports={
             "Baseline": "Programs",
             "Units": "FTE",
             "UnitsAlias": "Staffing Level (FTE)",
-            "Components": "FulltimeParttime",
+            "Components": "TimeAllocations",
             "Title": "2015 Council Approved Staff Positions",
             "Items": {
                 "311SERVICE": {
@@ -8070,7 +8070,9 @@ module.exports={
             "505A": "Contribution To Capital 505A",
             "510A": "Contribution To Reserves/Reserve Funds 510A",
             "650A": "Other Expenditures 650A",
-            "700A": "Inter-Divisional Charges 700A",
+            "700A": "Inter-Divisional Charges 700A"
+        },
+        "Revenues": {
             "750A": "Inter-Divisional Recoveries 750A",
             "805A": "Provincial Subsidies 805A",
             "810A": "Federal Subsidies 810A",
@@ -8081,7 +8083,7 @@ module.exports={
             "930A": "Contribution From Reserves/Reserve Funds 930A",
             "940A": "Sundry and Other Revenues 940A"
         },
-        "FulltimeParttime": {
+        "TimeAllocations": {
             "FULL": "Full Time",
             "PART": "Part Time"
         }
