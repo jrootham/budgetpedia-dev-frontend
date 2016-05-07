@@ -32,7 +32,7 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                     tooltipPosition="bottom-center" 
                     style={
                         { backgroundColor: (this.props.settings.chartCode == "ColumnChart")
-                            ? "lightgreen"
+                            ? "rgba(144,238,144,0.5)"
                             : "transparent" 
                         }
                     }
@@ -47,7 +47,7 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                     style={
                         {
                             backgroundColor: (this.props.settings.chartCode == "DonutChart")
-                                ? "lightgreen"
+                                ? "rgba(144,238,144,0.5)"
                                 : "transparent"
                         }
                     }
@@ -62,7 +62,7 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                     style={
                         {
                             backgroundColor: (this.props.settings.chartCode == "TimeLine")
-                                ? "lightgreen"
+                                ? "rgba(144,238,144,0.5)"
                                 : "transparent"
                         }
                     }

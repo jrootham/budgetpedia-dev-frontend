@@ -13,19 +13,19 @@ class ExplorerChart extends Component {
     }
     render() {
         return React.createElement("div", {style: { position: "relative", display: "inline-block", padding: "10px", backgroundColor: "Beige" }}, React.createElement("div", {style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton, {tooltip: "Column Chart", tooltipPosition: "bottom-center", style: { backgroundColor: (this.props.settings.chartCode == "ColumnChart")
-                ? "lightgreen"
+                ? "rgba(144,238,144,0.5)"
                 : "transparent"
         }, onTouchTap: e => {
             this.onChangeChartCode('ColumnChart');
         }}, React.createElement(FontIcon, {className: "material-icons"}, "insert_chart")), React.createElement(IconButton, {tooltip: "Donut Pie Chart", tooltipPosition: "bottom-center", style: {
             backgroundColor: (this.props.settings.chartCode == "DonutChart")
-                ? "lightgreen"
+                ? "rgba(144,238,144,0.5)"
                 : "transparent"
         }, onTouchTap: e => {
             this.onChangeChartCode('DonutChart');
         }}, React.createElement(FontIcon, {className: "material-icons"}, "donut_small")), React.createElement(IconButton, {tooltip: "Timeline", tooltipPosition: "bottom-center", style: {
             backgroundColor: (this.props.settings.chartCode == "TimeLine")
-                ? "lightgreen"
+                ? "rgba(144,238,144,0.5)"
                 : "transparent"
         }, disabled: true, onTouchTap: e => {
             this.onChangeChartCode('Timeline');
