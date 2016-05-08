@@ -10,13 +10,13 @@ import FontIcon = require('material-ui/lib/font-icon')
 import Tabs = require('material-ui/lib/tabs/tabs')
 import Tab = require('material-ui/lib/tabs/tab')
 import {
-    ChartConfig,
+    // ChartConfig,
     ChartParms,
-    ChartSelectionContext,
+    PortalConfig,
+    PortalChartConfig,
     PortalChartLocation,
     PortalChartSettings,
-    PortalChartConfig,
-    PortalConfig
+    ChartSelectionContext
 } from '../controllers/explorer/interfaces'
 
 interface ExploreChartProps {

@@ -44,19 +44,20 @@ class ExplorerClass extends Component {
             let dataseriesname = userselections.dataseries;
             let budgetdata = this.props.budgetdata;
             setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
-            let drilldownchartconfig = this.initRootChartConfig(constants_1.ChartSeries.DrillDown, userselections);
-            chartParmsObj = getchartparms_1.getChartParms(drilldownchartconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix);
+            let drilldownnodeconfig = this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
+            chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix);
             if (!chartParmsObj.error) {
-                drilldownchartconfig.chartparms = chartParmsObj.chartParms;
-                drilldownchartconfig.chartCode = constants_2.ChartTypeCodes[drilldownchartconfig.chartparms.chartType];
-                matrixlocation = drilldownchartconfig.matrixlocation;
-                chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig;
+                drilldownnodeconfig.charts[0].chartparms = chartParmsObj.chartParms;
+                drilldownnodeconfig.charts[0].chartCode =
+                    constants_2.ChartTypeCodes[drilldownnodeconfig.charts[0].chartparms.chartType];
+                matrixlocation = drilldownnodeconfig.matrixlocation;
+                chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
             }
             this.setState({
                 chartmatrix: chartmatrix,
             });
         };
-        this.initRootChartConfig = (matrixrow, userselections) => {
+        this.initRootNodeConfig = (matrixrow, userselections) => {
             let chartCode = constants_2.ChartTypeCodes[userselections.charttype];
             return {
                 viewpoint: userselections.viewpoint,
@@ -71,8 +72,12 @@ class ExplorerClass extends Component {
                     earliestyear: null,
                     fullrange: false,
                 },
-                charttype: userselections.charttype,
-                chartCode: chartCode,
+                charts: [
+                    {
+                        charttype: userselections.charttype,
+                        chartCode: chartCode,
+                    }
+                ]
             };
         };
         this.switchViewpoint = (viewpointname, seriesref) => {
@@ -99,23 +104,24 @@ class ExplorerClass extends Component {
             let budgetdata = this.props.budgetdata;
             setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, this.state.userselections.inflationadjusted);
             let matrixseries = chartmatrix[seriesref];
-            let cellconfig;
+            let nodeconfig;
             let cellptr;
             for (cellptr = 0; cellptr < matrixseries.length; cellptr++) {
-                cellconfig = matrixseries[cellptr];
-                let chartParmsObj = getchartparms_1.getChartParms(cellconfig, userselections, budgetdata, this.setState, chartmatrix);
+                nodeconfig = matrixseries[cellptr];
+                let chartParmsObj = getchartparms_1.getChartParms(nodeconfig, userselections, budgetdata, this.setState, chartmatrix);
                 if (chartParmsObj.isError) {
                     matrixseries.splice(cellptr);
                     if (cellptr > 0) {
                         let parentconfig = matrixseries[cellptr - 1];
-                        parentconfig.chartselection = null;
-                        parentconfig.chart = null;
+                        parentconfig.charts[0].chartselection = null;
+                        parentconfig.charts[0].chart = null;
                     }
                 }
                 else {
-                    cellconfig.chartparms = chartParmsObj.chartParms;
-                    cellconfig.chartCode = constants_2.ChartTypeCodes[cellconfig.chartparms.chartType];
-                    cellconfig.dataseries = seriesname;
+                    nodeconfig.charts[0].chartparms = chartParmsObj.chartParms;
+                    nodeconfig.charts[0].chartCode =
+                        constants_2.ChartTypeCodes[nodeconfig.charts[0].chartparms.chartType];
+                    nodeconfig.dataseries = seriesname;
                 }
             }
             this.setState({
@@ -128,39 +134,40 @@ class ExplorerClass extends Component {
         this.switchChartCode = (location, chartCode) => {
             let chartType = constants_2.ChartCodeTypes[chartCode];
             let chartmatrix = this.state.chartmatrix;
-            let chartConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
-            let oldChartType = chartConfig.charttype;
-            chartConfig.charttype = chartType;
-            let chartParmsObj = getchartparms_1.getChartParms(chartConfig, this.state.userselections, this.props.budgetdata, this.setState.bind(this), chartmatrix);
+            let nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
+            let oldChartType = nodeConfig.charts[0].charttype;
+            nodeConfig.charts[0].charttype = chartType;
+            let chartParmsObj = getchartparms_1.getChartParms(nodeConfig, this.state.userselections, this.props.budgetdata, this.setState.bind(this), chartmatrix);
             if (!chartParmsObj.isError) {
-                chartConfig.chartparms = chartParmsObj.chartParms;
-                chartConfig.chartCode = constants_2.ChartTypeCodes[chartConfig.chartparms.chartType];
+                nodeConfig.charts[0].chartparms = chartParmsObj.chartParms;
+                nodeConfig.charts[0].chartCode =
+                    constants_2.ChartTypeCodes[nodeConfig.charts[0].chartparms.chartType];
             }
             else {
-                chartConfig.charttype = oldChartType;
+                nodeConfig.charts[0].charttype = oldChartType;
             }
             this.setState({
                 chartmatrix: chartmatrix,
             });
             setTimeout(() => {
-                if (chartConfig.chart) {
-                    chartConfig.chart = chartConfig.Chart.chart;
-                    if (chartConfig.charttype == "PieChart") {
-                        chartConfig.chartselection[0].column = null;
+                if (nodeConfig.charts[0].chart) {
+                    nodeConfig.charts[0].chart = nodeConfig.charts[0].Chart.chart;
+                    if (nodeConfig.charts[0].charttype == "PieChart") {
+                        nodeConfig.charts[0].chartselection[0].column = null;
                     }
                     else {
-                        chartConfig.chartselection[0].column = 1;
+                        nodeConfig.charts[0].chartselection[0].column = 1;
                     }
                 }
                 updatechartselections_1.updateChartSelections(chartmatrix, location.matrixlocation.row);
             });
         };
         this.getCharts = (matrixcolumn, matrixrow) => {
-            let charts = matrixcolumn.map((chartconfig, index) => {
-                let portalchartparms = chartconfig.chartparms;
+            let charts = matrixcolumn.map((nodeconfig, index) => {
+                let portalchartparms = nodeconfig.charts[0].chartparms;
                 let portalchartsettings = {
                     onSwitchChartCode: this.switchChartCode,
-                    chartCode: chartconfig.chartCode,
+                    chartCode: nodeconfig.charts[0].chartCode,
                     graph_id: "ChartID" + matrixrow + '' + index,
                     chartblocktitle: "By Programs",
                 };
@@ -170,7 +177,7 @@ class ExplorerClass extends Component {
                             portalchartparms: portalchartparms,
                             portalchartsettings: portalchartsettings,
                             portalchartlocation: {
-                                matrixlocation: chartconfig.matrixlocation,
+                                matrixlocation: nodeconfig.matrixlocation,
                                 portalindex: null
                             }
                         }

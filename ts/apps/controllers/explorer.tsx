@@ -47,7 +47,7 @@ import { getChartParms } from './explorer/getchartparms'
 import { updateChartSelections } from './explorer/updatechartselections'
 
 import {
-    ChartConfig,
+    BudgetNodeConfig,
     ChartParms,
     ChartSelectionContext,
     MatrixLocation,
@@ -107,21 +107,22 @@ class ExplorerClass extends Component< any, any > {
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
 
         // assemble parms to get initial dataset
-        let drilldownchartconfig: ChartConfig =
-            this.initRootChartConfig(ChartSeries.DrillDown, userselections)
+        let drilldownnodeconfig: BudgetNodeConfig =
+            this.initRootNodeConfig(ChartSeries.DrillDown, userselections)
 
         chartParmsObj = getChartParms(
-            drilldownchartconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix)
+            drilldownnodeconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix)
 
         if (!chartParmsObj.error) {
 
-            drilldownchartconfig.chartparms = chartParmsObj.chartParms
-            drilldownchartconfig.chartCode = ChartTypeCodes[drilldownchartconfig.chartparms.chartType]
+            drilldownnodeconfig.charts[0].chartparms = chartParmsObj.chartParms
+            drilldownnodeconfig.charts[0].chartCode = 
+                ChartTypeCodes[drilldownnodeconfig.charts[0].chartparms.chartType]
 
 
 
-            matrixlocation = drilldownchartconfig.matrixlocation
-            chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig
+            matrixlocation = drilldownnodeconfig.matrixlocation
+            chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig
 
         }
 
@@ -152,7 +153,7 @@ class ExplorerClass extends Component< any, any > {
 
     // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
 
-    initRootChartConfig = ( matrixrow, userselections ): ChartConfig => {
+    initRootNodeConfig = (matrixrow, userselections): BudgetNodeConfig => {
         let chartCode = ChartTypeCodes[userselections.charttype]
         return {
             viewpoint:userselections.viewpoint,
@@ -167,8 +168,12 @@ class ExplorerClass extends Component< any, any > {
                 earliestyear: null,
                 fullrange: false,
             },
-            charttype: userselections.charttype,
-            chartCode,
+            charts: [ 
+                {
+                    charttype: userselections.charttype,
+                    chartCode,
+                }
+            ]
         }
 
     }
@@ -211,23 +216,24 @@ class ExplorerClass extends Component< any, any > {
         setViewpointAmounts(viewpointname, dataseriesname, budgetdata,
             this.state.userselections.inflationadjusted)
         let matrixseries = chartmatrix[seriesref]
-        let cellconfig:ChartConfig
+        let nodeconfig: BudgetNodeConfig
         let cellptr: number
         for (cellptr = 0; cellptr < matrixseries.length; cellptr++ ) {
-            cellconfig = matrixseries[cellptr]
-            let chartParmsObj = getChartParms(cellconfig, userselections, budgetdata, this.setState, chartmatrix)
+            nodeconfig = matrixseries[cellptr]
+            let chartParmsObj = getChartParms(nodeconfig, userselections, budgetdata, this.setState, chartmatrix)
             if (chartParmsObj.isError) {
                 matrixseries.splice(cellptr)
                 if (cellptr > 0) { // unset the selection of the parent
-                    let parentconfig:ChartConfig = matrixseries[cellptr - 1]
+                    let parentconfig: BudgetNodeConfig = matrixseries[cellptr - 1]
                     // disable reselection
-                    parentconfig.chartselection = null
-                    parentconfig.chart = null
+                    parentconfig.charts[0].chartselection = null
+                    parentconfig.charts[0].chart = null
                 }
             } else {
-                cellconfig.chartparms = chartParmsObj.chartParms
-                cellconfig.chartCode = ChartTypeCodes[cellconfig.chartparms.chartType]
-                cellconfig.dataseries = seriesname
+                nodeconfig.charts[0].chartparms = chartParmsObj.chartParms
+                nodeconfig.charts[0].chartCode = 
+                    ChartTypeCodes[nodeconfig.charts[0].chartparms.chartType]
+                nodeconfig.dataseries = seriesname
             }
         }
         this.setState({
@@ -242,36 +248,37 @@ class ExplorerClass extends Component< any, any > {
     switchChartCode = (location:PortalChartLocation, chartCode) => {
         let chartType = ChartCodeTypes[chartCode]
         let chartmatrix = this.state.chartmatrix
-        let chartConfig:ChartConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column]
-        let oldChartType = chartConfig.charttype
-        chartConfig.charttype = chartType
+        let nodeConfig: BudgetNodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column]
+        let oldChartType = nodeConfig.charts[0].charttype
+        nodeConfig.charts[0].charttype = chartType
         let chartParmsObj = getChartParms(
-            chartConfig, 
+            nodeConfig, 
             this.state.userselections, 
             this.props.budgetdata, 
             this.setState.bind(this), 
             chartmatrix)
         if (!chartParmsObj.isError) {
-            chartConfig.chartparms = chartParmsObj.chartParms
-            chartConfig.chartCode = ChartTypeCodes[chartConfig.chartparms.chartType]
+            nodeConfig.charts[0].chartparms = chartParmsObj.chartParms
+            nodeConfig.charts[0].chartCode = 
+                ChartTypeCodes[nodeConfig.charts[0].chartparms.chartType]
         } else {
-            chartConfig.charttype = oldChartType
+            nodeConfig.charts[0].charttype = oldChartType
         }
         this.setState({
             chartmatrix,
         })
         setTimeout(() => {
-            if (chartConfig.chart) {
+            if (nodeConfig.charts[0].chart) {
                 // refresh to new chart created with switch
-                chartConfig.chart = chartConfig.Chart.chart
+                nodeConfig.charts[0].chart = nodeConfig.charts[0].Chart.chart
                 // it turns out that "PieChart" needs column set to null
                 // for setSelection to work
-                if (chartConfig.charttype == "PieChart") {
-                    chartConfig.chartselection[0].column = null
+                if (nodeConfig.charts[0].charttype == "PieChart") {
+                    nodeConfig.charts[0].chartselection[0].column = null
                 } else {
                     // "ColumnChart" doesn't seem to care about column value,
                     // but we set it back to original (presumed) for consistency
-                    chartConfig.chartselection[0].column = 1
+                    nodeConfig.charts[0].chartselection[0].column = 1
                 }
             }
             updateChartSelections(chartmatrix, location.matrixlocation.row)
@@ -284,14 +291,14 @@ class ExplorerClass extends Component< any, any > {
     // get React components to render
     getCharts = (matrixcolumn, matrixrow) => {
 
-        let charts = matrixcolumn.map((chartconfig:ChartConfig, index) => {
+        let charts = matrixcolumn.map((nodeconfig: BudgetNodeConfig, index) => {
 
-            let portalchartparms = chartconfig.chartparms
+            let portalchartparms = nodeconfig.charts[0].chartparms
 
             let portalchartsettings:PortalChartSettings = { 
                 // matrixlocation: chartconfig.matrixlocation,
                 onSwitchChartCode: this.switchChartCode,
-                chartCode:chartconfig.chartCode,
+                chartCode:nodeconfig.charts[0].chartCode,
                 graph_id: "ChartID" + matrixrow + '' + index,
                 chartblocktitle:"By Programs",
                 // index,
@@ -303,7 +310,7 @@ class ExplorerClass extends Component< any, any > {
                         portalchartparms,
                         portalchartsettings,
                         portalchartlocation: {
-                            matrixlocation: chartconfig.matrixlocation,
+                            matrixlocation: nodeconfig.matrixlocation,
                             portalindex:null
                         }
                     }

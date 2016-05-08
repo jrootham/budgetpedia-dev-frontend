@@ -12,6 +12,10 @@ interface ComponentSummaries {
     Categories?: any,
 }
 
+import {
+    SortedComponentItem,
+} from './interfaces'
+
 // -------------------[ SET VIEWPOINT HIERARCHY NODE AMOUNTS ]-----------
 
 // starts with hash of components, 
@@ -176,17 +180,17 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
 
 // -----------------------[ RETURN SORTED COMPONENT LIST ]------------------------
 
-let getIndexSortedComponents = (components, lookups) => {
+let getIndexSortedComponents = (components, lookups):SortedComponentItem[] => {
     let sorted = []
     let catlookups = lookups.categorylookups
-    for (let componentname in components) {
-        let component = components[componentname]
+    for (let componentcode in components) {
+        let component = components[componentcode]
         let config = component.Contents
         let name = (config == 'BASELINE')
-            ? lookups.baselinelookups[componentname]
-            : catlookups[componentname]
+            ? lookups.baselinelookups[componentcode]
+            : catlookups[componentcode]
         let item = {
-            Code: componentname,
+            Code: componentcode,
             Index: component.Index,
             Name: name || 'unknown name'
         }
@@ -207,7 +211,7 @@ let getIndexSortedComponents = (components, lookups) => {
 
 }
 
-let getNameSortedComponents = (components, lookups) => {
+let getNameSortedComponents = (components, lookups):SortedComponentItem[] => {
     let sorted = []
     let complookups = lookups.componentlookups
     for (let componentname in components) {

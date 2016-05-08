@@ -1,8 +1,9 @@
 "use strict";
 let updateChartSelections = (chartmatrix, matrixrow) => {
-    for (let config of chartmatrix[matrixrow]) {
-        let chart = config.chart;
-        let selection = config.chartselection;
+    let node = null;
+    for (node of chartmatrix[matrixrow]) {
+        let chart = node.charts[0].chart;
+        let selection = node.charts[0].chartselection;
         if (chart) {
             chart.setSelection(selection);
         }

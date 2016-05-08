@@ -2,8 +2,8 @@
 var format = require('format-number');
 const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
-let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmatrix) => {
-    let viewpointindex = chartConfig.viewpoint, path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
+let getChartParms = (nodeConfig, userselections, budgetdata, setState, chartmatrix) => {
+    let viewpointindex = nodeConfig.viewpoint, path = nodeConfig.datapath, yearscope = nodeConfig.yearscope, year = yearscope.latestyear;
     let dataseriesname = userselections.dataseries;
     let viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel;
     vertlabel = itemseries.UnitsAlias;
@@ -19,16 +19,16 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
     let singlerounded = format({ round: 1, integerSeparator: '' });
     let staffrounded = format({ round: 1, integerSeparator: ',' });
     let { node, components } = getNodeDatasets(viewpointindex, path, budgetdata);
-    let chartType = chartConfig.charttype;
+    let chartType = nodeConfig.charts[0].charttype;
     let titleref = viewpointdata.Configuration[node.Contents];
     let axistitle = titleref.Alias || titleref.Name;
     let title;
-    if (chartConfig.parentdata) {
-        let parentnode = chartConfig.parentdata.node;
-        let configindex = node.Config || parentnode.Contents;
+    if (nodeConfig.parentdata) {
+        let parentdatanode = nodeConfig.parentdata.datanode;
+        let configindex = node.Config || parentdatanode.Contents;
         let category = viewpointdata.Configuration[configindex].Instance;
         let catname = category.Alias || category.Name;
-        title = catname + ': ' + chartConfig.parentdata.Name;
+        title = catname + ': ' + nodeConfig.parentdata.Name;
     }
     else {
         title = itemseries.Title;
@@ -83,7 +83,7 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
             top: charttop
         }
     };
-    let matrixlocation = Object.assign({}, chartConfig.matrixlocation);
+    let matrixlocation = Object.assign({}, nodeConfig.matrixlocation);
     let configlocation = {
         matrixlocation: matrixlocation,
         portalindex: null
@@ -110,7 +110,7 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
     if (!node.SortedComponents) {
         return { isError: true, chartParms: {} };
     }
-    let rows = node.SortedComponents.map(item => {
+    let rows = node.SortedComponents.map((item) => {
         let component = components[item.Code];
         if (!component) {
             console.error('component not found for (components, item, item.Code) ', components, item.Code, item);
@@ -165,19 +165,19 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
     let selectmatrixlocation = context.portalchartlocation.matrixlocation;
     let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrix[matrixrow];
-    let chartconfig = chartmatrix[matrixrow][matrixcolumn];
-    let viewpoint = chartconfig.viewpoint, dataseries = chartconfig.dataseries;
+    let nodeconfig = chartmatrix[matrixrow][matrixcolumn];
+    let viewpoint = nodeconfig.viewpoint, dataseries = nodeconfig.dataseries;
     serieslist.splice(matrixcolumn + 1);
     setState({
         chartmatrix: chartmatrix,
     });
     if (!selection) {
-        delete chartconfig.chartselection;
-        delete chartconfig.chart;
+        delete nodeconfig.charts[0].chartselection;
+        delete nodeconfig.charts[0].chart;
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
-    let childdataroot = chartconfig.datapath.slice();
+    let childdataroot = nodeconfig.datapath.slice();
     let { node, components } = getNodeDatasets(userselections.viewpoint, childdataroot, budgetdata);
     if (!node.Components) {
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
@@ -187,7 +187,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
     let parentdata = null;
     if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
         parentdata = node.SortedComponents[selectionrow];
-        parentdata.node = node;
+        parentdata.datanode = node;
         code = parentdata.Code;
     }
     if (code)
@@ -201,8 +201,8 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
-    let newrange = Object.assign({}, chartconfig.yearscope);
-    let newchartconfig = {
+    let newrange = Object.assign({}, nodeconfig.yearscope);
+    let newnodeconfig = {
         viewpoint: viewpoint,
         dataseries: dataseries,
         datapath: childdataroot,
@@ -212,23 +212,23 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         },
         parentdata: parentdata,
         yearscope: newrange,
-        charttype: userselections.charttype,
+        charts: [{ charttype: userselections.charttype }],
     };
-    let chartParmsObj = getChartParms(newchartconfig, userselections, budgetdata, setState, chartmatrix);
+    let chartParmsObj = getChartParms(newnodeconfig, userselections, budgetdata, setState, chartmatrix);
     if (chartParmsObj.isError) {
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
-    newchartconfig.chartparms = chartParmsObj.chartParms;
-    newchartconfig.chartCode = constants_1.ChartTypeCodes[newchartconfig.charttype];
+    newnodeconfig.charts[0].chartparms = chartParmsObj.chartParms;
+    newnodeconfig.charts[0].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[0].charttype];
     let newmatrixcolumn = matrixcolumn + 1;
-    chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig;
+    chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;
     setState({
         chartmatrix: chartmatrix,
     });
-    chartconfig.chartselection = context.selection;
-    chartconfig.chart = chart;
-    chartconfig.Chart = context.Chart;
+    nodeconfig.charts[0].chartselection = context.selection;
+    nodeconfig.charts[0].chart = chart;
+    nodeconfig.charts[0].Chart = context.Chart;
     updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
 };
 let getNodeDatasets = (viewpointindex, path, budgetdata) => {

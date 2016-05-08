@@ -13,25 +13,26 @@
 var format = require('format-number')
 
 import {
-    ChartConfig,
+    BudgetNodeConfig,
     ChartParms,
     ChartSelectionContext,
-    PortalChartLocation
+    PortalChartLocation,
+    SortedComponentItem
 } from './interfaces'
 
 import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
 
 let getChartParms = (
-    chartConfig: ChartConfig, 
+    nodeConfig: BudgetNodeConfig, 
     userselections, budgetdata, setState, chartmatrix) => {
 
     // -------------------[ INIT VARS ]---------------------
 
     // unpack chartConfig & derivatives
-    let viewpointindex = chartConfig.viewpoint,
-        path = chartConfig.datapath,
-        yearscope = chartConfig.yearscope,
+    let viewpointindex = nodeConfig.viewpoint,
+        path = nodeConfig.datapath,
+        yearscope = nodeConfig.yearscope,
         year = yearscope.latestyear
 
     // unpack userselections
@@ -66,7 +67,7 @@ let getChartParms = (
 
     // ---------------------[ COLLECT CHART PARMS ]---------------------
     // 1. chart type:
-    let chartType = chartConfig.charttype
+    let chartType = nodeConfig.charts[0].charttype
 
     // 2. chart options:
     // get axis title
@@ -75,12 +76,12 @@ let getChartParms = (
 
     // assemble chart title
     let title
-    if (chartConfig.parentdata) {
-        let parentnode = chartConfig.parentdata.node
-        let configindex = node.Config || parentnode.Contents
+    if (nodeConfig.parentdata) {
+        let parentdatanode = nodeConfig.parentdata.datanode
+        let configindex = node.Config || parentdatanode.Contents
         let category = viewpointdata.Configuration[configindex].Instance
         let catname = category.Alias || category.Name
-        title = catname + ': ' + chartConfig.parentdata.Name
+        title = catname + ': ' + nodeConfig.parentdata.Name
     }
     else {
         title = itemseries.Title
@@ -151,7 +152,7 @@ let getChartParms = (
     // TODO: replace chartconfig with matrix co-ordinates to avoid
     //     need to update chart by destroying chart (thus closure) before replacing it
     // 3. chart events:
-    let matrixlocation = Object.assign({}, chartConfig.matrixlocation)
+    let matrixlocation = Object.assign({}, nodeConfig.matrixlocation)
     let configlocation: PortalChartLocation = {
         matrixlocation,
         portalindex:null
@@ -187,7 +188,7 @@ let getChartParms = (
     if (!node.SortedComponents) {
         return { isError: true, chartParms: {} }
     }
-    let rows = node.SortedComponents.map(item => {
+    let rows = node.SortedComponents.map((item:SortedComponentItem) => {
         // TODO: get determination of amount processing from Unit value
         let component = components[item.Code]
         if (!component) {
@@ -271,11 +272,11 @@ let onChartComponentSelection = (
     // acquire serieslist from matrix
     let serieslist = chartmatrix[matrixrow]
 
-    let chartconfig = chartmatrix[matrixrow][matrixcolumn]
+    let nodeconfig:BudgetNodeConfig = chartmatrix[matrixrow][matrixcolumn]
 
     // get taxonomy references
-    let viewpoint = chartconfig.viewpoint,
-        dataseries = chartconfig.dataseries
+    let viewpoint = nodeconfig.viewpoint,
+        dataseries = nodeconfig.dataseries
 
     // TODO: abandon here if the next one exists and is the same
     serieslist.splice(matrixcolumn + 1) // remove subsequent charts
@@ -286,14 +287,14 @@ let onChartComponentSelection = (
     });
 
     if (!selection) { // deselected
-        delete chartconfig.chartselection
-        delete chartconfig.chart
+        delete nodeconfig.charts[0].chartselection
+        delete nodeconfig.charts[0].chart
         updateChartSelections(chartmatrix, matrixrow)
         return
     }
     // let chartconfig:ChartConfig = context.chartconfig // chartmatrix[matrixrow][matrixcolumn]
     // copy path
-    let childdataroot = chartconfig.datapath.slice()
+    let childdataroot = nodeconfig.datapath.slice()
 
     let { node, components } = getNodeDatasets(
         userselections.viewpoint, childdataroot, budgetdata)
@@ -304,10 +305,10 @@ let onChartComponentSelection = (
     }
 
     let code = null
-    let parentdata = null
+    let parentdata:SortedComponentItem = null
     if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
         parentdata = node.SortedComponents[selectionrow]
-        parentdata.node = node
+        parentdata.datanode = node
         code = parentdata.Code
     }
     if (code)
@@ -323,9 +324,9 @@ let onChartComponentSelection = (
         return
     }
 
-    let newrange = Object.assign({}, chartconfig.yearscope)
+    let newrange = Object.assign({}, nodeconfig.yearscope)
 
-    let newchartconfig: ChartConfig = {
+    let newnodeconfig: BudgetNodeConfig = {
         viewpoint,
         dataseries,
         datapath: childdataroot,
@@ -335,29 +336,29 @@ let onChartComponentSelection = (
         },
         parentdata: parentdata,
         yearscope: newrange,
-        charttype: userselections.charttype,
+        charts: [{ charttype: userselections.charttype }],
     }
 
-    let chartParmsObj = getChartParms(newchartconfig, userselections, budgetdata, setState, chartmatrix)
+    let chartParmsObj = getChartParms(newnodeconfig, userselections, budgetdata, setState, chartmatrix)
 
     if (chartParmsObj.isError) {
         updateChartSelections(chartmatrix, matrixrow)
         return
     }
 
-    newchartconfig.chartparms = chartParmsObj.chartParms
-    newchartconfig.chartCode = ChartTypeCodes[newchartconfig.charttype]
+    newnodeconfig.charts[0].chartparms = chartParmsObj.chartParms
+    newnodeconfig.charts[0].chartCode = ChartTypeCodes[newnodeconfig.charts[0].charttype]
 
     let newmatrixcolumn = matrixcolumn + 1
-    chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig
+    chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig
 
     setState({
         chartmatrix,
     })
 
-    chartconfig.chartselection = context.selection
-    chartconfig.chart = chart
-    chartconfig.Chart = context.Chart
+    nodeconfig.charts[0].chartselection = context.selection
+    nodeconfig.charts[0].chart = chart
+    nodeconfig.charts[0].Chart = context.Chart
 
     updateChartSelections(chartmatrix, matrixrow)
 

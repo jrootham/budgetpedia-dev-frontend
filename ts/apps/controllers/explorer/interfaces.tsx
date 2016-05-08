@@ -35,27 +35,44 @@ interface PortalChartLocation {
 // ---------------[ NODE CONFIGURATION ]--------------
 
 // used to configure single chart of chart portal
-interface ChartConfig {
-    name?: string,
+interface BudgetNodeConfig {
+    // name?: string,
+
     viewpoint: string,
     dataseries: string,
-    matrixlocation: MatrixLocation,
-    chartselection?: any[],
-    chart?: any,
-    Chart?:any,
     datapath: string[],
-    parentdata?: any,
+
     yearscope: YearScope,
+    parentdata?: SortedComponentItem,
+
+    matrixlocation: MatrixLocation,
+    isError?: boolean,
+    charts: ChartConfig[]
+
+}
+
+interface ChartConfig {
+
     charttype?: string,
     chartCode?: string,
     chartparms?: ChartParms,
-    isError?: boolean
+
+    chartselection?: ChartSelectionData[],
+    chart?: any,
+    Chart?: any,
 }
 
 // location of chart config in for portal
 interface MatrixLocation {
     row: number,
     column: number,
+}
+
+interface SortedComponentItem {
+    Code: string,
+    Index?: number,
+    Name: string,
+    datanode?: any // data node from budgetdata model
 }
 
 // internal component of chart config
@@ -110,7 +127,7 @@ interface ChartSelectionContext {
 
 
 export {
-    ChartConfig, 
+    BudgetNodeConfig, 
     MatrixLocation,
     PortalChartLocation, 
     ChartSelectionData,
@@ -120,4 +137,5 @@ export {
     PortalChartSettings,
     PortalConfig,
     PortalChartConfig,
+    SortedComponentItem,
 }

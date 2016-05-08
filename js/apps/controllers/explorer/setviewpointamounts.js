@@ -106,14 +106,14 @@ let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wa
 let getIndexSortedComponents = (components, lookups) => {
     let sorted = [];
     let catlookups = lookups.categorylookups;
-    for (let componentname in components) {
-        let component = components[componentname];
+    for (let componentcode in components) {
+        let component = components[componentcode];
         let config = component.Contents;
         let name = (config == 'BASELINE')
-            ? lookups.baselinelookups[componentname]
-            : catlookups[componentname];
+            ? lookups.baselinelookups[componentcode]
+            : catlookups[componentcode];
         let item = {
-            Code: componentname,
+            Code: componentcode,
             Index: component.Index,
             Name: name || 'unknown name'
         };
