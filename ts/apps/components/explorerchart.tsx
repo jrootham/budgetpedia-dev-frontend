@@ -41,10 +41,10 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
             chartTab.location.index = chartindex
             let chartparms = chartTab.chartparms
             return <Tab label={chartTab.settings.title} value="programs">
-                <div style={{ position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" }}>
+                <div style={{ padding: "3px" }}>
                     <IconButton
                         tooltip="Column Chart"
-                        tooltipPosition="bottom-center"
+                        tooltipPosition="top-center"
                         style={
                             {
                                 backgroundColor: (chartTab.settings.chartCode == "ColumnChart")
@@ -59,7 +59,7 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                     </IconButton>
                     <IconButton
                         tooltip="Donut Pie Chart"
-                        tooltipPosition="bottom-center"
+                        tooltipPosition="top-center"
                         style={
                             {
                                 backgroundColor: (chartTab.settings.chartCode == "DonutChart")
@@ -74,7 +74,7 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                     </IconButton>
                     <IconButton
                         tooltip="Timeline"
-                        tooltipPosition="bottom-center"
+                        tooltipPosition="top-center"
                         style={
                             {
                                 backgroundColor: (chartTab.settings.chartCode == "TimeLine")
@@ -137,17 +137,17 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                     color:"lightgreen",
                     fontWeight:"bold",
                     display: "inline-block", 
-                    zIndex: "1500",
                     backgroundColor: "#00bcd4",
                 }
             }>{ this.props.budgetPortal.portalName }</div>
             <Tabs>
 
                 { chartTabs }
-                
+
             </Tabs>
         </div>
     }
 }
 
 export { ExplorerChart }
+

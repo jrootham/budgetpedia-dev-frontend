@@ -19,19 +19,19 @@ class ExplorerChart extends Component {
                 chartTab.location = chartTab.settings.location;
                 chartTab.location.index = chartindex;
                 let chartparms = chartTab.chartparms;
-                return React.createElement(Tab, {label: chartTab.settings.title, value: "programs"}, React.createElement("div", {style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton, {tooltip: "Column Chart", tooltipPosition: "bottom-center", style: {
+                return React.createElement(Tab, {label: chartTab.settings.title, value: "programs"}, React.createElement("div", {style: { padding: "3px" }}, React.createElement(IconButton, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {
                     backgroundColor: (chartTab.settings.chartCode == "ColumnChart")
                         ? "rgba(144,238,144,0.5)"
                         : "transparent"
                 }, onTouchTap: e => {
                     this.onChangeChartCode('ColumnChart', chartTab.location);
-                }}, React.createElement(FontIcon, {className: "material-icons"}, "insert_chart")), React.createElement(IconButton, {tooltip: "Donut Pie Chart", tooltipPosition: "bottom-center", style: {
+                }}, React.createElement(FontIcon, {className: "material-icons"}, "insert_chart")), React.createElement(IconButton, {tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
                     backgroundColor: (chartTab.settings.chartCode == "DonutChart")
                         ? "rgba(144,238,144,0.5)"
                         : "transparent"
                 }, onTouchTap: e => {
                     this.onChangeChartCode('DonutChart', chartTab.location);
-                }}, React.createElement(FontIcon, {className: "material-icons"}, "donut_small")), React.createElement(IconButton, {tooltip: "Timeline", tooltipPosition: "bottom-center", style: {
+                }}, React.createElement(FontIcon, {className: "material-icons"}, "donut_small")), React.createElement(IconButton, {tooltip: "Timeline", tooltipPosition: "top-center", style: {
                     backgroundColor: (chartTab.settings.chartCode == "TimeLine")
                         ? "rgba(144,238,144,0.5)"
                         : "transparent"
@@ -61,7 +61,6 @@ class ExplorerChart extends Component {
             color: "lightgreen",
             fontWeight: "bold",
             display: "inline-block",
-            zIndex: "1500",
             backgroundColor: "#00bcd4",
         }}, this.props.budgetPortal.portalName), React.createElement(Tabs, null, chartTabs));
     }
