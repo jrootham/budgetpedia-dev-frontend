@@ -1,18 +1,38 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // interfaces.tsx
 
-// configuration for budget portal, saved in matrix
-interface BudgetPortalConfig {
-    budgetCharts: PortalBudgetChart[],
+// =====================================================
+// ---------------[ PORTAL CONFIGURATION ]--------------
+
+// configuration for budget portal, built on render
+interface PortalConfig {
+    portalCharts: PortalChartConfig[],
     portalName: string,
 }
 
 // configuration for individual chart of budget portal
-interface PortalBudgetChart {
+interface PortalChartConfig {
     portalchartparms: ChartParms,
     portalchartsettings: PortalChartSettings,
     portalchartlocation: PortalChartLocation,
 }
+
+// settings for individual portal chart
+interface PortalChartSettings {
+    onSwitchChartCode: Function,
+    chartCode: string,
+    graph_id: string,
+    chartblocktitle: string,
+}
+
+// to return value for callback processing
+interface PortalChartLocation {
+    matrixlocation: MatrixLocation,
+    portalindex: number,
+}
+
+// =====================================================
+// ---------------[ NODE CONFIGURATION ]--------------
 
 // used to configure single chart of chart portal
 interface ChartConfig {
@@ -31,12 +51,6 @@ interface ChartConfig {
     chartparms?: ChartParms,
     isError?: boolean
 }
-// internal component of chart config
-interface YearScope {
-    latestyear: number,
-    earliestyear: number,
-    fullrange: boolean,
-}
 
 // location of chart config in for portal
 interface MatrixLocation {
@@ -44,24 +58,15 @@ interface MatrixLocation {
     column: number,
 }
 
-interface ChartSelectionData {
-    row:number,
-    column:number
+// internal component of chart config
+interface YearScope {
+    latestyear: number,
+    earliestyear: number,
+    fullrange: boolean,
 }
 
-interface PortalChartLocation {
-    matrixlocation: MatrixLocation,
-    portalindex: number,
-}
-
-// settings for individual portal chart
-interface PortalChartSettings {
-    onChartCode: Function,
-    chartCode: string,
-    graph_id: string,
-    title: string,
-    index: number,
-}
+// =====================================================
+// --------------------[ CHART PARMS ]------------------
 
 // parameters to be passed to google chart
 interface ChartParms {
@@ -82,14 +87,27 @@ interface ChartParmsObj {
     chartParms?: ChartParms,
 }
 
+// =======================================================
+// ---------------[ CHART SELECTION OUTPUT ]--------------
+
+
+interface ChartSelectionData {
+    row:number,
+    column:number
+}
+
 // returned when user clicks on a chart component 
 // for drill-down or other action
 interface ChartSelectionContext {
-    configlocation: PortalChartLocation,
+    portalchartlocation: PortalChartLocation,
     Chart: any,
     selection: ChartSelectionData[],
     err: any,
 }
+
+// =====================================================
+// ---------------[ EXPORT ]--------------
+
 
 export {
     ChartConfig, 
@@ -100,6 +118,6 @@ export {
     ChartParmsObj, 
     ChartSelectionContext,
     PortalChartSettings,
-    BudgetPortalConfig,
-    PortalBudgetChart,
+    PortalConfig,
+    PortalChartConfig,
 }

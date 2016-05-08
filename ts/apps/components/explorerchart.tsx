@@ -13,22 +13,21 @@ import {
     ChartConfig,
     ChartParms,
     ChartSelectionContext,
-    // MatrixLocation,
     PortalChartLocation,
     PortalChartSettings,
-    PortalBudgetChart,
-    BudgetPortalConfig
+    PortalChartConfig,
+    PortalConfig
 } from '../controllers/explorer/interfaces'
 
 interface ExploreChartProps {
-    budgetPortal:BudgetPortalConfig,
+    budgetPortal:PortalConfig,
 }
 
 class ExplorerChart extends Component<ExploreChartProps, any> {
 
-    onChangeChartCode = (chartCode,location) => {
-        this.props.budgetPortal.budgetCharts[location.index]
-            .portalchartsettings.onChartCode(location, chartCode)
+    onChangeChartCode = (chartCode,location:PortalChartLocation) => {
+        this.props.budgetPortal.portalCharts[location.portalindex]
+            .portalchartsettings.onSwitchChartCode(location, chartCode)
     }
 
     componentWillMount = () => {
@@ -38,10 +37,10 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
     getTabs = () => {
 
         // generate array of chart tabs
-        let chartTabs = this.props.budgetPortal.budgetCharts.map((chartTab:PortalBudgetChart,chartindex) => {
+        let chartTabs = this.props.budgetPortal.portalCharts.map((chartTab:PortalChartConfig,chartindex) => {
             chartTab.portalchartlocation.portalindex = chartindex
             let chartparms = chartTab.portalchartparms
-            return <Tab label={chartTab.portalchartsettings.title} 
+            return <Tab label={chartTab.portalchartsettings.chartblocktitle} 
                 value="programs"
                 key={chartindex}>
                 <div style={{ padding: "3px" }}>

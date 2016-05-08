@@ -1,6 +1,7 @@
 "use strict";
 var format = require('format-number');
 const updatechartselections_1 = require('./updatechartselections');
+const constants_1 = require('../../constants');
 let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmatrix) => {
     let viewpointindex = chartConfig.viewpoint, path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
     let dataseriesname = userselections.dataseries;
@@ -94,7 +95,7 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
                 return (Chart, err) => {
                     let chart = Chart.chart;
                     let selection = chart.getSelection();
-                    let context = { configlocation: configLocation, Chart: Chart, selection: selection, err: err };
+                    let context = { portalchartlocation: configLocation, Chart: Chart, selection: selection, err: err };
                     onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix);
                 };
             })(configlocation)
@@ -161,7 +162,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         selectionrow = null;
     }
     let chart = context.Chart.chart;
-    let selectmatrixlocation = context.configlocation.matrixlocation;
+    let selectmatrixlocation = context.portalchartlocation.matrixlocation;
     let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrix[matrixrow];
     let chartconfig = chartmatrix[matrixrow][matrixcolumn];
@@ -219,6 +220,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         return;
     }
     newchartconfig.chartparms = chartParmsObj.chartParms;
+    newchartconfig.chartCode = constants_1.ChartTypeCodes[newchartconfig.charttype];
     let newmatrixcolumn = matrixcolumn + 1;
     chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig;
     setState({

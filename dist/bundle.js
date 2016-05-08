@@ -9593,14 +9593,14 @@ var ExplorerChart = function (_Component) {
         var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ExplorerChart)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
         _this.onChangeChartCode = function (chartCode, location) {
-            _this.props.budgetPortal.budgetCharts[location.index].portalchartsettings.onChartCode(location, chartCode);
+            _this.props.budgetPortal.portalCharts[location.portalindex].portalchartsettings.onSwitchChartCode(location, chartCode);
         };
         _this.componentWillMount = function () {};
         _this.getTabs = function () {
-            var chartTabs = _this.props.budgetPortal.budgetCharts.map(function (chartTab, chartindex) {
+            var chartTabs = _this.props.budgetPortal.portalCharts.map(function (chartTab, chartindex) {
                 chartTab.portalchartlocation.portalindex = chartindex;
                 var chartparms = chartTab.portalchartparms;
-                return React.createElement(Tab, { label: chartTab.portalchartsettings.title, value: "programs", key: chartindex }, React.createElement("div", { style: { padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "top-center", style: {
+                return React.createElement(Tab, { label: chartTab.portalchartsettings.chartblocktitle, value: "programs", key: chartindex }, React.createElement("div", { style: { padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "top-center", style: {
                         backgroundColor: chartTab.portalchartsettings.chartCode == "ColumnChart" ? "rgba(144,238,144,0.5)" : "transparent"
                     }, onTouchTap: function onTouchTap(e) {
                         _this.onChangeChartCode('ColumnChart', chartTab.portalchartlocation);
@@ -9964,7 +9964,7 @@ var ExplorerClass = function (_Component) {
         _this.switchChartCode = function (location, chartCode) {
             var chartType = constants_2.ChartCodeTypes[chartCode];
             var chartmatrix = _this.state.chartmatrix;
-            var chartConfig = chartmatrix[location.row][location.column];
+            var chartConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
             var oldChartType = chartConfig.charttype;
             chartConfig.charttype = chartType;
             var chartParmsObj = getchartparms_1.getChartParms(chartConfig, _this.state.userselections, _this.props.budgetdata, _this.setState.bind(_this), chartmatrix);
@@ -9986,23 +9986,22 @@ var ExplorerClass = function (_Component) {
                         chartConfig.chartselection[0].column = 1;
                     }
                 }
-                updatechartselections_1.updateChartSelections(chartmatrix, location.row);
+                updatechartselections_1.updateChartSelections(chartmatrix, location.matrixlocation.row);
             });
         };
         _this.getCharts = function (matrixcolumn, matrixrow) {
             var charts = matrixcolumn.map(function (chartconfig, index) {
-                var chartparms = chartconfig.chartparms;
-                var settings = {
-                    onChartCode: _this.switchChartCode,
+                var portalchartparms = chartconfig.chartparms;
+                var portalchartsettings = {
+                    onSwitchChartCode: _this.switchChartCode,
                     chartCode: chartconfig.chartCode,
                     graph_id: "ChartID" + matrixrow + '' + index,
-                    title: "By Programs",
-                    index: index
+                    chartblocktitle: "By Programs"
                 };
                 var budgetPortal = {
-                    budgetCharts: [{
-                        portalchartparms: chartparms,
-                        portalchartsettings: settings,
+                    portalCharts: [{
+                        portalchartparms: portalchartparms,
+                        portalchartsettings: portalchartsettings,
                         portalchartlocation: {
                             matrixlocation: chartconfig.matrixlocation,
                             portalindex: null
@@ -10090,6 +10089,7 @@ exports.Explorer = Explorer;
 
 var format = require('format-number');
 var updatechartselections_1 = require('./updatechartselections');
+var constants_1 = require('../../constants');
 var getChartParms = function getChartParms(chartConfig, userselections, budgetdata, setState, chartmatrix) {
     var viewpointindex = chartConfig.viewpoint,
         path = chartConfig.datapath,
@@ -10188,7 +10188,7 @@ var getChartParms = function getChartParms(chartConfig, userselections, budgetda
             return function (Chart, err) {
                 var chart = Chart.chart;
                 var selection = chart.getSelection();
-                var context = { configlocation: configLocation, Chart: Chart, selection: selection, err: err };
+                var context = { portalchartlocation: configLocation, Chart: Chart, selection: selection, err: err };
                 onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix);
             };
         }(configlocation)
@@ -10241,7 +10241,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         selectionrow = null;
     }
     var chart = context.Chart.chart;
-    var selectmatrixlocation = context.configlocation.matrixlocation;
+    var selectmatrixlocation = context.portalchartlocation.matrixlocation;
     var matrixrow = selectmatrixlocation.row,
         matrixcolumn = selectmatrixlocation.column;
     var serieslist = chartmatrix[matrixrow];
@@ -10304,6 +10304,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         return;
     }
     newchartconfig.chartparms = chartParmsObj.chartParms;
+    newchartconfig.chartCode = constants_1.ChartTypeCodes[newchartconfig.charttype];
     var newmatrixcolumn = matrixcolumn + 1;
     chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig;
     setState({
@@ -10347,7 +10348,7 @@ var getNodeDatasets = function getNodeDatasets(viewpointindex, path, budgetdata)
     return { node: node, components: components };
 };
 
-},{"./updatechartselections":15,"format-number":75}],14:[function(require,module,exports){
+},{"../../constants":7,"./updatechartselections":15,"format-number":75}],14:[function(require,module,exports){
 "use strict";
 
 var setViewpointAmounts = function setViewpointAmounts(viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) {

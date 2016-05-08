@@ -128,7 +128,7 @@ class ExplorerClass extends Component {
         this.switchChartCode = (location, chartCode) => {
             let chartType = constants_2.ChartCodeTypes[chartCode];
             let chartmatrix = this.state.chartmatrix;
-            let chartConfig = chartmatrix[location.row][location.column];
+            let chartConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
             let oldChartType = chartConfig.charttype;
             chartConfig.charttype = chartType;
             let chartParmsObj = getchartparms_1.getChartParms(chartConfig, this.state.userselections, this.props.budgetdata, this.setState.bind(this), chartmatrix);
@@ -152,24 +152,23 @@ class ExplorerClass extends Component {
                         chartConfig.chartselection[0].column = 1;
                     }
                 }
-                updatechartselections_1.updateChartSelections(chartmatrix, location.row);
+                updatechartselections_1.updateChartSelections(chartmatrix, location.matrixlocation.row);
             });
         };
         this.getCharts = (matrixcolumn, matrixrow) => {
             let charts = matrixcolumn.map((chartconfig, index) => {
-                let chartparms = chartconfig.chartparms;
-                let settings = {
-                    onChartCode: this.switchChartCode,
+                let portalchartparms = chartconfig.chartparms;
+                let portalchartsettings = {
+                    onSwitchChartCode: this.switchChartCode,
                     chartCode: chartconfig.chartCode,
                     graph_id: "ChartID" + matrixrow + '' + index,
-                    title: "By Programs",
-                    index: index,
+                    chartblocktitle: "By Programs",
                 };
                 let budgetPortal = {
-                    budgetCharts: [
+                    portalCharts: [
                         {
-                            portalchartparms: chartparms,
-                            portalchartsettings: settings,
+                            portalchartparms: portalchartparms,
+                            portalchartsettings: portalchartsettings,
                             portalchartlocation: {
                                 matrixlocation: chartconfig.matrixlocation,
                                 portalindex: null

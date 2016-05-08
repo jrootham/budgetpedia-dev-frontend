@@ -51,9 +51,9 @@ import {
     ChartParms,
     ChartSelectionContext,
     MatrixLocation,
-    BudgetPortalConfig,
-    // PortalBudgetChart,
-    PortalChartSettings
+    PortalConfig,
+    PortalChartSettings,
+    PortalChartLocation
 } from './explorer/interfaces'
 // import { categoryaliases } from '../constants'
 
@@ -239,10 +239,10 @@ class ExplorerClass extends Component< any, any > {
     }
 
     // TODO: belongs with explorerchart controller?
-    switchChartCode = (location:MatrixLocation, chartCode) => {
+    switchChartCode = (location:PortalChartLocation, chartCode) => {
         let chartType = ChartCodeTypes[chartCode]
         let chartmatrix = this.state.chartmatrix
-        let chartConfig:ChartConfig = chartmatrix[location.row][location.column]
+        let chartConfig:ChartConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column]
         let oldChartType = chartConfig.charttype
         chartConfig.charttype = chartType
         let chartParmsObj = getChartParms(
@@ -274,7 +274,7 @@ class ExplorerClass extends Component< any, any > {
                     chartConfig.chartselection[0].column = 1
                 }
             }
-            updateChartSelections(chartmatrix, location.row)
+            updateChartSelections(chartmatrix, location.matrixlocation.row)
         })
     }
 
@@ -286,22 +286,22 @@ class ExplorerClass extends Component< any, any > {
 
         let charts = matrixcolumn.map((chartconfig:ChartConfig, index) => {
 
-            let chartparms = chartconfig.chartparms
+            let portalchartparms = chartconfig.chartparms
 
-            let settings:PortalChartSettings = { 
+            let portalchartsettings:PortalChartSettings = { 
                 // matrixlocation: chartconfig.matrixlocation,
-                onChartCode: this.switchChartCode,
+                onSwitchChartCode: this.switchChartCode,
                 chartCode:chartconfig.chartCode,
                 graph_id: "ChartID" + matrixrow + '' + index,
-                title:"By Programs",
-                index,
+                chartblocktitle:"By Programs",
+                // index,
             }
 
-            let budgetPortal:BudgetPortalConfig = {
-                budgetCharts:[
+            let budgetPortal:PortalConfig = {
+                portalCharts:[
                     {
-                        portalchartparms:chartparms,
-                        portalchartsettings:settings,
+                        portalchartparms,
+                        portalchartsettings,
                         portalchartlocation: {
                             matrixlocation: chartconfig.matrixlocation,
                             portalindex:null

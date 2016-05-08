@@ -165,7 +165,7 @@ let getChartParms = (
                 return (Chart, err) => {
                     let chart = Chart.chart
                     let selection = chart.getSelection()
-                    let context: ChartSelectionContext = { configlocation: configLocation, Chart, selection, err }
+                    let context: ChartSelectionContext = { portalchartlocation: configLocation, Chart, selection, err }
 
                     onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix)
                 }
@@ -262,7 +262,7 @@ let onChartComponentSelection = (
     let chart = context.Chart.chart
 
     // unpack chartconfig
-    let selectmatrixlocation = context.configlocation.matrixlocation
+    let selectmatrixlocation = context.portalchartlocation.matrixlocation
 
     // unpack location
     let matrixrow = selectmatrixlocation.row,
@@ -346,6 +346,7 @@ let onChartComponentSelection = (
     }
 
     newchartconfig.chartparms = chartParmsObj.chartParms
+    newchartconfig.chartCode = ChartTypeCodes[newchartconfig.charttype]
 
     let newmatrixcolumn = matrixcolumn + 1
     chartmatrix[matrixrow][newmatrixcolumn] = newchartconfig
