@@ -1,17 +1,17 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // interfaces.tsx
 
-// configuration for budget portal, saveed in matrix
+// configuration for budget portal, saved in matrix
 interface BudgetPortalConfig {
-    budgetCharts: BudgetChart[],
+    budgetCharts: PortalBudgetChart[],
     portalName: string,
 }
 
 // configuration for individual chart of budget portal
-interface BudgetChart {
-    chartparms: ChartParms,
-    settings: ChartSettings,
-    location?: ChartLocation,
+interface PortalBudgetChart {
+    portalchartparms: ChartParms,
+    portalchartsettings: PortalChartSettings,
+    portalchartlocation: PortalChartLocation,
 }
 
 // used to configure single chart of chart portal
@@ -31,12 +31,17 @@ interface ChartConfig {
     chartparms?: ChartParms,
     isError?: boolean
 }
+// internal component of chart config
+interface YearScope {
+    latestyear: number,
+    earliestyear: number,
+    fullrange: boolean,
+}
 
 // location of chart config in for portal
 interface MatrixLocation {
     row: number,
     column: number,
-    // index?:number,
 }
 
 interface ChartSelectionData {
@@ -44,21 +49,13 @@ interface ChartSelectionData {
     column:number
 }
 
-interface ChartLocation {
-    location: MatrixLocation,
-    index: number,
-}
-
-// component of chart config
-interface YearScope {
-    latestyear: number,
-    earliestyear: number,
-    fullrange: boolean,
+interface PortalChartLocation {
+    matrixlocation: MatrixLocation,
+    portalindex: number,
 }
 
 // settings for individual portal chart
-interface ChartSettings {
-    location: MatrixLocation,
+interface PortalChartSettings {
     onChartCode: Function,
     chartCode: string,
     graph_id: string,
@@ -88,7 +85,7 @@ interface ChartParmsObj {
 // returned when user clicks on a chart component 
 // for drill-down or other action
 interface ChartSelectionContext {
-    configlocation: ChartLocation,
+    configlocation: PortalChartLocation,
     Chart: any,
     selection: ChartSelectionData[],
     err: any,
@@ -97,13 +94,12 @@ interface ChartSelectionContext {
 export {
     ChartConfig, 
     MatrixLocation,
-    ChartLocation, 
+    PortalChartLocation, 
     ChartSelectionData,
-    YearScope, 
     ChartParms, 
     ChartParmsObj, 
     ChartSelectionContext,
-    ChartSettings,
+    PortalChartSettings,
     BudgetPortalConfig,
-    BudgetChart,
+    PortalBudgetChart,
 }

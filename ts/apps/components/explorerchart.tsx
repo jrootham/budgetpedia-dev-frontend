@@ -13,10 +13,10 @@ import {
     ChartConfig,
     ChartParms,
     ChartSelectionContext,
-    MatrixLocation,
-    ChartLocation,
-    ChartSettings,
-    BudgetChart,
+    // MatrixLocation,
+    PortalChartLocation,
+    PortalChartSettings,
+    PortalBudgetChart,
     BudgetPortalConfig
 } from '../controllers/explorer/interfaces'
 
@@ -27,7 +27,8 @@ interface ExploreChartProps {
 class ExplorerChart extends Component<ExploreChartProps, any> {
 
     onChangeChartCode = (chartCode,location) => {
-        this.props.budgetPortal.budgetCharts[location.index].settings.onChartCode(location, chartCode)
+        this.props.budgetPortal.budgetCharts[location.index]
+            .portalchartsettings.onChartCode(location, chartCode)
     }
 
     componentWillMount = () => {
@@ -37,14 +38,10 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
     getTabs = () => {
 
         // generate array of chart tabs
-        let chartTabs = this.props.budgetPortal.budgetCharts.map((chartTab:BudgetChart,chartindex) => {
-            let chartlocation = {
-                location: chartTab.settings.location,
-                index: chartindex,
-            }
-            chartTab.location = chartlocation
-            let chartparms = chartTab.chartparms
-            return <Tab label={chartTab.settings.title} 
+        let chartTabs = this.props.budgetPortal.budgetCharts.map((chartTab:PortalBudgetChart,chartindex) => {
+            chartTab.portalchartlocation.portalindex = chartindex
+            let chartparms = chartTab.portalchartparms
+            return <Tab label={chartTab.portalchartsettings.title} 
                 value="programs"
                 key={chartindex}>
                 <div style={{ padding: "3px" }}>
@@ -53,13 +50,13 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                         tooltipPosition="top-center"
                         style={
                             {
-                                backgroundColor: (chartTab.settings.chartCode == "ColumnChart")
+                                backgroundColor: (chartTab.portalchartsettings.chartCode == "ColumnChart")
                                     ? "rgba(144,238,144,0.5)"
                                     : "transparent"
                             }
                         }
                         onTouchTap={ e => {
-                            this.onChangeChartCode('ColumnChart',chartTab.location)
+                            this.onChangeChartCode('ColumnChart',chartTab.portalchartlocation)
                         } }>
                         <FontIcon className="material-icons">insert_chart</FontIcon>
                     </IconButton>
@@ -68,13 +65,13 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                         tooltipPosition="top-center"
                         style={
                             {
-                                backgroundColor: (chartTab.settings.chartCode == "DonutChart")
+                                backgroundColor: (chartTab.portalchartsettings.chartCode == "DonutChart")
                                     ? "rgba(144,238,144,0.5)"
                                     : "transparent"
                             }
                         }
                         onTouchTap={ e => {
-                            this.onChangeChartCode('DonutChart',chartTab.location)
+                            this.onChangeChartCode('DonutChart',chartTab.portalchartlocation)
                         } }>
                         <FontIcon className="material-icons">donut_small</FontIcon>
                     </IconButton>
@@ -83,14 +80,14 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                         tooltipPosition="top-center"
                         style={
                             {
-                                backgroundColor: (chartTab.settings.chartCode == "TimeLine")
+                                backgroundColor: (chartTab.portalchartsettings.chartCode == "TimeLine")
                                     ? "rgba(144,238,144,0.5)"
                                     : "transparent"
                             }
                         }
                         disabled
                         onTouchTap={ e => {
-                            this.onChangeChartCode('Timeline',chartTab.location)
+                            this.onChangeChartCode('Timeline',chartTab.portalchartlocation)
                         } }>
                         <FontIcon className="material-icons">timeline</FontIcon>
                     </IconButton>
@@ -105,7 +102,7 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                     rows = { chartparms.rows }
                     columns = { chartparms.columns }
                     // used to create and cache html element id attribute
-                    graph_id = { chartTab.settings.graph_id }
+                    graph_id = { chartTab.portalchartsettings.graph_id }
                     />
                 <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}>
                     <IconButton disabled><FontIcon className="material-icons">view_list</FontIcon></IconButton>

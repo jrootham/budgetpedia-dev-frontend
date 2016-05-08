@@ -16,7 +16,7 @@ import {
     ChartConfig,
     ChartParms,
     ChartSelectionContext,
-    ChartLocation
+    PortalChartLocation
 } from './interfaces'
 
 import { updateChartSelections } from './updatechartselections'
@@ -151,16 +151,16 @@ let getChartParms = (
     // TODO: replace chartconfig with matrix co-ordinates to avoid
     //     need to update chart by destroying chart (thus closure) before replacing it
     // 3. chart events:
-    let location = Object.assign({}, chartConfig.matrixlocation)
-    let configlocation: ChartLocation = {
-        location,
-        index:null
+    let matrixlocation = Object.assign({}, chartConfig.matrixlocation)
+    let configlocation: PortalChartLocation = {
+        matrixlocation,
+        portalindex:null
     }
 
     let events = [
         {
             eventName: 'select',
-            callback: ((configLocation:ChartLocation) => {
+            callback: ((configLocation:PortalChartLocation) => {
 
                 return (Chart, err) => {
                     let chart = Chart.chart
@@ -262,7 +262,7 @@ let onChartComponentSelection = (
     let chart = context.Chart.chart
 
     // unpack chartconfig
-    let selectmatrixlocation = context.configlocation.location
+    let selectmatrixlocation = context.configlocation.matrixlocation
 
     // unpack location
     let matrixrow = selectmatrixlocation.row,

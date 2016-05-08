@@ -82,10 +82,10 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
             top: charttop
         }
     };
-    let location = Object.assign({}, chartConfig.matrixlocation);
+    let matrixlocation = Object.assign({}, chartConfig.matrixlocation);
     let configlocation = {
-        location: location,
-        index: null
+        matrixlocation: matrixlocation,
+        portalindex: null
     };
     let events = [
         {
@@ -161,7 +161,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         selectionrow = null;
     }
     let chart = context.Chart.chart;
-    let selectmatrixlocation = context.configlocation.location;
+    let selectmatrixlocation = context.configlocation.matrixlocation;
     let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrix[matrixrow];
     let chartconfig = chartmatrix[matrixrow][matrixcolumn];

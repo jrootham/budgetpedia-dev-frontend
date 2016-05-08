@@ -159,7 +159,6 @@ class ExplorerClass extends Component {
             let charts = matrixcolumn.map((chartconfig, index) => {
                 let chartparms = chartconfig.chartparms;
                 let settings = {
-                    location: chartconfig.matrixlocation,
                     onChartCode: this.switchChartCode,
                     chartCode: chartconfig.chartCode,
                     graph_id: "ChartID" + matrixrow + '' + index,
@@ -169,8 +168,12 @@ class ExplorerClass extends Component {
                 let budgetPortal = {
                     budgetCharts: [
                         {
-                            chartparms: chartparms,
-                            settings: settings,
+                            portalchartparms: chartparms,
+                            portalchartsettings: settings,
+                            portalchartlocation: {
+                                matrixlocation: chartconfig.matrixlocation,
+                                portalindex: null
+                            }
                         }
                     ],
                     portalName: 'City Budget'

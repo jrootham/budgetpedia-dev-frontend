@@ -9593,30 +9593,26 @@ var ExplorerChart = function (_Component) {
         var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ExplorerChart)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
         _this.onChangeChartCode = function (chartCode, location) {
-            _this.props.budgetPortal.budgetCharts[location.index].settings.onChartCode(location, chartCode);
+            _this.props.budgetPortal.budgetCharts[location.index].portalchartsettings.onChartCode(location, chartCode);
         };
         _this.componentWillMount = function () {};
         _this.getTabs = function () {
             var chartTabs = _this.props.budgetPortal.budgetCharts.map(function (chartTab, chartindex) {
-                var chartlocation = {
-                    location: chartTab.settings.location,
-                    index: chartindex
-                };
-                chartTab.location = chartlocation;
-                var chartparms = chartTab.chartparms;
-                return React.createElement(Tab, { label: chartTab.settings.title, value: "programs", key: chartindex }, React.createElement("div", { style: { padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "top-center", style: {
-                        backgroundColor: chartTab.settings.chartCode == "ColumnChart" ? "rgba(144,238,144,0.5)" : "transparent"
+                chartTab.portalchartlocation.portalindex = chartindex;
+                var chartparms = chartTab.portalchartparms;
+                return React.createElement(Tab, { label: chartTab.portalchartsettings.title, value: "programs", key: chartindex }, React.createElement("div", { style: { padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "top-center", style: {
+                        backgroundColor: chartTab.portalchartsettings.chartCode == "ColumnChart" ? "rgba(144,238,144,0.5)" : "transparent"
                     }, onTouchTap: function onTouchTap(e) {
-                        _this.onChangeChartCode('ColumnChart', chartTab.location);
+                        _this.onChangeChartCode('ColumnChart', chartTab.portalchartlocation);
                     } }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart")), React.createElement(IconButton, { tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
-                        backgroundColor: chartTab.settings.chartCode == "DonutChart" ? "rgba(144,238,144,0.5)" : "transparent"
+                        backgroundColor: chartTab.portalchartsettings.chartCode == "DonutChart" ? "rgba(144,238,144,0.5)" : "transparent"
                     }, onTouchTap: function onTouchTap(e) {
-                        _this.onChangeChartCode('DonutChart', chartTab.location);
+                        _this.onChangeChartCode('DonutChart', chartTab.portalchartlocation);
                     } }, React.createElement(FontIcon, { className: "material-icons" }, "donut_small")), React.createElement(IconButton, { tooltip: "Timeline", tooltipPosition: "top-center", style: {
-                        backgroundColor: chartTab.settings.chartCode == "TimeLine" ? "rgba(144,238,144,0.5)" : "transparent"
+                        backgroundColor: chartTab.portalchartsettings.chartCode == "TimeLine" ? "rgba(144,238,144,0.5)" : "transparent"
                     }, disabled: true, onTouchTap: function onTouchTap(e) {
-                        _this.onChangeChartCode('Timeline', chartTab.location);
-                    } }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: chartTab.settings.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))));
+                        _this.onChangeChartCode('Timeline', chartTab.portalchartlocation);
+                    } }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: chartTab.portalchartsettings.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))));
             });
             return chartTabs;
         };
@@ -9997,7 +9993,6 @@ var ExplorerClass = function (_Component) {
             var charts = matrixcolumn.map(function (chartconfig, index) {
                 var chartparms = chartconfig.chartparms;
                 var settings = {
-                    location: chartconfig.matrixlocation,
                     onChartCode: _this.switchChartCode,
                     chartCode: chartconfig.chartCode,
                     graph_id: "ChartID" + matrixrow + '' + index,
@@ -10006,8 +10001,12 @@ var ExplorerClass = function (_Component) {
                 };
                 var budgetPortal = {
                     budgetCharts: [{
-                        chartparms: chartparms,
-                        settings: settings
+                        portalchartparms: chartparms,
+                        portalchartsettings: settings,
+                        portalchartlocation: {
+                            matrixlocation: chartconfig.matrixlocation,
+                            portalindex: null
+                        }
                     }],
                     portalName: 'City Budget'
                 };
@@ -10178,10 +10177,10 @@ var getChartParms = function getChartParms(chartConfig, userselections, budgetda
             top: charttop
         }
     };
-    var location = Object.assign({}, chartConfig.matrixlocation);
+    var matrixlocation = Object.assign({}, chartConfig.matrixlocation);
     var configlocation = {
-        location: location,
-        index: null
+        matrixlocation: matrixlocation,
+        portalindex: null
     };
     var events = [{
         eventName: 'select',
@@ -10242,7 +10241,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         selectionrow = null;
     }
     var chart = context.Chart.chart;
-    var selectmatrixlocation = context.configlocation.location;
+    var selectmatrixlocation = context.configlocation.matrixlocation;
     var matrixrow = selectmatrixlocation.row,
         matrixcolumn = selectmatrixlocation.column;
     var serieslist = chartmatrix[matrixrow];

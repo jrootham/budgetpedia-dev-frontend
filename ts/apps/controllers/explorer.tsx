@@ -52,8 +52,8 @@ import {
     ChartSelectionContext,
     MatrixLocation,
     BudgetPortalConfig,
-    BudgetChart,
-    ChartSettings
+    // PortalBudgetChart,
+    PortalChartSettings
 } from './explorer/interfaces'
 // import { categoryaliases } from '../constants'
 
@@ -288,8 +288,8 @@ class ExplorerClass extends Component< any, any > {
 
             let chartparms = chartconfig.chartparms
 
-            let settings:ChartSettings = { 
-                location: chartconfig.matrixlocation,
+            let settings:PortalChartSettings = { 
+                // matrixlocation: chartconfig.matrixlocation,
                 onChartCode: this.switchChartCode,
                 chartCode:chartconfig.chartCode,
                 graph_id: "ChartID" + matrixrow + '' + index,
@@ -300,8 +300,12 @@ class ExplorerClass extends Component< any, any > {
             let budgetPortal:BudgetPortalConfig = {
                 budgetCharts:[
                     {
-                        chartparms,
-                        settings,
+                        portalchartparms:chartparms,
+                        portalchartsettings:settings,
+                        portalchartlocation: {
+                            matrixlocation: chartconfig.matrixlocation,
+                            portalindex:null
+                        }
                     }
                 ],
                 portalName:'City Budget'
