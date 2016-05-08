@@ -6,9 +6,11 @@
 //        but instead of showing up as no chart, subchart contains
 //        previous structure from either expenses or staff
 
-import {
-    ComponentSummaries
-} from './interfaces'
+// summarization structure for setviewpointamounts
+interface ComponentSummaries {
+    years?: any,
+    Categories?: any,
+}
 
 // -------------------[ SET VIEWPOINT HIERARCHY NODE AMOUNTS ]-----------
 

@@ -1,7 +1,6 @@
 "use strict";
 var format = require('format-number');
 const updatechartselections_1 = require('./updatechartselections');
-const constants_1 = require('../../constants');
 let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmatrix) => {
     let viewpointindex = chartConfig.viewpoint, path = chartConfig.datapath, yearscope = chartConfig.yearscope, year = yearscope.latestyear;
     let dataseriesname = userselections.dataseries;
@@ -83,7 +82,11 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
             top: charttop
         }
     };
-    let configlocation = Object.assign({}, chartConfig.matrixlocation);
+    let location = Object.assign({}, chartConfig.matrixlocation);
+    let configlocation = {
+        location: location,
+        index: null
+    };
     let events = [
         {
             eventName: 'select',
@@ -134,14 +137,12 @@ let getChartParms = (chartConfig, userselections, budgetdata, setState, chartmat
         }
         return [item.Name, amount, annotation];
     });
-    let chartCode = constants_1.ChartTypeCodes[chartType];
     let chartParms = {
         columns: columns,
         rows: rows,
         options: options,
         events: events,
         chartType: chartType,
-        chartCode: chartCode,
     };
     let chartParmsObj = {
         isError: isError,
@@ -160,7 +161,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         selectionrow = null;
     }
     let chart = context.Chart.chart;
-    let selectmatrixlocation = context.configlocation;
+    let selectmatrixlocation = context.configlocation.location;
     let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrix[matrixrow];
     let chartconfig = chartmatrix[matrixrow][matrixcolumn];

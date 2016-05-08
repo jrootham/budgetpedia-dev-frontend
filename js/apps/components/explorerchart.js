@@ -16,10 +16,13 @@ class ExplorerChart extends Component {
         };
         this.getTabs = () => {
             let chartTabs = this.props.budgetPortal.budgetCharts.map((chartTab, chartindex) => {
-                chartTab.location = chartTab.settings.location;
-                chartTab.location.index = chartindex;
+                let chartlocation = {
+                    location: chartTab.settings.location,
+                    index: chartindex,
+                };
+                chartTab.location = chartlocation;
                 let chartparms = chartTab.chartparms;
-                return React.createElement(Tab, {label: chartTab.settings.title, value: "programs"}, React.createElement("div", {style: { padding: "3px" }}, React.createElement(IconButton, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {
+                return React.createElement(Tab, {label: chartTab.settings.title, value: "programs", key: chartindex}, React.createElement("div", {style: { padding: "3px" }}, React.createElement(IconButton, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {
                     backgroundColor: (chartTab.settings.chartCode == "ColumnChart")
                         ? "rgba(144,238,144,0.5)"
                         : "transparent"

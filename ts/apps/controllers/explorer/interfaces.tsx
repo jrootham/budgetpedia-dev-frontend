@@ -1,5 +1,20 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // interfaces.tsx
+
+// configuration for budget portal, saveed in matrix
+interface BudgetPortalConfig {
+    budgetCharts: BudgetChart[],
+    portalName: string,
+}
+
+// configuration for individual chart of budget portal
+interface BudgetChart {
+    chartparms: ChartParms,
+    settings: ChartSettings,
+    location?: ChartLocation,
+}
+
+// used to configure single chart of chart portal
 interface ChartConfig {
     name?: string,
     viewpoint: string,
@@ -17,29 +32,31 @@ interface ChartConfig {
     isError?: boolean
 }
 
-interface BudgetPortal {
-    budgetCharts: BudgetChart[],
-    portalName: string,
-}
-
-interface BudgetChart {
-    chartparms: ChartParms,
-    settings: ChartSettings,
-    location?:MatrixLocation,
-}
-
+// location of chart config in for portal
 interface MatrixLocation {
     row: number,
     column: number,
-    index?:number,
+    // index?:number,
 }
 
+interface ChartSelectionData {
+    row:number,
+    column:number
+}
+
+interface ChartLocation {
+    location: MatrixLocation,
+    index: number,
+}
+
+// component of chart config
 interface YearScope {
     latestyear: number,
     earliestyear: number,
     fullrange: boolean,
 }
 
+// settings for individual portal chart
 interface ChartSettings {
     location: MatrixLocation,
     onChartCode: Function,
@@ -49,9 +66,9 @@ interface ChartSettings {
     index: number,
 }
 
+// parameters to be passed to google chart
 interface ChartParms {
     chartType?: string,
-    chartCode?: string,
     options?: {
         [index: string]: any,
     },
@@ -62,32 +79,31 @@ interface ChartParms {
     columns?: any[],
 }
 
+// return by getChartParms; returns isError with ChartParms
 interface ChartParmsObj {
     isError: Boolean,
     chartParms?: ChartParms,
 }
 
-interface ComponentSummaries {
-    years?: any,
-    Categories?: any,
-}
-
+// returned when user clicks on a chart component 
+// for drill-down or other action
 interface ChartSelectionContext {
-    configlocation: any,
+    configlocation: ChartLocation,
     Chart: any,
-    selection: any[],
+    selection: ChartSelectionData[],
     err: any,
 }
 
 export {
     ChartConfig, 
-    MatrixLocation, 
+    MatrixLocation,
+    ChartLocation, 
+    ChartSelectionData,
     YearScope, 
     ChartParms, 
     ChartParmsObj, 
-    ComponentSummaries, 
     ChartSelectionContext,
     ChartSettings,
-    BudgetPortal,
+    BudgetPortalConfig,
     BudgetChart,
 }

@@ -15,7 +15,8 @@ var format = require('format-number')
 import {
     ChartConfig,
     ChartParms,
-    ChartSelectionContext
+    ChartSelectionContext,
+    ChartLocation
 } from './interfaces'
 
 import { updateChartSelections } from './updatechartselections'
@@ -150,11 +151,16 @@ let getChartParms = (
     // TODO: replace chartconfig with matrix co-ordinates to avoid
     //     need to update chart by destroying chart (thus closure) before replacing it
     // 3. chart events:
-    let configlocation = Object.assign({}, chartConfig.matrixlocation)
+    let location = Object.assign({}, chartConfig.matrixlocation)
+    let configlocation: ChartLocation = {
+        location,
+        index:null
+    }
+
     let events = [
         {
             eventName: 'select',
-            callback: ((configLocation) => {
+            callback: ((configLocation:ChartLocation) => {
 
                 return (Chart, err) => {
                     let chart = Chart.chart
@@ -210,8 +216,6 @@ let getChartParms = (
         return [item.Name, amount, annotation]
     })
 
-    let chartCode:string = ChartTypeCodes[chartType]
-
     // --------------------[ ASSEMBLE PARMS PACK ]----------------
 
     let chartParms: ChartParms = {
@@ -221,8 +225,6 @@ let getChartParms = (
         options,
         events,
         chartType,
-        chartCode,
-
     }
     // ------------------[ ASSEMBLE RETURN PACK ]-------------------
     /* 
@@ -260,7 +262,7 @@ let onChartComponentSelection = (
     let chart = context.Chart.chart
 
     // unpack chartconfig
-    let selectmatrixlocation = context.configlocation
+    let selectmatrixlocation = context.configlocation.location
 
     // unpack location
     let matrixrow = selectmatrixlocation.row,

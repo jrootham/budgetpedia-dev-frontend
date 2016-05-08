@@ -51,7 +51,7 @@ import {
     ChartParms,
     ChartSelectionContext,
     MatrixLocation,
-    BudgetPortal,
+    BudgetPortalConfig,
     BudgetChart,
     ChartSettings
 } from './explorer/interfaces'
@@ -116,6 +116,9 @@ class ExplorerClass extends Component< any, any > {
         if (!chartParmsObj.error) {
 
             drilldownchartconfig.chartparms = chartParmsObj.chartParms
+            drilldownchartconfig.chartCode = ChartTypeCodes[drilldownchartconfig.chartparms.chartType]
+
+
 
             matrixlocation = drilldownchartconfig.matrixlocation
             chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig
@@ -223,6 +226,7 @@ class ExplorerClass extends Component< any, any > {
                 }
             } else {
                 cellconfig.chartparms = chartParmsObj.chartParms
+                cellconfig.chartCode = ChartTypeCodes[cellconfig.chartparms.chartType]
                 cellconfig.dataseries = seriesname
             }
         }
@@ -249,6 +253,7 @@ class ExplorerClass extends Component< any, any > {
             chartmatrix)
         if (!chartParmsObj.isError) {
             chartConfig.chartparms = chartParmsObj.chartParms
+            chartConfig.chartCode = ChartTypeCodes[chartConfig.chartparms.chartType]
         } else {
             chartConfig.charttype = oldChartType
         }
@@ -286,13 +291,13 @@ class ExplorerClass extends Component< any, any > {
             let settings:ChartSettings = { 
                 location: chartconfig.matrixlocation,
                 onChartCode: this.switchChartCode,
-                chartCode:chartparms.chartCode,
+                chartCode:chartconfig.chartCode,
                 graph_id: "ChartID" + matrixrow + '' + index,
                 title:"By Programs",
                 index,
             }
 
-            let budgetPortal:BudgetPortal = {
+            let budgetPortal:BudgetPortalConfig = {
                 budgetCharts:[
                     {
                         chartparms,

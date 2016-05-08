@@ -9598,10 +9598,13 @@ var ExplorerChart = function (_Component) {
         _this.componentWillMount = function () {};
         _this.getTabs = function () {
             var chartTabs = _this.props.budgetPortal.budgetCharts.map(function (chartTab, chartindex) {
-                chartTab.location = chartTab.settings.location;
-                chartTab.location.index = chartindex;
+                var chartlocation = {
+                    location: chartTab.settings.location,
+                    index: chartindex
+                };
+                chartTab.location = chartlocation;
                 var chartparms = chartTab.chartparms;
-                return React.createElement(Tab, { label: chartTab.settings.title, value: "programs" }, React.createElement("div", { style: { padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "top-center", style: {
+                return React.createElement(Tab, { label: chartTab.settings.title, value: "programs", key: chartindex }, React.createElement("div", { style: { padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "top-center", style: {
                         backgroundColor: chartTab.settings.chartCode == "ColumnChart" ? "rgba(144,238,144,0.5)" : "transparent"
                     }, onTouchTap: function onTouchTap(e) {
                         _this.onChangeChartCode('ColumnChart', chartTab.location);
@@ -9886,6 +9889,7 @@ var ExplorerClass = function (_Component) {
             chartParmsObj = getchartparms_1.getChartParms(drilldownchartconfig, userselections, budgetdata, _this.setState.bind(_this), chartmatrix);
             if (!chartParmsObj.error) {
                 drilldownchartconfig.chartparms = chartParmsObj.chartParms;
+                drilldownchartconfig.chartCode = constants_2.ChartTypeCodes[drilldownchartconfig.chartparms.chartType];
                 matrixlocation = drilldownchartconfig.matrixlocation;
                 chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig;
             }
@@ -9950,6 +9954,7 @@ var ExplorerClass = function (_Component) {
                     }
                 } else {
                     cellconfig.chartparms = chartParmsObj.chartParms;
+                    cellconfig.chartCode = constants_2.ChartTypeCodes[cellconfig.chartparms.chartType];
                     cellconfig.dataseries = seriesname;
                 }
             }
@@ -9969,6 +9974,7 @@ var ExplorerClass = function (_Component) {
             var chartParmsObj = getchartparms_1.getChartParms(chartConfig, _this.state.userselections, _this.props.budgetdata, _this.setState.bind(_this), chartmatrix);
             if (!chartParmsObj.isError) {
                 chartConfig.chartparms = chartParmsObj.chartParms;
+                chartConfig.chartCode = constants_2.ChartTypeCodes[chartConfig.chartparms.chartType];
             } else {
                 chartConfig.charttype = oldChartType;
             }
@@ -9993,7 +9999,7 @@ var ExplorerClass = function (_Component) {
                 var settings = {
                     location: chartconfig.matrixlocation,
                     onChartCode: _this.switchChartCode,
-                    chartCode: chartparms.chartCode,
+                    chartCode: chartconfig.chartCode,
                     graph_id: "ChartID" + matrixrow + '' + index,
                     title: "By Programs",
                     index: index
@@ -10085,7 +10091,6 @@ exports.Explorer = Explorer;
 
 var format = require('format-number');
 var updatechartselections_1 = require('./updatechartselections');
-var constants_1 = require('../../constants');
 var getChartParms = function getChartParms(chartConfig, userselections, budgetdata, setState, chartmatrix) {
     var viewpointindex = chartConfig.viewpoint,
         path = chartConfig.datapath,
@@ -10173,7 +10178,11 @@ var getChartParms = function getChartParms(chartConfig, userselections, budgetda
             top: charttop
         }
     };
-    var configlocation = Object.assign({}, chartConfig.matrixlocation);
+    var location = Object.assign({}, chartConfig.matrixlocation);
+    var configlocation = {
+        location: location,
+        index: null
+    };
     var events = [{
         eventName: 'select',
         callback: function (configLocation) {
@@ -10210,14 +10219,12 @@ var getChartParms = function getChartParms(chartConfig, userselections, budgetda
         }
         return [item.Name, amount, annotation];
     });
-    var chartCode = constants_1.ChartTypeCodes[chartType];
     var chartParms = {
         columns: columns,
         rows: rows,
         options: options,
         events: events,
-        chartType: chartType,
-        chartCode: chartCode
+        chartType: chartType
     };
     var chartParmsObj = {
         isError: isError,
@@ -10235,7 +10242,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         selectionrow = null;
     }
     var chart = context.Chart.chart;
-    var selectmatrixlocation = context.configlocation;
+    var selectmatrixlocation = context.configlocation.location;
     var matrixrow = selectmatrixlocation.row,
         matrixcolumn = selectmatrixlocation.column;
     var serieslist = chartmatrix[matrixrow];
@@ -10341,7 +10348,7 @@ var getNodeDatasets = function getNodeDatasets(viewpointindex, path, budgetdata)
     return { node: node, components: components };
 };
 
-},{"../../constants":7,"./updatechartselections":15,"format-number":75}],14:[function(require,module,exports){
+},{"./updatechartselections":15,"format-number":75}],14:[function(require,module,exports){
 "use strict";
 
 var setViewpointAmounts = function setViewpointAmounts(viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) {

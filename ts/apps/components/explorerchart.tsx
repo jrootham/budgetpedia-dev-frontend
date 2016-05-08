@@ -14,13 +14,14 @@ import {
     ChartParms,
     ChartSelectionContext,
     MatrixLocation,
+    ChartLocation,
     ChartSettings,
     BudgetChart,
-    BudgetPortal
+    BudgetPortalConfig
 } from '../controllers/explorer/interfaces'
 
 interface ExploreChartProps {
-    budgetPortal:BudgetPortal,
+    budgetPortal:BudgetPortalConfig,
 }
 
 class ExplorerChart extends Component<ExploreChartProps, any> {
@@ -37,10 +38,15 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
 
         // generate array of chart tabs
         let chartTabs = this.props.budgetPortal.budgetCharts.map((chartTab:BudgetChart,chartindex) => {
-            chartTab.location = chartTab.settings.location
-            chartTab.location.index = chartindex
+            let chartlocation = {
+                location: chartTab.settings.location,
+                index: chartindex,
+            }
+            chartTab.location = chartlocation
             let chartparms = chartTab.chartparms
-            return <Tab label={chartTab.settings.title} value="programs">
+            return <Tab label={chartTab.settings.title} 
+                value="programs"
+                key={chartindex}>
                 <div style={{ padding: "3px" }}>
                     <IconButton
                         tooltip="Column Chart"

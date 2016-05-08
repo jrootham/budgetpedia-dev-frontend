@@ -48,6 +48,7 @@ class ExplorerClass extends Component {
             chartParmsObj = getchartparms_1.getChartParms(drilldownchartconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix);
             if (!chartParmsObj.error) {
                 drilldownchartconfig.chartparms = chartParmsObj.chartParms;
+                drilldownchartconfig.chartCode = constants_2.ChartTypeCodes[drilldownchartconfig.chartparms.chartType];
                 matrixlocation = drilldownchartconfig.matrixlocation;
                 chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownchartconfig;
             }
@@ -113,6 +114,7 @@ class ExplorerClass extends Component {
                 }
                 else {
                     cellconfig.chartparms = chartParmsObj.chartParms;
+                    cellconfig.chartCode = constants_2.ChartTypeCodes[cellconfig.chartparms.chartType];
                     cellconfig.dataseries = seriesname;
                 }
             }
@@ -132,6 +134,7 @@ class ExplorerClass extends Component {
             let chartParmsObj = getchartparms_1.getChartParms(chartConfig, this.state.userselections, this.props.budgetdata, this.setState.bind(this), chartmatrix);
             if (!chartParmsObj.isError) {
                 chartConfig.chartparms = chartParmsObj.chartParms;
+                chartConfig.chartCode = constants_2.ChartTypeCodes[chartConfig.chartparms.chartType];
             }
             else {
                 chartConfig.charttype = oldChartType;
@@ -158,7 +161,7 @@ class ExplorerClass extends Component {
                 let settings = {
                     location: chartconfig.matrixlocation,
                     onChartCode: this.switchChartCode,
-                    chartCode: chartparms.chartCode,
+                    chartCode: chartconfig.chartCode,
                     graph_id: "ChartID" + matrixrow + '' + index,
                     title: "By Programs",
                     index: index,
