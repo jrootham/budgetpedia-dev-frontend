@@ -9592,8 +9592,31 @@ var ExplorerChart = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ExplorerChart)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
-        _this.onChangeChartCode = function (chartCode) {
-            _this.props.settings.onChartCode(_this.props.settings.location, chartCode);
+        _this.onChangeChartCode = function (chartCode, location) {
+            _this.props.budgetPortal.budgetCharts[location.index].settings.onChartCode(location, chartCode);
+        };
+        _this.componentWillMount = function () {
+            console.log('budgetPortal', _this.props.budgetPortal);
+        };
+        _this.getTabs = function () {
+            var chartTabs = _this.props.budgetPortal.budgetCharts.map(function (chartTab, chartindex) {
+                chartTab.location = chartTab.settings.location;
+                chartTab.location.index = chartindex;
+                return React.createElement(Tab, { label: chartTab.settings.title, value: "programs" }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "bottom-center", style: {
+                        backgroundColor: chartTab.settings.chartCode == "ColumnChart" ? "rgba(144,238,144,0.5)" : "transparent"
+                    }, onTouchTap: function onTouchTap(e) {
+                        _this.onChangeChartCode('ColumnChart', chartTab.location);
+                    } }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart")), React.createElement(IconButton, { tooltip: "Donut Pie Chart", tooltipPosition: "bottom-center", style: {
+                        backgroundColor: chartTab.settings.chartCode == "DonutChart" ? "rgba(144,238,144,0.5)" : "transparent"
+                    }, onTouchTap: function onTouchTap(e) {
+                        _this.onChangeChartCode('DonutChart', chartTab.location);
+                    } }, React.createElement(FontIcon, { className: "material-icons" }, "donut_small")), React.createElement(IconButton, { tooltip: "Timeline", tooltipPosition: "bottom-center", style: {
+                        backgroundColor: chartTab.settings.chartCode == "TimeLine" ? "rgba(144,238,144,0.5)" : "transparent"
+                    }, disabled: true, onTouchTap: function onTouchTap(e) {
+                        _this.onChangeChartCode('Timeline', chartTab.location);
+                    } }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: chartTab.chartparms.chartType, options: chartTab.chartparms.options, chartEvents: chartTab.chartparms.events, rows: chartTab.chartparms.rows, columns: chartTab.chartparms.columns, graph_id: chartTab.settings.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))));
+            });
+            return chartTabs;
         };
         return _this;
     }
@@ -9601,8 +9624,7 @@ var ExplorerChart = function (_Component) {
     _createClass(ExplorerChart, [{
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
+            var chartTabs = this.getTabs();
             return React.createElement("div", { style: {
                     position: "relative",
                     display: "inline-block",
@@ -9613,23 +9635,16 @@ var ExplorerChart = function (_Component) {
                 } }, React.createElement("div", { style: {
                     position: "absolute",
                     top: 0,
-                    left: "150px",
-                    width: "100px",
+                    left: "10px",
+                    padding: "3px 20px 0px 20px",
+                    borderRadius: "6px 6px 0 0",
+                    fontSize: "10px",
+                    color: "lightgreen",
+                    fontWeight: "bold",
                     display: "inline-block",
                     zIndex: "1500",
-                    textAlign: "center"
-                } }, "City Budget"), React.createElement(Tabs, null, React.createElement(Tab, { label: "by Programs", value: "programs" }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "bottom-center", style: { backgroundColor: this.props.settings.chartCode == "ColumnChart" ? "rgba(144,238,144,0.5)" : "transparent"
-                }, onTouchTap: function onTouchTap(e) {
-                    _this2.onChangeChartCode('ColumnChart');
-                } }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart")), React.createElement(IconButton, { tooltip: "Donut Pie Chart", tooltipPosition: "bottom-center", style: {
-                    backgroundColor: this.props.settings.chartCode == "DonutChart" ? "rgba(144,238,144,0.5)" : "transparent"
-                }, onTouchTap: function onTouchTap(e) {
-                    _this2.onChangeChartCode('DonutChart');
-                } }, React.createElement(FontIcon, { className: "material-icons" }, "donut_small")), React.createElement(IconButton, { tooltip: "Timeline", tooltipPosition: "bottom-center", style: {
-                    backgroundColor: this.props.settings.chartCode == "TimeLine" ? "rgba(144,238,144,0.5)" : "transparent"
-                }, disabled: true, onTouchTap: function onTouchTap(e) {
-                    _this2.onChangeChartCode('Timeline');
-                } }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: this.props.chartType, options: this.props.options, chartEvents: this.props.chartEvents, rows: this.props.rows, columns: this.props.columns, graph_id: this.props.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list")))), React.createElement(Tab, { label: "By Expenditures", value: "resources" }, React.createElement("div", null, "Resources"))));
+                    backgroundColor: "#00bcd4"
+                } }, this.props.budgetPortal.portalName), React.createElement(Tabs, null, chartTabs));
         }
     }]);
 
@@ -9980,9 +9995,19 @@ var ExplorerClass = function (_Component) {
                 var settings = {
                     location: chartconfig.matrixlocation,
                     onChartCode: _this.switchChartCode,
-                    chartCode: chartparms.chartCode
+                    chartCode: chartparms.chartCode,
+                    graph_id: "ChartID" + matrixrow + '' + index,
+                    title: "By Programs",
+                    index: index
                 };
-                return React.createElement(explorerchart_1.ExplorerChart, { key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + matrixrow + '' + index, settings: settings });
+                var budgetPortal = {
+                    budgetCharts: [{
+                        chartparms: chartparms,
+                        settings: settings
+                    }],
+                    portalName: 'City Budget'
+                };
+                return React.createElement(explorerchart_1.ExplorerChart, { key: index, budgetPortal: budgetPortal });
             });
             return charts;
         };

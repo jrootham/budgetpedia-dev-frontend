@@ -50,7 +50,10 @@ import {
     ChartConfig,
     ChartParms,
     ChartSelectionContext,
-    MatrixLocation
+    MatrixLocation,
+    BudgetPortal,
+    BudgetChart,
+    ChartSettings
 } from './explorer/interfaces'
 // import { categoryaliases } from '../constants'
 
@@ -280,22 +283,28 @@ class ExplorerClass extends Component< any, any > {
 
             let chartparms = chartconfig.chartparms
 
-            let settings = { 
+            let settings:ChartSettings = { 
                 location: chartconfig.matrixlocation,
                 onChartCode: this.switchChartCode,
                 chartCode:chartparms.chartCode,
+                graph_id: "ChartID" + matrixrow + '' + index,
+                title:"By Programs",
+                index,
+            }
+
+            let budgetPortal:BudgetPortal = {
+                budgetCharts:[
+                    {
+                        chartparms,
+                        settings,
+                    }
+                ],
+                portalName:'City Budget'
             }
 
             return <ExplorerChart
                 key = {index}
-                chartType = {chartparms.chartType}
-                options = { chartparms.options }
-                chartEvents = {chartparms.events}
-                rows = {chartparms.rows}
-                columns = {chartparms.columns}
-                // used to create html element id attribute
-                graph_id = { "ChartID" + matrixrow + '' + index }
-                settings = { settings }
+                budgetPortal = { budgetPortal }
                 />
         })
 

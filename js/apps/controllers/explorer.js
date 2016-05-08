@@ -159,8 +159,20 @@ class ExplorerClass extends Component {
                     location: chartconfig.matrixlocation,
                     onChartCode: this.switchChartCode,
                     chartCode: chartparms.chartCode,
+                    graph_id: "ChartID" + matrixrow + '' + index,
+                    title: "By Programs",
+                    index: index,
                 };
-                return React.createElement(explorerchart_1.ExplorerChart, {key: index, chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: "ChartID" + matrixrow + '' + index, settings: settings});
+                let budgetPortal = {
+                    budgetCharts: [
+                        {
+                            chartparms: chartparms,
+                            settings: settings,
+                        }
+                    ],
+                    portalName: 'City Budget'
+                };
+                return React.createElement(explorerchart_1.ExplorerChart, {key: index, budgetPortal: budgetPortal});
             });
             return charts;
         };

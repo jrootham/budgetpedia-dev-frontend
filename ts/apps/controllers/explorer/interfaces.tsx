@@ -17,15 +17,36 @@ interface ChartConfig {
     isError?: boolean
 }
 
+interface BudgetPortal {
+    budgetCharts: BudgetChart[],
+    portalName: string,
+}
+
+interface BudgetChart {
+    chartparms: ChartParms,
+    settings: ChartSettings,
+    location?:MatrixLocation,
+}
+
 interface MatrixLocation {
     row: number,
     column: number,
+    index?:number,
 }
 
 interface YearScope {
     latestyear: number,
     earliestyear: number,
     fullrange: boolean,
+}
+
+interface ChartSettings {
+    location: MatrixLocation,
+    onChartCode: Function,
+    chartCode: string,
+    graph_id: string,
+    title: string,
+    index: number,
 }
 
 interface ChartParms {
@@ -65,5 +86,8 @@ export {
     ChartParms, 
     ChartParmsObj, 
     ComponentSummaries, 
-    ChartSelectionContext
+    ChartSelectionContext,
+    ChartSettings,
+    BudgetPortal,
+    BudgetChart,
 }
