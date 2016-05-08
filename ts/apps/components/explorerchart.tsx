@@ -20,14 +20,6 @@ import {
 } from '../controllers/explorer/interfaces'
 
 interface ExploreChartProps {
-    // chartType?: string,
-    // options?: any,
-    // chartEvents?: any[],
-    // rows?: any[],
-    // columns?: any[],
-    // graph_id?: string,
-    // settings?: ChartSettings,
-    // title?:string,
     budgetPortal:BudgetPortal,
 }
 
@@ -38,14 +30,16 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
     }
 
     componentWillMount = () => {
-        console.log('budgetPortal',this.props.budgetPortal)
+        // console.log('budgetPortal',this.props.budgetPortal)
     }
 
     getTabs = () => {
 
+        // generate array of chart tabs
         let chartTabs = this.props.budgetPortal.budgetCharts.map((chartTab:BudgetChart,chartindex) => {
             chartTab.location = chartTab.settings.location
             chartTab.location.index = chartindex
+            let chartparms = chartTab.chartparms
             return <Tab label={chartTab.settings.title} value="programs">
                 <div style={{ position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" }}>
                     <IconButton
@@ -99,13 +93,13 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                     <IconButton disabled><FontIcon className="material-icons">info_outline</FontIcon></IconButton>
                 </div>
                 <Chart
-                    chartType = {chartTab.chartparms.chartType}
-                    options = { chartTab.chartparms.options }
-                    chartEvents = {chartTab.chartparms.events}
-                    rows = {chartTab.chartparms.rows}
-                    columns = {chartTab.chartparms.columns}
+                    chartType = { chartparms.chartType }
+                    options = { chartparms.options }
+                    chartEvents = { chartparms.events }
+                    rows = { chartparms.rows }
+                    columns = { chartparms.columns }
                     // used to create and cache html element id attribute
-                    graph_id = {chartTab.settings.graph_id}
+                    graph_id = { chartTab.settings.graph_id }
                     />
                 <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}>
                     <IconButton disabled><FontIcon className="material-icons">view_list</FontIcon></IconButton>
@@ -113,6 +107,7 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
             </Tab>
         })
 
+        // return chartTabs to caller
         return chartTabs
 
     }
@@ -147,7 +142,9 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                 }
             }>{ this.props.budgetPortal.portalName }</div>
             <Tabs>
+
                 { chartTabs }
+                
             </Tabs>
         </div>
     }

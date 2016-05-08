@@ -13,12 +13,12 @@ class ExplorerChart extends Component {
             this.props.budgetPortal.budgetCharts[location.index].settings.onChartCode(location, chartCode);
         };
         this.componentWillMount = () => {
-            console.log('budgetPortal', this.props.budgetPortal);
         };
         this.getTabs = () => {
             let chartTabs = this.props.budgetPortal.budgetCharts.map((chartTab, chartindex) => {
                 chartTab.location = chartTab.settings.location;
                 chartTab.location.index = chartindex;
+                let chartparms = chartTab.chartparms;
                 return React.createElement(Tab, {label: chartTab.settings.title, value: "programs"}, React.createElement("div", {style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton, {tooltip: "Column Chart", tooltipPosition: "bottom-center", style: {
                     backgroundColor: (chartTab.settings.chartCode == "ColumnChart")
                         ? "rgba(144,238,144,0.5)"
@@ -37,7 +37,7 @@ class ExplorerChart extends Component {
                         : "transparent"
                 }, disabled: true, onTouchTap: e => {
                     this.onChangeChartCode('Timeline', chartTab.location);
-                }}, React.createElement(FontIcon, {className: "material-icons"}, "timeline"))), React.createElement("div", {style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton, {disabled: true}, React.createElement(FontIcon, {className: "material-icons"}, "info_outline"))), React.createElement(Chart, {chartType: chartTab.chartparms.chartType, options: chartTab.chartparms.options, chartEvents: chartTab.chartparms.events, rows: chartTab.chartparms.rows, columns: chartTab.chartparms.columns, graph_id: chartTab.settings.graph_id}), React.createElement("div", {style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton, {disabled: true}, React.createElement(FontIcon, {className: "material-icons"}, "view_list"))));
+                }}, React.createElement(FontIcon, {className: "material-icons"}, "timeline"))), React.createElement("div", {style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton, {disabled: true}, React.createElement(FontIcon, {className: "material-icons"}, "info_outline"))), React.createElement(Chart, {chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: chartTab.settings.graph_id}), React.createElement("div", {style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton, {disabled: true}, React.createElement(FontIcon, {className: "material-icons"}, "view_list"))));
             });
             return chartTabs;
         };

@@ -9595,13 +9595,12 @@ var ExplorerChart = function (_Component) {
         _this.onChangeChartCode = function (chartCode, location) {
             _this.props.budgetPortal.budgetCharts[location.index].settings.onChartCode(location, chartCode);
         };
-        _this.componentWillMount = function () {
-            console.log('budgetPortal', _this.props.budgetPortal);
-        };
+        _this.componentWillMount = function () {};
         _this.getTabs = function () {
             var chartTabs = _this.props.budgetPortal.budgetCharts.map(function (chartTab, chartindex) {
                 chartTab.location = chartTab.settings.location;
                 chartTab.location.index = chartindex;
+                var chartparms = chartTab.chartparms;
                 return React.createElement(Tab, { label: chartTab.settings.title, value: "programs" }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "bottom-center", style: {
                         backgroundColor: chartTab.settings.chartCode == "ColumnChart" ? "rgba(144,238,144,0.5)" : "transparent"
                     }, onTouchTap: function onTouchTap(e) {
@@ -9614,7 +9613,7 @@ var ExplorerChart = function (_Component) {
                         backgroundColor: chartTab.settings.chartCode == "TimeLine" ? "rgba(144,238,144,0.5)" : "transparent"
                     }, disabled: true, onTouchTap: function onTouchTap(e) {
                         _this.onChangeChartCode('Timeline', chartTab.location);
-                    } }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: chartTab.chartparms.chartType, options: chartTab.chartparms.options, chartEvents: chartTab.chartparms.events, rows: chartTab.chartparms.rows, columns: chartTab.chartparms.columns, graph_id: chartTab.settings.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))));
+                    } }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: chartTab.settings.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))));
             });
             return chartTabs;
         };
