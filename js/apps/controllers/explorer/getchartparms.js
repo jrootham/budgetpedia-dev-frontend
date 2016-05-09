@@ -21,8 +21,15 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
     let staffrounded = format({ round: 1, integerSeparator: ',' });
     let { node, components } = getNodeDatasets(viewpointindex, path, budgetdata);
     let chartType = chartConfig.charttype;
-    let titleref = viewpointdata.Configuration[node.Contents];
-    let axistitle = titleref.Alias || titleref.Name;
+    let axistitle = null;
+    if (node.Contents != 'BASELINE') {
+        let titleref = viewpointdata.Configuration[node.Contents];
+        axistitle = titleref.Alias || titleref.Name;
+    }
+    else {
+        let portaltitles = budgetdata.DataSeries[dataseriesname].Titles;
+        axistitle = portaltitles.Components;
+    }
     let title;
     if (nodeConfig.parentdata) {
         let parentdatanode = nodeConfig.parentdata.datanode;

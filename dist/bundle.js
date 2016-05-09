@@ -8528,13 +8528,13 @@ module.exports={
                     "CITIZENOPS": "Citizen Centered Operations",
                     "CITIZENSERVICESA": "Citizen-Centered Services \"A\"",
                     "CITIZENSERVICESB": "Citizen-Centered Services \"B\"",
-                    "CORESERVICESA": "Core Administrative Services",
-                    "CORESERVICESB": "Core Administrative Services",
+                    "CORESERVICESA": "Core Administrative Services \"A\"",
+                    "CORESERVICESB": "Core Administrative Services \"B\"",
                     "CORPORATEACCOUNTS2": "Corporate Accounts",
                     "COUNCILOPS": "Council Domain",
                     "DESTINATIONS2": "Public Destinations",
-                    "FIELDSERVICESA": "Field Services",
-                    "FIELDSERVICESB": "Field Services",
+                    "FIELDSERVICESA": "Field Services \"A\"",
+                    "FIELDSERVICESB": "Field Services \"B\"",
                     "MANAGEMENTOFFICES": "Management Offices",
                     "CORPORATESERVICES": "Corporate Services",
                     "MANAGEMENTOPS": "City Manager Domain",
@@ -10158,8 +10158,14 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
     var components = _getNodeDatasets.components;
 
     var chartType = chartConfig.charttype;
-    var titleref = viewpointdata.Configuration[node.Contents];
-    var axistitle = titleref.Alias || titleref.Name;
+    var axistitle = null;
+    if (node.Contents != 'BASELINE') {
+        var titleref = viewpointdata.Configuration[node.Contents];
+        axistitle = titleref.Alias || titleref.Name;
+    } else {
+        var portaltitles = budgetdata.DataSeries[dataseriesname].Titles;
+        axistitle = portaltitles.Components;
+    }
     var title = undefined;
     if (nodeConfig.parentdata) {
         var parentdatanode = nodeConfig.parentdata.datanode;

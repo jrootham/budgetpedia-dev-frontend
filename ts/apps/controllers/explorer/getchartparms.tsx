@@ -74,8 +74,14 @@ let getChartParms = (
 
     // 2. chart options:
     // get axis title
-    let titleref = viewpointdata.Configuration[node.Contents]
-    let axistitle = titleref.Alias || titleref.Name
+    let axistitle = null
+    if (node.Contents != 'BASELINE') {
+        let titleref = viewpointdata.Configuration[node.Contents]
+        axistitle = titleref.Alias || titleref.Name
+    } else {
+        let portaltitles = budgetdata.DataSeries[dataseriesname].Titles
+        axistitle = portaltitles.Components
+    }
 
     // assemble chart title
     let title
