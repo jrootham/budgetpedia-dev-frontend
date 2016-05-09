@@ -19,7 +19,7 @@ class ExplorerChart extends Component {
             let chartTabs = this.props.budgetPortal.portalCharts.map((chartTab, chartindex) => {
                 chartTab.portalchartlocation.portalindex = chartindex;
                 let chartparms = chartTab.portalchartparms;
-                return React.createElement(Tab, {label: chartTab.portalchartsettings.chartblocktitle, value: "programs", key: chartindex}, React.createElement("div", {style: { padding: "3px" }}, React.createElement(IconButton, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {
+                return React.createElement(Tab, {style: { fontSize: "12px" }, label: chartTab.portalchartsettings.chartblocktitle, value: "programs", key: chartindex}, React.createElement("div", {style: { padding: "3px" }}, React.createElement(IconButton, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {
                     backgroundColor: (chartTab.portalchartsettings.chartCode == "ColumnChart")
                         ? "rgba(144,238,144,0.5)"
                         : "transparent"

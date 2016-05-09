@@ -57,6 +57,7 @@ interface NodeChartConfig {
     charttype: string,
     chartCode?: string,
     chartparms?: ChartParms,
+    portalcharttype?:string,
 
     chartselection?: ChartSelectionData[],
     chart?: any,

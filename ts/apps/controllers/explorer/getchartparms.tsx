@@ -30,6 +30,14 @@ let getChartParms = (
     userselections, budgetdata, setState, chartmatrix):ChartParmsObj => {
     let chartConfig: NodeChartConfig = nodeConfig.charts[chartIndex]
 
+    let sortedlist = 'SortedComponents'
+
+    let portalcharttype = chartConfig.portalcharttype
+
+    if (portalcharttype == 'Categories') {
+        sortedlist = 'SortedCategories'
+    }
+
     // -------------------[ INIT VARS ]---------------------
 
     // unpack chartConfig & derivatives
@@ -68,6 +76,11 @@ let getChartParms = (
     // collect chart node and its components as data sources for the graph
     let { node, components } = getNodeDatasets(viewpointindex, path, budgetdata)
 
+    // !Hack!
+    if (portalcharttype == 'Categories') {
+        components = node.Categories
+    }
+
     // ---------------------[ COLLECT CHART PARMS ]---------------------
     // 1. chart type:
     let chartType = chartConfig.charttype
@@ -75,7 +88,7 @@ let getChartParms = (
     // 2. chart options:
     // get axis title
     let axistitle = null
-    if (node.Contents != 'BASELINE') {
+    if ((node.Contents != 'BASELINE') && (portalcharttype == 'Components')) {
         let titleref = viewpointdata.Configuration[node.Contents]
         axistitle = titleref.Alias || titleref.Name
     } else {
@@ -194,10 +207,10 @@ let getChartParms = (
     ]
 
     // 5. chart rows:
-    if (!node.SortedComponents) {
+    if (!node[sortedlist]) {
         return { isError: true, chartParms: {} }
     }
-    let rows = node.SortedComponents.map((item:SortedComponentItem) => {
+    let rows = node[sortedlist].map((item:SortedComponentItem) => {
         // TODO: get determination of amount processing from Unit value
         let component = components[item.Code]
         if (!component) {

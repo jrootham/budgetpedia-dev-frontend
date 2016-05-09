@@ -45,25 +45,42 @@ class ExplorerClass extends Component {
             let budgetdata = this.props.budgetdata;
             setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
             let drilldownnodeconfig = this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
-            let drilldownindex = 0;
-            chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, this.setState.bind(this), chartmatrix);
-            if (!chartParmsObj.isError) {
-                drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
-                drilldownnodeconfig.charts[drilldownindex].chartCode =
-                    constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
-                drilldownnodeconfig.datanode = chartParmsObj.datanode;
-                matrixlocation = drilldownnodeconfig.matrixlocation;
-                chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
+            console.log('drilldownnodeconfig', drilldownnodeconfig);
+            let drilldownindex;
+            for (drilldownindex in drilldownnodeconfig.charts) {
+                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, this.setState.bind(this), chartmatrix);
+                if (!chartParmsObj.isError) {
+                    drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
+                    drilldownnodeconfig.charts[drilldownindex].chartCode =
+                        constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
+                    drilldownnodeconfig.datanode = chartParmsObj.datanode;
+                    matrixlocation = drilldownnodeconfig.matrixlocation;
+                    chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
+                }
             }
             this.setState({
                 chartmatrix: chartmatrix,
             });
         };
         this.initRootNodeConfig = (matrixrow, userselections) => {
-            let chartCode = constants_2.ChartTypeCodes[userselections.charttype];
+            let charttype = userselections.charttype;
+            let chartCode = constants_2.ChartTypeCodes[charttype];
+            let budgetdata = this.props.budgetdata;
+            let viewpoint = userselections.viewpoint;
+            let dataseries = userselections.dataseries;
+            let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries];
+            let charts = [];
+            for (let type of portalcharts) {
+                let chartconfig = {
+                    charttype: charttype,
+                    chartCode: chartCode,
+                };
+                chartconfig.portalcharttype = type.Type;
+                charts.push(chartconfig);
+            }
             return {
-                viewpoint: userselections.viewpoint,
-                dataseries: userselections.dataseries,
+                viewpoint: viewpoint,
+                dataseries: dataseries,
                 datapath: [],
                 matrixlocation: {
                     row: matrixrow,
@@ -74,12 +91,7 @@ class ExplorerClass extends Component {
                     earliestyear: null,
                     fullrange: false,
                 },
-                charts: [
-                    {
-                        charttype: userselections.charttype,
-                        chartCode: chartCode,
-                    }
-                ]
+                charts: charts
             };
         };
         this.switchViewpoint = (viewpointname, seriesref) => {
@@ -173,11 +185,11 @@ class ExplorerClass extends Component {
             let budgetdata = this.props.budgetdata;
             let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
             let charts = matrixcolumn.map((nodeconfig, index) => {
-                console.log('nodeconfig', nodeconfig);
                 let portalcharts = [];
                 for (let chartindex in nodeconfig.charts) {
                     let chartblocktitle = null;
-                    if (nodeconfig.datanode.Contents == 'BASELINE') {
+                    if ((nodeconfig.datanode.Contents == 'BASELINE')
+                        || (nodeconfig.charts[chartindex].portalcharttype == 'Categories')) {
                         chartblocktitle = portaltitles.Components;
                     }
                     else {

@@ -374,6 +374,20 @@
                 }
             },
             "Contents":"TYPES",
+            "PortalCharts":{
+                "BudgetExpenses":[
+                    {"Type":"Components"},
+                    {"Type":"Categories"}
+                ],
+                "BudgetRevenues":[
+                    {"Type":"Components"},
+                    {"Type":"Categories"}
+                ],
+                "BudgetStaffing":[
+                    {"Type":"Components"},
+                    {"Type":"Categories"}
+                ]
+            },
             "Components": {
                 "SHARED":
                 {
@@ -819,6 +833,20 @@
                 }
             },
             "Contents":"ROOT",
+            "PortalCharts":{
+                "BudgetExpenses":[
+                    {"Type":"Components"},
+                    {"Type":"Categories"}
+                ],
+                "BudgetRevenues":[
+                    {"Type":"Components"},
+                    {"Type":"Categories"}
+                ],
+                "BudgetStaffing":[
+                    {"Type":"Components"},
+                    {"Type":"Categories"}
+                ]
+            },
             "Components": 
             {
                 "ADMINOPS": 

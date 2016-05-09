@@ -48,6 +48,7 @@ import { updateChartSelections } from './explorer/updatechartselections'
 
 import {
     BudgetNodeConfig,
+    NodeChartConfig,
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,
@@ -110,20 +111,23 @@ class ExplorerClass extends Component< any, any > {
         // assemble parms to get initial dataset
         let drilldownnodeconfig: BudgetNodeConfig =
             this.initRootNodeConfig(ChartSeries.DrillDown, userselections)
-        let drilldownindex = 0
-        chartParmsObj = getChartParms(
-            drilldownnodeconfig, drilldownindex,
-            userselections, budgetdata, this.setState.bind(this), chartmatrix)
+        console.log('drilldownnodeconfig',drilldownnodeconfig)
+        let drilldownindex:any
+        for (drilldownindex in drilldownnodeconfig.charts) {
+            chartParmsObj = getChartParms(
+                drilldownnodeconfig, drilldownindex,
+                userselections, budgetdata, this.setState.bind(this), chartmatrix)
 
-        if (!chartParmsObj.isError) {
+            if (!chartParmsObj.isError) {
 
-            drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms
-            drilldownnodeconfig.charts[drilldownindex].chartCode = 
-                ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType]
-            drilldownnodeconfig.datanode = chartParmsObj.datanode
-            matrixlocation = drilldownnodeconfig.matrixlocation
-            chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig
+                drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms
+                drilldownnodeconfig.charts[drilldownindex].chartCode = 
+                    ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType]
+                drilldownnodeconfig.datanode = chartParmsObj.datanode
+                matrixlocation = drilldownnodeconfig.matrixlocation
+                chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig
 
+            }
         }
 
         // -----------------[ THE COMPARE ROOT ]-------------------
@@ -154,10 +158,24 @@ class ExplorerClass extends Component< any, any > {
     // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
 
     initRootNodeConfig = (matrixrow, userselections): BudgetNodeConfig => {
-        let chartCode = ChartTypeCodes[userselections.charttype]
+        let charttype = userselections.charttype
+        let chartCode = ChartTypeCodes[charttype]
+        let budgetdata = this.props.budgetdata
+        let viewpoint = userselections.viewpoint
+        let dataseries = userselections.dataseries
+        let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries]
+        let charts = []
+        for (let type of portalcharts) {
+            let chartconfig:NodeChartConfig = {
+                charttype,
+                chartCode,
+            }
+            chartconfig.portalcharttype = type.Type
+            charts.push(chartconfig)
+        }
         return {
-            viewpoint:userselections.viewpoint,
-            dataseries:userselections.dataseries,
+            viewpoint:viewpoint,
+            dataseries:dataseries,
             datapath: [], // get data from root viewpoint object
             matrixlocation: {
                 row:matrixrow,
@@ -168,12 +186,7 @@ class ExplorerClass extends Component< any, any > {
                 earliestyear: null,
                 fullrange: false,
             },
-            charts: [ 
-                {
-                    charttype: userselections.charttype,
-                    chartCode,
-                }
-            ]
+            charts: charts
         }
 
     }
@@ -305,14 +318,13 @@ class ExplorerClass extends Component< any, any > {
 
         let charts = matrixcolumn.map((nodeconfig: BudgetNodeConfig, index) => {
 
-            console.log('nodeconfig',nodeconfig)
-
             let portalcharts = []
 
             for (let chartindex in nodeconfig.charts) {
 
                 let chartblocktitle = null
-                if (nodeconfig.datanode.Contents == 'BASELINE') {
+                if ((nodeconfig.datanode.Contents == 'BASELINE')
+                    || (nodeconfig.charts[chartindex].portalcharttype == 'Categories' )) {
                     chartblocktitle = portaltitles.Components
                 } else {
                     chartblocktitle = portaltitles.Baseline

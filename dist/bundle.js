@@ -8173,6 +8173,32 @@ module.exports={
                 }
             },
             "Contents": "TYPES",
+            "PortalCharts": {
+                "BudgetExpenses": [
+                    {
+                        "Type": "Components"
+                    },
+                    {
+                        "Type": "Categories"
+                    }
+                ],
+                "BudgetRevenues": [
+                    {
+                        "Type": "Components"
+                    },
+                    {
+                        "Type": "Categories"
+                    }
+                ],
+                "BudgetStaffing": [
+                    {
+                        "Type": "Components"
+                    },
+                    {
+                        "Type": "Categories"
+                    }
+                ]
+            },
             "Components": {
                 "SHARED": {
                     "Index": 0,
@@ -8593,6 +8619,32 @@ module.exports={
                 }
             },
             "Contents": "ROOT",
+            "PortalCharts": {
+                "BudgetExpenses": [
+                    {
+                        "Type": "Components"
+                    },
+                    {
+                        "Type": "Categories"
+                    }
+                ],
+                "BudgetRevenues": [
+                    {
+                        "Type": "Components"
+                    },
+                    {
+                        "Type": "Categories"
+                    }
+                ],
+                "BudgetStaffing": [
+                    {
+                        "Type": "Components"
+                    },
+                    {
+                        "Type": "Categories"
+                    }
+                ]
+            },
             "Components": {
                 "ADMINOPS": {
                     "Index": 0,
@@ -9612,7 +9664,7 @@ var ExplorerChart = function (_Component) {
             var chartTabs = _this.props.budgetPortal.portalCharts.map(function (chartTab, chartindex) {
                 chartTab.portalchartlocation.portalindex = chartindex;
                 var chartparms = chartTab.portalchartparms;
-                return React.createElement(Tab, { label: chartTab.portalchartsettings.chartblocktitle, value: "programs", key: chartindex }, React.createElement("div", { style: { padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "top-center", style: {
+                return React.createElement(Tab, { style: { fontSize: "12px" }, label: chartTab.portalchartsettings.chartblocktitle, value: "programs", key: chartindex }, React.createElement("div", { style: { padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "top-center", style: {
                         backgroundColor: chartTab.portalchartsettings.chartCode == "ColumnChart" ? "rgba(144,238,144,0.5)" : "transparent"
                     }, onTouchTap: function onTouchTap(e) {
                         _this.onChangeChartCode('ColumnChart', chartTab.portalchartlocation);
@@ -9894,24 +9946,63 @@ var ExplorerClass = function (_Component) {
             var budgetdata = _this.props.budgetdata;
             setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
             var drilldownnodeconfig = _this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
-            var drilldownindex = 0;
-            chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix);
-            if (!chartParmsObj.isError) {
-                drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
-                drilldownnodeconfig.charts[drilldownindex].chartCode = constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
-                drilldownnodeconfig.datanode = chartParmsObj.datanode;
-                matrixlocation = drilldownnodeconfig.matrixlocation;
-                chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
+            console.log('drilldownnodeconfig', drilldownnodeconfig);
+            var drilldownindex = undefined;
+            for (drilldownindex in drilldownnodeconfig.charts) {
+                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix);
+                if (!chartParmsObj.isError) {
+                    drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
+                    drilldownnodeconfig.charts[drilldownindex].chartCode = constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
+                    drilldownnodeconfig.datanode = chartParmsObj.datanode;
+                    matrixlocation = drilldownnodeconfig.matrixlocation;
+                    chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
+                }
             }
             _this.setState({
                 chartmatrix: chartmatrix
             });
         };
         _this.initRootNodeConfig = function (matrixrow, userselections) {
-            var chartCode = constants_2.ChartTypeCodes[userselections.charttype];
+            var charttype = userselections.charttype;
+            var chartCode = constants_2.ChartTypeCodes[charttype];
+            var budgetdata = _this.props.budgetdata;
+            var viewpoint = userselections.viewpoint;
+            var dataseries = userselections.dataseries;
+            var portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries];
+            var charts = [];
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = portalcharts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var type = _step.value;
+
+                    var chartconfig = {
+                        charttype: charttype,
+                        chartCode: chartCode
+                    };
+                    chartconfig.portalcharttype = type.Type;
+                    charts.push(chartconfig);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
             return {
-                viewpoint: userselections.viewpoint,
-                dataseries: userselections.dataseries,
+                viewpoint: viewpoint,
+                dataseries: dataseries,
                 datapath: [],
                 matrixlocation: {
                     row: matrixrow,
@@ -9922,10 +10013,7 @@ var ExplorerClass = function (_Component) {
                     earliestyear: null,
                     fullrange: false
                 },
-                charts: [{
-                    charttype: userselections.charttype,
-                    chartCode: chartCode
-                }]
+                charts: charts
             };
         };
         _this.switchViewpoint = function (viewpointname, seriesref) {
@@ -10014,11 +10102,10 @@ var ExplorerClass = function (_Component) {
             var budgetdata = _this.props.budgetdata;
             var portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
             var charts = matrixcolumn.map(function (nodeconfig, index) {
-                console.log('nodeconfig', nodeconfig);
                 var portalcharts = [];
                 for (var chartindex in nodeconfig.charts) {
                     var chartblocktitle = null;
-                    if (nodeconfig.datanode.Contents == 'BASELINE') {
+                    if (nodeconfig.datanode.Contents == 'BASELINE' || nodeconfig.charts[chartindex].portalcharttype == 'Categories') {
                         chartblocktitle = portaltitles.Components;
                     } else {
                         chartblocktitle = portaltitles.Baseline;
@@ -10133,6 +10220,11 @@ var updatechartselections_1 = require('./updatechartselections');
 var constants_1 = require('../../constants');
 var getChartParms = function getChartParms(nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix) {
     var chartConfig = nodeConfig.charts[chartIndex];
+    var sortedlist = 'SortedComponents';
+    var portalcharttype = chartConfig.portalcharttype;
+    if (portalcharttype == 'Categories') {
+        sortedlist = 'SortedCategories';
+    }
     var viewpointindex = nodeConfig.viewpoint,
         path = nodeConfig.datapath,
         yearscope = nodeConfig.yearscope,
@@ -10157,9 +10249,12 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
     var node = _getNodeDatasets.node;
     var components = _getNodeDatasets.components;
 
+    if (portalcharttype == 'Categories') {
+        components = node.Categories;
+    }
     var chartType = chartConfig.charttype;
     var axistitle = null;
-    if (node.Contents != 'BASELINE') {
+    if (node.Contents != 'BASELINE' && portalcharttype == 'Components') {
         var titleref = viewpointdata.Configuration[node.Contents];
         axistitle = titleref.Alias || titleref.Name;
     } else {
@@ -10243,10 +10338,10 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
     }];
     var categorylabel = 'Component';
     var columns = [{ type: 'string', label: categorylabel }, { type: 'number', label: year.toString() }, { type: 'string', role: 'annotation' }];
-    if (!node.SortedComponents) {
+    if (!node[sortedlist]) {
         return { isError: true, chartParms: {} };
     }
-    var rows = node.SortedComponents.map(function (item) {
+    var rows = node[sortedlist].map(function (item) {
         var component = components[item.Code];
         if (!component) {
             console.error('component not found for (components, item, item.Code) ', components, item.Code, item);

@@ -4,6 +4,11 @@ const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
 let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix) => {
     let chartConfig = nodeConfig.charts[chartIndex];
+    let sortedlist = 'SortedComponents';
+    let portalcharttype = chartConfig.portalcharttype;
+    if (portalcharttype == 'Categories') {
+        sortedlist = 'SortedCategories';
+    }
     let viewpointindex = nodeConfig.viewpoint, path = nodeConfig.datapath, yearscope = nodeConfig.yearscope, year = yearscope.latestyear;
     let dataseriesname = userselections.dataseries;
     let viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel;
@@ -20,9 +25,12 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
     let singlerounded = format({ round: 1, integerSeparator: '' });
     let staffrounded = format({ round: 1, integerSeparator: ',' });
     let { node, components } = getNodeDatasets(viewpointindex, path, budgetdata);
+    if (portalcharttype == 'Categories') {
+        components = node.Categories;
+    }
     let chartType = chartConfig.charttype;
     let axistitle = null;
-    if (node.Contents != 'BASELINE') {
+    if ((node.Contents != 'BASELINE') && (portalcharttype == 'Components')) {
         let titleref = viewpointdata.Configuration[node.Contents];
         axistitle = titleref.Alias || titleref.Name;
     }
@@ -115,10 +123,10 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
         { type: 'number', label: year.toString() },
         { type: 'string', role: 'annotation' }
     ];
-    if (!node.SortedComponents) {
+    if (!node[sortedlist]) {
         return { isError: true, chartParms: {} };
     }
-    let rows = node.SortedComponents.map((item) => {
+    let rows = node[sortedlist].map((item) => {
         let component = components[item.Code];
         if (!component) {
             console.error('component not found for (components, item, item.Code) ', components, item.Code, item);

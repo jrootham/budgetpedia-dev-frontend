@@ -40,7 +40,8 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
         let chartTabs = this.props.budgetPortal.portalCharts.map((chartTab:PortalChartConfig,chartindex) => {
             chartTab.portalchartlocation.portalindex = chartindex
             let chartparms = chartTab.portalchartparms
-            return <Tab label={chartTab.portalchartsettings.chartblocktitle} 
+            return <Tab style={{fontSize:"12px"}} 
+                label={chartTab.portalchartsettings.chartblocktitle} 
                 value="programs"
                 key={chartindex}>
                 <div style={{ padding: "3px" }}>
