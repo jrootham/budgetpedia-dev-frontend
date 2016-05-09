@@ -10058,7 +10058,7 @@ var ExplorerClass = function (_Component) {
                     _this2.switchViewpoint('STRUCTURAL', constants_1.ChartSeries.DrillDown);
                 }, style: {
                     backgroundColor: this.state.userselections.viewpoint == 'STRUCTURAL' ? 'lightgreen' : 'transparent'
-                } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
+                } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "layers")), React.createElement("span", { style: { marginLeft: "10px" } }, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
                     _this2.switchDataSeries('BudgetExpenses', constants_1.ChartSeries.DrillDown);
                 }, style: {
                     backgroundColor: this.state.userselections.dataseries == 'BudgetExpenses' ? 'lightgreen' : 'transparent'

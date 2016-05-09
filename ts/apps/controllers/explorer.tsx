@@ -516,7 +516,7 @@ class ExplorerClass extends Component< any, any > {
                         <FontIcon className="material-icons">layers</FontIcon>
                     </IconButton>
 
-                    <span>Facets: </span>
+                    <span style={{marginLeft:"10px"}}>Facets: </span>
 
                     <IconButton 
                         tooltip="Expenses" 

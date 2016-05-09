@@ -229,7 +229,7 @@ class ExplorerClass extends Component {
             backgroundColor: (this.state.userselections.viewpoint == 'STRUCTURAL')
                 ? 'lightgreen'
                 : 'transparent'
-        }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "layers")), React.createElement("span", null, "Facets: "), React.createElement(IconButton, {tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: e => {
+        }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "layers")), React.createElement("span", {style: { marginLeft: "10px" }}, "Facets: "), React.createElement(IconButton, {tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: e => {
             this.switchDataSeries('BudgetExpenses', constants_1.ChartSeries.DrillDown);
         }, style: {
             backgroundColor: (this.state.userselections.dataseries == 'BudgetExpenses')
