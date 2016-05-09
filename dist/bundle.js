@@ -9882,7 +9882,8 @@ var ExplorerClass = function (_Component) {
             var budgetdata = _this.props.budgetdata;
             setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
             var drilldownnodeconfig = _this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
-            chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, userselections, budgetdata, _this.setState.bind(_this), chartmatrix);
+            var drilldownindex = 0;
+            chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix);
             if (!chartParmsObj.error) {
                 drilldownnodeconfig.charts[0].chartparms = chartParmsObj.chartParms;
                 drilldownnodeconfig.charts[0].chartCode = constants_2.ChartTypeCodes[drilldownnodeconfig.charts[0].chartparms.chartType];
@@ -9942,7 +9943,8 @@ var ExplorerClass = function (_Component) {
             var cellptr = undefined;
             for (cellptr = 0; cellptr < matrixseries.length; cellptr++) {
                 nodeconfig = matrixseries[cellptr];
-                var chartParmsObj = getchartparms_1.getChartParms(nodeconfig, userselections, budgetdata, _this.setState, chartmatrix);
+                var nodechartindex = 0;
+                var chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.setState, chartmatrix);
                 if (chartParmsObj.isError) {
                     matrixseries.splice(cellptr);
                     if (cellptr > 0) {
@@ -9965,27 +9967,28 @@ var ExplorerClass = function (_Component) {
         };
         _this.switchChartCode = function (location, chartCode) {
             var chartType = constants_2.ChartCodeTypes[chartCode];
+            var portalIndex = location.portalindex;
             var chartmatrix = _this.state.chartmatrix;
             var nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
-            var oldChartType = nodeConfig.charts[0].charttype;
-            nodeConfig.charts[0].charttype = chartType;
-            var chartParmsObj = getchartparms_1.getChartParms(nodeConfig, _this.state.userselections, _this.props.budgetdata, _this.setState.bind(_this), chartmatrix);
+            var oldChartType = nodeConfig.charts[portalIndex].charttype;
+            nodeConfig.charts[portalIndex].charttype = chartType;
+            var chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, _this.state.userselections, _this.props.budgetdata, _this.setState.bind(_this), chartmatrix);
             if (!chartParmsObj.isError) {
-                nodeConfig.charts[0].chartparms = chartParmsObj.chartParms;
-                nodeConfig.charts[0].chartCode = constants_2.ChartTypeCodes[nodeConfig.charts[0].chartparms.chartType];
+                nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
+                nodeConfig.charts[portalIndex].chartCode = constants_2.ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType];
             } else {
-                nodeConfig.charts[0].charttype = oldChartType;
+                nodeConfig.charts[portalIndex].charttype = oldChartType;
             }
             _this.setState({
                 chartmatrix: chartmatrix
             });
             setTimeout(function () {
-                if (nodeConfig.charts[0].chart) {
-                    nodeConfig.charts[0].chart = nodeConfig.charts[0].Chart.chart;
-                    if (nodeConfig.charts[0].charttype == "PieChart") {
-                        nodeConfig.charts[0].chartselection[0].column = null;
+                if (nodeConfig.charts[portalIndex].chart) {
+                    nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].Chart.chart;
+                    if (nodeConfig.charts[portalIndex].charttype == "PieChart") {
+                        nodeConfig.charts[portalIndex].chartselection[0].column = null;
                     } else {
-                        nodeConfig.charts[0].chartselection[0].column = 1;
+                        nodeConfig.charts[portalIndex].chartselection[0].column = 1;
                     }
                 }
                 updatechartselections_1.updateChartSelections(chartmatrix, location.matrixlocation.row);
@@ -10092,7 +10095,8 @@ exports.Explorer = Explorer;
 var format = require('format-number');
 var updatechartselections_1 = require('./updatechartselections');
 var constants_1 = require('../../constants');
-var getChartParms = function getChartParms(nodeConfig, userselections, budgetdata, setState, chartmatrix) {
+var getChartParms = function getChartParms(nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix) {
+    var chartConfig = nodeConfig.charts[chartIndex];
     var viewpointindex = nodeConfig.viewpoint,
         path = nodeConfig.datapath,
         yearscope = nodeConfig.yearscope,
@@ -10117,7 +10121,7 @@ var getChartParms = function getChartParms(nodeConfig, userselections, budgetdat
     var node = _getNodeDatasets.node;
     var components = _getNodeDatasets.components;
 
-    var chartType = nodeConfig.charts[0].charttype;
+    var chartType = chartConfig.charttype;
     var titleref = viewpointdata.Configuration[node.Contents];
     var axistitle = titleref.Alias || titleref.Name;
     var title = undefined;
@@ -10182,7 +10186,7 @@ var getChartParms = function getChartParms(nodeConfig, userselections, budgetdat
     var matrixlocation = Object.assign({}, nodeConfig.matrixlocation);
     var configlocation = {
         matrixlocation: matrixlocation,
-        portalindex: null
+        portalindex: chartIndex
     };
     var events = [{
         eventName: 'select',
@@ -10235,6 +10239,8 @@ var getChartParms = function getChartParms(nodeConfig, userselections, budgetdat
 };
 exports.getChartParms = getChartParms;
 var onChartComponentSelection = function onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix) {
+    var portalChartIndex = context.portalchartlocation.portalindex;
+    console.log('portalChartIndex', portalChartIndex);
     var selection = context.selection[0];
     var selectionrow = undefined;
     if (selection) {
@@ -10300,21 +10306,22 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         yearscope: newrange,
         charts: [{ charttype: userselections.charttype }]
     };
-    var chartParmsObj = getChartParms(newnodeconfig, userselections, budgetdata, setState, chartmatrix);
+    var newnodeindex = 0;
+    var chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix);
     if (chartParmsObj.isError) {
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
-    newnodeconfig.charts[0].chartparms = chartParmsObj.chartParms;
-    newnodeconfig.charts[0].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[0].charttype];
+    newnodeconfig.charts[portalChartIndex].chartparms = chartParmsObj.chartParms;
+    newnodeconfig.charts[portalChartIndex].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[0].charttype];
     var newmatrixcolumn = matrixcolumn + 1;
     chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;
     setState({
         chartmatrix: chartmatrix
     });
-    nodeconfig.charts[0].chartselection = context.selection;
-    nodeconfig.charts[0].chart = chart;
-    nodeconfig.charts[0].Chart = context.Chart;
+    nodeconfig.charts[portalChartIndex].chartselection = context.selection;
+    nodeconfig.charts[portalChartIndex].chart = chart;
+    nodeconfig.charts[portalChartIndex].Chart = context.Chart;
     updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
 };
 var getNodeDatasets = function getNodeDatasets(viewpointindex, path, budgetdata) {

@@ -45,7 +45,8 @@ class ExplorerClass extends Component {
             let budgetdata = this.props.budgetdata;
             setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
             let drilldownnodeconfig = this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
-            chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix);
+            let drilldownindex = 0;
+            chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, this.setState.bind(this), chartmatrix);
             if (!chartParmsObj.error) {
                 drilldownnodeconfig.charts[0].chartparms = chartParmsObj.chartParms;
                 drilldownnodeconfig.charts[0].chartCode =
@@ -108,7 +109,8 @@ class ExplorerClass extends Component {
             let cellptr;
             for (cellptr = 0; cellptr < matrixseries.length; cellptr++) {
                 nodeconfig = matrixseries[cellptr];
-                let chartParmsObj = getchartparms_1.getChartParms(nodeconfig, userselections, budgetdata, this.setState, chartmatrix);
+                let nodechartindex = 0;
+                let chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, this.setState, chartmatrix);
                 if (chartParmsObj.isError) {
                     matrixseries.splice(cellptr);
                     if (cellptr > 0) {
@@ -133,30 +135,31 @@ class ExplorerClass extends Component {
         };
         this.switchChartCode = (location, chartCode) => {
             let chartType = constants_2.ChartCodeTypes[chartCode];
+            let portalIndex = location.portalindex;
             let chartmatrix = this.state.chartmatrix;
             let nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
-            let oldChartType = nodeConfig.charts[0].charttype;
-            nodeConfig.charts[0].charttype = chartType;
-            let chartParmsObj = getchartparms_1.getChartParms(nodeConfig, this.state.userselections, this.props.budgetdata, this.setState.bind(this), chartmatrix);
+            let oldChartType = nodeConfig.charts[portalIndex].charttype;
+            nodeConfig.charts[portalIndex].charttype = chartType;
+            let chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, this.state.userselections, this.props.budgetdata, this.setState.bind(this), chartmatrix);
             if (!chartParmsObj.isError) {
-                nodeConfig.charts[0].chartparms = chartParmsObj.chartParms;
-                nodeConfig.charts[0].chartCode =
-                    constants_2.ChartTypeCodes[nodeConfig.charts[0].chartparms.chartType];
+                nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
+                nodeConfig.charts[portalIndex].chartCode =
+                    constants_2.ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType];
             }
             else {
-                nodeConfig.charts[0].charttype = oldChartType;
+                nodeConfig.charts[portalIndex].charttype = oldChartType;
             }
             this.setState({
                 chartmatrix: chartmatrix,
             });
             setTimeout(() => {
-                if (nodeConfig.charts[0].chart) {
-                    nodeConfig.charts[0].chart = nodeConfig.charts[0].Chart.chart;
-                    if (nodeConfig.charts[0].charttype == "PieChart") {
-                        nodeConfig.charts[0].chartselection[0].column = null;
+                if (nodeConfig.charts[portalIndex].chart) {
+                    nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].Chart.chart;
+                    if (nodeConfig.charts[portalIndex].charttype == "PieChart") {
+                        nodeConfig.charts[portalIndex].chartselection[0].column = null;
                     }
                     else {
-                        nodeConfig.charts[0].chartselection[0].column = 1;
+                        nodeConfig.charts[portalIndex].chartselection[0].column = 1;
                     }
                 }
                 updatechartselections_1.updateChartSelections(chartmatrix, location.matrixlocation.row);

@@ -17,16 +17,17 @@ import {
     ChartParms,
     ChartSelectionContext,
     PortalChartLocation,
-    SortedComponentItem
+    SortedComponentItem,
+    NodeChartConfig
 } from './interfaces'
 
 import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
 
 let getChartParms = (
-    nodeConfig: BudgetNodeConfig, 
+    nodeConfig: BudgetNodeConfig, chartIndex:number,
     userselections, budgetdata, setState, chartmatrix) => {
-
+    let chartConfig: NodeChartConfig = nodeConfig.charts[chartIndex]
     // -------------------[ INIT VARS ]---------------------
 
     // unpack chartConfig & derivatives
@@ -67,7 +68,7 @@ let getChartParms = (
 
     // ---------------------[ COLLECT CHART PARMS ]---------------------
     // 1. chart type:
-    let chartType = nodeConfig.charts[0].charttype
+    let chartType = chartConfig.charttype
 
     // 2. chart options:
     // get axis title
@@ -155,7 +156,7 @@ let getChartParms = (
     let matrixlocation = Object.assign({}, nodeConfig.matrixlocation)
     let configlocation: PortalChartLocation = {
         matrixlocation,
-        portalindex:null
+        portalindex: chartIndex
     }
 
     let events = [
@@ -250,6 +251,9 @@ let getChartParms = (
 let onChartComponentSelection = (
         context: ChartSelectionContext, userselections, budgetdata, setState, chartmatrix) => {
 
+    let portalChartIndex = context.portalchartlocation.portalindex
+
+    console.log('portalChartIndex',portalChartIndex)
     // unpack context
     let selection = context.selection[0]
 
@@ -338,16 +342,16 @@ let onChartComponentSelection = (
         yearscope: newrange,
         charts: [{ charttype: userselections.charttype }],
     }
-
-    let chartParmsObj = getChartParms(newnodeconfig, userselections, budgetdata, setState, chartmatrix)
+    let newnodeindex = 0
+    let chartParmsObj = getChartParms(newnodeconfig, newnodeindex,userselections, budgetdata, setState, chartmatrix)
 
     if (chartParmsObj.isError) {
         updateChartSelections(chartmatrix, matrixrow)
         return
     }
 
-    newnodeconfig.charts[0].chartparms = chartParmsObj.chartParms
-    newnodeconfig.charts[0].chartCode = ChartTypeCodes[newnodeconfig.charts[0].charttype]
+    newnodeconfig.charts[portalChartIndex].chartparms = chartParmsObj.chartParms
+    newnodeconfig.charts[portalChartIndex].chartCode = ChartTypeCodes[newnodeconfig.charts[0].charttype]
 
     let newmatrixcolumn = matrixcolumn + 1
     chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig
@@ -356,9 +360,9 @@ let onChartComponentSelection = (
         chartmatrix,
     })
 
-    nodeconfig.charts[0].chartselection = context.selection
-    nodeconfig.charts[0].chart = chart
-    nodeconfig.charts[0].Chart = context.Chart
+    nodeconfig.charts[portalChartIndex].chartselection = context.selection
+    nodeconfig.charts[portalChartIndex].chart = chart
+    nodeconfig.charts[portalChartIndex].Chart = context.Chart
 
     updateChartSelections(chartmatrix, matrixrow)
 

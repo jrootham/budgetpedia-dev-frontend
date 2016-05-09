@@ -2,7 +2,8 @@
 var format = require('format-number');
 const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
-let getChartParms = (nodeConfig, userselections, budgetdata, setState, chartmatrix) => {
+let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix) => {
+    let chartConfig = nodeConfig.charts[chartIndex];
     let viewpointindex = nodeConfig.viewpoint, path = nodeConfig.datapath, yearscope = nodeConfig.yearscope, year = yearscope.latestyear;
     let dataseriesname = userselections.dataseries;
     let viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel;
@@ -19,7 +20,7 @@ let getChartParms = (nodeConfig, userselections, budgetdata, setState, chartmatr
     let singlerounded = format({ round: 1, integerSeparator: '' });
     let staffrounded = format({ round: 1, integerSeparator: ',' });
     let { node, components } = getNodeDatasets(viewpointindex, path, budgetdata);
-    let chartType = nodeConfig.charts[0].charttype;
+    let chartType = chartConfig.charttype;
     let titleref = viewpointdata.Configuration[node.Contents];
     let axistitle = titleref.Alias || titleref.Name;
     let title;
@@ -86,7 +87,7 @@ let getChartParms = (nodeConfig, userselections, budgetdata, setState, chartmatr
     let matrixlocation = Object.assign({}, nodeConfig.matrixlocation);
     let configlocation = {
         matrixlocation: matrixlocation,
-        portalindex: null
+        portalindex: chartIndex
     };
     let events = [
         {
@@ -153,6 +154,8 @@ let getChartParms = (nodeConfig, userselections, budgetdata, setState, chartmatr
 };
 exports.getChartParms = getChartParms;
 let onChartComponentSelection = (context, userselections, budgetdata, setState, chartmatrix) => {
+    let portalChartIndex = context.portalchartlocation.portalindex;
+    console.log('portalChartIndex', portalChartIndex);
     let selection = context.selection[0];
     let selectionrow;
     if (selection) {
@@ -214,21 +217,22 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         yearscope: newrange,
         charts: [{ charttype: userselections.charttype }],
     };
-    let chartParmsObj = getChartParms(newnodeconfig, userselections, budgetdata, setState, chartmatrix);
+    let newnodeindex = 0;
+    let chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix);
     if (chartParmsObj.isError) {
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
-    newnodeconfig.charts[0].chartparms = chartParmsObj.chartParms;
-    newnodeconfig.charts[0].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[0].charttype];
+    newnodeconfig.charts[portalChartIndex].chartparms = chartParmsObj.chartParms;
+    newnodeconfig.charts[portalChartIndex].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[0].charttype];
     let newmatrixcolumn = matrixcolumn + 1;
     chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;
     setState({
         chartmatrix: chartmatrix,
     });
-    nodeconfig.charts[0].chartselection = context.selection;
-    nodeconfig.charts[0].chart = chart;
-    nodeconfig.charts[0].Chart = context.Chart;
+    nodeconfig.charts[portalChartIndex].chartselection = context.selection;
+    nodeconfig.charts[portalChartIndex].chart = chart;
+    nodeconfig.charts[portalChartIndex].Chart = context.Chart;
     updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
 };
 let getNodeDatasets = (viewpointindex, path, budgetdata) => {

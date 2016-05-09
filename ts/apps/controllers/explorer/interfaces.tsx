@@ -47,11 +47,11 @@ interface BudgetNodeConfig {
 
     matrixlocation: MatrixLocation,
     isError?: boolean,
-    charts: ChartConfig[]
+    charts: NodeChartConfig[]
 
 }
 
-interface ChartConfig {
+interface NodeChartConfig {
 
     charttype?: string,
     chartCode?: string,
@@ -128,6 +128,7 @@ interface ChartSelectionContext {
 
 export {
     BudgetNodeConfig, 
+    NodeChartConfig,
     MatrixLocation,
     PortalChartLocation, 
     ChartSelectionData,

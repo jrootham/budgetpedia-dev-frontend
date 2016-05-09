@@ -109,9 +109,10 @@ class ExplorerClass extends Component< any, any > {
         // assemble parms to get initial dataset
         let drilldownnodeconfig: BudgetNodeConfig =
             this.initRootNodeConfig(ChartSeries.DrillDown, userselections)
-
+        let drilldownindex = 0
         chartParmsObj = getChartParms(
-            drilldownnodeconfig, userselections, budgetdata, this.setState.bind(this), chartmatrix)
+            drilldownnodeconfig, drilldownindex,
+            userselections, budgetdata, this.setState.bind(this), chartmatrix)
 
         if (!chartParmsObj.error) {
 
@@ -220,7 +221,9 @@ class ExplorerClass extends Component< any, any > {
         let cellptr: number
         for (cellptr = 0; cellptr < matrixseries.length; cellptr++ ) {
             nodeconfig = matrixseries[cellptr]
-            let chartParmsObj = getChartParms(nodeconfig, userselections, budgetdata, this.setState, chartmatrix)
+            let nodechartindex = 0
+            let chartParmsObj = getChartParms(nodeconfig, nodechartindex,
+                userselections, budgetdata, this.setState, chartmatrix)
             if (chartParmsObj.isError) {
                 matrixseries.splice(cellptr)
                 if (cellptr > 0) { // unset the selection of the parent
@@ -247,38 +250,40 @@ class ExplorerClass extends Component< any, any > {
     // TODO: belongs with explorerchart controller?
     switchChartCode = (location:PortalChartLocation, chartCode) => {
         let chartType = ChartCodeTypes[chartCode]
+        let portalIndex = location.portalindex
         let chartmatrix = this.state.chartmatrix
         let nodeConfig: BudgetNodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column]
-        let oldChartType = nodeConfig.charts[0].charttype
-        nodeConfig.charts[0].charttype = chartType
+        let oldChartType = nodeConfig.charts[portalIndex].charttype
+        nodeConfig.charts[portalIndex].charttype = chartType
         let chartParmsObj = getChartParms(
             nodeConfig, 
+            portalIndex,
             this.state.userselections, 
             this.props.budgetdata, 
             this.setState.bind(this), 
             chartmatrix)
         if (!chartParmsObj.isError) {
-            nodeConfig.charts[0].chartparms = chartParmsObj.chartParms
-            nodeConfig.charts[0].chartCode = 
-                ChartTypeCodes[nodeConfig.charts[0].chartparms.chartType]
+            nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms
+            nodeConfig.charts[portalIndex].chartCode = 
+                ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType]
         } else {
-            nodeConfig.charts[0].charttype = oldChartType
+            nodeConfig.charts[portalIndex].charttype = oldChartType
         }
         this.setState({
             chartmatrix,
         })
         setTimeout(() => {
-            if (nodeConfig.charts[0].chart) {
+            if (nodeConfig.charts[portalIndex].chart) {
                 // refresh to new chart created with switch
-                nodeConfig.charts[0].chart = nodeConfig.charts[0].Chart.chart
+                nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].Chart.chart
                 // it turns out that "PieChart" needs column set to null
                 // for setSelection to work
-                if (nodeConfig.charts[0].charttype == "PieChart") {
-                    nodeConfig.charts[0].chartselection[0].column = null
+                if (nodeConfig.charts[portalIndex].charttype == "PieChart") {
+                    nodeConfig.charts[portalIndex].chartselection[0].column = null
                 } else {
                     // "ColumnChart" doesn't seem to care about column value,
                     // but we set it back to original (presumed) for consistency
-                    nodeConfig.charts[0].chartselection[0].column = 1
+                    nodeConfig.charts[portalIndex].chartselection[0].column = 1
                 }
             }
             updateChartSelections(chartmatrix, location.matrixlocation.row)
