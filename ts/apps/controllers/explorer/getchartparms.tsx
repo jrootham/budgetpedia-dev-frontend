@@ -15,6 +15,7 @@ var format = require('format-number')
 import {
     BudgetNodeConfig,
     ChartParms,
+    ChartParmsObj,
     ChartSelectionContext,
     PortalChartLocation,
     SortedComponentItem,
@@ -26,8 +27,9 @@ import { ChartTypeCodes } from '../../constants'
 
 let getChartParms = (
     nodeConfig: BudgetNodeConfig, chartIndex:number,
-    userselections, budgetdata, setState, chartmatrix) => {
+    userselections, budgetdata, setState, chartmatrix):ChartParmsObj => {
     let chartConfig: NodeChartConfig = nodeConfig.charts[chartIndex]
+
     // -------------------[ INIT VARS ]---------------------
 
     // unpack chartConfig & derivatives
@@ -233,9 +235,10 @@ let getChartParms = (
         provides for error flag 
     */
 
-    let chartParmsObj = {
+    let chartParmsObj:ChartParmsObj = {
         isError,
         chartParms,
+        datanode:node,
     }
 
     return chartParmsObj
@@ -344,7 +347,7 @@ let onChartComponentSelection = (
         charts: [{ charttype: userselections.charttype }],
     }
     let newnodeindex = 0
-    let chartParmsObj = getChartParms(newnodeconfig, newnodeindex,userselections, budgetdata, setState, chartmatrix)
+    let chartParmsObj:ChartParmsObj = getChartParms(newnodeconfig, newnodeindex,userselections, budgetdata, setState, chartmatrix)
 
     if (chartParmsObj.isError) {
         updateChartSelections(chartmatrix, matrixrow)
@@ -353,6 +356,7 @@ let onChartComponentSelection = (
 
     newnodeconfig.charts[portalChartIndex].chartparms = chartParmsObj.chartParms
     newnodeconfig.charts[portalChartIndex].chartCode = ChartTypeCodes[newnodeconfig.charts[portalChartIndex].charttype]
+    newnodeconfig.datanode = chartParmsObj.datanode
 
     let newmatrixcolumn = matrixcolumn + 1
     chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig

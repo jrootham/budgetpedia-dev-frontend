@@ -4,6 +4,10 @@ module.exports={
         "BudgetExpenses": {
             "Action": "Expenses",
             "Baseline": "Programs",
+            "Titles": {
+                "Baseline": "Programs",
+                "Components": "Expenditure Categories"
+            },
             "Units": "DOLLAR",
             "UnitsAlias": "$Thousands",
             "Components": "Expenditures",
@@ -4140,6 +4144,10 @@ module.exports={
         "BudgetRevenues": {
             "Action": "Revenues",
             "Baseline": "Programs",
+            "Titles": {
+                "Baseline": "Programs",
+                "Components": "Revenue Categories"
+            },
             "Units": "DOLLAR",
             "UnitsAlias": "$Thousands",
             "Components": "Revenues",
@@ -7061,6 +7069,10 @@ module.exports={
         "BudgetStaffing": {
             "Action": "Staffing",
             "Baseline": "Programs",
+            "Titles": {
+                "Baseline": "Programs",
+                "Components": "Staff Allocations"
+            },
             "Units": "FTE",
             "UnitsAlias": "Staffing Level (FTE)",
             "Components": "TimeAllocations",
@@ -9884,9 +9896,10 @@ var ExplorerClass = function (_Component) {
             var drilldownnodeconfig = _this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             var drilldownindex = 0;
             chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix);
-            if (!chartParmsObj.error) {
+            if (!chartParmsObj.isError) {
                 drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                 drilldownnodeconfig.charts[drilldownindex].chartCode = constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
+                drilldownnodeconfig.datanode = chartParmsObj.datanode;
                 matrixlocation = drilldownnodeconfig.matrixlocation;
                 chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
             }
@@ -9956,6 +9969,7 @@ var ExplorerClass = function (_Component) {
                     nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms;
                     nodeconfig.charts[nodechartindex].chartCode = constants_2.ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType];
                     nodeconfig.dataseries = seriesname;
+                    nodeconfig.datanode = chartParmsObj.datanode;
                 }
             }
             _this.setState({
@@ -9976,6 +9990,7 @@ var ExplorerClass = function (_Component) {
             if (!chartParmsObj.isError) {
                 nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.charts[portalIndex].chartCode = constants_2.ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType];
+                nodeConfig.datanode = chartParmsObj.datanode;
             } else {
                 nodeConfig.charts[portalIndex].charttype = oldChartType;
             }
@@ -9995,15 +10010,25 @@ var ExplorerClass = function (_Component) {
             });
         };
         _this.getCharts = function (matrixcolumn, matrixrow) {
+            var userselections = _this.state.userselections;
+            var budgetdata = _this.props.budgetdata;
+            var portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
             var charts = matrixcolumn.map(function (nodeconfig, index) {
+                console.log('nodeconfig', nodeconfig);
                 var portalcharts = [];
                 for (var chartindex in nodeconfig.charts) {
+                    var chartblocktitle = null;
+                    if (nodeconfig.datanode.Contents == 'BASELINE') {
+                        chartblocktitle = portaltitles.Components;
+                    } else {
+                        chartblocktitle = portaltitles.Baseline;
+                    }
                     var portalchartparms = nodeconfig.charts[chartindex].chartparms;
                     var portalchartsettings = {
                         onSwitchChartCode: _this.switchChartCode,
                         chartCode: nodeconfig.charts[chartindex].chartCode,
                         graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
-                        chartblocktitle: "By Programs"
+                        chartblocktitle: "By " + chartblocktitle
                     };
                     var portalchart = {
                         portalchartparms: portalchartparms,
@@ -10015,9 +10040,15 @@ var ExplorerClass = function (_Component) {
                     };
                     portalcharts.push(portalchart);
                 }
+                var portalname = null;
+                if (nodeconfig.parentdata) {
+                    portalname = nodeconfig.parentdata.Name;
+                } else {
+                    portalname = 'City Budget';
+                }
                 var budgetPortal = {
                     portalCharts: portalcharts,
-                    portalName: 'City Budget'
+                    portalName: portalname
                 };
                 return React.createElement(explorerchart_1.ExplorerChart, { key: index, budgetPortal: budgetPortal });
             });
@@ -10238,7 +10269,8 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
     };
     var chartParmsObj = {
         isError: isError,
-        chartParms: chartParms
+        chartParms: chartParms,
+        datanode: node
     };
     return chartParmsObj;
 };
@@ -10318,6 +10350,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
     }
     newnodeconfig.charts[portalChartIndex].chartparms = chartParmsObj.chartParms;
     newnodeconfig.charts[portalChartIndex].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[portalChartIndex].charttype];
+    newnodeconfig.datanode = chartParmsObj.datanode;
     var newmatrixcolumn = matrixcolumn + 1;
     chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;
     setState({

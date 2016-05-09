@@ -49,6 +49,7 @@ import { updateChartSelections } from './explorer/updatechartselections'
 import {
     BudgetNodeConfig,
     ChartParms,
+    ChartParmsObj,
     ChartSelectionContext,
     MatrixLocation,
     PortalConfig,
@@ -94,7 +95,7 @@ class ExplorerClass extends Component< any, any > {
             chartmatrix = this.state.chartmatrix
 
         var matrixlocation,
-            chartParmsObj
+            chartParmsObj:ChartParmsObj
 
         // ------------------------[ POPULATE VIEWPOINT WITH VALUES ]-----------------------
 
@@ -114,14 +115,12 @@ class ExplorerClass extends Component< any, any > {
             drilldownnodeconfig, drilldownindex,
             userselections, budgetdata, this.setState.bind(this), chartmatrix)
 
-        if (!chartParmsObj.error) {
+        if (!chartParmsObj.isError) {
 
             drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms
             drilldownnodeconfig.charts[drilldownindex].chartCode = 
                 ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType]
-
-
-
+            drilldownnodeconfig.datanode = chartParmsObj.datanode
             matrixlocation = drilldownnodeconfig.matrixlocation
             chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig
 
@@ -237,6 +236,7 @@ class ExplorerClass extends Component< any, any > {
                 nodeconfig.charts[nodechartindex].chartCode = 
                     ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType]
                 nodeconfig.dataseries = seriesname
+                nodeconfig.datanode = chartParmsObj.datanode
             }
         }
         this.setState({
@@ -255,7 +255,7 @@ class ExplorerClass extends Component< any, any > {
         let nodeConfig: BudgetNodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column]
         let oldChartType = nodeConfig.charts[portalIndex].charttype
         nodeConfig.charts[portalIndex].charttype = chartType
-        let chartParmsObj = getChartParms(
+        let chartParmsObj:ChartParmsObj = getChartParms(
             nodeConfig, 
             portalIndex,
             this.state.userselections, 
@@ -266,6 +266,7 @@ class ExplorerClass extends Component< any, any > {
             nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms
             nodeConfig.charts[portalIndex].chartCode = 
                 ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType]
+            nodeConfig.datanode = chartParmsObj.datanode
         } else {
             nodeConfig.charts[portalIndex].charttype = oldChartType
         }
@@ -296,12 +297,26 @@ class ExplorerClass extends Component< any, any > {
     // get React components to render
     getCharts = (matrixcolumn, matrixrow) => {
 
+        let userselections = this.state.userselections
+
+        let budgetdata = this.props.budgetdata
+
+        let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles
+
         let charts = matrixcolumn.map((nodeconfig: BudgetNodeConfig, index) => {
 
+            console.log('nodeconfig',nodeconfig)
 
             let portalcharts = []
 
             for (let chartindex in nodeconfig.charts) {
+
+                let chartblocktitle = null
+                if (nodeconfig.datanode.Contents == 'BASELINE') {
+                    chartblocktitle = portaltitles.Components
+                } else {
+                    chartblocktitle = portaltitles.Baseline
+                }
 
                 let portalchartparms = nodeconfig.charts[chartindex].chartparms
 
@@ -310,7 +325,7 @@ class ExplorerClass extends Component< any, any > {
                     onSwitchChartCode: this.switchChartCode,
                     chartCode: nodeconfig.charts[chartindex].chartCode,
                     graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
-                    chartblocktitle: "By Programs",
+                    chartblocktitle: "By " + chartblocktitle,
                     // index,
                 }
 
@@ -326,10 +341,16 @@ class ExplorerClass extends Component< any, any > {
                 portalcharts.push(portalchart)
 
             }
+            let portalname = null
+            if (nodeconfig.parentdata) {
+                portalname = nodeconfig.parentdata.Name
+            } else {
+                portalname = 'City Budget'
+            }
 
             let budgetPortal:PortalConfig = {
                 portalCharts:portalcharts,
-                portalName:'City Budget'
+                portalName: portalname
             }
 
             return <ExplorerChart

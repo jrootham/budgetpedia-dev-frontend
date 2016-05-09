@@ -44,6 +44,7 @@ interface BudgetNodeConfig {
 
     yearscope: YearScope,
     parentdata?: SortedComponentItem,
+    datanode?: any,
 
     matrixlocation: MatrixLocation,
     isError?: boolean,
@@ -102,6 +103,7 @@ interface ChartParms {
 interface ChartParmsObj {
     isError: Boolean,
     chartParms?: ChartParms,
+    datanode?:any,
 }
 
 // =======================================================

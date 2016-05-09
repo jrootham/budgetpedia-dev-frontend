@@ -4,8 +4,8 @@
             "Action": "Expenses",
             "Baseline": "Programs",
             "Titles": {
-                "Baseline": "By Programs",
-                "Components": "By Expenditure Categories"
+                "Baseline": "Programs",
+                "Components": "Expenditure Categories"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$Thousands",
@@ -4144,8 +4144,8 @@
             "Action": "Revenues",
             "Baseline": "Programs",
             "Titles": {
-                "Baseline": "By Programs",
-                "Components": "By Revenue Categories"
+                "Baseline": "Programs",
+                "Components": "Revenue Categories"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$Thousands",
@@ -7069,8 +7069,8 @@
             "Action": "Staffing",
             "Baseline": "Programs",
             "Titles": {
-                "Baseline": "By Programs",
-                "Components": "By Allocations"
+                "Baseline": "Programs",
+                "Components": "Staff Allocations"
             },
             "Units": "FTE",
             "UnitsAlias": "Staffing Level (FTE)",

@@ -47,10 +47,11 @@ class ExplorerClass extends Component {
             let drilldownnodeconfig = this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             let drilldownindex = 0;
             chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, this.setState.bind(this), chartmatrix);
-            if (!chartParmsObj.error) {
+            if (!chartParmsObj.isError) {
                 drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                 drilldownnodeconfig.charts[drilldownindex].chartCode =
                     constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
+                drilldownnodeconfig.datanode = chartParmsObj.datanode;
                 matrixlocation = drilldownnodeconfig.matrixlocation;
                 chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
             }
@@ -124,6 +125,7 @@ class ExplorerClass extends Component {
                     nodeconfig.charts[nodechartindex].chartCode =
                         constants_2.ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType];
                     nodeconfig.dataseries = seriesname;
+                    nodeconfig.datanode = chartParmsObj.datanode;
                 }
             }
             this.setState({
@@ -145,6 +147,7 @@ class ExplorerClass extends Component {
                 nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.charts[portalIndex].chartCode =
                     constants_2.ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType];
+                nodeConfig.datanode = chartParmsObj.datanode;
             }
             else {
                 nodeConfig.charts[portalIndex].charttype = oldChartType;
@@ -166,15 +169,26 @@ class ExplorerClass extends Component {
             });
         };
         this.getCharts = (matrixcolumn, matrixrow) => {
+            let userselections = this.state.userselections;
+            let budgetdata = this.props.budgetdata;
+            let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
             let charts = matrixcolumn.map((nodeconfig, index) => {
+                console.log('nodeconfig', nodeconfig);
                 let portalcharts = [];
                 for (let chartindex in nodeconfig.charts) {
+                    let chartblocktitle = null;
+                    if (nodeconfig.datanode.Contents == 'BASELINE') {
+                        chartblocktitle = portaltitles.Components;
+                    }
+                    else {
+                        chartblocktitle = portaltitles.Baseline;
+                    }
                     let portalchartparms = nodeconfig.charts[chartindex].chartparms;
                     let portalchartsettings = {
                         onSwitchChartCode: this.switchChartCode,
                         chartCode: nodeconfig.charts[chartindex].chartCode,
                         graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
-                        chartblocktitle: "By Programs",
+                        chartblocktitle: "By " + chartblocktitle,
                     };
                     let portalchart = {
                         portalchartparms: portalchartparms,
@@ -186,9 +200,16 @@ class ExplorerClass extends Component {
                     };
                     portalcharts.push(portalchart);
                 }
+                let portalname = null;
+                if (nodeconfig.parentdata) {
+                    portalname = nodeconfig.parentdata.Name;
+                }
+                else {
+                    portalname = 'City Budget';
+                }
                 let budgetPortal = {
                     portalCharts: portalcharts,
-                    portalName: 'City Budget'
+                    portalName: portalname
                 };
                 return React.createElement(explorerchart_1.ExplorerChart, {key: index, budgetPortal: budgetPortal});
             });

@@ -149,6 +149,7 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
     let chartParmsObj = {
         isError: isError,
         chartParms: chartParms,
+        datanode: node,
     };
     return chartParmsObj;
 };
@@ -224,6 +225,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
     }
     newnodeconfig.charts[portalChartIndex].chartparms = chartParmsObj.chartParms;
     newnodeconfig.charts[portalChartIndex].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[portalChartIndex].charttype];
+    newnodeconfig.datanode = chartParmsObj.datanode;
     let newmatrixcolumn = matrixcolumn + 1;
     chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;
     setState({
