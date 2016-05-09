@@ -3,6 +3,10 @@
         "BudgetExpenses": {
             "Action": "Expenses",
             "Baseline": "Programs",
+            "Titles": {
+                "Baseline": "By Programs",
+                "Components": "By Expenditure Categories"
+            },
             "Units": "DOLLAR",
             "UnitsAlias": "$Thousands",
             "Components": "Expenditures",
@@ -4139,6 +4143,10 @@
         "BudgetRevenues": {
             "Action": "Revenues",
             "Baseline": "Programs",
+            "Titles": {
+                "Baseline": "By Programs",
+                "Components": "By Revenue Categories"
+            },
             "Units": "DOLLAR",
             "UnitsAlias": "$Thousands",
             "Components": "Revenues",
@@ -7060,6 +7068,10 @@
         "BudgetStaffing": {
             "Action": "Staffing",
             "Baseline": "Programs",
+            "Titles": {
+                "Baseline": "By Programs",
+                "Components": "By Allocations"
+            },
             "Units": "FTE",
             "UnitsAlias": "Staffing Level (FTE)",
             "Components": "TimeAllocations",
