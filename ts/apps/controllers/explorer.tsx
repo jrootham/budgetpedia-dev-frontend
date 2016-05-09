@@ -116,9 +116,9 @@ class ExplorerClass extends Component< any, any > {
 
         if (!chartParmsObj.error) {
 
-            drilldownnodeconfig.charts[0].chartparms = chartParmsObj.chartParms
-            drilldownnodeconfig.charts[0].chartCode = 
-                ChartTypeCodes[drilldownnodeconfig.charts[0].chartparms.chartType]
+            drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms
+            drilldownnodeconfig.charts[drilldownindex].chartCode = 
+                ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType]
 
 
 
@@ -229,13 +229,13 @@ class ExplorerClass extends Component< any, any > {
                 if (cellptr > 0) { // unset the selection of the parent
                     let parentconfig: BudgetNodeConfig = matrixseries[cellptr - 1]
                     // disable reselection
-                    parentconfig.charts[0].chartselection = null
-                    parentconfig.charts[0].chart = null
+                    parentconfig.charts[nodechartindex].chartselection = null
+                    parentconfig.charts[nodechartindex].chart = null
                 }
             } else {
-                nodeconfig.charts[0].chartparms = chartParmsObj.chartParms
-                nodeconfig.charts[0].chartCode = 
-                    ChartTypeCodes[nodeconfig.charts[0].chartparms.chartType]
+                nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms
+                nodeconfig.charts[nodechartindex].chartCode = 
+                    ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType]
                 nodeconfig.dataseries = seriesname
             }
         }
@@ -298,28 +298,37 @@ class ExplorerClass extends Component< any, any > {
 
         let charts = matrixcolumn.map((nodeconfig: BudgetNodeConfig, index) => {
 
-            let portalchartparms = nodeconfig.charts[0].chartparms
 
-            let portalchartsettings:PortalChartSettings = { 
-                // matrixlocation: chartconfig.matrixlocation,
-                onSwitchChartCode: this.switchChartCode,
-                chartCode:nodeconfig.charts[0].chartCode,
-                graph_id: "ChartID" + matrixrow + '' + index,
-                chartblocktitle:"By Programs",
-                // index,
+            let portalcharts = []
+
+            for (let chartindex in nodeconfig.charts) {
+
+                let portalchartparms = nodeconfig.charts[chartindex].chartparms
+
+                let portalchartsettings: PortalChartSettings = {
+                    // matrixlocation: chartconfig.matrixlocation,
+                    onSwitchChartCode: this.switchChartCode,
+                    chartCode: nodeconfig.charts[chartindex].chartCode,
+                    graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
+                    chartblocktitle: "By Programs",
+                    // index,
+                }
+
+                let portalchart = {
+                    portalchartparms,
+                    portalchartsettings,
+                    portalchartlocation: {
+                        matrixlocation: nodeconfig.matrixlocation,
+                        portalindex: null // will be set on rendering
+                    }
+                }
+
+                portalcharts.push(portalchart)
+
             }
 
             let budgetPortal:PortalConfig = {
-                portalCharts:[
-                    {
-                        portalchartparms,
-                        portalchartsettings,
-                        portalchartlocation: {
-                            matrixlocation: nodeconfig.matrixlocation,
-                            portalindex:null
-                        }
-                    }
-                ],
+                portalCharts:portalcharts,
                 portalName:'City Budget'
             }
 

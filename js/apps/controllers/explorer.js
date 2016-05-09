@@ -48,9 +48,9 @@ class ExplorerClass extends Component {
             let drilldownindex = 0;
             chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, this.setState.bind(this), chartmatrix);
             if (!chartParmsObj.error) {
-                drilldownnodeconfig.charts[0].chartparms = chartParmsObj.chartParms;
-                drilldownnodeconfig.charts[0].chartCode =
-                    constants_2.ChartTypeCodes[drilldownnodeconfig.charts[0].chartparms.chartType];
+                drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
+                drilldownnodeconfig.charts[drilldownindex].chartCode =
+                    constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
                 matrixlocation = drilldownnodeconfig.matrixlocation;
                 chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
             }
@@ -115,14 +115,14 @@ class ExplorerClass extends Component {
                     matrixseries.splice(cellptr);
                     if (cellptr > 0) {
                         let parentconfig = matrixseries[cellptr - 1];
-                        parentconfig.charts[0].chartselection = null;
-                        parentconfig.charts[0].chart = null;
+                        parentconfig.charts[nodechartindex].chartselection = null;
+                        parentconfig.charts[nodechartindex].chart = null;
                     }
                 }
                 else {
-                    nodeconfig.charts[0].chartparms = chartParmsObj.chartParms;
-                    nodeconfig.charts[0].chartCode =
-                        constants_2.ChartTypeCodes[nodeconfig.charts[0].chartparms.chartType];
+                    nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms;
+                    nodeconfig.charts[nodechartindex].chartCode =
+                        constants_2.ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType];
                     nodeconfig.dataseries = seriesname;
                 }
             }
@@ -167,24 +167,27 @@ class ExplorerClass extends Component {
         };
         this.getCharts = (matrixcolumn, matrixrow) => {
             let charts = matrixcolumn.map((nodeconfig, index) => {
-                let portalchartparms = nodeconfig.charts[0].chartparms;
-                let portalchartsettings = {
-                    onSwitchChartCode: this.switchChartCode,
-                    chartCode: nodeconfig.charts[0].chartCode,
-                    graph_id: "ChartID" + matrixrow + '' + index,
-                    chartblocktitle: "By Programs",
-                };
-                let budgetPortal = {
-                    portalCharts: [
-                        {
-                            portalchartparms: portalchartparms,
-                            portalchartsettings: portalchartsettings,
-                            portalchartlocation: {
-                                matrixlocation: nodeconfig.matrixlocation,
-                                portalindex: null
-                            }
+                let portalcharts = [];
+                for (let chartindex in nodeconfig.charts) {
+                    let portalchartparms = nodeconfig.charts[chartindex].chartparms;
+                    let portalchartsettings = {
+                        onSwitchChartCode: this.switchChartCode,
+                        chartCode: nodeconfig.charts[chartindex].chartCode,
+                        graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
+                        chartblocktitle: "By Programs",
+                    };
+                    let portalchart = {
+                        portalchartparms: portalchartparms,
+                        portalchartsettings: portalchartsettings,
+                        portalchartlocation: {
+                            matrixlocation: nodeconfig.matrixlocation,
+                            portalindex: null
                         }
-                    ],
+                    };
+                    portalcharts.push(portalchart);
+                }
+                let budgetPortal = {
+                    portalCharts: portalcharts,
                     portalName: 'City Budget'
                 };
                 return React.createElement(explorerchart_1.ExplorerChart, {key: index, budgetPortal: budgetPortal});

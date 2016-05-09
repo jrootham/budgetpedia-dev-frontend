@@ -248,12 +248,13 @@ let getChartParms = (
 // called by chart callback
 // TODO: the context object should include matrix location of 
 // chartconfig, not the chartconfig itself
+// on selection, makes a child with the same portalCharts offset
+// TODO: create chile which appropriately sets up correct set of child charts
 let onChartComponentSelection = (
         context: ChartSelectionContext, userselections, budgetdata, setState, chartmatrix) => {
 
     let portalChartIndex = context.portalchartlocation.portalindex
 
-    console.log('portalChartIndex',portalChartIndex)
     // unpack context
     let selection = context.selection[0]
 
@@ -291,8 +292,8 @@ let onChartComponentSelection = (
     });
 
     if (!selection) { // deselected
-        delete nodeconfig.charts[0].chartselection
-        delete nodeconfig.charts[0].chart
+        delete nodeconfig.charts[portalChartIndex].chartselection
+        delete nodeconfig.charts[portalChartIndex].chart
         updateChartSelections(chartmatrix, matrixrow)
         return
     }
@@ -351,7 +352,7 @@ let onChartComponentSelection = (
     }
 
     newnodeconfig.charts[portalChartIndex].chartparms = chartParmsObj.chartParms
-    newnodeconfig.charts[portalChartIndex].chartCode = ChartTypeCodes[newnodeconfig.charts[0].charttype]
+    newnodeconfig.charts[portalChartIndex].chartCode = ChartTypeCodes[newnodeconfig.charts[portalChartIndex].charttype]
 
     let newmatrixcolumn = matrixcolumn + 1
     chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig

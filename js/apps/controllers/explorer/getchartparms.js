@@ -155,7 +155,6 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
 exports.getChartParms = getChartParms;
 let onChartComponentSelection = (context, userselections, budgetdata, setState, chartmatrix) => {
     let portalChartIndex = context.portalchartlocation.portalindex;
-    console.log('portalChartIndex', portalChartIndex);
     let selection = context.selection[0];
     let selectionrow;
     if (selection) {
@@ -175,8 +174,8 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         chartmatrix: chartmatrix,
     });
     if (!selection) {
-        delete nodeconfig.charts[0].chartselection;
-        delete nodeconfig.charts[0].chart;
+        delete nodeconfig.charts[portalChartIndex].chartselection;
+        delete nodeconfig.charts[portalChartIndex].chart;
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
@@ -224,7 +223,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         return;
     }
     newnodeconfig.charts[portalChartIndex].chartparms = chartParmsObj.chartParms;
-    newnodeconfig.charts[portalChartIndex].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[0].charttype];
+    newnodeconfig.charts[portalChartIndex].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[portalChartIndex].charttype];
     let newmatrixcolumn = matrixcolumn + 1;
     chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;
     setState({

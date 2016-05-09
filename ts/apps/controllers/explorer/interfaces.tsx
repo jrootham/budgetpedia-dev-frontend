@@ -53,7 +53,7 @@ interface BudgetNodeConfig {
 
 interface NodeChartConfig {
 
-    charttype?: string,
+    charttype: string,
     chartCode?: string,
     chartparms?: ChartParms,
 
