@@ -52,7 +52,8 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                             {
                                 backgroundColor: (chartTab.portalchartsettings.chartCode == "ColumnChart")
                                     ? "rgba(144,238,144,0.5)"
-                                    : "transparent"
+                                    : "transparent",
+                                borderRadius: "50%"
                             }
                         }
                         onTouchTap={ e => {
@@ -67,7 +68,8 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                             {
                                 backgroundColor: (chartTab.portalchartsettings.chartCode == "DonutChart")
                                     ? "rgba(144,238,144,0.5)"
-                                    : "transparent"
+                                    : "transparent",
+                                borderRadius: "50%"
                             }
                         }
                         onTouchTap={ e => {
@@ -82,7 +84,8 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                             {
                                 backgroundColor: (chartTab.portalchartsettings.chartCode == "TimeLine")
                                     ? "rgba(144,238,144,0.5)"
-                                    : "transparent"
+                                    : "transparent",
+                                borderRadius: "50%"
                             }
                         }
                         disabled

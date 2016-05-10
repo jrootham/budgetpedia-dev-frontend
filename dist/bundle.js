@@ -9671,15 +9671,18 @@ var ExplorerChart = function (_Component) {
                 chartTab.portalchartlocation.portalindex = chartindex;
                 var chartparms = chartTab.portalchartparms;
                 return React.createElement(Tab, { style: { fontSize: "12px" }, label: chartTab.portalchartsettings.chartblocktitle, value: "programs", key: chartindex }, React.createElement("div", { style: { padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "top-center", style: {
-                        backgroundColor: chartTab.portalchartsettings.chartCode == "ColumnChart" ? "rgba(144,238,144,0.5)" : "transparent"
+                        backgroundColor: chartTab.portalchartsettings.chartCode == "ColumnChart" ? "rgba(144,238,144,0.5)" : "transparent",
+                        borderRadius: "50%"
                     }, onTouchTap: function onTouchTap(e) {
                         _this.onChangeChartCode('ColumnChart', chartTab.portalchartlocation);
                     } }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart")), React.createElement(IconButton, { tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
-                        backgroundColor: chartTab.portalchartsettings.chartCode == "DonutChart" ? "rgba(144,238,144,0.5)" : "transparent"
+                        backgroundColor: chartTab.portalchartsettings.chartCode == "DonutChart" ? "rgba(144,238,144,0.5)" : "transparent",
+                        borderRadius: "50%"
                     }, onTouchTap: function onTouchTap(e) {
                         _this.onChangeChartCode('DonutChart', chartTab.portalchartlocation);
                     } }, React.createElement(FontIcon, { className: "material-icons" }, "donut_small")), React.createElement(IconButton, { tooltip: "Timeline", tooltipPosition: "top-center", style: {
-                        backgroundColor: chartTab.portalchartsettings.chartCode == "TimeLine" ? "rgba(144,238,144,0.5)" : "transparent"
+                        backgroundColor: chartTab.portalchartsettings.chartCode == "TimeLine" ? "rgba(144,238,144,0.5)" : "transparent",
+                        borderRadius: "50%"
                     }, disabled: true, onTouchTap: function onTouchTap(e) {
                         _this.onChangeChartCode('Timeline', chartTab.portalchartlocation);
                     } }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: chartTab.portalchartsettings.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))));
@@ -10190,22 +10193,27 @@ var ExplorerClass = function (_Component) {
             var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Drill Down"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down.", React.createElement(IconButton, { tooltip: "help", tooltipPosition: "top-center" }, React.createElement(FontIcon, { className: "material-icons" }, "help_outline"))), React.createElement("div", { style: {
                     padding: "3px" } }, React.createElement("span", null, "Viewpoints: "), React.createElement(IconButton, { tooltip: "Functional", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
                     _this2.switchViewpoint('FUNCTIONAL', constants_1.ChartSeries.DrillDown);
-                }, style: { backgroundColor: this.state.userselections.viewpoint == 'FUNCTIONAL' ? 'lightgreen' : 'transparent' } }, React.createElement(FontIcon, { className: "material-icons" }, "directions_walk")), React.createElement(IconButton, { tooltip: "Structural", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
+                }, style: { backgroundColor: this.state.userselections.viewpoint == 'FUNCTIONAL' ? "rgba(144,238,144,0.5)" : 'transparent',
+                    borderRadius: "50%" } }, React.createElement(FontIcon, { className: "material-icons" }, "directions_walk")), React.createElement(IconButton, { tooltip: "Structural", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
                     _this2.switchViewpoint('STRUCTURAL', constants_1.ChartSeries.DrillDown);
                 }, style: {
-                    backgroundColor: this.state.userselections.viewpoint == 'STRUCTURAL' ? 'lightgreen' : 'transparent'
+                    backgroundColor: this.state.userselections.viewpoint == 'STRUCTURAL' ? "rgba(144,238,144,0.5)" : 'transparent',
+                    borderRadius: "50%"
                 } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "layers")), React.createElement("span", { style: { marginLeft: "10px" } }, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
                     _this2.switchDataSeries('BudgetExpenses', constants_1.ChartSeries.DrillDown);
                 }, style: {
-                    backgroundColor: this.state.userselections.dataseries == 'BudgetExpenses' ? 'lightgreen' : 'transparent'
+                    backgroundColor: this.state.userselections.dataseries == 'BudgetExpenses' ? "rgba(144,238,144,0.5)" : 'transparent',
+                    borderRadius: "50%"
                 } }, React.createElement(FontIcon, { className: "material-icons" }, "attach_money")), React.createElement(IconButton, { tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
                     _this2.switchDataSeries('BudgetRevenues', constants_1.ChartSeries.DrillDown);
                 }, style: {
-                    backgroundColor: this.state.userselections.dataseries == 'BudgetRevenues' ? 'lightgreen' : 'transparent'
+                    backgroundColor: this.state.userselections.dataseries == 'BudgetRevenues' ? "rgba(144,238,144,0.5)" : 'transparent',
+                    borderRadius: "50%"
                 } }, React.createElement(FontIcon, { className: "material-icons" }, "receipt")), React.createElement(IconButton, { tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
                     _this2.switchDataSeries('BudgetStaffing', constants_1.ChartSeries.DrillDown);
                 }, style: {
-                    backgroundColor: this.state.userselections.dataseries == 'BudgetStaffing' ? 'lightgreen' : 'transparent'
+                    backgroundColor: this.state.userselections.dataseries == 'BudgetStaffing' ? "rgba(144,238,144,0.5)" : 'transparent',
+                    borderRadius: "50%"
                 } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
             var comparelist = explorer.state.chartmatrix[constants_1.ChartSeries.Compare];
             var comparecharts = explorer.getCharts(comparelist, constants_1.ChartSeries.Compare);

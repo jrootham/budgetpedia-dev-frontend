@@ -535,8 +535,9 @@ class ExplorerClass extends Component< any, any > {
                         } 
                         style={
                             { backgroundColor: (this.state.userselections.viewpoint == 'FUNCTIONAL')
-                                ?'lightgreen'
-                                :'transparent' }
+                                ? "rgba(144,238,144,0.5)"
+                                : 'transparent',
+                                borderRadius:"50%" }
                         }>
                         <FontIcon className="material-icons">directions_walk</FontIcon>
                     </IconButton>
@@ -552,8 +553,9 @@ class ExplorerClass extends Component< any, any > {
                         style={
                             {
                                 backgroundColor: (this.state.userselections.viewpoint == 'STRUCTURAL')
-                                    ? 'lightgreen'
-                                    : 'transparent'
+                                ? "rgba(144,238,144,0.5)"
+                                : 'transparent',
+                                borderRadius: "50%"
                             }
                         }>
                         >
@@ -573,8 +575,9 @@ class ExplorerClass extends Component< any, any > {
                         style={
                             {
                                 backgroundColor: (this.state.userselections.dataseries == 'BudgetExpenses')
-                                    ? 'lightgreen'
-                                    : 'transparent'
+                                ? "rgba(144,238,144,0.5)"
+                                : 'transparent',
+                                borderRadius: "50%"
                             }
                         }>
                         <FontIcon className="material-icons">attach_money</FontIcon>
@@ -591,8 +594,9 @@ class ExplorerClass extends Component< any, any > {
                         style={
                             {
                                 backgroundColor: (this.state.userselections.dataseries == 'BudgetRevenues')
-                                    ? 'lightgreen'
-                                    : 'transparent'
+                                ? "rgba(144,238,144,0.5)"
+                                : 'transparent',
+                                borderRadius: "50%"
                             }
                         }>
                         <FontIcon className="material-icons">receipt</FontIcon>
@@ -609,8 +613,9 @@ class ExplorerClass extends Component< any, any > {
                         style={
                             {
                                 backgroundColor: (this.state.userselections.dataseries == 'BudgetStaffing')
-                                    ? 'lightgreen'
-                                    : 'transparent'
+                                ? "rgba(144,238,144,0.5)"
+                                : 'transparent',
+                                borderRadius: "50%"
                             }
                         }>
                         >
