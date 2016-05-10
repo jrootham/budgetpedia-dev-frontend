@@ -533,7 +533,7 @@ class ExplorerClass extends Component< any, any > {
 
             <CardText expandable >
 
-                <p>In the charts below Viewpoints include:</p>
+                <p>In the charts below, Viewpoints include:</p>
                 <dl>
                     <dt><strong>Functional</strong></dt>
                     <dd>combines Agencies and Divisions into groups according to the nature of the services delivered (this is the default)</dd>
