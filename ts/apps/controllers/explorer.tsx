@@ -315,6 +315,12 @@ class ExplorerClass extends Component< any, any > {
         })
     }
 
+    onChangeBudgetPortalChart = (portalLocation:MatrixLocation) => {
+        setTimeout(()=>{
+            updateChartSelections(this.state.chartmatrix, portalLocation.row)
+        })
+    }
+
     // ============================================================
     // -------------------[ RENDER METHODS ]---------------------
 
@@ -373,12 +379,18 @@ class ExplorerClass extends Component< any, any > {
 
             let budgetPortal:PortalConfig = {
                 portalCharts:portalcharts,
-                portalName: portalname
+                portalName: portalname,
+                onChangeBudgetPortal:this.onChangeBudgetPortalChart,
+                portalLocation:{
+                    column:matrixcolumn,
+                    row:matrixrow,
+                }
             }
 
             return <ExplorerChart
                 key = {index}
                 budgetPortal = { budgetPortal }
+                onChangePortalChart = {this.onChangeBudgetPortalChart}
                 />
         })
 

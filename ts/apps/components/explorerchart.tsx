@@ -21,6 +21,7 @@ import {
 
 interface ExploreChartProps {
     budgetPortal:PortalConfig,
+    onChangePortalChart:Function
 }
 
 class ExplorerChart extends Component<ExploreChartProps, any> {
@@ -28,6 +29,10 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
     onChangeChartCode = (chartCode,location:PortalChartLocation) => {
         this.props.budgetPortal.portalCharts[location.portalindex]
             .portalchartsettings.onSwitchChartCode(location, chartCode)
+    }
+
+    onChangeTab = () => {
+        this.props.onChangePortalChart(this.props.budgetPortal.portalLocation)
     }
 
     componentWillMount = () => {
@@ -147,7 +152,10 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
                     backgroundColor: "#00bcd4",
                 }
             }>{ this.props.budgetPortal.portalName }</div>
-            <Tabs>
+            <Tabs 
+                onChange= { e => {
+                    this.onChangeTab()
+            }}>
 
                 { chartTabs }
 

@@ -8,6 +8,8 @@
 interface PortalConfig {
     portalCharts: PortalChartConfig[],
     portalName: string,
+    onChangeBudgetPortal:Function,
+    portalLocation:MatrixLocation,
 }
 
 // configuration for individual chart of budget portal

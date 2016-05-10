@@ -9665,6 +9665,9 @@ var ExplorerChart = function (_Component) {
         _this.onChangeChartCode = function (chartCode, location) {
             _this.props.budgetPortal.portalCharts[location.portalindex].portalchartsettings.onSwitchChartCode(location, chartCode);
         };
+        _this.onChangeTab = function () {
+            _this.props.onChangePortalChart(_this.props.budgetPortal.portalLocation);
+        };
         _this.componentWillMount = function () {};
         _this.getTabs = function () {
             var chartTabs = _this.props.budgetPortal.portalCharts.map(function (chartTab, chartindex) {
@@ -9695,6 +9698,8 @@ var ExplorerChart = function (_Component) {
     _createClass(ExplorerChart, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var chartTabs = this.getTabs();
             return React.createElement("div", { style: {
                     position: "relative",
@@ -9715,7 +9720,9 @@ var ExplorerChart = function (_Component) {
                     fontWeight: "bold",
                     display: "inline-block",
                     backgroundColor: "#00bcd4"
-                } }, this.props.budgetPortal.portalName), React.createElement(Tabs, null, chartTabs));
+                } }, this.props.budgetPortal.portalName), React.createElement(Tabs, { onChange: function onChange(e) {
+                    _this2.onChangeTab();
+                } }, chartTabs));
         }
     }]);
 
@@ -10118,6 +10125,11 @@ var ExplorerClass = function (_Component) {
                 updatechartselections_1.updateChartSelections(chartmatrix, location.matrixlocation.row);
             });
         };
+        _this.onChangeBudgetPortalChart = function (portalLocation) {
+            setTimeout(function () {
+                updatechartselections_1.updateChartSelections(_this.state.chartmatrix, portalLocation.row);
+            });
+        };
         _this.getCharts = function (matrixcolumn, matrixrow) {
             var userselections = _this.state.userselections;
             var budgetdata = _this.props.budgetdata;
@@ -10156,9 +10168,14 @@ var ExplorerClass = function (_Component) {
                 }
                 var budgetPortal = {
                     portalCharts: portalcharts,
-                    portalName: portalname
+                    portalName: portalname,
+                    onChangeBudgetPortal: _this.onChangeBudgetPortalChart,
+                    portalLocation: {
+                        column: matrixcolumn,
+                        row: matrixrow
+                    }
                 };
-                return React.createElement(explorerchart_1.ExplorerChart, { key: index, budgetPortal: budgetPortal });
+                return React.createElement(explorerchart_1.ExplorerChart, { key: index, budgetPortal: budgetPortal, onChangePortalChart: _this.onChangeBudgetPortalChart });
             });
             return charts;
         };

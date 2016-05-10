@@ -13,6 +13,9 @@ class ExplorerChart extends Component {
             this.props.budgetPortal.portalCharts[location.portalindex]
                 .portalchartsettings.onSwitchChartCode(location, chartCode);
         };
+        this.onChangeTab = () => {
+            this.props.onChangePortalChart(this.props.budgetPortal.portalLocation);
+        };
         this.componentWillMount = () => {
         };
         this.getTabs = () => {
@@ -66,7 +69,9 @@ class ExplorerChart extends Component {
             fontWeight: "bold",
             display: "inline-block",
             backgroundColor: "#00bcd4",
-        }}, this.props.budgetPortal.portalName), React.createElement(Tabs, null, chartTabs));
+        }}, this.props.budgetPortal.portalName), React.createElement(Tabs, {onChange: e => {
+            this.onChangeTab();
+        }}, chartTabs));
     }
 }
 exports.ExplorerChart = ExplorerChart;

@@ -192,6 +192,11 @@ class ExplorerClass extends Component {
                 updatechartselections_1.updateChartSelections(chartmatrix, location.matrixlocation.row);
             });
         };
+        this.onChangeBudgetPortalChart = (portalLocation) => {
+            setTimeout(() => {
+                updatechartselections_1.updateChartSelections(this.state.chartmatrix, portalLocation.row);
+            });
+        };
         this.getCharts = (matrixcolumn, matrixrow) => {
             let userselections = this.state.userselections;
             let budgetdata = this.props.budgetdata;
@@ -233,9 +238,14 @@ class ExplorerClass extends Component {
                 }
                 let budgetPortal = {
                     portalCharts: portalcharts,
-                    portalName: portalname
+                    portalName: portalname,
+                    onChangeBudgetPortal: this.onChangeBudgetPortalChart,
+                    portalLocation: {
+                        column: matrixcolumn,
+                        row: matrixrow,
+                    }
                 };
-                return React.createElement(explorerchart_1.ExplorerChart, {key: index, budgetPortal: budgetPortal});
+                return React.createElement(explorerchart_1.ExplorerChart, {key: index, budgetPortal: budgetPortal, onChangePortalChart: this.onChangeBudgetPortalChart});
             });
             return charts;
         };
