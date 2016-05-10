@@ -9698,9 +9698,10 @@ var ExplorerChart = function (_Component) {
                     position: "absolute",
                     top: 0,
                     left: "10px",
-                    padding: "3px 20px 0px 20px",
-                    borderRadius: "6px 6px 0 0",
-                    fontSize: "10px",
+                    padding: "3px 20px 3px 20px",
+                    borderRadius: "6px",
+                    border: "1px solid silver",
+                    fontSize: "12px",
                     color: "lightgreen",
                     fontWeight: "bold",
                     display: "inline-block",
@@ -9946,17 +9947,20 @@ var ExplorerClass = function (_Component) {
             var budgetdata = _this.props.budgetdata;
             setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
             var drilldownnodeconfig = _this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
-            console.log('drilldownnodeconfig', drilldownnodeconfig);
             var drilldownindex = undefined;
             for (drilldownindex in drilldownnodeconfig.charts) {
                 chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix);
                 if (!chartParmsObj.isError) {
                     drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                     drilldownnodeconfig.charts[drilldownindex].chartCode = constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
-                    drilldownnodeconfig.datanode = chartParmsObj.datanode;
-                    matrixlocation = drilldownnodeconfig.matrixlocation;
-                    chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
+                } else {
+                    break;
                 }
+            }
+            if (!chartParmsObj.isError) {
+                drilldownnodeconfig.datanode = chartParmsObj.datanode;
+                matrixlocation = drilldownnodeconfig.matrixlocation;
+                chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
             }
             _this.setState({
                 chartmatrix: chartmatrix
@@ -10042,23 +10046,31 @@ var ExplorerClass = function (_Component) {
             var matrixseries = chartmatrix[seriesref];
             var nodeconfig = undefined;
             var cellptr = undefined;
-            for (cellptr = 0; cellptr < matrixseries.length; cellptr++) {
+            var isError = false;
+            var chartParmsObj = null;
+            for (cellptr in matrixseries) {
                 nodeconfig = matrixseries[cellptr];
-                var nodechartindex = 0;
-                var chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.setState, chartmatrix);
-                if (chartParmsObj.isError) {
-                    matrixseries.splice(cellptr);
-                    if (cellptr > 0) {
-                        var parentconfig = matrixseries[cellptr - 1];
-                        parentconfig.charts[nodechartindex].chartselection = null;
-                        parentconfig.charts[nodechartindex].chart = null;
+                var nodechartindex = null;
+                for (nodechartindex in nodeconfig.charts) {
+                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.setState, chartmatrix);
+                    if (chartParmsObj.isError) {
+                        matrixseries.splice(cellptr);
+                        if (cellptr > 0) {
+                            var parentconfig = matrixseries[cellptr - 1];
+                            parentconfig.charts[nodechartindex].chartselection = null;
+                            parentconfig.charts[nodechartindex].chart = null;
+                        }
+                        isError = true;
+                        break;
+                    } else {
+                        nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms;
+                        nodeconfig.charts[nodechartindex].chartCode = constants_2.ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType];
                     }
-                } else {
-                    nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms;
-                    nodeconfig.charts[nodechartindex].chartCode = constants_2.ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType];
-                    nodeconfig.dataseries = seriesname;
-                    nodeconfig.datanode = chartParmsObj.datanode;
                 }
+            }
+            if (!isError) {
+                nodeconfig.dataseries = seriesname;
+                nodeconfig.datanode = chartParmsObj.datanode;
             }
             _this.setState({
                 chartmatrix: chartmatrix
@@ -10391,6 +10403,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         matrixcolumn = selectmatrixlocation.column;
     var serieslist = chartmatrix[matrixrow];
     var nodeconfig = chartmatrix[matrixrow][matrixcolumn];
+    if (nodeconfig.charts[portalChartIndex].portalcharttype == 'Categories') return;
     var viewpoint = nodeconfig.viewpoint,
         dataseries = nodeconfig.dataseries;
     serieslist.splice(matrixcolumn + 1);
@@ -10431,6 +10444,43 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         return;
     }
     var newrange = Object.assign({}, nodeconfig.yearscope);
+    var charttype = userselections.charttype;
+    var chartCode = constants_1.ChartTypeCodes[charttype];
+    var portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries];
+    var charts = [];
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = portalcharts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var type = _step.value;
+
+            if (newnode.Contents == 'BASELINE' && type.Type == 'Categories') {
+                continue;
+            }
+            var chartconfig = {
+                charttype: charttype,
+                chartCode: chartCode
+            };
+            chartconfig.portalcharttype = type.Type;
+            charts.push(chartconfig);
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+
     var newnodeconfig = {
         viewpoint: viewpoint,
         dataseries: dataseries,
@@ -10441,16 +10491,24 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         },
         parentdata: parentdata,
         yearscope: newrange,
-        charts: [{ charttype: userselections.charttype }]
+        charts: charts
     };
-    var newnodeindex = 0;
-    var chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix);
-    if (chartParmsObj.isError) {
+    var newnodeindex = null;
+    var chartParmsObj = null;
+    var isError = false;
+    for (newnodeindex in newnodeconfig.charts) {
+        chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix);
+        if (chartParmsObj.isError) {
+            isError = true;
+            break;
+        }
+        newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms;
+        newnodeconfig.charts[newnodeindex].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[newnodeindex].charttype];
+    }
+    if (isError) {
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
-    newnodeconfig.charts[portalChartIndex].chartparms = chartParmsObj.chartParms;
-    newnodeconfig.charts[portalChartIndex].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[portalChartIndex].charttype];
     newnodeconfig.datanode = chartParmsObj.datanode;
     var newmatrixcolumn = matrixcolumn + 1;
     chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;
@@ -10465,29 +10523,29 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
 var getNodeDatasets = function getNodeDatasets(viewpointindex, path, budgetdata) {
     var node = budgetdata.Viewpoints[viewpointindex];
     var components = node.Components;
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
 
     try {
-        for (var _iterator = path[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var index = _step.value;
+        for (var _iterator2 = path[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var index = _step2.value;
 
             node = components[index];
             if (!node) console.error('component node not found', components, viewpointindex, path);
             components = node.Components;
         }
     } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
     } finally {
         try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
             }
         } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
+            if (_didIteratorError2) {
+                throw _iteratorError2;
             }
         }
     }

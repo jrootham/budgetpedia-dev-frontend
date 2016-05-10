@@ -184,6 +184,8 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
     let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrix[matrixrow];
     let nodeconfig = chartmatrix[matrixrow][matrixcolumn];
+    if (nodeconfig.charts[portalChartIndex].portalcharttype == 'Categories')
+        return;
     let viewpoint = nodeconfig.viewpoint, dataseries = nodeconfig.dataseries;
     serieslist.splice(matrixcolumn + 1);
     setState({
@@ -220,6 +222,21 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         return;
     }
     let newrange = Object.assign({}, nodeconfig.yearscope);
+    let charttype = userselections.charttype;
+    let chartCode = constants_1.ChartTypeCodes[charttype];
+    let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries];
+    let charts = [];
+    for (let type of portalcharts) {
+        if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
+            continue;
+        }
+        let chartconfig = {
+            charttype: charttype,
+            chartCode: chartCode,
+        };
+        chartconfig.portalcharttype = type.Type;
+        charts.push(chartconfig);
+    }
     let newnodeconfig = {
         viewpoint: viewpoint,
         dataseries: dataseries,
@@ -230,16 +247,25 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         },
         parentdata: parentdata,
         yearscope: newrange,
-        charts: [{ charttype: userselections.charttype }],
+        charts: charts,
     };
-    let newnodeindex = 0;
-    let chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix);
-    if (chartParmsObj.isError) {
+    let newnodeindex = null;
+    let chartParmsObj = null;
+    let isError = false;
+    for (newnodeindex in newnodeconfig.charts) {
+        chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix);
+        if (chartParmsObj.isError) {
+            isError = true;
+            break;
+        }
+        newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms;
+        newnodeconfig.charts[newnodeindex].chartCode =
+            constants_1.ChartTypeCodes[newnodeconfig.charts[newnodeindex].charttype];
+    }
+    if (isError) {
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
-    newnodeconfig.charts[portalChartIndex].chartparms = chartParmsObj.chartParms;
-    newnodeconfig.charts[portalChartIndex].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[portalChartIndex].charttype];
     newnodeconfig.datanode = chartParmsObj.datanode;
     let newmatrixcolumn = matrixcolumn + 1;
     chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;

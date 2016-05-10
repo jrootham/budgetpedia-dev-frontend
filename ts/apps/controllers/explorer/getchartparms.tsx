@@ -301,6 +301,9 @@ let onChartComponentSelection = (
 
     let nodeconfig:BudgetNodeConfig = chartmatrix[matrixrow][matrixcolumn]
 
+    if (nodeconfig.charts[portalChartIndex].portalcharttype == 'Categories')
+        return
+
     // get taxonomy references
     let viewpoint = nodeconfig.viewpoint,
         dataseries = nodeconfig.dataseries
@@ -352,6 +355,21 @@ let onChartComponentSelection = (
     }
 
     let newrange = Object.assign({}, nodeconfig.yearscope)
+    let charttype = userselections.charttype
+    let chartCode = ChartTypeCodes[charttype]
+    let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries]
+    let charts = []
+    for (let type of portalcharts) {
+        if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
+            continue
+        }
+        let chartconfig: NodeChartConfig = {
+            charttype,
+            chartCode,
+        }
+        chartconfig.portalcharttype = type.Type
+        charts.push(chartconfig)
+    }
 
     let newnodeconfig: BudgetNodeConfig = {
         viewpoint,
@@ -363,20 +381,29 @@ let onChartComponentSelection = (
         },
         parentdata: parentdata,
         yearscope: newrange,
-        charts: [{ charttype: userselections.charttype }],
+        charts,
     }
-    let newnodeindex = 0
-    let chartParmsObj:ChartParmsObj = getChartParms(newnodeconfig, newnodeindex,userselections, budgetdata, setState, chartmatrix)
 
-    if (chartParmsObj.isError) {
+    let newnodeindex:any = null
+    let chartParmsObj: ChartParmsObj = null
+    let isError = false
+    for (newnodeindex in newnodeconfig.charts) {
+         chartParmsObj = getChartParms(
+             newnodeconfig, newnodeindex,userselections, budgetdata, setState, chartmatrix)
+        if (chartParmsObj.isError) {
+            isError = true
+            break
+        }
+        newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms
+        newnodeconfig.charts[newnodeindex].chartCode = 
+            ChartTypeCodes[newnodeconfig.charts[newnodeindex].charttype]
+    }
+
+    if (isError) {
         updateChartSelections(chartmatrix, matrixrow)
         return
     }
-
-    newnodeconfig.charts[portalChartIndex].chartparms = chartParmsObj.chartParms
-    newnodeconfig.charts[portalChartIndex].chartCode = ChartTypeCodes[newnodeconfig.charts[portalChartIndex].charttype]
     newnodeconfig.datanode = chartParmsObj.datanode
-
     let newmatrixcolumn = matrixcolumn + 1
     chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig
 

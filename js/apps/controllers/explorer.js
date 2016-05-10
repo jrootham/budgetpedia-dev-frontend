@@ -45,7 +45,6 @@ class ExplorerClass extends Component {
             let budgetdata = this.props.budgetdata;
             setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
             let drilldownnodeconfig = this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
-            console.log('drilldownnodeconfig', drilldownnodeconfig);
             let drilldownindex;
             for (drilldownindex in drilldownnodeconfig.charts) {
                 chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, this.setState.bind(this), chartmatrix);
@@ -53,10 +52,15 @@ class ExplorerClass extends Component {
                     drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                     drilldownnodeconfig.charts[drilldownindex].chartCode =
                         constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
-                    drilldownnodeconfig.datanode = chartParmsObj.datanode;
-                    matrixlocation = drilldownnodeconfig.matrixlocation;
-                    chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
                 }
+                else {
+                    break;
+                }
+            }
+            if (!chartParmsObj.isError) {
+                drilldownnodeconfig.datanode = chartParmsObj.datanode;
+                matrixlocation = drilldownnodeconfig.matrixlocation;
+                chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
             }
             this.setState({
                 chartmatrix: chartmatrix,
@@ -120,25 +124,33 @@ class ExplorerClass extends Component {
             let matrixseries = chartmatrix[seriesref];
             let nodeconfig;
             let cellptr;
-            for (cellptr = 0; cellptr < matrixseries.length; cellptr++) {
+            let isError = false;
+            let chartParmsObj = null;
+            for (cellptr in matrixseries) {
                 nodeconfig = matrixseries[cellptr];
-                let nodechartindex = 0;
-                let chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, this.setState, chartmatrix);
-                if (chartParmsObj.isError) {
-                    matrixseries.splice(cellptr);
-                    if (cellptr > 0) {
-                        let parentconfig = matrixseries[cellptr - 1];
-                        parentconfig.charts[nodechartindex].chartselection = null;
-                        parentconfig.charts[nodechartindex].chart = null;
+                let nodechartindex = null;
+                for (nodechartindex in nodeconfig.charts) {
+                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, this.setState, chartmatrix);
+                    if (chartParmsObj.isError) {
+                        matrixseries.splice(cellptr);
+                        if (cellptr > 0) {
+                            let parentconfig = matrixseries[cellptr - 1];
+                            parentconfig.charts[nodechartindex].chartselection = null;
+                            parentconfig.charts[nodechartindex].chart = null;
+                        }
+                        isError = true;
+                        break;
+                    }
+                    else {
+                        nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms;
+                        nodeconfig.charts[nodechartindex].chartCode =
+                            constants_2.ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType];
                     }
                 }
-                else {
-                    nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms;
-                    nodeconfig.charts[nodechartindex].chartCode =
-                        constants_2.ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType];
-                    nodeconfig.dataseries = seriesname;
-                    nodeconfig.datanode = chartParmsObj.datanode;
-                }
+            }
+            if (!isError) {
+                nodeconfig.dataseries = seriesname;
+                nodeconfig.datanode = chartParmsObj.datanode;
             }
             this.setState({
                 chartmatrix: chartmatrix,

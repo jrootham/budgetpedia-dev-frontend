@@ -111,7 +111,6 @@ class ExplorerClass extends Component< any, any > {
         // assemble parms to get initial dataset
         let drilldownnodeconfig: BudgetNodeConfig =
             this.initRootNodeConfig(ChartSeries.DrillDown, userselections)
-        console.log('drilldownnodeconfig',drilldownnodeconfig)
         let drilldownindex:any
         for (drilldownindex in drilldownnodeconfig.charts) {
             chartParmsObj = getChartParms(
@@ -123,11 +122,15 @@ class ExplorerClass extends Component< any, any > {
                 drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms
                 drilldownnodeconfig.charts[drilldownindex].chartCode = 
                     ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType]
-                drilldownnodeconfig.datanode = chartParmsObj.datanode
-                matrixlocation = drilldownnodeconfig.matrixlocation
-                chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig
 
+            } else {
+                break
             }
+        }
+        if (!chartParmsObj.isError) {
+            drilldownnodeconfig.datanode = chartParmsObj.datanode
+            matrixlocation = drilldownnodeconfig.matrixlocation
+            chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig
         }
 
         // -----------------[ THE COMPARE ROOT ]-------------------
@@ -230,27 +233,35 @@ class ExplorerClass extends Component< any, any > {
             this.state.userselections.inflationadjusted)
         let matrixseries = chartmatrix[seriesref]
         let nodeconfig: BudgetNodeConfig
-        let cellptr: number
-        for (cellptr = 0; cellptr < matrixseries.length; cellptr++ ) {
+        let cellptr: any
+        let isError = false
+        let chartParmsObj:ChartParmsObj = null
+        for (cellptr in matrixseries ) {
             nodeconfig = matrixseries[cellptr]
-            let nodechartindex = 0
-            let chartParmsObj = getChartParms(nodeconfig, nodechartindex,
-                userselections, budgetdata, this.setState, chartmatrix)
-            if (chartParmsObj.isError) {
-                matrixseries.splice(cellptr)
-                if (cellptr > 0) { // unset the selection of the parent
-                    let parentconfig: BudgetNodeConfig = matrixseries[cellptr - 1]
-                    // disable reselection
-                    parentconfig.charts[nodechartindex].chartselection = null
-                    parentconfig.charts[nodechartindex].chart = null
+            let nodechartindex:any = null
+            for (nodechartindex in nodeconfig.charts) {
+                chartParmsObj = getChartParms(nodeconfig, nodechartindex,
+                    userselections, budgetdata, this.setState, chartmatrix)
+                if (chartParmsObj.isError) {
+                    matrixseries.splice(cellptr)
+                    if (cellptr > 0) { // unset the selection of the parent
+                        let parentconfig: BudgetNodeConfig = matrixseries[cellptr - 1]
+                        // disable reselection
+                        parentconfig.charts[nodechartindex].chartselection = null
+                        parentconfig.charts[nodechartindex].chart = null
+                    }
+                    isError = true
+                    break
+                } else {
+                    nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms
+                    nodeconfig.charts[nodechartindex].chartCode = 
+                        ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType]
                 }
-            } else {
-                nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms
-                nodeconfig.charts[nodechartindex].chartCode = 
-                    ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType]
-                nodeconfig.dataseries = seriesname
-                nodeconfig.datanode = chartParmsObj.datanode
             }
+        }
+        if (!isError) {
+            nodeconfig.dataseries = seriesname
+            nodeconfig.datanode = chartParmsObj.datanode
         }
         this.setState({
             chartmatrix,
