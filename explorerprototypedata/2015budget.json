@@ -8745,7 +8745,7 @@
                 },
                 "CITIZENOPS": {
                     "Index": 1,
-                    "Contents": "STRUCTURES",
+                    "Contents": "CLUSTER",
                     "Components": {
                         "CITIZENSERVICESA": {
                             "Index": 0,
@@ -8753,7 +8753,6 @@
                             "Components": {
                                 "FIELDSERVICESA": {
                                     "Index": 0,
-                                    "Config": "SUBCLUSTER",
                                     "Contents": "PROGRAMS",
                                     "Components": {
                                         "CHILDSERV": {
@@ -8780,7 +8779,6 @@
                                 },
                                 "CORESERVICESA": {
                                     "Index": 1,
-                                    "Config": "SUBCLUSTER",
                                     "Contents": "PROGRAMS",
                                     "Components": {
                                         "ECONDEV": {
@@ -8813,7 +8811,6 @@
                             "Components": {
                                 "FIELDSERVICESB": {
                                     "Index": 0,
-                                    "Config": "SUBCLUSTER",
                                     "Contents": "PROGRAMS",
                                     "Components": {
                                         "SOLIDWASTE": {
@@ -8836,7 +8833,6 @@
                                 },
                                 "CORESERVICESB": {
                                     "Index": 1,
-                                    "Config": "SUBCLUSTER",
                                     "Contents": "PROGRAMS",
                                     "Components": {
                                         "ENGINEERING": {
@@ -8867,10 +8863,11 @@
                 },
                 "AGENCIES": {
                     "Index": 2,
-                    "Contents": "STRUCTURES",
+                    "Contents": "CLUSTER",
                     "Components": {
                         "POLICESERV": {
                             "Index": 0,
+                            "Config": "SUBCLUSTER",
                             "Contents": "PROGRAMS",
                             "Components": {
                                 "POLICE": {
@@ -8885,6 +8882,7 @@
                         },
                         "TRANSITSERV": {
                             "Index": 1,
+                            "Config": "SUBCLUSTER",
                             "Contents": "PROGRAMS",
                             "Components": {
                                 "TTCCONV": {
@@ -8911,7 +8909,8 @@
                         },
                         "SPECIALIZED": {
                             "Index": 4,
-                            "Contents": "CLUSTER",
+                            "Config": "SUBCLUSTER",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "COMMCENTRES": {
                                     "Index": 0,
@@ -8962,7 +8961,7 @@
                 },
                 "CORPORATEACCOUNTS2": {
                     "Index": 3,
-                    "Contents": "CLUSTER",
+                    "Contents": "PROGRAMS",
                     "Components": {
                         "CORPFINANCING": {
                             "Index": 0,

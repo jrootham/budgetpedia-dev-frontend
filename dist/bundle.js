@@ -8746,7 +8746,7 @@ module.exports={
                 },
                 "CITIZENOPS": {
                     "Index": 1,
-                    "Contents": "STRUCTURES",
+                    "Contents": "CLUSTER",
                     "Components": {
                         "CITIZENSERVICESA": {
                             "Index": 0,
@@ -8754,7 +8754,6 @@ module.exports={
                             "Components": {
                                 "FIELDSERVICESA": {
                                     "Index": 0,
-                                    "Config": "SUBCLUSTER",
                                     "Contents": "PROGRAMS",
                                     "Components": {
                                         "CHILDSERV": {
@@ -8781,7 +8780,6 @@ module.exports={
                                 },
                                 "CORESERVICESA": {
                                     "Index": 1,
-                                    "Config": "SUBCLUSTER",
                                     "Contents": "PROGRAMS",
                                     "Components": {
                                         "ECONDEV": {
@@ -8814,7 +8812,6 @@ module.exports={
                             "Components": {
                                 "FIELDSERVICESB": {
                                     "Index": 0,
-                                    "Config": "SUBCLUSTER",
                                     "Contents": "PROGRAMS",
                                     "Components": {
                                         "SOLIDWASTE": {
@@ -8837,7 +8834,6 @@ module.exports={
                                 },
                                 "CORESERVICESB": {
                                     "Index": 1,
-                                    "Config": "SUBCLUSTER",
                                     "Contents": "PROGRAMS",
                                     "Components": {
                                         "ENGINEERING": {
@@ -8868,10 +8864,11 @@ module.exports={
                 },
                 "AGENCIES": {
                     "Index": 2,
-                    "Contents": "STRUCTURES",
+                    "Contents": "CLUSTER",
                     "Components": {
                         "POLICESERV": {
                             "Index": 0,
+                            "Config": "SUBCLUSTER",
                             "Contents": "PROGRAMS",
                             "Components": {
                                 "POLICE": {
@@ -8886,6 +8883,7 @@ module.exports={
                         },
                         "TRANSITSERV": {
                             "Index": 1,
+                            "Config": "SUBCLUSTER",
                             "Contents": "PROGRAMS",
                             "Components": {
                                 "TTCCONV": {
@@ -8912,7 +8910,8 @@ module.exports={
                         },
                         "SPECIALIZED": {
                             "Index": 4,
-                            "Contents": "CLUSTER",
+                            "Config": "SUBCLUSTER",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "COMMCENTRES": {
                                     "Index": 0,
@@ -8963,7 +8962,7 @@ module.exports={
                 },
                 "CORPORATEACCOUNTS2": {
                     "Index": 3,
-                    "Contents": "CLUSTER",
+                    "Contents": "PROGRAMS",
                     "Components": {
                         "CORPFINANCING": {
                             "Index": 0,
