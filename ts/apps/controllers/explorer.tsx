@@ -545,7 +545,7 @@ class ExplorerClass extends Component< any, any > {
                 <p>This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal
                 </p>
                 <p>
-                    Click or tap on any column to drill down.
+                    Click or tap on any column (in the "By Programs" charts) to drill down.
                     <IconButton tooltip="help"tooltipPosition="top-center" disabled>
                         <FontIcon className="material-icons">help_outline</FontIcon>
                     </IconButton>
