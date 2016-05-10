@@ -3,6 +3,7 @@
         "BudgetExpenses": {
             "Action": "Expenses",
             "Baseline": "Programs",
+            "Name": "Expenditures",
             "Titles": {
                 "Baseline": "Programs",
                 "Components": "Expenditure Categories"
@@ -4143,6 +4144,7 @@
         "BudgetRevenues": {
             "Action": "Revenues",
             "Baseline": "Programs",
+            "Name": "Revenues",
             "Titles": {
                 "Baseline": "Programs",
                 "Components": "Revenue Categories"
@@ -7068,6 +7070,7 @@
         "BudgetStaffing": {
             "Action": "Staffing",
             "Baseline": "Programs",
+            "Name": "Staffing",
             "Titles": {
                 "Baseline": "Programs",
                 "Components": "Staff Allocations"

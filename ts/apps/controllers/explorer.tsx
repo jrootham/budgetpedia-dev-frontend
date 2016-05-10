@@ -241,7 +241,7 @@ class ExplorerClass extends Component< any, any > {
             let nodechartindex:any = null
             for (nodechartindex in nodeconfig.charts) {
                 chartParmsObj = getChartParms(nodeconfig, nodechartindex,
-                    userselections, budgetdata, this.setState, chartmatrix)
+                    userselections, budgetdata, this.setState.bind(this), chartmatrix)
                 if (chartParmsObj.isError) {
                     matrixseries.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
@@ -332,6 +332,7 @@ class ExplorerClass extends Component< any, any > {
         let budgetdata = this.props.budgetdata
 
         let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles
+        let portalseriesname = budgetdata.DataSeries[userselections.dataseries].Name
 
         let charts = matrixcolumn.map((nodeconfig: BudgetNodeConfig, index) => {
 
@@ -376,6 +377,8 @@ class ExplorerClass extends Component< any, any > {
             } else {
                 portalname = 'City Budget'
             }
+
+            portalname += ' ' + portalseriesname
 
             let budgetPortal:PortalConfig = {
                 portalCharts:portalcharts,

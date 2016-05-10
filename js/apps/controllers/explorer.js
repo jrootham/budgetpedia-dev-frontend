@@ -130,7 +130,7 @@ class ExplorerClass extends Component {
                 nodeconfig = matrixseries[cellptr];
                 let nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
-                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, this.setState, chartmatrix);
+                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, this.setState.bind(this), chartmatrix);
                     if (chartParmsObj.isError) {
                         matrixseries.splice(cellptr);
                         if (cellptr > 0) {
@@ -201,6 +201,7 @@ class ExplorerClass extends Component {
             let userselections = this.state.userselections;
             let budgetdata = this.props.budgetdata;
             let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
+            let portalseriesname = budgetdata.DataSeries[userselections.dataseries].Name;
             let charts = matrixcolumn.map((nodeconfig, index) => {
                 let portalcharts = [];
                 for (let chartindex in nodeconfig.charts) {
@@ -236,6 +237,7 @@ class ExplorerClass extends Component {
                 else {
                     portalname = 'City Budget';
                 }
+                portalname += ' ' + portalseriesname;
                 let budgetPortal = {
                     portalCharts: portalcharts,
                     portalName: portalname,

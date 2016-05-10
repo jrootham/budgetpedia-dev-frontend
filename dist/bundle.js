@@ -4,6 +4,7 @@ module.exports={
         "BudgetExpenses": {
             "Action": "Expenses",
             "Baseline": "Programs",
+            "Name": "Expenditures",
             "Titles": {
                 "Baseline": "Programs",
                 "Components": "Expenditure Categories"
@@ -4144,6 +4145,7 @@ module.exports={
         "BudgetRevenues": {
             "Action": "Revenues",
             "Baseline": "Programs",
+            "Name": "Revenues",
             "Titles": {
                 "Baseline": "Programs",
                 "Components": "Revenue Categories"
@@ -7069,6 +7071,7 @@ module.exports={
         "BudgetStaffing": {
             "Action": "Staffing",
             "Baseline": "Programs",
+            "Name": "Staffing",
             "Titles": {
                 "Baseline": "Programs",
                 "Components": "Staff Allocations"
@@ -10068,7 +10071,7 @@ var ExplorerClass = function (_Component) {
                 nodeconfig = matrixseries[cellptr];
                 var nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
-                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.setState, chartmatrix);
+                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix);
                     if (chartParmsObj.isError) {
                         matrixseries.splice(cellptr);
                         if (cellptr > 0) {
@@ -10134,6 +10137,7 @@ var ExplorerClass = function (_Component) {
             var userselections = _this.state.userselections;
             var budgetdata = _this.props.budgetdata;
             var portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
+            var portalseriesname = budgetdata.DataSeries[userselections.dataseries].Name;
             var charts = matrixcolumn.map(function (nodeconfig, index) {
                 var portalcharts = [];
                 for (var chartindex in nodeconfig.charts) {
@@ -10166,6 +10170,7 @@ var ExplorerClass = function (_Component) {
                 } else {
                     portalname = 'City Budget';
                 }
+                portalname += ' ' + portalseriesname;
                 var budgetPortal = {
                     portalCharts: portalcharts,
                     portalName: portalname,
