@@ -8245,8 +8245,8 @@
                             "Components": {
                                 "PARKSACTIVITIES": {
                                     "Index": 0,
-                                    "Contents": "PROGRAMS",
                                     "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "PARKS": {
                                             "Index": 0,
@@ -8268,8 +8268,8 @@
                                 },
                                 "DESTINATIONS": {
                                     "Index": 2,
-                                    "Contents": "PROGRAMS",
                                     "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "EXHIBPLACE": {
                                             "Index": 0,
@@ -8291,8 +8291,8 @@
                                 },
                                 "CONSERVATION": {
                                     "Index": 3,
-                                    "Contents": "PROGRAMS",
                                     "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "REGIONCONSERV": {
                                             "Index": 0,
@@ -8330,8 +8330,8 @@
                                 },
                                 "POLICECOURT": {
                                     "Index": 2,
-                                    "Contents": "PROGRAMS",
                                     "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "POLICE": {
                                             "Index": 0,
@@ -8393,8 +8393,8 @@
                     "Components": {
                         "CITYMANAGEMENT": {
                             "Index": 0,
-                            "Contents": "SUBCLUSTER",
                             "Config": "CLUSTER",
+                            "Contents": "SUBCLUSTER",
                             "Components": {
                                 "CORPMANAGEMENT": {
                                     "Index": 0,
@@ -8422,8 +8422,8 @@
                                         },
                                         "ACCOUNTABILITY": {
                                             "Index": 5,
-                                            "Contents": "PROGRAMS",
                                             "Config": "SUBCLUSTER",
+                                            "Contents": "PROGRAMS",
                                             "Components": {
                                                 "AUDITGEN": {
                                                     "Index": 0,
@@ -8570,7 +8570,7 @@
                 }
             },
             "Configuration": {
-                "ROOT": {
+                "STRUCTURES": {
                     "Name": "Structural",
                     "Alias": "Organizational Structure Types",
                     "DataSeries": {
@@ -8581,14 +8581,6 @@
                             "BudgetStaffing"
                         ]
                     },
-                    "Instance": {
-                        "Name": "Type",
-                        "Alias": "Program Structure Type"
-                    }
-                },
-                "STRUCTURE": {
-                    "Name": "Structural",
-                    "Alias": "Organizational Structure Types",
                     "Instance": {
                         "Name": "Type",
                         "Alias": "Program Structure Type"
@@ -8610,6 +8602,13 @@
                         "Alias": "Program sub-cluster"
                     }
                 },
+                "PROGRAMS": {
+                    "Name": "Programs",
+                    "Baseline": "Programs",
+                    "Instance": {
+                        "Name": "Program"
+                    }
+                },
                 "BASELINE": {
                     "Name": "Programs",
                     "Instance": {
@@ -8617,7 +8616,7 @@
                     }
                 }
             },
-            "Contents": "ROOT",
+            "Contents": "STRUCTURES",
             "PortalCharts": {
                 "BudgetExpenses": [
                     {
@@ -8647,11 +8646,11 @@
             "Components": {
                 "ADMINOPS": {
                     "Index": 0,
-                    "Contents": "STRUCTURE",
+                    "Contents": "CLUSTER",
                     "Components": {
                         "COUNCILOPS": {
                             "Index": 0,
-                            "Contents": "CLUSTER",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "COUNCIL": {
                                     "Index": 0,
@@ -8671,7 +8670,8 @@
                                 },
                                 "ACCOUNTABILITYAPPEAL2": {
                                     "Index": 4,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "AUDITGEN": {
                                             "Index": 0,
@@ -8699,7 +8699,8 @@
                             "Components": {
                                 "MANAGEMENTOFFICES": {
                                     "Index": 0,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "CITYMANAGER": {
                                             "Index": 0,
@@ -8717,7 +8718,8 @@
                                 },
                                 "CORPORATESERVICES": {
                                     "Index": 0,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "FACILITIES": {
                                             "Index": 3,
@@ -8743,7 +8745,7 @@
                 },
                 "CITIZENOPS": {
                     "Index": 1,
-                    "Contents": "STRUCTURE",
+                    "Contents": "STRUCTURES",
                     "Components": {
                         "CITIZENSERVICESA": {
                             "Index": 0,
@@ -8751,7 +8753,8 @@
                             "Components": {
                                 "FIELDSERVICESA": {
                                     "Index": 0,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "CHILDSERV": {
                                             "Index": 0,
@@ -8777,7 +8780,8 @@
                                 },
                                 "CORESERVICESA": {
                                     "Index": 1,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "ECONDEV": {
                                             "Index": 0,
@@ -8809,7 +8813,8 @@
                             "Components": {
                                 "FIELDSERVICESB": {
                                     "Index": 0,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "SOLIDWASTE": {
                                             "Index": 0,
@@ -8831,7 +8836,8 @@
                                 },
                                 "CORESERVICESB": {
                                     "Index": 1,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "ENGINEERING": {
                                             "Index": 0,
@@ -8861,11 +8867,11 @@
                 },
                 "AGENCIES": {
                     "Index": 2,
-                    "Contents": "STRUCTURE",
+                    "Contents": "STRUCTURES",
                     "Components": {
                         "POLICESERV": {
                             "Index": 0,
-                            "Contents": "CLUSTER",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "POLICE": {
                                     "Index": 0,
@@ -8879,7 +8885,7 @@
                         },
                         "TRANSITSERV": {
                             "Index": 1,
-                            "Contents": "CLUSTER",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "TTCCONV": {
                                     "Index": 0,
@@ -8929,7 +8935,8 @@
                                 },
                                 "DESTINATIONS2": {
                                     "Index": 5,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "EXHIBPLACE": {
                                             "Index": 0,

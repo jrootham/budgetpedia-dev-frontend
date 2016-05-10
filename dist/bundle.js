@@ -8246,8 +8246,8 @@ module.exports={
                             "Components": {
                                 "PARKSACTIVITIES": {
                                     "Index": 0,
-                                    "Contents": "PROGRAMS",
                                     "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "PARKS": {
                                             "Index": 0,
@@ -8269,8 +8269,8 @@ module.exports={
                                 },
                                 "DESTINATIONS": {
                                     "Index": 2,
-                                    "Contents": "PROGRAMS",
                                     "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "EXHIBPLACE": {
                                             "Index": 0,
@@ -8292,8 +8292,8 @@ module.exports={
                                 },
                                 "CONSERVATION": {
                                     "Index": 3,
-                                    "Contents": "PROGRAMS",
                                     "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "REGIONCONSERV": {
                                             "Index": 0,
@@ -8331,8 +8331,8 @@ module.exports={
                                 },
                                 "POLICECOURT": {
                                     "Index": 2,
-                                    "Contents": "PROGRAMS",
                                     "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "POLICE": {
                                             "Index": 0,
@@ -8394,8 +8394,8 @@ module.exports={
                     "Components": {
                         "CITYMANAGEMENT": {
                             "Index": 0,
-                            "Contents": "SUBCLUSTER",
                             "Config": "CLUSTER",
+                            "Contents": "SUBCLUSTER",
                             "Components": {
                                 "CORPMANAGEMENT": {
                                     "Index": 0,
@@ -8423,8 +8423,8 @@ module.exports={
                                         },
                                         "ACCOUNTABILITY": {
                                             "Index": 5,
-                                            "Contents": "PROGRAMS",
                                             "Config": "SUBCLUSTER",
+                                            "Contents": "PROGRAMS",
                                             "Components": {
                                                 "AUDITGEN": {
                                                     "Index": 0,
@@ -8571,7 +8571,7 @@ module.exports={
                 }
             },
             "Configuration": {
-                "ROOT": {
+                "STRUCTURES": {
                     "Name": "Structural",
                     "Alias": "Organizational Structure Types",
                     "DataSeries": {
@@ -8582,14 +8582,6 @@ module.exports={
                             "BudgetStaffing"
                         ]
                     },
-                    "Instance": {
-                        "Name": "Type",
-                        "Alias": "Program Structure Type"
-                    }
-                },
-                "STRUCTURE": {
-                    "Name": "Structural",
-                    "Alias": "Organizational Structure Types",
                     "Instance": {
                         "Name": "Type",
                         "Alias": "Program Structure Type"
@@ -8611,6 +8603,13 @@ module.exports={
                         "Alias": "Program sub-cluster"
                     }
                 },
+                "PROGRAMS": {
+                    "Name": "Programs",
+                    "Baseline": "Programs",
+                    "Instance": {
+                        "Name": "Program"
+                    }
+                },
                 "BASELINE": {
                     "Name": "Programs",
                     "Instance": {
@@ -8618,7 +8617,7 @@ module.exports={
                     }
                 }
             },
-            "Contents": "ROOT",
+            "Contents": "STRUCTURES",
             "PortalCharts": {
                 "BudgetExpenses": [
                     {
@@ -8648,11 +8647,11 @@ module.exports={
             "Components": {
                 "ADMINOPS": {
                     "Index": 0,
-                    "Contents": "STRUCTURE",
+                    "Contents": "CLUSTER",
                     "Components": {
                         "COUNCILOPS": {
                             "Index": 0,
-                            "Contents": "CLUSTER",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "COUNCIL": {
                                     "Index": 0,
@@ -8672,7 +8671,8 @@ module.exports={
                                 },
                                 "ACCOUNTABILITYAPPEAL2": {
                                     "Index": 4,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "AUDITGEN": {
                                             "Index": 0,
@@ -8700,7 +8700,8 @@ module.exports={
                             "Components": {
                                 "MANAGEMENTOFFICES": {
                                     "Index": 0,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "CITYMANAGER": {
                                             "Index": 0,
@@ -8718,7 +8719,8 @@ module.exports={
                                 },
                                 "CORPORATESERVICES": {
                                     "Index": 0,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "FACILITIES": {
                                             "Index": 3,
@@ -8744,7 +8746,7 @@ module.exports={
                 },
                 "CITIZENOPS": {
                     "Index": 1,
-                    "Contents": "STRUCTURE",
+                    "Contents": "STRUCTURES",
                     "Components": {
                         "CITIZENSERVICESA": {
                             "Index": 0,
@@ -8752,7 +8754,8 @@ module.exports={
                             "Components": {
                                 "FIELDSERVICESA": {
                                     "Index": 0,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "CHILDSERV": {
                                             "Index": 0,
@@ -8778,7 +8781,8 @@ module.exports={
                                 },
                                 "CORESERVICESA": {
                                     "Index": 1,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "ECONDEV": {
                                             "Index": 0,
@@ -8810,7 +8814,8 @@ module.exports={
                             "Components": {
                                 "FIELDSERVICESB": {
                                     "Index": 0,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "SOLIDWASTE": {
                                             "Index": 0,
@@ -8832,7 +8837,8 @@ module.exports={
                                 },
                                 "CORESERVICESB": {
                                     "Index": 1,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "ENGINEERING": {
                                             "Index": 0,
@@ -8862,11 +8868,11 @@ module.exports={
                 },
                 "AGENCIES": {
                     "Index": 2,
-                    "Contents": "STRUCTURE",
+                    "Contents": "STRUCTURES",
                     "Components": {
                         "POLICESERV": {
                             "Index": 0,
-                            "Contents": "CLUSTER",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "POLICE": {
                                     "Index": 0,
@@ -8880,7 +8886,7 @@ module.exports={
                         },
                         "TRANSITSERV": {
                             "Index": 1,
-                            "Contents": "CLUSTER",
+                            "Contents": "PROGRAMS",
                             "Components": {
                                 "TTCCONV": {
                                     "Index": 0,
@@ -8930,7 +8936,8 @@ module.exports={
                                 },
                                 "DESTINATIONS2": {
                                     "Index": 5,
-                                    "Contents": "SUBCLUSTER",
+                                    "Config": "SUBCLUSTER",
+                                    "Contents": "PROGRAMS",
                                     "Components": {
                                         "EXHIBPLACE": {
                                             "Index": 0,
