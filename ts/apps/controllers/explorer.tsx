@@ -533,8 +533,22 @@ class ExplorerClass extends Component< any, any > {
 
             <CardText expandable >
 
+                <p>In the charts below Viewpoints include:</p>
+                <dl>
+                    <dt><strong>Functional</strong></dt>
+                    <dd>combines Agencies and Divisions into groups according to the nature of the services delivered (this is the default)</dd>
+                    <dt><strong>Structural</strong></dt>
+                    <dd>more traditional: separates Agencies from Divisions; groupings are closer to those found
+                        in City annual Budget Summaries</dd>
+                </dl>
+                <p>Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents)</p>
+                <p>This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal
+                </p>
                 <p>
-                    Click or tap on any column to drill down.<IconButton tooltip="help"tooltipPosition="top-center" ><FontIcon className="material-icons">help_outline</FontIcon></IconButton>
+                    Click or tap on any column to drill down.
+                    <IconButton tooltip="help"tooltipPosition="top-center" disabled>
+                        <FontIcon className="material-icons">help_outline</FontIcon>
+                    </IconButton>
                 </p>
                 <div style={{
                     padding: "3px"}}>
