@@ -8082,8 +8082,8 @@ module.exports={
             "200A": "Materials & Supplies 200A",
             "300A": "Equipment 300A",
             "400A": "Service And Rent 400A",
-            "505A": "Contribution To Capital 505A",
-            "510A": "Contribution To Reserves/Reserve Funds 510A",
+            "505A": "Cont. To Capital 505A",
+            "510A": "Cont. To Reserves/Reserve Funds 510A",
             "650A": "Other Expenditures 650A",
             "700A": "Inter-Divisional Charges 700A"
         },
@@ -8095,7 +8095,7 @@ module.exports={
             "850A": "User Fees & Donations 850A",
             "860A": "Licences & Permits Revenue 860A",
             "920A": "Transfers From Capital 920A",
-            "930A": "Contribution From Reserves/Reserve Funds 930A",
+            "930A": "Cont. From Reserves/Reserve Funds 930A",
             "940A": "Sundry and Other Revenues 940A"
         },
         "TimeAllocations": {
@@ -10333,11 +10333,15 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
     var legendvalue = undefined;
     var chartheight = undefined;
     var charttop = undefined;
+    var chartleft = undefined;
+    var chartwidth = undefined;
     switch (chartType) {
         case "ColumnChart":
-            legendvalue = "none";
-            chartheight = 'auto';
-            charttop = 'auto';
+            legendvalue = 'none';
+            chartheight = '50%';
+            charttop = '15%';
+            chartleft = '25%';
+            chartwidth = '70%';
             break;
         case "PieChart":
             legendvalue = {
@@ -10347,8 +10351,10 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
                 },
                 maxLines: 4
             };
-            chartheight = '70%';
+            chartheight = '55%';
             charttop = '30%';
+            chartleft = 'auto';
+            chartwidth = 'auto';
             break;
         default:
             break;
@@ -10356,7 +10362,7 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
     var options = {
         title: title,
         vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
-        hAxis: { title: axistitle, textStyle: { fontSize: 9 } },
+        hAxis: { title: axistitle, textStyle: { fontSize: 10 } },
         bar: { groupWidth: "95%" },
         height: 400,
         width: 400,
@@ -10365,7 +10371,9 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
         pieHole: 0.4,
         chartArea: {
             height: chartheight,
-            top: charttop
+            top: charttop,
+            left: chartleft,
+            width: chartwidth
         }
     };
     var matrixlocation = Object.assign({}, nodeConfig.matrixlocation);

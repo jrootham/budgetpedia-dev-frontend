@@ -64,11 +64,15 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
     let legendvalue;
     let chartheight;
     let charttop;
+    let chartleft;
+    let chartwidth;
     switch (chartType) {
         case "ColumnChart":
-            legendvalue = "none";
-            chartheight = 'auto';
-            charttop = 'auto';
+            legendvalue = 'none';
+            chartheight = '50%';
+            charttop = '15%';
+            chartleft = '25%';
+            chartwidth = '70%';
             break;
         case "PieChart":
             legendvalue = {
@@ -78,8 +82,10 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
                 },
                 maxLines: 4
             };
-            chartheight = '70%';
+            chartheight = '55%';
             charttop = '30%';
+            chartleft = 'auto';
+            chartwidth = 'auto';
             break;
         default:
             break;
@@ -87,7 +93,7 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
     let options = {
         title: title,
         vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
-        hAxis: { title: axistitle, textStyle: { fontSize: 9 } },
+        hAxis: { title: axistitle, textStyle: { fontSize: 10 } },
         bar: { groupWidth: "95%" },
         height: 400,
         width: 400,
@@ -96,7 +102,9 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
         pieHole: 0.4,
         chartArea: {
             height: chartheight,
-            top: charttop
+            top: charttop,
+            left: chartleft,
+            width: chartwidth,
         }
     };
     let matrixlocation = Object.assign({}, nodeConfig.matrixlocation);

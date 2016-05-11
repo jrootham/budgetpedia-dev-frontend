@@ -123,12 +123,16 @@ let getChartParms = (
     let legendvalue
     let chartheight
     let charttop
+    let chartleft
+    let chartwidth
     switch (chartType) {
         case "ColumnChart":
-            legendvalue = "none"
-            chartheight ='auto'
-            charttop = 'auto'
-            break;
+            legendvalue = 'none'
+            chartheight ='50%'
+            charttop = '15%'
+            chartleft = '25%'
+            chartwidth = '70%'
+            break
         
         case "PieChart":
             legendvalue = {
@@ -138,12 +142,14 @@ let getChartParms = (
                 },
                 maxLines:4
             }
-            chartheight = '70%'
+            chartheight = '55%'
             charttop = '30%'
+            chartleft = 'auto'
+            chartwidth = 'auto'
             break;
         default:
             // code...
-            break;
+            break
     }
 
     // TODO: animation breaks draswing; probably conflict with react render
@@ -156,7 +162,7 @@ let getChartParms = (
         // },
         title: title,
         vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
-        hAxis: { title: axistitle, textStyle: { fontSize: 9 } },
+        hAxis: { title: axistitle, textStyle: { fontSize: 10 } },
         bar: { groupWidth: "95%" },
         // width: children.length * 120,// 120 per column
         height: 400,
@@ -166,7 +172,9 @@ let getChartParms = (
         pieHole: 0.4,
         chartArea:{
             height:chartheight,
-            top:charttop
+            top:charttop,
+            left:chartleft,
+            width:chartwidth,
         }
     }
 
