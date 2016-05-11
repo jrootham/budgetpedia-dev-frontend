@@ -26,9 +26,6 @@ let colors = (state = initialstate_1.initialstate.colors) => {
 let mainpadding = (state = initialstate_1.initialstate.mainpadding, action) => {
     return state;
 };
-let maintiles = (state = initialstate_1.initialstate.maintiles, action) => {
-    return state;
-};
 let maincolsreducer = (state = initialstate_1.initialstate.maincols, action) => {
     switch (action.type) {
         case Actions.SET_TILECOLS: {
@@ -219,7 +216,6 @@ function registerconfirm(state = {
     }
 }
 let mainReducerCore = redux_1.combineReducers({
-    maintiles: maintiles,
     maincols: maincols,
     mainpadding: mainpadding,
     hometiles: hometiles,

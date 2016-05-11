@@ -219,7 +219,7 @@ let hometiles: [Object] = [
         index: 1,
         route: 'timeline',
     },
-    {
+/*    {
         id: 1,
         content: {
             title: `Deputation Helper`,
@@ -230,7 +230,7 @@ let hometiles: [Object] = [
         index: 2,
         route: 'deputations',
     },
-    {
+*/    {
         id: 9,
         content: {
             title: `Budget Explorer`,
@@ -252,7 +252,7 @@ let hometiles: [Object] = [
         index: 4,
         route: 'pathways',
     },
-    {
+/*    {
         id: 2,
         content: {
             title: `Communities`,
@@ -296,7 +296,7 @@ let hometiles: [Object] = [
         index: 8,
         route: 'resources',
     },
-    {
+*/    {
         id: 10,
         content: {
             title: `Join Us!`,
@@ -307,7 +307,7 @@ let hometiles: [Object] = [
         index: 9,
         route: 'joinus',
     },
-    {
+/*    {
         id: 12,
         content: {
             title: `Tell your story`,
@@ -318,7 +318,7 @@ let hometiles: [Object] = [
         index: 10,
         route: 'stories',
     },
-    {
+*/    {
         id: 13,
         content: {
             title: `Get a demo`,
@@ -332,7 +332,7 @@ let hometiles: [Object] = [
 ]
 
 export var initialstate = {
-	maintiles,
+	// maintiles,
 	maincols,
 	mainpadding,
     hometiles,

@@ -168,17 +168,6 @@ let hometiles = [
         route: 'timeline',
     },
     {
-        id: 1,
-        content: {
-            title: `Deputation Helper`,
-            subtitle: `Have your say`,
-            image: '../../public/icons/ic_insert_emoticon_48px.svg',
-            category: 'tools',
-        },
-        index: 2,
-        route: 'deputations',
-    },
-    {
         id: 9,
         content: {
             title: `Budget Explorer`,
@@ -201,50 +190,6 @@ let hometiles = [
         route: 'pathways',
     },
     {
-        id: 2,
-        content: {
-            title: `Communities`,
-            subtitle: `Find birds of a feather`,
-            image: '../../public/icons/ic_local_library_48px.svg',
-            category: 'support',
-        },
-        index: 5,
-        route: 'communities',
-    },
-    {
-        id: 8,
-        content: {
-            title: `Social Media`,
-            subtitle: `Public forums`,
-            image: '../../public/icons/ic_thumb_up_48px.svg',
-            category: 'support',
-        },
-        index: 6,
-        route: 'socialmedia',
-    },
-    {
-        id: 11,
-        content: {
-            title: `Newsletter`,
-            subtitle: `News and notices`,
-            image: '../../public/icons/ic_markunread_mailbox_48px.svg',
-            category: 'support',
-        },
-        index: 7,
-        route: 'newsletter',
-    },
-    {
-        id: 15,
-        content: {
-            title: `Resources`,
-            subtitle: `External websites`,
-            image: '../../public/icons/ic_library_books_48px.svg',
-            category: 'support',
-        },
-        index: 8,
-        route: 'resources',
-    },
-    {
         id: 10,
         content: {
             title: `Join Us!`,
@@ -254,17 +199,6 @@ let hometiles = [
         },
         index: 9,
         route: 'joinus',
-    },
-    {
-        id: 12,
-        content: {
-            title: `Tell your story`,
-            subtitle: `Write for us`,
-            image: '../../public/icons/ic_keyboard_48px.svg',
-            category: 'get involved',
-        },
-        index: 10,
-        route: 'stories',
     },
     {
         id: 13,
@@ -279,7 +213,6 @@ let hometiles = [
     },
 ];
 exports.initialstate = {
-    maintiles: maintiles,
     maincols: maincols,
     mainpadding: mainpadding,
     hometiles: hometiles,

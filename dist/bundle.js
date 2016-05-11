@@ -12147,16 +12147,6 @@ var hometiles = [{
     index: 1,
     route: 'timeline'
 }, {
-    id: 1,
-    content: {
-        title: 'Deputation Helper',
-        subtitle: 'Have your say',
-        image: '../../public/icons/ic_insert_emoticon_48px.svg',
-        category: 'tools'
-    },
-    index: 2,
-    route: 'deputations'
-}, {
     id: 9,
     content: {
         title: 'Budget Explorer',
@@ -12177,46 +12167,6 @@ var hometiles = [{
     index: 4,
     route: 'pathways'
 }, {
-    id: 2,
-    content: {
-        title: 'Communities',
-        subtitle: 'Find birds of a feather',
-        image: '../../public/icons/ic_local_library_48px.svg',
-        category: 'support'
-    },
-    index: 5,
-    route: 'communities'
-}, {
-    id: 8,
-    content: {
-        title: 'Social Media',
-        subtitle: 'Public forums',
-        image: '../../public/icons/ic_thumb_up_48px.svg',
-        category: 'support'
-    },
-    index: 6,
-    route: 'socialmedia'
-}, {
-    id: 11,
-    content: {
-        title: 'Newsletter',
-        subtitle: 'News and notices',
-        image: '../../public/icons/ic_markunread_mailbox_48px.svg',
-        category: 'support'
-    },
-    index: 7,
-    route: 'newsletter'
-}, {
-    id: 15,
-    content: {
-        title: 'Resources',
-        subtitle: 'External websites',
-        image: '../../public/icons/ic_library_books_48px.svg',
-        category: 'support'
-    },
-    index: 8,
-    route: 'resources'
-}, {
     id: 10,
     content: {
         title: 'Join Us!',
@@ -12226,16 +12176,6 @@ var hometiles = [{
     },
     index: 9,
     route: 'joinus'
-}, {
-    id: 12,
-    content: {
-        title: 'Tell your story',
-        subtitle: 'Write for us',
-        image: '../../public/icons/ic_keyboard_48px.svg',
-        category: 'get involved'
-    },
-    index: 10,
-    route: 'stories'
 }, {
     id: 13,
     content: {
@@ -12248,7 +12188,6 @@ var hometiles = [{
     route: 'demos'
 }];
 exports.initialstate = {
-    maintiles: maintiles,
     maincols: maincols,
     mainpadding: mainpadding,
     hometiles: hometiles,
@@ -12308,12 +12247,6 @@ var colors = function colors() {
 };
 var mainpadding = function mainpadding() {
     var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.initialstate.mainpadding : arguments[0];
-    var action = arguments[1];
-
-    return state;
-};
-var maintiles = function maintiles() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.initialstate.maintiles : arguments[0];
     var action = arguments[1];
 
     return state;
@@ -12535,7 +12468,6 @@ function registerconfirm() {
     }
 }
 var mainReducerCore = redux_1.combineReducers({
-    maintiles: maintiles,
     maincols: maincols,
     mainpadding: mainpadding,
     hometiles: hometiles,

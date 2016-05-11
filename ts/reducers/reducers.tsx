@@ -39,10 +39,10 @@ let mainpadding = (state: any = initialstate.mainpadding, action) => {
     return state
 }
 
-let maintiles = (state: any = initialstate.maintiles, action) => {
+/*let maintiles = (state: any = initialstate.maintiles, action) => {
     return state
 }
-
+*/
 // ========================================================================
 // -----------------------[ SET TILE COLUMNS ]-----------------------------
 
@@ -339,7 +339,7 @@ function registerconfirm(state = {
 
 let mainReducerCore = combineReducers(
     { 
-        maintiles,
+        // maintiles,
         maincols,
         mainpadding,
         hometiles,
