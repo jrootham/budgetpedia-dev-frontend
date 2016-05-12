@@ -46,7 +46,7 @@ import theme = require('material-ui/lib/styles/raw-themes/light-raw-theme')
 import colors = require('material-ui/lib/styles/colors')
 
 let appnavbar = {
-	title: 'Toronto Budget Commons',
+	title: 'Toronto Budgetpedia',
 	username: 'anonymous',
 	accountoptions: [],
 	menuoptions: [],

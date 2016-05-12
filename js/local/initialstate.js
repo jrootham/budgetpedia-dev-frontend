@@ -3,7 +3,7 @@ let budgetdata = require('../../explorerprototypedata/2015budget.json');
 const theme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
 const colors = require('material-ui/lib/styles/colors');
 let appnavbar = {
-    title: 'Toronto Budget Commons',
+    title: 'Toronto Budgetpedia',
     username: 'anonymous',
     accountoptions: [],
     menuoptions: [],

@@ -8095,7 +8095,7 @@
             "860A": "Licences & Permits Revenue 860A",
             "920A": "Transfers From Capital 920A",
             "930A": "Contribution From Reserves/Reserve Funds 930A",
-            "940A": "Sundry and Other Revenues 940A"
+            "940A": "Sundry and Other Revenues (incl. prop. tax) 940A"
         },
         "TimeAllocations": {
             "FULL": "Full Time",

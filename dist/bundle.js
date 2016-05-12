@@ -8096,7 +8096,7 @@ module.exports={
             "860A": "Licences & Permits Revenue 860A",
             "920A": "Transfers From Capital 920A",
             "930A": "Contribution From Reserves/Reserve Funds 930A",
-            "940A": "Sundry and Other Revenues 940A"
+            "940A": "Sundry and Other Revenues (incl. prop. tax) 940A"
         },
         "TimeAllocations": {
             "FULL": "Full Time",
@@ -12028,7 +12028,7 @@ var budgetdata = require('../../explorerprototypedata/2015budget.json');
 var theme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
 var colors = require('material-ui/lib/styles/colors');
 var appnavbar = {
-    title: 'Toronto Budget Commons',
+    title: 'Toronto Budgetpedia',
     username: 'anonymous',
     accountoptions: [],
     menuoptions: []
