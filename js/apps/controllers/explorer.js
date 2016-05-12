@@ -13,6 +13,8 @@ const Divider = require('material-ui/lib/divider');
 const Checkbox = require('material-ui/lib/checkbox');
 const RaisedButton = require('material-ui/lib/raised-button');
 const ReactSlider = require('react-slider');
+const DropDownMenu = require('material-ui/lib/drop-down-menu');
+const MenuItem = require('material-ui/lib/menus/menu-item');
 const explorerchart_1 = require('../components/explorerchart');
 const constants_1 = require('../constants');
 const constants_2 = require('../constants');
@@ -276,19 +278,9 @@ class ExplorerClass extends Component {
         let drilldownlist = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
         let drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
         let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Drill Down"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "In the charts below, Viewpoints include:"), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines Agencies and Divisions into groups according to the nature of the services delivered (this is the default)"), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents)"), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column (in the \"By Programs\" charts) to drill down.", React.createElement(IconButton, {tooltip: "help", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon, {className: "material-icons"}, "help_outline"))), React.createElement("div", {style: {
-            padding: "3px" }}, React.createElement("span", null, "Viewpoints: "), React.createElement(IconButton, {tooltip: "Functional", tooltipPosition: "top-center", onTouchTap: e => {
-            this.switchViewpoint('FUNCTIONAL', constants_1.ChartSeries.DrillDown);
-        }, style: { backgroundColor: (this.state.userselections.viewpoint == 'FUNCTIONAL')
-                ? "rgba(144,238,144,0.5)"
-                : 'transparent',
-            borderRadius: "50%" }}, React.createElement(FontIcon, {className: "material-icons"}, "directions_walk")), React.createElement(IconButton, {tooltip: "Structural", tooltipPosition: "top-center", onTouchTap: e => {
-            this.switchViewpoint('STRUCTURAL', constants_1.ChartSeries.DrillDown);
-        }, style: {
-            backgroundColor: (this.state.userselections.viewpoint == 'STRUCTURAL')
-                ? "rgba(144,238,144,0.5)"
-                : 'transparent',
-            borderRadius: "50%"
-        }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "layers")), React.createElement("span", {style: { marginLeft: "10px" }}, "Facets: "), React.createElement(IconButton, {tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: e => {
+            padding: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu, {value: this.state.userselections.viewpoint, style: {}, onChange: (e, index, value) => {
+            this.switchViewpoint(value, constants_1.ChartSeries.DrillDown);
+        }}, React.createElement(MenuItem, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton, {tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: e => {
             this.switchDataSeries('BudgetExpenses', constants_1.ChartSeries.DrillDown);
         }, style: {
             backgroundColor: (this.state.userselections.dataseries == 'BudgetExpenses')

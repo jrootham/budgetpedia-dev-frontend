@@ -414,7 +414,7 @@ declare namespace __MaterialUI {
         displayMember?: string;
         valueMember?: string;
         autoWidth?: boolean;
-        menuItems: Menu.MenuItemRequest[];
+        menuItems?: Menu.MenuItemRequest[];
         menuItemStyle?: React.CSSProperties;
         selectedIndex?: number;
         underlineStyle?: React.CSSProperties;
@@ -423,7 +423,7 @@ declare namespace __MaterialUI {
         style?: React.CSSProperties;
         disabled?: boolean;
         valueLink?: ReactLink<any>;
-        value?: number;
+        value?: any;
 
         onChange?: Menu.ItemTapEventHandler;
     }
@@ -788,7 +788,7 @@ declare namespace __MaterialUI {
         displayMember?: string;
         valueMember?: string;
         autoWidth?: boolean;
-        menuItems: Menu.MenuItemRequest[];
+        menuItems?: Menu.MenuItemRequest[];
         menuItemStyle?: React.CSSProperties;
         selectedIndex?: number;
         underlineStyle?: React.CSSProperties;
@@ -798,7 +798,7 @@ declare namespace __MaterialUI {
         style?: React.CSSProperties;
         disabled?: boolean;
         valueLink?: ReactLink<any>;
-        value?: number;
+        value?: any;
 
         onChange?: Menu.ItemTapEventHandler;
         onEnterKeyDown?: React.KeyboardEventHandler;

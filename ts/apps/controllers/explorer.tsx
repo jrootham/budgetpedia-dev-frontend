@@ -37,6 +37,8 @@ import Divider = require('material-ui/lib/divider')
 import Checkbox = require('material-ui/lib/checkbox')
 import RaisedButton = require('material-ui/lib/raised-button')
 import ReactSlider = require('react-slider')
+import DropDownMenu = require('material-ui/lib/drop-down-menu')
+import MenuItem = require('material-ui/lib/menus/menu-item')
 
 import { ExplorerChart } from '../components/explorerchart'
 import { ChartSeries } from '../constants'
@@ -552,46 +554,22 @@ class ExplorerClass extends Component< any, any > {
                 </p>
                 <div style={{
                     padding: "3px"}}>
-                    <span>Viewpoints: </span> 
-
-                    <IconButton 
-                        tooltip="Functional" 
-                        tooltipPosition="top-center"
-                        onTouchTap= {
-                            e => {
-                                this.switchViewpoint('FUNCTIONAL',ChartSeries.DrillDown)
-                            }
-                        } 
-                        style={
-                            { backgroundColor: (this.state.userselections.viewpoint == 'FUNCTIONAL')
-                                ? "rgba(144,238,144,0.5)"
-                                : 'transparent',
-                                borderRadius:"50%" }
-                        }>
-                        <FontIcon className="material-icons">directions_walk</FontIcon>
-                    </IconButton>
-
-                    <IconButton 
-                        tooltip="Structural" 
-                        tooltipPosition="top-center" 
-                        onTouchTap= {
-                            e => {
-                                this.switchViewpoint('STRUCTURAL', ChartSeries.DrillDown)
+                    <span style={{fontStyle: "italic"}}>Viewpoint: </span> 
+                    <DropDownMenu 
+                        value={this.state.userselections.viewpoint} 
+                        style={{
+                        }}
+                        onChange={
+                            (e,index,value) => {
+                                this.switchViewpoint(value, ChartSeries.DrillDown)
                             }
                         }
-                        style={
-                            {
-                                backgroundColor: (this.state.userselections.viewpoint == 'STRUCTURAL')
-                                ? "rgba(144,238,144,0.5)"
-                                : 'transparent',
-                                borderRadius: "50%"
-                            }
-                        }>
-                        >
-                        <FontIcon className="material-icons">layers</FontIcon>
-                    </IconButton>
+                    >
+                        <MenuItem value={'FUNCTIONAL'} primaryText="Functional"/>
+                        <MenuItem value={'STRUCTURAL'} primaryText="Structural"/>
+                    </DropDownMenu>
 
-                    <span style={{marginLeft:"10px"}}>Facets: </span>
+                    <span style={{margin:"0 10px 0 10px",fontStyle:"italic"}}>Facets: </span>
 
                     <IconButton 
                         tooltip="Expenses" 

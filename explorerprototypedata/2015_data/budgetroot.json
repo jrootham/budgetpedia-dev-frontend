@@ -282,8 +282,8 @@
             "200A":"Materials & Supplies 200A",
             "300A":"Equipment 300A",
             "400A":"Service And Rent 400A",
-            "505A":"Cont. To Capital 505A",
-            "510A":"Cont. To Reserves/Reserve Funds 510A",
+            "505A":"Contribution To Capital 505A",
+            "510A":"Contribution To Reserves/Reserve Funds 510A",
             "650A":"Other Expenditures 650A",
             "700A":"Inter-Divisional Charges 700A"
         },
@@ -295,7 +295,7 @@
             "850A":"User Fees & Donations 850A",
             "860A":"Licences & Permits Revenue 860A",
             "920A":"Transfers From Capital 920A",
-            "930A":"Cont. From Reserves/Reserve Funds 930A",
+            "930A":"Contribution From Reserves/Reserve Funds 930A",
             "940A":"Sundry and Other Revenues 940A"
         },
         "TimeAllocations": {
