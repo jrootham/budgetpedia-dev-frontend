@@ -36,6 +36,7 @@ class ExplorerClass extends Component {
                 inflationadjusted: true,
             }
         };
+        this.branchScrollBlocks = [];
         this.componentDidMount = () => {
             this.initializeChartSeries();
         };
@@ -49,7 +50,7 @@ class ExplorerClass extends Component {
             let drilldownnodeconfig = this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             let drilldownindex;
             for (drilldownindex in drilldownnodeconfig.charts) {
-                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, this.setState.bind(this), chartmatrix);
+                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, this.setState.bind(this), chartmatrix, this.onPortalCreation);
                 if (!chartParmsObj.isError) {
                     drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                     drilldownnodeconfig.charts[drilldownindex].chartCode =
@@ -100,6 +101,9 @@ class ExplorerClass extends Component {
                 charts: charts
             };
         };
+        this.onPortalCreation = (newPortalLocation) => {
+            console.log('onPortalCreation', newPortalLocation);
+        };
         this.switchViewpoint = (viewpointname, seriesref) => {
             let userselections = this.state.userselections;
             let chartmatrix = this.state.chartmatrix;
@@ -132,7 +136,7 @@ class ExplorerClass extends Component {
                 nodeconfig = matrixseries[cellptr];
                 let nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
-                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, this.setState.bind(this), chartmatrix);
+                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, this.setState.bind(this), chartmatrix, this.onPortalCreation);
                     if (chartParmsObj.isError) {
                         matrixseries.splice(cellptr);
                         if (cellptr > 0) {
@@ -168,7 +172,7 @@ class ExplorerClass extends Component {
             let nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
             let oldChartType = nodeConfig.charts[portalIndex].charttype;
             nodeConfig.charts[portalIndex].charttype = chartType;
-            let chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, this.state.userselections, this.props.budgetdata, this.setState.bind(this), chartmatrix);
+            let chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, this.state.userselections, this.props.budgetdata, this.setState.bind(this), chartmatrix, this.onPortalCreation);
             if (!chartParmsObj.isError) {
                 nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.charts[portalIndex].chartCode =
@@ -301,7 +305,10 @@ class ExplorerClass extends Component {
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"
-        }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "people"))), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, drilldowncharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
+        }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "people"))), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
+            this.branchScrollBlocks[constants_1.ChartSeries.DrillDown] = node;
+            console.log(this.branchScrollBlocks);
+        }, style: { overflow: "scroll" }}, drilldowncharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
         let comparelist = explorer.state.chartmatrix[constants_1.ChartSeries.Compare];
         let comparecharts = explorer.getCharts(comparelist, constants_1.ChartSeries.Compare);
         let comparesegment = React.createElement(Card, {initiallyExpanded: false}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Compare"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, comparecharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));

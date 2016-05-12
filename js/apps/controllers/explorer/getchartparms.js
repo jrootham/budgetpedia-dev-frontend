@@ -2,7 +2,7 @@
 var format = require('format-number');
 const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
-let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix) => {
+let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix, onPortalCreation) => {
     let chartConfig = nodeConfig.charts[chartIndex];
     let sortedlist = 'SortedComponents';
     let portalcharttype = chartConfig.portalcharttype;
@@ -120,7 +120,7 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
                     let chart = Chart.chart;
                     let selection = chart.getSelection();
                     let context = { portalchartlocation: configLocation, Chart: Chart, selection: selection, err: err };
-                    onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix);
+                    onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation);
                 };
             })(configlocation)
         }
@@ -177,7 +177,7 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
     return chartParmsObj;
 };
 exports.getChartParms = getChartParms;
-let onChartComponentSelection = (context, userselections, budgetdata, setState, chartmatrix) => {
+let onChartComponentSelection = (context, userselections, budgetdata, setState, chartmatrix, onPortalCreation) => {
     let portalChartIndex = context.portalchartlocation.portalindex;
     let selection = context.selection[0];
     let selectionrow;
@@ -261,7 +261,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
     let chartParmsObj = null;
     let isError = false;
     for (newnodeindex in newnodeconfig.charts) {
-        chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix);
+        chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix, onPortalCreation);
         if (chartParmsObj.isError) {
             isError = true;
             break;
@@ -284,6 +284,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
     nodeconfig.charts[portalChartIndex].chart = chart;
     nodeconfig.charts[portalChartIndex].Chart = context.Chart;
     updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
+    onPortalCreation(newnodeconfig.matrixlocation);
 };
 let getNodeDatasets = (viewpointindex, path, budgetdata) => {
     let node = budgetdata.Viewpoints[viewpointindex];

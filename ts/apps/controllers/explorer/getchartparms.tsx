@@ -27,7 +27,8 @@ import { ChartTypeCodes } from '../../constants'
 
 let getChartParms = (
     nodeConfig: BudgetNodeConfig, chartIndex:number,
-    userselections, budgetdata, setState, chartmatrix):ChartParmsObj => {
+    userselections, budgetdata, setState, chartmatrix, onPortalCreation:Function):ChartParmsObj => {
+
     let chartConfig: NodeChartConfig = nodeConfig.charts[chartIndex]
 
     let sortedlist = 'SortedComponents'
@@ -198,7 +199,7 @@ let getChartParms = (
                     let selection = chart.getSelection()
                     let context: ChartSelectionContext = { portalchartlocation: configLocation, Chart, selection, err }
 
-                    onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix)
+                    onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation)
                 }
             })(configlocation)
         }
@@ -281,7 +282,7 @@ let getChartParms = (
 // on selection, makes a child with the same portalCharts offset
 // TODO: create chile which appropriately sets up correct set of child charts
 let onChartComponentSelection = (
-        context: ChartSelectionContext, userselections, budgetdata, setState, chartmatrix) => {
+        context: ChartSelectionContext, userselections, budgetdata, setState, chartmatrix, onPortalCreation:Function) => {
 
     let portalChartIndex = context.portalchartlocation.portalindex
 
@@ -397,7 +398,7 @@ let onChartComponentSelection = (
     let isError = false
     for (newnodeindex in newnodeconfig.charts) {
          chartParmsObj = getChartParms(
-             newnodeconfig, newnodeindex,userselections, budgetdata, setState, chartmatrix)
+             newnodeconfig, newnodeindex,userselections, budgetdata, setState, chartmatrix, onPortalCreation)
         if (chartParmsObj.isError) {
             isError = true
             break
@@ -424,6 +425,7 @@ let onChartComponentSelection = (
     nodeconfig.charts[portalChartIndex].Chart = context.Chart
 
     updateChartSelections(chartmatrix, matrixrow)
+    onPortalCreation(newnodeconfig.matrixlocation)
 
 }
 

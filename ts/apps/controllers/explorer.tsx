@@ -85,6 +85,8 @@ class ExplorerClass extends Component< any, any > {
             inflationadjusted:true,
         }
     }
+
+    branchScrollBlocks = []
     
     // initialize once - create root drilldown and compare series
     componentDidMount = () => {
@@ -117,7 +119,7 @@ class ExplorerClass extends Component< any, any > {
         for (drilldownindex in drilldownnodeconfig.charts) {
             chartParmsObj = getChartParms(
                 drilldownnodeconfig, drilldownindex,
-                userselections, budgetdata, this.setState.bind(this), chartmatrix)
+                userselections, budgetdata, this.setState.bind(this), chartmatrix, this.onPortalCreation)
 
             if (!chartParmsObj.isError) {
 
@@ -198,6 +200,10 @@ class ExplorerClass extends Component< any, any > {
 
     // ============================================================
     // ---------------------[ CONTROL RESPONSES ]------------------
+    onPortalCreation = (newPortalLocation:MatrixLocation) => {
+        console.log('onPortalCreation',newPortalLocation)
+        // get scrollWidth, scrollLeft, clientWidth, subtract 500 for rightmost div
+    }
 
     switchViewpoint = (viewpointname, seriesref) => {
 
@@ -243,7 +249,7 @@ class ExplorerClass extends Component< any, any > {
             let nodechartindex:any = null
             for (nodechartindex in nodeconfig.charts) {
                 chartParmsObj = getChartParms(nodeconfig, nodechartindex,
-                    userselections, budgetdata, this.setState.bind(this), chartmatrix)
+                    userselections, budgetdata, this.setState.bind(this), chartmatrix, this.onPortalCreation)
                 if (chartParmsObj.isError) {
                     matrixseries.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
@@ -287,7 +293,8 @@ class ExplorerClass extends Component< any, any > {
             this.state.userselections, 
             this.props.budgetdata, 
             this.setState.bind(this), 
-            chartmatrix)
+            chartmatrix,
+            this.onPortalCreation)
         if (!chartParmsObj.isError) {
             nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms
             nodeConfig.charts[portalIndex].chartCode = 
@@ -632,7 +639,10 @@ class ExplorerClass extends Component< any, any > {
                 </div>
 
                 <div style={{ whiteSpace: "nowrap" }}>
-                    <div style={{ overflow: "scroll" }}>
+                    <div ref={node =>{
+                        this.branchScrollBlocks[ChartSeries.DrillDown] = node
+                        console.log(this.branchScrollBlocks)
+                    }} style={{ overflow: "scroll" }}>
 
                         { drilldowncharts }
 

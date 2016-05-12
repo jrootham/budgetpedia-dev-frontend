@@ -9956,6 +9956,7 @@ var ExplorerClass = function (_Component) {
                 inflationadjusted: true
             }
         };
+        _this.branchScrollBlocks = [];
         _this.componentDidMount = function () {
             _this.initializeChartSeries();
         };
@@ -9970,7 +9971,7 @@ var ExplorerClass = function (_Component) {
             var drilldownnodeconfig = _this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             var drilldownindex = undefined;
             for (drilldownindex in drilldownnodeconfig.charts) {
-                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix);
+                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation);
                 if (!chartParmsObj.isError) {
                     drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                     drilldownnodeconfig.charts[drilldownindex].chartCode = constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
@@ -10041,6 +10042,9 @@ var ExplorerClass = function (_Component) {
                 charts: charts
             };
         };
+        _this.onPortalCreation = function (newPortalLocation) {
+            console.log('onPortalCreation', newPortalLocation);
+        };
         _this.switchViewpoint = function (viewpointname, seriesref) {
             var userselections = _this.state.userselections;
             var chartmatrix = _this.state.chartmatrix;
@@ -10073,7 +10077,7 @@ var ExplorerClass = function (_Component) {
                 nodeconfig = matrixseries[cellptr];
                 var nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
-                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix);
+                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation);
                     if (chartParmsObj.isError) {
                         matrixseries.splice(cellptr);
                         if (cellptr > 0) {
@@ -10107,7 +10111,7 @@ var ExplorerClass = function (_Component) {
             var nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
             var oldChartType = nodeConfig.charts[portalIndex].charttype;
             nodeConfig.charts[portalIndex].charttype = chartType;
-            var chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, _this.state.userselections, _this.props.budgetdata, _this.setState.bind(_this), chartmatrix);
+            var chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, _this.state.userselections, _this.props.budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation);
             if (!chartParmsObj.isError) {
                 nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.charts[portalIndex].chartCode = constants_2.ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType];
@@ -10232,7 +10236,10 @@ var ExplorerClass = function (_Component) {
                 }, style: {
                     backgroundColor: this.state.userselections.dataseries == 'BudgetStaffing' ? "rgba(144,238,144,0.5)" : 'transparent',
                     borderRadius: "50%"
-                } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
+                } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
+                    _this2.branchScrollBlocks[constants_1.ChartSeries.DrillDown] = node;
+                    console.log(_this2.branchScrollBlocks);
+                }, style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
             var comparelist = explorer.state.chartmatrix[constants_1.ChartSeries.Compare];
             var comparecharts = explorer.getCharts(comparelist, constants_1.ChartSeries.Compare);
             var comparesegment = React.createElement(Card, { initiallyExpanded: false }, React.createElement(CardTitle, { actAsExpander: true, showExpandableButton: true }, "Compare"), React.createElement(CardText, { expandable: true }, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { style: { overflow: "scroll" } }, comparecharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
@@ -10262,7 +10269,7 @@ exports.Explorer = Explorer;
 var format = require('format-number');
 var updatechartselections_1 = require('./updatechartselections');
 var constants_1 = require('../../constants');
-var getChartParms = function getChartParms(nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix) {
+var getChartParms = function getChartParms(nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix, onPortalCreation) {
     var chartConfig = nodeConfig.charts[chartIndex];
     var sortedlist = 'SortedComponents';
     var portalcharttype = chartConfig.portalcharttype;
@@ -10384,7 +10391,7 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
                 var chart = Chart.chart;
                 var selection = chart.getSelection();
                 var context = { portalchartlocation: configLocation, Chart: Chart, selection: selection, err: err };
-                onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix);
+                onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation);
             };
         }(configlocation)
     }];
@@ -10428,7 +10435,7 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
     return chartParmsObj;
 };
 exports.getChartParms = getChartParms;
-var onChartComponentSelection = function onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix) {
+var onChartComponentSelection = function onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation) {
     var portalChartIndex = context.portalchartlocation.portalindex;
     var selection = context.selection[0];
     var selectionrow = undefined;
@@ -10537,7 +10544,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
     var chartParmsObj = null;
     var isError = false;
     for (newnodeindex in newnodeconfig.charts) {
-        chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix);
+        chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix, onPortalCreation);
         if (chartParmsObj.isError) {
             isError = true;
             break;
@@ -10559,6 +10566,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
     nodeconfig.charts[portalChartIndex].chart = chart;
     nodeconfig.charts[portalChartIndex].Chart = context.Chart;
     updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
+    onPortalCreation(newnodeconfig.matrixlocation);
 };
 var getNodeDatasets = function getNodeDatasets(viewpointindex, path, budgetdata) {
     var node = budgetdata.Viewpoints[viewpointindex];
