@@ -40,7 +40,6 @@ class ExplorerClass extends Component {
         this.workingStatus = status => {
             if (status) {
                 this.props.dispatch(Actions.showWaitingMessage());
-                this.forceUpdate();
             }
             else {
                 setTimeout(() => {

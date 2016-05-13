@@ -381,7 +381,8 @@ class MainBarClass extends React.Component<any, any> {
                             }
                             ><div style={{
                                 display: "inline-block", color: "green",
-                                backgroundColor: "orange",
+                                backgroundColor: "beige",
+                                fontSize:"12px",
                                 padding: "3px",
                                 border: "1px solid silver",
                                 borderRadius: "10%"

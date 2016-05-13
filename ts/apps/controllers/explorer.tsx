@@ -103,7 +103,7 @@ class ExplorerClass extends Component< any, any > {
     workingStatus = status => {
         if (status) {
             this.props.dispatch(Actions.showWaitingMessage())
-            this.forceUpdate()
+            // this.forceUpdate()
         } else {
             setTimeout(() => {
                 this.props.dispatch(Actions.hideWaitingMessage())

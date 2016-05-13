@@ -9964,7 +9964,6 @@ var ExplorerClass = function (_Component) {
         _this.workingStatus = function (status) {
             if (status) {
                 _this.props.dispatch(Actions.showWaitingMessage());
-                _this.forceUpdate();
             } else {
                 setTimeout(function () {
                     _this.props.dispatch(Actions.hideWaitingMessage());
@@ -11695,7 +11694,8 @@ var MainBarClass = function (_React$Component) {
                     width: "100%"
                 } }, React.createElement("div", { style: {
                     display: "inline-block", color: "green",
-                    backgroundColor: "orange",
+                    backgroundColor: "beige",
+                    fontSize: "12px",
                     padding: "3px",
                     border: "1px solid silver",
                     borderRadius: "10%"
