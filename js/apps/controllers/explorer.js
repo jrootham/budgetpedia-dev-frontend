@@ -5,16 +5,11 @@ const react_redux_1 = require('react-redux');
 const Card = require('material-ui/lib/card/card');
 const CardTitle = require('material-ui/lib/card/card-title');
 const CardText = require('material-ui/lib/card/card-text');
-const RadioButton = require('material-ui/lib/radio-button');
-const RadioButtonGroup = require('material-ui/lib/radio-button-group');
 const FontIcon = require('material-ui/lib/font-icon');
 const IconButton = require('material-ui/lib/icon-button');
-const Divider = require('material-ui/lib/divider');
-const Checkbox = require('material-ui/lib/checkbox');
-const RaisedButton = require('material-ui/lib/raised-button');
-const ReactSlider = require('react-slider');
 const DropDownMenu = require('material-ui/lib/drop-down-menu');
 const MenuItem = require('material-ui/lib/menus/menu-item');
+const Dialog = require('material-ui/lib/dialog');
 const explorerchart_1 = require('../components/explorerchart');
 const constants_1 = require('../constants');
 const constants_2 = require('../constants');
@@ -28,6 +23,7 @@ class ExplorerClass extends Component {
             chartmatrix: [[], []],
             yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] },
             yearscope: "one",
+            dialogopen: false,
             userselections: {
                 latestyear: 2015,
                 viewpoint: "FUNCTIONAL",
@@ -39,6 +35,16 @@ class ExplorerClass extends Component {
         this.branchScrollBlocks = [];
         this.componentDidMount = () => {
             this.initializeChartSeries();
+        };
+        this.handleDialogOpen = () => {
+            this.setState({
+                dialogopen: true
+            });
+        };
+        this.handleDialogClose = () => {
+            this.setState({
+                dialogopen: false
+            });
         };
         this.initializeChartSeries = () => {
             let userselections = this.state.userselections, chartmatrix = this.state.chartmatrix;
@@ -292,28 +298,18 @@ class ExplorerClass extends Component {
     }
     render() {
         let explorer = this;
-        let singleslider = (explorer.state.yearscope == 'one') ?
-            React.createElement(ReactSlider, {className: "horizontal-slider", defaultValue: explorer.state.yearslider.singlevalue, min: 2003, max: 2016, onChange: (value) => {
-                explorer.setState({
-                    yearslider: Object.assign(explorer.state.yearslider, {
-                        singlevalue: [value]
-                    })
-                });
-            }}, React.createElement("div", null, explorer.state.yearslider.singlevalue[0])) : '';
-        let doubleslider = (explorer.state.yearscope != 'one') ?
-            React.createElement(ReactSlider, {className: "horizontal-slider", defaultValue: explorer.state.yearslider.doublevalue, min: 2003, max: 2016, withBars: (explorer.state.yearscope == 'all') ? true : false, onChange: (value) => {
-                explorer.setState({
-                    yearslider: Object.assign(explorer.state.yearslider, {
-                        doublevalue: value
-                    })
-                });
-            }}, React.createElement("div", null, explorer.state.yearslider.doublevalue[0]), React.createElement("div", null, explorer.state.yearslider.doublevalue[1])) : '';
-        let dashboardsegment = React.createElement(Card, {initiallyExpanded: false}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Dashboard"), React.createElement(CardText, {expandable: true}, React.createElement("div", {style: { fontStyle: 'italic' }}, " These dashboard controls are not yet functional "), React.createElement(Divider, null), React.createElement(Checkbox, {label: "Inflation adjusted", defaultChecked: true}), React.createElement(Divider, null), React.createElement("div", {style: { display: 'inline-block', verticalAlign: "bottom", height: "24px", marginRight: "24px" }}, "Years:"), React.createElement(RadioButtonGroup, {style: { display: 'inline-block' }, name: "yearscope", defaultSelected: explorer.state.yearscope, onChange: (ev, selection) => {
-            explorer.setState({ yearscope: selection });
-        }}, React.createElement(RadioButton, {value: "one", label: "One", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "two", label: "Two (side-by-side)", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }}), React.createElement(RadioButton, {value: "all", label: "All (timelines)", iconStyle: { marginRight: "4px" }, labelStyle: { width: "auto", marginRight: "24px" }, style: { display: 'inline-block', width: 'auto' }})), singleslider, doubleslider, React.createElement("div", {style: { display: (explorer.state.yearscope == 'all') ? 'inline' : 'none' }}, React.createElement(Checkbox, {label: "Year-over-year change, rather than actuals", defaultChecked: false})), React.createElement(Divider, null), React.createElement(RaisedButton, {style: { marginRight: "24px" }, type: "button", label: "Download"}), React.createElement(RaisedButton, {type: "button", label: "Reset"})));
+        let dialogbox = React.createElement(Dialog, {title: "Budget Explorer Help", modal: false, open: this.state.dialogopen, onRequestClose: this.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton, {style: {
+            top: 0,
+            right: 0,
+            padding: 0,
+            height: "36px",
+            width: "36px",
+            position: "absolute",
+            zIndex: 2,
+        }, onTouchTap: this.handleDialogClose}, React.createElement(FontIcon, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
         let drilldownlist = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
         let drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
-        let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: false, showExpandableButton: false}, "Budget Explorer"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "In the charts below, Viewpoints include:"), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines Agencies and Divisions into groups according to the nature of the services delivered (this is the default)"), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents)"), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column (in the \"By Programs\" charts) to drill down.", React.createElement(IconButton, {tooltip: "help", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon, {className: "material-icons"}, "help_outline"))), React.createElement("div", {style: {
+        let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: false, showExpandableButton: false}, "Budget Explorer"), React.createElement(CardText, {expandable: true}, React.createElement("p", {style: { marginTop: 0 }}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: this.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.handleDialogOpen}, React.createElement(FontIcon, {className: "material-icons"}, "help_outline"))), React.createElement("div", {style: {
             padding: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu, {value: this.state.userselections.viewpoint, style: {}, onChange: (e, index, value) => {
             this.switchViewpoint(value, constants_1.ChartSeries.DrillDown);
         }}, React.createElement(MenuItem, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton, {tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: e => {
@@ -340,13 +336,7 @@ class ExplorerClass extends Component {
         }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "people"))), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             this.branchScrollBlocks[constants_1.ChartSeries.DrillDown] = node;
         }, style: { overflow: "scroll" }}, drilldowncharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
-        let comparelist = explorer.state.chartmatrix[constants_1.ChartSeries.Compare];
-        let comparecharts = explorer.getCharts(comparelist, constants_1.ChartSeries.Compare);
-        let comparesegment = React.createElement(Card, {initiallyExpanded: false}, React.createElement(CardTitle, {actAsExpander: true, showExpandableButton: true}, "Compare"), React.createElement(CardText, {expandable: true}, React.createElement("p", null, "Click or tap on any column to drill down"), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {style: { overflow: "scroll" }}, comparecharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
-        let differencessegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Show differences"));
-        let contextsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Context"));
-        let buildsegment = React.createElement(Card, null, React.createElement(CardTitle, null, "Build"));
-        return React.createElement("div", null, drilldownsegment);
+        return React.createElement("div", null, dialogbox, drilldownsegment);
     }
 }
 let mapStateToProps = (state) => {

@@ -39,6 +39,7 @@ import RaisedButton = require('material-ui/lib/raised-button')
 import ReactSlider = require('react-slider')
 import DropDownMenu = require('material-ui/lib/drop-down-menu')
 import MenuItem = require('material-ui/lib/menus/menu-item')
+import Dialog = require('material-ui/lib/dialog')
 
 import { ExplorerChart } from '../components/explorerchart'
 import { ChartSeries } from '../constants'
@@ -77,6 +78,7 @@ class ExplorerClass extends Component< any, any > {
         chartmatrix: [ [], [] ], // DrillDown, Compare (Later: Differences, Context, Build)
         yearslider: {singlevalue:[2015],doublevalue:[2005,2015]},
         yearscope:"one",
+        dialogopen:false,
         userselections:{
             latestyear:2015,
             viewpoint:"FUNCTIONAL",
@@ -93,6 +95,18 @@ class ExplorerClass extends Component< any, any > {
 
         this.initializeChartSeries()
 
+    }
+
+    handleDialogOpen = () => {
+        this.setState({
+            dialogopen:true
+        })
+    }
+
+    handleDialogClose = () => {
+        this.setState({
+            dialogopen: false
+        })
     }
 
     initializeChartSeries = () => {
@@ -200,7 +214,7 @@ class ExplorerClass extends Component< any, any > {
 
     // ============================================================
     // ---------------------[ CONTROL RESPONSES ]------------------
-    // TODO: user requestAnimationFrame 
+    // TODO: use requestAnimationFrame 
     //     https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
     
     // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
@@ -453,9 +467,60 @@ class ExplorerClass extends Component< any, any > {
 
         let explorer = this
 
+
+        let dialogbox =  
+            <Dialog
+                title = "Budget Explorer Help"
+                modal = { false}
+                open = { this.state.dialogopen }
+                onRequestClose = { this.handleDialogClose }
+                autoScrollBodyContent
+            >
+                <IconButton
+                    style={{
+                        top: 0,
+                        right: 0,
+                        padding: 0,
+                        height: "36px",
+                        width: "36px",
+                        position: "absolute",
+                        zIndex: 2,
+                    }}
+                    onTouchTap={ this.handleDialogClose } >
+
+                    <FontIcon
+                        className="material-icons"
+                        style = {{ cursor: "pointer" }} >
+
+                        close
+
+                    </FontIcon>
+
+                </IconButton>
+
+                <p>In the explorer charts, Viewpoints include: </p>
+                <dl>
+                    <dt><strong>Functional</strong></dt>
+                    <dd>combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) </dd>
+                    <dt><strong>Structural</strong></dt>
+                    <dd>more traditional: separates Agencies from Divisions; groupings are closer to those found
+                        in City annual Budget Summaries</dd>
+                </dl>
+                <p>Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) </p>
+                <p>This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal
+                </p>
+
+                <p>
+                    Click or tap on any column in the "By Programs" charts to drill-down. Other charts do not 
+                    currently support drill-down.
+                </p>
+
+            </Dialog >
+
+
         // -----------[ DASHBOARD SEGMENT]-------------
 
-        let singleslider = (explorer.state.yearscope == 'one')?
+/*        let singleslider = (explorer.state.yearscope == 'one')?
             <ReactSlider 
                 className="horizontal-slider" 
                 defaultValue={explorer.state.yearslider.singlevalue} 
@@ -558,7 +623,7 @@ class ExplorerClass extends Component< any, any > {
             </CardText>
 
         </Card>
-
+*/
         // -----------[ DRILLDOWN SEGMENT]-------------
 
         let drilldownlist = explorer.state.chartmatrix[ChartSeries.DrillDown]
@@ -578,20 +643,14 @@ class ExplorerClass extends Component< any, any > {
 
             <CardText expandable >
 
-                <p>In the charts below, Viewpoints include:</p>
-                <dl>
-                    <dt><strong>Functional</strong></dt>
-                    <dd>combines Agencies and Divisions into groups according to the nature of the services delivered (this is the default)</dd>
-                    <dt><strong>Structural</strong></dt>
-                    <dd>more traditional: separates Agencies from Divisions; groupings are closer to those found
-                        in City annual Budget Summaries</dd>
-                </dl>
-                <p>Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents)</p>
-                <p>This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal
-                </p>
-                <p>
-                    Click or tap on any column (in the "By Programs" charts) to drill down.
-                    <IconButton tooltip="help"tooltipPosition="top-center" disabled>
+                <p style={{marginTop:0}}>
+                    If you're new here, <a href="javascript:void(0)" 
+                        onTouchTap={this.handleDialogOpen}>
+                        read the help text</a> first.
+                    <IconButton tooltip="help"tooltipPosition="top-center"
+                        onTouchTap = {
+                            this.handleDialogOpen
+                        }>
                         <FontIcon className="material-icons">help_outline</FontIcon>
                     </IconButton>
                 </p>
@@ -692,7 +751,7 @@ class ExplorerClass extends Component< any, any > {
 
         // --------------[ COMPARE SEGMENT]-------------
 
-        let comparelist = explorer.state.chartmatrix[ChartSeries.Compare]
+/*        let comparelist = explorer.state.chartmatrix[ChartSeries.Compare]
 
         let comparecharts = explorer.getCharts(comparelist, ChartSeries.Compare)
 
@@ -749,9 +808,12 @@ class ExplorerClass extends Component< any, any > {
 
         </Card>
 
+*/
         // -----------[ COMBINE SEGMENTS ]---------------
 
         return <div>
+
+            { dialogbox }
 
             { drilldownsegment }
 
@@ -770,7 +832,6 @@ class ExplorerClass extends Component< any, any > {
     }
 
 }
-
 // ====================================================================================
 // ------------------------------[ INJECT DATA STORE ]---------------------------------
 
