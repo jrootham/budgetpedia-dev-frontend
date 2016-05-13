@@ -53,6 +53,18 @@ let maincolsreducer = (state = initialstate_1.initialstate.maincols, action) => 
 let maincols = redux_actions_1.handleActions({
     [Actions.SET_TILECOLS]: maincolsreducer,
 }, initialstate_1.initialstate.maincols);
+let workingmessagestate = (state = initialstate_1.initialstate.workingmessagestate, action) => {
+    switch (action.type) {
+        case Actions.SHOW_WORKING_MESSAGE: {
+            return true;
+        }
+        case Actions.HIDE_WORKING_MESSAGE: {
+            return false;
+        }
+        default:
+            return state;
+    }
+};
 let homepadding = (state = initialstate_1.initialstate.homepadding, action) => {
     return state;
 };
@@ -230,6 +242,7 @@ let mainReducerCore = redux_1.combineReducers({
     auth: auth,
     register: register,
     registerconfirm: registerconfirm,
+    workingmessagestate: workingmessagestate,
 });
 let mainReducer = (state, action) => {
     if (!flux_standard_action_1.isFSA(action)) {

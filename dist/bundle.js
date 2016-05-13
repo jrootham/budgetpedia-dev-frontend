@@ -9555,6 +9555,10 @@ exports.registerUser = function (profile) {
         });
     };
 };
+exports.SHOW_WORKING_MESSAGE = 'SHOW_WORKING_MESSAGE';
+exports.HIDE_WORKING_MESSAGE = 'HIDE_WORKING_MESSAGE';
+exports.showWaitingMessage = redux_actions_1.createAction(exports.SHOW_WORKING_MESSAGE);
+exports.hideWaitingMessage = redux_actions_1.createAction(exports.HIDE_WORKING_MESSAGE);
 exports.REGISTER_CONFIRM_REQUEST = 'REGISTER_CONFIRM_REQUEST';
 exports.REGISTER_CONFIRM_SUCCESS = 'REGISTER_CONFIRM_SUCCESS';
 exports.REGISTER_CONFIRM_FAILURE = 'REGISTER_CONFIRM_FAILURE';
@@ -9930,6 +9934,7 @@ var constants_2 = require('../constants');
 var setviewpointamounts_1 = require('./explorer/setviewpointamounts');
 var getchartparms_1 = require('./explorer/getchartparms');
 var updatechartselections_1 = require('./explorer/updatechartselections');
+var Actions = require('../../actions/actions');
 
 var ExplorerClass = function (_Component) {
     _inherits(ExplorerClass, _Component);
@@ -9956,6 +9961,16 @@ var ExplorerClass = function (_Component) {
         _this.componentDidMount = function () {
             _this.initializeChartSeries();
         };
+        _this.workingStatus = function (status) {
+            if (status) {
+                _this.props.dispatch(Actions.showWaitingMessage());
+                _this.forceUpdate();
+            } else {
+                setTimeout(function () {
+                    _this.props.dispatch(Actions.hideWaitingMessage());
+                }, 250);
+            }
+        };
         _this.handleDialogOpen = function () {
             _this.setState({
                 dialogopen: true
@@ -9977,7 +9992,7 @@ var ExplorerClass = function (_Component) {
             var drilldownnodeconfig = _this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             var drilldownindex = undefined;
             for (drilldownindex in drilldownnodeconfig.charts) {
-                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation);
+                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation, _this.workingStatus.bind(_this));
                 if (!chartParmsObj.isError) {
                     drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                     drilldownnodeconfig.charts[drilldownindex].chartCode = constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
@@ -10117,7 +10132,7 @@ var ExplorerClass = function (_Component) {
                 nodeconfig = matrixseries[cellptr];
                 var nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
-                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation);
+                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation, _this.workingStatus.bind(_this));
                     if (chartParmsObj.isError) {
                         matrixseries.splice(cellptr);
                         if (cellptr > 0) {
@@ -10151,7 +10166,7 @@ var ExplorerClass = function (_Component) {
             var nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
             var oldChartType = nodeConfig.charts[portalIndex].charttype;
             nodeConfig.charts[portalIndex].charttype = chartType;
-            var chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, _this.state.userselections, _this.props.budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation);
+            var chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, _this.state.userselections, _this.props.budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation, _this.workingStatus.bind(_this));
             if (!chartParmsObj.isError) {
                 nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.charts[portalIndex].chartCode = constants_2.ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType];
@@ -10292,13 +10307,13 @@ var mapStateToProps = function mapStateToProps(state) {
 var Explorer = react_redux_1.connect(mapStateToProps)(ExplorerClass);
 exports.Explorer = Explorer;
 
-},{"../components/explorerchart":6,"../constants":7,"./explorer/getchartparms":13,"./explorer/setviewpointamounts":14,"./explorer/updatechartselections":15,"material-ui/lib/card/card":150,"material-ui/lib/card/card-text":148,"material-ui/lib/card/card-title":149,"material-ui/lib/dialog":152,"material-ui/lib/drop-down-menu":154,"material-ui/lib/font-icon":159,"material-ui/lib/icon-button":162,"material-ui/lib/menus/menu-item":173,"react":436,"react-redux":246}],13:[function(require,module,exports){
+},{"../../actions/actions":5,"../components/explorerchart":6,"../constants":7,"./explorer/getchartparms":13,"./explorer/setviewpointamounts":14,"./explorer/updatechartselections":15,"material-ui/lib/card/card":150,"material-ui/lib/card/card-text":148,"material-ui/lib/card/card-title":149,"material-ui/lib/dialog":152,"material-ui/lib/drop-down-menu":154,"material-ui/lib/font-icon":159,"material-ui/lib/icon-button":162,"material-ui/lib/menus/menu-item":173,"react":436,"react-redux":246}],13:[function(require,module,exports){
 "use strict";
 
 var format = require('format-number');
 var updatechartselections_1 = require('./updatechartselections');
 var constants_1 = require('../../constants');
-var getChartParms = function getChartParms(nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix, onPortalCreation) {
+var getChartParms = function getChartParms(nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus) {
     var chartConfig = nodeConfig.charts[chartIndex];
     var sortedlist = 'SortedComponents';
     var portalcharttype = chartConfig.portalcharttype;
@@ -10420,7 +10435,7 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
                 var chart = Chart.chart;
                 var selection = chart.getSelection();
                 var context = { portalchartlocation: configLocation, Chart: Chart, selection: selection, err: err };
-                onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation);
+                onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus);
             };
         }(configlocation)
     }];
@@ -10464,7 +10479,7 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
     return chartParmsObj;
 };
 exports.getChartParms = getChartParms;
-var onChartComponentSelection = function onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation) {
+var onChartComponentSelection = function onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus) {
     var portalChartIndex = context.portalchartlocation.portalindex;
     var selection = context.selection[0];
     var selectionrow = undefined;
@@ -10519,83 +10534,87 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
-    var newrange = Object.assign({}, nodeconfig.yearscope);
-    var charttype = userselections.charttype;
-    var chartCode = constants_1.ChartTypeCodes[charttype];
-    var portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries];
-    var charts = [];
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+    workingStatus(true);
+    setTimeout(function () {
+        var newrange = Object.assign({}, nodeconfig.yearscope);
+        var charttype = userselections.charttype;
+        var chartCode = constants_1.ChartTypeCodes[charttype];
+        var portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries];
+        var charts = [];
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-    try {
-        for (var _iterator = portalcharts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var type = _step.value;
-
-            if (newnode.Contents == 'BASELINE' && type.Type == 'Categories') {
-                continue;
-            }
-            var chartconfig = {
-                charttype: charttype,
-                chartCode: chartCode
-            };
-            chartconfig.portalcharttype = type.Type;
-            charts.push(chartconfig);
-        }
-    } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-    } finally {
         try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-            }
-        } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
-            }
-        }
-    }
+            for (var _iterator = portalcharts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var type = _step.value;
 
-    var newnodeconfig = {
-        viewpoint: viewpoint,
-        dataseries: dataseries,
-        datapath: childdataroot,
-        matrixlocation: {
-            row: matrixrow,
-            column: matrixcolumn + 1
-        },
-        parentdata: parentdata,
-        yearscope: newrange,
-        charts: charts
-    };
-    var newnodeindex = null;
-    var chartParmsObj = null;
-    var isError = false;
-    for (newnodeindex in newnodeconfig.charts) {
-        chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix, onPortalCreation);
-        if (chartParmsObj.isError) {
-            isError = true;
-            break;
+                if (newnode.Contents == 'BASELINE' && type.Type == 'Categories') {
+                    continue;
+                }
+                var chartconfig = {
+                    charttype: charttype,
+                    chartCode: chartCode
+                };
+                chartconfig.portalcharttype = type.Type;
+                charts.push(chartconfig);
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
         }
-        newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms;
-        newnodeconfig.charts[newnodeindex].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[newnodeindex].charttype];
-    }
-    if (isError) {
+
+        var newnodeconfig = {
+            viewpoint: viewpoint,
+            dataseries: dataseries,
+            datapath: childdataroot,
+            matrixlocation: {
+                row: matrixrow,
+                column: matrixcolumn + 1
+            },
+            parentdata: parentdata,
+            yearscope: newrange,
+            charts: charts
+        };
+        var newnodeindex = null;
+        var chartParmsObj = null;
+        var isError = false;
+        for (newnodeindex in newnodeconfig.charts) {
+            chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus);
+            if (chartParmsObj.isError) {
+                isError = true;
+                break;
+            }
+            newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms;
+            newnodeconfig.charts[newnodeindex].chartCode = constants_1.ChartTypeCodes[newnodeconfig.charts[newnodeindex].charttype];
+        }
+        if (isError) {
+            updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
+            return;
+        }
+        newnodeconfig.datanode = chartParmsObj.datanode;
+        var newmatrixcolumn = matrixcolumn + 1;
+        chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;
+        setState({
+            chartmatrix: chartmatrix
+        });
+        nodeconfig.charts[portalChartIndex].chartselection = context.selection;
+        nodeconfig.charts[portalChartIndex].chart = chart;
+        nodeconfig.charts[portalChartIndex].Chart = context.Chart;
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
-        return;
-    }
-    newnodeconfig.datanode = chartParmsObj.datanode;
-    var newmatrixcolumn = matrixcolumn + 1;
-    chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;
-    setState({
-        chartmatrix: chartmatrix
+        onPortalCreation(newnodeconfig.matrixlocation);
+        workingStatus(false);
     });
-    nodeconfig.charts[portalChartIndex].chartselection = context.selection;
-    nodeconfig.charts[portalChartIndex].chart = chart;
-    nodeconfig.charts[portalChartIndex].Chart = context.Chart;
-    updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
-    onPortalCreation(newnodeconfig.matrixlocation);
 };
 var getNodeDatasets = function getNodeDatasets(viewpointindex, path, budgetdata) {
     var node = budgetdata.Viewpoints[viewpointindex];
@@ -11667,7 +11686,20 @@ var MainBarClass = function (_React$Component) {
                     padding: "3px",
                     color: theme.palette.alternateTextColor
                 } }, auth.isAuthenticated ? auth.profile.userhandle : appnavbar.username);
-            return React.createElement(AppBar, { onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated ? accountmenu : accounticon }, username, loginsidebar, menusidebar);
+            var workingmessagestate = this.props.workingmessagestate;
+            return React.createElement(AppBar, { onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated ? accountmenu : accounticon }, username, loginsidebar, menusidebar, workingmessagestate ? React.createElement("div", { style: {
+                    position: "absolute",
+                    top: "54px",
+                    left: 0,
+                    textAlign: "center",
+                    width: "100%"
+                } }, React.createElement("div", { style: {
+                    display: "inline-block", color: "green",
+                    backgroundColor: "orange",
+                    padding: "3px",
+                    border: "1px solid silver",
+                    borderRadius: "10%"
+                } }, "Working...")) : null);
         }
     }]);
 
@@ -11679,13 +11711,15 @@ function mapStateToProps(state) {
     var theme = state.theme;
     var auth = state.auth;
     var hometiles = state.hometiles;
+    var workingmessagestate = state.workingmessagestate;
 
     return {
         state: state,
         auth: auth,
         appnavbar: appnavbar,
         theme: theme,
-        hometiles: hometiles
+        hometiles: hometiles,
+        workingmessagestate: workingmessagestate
     };
 }
 var MainBar = react_redux_1.connect(mapStateToProps)(MainBarClass);
@@ -12076,95 +12110,6 @@ var system = {
 };
 var maincols = 2;
 var mainpadding = 0;
-var maintiles = [{
-    id: 6,
-    content: {
-        title: 'About Budget Commons',
-        body: '<p><em>Budget Commons</em> (this website) is a new, evolving initiative coming out of Toronto\'s \n        \t\tcivil society sector, specifically <a target="_blank" href="http://civictech.ca">Civic Tech \n        \t\tToronto</a>, in collaboration with <a target="_blank" href="http://betterbudget.ca">Better \n        \t\tBudget Toronto<a>, among others. The purpose is to <em>support informed debate about the \n        \t\tToronto Budget.</em></p>'
-    },
-    help: {
-        title: 'Project Background',
-        body: '<p>The <a href="http://civictech.ca/projects/#torontobudgetproject" target="_blank">\n        \t\tToronto Budget Project</a> started in July 2015. Deliberations and consultations\n        \t\tabout scope and direction continued until August of that year, and building of foundation\n        \t\telements of the website began in December.</p>'
-    },
-    index: 0,
-    route: 'about'
-}, {
-    id: 7,
-    content: {
-        title: 'The Budget Roadmap',
-        body: '<p><em>Under development.</em></p>\n        \t\t<p>The budget roadmap is a compilation of annual budget events that lead to the adoption of the\n        \t\tCity of Toronto Budget in February of each year. These events include:</p> \n        \t\t<ul>\n        \t\t<li>public events, some of which include public deputations</li> \n        \t\t<li>internal city events</li>\n        \t\t<li>councillor sponsored budget \'Town Halls\'</li>\n        \t\t<li>a participatory budget process</li>\n        \t\t<li>events hosted by civil society organizations</li>\n        \t\t</ul>'
-    },
-    help: {
-        title: 'About the Budget Roadmap',
-        body: '<p>In principle the budget roadmap could encompass regional councils, as well as city ridings,\n        \t\tinternal executive and staff consultations, and public committee meetings.The information  we \n        \t\thave is taken from a variety of sources, including interviews with City staff.</p>\n                <p>This is the first feature we\'re implementing because being the simplest, it will give us\n                a chance to build the website foundation that wil be used by all future features as well.</p>'
-    },
-    index: 1,
-    route: 'timeline'
-}, {
-    id: 1,
-    content: {
-        title: 'Deputation Helper',
-        body: '<p><em>In the planning stage.</em></p>\n        \t\t<p>The City of Toronto mandates receiving brief (typicallty 3-5 minute) deputations from city\n                residents, usually late in the budget process. But there as so many more ways to make your voice\n                heard! For this deputation helper, we\'re hoping to help with the problem of scheduling, such\n                that people don\'t have to wait much of the day to give their brief presentations. But we\'ll also\n                offer other assists to help people collaborate on voicing their opinions.</p>'
-    },
-    index: 2,
-    route: 'deputations'
-}, {
-    id: 9,
-    content: {
-        title: 'Budget Explorer',
-        body: '<p><em>To be developed after the deputation helper is underway.</em></p>\n                <p>The key to influencing the budget is understanding the budget, but that\'s a challenge with\n                such a large document. We\'re planning to apply interactive tools, better taxonomies (categories),\n                and lessons learned from excellent attempts elsewhere, to create a more individualized experience\n                to exploring the budget, and assembling information to support arguments.</p>'
-    },
-    index: 3,
-    route: 'explorer'
-}, {
-    id: 2,
-    content: {
-        title: 'Community Resources',
-        body: '<p><em>[content pending]</em></p>'
-    },
-    help: {
-        title: 'About Community Resources',
-        body: '<p><em>[content pending]</em></p>'
-    },
-    index: 4,
-    route: 'resources'
-}, {
-    id: 8,
-    content: {
-        title: 'Social Media',
-        body: '<p><em>[content pending]</em></p>'
-    },
-    help: {
-        title: 'About Social Media',
-        body: '<p><em>[content pending]</em></p>'
-    },
-    index: 5,
-    route: 'socialmedia'
-}, {
-    id: 11,
-    content: {
-        title: 'Newsletter',
-        body: '<p><em>[content pending]</em></p>'
-    },
-    index: 6,
-    route: 'newsletter'
-}, {
-    id: 10,
-    content: {
-        title: 'Join Us!',
-        body: '<p><em>[content pending]</em></p>'
-    },
-    index: 7,
-    route: 'joinus'
-}, {
-    id: 12,
-    content: {
-        title: 'Tell your story',
-        body: '<p><em>Under consideration</em></p>'
-    },
-    index: 7,
-    route: 'stories'
-}];
 var homecols = 2;
 var homepadding = 20;
 var hometiles = [{
@@ -12228,6 +12173,7 @@ var hometiles = [{
     index: 11,
     route: 'demos'
 }];
+var workingmessagestate = false;
 exports.initialstate = {
     maincols: maincols,
     mainpadding: mainpadding,
@@ -12239,7 +12185,8 @@ exports.initialstate = {
     theme: theme,
     colors: colors,
     system: system,
-    budgetdata: budgetdata
+    budgetdata: budgetdata,
+    workingmessagestate: workingmessagestate
 };
 
 },{"../../explorerprototypedata/2015budget.json":1,"material-ui/lib/styles/colors":193,"material-ui/lib/styles/raw-themes/light-raw-theme":197}],40:[function(require,module,exports){
@@ -12318,6 +12265,23 @@ var maincolsreducer = function maincolsreducer() {
     }
 };
 var maincols = redux_actions_1.handleActions(_defineProperty({}, Actions.SET_TILECOLS, maincolsreducer), initialstate_1.initialstate.maincols);
+var workingmessagestate = function workingmessagestate() {
+    var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.initialstate.workingmessagestate : arguments[0];
+    var action = arguments[1];
+
+    switch (action.type) {
+        case Actions.SHOW_WORKING_MESSAGE:
+            {
+                return true;
+            }
+        case Actions.HIDE_WORKING_MESSAGE:
+            {
+                return false;
+            }
+        default:
+            return state;
+    }
+};
 var homepadding = function homepadding() {
     var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.initialstate.homepadding : arguments[0];
     var action = arguments[1];
@@ -12522,7 +12486,8 @@ var mainReducerCore = redux_1.combineReducers({
     routing: react_router_redux_1.routerReducer,
     auth: auth,
     register: register,
-    registerconfirm: registerconfirm
+    registerconfirm: registerconfirm,
+    workingmessagestate: workingmessagestate
 });
 var mainReducer = function mainReducer(state, action) {
     if (!flux_standard_action_1.isFSA(action)) {

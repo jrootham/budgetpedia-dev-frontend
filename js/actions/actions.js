@@ -247,6 +247,10 @@ exports.registerUser = profile => {
         });
     };
 };
+exports.SHOW_WORKING_MESSAGE = 'SHOW_WORKING_MESSAGE';
+exports.HIDE_WORKING_MESSAGE = 'HIDE_WORKING_MESSAGE';
+exports.showWaitingMessage = redux_actions_1.createAction(exports.SHOW_WORKING_MESSAGE);
+exports.hideWaitingMessage = redux_actions_1.createAction(exports.HIDE_WORKING_MESSAGE);
 exports.REGISTER_CONFIRM_REQUEST = 'REGISTER_CONFIRM_REQUEST';
 exports.REGISTER_CONFIRM_SUCCESS = 'REGISTER_CONFIRM_SUCCESS';
 exports.REGISTER_CONFIRM_FAILURE = 'REGISTER_CONFIRM_FAILURE';

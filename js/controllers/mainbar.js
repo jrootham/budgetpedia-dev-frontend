@@ -131,19 +131,35 @@ class MainBarClass extends React.Component {
             padding: "3px",
             color: theme.palette.alternateTextColor,
         }}, auth.isAuthenticated ? auth.profile.userhandle : appnavbar.username);
+        let workingmessagestate = this.props.workingmessagestate;
         return (React.createElement(AppBar, {onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated
             ? accountmenu
-            : accounticon}, username, loginsidebar, menusidebar));
+            : accounticon}, username, loginsidebar, menusidebar, workingmessagestate
+            ? React.createElement("div", {style: {
+                position: "absolute",
+                top: "54px",
+                left: 0,
+                textAlign: "center",
+                width: "100%",
+            }}, React.createElement("div", {style: {
+                display: "inline-block", color: "green",
+                backgroundColor: "orange",
+                padding: "3px",
+                border: "1px solid silver",
+                borderRadius: "10%"
+            }}, "Working..."))
+            : null));
     }
 }
 function mapStateToProps(state) {
-    let { appnavbar, theme, auth, hometiles } = state;
+    let { appnavbar, theme, auth, hometiles, workingmessagestate } = state;
     return {
         state: state,
         auth: auth,
         appnavbar: appnavbar,
         theme: theme,
         hometiles: hometiles,
+        workingmessagestate: workingmessagestate,
     };
 }
 var MainBar = react_redux_1.connect(mapStateToProps)(MainBarClass);

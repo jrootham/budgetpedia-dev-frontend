@@ -48,6 +48,9 @@ import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 import { setViewpointAmounts } from './explorer/setviewpointamounts'
 import { getChartParms } from './explorer/getchartparms'
 import { updateChartSelections } from './explorer/updatechartselections'
+import * as Actions from '../../actions/actions'
+
+
 
 import {
     BudgetNodeConfig,
@@ -97,6 +100,18 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
+    workingStatus = status => {
+        if (status) {
+            this.props.dispatch(Actions.showWaitingMessage())
+            this.forceUpdate()
+        } else {
+            setTimeout(() => {
+                this.props.dispatch(Actions.hideWaitingMessage())
+            },250)
+        }
+
+    }
+
     handleDialogOpen = () => {
         this.setState({
             dialogopen:true
@@ -133,7 +148,8 @@ class ExplorerClass extends Component< any, any > {
         for (drilldownindex in drilldownnodeconfig.charts) {
             chartParmsObj = getChartParms(
                 drilldownnodeconfig, drilldownindex,
-                userselections, budgetdata, this.setState.bind(this), chartmatrix, this.onPortalCreation)
+                userselections, budgetdata, this.setState.bind(this), chartmatrix, 
+                this.onPortalCreation, this.workingStatus.bind(this))
 
             if (!chartParmsObj.isError) {
 
@@ -299,7 +315,8 @@ class ExplorerClass extends Component< any, any > {
             let nodechartindex:any = null
             for (nodechartindex in nodeconfig.charts) {
                 chartParmsObj = getChartParms(nodeconfig, nodechartindex,
-                    userselections, budgetdata, this.setState.bind(this), chartmatrix, this.onPortalCreation)
+                    userselections, budgetdata, this.setState.bind(this), 
+                    chartmatrix, this.onPortalCreation, this.workingStatus.bind(this))
                 if (chartParmsObj.isError) {
                     matrixseries.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
@@ -344,7 +361,7 @@ class ExplorerClass extends Component< any, any > {
             this.props.budgetdata, 
             this.setState.bind(this), 
             chartmatrix,
-            this.onPortalCreation)
+            this.onPortalCreation, this.workingStatus.bind(this))
         if (!chartParmsObj.isError) {
             nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms
             nodeConfig.charts[portalIndex].chartCode = 

@@ -346,6 +346,7 @@ class MainBarClass extends React.Component<any, any> {
             </div>
 
         // main components
+        let workingmessagestate = this.props.workingmessagestate
 
         return (
             <AppBar
@@ -366,14 +367,35 @@ class MainBarClass extends React.Component<any, any> {
 
                 { menusidebar }
 
-             </AppBar>
+                {
+                    workingmessagestate
+                        ? <div
+                            style={
+                                {
+                                    position: "absolute",
+                                    top: "54px",
+                                    left:0,
+                                    textAlign: "center",
+                                    width: "100%",
+                                }
+                            }
+                            ><div style={{
+                                display: "inline-block", color: "green",
+                                backgroundColor: "orange",
+                                padding: "3px",
+                                border: "1px solid silver",
+                                borderRadius: "10%"
+                            }}>Working...</div></div>
+                        : null
+                }
+            </AppBar>
         )
     } // render
 }
 
 function mapStateToProps(state) {
 
-    let { appnavbar, theme, auth, hometiles } = state
+    let { appnavbar, theme, auth, hometiles, workingmessagestate } = state
 
     return {
 
@@ -382,6 +404,7 @@ function mapStateToProps(state) {
         appnavbar,
         theme,
         hometiles,
+        workingmessagestate,
     }
 
 }

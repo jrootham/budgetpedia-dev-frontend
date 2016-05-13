@@ -27,7 +27,8 @@ import { ChartTypeCodes } from '../../constants'
 
 let getChartParms = (
     nodeConfig: BudgetNodeConfig, chartIndex:number,
-    userselections, budgetdata, setState, chartmatrix, onPortalCreation:Function):ChartParmsObj => {
+    userselections, budgetdata, setState, chartmatrix, 
+    onPortalCreation:Function, workingStatus:Function):ChartParmsObj => {
 
     let chartConfig: NodeChartConfig = nodeConfig.charts[chartIndex]
 
@@ -199,7 +200,8 @@ let getChartParms = (
                     let selection = chart.getSelection()
                     let context: ChartSelectionContext = { portalchartlocation: configLocation, Chart, selection, err }
 
-                    onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation)
+                    onChartComponentSelection(context, userselections, 
+                        budgetdata, setState, chartmatrix, onPortalCreation, workingStatus)
                 }
             })(configlocation)
         }
@@ -282,7 +284,8 @@ let getChartParms = (
 // on selection, makes a child with the same portalCharts offset
 // TODO: create chile which appropriately sets up correct set of child charts
 let onChartComponentSelection = (
-        context: ChartSelectionContext, userselections, budgetdata, setState, chartmatrix, onPortalCreation:Function) => {
+        context: ChartSelectionContext, userselections, budgetdata, 
+        setState, chartmatrix, onPortalCreation:Function, workingStatus:Function) => {
 
     let portalChartIndex = context.portalchartlocation.portalindex
 
@@ -362,71 +365,75 @@ let onChartComponentSelection = (
         updateChartSelections(chartmatrix, matrixrow)
         return
     }
+    workingStatus(true)
+    setTimeout(()=>{
 
-    let newrange = Object.assign({}, nodeconfig.yearscope)
-    let charttype = userselections.charttype
-    let chartCode = ChartTypeCodes[charttype]
-    let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries]
-    let charts = []
-    for (let type of portalcharts) {
-        if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
-            continue
+        let newrange = Object.assign({}, nodeconfig.yearscope)
+        let charttype = userselections.charttype
+        let chartCode = ChartTypeCodes[charttype]
+        let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries]
+        let charts = []
+        for (let type of portalcharts) {
+            if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
+                continue
+            }
+            let chartconfig: NodeChartConfig = {
+                charttype,
+                chartCode,
+            }
+            chartconfig.portalcharttype = type.Type
+            charts.push(chartconfig)
         }
-        let chartconfig: NodeChartConfig = {
-            charttype,
-            chartCode,
+
+        let newnodeconfig: BudgetNodeConfig = {
+            viewpoint,
+            dataseries,
+            datapath: childdataroot,
+            matrixlocation: {
+                row: matrixrow,
+                column: matrixcolumn + 1
+            },
+            parentdata: parentdata,
+            yearscope: newrange,
+            charts,
         }
-        chartconfig.portalcharttype = type.Type
-        charts.push(chartconfig)
-    }
 
-    let newnodeconfig: BudgetNodeConfig = {
-        viewpoint,
-        dataseries,
-        datapath: childdataroot,
-        matrixlocation: {
-            row: matrixrow,
-            column: matrixcolumn + 1
-        },
-        parentdata: parentdata,
-        yearscope: newrange,
-        charts,
-    }
-
-    let newnodeindex:any = null
-    let chartParmsObj: ChartParmsObj = null
-    let isError = false
-    for (newnodeindex in newnodeconfig.charts) {
-         chartParmsObj = getChartParms(
-             newnodeconfig, newnodeindex,userselections, budgetdata, setState, chartmatrix, onPortalCreation)
-        if (chartParmsObj.isError) {
-            isError = true
-            break
+        let newnodeindex:any = null
+        let chartParmsObj: ChartParmsObj = null
+        let isError = false
+        for (newnodeindex in newnodeconfig.charts) {
+             chartParmsObj = getChartParms(
+                 newnodeconfig, newnodeindex,userselections, budgetdata, setState, 
+                 chartmatrix, onPortalCreation, workingStatus)
+            if (chartParmsObj.isError) {
+                isError = true
+                break
+            }
+            newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms
+            newnodeconfig.charts[newnodeindex].chartCode = 
+                ChartTypeCodes[newnodeconfig.charts[newnodeindex].charttype]
         }
-        newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms
-        newnodeconfig.charts[newnodeindex].chartCode = 
-            ChartTypeCodes[newnodeconfig.charts[newnodeindex].charttype]
-    }
 
-    if (isError) {
+        if (isError) {
+            updateChartSelections(chartmatrix, matrixrow)
+            return
+        }
+        newnodeconfig.datanode = chartParmsObj.datanode
+        let newmatrixcolumn = matrixcolumn + 1
+        chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig
+
+        setState({
+            chartmatrix,
+        })
+
+        nodeconfig.charts[portalChartIndex].chartselection = context.selection
+        nodeconfig.charts[portalChartIndex].chart = chart
+        nodeconfig.charts[portalChartIndex].Chart = context.Chart
+
         updateChartSelections(chartmatrix, matrixrow)
-        return
-    }
-    newnodeconfig.datanode = chartParmsObj.datanode
-    let newmatrixcolumn = matrixcolumn + 1
-    chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig
-
-    setState({
-        chartmatrix,
+        onPortalCreation(newnodeconfig.matrixlocation)
+        workingStatus(false)
     })
-
-    nodeconfig.charts[portalChartIndex].chartselection = context.selection
-    nodeconfig.charts[portalChartIndex].chart = chart
-    nodeconfig.charts[portalChartIndex].Chart = context.Chart
-
-    updateChartSelections(chartmatrix, matrixrow)
-    onPortalCreation(newnodeconfig.matrixlocation)
-
 }
 
 let getNodeDatasets = (viewpointindex, path, budgetdata) => {

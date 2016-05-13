@@ -94,6 +94,19 @@ let maincols = handleActions({
     [Actions.SET_TILECOLS]: maincolsreducer,
 }, initialstate.maincols )
 
+let workingmessagestate = (state:any = initialstate.workingmessagestate, action) => {
+    switch (action.type) {
+        case Actions.SHOW_WORKING_MESSAGE: {
+            return true
+        }
+        case Actions.HIDE_WORKING_MESSAGE: {
+            return false
+        }
+        default:
+            return state
+    }
+}
+
 let homepadding = (state: any = initialstate.homepadding, action) => {
     return state
 }
@@ -356,6 +369,7 @@ let mainReducerCore = combineReducers(
         auth,
         register,
         registerconfirm,
+        workingmessagestate,
     }
 )
 

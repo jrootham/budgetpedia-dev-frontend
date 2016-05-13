@@ -64,7 +64,7 @@ let system = {
 
 let maincols: number = 2 // default
 let mainpadding: number = 0
-let maintiles: [Object] = [
+/*let maintiles: [Object] = [
 	{
 		id: 6,
 		content: {
@@ -192,7 +192,7 @@ let maintiles: [Object] = [
         route: 'stories',
     },
 ]
-
+*/
 let homecols: number = 2 // default
 let homepadding: number = 20
 
@@ -331,6 +331,8 @@ let hometiles: [Object] = [
     },
 ]
 
+let workingmessagestate = false
+
 export var initialstate = {
 	// maintiles,
 	maincols,
@@ -344,4 +346,5 @@ export var initialstate = {
 	colors,
 	system,
     budgetdata,
+    workingmessagestate,
 }

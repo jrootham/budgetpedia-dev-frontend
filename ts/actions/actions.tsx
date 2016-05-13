@@ -358,6 +358,19 @@ export const registerUser = profile => {
             })
     }
 }
+// ===============================================================
+// -------------[ WAITING MESSAGE STATE ]------------------------
+
+export const SHOW_WORKING_MESSAGE = 'SHOW_WORKING_MESSAGE'
+export const HIDE_WORKING_MESSAGE = 'HIDE_WORKING_MESSAGE'
+
+export let showWaitingMessage = createAction(
+        SHOW_WORKING_MESSAGE
+    )
+
+export let hideWaitingMessage = createAction(
+        HIDE_WORKING_MESSAGE
+    )
 
 //================================================================
 //------------- REGISTRATION CONFIRMATION MANAGEMENT -------------
