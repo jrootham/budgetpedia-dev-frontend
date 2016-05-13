@@ -58,16 +58,16 @@ let getChartParms = (
     vertlabel = itemseries.UnitsAlias
     if (units != 'FTE') {
         if (dataseriesname == 'BudgetExpenses')
-            vertlabel += ' (Expenses)'
+            vertlabel = 'Expenditures' + ' (' + vertlabel + ')'
         else
-            vertlabel += ' (Revenues)'
+            vertlabel = 'Revenues' + ' (' + vertlabel + ')'
     }
 
     // provide basis for error handling
     let isError = false
 
     // utility functions for number formatting
-    let thousandsformat = format({ prefix: "$", suffix: "T" })
+    let thousandsformat = format({ prefix: "$" })
     let rounded = format({ round: 0, integerSeparator: '' })
     let singlerounded = format({ round: 1, integerSeparator: '' })
     let staffrounded = format({ round: 1, integerSeparator: ',' })

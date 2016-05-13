@@ -15,12 +15,12 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
     vertlabel = itemseries.UnitsAlias;
     if (units != 'FTE') {
         if (dataseriesname == 'BudgetExpenses')
-            vertlabel += ' (Expenses)';
+            vertlabel = 'Expenditures' + ' (' + vertlabel + ')';
         else
-            vertlabel += ' (Revenues)';
+            vertlabel = 'Revenues' + ' (' + vertlabel + ')';
     }
     let isError = false;
-    let thousandsformat = format({ prefix: "$", suffix: "T" });
+    let thousandsformat = format({ prefix: "$" });
     let rounded = format({ round: 0, integerSeparator: '' });
     let singlerounded = format({ round: 1, integerSeparator: '' });
     let staffrounded = format({ round: 1, integerSeparator: ',' });

@@ -9,7 +9,7 @@
                 "Components": "Expenditure Categories"
             },
             "Units": "DOLLAR",
-            "UnitsAlias": "$Thousands",
+            "UnitsAlias": "$000's",
             "Components": "Expenditures",
             "Title": "2015 Council Approved Gross Operating Expenditures",
             "InflationAdjusted": true,
@@ -4150,7 +4150,7 @@
                 "Components": "Revenue Categories"
             },
             "Units": "DOLLAR",
-            "UnitsAlias": "$Thousands",
+            "UnitsAlias": "$000's",
             "Components": "Revenues",
             "Title": "2015 Council Approved Gross Operating Revenue",
             "InflationAdjusted": true,

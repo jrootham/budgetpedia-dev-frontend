@@ -10,7 +10,7 @@ module.exports={
                 "Components": "Expenditure Categories"
             },
             "Units": "DOLLAR",
-            "UnitsAlias": "$Thousands",
+            "UnitsAlias": "$000's",
             "Components": "Expenditures",
             "Title": "2015 Council Approved Gross Operating Expenditures",
             "InflationAdjusted": true,
@@ -4151,7 +4151,7 @@ module.exports={
                 "Components": "Revenue Categories"
             },
             "Units": "DOLLAR",
-            "UnitsAlias": "$Thousands",
+            "UnitsAlias": "$000's",
             "Components": "Revenues",
             "Title": "2015 Council Approved Gross Operating Revenue",
             "InflationAdjusted": true,
@@ -10183,7 +10183,11 @@ var ExplorerClass = function (_Component) {
             var userselections = _this.state.userselections;
             var budgetdata = _this.props.budgetdata;
             var portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
-            var portalseriesname = budgetdata.DataSeries[userselections.dataseries].Name;
+            var dataseries = budgetdata.DataSeries[userselections.dataseries];
+            var portalseriesname = dataseries.Name;
+            if (dataseries.Units == 'DOLLAR') {
+                portalseriesname += ' (' + dataseries.UnitsAlias + ')';
+            }
             var charts = matrixcolumn.map(function (nodeconfig, index) {
                 var portalcharts = [];
                 for (var chartindex in nodeconfig.charts) {
@@ -10312,10 +10316,10 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
         vertlabel = undefined;
     vertlabel = itemseries.UnitsAlias;
     if (units != 'FTE') {
-        if (dataseriesname == 'BudgetExpenses') vertlabel += ' (Expenses)';else vertlabel += ' (Revenues)';
+        if (dataseriesname == 'BudgetExpenses') vertlabel = 'Expenditures' + ' (' + vertlabel + ')';else vertlabel = 'Revenues' + ' (' + vertlabel + ')';
     }
     var isError = false;
-    var thousandsformat = format({ prefix: "$", suffix: "T" });
+    var thousandsformat = format({ prefix: "$" });
     var rounded = format({ round: 0, integerSeparator: '' });
     var singlerounded = format({ round: 1, integerSeparator: '' });
     var staffrounded = format({ round: 1, integerSeparator: ',' });

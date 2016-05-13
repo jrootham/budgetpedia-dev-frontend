@@ -245,7 +245,11 @@ class ExplorerClass extends Component {
             let userselections = this.state.userselections;
             let budgetdata = this.props.budgetdata;
             let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
-            let portalseriesname = budgetdata.DataSeries[userselections.dataseries].Name;
+            let dataseries = budgetdata.DataSeries[userselections.dataseries];
+            let portalseriesname = dataseries.Name;
+            if (dataseries.Units == 'DOLLAR') {
+                portalseriesname += ' (' + dataseries.UnitsAlias + ')';
+            }
             let charts = matrixcolumn.map((nodeconfig, index) => {
                 let portalcharts = [];
                 for (let chartindex in nodeconfig.charts) {
