@@ -101,8 +101,40 @@ class ExplorerClass extends Component {
                 charts: charts
             };
         };
+        this.easeOutCubic = t => {
+            const t1 = t - 1;
+            return t1 * t1 * t1 + 1;
+        };
         this.onPortalCreation = (newPortalLocation) => {
-            console.log('onPortalCreation', newPortalLocation);
+            let matrixrow = newPortalLocation.row;
+            let element = this.branchScrollBlocks[matrixrow];
+            if (!element) {
+                console.error('expected branch element not found in onPortalCreation', newPortalLocation);
+                return;
+            }
+            setTimeout(() => {
+                let scrollwidth = element.scrollWidth;
+                let scrollleft = element.scrollLeft;
+                let clientwidth = element.clientWidth;
+                let scrollright = scrollleft + clientwidth;
+                let targetright = scrollwidth - 500;
+                let adjustment = scrollright - targetright;
+                let frames = 60;
+                if (adjustment < 0) {
+                    let t = 1 / frames;
+                    let timeinterval = 1000 / frames;
+                    let counter = 0;
+                    let interval = setInterval(() => {
+                        counter++;
+                        let factor = this.easeOutCubic(counter * t);
+                        let scrollinterval = adjustment * factor;
+                        element.scrollLeft = scrollleft - scrollinterval;
+                        if (counter == frames) {
+                            clearInterval(interval);
+                        }
+                    }, timeinterval);
+                }
+            });
         };
         this.switchViewpoint = (viewpointname, seriesref) => {
             let userselections = this.state.userselections;
@@ -307,7 +339,6 @@ class ExplorerClass extends Component {
             borderRadius: "50%"
         }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "people"))), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             this.branchScrollBlocks[constants_1.ChartSeries.DrillDown] = node;
-            console.log(this.branchScrollBlocks);
         }, style: { overflow: "scroll" }}, drilldowncharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
         let comparelist = explorer.state.chartmatrix[constants_1.ChartSeries.Compare];
         let comparecharts = explorer.getCharts(comparelist, constants_1.ChartSeries.Compare);

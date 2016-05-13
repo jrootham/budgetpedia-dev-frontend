@@ -200,9 +200,42 @@ class ExplorerClass extends Component< any, any > {
 
     // ============================================================
     // ---------------------[ CONTROL RESPONSES ]------------------
+    // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
+    easeOutCubic = t => {
+        const t1 = t - 1;
+        return t1 * t1 * t1 + 1;
+    }    
     onPortalCreation = (newPortalLocation:MatrixLocation) => {
-        console.log('onPortalCreation',newPortalLocation)
-        // get scrollWidth, scrollLeft, clientWidth, subtract 500 for rightmost div
+        let matrixrow = newPortalLocation.row
+        let element:Element = this.branchScrollBlocks[matrixrow]
+        if (!element) {
+            console.error('expected branch element not found in onPortalCreation',newPortalLocation)
+            return
+        }
+        setTimeout(()=>{
+
+            let scrollwidth = element.scrollWidth
+            let scrollleft = element.scrollLeft
+            let clientwidth = element.clientWidth
+            let scrollright = scrollleft + clientwidth
+            let targetright = scrollwidth - 500
+            let adjustment = scrollright - targetright
+            let frames = 60
+            if (adjustment < 0) {
+                let t = 1/frames
+                let timeinterval = 1000 / frames
+                let counter = 0
+                let interval = setInterval(() => {
+                    counter++
+                    let factor = this.easeOutCubic(counter * t)
+                    let scrollinterval = adjustment * factor
+                    element.scrollLeft = scrollleft - scrollinterval
+                    if (counter == frames) {
+                        clearInterval(interval)
+                    }
+                }, timeinterval)
+            }
+        })
     }
 
     switchViewpoint = (viewpointname, seriesref) => {
@@ -641,7 +674,6 @@ class ExplorerClass extends Component< any, any > {
                 <div style={{ whiteSpace: "nowrap" }}>
                     <div ref={node =>{
                         this.branchScrollBlocks[ChartSeries.DrillDown] = node
-                        console.log(this.branchScrollBlocks)
                     }} style={{ overflow: "scroll" }}>
 
                         { drilldowncharts }

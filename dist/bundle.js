@@ -10042,8 +10042,42 @@ var ExplorerClass = function (_Component) {
                 charts: charts
             };
         };
+        _this.easeOutCubic = function (t) {
+            var t1 = t - 1;
+            return t1 * t1 * t1 + 1;
+        };
         _this.onPortalCreation = function (newPortalLocation) {
-            console.log('onPortalCreation', newPortalLocation);
+            var matrixrow = newPortalLocation.row;
+            var element = _this.branchScrollBlocks[matrixrow];
+            if (!element) {
+                console.error('expected branch element not found in onPortalCreation', newPortalLocation);
+                return;
+            }
+            setTimeout(function () {
+                var scrollwidth = element.scrollWidth;
+                var scrollleft = element.scrollLeft;
+                var clientwidth = element.clientWidth;
+                var scrollright = scrollleft + clientwidth;
+                var targetright = scrollwidth - 500;
+                var adjustment = scrollright - targetright;
+                var frames = 60;
+                if (adjustment < 0) {
+                    (function () {
+                        var t = 1 / frames;
+                        var timeinterval = 1000 / frames;
+                        var counter = 0;
+                        var interval = setInterval(function () {
+                            counter++;
+                            var factor = _this.easeOutCubic(counter * t);
+                            var scrollinterval = adjustment * factor;
+                            element.scrollLeft = scrollleft - scrollinterval;
+                            if (counter == frames) {
+                                clearInterval(interval);
+                            }
+                        }, timeinterval);
+                    })();
+                }
+            });
         };
         _this.switchViewpoint = function (viewpointname, seriesref) {
             var userselections = _this.state.userselections;
@@ -10238,7 +10272,6 @@ var ExplorerClass = function (_Component) {
                     borderRadius: "50%"
                 } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
                     _this2.branchScrollBlocks[constants_1.ChartSeries.DrillDown] = node;
-                    console.log(_this2.branchScrollBlocks);
                 }, style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
             var comparelist = explorer.state.chartmatrix[constants_1.ChartSeries.Compare];
             var comparecharts = explorer.getCharts(comparelist, constants_1.ChartSeries.Compare);
