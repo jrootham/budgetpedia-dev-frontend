@@ -200,6 +200,9 @@ class ExplorerClass extends Component< any, any > {
 
     // ============================================================
     // ---------------------[ CONTROL RESPONSES ]------------------
+    // TODO: user requestAnimationFrame 
+    //     https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+    
     // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
     easeOutCubic = t => {
         const t1 = t - 1;
@@ -220,9 +223,9 @@ class ExplorerClass extends Component< any, any > {
             let scrollright = scrollleft + clientwidth
             let targetright = scrollwidth - 500
             let adjustment = scrollright - targetright
-            let frames = 60
             if (adjustment < 0) {
-                let t = 1/frames
+                let frames = 60
+                let t = 1 / frames
                 let timeinterval = 1000 / frames
                 let counter = 0
                 let interval = setInterval(() => {
@@ -566,10 +569,10 @@ class ExplorerClass extends Component< any, any > {
         <Card initiallyExpanded >
 
             <CardTitle
-                actAsExpander
-                showExpandableButton >
+                actAsExpander={false}
+                showExpandableButton={false} >
 
-                Drill Down
+                Budget Explorer
 
             </CardTitle>
 
@@ -750,18 +753,19 @@ class ExplorerClass extends Component< any, any > {
 
         return <div>
 
-            { dashboardsegment }
-
             { drilldownsegment }
 
-            { comparesegment }
+{
+            // { dashboardsegment }
 
-            { differencessegment }
+            // { comparesegment }
 
-            { contextsegment }
+            // { differencessegment }
 
-            { buildsegment }
+            // { contextsegment }
 
+            // { buildsegment }
+}
         </div>
     }
 
