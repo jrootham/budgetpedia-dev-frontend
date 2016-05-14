@@ -10086,15 +10086,16 @@ var ExplorerClass = function (_Component) {
                         var t = 1 / frames;
                         var timeinterval = 1000 / frames;
                         var counter = 0;
-                        var interval = setInterval(function () {
+                        var tick = function tick() {
                             counter++;
                             var factor = _this.easeOutCubic(counter * t);
                             var scrollinterval = adjustment * factor;
                             element.scrollLeft = scrollleft - scrollinterval;
-                            if (counter == frames) {
-                                clearInterval(interval);
+                            if (counter < frames) {
+                                requestAnimationFrame(tick);
                             }
-                        }, timeinterval);
+                        };
+                        requestAnimationFrame(tick);
                     })();
                 }
             });

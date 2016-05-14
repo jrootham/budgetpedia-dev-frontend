@@ -100,6 +100,7 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
+    // callbacks
     workingStatus = status => {
         if (status) {
             this.props.dispatch(Actions.showWaitingMessage())
@@ -258,15 +259,25 @@ class ExplorerClass extends Component< any, any > {
                 let t = 1 / frames
                 let timeinterval = 1000 / frames
                 let counter = 0
-                let interval = setInterval(() => {
+                let tick = () => {
                     counter++
                     let factor = this.easeOutCubic(counter * t)
                     let scrollinterval = adjustment * factor
                     element.scrollLeft = scrollleft - scrollinterval
-                    if (counter == frames) {
-                        clearInterval(interval)
+                    if (counter < frames) {
+                        requestAnimationFrame(tick)
                     }
-                }, timeinterval)
+                }
+                requestAnimationFrame(tick)
+                // let interval = setInterval(() => {
+                //     counter++
+                //     let factor = this.easeOutCubic(counter * t)
+                //     let scrollinterval = adjustment * factor
+                //     element.scrollLeft = scrollleft - scrollinterval
+                //     if (counter == frames) {
+                //         clearInterval(interval)
+                //     }
+                // }, timeinterval)
             }
         })
     }
