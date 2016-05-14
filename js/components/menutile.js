@@ -12,7 +12,7 @@ class MenuTile extends React.Component {
     }
     render() {
         let tile = this;
-        return (React.createElement(MenuItem, {onTouchTap: tile.transitionTo, key: this.props.key, primaryText: this.props.primaryText, leftIcon: React.createElement("img", {src: this.props.image})}));
+        return (React.createElement(MenuItem, {onTouchTap: tile.transitionTo, key: this.props.key, primaryText: this.props.primaryText, leftIcon: React.createElement("img", {src: this.props.image}), disabled: this.props.disabled ? true : false}));
     }
 }
 exports.MenuTile = MenuTile;

@@ -16,6 +16,10 @@ export class AppTile extends React.Component<any, any> {
     transitionTo = (e) => {
         // if (e.target.tagName == 'A') return;
         // used exclusively for transition
+        if (this.props.content.disabled) {
+            // alert('this page not yet available')
+            return
+        }
         e.stopPropagation()
         e.preventDefault()
         var _this = this;
@@ -26,6 +30,19 @@ export class AppTile extends React.Component<any, any> {
 
         let tile = this
 
+        let wrapperstyle = null
+        if (this.props.content.disabled) {
+            wrapperstyle = {
+                opacity: 0.3,
+                filter: "alpha(opacity = 30)", /* msie */
+                backgroundColor: "#000",
+            }
+        } else {
+            wrapperstyle = {
+                pointerEvens:"none"
+            }
+        }
+
         return (
 
             <GridTile 
@@ -34,12 +51,14 @@ export class AppTile extends React.Component<any, any> {
                 onTouchTap={ tile.transitionTo }
                 key = {this.props.key}
                 title = {this.props.content.title}
-                subtitle = {this.props.content.subtitle}>
+                subtitle = {this.props.content.subtitle}
+                >
+                <div style={wrapperstyle}>
                 <div style={{position:"absolute",top:0,left:0,color:"silver",fontStyle:"italic",fontSize:"smaller"}} >
                 {this.props.content.category}</div>
-                <img src={this.props.content.image} style={{height:"120px"}}/>
+                <img src={this.props.content.image} style={{ height: "120px" }}/>
                 <div style={{ position: "abolute", height: "30px", bottom: 0, width: "100%" }}></div>
-                
+                </div>
             </GridTile>
 
         )

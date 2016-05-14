@@ -32,7 +32,8 @@ export class MenuTile extends React.Component<any, any> {
                 onTouchTap={ tile.transitionTo }
                 key = {this.props.key}
                 primaryText = {this.props.primaryText}
-                leftIcon = {<img src={this.props.image}/>}>
+                leftIcon = {<img src={this.props.image}/>}
+                disabled = {this.props.disabled?true:false}>
                 
             </MenuItem>
 

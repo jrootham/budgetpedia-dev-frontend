@@ -11255,6 +11255,9 @@ var AppTile = function (_React$Component) {
         var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(AppTile).call(this, props));
 
         _this2.transitionTo = function (e) {
+            if (_this2.props.content.disabled) {
+                return;
+            }
             e.stopPropagation();
             e.preventDefault();
             var _this = _this2;
@@ -11267,7 +11270,19 @@ var AppTile = function (_React$Component) {
         key: 'render',
         value: function render() {
             var tile = this;
-            return React.createElement(GridTile, { style: { textAlign: "center" }, onTouchTap: tile.transitionTo, key: this.props.key, title: this.props.content.title, subtitle: this.props.content.subtitle }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, color: "silver", fontStyle: "italic", fontSize: "smaller" } }, this.props.content.category), React.createElement("img", { src: this.props.content.image, style: { height: "120px" } }), React.createElement("div", { style: { position: "abolute", height: "30px", bottom: 0, width: "100%" } }));
+            var wrapperstyle = null;
+            if (this.props.content.disabled) {
+                wrapperstyle = {
+                    opacity: 0.3,
+                    filter: "alpha(opacity = 30)",
+                    backgroundColor: "#000"
+                };
+            } else {
+                wrapperstyle = {
+                    pointerEvens: "none"
+                };
+            }
+            return React.createElement(GridTile, { style: { textAlign: "center" }, onTouchTap: tile.transitionTo, key: this.props.key, title: this.props.content.title, subtitle: this.props.content.subtitle }, React.createElement("div", { style: wrapperstyle }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, color: "silver", fontStyle: "italic", fontSize: "smaller" } }, this.props.content.category), React.createElement("img", { src: this.props.content.image, style: { height: "120px" } }), React.createElement("div", { style: { position: "abolute", height: "30px", bottom: 0, width: "100%" } })));
         }
     }]);
 
@@ -11434,7 +11449,7 @@ var MenuTile = function (_React$Component) {
         key: 'render',
         value: function render() {
             var tile = this;
-            return React.createElement(MenuItem, { onTouchTap: tile.transitionTo, key: this.props.key, primaryText: this.props.primaryText, leftIcon: React.createElement("img", { src: this.props.image }) });
+            return React.createElement(MenuItem, { onTouchTap: tile.transitionTo, key: this.props.key, primaryText: this.props.primaryText, leftIcon: React.createElement("img", { src: this.props.image }), disabled: this.props.disabled ? true : false });
         }
     }]);
 
@@ -11740,7 +11755,8 @@ var MainBarClass = function (_React$Component) {
                 }, open: appbar.state.accountsidebaropen }, React.createElement(Card, { style: { margin: "5px" } }, closeicon, React.createElement(CardTitle, { title: "Member Sign In", style: { paddingBottom: 0 } }), loginform, registerprompt));
             var transitionToFunc = redux_1.compose(menutransition, this.props.dispatch, Actions.transitionTo);
             var menuitems = hometiles.map(function (menutile) {
-                return React.createElement(menutile_1.MenuTile, { transitionTo: transitionToFunc, key: menutile.id, primaryText: menutile.content.title, image: menutile.content.image, route: menutile.route });
+                console.log('menutile', menutile);
+                return React.createElement(menutile_1.MenuTile, { transitionTo: transitionToFunc, key: menutile.id, primaryText: menutile.content.title, image: menutile.content.image, route: menutile.route, disabled: menutile.content.disabled });
             });
             var menusidebar = React.createElement(LeftNav, { width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: function onRequestChange(open) {
                     return appbar.setState({ menusidebaropen: open });
@@ -12193,7 +12209,8 @@ var hometiles = [{
         title: 'About this Site',
         subtitle: 'History and people',
         image: '../../public/icons/ic_info_48px.svg',
-        category: 'information'
+        category: 'information',
+        disabled: true
     },
     index: 0,
     route: 'about'
@@ -12203,7 +12220,8 @@ var hometiles = [{
         title: 'Budget Roadmap',
         subtitle: 'About budget decisions',
         image: '../../public/icons/ic_map_48px.svg',
-        category: 'tools'
+        category: 'tools',
+        disabled: true
     },
     index: 1,
     route: 'timeline'
@@ -12223,7 +12241,8 @@ var hometiles = [{
         title: 'Activist Pathways',
         subtitle: 'How to make change',
         image: '../../public/icons/ic_directions_walk_48px.svg',
-        category: 'tools'
+        category: 'tools',
+        disabled: true
     },
     index: 4,
     route: 'pathways'
@@ -12233,7 +12252,8 @@ var hometiles = [{
         title: 'Join Us!',
         subtitle: 'Join our team',
         image: '../../public/icons/ic_group_48px.svg',
-        category: 'get involved'
+        category: 'get involved',
+        disabled: true
     },
     index: 9,
     route: 'joinus'
@@ -12243,7 +12263,8 @@ var hometiles = [{
         title: 'Get a demo',
         subtitle: 'Resources & training',
         image: '../../public/icons/ic_record_voice_over_48px.svg',
-        category: 'get involved'
+        category: 'get involved',
+        disabled: true
     },
     index: 11,
     route: 'demos'

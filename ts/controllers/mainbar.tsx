@@ -243,12 +243,14 @@ class MainBarClass extends React.Component<any, any> {
 
         let transitionToFunc = compose(menutransition, this.props.dispatch, Actions.transitionTo)
         let menuitems = hometiles.map(menutile =>{
+            console.log('menutile',menutile)
             return <MenuTile
                 transitionTo = { transitionToFunc }
                 key = { menutile.id}
                 primaryText = { menutile.content.title }
                 image = {menutile.content.image}
                 route = {menutile.route}
+                disabled = {menutile.content.disabled}
                 />
 
         })

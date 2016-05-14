@@ -9,6 +9,8 @@
         - include getChartParms -> node.getChartParms
     - move state to central store
     ? Classes:
+        Explorer
+        ExplorerPortal
         BudgetData = budgetdata -- package of dataseries, lookup, and viewpoint data
         BudgetExplorer (set of BudgetNodes)
         BudgetNode (derive from chartconfig) Node within Hierarchy
