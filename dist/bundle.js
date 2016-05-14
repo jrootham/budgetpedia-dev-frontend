@@ -7074,7 +7074,7 @@ module.exports={
             "Name": "Staffing",
             "Titles": {
                 "Baseline": "Programs",
-                "Components": "Staff Allocations"
+                "Components": "Staff Designations"
             },
             "Units": "FTE",
             "UnitsAlias": "Staffing Level (FTE)",
@@ -8099,8 +8099,8 @@ module.exports={
             "940A": "Sundry and Other Revenues (incl. prop. tax) 940A"
         },
         "TimeAllocations": {
-            "FULL": "Full Time",
-            "PART": "Part Time"
+            "FULL": "Permanent",
+            "PART": "Temporary"
         }
     },
     "Viewpoints": {
