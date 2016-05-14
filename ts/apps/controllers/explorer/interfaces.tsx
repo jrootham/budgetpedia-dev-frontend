@@ -32,6 +32,20 @@ interface PortalChartLocation {
     matrixlocation: MatrixLocation,
     portalindex: number,
 }
+    
+interface GetChartParmsProps {
+    nodeConfig: BudgetNodeConfig, 
+    chartIndex: number,
+    userselections:any, 
+    budgetdata:any, 
+    chartmatrix:any,
+}
+
+interface GetChartParmsCallbacks {
+    refreshPresentation: Function,
+    onPortalCreation: Function, 
+    workingStatus: Function,
+}
 
 // =====================================================
 // ---------------[ NODE CONFIGURATION ]--------------
@@ -144,4 +158,6 @@ export {
     PortalConfig,
     PortalChartConfig,
     SortedComponentItem,
+    GetChartParmsProps,
+    GetChartParmsCallbacks,
 }

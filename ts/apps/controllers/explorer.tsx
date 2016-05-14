@@ -61,7 +61,9 @@ import {
     MatrixLocation,
     PortalConfig,
     PortalChartSettings,
-    PortalChartLocation
+    PortalChartLocation,
+    GetChartParmsProps,
+    GetChartParmsCallbacks,
 } from './explorer/interfaces'
 // import { categoryaliases } from '../constants'
 
@@ -146,11 +148,24 @@ class ExplorerClass extends Component< any, any > {
         let drilldownnodeconfig: BudgetNodeConfig =
             this.initRootNodeConfig(ChartSeries.DrillDown, userselections)
         let drilldownindex:any
+
         for (drilldownindex in drilldownnodeconfig.charts) {
-            chartParmsObj = getChartParms(
-                drilldownnodeconfig, drilldownindex,
-                userselections, budgetdata, this.refreshPresentation, chartmatrix, 
-                this.onPortalCreation, this.workingStatus)
+            let props: GetChartParmsProps = {
+                nodeConfig: drilldownnodeconfig,
+                chartIndex: drilldownindex,
+                userselections,
+                budgetdata,
+                chartmatrix,
+            }
+            let callbacks: GetChartParmsCallbacks = {
+                refreshPresentation: this.refreshPresentation,
+                onPortalCreation: this.onPortalCreation,
+                workingStatus: this.workingStatus,
+            }
+            chartParmsObj = getChartParms(props, callbacks)
+                // drilldownnodeconfig, drilldownindex,
+                // userselections, budgetdata, this.refreshPresentation, chartmatrix, 
+                // this.onPortalCreation, this.workingStatus)
 
             if (!chartParmsObj.isError) {
 
@@ -325,9 +340,19 @@ class ExplorerClass extends Component< any, any > {
             nodeconfig = matrixseries[cellptr]
             let nodechartindex:any = null
             for (nodechartindex in nodeconfig.charts) {
-                chartParmsObj = getChartParms(nodeconfig, nodechartindex,
-                    userselections, budgetdata, this.refreshPresentation, 
-                    chartmatrix, this.onPortalCreation, this.workingStatus)
+                let props: GetChartParmsProps = {
+                    nodeConfig: nodeconfig,
+                    chartIndex: nodechartindex,
+                    userselections,
+                    budgetdata,
+                    chartmatrix,
+                }
+                let callbacks: GetChartParmsCallbacks = {
+                    refreshPresentation: this.refreshPresentation,
+                    onPortalCreation: this.onPortalCreation,
+                    workingStatus: this.workingStatus,
+                }
+                chartParmsObj = getChartParms(props, callbacks)
                 if (chartParmsObj.isError) {
                     matrixseries.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
@@ -365,14 +390,19 @@ class ExplorerClass extends Component< any, any > {
         let nodeConfig: BudgetNodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column]
         let oldChartType = nodeConfig.charts[portalIndex].charttype
         nodeConfig.charts[portalIndex].charttype = chartType
-        let chartParmsObj:ChartParmsObj = getChartParms(
-            nodeConfig, 
-            portalIndex,
-            this.state.userselections, 
-            this.props.budgetdata, 
-            this.refreshPresentation, 
+        let props: GetChartParmsProps = {
+            nodeConfig: nodeConfig,
+            chartIndex: portalIndex,
+            userselections:this.state.userselections,
+            budgetdata:this.props.budgetdata,
             chartmatrix,
-            this.onPortalCreation, this.workingStatus)
+        }
+        let callbacks: GetChartParmsCallbacks = {
+            refreshPresentation: this.refreshPresentation,
+            onPortalCreation: this.onPortalCreation,
+            workingStatus: this.workingStatus,
+        }
+        let chartParmsObj: ChartParmsObj = getChartParms(props,callbacks)
         if (!chartParmsObj.isError) {
             nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms
             nodeConfig.charts[portalIndex].chartCode = 

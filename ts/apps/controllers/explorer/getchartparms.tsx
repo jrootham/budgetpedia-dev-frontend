@@ -19,16 +19,27 @@ import {
     ChartSelectionContext,
     PortalChartLocation,
     SortedComponentItem,
-    NodeChartConfig
+    NodeChartConfig,
+    GetChartParmsProps,
+    GetChartParmsCallbacks,
 } from './interfaces'
 
 import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
 
 let getChartParms = (
-    nodeConfig: BudgetNodeConfig, chartIndex:number,
-    userselections, budgetdata, refreshPresentation, chartmatrix, 
-    onPortalCreation:Function, workingStatus:Function):ChartParmsObj => {
+        props:GetChartParmsProps, callbacks: GetChartParmsCallbacks
+    ):ChartParmsObj => {
+
+    let nodeConfig = props.nodeConfig
+    let chartIndex = props.chartIndex
+    let userselections = props.userselections
+    let budgetdata = props.budgetdata
+    let chartmatrix = props.chartmatrix
+
+    let refreshPresentation = callbacks.refreshPresentation
+    let onPortalCreation = callbacks.onPortalCreation
+    let workingStatus = callbacks.workingStatus
 
     let chartConfig: NodeChartConfig = nodeConfig.charts[chartIndex]
 
@@ -400,9 +411,19 @@ let onChartComponentSelection = (
         let chartParmsObj: ChartParmsObj = null
         let isError = false
         for (newnodeindex in newnodeconfig.charts) {
-             chartParmsObj = getChartParms(
-                 newnodeconfig, newnodeindex,userselections, budgetdata, refreshPresentation, 
-                 chartmatrix, onPortalCreation, workingStatus)
+            let props: GetChartParmsProps = {
+                nodeConfig: newnodeconfig,
+                chartIndex: newnodeindex,
+                userselections,
+                budgetdata,
+                chartmatrix,
+            }
+            let callbacks: GetChartParmsCallbacks = {
+                refreshPresentation,
+                onPortalCreation,
+                workingStatus,
+            }
+            chartParmsObj = getChartParms(props, callbacks)
             if (chartParmsObj.isError) {
                 isError = true
                 break

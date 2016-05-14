@@ -67,7 +67,19 @@ class ExplorerClass extends Component {
             let drilldownnodeconfig = this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             let drilldownindex;
             for (drilldownindex in drilldownnodeconfig.charts) {
-                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, this.refreshPresentation, chartmatrix, this.onPortalCreation, this.workingStatus);
+                let props = {
+                    nodeConfig: drilldownnodeconfig,
+                    chartIndex: drilldownindex,
+                    userselections: userselections,
+                    budgetdata: budgetdata,
+                    chartmatrix: chartmatrix,
+                };
+                let callbacks = {
+                    refreshPresentation: this.refreshPresentation,
+                    onPortalCreation: this.onPortalCreation,
+                    workingStatus: this.workingStatus,
+                };
+                chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
                 if (!chartParmsObj.isError) {
                     drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                     drilldownnodeconfig.charts[drilldownindex].chartCode =
@@ -186,7 +198,19 @@ class ExplorerClass extends Component {
                 nodeconfig = matrixseries[cellptr];
                 let nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
-                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, this.refreshPresentation, chartmatrix, this.onPortalCreation, this.workingStatus);
+                    let props = {
+                        nodeConfig: nodeconfig,
+                        chartIndex: nodechartindex,
+                        userselections: userselections,
+                        budgetdata: budgetdata,
+                        chartmatrix: chartmatrix,
+                    };
+                    let callbacks = {
+                        refreshPresentation: this.refreshPresentation,
+                        onPortalCreation: this.onPortalCreation,
+                        workingStatus: this.workingStatus,
+                    };
+                    chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
                     if (chartParmsObj.isError) {
                         matrixseries.splice(cellptr);
                         if (cellptr > 0) {
@@ -222,7 +246,19 @@ class ExplorerClass extends Component {
             let nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
             let oldChartType = nodeConfig.charts[portalIndex].charttype;
             nodeConfig.charts[portalIndex].charttype = chartType;
-            let chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, this.state.userselections, this.props.budgetdata, this.refreshPresentation, chartmatrix, this.onPortalCreation, this.workingStatus);
+            let props = {
+                nodeConfig: nodeConfig,
+                chartIndex: portalIndex,
+                userselections: this.state.userselections,
+                budgetdata: this.props.budgetdata,
+                chartmatrix: chartmatrix,
+            };
+            let callbacks = {
+                refreshPresentation: this.refreshPresentation,
+                onPortalCreation: this.onPortalCreation,
+                workingStatus: this.workingStatus,
+            };
+            let chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
             if (!chartParmsObj.isError) {
                 nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.charts[portalIndex].chartCode =

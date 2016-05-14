@@ -2,7 +2,15 @@
 var format = require('format-number');
 const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
-let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus) => {
+let getChartParms = (props, callbacks) => {
+    let nodeConfig = props.nodeConfig;
+    let chartIndex = props.chartIndex;
+    let userselections = props.userselections;
+    let budgetdata = props.budgetdata;
+    let chartmatrix = props.chartmatrix;
+    let refreshPresentation = callbacks.refreshPresentation;
+    let onPortalCreation = callbacks.onPortalCreation;
+    let workingStatus = callbacks.workingStatus;
     let chartConfig = nodeConfig.charts[chartIndex];
     let sortedlist = 'SortedComponents';
     let portalcharttype = chartConfig.portalcharttype;
@@ -261,7 +269,19 @@ let onChartComponentSelection = (context, userselections, budgetdata, refreshPre
         let chartParmsObj = null;
         let isError = false;
         for (newnodeindex in newnodeconfig.charts) {
-            chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus);
+            let props = {
+                nodeConfig: newnodeconfig,
+                chartIndex: newnodeindex,
+                userselections: userselections,
+                budgetdata: budgetdata,
+                chartmatrix: chartmatrix,
+            };
+            let callbacks = {
+                refreshPresentation: refreshPresentation,
+                onPortalCreation: onPortalCreation,
+                workingStatus: workingStatus,
+            };
+            chartParmsObj = getChartParms(props, callbacks);
             if (chartParmsObj.isError) {
                 isError = true;
                 break;

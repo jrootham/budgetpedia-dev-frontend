@@ -9991,7 +9991,19 @@ var ExplorerClass = function (_Component) {
             var drilldownnodeconfig = _this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             var drilldownindex = undefined;
             for (drilldownindex in drilldownnodeconfig.charts) {
-                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.refreshPresentation, chartmatrix, _this.onPortalCreation, _this.workingStatus);
+                var _props = {
+                    nodeConfig: drilldownnodeconfig,
+                    chartIndex: drilldownindex,
+                    userselections: userselections,
+                    budgetdata: budgetdata,
+                    chartmatrix: chartmatrix
+                };
+                var callbacks = {
+                    refreshPresentation: _this.refreshPresentation,
+                    onPortalCreation: _this.onPortalCreation,
+                    workingStatus: _this.workingStatus
+                };
+                chartParmsObj = getchartparms_1.getChartParms(_props, callbacks);
                 if (!chartParmsObj.isError) {
                     drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                     drilldownnodeconfig.charts[drilldownindex].chartCode = constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
@@ -10132,7 +10144,19 @@ var ExplorerClass = function (_Component) {
                 nodeconfig = matrixseries[cellptr];
                 var nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
-                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.refreshPresentation, chartmatrix, _this.onPortalCreation, _this.workingStatus);
+                    var _props2 = {
+                        nodeConfig: nodeconfig,
+                        chartIndex: nodechartindex,
+                        userselections: userselections,
+                        budgetdata: budgetdata,
+                        chartmatrix: chartmatrix
+                    };
+                    var callbacks = {
+                        refreshPresentation: _this.refreshPresentation,
+                        onPortalCreation: _this.onPortalCreation,
+                        workingStatus: _this.workingStatus
+                    };
+                    chartParmsObj = getchartparms_1.getChartParms(_props2, callbacks);
                     if (chartParmsObj.isError) {
                         matrixseries.splice(cellptr);
                         if (cellptr > 0) {
@@ -10166,7 +10190,19 @@ var ExplorerClass = function (_Component) {
             var nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
             var oldChartType = nodeConfig.charts[portalIndex].charttype;
             nodeConfig.charts[portalIndex].charttype = chartType;
-            var chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, _this.state.userselections, _this.props.budgetdata, _this.refreshPresentation, chartmatrix, _this.onPortalCreation, _this.workingStatus);
+            var props = {
+                nodeConfig: nodeConfig,
+                chartIndex: portalIndex,
+                userselections: _this.state.userselections,
+                budgetdata: _this.props.budgetdata,
+                chartmatrix: chartmatrix
+            };
+            var callbacks = {
+                refreshPresentation: _this.refreshPresentation,
+                onPortalCreation: _this.onPortalCreation,
+                workingStatus: _this.workingStatus
+            };
+            var chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
             if (!chartParmsObj.isError) {
                 nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.charts[portalIndex].chartCode = constants_2.ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType];
@@ -10317,7 +10353,15 @@ exports.Explorer = Explorer;
 var format = require('format-number');
 var updatechartselections_1 = require('./updatechartselections');
 var constants_1 = require('../../constants');
-var getChartParms = function getChartParms(nodeConfig, chartIndex, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus) {
+var getChartParms = function getChartParms(props, callbacks) {
+    var nodeConfig = props.nodeConfig;
+    var chartIndex = props.chartIndex;
+    var userselections = props.userselections;
+    var budgetdata = props.budgetdata;
+    var chartmatrix = props.chartmatrix;
+    var refreshPresentation = callbacks.refreshPresentation;
+    var onPortalCreation = callbacks.onPortalCreation;
+    var workingStatus = callbacks.workingStatus;
     var chartConfig = nodeConfig.charts[chartIndex];
     var sortedlist = 'SortedComponents';
     var portalcharttype = chartConfig.portalcharttype;
@@ -10592,7 +10636,19 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         var chartParmsObj = null;
         var isError = false;
         for (newnodeindex in newnodeconfig.charts) {
-            chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus);
+            var props = {
+                nodeConfig: newnodeconfig,
+                chartIndex: newnodeindex,
+                userselections: userselections,
+                budgetdata: budgetdata,
+                chartmatrix: chartmatrix
+            };
+            var callbacks = {
+                refreshPresentation: refreshPresentation,
+                onPortalCreation: onPortalCreation,
+                workingStatus: workingStatus
+            };
+            chartParmsObj = getChartParms(props, callbacks);
             if (chartParmsObj.isError) {
                 isError = true;
                 break;
