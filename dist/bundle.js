@@ -9991,7 +9991,7 @@ var ExplorerClass = function (_Component) {
             var drilldownnodeconfig = _this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             var drilldownindex = undefined;
             for (drilldownindex in drilldownnodeconfig.charts) {
-                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation, _this.workingStatus.bind(_this));
+                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, _this.refreshPresentation, chartmatrix, _this.onPortalCreation, _this.workingStatus);
                 if (!chartParmsObj.isError) {
                     drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                     drilldownnodeconfig.charts[drilldownindex].chartCode = constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
@@ -10132,7 +10132,7 @@ var ExplorerClass = function (_Component) {
                 nodeconfig = matrixseries[cellptr];
                 var nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
-                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation, _this.workingStatus.bind(_this));
+                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, _this.refreshPresentation, chartmatrix, _this.onPortalCreation, _this.workingStatus);
                     if (chartParmsObj.isError) {
                         matrixseries.splice(cellptr);
                         if (cellptr > 0) {
@@ -10166,7 +10166,7 @@ var ExplorerClass = function (_Component) {
             var nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
             var oldChartType = nodeConfig.charts[portalIndex].charttype;
             nodeConfig.charts[portalIndex].charttype = chartType;
-            var chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, _this.state.userselections, _this.props.budgetdata, _this.setState.bind(_this), chartmatrix, _this.onPortalCreation, _this.workingStatus.bind(_this));
+            var chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, _this.state.userselections, _this.props.budgetdata, _this.refreshPresentation, chartmatrix, _this.onPortalCreation, _this.workingStatus);
             if (!chartParmsObj.isError) {
                 nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.charts[portalIndex].chartCode = constants_2.ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType];
@@ -10194,7 +10194,12 @@ var ExplorerClass = function (_Component) {
                 updatechartselections_1.updateChartSelections(_this.state.chartmatrix, portalLocation.row);
             });
         };
-        _this.getCharts = function (matrixcolumn, matrixrow) {
+        _this.refreshPresentation = function (chartmatrix) {
+            _this.setState({
+                chartmatrix: chartmatrix
+            });
+        };
+        _this.getPortals = function (matrixcolumn, matrixrow) {
             var userselections = _this.state.userselections;
             var budgetdata = _this.props.budgetdata;
             var portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
@@ -10203,7 +10208,7 @@ var ExplorerClass = function (_Component) {
             if (dataseries.Units == 'DOLLAR') {
                 portalseriesname += ' (' + dataseries.UnitsAlias + ')';
             }
-            var charts = matrixcolumn.map(function (nodeconfig, index) {
+            var portals = matrixcolumn.map(function (nodeconfig, index) {
                 var portalcharts = [];
                 for (var chartindex in nodeconfig.charts) {
                     var chartblocktitle = null;
@@ -10246,7 +10251,7 @@ var ExplorerClass = function (_Component) {
                 };
                 return React.createElement(explorerportal_1.ExplorerPortal, { key: index, budgetPortal: budgetPortal, onChangePortalChart: _this.onChangeBudgetPortalChart });
             });
-            return charts;
+            return portals;
         };
         return _this;
     }
@@ -10267,7 +10272,7 @@ var ExplorerClass = function (_Component) {
                     zIndex: 2
                 }, onTouchTap: this.handleDialogClose }, React.createElement(FontIcon, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
             var drilldownlist = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
-            var drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
+            var drilldownportals = explorer.getPortals(drilldownlist, constants_1.ChartSeries.DrillDown);
             var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: false, showExpandableButton: false }, "Budget Explorer"), React.createElement(CardText, { expandable: true }, React.createElement("p", { style: { marginTop: 0 } }, "If you're new here, ", React.createElement("a", { href: "javascript:void(0)", onTouchTap: this.handleDialogOpen }, "read the help text"), " first.", React.createElement(IconButton, { tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.handleDialogOpen }, React.createElement(FontIcon, { className: "material-icons" }, "help_outline"))), React.createElement("div", { style: {
                     padding: "3px" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Viewpoint: "), React.createElement(DropDownMenu, { value: this.state.userselections.viewpoint, style: {}, onChange: function onChange(e, index, value) {
                     _this2.switchViewpoint(value, constants_1.ChartSeries.DrillDown);
@@ -10288,7 +10293,7 @@ var ExplorerClass = function (_Component) {
                     borderRadius: "50%"
                 } }, ">", React.createElement(FontIcon, { className: "material-icons" }, "people"))), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
                     _this2.branchScrollBlocks[constants_1.ChartSeries.DrillDown] = node;
-                }, style: { overflow: "scroll" } }, drilldowncharts, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
+                }, style: { overflow: "scroll" } }, drilldownportals, React.createElement("div", { style: { display: "inline-block", width: "500px" } })))));
             return React.createElement("div", null, dialogbox, drilldownsegment);
         }
     }]);
@@ -10312,7 +10317,7 @@ exports.Explorer = Explorer;
 var format = require('format-number');
 var updatechartselections_1 = require('./updatechartselections');
 var constants_1 = require('../../constants');
-var getChartParms = function getChartParms(nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus) {
+var getChartParms = function getChartParms(nodeConfig, chartIndex, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus) {
     var chartConfig = nodeConfig.charts[chartIndex];
     var sortedlist = 'SortedComponents';
     var portalcharttype = chartConfig.portalcharttype;
@@ -10434,7 +10439,7 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
                 var chart = Chart.chart;
                 var selection = chart.getSelection();
                 var context = { portalchartlocation: configLocation, Chart: Chart, selection: selection, err: err };
-                onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus);
+                onChartComponentSelection(context, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus);
             };
         }(configlocation)
     }];
@@ -10478,7 +10483,7 @@ var getChartParms = function getChartParms(nodeConfig, chartIndex, userselection
     return chartParmsObj;
 };
 exports.getChartParms = getChartParms;
-var onChartComponentSelection = function onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus) {
+var onChartComponentSelection = function onChartComponentSelection(context, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus) {
     var portalChartIndex = context.portalchartlocation.portalindex;
     var selection = context.selection[0];
     var selectionrow = undefined;
@@ -10497,9 +10502,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
     var viewpoint = nodeconfig.viewpoint,
         dataseries = nodeconfig.dataseries;
     serieslist.splice(matrixcolumn + 1);
-    setState({
-        chartmatrix: chartmatrix
-    });
+    refreshPresentation(chartmatrix);
     if (!selection) {
         delete nodeconfig.charts[portalChartIndex].chartselection;
         delete nodeconfig.charts[portalChartIndex].chart;
@@ -10589,7 +10592,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         var chartParmsObj = null;
         var isError = false;
         for (newnodeindex in newnodeconfig.charts) {
-            chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus);
+            chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus);
             if (chartParmsObj.isError) {
                 isError = true;
                 break;
@@ -10604,9 +10607,7 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         newnodeconfig.datanode = chartParmsObj.datanode;
         var newmatrixcolumn = matrixcolumn + 1;
         chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;
-        setState({
-            chartmatrix: chartmatrix
-        });
+        refreshPresentation(chartmatrix);
         nodeconfig.charts[portalChartIndex].chartselection = context.selection;
         nodeconfig.charts[portalChartIndex].chart = chart;
         nodeconfig.charts[portalChartIndex].Chart = context.Chart;

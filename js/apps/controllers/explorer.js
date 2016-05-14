@@ -67,7 +67,7 @@ class ExplorerClass extends Component {
             let drilldownnodeconfig = this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             let drilldownindex;
             for (drilldownindex in drilldownnodeconfig.charts) {
-                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, this.setState.bind(this), chartmatrix, this.onPortalCreation, this.workingStatus.bind(this));
+                chartParmsObj = getchartparms_1.getChartParms(drilldownnodeconfig, drilldownindex, userselections, budgetdata, this.refreshPresentation, chartmatrix, this.onPortalCreation, this.workingStatus);
                 if (!chartParmsObj.isError) {
                     drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                     drilldownnodeconfig.charts[drilldownindex].chartCode =
@@ -186,7 +186,7 @@ class ExplorerClass extends Component {
                 nodeconfig = matrixseries[cellptr];
                 let nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
-                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, this.setState.bind(this), chartmatrix, this.onPortalCreation, this.workingStatus.bind(this));
+                    chartParmsObj = getchartparms_1.getChartParms(nodeconfig, nodechartindex, userselections, budgetdata, this.refreshPresentation, chartmatrix, this.onPortalCreation, this.workingStatus);
                     if (chartParmsObj.isError) {
                         matrixseries.splice(cellptr);
                         if (cellptr > 0) {
@@ -222,7 +222,7 @@ class ExplorerClass extends Component {
             let nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
             let oldChartType = nodeConfig.charts[portalIndex].charttype;
             nodeConfig.charts[portalIndex].charttype = chartType;
-            let chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, this.state.userselections, this.props.budgetdata, this.setState.bind(this), chartmatrix, this.onPortalCreation, this.workingStatus.bind(this));
+            let chartParmsObj = getchartparms_1.getChartParms(nodeConfig, portalIndex, this.state.userselections, this.props.budgetdata, this.refreshPresentation, chartmatrix, this.onPortalCreation, this.workingStatus);
             if (!chartParmsObj.isError) {
                 nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.charts[portalIndex].chartCode =
@@ -253,7 +253,12 @@ class ExplorerClass extends Component {
                 updatechartselections_1.updateChartSelections(this.state.chartmatrix, portalLocation.row);
             });
         };
-        this.getCharts = (matrixcolumn, matrixrow) => {
+        this.refreshPresentation = chartmatrix => {
+            this.setState({
+                chartmatrix: chartmatrix,
+            });
+        };
+        this.getPortals = (matrixcolumn, matrixrow) => {
             let userselections = this.state.userselections;
             let budgetdata = this.props.budgetdata;
             let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
@@ -262,7 +267,7 @@ class ExplorerClass extends Component {
             if (dataseries.Units == 'DOLLAR') {
                 portalseriesname += ' (' + dataseries.UnitsAlias + ')';
             }
-            let charts = matrixcolumn.map((nodeconfig, index) => {
+            let portals = matrixcolumn.map((nodeconfig, index) => {
                 let portalcharts = [];
                 for (let chartindex in nodeconfig.charts) {
                     let chartblocktitle = null;
@@ -308,7 +313,7 @@ class ExplorerClass extends Component {
                 };
                 return React.createElement(explorerportal_1.ExplorerPortal, {key: index, budgetPortal: budgetPortal, onChangePortalChart: this.onChangeBudgetPortalChart});
             });
-            return charts;
+            return portals;
         };
     }
     render() {
@@ -323,7 +328,7 @@ class ExplorerClass extends Component {
             zIndex: 2,
         }, onTouchTap: this.handleDialogClose}, React.createElement(FontIcon, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
         let drilldownlist = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
-        let drilldowncharts = explorer.getCharts(drilldownlist, constants_1.ChartSeries.DrillDown);
+        let drilldownportals = explorer.getPortals(drilldownlist, constants_1.ChartSeries.DrillDown);
         let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: false, showExpandableButton: false}, "Budget Explorer"), React.createElement(CardText, {expandable: true}, React.createElement("p", {style: { marginTop: 0 }}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: this.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.handleDialogOpen}, React.createElement(FontIcon, {className: "material-icons"}, "help_outline"))), React.createElement("div", {style: {
             padding: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu, {value: this.state.userselections.viewpoint, style: {}, onChange: (e, index, value) => {
             this.switchViewpoint(value, constants_1.ChartSeries.DrillDown);
@@ -350,7 +355,7 @@ class ExplorerClass extends Component {
             borderRadius: "50%"
         }}, ">", React.createElement(FontIcon, {className: "material-icons"}, "people"))), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             this.branchScrollBlocks[constants_1.ChartSeries.DrillDown] = node;
-        }, style: { overflow: "scroll" }}, drilldowncharts, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
+        }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
         return React.createElement("div", null, dialogbox, drilldownsegment);
     }
 }

@@ -149,8 +149,8 @@ class ExplorerClass extends Component< any, any > {
         for (drilldownindex in drilldownnodeconfig.charts) {
             chartParmsObj = getChartParms(
                 drilldownnodeconfig, drilldownindex,
-                userselections, budgetdata, this.setState.bind(this), chartmatrix, 
-                this.onPortalCreation, this.workingStatus.bind(this))
+                userselections, budgetdata, this.refreshPresentation, chartmatrix, 
+                this.onPortalCreation, this.workingStatus)
 
             if (!chartParmsObj.isError) {
 
@@ -326,8 +326,8 @@ class ExplorerClass extends Component< any, any > {
             let nodechartindex:any = null
             for (nodechartindex in nodeconfig.charts) {
                 chartParmsObj = getChartParms(nodeconfig, nodechartindex,
-                    userselections, budgetdata, this.setState.bind(this), 
-                    chartmatrix, this.onPortalCreation, this.workingStatus.bind(this))
+                    userselections, budgetdata, this.refreshPresentation, 
+                    chartmatrix, this.onPortalCreation, this.workingStatus)
                 if (chartParmsObj.isError) {
                     matrixseries.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
@@ -370,9 +370,9 @@ class ExplorerClass extends Component< any, any > {
             portalIndex,
             this.state.userselections, 
             this.props.budgetdata, 
-            this.setState.bind(this), 
+            this.refreshPresentation, 
             chartmatrix,
-            this.onPortalCreation, this.workingStatus.bind(this))
+            this.onPortalCreation, this.workingStatus)
         if (!chartParmsObj.isError) {
             nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms
             nodeConfig.charts[portalIndex].chartCode = 
@@ -408,11 +408,17 @@ class ExplorerClass extends Component< any, any > {
         })
     }
 
+    refreshPresentation = chartmatrix => {
+        this.setState({
+            chartmatrix,
+        })
+    }
+
     // ============================================================
     // -------------------[ RENDER METHODS ]---------------------
 
     // get React components to render
-    getCharts = (matrixcolumn, matrixrow) => {
+    getPortals = (matrixcolumn, matrixrow) => {
 
         let userselections = this.state.userselections
 
@@ -425,7 +431,7 @@ class ExplorerClass extends Component< any, any > {
             portalseriesname += ' (' + dataseries.UnitsAlias + ')'
         }
 
-        let charts = matrixcolumn.map((nodeconfig: BudgetNodeConfig, index) => {
+        let portals = matrixcolumn.map((nodeconfig: BudgetNodeConfig, index) => {
 
             let portalcharts = []
 
@@ -488,7 +494,7 @@ class ExplorerClass extends Component< any, any > {
                 />
         })
 
-        return charts
+        return portals
 
     }
 
@@ -660,7 +666,7 @@ class ExplorerClass extends Component< any, any > {
 
         let drilldownlist = explorer.state.chartmatrix[ChartSeries.DrillDown]
 
-        let drilldowncharts = explorer.getCharts(drilldownlist, ChartSeries.DrillDown)
+        let drilldownportals = explorer.getPortals(drilldownlist, ChartSeries.DrillDown)
 
         let drilldownsegment = 
         <Card initiallyExpanded >
@@ -770,7 +776,7 @@ class ExplorerClass extends Component< any, any > {
                         this.branchScrollBlocks[ChartSeries.DrillDown] = node
                     }} style={{ overflow: "scroll" }}>
 
-                        { drilldowncharts }
+                        { drilldownportals }
 
                         <div style={{ display: "inline-block", width: "500px" }}></div>
 

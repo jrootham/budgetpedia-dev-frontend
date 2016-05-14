@@ -27,7 +27,7 @@ import { ChartTypeCodes } from '../../constants'
 
 let getChartParms = (
     nodeConfig: BudgetNodeConfig, chartIndex:number,
-    userselections, budgetdata, setState, chartmatrix, 
+    userselections, budgetdata, refreshPresentation, chartmatrix, 
     onPortalCreation:Function, workingStatus:Function):ChartParmsObj => {
 
     let chartConfig: NodeChartConfig = nodeConfig.charts[chartIndex]
@@ -201,7 +201,7 @@ let getChartParms = (
                     let context: ChartSelectionContext = { portalchartlocation: configLocation, Chart, selection, err }
 
                     onChartComponentSelection(context, userselections, 
-                        budgetdata, setState, chartmatrix, onPortalCreation, workingStatus)
+                        budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus)
                 }
             })(configlocation)
         }
@@ -285,7 +285,7 @@ let getChartParms = (
 // TODO: create chile which appropriately sets up correct set of child charts
 let onChartComponentSelection = (
         context: ChartSelectionContext, userselections, budgetdata, 
-        setState, chartmatrix, onPortalCreation:Function, workingStatus:Function) => {
+        refreshPresentation, chartmatrix, onPortalCreation:Function, workingStatus:Function) => {
 
     let portalChartIndex = context.portalchartlocation.portalindex
 
@@ -324,9 +324,7 @@ let onChartComponentSelection = (
     serieslist.splice(matrixcolumn + 1) // remove subsequent charts
 
     // trigger update to avoid google charts use of cached versions
-    setState({
-        chartmatrix,
-    });
+    refreshPresentation(chartmatrix)
 
     if (!selection) { // deselected
         delete nodeconfig.charts[portalChartIndex].chartselection
@@ -403,7 +401,7 @@ let onChartComponentSelection = (
         let isError = false
         for (newnodeindex in newnodeconfig.charts) {
              chartParmsObj = getChartParms(
-                 newnodeconfig, newnodeindex,userselections, budgetdata, setState, 
+                 newnodeconfig, newnodeindex,userselections, budgetdata, refreshPresentation, 
                  chartmatrix, onPortalCreation, workingStatus)
             if (chartParmsObj.isError) {
                 isError = true
@@ -422,9 +420,7 @@ let onChartComponentSelection = (
         let newmatrixcolumn = matrixcolumn + 1
         chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig
 
-        setState({
-            chartmatrix,
-        })
+        refreshPresentation(chartmatrix)
 
         nodeconfig.charts[portalChartIndex].chartselection = context.selection
         nodeconfig.charts[portalChartIndex].chart = chart

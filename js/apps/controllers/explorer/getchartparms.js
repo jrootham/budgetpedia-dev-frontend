@@ -2,7 +2,7 @@
 var format = require('format-number');
 const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
-let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus) => {
+let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus) => {
     let chartConfig = nodeConfig.charts[chartIndex];
     let sortedlist = 'SortedComponents';
     let portalcharttype = chartConfig.portalcharttype;
@@ -120,7 +120,7 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
                     let chart = Chart.chart;
                     let selection = chart.getSelection();
                     let context = { portalchartlocation: configLocation, Chart: Chart, selection: selection, err: err };
-                    onChartComponentSelection(context, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus);
+                    onChartComponentSelection(context, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus);
                 };
             })(configlocation)
         }
@@ -177,7 +177,7 @@ let getChartParms = (nodeConfig, chartIndex, userselections, budgetdata, setStat
     return chartParmsObj;
 };
 exports.getChartParms = getChartParms;
-let onChartComponentSelection = (context, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus) => {
+let onChartComponentSelection = (context, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus) => {
     let portalChartIndex = context.portalchartlocation.portalindex;
     let selection = context.selection[0];
     let selectionrow;
@@ -196,9 +196,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         return;
     let viewpoint = nodeconfig.viewpoint, dataseries = nodeconfig.dataseries;
     serieslist.splice(matrixcolumn + 1);
-    setState({
-        chartmatrix: chartmatrix,
-    });
+    refreshPresentation(chartmatrix);
     if (!selection) {
         delete nodeconfig.charts[portalChartIndex].chartselection;
         delete nodeconfig.charts[portalChartIndex].chart;
@@ -263,7 +261,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         let chartParmsObj = null;
         let isError = false;
         for (newnodeindex in newnodeconfig.charts) {
-            chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, setState, chartmatrix, onPortalCreation, workingStatus);
+            chartParmsObj = getChartParms(newnodeconfig, newnodeindex, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus);
             if (chartParmsObj.isError) {
                 isError = true;
                 break;
@@ -279,9 +277,7 @@ let onChartComponentSelection = (context, userselections, budgetdata, setState, 
         newnodeconfig.datanode = chartParmsObj.datanode;
         let newmatrixcolumn = matrixcolumn + 1;
         chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig;
-        setState({
-            chartmatrix: chartmatrix,
-        });
+        refreshPresentation(chartmatrix);
         nodeconfig.charts[portalChartIndex].chartselection = context.selection;
         nodeconfig.charts[portalChartIndex].chart = chart;
         nodeconfig.charts[portalChartIndex].Chart = context.Chart;
