@@ -11755,7 +11755,6 @@ var MainBarClass = function (_React$Component) {
                 }, open: appbar.state.accountsidebaropen }, React.createElement(Card, { style: { margin: "5px" } }, closeicon, React.createElement(CardTitle, { title: "Member Sign In", style: { paddingBottom: 0 } }), loginform, registerprompt));
             var transitionToFunc = redux_1.compose(menutransition, this.props.dispatch, Actions.transitionTo);
             var menuitems = hometiles.map(function (menutile) {
-                console.log('menutile', menutile);
                 return React.createElement(menutile_1.MenuTile, { transitionTo: transitionToFunc, key: menutile.id, primaryText: menutile.content.title, image: menutile.content.image, route: menutile.route, disabled: menutile.content.disabled });
             });
             var menusidebar = React.createElement(LeftNav, { width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: function onRequestChange(open) {

@@ -117,7 +117,6 @@ class MainBarClass extends React.Component {
         let loginsidebar = React.createElement(LeftNav, {width: 300, disableSwipeToOpen: true, docked: false, openRight: true, onRequestChange: open => appbar.setState({ accountsidebaropen: open, }), open: appbar.state.accountsidebaropen}, React.createElement(Card, {style: { margin: "5px" }}, closeicon, React.createElement(CardTitle, {title: "Member Sign In", style: { paddingBottom: 0 }}), loginform, registerprompt));
         let transitionToFunc = redux_1.compose(menutransition, this.props.dispatch, Actions.transitionTo);
         let menuitems = hometiles.map(menutile => {
-            console.log('menutile', menutile);
             return React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: menutile.id, primaryText: menutile.content.title, image: menutile.content.image, route: menutile.route, disabled: menutile.content.disabled});
         });
         let menusidebar = React.createElement(LeftNav, {width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: open => appbar.setState({ menusidebaropen: open, }), open: this.state.menusidebaropen}, React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: 'home', primaryText: "Budget Commons", image: '../../public/icons/ic_home_24px.svg', route: '/'}), React.createElement(Divider, null), menuitems);
