@@ -9748,7 +9748,7 @@ var ExplorerPortal = function (_Component) {
                 var chartparms = chartTab.portalchartparms;
                 var chartsettings = chartTab.portalchartsettings;
                 var chartlocation = chartTab.portalchartlocation;
-                return React.createElement(Tab, { style: { fontSize: "12px" }, label: chartsettings.chartblocktitle, value: "programs", key: chartindex }, React.createElement(explorerchart_1.ExplorerChart, { chartlocation: chartlocation, chartsettings: chartsettings, chartparms: chartparms }));
+                return React.createElement(Tab, { style: { fontSize: "12px" }, label: chartTab.chartblocktitle, value: "programs", key: chartindex }, React.createElement(explorerchart_1.ExplorerChart, { chartlocation: chartlocation, chartsettings: chartsettings, chartparms: chartparms }));
             });
             return chartTabs;
         };
@@ -10310,8 +10310,7 @@ var ExplorerClass = function (_Component) {
                     var portalchartsettings = {
                         onSwitchChartCode: _this.switchChartCode,
                         chartCode: nodeconfig.charts[chartindex].chartCode,
-                        graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
-                        chartblocktitle: "By " + chartblocktitle
+                        graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex
                     };
                     var portalchart = {
                         portalchartparms: portalchartparms,
@@ -10319,7 +10318,8 @@ var ExplorerClass = function (_Component) {
                         portalchartlocation: {
                             matrixlocation: nodeconfig.matrixlocation,
                             portalindex: null
-                        }
+                        },
+                        chartblocktitle: "By " + chartblocktitle
                     };
                     portalcharts.push(portalchart);
                 }

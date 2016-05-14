@@ -319,7 +319,6 @@ class ExplorerClass extends Component {
                         onSwitchChartCode: this.switchChartCode,
                         chartCode: nodeconfig.charts[chartindex].chartCode,
                         graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
-                        chartblocktitle: "By " + chartblocktitle,
                     };
                     let portalchart = {
                         portalchartparms: portalchartparms,
@@ -327,7 +326,8 @@ class ExplorerClass extends Component {
                         portalchartlocation: {
                             matrixlocation: nodeconfig.matrixlocation,
                             portalindex: null
-                        }
+                        },
+                        chartblocktitle: "By " + chartblocktitle,
                     };
                     portalcharts.push(portalchart);
                 }

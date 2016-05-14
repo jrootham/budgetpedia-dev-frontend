@@ -62,8 +62,9 @@ import {
     ChartSelectionContext,
     MatrixLocation,
     PortalConfig,
-    PortalChartSettings,
-    PortalChartLocation,
+    ChartSettings,
+    ChartLocation,
+    PortalChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
 } from './explorer/interfaces'
@@ -385,7 +386,7 @@ class ExplorerClass extends Component< any, any > {
     }
 
     // TODO: belongs with explorerchart controller?
-    switchChartCode = (location:PortalChartLocation, chartCode) => {
+    switchChartCode = (location:ChartLocation, chartCode) => {
         let chartType = ChartCodeTypes[chartCode]
         let portalIndex = location.portalindex
         let chartmatrix = this.state.chartmatrix
@@ -479,22 +480,22 @@ class ExplorerClass extends Component< any, any > {
 
                 let portalchartparms = nodeconfig.charts[chartindex].chartparms
 
-                let portalchartsettings: PortalChartSettings = {
+                let portalchartsettings: ChartSettings = {
                     // matrixlocation: chartconfig.matrixlocation,
                     onSwitchChartCode: this.switchChartCode,
                     chartCode: nodeconfig.charts[chartindex].chartCode,
                     graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
-                    chartblocktitle: "By " + chartblocktitle,
                     // index,
                 }
 
-                let portalchart = {
+                let portalchart:PortalChartConfig = {
                     portalchartparms,
                     portalchartsettings,
                     portalchartlocation: {
                         matrixlocation: nodeconfig.matrixlocation,
                         portalindex: null // will be set on rendering
-                    }
+                    },
+                    chartblocktitle: "By " + chartblocktitle,
                 }
 
                 portalcharts.push(portalchart)

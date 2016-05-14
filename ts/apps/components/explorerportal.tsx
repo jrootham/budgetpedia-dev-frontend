@@ -14,8 +14,8 @@ import {
     ChartParms,
     PortalConfig,
     PortalChartConfig,
-    PortalChartLocation,
-    PortalChartSettings,
+    ChartLocation,
+    ChartSettings,
     ChartSelectionContext
 } from '../controllers/explorer/interfaces'
 
@@ -46,7 +46,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             let chartsettings = chartTab.portalchartsettings
             let chartlocation = chartTab.portalchartlocation
             return <Tab style={{fontSize:"12px"}} 
-                label={chartsettings.chartblocktitle} 
+                label={chartTab.chartblocktitle} 
                 value="programs"
                 key={chartindex}>
                 <ExplorerChart 

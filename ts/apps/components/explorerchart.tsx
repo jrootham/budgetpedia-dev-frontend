@@ -11,22 +11,22 @@ import {
     ChartParms,
     // PortalConfig,
     // PortalChartConfig,
-    PortalChartLocation,
-    PortalChartSettings,
+    ChartLocation,
+    ChartSettings,
     // ChartSelectionContext
 } from '../controllers/explorer/interfaces'
 
 interface ExplorerChartProps {
     // budgetPortal: PortalConfig,
-    chartsettings: PortalChartSettings,
-    chartlocation: PortalChartLocation,
+    chartsettings: ChartSettings,
+    chartlocation: ChartLocation,
     chartparms: ChartParms,
     // onChangePortalChart: Function
 }
 
 class ExplorerChart extends Component<ExplorerChartProps, any> {
 
-    onChangeChartCode = (chartCode, location: PortalChartLocation) => {
+    onChangeChartCode = (chartCode, location: ChartLocation) => {
         this.props.chartsettings.onSwitchChartCode(location, chartCode)
     }
 

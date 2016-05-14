@@ -17,7 +17,7 @@ import {
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,
-    PortalChartLocation,
+    ChartLocation,
     SortedComponentItem,
     NodeChartConfig,
     GetChartParmsProps,
@@ -198,7 +198,7 @@ let getChartParms = (
     //     need to update chart by destroying chart (thus closure) before replacing it
     // 3. chart events:
     let matrixlocation = Object.assign({}, nodeConfig.matrixlocation)
-    let configlocation: PortalChartLocation = {
+    let configlocation: ChartLocation = {
         matrixlocation,
         portalindex: chartIndex
     }
@@ -206,7 +206,7 @@ let getChartParms = (
     let events = [
         {
             eventName: 'select',
-            callback: ((configLocation:PortalChartLocation) => {
+            callback: ((configLocation:ChartLocation) => {
 
                 return (Chart, err) => {
                     let chart = Chart.chart

@@ -15,20 +15,20 @@ interface PortalConfig {
 // configuration for individual chart of budget portal
 interface PortalChartConfig {
     portalchartparms: ChartParms,
-    portalchartsettings: PortalChartSettings,
-    portalchartlocation: PortalChartLocation,
-}
-
-// settings for individual portal chart
-interface PortalChartSettings {
-    onSwitchChartCode: Function,
-    chartCode: string,
-    graph_id: string,
+    portalchartsettings: ChartSettings,
+    portalchartlocation: ChartLocation,
     chartblocktitle: string,
 }
 
+// settings for individual portal chart
+interface ChartSettings {
+    onSwitchChartCode: Function,
+    chartCode: string,
+    graph_id: string,
+}
+
 // to return value for callback processing
-interface PortalChartLocation {
+interface ChartLocation {
     matrixlocation: MatrixLocation,
     portalindex: number,
 }
@@ -146,7 +146,7 @@ interface ChartSelectionData {
 // returned when user clicks on a chart component 
 // for drill-down or other action
 interface ChartSelectionContext {
-    portalchartlocation: PortalChartLocation,
+    portalchartlocation: ChartLocation,
     Chart: any,
     selection: ChartSelectionData[],
     err: any,
@@ -160,12 +160,12 @@ export {
     BudgetNodeConfig, 
     NodeChartConfig,
     MatrixLocation,
-    PortalChartLocation, 
+    ChartLocation, 
     ChartSelectionData,
     ChartParms, 
     ChartParmsObj, 
     ChartSelectionContext,
-    PortalChartSettings,
+    ChartSettings,
     PortalConfig,
     PortalChartConfig,
     SortedComponentItem,

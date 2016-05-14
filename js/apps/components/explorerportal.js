@@ -19,7 +19,7 @@ class ExplorerPortal extends Component {
                 let chartparms = chartTab.portalchartparms;
                 let chartsettings = chartTab.portalchartsettings;
                 let chartlocation = chartTab.portalchartlocation;
-                return React.createElement(Tab, {style: { fontSize: "12px" }, label: chartsettings.chartblocktitle, value: "programs", key: chartindex}, React.createElement(explorerchart_1.ExplorerChart, {chartlocation: chartlocation, chartsettings: chartsettings, chartparms: chartparms}));
+                return React.createElement(Tab, {style: { fontSize: "12px" }, label: chartTab.chartblocktitle, value: "programs", key: chartindex}, React.createElement(explorerchart_1.ExplorerChart, {chartlocation: chartlocation, chartsettings: chartsettings, chartparms: chartparms}));
             });
             return chartTabs;
         };
