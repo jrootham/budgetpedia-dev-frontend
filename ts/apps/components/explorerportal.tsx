@@ -41,16 +41,13 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         // generate array of chart tabs
         let chartTabs = this.props.budgetPortal.portalCharts.map(
             (chartTab:PortalChartConfig,chartindex) => {
-            chartTab.portalchartlocation.portalindex = chartindex
             let chartparms = chartTab.portalchartparms
             let chartsettings = chartTab.portalchartsettings
-            let chartlocation = chartTab.portalchartlocation
             return <Tab style={{fontSize:"12px"}} 
                 label={chartTab.chartblocktitle} 
                 value="programs"
                 key={chartindex}>
                 <ExplorerChart 
-                    chartlocation = {chartlocation}
                     chartsettings = {chartsettings}
                     chartparms = {chartparms}
                 />

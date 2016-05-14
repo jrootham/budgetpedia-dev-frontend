@@ -315,18 +315,23 @@ class ExplorerClass extends Component {
                         chartblocktitle = portaltitles.Baseline;
                     }
                     let portalchartparms = nodeconfig.charts[chartindex].chartparms;
+                    let location = {
+                        matrixlocation: nodeconfig.matrixlocation,
+                        portalindex: Number(chartindex)
+                    };
+                    let explorer = this;
                     let portalchartsettings = {
-                        onSwitchChartCode: this.switchChartCode,
+                        onSwitchChartCode: ((location) => {
+                            return (chartCode) => {
+                                explorer.switchChartCode(location, chartCode);
+                            };
+                        })(location),
                         chartCode: nodeconfig.charts[chartindex].chartCode,
                         graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
                     };
                     let portalchart = {
                         portalchartparms: portalchartparms,
                         portalchartsettings: portalchartsettings,
-                        portalchartlocation: {
-                            matrixlocation: nodeconfig.matrixlocation,
-                            portalindex: null
-                        },
                         chartblocktitle: "By " + chartblocktitle,
                     };
                     portalcharts.push(portalchart);

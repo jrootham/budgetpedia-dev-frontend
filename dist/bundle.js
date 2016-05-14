@@ -9667,8 +9667,8 @@ var ExplorerChart = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ExplorerChart)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
-        _this.onChangeChartCode = function (chartCode, location) {
-            _this.props.chartsettings.onSwitchChartCode(location, chartCode);
+        _this.onChangeChartCode = function (chartCode) {
+            _this.props.chartsettings.onSwitchChartCode(chartCode);
         };
         return _this;
     }
@@ -9680,22 +9680,21 @@ var ExplorerChart = function (_Component) {
 
             var chartparms = this.props.chartparms;
             var chartsettings = this.props.chartsettings;
-            var chartlocation = this.props.chartlocation;
             return React.createElement("div", null, React.createElement("div", { style: { padding: "3px" } }, React.createElement(IconButton, { tooltip: "Column Chart", tooltipPosition: "top-center", style: {
                     backgroundColor: chartsettings.chartCode == "ColumnChart" ? "rgba(144,238,144,0.5)" : "transparent",
                     borderRadius: "50%"
                 }, onTouchTap: function onTouchTap(e) {
-                    _this2.onChangeChartCode('ColumnChart', chartlocation);
+                    _this2.onChangeChartCode('ColumnChart');
                 } }, React.createElement(FontIcon, { className: "material-icons" }, "insert_chart")), React.createElement(IconButton, { tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
                     backgroundColor: chartsettings.chartCode == "DonutChart" ? "rgba(144,238,144,0.5)" : "transparent",
                     borderRadius: "50%"
                 }, onTouchTap: function onTouchTap(e) {
-                    _this2.onChangeChartCode('DonutChart', chartlocation);
+                    _this2.onChangeChartCode('DonutChart');
                 } }, React.createElement(FontIcon, { className: "material-icons" }, "donut_small")), React.createElement(IconButton, { tooltip: "Timeline", tooltipPosition: "top-center", style: {
                     backgroundColor: this.props.chartsettings.chartCode == "TimeLine" ? "rgba(144,238,144,0.5)" : "transparent",
                     borderRadius: "50%"
                 }, disabled: true, onTouchTap: function onTouchTap(e) {
-                    _this2.onChangeChartCode('Timeline', chartlocation);
+                    _this2.onChangeChartCode('Timeline');
                 } }, React.createElement(FontIcon, { className: "material-icons" }, "timeline"))), React.createElement("div", { style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "info_outline"))), React.createElement(Chart, { chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: chartsettings.graph_id }), React.createElement("div", { style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" } }, React.createElement(IconButton, { disabled: true }, React.createElement(FontIcon, { className: "material-icons" }, "view_list"))));
         }
     }]);
@@ -9744,11 +9743,9 @@ var ExplorerPortal = function (_Component) {
         _this.componentWillMount = function () {};
         _this.getTabs = function () {
             var chartTabs = _this.props.budgetPortal.portalCharts.map(function (chartTab, chartindex) {
-                chartTab.portalchartlocation.portalindex = chartindex;
                 var chartparms = chartTab.portalchartparms;
                 var chartsettings = chartTab.portalchartsettings;
-                var chartlocation = chartTab.portalchartlocation;
-                return React.createElement(Tab, { style: { fontSize: "12px" }, label: chartTab.chartblocktitle, value: "programs", key: chartindex }, React.createElement(explorerchart_1.ExplorerChart, { chartlocation: chartlocation, chartsettings: chartsettings, chartparms: chartparms }));
+                return React.createElement(Tab, { style: { fontSize: "12px" }, label: chartTab.chartblocktitle, value: "programs", key: chartindex }, React.createElement(explorerchart_1.ExplorerChart, { chartsettings: chartsettings, chartparms: chartparms }));
             });
             return chartTabs;
         };
@@ -10299,7 +10296,8 @@ var ExplorerClass = function (_Component) {
             }
             var portals = matrixcolumn.map(function (nodeconfig, index) {
                 var portalcharts = [];
-                for (var chartindex in nodeconfig.charts) {
+
+                var _loop = function _loop(chartindex) {
                     var chartblocktitle = null;
                     if (nodeconfig.datanode.Contents == 'BASELINE' || nodeconfig.charts[chartindex].portalcharttype == 'Categories') {
                         chartblocktitle = portaltitles.Components;
@@ -10307,21 +10305,30 @@ var ExplorerClass = function (_Component) {
                         chartblocktitle = portaltitles.Baseline;
                     }
                     var portalchartparms = nodeconfig.charts[chartindex].chartparms;
+                    var location = {
+                        matrixlocation: nodeconfig.matrixlocation,
+                        portalindex: Number(chartindex)
+                    };
+                    var explorer = _this;
                     var portalchartsettings = {
-                        onSwitchChartCode: _this.switchChartCode,
+                        onSwitchChartCode: function (location) {
+                            return function (chartCode) {
+                                explorer.switchChartCode(location, chartCode);
+                            };
+                        }(location),
                         chartCode: nodeconfig.charts[chartindex].chartCode,
                         graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex
                     };
                     var portalchart = {
                         portalchartparms: portalchartparms,
                         portalchartsettings: portalchartsettings,
-                        portalchartlocation: {
-                            matrixlocation: nodeconfig.matrixlocation,
-                            portalindex: null
-                        },
                         chartblocktitle: "By " + chartblocktitle
                     };
                     portalcharts.push(portalchart);
+                };
+
+                for (var chartindex in nodeconfig.charts) {
+                    _loop(chartindex);
                 }
                 var portalname = null;
                 if (nodeconfig.parentdata) {

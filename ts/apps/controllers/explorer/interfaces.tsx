@@ -16,7 +16,6 @@ interface PortalConfig {
 interface PortalChartConfig {
     portalchartparms: ChartParms,
     portalchartsettings: ChartSettings,
-    portalchartlocation: ChartLocation,
     chartblocktitle: string,
 }
 

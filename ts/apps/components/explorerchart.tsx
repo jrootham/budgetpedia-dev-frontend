@@ -19,22 +19,20 @@ import {
 interface ExplorerChartProps {
     // budgetPortal: PortalConfig,
     chartsettings: ChartSettings,
-    chartlocation: ChartLocation,
     chartparms: ChartParms,
     // onChangePortalChart: Function
 }
 
 class ExplorerChart extends Component<ExplorerChartProps, any> {
 
-    onChangeChartCode = (chartCode, location: ChartLocation) => {
-        this.props.chartsettings.onSwitchChartCode(location, chartCode)
+    onChangeChartCode = (chartCode) => {
+        this.props.chartsettings.onSwitchChartCode(chartCode)
     }
 
     render() {
 
         let chartparms = this.props.chartparms
         let chartsettings = this.props.chartsettings
-        let chartlocation = this.props.chartlocation
 
         return <div>
             <div style={{ padding: "3px" }}>
@@ -50,7 +48,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                         }
                     }
                     onTouchTap={ e => {
-                        this.onChangeChartCode('ColumnChart', chartlocation)
+                        this.onChangeChartCode('ColumnChart')
                     } }>
                     <FontIcon className="material-icons">insert_chart</FontIcon>
                 </IconButton>
@@ -66,7 +64,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                         }
                     }
                     onTouchTap={ e => {
-                        this.onChangeChartCode('DonutChart', chartlocation)
+                        this.onChangeChartCode('DonutChart')
                     } }>
                     <FontIcon className="material-icons">donut_small</FontIcon>
                 </IconButton>
@@ -83,7 +81,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     }
                     disabled
                     onTouchTap={ e => {
-                        this.onChangeChartCode('Timeline', chartlocation)
+                        this.onChangeChartCode('Timeline')
                     } }>
                     <FontIcon className="material-icons">timeline</FontIcon>
                 </IconButton>
