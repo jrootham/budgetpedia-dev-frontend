@@ -8,7 +8,7 @@
 interface PortalConfig {
     portalCharts: PortalChartConfig[],
     portalName: string,
-    onChangeBudgetPortal:Function,
+    // onChangeBudgetPortal:Function,
     portalLocation:MatrixLocation,
 }
 

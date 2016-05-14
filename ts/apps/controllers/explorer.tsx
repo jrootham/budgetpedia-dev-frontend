@@ -41,7 +41,7 @@ import DropDownMenu = require('material-ui/lib/drop-down-menu')
 import MenuItem = require('material-ui/lib/menus/menu-item')
 import Dialog = require('material-ui/lib/dialog')
 
-import { ExplorerChart } from '../components/explorerchart'
+import { ExplorerPortal } from '../components/explorerportal'
 import { ChartSeries } from '../constants'
 import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
@@ -474,17 +474,17 @@ class ExplorerClass extends Component< any, any > {
             let budgetPortal:PortalConfig = {
                 portalCharts:portalcharts,
                 portalName: portalname,
-                onChangeBudgetPortal:this.onChangeBudgetPortalChart,
+                // onChangeBudgetPortal:this.onChangeBudgetPortalChart,
                 portalLocation:{
                     column:matrixcolumn,
                     row:matrixrow,
                 }
             }
 
-            return <ExplorerChart
+            return <ExplorerPortal
                 key = {index}
                 budgetPortal = { budgetPortal }
-                onChangePortalChart = {this.onChangeBudgetPortalChart}
+                onChangePortalChart = { this.onChangeBudgetPortalChart }
                 />
         })
 

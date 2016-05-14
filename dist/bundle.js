@@ -9655,19 +9655,19 @@ var FontIcon = require('material-ui/lib/font-icon');
 var Tabs = require('material-ui/lib/tabs/tabs');
 var Tab = require('material-ui/lib/tabs/tab');
 
-var ExplorerChart = function (_Component) {
-    _inherits(ExplorerChart, _Component);
+var ExplorerPortal = function (_Component) {
+    _inherits(ExplorerPortal, _Component);
 
-    function ExplorerChart() {
+    function ExplorerPortal() {
         var _Object$getPrototypeO;
 
-        _classCallCheck(this, ExplorerChart);
+        _classCallCheck(this, ExplorerPortal);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ExplorerChart)).call.apply(_Object$getPrototypeO, [this].concat(args)));
+        var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ExplorerPortal)).call.apply(_Object$getPrototypeO, [this].concat(args)));
 
         _this.onChangeChartCode = function (chartCode, location) {
             _this.props.budgetPortal.portalCharts[location.portalindex].portalchartsettings.onSwitchChartCode(location, chartCode);
@@ -9702,7 +9702,7 @@ var ExplorerChart = function (_Component) {
         return _this;
     }
 
-    _createClass(ExplorerChart, [{
+    _createClass(ExplorerPortal, [{
         key: 'render',
         value: function render() {
             var _this2 = this;
@@ -9733,10 +9733,10 @@ var ExplorerChart = function (_Component) {
         }
     }]);
 
-    return ExplorerChart;
+    return ExplorerPortal;
 }(Component);
 
-exports.ExplorerChart = ExplorerChart;
+exports.ExplorerPortal = ExplorerPortal;
 
 },{"../../../forked/react-google-charts/Chart.js":2,"material-ui/lib/font-icon":159,"material-ui/lib/icon-button":162,"material-ui/lib/tabs/tab":215,"material-ui/lib/tabs/tabs":217,"react":436}],7:[function(require,module,exports){
 "use strict";
@@ -9928,7 +9928,7 @@ var IconButton = require('material-ui/lib/icon-button');
 var DropDownMenu = require('material-ui/lib/drop-down-menu');
 var MenuItem = require('material-ui/lib/menus/menu-item');
 var Dialog = require('material-ui/lib/dialog');
-var explorerchart_1 = require('../components/explorerchart');
+var explorerportal_1 = require('../components/explorerportal');
 var constants_1 = require('../constants');
 var constants_2 = require('../constants');
 var setviewpointamounts_1 = require('./explorer/setviewpointamounts');
@@ -10239,13 +10239,12 @@ var ExplorerClass = function (_Component) {
                 var budgetPortal = {
                     portalCharts: portalcharts,
                     portalName: portalname,
-                    onChangeBudgetPortal: _this.onChangeBudgetPortalChart,
                     portalLocation: {
                         column: matrixcolumn,
                         row: matrixrow
                     }
                 };
-                return React.createElement(explorerchart_1.ExplorerChart, { key: index, budgetPortal: budgetPortal, onChangePortalChart: _this.onChangeBudgetPortalChart });
+                return React.createElement(explorerportal_1.ExplorerPortal, { key: index, budgetPortal: budgetPortal, onChangePortalChart: _this.onChangeBudgetPortalChart });
             });
             return charts;
         };
@@ -10307,7 +10306,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var Explorer = react_redux_1.connect(mapStateToProps)(ExplorerClass);
 exports.Explorer = Explorer;
 
-},{"../../actions/actions":5,"../components/explorerchart":6,"../constants":7,"./explorer/getchartparms":13,"./explorer/setviewpointamounts":14,"./explorer/updatechartselections":15,"material-ui/lib/card/card":150,"material-ui/lib/card/card-text":148,"material-ui/lib/card/card-title":149,"material-ui/lib/dialog":152,"material-ui/lib/drop-down-menu":154,"material-ui/lib/font-icon":159,"material-ui/lib/icon-button":162,"material-ui/lib/menus/menu-item":173,"react":436,"react-redux":246}],13:[function(require,module,exports){
+},{"../../actions/actions":5,"../components/explorerportal":6,"../constants":7,"./explorer/getchartparms":13,"./explorer/setviewpointamounts":14,"./explorer/updatechartselections":15,"material-ui/lib/card/card":150,"material-ui/lib/card/card-text":148,"material-ui/lib/card/card-title":149,"material-ui/lib/dialog":152,"material-ui/lib/drop-down-menu":154,"material-ui/lib/font-icon":159,"material-ui/lib/icon-button":162,"material-ui/lib/menus/menu-item":173,"react":436,"react-redux":246}],13:[function(require,module,exports){
 "use strict";
 
 var format = require('format-number');

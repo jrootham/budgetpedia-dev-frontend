@@ -19,12 +19,12 @@ import {
     ChartSelectionContext
 } from '../controllers/explorer/interfaces'
 
-interface ExploreChartProps {
+interface ExplorePortalProps {
     budgetPortal:PortalConfig,
     onChangePortalChart:Function
 }
 
-class ExplorerChart extends Component<ExploreChartProps, any> {
+class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     onChangeChartCode = (chartCode,location:PortalChartLocation) => {
         this.props.budgetPortal.portalCharts[location.portalindex]
@@ -164,5 +164,5 @@ class ExplorerChart extends Component<ExploreChartProps, any> {
     }
 }
 
-export { ExplorerChart }
+export { ExplorerPortal }
 

@@ -10,7 +10,7 @@ const IconButton = require('material-ui/lib/icon-button');
 const DropDownMenu = require('material-ui/lib/drop-down-menu');
 const MenuItem = require('material-ui/lib/menus/menu-item');
 const Dialog = require('material-ui/lib/dialog');
-const explorerchart_1 = require('../components/explorerchart');
+const explorerportal_1 = require('../components/explorerportal');
 const constants_1 = require('../constants');
 const constants_2 = require('../constants');
 const setviewpointamounts_1 = require('./explorer/setviewpointamounts');
@@ -301,13 +301,12 @@ class ExplorerClass extends Component {
                 let budgetPortal = {
                     portalCharts: portalcharts,
                     portalName: portalname,
-                    onChangeBudgetPortal: this.onChangeBudgetPortalChart,
                     portalLocation: {
                         column: matrixcolumn,
                         row: matrixrow,
                     }
                 };
-                return React.createElement(explorerchart_1.ExplorerChart, {key: index, budgetPortal: budgetPortal, onChangePortalChart: this.onChangeBudgetPortalChart});
+                return React.createElement(explorerportal_1.ExplorerPortal, {key: index, budgetPortal: budgetPortal, onChangePortalChart: this.onChangeBudgetPortalChart});
             });
             return charts;
         };
