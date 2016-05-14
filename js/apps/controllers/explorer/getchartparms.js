@@ -128,7 +128,18 @@ let getChartParms = (props, callbacks) => {
                     let chart = Chart.chart;
                     let selection = chart.getSelection();
                     let context = { portalchartlocation: configLocation, Chart: Chart, selection: selection, err: err };
-                    onChartComponentSelection(context, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus);
+                    let props = {
+                        context: context,
+                        userselections: userselections,
+                        budgetdata: budgetdata,
+                        chartmatrix: chartmatrix
+                    };
+                    let callbacks = {
+                        refreshPresentation: refreshPresentation,
+                        onPortalCreation: onPortalCreation,
+                        workingStatus: workingStatus,
+                    };
+                    onChartComponentSelection(props, callbacks);
                 };
             })(configlocation)
         }
@@ -185,7 +196,14 @@ let getChartParms = (props, callbacks) => {
     return chartParmsObj;
 };
 exports.getChartParms = getChartParms;
-let onChartComponentSelection = (context, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus) => {
+let onChartComponentSelection = (props, callbacks) => {
+    let context = props.context;
+    let userselections = props.userselections;
+    let budgetdata = props.budgetdata;
+    let chartmatrix = props.chartmatrix;
+    let refreshPresentation = callbacks.refreshPresentation;
+    let onPortalCreation = callbacks.onPortalCreation;
+    let workingStatus = callbacks.workingStatus;
     let portalChartIndex = context.portalchartlocation.portalindex;
     let selection = context.selection[0];
     let selectionrow;

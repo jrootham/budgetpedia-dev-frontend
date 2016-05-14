@@ -10483,7 +10483,18 @@ var getChartParms = function getChartParms(props, callbacks) {
                 var chart = Chart.chart;
                 var selection = chart.getSelection();
                 var context = { portalchartlocation: configLocation, Chart: Chart, selection: selection, err: err };
-                onChartComponentSelection(context, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus);
+                var props = {
+                    context: context,
+                    userselections: userselections,
+                    budgetdata: budgetdata,
+                    chartmatrix: chartmatrix
+                };
+                var callbacks = {
+                    refreshPresentation: refreshPresentation,
+                    onPortalCreation: onPortalCreation,
+                    workingStatus: workingStatus
+                };
+                onChartComponentSelection(props, callbacks);
             };
         }(configlocation)
     }];
@@ -10527,7 +10538,14 @@ var getChartParms = function getChartParms(props, callbacks) {
     return chartParmsObj;
 };
 exports.getChartParms = getChartParms;
-var onChartComponentSelection = function onChartComponentSelection(context, userselections, budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus) {
+var onChartComponentSelection = function onChartComponentSelection(props, callbacks) {
+    var context = props.context;
+    var userselections = props.userselections;
+    var budgetdata = props.budgetdata;
+    var chartmatrix = props.chartmatrix;
+    var refreshPresentation = callbacks.refreshPresentation;
+    var onPortalCreation = callbacks.onPortalCreation;
+    var workingStatus = callbacks.workingStatus;
     var portalChartIndex = context.portalchartlocation.portalindex;
     var selection = context.selection[0];
     var selectionrow = undefined;
@@ -10636,19 +10654,19 @@ var onChartComponentSelection = function onChartComponentSelection(context, user
         var chartParmsObj = null;
         var isError = false;
         for (newnodeindex in newnodeconfig.charts) {
-            var props = {
+            var _props = {
                 nodeConfig: newnodeconfig,
                 chartIndex: newnodeindex,
                 userselections: userselections,
                 budgetdata: budgetdata,
                 chartmatrix: chartmatrix
             };
-            var callbacks = {
+            var _callbacks = {
                 refreshPresentation: refreshPresentation,
                 onPortalCreation: onPortalCreation,
                 workingStatus: workingStatus
             };
-            chartParmsObj = getChartParms(props, callbacks);
+            chartParmsObj = getChartParms(_props, _callbacks);
             if (chartParmsObj.isError) {
                 isError = true;
                 break;

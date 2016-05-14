@@ -47,6 +47,17 @@ interface GetChartParmsCallbacks {
     workingStatus: Function,
 }
 
+interface onChartComponentSelectionProps {
+    context: ChartSelectionContext,
+    userselections: any,
+    budgetdata: any,
+    chartmatrix: any,
+}
+interface onChartComponentSelectionCallbacks {
+    refreshPresentation: Function,
+    onPortalCreation: Function,
+    workingStatus: Function,
+}
 // =====================================================
 // ---------------[ NODE CONFIGURATION ]--------------
 
@@ -160,4 +171,6 @@ export {
     SortedComponentItem,
     GetChartParmsProps,
     GetChartParmsCallbacks,
+    onChartComponentSelectionProps,
+    onChartComponentSelectionCallbacks,
 }

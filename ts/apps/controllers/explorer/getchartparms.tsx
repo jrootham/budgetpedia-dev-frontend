@@ -22,6 +22,8 @@ import {
     NodeChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
+    onChartComponentSelectionProps,
+    onChartComponentSelectionCallbacks,
 } from './interfaces'
 
 import { updateChartSelections } from './updatechartselections'
@@ -211,8 +213,19 @@ let getChartParms = (
                     let selection = chart.getSelection()
                     let context: ChartSelectionContext = { portalchartlocation: configLocation, Chart, selection, err }
 
-                    onChartComponentSelection(context, userselections, 
-                        budgetdata, refreshPresentation, chartmatrix, onPortalCreation, workingStatus)
+                    let props: onChartComponentSelectionProps = {
+                        context,
+                        userselections,
+                        budgetdata,
+                        chartmatrix
+                    }
+                    let callbacks: onChartComponentSelectionCallbacks = {
+                        refreshPresentation,
+                        onPortalCreation,
+                        workingStatus,
+                    }
+
+                    onChartComponentSelection(props, callbacks)
                 }
             })(configlocation)
         }
@@ -294,9 +307,17 @@ let getChartParms = (
 // chartconfig, not the chartconfig itself
 // on selection, makes a child with the same portalCharts offset
 // TODO: create chile which appropriately sets up correct set of child charts
-let onChartComponentSelection = (
-        context: ChartSelectionContext, userselections, budgetdata, 
-        refreshPresentation, chartmatrix, onPortalCreation:Function, workingStatus:Function) => {
+let onChartComponentSelection = (props: onChartComponentSelectionProps,
+    callbacks: onChartComponentSelectionCallbacks) => {
+
+    let context = props.context
+    let userselections = props.userselections
+    let budgetdata = props.budgetdata
+    let chartmatrix = props.chartmatrix
+
+    let refreshPresentation = callbacks.refreshPresentation
+    let onPortalCreation = callbacks.onPortalCreation
+    let workingStatus = callbacks.workingStatus
 
     let portalChartIndex = context.portalchartlocation.portalindex
 
