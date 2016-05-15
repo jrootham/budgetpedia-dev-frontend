@@ -108,7 +108,7 @@ let getChartParms = (
         axistitle = titleref.Alias || titleref.Name
     } else {
         let portaltitles = budgetdata.DataSeries[dataseriesname].Titles
-        axistitle = portaltitles.Components
+        axistitle = portaltitles.Categories
     }
 
     // assemble chart title

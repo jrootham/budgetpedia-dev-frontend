@@ -44,7 +44,7 @@ let getChartParms = (props, callbacks) => {
     }
     else {
         let portaltitles = budgetdata.DataSeries[dataseriesname].Titles;
-        axistitle = portaltitles.Components;
+        axistitle = portaltitles.Categories;
     }
     let title;
     if (nodeConfig.parentdata) {

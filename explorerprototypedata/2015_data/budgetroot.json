@@ -7,11 +7,11 @@
             "Titles":
             {
                 "Baseline":"Programs",
-                "Components":"Expenditure Categories"
+                "Categories":"Expenditure Categories"
             },
             "Units":"DOLLAR",
             "UnitsAlias":"$000's",
-            "Components":"Expenditures",
+            "Categories":"Expenditures",
             "Title":"2015 Council Approved Gross Operating Expenditures",
             "InflationAdjusted":true,
             "Items":
@@ -80,11 +80,11 @@
             "Titles":
             {
                 "Baseline":"Programs",
-                "Components":"Revenue Categories"
+                "Categories":"Revenue Categories"
             },
             "Units":"DOLLAR",
             "UnitsAlias":"$000's",
-            "Components":"Revenues",
+            "Categories":"Revenues",
             "Title":"2015 Council Approved Gross Operating Revenue",
             "InflationAdjusted":true,
             "Items":
@@ -153,11 +153,11 @@
             "Titles":
             {
                 "Baseline":"Programs",
-                "Components":"Staff Designations"
+                "Categories":"Staff Designations"
             },
             "Units":"FTE",
             "UnitsAlias":"Staffing Level (FTE)",
-            "Components":"TimeAllocations",
+            "Categories":"TimeAllocations",
             "Title":"2015 Council Approved Staff Positions",
             "Items":
             {

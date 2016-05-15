@@ -34,15 +34,15 @@ for (var line of records) {
         // decompose
         let years = item.years || {}
         years[year] = total
-        let components = item.Components || {
+        let categories = item.Categories || {
             FULL:{years:{}},
             PART:{years:{}},
         }
-        components.FULL.years[year]=perm
-        components.PART.years[year]=temp
+        categories.FULL.years[year]=perm
+        categories.PART.years[year]=temp
         // re-assemble
         item.years = years
-        item.Components = components
+        item.Categories = categories
     }
 }
 
@@ -67,8 +67,8 @@ for (var line of records) {
         console.log('expense program code not found: ', program)
     } else {
         // decompose
-        let nominaldata = item.Nominal || {years:{}, Components:{}}
-        let adjusteddata = item.Adjusted || {years:{}, Components:{}}
+        let nominaldata = item.Nominal || {years:{}, Categories:{}}
+        let adjusteddata = item.Adjusted || {years:{}, Categories:{}}
 
         // ------------------[ ITEM ]----------------
         let nominalyears = nominaldata.years
@@ -79,10 +79,10 @@ for (var line of records) {
         if (!adjustedyears[year]) adjustedyears[year] = 0
         adjustedyears[year] += amount
 
-        // -------------------[ COMPONENTS ]------------------
+        // -------------------[ CATEGORIES ]------------------
 
-        let nominalcomponents = nominaldata.Components
-        let nominalcompexp = nominalcomponents[expenditure] || {years:{}}
+        let nominalcategories = nominaldata.Categories
+        let nominalcompexp = nominalcategories[expenditure] || {years:{}}
         let nominalyearaccount = nominalcompexp.years[year]
         if (nominalyearaccount) {
             nominalyearaccount += amount
@@ -90,10 +90,10 @@ for (var line of records) {
             nominalyearaccount = amount
         }
         nominalcompexp.years[year] = nominalyearaccount
-        nominalcomponents[expenditure] = nominalcompexp
+        nominalcategories[expenditure] = nominalcompexp
 
-        let adjustedcomponents = adjusteddata.Components
-        let adjustedcompexp = adjustedcomponents[expenditure] || {years:{}}
+        let adjustedcategories = adjusteddata.Categories
+        let adjustedcompexp = adjustedcategories[expenditure] || {years:{}}
         let adjustedyearaccount = adjustedcompexp.years[year]
         if (adjustedyearaccount) {
             adjustedyearaccount += amount
@@ -101,7 +101,7 @@ for (var line of records) {
             adjustedyearaccount = amount
         }
         adjustedcompexp.years[year] = adjustedyearaccount
-        adjustedcomponents[expenditure] = adjustedcompexp
+        adjustedcategories[expenditure] = adjustedcompexp
 
         item.Nominal = nominaldata
         item.Adjusted = adjusteddata
@@ -132,8 +132,8 @@ for (var line of records) {
         console.log('revenue program code not found: ', program)
     } else {
         // decompose
-        let nominaldata = item.Nominal || {years:{}, Components:{}}
-        let adjusteddata = item.Adjusted || {years:{}, Components:{}}
+        let nominaldata = item.Nominal || {years:{}, Categories:{}}
+        let adjusteddata = item.Adjusted || {years:{}, Categories:{}}
 
         // ------------------[ ITEM ]----------------
 
@@ -151,13 +151,13 @@ for (var line of records) {
         if (!adjustedyears[year]) adjustedyears[year] = 0
         adjustedyears[year] += amount
 
-        // -------------------[ COMPONENTS ]------------------
+        // -------------------[ CATEGORIES ]------------------
 
-        // update nominaldata.Components
+        // update nominaldata.Categories
 
         // nominal: decompose...
-        let nominalcomponents = nominaldata.Components
-        let nominalcompyears = nominalcomponents[expenditure] || {years:{}}
+        let nominalcategories = nominaldata.Categories
+        let nominalcompyears = nominalcategories[expenditure] || {years:{}}
         let nominalyearaccount = nominalcompyears.years[year]
         if (nominalyearaccount) {
             nominalyearaccount += amount
@@ -166,13 +166,13 @@ for (var line of records) {
         }
         // nominal: re-assemble...
         nominalcompyears.years[year] = nominalyearaccount
-        nominalcomponents[expenditure] = nominalcompyears
+        nominalcategories[expenditure] = nominalcompyears
 
-        // update adjusteddata.Components
+        // update adjusteddata.Categories
 
         // adjusted: decompose
-        let adjustedcomponents = adjusteddata.Components
-        let adjustedcompyears = adjustedcomponents[expenditure] || {years:{}}
+        let adjustedcategories = adjusteddata.Categories
+        let adjustedcompyears = adjustedcategories[expenditure] || {years:{}}
         let adjustedyearaccount = adjustedcompyears.years[year]
         if (adjustedyearaccount) {
             adjustedyearaccount += amount
@@ -181,7 +181,7 @@ for (var line of records) {
         }
         // adjusted: re-assemble
         adjustedcompyears.years[year] = adjustedyearaccount
-        adjustedcomponents[expenditure] = adjustedcompyears
+        adjustedcategories[expenditure] = adjustedcompyears
 
         // re-assemble
         item.Nominal = nominaldata

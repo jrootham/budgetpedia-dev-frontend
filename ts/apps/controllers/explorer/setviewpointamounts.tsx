@@ -32,7 +32,7 @@ let setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsInfla
 
     let baselinecat = itemseries.Baseline // use for system lookups
     let baselinelookups = budgetdata.Lookups[baselinecat]
-    let componentcat = itemseries.Components
+    let componentcat = itemseries.Categories
     let componentlookups = budgetdata.Lookups[componentcat]
     let categorylookups = viewpoint.Lookups.Categories
 
@@ -128,21 +128,21 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
                     if (item.Adjusted) {
                         componentSummaries = {
                             years: item.Adjusted.years,
-                            Categories: item.Adjusted.Components,
+                            Categories: item.Adjusted.Categories,
                         }
                     }
                 } else {
                     if (item.Nominal) {
                         componentSummaries = {
                             years: item.Nominal.years,
-                            Categories: item.Nominal.Components,
+                            Categories: item.Nominal.Categories,
                         }
                     }
                 }
             } else {
                 componentSummaries = {
                     years: item.years,
-                    Categories: item.Components,
+                    Categories: item.Categories,
                 }
             }
             // capture data for chart-making

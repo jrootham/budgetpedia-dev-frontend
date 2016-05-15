@@ -7,11 +7,11 @@ module.exports={
             "Name": "Expenditures",
             "Titles": {
                 "Baseline": "Programs",
-                "Components": "Expenditure Categories"
+                "Categories": "Expenditure Categories"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
-            "Components": "Expenditures",
+            "Categories": "Expenditures",
             "Title": "2015 Council Approved Gross Operating Expenditures",
             "InflationAdjusted": true,
             "Items": {
@@ -20,7 +20,7 @@ module.exports={
                         "years": {
                             "2015": 17092675
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 15371796
@@ -57,7 +57,7 @@ module.exports={
                         "years": {
                             "2015": 17092675
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 15371796
@@ -96,7 +96,7 @@ module.exports={
                         "years": {
                             "2015": 2763451
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 2244944
@@ -133,7 +133,7 @@ module.exports={
                         "years": {
                             "2015": 2763451
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 2244944
@@ -172,7 +172,7 @@ module.exports={
                         "years": {
                             "2015": 8400403
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 4348489
@@ -209,7 +209,7 @@ module.exports={
                         "years": {
                             "2015": 8400403
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 4348489
@@ -248,7 +248,7 @@ module.exports={
                         "years": {
                             "2015": 2575000
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 953000
@@ -275,7 +275,7 @@ module.exports={
                         "years": {
                             "2015": 2575000
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 953000
@@ -304,7 +304,7 @@ module.exports={
                         "years": {
                             "2015": 4717334
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 4520927
@@ -341,7 +341,7 @@ module.exports={
                         "years": {
                             "2015": 4717334
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 4520927
@@ -380,7 +380,7 @@ module.exports={
                         "years": {
                             "2015": 50445337
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 44512469
@@ -422,7 +422,7 @@ module.exports={
                         "years": {
                             "2015": 50445337
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 44512469
@@ -466,7 +466,7 @@ module.exports={
                         "years": {
                             "2015": 16558562
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 15431315
@@ -508,7 +508,7 @@ module.exports={
                         "years": {
                             "2015": 16558562
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 15431315
@@ -552,7 +552,7 @@ module.exports={
                         "years": {
                             "2015": 452480205
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 86275556
@@ -594,7 +594,7 @@ module.exports={
                         "years": {
                             "2015": 452480205
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 86275556
@@ -638,7 +638,7 @@ module.exports={
                         "years": {
                             "2015": 55757201
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 50442411
@@ -675,7 +675,7 @@ module.exports={
                         "years": {
                             "2015": 55757201
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 50442411
@@ -714,7 +714,7 @@ module.exports={
                         "years": {
                             "2015": 49258541
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 39264578
@@ -756,7 +756,7 @@ module.exports={
                         "years": {
                             "2015": 49258541
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 39264578
@@ -800,7 +800,7 @@ module.exports={
                         "years": {
                             "2015": 7900060
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 6620822
@@ -837,7 +837,7 @@ module.exports={
                         "years": {
                             "2015": 7900060
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 6620822
@@ -876,7 +876,7 @@ module.exports={
                         "years": {
                             "2015": 608194188
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 55041113
@@ -913,7 +913,7 @@ module.exports={
                         "years": {
                             "2015": 608194188
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 55041113
@@ -952,7 +952,7 @@ module.exports={
                         "years": {
                             "2015": 701532019
                         },
-                        "Components": {
+                        "Categories": {
                             "505A": {
                                 "years": {
                                     "2015": 227642150
@@ -979,7 +979,7 @@ module.exports={
                         "years": {
                             "2015": 701532019
                         },
-                        "Components": {
+                        "Categories": {
                             "505A": {
                                 "years": {
                                     "2015": 227642150
@@ -1008,7 +1008,7 @@ module.exports={
                         "years": {
                             "2015": 116920960
                         },
-                        "Components": {
+                        "Categories": {
                             "400A": {
                                 "years": {
                                     "2015": 5767329
@@ -1035,7 +1035,7 @@ module.exports={
                         "years": {
                             "2015": 116920960
                         },
-                        "Components": {
+                        "Categories": {
                             "400A": {
                                 "years": {
                                     "2015": 5767329
@@ -1064,7 +1064,7 @@ module.exports={
                         "years": {
                             "2015": 20822628
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 18672088
@@ -1101,7 +1101,7 @@ module.exports={
                         "years": {
                             "2015": 20822628
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 18672088
@@ -1140,7 +1140,7 @@ module.exports={
                         "years": {
                             "2015": 49531095
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 19782539
@@ -1182,7 +1182,7 @@ module.exports={
                         "years": {
                             "2015": 49531095
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 19782539
@@ -1226,7 +1226,7 @@ module.exports={
                         "years": {
                             "2015": 77653131
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 28715391
@@ -1268,7 +1268,7 @@ module.exports={
                         "years": {
                             "2015": 77653131
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 28715391
@@ -1312,7 +1312,7 @@ module.exports={
                         "years": {
                             "2015": 66838967
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 58244161
@@ -1349,7 +1349,7 @@ module.exports={
                         "years": {
                             "2015": 66838967
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 58244161
@@ -1388,7 +1388,7 @@ module.exports={
                         "years": {
                             "2015": 38178608
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 33109005
@@ -1425,7 +1425,7 @@ module.exports={
                         "years": {
                             "2015": 38178608
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 33109005
@@ -1464,7 +1464,7 @@ module.exports={
                         "years": {
                             "2015": 189876418
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 94290567
@@ -1506,7 +1506,7 @@ module.exports={
                         "years": {
                             "2015": 189876418
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 94290567
@@ -1550,7 +1550,7 @@ module.exports={
                         "years": {
                             "2015": 432888712
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 400338209
@@ -1587,7 +1587,7 @@ module.exports={
                         "years": {
                             "2015": 432888712
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 400338209
@@ -1626,7 +1626,7 @@ module.exports={
                         "years": {
                             "2015": 50708982
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 17472775
@@ -1663,7 +1663,7 @@ module.exports={
                         "years": {
                             "2015": 50708982
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 17472775
@@ -1702,7 +1702,7 @@ module.exports={
                         "years": {
                             "2015": 761466
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 550300
@@ -1734,7 +1734,7 @@ module.exports={
                         "years": {
                             "2015": 761466
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 550300
@@ -1768,7 +1768,7 @@ module.exports={
                         "years": {
                             "2015": 427769
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 387754
@@ -1805,7 +1805,7 @@ module.exports={
                         "years": {
                             "2015": 427769
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 387754
@@ -1844,7 +1844,7 @@ module.exports={
                         "years": {
                             "2015": 121541046
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 94653797
@@ -1886,7 +1886,7 @@ module.exports={
                         "years": {
                             "2015": 121541046
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 94653797
@@ -1930,7 +1930,7 @@ module.exports={
                         "years": {
                             "2015": 49567888
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 40463694
@@ -1967,7 +1967,7 @@ module.exports={
                         "years": {
                             "2015": 49567888
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 40463694
@@ -2006,7 +2006,7 @@ module.exports={
                         "years": {
                             "2015": 188708307
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 141221781
@@ -2043,7 +2043,7 @@ module.exports={
                         "years": {
                             "2015": 188708307
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 141221781
@@ -2082,7 +2082,7 @@ module.exports={
                         "years": {
                             "2015": 50858462
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 42021565
@@ -2124,7 +2124,7 @@ module.exports={
                         "years": {
                             "2015": 50858462
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 42021565
@@ -2168,7 +2168,7 @@ module.exports={
                         "years": {
                             "2015": 1124105
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 1036130
@@ -2205,7 +2205,7 @@ module.exports={
                         "years": {
                             "2015": 1124105
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 1036130
@@ -2245,7 +2245,7 @@ module.exports={
                         "years": {
                             "2015": 242138627
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 197781300
@@ -2287,7 +2287,7 @@ module.exports={
                         "years": {
                             "2015": 242138627
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 197781300
@@ -2331,7 +2331,7 @@ module.exports={
                         "years": {
                             "2015": 2297110
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 2199586
@@ -2358,7 +2358,7 @@ module.exports={
                         "years": {
                             "2015": 2297110
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 2199586
@@ -2387,7 +2387,7 @@ module.exports={
                         "years": {
                             "2015": 1755386
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 1493782
@@ -2424,7 +2424,7 @@ module.exports={
                         "years": {
                             "2015": 1755386
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 1493782
@@ -2463,7 +2463,7 @@ module.exports={
                         "years": {
                             "2015": 198108999
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 164585965
@@ -2510,7 +2510,7 @@ module.exports={
                         "years": {
                             "2015": 198108999
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 164585965
@@ -2559,7 +2559,7 @@ module.exports={
                         "years": {
                             "2015": 134229440
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 23278828
@@ -2591,7 +2591,7 @@ module.exports={
                         "years": {
                             "2015": 134229440
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 23278828
@@ -2625,7 +2625,7 @@ module.exports={
                         "years": {
                             "2015": 438176476
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 288071988
@@ -2667,7 +2667,7 @@ module.exports={
                         "years": {
                             "2015": 438176476
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 288071988
@@ -2711,7 +2711,7 @@ module.exports={
                         "years": {
                             "2015": 43076088
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 39656303
@@ -2753,7 +2753,7 @@ module.exports={
                         "years": {
                             "2015": 43076088
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 39656303
@@ -2797,7 +2797,7 @@ module.exports={
                         "years": {
                             "2015": 1172316989
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 1028821700
@@ -2834,7 +2834,7 @@ module.exports={
                         "years": {
                             "2015": 1172316989
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 1028821700
@@ -2873,7 +2873,7 @@ module.exports={
                         "years": {
                             "2015": 3115800
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 969200
@@ -2905,7 +2905,7 @@ module.exports={
                         "years": {
                             "2015": 3115800
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 969200
@@ -2939,7 +2939,7 @@ module.exports={
                         "years": {
                             "2015": 21956972
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 18994536
@@ -2976,7 +2976,7 @@ module.exports={
                         "years": {
                             "2015": 21956972
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 18994536
@@ -3015,7 +3015,7 @@ module.exports={
                         "years": {
                             "2015": 24846399
                         },
-                        "Components": {
+                        "Categories": {
                             "510A": {
                                 "years": {
                                     "2015": 24846399
@@ -3027,7 +3027,7 @@ module.exports={
                         "years": {
                             "2015": 24846399
                         },
-                        "Components": {
+                        "Categories": {
                             "510A": {
                                 "years": {
                                     "2015": 24846399
@@ -3041,7 +3041,7 @@ module.exports={
                         "years": {
                             "2015": 253979470
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 181685344
@@ -3083,7 +3083,7 @@ module.exports={
                         "years": {
                             "2015": 253979470
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 181685344
@@ -3127,7 +3127,7 @@ module.exports={
                         "years": {
                             "2015": 39919000
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 32520000
@@ -3154,7 +3154,7 @@ module.exports={
                         "years": {
                             "2015": 39919000
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 32520000
@@ -3183,7 +3183,7 @@ module.exports={
                         "years": {
                             "2015": 662409271
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 68280876
@@ -3225,7 +3225,7 @@ module.exports={
                         "years": {
                             "2015": 662409271
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 68280876
@@ -3269,7 +3269,7 @@ module.exports={
                         "years": {
                             "2015": 49007718
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 14694532
@@ -3311,7 +3311,7 @@ module.exports={
                         "years": {
                             "2015": 49007718
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 14694532
@@ -3355,7 +3355,7 @@ module.exports={
                         "years": {
                             "2015": 1113252892
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 187755901
@@ -3397,7 +3397,7 @@ module.exports={
                         "years": {
                             "2015": 1113252892
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 187755901
@@ -3441,7 +3441,7 @@ module.exports={
                         "years": {
                             "2015": 370785148
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 93897682
@@ -3483,7 +3483,7 @@ module.exports={
                         "years": {
                             "2015": 370785148
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 93897682
@@ -3527,7 +3527,7 @@ module.exports={
                         "years": {
                             "2015": 23323671
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 10652574
@@ -3569,7 +3569,7 @@ module.exports={
                         "years": {
                             "2015": 23323671
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 10652574
@@ -3613,7 +3613,7 @@ module.exports={
                         "years": {
                             "2015": 350356541
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 99098510
@@ -3655,7 +3655,7 @@ module.exports={
                         "years": {
                             "2015": 350356541
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 99098510
@@ -3699,7 +3699,7 @@ module.exports={
                         "years": {
                             "2015": 76837594
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 64410453
@@ -3741,7 +3741,7 @@ module.exports={
                         "years": {
                             "2015": 76837594
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 64410453
@@ -3785,7 +3785,7 @@ module.exports={
                         "years": {
                             "2015": 1693820299
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 1212667300
@@ -3827,7 +3827,7 @@ module.exports={
                         "years": {
                             "2015": 1693820299
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 1212667300
@@ -3871,7 +3871,7 @@ module.exports={
                         "years": {
                             "2015": 115313100
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 57920300
@@ -3898,7 +3898,7 @@ module.exports={
                         "years": {
                             "2015": 115313100
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 57920300
@@ -3927,7 +3927,7 @@ module.exports={
                         "years": {
                             "2015": 1096654889
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 171294425
@@ -3969,7 +3969,7 @@ module.exports={
                         "years": {
                             "2015": 1096654889
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 171294425
@@ -4013,7 +4013,7 @@ module.exports={
                         "years": {
                             "2015": 2265946
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 569957
@@ -4045,7 +4045,7 @@ module.exports={
                         "years": {
                             "2015": 2265946
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 569957
@@ -4079,7 +4079,7 @@ module.exports={
                         "years": {
                             "2015": 50594167
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 28944770
@@ -4111,7 +4111,7 @@ module.exports={
                         "years": {
                             "2015": 50594167
                         },
-                        "Components": {
+                        "Categories": {
                             "100A": {
                                 "years": {
                                     "2015": 28944770
@@ -4148,11 +4148,11 @@ module.exports={
             "Name": "Revenues",
             "Titles": {
                 "Baseline": "Programs",
-                "Components": "Revenue Categories"
+                "Categories": "Revenue Categories"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
-            "Components": "Revenues",
+            "Categories": "Revenues",
             "Title": "2015 Council Approved Gross Operating Revenue",
             "InflationAdjusted": true,
             "Items": {
@@ -4161,7 +4161,7 @@ module.exports={
                         "years": {
                             "2015": 7844066
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 5293589
@@ -4178,7 +4178,7 @@ module.exports={
                         "years": {
                             "2015": 7844066
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 5293589
@@ -4197,7 +4197,7 @@ module.exports={
                         "years": {
                             "2015": 1569495
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 125076
@@ -4219,7 +4219,7 @@ module.exports={
                         "years": {
                             "2015": 1569495
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 125076
@@ -4243,7 +4243,7 @@ module.exports={
                         "years": {
                             "2015": 8407168
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 7382943
@@ -4260,7 +4260,7 @@ module.exports={
                         "years": {
                             "2015": 8407168
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 7382943
@@ -4279,7 +4279,7 @@ module.exports={
                         "years": {
                             "2015": 2575000
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 650000
@@ -4296,7 +4296,7 @@ module.exports={
                         "years": {
                             "2015": 2575000
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 650000
@@ -4316,7 +4316,7 @@ module.exports={
                         "years": {
                             "2015": 61199885
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 923845
@@ -4348,7 +4348,7 @@ module.exports={
                         "years": {
                             "2015": 61199885
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 923845
@@ -4382,7 +4382,7 @@ module.exports={
                         "years": {
                             "2015": 6780704
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 2707488
@@ -4409,7 +4409,7 @@ module.exports={
                         "years": {
                             "2015": 6780704
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 2707488
@@ -4438,7 +4438,7 @@ module.exports={
                         "years": {
                             "2015": 375718177
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 9475000
@@ -4470,7 +4470,7 @@ module.exports={
                         "years": {
                             "2015": 375718177
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 9475000
@@ -4504,7 +4504,7 @@ module.exports={
                         "years": {
                             "2015": 8375681
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 4862408
@@ -4531,7 +4531,7 @@ module.exports={
                         "years": {
                             "2015": 8375681
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 4862408
@@ -4560,7 +4560,7 @@ module.exports={
                         "years": {
                             "2015": 17415217
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 8766500
@@ -4592,7 +4592,7 @@ module.exports={
                         "years": {
                             "2015": 17415217
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 8766500
@@ -4626,7 +4626,7 @@ module.exports={
                         "years": {
                             "2015": 423213
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 252713
@@ -4648,7 +4648,7 @@ module.exports={
                         "years": {
                             "2015": 423213
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 252713
@@ -4672,7 +4672,7 @@ module.exports={
                         "years": {
                             "2015": 168452744
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 1952942
@@ -4694,7 +4694,7 @@ module.exports={
                         "years": {
                             "2015": 168452744
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 1952942
@@ -4718,7 +4718,7 @@ module.exports={
                         "years": {
                             "2015": 58405898
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 2777457
@@ -4745,7 +4745,7 @@ module.exports={
                         "years": {
                             "2015": 58405898
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 2777457
@@ -4774,7 +4774,7 @@ module.exports={
                         "years": {
                             "2015": 1222776625
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 35299700
@@ -4811,7 +4811,7 @@ module.exports={
                         "years": {
                             "2015": 1222776625
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 35299700
@@ -4850,7 +4850,7 @@ module.exports={
                         "years": {
                             "2015": 130000
                         },
-                        "Components": {
+                        "Categories": {
                             "930A": {
                                 "years": {
                                     "2015": 130000
@@ -4862,7 +4862,7 @@ module.exports={
                         "years": {
                             "2015": 130000
                         },
-                        "Components": {
+                        "Categories": {
                             "930A": {
                                 "years": {
                                     "2015": 130000
@@ -4876,7 +4876,7 @@ module.exports={
                         "years": {
                             "2015": 54583733
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 6918834
@@ -4898,7 +4898,7 @@ module.exports={
                         "years": {
                             "2015": 54583733
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 6918834
@@ -4922,7 +4922,7 @@ module.exports={
                         "years": {
                             "2015": 23744266
                         },
-                        "Components": {
+                        "Categories": {
                             "805A": {
                                 "years": {
                                     "2015": 2775200
@@ -4969,7 +4969,7 @@ module.exports={
                         "years": {
                             "2015": 23744266
                         },
-                        "Components": {
+                        "Categories": {
                             "805A": {
                                 "years": {
                                     "2015": 2775200
@@ -5018,7 +5018,7 @@ module.exports={
                         "years": {
                             "2015": 59293971
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 175570
@@ -5050,7 +5050,7 @@ module.exports={
                         "years": {
                             "2015": 59293971
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 175570
@@ -5084,7 +5084,7 @@ module.exports={
                         "years": {
                             "2015": 38430916
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 35146509
@@ -5101,7 +5101,7 @@ module.exports={
                         "years": {
                             "2015": 38430916
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 35146509
@@ -5120,7 +5120,7 @@ module.exports={
                         "years": {
                             "2015": 123559063
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 50194952
@@ -5162,7 +5162,7 @@ module.exports={
                         "years": {
                             "2015": 123559063
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 50194952
@@ -5206,7 +5206,7 @@ module.exports={
                         "years": {
                             "2015": 17000186
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 247406
@@ -5243,7 +5243,7 @@ module.exports={
                         "years": {
                             "2015": 17000186
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 247406
@@ -5282,7 +5282,7 @@ module.exports={
                         "years": {
                             "2015": 50708980
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 47687225
@@ -5309,7 +5309,7 @@ module.exports={
                         "years": {
                             "2015": 50708980
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 47687225
@@ -5338,7 +5338,7 @@ module.exports={
                         "years": {
                             "2015": 449500
                         },
-                        "Components": {
+                        "Categories": {
                             "805A": {
                                 "years": {
                                     "2015": 36200
@@ -5365,7 +5365,7 @@ module.exports={
                         "years": {
                             "2015": 449500
                         },
-                        "Components": {
+                        "Categories": {
                             "805A": {
                                 "years": {
                                     "2015": 36200
@@ -5395,7 +5395,7 @@ module.exports={
                         "years": {
                             "2015": 49242309
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 13508878
@@ -5427,7 +5427,7 @@ module.exports={
                         "years": {
                             "2015": 49242309
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 13508878
@@ -5461,7 +5461,7 @@ module.exports={
                         "years": {
                             "2015": 29261228
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 22162478
@@ -5493,7 +5493,7 @@ module.exports={
                         "years": {
                             "2015": 29261228
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 22162478
@@ -5527,7 +5527,7 @@ module.exports={
                         "years": {
                             "2015": 16516100
                         },
-                        "Components": {
+                        "Categories": {
                             "805A": {
                                 "years": {
                                     "2015": 5695400
@@ -5564,7 +5564,7 @@ module.exports={
                         "years": {
                             "2015": 16516100
                         },
-                        "Components": {
+                        "Categories": {
                             "805A": {
                                 "years": {
                                     "2015": 5695400
@@ -5603,7 +5603,7 @@ module.exports={
                         "years": {
                             "2015": 29819236
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 1541461
@@ -5635,7 +5635,7 @@ module.exports={
                         "years": {
                             "2015": 29819236
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 1541461
@@ -5671,7 +5671,7 @@ module.exports={
                         "years": {
                             "2015": 195942621
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 72800
@@ -5703,7 +5703,7 @@ module.exports={
                         "years": {
                             "2015": 195942621
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 72800
@@ -5739,7 +5739,7 @@ module.exports={
                         "years": {
                             "2015": 123412374
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 894158
@@ -5776,7 +5776,7 @@ module.exports={
                         "years": {
                             "2015": 123412374
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 894158
@@ -5815,7 +5815,7 @@ module.exports={
                         "years": {
                             "2015": 134229440
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 128878837
@@ -5837,7 +5837,7 @@ module.exports={
                         "years": {
                             "2015": 134229440
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 128878837
@@ -5861,7 +5861,7 @@ module.exports={
                         "years": {
                             "2015": 129966794
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 7561289
@@ -5908,7 +5908,7 @@ module.exports={
                         "years": {
                             "2015": 129966794
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 7561289
@@ -5957,7 +5957,7 @@ module.exports={
                         "years": {
                             "2015": 27477221
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 24205978
@@ -5979,7 +5979,7 @@ module.exports={
                         "years": {
                             "2015": 27477221
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 24205978
@@ -6003,7 +6003,7 @@ module.exports={
                         "years": {
                             "2015": 192654100
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 9956100
@@ -6035,7 +6035,7 @@ module.exports={
                         "years": {
                             "2015": 192654100
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 9956100
@@ -6069,7 +6069,7 @@ module.exports={
                         "years": {
                             "2015": 750000
                         },
-                        "Components": {
+                        "Categories": {
                             "930A": {
                                 "years": {
                                     "2015": 750000
@@ -6081,7 +6081,7 @@ module.exports={
                         "years": {
                             "2015": 750000
                         },
-                        "Components": {
+                        "Categories": {
                             "930A": {
                                 "years": {
                                     "2015": 750000
@@ -6095,7 +6095,7 @@ module.exports={
                         "years": {
                             "2015": 12214286
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 9367334
@@ -6127,7 +6127,7 @@ module.exports={
                         "years": {
                             "2015": 12214286
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 9367334
@@ -6161,7 +6161,7 @@ module.exports={
                         "years": {
                             "2015": 3873481164
                         },
-                        "Components": {
+                        "Categories": {
                             "940A": {
                                 "years": {
                                     "2015": 3873481164
@@ -6173,7 +6173,7 @@ module.exports={
                         "years": {
                             "2015": 3873481164
                         },
-                        "Components": {
+                        "Categories": {
                             "940A": {
                                 "years": {
                                     "2015": 3873481164
@@ -6187,7 +6187,7 @@ module.exports={
                         "years": {
                             "2015": 197051997
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 10541886
@@ -6229,7 +6229,7 @@ module.exports={
                         "years": {
                             "2015": 197051997
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 10541886
@@ -6273,7 +6273,7 @@ module.exports={
                         "years": {
                             "2015": 36463000
                         },
-                        "Components": {
+                        "Categories": {
                             "805A": {
                                 "years": {
                                     "2015": 1835000
@@ -6300,7 +6300,7 @@ module.exports={
                         "years": {
                             "2015": 36463000
                         },
-                        "Components": {
+                        "Categories": {
                             "805A": {
                                 "years": {
                                     "2015": 1835000
@@ -6329,7 +6329,7 @@ module.exports={
                         "years": {
                             "2015": 340926443
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 11250
@@ -6376,7 +6376,7 @@ module.exports={
                         "years": {
                             "2015": 340926443
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 11250
@@ -6425,7 +6425,7 @@ module.exports={
                         "years": {
                             "2015": 18045552
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 498300
@@ -6457,7 +6457,7 @@ module.exports={
                         "years": {
                             "2015": 18045552
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 498300
@@ -6491,7 +6491,7 @@ module.exports={
                         "years": {
                             "2015": 956823649
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 354355
@@ -6523,7 +6523,7 @@ module.exports={
                         "years": {
                             "2015": 956823649
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 354355
@@ -6557,7 +6557,7 @@ module.exports={
                         "years": {
                             "2015": 370785149
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 5984239
@@ -6589,7 +6589,7 @@ module.exports={
                         "years": {
                             "2015": 370785149
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 5984239
@@ -6623,7 +6623,7 @@ module.exports={
                         "years": {
                             "2015": 17978443
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 12827713
@@ -6645,7 +6645,7 @@ module.exports={
                         "years": {
                             "2015": 17978443
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 12827713
@@ -6669,7 +6669,7 @@ module.exports={
                         "years": {
                             "2015": 142839627
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 8728149
@@ -6706,7 +6706,7 @@ module.exports={
                         "years": {
                             "2015": 142839627
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 8728149
@@ -6745,7 +6745,7 @@ module.exports={
                         "years": {
                             "2015": 46909953
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 25310556
@@ -6777,7 +6777,7 @@ module.exports={
                         "years": {
                             "2015": 46909953
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 25310556
@@ -6811,7 +6811,7 @@ module.exports={
                         "years": {
                             "2015": 1220089500
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 1206687700
@@ -6833,7 +6833,7 @@ module.exports={
                         "years": {
                             "2015": 1220089500
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 1206687700
@@ -6857,7 +6857,7 @@ module.exports={
                         "years": {
                             "2015": 6514300
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 6214300
@@ -6874,7 +6874,7 @@ module.exports={
                         "years": {
                             "2015": 6514300
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 6214300
@@ -6893,7 +6893,7 @@ module.exports={
                         "years": {
                             "2015": 1081135049
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 25000
@@ -6925,7 +6925,7 @@ module.exports={
                         "years": {
                             "2015": 1081135049
                         },
-                        "Components": {
+                        "Categories": {
                             "750A": {
                                 "years": {
                                     "2015": 25000
@@ -6959,7 +6959,7 @@ module.exports={
                         "years": {
                             "2015": 1872649
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 1000000
@@ -6981,7 +6981,7 @@ module.exports={
                         "years": {
                             "2015": 1872649
                         },
-                        "Components": {
+                        "Categories": {
                             "850A": {
                                 "years": {
                                     "2015": 1000000
@@ -7005,7 +7005,7 @@ module.exports={
                         "years": {
                             "2015": 38855103
                         },
-                        "Components": {
+                        "Categories": {
                             "805A": {
                                 "years": {
                                     "2015": 1011500
@@ -7037,7 +7037,7 @@ module.exports={
                         "years": {
                             "2015": 38855103
                         },
-                        "Components": {
+                        "Categories": {
                             "805A": {
                                 "years": {
                                     "2015": 1011500
@@ -7074,18 +7074,18 @@ module.exports={
             "Name": "Staffing",
             "Titles": {
                 "Baseline": "Programs",
-                "Components": "Staff Designations"
+                "Categories": "Staff Designations"
             },
             "Units": "FTE",
             "UnitsAlias": "Staffing Level (FTE)",
-            "Components": "TimeAllocations",
+            "Categories": "TimeAllocations",
             "Title": "2015 Council Approved Staff Positions",
             "Items": {
                 "311SERVICE": {
                     "years": {
                         "2015": 157
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 137
@@ -7102,7 +7102,7 @@ module.exports={
                     "years": {
                         "2015": 19
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 15
@@ -7119,7 +7119,7 @@ module.exports={
                     "years": {
                         "2015": 66.6
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 43.2
@@ -7136,7 +7136,7 @@ module.exports={
                     "years": {
                         "2015": 8
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 8
@@ -7153,7 +7153,7 @@ module.exports={
                     "years": {
                         "2015": 29.5
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 29.5
@@ -7170,7 +7170,7 @@ module.exports={
                     "years": {
                         "2015": 440
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 433
@@ -7187,7 +7187,7 @@ module.exports={
                     "years": {
                         "2015": 102
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 101
@@ -7204,7 +7204,7 @@ module.exports={
                     "years": {
                         "2015": 967.6
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 729.9
@@ -7221,7 +7221,7 @@ module.exports={
                     "years": {
                         "2015": 424.5
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 415.5
@@ -7238,7 +7238,7 @@ module.exports={
                     "years": {
                         "2015": 403.9
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 396.3
@@ -7255,7 +7255,7 @@ module.exports={
                     "years": {
                         "2015": 77.9
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 77.9
@@ -7272,7 +7272,7 @@ module.exports={
                     "years": {
                         "2015": 394
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 394
@@ -7289,7 +7289,7 @@ module.exports={
                     "years": {
                         "2015": null
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": null
@@ -7306,7 +7306,7 @@ module.exports={
                     "years": {
                         "2015": null
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": null
@@ -7323,7 +7323,7 @@ module.exports={
                     "years": {
                         "2015": 176
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 44
@@ -7340,7 +7340,7 @@ module.exports={
                     "years": {
                         "2015": 282
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 282
@@ -7357,7 +7357,7 @@ module.exports={
                     "years": {
                         "2015": 300.6
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 231
@@ -7374,7 +7374,7 @@ module.exports={
                     "years": {
                         "2015": 133
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 127.5
@@ -7391,7 +7391,7 @@ module.exports={
                     "years": {
                         "2015": 390
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 379
@@ -7408,7 +7408,7 @@ module.exports={
                     "years": {
                         "2015": 925.5
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 891.2
@@ -7425,7 +7425,7 @@ module.exports={
                     "years": {
                         "2015": 3154.8
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 3149.5
@@ -7442,7 +7442,7 @@ module.exports={
                     "years": {
                         "2015": 176
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 175
@@ -7459,7 +7459,7 @@ module.exports={
                     "years": {
                         "2015": 7
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 7
@@ -7476,7 +7476,7 @@ module.exports={
                     "years": {
                         "2015": 4
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 4
@@ -7493,7 +7493,7 @@ module.exports={
                     "years": {
                         "2015": 587
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 584
@@ -7510,7 +7510,7 @@ module.exports={
                     "years": {
                         "2015": 301.4
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 268.4
@@ -7527,7 +7527,7 @@ module.exports={
                     "years": {
                         "2015": 1736.3
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 1736.3
@@ -7544,7 +7544,7 @@ module.exports={
                     "years": {
                         "2015": 460
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 459
@@ -7561,7 +7561,7 @@ module.exports={
                     "years": {
                         "2015": 8.3
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 8
@@ -7578,7 +7578,7 @@ module.exports={
                     "years": {
                         "2015": null
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": null
@@ -7595,7 +7595,7 @@ module.exports={
                     "years": {
                         "2015": 2225.9
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 2225.9
@@ -7612,7 +7612,7 @@ module.exports={
                     "years": {
                         "2015": 20
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 1
@@ -7629,7 +7629,7 @@ module.exports={
                     "years": {
                         "2015": 17
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 17
@@ -7646,7 +7646,7 @@ module.exports={
                     "years": {
                         "2015": 1391.3
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 1376.5
@@ -7663,7 +7663,7 @@ module.exports={
                     "years": {
                         "2015": 299.4
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 246.1
@@ -7680,7 +7680,7 @@ module.exports={
                     "years": {
                         "2015": 4435.8
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 1876.2
@@ -7697,7 +7697,7 @@ module.exports={
                     "years": {
                         "2015": 360
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 347
@@ -7714,7 +7714,7 @@ module.exports={
                     "years": {
                         "2015": 7883
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 7672
@@ -7731,7 +7731,7 @@ module.exports={
                     "years": {
                         "2015": 7
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 7
@@ -7748,7 +7748,7 @@ module.exports={
                     "years": {
                         "2015": 199.4
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 192
@@ -7765,7 +7765,7 @@ module.exports={
                     "years": {
                         "2015": null
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": null
@@ -7782,7 +7782,7 @@ module.exports={
                     "years": {
                         "2015": 1838.6
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 1794
@@ -7799,7 +7799,7 @@ module.exports={
                     "years": {
                         "2015": null
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": null
@@ -7816,7 +7816,7 @@ module.exports={
                     "years": {
                         "2015": 707.2
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 568
@@ -7833,7 +7833,7 @@ module.exports={
                     "years": {
                         "2015": 127.5
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 120.5
@@ -7850,7 +7850,7 @@ module.exports={
                     "years": {
                         "2015": 2082
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 2024
@@ -7867,7 +7867,7 @@ module.exports={
                     "years": {
                         "2015": 1081.7
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 964
@@ -7884,7 +7884,7 @@ module.exports={
                     "years": {
                         "2015": 163.1
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 85.9
@@ -7901,7 +7901,7 @@ module.exports={
                     "years": {
                         "2015": 1033.8
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 1001.1
@@ -7918,7 +7918,7 @@ module.exports={
                     "years": {
                         "2015": 693
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 662
@@ -7935,7 +7935,7 @@ module.exports={
                     "years": {
                         "2015": 11756
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 11747
@@ -7952,7 +7952,7 @@ module.exports={
                     "years": {
                         "2015": 562
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 562
@@ -7969,7 +7969,7 @@ module.exports={
                     "years": {
                         "2015": 1710.3
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 1640
@@ -7986,7 +7986,7 @@ module.exports={
                     "years": {
                         "2015": 6.5
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 6
@@ -8003,7 +8003,7 @@ module.exports={
                     "years": {
                         "2015": 402.5
                     },
-                    "Components": {
+                    "Categories": {
                         "FULL": {
                             "years": {
                                 "2015": 278
@@ -10300,7 +10300,7 @@ var ExplorerClass = function (_Component) {
                 var _loop = function _loop(chartindex) {
                     var chartblocktitle = null;
                     if (nodeconfig.datanode.Contents == 'BASELINE' || nodeconfig.charts[chartindex].portalcharttype == 'Categories') {
-                        chartblocktitle = portaltitles.Components;
+                        chartblocktitle = portaltitles.Categories;
                     } else {
                         chartblocktitle = portaltitles.Baseline;
                     }
@@ -10462,7 +10462,7 @@ var getChartParms = function getChartParms(props, callbacks) {
         axistitle = titleref.Alias || titleref.Name;
     } else {
         var portaltitles = budgetdata.DataSeries[dataseriesname].Titles;
-        axistitle = portaltitles.Components;
+        axistitle = portaltitles.Categories;
     }
     var title = undefined;
     if (nodeConfig.parentdata) {
@@ -10792,7 +10792,7 @@ var setViewpointAmounts = function setViewpointAmounts(viewpointname, dataseries
     var itemseries = budgetdata.DataSeries[dataseriesname];
     var baselinecat = itemseries.Baseline;
     var baselinelookups = budgetdata.Lookups[baselinecat];
-    var componentcat = itemseries.Components;
+    var componentcat = itemseries.Categories;
     var componentlookups = budgetdata.Lookups[componentcat];
     var categorylookups = viewpoint.Lookups.Categories;
     var lookups = {
@@ -10839,21 +10839,21 @@ var setComponentSummaries = function setComponentSummaries(components, items, is
                     if (item.Adjusted) {
                         componentSummaries = {
                             years: item.Adjusted.years,
-                            Categories: item.Adjusted.Components
+                            Categories: item.Adjusted.Categories
                         };
                     }
                 } else {
                     if (item.Nominal) {
                         componentSummaries = {
                             years: item.Nominal.years,
-                            Categories: item.Nominal.Components
+                            Categories: item.Nominal.Categories
                         };
                     }
                 }
             } else {
                 componentSummaries = {
                     years: item.years,
-                    Categories: item.Components
+                    Categories: item.Categories
                 };
             }
             if (componentSummaries) {
