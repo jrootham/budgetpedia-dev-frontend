@@ -82,6 +82,7 @@ class ExplorerClass extends Component< any, any > {
     // TODO: these values should be in global state to allow for re-creation after return visit
     // TODO: Take state initialization from external source
     // charts exist in a matrix (row/column) which contain a chartconfig object
+    // TODO: most of 
     state = {
         chartmatrix: [ [], [] ], // DrillDown, Compare (Later: Differences, Context, Build)
         yearslider: {singlevalue:[2015],doublevalue:[2005,2015]},
@@ -96,6 +97,8 @@ class ExplorerClass extends Component< any, any > {
         }
     }
 
+    // numbered scroll elements, which self-register for response to 
+    // chart column select clicks
     branchScrollBlocks = []
     
     // initialize once - create root drilldown and compare series
@@ -103,31 +106,6 @@ class ExplorerClass extends Component< any, any > {
 
         this.initializeChartSeries()
 
-    }
-
-    // callbacks
-    workingStatus = status => {
-        if (status) {
-            this.props.dispatch(Actions.showWaitingMessage())
-            // this.forceUpdate()
-        } else {
-            setTimeout(() => {
-                this.props.dispatch(Actions.hideWaitingMessage())
-            },250)
-        }
-
-    }
-
-    handleDialogOpen = () => {
-        this.setState({
-            dialogopen:true
-        })
-    }
-
-    handleDialogClose = () => {
-        this.setState({
-            dialogopen: false
-        })
     }
 
     initializeChartSeries = () => {
@@ -145,8 +123,10 @@ class ExplorerClass extends Component< any, any > {
         setViewpointAmounts(viewpointname, dataseriesname, budgetdata,
             userselections.inflationadjusted)
 
+        // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
 
+        // *** TODO: SIMPLIFY
         // assemble parms to get initial dataset
         let drilldownnodeconfig: BudgetNodeConfig =
             this.initRootNodeConfig(ChartSeries.DrillDown, userselections)
@@ -166,9 +146,6 @@ class ExplorerClass extends Component< any, any > {
                 workingStatus: this.workingStatus,
             }
             chartParmsObj = getChartParms(props, callbacks)
-                // drilldownnodeconfig, drilldownindex,
-                // userselections, budgetdata, this.refreshPresentation, chartmatrix, 
-                // this.onPortalCreation, this.workingStatus)
 
             if (!chartParmsObj.isError) {
 
@@ -186,22 +163,6 @@ class ExplorerClass extends Component< any, any > {
             chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig
         }
 
-        // -----------------[ THE COMPARE ROOT ]-------------------
-        /*
-                // assemble parms to get initial dataset
-                let comparechartconfig: ChartConfig = this.initRootChartConfig( ChartSeries.Compare, userselections )
-        
-                chartParmsObj = this.getChartParms( comparechartconfig )
-        
-                if (!chartParmsObj.error) {
-        
-                    comparechartconfig.chartparms = chartParmsObj.chartParms
-        
-                    matrixlocation = comparechartconfig.matrixlocation
-                    chartmatrix[ matrixlocation.row ][ matrixlocation.column ] = comparechartconfig
-        
-                }
-        */
         // -------------[ SAVE INITIALIZATION ]----------------
 
         // make initial dataset available to chart
@@ -247,16 +208,27 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
+    handleDialogOpen = () => {
+        this.setState({
+            dialogopen: true
+        })
+    }
+
+    handleDialogClose = () => {
+        this.setState({
+            dialogopen: false
+        })
+    }
+
     // ============================================================
-    // ---------------------[ CONTROL RESPONSES ]------------------
+    // ---------------------[ *** BRANCH *** CONTROL RESPONSES ]------------------
+
+    // onPortalCreation animates scroll-in of new portal
+    // TODO: isolate location from matrix location -- use branch column location instead
     // TODO: use requestAnimationFrame 
     //     https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
     
     // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
-    easeOutCubic = t => {
-        const t1 = t - 1;
-        return t1 * t1 * t1 + 1;
-    }    
     onPortalCreation = (newPortalLocation:MatrixLocation) => {
         let matrixrow = newPortalLocation.row
         let element:Element = this.branchScrollBlocks[matrixrow]
@@ -287,18 +259,13 @@ class ExplorerClass extends Component< any, any > {
                     }
                 }
                 requestAnimationFrame(tick)
-                // let interval = setInterval(() => {
-                //     counter++
-                //     let factor = this.easeOutCubic(counter * t)
-                //     let scrollinterval = adjustment * factor
-                //     element.scrollLeft = scrollleft - scrollinterval
-                //     if (counter == frames) {
-                //         clearInterval(interval)
-                //     }
-                // }, timeinterval)
             }
         })
     }
+    easeOutCubic = t => {
+        const t1 = t - 1;
+        return t1 * t1 * t1 + 1;
+    }    
 
     switchViewpoint = (viewpointname, seriesref) => {
 
@@ -311,13 +278,8 @@ class ExplorerClass extends Component< any, any > {
             userselections,
             chartmatrix,
         })
-        // defer initialization until after update 
-        // triggered by setState, to make sure previous
-        // chart is destroyed; otherwise previous viewpoint 
-        // settings are retained in error
-        // setTimeout(() => {
+
         this.initializeChartSeries()
-        // })
 
     }
 
@@ -435,7 +397,20 @@ class ExplorerClass extends Component< any, any > {
         })
     }
 
-    onChangeBudgetPortalChart = (portalLocation:MatrixLocation) => {
+    // callbacks
+    workingStatus = status => {
+        if (status) {
+            this.props.dispatch(Actions.showWaitingMessage())
+            // this.forceUpdate()
+        } else {
+            setTimeout(() => {
+                this.props.dispatch(Actions.hideWaitingMessage())
+            }, 250)
+        }
+
+    }
+
+    onChangeBudgetPortalChart = (portalLocation: MatrixLocation) => {
         setTimeout(()=>{
             updateChartSelections(this.state.chartmatrix, portalLocation.row)
         })
@@ -702,9 +677,9 @@ class ExplorerClass extends Component< any, any > {
 */
         // -----------[ DRILLDOWN SEGMENT]-------------
 
-        let drilldownlist = explorer.state.chartmatrix[ChartSeries.DrillDown]
+        let drilldownbranch = explorer.state.chartmatrix[ChartSeries.DrillDown]
 
-        let drilldownportals = explorer.getPortals(drilldownlist, ChartSeries.DrillDown)
+        let drilldownportals = explorer.getPortals(drilldownbranch, ChartSeries.DrillDown)
 
         let drilldownsegment = 
         <Card initiallyExpanded >
@@ -750,7 +725,7 @@ class ExplorerClass extends Component< any, any > {
                     <span style={{margin:"0 10px 0 10px",fontStyle:"italic"}}>Facets: </span>
 
                     <IconButton 
-                        tooltip="Expenses" 
+                        tooltip="Expenditures" 
                         tooltipPosition="top-center" 
                         onTouchTap= {
                             e => {
@@ -825,66 +800,6 @@ class ExplorerClass extends Component< any, any > {
 
         </Card >
 
-        // --------------[ COMPARE SEGMENT]-------------
-
-/*        let comparelist = explorer.state.chartmatrix[ChartSeries.Compare]
-
-        let comparecharts = explorer.getCharts(comparelist, ChartSeries.Compare)
-
-        let comparesegment = <Card initiallyExpanded = {false}>
-
-            <CardTitle
-                actAsExpander
-                showExpandableButton >
-
-                Compare
-
-            </CardTitle>
-
-            <CardText expandable >
-
-                <p>Click or tap on any column to drill down</p>
-                <div style={{ whiteSpace: "nowrap" }}>
-
-                    <div style={{ overflow: "scroll" }}>
-
-                        { comparecharts }
-
-                        <div style={{ display: "inline-block", width: "500px" }}></div>
-
-                    </div>
-
-                </div>
-
-            </CardText>
-            
-        </Card>
-
-        // -----------[ DIFFERENCES SEGMENT ]-------------
-
-        let differencessegment = <Card>
-
-            <CardTitle>Show differences</CardTitle>
-
-        </Card>
-
-        // -----------[ CONTEXT SEGMENT ]-------------
-
-        let contextsegment = <Card>
-
-            <CardTitle>Context</CardTitle>
-
-        </Card>
-
-        // -----------[ BUILD SEGMENT ]-------------
-
-        let buildsegment = <Card>
-
-            <CardTitle>Build</CardTitle>
-
-        </Card>
-
-*/
         // -----------[ COMBINE SEGMENTS ]---------------
 
         return <div>

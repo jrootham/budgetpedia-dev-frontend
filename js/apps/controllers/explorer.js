@@ -37,26 +37,6 @@ class ExplorerClass extends Component {
         this.componentDidMount = () => {
             this.initializeChartSeries();
         };
-        this.workingStatus = status => {
-            if (status) {
-                this.props.dispatch(Actions.showWaitingMessage());
-            }
-            else {
-                setTimeout(() => {
-                    this.props.dispatch(Actions.hideWaitingMessage());
-                }, 250);
-            }
-        };
-        this.handleDialogOpen = () => {
-            this.setState({
-                dialogopen: true
-            });
-        };
-        this.handleDialogClose = () => {
-            this.setState({
-                dialogopen: false
-            });
-        };
         this.initializeChartSeries = () => {
             let userselections = this.state.userselections, chartmatrix = this.state.chartmatrix;
             var matrixlocation, chartParmsObj;
@@ -130,9 +110,15 @@ class ExplorerClass extends Component {
                 charts: charts
             };
         };
-        this.easeOutCubic = t => {
-            const t1 = t - 1;
-            return t1 * t1 * t1 + 1;
+        this.handleDialogOpen = () => {
+            this.setState({
+                dialogopen: true
+            });
+        };
+        this.handleDialogClose = () => {
+            this.setState({
+                dialogopen: false
+            });
         };
         this.onPortalCreation = (newPortalLocation) => {
             let matrixrow = newPortalLocation.row;
@@ -165,6 +151,10 @@ class ExplorerClass extends Component {
                     requestAnimationFrame(tick);
                 }
             });
+        };
+        this.easeOutCubic = t => {
+            const t1 = t - 1;
+            return t1 * t1 * t1 + 1;
         };
         this.switchViewpoint = (viewpointname, seriesref) => {
             let userselections = this.state.userselections;
@@ -284,6 +274,16 @@ class ExplorerClass extends Component {
                 updatechartselections_1.updateChartSelections(chartmatrix, location.matrixlocation.row);
             });
         };
+        this.workingStatus = status => {
+            if (status) {
+                this.props.dispatch(Actions.showWaitingMessage());
+            }
+            else {
+                setTimeout(() => {
+                    this.props.dispatch(Actions.hideWaitingMessage());
+                }, 250);
+            }
+        };
         this.onChangeBudgetPortalChart = (portalLocation) => {
             setTimeout(() => {
                 updatechartselections_1.updateChartSelections(this.state.chartmatrix, portalLocation.row);
@@ -368,12 +368,12 @@ class ExplorerClass extends Component {
             position: "absolute",
             zIndex: 2,
         }, onTouchTap: this.handleDialogClose}, React.createElement(FontIcon, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
-        let drilldownlist = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
-        let drilldownportals = explorer.getPortals(drilldownlist, constants_1.ChartSeries.DrillDown);
+        let drilldownbranch = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
+        let drilldownportals = explorer.getPortals(drilldownbranch, constants_1.ChartSeries.DrillDown);
         let drilldownsegment = React.createElement(Card, {initiallyExpanded: true}, React.createElement(CardTitle, {actAsExpander: false, showExpandableButton: false}, "Budget Explorer"), React.createElement(CardText, {expandable: true}, React.createElement("p", {style: { marginTop: 0 }}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: this.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.handleDialogOpen}, React.createElement(FontIcon, {className: "material-icons"}, "help_outline"))), React.createElement("div", {style: {
             padding: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu, {value: this.state.userselections.viewpoint, style: {}, onChange: (e, index, value) => {
             this.switchViewpoint(value, constants_1.ChartSeries.DrillDown);
-        }}, React.createElement(MenuItem, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton, {tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: e => {
+        }}, React.createElement(MenuItem, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {
             this.switchDataSeries('BudgetExpenses', constants_1.ChartSeries.DrillDown);
         }, style: {
             backgroundColor: (this.state.userselections.dataseries == 'BudgetExpenses')

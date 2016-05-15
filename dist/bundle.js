@@ -10011,25 +10011,6 @@ var ExplorerClass = function (_Component) {
         _this.componentDidMount = function () {
             _this.initializeChartSeries();
         };
-        _this.workingStatus = function (status) {
-            if (status) {
-                _this.props.dispatch(Actions.showWaitingMessage());
-            } else {
-                setTimeout(function () {
-                    _this.props.dispatch(Actions.hideWaitingMessage());
-                }, 250);
-            }
-        };
-        _this.handleDialogOpen = function () {
-            _this.setState({
-                dialogopen: true
-            });
-        };
-        _this.handleDialogClose = function () {
-            _this.setState({
-                dialogopen: false
-            });
-        };
         _this.initializeChartSeries = function () {
             var userselections = _this.state.userselections,
                 chartmatrix = _this.state.chartmatrix;
@@ -10124,9 +10105,15 @@ var ExplorerClass = function (_Component) {
                 charts: charts
             };
         };
-        _this.easeOutCubic = function (t) {
-            var t1 = t - 1;
-            return t1 * t1 * t1 + 1;
+        _this.handleDialogOpen = function () {
+            _this.setState({
+                dialogopen: true
+            });
+        };
+        _this.handleDialogClose = function () {
+            _this.setState({
+                dialogopen: false
+            });
         };
         _this.onPortalCreation = function (newPortalLocation) {
             var matrixrow = newPortalLocation.row;
@@ -10161,6 +10148,10 @@ var ExplorerClass = function (_Component) {
                     })();
                 }
             });
+        };
+        _this.easeOutCubic = function (t) {
+            var t1 = t - 1;
+            return t1 * t1 * t1 + 1;
         };
         _this.switchViewpoint = function (viewpointname, seriesref) {
             var userselections = _this.state.userselections;
@@ -10275,6 +10266,15 @@ var ExplorerClass = function (_Component) {
                 updatechartselections_1.updateChartSelections(chartmatrix, location.matrixlocation.row);
             });
         };
+        _this.workingStatus = function (status) {
+            if (status) {
+                _this.props.dispatch(Actions.showWaitingMessage());
+            } else {
+                setTimeout(function () {
+                    _this.props.dispatch(Actions.hideWaitingMessage());
+                }, 250);
+            }
+        };
         _this.onChangeBudgetPortalChart = function (portalLocation) {
             setTimeout(function () {
                 updatechartselections_1.updateChartSelections(_this.state.chartmatrix, portalLocation.row);
@@ -10367,12 +10367,12 @@ var ExplorerClass = function (_Component) {
                     position: "absolute",
                     zIndex: 2
                 }, onTouchTap: this.handleDialogClose }, React.createElement(FontIcon, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
-            var drilldownlist = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
-            var drilldownportals = explorer.getPortals(drilldownlist, constants_1.ChartSeries.DrillDown);
+            var drilldownbranch = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
+            var drilldownportals = explorer.getPortals(drilldownbranch, constants_1.ChartSeries.DrillDown);
             var drilldownsegment = React.createElement(Card, { initiallyExpanded: true }, React.createElement(CardTitle, { actAsExpander: false, showExpandableButton: false }, "Budget Explorer"), React.createElement(CardText, { expandable: true }, React.createElement("p", { style: { marginTop: 0 } }, "If you're new here, ", React.createElement("a", { href: "javascript:void(0)", onTouchTap: this.handleDialogOpen }, "read the help text"), " first.", React.createElement(IconButton, { tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.handleDialogOpen }, React.createElement(FontIcon, { className: "material-icons" }, "help_outline"))), React.createElement("div", { style: {
                     padding: "3px" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Viewpoint: "), React.createElement(DropDownMenu, { value: this.state.userselections.viewpoint, style: {}, onChange: function onChange(e, index, value) {
                     _this2.switchViewpoint(value, constants_1.ChartSeries.DrillDown);
-                } }, React.createElement(MenuItem, { value: 'FUNCTIONAL', primaryText: "Functional" }), React.createElement(MenuItem, { value: 'STRUCTURAL', primaryText: "Structural" })), React.createElement("span", { style: { margin: "0 10px 0 10px", fontStyle: "italic" } }, "Facets: "), React.createElement(IconButton, { tooltip: "Expenses", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
+                } }, React.createElement(MenuItem, { value: 'FUNCTIONAL', primaryText: "Functional" }), React.createElement(MenuItem, { value: 'STRUCTURAL', primaryText: "Structural" })), React.createElement("span", { style: { margin: "0 10px 0 10px", fontStyle: "italic" } }, "Facets: "), React.createElement(IconButton, { tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: function onTouchTap(e) {
                     _this2.switchDataSeries('BudgetExpenses', constants_1.ChartSeries.DrillDown);
                 }, style: {
                     backgroundColor: this.state.userselections.dataseries == 'BudgetExpenses' ? "rgba(144,238,144,0.5)" : 'transparent',

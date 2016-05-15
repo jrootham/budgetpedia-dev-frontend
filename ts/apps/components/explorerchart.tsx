@@ -7,20 +7,13 @@ var Chart = require('../../../forked/react-google-charts/Chart.js')
 import IconButton = require('material-ui/lib/icon-button')
 import FontIcon = require('material-ui/lib/font-icon')
 import {
-    // ChartConfig,
     ChartParms,
-    // PortalConfig,
-    // PortalChartConfig,
-    ChartLocation,
     ChartSettings,
-    // ChartSelectionContext
 } from '../controllers/explorer/interfaces'
 
 interface ExplorerChartProps {
-    // budgetPortal: PortalConfig,
     chartsettings: ChartSettings,
     chartparms: ChartParms,
-    // onChangePortalChart: Function
 }
 
 class ExplorerChart extends Component<ExplorerChartProps, any> {
