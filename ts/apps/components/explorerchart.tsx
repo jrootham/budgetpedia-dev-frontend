@@ -94,6 +94,9 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
             <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}>
                 <IconButton disabled><FontIcon className="material-icons">view_list</FontIcon></IconButton>
             </div>
+            <div style={{ position: "absolute", bottom: 0, right: 0, zIndex: 1000, padding: "3px" }}>
+                <IconButton disabled><FontIcon className="material-icons">note</FontIcon></IconButton>
+            </div>
         </div>
     }
 }
