@@ -9,7 +9,7 @@
 
 /* ================= theme details: ==================== */
 
-let budgetdata = require('../../explorerprototypedata/2015budget.json')
+let budgetdata = require('../../explorerprototypedata/2015budgetA.json')
 
 import theme = require('material-ui/lib/styles/raw-themes/light-raw-theme')
 
