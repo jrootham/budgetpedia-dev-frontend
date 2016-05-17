@@ -1,4 +1,6 @@
 // 2015_preprocess.js
+
+// TODO: avoid creating service when named identically to the program!!
 'use strict'
 var jsonfile = require('jsonfile')
 var fs = require('fs')
@@ -65,7 +67,7 @@ var PROGRAM = 0,
     AMOUNT = 6,
     PROGCODE = 7
 
-let getProgCode = program => {
+let filterForProgCode = program => {
     let progitem = programcodes.filter(item => {
         if (item[1] == program) {
             return true
@@ -76,9 +78,11 @@ let getProgCode = program => {
     return progitem
 }
 
+// containers for records filtered below
 let expenserecords = []
 let revenuerecords = []
 
+// clean records; isolate expenses from revenues
 for (var record of financialrecords) {
     let amount = record[AMOUNT]
     if (amount == '') {
@@ -89,7 +93,6 @@ for (var record of financialrecords) {
             amount = amount.replace('(','-')
             amount = amount.replace(')','')
             amount = amount.replace(/,/g,'')
-            // console.log
             amount = Number(amount)
             if (isNaN(amount)) {
                 throw new Error('NaN: ' + record)
@@ -100,7 +103,7 @@ for (var record of financialrecords) {
             record[AMOUNT] = amount
         }
     } // else must be a number; leave it alone
-    let progcode = getProgCode(record[PROGRAM])
+    let progcode = filterForProgCode(record[PROGRAM])
     progcode = progcode[0]
     if (!progcode || !progcode[0]) {
         throw new Error('progcode not found for ',record)
@@ -113,9 +116,8 @@ for (var record of financialrecords) {
     }
 }
 
-// =============================================================================
-// ----------------------------[ IMPORT EXPENSE DATA ]-------------------------
 
+// utilities for imporing expense and revenue records into json structure
 class Component {
     constructor() {
         this.years = {}
@@ -127,6 +129,7 @@ var assignrecords = (budgetrecords,records) => {
 
     for (var record of records) {
         let program = record[PROGCODE],
+            programname = record[PROGRAM],
             service = record[SERVICE],
             activity = record[ACTIVITY],
             expenditure = record[CATCODE],
@@ -155,40 +158,43 @@ var assignrecords = (budgetrecords,records) => {
             // increment adjusted Categories year value
             adjusteddata.Categories[expenditure].years[year] += amount
 
-            // assert adjusted Components object
-            if (!adjusteddata.Components)
-                adjusteddata.Components = {}
-            if (!adjusteddata.Components[service])
-                adjusteddata.Components[service] = new Component()
-            let servicecomponent = adjusteddata.Components[service]
-            // assert servicecomponent.years[year]
-            if (!servicecomponent.years[year])
-                servicecomponent.years[year] = 0
-            servicecomponent.years[year]+= amount
-            // assert servicecomponent Category
-            if (!servicecomponent.Categories[expenditure])
-                servicecomponent.Categories[expenditure] = {years:{}}
-            if (!servicecomponent.Categories[expenditure].years[year])
-                servicecomponent.Categories[expenditure].years[year] = 0
-            servicecomponent.Categories[expenditure].years[year] += amount
-
-            if (activity != service) {
+            if (programname != activity) {
                 // assert adjusted Components object
-                if (!servicecomponent.Components)
-                    servicecomponent.Components = {}
-                if (!servicecomponent.Components[activity])
-                    servicecomponent.Components[activity] = new Component()
-                let activitycomponent = servicecomponent.Components[activity]
-                // assert activitycomponent.years[year]
-                if (!activitycomponent.years[year])
-                    activitycomponent.years[year] = 0
-                activitycomponent.years[year]+= amount
+                if (!adjusteddata.Components)
+                    adjusteddata.Components = {}
+                if (!adjusteddata.Components[service])
+                    adjusteddata.Components[service] = new Component()
+
+                let servicecomponent = adjusteddata.Components[service]
+                // assert servicecomponent.years[year]
+                if (!servicecomponent.years[year])
+                    servicecomponent.years[year] = 0
+                servicecomponent.years[year]+= amount
                 // assert servicecomponent Category
-                if (!activitycomponent.Categories[expenditure])
-                    activitycomponent.Categories[expenditure] = {years:{}}
-                if (!activitycomponent.Categories[expenditure].years[year])
-                    activitycomponent.Categories[expenditure].years[year] = 0
-                activitycomponent.Categories[expenditure].years[year] += amount
+                if (!servicecomponent.Categories[expenditure])
+                    servicecomponent.Categories[expenditure] = {years:{}}
+                if (!servicecomponent.Categories[expenditure].years[year])
+                    servicecomponent.Categories[expenditure].years[year] = 0
+                servicecomponent.Categories[expenditure].years[year] += amount
+
+                if (activity != service) {
+                    // assert adjusted Components object
+                    if (!servicecomponent.Components)
+                        servicecomponent.Components = {}
+                    if (!servicecomponent.Components[activity])
+                        servicecomponent.Components[activity] = new Component()
+                    let activitycomponent = servicecomponent.Components[activity]
+                    // assert activitycomponent.years[year]
+                    if (!activitycomponent.years[year])
+                        activitycomponent.years[year] = 0
+                    activitycomponent.years[year]+= amount
+                    // assert servicecomponent Category
+                    if (!activitycomponent.Categories[expenditure])
+                        activitycomponent.Categories[expenditure] = {years:{}}
+                    if (!activitycomponent.Categories[expenditure].years[year])
+                        activitycomponent.Categories[expenditure].years[year] = 0
+                    activitycomponent.Categories[expenditure].years[year] += amount
+                }
             }
 
             item.Adjusted = adjusteddata
@@ -196,11 +202,17 @@ var assignrecords = (budgetrecords,records) => {
     }
 }
 
+// =============================================================================
+// ----------------------------[ IMPORT EXPENSE DATA ]-------------------------
+
 var budgetexpenses = budgetroot.DataSeries.BudgetExpenses.Items
 
 var records = expenserecords
 
 assignrecords(budgetexpenses, records)
+
+// =============================================================================
+// ----------------------------[ IMPORT REVENUE DATA ]-------------------------
 
 var budgetrevenues = budgetroot.DataSeries.BudgetRevenues.Items
 
@@ -209,87 +221,81 @@ var records = revenuerecords
 assignrecords(budgetrevenues, records)
 
 // =============================================================================
-// ----------------------------[ IMPORT REVENUE DATA ]-------------------------
-/*
-var filetext = fs.readFileSync('./2015_data/2015.revenues.expenditures.csv','utf8')
+// ----------------------------[ ADD SORTED STRUCTURES ]-------------------------
 
-var records = parse(filetext, {auto_parse:true})
+// expenses
+var dataseries = budgetroot.DataSeries['BudgetExpenses']
+var items = budgetexpenses
 
-var budgetrevenues = budgetroot.DataSeries.BudgetRevenues.Items
+var category = dataseries.Categories
+var lookups = budgetroot.Lookups[category]
 
-for (var line of records) {
-    let program = line[0],
-        expenditure = line[2],
-        amount = line[5]
+for (let item in items) {
+    let node = items[item].Adjusted
+    if (node)
+        addSortedLists(node,lookups)
+}
 
-    if (amount === '') 
-        amount = null
-    else 
-        amount = -amount // normalize
+// revenues
+var dataseries = budgetroot.DataSeries['BudgetRevenues']
+var items = budgetrevenues
 
-    let item = budgetrevenues[program]
-    if (!item) {
-        console.log('revenue program code not found: ', program)
-    } else {
-        // decompose
-        let nominaldata = item.Nominal || {years:{}, Categories:{}}
-        let adjusteddata = item.Adjusted || {years:{}, Categories:{}}
+var category = dataseries.Categories
+var lookups = budgetroot.Lookups[category]
 
-        // ------------------[ ITEM ]----------------
+for (let item in items) {
+    let node = items[item].Adjusted
+    if (node)
+        addSortedLists(node,lookups)
+}
 
-        // update nominaldata.years
-
-        // nominal...
-        let nominalyears = nominaldata.years
-        if (!nominalyears[year]) nominalyears[year] = 0
-        nominalyears[year] += amount
-
-        // updaet adjusteddata.years
-
-        // adjusted...
-        let adjustedyears = adjusteddata.years
-        if (!adjustedyears[year]) adjustedyears[year] = 0
-        adjustedyears[year] += amount
-
-        // -------------------[ CATEGORIES ]------------------
-
-        // update nominaldata.Categories
-
-        // nominal: decompose...
-        let nominalcategories = nominaldata.Categories
-        let nominalcompyears = nominalcategories[expenditure] || {years:{}}
-        let nominalyearaccount = nominalcompyears.years[year]
-        if (nominalyearaccount) {
-            nominalyearaccount += amount
-        } else {
-            nominalyearaccount = amount
+// recursive
+function addSortedLists(node,lookups) {
+    if (node.Categories) {
+        node.SortedCategories = getNameSortedComponents(node.Categories,lookups)
+    }
+    if (node.Components) {
+        node.SortedComponents = getNameSortedComponents(node.Components)
+        for (let subnode in node.Components) {
+            addSortedLists(subnode,lookups)
         }
-        // nominal: re-assemble...
-        nominalcompyears.years[year] = nominalyearaccount
-        nominalcategories[expenditure] = nominalcompyears
-
-        // update adjusteddata.Categories
-
-        // adjusted: decompose
-        let adjustedcategories = adjusteddata.Categories
-        let adjustedcompyears = adjustedcategories[expenditure] || {years:{}}
-        let adjustedyearaccount = adjustedcompyears.years[year]
-        if (adjustedyearaccount) {
-            adjustedyearaccount += amount
-        } else {
-            adjustedyearaccount = amount
-        }
-        // adjusted: re-assemble
-        adjustedcompyears.years[year] = adjustedyearaccount
-        adjustedcategories[expenditure] = adjustedcompyears
-
-        // re-assemble
-        item.Nominal = nominaldata
-        item.Adjusted = adjusteddata
     }
 }
 
-*/// ======================================================================
+// utility used later
+function getNameSortedComponents(items, lookups) {
+    let sorted = []
+    for (let itemname in items) {
+        let component = items[itemname]
+
+        let name, item
+        if (lookups) {
+            name = lookups[itemname]
+        } else {
+            name = itemname
+        }
+        item = {
+            Code: itemname,
+            Name: name || 'unknown name'
+        }
+        sorted.push(item)
+    }
+    sorted.sort((a, b) => {
+        let value
+        if (a.Name < b.Name)
+            value = -1
+        else if (a.Name > b.Name)
+            value = 1
+        else
+            value = 0
+        return value
+    })
+
+    return sorted
+
+}
+
+// ======================================================================
 // -------------------------[ SAVE OUTPUT JSON FILE ]--------------------
 
 jsonfile.spaces = 4
