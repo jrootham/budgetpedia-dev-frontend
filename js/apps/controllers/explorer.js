@@ -13,7 +13,7 @@ const Dialog = require('material-ui/lib/dialog');
 const explorerportal_1 = require('../components/explorerportal');
 const constants_1 = require('../constants');
 const constants_2 = require('../constants');
-const setviewpointamounts_1 = require('./explorer/setviewpointamounts');
+const setviewpointdata_1 = require('./explorer/setviewpointdata');
 const getchartparms_1 = require('./explorer/getchartparms');
 const updatechartselections_1 = require('./explorer/updatechartselections');
 const Actions = require('../../actions/actions');
@@ -43,7 +43,7 @@ class ExplorerClass extends Component {
             let viewpointname = userselections.viewpoint;
             let dataseriesname = userselections.dataseries;
             let budgetdata = this.props.budgetdata;
-            setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
+            setviewpointdata_1.setViewpointData(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
             let drilldownnodeconfig = this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             let drilldownindex;
             for (drilldownindex in drilldownnodeconfig.charts) {
@@ -178,7 +178,7 @@ class ExplorerClass extends Component {
             let viewpointname = this.state.userselections.viewpoint;
             let dataseriesname = this.state.userselections.dataseries;
             let budgetdata = this.props.budgetdata;
-            setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, this.state.userselections.inflationadjusted);
+            setviewpointdata_1.setViewpointData(viewpointname, dataseriesname, budgetdata, this.state.userselections.inflationadjusted);
             let matrixseries = chartmatrix[seriesref];
             let nodeconfig;
             let cellptr;

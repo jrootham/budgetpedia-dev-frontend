@@ -32548,7 +32548,7 @@ var Dialog = require('material-ui/lib/dialog');
 var explorerportal_1 = require('../components/explorerportal');
 var constants_1 = require('../constants');
 var constants_2 = require('../constants');
-var setviewpointamounts_1 = require('./explorer/setviewpointamounts');
+var setviewpointdata_1 = require('./explorer/setviewpointdata');
 var getchartparms_1 = require('./explorer/getchartparms');
 var updatechartselections_1 = require('./explorer/updatechartselections');
 var Actions = require('../../actions/actions');
@@ -32585,7 +32585,7 @@ var ExplorerClass = function (_Component) {
             var viewpointname = userselections.viewpoint;
             var dataseriesname = userselections.dataseries;
             var budgetdata = _this.props.budgetdata;
-            setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
+            setviewpointdata_1.setViewpointData(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
             var drilldownnodeconfig = _this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             var drilldownindex = undefined;
             for (drilldownindex in drilldownnodeconfig.charts) {
@@ -32742,7 +32742,7 @@ var ExplorerClass = function (_Component) {
             var viewpointname = _this.state.userselections.viewpoint;
             var dataseriesname = _this.state.userselections.dataseries;
             var budgetdata = _this.props.budgetdata;
-            setviewpointamounts_1.setViewpointAmounts(viewpointname, dataseriesname, budgetdata, _this.state.userselections.inflationadjusted);
+            setviewpointdata_1.setViewpointData(viewpointname, dataseriesname, budgetdata, _this.state.userselections.inflationadjusted);
             var matrixseries = chartmatrix[seriesref];
             var nodeconfig = undefined;
             var cellptr = undefined;
@@ -32974,7 +32974,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var Explorer = react_redux_1.connect(mapStateToProps)(ExplorerClass);
 exports.Explorer = Explorer;
 
-},{"../../actions/actions":5,"../components/explorerportal":7,"../constants":8,"./explorer/getchartparms":14,"./explorer/setviewpointamounts":16,"./explorer/updatechartselections":17,"material-ui/lib/card/card":152,"material-ui/lib/card/card-text":150,"material-ui/lib/card/card-title":151,"material-ui/lib/dialog":154,"material-ui/lib/drop-down-menu":156,"material-ui/lib/font-icon":161,"material-ui/lib/icon-button":164,"material-ui/lib/menus/menu-item":175,"react":438,"react-redux":248}],14:[function(require,module,exports){
+},{"../../actions/actions":5,"../components/explorerportal":7,"../constants":8,"./explorer/getchartparms":14,"./explorer/setviewpointdata":16,"./explorer/updatechartselections":17,"material-ui/lib/card/card":152,"material-ui/lib/card/card-text":150,"material-ui/lib/card/card-title":151,"material-ui/lib/dialog":154,"material-ui/lib/drop-down-menu":156,"material-ui/lib/font-icon":161,"material-ui/lib/icon-button":164,"material-ui/lib/menus/menu-item":175,"react":438,"react-redux":248}],14:[function(require,module,exports){
 "use strict";
 
 var format = require('format-number');
@@ -33362,7 +33362,7 @@ exports.onChartComponentSelection = onChartComponentSelection;
 },{"../../constants":8,"./getchartparms":14,"./updatechartselections":17,"format-number":77}],16:[function(require,module,exports){
 "use strict";
 
-var setViewpointAmounts = function setViewpointAmounts(viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) {
+var setViewpointData = function setViewpointData(viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) {
     var viewpoint = budgetdata.Viewpoints[viewpointname];
     if (viewpoint.currentdataseries == dataseriesname) return;
     var itemseries = budgetdata.DataSeries[dataseriesname];
@@ -33382,7 +33382,7 @@ var setViewpointAmounts = function setViewpointAmounts(viewpointname, dataseries
     setComponentAggregates(rootcomponent, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
     viewpoint.currentdataseries = dataseriesname;
 };
-exports.setViewpointAmounts = setViewpointAmounts;
+exports.setViewpointData = setViewpointData;
 var setComponentAggregates = function setComponentAggregates(components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) {
     var cumulatingSummaries = {
         years: {},

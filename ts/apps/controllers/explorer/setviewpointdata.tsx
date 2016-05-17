@@ -21,7 +21,7 @@ import {
 // starts with hash of components, 
 // recursively descends to BASELINE items, then leaves 
 // summaries by year, and Categories by year on ascent
-let setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) => {
+let setViewpointData = (viewpointname, dataseriesname, budgetdata, wantsInflationAdjusted) => {
     let viewpoint = budgetdata.Viewpoints[viewpointname]
 
     // already done if currentdataseries matches request
@@ -328,4 +328,4 @@ let aggregateComponentAggregates = (
     }
 }
 
-export { setViewpointAmounts }
+export { setViewpointData }

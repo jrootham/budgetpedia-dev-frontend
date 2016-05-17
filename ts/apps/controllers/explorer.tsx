@@ -47,7 +47,7 @@ import { ExplorerPortal } from '../components/explorerportal'
 import { ChartSeries } from '../constants'
 import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
-import { setViewpointAmounts } from './explorer/setviewpointamounts'
+import { setViewpointData } from './explorer/setviewpointdata'
 import { getChartParms } from './explorer/getchartparms'
 import { updateChartSelections } from './explorer/updatechartselections'
 import * as Actions from '../../actions/actions'
@@ -120,7 +120,7 @@ class ExplorerClass extends Component< any, any > {
         let viewpointname = userselections.viewpoint
         let dataseriesname = userselections.dataseries
         let budgetdata = this.props.budgetdata
-        setViewpointAmounts(viewpointname, dataseriesname, budgetdata,
+        setViewpointData(viewpointname, dataseriesname, budgetdata,
             userselections.inflationadjusted)
 
         // *** CREATE BRANCH
@@ -294,7 +294,7 @@ class ExplorerClass extends Component< any, any > {
         let viewpointname = this.state.userselections.viewpoint
         let dataseriesname = this.state.userselections.dataseries
         let budgetdata = this.props.budgetdata
-        setViewpointAmounts(viewpointname, dataseriesname, budgetdata,
+        setViewpointData(viewpointname, dataseriesname, budgetdata,
             this.state.userselections.inflationadjusted)
         let matrixseries = chartmatrix[seriesref]
         let nodeconfig: BudgetNodeConfig
