@@ -68,9 +68,6 @@ let onChartComponentSelection = (props, callbacks) => {
         let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries];
         let charts = [];
         for (let type of portalcharts) {
-            if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
-                continue;
-            }
             let chartconfig = {
                 charttype: charttype,
                 chartCode: chartCode,
@@ -108,6 +105,7 @@ let onChartComponentSelection = (props, callbacks) => {
             };
             chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
             if (chartParmsObj.isError) {
+                console.log('getChartParms Error', chartParmsObj, props, callbacks);
                 isError = true;
                 break;
             }
@@ -117,6 +115,7 @@ let onChartComponentSelection = (props, callbacks) => {
         }
         if (isError) {
             updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
+            workingStatus(false);
             return;
         }
         newnodeconfig.datanode = chartParmsObj.datanode;

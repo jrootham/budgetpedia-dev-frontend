@@ -126,9 +126,9 @@ let onChartComponentSelection = (props: onChartComponentSelectionProps,
         let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries]
         let charts = []
         for (let type of portalcharts) {
-            if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
-                continue
-            }
+            // if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
+            //     continue
+            // }
             let chartconfig: NodeChartConfig = {
                 charttype,
                 chartCode,
@@ -168,6 +168,7 @@ let onChartComponentSelection = (props: onChartComponentSelectionProps,
             }
             chartParmsObj = getChartParms(props, callbacks)
             if (chartParmsObj.isError) {
+                console.log('getChartParms Error', chartParmsObj, props, callbacks)
                 isError = true
                 break
             }
@@ -178,6 +179,7 @@ let onChartComponentSelection = (props: onChartComponentSelectionProps,
 
         if (isError) {
             updateChartSelections(chartmatrix, matrixrow)
+            workingStatus(false)
             return
         }
         newnodeconfig.datanode = chartParmsObj.datanode

@@ -129,6 +129,7 @@ interface ChartParms {
 // return by getChartParms; returns isError with ChartParms
 interface ChartParmsObj {
     isError: Boolean,
+    errorMessage?:string,
     chartParms?: ChartParms,
     datanode?:any,
 }

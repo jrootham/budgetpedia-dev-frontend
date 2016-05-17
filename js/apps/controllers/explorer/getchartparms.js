@@ -37,7 +37,7 @@ let getChartParms = (props, callbacks) => {
     }
     let chartType = chartConfig.charttype;
     let axistitle = null;
-    if ((node.Contents != 'BASELINE') && (portalcharttype == 'Components')) {
+    if ((node.Contents) && (node.Contents != 'BASELINE') && (portalcharttype == 'Components')) {
         let titleref = viewpointdata.Configuration[node.Contents];
         axistitle = titleref.Alias || titleref.Name;
     }
@@ -150,7 +150,12 @@ let getChartParms = (props, callbacks) => {
         { type: 'string', role: 'annotation' }
     ];
     if (!node[sortedlist]) {
-        return { isError: true, chartParms: {} };
+        console.log('sortedlist missing from node ', sortedlist, node);
+        return {
+            isError: true,
+            errorMessage: 'sorted list "' + sortedlist + '" not available',
+            chartParms: {}
+        };
     }
     let rows = node[sortedlist].map((item) => {
         let component = components[item.Code];

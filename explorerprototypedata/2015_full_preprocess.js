@@ -257,7 +257,7 @@ function addSortedLists(node,lookups) {
     if (node.Components) {
         node.SortedComponents = getNameSortedComponents(node.Components)
         for (let subnode in node.Components) {
-            addSortedLists(subnode,lookups)
+            addSortedLists(node.Components[subnode],lookups)
         }
     }
 }
