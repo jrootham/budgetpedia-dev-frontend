@@ -17,18 +17,18 @@ let setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsInfla
     let items = itemseries.Items;
     let isInflationAdjusted = !!itemseries.InflationAdjusted;
     let rootcomponent = { "ROOT": viewpoint };
-    setComponentSummaries(rootcomponent, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
+    setComponentAggregates(rootcomponent, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
     viewpoint.currentdataseries = dataseriesname;
 };
 exports.setViewpointAmounts = setViewpointAmounts;
-let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) => {
+let setComponentAggregates = (components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) => {
     let cumulatingSummaries = {
         years: {},
         Categories: {},
     };
     for (let componentname in components) {
         let component = components[componentname];
-        let componentSummaries = null;
+        let componentAggregates = null;
         if (component.years)
             delete component.years;
         if (component.Categories)
@@ -37,11 +37,11 @@ let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wa
             if (component.Components) {
                 let sorted = getIndexSortedComponents(component.Components, lookups);
                 component.SortedComponents = sorted;
-                componentSummaries = setComponentSummaries(component.Components, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
-                if (componentSummaries.years)
-                    component.years = componentSummaries.years;
-                if (componentSummaries.Categories) {
-                    component.Categories = componentSummaries.Categories;
+                componentAggregates = setComponentAggregates(component.Components, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
+                if (componentAggregates.years)
+                    component.years = componentAggregates.years;
+                if (componentAggregates.Categories) {
+                    component.Categories = componentAggregates.Categories;
                     if (component.Categories) {
                         let sorted = getNameSortedComponents(component.Categories, lookups);
                         component.SortedCategories = sorted;
@@ -51,20 +51,23 @@ let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wa
         }
         else {
             let item = items[componentname];
+            let importitem = null;
             if (!item)
                 console.error('failed to find item for ', componentname);
             if (isInflationAdjusted) {
                 if (wantsInflationAdjusted) {
-                    if (item.Adjusted) {
-                        componentSummaries = {
+                    importitem = item.Adjusted;
+                    if (importitem) {
+                        componentAggregates = {
                             years: item.Adjusted.years,
                             Categories: item.Adjusted.Categories,
                         };
                     }
                 }
                 else {
+                    importitem = item.Nominal;
                     if (item.Nominal) {
-                        componentSummaries = {
+                        componentAggregates = {
                             years: item.Nominal.years,
                             Categories: item.Nominal.Categories,
                         };
@@ -72,33 +75,51 @@ let setComponentSummaries = (components, items, isInflationAdjusted, lookups, wa
                 }
             }
             else {
-                componentSummaries = {
+                importitem = item;
+                componentAggregates = {
                     years: item.years,
                     Categories: item.Categories,
                 };
             }
-            if (componentSummaries) {
-                if (componentSummaries.years) {
-                    component.years = componentSummaries.years;
-                }
-                if (componentSummaries.Categories) {
-                    component.Components = componentSummaries.Categories;
-                }
-            }
-            else {
-                if (component.Components)
-                    delete component.SortedComponents;
-                delete component.Components;
-                if (component.years)
-                    delete component.years;
-            }
             if (component.Components) {
+                delete component.SortedComponents;
+                delete component.Components;
+            }
+            if (component.Categories) {
+                delete component.SortedCategories;
+                delete component.Categories;
+            }
+            if (component.years) {
+                delete component.years;
+            }
+            if (importitem) {
+                if (importitem.years) {
+                    component.years = importitem.years;
+                }
+                if (importitem.Categories) {
+                    component.Categories = importitem.Categories;
+                }
+                if (importitem.SortedCategories) {
+                    component.SortedCategories = importitem.SortedCategories;
+                }
+                if (importitem.Components) {
+                    component.Components = importitem.Components;
+                }
+                if (importitem.SortedComponents) {
+                    component.SortedComponents = importitem.SortedComponents;
+                }
+            }
+            if (component.Components && !component.SortedComponents) {
                 let sorted = getNameSortedComponents(component.Components, lookups);
                 component.SortedComponents = sorted;
             }
+            if (component.Categories && !component.SortedCategories) {
+                let sorted = getNameSortedComponents(component.Categories, lookups);
+                component.SortedCategories = sorted;
+            }
         }
-        if (componentSummaries) {
-            aggregateComponentSummaries(cumulatingSummaries, componentSummaries);
+        if (componentAggregates) {
+            aggregateComponentAggregates(cumulatingSummaries, componentAggregates);
         }
     }
     return cumulatingSummaries;
@@ -156,9 +177,9 @@ let getNameSortedComponents = (components, lookups) => {
     });
     return sorted;
 };
-let aggregateComponentSummaries = (cumulatingSummaries, componentSummaries) => {
-    if (componentSummaries.years) {
-        let years = componentSummaries.years;
+let aggregateComponentAggregates = (cumulatingSummaries, componentAggregates) => {
+    if (componentAggregates.years) {
+        let years = componentAggregates.years;
         for (let yearname in years) {
             let yearvalue = years[yearname];
             if (cumulatingSummaries.years[yearname])
@@ -167,8 +188,8 @@ let aggregateComponentSummaries = (cumulatingSummaries, componentSummaries) => {
                 cumulatingSummaries.years[yearname] = yearvalue;
         }
     }
-    if (componentSummaries.Categories) {
-        let Categories = componentSummaries.Categories;
+    if (componentAggregates.Categories) {
+        let Categories = componentAggregates.Categories;
         for (let categoryname in Categories) {
             let Category = Categories[categoryname];
             if (Category.years) {

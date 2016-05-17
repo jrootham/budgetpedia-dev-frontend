@@ -7,7 +7,7 @@
 //        previous structure from either expenses or staff
 
 // summarization structure for setviewpointamounts
-interface ComponentSummaries {
+interface ComponentAggregates {
     years?: any,
     Categories?: any,
 }
@@ -50,7 +50,7 @@ let setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsInfla
 
     // set years, and Categories by years
     // initiates recursion
-    setComponentSummaries(rootcomponent, items, isInflationAdjusted,
+    setComponentAggregates(rootcomponent, items, isInflationAdjusted,
         lookups, wantsInflationAdjusted)
 
     // create sentinel to prevent unnucessary processing
@@ -60,12 +60,13 @@ let setViewpointAmounts = (viewpointname, dataseriesname, budgetdata, wantsInfla
 
 }
 
-// this is recursive, with "BASELINE" component at the leaf,
-// or with absence of Components property at leaf
-let setComponentSummaries = (components, items, isInflationAdjusted,
-    lookups, wantsInflationAdjusted): ComponentSummaries => {
+// this is recursive, with absence of Components property at leaf
+// special treatment for 'BASELINE' items -- fetches data from data series items
+// sets years and Categories for the node
+let setComponentAggregates = (components, items, isInflationAdjusted,
+    lookups, wantsInflationAdjusted): ComponentAggregates => {
     // cumulate summaries for this level
-    let cumulatingSummaries: ComponentSummaries = {
+    let cumulatingSummaries: ComponentAggregates = {
         years: {},
         Categories: {},
     }
@@ -76,7 +77,7 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
         // isolate the component...
         let component = components[componentname]
 
-        let componentSummaries = null
+        let componentAggregates = null
 
         // remove any previous aggregations...
         if (component.years) delete component.years
@@ -96,15 +97,15 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
                 // }
 
                 // get child component summaries recursively
-                componentSummaries = setComponentSummaries(
+                componentAggregates = setComponentAggregates(
                     component.Components, items, isInflationAdjusted,
                     lookups, wantsInflationAdjusted)
 
                 // capture data for chart-making
-                if (componentSummaries.years)
-                    component.years = componentSummaries.years
-                if (componentSummaries.Categories) {
-                    component.Categories = componentSummaries.Categories
+                if (componentAggregates.years)
+                    component.years = componentAggregates.years
+                if (componentAggregates.Categories) {
+                    component.Categories = componentAggregates.Categories
                     if (component.Categories) {// && !component.SortedCategories) {
                         let sorted = getNameSortedComponents(
                             component.Categories, lookups)
@@ -121,57 +122,82 @@ let setComponentSummaries = (components, items, isInflationAdjusted,
 
             // fetch the data from the dataseries itemlist
             let item = items[componentname]
+            let importitem = null
             if (!item) console.error('failed to find item for ', componentname)
-            // first set componentSummaries as usual
+            // first set componentAggregates as usual
             if (isInflationAdjusted) {
                 if (wantsInflationAdjusted) {
-                    if (item.Adjusted) {
-                        componentSummaries = {
+                    importitem = item.Adjusted
+                    if (importitem) {
+                        componentAggregates = {
                             years: item.Adjusted.years,
                             Categories: item.Adjusted.Categories,
                         }
                     }
                 } else {
+                    importitem = item.Nominal
                     if (item.Nominal) {
-                        componentSummaries = {
+                        componentAggregates = {
                             years: item.Nominal.years,
                             Categories: item.Nominal.Categories,
                         }
                     }
                 }
             } else {
-                componentSummaries = {
+                importitem = item
+                componentAggregates = {
                     years: item.years,
                     Categories: item.Categories,
                 }
             }
             // capture data for chart-making
-            if (componentSummaries) {
-                if (componentSummaries.years) {
-                    component.years = componentSummaries.years
-                } 
-                if (componentSummaries.Categories) {
-                    component.Components = componentSummaries.Categories
-                } 
-            } else {
-                if (component.Components)
-                    delete component.SortedComponents
-                    delete component.Components
-                if (component.years)
-                    delete component.years
+            if (component.Components) {
+                delete component.SortedComponents
+                delete component.Components
             }
-            if (component.Components) { // && !component.SortedComponents) {
+            if (component.Categories) {
+                delete component.SortedCategories
+                delete component.Categories
+            }
+            if (component.years) {
+                delete component.years
+            }
+            if (importitem) { // there is data
+                if (importitem.years) {
+                    component.years = importitem.years
+                } 
+                if (importitem.Categories) {
+                    component.Categories = importitem.Categories
+                } 
+                if (importitem.SortedCategories) {
+                    component.SortedCategories = importitem.SortedCategories
+                }
+                if (importitem.Components) {
+                    component.Components = importitem.Components
+                }
+                if (importitem.SortedComponents) {
+                    component.SortedComponents = importitem.SortedComponents
+                }
+
+            } 
+            if (component.Components && !component.SortedComponents) { // && !component.SortedComponents) {
                 let sorted = getNameSortedComponents(
                     component.Components, lookups)
 
                 component.SortedComponents = sorted
             }
+            if (component.Categories && !component.SortedCategories) { // && !component.SortedComponents) {
+                let sorted = getNameSortedComponents(
+                    component.Categories, lookups)
+
+                component.SortedCategories = sorted
+            }
 
         }
 
         // aggregate the collected summaries for the caller
-        if (componentSummaries) {
-            aggregateComponentSummaries(cumulatingSummaries, componentSummaries)
+        if (componentAggregates) {
+            aggregateComponentAggregates(cumulatingSummaries, componentAggregates)
         }
     }
 
@@ -241,16 +267,16 @@ let getNameSortedComponents = (components, lookups):SortedComponentItem[] => {
 
 // -----------------------[ SUMMARIZE COMPONENT DATA ]-----------------------
 
-// summarize the componentSummaries into the cumumlatingSummaries
+// summarize the componentAggregates into the cumumlatingSummaries
 
-let aggregateComponentSummaries = (
-    cumulatingSummaries: ComponentSummaries,
-    componentSummaries: ComponentSummaries) => {
+let aggregateComponentAggregates = (
+    cumulatingSummaries: ComponentAggregates,
+    componentAggregates: ComponentAggregates) => {
 
     // if years have been collected, add them to the total
-    if (componentSummaries.years) {
+    if (componentAggregates.years) {
 
-        let years = componentSummaries.years
+        let years = componentAggregates.years
 
         // for each year...
         for (let yearname in years) {
@@ -266,9 +292,9 @@ let aggregateComponentSummaries = (
     }
 
     // if Categories have been collected, add them to the totals
-    if (componentSummaries.Categories) {
+    if (componentAggregates.Categories) {
 
-        let Categories = componentSummaries.Categories
+        let Categories = componentAggregates.Categories
 
         // for each aggreate...
         for (let categoryname in Categories) {
