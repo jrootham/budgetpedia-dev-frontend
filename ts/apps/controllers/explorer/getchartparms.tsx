@@ -104,7 +104,8 @@ let getChartParms = (
     // 2. chart options:
     // get axis title
     let axistitle = null
-    if ((node.Contents) && (node.Contents != 'BASELINE') && (portalcharttype == 'Components')) {
+    if ((node.Contents) && (portalcharttype == 'Components')) {
+    // if ((node.Contents) && (node.Contents != 'BASELINE') && (portalcharttype == 'Components')) {
         let titleref = viewpointdata.Configuration[node.Contents]
         axistitle = titleref.Alias || titleref.Name
     } else {

@@ -370,9 +370,21 @@
                     }
                 },
                 "BASELINE":{
-                    "Name":"Expenditure Categories",
+                    "Name":"Services",
                     "Instance":{
-                        "Name":"Expenditure Category"
+                        "Name":"Service"
+                    }
+                },
+                "SERVICES":{
+                    "Name":"Services",
+                    "Instance":{
+                        "Name":"Service"
+                    }
+                },
+                "ACTIVITIES":{
+                    "Name":"Activities",
+                    "Instance":{
+                        "Name":"Activity"
                     }
                 }
             },
@@ -827,9 +839,21 @@
                     }
                 },
                 "BASELINE":{
-                    "Name":"Programs",
+                    "Name":"Services",
                     "Instance":{
-                        "Name":"Program"
+                        "Name":"Service"
+                    }
+                },
+                "SERVICES":{
+                    "Name":"Services",
+                    "Instance":{
+                        "Name":"Service"
+                    }
+                },
+                "ACTIVITIES":{
+                    "Name":"Activities",
+                    "Instance":{
+                        "Name":"Activity"
                     }
                 }
             },

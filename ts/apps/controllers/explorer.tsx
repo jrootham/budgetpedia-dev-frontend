@@ -451,8 +451,8 @@ class ExplorerClass extends Component< any, any > {
             for (let chartindex in nodeconfig.charts) {
 
                 let chartblocktitle = null
-                if ((nodeconfig.datanode.Contents == 'BASELINE')
-                    || (nodeconfig.charts[chartindex].portalcharttype == 'Categories' )) {
+                if (//(nodeconfig.datanode.Contents == 'BASELINE') ||
+                    (nodeconfig.charts[chartindex].portalcharttype == 'Categories' )) {
                     chartblocktitle = portaltitles.Categories
                 } else {
                     chartblocktitle = portaltitles.Baseline

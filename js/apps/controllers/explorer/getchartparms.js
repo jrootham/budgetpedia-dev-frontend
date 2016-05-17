@@ -37,7 +37,7 @@ let getChartParms = (props, callbacks) => {
     }
     let chartType = chartConfig.charttype;
     let axistitle = null;
-    if ((node.Contents) && (node.Contents != 'BASELINE') && (portalcharttype == 'Components')) {
+    if ((node.Contents) && (portalcharttype == 'Components')) {
         let titleref = viewpointdata.Configuration[node.Contents];
         axistitle = titleref.Alias || titleref.Name;
     }

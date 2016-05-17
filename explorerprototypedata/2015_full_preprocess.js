@@ -233,7 +233,7 @@ var lookups = budgetroot.Lookups[category]
 for (let item in items) {
     let node = items[item].Adjusted
     if (node)
-        addSortedLists(node,lookups)
+        addSortedLists(node,lookups,0)
 }
 
 // revenues
@@ -246,18 +246,23 @@ var lookups = budgetroot.Lookups[category]
 for (let item in items) {
     let node = items[item].Adjusted
     if (node)
-        addSortedLists(node,lookups)
+        addSortedLists(node,lookups,0)
 }
 
 // recursive
-function addSortedLists(node,lookups) {
+function addSortedLists(node,lookups, depth) {
     if (node.Categories) {
         node.SortedCategories = getNameSortedComponents(node.Categories,lookups)
     }
     if (node.Components) {
         node.SortedComponents = getNameSortedComponents(node.Components)
+        if (depth == 0) 
+            node.Contents = 'SERVICES'
+        else node.Contents = 'ACTIVITIES'
         for (let subnode in node.Components) {
+            depth ++
             addSortedLists(node.Components[subnode],lookups)
+            depth --
         }
     }
 }
