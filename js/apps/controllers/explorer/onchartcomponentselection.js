@@ -4,6 +4,7 @@ const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
 const getchartparms_1 = require('./getchartparms');
 let onChartComponentSelection = (props, callbacks) => {
+    console.log('chart selection');
     let context = props.context;
     let userselections = props.userselections;
     let budgetdata = props.budgetdata;
@@ -25,12 +26,15 @@ let onChartComponentSelection = (props, callbacks) => {
     let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrix[matrixrow];
     let nodeconfig = chartmatrix[matrixrow][matrixcolumn];
-    if (nodeconfig.charts[portalChartIndex].portalcharttype == 'Categories')
+    if (nodeconfig.charts[portalChartIndex].portalcharttype == 'Categories') {
+        console.log('returning for Categories');
         return;
+    }
     let viewpoint = nodeconfig.viewpoint, dataseries = nodeconfig.dataseries;
     serieslist.splice(matrixcolumn + 1);
     refreshPresentation(chartmatrix);
     if (!selection) {
+        console.log('returning for no selection');
         delete nodeconfig.charts[portalChartIndex].chartselection;
         delete nodeconfig.charts[portalChartIndex].chart;
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
@@ -39,6 +43,7 @@ let onChartComponentSelection = (props, callbacks) => {
     let childdataroot = nodeconfig.datapath.slice();
     let { node, components } = getchartparms_1.getNodeDatasets(userselections.viewpoint, childdataroot, budgetdata);
     if (!node.Components) {
+        console.log('no components ', node);
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
@@ -53,11 +58,13 @@ let onChartComponentSelection = (props, callbacks) => {
         childdataroot.push(code);
     else {
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
+        console.log('returning for no code');
         return;
     }
     let newnode = node.Components[code];
-    if (!newnode.Components) {
+    if (!newnode.Components && !newnode.Categories) {
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
+        console.log('returning for no newnode components or categories');
         return;
     }
     workingStatus(true);
@@ -68,6 +75,12 @@ let onChartComponentSelection = (props, callbacks) => {
         let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries];
         let charts = [];
         for (let type of portalcharts) {
+            if (type.Type == 'Components' && !newnode.Components) {
+                continue;
+            }
+            if (type.Type == 'Categories' && !newnode.Categories) {
+                continue;
+            }
             let chartconfig = {
                 charttype: charttype,
                 chartCode: chartCode,
@@ -105,7 +118,6 @@ let onChartComponentSelection = (props, callbacks) => {
             };
             chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
             if (chartParmsObj.isError) {
-                console.log('getChartParms Error', chartParmsObj, props, callbacks);
                 isError = true;
                 break;
             }
@@ -116,6 +128,7 @@ let onChartComponentSelection = (props, callbacks) => {
         if (isError) {
             updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
             workingStatus(false);
+            console.log('returning for chartparms error');
             return;
         }
         newnodeconfig.datanode = chartParmsObj.datanode;

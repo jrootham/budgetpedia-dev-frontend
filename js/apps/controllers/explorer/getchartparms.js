@@ -49,8 +49,14 @@ let getChartParms = (props, callbacks) => {
     if (nodeConfig.parentdata) {
         let parentdatanode = nodeConfig.parentdata.datanode;
         let configindex = node.Config || parentdatanode.Contents;
-        let category = viewpointdata.Configuration[configindex].Instance;
-        let catname = category.Alias || category.Name;
+        let catname = null;
+        if (configindex) {
+            let category = viewpointdata.Configuration[configindex].Instance;
+            let catname = category.Alias || category.Name;
+        }
+        else {
+            catname = 'Service/Activity';
+        }
         title = catname + ': ' + nodeConfig.parentdata.Name;
     }
     else {
@@ -150,7 +156,6 @@ let getChartParms = (props, callbacks) => {
         { type: 'string', role: 'annotation' }
     ];
     if (!node[sortedlist]) {
-        console.log('sortedlist missing from node ', sortedlist, node);
         return {
             isError: true,
             errorMessage: 'sorted list "' + sortedlist + '" not available',
