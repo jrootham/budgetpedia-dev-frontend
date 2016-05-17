@@ -92,6 +92,14 @@ let getChartParms = (
     // collect chart node and its components as data sources for the graph
     let { node, components } = getNodeDatasets(viewpointindex, path, budgetdata)
 
+    if (!node) {
+        return {
+            isError: true,
+            errorMessage: 'node not found',
+            chartParms: {}
+        }
+    }
+
     // !Hack!
     if (portalcharttype == 'Categories') {
         components = node.Categories
@@ -320,7 +328,12 @@ let getNodeDatasets = (viewpointindex, path, budgetdata) => {
 
         node = components[index]
 
-        if (!node) console.error('component node not found', components, viewpointindex, path)
+        if (!node) { // can happen legitimately switching from one facet to another
+
+            // console.log('component node not found', components, viewpointindex, path)
+            return {node:null, components:null}
+
+        }
 
         components = node.Components
     }

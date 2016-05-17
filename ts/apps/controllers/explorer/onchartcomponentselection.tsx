@@ -32,8 +32,6 @@ import { getChartParms, getNodeDatasets } from './getchartparms'
 let onChartComponentSelection = (props: onChartComponentSelectionProps,
     callbacks: onChartComponentSelectionCallbacks) => {
 
-    console.log('chart selection')
-
     let context = props.context
     let userselections = props.userselections
     let budgetdata = props.budgetdata
@@ -70,7 +68,6 @@ let onChartComponentSelection = (props: onChartComponentSelectionProps,
     let nodeconfig: BudgetNodeConfig = chartmatrix[matrixrow][matrixcolumn]
 
     if (nodeconfig.charts[portalChartIndex].portalcharttype == 'Categories') {
-        console.log('returning for Categories')
         return
     }
 
@@ -85,7 +82,6 @@ let onChartComponentSelection = (props: onChartComponentSelectionProps,
     refreshPresentation(chartmatrix)
 
     if (!selection) { // deselected
-        console.log('returning for no selection')
         delete nodeconfig.charts[portalChartIndex].chartselection
         delete nodeconfig.charts[portalChartIndex].chart
         updateChartSelections(chartmatrix, matrixrow)
@@ -98,7 +94,6 @@ let onChartComponentSelection = (props: onChartComponentSelectionProps,
         userselections.viewpoint, childdataroot, budgetdata)
 
     if (!node.Components) {
-        console.log('no components ', node)
         updateChartSelections(chartmatrix, matrixrow)
         return
     }
@@ -114,14 +109,12 @@ let onChartComponentSelection = (props: onChartComponentSelectionProps,
         childdataroot.push(code)
     else {
         updateChartSelections(chartmatrix, matrixrow)
-        console.log('returning for no code')
         return
     }
 
     let newnode = node.Components[code]
     if (!newnode.Components && !newnode.Categories) {
         updateChartSelections(chartmatrix, matrixrow)
-        console.log('returning for no newnode components or categories')
         return
     }
     workingStatus(true)
@@ -192,7 +185,6 @@ let onChartComponentSelection = (props: onChartComponentSelectionProps,
         if (isError) {
             updateChartSelections(chartmatrix, matrixrow)
             workingStatus(false)
-            console.log('returning for chartparms error')
             return
         }
         newnodeconfig.datanode = chartParmsObj.datanode

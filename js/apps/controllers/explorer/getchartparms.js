@@ -32,6 +32,13 @@ let getChartParms = (props, callbacks) => {
     let singlerounded = format({ round: 1, integerSeparator: '' });
     let staffrounded = format({ round: 1, integerSeparator: ',' });
     let { node, components } = getNodeDatasets(viewpointindex, path, budgetdata);
+    if (!node) {
+        return {
+            isError: true,
+            errorMessage: 'node not found',
+            chartParms: {}
+        };
+    }
     if (portalcharttype == 'Categories') {
         components = node.Categories;
     }
@@ -210,8 +217,9 @@ let getNodeDatasets = (viewpointindex, path, budgetdata) => {
     let components = node.Components;
     for (let index of path) {
         node = components[index];
-        if (!node)
-            console.error('component node not found', components, viewpointindex, path);
+        if (!node) {
+            return { node: null, components: null };
+        }
         components = node.Components;
     }
     return { node: node, components: components };
