@@ -2,6 +2,11 @@
 // explorer.tsx
 
 /*
+    BUG: an activity may exist for one facet (like expenditures) but not another (like revenues)
+    eg. bundle.js:50148 component node not found Object {Street Litter Bins: Object} FUNCTIONAL ["SHARED", "WASTEWATER", "SOLIDWASTE", "SW-City Beautification", "Parks Bin"]
+    add validation code to avoid this error.
+    - on getnodedatasets
+
     TODO: 
     - do systematic check for error handling requirements; protect against 
         unexpected data (extrenal)

@@ -52,7 +52,7 @@ let getChartParms = (props, callbacks) => {
         let catname = null;
         if (configindex) {
             let category = viewpointdata.Configuration[configindex].Instance;
-            let catname = category.Alias || category.Name;
+            catname = category.Alias || category.Name;
         }
         else {
             catname = 'Service/Activity';
