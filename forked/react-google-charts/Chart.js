@@ -8,6 +8,9 @@ var generateUniqueId = function() {
 	return "reactgooglegraph" + uniqueId;
 };
 
+// update to new version
+// https://github.com/RakanNimer/react-google-charts/blob/master/src/components/Chart.js
+
 var Chart = React.createClass({
 	chart: null,
 	wrapper: null,
@@ -25,6 +28,15 @@ var Chart = React.createClass({
 			self.drawChart();
 		});
 	},
+    componentWillUnmount() {
+        try {
+            google.visualization.events.removeAllListeners(this.wrapper);
+        }
+        catch(err) {
+            console.error("Error removing events, error : ", err);
+        }
+
+    },
 
 	componentDidUpdate: function(){
 		if (GoogleChartLoader.is_loaded){

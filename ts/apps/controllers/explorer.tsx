@@ -2,8 +2,10 @@
 // explorer.tsx
 
 /*
-
+    BUG: 'Working' sign persists when click fails to drill down,
+        such as when staff facet is selected and max depth is reached
     TODO: 
+    - change 'Facets' to 'Perspectives'
     - do systematic check for error handling requirements; protect against 
         unexpected data (extrenal)
     - consider creating an instance around 'node' for the key abstraction
