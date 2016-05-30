@@ -30,7 +30,6 @@ class Chart extends React.Component {
     this.wrapper = null;
     this.hidden_columns = {};
     this.dataTable = [];
-    console.log('state',this.state)
   }
   componentDidMount(){
     // debug('componentDidMount');
@@ -48,7 +47,6 @@ class Chart extends React.Component {
 
   }
   componentDidUpdate(){
-    console.log('didupdate',googleChartLoader)
     // debug('componentDidUpdate');
     if (googleChartLoader.isLoading){
       googleChartLoader.initPromise.then(()=>{
@@ -102,7 +100,6 @@ class Chart extends React.Component {
   drawChart() {
     // debug("drawChart", this);
     if (!this.wrapper) {
-      console.log('draw without wrapper')
       let chartConfig = {
         chartType: this.props.chartType,
         options: this.props.options,
@@ -119,20 +116,19 @@ class Chart extends React.Component {
       });
     }
     else {
-      console.log('draw with wrapper')
       this.updateDataTable.bind(this)();
       this.wrapper.setDataTable(this.dataTable);
-      this.wrapper.setChartType(this.props.chartType)
+      // this.wrapper.setChartType(this.props.chartType)
       this.wrapper.setOptions(this.props.options)
-      // if (this.wrapper.getChartType() != this.props.chartType) {
-      //   google.visualization.events.removeAllListeners(this.wrapper)
-      //   this.wrapper.setChartType(this.props.chartType)
-      //   var self = this
-      //   google.visualization.events.addOneTimeListener(this.wrapper, 'ready', function () {
-      //     self.chart = self.wrapper.getChart();
-      //     self.listen_to_chart_events.call(this);
-      //   });
-      // }
+      if (this.wrapper.getChartType() != this.props.chartType) {
+        google.visualization.events.removeAllListeners(this.wrapper)
+        this.wrapper.setChartType(this.props.chartType)
+        var self = this
+        google.visualization.events.addOneTimeListener(this.wrapper, 'ready', function () {
+          self.chart = self.wrapper.getChart();
+          self.listenToChartEvents.call(self);
+        });
+      }
     }
     this.wrapper.draw();
   }
