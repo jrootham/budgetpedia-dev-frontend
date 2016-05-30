@@ -1,7 +1,6 @@
 'use strict';
 const React = require('react');
 var { Component } = React;
-var Chart = require('../../../forked/react-google-charts/Chart.js');
 const Tabs = require('material-ui/lib/tabs/tabs');
 const Tab = require('material-ui/lib/tabs/tab');
 const explorerchart_1 = require('./explorerchart');

@@ -1,9 +1,12 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // explorerchart.tsx
+// 
+// <reference path="../../../typings-custom/chart.d.ts" />
 'use strict'
 import * as React from 'react'
 var { Component } = React
-var Chart = require('../../../forked/react-google-charts/Chart.js')
+// var { Chart } = require('../../../forked/react-google-charts/Chart.js')
+var { Chart } = require('react-google-charts')
 import IconButton = require('material-ui/lib/icon-button')
 import FontIcon = require('material-ui/lib/font-icon')
 import {

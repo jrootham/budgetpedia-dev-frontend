@@ -4,7 +4,7 @@
 'use strict'
 import * as React from 'react'
 var { Component } = React
-var Chart = require('../../../forked/react-google-charts/Chart.js')
+// var Chart = require('../../../forked/react-google-charts/Chart.js')
 import IconButton = require('material-ui/lib/icon-button')
 import FontIcon = require('material-ui/lib/font-icon')
 import Tabs = require('material-ui/lib/tabs/tabs')
