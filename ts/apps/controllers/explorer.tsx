@@ -560,7 +560,7 @@ class ExplorerClass extends Component< any, any > {
                     <dd>more traditional: separates Agencies from Divisions; groupings are closer to those found
                         in City annual Budget Summaries</dd>
                 </dl>
-                <p>Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) </p>
+                <p>Perspectives are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) </p>
                 <p>This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal
                 </p>
 
@@ -725,7 +725,7 @@ class ExplorerClass extends Component< any, any > {
                         <MenuItem value={'STRUCTURAL'} primaryText="Structural"/>
                     </DropDownMenu>
 
-                    <span style={{margin:"0 10px 0 10px",fontStyle:"italic"}}>Facets: </span>
+                    <span style={{margin:"0 10px 0 10px",fontStyle:"italic"}}>Perspectives: </span>
 
                     <IconButton 
                         tooltip="Expenditures" 

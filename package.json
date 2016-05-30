@@ -32,7 +32,7 @@
     "react-dnd-touch-backend": "^0.2.5",
     "react-dom": "^0.14.8",
     "react-flipcard": "^0.2.1",
-    "react-google-charts": "^0.2.1",
+    "react-google-charts": "^1.0.0",
     "react-redux": "^4.4.2",
     "react-router": "^2.0.1",
     "react-router-redux": "^4.0.2",
