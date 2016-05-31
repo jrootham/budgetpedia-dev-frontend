@@ -195,8 +195,8 @@ let getChartParms = (
         hAxis: { title: axistitle, textStyle: { fontSize: 10 } },
         bar: { groupWidth: "95%" },
         // width: children.length * 120,// 120 per column
-        height: 400,
-        width: 400,
+        height: "400px",
+        width: "400px",
         legend: legendvalue,
         annotations: { alwaysOutside: true },
         pieHole: 0.4,
