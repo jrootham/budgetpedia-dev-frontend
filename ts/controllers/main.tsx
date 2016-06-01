@@ -55,8 +55,8 @@ export class Main extends Component<any, any> {
                     <div style={{ height: "64px" }} > {/* space for top fixed appbar */}
                     </div>
                     <div>THIS IS THE DEVELOPER'S VERSION OF THIS SITE (FOR PROTOTYPING), 
-                        AND MAY CHANGE OR BREAK AT ANY TIME. PLEASE DO NOT RELY ON THE DATA 
-                        FOR REAL-LIFE DECISION MAKING, AS IT HAS NOT BEEN VETTED.
+                        AND MAY CHANGE OR BREAK AT ANY TIME. ALSO, PLEASE NOTE THAT THE DATA
+                        HAS NOT BEEN VETTED.
                     </div>
 
                     { routes }

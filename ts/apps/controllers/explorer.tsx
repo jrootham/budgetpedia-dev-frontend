@@ -561,7 +561,7 @@ class ExplorerClass extends Component< any, any > {
                     <dd>more traditional: separates Agencies from Divisions; groupings are closer to those found
                         in City annual Budget Summaries</dd>
                 </dl>
-                <p>Facets the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) </p>
+                <p>Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) </p>
                 <p>This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal
                 </p>
 
@@ -698,19 +698,18 @@ class ExplorerClass extends Component< any, any > {
 
             <CardText expandable >
 
-                <p style={{marginTop:0}}>
-                    If you're new here, <a href="javascript:void(0)" 
-                        onTouchTap={this.handleDialogOpen}>
-                        read the help text</a> first.
-                    <IconButton tooltip="help"tooltipPosition="top-center"
-                        onTouchTap = {
-                            this.handleDialogOpen
-                        }>
-                        <FontIcon className="material-icons">help_outline</FontIcon>
-                    </IconButton>
-                </p>
-                <div style={{
-                    padding: "3px"}}>
+                If you're new here, <a href="javascript:void(0)" 
+                    onTouchTap={this.handleDialogOpen}>
+                    read the help text</a> first.
+                <IconButton tooltip="help"tooltipPosition="top-center"
+                    onTouchTap = {
+                        this.handleDialogOpen
+                    }>
+                    <FontIcon className="material-icons">help_outline</FontIcon>
+                </IconButton>
+             </CardText>
+             <CardText>
+                <div>
                     <span style={{fontStyle: "italic"}}>Viewpoint: </span> 
                     <DropDownMenu 
                         value={this.state.userselections.viewpoint} 
