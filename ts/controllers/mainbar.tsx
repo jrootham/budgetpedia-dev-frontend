@@ -27,25 +27,22 @@ import { connect as injectStore} from 'react-redux'
 import * as Actions from '../actions/actions'
 import { compose } from 'redux'
 
-import AppBar = require('material-ui/lib/app-bar')
-import LeftNav = require('material-ui/lib/left-nav')
+import AppBar from 'material-ui/AppBar'
+import LeftNav from 'material-ui/Drawer'
 // import AppTile = require('../components/apptile')
 
 import { BasicForm, elementProps } from '../components/basicform'
 
-import Card = require('material-ui/lib/card/card')
-import CardTitle = require('material-ui/lib/card/card-title')
-import CardText = require('material-ui/lib/card/card-text')
-import CardActions = require('material-ui/lib/card/card-actions')
+import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card'
 
-import MenuItem = require('material-ui/lib/menus/menu-item')
+import MenuItem from 'material-ui/MenuItem'
 import { MenuTile } from '../components/menutile'
-import IconButton = require('material-ui/lib/icon-button')
-import RaisedButton = require('material-ui/lib/raised-button')
-import FontIcon = require('material-ui/lib/font-icon')
-import TextField = require('material-ui/lib/text-field')
-import Divider = require('material-ui/lib/divider')
-import IconMenu = require('material-ui/lib/menus/icon-menu')
+import IconButton from 'material-ui/IconButton'
+import RaisedButton from 'material-ui/RaisedButton'
+import FontIcon from 'material-ui/FontIcon'
+import TextField from 'material-ui/TextField'
+import Divider from 'material-ui/Divider'
+import IconMenu from 'material-ui/IconMenu'
 // console.log(Colors)
 // import FlatButton = require('material-ui/lib/flat-button')
 

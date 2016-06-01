@@ -1,7 +1,7 @@
 'use strict';
 let budgetdata = require('../../explorerprototypedata/2015budgetA.json');
-const theme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
-const colors = require('material-ui/lib/styles/colors');
+const lightBaseTheme_1 = require('material-ui/styles/baseThemes/lightBaseTheme');
+const colors = require('material-ui/styles/colors');
 let appnavbar = {
     title: 'Toronto Budgetpedia',
     username: 'anonymous',
@@ -98,7 +98,7 @@ exports.initialstate = {
     homepadding: homepadding,
     appnavbar: appnavbar,
     toolsnavbar: toolsnavbar,
-    theme: theme,
+    theme: lightBaseTheme_1.default,
     colors: colors,
     system: system,
     budgetdata: budgetdata,

@@ -7,7 +7,7 @@
 import * as React from 'react'
 var { Component } = React
 
-import GridList = require('material-ui/lib/grid-list/grid-list')
+import GridList from 'material-ui/GridList'
 
 import { AppTile } from "./apptile"
 

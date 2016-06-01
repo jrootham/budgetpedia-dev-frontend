@@ -3,9 +3,7 @@ const React = require('react');
 var { Component } = React;
 const react_redux_1 = require('react-redux');
 const Actions = require('../actions/actions');
-const Card = require('material-ui/lib/card/card');
-const CardText = require('material-ui/lib/card/card-text');
-const CardTitle = require('material-ui/lib/card/card-title');
+const Card_1 = require('material-ui/Card');
 class RegisterConfirmClass extends Component {
     constructor(...args) {
         super(...args);
@@ -28,7 +26,7 @@ class RegisterConfirmClass extends Component {
             ?
                 React.createElement("div", null, React.createElement("p", null, auth.profile.username, ", you have been automatically logged in."))
             : '');
-        return React.createElement(Card, {style: { margin: "5px" }}, React.createElement(CardTitle, {title: "Registration Confirmation", style: { paddingBottom: 0 }}), React.createElement(CardText, null, registerconfirmview));
+        return React.createElement(Card_1.Card, {style: { margin: "5px" }}, React.createElement(Card_1.CardTitle, {title: "Registration Confirmation", style: { paddingBottom: 0 }}), React.createElement(Card_1.CardText, null, registerconfirmview));
     }
 }
 function mapStateToProps(state) {

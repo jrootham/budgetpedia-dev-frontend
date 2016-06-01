@@ -1,7 +1,7 @@
 'use strict';
 const React = require('react');
 var { Component } = React;
-const GridList = require('material-ui/lib/grid-list/grid-list');
+const GridList_1 = require('material-ui/GridList');
 const apptile_1 = require("./apptile");
 class AppTiles extends Component {
     render() {
@@ -9,7 +9,7 @@ class AppTiles extends Component {
         let tiles_ = tiles.map(function (data) {
             return (React.createElement(apptile_1.AppTile, {key: data.id, content: data.content, image: data.image, tilecolors: tilecolors, system: system, route: data.route, transitionTo: transitionTo}));
         });
-        return (React.createElement(GridList, {style: style, children: tiles_, cols: tilecols, padding: padding, cellHeight: cellHeight}));
+        return (React.createElement(GridList_1.default, {style: style, children: tiles_, cols: tilecols, padding: padding, cellHeight: cellHeight}));
     }
 }
 exports.AppTiles = AppTiles;

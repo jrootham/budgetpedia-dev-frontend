@@ -11,7 +11,7 @@
 
 let budgetdata = require('../../explorerprototypedata/2015budgetA.json')
 
-import theme = require('material-ui/lib/styles/raw-themes/light-raw-theme')
+import theme from 'material-ui/styles/baseThemes/lightBaseTheme'
 
 // fontFamily: "Roboto, sans-serif"
 // palette: Object
@@ -43,7 +43,7 @@ import theme = require('material-ui/lib/styles/raw-themes/light-raw-theme')
 
 /* ======================================== */
 
-import colors = require('material-ui/lib/styles/colors')
+import * as colors from 'material-ui/styles/colors'
 
 let appnavbar = {
 	title: 'Toronto Budgetpedia',

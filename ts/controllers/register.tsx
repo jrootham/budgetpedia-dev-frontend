@@ -12,8 +12,7 @@ import { connect as injectStore} from 'react-redux'
 import * as Actions from '../actions/actions'
 
 import { BasicForm, elementProps } from '../components/basicform'
-import Card = require('material-ui/lib/card/card')
-import CardTitle = require('material-ui/lib/card/card-title')
+import { Card, CardTitle } from 'material-ui/Card'
 import { DEFAULT_PARTICIPATION } from '../common/constants'
 
 class RegisterClass extends Component<any, any> {

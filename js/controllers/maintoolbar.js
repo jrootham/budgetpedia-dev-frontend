@@ -2,8 +2,8 @@
 const React = require('react');
 const react_redux_1 = require('react-redux');
 const Actions = require('../actions/actions');
-const IconButton = require('material-ui/lib/icon-button');
-const FontIcon = require('material-ui/lib/font-icon');
+const IconButton_1 = require('material-ui/IconButton');
+const FontIcon_1 = require('material-ui/FontIcon');
 const Toolbar = require('material-ui/lib/toolbar/toolbar');
 const ToolbarGroup = require('material-ui/lib/toolbar/toolbar-group');
 function mapStateToProps(state) {
@@ -33,7 +33,7 @@ class MainToolbarClass extends React.Component {
             width: "70%",
             display: "flex",
             justifyContent: "space-around"
-        }}, React.createElement(IconButton, {disabled: true}, React.createElement(FontIcon, {className: "material-icons"}, "arrow_back")), React.createElement(IconButton, {onTouchTap: this.transitionToHome}, React.createElement(FontIcon, {className: "material-icons"}, "radio_button_unchecked")), React.createElement(IconButton, {disabled: true}, React.createElement(FontIcon, {className: "material-icons"}, "check_box_outline_blank")), React.createElement(IconButton, {disabled: true}, React.createElement(FontIcon, {className: "material-icons"}, "help_outline")), React.createElement(IconButton, {disabled: true}, React.createElement(FontIcon, {className: "material-icons"}, "arrow_forward")))));
+        }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "arrow_back")), React.createElement(IconButton_1.default, {onTouchTap: this.transitionToHome}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "radio_button_unchecked")), React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "check_box_outline_blank")), React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")), React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "arrow_forward")))));
     }
 }
 var MainToolbar = react_redux_1.connect(mapStateToProps)(MainToolbarClass);

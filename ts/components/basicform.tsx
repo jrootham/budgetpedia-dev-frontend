@@ -8,10 +8,9 @@ import * as React from 'react'
 var { Component } = React
 
 import Checkbox = require('material-ui/lib/checkbox')
-import TextField = require('material-ui/lib/text-field')
-import CardText = require('material-ui/lib/card/card-text')
-import CardActions = require('material-ui/lib/card/card-actions')
-import RaisedButton = require('material-ui/lib/raised-button')
+import TextField from 'material-ui/TextField'
+import { CardText, CardActions} from 'material-ui/Card'
+import RaisedButton from 'material-ui/RaisedButton'
 
 interface BasicFormProps extends React.Props<BasicForm> {
     submit: Function,

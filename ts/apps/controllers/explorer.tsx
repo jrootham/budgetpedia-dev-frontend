@@ -32,20 +32,18 @@ import * as React from 'react'
 var { Component } = React
 // doesn't require .d.ts...! (reference available in index.tsx)
 import { connect as injectStore} from 'react-redux'
-import Card = require('material-ui/lib/card/card')
-import CardTitle = require('material-ui/lib/card/card-title')
-import CardText = require('material-ui/lib/card/card-text')
+import {Card, CardTitle, CardText} from 'material-ui/Card'
 import RadioButton = require('material-ui/lib/radio-button')
 import RadioButtonGroup = require('material-ui/lib/radio-button-group')
-import FontIcon = require('material-ui/lib/font-icon')
-import IconButton = require('material-ui/lib/icon-button')
-import Divider = require('material-ui/lib/divider')
+import FontIcon from 'material-ui/FontIcon'
+import IconButton from 'material-ui/IconButton'
+import Divider from 'material-ui/Divider'
 import Checkbox = require('material-ui/lib/checkbox')
-import RaisedButton = require('material-ui/lib/raised-button')
+import RaisedButton from 'material-ui/RaisedButton'
 import ReactSlider = require('react-slider')
-import DropDownMenu = require('material-ui/lib/drop-down-menu')
-import MenuItem = require('material-ui/lib/menus/menu-item')
-import Dialog = require('material-ui/lib/dialog')
+import DropDownMenu from 'material-ui/DropDownMenu'
+import MenuItem from 'material-ui/MenuItem'
+import Dialog from 'material-ui/Dialog'
 
 import { ExplorerPortal } from '../components/explorerportal'
 import { ChartSeries } from '../constants'

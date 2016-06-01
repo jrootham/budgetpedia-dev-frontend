@@ -8,8 +8,8 @@ import * as React from 'react';
 import { connect as injectStore} from 'react-redux'
 import * as Actions from '../actions/actions'
 
-import IconButton = require('material-ui/lib/icon-button')
-import FontIcon = require('material-ui/lib/font-icon')
+import IconButton from 'material-ui/IconButton'
+import FontIcon from 'material-ui/FontIcon'
 import Toolbar = require('material-ui/lib/toolbar/toolbar')
 import ToolbarGroup = require('material-ui/lib/toolbar/toolbar-group')
 

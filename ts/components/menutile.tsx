@@ -6,7 +6,7 @@
 // required by bundler
 import * as React from 'react'
 
-import MenuItem = require('material-ui/lib/menus/menu-item')
+import MenuItem from 'material-ui/MenuItem'
 
 export class MenuTile extends React.Component<any, any> {
     constructor(props) {

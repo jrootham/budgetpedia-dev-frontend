@@ -8,6 +8,8 @@ var { Component } = React
 
 // required by material-ui
 import injectTapEventPlugin = require( 'react-tap-event-plugin' )
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 injectTapEventPlugin()
 
 // import * as ReactDom from 'react-dom'
@@ -49,6 +51,7 @@ export class Main extends Component<any, any> {
     render() {
         // store made available to children through connect = injectStore
         return (
+            <MuiThemeProvider muiTheme = {getMuiTheme()}>
             <Provider store={ store }>
                 <div >
                     <MainBar />
@@ -63,6 +66,7 @@ export class Main extends Component<any, any> {
                     
                 </div>
             </Provider>
+            </MuiThemeProvider>
         )
     }
     

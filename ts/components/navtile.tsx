@@ -12,10 +12,10 @@
 // required by bundler
 import * as React from 'react'
 // import * as ReactDOM from 'react-dom';
-import FlipCard = require('react-flipcard')
-import GridTile = require('material-ui/lib/grid-list/grid-tile')
-import FontIcon = require('material-ui/lib/font-icon')
-import IconButton = require('material-ui/lib/icon-button')
+// import FlipCard = require('react-flipcard')
+import GridTile from 'material-ui/GridList'
+import FontIcon from 'material-ui/FontIcon'
+import IconButton from 'material-ui/IconButton'
 import Paper = require('material-ui/lib/paper')
 
 export class NavTile extends React.Component<any, any> {

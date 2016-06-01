@@ -4,8 +4,7 @@ var { Component, PropTypes } = React;
 const react_redux_1 = require('react-redux');
 const Actions = require('../actions/actions');
 const basicform_1 = require('../components/basicform');
-const Card = require('material-ui/lib/card/card');
-const CardTitle = require('material-ui/lib/card/card-title');
+const Card_1 = require('material-ui/Card');
 const constants_1 = require('../common/constants');
 class RegisterClass extends Component {
     constructor(...args) {
@@ -86,7 +85,7 @@ class RegisterClass extends Component {
             },
         ];
         let registerform = React.createElement(basicform_1.BasicForm, {submit: registerpage.submitRegistration, elements: elements, submitButtonLabel: 'Register', errorMessage: registerpage.props.register.errorMessage});
-        return React.createElement(Card, {style: { margin: "5px" }}, React.createElement(CardTitle, {title: "Register", style: { paddingBottom: 0 }}), registerpage.props.auth.isAuthenticated
+        return React.createElement(Card_1.Card, {style: { margin: "5px" }}, React.createElement(Card_1.CardTitle, {title: "Register", style: { paddingBottom: 0 }}), registerpage.props.auth.isAuthenticated
             ? React.createElement("p", null, "Cannot register while logged in. Please log out to register a new membership.")
             : registerform);
     }

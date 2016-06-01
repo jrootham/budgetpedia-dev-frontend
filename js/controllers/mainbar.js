@@ -4,20 +4,17 @@ var { Component, PropTypes } = React;
 const react_redux_1 = require('react-redux');
 const Actions = require('../actions/actions');
 const redux_1 = require('redux');
-const AppBar = require('material-ui/lib/app-bar');
-const LeftNav = require('material-ui/lib/left-nav');
+const AppBar_1 = require('material-ui/AppBar');
+const Drawer_1 = require('material-ui/Drawer');
 const basicform_1 = require('../components/basicform');
-const Card = require('material-ui/lib/card/card');
-const CardTitle = require('material-ui/lib/card/card-title');
-const CardText = require('material-ui/lib/card/card-text');
-const CardActions = require('material-ui/lib/card/card-actions');
-const MenuItem = require('material-ui/lib/menus/menu-item');
+const Card_1 = require('material-ui/Card');
+const MenuItem_1 = require('material-ui/MenuItem');
 const menutile_1 = require('../components/menutile');
-const IconButton = require('material-ui/lib/icon-button');
-const RaisedButton = require('material-ui/lib/raised-button');
-const FontIcon = require('material-ui/lib/font-icon');
-const Divider = require('material-ui/lib/divider');
-const IconMenu = require('material-ui/lib/menus/icon-menu');
+const IconButton_1 = require('material-ui/IconButton');
+const RaisedButton_1 = require('material-ui/RaisedButton');
+const FontIcon_1 = require('material-ui/FontIcon');
+const Divider_1 = require('material-ui/Divider');
+const IconMenu_1 = require('material-ui/IconMenu');
 class MainBarClass extends React.Component {
     constructor(props) {
         super(props);
@@ -83,7 +80,7 @@ class MainBarClass extends React.Component {
             });
             return func;
         };
-        let closeicon = React.createElement(IconButton, {style: {
+        let closeicon = React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,
             padding: 0,
@@ -91,7 +88,7 @@ class MainBarClass extends React.Component {
             width: "36px",
             position: "absolute",
             zIndex: 2,
-        }, onTouchTap: appbar.close}, React.createElement(FontIcon, {className: "material-icons", color: theme.palette.primary3Color, style: { cursor: "pointer" }}, "close"));
+        }, onTouchTap: appbar.close}, React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.primary3Color, style: { cursor: "pointer" }}, "close"));
         let elements = [
             {
                 index: 'email',
@@ -113,16 +110,16 @@ class MainBarClass extends React.Component {
             },
         ];
         let loginform = React.createElement(basicform_1.BasicForm, {submit: appbar.submitLogin, elements: elements, submitButtonLabel: 'Sign in', errorMessage: appbar.props.auth.errorMessage});
-        let registerprompt = React.createElement("div", null, React.createElement(CardText, null, React.createElement("a", {href: "javascript:void(0);", onTouchTap: appbar.transitionToResetPassword}, "Forgot your password?")), React.createElement(Divider, null), React.createElement(CardText, null, "Not a member? Register:"), React.createElement(CardActions, null, React.createElement(RaisedButton, {type: "button", label: "Register", onTouchTap: appbar.transitionToRegister})));
-        let loginsidebar = React.createElement(LeftNav, {width: 300, disableSwipeToOpen: true, docked: false, openRight: true, onRequestChange: open => appbar.setState({ accountsidebaropen: open, }), open: appbar.state.accountsidebaropen}, React.createElement(Card, {style: { margin: "5px" }}, closeicon, React.createElement(CardTitle, {title: "Member Sign In", style: { paddingBottom: 0 }}), loginform, registerprompt));
+        let registerprompt = React.createElement("div", null, React.createElement(Card_1.CardText, null, React.createElement("a", {href: "javascript:void(0);", onTouchTap: appbar.transitionToResetPassword}, "Forgot your password?")), React.createElement(Divider_1.default, null), React.createElement(Card_1.CardText, null, "Not a member? Register:"), React.createElement(Card_1.CardActions, null, React.createElement(RaisedButton_1.default, {type: "button", label: "Register", onTouchTap: appbar.transitionToRegister})));
+        let loginsidebar = React.createElement(Drawer_1.default, {width: 300, disableSwipeToOpen: true, docked: false, openRight: true, onRequestChange: open => appbar.setState({ accountsidebaropen: open, }), open: appbar.state.accountsidebaropen}, React.createElement(Card_1.Card, {style: { margin: "5px" }}, closeicon, React.createElement(Card_1.CardTitle, {title: "Member Sign In", style: { paddingBottom: 0 }}), loginform, registerprompt));
         let transitionToFunc = redux_1.compose(menutransition, this.props.dispatch, Actions.transitionTo);
         let menuitems = hometiles.map(menutile => {
             return React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: menutile.id, primaryText: menutile.content.title, image: menutile.content.image, route: menutile.route, disabled: menutile.content.disabled});
         });
-        let menusidebar = React.createElement(LeftNav, {width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: open => appbar.setState({ menusidebaropen: open, }), open: this.state.menusidebaropen}, React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: 'home', primaryText: "Budget Commons", image: '../../public/icons/ic_home_24px.svg', route: '/'}), React.createElement(Divider, null), menuitems);
-        let menuicon = React.createElement(IconButton, {onTouchTap: () => { appbar.handleMenuSidebarToggle(); }}, React.createElement(FontIcon, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "menu"));
-        let accountmenu = React.createElement(IconMenu, {iconButtonElement: React.createElement(IconButton, null, React.createElement(FontIcon, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "account_circle")), targetOrigin: { horizontal: 'right', vertical: 'top' }, anchorOrigin: { horizontal: 'right', vertical: 'top' }}, React.createElement(MenuItem, {onTouchTap: appbar.transitionToProfile, primaryText: "Profile"}), React.createElement(MenuItem, {onTouchTap: appbar.logout, primaryText: "Sign out"}));
-        let accounticon = React.createElement(IconButton, {onTouchTap: () => { appbar.handleAccountSidebarToggle(); }}, React.createElement(FontIcon, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "account_circle"));
+        let menusidebar = React.createElement(Drawer_1.default, {width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: open => appbar.setState({ menusidebaropen: open, }), open: this.state.menusidebaropen}, React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: 'home', primaryText: "Budget Commons", image: '../../public/icons/ic_home_24px.svg', route: '/'}), React.createElement(Divider_1.default, null), menuitems);
+        let menuicon = React.createElement(IconButton_1.default, {onTouchTap: () => { appbar.handleMenuSidebarToggle(); }}, React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "menu"));
+        let accountmenu = React.createElement(IconMenu_1.default, {iconButtonElement: React.createElement(IconButton_1.default, null, React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "account_circle")), targetOrigin: { horizontal: 'right', vertical: 'top' }, anchorOrigin: { horizontal: 'right', vertical: 'top' }}, React.createElement(MenuItem_1.default, {onTouchTap: appbar.transitionToProfile, primaryText: "Profile"}), React.createElement(MenuItem_1.default, {onTouchTap: appbar.logout, primaryText: "Sign out"}));
+        let accounticon = React.createElement(IconButton_1.default, {onTouchTap: () => { appbar.handleAccountSidebarToggle(); }}, React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "account_circle"));
         let username = React.createElement("div", {style: {
             position: "absolute",
             bottom: 0,
@@ -132,7 +129,7 @@ class MainBarClass extends React.Component {
             color: theme.palette.alternateTextColor,
         }}, auth.isAuthenticated ? auth.profile.userhandle : appnavbar.username);
         let workingmessagestate = this.props.workingmessagestate;
-        return (React.createElement(AppBar, {onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated
+        return (React.createElement(AppBar_1.default, {onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated
             ? accountmenu
             : accounticon}, username, loginsidebar, menusidebar, workingmessagestate
             ? React.createElement("div", {style: {

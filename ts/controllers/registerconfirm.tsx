@@ -11,9 +11,7 @@ var { Component } = React
 import { connect as injectStore} from 'react-redux'
 import * as Actions from '../actions/actions'
 
-import Card = require('material-ui/lib/card/card')
-import CardText = require('material-ui/lib/card/card-text')
-import CardTitle = require('material-ui/lib/card/card-title')
+import { Card, CardText, CardTitle} from 'material-ui/Card'
 
 class RegisterConfirmClass extends Component<any, any> {
 

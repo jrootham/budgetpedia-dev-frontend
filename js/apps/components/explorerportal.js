@@ -1,8 +1,7 @@
 'use strict';
 const React = require('react');
 var { Component } = React;
-const Tabs = require('material-ui/lib/tabs/tabs');
-const Tab = require('material-ui/lib/tabs/tab');
+const Tabs_1 = require('material-ui/Tabs');
 const explorerchart_1 = require('./explorerchart');
 class ExplorerPortal extends Component {
     constructor(...args) {
@@ -16,7 +15,7 @@ class ExplorerPortal extends Component {
             let chartTabs = this.props.budgetPortal.portalCharts.map((chartTab, chartindex) => {
                 let chartparms = chartTab.portalchartparms;
                 let chartsettings = chartTab.portalchartsettings;
-                return React.createElement(Tab, {style: { fontSize: "12px" }, label: chartTab.chartblocktitle, value: "programs", key: chartindex}, React.createElement(explorerchart_1.ExplorerChart, {chartsettings: chartsettings, chartparms: chartparms}));
+                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: chartTab.chartblocktitle, value: "programs", key: chartindex}, React.createElement(explorerchart_1.ExplorerChart, {chartsettings: chartsettings, chartparms: chartparms}));
             });
             return chartTabs;
         };
@@ -42,7 +41,7 @@ class ExplorerPortal extends Component {
             fontWeight: "bold",
             display: "inline-block",
             backgroundColor: "#00bcd4",
-        }}, this.props.budgetPortal.portalName), React.createElement(Tabs, {onChange: e => {
+        }}, this.props.budgetPortal.portalName), React.createElement(Tabs_1.Tabs, {onChange: e => {
             this.onChangeTab();
         }}, chartTabs));
     }

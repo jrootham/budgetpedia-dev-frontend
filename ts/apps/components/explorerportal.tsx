@@ -5,10 +5,9 @@
 import * as React from 'react'
 var { Component } = React
 // var Chart = require('../../../forked/react-google-charts/Chart.js')
-import IconButton = require('material-ui/lib/icon-button')
-import FontIcon = require('material-ui/lib/font-icon')
-import Tabs = require('material-ui/lib/tabs/tabs')
-import Tab = require('material-ui/lib/tabs/tab')
+import IconButton from 'material-ui/IconButton'
+import FontIcon from 'material-ui/FontIcon'
+import { Tabs, Tab } from 'material-ui/Tabs'
 import {
     // ChartConfig,
     ChartParms,

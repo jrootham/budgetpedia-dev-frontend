@@ -6,7 +6,7 @@
 // required by bundler
 import * as React from 'react'
 
-import GridTile = require('material-ui/lib/grid-list/grid-tile')
+import GridTile from 'material-ui/GridList'
 
 export class AppTile extends React.Component<any, any> {
     constructor(props) {

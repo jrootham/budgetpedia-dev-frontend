@@ -1,6 +1,6 @@
 'use strict';
 const React = require('react');
-const MenuItem = require('material-ui/lib/menus/menu-item');
+const MenuItem_1 = require('material-ui/MenuItem');
 class MenuTile extends React.Component {
     constructor(props) {
         super(props);
@@ -12,7 +12,7 @@ class MenuTile extends React.Component {
     }
     render() {
         let tile = this;
-        return (React.createElement(MenuItem, {onTouchTap: tile.transitionTo, key: this.props.key, primaryText: this.props.primaryText, leftIcon: React.createElement("img", {src: this.props.image}), disabled: this.props.disabled ? true : false}));
+        return (React.createElement(MenuItem_1.default, {onTouchTap: tile.transitionTo, key: this.props.key, primaryText: this.props.primaryText, leftIcon: React.createElement("img", {src: this.props.image}), disabled: this.props.disabled ? true : false}));
     }
 }
 exports.MenuTile = MenuTile;
