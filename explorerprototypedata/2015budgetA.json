@@ -47892,8 +47892,9 @@
                     "MUNICIPAL": "Municipal Services",
                     "CORPMANAGEMENT": "Senior Corporate Offices",
                     "ACCOUNTABILITY": "Accountability Offices",
-                    "MAINTSTANDARDS": "Maintenance & Standards Services",
-                    "PLANNINGDEV": "Planning & Development Services",
+                    "MAINTSTANDARDS": "Division Support",
+                    "INITIATIVES": "Municipal Initiatives",
+                    "PLANNINGDEV": "Permits, Licensing & Standards",
                     "INTERNALSERV": "Internal Services",
                     "CORPORATEACCOUNTS": "Corporate Accounts",
                     "PARKSACTIVITIES": "Parks & Activity Centres",
@@ -48232,42 +48233,48 @@
                                         }
                                     }
                                 },
-                                "MAINTSTANDARDS": {
+                                "INITIATIVES": {
                                     "Index": 1,
-                                    "Contents": "PROGRAMS",
-                                    "Components": {
-                                        "311SERVICE": {
-                                            "Index": 0,
-                                            "Contents": "BASELINE"
-                                        },
-                                        "LICENCING": {
-                                            "Index": 1,
-                                            "Contents": "BASELINE"
-                                        },
-                                        "BUILDINGS": {
-                                            "Index": 2,
-                                            "Contents": "BASELINE"
-                                        }
-                                    }
-                                },
-                                "PLANNINGDEV": {
-                                    "Index": 3,
                                     "Contents": "PROGRAMS",
                                     "Components": {
                                         "PLANNING": {
                                             "Index": 0,
                                             "Contents": "BASELINE"
                                         },
-                                        "POLICYADMIN": {
+                                        "ECONDEV": {
                                             "Index": 1,
                                             "Contents": "BASELINE"
                                         },
-                                        "ECONDEV": {
+                                        "SOCIALDEV": {
                                             "Index": 2,
                                             "Contents": "BASELINE"
+                                        }
+                                    }
+                                },
+                                "PLANNINGDEV": {
+                                    "Index": 2,
+                                    "Contents": "PROGRAMS",
+                                    "Components": {
+                                        "BUILDINGS": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
                                         },
-                                        "SOCIALDEV": {
-                                            "Index": 3,
+                                        "LICENCING": {
+                                            "Index": 1,
+                                            "Contents": "BASELINE"
+                                        }
+                                    }
+                                },
+                                "MAINTSTANDARDS": {
+                                    "Index": 3,
+                                    "Contents": "PROGRAMS",
+                                    "Components": {
+                                        "311SERVICE": {
+                                            "Index": 0,
+                                            "Contents": "BASELINE"
+                                        },
+                                        "POLICYADMIN": {
+                                            "Index": 1,
                                             "Contents": "BASELINE"
                                         }
                                     }
