@@ -27,7 +27,7 @@ if (!auth.isAuthenticated) {
 }
 class Main extends Component {
     render() {
-        return (React.createElement(react_redux_1.Provider, {store: store}, React.createElement("div", null, React.createElement(mainbar_1.MainBar, null), React.createElement("div", {style: { height: "64px" }}, " "), React.createElement("div", null, "THIS IS THE DEVELOPER'S VERSION OF THIS SITE (FOR PROTOTYPING)," + ' ' + "AND MAY CHANGE OR BREAK AT ANY TIME. ALSO, IT LIKELY USES FAKE DATA."), routes_1.routes)));
+        return (React.createElement(react_redux_1.Provider, {store: store}, React.createElement("div", null, React.createElement(mainbar_1.MainBar, null), React.createElement("div", {style: { height: "64px" }}, " "), React.createElement("div", null, "THIS IS THE DEVELOPER'S VERSION OF THIS SITE (FOR PROTOTYPING)," + ' ' + "AND MAY CHANGE OR BREAK AT ANY TIME. PLEASE DO NOT RELY ON THE DATA" + ' ' + "FOR REAL-LIFE DECISION MAKING, AS IT HAS NOT BEEN VETTED."), routes_1.routes)));
     }
 }
 exports.Main = Main;
