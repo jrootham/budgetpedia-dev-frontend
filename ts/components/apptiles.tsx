@@ -7,7 +7,7 @@
 import * as React from 'react'
 var { Component } = React
 
-import GridList from 'material-ui/GridList'
+import { GridList } from 'material-ui/GridList'
 
 import { AppTile } from "./apptile"
 

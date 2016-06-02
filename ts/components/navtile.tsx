@@ -12,8 +12,8 @@
 // required by bundler
 import * as React from 'react'
 // import * as ReactDOM from 'react-dom';
-// import FlipCard = require('react-flipcard')
-import GridTile from 'material-ui/GridList'
+import FlipCard = require('react-flipcard')
+import { GridTile } from 'material-ui/GridList'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Paper = require('material-ui/lib/paper')

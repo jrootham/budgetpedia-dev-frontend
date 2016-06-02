@@ -29,7 +29,7 @@ class AppTile extends React.Component {
                 pointerEvens: "none"
             };
         }
-        return (React.createElement(GridList_1.default, {style: { textAlign: "center" }, onTouchTap: tile.transitionTo, key: this.props.key, title: this.props.content.title, subtitle: this.props.content.subtitle}, React.createElement("div", {style: wrapperstyle}, React.createElement("div", {style: { position: "absolute", top: 0, left: 0, color: "silver", fontStyle: "italic", fontSize: "smaller" }}, this.props.content.category), React.createElement("img", {src: this.props.content.image, style: { height: "120px" }}), React.createElement("div", {style: { position: "abolute", height: "30px", bottom: 0, width: "100%" }}))));
+        return (React.createElement(GridList_1.GridTile, {style: { textAlign: "center" }, onTouchTap: tile.transitionTo, key: this.props.key, title: this.props.content.title, subtitle: this.props.content.subtitle}, React.createElement("div", {style: wrapperstyle}, React.createElement("div", {style: { position: "absolute", top: 0, left: 0, color: "silver", fontStyle: "italic", fontSize: "smaller" }}, this.props.content.category), React.createElement("img", {src: this.props.content.image, style: { height: "120px" }}), React.createElement("div", {style: { position: "abolute", height: "30px", bottom: 0, width: "100%" }}))));
     }
 }
 exports.AppTile = AppTile;

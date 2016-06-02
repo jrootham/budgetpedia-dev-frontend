@@ -1,5 +1,6 @@
 'use strict';
 const React = require('react');
+const FlipCard = require('react-flipcard');
 const GridList_1 = require('material-ui/GridList');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
@@ -188,7 +189,7 @@ class NavTile extends React.Component {
             fontStyle: "italic",
             color: tile.props.tilecolors.helpbutton,
         }, href: "javascript:void(0)", onTouchTap: tile.showFront}, "Return >>"), React.createElement("h3", {onTouchTap: tile.showFront, style: { marginBottom: 0, cursor: "pointer", }}, tile.isHelpContent() ? tile.props.help.title : null), React.createElement("div", {dangerouslySetInnerHTML: tile.rawMarkup('help')})), React.createElement("div", {className: "flipcard-gradient back"}))));
-        return (React.createElement(GridList_1.default, null, React.createElement(FlipCard, {disabled: true, flipped: tile.state.isFlipped, onFlip: tile.handleOnFlip, onKeyDown: tile.handleKeyDown, style: { border: "none" }}, frontflipcard, backflipcard)));
+        return (React.createElement(GridList_1.GridTile, null, React.createElement(FlipCard, {disabled: true, flipped: tile.state.isFlipped, onFlip: tile.handleOnFlip, onKeyDown: tile.handleKeyDown, style: { border: "none" }}, frontflipcard, backflipcard)));
     }
 }
 exports.NavTile = NavTile;

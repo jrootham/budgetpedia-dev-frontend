@@ -9,7 +9,7 @@ class AppTiles extends Component {
         let tiles_ = tiles.map(function (data) {
             return (React.createElement(apptile_1.AppTile, {key: data.id, content: data.content, image: data.image, tilecolors: tilecolors, system: system, route: data.route, transitionTo: transitionTo}));
         });
-        return (React.createElement(GridList_1.default, {style: style, children: tiles_, cols: tilecols, padding: padding, cellHeight: cellHeight}));
+        return (React.createElement(GridList_1.GridList, {style: style, children: tiles_, cols: tilecols, padding: padding, cellHeight: cellHeight}));
     }
 }
 exports.AppTiles = AppTiles;
