@@ -131,7 +131,14 @@ class MainBarClass extends React.Component {
         let workingmessagestate = this.props.workingmessagestate;
         return (React.createElement(AppBar_1.default, {onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated
             ? accountmenu
-            : accounticon}, username, loginsidebar, menusidebar, workingmessagestate
+            : accounticon}, React.createElement("div", {style: {
+            position: "absolute",
+            fontSize: "12px",
+            color: "white",
+            top: 0,
+            right: 0,
+            padding: "3px",
+        }}, "contact: ", React.createElement("a", {href: "mailto:mail@budgetpedia.ca"}, "mail @budgetpedia.ca")), username, loginsidebar, menusidebar, workingmessagestate
             ? React.createElement("div", {style: {
                 position: "absolute",
                 top: "54px",

@@ -358,6 +358,16 @@ class MainBarClass extends React.Component<any, any> {
                     appbar.props.auth.isAuthenticated
                     ? accountmenu
                     : accounticon } >
+                <div style={{
+                    position: "absolute",
+                    fontSize: "12px",
+                    color: "white",
+                    top: 0,
+                    right: 0,
+                    padding: "3px",
+                }}>
+                    contact: <a href="mailto:mail@budgetpedia.ca">mail @budgetpedia.ca</a>
+                </div>
 
                 { username }
 
