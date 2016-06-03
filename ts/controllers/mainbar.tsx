@@ -366,7 +366,7 @@ class MainBarClass extends React.Component<any, any> {
                     right: 0,
                     padding: "3px",
                 }}>
-                    contact: <a href="mailto:mail@budgetpedia.ca">mail @budgetpedia.ca</a>
+                    contact: <a href="mailto:mail@budgetpedia.ca">mail@budgetpedia.ca</a>
                 </div>
 
                 { username }
