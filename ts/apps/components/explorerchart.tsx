@@ -21,6 +21,7 @@ interface ExplorerChartProps {
 
 class ExplorerChart extends Component<ExplorerChartProps, any> {
 
+
     onChangeChartCode = (chartCode) => {
         this.props.chartsettings.onSwitchChartCode(chartCode)
     }

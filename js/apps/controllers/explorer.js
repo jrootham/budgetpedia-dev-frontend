@@ -225,6 +225,26 @@ class ExplorerClass extends Component {
                 updatechartselections_1.updateChartSelections(chartmatrix, seriesref);
             });
         };
+        this.workingStatus = status => {
+            if (status) {
+                this.props.dispatch(Actions.showWaitingMessage());
+            }
+            else {
+                setTimeout(() => {
+                    this.props.dispatch(Actions.hideWaitingMessage());
+                }, 250);
+            }
+        };
+        this.onChangeBudgetPortalChart = (portalLocation) => {
+            setTimeout(() => {
+                updatechartselections_1.updateChartSelections(this.state.chartmatrix, portalLocation.row);
+            });
+        };
+        this.refreshPresentation = chartmatrix => {
+            this.setState({
+                chartmatrix: chartmatrix,
+            });
+        };
         this.switchChartCode = (location, chartCode) => {
             let chartType = constants_2.ChartCodeTypes[chartCode];
             let portalIndex = location.portalindex;
@@ -268,26 +288,6 @@ class ExplorerClass extends Component {
                     }
                 }
                 updatechartselections_1.updateChartSelections(chartmatrix, location.matrixlocation.row);
-            });
-        };
-        this.workingStatus = status => {
-            if (status) {
-                this.props.dispatch(Actions.showWaitingMessage());
-            }
-            else {
-                setTimeout(() => {
-                    this.props.dispatch(Actions.hideWaitingMessage());
-                }, 250);
-            }
-        };
-        this.onChangeBudgetPortalChart = (portalLocation) => {
-            setTimeout(() => {
-                updatechartselections_1.updateChartSelections(this.state.chartmatrix, portalLocation.row);
-            });
-        };
-        this.refreshPresentation = chartmatrix => {
-            this.setState({
-                chartmatrix: chartmatrix,
             });
         };
     }
