@@ -11,17 +11,17 @@ class ExplorerPortal extends Component {
         };
         this.componentWillMount = () => {
         };
-        this.getTabs = () => {
-            let chartTabs = this.props.budgetPortal.portalCharts.map((chartTab, chartindex) => {
-                let chartparms = chartTab.portalchartparms;
-                let chartsettings = chartTab.portalchartsettings;
-                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: chartTab.chartblocktitle, value: "programs", key: chartindex}, React.createElement(explorerchart_1.ExplorerChart, {chartsettings: chartsettings, chartparms: chartparms}));
+        this.getChartTabs = () => {
+            let chartTabs = this.props.budgetPortal.portalCharts.map((tabChart, chartindex) => {
+                let chartparms = tabChart.chartparms;
+                let chartsettings = tabChart.chartsettings;
+                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: tabChart.chartblocktitle, value: "programs", key: chartindex}, React.createElement(explorerchart_1.ExplorerChart, {chartsettings: chartsettings, chartparms: chartparms}));
             });
             return chartTabs;
         };
     }
     render() {
-        let chartTabs = this.getTabs();
+        let chartTabs = this.getChartTabs();
         return React.createElement("div", {style: {
             position: "relative",
             display: "inline-block",

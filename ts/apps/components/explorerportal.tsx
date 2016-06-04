@@ -33,15 +33,15 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         // console.log('budgetPortal',this.props.budgetPortal)
     }
 
-    getTabs = () => {
+    getChartTabs = () => {
 
         // generate array of chart tabs
         let chartTabs = this.props.budgetPortal.portalCharts.map(
-            (chartTab:ChartConfig,chartindex) => {
-            let chartparms = chartTab.portalchartparms
-            let chartsettings = chartTab.portalchartsettings
+            (tabChart:ChartConfig,chartindex) => {
+            let chartparms = tabChart.chartparms
+            let chartsettings = tabChart.chartsettings
             return <Tab style={{fontSize:"12px"}} 
-                label={chartTab.chartblocktitle} 
+                label={tabChart.chartblocktitle} 
                 value="programs"
                 key={chartindex}>
                 <ExplorerChart 
@@ -58,7 +58,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     render() {
 
-        let chartTabs = this.getTabs()
+        let chartTabs = this.getChartTabs()
 
         return <div style={
                 { 

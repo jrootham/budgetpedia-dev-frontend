@@ -65,14 +65,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     chartblocktitle = portaltitles.Baseline
                 }
 
-                let portalchartparms = nodeconfig.charts[chartindex].chartparms
+                let chartparms = nodeconfig.charts[chartindex].chartparms
 
                 let location = {
                     matrixlocation: nodeconfig.matrixlocation,
                     portalindex: Number(chartindex)
                 }
                 let explorer = this
-                let portalchartsettings: ChartSettings = {
+                let chartsettings: ChartSettings = {
                     // matrixlocation: chartconfig.matrixlocation,
                     onSwitchChartCode: ((location) => {
                         return (chartCode) => {
@@ -85,8 +85,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 }
 
                 let portalchart: ChartConfig = {
-                    portalchartparms,
-                    portalchartsettings,
+                    chartparms,
+                    chartsettings,
                     chartblocktitle: "By " + chartblocktitle,
                 }
 

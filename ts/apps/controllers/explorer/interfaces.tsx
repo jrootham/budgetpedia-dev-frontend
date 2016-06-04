@@ -29,10 +29,10 @@ interface ChartSettings {
     graph_id: string,
 }
 
-// configuration for individual chart of budget portal
+// configuration for individual chart
 interface ChartConfig {
-    portalchartparms: ChartParms,
-    portalchartsettings: ChartSettings,
+    chartparms: ChartParms,
+    chartsettings: ChartSettings,
     chartblocktitle: string,
 }
 

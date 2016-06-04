@@ -30,13 +30,13 @@ class ExplorerBranch extends Component {
                     else {
                         chartblocktitle = portaltitles.Baseline;
                     }
-                    let portalchartparms = nodeconfig.charts[chartindex].chartparms;
+                    let chartparms = nodeconfig.charts[chartindex].chartparms;
                     let location = {
                         matrixlocation: nodeconfig.matrixlocation,
                         portalindex: Number(chartindex)
                     };
                     let explorer = this;
-                    let portalchartsettings = {
+                    let chartsettings = {
                         onSwitchChartCode: ((location) => {
                             return (chartCode) => {
                                 this.callbacks.switchChartCode(location, chartCode);
@@ -46,8 +46,8 @@ class ExplorerBranch extends Component {
                         graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
                     };
                     let portalchart = {
-                        portalchartparms: portalchartparms,
-                        portalchartsettings: portalchartsettings,
+                        chartparms: chartparms,
+                        chartsettings: chartsettings,
                         chartblocktitle: "By " + chartblocktitle,
                     };
                     portalcharts.push(portalchart);
