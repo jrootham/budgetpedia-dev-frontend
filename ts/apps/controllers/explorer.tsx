@@ -64,7 +64,6 @@ import {
     ChartSelectionContext,
     MatrixLocation,
     PortalConfig,
-    ChartSettings,
     PortalChartLocation,
     ChartConfig,
     GetChartParmsProps,

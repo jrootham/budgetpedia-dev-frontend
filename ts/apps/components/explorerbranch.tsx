@@ -7,7 +7,7 @@ var { Component } = React
 
 import {
     BudgetNodeConfig,
-    NodeChartConfig,
+    // NodeChartConfig,
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,

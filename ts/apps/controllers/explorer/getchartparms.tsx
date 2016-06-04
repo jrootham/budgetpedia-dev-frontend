@@ -22,8 +22,8 @@ import {
     NodeChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
-    onChartComponentSelectionProps,
-    onChartComponentSelectionCallbacks,
+    OnChartComponentSelectionProps,
+    OnChartComponentSelectionCallbacks,
 } from './interfaces'
 
 import { getBudgetNode } from './getbudgetnode'
@@ -231,13 +231,13 @@ let getChartParms = (
                     let selection = chart.getSelection()
                     let context: ChartSelectionContext = { portalchartlocation: configLocation, Chart, selection, err }
 
-                    let props: onChartComponentSelectionProps = {
+                    let props: OnChartComponentSelectionProps = {
                         context,
                         userselections,
                         budgetdata,
                         chartmatrix
                     }
-                    let callbacks: onChartComponentSelectionCallbacks = {
+                    let callbacks: OnChartComponentSelectionCallbacks = {
                         refreshPresentation,
                         onPortalCreation,
                         workingStatus,

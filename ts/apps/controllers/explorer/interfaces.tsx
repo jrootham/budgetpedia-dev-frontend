@@ -67,13 +67,13 @@ interface GetChartParmsCallbacks {
     workingStatus: Function,
 }
 
-interface onChartComponentSelectionProps {
+interface OnChartComponentSelectionProps {
     context: ChartSelectionContext,
     userselections: any,
     budgetdata: any,
     chartmatrix: any,
 }
-interface onChartComponentSelectionCallbacks {
+interface OnChartComponentSelectionCallbacks {
     refreshPresentation: Function,
     onPortalCreation: Function,
     workingStatus: Function,
@@ -106,7 +106,7 @@ interface NodeChartConfig {
     chartparms?: ChartParms,
     portalcharttype?:string,
 
-    chartselection?: ChartSelectionData[],
+    chartselection?: ChartSelectionCell[],
     chart?: any,
     Chart?: any,
 }
@@ -135,7 +135,7 @@ interface YearScope {
 // ---------------[ CHART SELECTION OUTPUT ]--------------
 
 
-interface ChartSelectionData {
+interface ChartSelectionCell {
     row:number,
     column:number
 }
@@ -145,7 +145,7 @@ interface ChartSelectionData {
 interface ChartSelectionContext {
     portalchartlocation: PortalChartLocation,
     Chart: any,
-    selection: ChartSelectionData[],
+    selection: ChartSelectionCell[],
     err: any,
 }
 
@@ -158,7 +158,6 @@ export {
     NodeChartConfig,
     MatrixLocation,
     PortalChartLocation, 
-    ChartSelectionData,
     ChartParms, 
     ChartParmsObj, 
     ChartSelectionContext,
@@ -168,6 +167,6 @@ export {
     SortedComponentItem,
     GetChartParmsProps,
     GetChartParmsCallbacks,
-    onChartComponentSelectionProps,
-    onChartComponentSelectionCallbacks,
+    OnChartComponentSelectionProps,
+    OnChartComponentSelectionCallbacks,
 }

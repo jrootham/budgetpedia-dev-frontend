@@ -13,8 +13,8 @@ import {
     NodeChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
-    onChartComponentSelectionProps,
-    onChartComponentSelectionCallbacks,
+    OnChartComponentSelectionProps,
+    OnChartComponentSelectionCallbacks,
 } from './interfaces'
 
 import { updateChartSelections } from './updatechartselections'
@@ -30,8 +30,8 @@ import { getBudgetNode } from './getbudgetnode'
 // chartconfig, not the chartconfig itself
 // on selection, makes a child with the same portalCharts offset
 // TODO: create chile which appropriately sets up correct set of child charts
-let onChartComponentSelection = (props: onChartComponentSelectionProps,
-    callbacks: onChartComponentSelectionCallbacks) => {
+let onChartComponentSelection = (props: OnChartComponentSelectionProps,
+    callbacks: OnChartComponentSelectionCallbacks) => {
 
     let context = props.context
     let userselections = props.userselections

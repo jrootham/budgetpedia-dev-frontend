@@ -13,7 +13,6 @@ import {
     PortalConfig,
     ChartConfig,
     PortalChartLocation,
-    ChartSettings,
     ChartSelectionContext
 } from '../controllers/explorer/interfaces'
 
