@@ -32,7 +32,7 @@ let getChartParms = (props, callbacks) => {
     let rounded = format({ round: 0, integerSeparator: '' });
     let singlerounded = format({ round: 1, integerSeparator: '' });
     let staffrounded = format({ round: 1, integerSeparator: ',' });
-    let node = getbudgetnode_1.getBudgetNode(viewpointindex, path, budgetdata);
+    let node = getbudgetnode_1.getBudgetNode(budgetdata.Viewpoints[viewpointindex], path);
     if (!node) {
         return {
             isError: true,

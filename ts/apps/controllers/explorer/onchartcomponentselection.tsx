@@ -92,7 +92,7 @@ let onChartComponentSelection = (props: onChartComponentSelectionProps,
     let childdataroot = nodeconfig.datapath.slice()
 
     let node = getBudgetNode(
-        userselections.viewpoint, childdataroot, budgetdata)
+        budgetdata.Viewpoints[userselections.viewpoint], childdataroot)
 
     if (!node.Components) {
         updateChartSelections(chartmatrix, matrixrow)

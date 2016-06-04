@@ -91,7 +91,7 @@ let getChartParms = (
     // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
     // collect chart node and its components as data sources for the graph
-    let node = getBudgetNode(viewpointindex, path, budgetdata)
+    let node = getBudgetNode(budgetdata.Viewpoints[viewpointindex], path)
 
     if (!node) {
         return {

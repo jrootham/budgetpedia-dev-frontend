@@ -1,6 +1,5 @@
 "use strict";
-let getBudgetNode = (viewpointindex, path, budgetdata) => {
-    let node = budgetdata.Viewpoints[viewpointindex];
+let getBudgetNode = (node, path) => {
     let components = node.Components;
     for (let index of path) {
         node = components[index];

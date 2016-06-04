@@ -1,9 +1,7 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // getnodedatasets.tsx
 
-let getBudgetNode = (viewpointindex, path, budgetdata) => {
-
-    let node = budgetdata.Viewpoints[viewpointindex]
+let getBudgetNode = (node, path) => {
 
     let components = node.Components
 
@@ -13,7 +11,6 @@ let getBudgetNode = (viewpointindex, path, budgetdata) => {
 
         if (!node) { // can happen legitimately switching from one facet to another
 
-            // console.log('component node not found', components, viewpointindex, path)
             return null
 
         }
