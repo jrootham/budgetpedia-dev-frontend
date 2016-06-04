@@ -26,6 +26,7 @@ import {
     onChartComponentSelectionCallbacks,
 } from './interfaces'
 
+import { getNodeDatasets } from './getnodedatasets'
 import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
 import { onChartComponentSelection } from './onchartcomponentselection'
@@ -318,28 +319,5 @@ let getChartParms = (
 
 }
 
-let getNodeDatasets = (viewpointindex, path, budgetdata) => {
-
-    let node = budgetdata.Viewpoints[viewpointindex]
-
-    let components = node.Components
-
-    for (let index of path) {
-
-        node = components[index]
-
-        if (!node) { // can happen legitimately switching from one facet to another
-
-            // console.log('component node not found', components, viewpointindex, path)
-            return {node:null, components:null}
-
-        }
-
-        components = node.Components
-    }
-
-    return { node, components }
-}
-
-export { getChartParms, getNodeDatasets }
+export { getChartParms }
 

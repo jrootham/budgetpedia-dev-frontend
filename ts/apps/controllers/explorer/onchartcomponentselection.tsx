@@ -19,7 +19,8 @@ import {
 
 import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
-import { getChartParms, getNodeDatasets } from './getchartparms'
+import { getChartParms } from './getchartparms'
+import { getNodeDatasets } from './getnodedatasets'
 
 // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
 
