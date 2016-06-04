@@ -13,7 +13,6 @@
 var format = require('format-number')
 
 import {
-    BudgetNodeConfig,
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,

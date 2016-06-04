@@ -2,12 +2,12 @@
 // updatechartselections.tsx
 
 import {
-    BudgetNodeConfig
+    MatrixNodeConfig
 } from './interfaces'
 
 // update the visual cue for selection that led to user array of graphs
 let updateChartSelections = (chartmatrix, matrixrow) => {
-    let node: BudgetNodeConfig = null
+    let node: MatrixNodeConfig = null
     for (node of chartmatrix[matrixrow]) {
         for (let chartindex in node.charts ) {
             let chart = node.charts[chartindex].chart

@@ -57,7 +57,7 @@ import * as Actions from '../../actions/actions'
 
 
 import {
-    BudgetNodeConfig,
+    MatrixNodeConfig,
     NodeChartConfig,
     ChartParms,
     ChartParmsObj,
@@ -65,7 +65,6 @@ import {
     MatrixLocation,
     PortalConfig,
     PortalChartLocation,
-    ChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
 } from './explorer/interfaces'
@@ -129,7 +128,7 @@ class ExplorerClass extends Component< any, any > {
 
         // *** TODO: SIMPLIFY
         // assemble parms to get initial dataset
-        let drilldownnodeconfig: BudgetNodeConfig =
+        let drilldownnodeconfig: MatrixNodeConfig =
             this.initRootNodeConfig(ChartSeries.DrillDown, userselections)
         let drilldownindex:any
 
@@ -175,7 +174,7 @@ class ExplorerClass extends Component< any, any > {
 
     // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
 
-    initRootNodeConfig = (matrixrow, userselections): BudgetNodeConfig => {
+    initRootNodeConfig = (matrixrow, userselections): MatrixNodeConfig => {
         let charttype = userselections.charttype
         let chartCode = ChartTypeCodes[charttype]
         let budgetdata = this.props.budgetdata
@@ -298,7 +297,7 @@ class ExplorerClass extends Component< any, any > {
         setViewpointData(viewpointname, dataseriesname, budgetdata,
             this.state.userselections.inflationadjusted)
         let matrixseries = chartmatrix[seriesref]
-        let nodeconfig: BudgetNodeConfig
+        let nodeconfig: MatrixNodeConfig
         let cellptr: any
         let isError = false
         let chartParmsObj:ChartParmsObj = null
@@ -322,7 +321,7 @@ class ExplorerClass extends Component< any, any > {
                 if (chartParmsObj.isError) {
                     matrixseries.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
-                        let parentconfig: BudgetNodeConfig = matrixseries[cellptr - 1]
+                        let parentconfig: MatrixNodeConfig = matrixseries[cellptr - 1]
                         // disable reselection
                         parentconfig.charts[nodechartindex].chartselection = null
                         parentconfig.charts[nodechartindex].chart = null
@@ -380,7 +379,7 @@ class ExplorerClass extends Component< any, any > {
         let chartType = ChartCodeTypes[chartCode]
         let portalIndex = location.portalindex
         let chartmatrix = this.state.chartmatrix
-        let nodeConfig: BudgetNodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column]
+        let nodeConfig: MatrixNodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column]
         let oldChartType = nodeConfig.charts[portalIndex].charttype
         nodeConfig.charts[portalIndex].charttype = chartType
         let props: GetChartParmsProps = {

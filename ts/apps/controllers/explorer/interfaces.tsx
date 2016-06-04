@@ -54,7 +54,7 @@ interface PortalChartLocation {
 }
     
 interface GetChartParmsProps {
-    nodeConfig: BudgetNodeConfig, 
+    nodeConfig: MatrixNodeConfig, 
     chartIndex: number,
     userselections:any, 
     budgetdata:any, 
@@ -82,7 +82,7 @@ interface OnChartComponentSelectionCallbacks {
 // ---------------[ NODE CONFIGURATION ]--------------
 
 // used to configure single chart of chart portal
-interface BudgetNodeConfig {
+interface MatrixNodeConfig {
     // name?: string,
 
     viewpoint: string,
@@ -154,7 +154,7 @@ interface ChartSelectionContext {
 
 
 export {
-    BudgetNodeConfig, 
+    MatrixNodeConfig, 
     NodeChartConfig,
     MatrixLocation,
     PortalChartLocation, 

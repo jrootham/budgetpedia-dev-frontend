@@ -6,8 +6,7 @@ import * as React from 'react'
 var { Component } = React
 
 import {
-    BudgetNodeConfig,
-    // NodeChartConfig,
+    MatrixNodeConfig,
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,
@@ -52,7 +51,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             portalseriesname += ' (' + dataseries.UnitsAlias + ')'
         }
 
-        let portals = matrixcolumn.map((nodeconfig: BudgetNodeConfig, index) => {
+        let portals = matrixcolumn.map((nodeconfig: MatrixNodeConfig, index) => {
 
             let portalcharts = []
 

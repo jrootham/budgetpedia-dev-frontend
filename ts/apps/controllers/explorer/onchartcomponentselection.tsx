@@ -4,7 +4,7 @@
 var format = require('format-number')
 
 import {
-    BudgetNodeConfig,
+    MatrixNodeConfig,
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,
@@ -66,7 +66,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     // acquire serieslist from matrix
     let serieslist = chartmatrix[matrixrow]
 
-    let nodeconfig: BudgetNodeConfig = chartmatrix[matrixrow][matrixcolumn]
+    let nodeconfig: MatrixNodeConfig = chartmatrix[matrixrow][matrixcolumn]
 
     if (nodeconfig.charts[portalChartIndex].portalcharttype == 'Categories') {
         return
@@ -146,7 +146,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
             charts.push(chartconfig)
         }
 
-        let newnodeconfig: BudgetNodeConfig = {
+        let newnodeconfig: MatrixNodeConfig = {
             viewpoint,
             dataseries,
             datapath: childdataroot,
