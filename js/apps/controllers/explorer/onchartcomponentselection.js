@@ -39,11 +39,12 @@ let onChartComponentSelection = (props, callbacks) => {
         return;
     }
     let childdataroot = nodeconfig.datapath.slice();
-    let { node, components } = getbudgetnode_1.getBudgetNode(userselections.viewpoint, childdataroot, budgetdata);
+    let node = getbudgetnode_1.getBudgetNode(userselections.viewpoint, childdataroot, budgetdata);
     if (!node.Components) {
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;
     }
+    let components = node.Components;
     let code = null;
     let parentdata = null;
     if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {

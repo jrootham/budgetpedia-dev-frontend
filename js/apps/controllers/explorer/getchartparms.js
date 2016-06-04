@@ -32,7 +32,7 @@ let getChartParms = (props, callbacks) => {
     let rounded = format({ round: 0, integerSeparator: '' });
     let singlerounded = format({ round: 1, integerSeparator: '' });
     let staffrounded = format({ round: 1, integerSeparator: ',' });
-    let { node, components } = getbudgetnode_1.getBudgetNode(viewpointindex, path, budgetdata);
+    let node = getbudgetnode_1.getBudgetNode(viewpointindex, path, budgetdata);
     if (!node) {
         return {
             isError: true,
@@ -40,6 +40,7 @@ let getChartParms = (props, callbacks) => {
             chartParms: {}
         };
     }
+    let components = node.Components;
     if (portalcharttype == 'Categories') {
         components = node.Categories;
     }

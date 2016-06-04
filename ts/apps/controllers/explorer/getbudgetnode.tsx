@@ -14,14 +14,14 @@ let getBudgetNode = (viewpointindex, path, budgetdata) => {
         if (!node) { // can happen legitimately switching from one facet to another
 
             // console.log('component node not found', components, viewpointindex, path)
-            return { node: null, components: null }
+            return null
 
         }
 
         components = node.Components
     }
 
-    return { node, components }
+    return node
 }
 
 export { getBudgetNode }

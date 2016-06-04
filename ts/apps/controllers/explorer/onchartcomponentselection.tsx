@@ -91,13 +91,15 @@ let onChartComponentSelection = (props: onChartComponentSelectionProps,
     // copy path
     let childdataroot = nodeconfig.datapath.slice()
 
-    let { node, components } = getBudgetNode(
+    let node = getBudgetNode(
         userselections.viewpoint, childdataroot, budgetdata)
 
     if (!node.Components) {
         updateChartSelections(chartmatrix, matrixrow)
         return
     }
+
+    let components = node.Components
 
     let code = null
     let parentdata: SortedComponentItem = null

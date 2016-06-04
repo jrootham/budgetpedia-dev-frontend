@@ -91,7 +91,7 @@ let getChartParms = (
     // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
     // collect chart node and its components as data sources for the graph
-    let { node, components } = getBudgetNode(viewpointindex, path, budgetdata)
+    let node = getBudgetNode(viewpointindex, path, budgetdata)
 
     if (!node) {
         return {
@@ -100,6 +100,8 @@ let getChartParms = (
             chartParms: {}
         }
     }
+
+    let components = node.Components
 
     // !Hack!
     if (portalcharttype == 'Categories') {

@@ -5,10 +5,10 @@ let getBudgetNode = (viewpointindex, path, budgetdata) => {
     for (let index of path) {
         node = components[index];
         if (!node) {
-            return { node: null, components: null };
+            return null;
         }
         components = node.Components;
     }
-    return { node: node, components: components };
+    return node;
 };
 exports.getBudgetNode = getBudgetNode;
