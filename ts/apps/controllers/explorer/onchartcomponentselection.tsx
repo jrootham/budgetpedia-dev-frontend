@@ -10,7 +10,7 @@ import {
     ChartSelectionContext,
     PortalChartLocation,
     SortedComponentItem,
-    NodeChartConfig,
+    MatrixChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
     OnChartComponentSelectionProps,
@@ -138,7 +138,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
             // if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
             //     continue
             // }
-            let chartconfig: NodeChartConfig = {
+            let chartconfig: MatrixChartConfig = {
                 charttype,
                 chartCode,
             }

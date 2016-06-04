@@ -95,11 +95,11 @@ interface MatrixNodeConfig {
 
     matrixlocation: MatrixLocation,
     isError?: boolean,
-    charts: NodeChartConfig[]
+    charts: MatrixChartConfig[]
 
 }
 
-interface NodeChartConfig {
+interface MatrixChartConfig {
 
     charttype: string,
     chartCode?: string,
@@ -155,7 +155,7 @@ interface ChartSelectionContext {
 
 export {
     MatrixNodeConfig, 
-    NodeChartConfig,
+    MatrixChartConfig,
     MatrixLocation,
     PortalChartLocation, 
     ChartParms, 

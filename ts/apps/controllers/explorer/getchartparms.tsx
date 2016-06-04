@@ -18,7 +18,7 @@ import {
     ChartSelectionContext,
     PortalChartLocation,
     SortedComponentItem,
-    NodeChartConfig,
+    MatrixChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
     OnChartComponentSelectionProps,
@@ -44,7 +44,7 @@ let getChartParms = (
     let onPortalCreation = callbacks.onPortalCreation
     let workingStatus = callbacks.workingStatus
 
-    let chartConfig: NodeChartConfig = nodeConfig.charts[chartIndex]
+    let chartConfig: MatrixChartConfig = nodeConfig.charts[chartIndex]
 
     let sortedlist = 'SortedComponents'
 

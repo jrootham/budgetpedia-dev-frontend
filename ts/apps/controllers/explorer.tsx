@@ -58,7 +58,7 @@ import * as Actions from '../../actions/actions'
 
 import {
     MatrixNodeConfig,
-    NodeChartConfig,
+    MatrixChartConfig,
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,
@@ -183,7 +183,7 @@ class ExplorerClass extends Component< any, any > {
         let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries]
         let charts = []
         for (let type of portalcharts) {
-            let chartconfig:NodeChartConfig = {
+            let chartconfig:MatrixChartConfig = {
                 charttype,
                 chartCode,
             }
