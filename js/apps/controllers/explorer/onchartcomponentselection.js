@@ -21,12 +21,12 @@ let onChartComponentSelection = (props, callbacks) => {
     else {
         selectionrow = null;
     }
-    let chart = context.Chart.chart;
+    let chart = context.ChartObject.chart;
     let selectmatrixlocation = context.portalchartlocation.matrixlocation;
     let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrix[matrixrow];
     let nodeconfig = chartmatrix[matrixrow][matrixcolumn];
-    if (nodeconfig.charts[portalChartIndex].portalcharttype == 'Categories') {
+    if (nodeconfig.charts[portalChartIndex].nodepropertyname == 'Categories') {
         return;
     }
     let viewpoint = nodeconfig.viewpoint, dataseries = nodeconfig.dataseries;
@@ -78,10 +78,10 @@ let onChartComponentSelection = (props, callbacks) => {
                 continue;
             }
             let chartconfig = {
-                charttype: charttype,
+                googlecharttype: charttype,
                 chartCode: chartCode,
             };
-            chartconfig.portalcharttype = type.Type;
+            chartconfig.nodepropertyname = type.Type;
             charts.push(chartconfig);
         }
         let newnodeconfig = {
@@ -119,7 +119,7 @@ let onChartComponentSelection = (props, callbacks) => {
             }
             newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms;
             newnodeconfig.charts[newnodeindex].chartCode =
-                constants_1.ChartTypeCodes[newnodeconfig.charts[newnodeindex].charttype];
+                constants_1.ChartTypeCodes[newnodeconfig.charts[newnodeindex].googlecharttype];
         }
         if (isError) {
             updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
@@ -132,7 +132,7 @@ let onChartComponentSelection = (props, callbacks) => {
         refreshPresentation(chartmatrix);
         nodeconfig.charts[portalChartIndex].chartselection = context.selection;
         nodeconfig.charts[portalChartIndex].chart = chart;
-        nodeconfig.charts[portalChartIndex].Chart = context.Chart;
+        nodeconfig.charts[portalChartIndex].ChartObject = context.ChartObject;
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         onPortalCreation(newnodeconfig.matrixlocation);
         workingStatus(false);

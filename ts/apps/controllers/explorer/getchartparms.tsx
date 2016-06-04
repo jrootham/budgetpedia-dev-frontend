@@ -48,7 +48,7 @@ let getChartParms = (
 
     let sortedlist = 'SortedComponents'
 
-    let portalcharttype = chartConfig.portalcharttype
+    let portalcharttype = chartConfig.nodepropertyname
 
     if (portalcharttype == 'Categories') {
         sortedlist = 'SortedCategories'
@@ -109,7 +109,7 @@ let getChartParms = (
 
     // ---------------------[ COLLECT CHART PARMS ]---------------------
     // 1. chart type:
-    let chartType = chartConfig.charttype
+    let chartType = chartConfig.googlecharttype
 
     // 2. chart options:
     // get axis title
@@ -228,7 +228,7 @@ let getChartParms = (
                 return (Chart, err) => {
                     let chart = Chart.chart
                     let selection = chart.getSelection()
-                    let context: ChartSelectionContext = { portalchartlocation: configLocation, Chart, selection, err }
+                    let context: ChartSelectionContext = { portalchartlocation: configLocation, ChartObject:Chart, selection, err }
 
                     let props: OnChartComponentSelectionProps = {
                         context,

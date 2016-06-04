@@ -75,8 +75,8 @@ class ExplorerClass extends Component {
             });
         };
         this.initRootNodeConfig = (matrixrow, userselections) => {
-            let charttype = userselections.charttype;
-            let chartCode = constants_2.ChartTypeCodes[charttype];
+            let googlecharttype = userselections.charttype;
+            let chartCode = constants_2.ChartTypeCodes[googlecharttype];
             let budgetdata = this.props.budgetdata;
             let viewpoint = userselections.viewpoint;
             let dataseries = userselections.dataseries;
@@ -84,10 +84,10 @@ class ExplorerClass extends Component {
             let charts = [];
             for (let type of portalcharts) {
                 let chartconfig = {
-                    charttype: charttype,
+                    googlecharttype: googlecharttype,
                     chartCode: chartCode,
                 };
-                chartconfig.portalcharttype = type.Type;
+                chartconfig.nodepropertyname = type.Type;
                 charts.push(chartconfig);
             }
             return {
@@ -250,8 +250,8 @@ class ExplorerClass extends Component {
             let portalIndex = location.portalindex;
             let chartmatrix = this.state.chartmatrix;
             let nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
-            let oldChartType = nodeConfig.charts[portalIndex].charttype;
-            nodeConfig.charts[portalIndex].charttype = chartType;
+            let oldChartType = nodeConfig.charts[portalIndex].googlecharttype;
+            nodeConfig.charts[portalIndex].googlecharttype = chartType;
             let props = {
                 nodeConfig: nodeConfig,
                 chartIndex: portalIndex,
@@ -272,15 +272,15 @@ class ExplorerClass extends Component {
                 nodeConfig.datanode = chartParmsObj.datanode;
             }
             else {
-                nodeConfig.charts[portalIndex].charttype = oldChartType;
+                nodeConfig.charts[portalIndex].googlecharttype = oldChartType;
             }
             this.setState({
                 chartmatrix: chartmatrix,
             });
             setTimeout(() => {
                 if (nodeConfig.charts[portalIndex].chart) {
-                    nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].Chart.chart;
-                    if (nodeConfig.charts[portalIndex].charttype == "PieChart") {
+                    nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].ChartObject.chart;
+                    if (nodeConfig.charts[portalIndex].googlecharttype == "PieChart") {
                         nodeConfig.charts[portalIndex].chartselection[0].column = null;
                     }
                     else {

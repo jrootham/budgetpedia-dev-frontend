@@ -175,8 +175,8 @@ class ExplorerClass extends Component< any, any > {
     // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
 
     initRootNodeConfig = (matrixrow, userselections): MatrixNodeConfig => {
-        let charttype = userselections.charttype
-        let chartCode = ChartTypeCodes[charttype]
+        let googlecharttype = userselections.charttype
+        let chartCode = ChartTypeCodes[googlecharttype]
         let budgetdata = this.props.budgetdata
         let viewpoint = userselections.viewpoint
         let dataseries = userselections.dataseries
@@ -184,10 +184,10 @@ class ExplorerClass extends Component< any, any > {
         let charts = []
         for (let type of portalcharts) {
             let chartconfig:MatrixChartConfig = {
-                charttype,
+                googlecharttype,
                 chartCode,
             }
-            chartconfig.portalcharttype = type.Type
+            chartconfig.nodepropertyname = type.Type
             charts.push(chartconfig)
         }
         return {
@@ -380,8 +380,8 @@ class ExplorerClass extends Component< any, any > {
         let portalIndex = location.portalindex
         let chartmatrix = this.state.chartmatrix
         let nodeConfig: MatrixNodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column]
-        let oldChartType = nodeConfig.charts[portalIndex].charttype
-        nodeConfig.charts[portalIndex].charttype = chartType
+        let oldChartType = nodeConfig.charts[portalIndex].googlecharttype
+        nodeConfig.charts[portalIndex].googlecharttype = chartType
         let props: GetChartParmsProps = {
             nodeConfig: nodeConfig,
             chartIndex: portalIndex,
@@ -401,7 +401,7 @@ class ExplorerClass extends Component< any, any > {
                 ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType]
             nodeConfig.datanode = chartParmsObj.datanode
         } else {
-            nodeConfig.charts[portalIndex].charttype = oldChartType
+            nodeConfig.charts[portalIndex].googlecharttype = oldChartType
         }
         this.setState({
             chartmatrix,
@@ -409,10 +409,10 @@ class ExplorerClass extends Component< any, any > {
         setTimeout(() => {
             if (nodeConfig.charts[portalIndex].chart) {
                 // refresh to new chart created with switch
-                nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].Chart.chart
+                nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].ChartObject.chart
                 // it turns out that "PieChart" needs column set to null
                 // for setSelection to work
-                if (nodeConfig.charts[portalIndex].charttype == "PieChart") {
+                if (nodeConfig.charts[portalIndex].googlecharttype == "PieChart") {
                     nodeConfig.charts[portalIndex].chartselection[0].column = null
                 } else {
                     // "ColumnChart" doesn't seem to care about column value,

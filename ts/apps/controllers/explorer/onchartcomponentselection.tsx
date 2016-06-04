@@ -54,7 +54,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
         selectionrow = null
     }
 
-    let chart = context.Chart.chart
+    let chart = context.ChartObject.chart
 
     // unpack chartconfig
     let selectmatrixlocation = context.portalchartlocation.matrixlocation
@@ -68,7 +68,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
     let nodeconfig: MatrixNodeConfig = chartmatrix[matrixrow][matrixcolumn]
 
-    if (nodeconfig.charts[portalChartIndex].portalcharttype == 'Categories') {
+    if (nodeconfig.charts[portalChartIndex].nodepropertyname == 'Categories') {
         return
     }
 
@@ -139,10 +139,10 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
             //     continue
             // }
             let chartconfig: MatrixChartConfig = {
-                charttype,
+                googlecharttype:charttype,
                 chartCode,
             }
-            chartconfig.portalcharttype = type.Type
+            chartconfig.nodepropertyname = type.Type
             charts.push(chartconfig)
         }
 
@@ -182,7 +182,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
             }
             newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms
             newnodeconfig.charts[newnodeindex].chartCode =
-                ChartTypeCodes[newnodeconfig.charts[newnodeindex].charttype]
+                ChartTypeCodes[newnodeconfig.charts[newnodeindex].googlecharttype]
         }
 
         if (isError) {
@@ -198,7 +198,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
         nodeconfig.charts[portalChartIndex].chartselection = context.selection
         nodeconfig.charts[portalChartIndex].chart = chart
-        nodeconfig.charts[portalChartIndex].Chart = context.Chart
+        nodeconfig.charts[portalChartIndex].ChartObject = context.ChartObject
 
         updateChartSelections(chartmatrix, matrixrow)
         onPortalCreation(newnodeconfig.matrixlocation)

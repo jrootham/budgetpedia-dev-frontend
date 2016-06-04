@@ -29,7 +29,7 @@ interface ChartSettings {
     graph_id: string,
 }
 
-// configuration for individual chart
+// configuration for ExplorerChart
 interface ChartConfig {
     chartparms: ChartParms,
     chartsettings: ChartSettings,
@@ -101,14 +101,14 @@ interface MatrixNodeConfig {
 
 interface MatrixChartConfig {
 
-    charttype: string,
+    googlecharttype: string,
     chartCode?: string,
     chartparms?: ChartParms,
-    portalcharttype?:string,
+    nodepropertyname?:string,
 
     chartselection?: ChartSelectionCell[],
     chart?: any,
-    Chart?: any,
+    ChartObject?: any,
 }
 
 // location of chart config in for portal
@@ -144,14 +144,13 @@ interface ChartSelectionCell {
 // for drill-down or other action
 interface ChartSelectionContext {
     portalchartlocation: PortalChartLocation,
-    Chart: any,
+    ChartObject: any,
     selection: ChartSelectionCell[],
     err: any,
 }
 
 // =====================================================
 // ---------------[ EXPORT ]--------------
-
 
 export {
     MatrixNodeConfig, 

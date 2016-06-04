@@ -13,7 +13,7 @@ let getChartParms = (props, callbacks) => {
     let workingStatus = callbacks.workingStatus;
     let chartConfig = nodeConfig.charts[chartIndex];
     let sortedlist = 'SortedComponents';
-    let portalcharttype = chartConfig.portalcharttype;
+    let portalcharttype = chartConfig.nodepropertyname;
     if (portalcharttype == 'Categories') {
         sortedlist = 'SortedCategories';
     }
@@ -44,7 +44,7 @@ let getChartParms = (props, callbacks) => {
     if (portalcharttype == 'Categories') {
         components = node.Categories;
     }
-    let chartType = chartConfig.charttype;
+    let chartType = chartConfig.googlecharttype;
     let axistitle = null;
     if ((node.Contents) && (portalcharttype == 'Components')) {
         let titleref = viewpointdata.Configuration[node.Contents];
@@ -141,7 +141,7 @@ let getChartParms = (props, callbacks) => {
                 return (Chart, err) => {
                     let chart = Chart.chart;
                     let selection = chart.getSelection();
-                    let context = { portalchartlocation: configLocation, Chart: Chart, selection: selection, err: err };
+                    let context = { portalchartlocation: configLocation, ChartObject: Chart, selection: selection, err: err };
                     let props = {
                         context: context,
                         userselections: userselections,
