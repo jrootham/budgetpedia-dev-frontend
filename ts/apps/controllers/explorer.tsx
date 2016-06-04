@@ -45,7 +45,7 @@ import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import Dialog from 'material-ui/Dialog'
 
-import { ExplorerPortal } from '../components/explorerportal'
+import { ExplorerBranch } from '../components/explorerbranch'
 import { ChartSeries } from '../constants'
 import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
@@ -427,91 +427,6 @@ class ExplorerClass extends Component< any, any > {
     // ============================================================
     // -------------------[ RENDER METHODS ]---------------------
 
-    // get React components to render
-    getPortals = (matrixcolumn, matrixrow) => {
-
-        let userselections = this.state.userselections
-
-        let budgetdata = this.props.budgetdata
-
-        let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles
-        let dataseries = budgetdata.DataSeries[userselections.dataseries]
-        let portalseriesname = dataseries.Name
-        if (dataseries.Units == 'DOLLAR') {
-            portalseriesname += ' (' + dataseries.UnitsAlias + ')'
-        }
-
-        let portals = matrixcolumn.map((nodeconfig: BudgetNodeConfig, index) => {
-
-            let portalcharts = []
-
-            for (let chartindex in nodeconfig.charts) {
-
-                let chartblocktitle = null
-                if (//(nodeconfig.datanode.Contents == 'BASELINE') ||
-                    (nodeconfig.charts[chartindex].portalcharttype == 'Categories' )) {
-                    chartblocktitle = portaltitles.Categories
-                } else {
-                    chartblocktitle = portaltitles.Baseline
-                }
-
-                let portalchartparms = nodeconfig.charts[chartindex].chartparms
-
-                let location = {
-                    matrixlocation: nodeconfig.matrixlocation,
-                    portalindex: Number(chartindex)
-                }
-                let explorer = this
-                let portalchartsettings: ChartSettings = {
-                    // matrixlocation: chartconfig.matrixlocation,
-                    onSwitchChartCode: ((location) => {
-                        return (chartCode) => {
-                            explorer.switchChartCode(location,chartCode)
-                        }
-                    })(location),
-                    chartCode: nodeconfig.charts[chartindex].chartCode,
-                    graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
-                    // index,
-                }
-
-                let portalchart: PortalChartConfig = {
-                    portalchartparms,
-                    portalchartsettings,
-                    chartblocktitle: "By " + chartblocktitle,
-                }
-
-                portalcharts.push(portalchart)
-
-            }
-            let portalname = null
-            if (nodeconfig.parentdata) {
-                portalname = nodeconfig.parentdata.Name
-            } else {
-                portalname = 'City Budget'
-            }
-
-            portalname += ' ' + portalseriesname
-
-            let budgetPortal:PortalConfig = {
-                portalCharts:portalcharts,
-                portalName: portalname,
-                // onChangeBudgetPortal:this.onChangeBudgetPortalChart,
-                portalLocation:{
-                    column:matrixcolumn,
-                    row:matrixrow,
-                }
-            }
-
-            return <ExplorerPortal
-                key = {index}
-                budgetPortal = { budgetPortal }
-                onChangePortalChart = { this.onChangeBudgetPortalChart }
-                />
-        })
-
-        return portals
-
-    }
 
     // ===================================================================
     // ---------------------------[ RENDER ]------------------------------ 
@@ -679,9 +594,6 @@ class ExplorerClass extends Component< any, any > {
 */
         // -----------[ DRILLDOWN SEGMENT]-------------
 
-        let drilldownbranch = explorer.state.chartmatrix[ChartSeries.DrillDown]
-
-        let drilldownportals = explorer.getPortals(drilldownbranch, ChartSeries.DrillDown)
 
         let drilldownsegment = 
         <Card initiallyExpanded >
@@ -707,96 +619,18 @@ class ExplorerClass extends Component< any, any > {
                 </IconButton>
              </CardText>
              <CardText>
-                <div>
-                    <span style={{fontStyle: "italic"}}>Viewpoint: </span> 
-                    <DropDownMenu 
-                        value={this.state.userselections.viewpoint} 
-                        style={{
-                        }}
-                        onChange={
-                            (e,index,value) => {
-                                this.switchViewpoint(value, ChartSeries.DrillDown)
-                            }
-                        }
-                    >
-                        <MenuItem value={'FUNCTIONAL'} primaryText="Functional"/>
-                        <MenuItem value={'STRUCTURAL'} primaryText="Structural"/>
-                    </DropDownMenu>
-
-                    <span style={{margin:"0 10px 0 10px",fontStyle:"italic"}}>Facets: </span>
-
-                    <IconButton 
-                        tooltip="Expenditures" 
-                        tooltipPosition="top-center" 
-                        onTouchTap= {
-                            e => {
-                                this.switchDataSeries('BudgetExpenses', ChartSeries.DrillDown)
-                            }
-                        }
-                        style={
-                            {
-                                backgroundColor: (this.state.userselections.dataseries == 'BudgetExpenses')
-                                ? "rgba(144,238,144,0.5)"
-                                : 'transparent',
-                                borderRadius: "50%"
-                            }
-                        }>
-                        <FontIcon className="material-icons">attach_money</FontIcon>
-                    </IconButton>
-
-                    <IconButton 
-                        tooltip="Revenues" 
-                        tooltipPosition="top-center" 
-                        onTouchTap= {
-                            e => {
-                                this.switchDataSeries('BudgetRevenues', ChartSeries.DrillDown)
-                            }
-                        }
-                        style={
-                            {
-                                backgroundColor: (this.state.userselections.dataseries == 'BudgetRevenues')
-                                ? "rgba(144,238,144,0.5)"
-                                : 'transparent',
-                                borderRadius: "50%"
-                            }
-                        }>
-                        <FontIcon className="material-icons">receipt</FontIcon>
-                    </IconButton>
-
-                    <IconButton 
-                        tooltip="Staffing"
-                        tooltipPosition="top-center" 
-                        onTouchTap= {
-                            e => {
-                                this.switchDataSeries('BudgetStaffing', ChartSeries.DrillDown)
-                            }
-                        }
-                        style={
-                            {
-                                backgroundColor: (this.state.userselections.dataseries == 'BudgetStaffing')
-                                ? "rgba(144,238,144,0.5)"
-                                : 'transparent',
-                                borderRadius: "50%"
-                            }
-                        }>
-                        >
-                        <FontIcon className="material-icons">people</FontIcon>
-                    </IconButton >
-
-                </div>
-
-                <div style={{ whiteSpace: "nowrap" }}>
-                    <div ref={node =>{
-                        this.branchScrollBlocks[ChartSeries.DrillDown] = node
-                    }} style={{ overflow: "scroll" }}>
-
-                        { drilldownportals }
-
-                        <div style={{ display: "inline-block", width: "500px" }}></div>
-
-                    </div>
-                </div>
-
+             <ExplorerBranch 
+                 budgetdata = {explorer.props.budgetdata}
+                 chartmatrix = {explorer.state.chartmatrix}
+                 userselections = {explorer.state.userselections}
+                 callbacks = {{
+                     switchChartCode:explorer.switchChartCode,
+                     onChangeBudgetPortalChart: explorer.onChangeBudgetPortalChart,
+                     switchViewpoint: explorer.switchViewpoint,
+                     switchDataSeries: explorer.switchDataSeries,
+                 }}
+                 branchScrollBlocks = {explorer.branchScrollBlocks}
+             />
             </CardText>
 
         </Card >

@@ -1,3 +1,4 @@
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // getnodedatasets.tsx
 
 let getNodeDatasets = (viewpointindex, path, budgetdata) => {

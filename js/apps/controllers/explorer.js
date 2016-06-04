@@ -5,10 +5,8 @@ const react_redux_1 = require('react-redux');
 const Card_1 = require('material-ui/Card');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
-const DropDownMenu_1 = require('material-ui/DropDownMenu');
-const MenuItem_1 = require('material-ui/MenuItem');
 const Dialog_1 = require('material-ui/Dialog');
-const explorerportal_1 = require('../components/explorerportal');
+const explorerbranch_1 = require('../components/explorerbranch');
 const constants_1 = require('../constants');
 const constants_2 = require('../constants');
 const setviewpointdata_1 = require('./explorer/setviewpointdata');
@@ -292,67 +290,6 @@ class ExplorerClass extends Component {
                 chartmatrix: chartmatrix,
             });
         };
-        this.getPortals = (matrixcolumn, matrixrow) => {
-            let userselections = this.state.userselections;
-            let budgetdata = this.props.budgetdata;
-            let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
-            let dataseries = budgetdata.DataSeries[userselections.dataseries];
-            let portalseriesname = dataseries.Name;
-            if (dataseries.Units == 'DOLLAR') {
-                portalseriesname += ' (' + dataseries.UnitsAlias + ')';
-            }
-            let portals = matrixcolumn.map((nodeconfig, index) => {
-                let portalcharts = [];
-                for (let chartindex in nodeconfig.charts) {
-                    let chartblocktitle = null;
-                    if ((nodeconfig.charts[chartindex].portalcharttype == 'Categories')) {
-                        chartblocktitle = portaltitles.Categories;
-                    }
-                    else {
-                        chartblocktitle = portaltitles.Baseline;
-                    }
-                    let portalchartparms = nodeconfig.charts[chartindex].chartparms;
-                    let location = {
-                        matrixlocation: nodeconfig.matrixlocation,
-                        portalindex: Number(chartindex)
-                    };
-                    let explorer = this;
-                    let portalchartsettings = {
-                        onSwitchChartCode: ((location) => {
-                            return (chartCode) => {
-                                explorer.switchChartCode(location, chartCode);
-                            };
-                        })(location),
-                        chartCode: nodeconfig.charts[chartindex].chartCode,
-                        graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
-                    };
-                    let portalchart = {
-                        portalchartparms: portalchartparms,
-                        portalchartsettings: portalchartsettings,
-                        chartblocktitle: "By " + chartblocktitle,
-                    };
-                    portalcharts.push(portalchart);
-                }
-                let portalname = null;
-                if (nodeconfig.parentdata) {
-                    portalname = nodeconfig.parentdata.Name;
-                }
-                else {
-                    portalname = 'City Budget';
-                }
-                portalname += ' ' + portalseriesname;
-                let budgetPortal = {
-                    portalCharts: portalcharts,
-                    portalName: portalname,
-                    portalLocation: {
-                        column: matrixcolumn,
-                        row: matrixrow,
-                    }
-                };
-                return React.createElement(explorerportal_1.ExplorerPortal, {key: index, budgetPortal: budgetPortal, onChangePortalChart: this.onChangeBudgetPortalChart});
-            });
-            return portals;
-        };
     }
     render() {
         let explorer = this;
@@ -365,34 +302,12 @@ class ExplorerClass extends Component {
             position: "absolute",
             zIndex: 2,
         }, onTouchTap: this.handleDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
-        let drilldownbranch = explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown];
-        let drilldownportals = explorer.getPortals(drilldownbranch, constants_1.ChartSeries.DrillDown);
-        let drilldownsegment = React.createElement(Card_1.Card, {initiallyExpanded: true}, React.createElement(Card_1.CardTitle, {actAsExpander: false, showExpandableButton: false}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: this.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline"))), React.createElement(Card_1.CardText, null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.state.userselections.viewpoint, style: {}, onChange: (e, index, value) => {
-            this.switchViewpoint(value, constants_1.ChartSeries.DrillDown);
-        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton_1.default, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {
-            this.switchDataSeries('BudgetExpenses', constants_1.ChartSeries.DrillDown);
-        }, style: {
-            backgroundColor: (this.state.userselections.dataseries == 'BudgetExpenses')
-                ? "rgba(144,238,144,0.5)"
-                : 'transparent',
-            borderRadius: "50%"
-        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "attach_money")), React.createElement(IconButton_1.default, {tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: e => {
-            this.switchDataSeries('BudgetRevenues', constants_1.ChartSeries.DrillDown);
-        }, style: {
-            backgroundColor: (this.state.userselections.dataseries == 'BudgetRevenues')
-                ? "rgba(144,238,144,0.5)"
-                : 'transparent',
-            borderRadius: "50%"
-        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "receipt")), React.createElement(IconButton_1.default, {tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: e => {
-            this.switchDataSeries('BudgetStaffing', constants_1.ChartSeries.DrillDown);
-        }, style: {
-            backgroundColor: (this.state.userselections.dataseries == 'BudgetStaffing')
-                ? "rgba(144,238,144,0.5)"
-                : 'transparent',
-            borderRadius: "50%"
-        }}, ">", React.createElement(FontIcon_1.default, {className: "material-icons"}, "people"))), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
-            this.branchScrollBlocks[constants_1.ChartSeries.DrillDown] = node;
-        }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }})))));
+        let drilldownsegment = React.createElement(Card_1.Card, {initiallyExpanded: true}, React.createElement(Card_1.CardTitle, {actAsExpander: false, showExpandableButton: false}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: this.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline"))), React.createElement(Card_1.CardText, null, React.createElement(explorerbranch_1.ExplorerBranch, {budgetdata: explorer.props.budgetdata, chartmatrix: explorer.state.chartmatrix, userselections: explorer.state.userselections, callbacks: {
+            switchChartCode: explorer.switchChartCode,
+            onChangeBudgetPortalChart: explorer.onChangeBudgetPortalChart,
+            switchViewpoint: explorer.switchViewpoint,
+            switchDataSeries: explorer.switchDataSeries,
+        }, branchScrollBlocks: explorer.branchScrollBlocks})));
         return React.createElement("div", null, dialogbox, drilldownsegment);
     }
 }
