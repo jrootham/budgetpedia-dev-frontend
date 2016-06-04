@@ -187,7 +187,7 @@ class ExplorerClass extends Component< any, any > {
                 googlecharttype,
                 chartCode,
             }
-            chartconfig.nodepropertyname = type.Type
+            chartconfig.nodedatapropertyname = type.Type
             charts.push(chartconfig)
         }
         return {

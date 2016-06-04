@@ -104,7 +104,7 @@ interface MatrixChartConfig {
     googlecharttype: string,
     chartCode?: string,
     chartparms?: ChartParms,
-    nodepropertyname?:string,
+    nodedatapropertyname?:string,
 
     chartselection?: ChartSelectionCell[],
     chart?: any,

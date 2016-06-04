@@ -68,7 +68,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
     let nodeconfig: MatrixNodeConfig = chartmatrix[matrixrow][matrixcolumn]
 
-    if (nodeconfig.charts[portalChartIndex].nodepropertyname == 'Categories') {
+    if (nodeconfig.charts[portalChartIndex].nodedatapropertyname == 'Categories') {
         return
     }
 
@@ -142,7 +142,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
                 googlecharttype:charttype,
                 chartCode,
             }
-            chartconfig.nodepropertyname = type.Type
+            chartconfig.nodedatapropertyname = type.Type
             charts.push(chartconfig)
         }
 

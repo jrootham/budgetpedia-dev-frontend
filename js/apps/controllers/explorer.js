@@ -87,7 +87,7 @@ class ExplorerClass extends Component {
                     googlecharttype: googlecharttype,
                     chartCode: chartCode,
                 };
-                chartconfig.nodepropertyname = type.Type;
+                chartconfig.nodedatapropertyname = type.Type;
                 charts.push(chartconfig);
             }
             return {

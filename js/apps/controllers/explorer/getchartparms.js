@@ -13,7 +13,7 @@ let getChartParms = (props, callbacks) => {
     let workingStatus = callbacks.workingStatus;
     let chartConfig = nodeConfig.charts[chartIndex];
     let sortedlist = 'SortedComponents';
-    let portalcharttype = chartConfig.nodepropertyname;
+    let portalcharttype = chartConfig.nodedatapropertyname;
     if (portalcharttype == 'Categories') {
         sortedlist = 'SortedCategories';
     }

@@ -48,7 +48,7 @@ let getChartParms = (
 
     let sortedlist = 'SortedComponents'
 
-    let portalcharttype = chartConfig.nodepropertyname
+    let portalcharttype = chartConfig.nodedatapropertyname
 
     if (portalcharttype == 'Categories') {
         sortedlist = 'SortedCategories'

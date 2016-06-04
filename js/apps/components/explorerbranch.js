@@ -24,7 +24,7 @@ class ExplorerBranch extends Component {
                 let portalcharts = [];
                 for (let chartindex in nodeconfig.charts) {
                     let chartblocktitle = null;
-                    if ((nodeconfig.charts[chartindex].nodepropertyname == 'Categories')) {
+                    if ((nodeconfig.charts[chartindex].nodedatapropertyname == 'Categories')) {
                         chartblocktitle = portaltitles.Categories;
                     }
                     else {

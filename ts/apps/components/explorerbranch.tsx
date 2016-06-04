@@ -59,7 +59,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
                 let chartblocktitle = null
                 if (//(nodeconfig.datanode.Contents == 'BASELINE') ||
-                    (nodeconfig.charts[chartindex].nodepropertyname == 'Categories')) {
+                    (nodeconfig.charts[chartindex].nodedatapropertyname == 'Categories')) {
                     chartblocktitle = portaltitles.Categories
                 } else {
                     chartblocktitle = portaltitles.Baseline
