@@ -14,8 +14,8 @@ import {
     MatrixLocation,
     PortalConfig,
     ChartSettings,
-    ChartLocation,
-    PortalChartConfig,
+    PortalChartLocation,
+    ChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
 } from '../controllers/explorer/interfaces'
@@ -85,7 +85,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     // index,
                 }
 
-                let portalchart: PortalChartConfig = {
+                let portalchart: ChartConfig = {
                     portalchartparms,
                     portalchartsettings,
                     chartblocktitle: "By " + chartblocktitle,
@@ -107,7 +107,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 portalCharts: portalcharts,
                 portalName: portalname,
                 // onChangeBudgetPortal:this.onChangeBudgetPortalChart,
-                portalLocation: {
+                matrixLocation: {
                     column: matrixcolumn,
                     row: matrixrow,
                 }

@@ -7,7 +7,7 @@ class ExplorerPortal extends Component {
     constructor(...args) {
         super(...args);
         this.onChangeTab = () => {
-            this.props.onChangePortalChart(this.props.budgetPortal.portalLocation);
+            this.props.onChangePortalChart(this.props.budgetPortal.matrixLocation);
         };
         this.componentWillMount = () => {
         };

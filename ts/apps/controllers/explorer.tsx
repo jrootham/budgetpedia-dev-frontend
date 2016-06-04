@@ -65,8 +65,8 @@ import {
     MatrixLocation,
     PortalConfig,
     ChartSettings,
-    ChartLocation,
-    PortalChartConfig,
+    PortalChartLocation,
+    ChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
 } from './explorer/interfaces'
@@ -231,11 +231,11 @@ class ExplorerClass extends Component< any, any > {
     //     https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
     
     // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
-    onPortalCreation = (newPortalLocation:MatrixLocation) => {
-        let matrixrow = newPortalLocation.row
+    onPortalCreation = (newMatrixLocation:MatrixLocation) => {
+        let matrixrow = newMatrixLocation.row
         let element:Element = this.branchScrollBlocks[matrixrow]
         if (!element) {
-            console.error('expected branch element not found in onPortalCreation',newPortalLocation)
+            console.error('expected branch element not found in onPortalCreation',newMatrixLocation)
             return
         }
         setTimeout(()=>{
@@ -362,9 +362,9 @@ class ExplorerClass extends Component< any, any > {
 
     }
 
-    onChangeBudgetPortalChart = (portalLocation: MatrixLocation) => {
+    onChangeBudgetPortalChart = (matrixLocation: MatrixLocation) => {
         setTimeout(()=>{
-            updateChartSelections(this.state.chartmatrix, portalLocation.row)
+            updateChartSelections(this.state.chartmatrix, matrixLocation.row)
         })
     }
 
@@ -377,7 +377,7 @@ class ExplorerClass extends Component< any, any > {
     // ============================================================
     // -------------------[ RENDER METHODS ]---------------------
     // TODO: belongs with explorerchart controller?
-    switchChartCode = (location: ChartLocation, chartCode) => {
+    switchChartCode = (location: PortalChartLocation, chartCode) => {
         let chartType = ChartCodeTypes[chartCode]
         let portalIndex = location.portalindex
         let chartmatrix = this.state.chartmatrix

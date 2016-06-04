@@ -9,11 +9,10 @@ import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
 import { Tabs, Tab } from 'material-ui/Tabs'
 import {
-    // ChartConfig,
     ChartParms,
     PortalConfig,
-    PortalChartConfig,
-    ChartLocation,
+    ChartConfig,
+    PortalChartLocation,
     ChartSettings,
     ChartSelectionContext
 } from '../controllers/explorer/interfaces'
@@ -28,7 +27,7 @@ interface ExplorePortalProps {
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     onChangeTab = () => {
-        this.props.onChangePortalChart(this.props.budgetPortal.portalLocation)
+        this.props.onChangePortalChart(this.props.budgetPortal.matrixLocation)
     }
 
     componentWillMount = () => {
@@ -39,7 +38,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
         // generate array of chart tabs
         let chartTabs = this.props.budgetPortal.portalCharts.map(
-            (chartTab:PortalChartConfig,chartindex) => {
+            (chartTab:ChartConfig,chartindex) => {
             let chartparms = chartTab.portalchartparms
             let chartsettings = chartTab.portalchartsettings
             return <Tab style={{fontSize:"12px"}} 

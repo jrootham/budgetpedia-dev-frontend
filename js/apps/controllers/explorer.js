@@ -116,11 +116,11 @@ class ExplorerClass extends Component {
                 dialogopen: false
             });
         };
-        this.onPortalCreation = (newPortalLocation) => {
-            let matrixrow = newPortalLocation.row;
+        this.onPortalCreation = (newMatrixLocation) => {
+            let matrixrow = newMatrixLocation.row;
             let element = this.branchScrollBlocks[matrixrow];
             if (!element) {
-                console.error('expected branch element not found in onPortalCreation', newPortalLocation);
+                console.error('expected branch element not found in onPortalCreation', newMatrixLocation);
                 return;
             }
             setTimeout(() => {
@@ -235,9 +235,9 @@ class ExplorerClass extends Component {
                 }, 250);
             }
         };
-        this.onChangeBudgetPortalChart = (portalLocation) => {
+        this.onChangeBudgetPortalChart = (matrixLocation) => {
             setTimeout(() => {
-                updatechartselections_1.updateChartSelections(this.state.chartmatrix, portalLocation.row);
+                updatechartselections_1.updateChartSelections(this.state.chartmatrix, matrixLocation.row);
             });
         };
         this.refreshPresentation = chartmatrix => {

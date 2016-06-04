@@ -1,22 +1,25 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // interfaces.tsx
 
-// =====================================================
-// ---------------[ PORTAL CONFIGURATION ]--------------
-
-// configuration for budget portal, built on render
-interface PortalConfig {
-    portalCharts: PortalChartConfig[],
-    portalName: string,
-    // onChangeBudgetPortal:Function,
-    portalLocation:MatrixLocation,
+// return by getChartParms; returns isError with ChartParms
+interface ChartParmsObj {
+    isError: Boolean,
+    errorMessage?: string,
+    chartParms?: ChartParms,
+    datanode?: any,
 }
 
-// configuration for individual chart of budget portal
-interface PortalChartConfig {
-    portalchartparms: ChartParms,
-    portalchartsettings: ChartSettings,
-    chartblocktitle: string,
+// parameters to be passed to google chart
+interface ChartParms {
+    chartType?: string,
+    options?: {
+        [index: string]: any,
+    },
+    events?: {
+        [index: string]: any,
+    }[]
+    rows?: any[],
+    columns?: any[],
 }
 
 // settings for individual portal chart
@@ -26,8 +29,26 @@ interface ChartSettings {
     graph_id: string,
 }
 
+// configuration for individual chart of budget portal
+interface ChartConfig {
+    portalchartparms: ChartParms,
+    portalchartsettings: ChartSettings,
+    chartblocktitle: string,
+}
+
+// =====================================================
+// ---------------[ PORTAL CONFIGURATION ]--------------
+
+// configuration for budget portal, built on render
+interface PortalConfig {
+    portalCharts: ChartConfig[],
+    portalName: string,
+    // onChangeBudgetPortal:Function,
+    matrixLocation:MatrixLocation,
+}
+
 // to return value for callback processing
-interface ChartLocation {
+interface PortalChartLocation {
     matrixlocation: MatrixLocation,
     portalindex: number,
 }
@@ -38,6 +59,7 @@ interface GetChartParmsProps {
     userselections:any, 
     budgetdata:any, 
     chartmatrix:any,
+    // node:any,
 }
 
 interface GetChartParmsCallbacks {
@@ -110,30 +132,6 @@ interface YearScope {
     fullrange: boolean,
 }
 
-// =====================================================
-// --------------------[ CHART PARMS ]------------------
-
-// parameters to be passed to google chart
-interface ChartParms {
-    chartType?: string,
-    options?: {
-        [index: string]: any,
-    },
-    events?: {
-        [index: string]: any,
-    }[]
-    rows?: any[],
-    columns?: any[],
-}
-
-// return by getChartParms; returns isError with ChartParms
-interface ChartParmsObj {
-    isError: Boolean,
-    errorMessage?:string,
-    chartParms?: ChartParms,
-    datanode?:any,
-}
-
 // =======================================================
 // ---------------[ CHART SELECTION OUTPUT ]--------------
 
@@ -146,7 +144,7 @@ interface ChartSelectionData {
 // returned when user clicks on a chart component 
 // for drill-down or other action
 interface ChartSelectionContext {
-    portalchartlocation: ChartLocation,
+    portalchartlocation: PortalChartLocation,
     Chart: any,
     selection: ChartSelectionData[],
     err: any,
@@ -160,14 +158,14 @@ export {
     BudgetNodeConfig, 
     NodeChartConfig,
     MatrixLocation,
-    ChartLocation, 
+    PortalChartLocation, 
     ChartSelectionData,
     ChartParms, 
     ChartParmsObj, 
     ChartSelectionContext,
     ChartSettings,
     PortalConfig,
-    PortalChartConfig,
+    ChartConfig,
     SortedComponentItem,
     GetChartParmsProps,
     GetChartParmsCallbacks,

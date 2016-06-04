@@ -63,7 +63,7 @@ class ExplorerBranch extends Component {
                 let budgetPortal = {
                     portalCharts: portalcharts,
                     portalName: portalname,
-                    portalLocation: {
+                    matrixLocation: {
                         column: matrixcolumn,
                         row: matrixrow,
                     }

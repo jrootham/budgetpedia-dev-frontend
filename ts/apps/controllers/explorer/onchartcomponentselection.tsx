@@ -8,7 +8,7 @@ import {
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,
-    ChartLocation,
+    PortalChartLocation,
     SortedComponentItem,
     NodeChartConfig,
     GetChartParmsProps,
