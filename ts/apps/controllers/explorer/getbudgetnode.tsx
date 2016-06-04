@@ -1,7 +1,7 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // getnodedatasets.tsx
 
-let getNodeDatasets = (viewpointindex, path, budgetdata) => {
+let getBudgetNode = (viewpointindex, path, budgetdata) => {
 
     let node = budgetdata.Viewpoints[viewpointindex]
 
@@ -24,4 +24,4 @@ let getNodeDatasets = (viewpointindex, path, budgetdata) => {
     return { node, components }
 }
 
-export { getNodeDatasets }
+export { getBudgetNode }

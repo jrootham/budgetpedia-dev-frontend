@@ -3,7 +3,7 @@ var format = require('format-number');
 const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
 const getchartparms_1 = require('./getchartparms');
-const getnodedatasets_1 = require('./getnodedatasets');
+const getbudgetnode_1 = require('./getbudgetnode');
 let onChartComponentSelection = (props, callbacks) => {
     let context = props.context;
     let userselections = props.userselections;
@@ -39,7 +39,7 @@ let onChartComponentSelection = (props, callbacks) => {
         return;
     }
     let childdataroot = nodeconfig.datapath.slice();
-    let { node, components } = getnodedatasets_1.getNodeDatasets(userselections.viewpoint, childdataroot, budgetdata);
+    let { node, components } = getbudgetnode_1.getBudgetNode(userselections.viewpoint, childdataroot, budgetdata);
     if (!node.Components) {
         updatechartselections_1.updateChartSelections(chartmatrix, matrixrow);
         return;

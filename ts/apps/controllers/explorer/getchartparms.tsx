@@ -26,7 +26,7 @@ import {
     onChartComponentSelectionCallbacks,
 } from './interfaces'
 
-import { getNodeDatasets } from './getnodedatasets'
+import { getBudgetNode } from './getbudgetnode'
 import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
 import { onChartComponentSelection } from './onchartcomponentselection'
@@ -91,7 +91,7 @@ let getChartParms = (
     // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
     // collect chart node and its components as data sources for the graph
-    let { node, components } = getNodeDatasets(viewpointindex, path, budgetdata)
+    let { node, components } = getBudgetNode(viewpointindex, path, budgetdata)
 
     if (!node) {
         return {

@@ -1,6 +1,6 @@
 "use strict";
 var format = require('format-number');
-const getnodedatasets_1 = require('./getnodedatasets');
+const getbudgetnode_1 = require('./getbudgetnode');
 const onchartcomponentselection_1 = require('./onchartcomponentselection');
 let getChartParms = (props, callbacks) => {
     let nodeConfig = props.nodeConfig;
@@ -32,7 +32,7 @@ let getChartParms = (props, callbacks) => {
     let rounded = format({ round: 0, integerSeparator: '' });
     let singlerounded = format({ round: 1, integerSeparator: '' });
     let staffrounded = format({ round: 1, integerSeparator: ',' });
-    let { node, components } = getnodedatasets_1.getNodeDatasets(viewpointindex, path, budgetdata);
+    let { node, components } = getbudgetnode_1.getBudgetNode(viewpointindex, path, budgetdata);
     if (!node) {
         return {
             isError: true,

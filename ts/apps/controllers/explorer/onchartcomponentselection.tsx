@@ -20,7 +20,7 @@ import {
 import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
 import { getChartParms } from './getchartparms'
-import { getNodeDatasets } from './getnodedatasets'
+import { getBudgetNode } from './getbudgetnode'
 
 // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
 
@@ -91,7 +91,7 @@ let onChartComponentSelection = (props: onChartComponentSelectionProps,
     // copy path
     let childdataroot = nodeconfig.datapath.slice()
 
-    let { node, components } = getNodeDatasets(
+    let { node, components } = getBudgetNode(
         userselections.viewpoint, childdataroot, budgetdata)
 
     if (!node.Components) {
