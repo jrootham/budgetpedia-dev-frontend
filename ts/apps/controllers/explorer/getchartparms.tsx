@@ -91,7 +91,7 @@ let getChartParms = (
     // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
     // collect chart node and its components as data sources for the graph
-    let node = getBudgetNode(budgetdata.Viewpoints[viewpointindex], path)
+    let node = getBudgetNode(viewpointdata, path)
 
     if (!node) {
         return {
@@ -120,7 +120,7 @@ let getChartParms = (
         let titleref = viewpointdata.Configuration[node.Contents]
         axistitle = titleref.Alias || titleref.Name
     } else {
-        let portaltitles = budgetdata.DataSeries[dataseriesname].Titles
+        let portaltitles = itemseries.Titles
         axistitle = portaltitles.Categories
     }
 

@@ -32,7 +32,7 @@ let getChartParms = (props, callbacks) => {
     let rounded = format({ round: 0, integerSeparator: '' });
     let singlerounded = format({ round: 1, integerSeparator: '' });
     let staffrounded = format({ round: 1, integerSeparator: ',' });
-    let node = getbudgetnode_1.getBudgetNode(budgetdata.Viewpoints[viewpointindex], path);
+    let node = getbudgetnode_1.getBudgetNode(viewpointdata, path);
     if (!node) {
         return {
             isError: true,
@@ -51,7 +51,7 @@ let getChartParms = (props, callbacks) => {
         axistitle = titleref.Alias || titleref.Name;
     }
     else {
-        let portaltitles = budgetdata.DataSeries[dataseriesname].Titles;
+        let portaltitles = itemseries.Titles;
         axistitle = portaltitles.Categories;
     }
     let title;

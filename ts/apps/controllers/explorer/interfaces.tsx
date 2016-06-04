@@ -59,7 +59,6 @@ interface GetChartParmsProps {
     userselections:any, 
     budgetdata:any, 
     chartmatrix:any,
-    // node:any,
 }
 
 interface GetChartParmsCallbacks {
