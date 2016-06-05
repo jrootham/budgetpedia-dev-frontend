@@ -15,10 +15,9 @@ class ExplorerBranch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            chartmatrix: [[], []],
+            chartmatrixrow: [],
             yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] },
             yearscope: "one",
-            dialogopen: false,
             userselections: {
                 latestyear: 2015,
                 viewpoint: "FUNCTIONAL",
@@ -32,7 +31,7 @@ class ExplorerBranch extends Component {
             this.initializeChartSeries();
         };
         this.initializeChartSeries = () => {
-            let userselections = this.state.userselections, chartmatrix = this.state.chartmatrix;
+            let userselections = this.state.userselections, chartmatrixrow = this.state.chartmatrixrow;
             let budgetdata = this.props.budgetdata;
             var matrixlocation, chartParmsObj;
             let viewpointname = userselections.viewpoint;
@@ -46,7 +45,7 @@ class ExplorerBranch extends Component {
                     chartIndex: drilldownindex,
                     userselections: userselections,
                     budgetdata: budgetdata,
-                    chartmatrix: chartmatrix,
+                    chartmatrixrow: chartmatrixrow,
                 };
                 let callbacks = {
                     refreshPresentation: this.refreshPresentation,
@@ -66,9 +65,9 @@ class ExplorerBranch extends Component {
             if (!chartParmsObj.isError) {
                 drilldownnodeconfig.datanode = chartParmsObj.datanode;
                 matrixlocation = drilldownnodeconfig.matrixlocation;
-                chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
+                chartmatrixrow[matrixlocation.column] = drilldownnodeconfig;
             }
-            this.refreshPresentation(chartmatrix);
+            this.refreshPresentation(chartmatrixrow);
         };
         this.initRootNodeConfig = (matrixrow, userselections) => {
             let googlecharttype = userselections.charttype;
@@ -150,20 +149,20 @@ class ExplorerBranch extends Component {
         };
         this.switchViewpoint = (viewpointname, seriesref) => {
             let userselections = this.state.userselections;
-            let chartmatrix = this.state.chartmatrix;
-            let chartseries = chartmatrix[seriesref];
+            let chartmatrixrow = this.state.chartmatrixrow;
+            let chartseries = chartmatrixrow;
             chartseries.splice(0);
             userselections.viewpoint = viewpointname;
             this.setState({
                 userselections: userselections,
-                chartmatrix: chartmatrix,
+                chartmatrixrow: chartmatrixrow,
             });
             this.initializeChartSeries();
         };
         this.switchDataSeries = (seriesname, seriesref) => {
             let userselections = this.state.userselections;
             userselections.dataseries = seriesname;
-            let chartmatrix = this.state.chartmatrix;
+            let chartmatrixrow = this.state.chartmatrixrow;
             this.setState({
                 userselections: userselections,
             });
@@ -171,7 +170,7 @@ class ExplorerBranch extends Component {
             let dataseriesname = this.state.userselections.dataseries;
             let budgetdata = this.props.budgetdata;
             setviewpointdata_1.setViewpointData(viewpointname, dataseriesname, budgetdata, this.state.userselections.inflationadjusted);
-            let matrixseries = chartmatrix[seriesref];
+            let matrixseries = chartmatrixrow;
             let nodeconfig;
             let cellptr;
             let isError = false;
@@ -185,7 +184,7 @@ class ExplorerBranch extends Component {
                         chartIndex: nodechartindex,
                         userselections: userselections,
                         budgetdata: budgetdata,
-                        chartmatrix: chartmatrix,
+                        chartmatrixrow: chartmatrixrow,
                     };
                     let callbacks = {
                         refreshPresentation: this.refreshPresentation,
@@ -214,14 +213,14 @@ class ExplorerBranch extends Component {
                 nodeconfig.dataseries = seriesname;
                 nodeconfig.datanode = chartParmsObj.datanode;
             }
-            this.refreshPresentation(chartmatrix);
+            this.refreshPresentation(chartmatrixrow);
             setTimeout(() => {
-                updatechartselections_1.updateChartSelections(chartmatrix, seriesref);
+                updatechartselections_1.updateChartSelections(chartmatrixrow);
             });
         };
         this.onChangeBudgetPortalChart = (matrixLocation) => {
             setTimeout(() => {
-                updatechartselections_1.updateChartSelections(this.state.chartmatrix, matrixLocation.row);
+                updatechartselections_1.updateChartSelections(this.state.chartmatrixrow);
             });
         };
         this.refreshPresentation = chartmatrix => {
@@ -232,8 +231,8 @@ class ExplorerBranch extends Component {
         this.switchChartCode = (location, chartCode) => {
             let chartType = constants_2.ChartCodeTypes[chartCode];
             let portalIndex = location.portalindex;
-            let chartmatrix = this.state.chartmatrix;
-            let nodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column];
+            let chartmatrixrow = this.state.chartmatrixrow;
+            let nodeConfig = chartmatrixrow[location.matrixlocation.column];
             let oldChartType = nodeConfig.charts[portalIndex].googlecharttype;
             nodeConfig.charts[portalIndex].googlecharttype = chartType;
             let props = {
@@ -241,7 +240,7 @@ class ExplorerBranch extends Component {
                 chartIndex: portalIndex,
                 userselections: this.state.userselections,
                 budgetdata: this.props.budgetdata,
-                chartmatrix: chartmatrix,
+                chartmatrixrow: chartmatrixrow,
             };
             let callbacks = {
                 refreshPresentation: this.refreshPresentation,
@@ -258,7 +257,7 @@ class ExplorerBranch extends Component {
             else {
                 nodeConfig.charts[portalIndex].googlecharttype = oldChartType;
             }
-            this.refreshPresentation(chartmatrix);
+            this.refreshPresentation(chartmatrixrow);
             setTimeout(() => {
                 if (nodeConfig.charts[portalIndex].chart) {
                     nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].ChartObject.chart;
@@ -269,7 +268,7 @@ class ExplorerBranch extends Component {
                         nodeConfig.charts[portalIndex].chartselection[0].column = 1;
                     }
                 }
-                updatechartselections_1.updateChartSelections(chartmatrix, location.matrixlocation.row);
+                updatechartselections_1.updateChartSelections(chartmatrixrow);
             });
         };
         this.getPortals = (matrixcolumn, matrixrow) => {
@@ -336,7 +335,7 @@ class ExplorerBranch extends Component {
     }
     render() {
         let branch = this;
-        let drilldownbranch = branch.state.chartmatrix[constants_1.ChartSeries.DrillDown];
+        let drilldownbranch = branch.state.chartmatrixrow;
         let drilldownportals = branch.getPortals(drilldownbranch, constants_1.ChartSeries.DrillDown);
         return React.createElement("div", null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.state.userselections.viewpoint, style: {}, onChange: (e, index, value) => {
             branch.switchViewpoint(value, constants_1.ChartSeries.DrillDown);

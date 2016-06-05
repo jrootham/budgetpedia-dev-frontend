@@ -12,6 +12,7 @@ class ExplorerClass extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            chartmatrix: [[], []],
             dialogopen: false,
         };
         this.handleDialogOpen = () => {

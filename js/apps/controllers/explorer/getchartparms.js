@@ -7,7 +7,7 @@ let getChartParms = (props, callbacks) => {
     let chartIndex = props.chartIndex;
     let userselections = props.userselections;
     let budgetdata = props.budgetdata;
-    let chartmatrix = props.chartmatrix;
+    let chartmatrixrow = props.chartmatrixrow;
     let refreshPresentation = callbacks.refreshPresentation;
     let onPortalCreation = callbacks.onPortalCreation;
     let workingStatus = callbacks.workingStatus;
@@ -146,7 +146,7 @@ let getChartParms = (props, callbacks) => {
                         context: context,
                         userselections: userselections,
                         budgetdata: budgetdata,
-                        chartmatrix: chartmatrix
+                        chartmatrixrow: chartmatrixrow
                     };
                     let callbacks = {
                         refreshPresentation: refreshPresentation,

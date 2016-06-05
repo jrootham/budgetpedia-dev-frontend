@@ -38,7 +38,7 @@ let getChartParms = (
     let chartIndex = props.chartIndex
     let userselections = props.userselections
     let budgetdata = props.budgetdata
-    let chartmatrix = props.chartmatrix
+    let chartmatrixrow = props.chartmatrixrow
 
     let refreshPresentation = callbacks.refreshPresentation
     let onPortalCreation = callbacks.onPortalCreation
@@ -234,7 +234,7 @@ let getChartParms = (
                         context,
                         userselections,
                         budgetdata,
-                        chartmatrix
+                        chartmatrixrow
                     }
                     let callbacks: OnChartComponentSelectionCallbacks = {
                         refreshPresentation,

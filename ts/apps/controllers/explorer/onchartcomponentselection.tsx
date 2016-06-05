@@ -36,7 +36,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     let context = props.context
     let userselections = props.userselections
     let budgetdata = props.budgetdata
-    let chartmatrix = props.chartmatrix
+    let chartmatrixrow = props.chartmatrixrow
 
     let refreshPresentation = callbacks.refreshPresentation
     let onPortalCreation = callbacks.onPortalCreation
@@ -64,9 +64,9 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
         matrixcolumn = selectmatrixlocation.column
 
     // acquire serieslist from matrix
-    let serieslist = chartmatrix[matrixrow]
+    let serieslist = chartmatrixrow
 
-    let nodeconfig: MatrixNodeConfig = chartmatrix[matrixrow][matrixcolumn]
+    let nodeconfig: MatrixNodeConfig = chartmatrixrow[matrixcolumn]
 
     if (nodeconfig.charts[portalChartIndex].nodedatapropertyname == 'Categories') {
         return
@@ -80,12 +80,12 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     serieslist.splice(matrixcolumn + 1) // remove subsequent charts
 
     // trigger update to avoid google charts use of cached versions
-    refreshPresentation(chartmatrix)
+    refreshPresentation(chartmatrixrow)
 
     if (!selection) { // deselected
         delete nodeconfig.charts[portalChartIndex].chartselection
         delete nodeconfig.charts[portalChartIndex].chart
-        updateChartSelections(chartmatrix, matrixrow)
+        updateChartSelections(chartmatrixrow)
         return
     }
     // copy path
@@ -95,7 +95,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
         budgetdata.Viewpoints[userselections.viewpoint], childdataroot)
 
     if (!node.Components) {
-        updateChartSelections(chartmatrix, matrixrow)
+        updateChartSelections(chartmatrixrow)
         return
     }
 
@@ -111,13 +111,13 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     if (code)
         childdataroot.push(code)
     else {
-        updateChartSelections(chartmatrix, matrixrow)
+        updateChartSelections(chartmatrixrow)
         return
     }
 
     let newnode = node.Components[code]
     if (!newnode.Components && !newnode.Categories) {
-        updateChartSelections(chartmatrix, matrixrow)
+        updateChartSelections(chartmatrixrow)
         return
     }
     workingStatus(true)
@@ -168,7 +168,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
                 chartIndex: newnodeindex,
                 userselections,
                 budgetdata,
-                chartmatrix,
+                chartmatrixrow,
             }
             let callbacks: GetChartParmsCallbacks = {
                 refreshPresentation,
@@ -186,21 +186,21 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
         }
 
         if (isError) {
-            updateChartSelections(chartmatrix, matrixrow)
+            updateChartSelections(chartmatrixrow)
             workingStatus(false)
             return
         }
         newnodeconfig.datanode = chartParmsObj.datanode
         let newmatrixcolumn = matrixcolumn + 1
-        chartmatrix[matrixrow][newmatrixcolumn] = newnodeconfig
+        chartmatrixrow[newmatrixcolumn] = newnodeconfig
 
-        refreshPresentation(chartmatrix)
+        refreshPresentation(chartmatrixrow)
 
         nodeconfig.charts[portalChartIndex].chartselection = context.selection
         nodeconfig.charts[portalChartIndex].chart = chart
         nodeconfig.charts[portalChartIndex].ChartObject = context.ChartObject
 
-        updateChartSelections(chartmatrix, matrixrow)
+        updateChartSelections(chartmatrixrow)
         onPortalCreation(newnodeconfig.matrixlocation)
         workingStatus(false)
     })

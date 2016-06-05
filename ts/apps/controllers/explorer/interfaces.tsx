@@ -58,7 +58,7 @@ interface GetChartParmsProps {
     chartIndex: number,
     userselections:any, 
     budgetdata:any, 
-    chartmatrix:any,
+    chartmatrixrow:any,
 }
 
 interface GetChartParmsCallbacks {
@@ -71,7 +71,7 @@ interface OnChartComponentSelectionProps {
     context: ChartSelectionContext,
     userselections: any,
     budgetdata: any,
-    chartmatrix: any,
+    chartmatrixrow: any,
 }
 interface OnChartComponentSelectionCallbacks {
     refreshPresentation: Function,

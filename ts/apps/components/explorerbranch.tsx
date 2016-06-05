@@ -56,10 +56,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // charts exist in a matrix (row/column) which contain a chartconfig object
     // TODO: most of 
     state = {
-        chartmatrix: [[], []], // DrillDown, Compare (Later: Differences, Context, Build)
+        chartmatrixrow:[],
         yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] },
         yearscope: "one",
-        dialogopen: false,
         userselections: {
             latestyear: 2015,
             viewpoint: "FUNCTIONAL",
@@ -82,7 +81,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     initializeChartSeries = () => {
         let userselections = this.state.userselections,
-            chartmatrix = this.state.chartmatrix
+            chartmatrixrow = this.state.chartmatrixrow
         let budgetdata = this.props.budgetdata
 
         var matrixlocation,
@@ -110,7 +109,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 chartIndex: drilldownindex,
                 userselections,
                 budgetdata,
-                chartmatrix,
+                chartmatrixrow,
             }
             let callbacks: GetChartParmsCallbacks = {
                 refreshPresentation: this.refreshPresentation,
@@ -132,13 +131,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         if (!chartParmsObj.isError) {
             drilldownnodeconfig.datanode = chartParmsObj.datanode
             matrixlocation = drilldownnodeconfig.matrixlocation
-            chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig
+            chartmatrixrow[matrixlocation.column] = drilldownnodeconfig
         }
 
         // -------------[ SAVE INITIALIZATION ]----------------
 
         // make initial dataset available to chart
-        this.refreshPresentation(chartmatrix)
+        this.refreshPresentation(chartmatrixrow)
         // this.setState({
         //     chartmatrix,
         // });
@@ -243,13 +242,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     switchViewpoint = (viewpointname, seriesref) => {
 
         let userselections = this.state.userselections
-        let chartmatrix = this.state.chartmatrix
-        let chartseries = chartmatrix[seriesref]
+        let chartmatrixrow = this.state.chartmatrixrow
+        let chartseries = chartmatrixrow
         chartseries.splice(0) // remove subsequent charts
         userselections.viewpoint = viewpointname
         this.setState({
             userselections,
-            chartmatrix,
+            chartmatrixrow,
         })
 
         this.initializeChartSeries()
@@ -260,7 +259,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let userselections = this.state.userselections
         userselections.dataseries = seriesname
-        let chartmatrix = this.state.chartmatrix
+        let chartmatrixrow = this.state.chartmatrixrow
         this.setState({
             userselections,
         })
@@ -269,7 +268,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let budgetdata = this.props.budgetdata
         setViewpointData(viewpointname, dataseriesname, budgetdata,
             this.state.userselections.inflationadjusted)
-        let matrixseries = chartmatrix[seriesref]
+        let matrixseries = chartmatrixrow
         let nodeconfig: MatrixNodeConfig
         let cellptr: any
         let isError = false
@@ -283,7 +282,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     chartIndex: nodechartindex,
                     userselections,
                     budgetdata,
-                    chartmatrix,
+                    chartmatrixrow,
                 }
                 let callbacks: GetChartParmsCallbacks = {
                     refreshPresentation: this.refreshPresentation,
@@ -312,18 +311,18 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             nodeconfig.dataseries = seriesname
             nodeconfig.datanode = chartParmsObj.datanode
         }
-        this.refreshPresentation(chartmatrix)
+        this.refreshPresentation(chartmatrixrow)
         // this.setState({
         //     chartmatrix,
         // })
         setTimeout(() => {
-            updateChartSelections(chartmatrix, seriesref)
+            updateChartSelections(chartmatrixrow)
         })
     }
 
     onChangeBudgetPortalChart = (matrixLocation: MatrixLocation) => {
         setTimeout(() => {
-            updateChartSelections(this.state.chartmatrix, matrixLocation.row)
+            updateChartSelections(this.state.chartmatrixrow)
         })
     }
 
@@ -339,8 +338,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     switchChartCode = (location: PortalChartLocation, chartCode) => {
         let chartType = ChartCodeTypes[chartCode]
         let portalIndex = location.portalindex
-        let chartmatrix = this.state.chartmatrix
-        let nodeConfig: MatrixNodeConfig = chartmatrix[location.matrixlocation.row][location.matrixlocation.column]
+        let chartmatrixrow = this.state.chartmatrixrow
+        let nodeConfig: MatrixNodeConfig = chartmatrixrow[location.matrixlocation.column]
         let oldChartType = nodeConfig.charts[portalIndex].googlecharttype
         nodeConfig.charts[portalIndex].googlecharttype = chartType
         let props: GetChartParmsProps = {
@@ -348,7 +347,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             chartIndex: portalIndex,
             userselections: this.state.userselections,
             budgetdata: this.props.budgetdata,
-            chartmatrix,
+            chartmatrixrow,
         }
         let callbacks: GetChartParmsCallbacks = {
             refreshPresentation: this.refreshPresentation,
@@ -364,7 +363,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         } else {
             nodeConfig.charts[portalIndex].googlecharttype = oldChartType
         }
-        this.refreshPresentation(chartmatrix)
+        this.refreshPresentation(chartmatrixrow)
         // this.setState({
         //     chartmatrix,
         // })
@@ -382,7 +381,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     nodeConfig.charts[portalIndex].chartselection[0].column = 1
                 }
             }
-            updateChartSelections(chartmatrix, location.matrixlocation.row)
+            updateChartSelections(chartmatrixrow)
         })
     }
 
@@ -476,7 +475,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     render() {
 
     let branch = this
-    let drilldownbranch = branch.state.chartmatrix[ChartSeries.DrillDown]
+    let drilldownbranch = branch.state.chartmatrixrow
 
     let drilldownportals = branch.getPortals(drilldownbranch, ChartSeries.DrillDown)
     return <div >
