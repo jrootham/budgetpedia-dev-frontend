@@ -31,8 +31,10 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
         let componentAggregates = null;
         if (component.years)
             delete component.years;
-        if (component.Categories)
+        if (component.Categories) {
             delete component.Categories;
+            delete component.SortedCategories;
+        }
         if (component.Contents != "BASELINE") {
             if (component.Components) {
                 let sorted = getIndexSortedComponents(component.Components, lookups);

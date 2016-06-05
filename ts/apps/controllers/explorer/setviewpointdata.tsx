@@ -81,7 +81,10 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
 
         // remove any previous aggregations...
         if (component.years) delete component.years
-        if (component.Categories) delete component.Categories
+        if (component.Categories) {
+            delete component.Categories
+            delete component.SortedCategories
+        }
 
         // for non-baseline items, recurse to collect aggregations
         if (component.Contents != "BASELINE") {
@@ -178,7 +181,6 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
                 if (importitem.SortedComponents) {
                     component.SortedComponents = importitem.SortedComponents
                 }
-
             } 
             if (component.Components && !component.SortedComponents) { // && !component.SortedComponents) {
                 let sorted = getNameSortedComponents(

@@ -12,10 +12,13 @@ let getChartParms = (props, callbacks) => {
     let onPortalCreation = callbacks.onPortalCreation;
     let workingStatus = callbacks.workingStatus;
     let chartConfig = nodeConfig.charts[chartIndex];
-    let sortedlist = 'SortedComponents';
-    let portalcharttype = chartConfig.nodedatapropertyname;
-    if (portalcharttype == 'Categories') {
+    let nodedatapropertyname = chartConfig.nodedatapropertyname;
+    let sortedlist;
+    if (nodedatapropertyname == 'Categories') {
         sortedlist = 'SortedCategories';
+    }
+    else {
+        sortedlist = 'SortedComponents';
     }
     let viewpointindex = nodeConfig.viewpoint, path = nodeConfig.datapath, yearscope = nodeConfig.yearscope, year = yearscope.latestyear;
     let dataseriesname = userselections.dataseries;
@@ -40,13 +43,16 @@ let getChartParms = (props, callbacks) => {
             chartParms: {}
         };
     }
-    let components = node.Components;
-    if (portalcharttype == 'Categories') {
+    let components;
+    if (nodedatapropertyname == 'Categories') {
         components = node.Categories;
+    }
+    else {
+        components = node.Components;
     }
     let chartType = chartConfig.googlecharttype;
     let axistitle = null;
-    if ((node.Contents) && (portalcharttype == 'Components')) {
+    if ((node.Contents) && (nodedatapropertyname == 'Components')) {
         let titleref = viewpointdata.Configuration[node.Contents];
         axistitle = titleref.Alias || titleref.Name;
     }
@@ -174,7 +180,7 @@ let getChartParms = (props, callbacks) => {
     let rows = node[sortedlist].map((item) => {
         let component = components[item.Code];
         if (!component) {
-            console.error('component not found for (components, item, item.Code) ', components, item.Code, item);
+            console.error('component not found for (node, sortedlist components, item, item.Code) ', node, sortedlist, components, item.Code, item);
         }
         let amount;
         if (component.years)

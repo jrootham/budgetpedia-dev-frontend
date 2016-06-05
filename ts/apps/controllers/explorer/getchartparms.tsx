@@ -9,6 +9,7 @@
 // returns inputs required for a chart, based on Chart Configuration
 
 // TODO: handle yearscope, including multiple years
+// getChartParms shouldn't know about matrix
 
 var format = require('format-number')
 
@@ -19,6 +20,7 @@ import {
     PortalChartLocation,
     SortedComponentItem,
     MatrixChartConfig,
+    MatrixNodeConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
     OnChartComponentSelectionProps,
@@ -34,7 +36,7 @@ let getChartParms = (
         props:GetChartParmsProps, callbacks: GetChartParmsCallbacks
     ):ChartParmsObj => {
 
-    let nodeConfig = props.nodeConfig
+    let nodeConfig:MatrixNodeConfig = props.nodeConfig
     let chartIndex = props.chartIndex
     let userselections = props.userselections
     let budgetdata = props.budgetdata
@@ -46,12 +48,13 @@ let getChartParms = (
 
     let chartConfig: MatrixChartConfig = nodeConfig.charts[chartIndex]
 
-    let sortedlist = 'SortedComponents'
+    let nodedatapropertyname = chartConfig.nodedatapropertyname
+    let sortedlist
 
-    let portalcharttype = chartConfig.nodedatapropertyname
-
-    if (portalcharttype == 'Categories') {
+    if (nodedatapropertyname == 'Categories') {
         sortedlist = 'SortedCategories'
+    } else {
+        sortedlist = 'SortedComponents'
     }
 
     // -------------------[ INIT VARS ]---------------------
@@ -100,11 +103,12 @@ let getChartParms = (
         }
     }
 
-    let components = node.Components
+    let components
 
-    // !Hack!
-    if (portalcharttype == 'Categories') {
+    if (nodedatapropertyname == 'Categories') {
         components = node.Categories
+    } else {
+        components = node.Components
     }
 
     // ---------------------[ COLLECT CHART PARMS ]---------------------
@@ -114,8 +118,8 @@ let getChartParms = (
     // 2. chart options:
     // get axis title
     let axistitle = null
-    if ((node.Contents) && (portalcharttype == 'Components')) {
-    // if ((node.Contents) && (node.Contents != 'BASELINE') && (portalcharttype == 'Components')) {
+    if ((node.Contents) && (nodedatapropertyname == 'Components')) {
+    // if ((node.Contents) && (node.Contents != 'BASELINE') && (nodedatapropertyname == 'Components')) {
         let titleref = viewpointdata.Configuration[node.Contents]
         axistitle = titleref.Alias || titleref.Name
     } else {
@@ -270,7 +274,8 @@ let getChartParms = (
         // TODO: get determination of amount processing from Unit value
         let component = components[item.Code]
         if (!component) {
-            console.error('component not found for (components, item, item.Code) ', components, item.Code, item)
+            console.error('component not found for (node, sortedlist components, item, item.Code) ',
+                node, sortedlist, components, item.Code, item)
         }
         let amount
         if (component.years)
