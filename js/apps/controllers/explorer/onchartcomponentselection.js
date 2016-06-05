@@ -133,7 +133,7 @@ let onChartComponentSelection = (props, callbacks) => {
         nodeconfig.charts[portalChartIndex].chart = chart;
         nodeconfig.charts[portalChartIndex].ChartObject = context.ChartObject;
         updatechartselections_1.updateChartSelections(chartmatrixrow);
-        onPortalCreation(newnodeconfig.matrixlocation);
+        onPortalCreation();
         workingStatus(false);
     });
 };

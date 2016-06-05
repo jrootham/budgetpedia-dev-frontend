@@ -43,7 +43,7 @@ class ExplorerBranch extends Component {
                 let callbacks = {
                     refreshPresentation: this.refreshPresentation,
                     onPortalCreation: this.onPortalCreation,
-                    workingStatus: this.props.workingStatus,
+                    workingStatus: this.props.callbacks.workingStatus,
                 };
                 chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
                 if (!chartParmsObj.isError) {
@@ -103,10 +103,10 @@ class ExplorerBranch extends Component {
                 dialogopen: false
             });
         };
-        this.onPortalCreation = (newMatrixLocation) => {
+        this.onPortalCreation = () => {
             let element = this.branchScrollBlock;
             if (!element) {
-                console.error('expected branch element not found in onPortalCreation', newMatrixLocation);
+                console.error('expected branch element not found in onPortalCreation');
                 return;
             }
             setTimeout(() => {
@@ -180,7 +180,7 @@ class ExplorerBranch extends Component {
                     let callbacks = {
                         refreshPresentation: this.refreshPresentation,
                         onPortalCreation: this.onPortalCreation,
-                        workingStatus: this.props.workingStatus,
+                        workingStatus: this.props.callbacks.workingStatus,
                     };
                     chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
                     if (chartParmsObj.isError) {
@@ -209,7 +209,7 @@ class ExplorerBranch extends Component {
                 updatechartselections_1.updateChartSelections(chartmatrixrow);
             });
         };
-        this.onChangeBudgetPortalChart = (matrixLocation) => {
+        this.onChangeBudgetPortalChart = () => {
             setTimeout(() => {
                 updatechartselections_1.updateChartSelections(this.state.chartmatrixrow);
             });
@@ -236,7 +236,7 @@ class ExplorerBranch extends Component {
             let callbacks = {
                 refreshPresentation: this.refreshPresentation,
                 onPortalCreation: this.onPortalCreation,
-                workingStatus: this.props.workingStatus,
+                workingStatus: this.props.callbacks.workingStatus,
             };
             let chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
             if (!chartParmsObj.isError) {
@@ -262,7 +262,7 @@ class ExplorerBranch extends Component {
                 updatechartselections_1.updateChartSelections(chartmatrixrow);
             });
         };
-        this.getPortals = (matrixcolumn) => {
+        this.getPortals = (matrixrow) => {
             let userselections = this.state.userselections;
             let budgetdata = this.props.budgetdata;
             let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
@@ -271,7 +271,7 @@ class ExplorerBranch extends Component {
             if (dataseries.Units == 'DOLLAR') {
                 portalseriesname += ' (' + dataseries.UnitsAlias + ')';
             }
-            let portals = matrixcolumn.map((nodeconfig, index) => {
+            let portals = matrixrow.map((nodeconfig, index) => {
                 let portalcharts = [];
                 for (let chartindex in nodeconfig.charts) {
                     let chartblocktitle = null;
@@ -314,9 +314,6 @@ class ExplorerBranch extends Component {
                 let budgetPortal = {
                     portalCharts: portalcharts,
                     portalName: portalname,
-                    matrixLocation: {
-                        column: matrixcolumn,
-                    }
                 };
                 return React.createElement(explorerportal_1.ExplorerPortal, {key: index, budgetPortal: budgetPortal, onChangePortalChart: this.onChangeBudgetPortalChart});
             });

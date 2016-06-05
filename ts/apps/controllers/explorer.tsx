@@ -291,7 +291,7 @@ class ExplorerClass extends Component< any, any > {
              <CardText>
              <ExplorerBranch 
                  budgetdata = {explorer.props.budgetdata}
-                 workingStatus = {explorer.workingStatus}
+                 callbacks = {{ workingStatus: explorer.workingStatus }}
                  matrixrow = {explorer.state.chartmatrix[ChartSeries.DrillDown]}
                  userselections = {{
                      latestyear: 2015,

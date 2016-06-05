@@ -26,7 +26,7 @@ interface ExplorePortalProps {
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     onChangeTab = () => {
-        this.props.onChangePortalChart(this.props.budgetPortal.matrixLocation)
+        this.props.onChangePortalChart()
     }
 
     componentWillMount = () => {

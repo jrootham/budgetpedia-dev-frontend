@@ -201,7 +201,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
         nodeconfig.charts[portalChartIndex].ChartObject = context.ChartObject
 
         updateChartSelections(chartmatrixrow)
-        onPortalCreation(newnodeconfig.matrixlocation)
+        onPortalCreation()
         workingStatus(false)
     })
 }

@@ -43,8 +43,6 @@ interface ChartConfig {
 interface PortalConfig {
     portalCharts: ChartConfig[],
     portalName: string,
-    // onChangeBudgetPortal:Function,
-    matrixLocation:MatrixLocation,
 }
 
 // to return value for callback processing

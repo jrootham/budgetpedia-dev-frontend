@@ -7,6 +7,7 @@ var { Component } = React
 
 import {
     MatrixNodeConfig,
+    MatrixChartConfig,
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,
@@ -17,8 +18,6 @@ import {
     ChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
-
-    MatrixChartConfig,
 } from '../controllers/explorer/interfaces'
 
 import { ExplorerPortal } from './explorerportal'
@@ -40,7 +39,7 @@ import * as Actions from '../../actions/actions'
 interface ExploreBranchProps {
     budgetdata: any,
     matrixrow: any,
-    workingStatus:any,
+    callbacks:any,
     userselections:any,
     yearscope:any,
     yearslider:any,
@@ -110,7 +109,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             let callbacks: GetChartParmsCallbacks = {
                 refreshPresentation: this.refreshPresentation,
                 onPortalCreation: this.onPortalCreation,
-                workingStatus: this.props.workingStatus,
+                workingStatus: this.props.callbacks.workingStatus,
             }
             chartParmsObj = getChartParms(props, callbacks)
 
@@ -196,11 +195,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     //     https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
 
     // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
-    onPortalCreation = (newMatrixLocation: MatrixLocation) => {
+    onPortalCreation = () => {
         // let matrixrow = newMatrixLocation.row
         let element: Element = this.branchScrollBlock
         if (!element) {
-            console.error('expected branch element not found in onPortalCreation', newMatrixLocation)
+            console.error('expected branch element not found in onPortalCreation')
             return
         }
         setTimeout(() => {
@@ -282,7 +281,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 let callbacks: GetChartParmsCallbacks = {
                     refreshPresentation: this.refreshPresentation,
                     onPortalCreation: this.onPortalCreation,
-                    workingStatus: this.props.workingStatus,
+                    workingStatus: this.props.callbacks.workingStatus,
                 }
                 chartParmsObj = getChartParms(props, callbacks)
                 if (chartParmsObj.isError) {
@@ -315,7 +314,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         })
     }
 
-    onChangeBudgetPortalChart = (matrixLocation: MatrixLocation) => {
+    onChangeBudgetPortalChart = () => {
         setTimeout(() => {
             updateChartSelections(this.state.chartmatrixrow)
         })
@@ -347,7 +346,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let callbacks: GetChartParmsCallbacks = {
             refreshPresentation: this.refreshPresentation,
             onPortalCreation: this.onPortalCreation,
-            workingStatus: this.props.workingStatus,
+            workingStatus: this.props.callbacks.workingStatus,
         }
         let chartParmsObj: ChartParmsObj = getChartParms(props, callbacks)
         if (!chartParmsObj.isError) {
@@ -382,7 +381,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     // callbacks = this.props.callbacks
     // get React components to render
-    getPortals = (matrixcolumn) => {
+    getPortals = (matrixrow) => {
 
         let userselections = this.state.userselections
 
@@ -395,7 +394,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             portalseriesname += ' (' + dataseries.UnitsAlias + ')'
         }
 
-        let portals = matrixcolumn.map((nodeconfig: MatrixNodeConfig, index) => {
+        let portals = matrixrow.map((nodeconfig: MatrixNodeConfig, index) => {
 
             let portalcharts = []
 
@@ -448,11 +447,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             let budgetPortal: PortalConfig = {
                 portalCharts: portalcharts,
                 portalName: portalname,
-                // onChangeBudgetPortal:this.onChangeBudgetPortalChart,
-                matrixLocation: {
-                    column: matrixcolumn,
-                    // row: matrixrow,
-                }
             }
 
             return <ExplorerPortal
