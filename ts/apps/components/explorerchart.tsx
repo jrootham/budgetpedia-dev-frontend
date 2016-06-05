@@ -17,6 +17,7 @@ import {
 interface ExplorerChartProps {
     chartsettings: ChartSettings,
     chartparms: ChartParms,
+    expandable: boolean,
 }
 
 class ExplorerChart extends Component<ExplorerChartProps, any> {
@@ -103,6 +104,15 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
             </div>
             <div style={{ position: "absolute", bottom: 0, right: 0, zIndex: 1000, padding: "3px" }}>
                 <IconButton disabled><FontIcon className="material-icons">note</FontIcon></IconButton>
+            </div>
+            <div style={{
+                position:"absolute",
+                bottom:0,
+                left:"40px",
+                fontSize:"9px",
+                fontStyle:"italic",
+            }}>
+               {this.props.expandable?'drill down':'no drill down'}
             </div>
         </div>
     }

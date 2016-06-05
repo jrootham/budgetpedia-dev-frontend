@@ -12,10 +12,12 @@ class ExplorerPortal extends Component {
         this.componentWillMount = () => {
         };
         this.getChartTabs = () => {
-            let chartTabs = this.props.budgetPortal.portalCharts.map((tabChart, chartindex) => {
+            let portalcharts = this.props.budgetPortal.portalCharts;
+            let chartTabs = portalcharts.map((tabChart, chartindex) => {
+                let expandable = ((portalcharts.length > 1) && (chartindex == 0));
                 let chartparms = tabChart.chartparms;
                 let chartsettings = tabChart.chartsettings;
-                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: tabChart.chartblocktitle, value: "programs", key: chartindex}, React.createElement(explorerchart_1.ExplorerChart, {chartsettings: chartsettings, chartparms: chartparms}));
+                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: tabChart.chartblocktitle, value: "programs", key: chartindex}, React.createElement(explorerchart_1.ExplorerChart, {chartsettings: chartsettings, chartparms: chartparms, expandable: expandable}));
             });
             return chartTabs;
         };
