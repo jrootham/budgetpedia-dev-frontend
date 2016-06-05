@@ -35,10 +35,10 @@ class ExplorerClass extends Component {
         };
         this.initializeChartSeries = () => {
             let userselections = this.state.userselections, chartmatrix = this.state.chartmatrix;
+            let budgetdata = this.props.budgetdata;
             var matrixlocation, chartParmsObj;
             let viewpointname = userselections.viewpoint;
             let dataseriesname = userselections.dataseries;
-            let budgetdata = this.props.budgetdata;
             setviewpointdata_1.setViewpointData(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
             let drilldownnodeconfig = this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
             let drilldownindex;
@@ -70,9 +70,7 @@ class ExplorerClass extends Component {
                 matrixlocation = drilldownnodeconfig.matrixlocation;
                 chartmatrix[matrixlocation.row][matrixlocation.column] = drilldownnodeconfig;
             }
-            this.setState({
-                chartmatrix: chartmatrix,
-            });
+            this.refreshPresentation(chartmatrix);
         };
         this.initRootNodeConfig = (matrixrow, userselections) => {
             let googlecharttype = userselections.charttype;
@@ -218,9 +216,7 @@ class ExplorerClass extends Component {
                 nodeconfig.dataseries = seriesname;
                 nodeconfig.datanode = chartParmsObj.datanode;
             }
-            this.setState({
-                chartmatrix: chartmatrix,
-            });
+            this.refreshPresentation(chartmatrix);
             setTimeout(() => {
                 updatechartselections_1.updateChartSelections(chartmatrix, seriesref);
             });
@@ -274,9 +270,7 @@ class ExplorerClass extends Component {
             else {
                 nodeConfig.charts[portalIndex].googlecharttype = oldChartType;
             }
-            this.setState({
-                chartmatrix: chartmatrix,
-            });
+            this.refreshPresentation(chartmatrix);
             setTimeout(() => {
                 if (nodeConfig.charts[portalIndex].chart) {
                     nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].ChartObject.chart;

@@ -33,16 +33,8 @@ var { Component } = React
 // doesn't require .d.ts...! (reference available in index.tsx)
 import { connect as injectStore} from 'react-redux'
 import {Card, CardTitle, CardText} from 'material-ui/Card'
-import RadioButton = require('material-ui/lib/radio-button')
-import RadioButtonGroup = require('material-ui/lib/radio-button-group')
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
-import Divider from 'material-ui/Divider'
-import Checkbox = require('material-ui/lib/checkbox')
-import RaisedButton from 'material-ui/RaisedButton'
-import ReactSlider = require('react-slider')
-import DropDownMenu from 'material-ui/DropDownMenu'
-import MenuItem from 'material-ui/MenuItem'
 import Dialog from 'material-ui/Dialog'
 
 import { ExplorerBranch } from '../components/explorerbranch'
@@ -54,16 +46,11 @@ import { getChartParms } from './explorer/getchartparms'
 import { updateChartSelections } from './explorer/updatechartselections'
 import * as Actions from '../../actions/actions'
 
-
-
 import {
     MatrixNodeConfig,
     MatrixChartConfig,
-    ChartParms,
     ChartParmsObj,
-    ChartSelectionContext,
     MatrixLocation,
-    PortalConfig,
     PortalChartLocation,
     GetChartParmsProps,
     GetChartParmsCallbacks,
@@ -111,6 +98,7 @@ class ExplorerClass extends Component< any, any > {
     initializeChartSeries = () => {
         let userselections = this.state.userselections,
             chartmatrix = this.state.chartmatrix
+        let budgetdata = this.props.budgetdata
 
         var matrixlocation,
             chartParmsObj:ChartParmsObj
@@ -119,7 +107,6 @@ class ExplorerClass extends Component< any, any > {
 
         let viewpointname = userselections.viewpoint
         let dataseriesname = userselections.dataseries
-        let budgetdata = this.props.budgetdata
         setViewpointData(viewpointname, dataseriesname, budgetdata,
             userselections.inflationadjusted)
 
@@ -166,9 +153,10 @@ class ExplorerClass extends Component< any, any > {
         // -------------[ SAVE INITIALIZATION ]----------------
 
         // make initial dataset available to chart
-        this.setState({
-            chartmatrix,
-        });
+        this.refreshPresentation(chartmatrix)
+        // this.setState({
+        //     chartmatrix,
+        // });
 
     }
 
@@ -339,9 +327,10 @@ class ExplorerClass extends Component< any, any > {
             nodeconfig.dataseries = seriesname
             nodeconfig.datanode = chartParmsObj.datanode
         }
-        this.setState({
-            chartmatrix,
-        })
+        this.refreshPresentation(chartmatrix)
+        // this.setState({
+        //     chartmatrix,
+        // })
         setTimeout(() => {
             updateChartSelections(chartmatrix, seriesref)
         })
@@ -403,9 +392,10 @@ class ExplorerClass extends Component< any, any > {
         } else {
             nodeConfig.charts[portalIndex].googlecharttype = oldChartType
         }
-        this.setState({
-            chartmatrix,
-        })
+        this.refreshPresentation(chartmatrix)
+        // this.setState({
+        //     chartmatrix,
+        // })
         setTimeout(() => {
             if (nodeConfig.charts[portalIndex].chart) {
                 // refresh to new chart created with switch
