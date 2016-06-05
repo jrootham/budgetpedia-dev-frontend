@@ -147,7 +147,7 @@ class ExplorerBranch extends Component {
             const t1 = t - 1;
             return t1 * t1 * t1 + 1;
         };
-        this.switchViewpoint = (viewpointname, seriesref) => {
+        this.switchViewpoint = (viewpointname) => {
             let userselections = this.state.userselections;
             let chartmatrixrow = this.state.chartmatrixrow;
             let chartseries = chartmatrixrow;
@@ -159,7 +159,7 @@ class ExplorerBranch extends Component {
             });
             this.initializeChartSeries();
         };
-        this.switchDataSeries = (seriesname, seriesref) => {
+        this.switchDataSeries = (seriesname) => {
             let userselections = this.state.userselections;
             userselections.dataseries = seriesname;
             let chartmatrixrow = this.state.chartmatrixrow;
@@ -338,23 +338,23 @@ class ExplorerBranch extends Component {
         let drilldownbranch = branch.state.chartmatrixrow;
         let drilldownportals = branch.getPortals(drilldownbranch, constants_1.ChartSeries.DrillDown);
         return React.createElement("div", null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.state.userselections.viewpoint, style: {}, onChange: (e, index, value) => {
-            branch.switchViewpoint(value, constants_1.ChartSeries.DrillDown);
+            branch.switchViewpoint(value);
         }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton_1.default, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchDataSeries('BudgetExpenses', constants_1.ChartSeries.DrillDown);
+            branch.switchDataSeries('BudgetExpenses');
         }, style: {
             backgroundColor: (this.state.userselections.dataseries == 'BudgetExpenses')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "attach_money")), React.createElement(IconButton_1.default, {tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchDataSeries('BudgetRevenues', constants_1.ChartSeries.DrillDown);
+            branch.switchDataSeries('BudgetRevenues');
         }, style: {
             backgroundColor: (this.state.userselections.dataseries == 'BudgetRevenues')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "receipt")), React.createElement(IconButton_1.default, {tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchDataSeries('BudgetStaffing', constants_1.ChartSeries.DrillDown);
+            branch.switchDataSeries('BudgetStaffing');
         }, style: {
             backgroundColor: (this.state.userselections.dataseries == 'BudgetStaffing')
                 ? "rgba(144,238,144,0.5)"

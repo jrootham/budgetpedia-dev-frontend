@@ -239,7 +239,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         return t1 * t1 * t1 + 1;
     }
 
-    switchViewpoint = (viewpointname, seriesref) => {
+    switchViewpoint = (viewpointname) => {
 
         let userselections = this.state.userselections
         let chartmatrixrow = this.state.chartmatrixrow
@@ -255,7 +255,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     }
 
-    switchDataSeries = (seriesname, seriesref) => {
+    switchDataSeries = (seriesname) => {
 
         let userselections = this.state.userselections
         userselections.dataseries = seriesname
@@ -487,7 +487,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }}
             onChange={
                 (e, index, value) => {
-                    branch.switchViewpoint(value, ChartSeries.DrillDown)
+                    branch.switchViewpoint(value)
                 }
             }
             >
@@ -502,7 +502,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             tooltipPosition="top-center"
             onTouchTap= {
                 e => {
-                    branch.switchDataSeries('BudgetExpenses', ChartSeries.DrillDown)
+                    branch.switchDataSeries('BudgetExpenses')
                 }
             }
             style={
@@ -521,7 +521,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             tooltipPosition="top-center"
             onTouchTap= {
                 e => {
-                    branch.switchDataSeries('BudgetRevenues', ChartSeries.DrillDown)
+                    branch.switchDataSeries('BudgetRevenues')
                 }
             }
             style={
@@ -540,7 +540,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             tooltipPosition="top-center"
             onTouchTap= {
                 e => {
-                    branch.switchDataSeries('BudgetStaffing', ChartSeries.DrillDown)
+                    branch.switchDataSeries('BudgetStaffing')
                 }
             }
             style={
