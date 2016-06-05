@@ -30,7 +30,7 @@ import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 
-import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
+import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
 import { setViewpointData } from '../controllers/explorer/setviewpointdata'
 import { getChartParms } from '../controllers/explorer/getchartparms'
@@ -44,6 +44,7 @@ interface ExploreBranchProps {
     userselections:any,
     yearscope:any,
     yearslider:any,
+    branchkey:any,
 }
 
 class ExplorerBranch extends Component<ExploreBranchProps, any> {
@@ -95,7 +96,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         // *** TODO: SIMPLIFY
         // assemble parms to get initial dataset
         let drilldownnodeconfig: MatrixNodeConfig =
-            this.initRootNodeConfig(ChartSeries.DrillDown, userselections)
+            this.initRootNodeConfig(userselections)
         let drilldownindex: any
 
         for (drilldownindex in drilldownnodeconfig.charts) {
@@ -141,7 +142,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
 
-    initRootNodeConfig = (matrixrow, userselections): MatrixNodeConfig => {
+    initRootNodeConfig = (userselections): MatrixNodeConfig => {
         let googlecharttype = userselections.charttype
         let chartCode = ChartTypeCodes[googlecharttype]
         let budgetdata = this.props.budgetdata
@@ -162,7 +163,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             dataseries: dataseries,
             datapath: [], // get data from root viewpoint object
             matrixlocation: {
-                // row: matrixrow,
                 column: 0
             },
             yearscope: {
@@ -382,7 +382,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     // callbacks = this.props.callbacks
     // get React components to render
-    getPortals = (matrixcolumn, matrixrow) => {
+    getPortals = (matrixcolumn) => {
 
         let userselections = this.state.userselections
 
@@ -423,7 +423,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                         }
                     })(location),
                     chartCode: nodeconfig.charts[chartindex].chartCode,
-                    graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
+                    graph_id: "ChartID" + this.props.branchkey + '-' + index + '-' + chartindex,
                     // index,
                 }
 
@@ -471,7 +471,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     let branch = this
     let drilldownbranch = branch.state.chartmatrixrow
 
-    let drilldownportals = branch.getPortals(drilldownbranch, ChartSeries.DrillDown)
+    let drilldownportals = branch.getPortals(drilldownbranch)
     return <div >
     <div>
         <span style={{ fontStyle: "italic" }}>Viewpoint: </span>
@@ -562,7 +562,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         </div>
     </div>
-                </div >
+    </div >
     }
 
 }

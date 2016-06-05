@@ -30,7 +30,7 @@ class ExplorerBranch extends Component {
             let viewpointname = userselections.viewpoint;
             let dataseriesname = userselections.dataseries;
             setviewpointdata_1.setViewpointData(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
-            let drilldownnodeconfig = this.initRootNodeConfig(constants_1.ChartSeries.DrillDown, userselections);
+            let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
             for (drilldownindex in drilldownnodeconfig.charts) {
                 let props = {
@@ -62,7 +62,7 @@ class ExplorerBranch extends Component {
             }
             this.refreshPresentation(chartmatrixrow);
         };
-        this.initRootNodeConfig = (matrixrow, userselections) => {
+        this.initRootNodeConfig = (userselections) => {
             let googlecharttype = userselections.charttype;
             let chartCode = constants_1.ChartTypeCodes[googlecharttype];
             let budgetdata = this.props.budgetdata;
@@ -262,7 +262,7 @@ class ExplorerBranch extends Component {
                 updatechartselections_1.updateChartSelections(chartmatrixrow);
             });
         };
-        this.getPortals = (matrixcolumn, matrixrow) => {
+        this.getPortals = (matrixcolumn) => {
             let userselections = this.state.userselections;
             let budgetdata = this.props.budgetdata;
             let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
@@ -294,7 +294,7 @@ class ExplorerBranch extends Component {
                             };
                         })(location),
                         chartCode: nodeconfig.charts[chartindex].chartCode,
-                        graph_id: "ChartID" + matrixrow + '-' + index + '-' + chartindex,
+                        graph_id: "ChartID" + this.props.branchkey + '-' + index + '-' + chartindex,
                     };
                     let portalchart = {
                         chartparms: chartparms,
@@ -326,7 +326,7 @@ class ExplorerBranch extends Component {
     render() {
         let branch = this;
         let drilldownbranch = branch.state.chartmatrixrow;
-        let drilldownportals = branch.getPortals(drilldownbranch, constants_1.ChartSeries.DrillDown);
+        let drilldownportals = branch.getPortals(drilldownbranch);
         return React.createElement("div", null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.state.userselections.viewpoint, style: {}, onChange: (e, index, value) => {
             branch.switchViewpoint(value);
         }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton_1.default, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {

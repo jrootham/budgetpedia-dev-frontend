@@ -302,6 +302,7 @@ class ExplorerClass extends Component< any, any > {
                  }}
                  yearslider = {{ singlevalue: [2015], doublevalue: [2005, 2015] }}
                  yearscope = {"one"}
+                 branchkey = {ChartSeries.DrillDown}
              />
             </CardText>
 

@@ -54,7 +54,7 @@ class ExplorerClass extends Component {
             dataseries: "BudgetExpenses",
             charttype: "ColumnChart",
             inflationadjusted: true,
-        }, yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] }, yearscope: "one"})));
+        }, yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] }, yearscope: "one", branchkey: constants_1.ChartSeries.DrillDown})));
         return React.createElement("div", null, dialogbox, drilldownsegment);
     }
 }
