@@ -249,7 +249,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     }
 
-    switchDataSeries = (facet) => {
+    switchFacet = (facet) => {
 
         let userselections = this.state.userselections
         userselections.facet = facet
@@ -258,9 +258,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             userselections,
         })
         let viewpointname = this.state.userselections.viewpoint
-        let dataseriesname = this.state.userselections.facet
+        let facetname = this.state.userselections.facet
         let budgetdata = this.props.budgetdata
-        setViewpointData(viewpointname, dataseriesname, budgetdata,
+        setViewpointData(viewpointname, facetname, budgetdata,
             this.state.userselections.inflationadjusted)
         let matrixseries = chartmatrixrow
         let nodeconfig: MatrixNodeConfig
@@ -269,6 +269,17 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let chartParmsObj: ChartParmsObj = null
         for (cellptr in matrixseries) {
             nodeconfig = matrixseries[cellptr]
+            let datanode = nodeconfig.datanode
+            if (datanode) {
+                if (datanode.Components && (nodeconfig.charts.length == 1)) {
+                    console.log('nodeconfig should be updated 1')
+                }
+                if (!datanode.Components && (nodeconfig.charts.length == 2)) {
+                    console.log('nodeconfig should be updated 2')
+                }
+            } else {
+                console.log('no data node')
+            }
             let nodechartindex: any = null
             for (nodechartindex in nodeconfig.charts) {
                 let props: GetChartParmsProps = {
@@ -306,9 +317,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             nodeconfig.datanode = chartParmsObj.datanode
         }
         this.refreshPresentation(chartmatrixrow)
-        // this.setState({
-        //     chartmatrix,
-        // })
         setTimeout(() => {
             updateChartSelections(chartmatrixrow)
         })
@@ -490,7 +498,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             tooltipPosition="top-center"
             onTouchTap= {
                 e => {
-                    branch.switchDataSeries('BudgetExpenses')
+                    branch.switchFacet('BudgetExpenses')
                 }
             }
             style={
@@ -509,7 +517,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             tooltipPosition="top-center"
             onTouchTap= {
                 e => {
-                    branch.switchDataSeries('BudgetRevenues')
+                    branch.switchFacet('BudgetRevenues')
                 }
             }
             style={
@@ -528,7 +536,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             tooltipPosition="top-center"
             onTouchTap= {
                 e => {
-                    branch.switchDataSeries('BudgetStaffing')
+                    branch.switchFacet('BudgetStaffing')
                 }
             }
             style={

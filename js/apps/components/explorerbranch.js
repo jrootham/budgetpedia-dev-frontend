@@ -150,7 +150,7 @@ class ExplorerBranch extends Component {
             });
             this.initializeChartSeries();
         };
-        this.switchDataSeries = (facet) => {
+        this.switchFacet = (facet) => {
             let userselections = this.state.userselections;
             userselections.facet = facet;
             let chartmatrixrow = this.state.chartmatrixrow;
@@ -158,9 +158,9 @@ class ExplorerBranch extends Component {
                 userselections: userselections,
             });
             let viewpointname = this.state.userselections.viewpoint;
-            let dataseriesname = this.state.userselections.facet;
+            let facetname = this.state.userselections.facet;
             let budgetdata = this.props.budgetdata;
-            setviewpointdata_1.setViewpointData(viewpointname, dataseriesname, budgetdata, this.state.userselections.inflationadjusted);
+            setviewpointdata_1.setViewpointData(viewpointname, facetname, budgetdata, this.state.userselections.inflationadjusted);
             let matrixseries = chartmatrixrow;
             let nodeconfig;
             let cellptr;
@@ -168,6 +168,18 @@ class ExplorerBranch extends Component {
             let chartParmsObj = null;
             for (cellptr in matrixseries) {
                 nodeconfig = matrixseries[cellptr];
+                let datanode = nodeconfig.datanode;
+                if (datanode) {
+                    if (datanode.Components && (nodeconfig.charts.length == 1)) {
+                        console.log('nodeconfig should be updated 1');
+                    }
+                    if (!datanode.Components && (nodeconfig.charts.length == 2)) {
+                        console.log('nodeconfig should be updated 2');
+                    }
+                }
+                else {
+                    console.log('no data node');
+                }
                 let nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
                     let props = {
@@ -327,21 +339,21 @@ class ExplorerBranch extends Component {
         return React.createElement("div", null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.state.userselections.viewpoint, style: {}, onChange: (e, index, value) => {
             branch.switchViewpoint(value);
         }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton_1.default, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchDataSeries('BudgetExpenses');
+            branch.switchFacet('BudgetExpenses');
         }, style: {
             backgroundColor: (this.state.userselections.facet == 'BudgetExpenses')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "attach_money")), React.createElement(IconButton_1.default, {tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchDataSeries('BudgetRevenues');
+            branch.switchFacet('BudgetRevenues');
         }, style: {
             backgroundColor: (this.state.userselections.facet == 'BudgetRevenues')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "receipt")), React.createElement(IconButton_1.default, {tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchDataSeries('BudgetStaffing');
+            branch.switchFacet('BudgetStaffing');
         }, style: {
             backgroundColor: (this.state.userselections.facet == 'BudgetStaffing')
                 ? "rgba(144,238,144,0.5)"
