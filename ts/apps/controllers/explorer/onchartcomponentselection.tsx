@@ -74,7 +74,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
     // get taxonomy references
     let viewpoint = nodeconfig.viewpoint,
-        dataseries = nodeconfig.dataseries
+        facet = nodeconfig.facet
 
     // TODO: abandon here if the next one exists and is the same
     serieslist.splice(matrixcolumn + 1) // remove subsequent charts
@@ -126,7 +126,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
         let newrange = Object.assign({}, nodeconfig.yearscope)
         let charttype = userselections.charttype
         let chartCode = ChartTypeCodes[charttype]
-        let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries]
+        let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[facet]
         let charts = []
         for (let type of portalcharts) {
             if (type.Type == 'Components' && !newnode.Components) {
@@ -148,7 +148,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
         let newnodeconfig: MatrixNodeConfig = {
             viewpoint,
-            dataseries,
+            facet,
             datapath: childdataroot,
             matrixlocation: {
                 // row: matrixrow,

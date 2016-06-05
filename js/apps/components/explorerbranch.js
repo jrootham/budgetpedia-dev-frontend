@@ -28,8 +28,8 @@ class ExplorerBranch extends Component {
             let budgetdata = this.props.budgetdata;
             var matrixlocation, chartParmsObj;
             let viewpointname = userselections.viewpoint;
-            let dataseriesname = userselections.dataseries;
-            setviewpointdata_1.setViewpointData(viewpointname, dataseriesname, budgetdata, userselections.inflationadjusted);
+            let facet = userselections.facet;
+            setviewpointdata_1.setViewpointData(viewpointname, facet, budgetdata, userselections.inflationadjusted);
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
             for (drilldownindex in drilldownnodeconfig.charts) {
@@ -67,8 +67,8 @@ class ExplorerBranch extends Component {
             let chartCode = constants_1.ChartTypeCodes[googlecharttype];
             let budgetdata = this.props.budgetdata;
             let viewpoint = userselections.viewpoint;
-            let dataseries = userselections.dataseries;
-            let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries];
+            let facet = userselections.facet;
+            let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[facet];
             let charts = [];
             for (let type of portalcharts) {
                 let chartconfig = {
@@ -80,7 +80,7 @@ class ExplorerBranch extends Component {
             }
             return {
                 viewpoint: viewpoint,
-                dataseries: dataseries,
+                facet: facet,
                 datapath: [],
                 matrixlocation: {
                     column: 0
@@ -150,15 +150,15 @@ class ExplorerBranch extends Component {
             });
             this.initializeChartSeries();
         };
-        this.switchDataSeries = (seriesname) => {
+        this.switchDataSeries = (facet) => {
             let userselections = this.state.userselections;
-            userselections.dataseries = seriesname;
+            userselections.facet = facet;
             let chartmatrixrow = this.state.chartmatrixrow;
             this.setState({
                 userselections: userselections,
             });
             let viewpointname = this.state.userselections.viewpoint;
-            let dataseriesname = this.state.userselections.dataseries;
+            let dataseriesname = this.state.userselections.facet;
             let budgetdata = this.props.budgetdata;
             setviewpointdata_1.setViewpointData(viewpointname, dataseriesname, budgetdata, this.state.userselections.inflationadjusted);
             let matrixseries = chartmatrixrow;
@@ -201,7 +201,7 @@ class ExplorerBranch extends Component {
                 }
             }
             if (!isError) {
-                nodeconfig.dataseries = seriesname;
+                nodeconfig.facet = facet;
                 nodeconfig.datanode = chartParmsObj.datanode;
             }
             this.refreshPresentation(chartmatrixrow);
@@ -265,8 +265,8 @@ class ExplorerBranch extends Component {
         this.getPortals = (matrixrow) => {
             let userselections = this.state.userselections;
             let budgetdata = this.props.budgetdata;
-            let portaltitles = budgetdata.DataSeries[userselections.dataseries].Titles;
-            let dataseries = budgetdata.DataSeries[userselections.dataseries];
+            let portaltitles = budgetdata.DataSeries[userselections.facet].Titles;
+            let dataseries = budgetdata.DataSeries[userselections.facet];
             let portalseriesname = dataseries.Name;
             if (dataseries.Units == 'DOLLAR') {
                 portalseriesname += ' (' + dataseries.UnitsAlias + ')';
@@ -329,21 +329,21 @@ class ExplorerBranch extends Component {
         }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton_1.default, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {
             branch.switchDataSeries('BudgetExpenses');
         }, style: {
-            backgroundColor: (this.state.userselections.dataseries == 'BudgetExpenses')
+            backgroundColor: (this.state.userselections.facet == 'BudgetExpenses')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "attach_money")), React.createElement(IconButton_1.default, {tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: e => {
             branch.switchDataSeries('BudgetRevenues');
         }, style: {
-            backgroundColor: (this.state.userselections.dataseries == 'BudgetRevenues')
+            backgroundColor: (this.state.userselections.facet == 'BudgetRevenues')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "receipt")), React.createElement(IconButton_1.default, {tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: e => {
             branch.switchDataSeries('BudgetStaffing');
         }, style: {
-            backgroundColor: (this.state.userselections.dataseries == 'BudgetStaffing')
+            backgroundColor: (this.state.userselections.facet == 'BudgetStaffing')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"

@@ -15,7 +15,7 @@
     ? Classes:
         Explorer
         ExplorerPortal
-        BudgetData = budgetdata -- package of dataseries, lookup, and viewpoint data
+        BudgetData = budgetdata -- package of facets, lookup, and viewpoint data
         BudgetExplorer (set of BudgetNodes)
         BudgetNode (derive from chartconfig) Node within Hierarchy
         BedgetChart (derive from chartcomfig) - presentation of BudgetNode
@@ -296,7 +296,7 @@ class ExplorerClass extends Component< any, any > {
                  userselections = {{
                      latestyear: 2015,
                      viewpoint: "FUNCTIONAL",
-                     dataseries: "BudgetExpenses",
+                     facet: "BudgetExpenses",
                      charttype: "ColumnChart",
                      inflationadjusted: true,
                  }}

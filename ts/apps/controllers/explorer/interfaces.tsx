@@ -84,7 +84,7 @@ interface MatrixNodeConfig {
     // name?: string,
 
     viewpoint: string,
-    dataseries: string,
+    facet: string,
     datapath: string[],
 
     yearscope: YearScope,

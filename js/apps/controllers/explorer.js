@@ -51,7 +51,7 @@ class ExplorerClass extends Component {
         let drilldownsegment = React.createElement(Card_1.Card, {initiallyExpanded: true}, React.createElement(Card_1.CardTitle, {actAsExpander: false, showExpandableButton: false}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: this.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline"))), React.createElement(Card_1.CardText, null, React.createElement(explorerbranch_1.ExplorerBranch, {budgetdata: explorer.props.budgetdata, callbacks: { workingStatus: explorer.workingStatus }, matrixrow: explorer.state.chartmatrix[constants_1.ChartSeries.DrillDown], userselections: {
             latestyear: 2015,
             viewpoint: "FUNCTIONAL",
-            dataseries: "BudgetExpenses",
+            facet: "BudgetExpenses",
             charttype: "ColumnChart",
             inflationadjusted: true,
         }, yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] }, yearscope: "one", branchkey: constants_1.ChartSeries.DrillDown})));

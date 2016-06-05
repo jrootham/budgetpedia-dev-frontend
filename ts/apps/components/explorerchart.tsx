@@ -18,6 +18,7 @@ interface ExplorerChartProps {
     chartsettings: ChartSettings,
     chartparms: ChartParms,
     expandable: boolean,
+    nodata?:boolean,
 }
 
 class ExplorerChart extends Component<ExplorerChartProps, any> {
@@ -28,6 +29,8 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
     }
 
     render() {
+
+        let nodata = this.props.nodata || false
 
         let chartparms = this.props.chartparms
         let chartsettings = this.props.chartsettings

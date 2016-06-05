@@ -12,6 +12,7 @@ class ExplorerChart extends Component {
         };
     }
     render() {
+        let nodata = this.props.nodata || false;
         let chartparms = this.props.chartparms;
         let chartsettings = this.props.chartsettings;
         return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {

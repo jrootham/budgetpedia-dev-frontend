@@ -29,7 +29,7 @@ let onChartComponentSelection = (props, callbacks) => {
     if (nodeconfig.charts[portalChartIndex].nodedatapropertyname == 'Categories') {
         return;
     }
-    let viewpoint = nodeconfig.viewpoint, dataseries = nodeconfig.dataseries;
+    let viewpoint = nodeconfig.viewpoint, facet = nodeconfig.facet;
     serieslist.splice(matrixcolumn + 1);
     refreshPresentation(chartmatrixrow);
     if (!selection) {
@@ -68,7 +68,7 @@ let onChartComponentSelection = (props, callbacks) => {
         let newrange = Object.assign({}, nodeconfig.yearscope);
         let charttype = userselections.charttype;
         let chartCode = constants_1.ChartTypeCodes[charttype];
-        let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[dataseries];
+        let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[facet];
         let charts = [];
         for (let type of portalcharts) {
             if (type.Type == 'Components' && !newnode.Components) {
@@ -86,7 +86,7 @@ let onChartComponentSelection = (props, callbacks) => {
         }
         let newnodeconfig = {
             viewpoint: viewpoint,
-            dataseries: dataseries,
+            facet: facet,
             datapath: childdataroot,
             matrixlocation: {
                 column: matrixcolumn + 1

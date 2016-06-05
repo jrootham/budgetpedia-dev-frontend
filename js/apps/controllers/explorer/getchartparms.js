@@ -21,7 +21,7 @@ let getChartParms = (props, callbacks) => {
         sortedlist = 'SortedComponents';
     }
     let viewpointindex = nodeConfig.viewpoint, path = nodeConfig.datapath, yearscope = nodeConfig.yearscope, year = yearscope.latestyear;
-    let dataseriesname = userselections.dataseries;
+    let dataseriesname = userselections.facet;
     let viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel;
     vertlabel = itemseries.UnitsAlias;
     if (units != 'FTE') {

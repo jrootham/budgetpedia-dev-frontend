@@ -66,7 +66,7 @@ let getChartParms = (
         year = yearscope.latestyear
 
     // unpack userselections
-    let dataseriesname = userselections.dataseries
+    let dataseriesname = userselections.facet
 
     // unpack budgetdata
     let viewpointdata = budgetdata.Viewpoints[viewpointindex],
