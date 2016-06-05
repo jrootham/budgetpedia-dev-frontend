@@ -23,7 +23,7 @@ let onChartComponentSelection = (props, callbacks) => {
     }
     let chart = context.ChartObject.chart;
     let selectmatrixlocation = context.portalchartlocation.matrixlocation;
-    let matrixrow = selectmatrixlocation.row, matrixcolumn = selectmatrixlocation.column;
+    let matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrixrow;
     let nodeconfig = chartmatrixrow[matrixcolumn];
     if (nodeconfig.charts[portalChartIndex].nodedatapropertyname == 'Categories') {
@@ -89,7 +89,6 @@ let onChartComponentSelection = (props, callbacks) => {
             dataseries: dataseries,
             datapath: childdataroot,
             matrixlocation: {
-                row: matrixrow,
                 column: matrixcolumn + 1
             },
             parentdata: parentdata,

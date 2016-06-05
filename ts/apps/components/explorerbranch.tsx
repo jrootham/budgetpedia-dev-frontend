@@ -30,8 +30,7 @@ import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 
-import { ChartSeries } from '../constants'
-import { ChartTypeCodes, ChartCodeTypes } from '../constants'
+import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
 
 import { setViewpointData } from '../controllers/explorer/setviewpointdata'
 import { getChartParms } from '../controllers/explorer/getchartparms'
@@ -66,7 +65,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     // numbered scroll elements, which self-register for response to 
     // chart column select clicks
-    branchScrollBlocks = []
+    branchScrollBlock = null
 
     // initialize once - create root drilldown and compare series
     componentDidMount = () => {
@@ -163,7 +162,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             dataseries: dataseries,
             datapath: [], // get data from root viewpoint object
             matrixlocation: {
-                row: matrixrow,
+                // row: matrixrow,
                 column: 0
             },
             yearscope: {
@@ -198,8 +197,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
     onPortalCreation = (newMatrixLocation: MatrixLocation) => {
-        let matrixrow = newMatrixLocation.row
-        let element: Element = this.branchScrollBlocks[matrixrow]
+        // let matrixrow = newMatrixLocation.row
+        let element: Element = this.branchScrollBlock
         if (!element) {
             console.error('expected branch element not found in onPortalCreation', newMatrixLocation)
             return
@@ -418,7 +417,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 }
                 let explorer = this
                 let chartsettings: ChartSettings = {
-                    // matrixlocation: chartconfig.matrixlocation,
                     onSwitchChartCode: ((location) => {
                         return (chartCode) => {
                             this.switchChartCode(location, chartCode)
@@ -453,7 +451,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 // onChangeBudgetPortal:this.onChangeBudgetPortalChart,
                 matrixLocation: {
                     column: matrixcolumn,
-                    row: matrixrow,
+                    // row: matrixrow,
                 }
             }
 
@@ -555,7 +553,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     <div style={{ whiteSpace: "nowrap" }}>
         <div ref={node => {
-            branch.branchScrollBlocks[ChartSeries.DrillDown] = node
+            branch.branchScrollBlock = node
         } } style={{ overflow: "scroll" }}>
 
             { drilldownportals }

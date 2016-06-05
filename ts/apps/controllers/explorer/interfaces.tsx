@@ -113,7 +113,7 @@ interface MatrixChartConfig {
 
 // location of chart config in for portal
 interface MatrixLocation {
-    row: number,
+    // row: number,
     column: number,
 }
 

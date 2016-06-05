@@ -7,7 +7,6 @@ const MenuItem_1 = require('material-ui/MenuItem');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const constants_1 = require('../constants');
-const constants_2 = require('../constants');
 const setviewpointdata_1 = require('../controllers/explorer/setviewpointdata');
 const getchartparms_1 = require('../controllers/explorer/getchartparms');
 const updatechartselections_1 = require('../controllers/explorer/updatechartselections');
@@ -20,7 +19,7 @@ class ExplorerBranch extends Component {
             yearscope: this.props.yearscope,
             userselections: this.props.userselections,
         };
-        this.branchScrollBlocks = [];
+        this.branchScrollBlock = null;
         this.componentDidMount = () => {
             this.initializeChartSeries();
         };
@@ -50,7 +49,7 @@ class ExplorerBranch extends Component {
                 if (!chartParmsObj.isError) {
                     drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                     drilldownnodeconfig.charts[drilldownindex].chartCode =
-                        constants_2.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
+                        constants_1.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
                 }
                 else {
                     break;
@@ -65,7 +64,7 @@ class ExplorerBranch extends Component {
         };
         this.initRootNodeConfig = (matrixrow, userselections) => {
             let googlecharttype = userselections.charttype;
-            let chartCode = constants_2.ChartTypeCodes[googlecharttype];
+            let chartCode = constants_1.ChartTypeCodes[googlecharttype];
             let budgetdata = this.props.budgetdata;
             let viewpoint = userselections.viewpoint;
             let dataseries = userselections.dataseries;
@@ -84,7 +83,6 @@ class ExplorerBranch extends Component {
                 dataseries: dataseries,
                 datapath: [],
                 matrixlocation: {
-                    row: matrixrow,
                     column: 0
                 },
                 yearscope: {
@@ -106,8 +104,7 @@ class ExplorerBranch extends Component {
             });
         };
         this.onPortalCreation = (newMatrixLocation) => {
-            let matrixrow = newMatrixLocation.row;
-            let element = this.branchScrollBlocks[matrixrow];
+            let element = this.branchScrollBlock;
             if (!element) {
                 console.error('expected branch element not found in onPortalCreation', newMatrixLocation);
                 return;
@@ -199,7 +196,7 @@ class ExplorerBranch extends Component {
                     else {
                         nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms;
                         nodeconfig.charts[nodechartindex].chartCode =
-                            constants_2.ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType];
+                            constants_1.ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType];
                     }
                 }
             }
@@ -223,7 +220,7 @@ class ExplorerBranch extends Component {
             });
         };
         this.switchChartCode = (location, chartCode) => {
-            let chartType = constants_2.ChartCodeTypes[chartCode];
+            let chartType = constants_1.ChartCodeTypes[chartCode];
             let portalIndex = location.portalindex;
             let chartmatrixrow = this.state.chartmatrixrow;
             let nodeConfig = chartmatrixrow[location.matrixlocation.column];
@@ -245,7 +242,7 @@ class ExplorerBranch extends Component {
             if (!chartParmsObj.isError) {
                 nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.charts[portalIndex].chartCode =
-                    constants_2.ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType];
+                    constants_1.ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType];
                 nodeConfig.datanode = chartParmsObj.datanode;
             }
             else {
@@ -319,7 +316,6 @@ class ExplorerBranch extends Component {
                     portalName: portalname,
                     matrixLocation: {
                         column: matrixcolumn,
-                        row: matrixrow,
                     }
                 };
                 return React.createElement(explorerportal_1.ExplorerPortal, {key: index, budgetPortal: budgetPortal, onChangePortalChart: this.onChangeBudgetPortalChart});
@@ -355,7 +351,7 @@ class ExplorerBranch extends Component {
                 : 'transparent',
             borderRadius: "50%"
         }}, ">", React.createElement(FontIcon_1.default, {className: "material-icons"}, "people"))), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
-            branch.branchScrollBlocks[constants_1.ChartSeries.DrillDown] = node;
+            branch.branchScrollBlock = node;
         }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))));
     }
 }

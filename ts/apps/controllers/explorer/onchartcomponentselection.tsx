@@ -60,8 +60,8 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     let selectmatrixlocation = context.portalchartlocation.matrixlocation
 
     // unpack location
-    let matrixrow = selectmatrixlocation.row,
-        matrixcolumn = selectmatrixlocation.column
+    // let matrixrow = selectmatrixlocation.row,
+    let matrixcolumn = selectmatrixlocation.column
 
     // acquire serieslist from matrix
     let serieslist = chartmatrixrow
@@ -151,7 +151,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
             dataseries,
             datapath: childdataroot,
             matrixlocation: {
-                row: matrixrow,
+                // row: matrixrow,
                 column: matrixcolumn + 1
             },
             parentdata: parentdata,

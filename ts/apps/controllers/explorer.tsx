@@ -38,8 +38,7 @@ import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 
 import { ExplorerBranch } from '../components/explorerbranch'
-// import { ChartSeries } from '../constants'
-import { ChartTypeCodes, ChartCodeTypes } from '../constants'
+import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
 
 import { setViewpointData } from './explorer/setviewpointdata'
 import { getChartParms } from './explorer/getchartparms'
@@ -55,7 +54,6 @@ import {
     GetChartParmsProps,
     GetChartParmsCallbacks,
 } from './explorer/interfaces'
-// import { categoryaliases } from '../constants'
 
 class ExplorerClass extends Component< any, any > {
 
@@ -294,7 +292,7 @@ class ExplorerClass extends Component< any, any > {
              <ExplorerBranch 
                  budgetdata = {explorer.props.budgetdata}
                  workingStatus = {explorer.workingStatus}
-                 matrixrow = {explorer.state.chartmatrix[0]}
+                 matrixrow = {explorer.state.chartmatrix[ChartSeries.DrillDown]}
                  userselections = {{
                      latestyear: 2015,
                      viewpoint: "FUNCTIONAL",
