@@ -40,9 +40,11 @@ import * as Actions from '../../actions/actions'
 
 interface ExploreBranchProps {
     budgetdata: any,
-    // chartmatrix: any,
-    // userselections: any,
+    matrixrow: any,
     workingStatus:any,
+    userselections:any,
+    yearscope:any,
+    yearslider:any,
 }
 
 class ExplorerBranch extends Component<ExploreBranchProps, any> {
@@ -56,16 +58,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // charts exist in a matrix (row/column) which contain a chartconfig object
     // TODO: most of 
     state = {
-        chartmatrixrow:[],
-        yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] },
-        yearscope: "one",
-        userselections: {
-            latestyear: 2015,
-            viewpoint: "FUNCTIONAL",
-            dataseries: "BudgetExpenses",
-            charttype: "ColumnChart",
-            inflationadjusted: true,
-        }
+        chartmatrixrow:this.props.matrixrow,
+        yearslider: this.props.yearslider,
+        yearscope: this.props.yearscope,
+        userselections: this.props.userselections,
     }
 
     // numbered scroll elements, which self-register for response to 

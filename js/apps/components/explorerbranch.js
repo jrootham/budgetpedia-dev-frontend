@@ -15,16 +15,10 @@ class ExplorerBranch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            chartmatrixrow: [],
-            yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] },
-            yearscope: "one",
-            userselections: {
-                latestyear: 2015,
-                viewpoint: "FUNCTIONAL",
-                dataseries: "BudgetExpenses",
-                charttype: "ColumnChart",
-                inflationadjusted: true,
-            }
+            chartmatrixrow: this.props.matrixrow,
+            yearslider: this.props.yearslider,
+            yearscope: this.props.yearscope,
+            userselections: this.props.userselections,
         };
         this.branchScrollBlocks = [];
         this.componentDidMount = () => {

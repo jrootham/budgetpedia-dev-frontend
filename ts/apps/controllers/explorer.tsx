@@ -294,6 +294,16 @@ class ExplorerClass extends Component< any, any > {
              <ExplorerBranch 
                  budgetdata = {explorer.props.budgetdata}
                  workingStatus = {explorer.workingStatus}
+                 matrixrow = {explorer.state.chartmatrix[0]}
+                 userselections = {{
+                     latestyear: 2015,
+                     viewpoint: "FUNCTIONAL",
+                     dataseries: "BudgetExpenses",
+                     charttype: "ColumnChart",
+                     inflationadjusted: true,
+                 }}
+                 yearslider = {{ singlevalue: [2015], doublevalue: [2005, 2015] }}
+                 yearscope = {"one"}
              />
             </CardText>
 
