@@ -6,6 +6,7 @@ const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
+const Snackbar_1 = require('material-ui/Snackbar');
 const constants_1 = require('../constants');
 const setviewpointdata_1 = require('../controllers/explorer/setviewpointdata');
 const getchartparms_1 = require('../controllers/explorer/getchartparms');
@@ -19,6 +20,15 @@ class ExplorerBranch extends Component {
             yearslider: this.props.yearslider,
             yearscope: this.props.yearscope,
             userselections: this.props.userselections,
+            snackbar: { open: false, message: 'empty' }
+        };
+        this.handleSnackbarRequestClose = () => {
+            this.setState({
+                snackbar: {
+                    open: false,
+                    message: 'empty',
+                }
+            });
         };
         this.branchScrollBlock = null;
         this.componentDidMount = () => {
@@ -171,8 +181,9 @@ class ExplorerBranch extends Component {
                 nodeconfig = matrixseries[cellptr];
                 let datanode = nodeconfig.datanode;
                 if (datanode) {
-                    if ((datanode.Components && (nodeconfig.charts.length == 1)) ||
-                        (!datanode.Components && (nodeconfig.charts.length == 2))) {
+                    let deeperdata = (datanode.Components && (nodeconfig.charts.length == 1));
+                    let shallowerdata = (!datanode.Components && (nodeconfig.charts.length == 2));
+                    if (deeperdata || shallowerdata) {
                         matrixseries.splice(cellptr);
                         nodeconfig.charts = [];
                         isError = true;
@@ -198,6 +209,15 @@ class ExplorerBranch extends Component {
                             workingStatus: this.props.callbacks.workingStatus,
                         };
                         onchartcomponentselection_1.createChildNode(childprops, childcallbacks);
+                        let message = null;
+                        if (deeperdata) {
+                            message = "More drilldown is available for current facet selection";
+                        }
+                        else {
+                            message = "Less drilldown is available for current facet selection";
+                        }
+                        this.state.snackbar.message = message;
+                        this.state.snackbar.open = true;
                     }
                 }
                 else {
@@ -384,7 +404,7 @@ class ExplorerBranch extends Component {
             borderRadius: "50%"
         }}, ">", React.createElement(FontIcon_1.default, {className: "material-icons"}, "people"))), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;
-        }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))));
+        }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 3000, onRequestClose: this.handleSnackbarRequestClose}));
     }
 }
 exports.ExplorerBranch = ExplorerBranch;

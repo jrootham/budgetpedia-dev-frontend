@@ -30,6 +30,7 @@ import {Card, CardTitle, CardText} from 'material-ui/Card'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
+import Snackbar from 'material-ui/Snackbar';
 
 import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
@@ -64,6 +65,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         yearslider: this.props.yearslider,
         yearscope: this.props.yearscope,
         userselections: this.props.userselections,
+        snackbar:{open:false,message:'empty'}
+    }
+
+    handleSnackbarRequestClose = () => {
+        this.setState({
+            snackbar: {
+                open: false,
+                message: 'empty',
+            }
+        })
     }
 
     // numbered scroll elements, which self-register for response to 
@@ -274,8 +285,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             nodeconfig = matrixseries[cellptr]
             let datanode = nodeconfig.datanode
             if (datanode) {
-                if ((datanode.Components && (nodeconfig.charts.length == 1)) || 
-                    (!datanode.Components && (nodeconfig.charts.length == 2))) {
+                let deeperdata = (datanode.Components && (nodeconfig.charts.length == 1))
+                let shallowerdata = (!datanode.Components && (nodeconfig.charts.length == 2))
+                if ( deeperdata || shallowerdata) {
                     matrixseries.splice(cellptr)
                     nodeconfig.charts = []
                     isError = true
@@ -306,6 +318,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                         workingStatus: this.props.callbacks.workingStatus,
                     }
                     createChildNode(childprops, childcallbacks)
+                    let message = null
+                    if (deeperdata) {
+                        message = "More drilldown is available for current facet selection"
+                    } else {
+                        message = "Less drilldown is available for current facet selection"
+                    }
+                    this.state.snackbar.message = message
+                    this.state.snackbar.open = true
                 }
             } else {
                 console.error('no data node',nodeconfig)
@@ -594,6 +614,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         </div>
     </div>
+    <Snackbar
+        open={this.state.snackbar.open}
+        message={this.state.snackbar.message}
+        autoHideDuration={3000}
+        onRequestClose={this.handleSnackbarRequestClose}
+        />
     </div >
     }
 

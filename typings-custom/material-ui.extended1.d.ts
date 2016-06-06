@@ -6850,7 +6850,7 @@ declare module 'material-ui/lib/styles/theme-decorator' {
 }
 
 
-declare module 'material-ui/lib/snackbar' {
+declare module 'material-ui/Snackbar' {
     export import Snackbar = __MaterialUI.Snackbar;
     export default Snackbar;
 }
