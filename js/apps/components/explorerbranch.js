@@ -29,6 +29,9 @@ class ExplorerBranch extends Component {
                     message: 'empty',
                 }
             });
+            setTimeout(() => {
+                updatechartselections_1.updateChartSelections(this.state.chartmatrixrow);
+            });
         };
         this.branchScrollBlock = null;
         this.componentDidMount = () => {

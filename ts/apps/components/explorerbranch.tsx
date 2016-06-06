@@ -75,6 +75,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 message: 'empty',
             }
         })
+        setTimeout(() => {
+            updateChartSelections(this.state.chartmatrixrow)
+        })
     }
 
     // numbered scroll elements, which self-register for response to 
