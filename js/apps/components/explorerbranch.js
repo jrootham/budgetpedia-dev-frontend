@@ -170,15 +170,18 @@ class ExplorerBranch extends Component {
                 nodeconfig = matrixseries[cellptr];
                 let datanode = nodeconfig.datanode;
                 if (datanode) {
-                    if (datanode.Components && (nodeconfig.charts.length == 1)) {
-                        console.log('nodeconfig should be updated 1');
-                    }
-                    if (!datanode.Components && (nodeconfig.charts.length == 2)) {
-                        console.log('nodeconfig should be updated 2');
+                    if ((datanode.Components && (nodeconfig.charts.length == 1)) ||
+                        (!datanode.Components && (nodeconfig.charts.length == 2))) {
+                        matrixseries.splice(cellptr);
+                        nodeconfig.charts = [];
+                        isError = true;
+                        let prevconfig = matrixseries[cellptr - 1];
+                        delete prevconfig.charts[0].chartselection;
+                        delete prevconfig.charts[0].chart;
                     }
                 }
                 else {
-                    console.log('no data node');
+                    console.error('no data node', nodeconfig);
                 }
                 let nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {

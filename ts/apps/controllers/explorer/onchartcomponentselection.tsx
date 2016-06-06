@@ -88,6 +88,17 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
         updateChartSelections(chartmatrixrow)
         return
     }
+    createChildNode(nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow,
+        viewpoint, facet, matrixcolumn, workingStatus, refreshPresentation, onPortalCreation,
+        portalChartIndex, context, chart)
+}
+
+let createChildNode = (nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow,
+    viewpoint, facet, matrixcolumn, workingStatus, refreshPresentation, onPortalCreation,
+    portalChartIndex, context, chart) => {
+
+    // ----------------------------------------------------
+    // ----------------[ create child ]--------------------
     // copy path
     let childdataroot = nodeconfig.datapath.slice()
 
@@ -139,7 +150,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
             //     continue
             // }
             let chartconfig: MatrixChartConfig = {
-                googlecharttype:charttype,
+                googlecharttype: charttype,
                 chartCode,
             }
             chartconfig.nodedatapropertyname = type.Type

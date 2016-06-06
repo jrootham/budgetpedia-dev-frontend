@@ -38,6 +38,10 @@ let onChartComponentSelection = (props, callbacks) => {
         updatechartselections_1.updateChartSelections(chartmatrixrow);
         return;
     }
+    createChildNode(nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow, viewpoint, facet, matrixcolumn, workingStatus, refreshPresentation, onPortalCreation, portalChartIndex, context, chart);
+};
+exports.onChartComponentSelection = onChartComponentSelection;
+let createChildNode = (nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow, viewpoint, facet, matrixcolumn, workingStatus, refreshPresentation, onPortalCreation, portalChartIndex, context, chart) => {
     let childdataroot = nodeconfig.datapath.slice();
     let node = getbudgetnode_1.getBudgetNode(budgetdata.Viewpoints[userselections.viewpoint], childdataroot);
     if (!node.Components) {
@@ -137,4 +141,3 @@ let onChartComponentSelection = (props, callbacks) => {
         workingStatus(false);
     });
 };
-exports.onChartComponentSelection = onChartComponentSelection;
