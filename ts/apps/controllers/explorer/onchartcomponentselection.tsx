@@ -168,7 +168,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         return
     }
     workingStatus(true)
-    setTimeout(() => {
+    // setTimeout(() => {
 
         let newrange = Object.assign({}, nodeconfig.yearscope)
         let charttype = userselections.charttype
@@ -250,7 +250,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         updateChartSelections(chartmatrixrow)
         onPortalCreation()
         workingStatus(false)
-    })
+    // })
 }
 
 export { onChartComponentSelection, createChildNode }

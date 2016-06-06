@@ -285,7 +285,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     // delete prevconfig.charts[0].chart
 
                     let context = {
-                        selection:prevconfig.charts[0].chartselection[0],
+                        selection:prevconfig.charts[0].chartselection,
                         ChartObject: prevconfig.charts[0].ChartObject,
                     }
 
@@ -293,9 +293,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                         nodeconfig:prevconfig,
                         userselections,
                         budgetdata,
-                        chartmatrixrow,
-                        selectionrow:prevconfig.charts[0].chartselection[0].row,
-                        matrixcolumn: nodeconfig.matrixlocation.column,
+                        chartmatrixrow:matrixseries,
+                        selectionrow: prevconfig.charts[0].chartselection[0].row,
+                        matrixcolumn: prevconfig.matrixlocation.column,
                         portalChartIndex:0,
                         context,
                         chart:prevconfig.charts[0].chart,

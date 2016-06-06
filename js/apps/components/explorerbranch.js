@@ -178,16 +178,16 @@ class ExplorerBranch extends Component {
                         isError = true;
                         let prevconfig = matrixseries[cellptr - 1];
                         let context = {
-                            selection: prevconfig.charts[0].chartselection[0],
+                            selection: prevconfig.charts[0].chartselection,
                             ChartObject: prevconfig.charts[0].ChartObject,
                         };
                         let childprops = {
                             nodeconfig: prevconfig,
                             userselections: userselections,
                             budgetdata: budgetdata,
-                            chartmatrixrow: chartmatrixrow,
+                            chartmatrixrow: matrixseries,
                             selectionrow: prevconfig.charts[0].chartselection[0].row,
-                            matrixcolumn: nodeconfig.matrixlocation.column,
+                            matrixcolumn: prevconfig.matrixlocation.column,
                             portalChartIndex: 0,
                             context: context,
                             chart: prevconfig.charts[0].chart,

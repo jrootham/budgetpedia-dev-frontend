@@ -86,77 +86,75 @@ let createChildNode = (props, callbacks) => {
         return;
     }
     workingStatus(true);
-    setTimeout(() => {
-        let newrange = Object.assign({}, nodeconfig.yearscope);
-        let charttype = userselections.charttype;
-        let chartCode = constants_1.ChartTypeCodes[charttype];
-        let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[facet];
-        let charts = [];
-        for (let type of portalcharts) {
-            if (type.Type == 'Components' && !newnode.Components) {
-                continue;
-            }
-            if (type.Type == 'Categories' && !newnode.Categories) {
-                continue;
-            }
-            let chartconfig = {
-                googlecharttype: charttype,
-                chartCode: chartCode,
-            };
-            chartconfig.nodedatapropertyname = type.Type;
-            charts.push(chartconfig);
+    let newrange = Object.assign({}, nodeconfig.yearscope);
+    let charttype = userselections.charttype;
+    let chartCode = constants_1.ChartTypeCodes[charttype];
+    let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[facet];
+    let charts = [];
+    for (let type of portalcharts) {
+        if (type.Type == 'Components' && !newnode.Components) {
+            continue;
         }
-        let newnodeconfig = {
-            viewpoint: viewpoint,
-            facet: facet,
-            datapath: childdatapath,
-            matrixlocation: {
-                column: matrixcolumn + 1
-            },
-            parentdata: parentdata,
-            yearscope: newrange,
-            charts: charts,
+        if (type.Type == 'Categories' && !newnode.Categories) {
+            continue;
+        }
+        let chartconfig = {
+            googlecharttype: charttype,
+            chartCode: chartCode,
         };
-        let newnodeindex = null;
-        let chartParmsObj = null;
-        let isError = false;
-        for (newnodeindex in newnodeconfig.charts) {
-            let props = {
-                nodeConfig: newnodeconfig,
-                chartIndex: newnodeindex,
-                userselections: userselections,
-                budgetdata: budgetdata,
-                chartmatrixrow: chartmatrixrow,
-            };
-            let callbacks = {
-                refreshPresentation: refreshPresentation,
-                onPortalCreation: onPortalCreation,
-                workingStatus: workingStatus,
-            };
-            chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
-            if (chartParmsObj.isError) {
-                isError = true;
-                break;
-            }
-            newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms;
-            newnodeconfig.charts[newnodeindex].chartCode =
-                constants_1.ChartTypeCodes[newnodeconfig.charts[newnodeindex].googlecharttype];
+        chartconfig.nodedatapropertyname = type.Type;
+        charts.push(chartconfig);
+    }
+    let newnodeconfig = {
+        viewpoint: viewpoint,
+        facet: facet,
+        datapath: childdatapath,
+        matrixlocation: {
+            column: matrixcolumn + 1
+        },
+        parentdata: parentdata,
+        yearscope: newrange,
+        charts: charts,
+    };
+    let newnodeindex = null;
+    let chartParmsObj = null;
+    let isError = false;
+    for (newnodeindex in newnodeconfig.charts) {
+        let props = {
+            nodeConfig: newnodeconfig,
+            chartIndex: newnodeindex,
+            userselections: userselections,
+            budgetdata: budgetdata,
+            chartmatrixrow: chartmatrixrow,
+        };
+        let callbacks = {
+            refreshPresentation: refreshPresentation,
+            onPortalCreation: onPortalCreation,
+            workingStatus: workingStatus,
+        };
+        chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
+        if (chartParmsObj.isError) {
+            isError = true;
+            break;
         }
-        if (isError) {
-            updatechartselections_1.updateChartSelections(chartmatrixrow);
-            workingStatus(false);
-            return;
-        }
-        newnodeconfig.datanode = chartParmsObj.datanode;
-        let newmatrixcolumn = matrixcolumn + 1;
-        chartmatrixrow[newmatrixcolumn] = newnodeconfig;
-        refreshPresentation(chartmatrixrow);
-        nodeconfig.charts[portalChartIndex].chartselection = context.selection;
-        nodeconfig.charts[portalChartIndex].chart = chart;
-        nodeconfig.charts[portalChartIndex].ChartObject = context.ChartObject;
+        newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms;
+        newnodeconfig.charts[newnodeindex].chartCode =
+            constants_1.ChartTypeCodes[newnodeconfig.charts[newnodeindex].googlecharttype];
+    }
+    if (isError) {
         updatechartselections_1.updateChartSelections(chartmatrixrow);
-        onPortalCreation();
         workingStatus(false);
-    });
+        return;
+    }
+    newnodeconfig.datanode = chartParmsObj.datanode;
+    let newmatrixcolumn = matrixcolumn + 1;
+    chartmatrixrow[newmatrixcolumn] = newnodeconfig;
+    refreshPresentation(chartmatrixrow);
+    nodeconfig.charts[portalChartIndex].chartselection = context.selection;
+    nodeconfig.charts[portalChartIndex].chart = chart;
+    nodeconfig.charts[portalChartIndex].ChartObject = context.ChartObject;
+    updatechartselections_1.updateChartSelections(chartmatrixrow);
+    onPortalCreation();
+    workingStatus(false);
 };
 exports.createChildNode = createChildNode;
