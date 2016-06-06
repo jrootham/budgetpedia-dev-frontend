@@ -127,22 +127,21 @@ class ExplorerBranch extends Component {
                 let scrollright = scrollleft + clientwidth;
                 let targetright = scrollwidth - 500;
                 let adjustment = scrollright - targetright;
-                if (adjustment < 0) {
-                    let frames = 60;
-                    let t = 1 / frames;
-                    let timeinterval = 1000 / frames;
-                    let counter = 0;
-                    let tick = () => {
-                        counter++;
-                        let factor = this.easeOutCubic(counter * t);
-                        let scrollinterval = adjustment * factor;
-                        element.scrollLeft = scrollleft - scrollinterval;
-                        if (counter < frames) {
-                            requestAnimationFrame(tick);
-                        }
-                    };
-                    requestAnimationFrame(tick);
-                }
+                if (adjustment > 0)
+                    adjustment = Math.min(adjustment, scrollleft);
+                let frames = 60;
+                let t = 1 / frames;
+                let counter = 0;
+                let tick = () => {
+                    counter++;
+                    let factor = this.easeOutCubic(counter * t);
+                    let scrollinterval = adjustment * factor;
+                    element.scrollLeft = scrollleft - scrollinterval;
+                    if (counter < frames) {
+                        requestAnimationFrame(tick);
+                    }
+                };
+                requestAnimationFrame(tick);
             });
         };
         this.easeOutCubic = t => {
@@ -404,7 +403,7 @@ class ExplorerBranch extends Component {
             borderRadius: "50%"
         }}, ">", React.createElement(FontIcon_1.default, {className: "material-icons"}, "people"))), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;
-        }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 3000, onRequestClose: this.handleSnackbarRequestClose}));
+        }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));
     }
 }
 exports.ExplorerBranch = ExplorerBranch;

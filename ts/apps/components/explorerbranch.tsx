@@ -204,13 +204,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // ---------------------[ *** BRANCH *** CONTROL RESPONSES ]------------------
 
     // onPortalCreation animates scroll-in of new portal
-    // TODO: isolate location from matrix location -- use branch column location instead
-    // TODO: use requestAnimationFrame 
-    //     https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
 
-    // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
+    // TODO: animate scroll-in from left (currently just from right)
     onPortalCreation = () => {
-        // let matrixrow = newMatrixLocation.row
         let element: Element = this.branchScrollBlock
         if (!element) {
             console.error('expected branch element not found in onPortalCreation')
@@ -224,10 +220,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             let scrollright = scrollleft + clientwidth
             let targetright = scrollwidth - 500
             let adjustment = scrollright - targetright
-            if (adjustment < 0) {
+            if (adjustment > 0)
+                adjustment = Math.min(adjustment,scrollleft)
+            // if (adjustment < 0) {
                 let frames = 60
                 let t = 1 / frames
-                let timeinterval = 1000 / frames
                 let counter = 0
                 let tick = () => {
                     counter++
@@ -239,9 +236,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     }
                 }
                 requestAnimationFrame(tick)
-            }
+            // }
         })
     }
+    // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
     easeOutCubic = t => {
         const t1 = t - 1;
         return t1 * t1 * t1 + 1;
@@ -617,7 +615,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     <Snackbar
         open={this.state.snackbar.open}
         message={this.state.snackbar.message}
-        autoHideDuration={3000}
+        autoHideDuration={4000}
         onRequestClose={this.handleSnackbarRequestClose}
         />
     </div >
