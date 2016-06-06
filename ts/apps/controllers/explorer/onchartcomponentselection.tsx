@@ -15,6 +15,8 @@ import {
     GetChartParmsCallbacks,
     OnChartComponentSelectionProps,
     OnChartComponentSelectionCallbacks,
+    CreateChildNodeProps,
+    CreateChildNodeCallbacks,
 } from './interfaces'
 
 import { updateChartSelections } from './updatechartselections'
@@ -88,22 +90,56 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
         updateChartSelections(chartmatrixrow)
         return
     }
-    createChildNode(nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow,
-        viewpoint, facet, matrixcolumn, workingStatus, refreshPresentation, onPortalCreation,
-        portalChartIndex, context, chart)
+    let childprops: CreateChildNodeProps = {
+        nodeconfig, 
+        userselections, 
+        budgetdata, 
+        chartmatrixrow, 
+        selectionrow,
+        matrixcolumn,
+        portalChartIndex, 
+        context, 
+        chart,
+    }
+    let childcallbacks: CreateChildNodeCallbacks = {
+        workingStatus, 
+        refreshPresentation, 
+        onPortalCreation,
+    }
+    createChildNode( childprops, childcallbacks )
 }
 
-let createChildNode = (nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow,
-    viewpoint, facet, matrixcolumn, workingStatus, refreshPresentation, onPortalCreation,
-    portalChartIndex, context, chart) => {
+let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCallbacks) => {
+
+    let {
+        nodeconfig,
+        userselections,
+        budgetdata,
+        chartmatrixrow,
+        selectionrow,
+        matrixcolumn,
+        portalChartIndex,
+        context,
+        chart,
+    } = props
+
+    let viewpoint = nodeconfig.viewpoint,
+        facet = nodeconfig.facet
+
+    let {
+        workingStatus,
+        refreshPresentation,
+        onPortalCreation,
+    } = callbacks
 
     // ----------------------------------------------------
     // ----------------[ create child ]--------------------
     // copy path
-    let childdataroot = nodeconfig.datapath.slice()
+    let childdatapath = nodeconfig.datapath.slice()
 
-    let node = getBudgetNode(
-        budgetdata.Viewpoints[userselections.viewpoint], childdataroot)
+    let node = nodeconfig.datanode
+     // getBudgetNode(
+     //    budgetdata.Viewpoints[userselections.viewpoint], childdatapath)
 
     if (!node.Components) {
         updateChartSelections(chartmatrixrow)
@@ -120,7 +156,7 @@ let createChildNode = (nodeconfig, userselections, budgetdata, chartmatrixrow, s
         code = parentdata.Code
     }
     if (code)
-        childdataroot.push(code)
+        childdatapath.push(code)
     else {
         updateChartSelections(chartmatrixrow)
         return
@@ -160,7 +196,7 @@ let createChildNode = (nodeconfig, userselections, budgetdata, chartmatrixrow, s
         let newnodeconfig: MatrixNodeConfig = {
             viewpoint,
             facet,
-            datapath: childdataroot,
+            datapath: childdatapath,
             matrixlocation: {
                 // row: matrixrow,
                 column: matrixcolumn + 1
@@ -217,4 +253,4 @@ let createChildNode = (nodeconfig, userselections, budgetdata, chartmatrixrow, s
     })
 }
 
-export { onChartComponentSelection }
+export { onChartComponentSelection, createChildNode }

@@ -147,6 +147,23 @@ interface ChartSelectionContext {
     err: any,
 }
 
+interface CreateChildNodeProps {
+    nodeconfig: MatrixNodeConfig,
+    userselections: any,
+    budgetdata: any,
+    chartmatrixrow: any,
+    selectionrow: any,
+    matrixcolumn: any,
+    portalChartIndex: number,
+    context: any,
+    chart: any
+}
+interface CreateChildNodeCallbacks {
+    workingStatus: Function,
+    refreshPresentation: Function,
+    onPortalCreation: Function,
+}
+
 // =====================================================
 // ---------------[ EXPORT ]--------------
 
@@ -166,4 +183,6 @@ export {
     GetChartParmsCallbacks,
     OnChartComponentSelectionProps,
     OnChartComponentSelectionCallbacks,
+    CreateChildNodeProps,
+    CreateChildNodeCallbacks,
 }

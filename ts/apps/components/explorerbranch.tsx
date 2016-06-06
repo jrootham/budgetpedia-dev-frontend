@@ -18,6 +18,8 @@ import {
     ChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
+    CreateChildNodeProps,
+    CreateChildNodeCallbacks,
 } from '../controllers/explorer/interfaces'
 
 import { ExplorerPortal } from './explorerportal'
@@ -34,6 +36,7 @@ import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 import { setViewpointData } from '../controllers/explorer/setviewpointdata'
 import { getChartParms } from '../controllers/explorer/getchartparms'
 import { updateChartSelections } from '../controllers/explorer/updatechartselections'
+import { createChildNode } from '../controllers/explorer/onchartcomponentselection'
 import * as Actions from '../../actions/actions'
 
 interface ExploreBranchProps {
@@ -277,9 +280,32 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     nodeconfig.charts = []
                     isError = true
                     //!Hack! remove selector from ancestor graph
-                    let prevconfig = matrixseries[cellptr - 1]
-                    delete prevconfig.charts[0].chartselection
-                    delete prevconfig.charts[0].chart
+                    let prevconfig: MatrixNodeConfig = matrixseries[cellptr - 1]
+                    // delete prevconfig.charts[0].chartselection
+                    // delete prevconfig.charts[0].chart
+
+                    let context = {
+                        selection:prevconfig.charts[0].chartselection[0],
+                        ChartObject: prevconfig.charts[0].ChartObject,
+                    }
+
+                    let childprops: CreateChildNodeProps = {
+                        nodeconfig:prevconfig,
+                        userselections,
+                        budgetdata,
+                        chartmatrixrow,
+                        selectionrow:prevconfig.charts[0].chartselection[0].row,
+                        matrixcolumn: nodeconfig.matrixlocation.column,
+                        portalChartIndex:0,
+                        context,
+                        chart:prevconfig.charts[0].chart,
+                    }
+                    let childcallbacks: CreateChildNodeCallbacks = {
+                        refreshPresentation: this.refreshPresentation,
+                        onPortalCreation: this.onPortalCreation,
+                        workingStatus: this.props.callbacks.workingStatus,
+                    }
+                    createChildNode(childprops, childcallbacks)
                 }
             } else {
                 console.error('no data node',nodeconfig)

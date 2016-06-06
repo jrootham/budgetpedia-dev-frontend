@@ -10,6 +10,7 @@ const constants_1 = require('../constants');
 const setviewpointdata_1 = require('../controllers/explorer/setviewpointdata');
 const getchartparms_1 = require('../controllers/explorer/getchartparms');
 const updatechartselections_1 = require('../controllers/explorer/updatechartselections');
+const onchartcomponentselection_1 = require('../controllers/explorer/onchartcomponentselection');
 class ExplorerBranch extends Component {
     constructor(props) {
         super(props);
@@ -176,8 +177,27 @@ class ExplorerBranch extends Component {
                         nodeconfig.charts = [];
                         isError = true;
                         let prevconfig = matrixseries[cellptr - 1];
-                        delete prevconfig.charts[0].chartselection;
-                        delete prevconfig.charts[0].chart;
+                        let context = {
+                            selection: prevconfig.charts[0].chartselection[0],
+                            ChartObject: prevconfig.charts[0].ChartObject,
+                        };
+                        let childprops = {
+                            nodeconfig: prevconfig,
+                            userselections: userselections,
+                            budgetdata: budgetdata,
+                            chartmatrixrow: chartmatrixrow,
+                            selectionrow: prevconfig.charts[0].chartselection[0].row,
+                            matrixcolumn: nodeconfig.matrixlocation.column,
+                            portalChartIndex: 0,
+                            context: context,
+                            chart: prevconfig.charts[0].chart,
+                        };
+                        let childcallbacks = {
+                            refreshPresentation: this.refreshPresentation,
+                            onPortalCreation: this.onPortalCreation,
+                            workingStatus: this.props.callbacks.workingStatus,
+                        };
+                        onchartcomponentselection_1.createChildNode(childprops, childcallbacks);
                     }
                 }
                 else {

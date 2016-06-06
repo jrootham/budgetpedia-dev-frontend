@@ -3,7 +3,6 @@ var format = require('format-number');
 const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
 const getchartparms_1 = require('./getchartparms');
-const getbudgetnode_1 = require('./getbudgetnode');
 let onChartComponentSelection = (props, callbacks) => {
     let context = props.context;
     let userselections = props.userselections;
@@ -38,12 +37,31 @@ let onChartComponentSelection = (props, callbacks) => {
         updatechartselections_1.updateChartSelections(chartmatrixrow);
         return;
     }
-    createChildNode(nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow, viewpoint, facet, matrixcolumn, workingStatus, refreshPresentation, onPortalCreation, portalChartIndex, context, chart);
+    let childprops = {
+        nodeconfig: nodeconfig,
+        userselections: userselections,
+        budgetdata: budgetdata,
+        chartmatrixrow: chartmatrixrow,
+        selectionrow: selectionrow,
+        matrixcolumn: matrixcolumn,
+        portalChartIndex: portalChartIndex,
+        context: context,
+        chart: chart,
+    };
+    let childcallbacks = {
+        workingStatus: workingStatus,
+        refreshPresentation: refreshPresentation,
+        onPortalCreation: onPortalCreation,
+    };
+    createChildNode(childprops, childcallbacks);
 };
 exports.onChartComponentSelection = onChartComponentSelection;
-let createChildNode = (nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow, viewpoint, facet, matrixcolumn, workingStatus, refreshPresentation, onPortalCreation, portalChartIndex, context, chart) => {
-    let childdataroot = nodeconfig.datapath.slice();
-    let node = getbudgetnode_1.getBudgetNode(budgetdata.Viewpoints[userselections.viewpoint], childdataroot);
+let createChildNode = (props, callbacks) => {
+    let { nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow, matrixcolumn, portalChartIndex, context, chart, } = props;
+    let viewpoint = nodeconfig.viewpoint, facet = nodeconfig.facet;
+    let { workingStatus, refreshPresentation, onPortalCreation, } = callbacks;
+    let childdatapath = nodeconfig.datapath.slice();
+    let node = nodeconfig.datanode;
     if (!node.Components) {
         updatechartselections_1.updateChartSelections(chartmatrixrow);
         return;
@@ -57,7 +75,7 @@ let createChildNode = (nodeconfig, userselections, budgetdata, chartmatrixrow, s
         code = parentdata.Code;
     }
     if (code)
-        childdataroot.push(code);
+        childdatapath.push(code);
     else {
         updatechartselections_1.updateChartSelections(chartmatrixrow);
         return;
@@ -91,7 +109,7 @@ let createChildNode = (nodeconfig, userselections, budgetdata, chartmatrixrow, s
         let newnodeconfig = {
             viewpoint: viewpoint,
             facet: facet,
-            datapath: childdataroot,
+            datapath: childdatapath,
             matrixlocation: {
                 column: matrixcolumn + 1
             },
@@ -141,3 +159,4 @@ let createChildNode = (nodeconfig, userselections, budgetdata, chartmatrixrow, s
         workingStatus(false);
     });
 };
+exports.createChildNode = createChildNode;
