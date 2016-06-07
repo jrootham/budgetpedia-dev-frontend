@@ -29,7 +29,7 @@ if (!auth.isAuthenticated) {
 }
 class Main extends Component {
     render() {
-        return (React.createElement(MuiThemeProvider_1.default, {muiTheme: getMuiTheme_1.default()}, React.createElement(react_redux_1.Provider, {store: store}, React.createElement("div", null, React.createElement(mainbar_1.MainBar, null), React.createElement("div", {style: { height: "64px" }}, " "), React.createElement("div", null, "THIS IS THE DEVELOPER'S VERSION OF THIS SITE (FOR PROTOTYPING)," + ' ' + "AND MAY CHANGE OR BREAK AT ANY TIME. ALSO, PLEASE NOTE THAT THE DATA" + ' ' + "HAS NOT BEEN VETTED."), routes_1.routes))));
+        return (React.createElement(MuiThemeProvider_1.default, {muiTheme: getMuiTheme_1.default()}, React.createElement(react_redux_1.Provider, {store: store}, React.createElement("div", null, React.createElement(mainbar_1.MainBar, null), React.createElement("div", {style: { height: "64px" }}, " "), React.createElement("div", null, "FOR TESTING, YOU'RE IN THE WRONG SPOT! GO TO ", React.createElement("a", {href: "http://staging.budgetpedia.ca"}, "staging.budgetpedia.ca"), " INSTEAD. THIS IS THE DEVELOPER'S VERSION OF THIS SITE (FOR PROTOTYPING)," + ' ' + "AND MAY CHANGE OR BREAK AT ANY TIME. ALSO, THE DATA MAY BE FAKE."), routes_1.routes))));
     }
 }
 exports.Main = Main;

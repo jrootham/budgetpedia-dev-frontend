@@ -38,13 +38,12 @@ class Chart extends React.Component {
     });
   }
   componentWillUnmount() {
-    try {
-      google.visualization.events.removeAllListeners(this.wrapper);
-    }
-    catch(err) {
-      console.error("Error removing events, error : ", err);
-    }
-
+      try {
+         google.visualization.events.removeAllListeners(this.wrapper);
+      }
+      catch(err) {
+        console.error("Error removing events, error : ", err);
+      }
   }
   componentDidUpdate(){
     // debug('componentDidUpdate');
@@ -125,6 +124,7 @@ class Chart extends React.Component {
         this.wrapper.setChartType(this.props.chartType)
         var self = this
         google.visualization.events.addOneTimeListener(this.wrapper, 'ready', function () {
+          // google.visualization.events.removeAllListeners(this.wrapper)
           self.chart = self.wrapper.getChart();
           self.listenToChartEvents.call(self);
         });
