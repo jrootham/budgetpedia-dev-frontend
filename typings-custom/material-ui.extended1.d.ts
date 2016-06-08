@@ -2161,7 +2161,7 @@ declare module 'material-ui/lib/slider' {
     export default Slider;
 }
 
-declare module 'material-ui/lib/svg-icon' {
+declare module 'material-ui/SvgIcon' {
     export import SvgIcon = __MaterialUI.SvgIcon;
     export default SvgIcon;
 }
