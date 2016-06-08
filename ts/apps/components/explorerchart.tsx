@@ -93,12 +93,12 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     disabled><FontIcon className="material-icons">info_outline</FontIcon></IconButton>
             </div>
             <div style={{ position: "absolute", top: 0, right: "36px", zIndex: 1000, padding: "3px" }}>
-                <IconButton tooltip="Share"
+                <IconButton tooltip="Shared stories"
                     tooltipPosition="top-center"
                     disabled><FontIcon className="material-icons">share</FontIcon></IconButton>
             </div>
             <div style={{ position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" }}>
-                <IconButton tooltip="Announcements"
+                <IconButton tooltip="Calls to action"
                     tooltipPosition="top-center"
                     disabled><FontIcon className="material-icons">announcement</FontIcon></IconButton>
             </div>
