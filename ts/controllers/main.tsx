@@ -12,26 +12,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 injectTapEventPlugin()
 
-// import * as ReactDom from 'react-dom'
 import { render } from 'react-dom'
-import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { browserHistory } from 'react-router'
-import { routerMiddleware } from 'react-router-redux'
-import  thunkMiddleware from 'redux-thunk'
-//====================================
-import { mainReducer } from "../reducers/reducers"
+// custom...
 import { MainBar } from './mainbar'
 import { MainToolbar } from './maintoolbar'
 import { routes } from '../apps/routes'
 import * as Actions from '../actions/actions'
+import configureStore from '../common/configurestore'
 
-const reduxRouterMiddleware = routerMiddleware( browserHistory )
-
-const store = createStore(
-    mainReducer,
-    applyMiddleware(reduxRouterMiddleware, thunkMiddleware)
-)
+const store = configureStore()
 
 let state = store.getState()
 let auth = state.auth

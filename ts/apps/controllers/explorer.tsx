@@ -334,17 +334,11 @@ class ExplorerClass extends Component< any, any > {
 // ====================================================================================
 // ------------------------------[ INJECT DATA STORE ]---------------------------------
 
-let mapStateToProps = (state) => {
+let mapStateToProps = state => ({
 
-    let { budgetdata } = state
+    budgetdata:state.budgetdata,
 
-    return {
-
-        budgetdata,
-
-    }
-
-}
+})
 
 let Explorer: typeof ExplorerClass = injectStore(mapStateToProps)(ExplorerClass)
 

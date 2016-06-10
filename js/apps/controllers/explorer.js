@@ -58,11 +58,8 @@ class ExplorerClass extends Component {
         return React.createElement("div", null, dialogbox, drilldownsegment);
     }
 }
-let mapStateToProps = (state) => {
-    let { budgetdata } = state;
-    return {
-        budgetdata: budgetdata,
-    };
-};
+let mapStateToProps = state => ({
+    budgetdata: state.budgetdata,
+});
 let Explorer = react_redux_1.connect(mapStateToProps)(ExplorerClass);
 exports.Explorer = Explorer;
