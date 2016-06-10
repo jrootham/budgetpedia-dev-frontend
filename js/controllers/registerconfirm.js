@@ -38,4 +38,5 @@ function mapStateToProps(state) {
     };
 }
 var RegisterConfirm = react_redux_1.connect(mapStateToProps)(RegisterConfirmClass);
-exports.RegisterConfirm = RegisterConfirm;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = RegisterConfirm;

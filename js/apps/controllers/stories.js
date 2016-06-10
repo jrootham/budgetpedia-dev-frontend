@@ -6,4 +6,5 @@ class Stories extends Component {
         return React.createElement("div", null, "Stories Page");
     }
 }
-exports.Stories = Stories;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Stories;

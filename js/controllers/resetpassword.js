@@ -6,4 +6,5 @@ class ResetPassword extends Component {
         return React.createElement("div", null, "Reset Password Page");
     }
 }
-exports.ResetPassword = ResetPassword;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = ResetPassword;

@@ -6,4 +6,5 @@ class Timeline extends Component {
         return React.createElement("div", null, "Timeline Page");
     }
 }
-exports.Timeline = Timeline;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Timeline;

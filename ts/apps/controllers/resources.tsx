@@ -9,4 +9,4 @@ class Resources extends Component<any, any> {
     }
 }
 
-export { Resources }
+export default Resources

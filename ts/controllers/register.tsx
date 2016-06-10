@@ -135,4 +135,4 @@ function mapStateToProps(state) {
 
 var Register: typeof RegisterClass = injectStore(mapStateToProps)(RegisterClass)
 
-export { Register }
+export default Register

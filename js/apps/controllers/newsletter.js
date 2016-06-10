@@ -6,4 +6,5 @@ class Newsletter extends Component {
         return React.createElement("div", null, "Newsletter Page");
     }
 }
-exports.Newsletter = Newsletter;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Newsletter;

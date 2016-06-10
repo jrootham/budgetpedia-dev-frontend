@@ -12,13 +12,13 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 injectTapEventPlugin()
 
-import { render } from 'react-dom'
+// import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 // custom...
 import { MainBar } from './mainbar'
-import { MainToolbar } from './maintoolbar'
-import { routes } from '../common/routes'
-import * as Actions from '../actions/actions'
+// import { MainToolbar } from './maintoolbar'
+import routes from '../common/routes'
+import { autoLoginUser } from '../actions/actions'
 import configureStore from '../common/configurestore'
 
 const store = configureStore()
@@ -32,7 +32,7 @@ if (!auth.isAuthenticated) {
         let callback = result => {
             // no action required
         }
-        store.dispatch(Actions.autoLoginUser(token,callback))
+        store.dispatch(autoLoginUser(token,callback))
     }
 }
 

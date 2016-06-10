@@ -86,4 +86,4 @@ function mapStateToProps(state) {
 
 var RegisterConfirm: typeof RegisterConfirmClass = injectStore(mapStateToProps)(RegisterConfirmClass)
 
-export { RegisterConfirm }
+export default RegisterConfirm

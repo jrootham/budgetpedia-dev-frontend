@@ -9,4 +9,4 @@ class UserProfile extends Component<any, any> {
     }
 }
 
-export { UserProfile }
+export default UserProfile

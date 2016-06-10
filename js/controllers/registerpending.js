@@ -28,4 +28,5 @@ function mapStateToProps(state) {
     };
 }
 var RegisterPending = react_redux_1.connect(mapStateToProps)(RegisterPendingClass);
-exports.RegisterPending = RegisterPending;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = RegisterPending;

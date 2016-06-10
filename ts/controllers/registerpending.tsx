@@ -68,4 +68,4 @@ function mapStateToProps(state) {
 
 var RegisterPending: typeof RegisterPendingClass = injectStore(mapStateToProps)(RegisterPendingClass)
 
-export { RegisterPending }
+export default RegisterPending

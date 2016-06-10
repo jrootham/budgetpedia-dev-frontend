@@ -41,4 +41,5 @@ class HomeTilesClass extends React.Component {
     }
 }
 var HomeTiles = react_redux_1.connect(mapStateToProps)(HomeTilesClass);
-exports.HomeTiles = HomeTiles;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = HomeTiles;

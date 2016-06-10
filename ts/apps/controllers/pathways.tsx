@@ -9,4 +9,4 @@ class Pathways extends Component<any, any> {
     }
 }
 
-export { Pathways }
+export default Pathways

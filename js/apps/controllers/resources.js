@@ -6,4 +6,5 @@ class Resources extends Component {
         return React.createElement("div", null, "Resources Page");
     }
 }
-exports.Resources = Resources;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Resources;

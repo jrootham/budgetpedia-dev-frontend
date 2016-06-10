@@ -6,4 +6,5 @@ class UserProfile extends Component {
         return React.createElement("div", null, "User Profile Page");
     }
 }
-exports.UserProfile = UserProfile;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = UserProfile;

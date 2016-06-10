@@ -9,4 +9,4 @@ class SocialMedia extends Component<any, any> {
     }
 }
 
-export { SocialMedia }
+export default SocialMedia

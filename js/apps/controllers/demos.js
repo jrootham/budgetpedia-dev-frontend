@@ -6,4 +6,5 @@ class Demos extends Component {
         return React.createElement("div", null, "Demos Page");
     }
 }
-exports.Demos = Demos;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Demos;

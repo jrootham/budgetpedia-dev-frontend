@@ -9,4 +9,4 @@ class About extends Component<any, any> {
     }
 }
 
-export { About }
+export default About

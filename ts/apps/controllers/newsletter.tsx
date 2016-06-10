@@ -9,4 +9,4 @@ class Newsletter extends Component<any, any> {
     }
 }
 
-export { Newsletter }
+export default Newsletter

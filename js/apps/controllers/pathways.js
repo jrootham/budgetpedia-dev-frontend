@@ -6,4 +6,5 @@ class Pathways extends Component {
         return React.createElement("div", null, "Activist Pathways");
     }
 }
-exports.Pathways = Pathways;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Pathways;

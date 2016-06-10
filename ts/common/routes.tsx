@@ -11,48 +11,58 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 
 import App from './app'
 
-import { HomeTiles } from '../controllers/hometiles'
-import { NoMatch } from '../controllers/nomatch'
-import { ResetPassword } from '../controllers/resetpassword'
-import { Register } from '../controllers/register'
-import { RegisterPending } from '../controllers/registerpending'
-import { RegisterConfirm } from '../controllers/registerconfirm'
-import { UserProfile } from '../controllers/userprofile'
+import HomeTiles from '../controllers/hometiles'
 
-import { About } from '../apps/controllers/about'
-import { Timeline } from '../apps/controllers/timeline'
-import { Deputations } from '../apps/controllers/deputations'
-import { Resources } from '../apps/controllers/resources'
-import { SocialMedia } from '../apps/controllers/socialmedia'
-import { Newsletter } from '../apps/controllers/newsletter'
-import { JoinUs } from '../apps/controllers/joinus'
-import { Stories } from '../apps/controllers/stories'
-import { Explorer } from '../apps/controllers/explorer'
-import { Demos } from '../apps/controllers/demos'
-import { Pathways } from '../apps/controllers/pathways'
-import { Communities } from '../apps/controllers/communities'
+import About from '../apps/controllers/about'
+import Timeline from '../apps/controllers/timeline'
+import Deputations from '../apps/controllers/deputations'
+import Explorer from '../apps/controllers/explorer'
+import Communities from '../apps/controllers/communities'
+import SocialMedia from '../apps/controllers/socialmedia'
+import Newsletter from '../apps/controllers/newsletter'
+import Resources from '../apps/controllers/resources'
+import JoinUs from '../apps/controllers/joinus'
+import Stories from '../apps/controllers/stories'
+import Demos from '../apps/controllers/demos'
+import Pathways from '../apps/controllers/pathways'
+import ResetPassword from '../controllers/resetpassword'
+import Register from '../controllers/register'
+import RegisterPending from '../controllers/registerpending'
+import RegisterConfirm from '../controllers/registerconfirm'
+import UserProfile from '../controllers/userprofile'
+import NoMatch  from '../controllers/nomatch'
 
-export var routes = 
+let routedata = [
+    { path: "about", component: About },
+    { path: "timeline", component: Timeline },
+    { path: "deputations", component: Deputations },
+    { path: "explorer", component: Explorer },
+    { path: "communities", component: Communities },
+    { path: "socialmedia", component: SocialMedia },
+    { path: "newsletter", component: Newsletter },
+    { path: "resources", component: Resources },
+    { path: "joinus", component: JoinUs },
+    { path: "stories", component: Stories },
+    { path: "demos", component: Demos },
+    { path: "pathways", component: Pathways },
+    { path: "resetpassword", component: ResetPassword },
+    { path: "register", component: Register },
+    { path: "register/pending", component: RegisterPending },
+    { path: "register/confirm", component: RegisterConfirm },
+    { path: "userprofile", component: UserProfile },
+    { path: "*", component: NoMatch },
+]
+
+const routelist = routedata.map((item, index) => {
+    return <Route key = {index} path={item.path} component= {item.component} />
+})
+
+var routes = 
     <Router history={ browserHistory }>
-        <Route path="/" component={ App }>
+        <Route path="/" component={ App } >
             <IndexRoute component={ HomeTiles } />
-            <Route path="about" component={ About } />
-            <Route path="timeline" component={ Timeline } />
-            <Route path="deputations" component={ Deputations } />
-            <Route path="explorer" component={ Explorer } />
-            <Route path="communities" component={ Communities } />
-            <Route path="socialmedia" component={ SocialMedia } />
-            <Route path="newsletter" component={ Newsletter } />
-            <Route path="resources" component={ Resources } />
-            <Route path="joinus" component={ JoinUs } />
-            <Route path="stories" component={ Stories } />
-            <Route path="demos" component={ Demos } />
-            <Route path="pathways" component={ Pathways } />
-            <Route path="resetpassword" component={ ResetPassword } />
-            <Route path="register" component={ Register } />
-            <Route path="register/pending" component={ RegisterPending } />
-            <Route path="register/confirm" component={ RegisterConfirm } />
-            <Route path="userprofile" component={ UserProfile } />
-            <Route path="*" component={ NoMatch } />
+            { routelist }
         </Route>
     </Router>
+
+export default routes

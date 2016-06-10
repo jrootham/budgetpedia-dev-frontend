@@ -84,4 +84,4 @@ class HomeTilesClass extends React.Component<any, any> {
 // dependency injection
 var HomeTiles = injectStore ( mapStateToProps ) ( HomeTilesClass )
 
-export { HomeTiles }
+export default HomeTiles

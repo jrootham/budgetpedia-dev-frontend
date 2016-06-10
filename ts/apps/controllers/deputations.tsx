@@ -9,4 +9,4 @@ class Deputations extends Component<any, any> {
     }
 }
 
-export { Deputations }
+export default Deputations

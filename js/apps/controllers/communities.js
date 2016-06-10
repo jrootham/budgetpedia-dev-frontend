@@ -6,4 +6,5 @@ class Communities extends Component {
         return React.createElement("div", null, "Communities Page");
     }
 }
-exports.Communities = Communities;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Communities;

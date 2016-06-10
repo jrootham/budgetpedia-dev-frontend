@@ -9,4 +9,4 @@ class Timeline extends Component<any, any> {
     }
 }
 
-export { Timeline }
+export default Timeline

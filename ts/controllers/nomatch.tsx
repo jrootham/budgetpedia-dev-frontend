@@ -9,4 +9,4 @@ class NoMatch extends Component<any, any> {
     }
 }
 
-export { NoMatch }
+export default NoMatch 

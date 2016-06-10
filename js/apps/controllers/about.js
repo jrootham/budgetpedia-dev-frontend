@@ -6,4 +6,5 @@ class About extends Component {
         return React.createElement("div", null, "About Page");
     }
 }
-exports.About = About;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = About;

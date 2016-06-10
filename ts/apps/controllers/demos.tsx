@@ -9,4 +9,4 @@ class Demos extends Component<any, any> {
     }
 }
 
-export { Demos }
+export default Demos

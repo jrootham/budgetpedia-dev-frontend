@@ -6,4 +6,5 @@ class NoMatch extends Component {
         return React.createElement("div", null, "NoMatch Page");
     }
 }
-exports.NoMatch = NoMatch;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = NoMatch;

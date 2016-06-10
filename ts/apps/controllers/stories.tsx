@@ -9,4 +9,4 @@ class Stories extends Component<any, any> {
     }
 }
 
-export { Stories }
+export default Stories

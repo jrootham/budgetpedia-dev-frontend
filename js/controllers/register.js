@@ -100,4 +100,5 @@ function mapStateToProps(state) {
     };
 }
 var Register = react_redux_1.connect(mapStateToProps)(RegisterClass);
-exports.Register = Register;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Register;

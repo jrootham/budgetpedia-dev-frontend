@@ -6,4 +6,5 @@ class SocialMedia extends Component {
         return React.createElement("div", null, "Social Media");
     }
 }
-exports.SocialMedia = SocialMedia;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = SocialMedia;

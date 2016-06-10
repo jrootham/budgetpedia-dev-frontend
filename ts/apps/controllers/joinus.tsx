@@ -9,4 +9,4 @@ class JoinUs extends Component<any, any> {
     }
 }
 
-export { JoinUs }
+export default JoinUs

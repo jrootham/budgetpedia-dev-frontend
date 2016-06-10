@@ -342,5 +342,5 @@ let mapStateToProps = state => ({
 
 let Explorer: typeof ExplorerClass = injectStore(mapStateToProps)(ExplorerClass)
 
-export { Explorer }
+export default Explorer
 

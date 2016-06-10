@@ -6,4 +6,5 @@ class Deputations extends Component {
         return React.createElement("div", null, "Deputations Page");
     }
 }
-exports.Deputations = Deputations;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Deputations;

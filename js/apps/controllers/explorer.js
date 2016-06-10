@@ -62,4 +62,5 @@ let mapStateToProps = state => ({
     budgetdata: state.budgetdata,
 });
 let Explorer = react_redux_1.connect(mapStateToProps)(ExplorerClass);
-exports.Explorer = Explorer;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Explorer;

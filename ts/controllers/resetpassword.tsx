@@ -9,4 +9,4 @@ class ResetPassword extends Component<any, any> {
     }
 }
 
-export { ResetPassword }
+export default ResetPassword

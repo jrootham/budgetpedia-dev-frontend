@@ -9,4 +9,4 @@ class Communities extends Component<any, any> {
     }
 }
 
-export { Communities }
+export default Communities
