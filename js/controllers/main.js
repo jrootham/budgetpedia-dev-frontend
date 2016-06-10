@@ -7,7 +7,7 @@ const getMuiTheme_1 = require('material-ui/styles/getMuiTheme');
 injectTapEventPlugin();
 const react_redux_1 = require('react-redux');
 const mainbar_1 = require('./mainbar');
-const routes_1 = require('../apps/routes');
+const routes_1 = require('../common/routes');
 const Actions = require('../actions/actions');
 const configurestore_1 = require('../common/configurestore');
 const store = configurestore_1.default();

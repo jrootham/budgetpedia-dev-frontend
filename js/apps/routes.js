@@ -10,18 +10,18 @@ const register_1 = require('../controllers/register');
 const registerpending_1 = require('../controllers/registerpending');
 const registerconfirm_1 = require('../controllers/registerconfirm');
 const userprofile_1 = require('../controllers/userprofile');
-const about_1 = require('./controllers/about');
-const timeline_1 = require('./controllers/timeline');
-const deputations_1 = require('./controllers/deputations');
-const resources_1 = require('./controllers/resources');
-const socialmedia_1 = require('./controllers/socialmedia');
-const newsletter_1 = require('./controllers/newsletter');
-const joinus_1 = require('./controllers/joinus');
-const stories_1 = require('./controllers/stories');
-const explorer_1 = require('./controllers/explorer');
-const demos_1 = require('./controllers/demos');
-const pathways_1 = require('./controllers/pathways');
-const communities_1 = require('./controllers/communities');
+const about_1 = require('../apps/controllers/about');
+const timeline_1 = require('../apps/controllers/timeline');
+const deputations_1 = require('../apps/controllers/deputations');
+const resources_1 = require('../apps/controllers/resources');
+const socialmedia_1 = require('../apps/controllers/socialmedia');
+const newsletter_1 = require('../apps/controllers/newsletter');
+const joinus_1 = require('../apps/controllers/joinus');
+const stories_1 = require('../apps/controllers/stories');
+const explorer_1 = require('../apps/controllers/explorer');
+const demos_1 = require('../apps/controllers/demos');
+const pathways_1 = require('../apps/controllers/pathways');
+const communities_1 = require('../apps/controllers/communities');
 class App extends Component {
     render() {
         return (React.createElement("div", null, React.createElement(ReactCSSTransitionGroup, {component: "div", transitionName: "mainpage", transitionEnterTimeout: 300, transitionLeave: false}, React.cloneElement(this.props.children, {

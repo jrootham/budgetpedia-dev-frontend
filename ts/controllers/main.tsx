@@ -17,7 +17,7 @@ import { Provider } from 'react-redux'
 // custom...
 import { MainBar } from './mainbar'
 import { MainToolbar } from './maintoolbar'
-import { routes } from '../apps/routes'
+import { routes } from '../common/routes'
 import * as Actions from '../actions/actions'
 import configureStore from '../common/configurestore'
 
