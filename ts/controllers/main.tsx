@@ -8,22 +8,20 @@ import * as React from 'react'
 import injectTapEventPlugin = require( 'react-tap-event-plugin' )
 injectTapEventPlugin()
 require('isomorphic-fetch')
-import { autoLoginUser } from '../actions/actions'
+
 import configureStore from '../common/configurestore'
 import Root from '../common/root'
 
+import { autoLoginUser } from '../actions/actions'
+
 const store = configureStore()
 
-let state = store.getState()
-let auth = state.auth
-var token
+let { auth } = store.getState()
+
 if (!auth.isAuthenticated) {
-    token = localStorage.getItem('jsonwebtoken')
+    let token = localStorage.getItem('jsonwebtoken')
     if (token) {
-        let callback = result => {
-            // no action required
-        }
-        store.dispatch(autoLoginUser(token,callback))
+        store.dispatch(autoLoginUser(token))
     }
 }
 

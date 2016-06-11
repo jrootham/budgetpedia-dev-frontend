@@ -3,19 +3,15 @@ const React = require('react');
 const injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin();
 require('isomorphic-fetch');
-const actions_1 = require('../actions/actions');
 const configurestore_1 = require('../common/configurestore');
 const root_1 = require('../common/root');
+const actions_1 = require('../actions/actions');
 const store = configurestore_1.default();
-let state = store.getState();
-let auth = state.auth;
-var token;
+let { auth } = store.getState();
 if (!auth.isAuthenticated) {
-    token = localStorage.getItem('jsonwebtoken');
+    let token = localStorage.getItem('jsonwebtoken');
     if (token) {
-        let callback = result => {
-        };
-        store.dispatch(actions_1.autoLoginUser(token, callback));
+        store.dispatch(actions_1.autoLoginUser(token));
     }
 }
 const Main = ({ globalmessage, version }) => (React.createElement(root_1.default, {store: store, globalmessage: globalmessage}));

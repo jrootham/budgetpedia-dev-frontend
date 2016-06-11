@@ -168,8 +168,9 @@ let autoLoginError = createAction(
 )
 
 // call the api
-export const autoLoginUser = (token, callback) => {
-
+export const autoLoginUser = (token, callback?) => {
+    let fallback = () => {}
+    callback = callback || fallback
     let config: RequestInit = {
         method: 'POST',
         headers: { "Content-Type": "application/x-www-form-urlencoded", },

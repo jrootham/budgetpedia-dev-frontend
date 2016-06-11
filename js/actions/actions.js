@@ -106,6 +106,8 @@ let autoLoginError = redux_actions_1.createAction(exports.AUTO_LOGIN_FAILURE, (m
     };
 });
 exports.autoLoginUser = (token, callback) => {
+    let fallback = () => { };
+    callback = callback || fallback;
     let config = {
         method: 'POST',
         headers: { "Content-Type": "application/x-www-form-urlencoded", },
