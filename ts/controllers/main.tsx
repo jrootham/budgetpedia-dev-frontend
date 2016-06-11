@@ -7,6 +7,7 @@ import * as React from 'react'
 // required by material-ui
 import injectTapEventPlugin = require( 'react-tap-event-plugin' )
 injectTapEventPlugin()
+require('isomorphic-fetch')
 import { autoLoginUser } from '../actions/actions'
 import configureStore from '../common/configurestore'
 import Root from '../common/root'

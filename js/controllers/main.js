@@ -2,6 +2,7 @@
 const React = require('react');
 const injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin();
+require('isomorphic-fetch');
 const actions_1 = require('../actions/actions');
 const configurestore_1 = require('../common/configurestore');
 const root_1 = require('../common/root');

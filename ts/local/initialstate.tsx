@@ -204,7 +204,7 @@ let hometiles: [Object] = [
             subtitle: `History and people`,
             image: '../../public/icons/ic_info_48px.svg',
             category: 'information',
-            disabled: true,
+            disabled: false,
         },
         index: 0,
         route: 'about',

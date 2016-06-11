@@ -12,7 +12,6 @@ import { MainBar } from '../controllers/mainbar'
 import routes from '../common/routes'
 
 const Root = ({store, globalmessage}) => (
-
     <MuiThemeProvider muiTheme = {getMuiTheme()}>
         <Provider store={ store }>
             <div >
