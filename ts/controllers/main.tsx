@@ -39,6 +39,7 @@ if (!auth.isAuthenticated) {
 export class Main extends Component<any, any> {
 
     render() {
+        let globalmessage = this.props.globalmessage
         // store made available to children through connect = injectStore
         return (
             <MuiThemeProvider muiTheme = {getMuiTheme()}>
@@ -47,9 +48,8 @@ export class Main extends Component<any, any> {
                     <MainBar />
                     <div style={{ height: "64px" }} > {/* space for top fixed appbar */}
                     </div>
-                    <div>FOR TESTING, YOU'RE IN THE WRONG SPOT! GO TO <a href="http://staging.budgetpedia.ca">staging.budgetpedia.ca</a> INSTEAD. THIS IS THE DEVELOPER'S VERSION OF THIS SITE (FOR PROTOTYPING), 
-                        AND MAY CHANGE OR BREAK AT ANY TIME. ALSO, THE DATA MAY BE FAKE.
-                    </div>
+
+                    {globalmessage}
 
                     { routes }
                     

@@ -14,7 +14,13 @@ import { Main } from './controllers/main'
 // install fetch as global function for browsers (eg Safari) that don't have it
 require('isomorphic-fetch')
 
+let globalmessage =  (
+    <div>FOR TESTING, YOU'RE IN THE WRONG SPOT! GO TO <a href="http://staging.budgetpedia.ca">staging.budgetpedia.ca</a> INSTEAD. THIS IS THE DEVELOPER'S VERSION OF THIS SITE (FOR PROTOTYPING), 
+        AND MAY CHANGE OR BREAK AT ANY TIME. ALSO, THE DATA MAY BE FAKE.
+    </div>
+)
+
 render(
-	<Main />,
+	<Main globalmessage = {globalmessage} version="DEVELOPMENT"/>,
 	document.getElementById('main')
 )
