@@ -2,24 +2,14 @@
 
 'use strict'
 
-// required by bundler
 import * as React from 'react'
-var { Component } = React
 
 // required by material-ui
 import injectTapEventPlugin = require( 'react-tap-event-plugin' )
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
 injectTapEventPlugin()
-
-// import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-// custom...
-import { MainBar } from './mainbar'
-// import { MainToolbar } from './maintoolbar'
-import routes from '../common/routes'
 import { autoLoginUser } from '../actions/actions'
 import configureStore from '../common/configurestore'
+import Root from '../common/root'
 
 const store = configureStore()
 
@@ -36,31 +26,10 @@ if (!auth.isAuthenticated) {
     }
 }
 
-export class Main extends Component<any, any> {
+//TODO: assign version to state (DEVELOPMENT|STAGING|PRODUCTION)
+const Main = ({globalmessage, version}) => (
+    <Root store={store} globalmessage={globalmessage} />
+)
 
-    render() {
-        let globalmessage = this.props.globalmessage
-        // store made available to children through connect = injectStore
-        return (
-            <MuiThemeProvider muiTheme = {getMuiTheme()}>
-            <Provider store={ store }>
-                <div >
-                    <MainBar />
-                    <div style={{ height: "64px" }} > {/* space for top fixed appbar */}
-                    </div>
+export default Main
 
-                    {globalmessage}
-
-                    { routes }
-                    
-                </div>
-            </Provider>
-            </MuiThemeProvider>
-        )
-    }
-    
-}
-
-// <div style={{ height: "64px" }} > {/* space for bottom fixed toolbar */}
-// </div>
-// <MainToolbar />
