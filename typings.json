@@ -12,10 +12,12 @@
   "globalDependencies": {
     "isomorphic-fetch": "registry:dt/isomorphic-fetch#0.0.0+20160524142046",
     "material-ui": "registry:dt/material-ui#0.14.4+20160514161815",
+    "react": "registry:dt/react#0.14.0+20160602151522",
     "react-addons-css-transition-group": "registry:dt/react-addons-css-transition-group#0.14.0+20160316155526",
     "react-addons-transition-group": "registry:dt/react-addons-transition-group#0.14.0+20160417134118",
     "react-dnd": "registry:dt/react-dnd#1.1.4+20160316155526",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
+    "react-router": "registry:dt/react-router#2.0.0+20160608101747",
     "react-tap-event-plugin": "registry:dt/react-tap-event-plugin#0.0.0+20160226083632",
     "redux-actions": "registry:dt/redux-actions#0.8.0+20160521154116",
     "redux-devtools": "registry:dt/redux-devtools#3.0.0+20151215130854"

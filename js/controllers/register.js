@@ -5,7 +5,7 @@ const react_redux_1 = require('react-redux');
 const Actions = require('../actions/actions');
 const basicform_1 = require('../components/basicform');
 const Card_1 = require('material-ui/Card');
-const constants_1 = require('../common/constants');
+const constants_1 = require('../local/constants');
 class RegisterClass extends Component {
     constructor(...args) {
         super(...args);

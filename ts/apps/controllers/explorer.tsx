@@ -26,12 +26,16 @@
 
 /// <reference path="../../../typings-custom/react-google-charts.d.ts" />
 /// <reference path="../../../typings-custom/react-slider.d.ts" />
+// <reference path="../../../typings-custom/general.d.ts" />
+// <reference path="../../../typings/globals/react-router/index.d.ts" />
 
 'use strict'
 import * as React from 'react'
 var { Component } = React
 // doesn't require .d.ts...! (reference available in index.tsx)
 import { connect as injectStore} from 'react-redux'
+import { withRouter } from 'react-router' // not ready yet!!
+// console.log('withrouter',withRouter)
 import {Card, CardTitle, CardText} from 'material-ui/Card'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
@@ -339,6 +343,8 @@ let mapStateToProps = state => ({
     budgetdata:state.budgetdata,
 
 })
+
+// TODO: mapdispatch to props
 
 let Explorer: typeof ExplorerClass = injectStore(mapStateToProps)(ExplorerClass)
 
