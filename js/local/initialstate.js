@@ -65,6 +65,17 @@ let hometiles = [
         route: 'pathways',
     },
     {
+        id: 8,
+        content: {
+            title: `Social Media`,
+            subtitle: `Public forums`,
+            image: '../../public/icons/ic_thumb_up_48px.svg',
+            category: 'support',
+        },
+        index: 6,
+        route: 'socialmedia',
+    },
+    {
         id: 10,
         content: {
             title: `Join Us!`,

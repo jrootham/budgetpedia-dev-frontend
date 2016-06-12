@@ -265,7 +265,7 @@ let hometiles: [Object] = [
         },
         index: 5,
         route: 'communities',
-    },
+    }, */
     {
         id: 8,
         content: {
@@ -277,7 +277,7 @@ let hometiles: [Object] = [
         index: 6,
         route: 'socialmedia',
     },
-    {
+/*    {
         id: 11,
         content: {
             title: `Newsletter`,
