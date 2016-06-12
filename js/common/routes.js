@@ -18,7 +18,7 @@ let routedata = [
     { path: "userprofile", component: userprofile_1.default },
     { path: "*", component: nomatch_1.default },
 ];
-let routelist = routedata.map((item, index) => (React.createElement(react_router_1.Route, {key: 'route' + index, path: item.path, component: item.component})));
-let routes = (React.createElement(react_router_1.Router, {history: react_router_1.browserHistory}, React.createElement(react_router_1.Route, {path: "/", component: app_1.default}, React.createElement(react_router_1.IndexRoute, {component: hometiles_1.default}), approutes_1.default, routelist)));
+let coreroutes = routedata.map((item, index) => (React.createElement(react_router_1.Route, {key: 'coreroute' + index, path: item.path, component: item.component})));
+let routes = (React.createElement(react_router_1.Router, {history: react_router_1.browserHistory}, React.createElement(react_router_1.Route, {path: "/", component: app_1.default}, React.createElement(react_router_1.IndexRoute, {component: hometiles_1.default}), approutes_1.default, coreroutes)));
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = routes;

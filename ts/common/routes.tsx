@@ -31,8 +31,8 @@ let routedata = [
     { path: "*", component: NoMatch }, // must be LAST, or else will pre-empt other paths
 ]
 
-let routelist = routedata.map((item, index) => (
-   <Route key = {'route'+index} path={item.path} component = {item.component} />
+let coreroutes = routedata.map((item, index) => (
+   <Route key = {'coreroute'+index} path={item.path} component = {item.component} />
 ))
 
 let routes = (
@@ -40,7 +40,7 @@ let routes = (
         <Route path="/" component={ App } >
             <IndexRoute component={ HomeTiles } />
             {approutes}
-            {routelist}
+            {coreroutes}
         </Route>
     </Router>)
 
