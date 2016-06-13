@@ -26,7 +26,7 @@
 
 /// <reference path="../../../typings-custom/react-google-charts.d.ts" />
 /// <reference path="../../../typings-custom/react-slider.d.ts" />
-// <reference path="../../../typings-custom/general.d.ts" />
+/// <reference path="../../../typings-custom/general.d.ts" />
 // <reference path="../../../typings/globals/react-router/index.d.ts" />
 
 'use strict'
@@ -346,6 +346,7 @@ let mapStateToProps = state => ({
 
 // TODO: mapdispatch to props
 
+// let Explorer: typeof ExplorerClass = withRouter(injectStore(mapStateToProps)(ExplorerClass))
 let Explorer: typeof ExplorerClass = injectStore(mapStateToProps)(ExplorerClass)
 
 export default Explorer
