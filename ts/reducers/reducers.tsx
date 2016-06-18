@@ -1,6 +1,8 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // reducers.tsx
 
+// TODO: co-locate selectors here: get...(...)
+
 'use strict'
 
 import { combineReducers } from 'redux'

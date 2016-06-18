@@ -4,7 +4,7 @@
 'use strict'
 
 import * as React from 'react';
-import { connect as injectStore} from 'react-redux'
+import { connect } from 'react-redux'
 import { compose } from 'redux'
 import * as Actions from '../actions/actions'
 
@@ -75,6 +75,6 @@ class HomeTilesClass extends React.Component<any, any> {
 }
 
 // dependency injection
-var HomeTiles = injectStore ( mapStateToProps ) ( HomeTilesClass )
+var HomeTiles = connect ( mapStateToProps ) ( HomeTilesClass )
 
 export default HomeTiles

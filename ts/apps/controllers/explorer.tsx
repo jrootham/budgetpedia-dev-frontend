@@ -33,8 +33,8 @@
 import * as React from 'react'
 var { Component } = React
 // doesn't require .d.ts...! (reference available in index.tsx)
-import { connect as injectStore} from 'react-redux'
-import { withRouter } from 'react-router' // not ready yet!!
+import { connect } from 'react-redux'
+// import { withRouter } from 'react-router' // not ready yet!!
 // console.log('withrouter',withRouter)
 import {Card, CardTitle, CardText} from 'material-ui/Card'
 import FontIcon from 'material-ui/FontIcon'
@@ -347,7 +347,7 @@ let mapStateToProps = state => ({
 // TODO: mapdispatch to props
 
 // let Explorer: typeof ExplorerClass = withRouter(injectStore(mapStateToProps)(ExplorerClass))
-let Explorer: typeof ExplorerClass = injectStore(mapStateToProps)(ExplorerClass)
+let Explorer: typeof ExplorerClass = connect(mapStateToProps)(ExplorerClass)
 
 export default Explorer
 

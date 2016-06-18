@@ -3,7 +3,7 @@
 
 import * as React from 'react' // required by bundler
 var { Component } = React
-import { connect as injectStore} from 'react-redux'
+import { connect } from 'react-redux'
 import * as Actions from '../actions/actions'
 
 import {Card, CardText, CardTitle} from 'material-ui/Card'
@@ -66,6 +66,6 @@ function mapStateToProps(state) {
 
 }
 
-var RegisterPending: typeof RegisterPendingClass = injectStore(mapStateToProps)(RegisterPendingClass)
+var RegisterPending: typeof RegisterPendingClass = connect(mapStateToProps)(RegisterPendingClass)
 
 export default RegisterPending

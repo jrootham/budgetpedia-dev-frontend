@@ -23,7 +23,7 @@
 
 import * as React from 'react' // required by bundler
 var { Component, PropTypes } = React
-import { connect as injectStore} from 'react-redux'
+import { connect } from 'react-redux'
 import * as Actions from '../actions/actions'
 import { compose } from 'redux'
 
@@ -418,6 +418,6 @@ function mapStateToProps(state) {
 
 }
 
-var MainBar:typeof MainBarClass = injectStore(mapStateToProps)(MainBarClass)
+var MainBar:typeof MainBarClass = connect(mapStateToProps)(MainBarClass)
 
 export { MainBar }

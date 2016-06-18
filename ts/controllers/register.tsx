@@ -8,7 +8,7 @@
 
 import * as React from 'react' // required by bundler
 var { Component, PropTypes } = React
-import { connect as injectStore} from 'react-redux'
+import { connect } from 'react-redux'
 import * as Actions from '../actions/actions'
 
 import { BasicForm, elementProps } from '../components/basicform'
@@ -133,6 +133,6 @@ function mapStateToProps(state) {
 
 }
 
-var Register: typeof RegisterClass = injectStore(mapStateToProps)(RegisterClass)
+var Register: typeof RegisterClass = connect(mapStateToProps)(RegisterClass)
 
 export default Register

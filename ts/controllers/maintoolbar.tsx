@@ -5,7 +5,7 @@
 // http://stackoverflow.com/questions/19466750/scrolling-element-without-scrollbar-with-css
 
 import * as React from 'react';
-import { connect as injectStore} from 'react-redux'
+import { connect } from 'react-redux'
 import * as Actions from '../actions/actions'
 
 import IconButton from 'material-ui/IconButton'
@@ -60,6 +60,6 @@ class MainToolbarClass extends React.Component<any, any> {
     } // render
 }
 
-var MainToolbar = injectStore(mapStateToProps)(MainToolbarClass)
+var MainToolbar = connect(mapStateToProps)(MainToolbarClass)
 
 export { MainToolbar }

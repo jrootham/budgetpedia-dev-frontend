@@ -4,7 +4,7 @@
 'use strict'
 
 import * as React from 'react';
-import { connect as injectStore} from 'react-redux'
+import { connect } from 'react-redux'
 import { compose } from 'redux'
 import * as Actions from '../actions/actions'
 
@@ -83,6 +83,6 @@ class MainTilesClass extends React.Component<any, any> {
 }
 
 // dependency injection
-var MainTiles = injectStore ( mapStateToProps ) ( MainTilesClass )
+var MainTiles = connect ( mapStateToProps ) ( MainTilesClass )
 
 export { MainTiles }
