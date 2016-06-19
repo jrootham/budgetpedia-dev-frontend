@@ -1,6 +1,9 @@
 // databaseapi.tsx
 // TEMPORARY DATA SOURCES
 // data sources
+
+import setViewpointData from './databaseapi/setviewpointdata'
+
 let db_dataseries = require('../../data/dataseries.json')
 // common lookups
 let db_lookups = require('../../data/lookups.json')
@@ -108,12 +111,14 @@ class Database {
 
     }
 
+    setViewpointData = setViewpointData
+
     private getViewpoint = (viewpoint:string):Viewpoint => {
         let vpt:Viewpoint
         return vpt
     }
 
-    getDataset = (dataset:string) => 
+    private getDataset = (dataset:string) => 
         delay(500).then(() => {
             let dst: CurrencyDataset | ItemDataset
             dst = db_dataseries[dataset]

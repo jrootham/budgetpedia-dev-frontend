@@ -15,11 +15,6 @@ import theme from 'material-ui/styles/baseThemes/lightBaseTheme'
 
 import database, {CurrencyDataset,ItemDataset} from './databaseapi'
 
-let a = database.getDataset('BudgetExpenses')
-a.then((dataset:CurrencyDataset|ItemDataset)=>{
-    console.log(dataset)
-})
-
 // fontFamily: "Roboto, sans-serif"
 // palette: Object
 // 	accent1Color: "#ff4081"

@@ -34,7 +34,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
-import { setViewpointData } from '../controllers/explorer/setviewpointdata'
+import databaseapi from '../../local/databaseapi'
 import { getChartParms } from '../controllers/explorer/getchartparms'
 import { updateChartSelections } from '../controllers/explorer/updatechartselections'
 import { createChildNode } from '../controllers/explorer/onchartcomponentselection'
@@ -103,8 +103,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let viewpointname = userselections.viewpoint
         let facet = userselections.facet
-        setViewpointData(viewpointname, facet, budgetdata,
-            userselections.inflationadjusted)
+        databaseapi.setViewpointData({
+            viewpointname, 
+            dataseriesname: facet, 
+            budgetdata,
+            wantsInflationAdjusted: userselections.inflationadjusted,
+        })
 
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
@@ -275,8 +279,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let viewpointname = this.state.userselections.viewpoint
         let facetname = this.state.userselections.facet
         let budgetdata = this.props.budgetdata
-        setViewpointData(viewpointname, facetname, budgetdata,
-            this.state.userselections.inflationadjusted)
+        databaseapi.setViewpointData({
+            viewpointname,
+            dataseriesname:facetname,
+            budgetdata,
+            wantsInflationAdjusted:this.state.userselections.inflationadjusted
+        })
         let matrixseries = chartmatrixrow
         let nodeconfig: MatrixNodeConfig
         let cellptr: any

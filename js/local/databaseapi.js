@@ -1,4 +1,5 @@
 "use strict";
+const setviewpointdata_1 = require('./databaseapi/setviewpointdata');
 let db_dataseries = require('../../data/dataseries.json');
 let db_lookups = require('../../data/lookups.json');
 let db_viewpoints = require('../../data/viewpoints.json');
@@ -7,6 +8,7 @@ class Database {
     constructor() {
         this.getBranch = (viewpoint, path = []) => {
         };
+        this.setViewpointData = setviewpointdata_1.default;
         this.getViewpoint = (viewpoint) => {
             let vpt;
             return vpt;

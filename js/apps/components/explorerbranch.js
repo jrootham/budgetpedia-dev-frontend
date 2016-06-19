@@ -8,7 +8,7 @@ const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
 const constants_1 = require('../constants');
-const setviewpointdata_1 = require('../controllers/explorer/setviewpointdata');
+const databaseapi_1 = require('../../local/databaseapi');
 const getchartparms_1 = require('../controllers/explorer/getchartparms');
 const updatechartselections_1 = require('../controllers/explorer/updatechartselections');
 const onchartcomponentselection_1 = require('../controllers/explorer/onchartcomponentselection');
@@ -43,7 +43,12 @@ class ExplorerBranch extends Component {
             var matrixlocation, chartParmsObj;
             let viewpointname = userselections.viewpoint;
             let facet = userselections.facet;
-            setviewpointdata_1.setViewpointData(viewpointname, facet, budgetdata, userselections.inflationadjusted);
+            databaseapi_1.default.setViewpointData({
+                viewpointname: viewpointname,
+                dataseriesname: facet,
+                budgetdata: budgetdata,
+                wantsInflationAdjusted: userselections.inflationadjusted,
+            });
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
             for (drilldownindex in drilldownnodeconfig.charts) {
@@ -173,7 +178,12 @@ class ExplorerBranch extends Component {
             let viewpointname = this.state.userselections.viewpoint;
             let facetname = this.state.userselections.facet;
             let budgetdata = this.props.budgetdata;
-            setviewpointdata_1.setViewpointData(viewpointname, facetname, budgetdata, this.state.userselections.inflationadjusted);
+            databaseapi_1.default.setViewpointData({
+                viewpointname: viewpointname,
+                dataseriesname: facetname,
+                budgetdata: budgetdata,
+                wantsInflationAdjusted: this.state.userselections.inflationadjusted
+            });
             let matrixseries = chartmatrixrow;
             let nodeconfig;
             let cellptr;

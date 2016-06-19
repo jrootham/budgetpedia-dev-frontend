@@ -20,7 +20,6 @@ let setViewpointData = (viewpointname, dataseriesname, budgetdata, wantsInflatio
     setComponentAggregates(rootcomponent, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
     viewpoint.currentdataseries = dataseriesname;
 };
-exports.setViewpointData = setViewpointData;
 let setComponentAggregates = (components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) => {
     let cumulatingSummaries = {
         years: {},
@@ -209,3 +208,5 @@ let aggregateComponentAggregates = (cumulatingSummaries, componentAggregates) =>
         }
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = setViewpointData;
