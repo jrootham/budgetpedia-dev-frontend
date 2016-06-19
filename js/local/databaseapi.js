@@ -1,5 +1,7 @@
 "use strict";
-let budgetdata = require('../../explorerprototypedata/2015budgetA.json');
+let db_dataseries = require('../../data/dataseries.json');
+let db_lookups = require('../../data/lookups.json');
+let db_viewpoints = require('../../data/viewpoints.json');
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 class Database {
     constructor() {
@@ -9,14 +11,13 @@ class Database {
             let vpt;
             return vpt;
         };
-        this.getCurrencyDataset = (dataset) => {
+        this.getDataset = (dataset) => delay(500).then(() => {
             let dst;
+            dst = db_dataseries[dataset];
+            if (!dst)
+                throw new Error(`dataset "${dataset}" not found`);
             return dst;
-        };
-        this.getItemDataset = (dataset) => {
-            let dst;
-            return dst;
-        };
+        });
         this.getLookup = (lookup) => {
             let lkp;
             return lkp;

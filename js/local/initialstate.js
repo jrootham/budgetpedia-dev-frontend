@@ -1,6 +1,11 @@
 'use strict';
 let budgetdata = require('../../explorerprototypedata/2015budgetA.json');
 const lightBaseTheme_1 = require('material-ui/styles/baseThemes/lightBaseTheme');
+const databaseapi_1 = require('./databaseapi');
+let a = databaseapi_1.default.getDataset('BudgetExpenses');
+a.then((dataset) => {
+    console.log(dataset);
+});
 const colors = require('material-ui/styles/colors');
 let appnavbar = {
     title: 'Toronto Budgetpedia',

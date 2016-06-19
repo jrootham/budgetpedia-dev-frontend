@@ -13,7 +13,12 @@ let budgetdata = require('../../explorerprototypedata/2015budgetA.json')
 
 import theme from 'material-ui/styles/baseThemes/lightBaseTheme'
 
-import database from './databaseapi'
+import database, {CurrencyDataset,ItemDataset} from './databaseapi'
+
+let a = database.getDataset('BudgetExpenses')
+a.then((dataset:CurrencyDataset|ItemDataset)=>{
+    console.log(dataset)
+})
 
 // fontFamily: "Roboto, sans-serif"
 // palette: Object

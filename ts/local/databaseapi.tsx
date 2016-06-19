@@ -1,5 +1,11 @@
 // databaseapi.tsx
-let budgetdata = require('../../explorerprototypedata/2015budgetA.json')
+// TEMPORARY DATA SOURCES
+// data sources
+let db_dataseries = require('../../data/dataseries.json')
+// common lookups
+let db_lookups = require('../../data/lookups.json')
+// top level taxonomies
+let db_viewpoints = require('../../data/viewpoints.json')
 
 const delay = ms => 
     new Promise(resolve => setTimeout(resolve,ms))
@@ -79,6 +85,10 @@ interface Datasets {
     [index: string]: Dataset<CurrencyItemType> | Dataset<ItemType>
 }
 
+export interface CurrencyDataset extends Dataset<CurrencyItemType> {}
+
+export interface ItemDataset extends Dataset<ItemType> {}
+
 interface Lookup {
     [index:string]: {
         [index:string]:string,
@@ -103,15 +113,13 @@ class Database {
         return vpt
     }
 
-    private getCurrencyDataset = (dataset:string):Dataset<CurrencyItemType> => {
-        let dst:Dataset<CurrencyItemType>
-        return dst
-    }
-
-    private getItemDataset = (dataset: string):Dataset<ItemType> => {
-        let dst: Dataset<ItemType>
-        return dst
-    }
+    getDataset = (dataset:string) => 
+        delay(500).then(() => {
+            let dst: CurrencyDataset | ItemDataset
+            dst = db_dataseries[dataset]
+            if (!dst) throw new Error(`dataset "${dataset}" not found`)
+            return dst
+        })
 
     private getLookup = (lookup:string):Lookup => {
         let lkp: Lookup
