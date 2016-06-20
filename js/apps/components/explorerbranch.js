@@ -48,6 +48,11 @@ class ExplorerBranch extends Component {
                 dataseriesname: facet,
                 budgetdata: budgetdata,
                 wantsInflationAdjusted: userselections.inflationadjusted,
+                timeSpecs: {
+                    leftyear: null,
+                    rightyear: null,
+                    spanyears: false,
+                }
             });
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
@@ -182,7 +187,12 @@ class ExplorerBranch extends Component {
                 viewpointname: viewpointname,
                 dataseriesname: facetname,
                 budgetdata: budgetdata,
-                wantsInflationAdjusted: this.state.userselections.inflationadjusted
+                wantsInflationAdjusted: this.state.userselections.inflationadjusted,
+                timeSpecs: {
+                    leftyear: null,
+                    rightyear: null,
+                    spanyears: false,
+                }
             });
             let matrixseries = chartmatrixrow;
             let nodeconfig;

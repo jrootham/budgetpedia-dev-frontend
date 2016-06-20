@@ -8,7 +8,9 @@ class Database {
     constructor() {
         this.getBranch = (viewpoint, path = []) => {
         };
-        this.setViewpointData = setviewpointdata_1.default;
+        this.setViewpointData = (parms) => {
+            setviewpointdata_1.default(parms);
+        };
         this.getViewpoint = (viewpoint) => {
             let vpt;
             return vpt;

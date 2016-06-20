@@ -18,11 +18,16 @@ import {
 
 // -------------------[ SET VIEWPOINT HIERARCHY NODE AMOUNTS ]-----------
 
-interface SetViewpointDataParms {
+export interface SetViewpointDataParms {
     viewpointname:string,
     dataseriesname: string,
     budgetdata: any,
     wantsInflationAdjusted: boolean,
+    timeSpecs: {
+        leftyear:number,
+        rightyear:number,
+        spanyears: boolean,
+    }
 }
 
 // starts with hash of components, 

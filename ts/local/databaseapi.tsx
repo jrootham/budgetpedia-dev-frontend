@@ -2,7 +2,7 @@
 // TEMPORARY DATA SOURCES
 // data sources
 
-import setViewpointData from './databaseapi/setviewpointdata'
+import updateViewpointData, { SetViewpointDataParms } from './databaseapi/setviewpointdata'
 
 let db_dataseries = require('../../data/dataseries.json')
 // common lookups
@@ -111,7 +111,9 @@ class Database {
 
     }
 
-    setViewpointData = setViewpointData
+    setViewpointData = (parms: SetViewpointDataParms) => {
+        updateViewpointData(parms)
+    }
 
     private getViewpoint = (viewpoint:string):Viewpoint => {
         let vpt:Viewpoint

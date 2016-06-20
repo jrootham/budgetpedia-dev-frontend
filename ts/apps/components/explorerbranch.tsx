@@ -108,6 +108,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             dataseriesname: facet, 
             budgetdata,
             wantsInflationAdjusted: userselections.inflationadjusted,
+            timeSpecs: {
+                leftyear:null,
+                rightyear: null,
+                spanyears: false,
+            }
         })
 
         // *** CREATE BRANCH
@@ -283,7 +288,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             viewpointname,
             dataseriesname:facetname,
             budgetdata,
-            wantsInflationAdjusted:this.state.userselections.inflationadjusted
+            wantsInflationAdjusted:this.state.userselections.inflationadjusted,
+            timeSpecs: {
+                leftyear: null,
+                rightyear: null,
+                spanyears: false,
+            }
         })
         let matrixseries = chartmatrixrow
         let nodeconfig: MatrixNodeConfig
