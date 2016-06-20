@@ -15,7 +15,7 @@ import { BasicForm, elementProps } from '../components/basicform'
 import { Card, CardTitle } from 'material-ui/Card'
 import { DEFAULT_PARTICIPATION } from '../local/constants'
 
-class RegisterClass extends Component<any, any> {
+let Register = class extends Component<any, any> {
     // respond to login form; assume error correction
     submitRegistration = elements => {
 
@@ -133,6 +133,6 @@ function mapStateToProps(state) {
 
 }
 
-var Register: typeof RegisterClass = connect(mapStateToProps)(RegisterClass)
+Register = connect(mapStateToProps)(Register)
 
 export default Register

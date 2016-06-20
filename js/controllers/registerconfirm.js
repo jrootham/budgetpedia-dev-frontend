@@ -4,7 +4,7 @@ var { Component } = React;
 const react_redux_1 = require('react-redux');
 const Actions = require('../actions/actions');
 const Card_1 = require('material-ui/Card');
-class RegisterConfirmClass extends Component {
+let RegisterConfirm = class extends Component {
     constructor(...args) {
         super(...args);
         this.componentWillMount = () => {
@@ -29,6 +29,7 @@ class RegisterConfirmClass extends Component {
         return React.createElement(Card_1.Card, {style: { margin: "5px" }}, React.createElement(Card_1.CardTitle, {title: "Registration Confirmation", style: { paddingBottom: 0 }}), React.createElement(Card_1.CardText, null, registerconfirmview));
     }
 }
+;
 function mapStateToProps(state) {
     let { auth, register, registerconfirm } = state;
     return {
@@ -37,6 +38,6 @@ function mapStateToProps(state) {
         registerconfirm: registerconfirm,
     };
 }
-var RegisterConfirm = react_redux_1.connect(mapStateToProps)(RegisterConfirmClass);
+RegisterConfirm = react_redux_1.connect(mapStateToProps)(RegisterConfirm);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = RegisterConfirm;

@@ -7,7 +7,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 // import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 // custom...
-import { MainBar } from '../controllers/mainbar'
+import MainBar from '../controllers/mainbar'
 // import { MainToolbar } from './maintoolbar'
 import routes from '../common/routes'
 

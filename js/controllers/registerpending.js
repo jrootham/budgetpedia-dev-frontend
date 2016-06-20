@@ -3,7 +3,7 @@ const React = require('react');
 var { Component } = React;
 const react_redux_1 = require('react-redux');
 const Card_1 = require('material-ui/Card');
-class RegisterPendingClass extends Component {
+let RegisterPending = class extends Component {
     render() {
         let registerpendingpage = this;
         let auth = registerpendingpage.props.auth;
@@ -19,6 +19,7 @@ class RegisterPendingClass extends Component {
         return React.createElement(Card_1.Card, {style: { margin: "5px" }}, React.createElement(Card_1.CardTitle, {title: "Registration Pending", style: { paddingBottom: 0 }}), React.createElement(Card_1.CardText, null, registerpending));
     }
 }
+;
 function mapStateToProps(state) {
     let { auth, register } = state;
     return {
@@ -27,6 +28,6 @@ function mapStateToProps(state) {
         register: register,
     };
 }
-var RegisterPending = react_redux_1.connect(mapStateToProps)(RegisterPendingClass);
+RegisterPending = react_redux_1.connect(mapStateToProps)(RegisterPending);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = RegisterPending;

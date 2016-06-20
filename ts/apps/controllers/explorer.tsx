@@ -58,7 +58,7 @@ import {
     GetChartParmsCallbacks,
 } from './explorer/interfaces'
 
-class ExplorerClass extends Component< any, any > {
+let Explorer = class extends Component< any, any > {
 
     // ============================================================
     // ---------------------[ INITIALIZE ]-------------------------
@@ -346,7 +346,7 @@ let mapStateToProps = state => ({
 // TODO: mapdispatch to props
 
 // let Explorer: typeof ExplorerClass = withRouter(injectStore(mapStateToProps)(ExplorerClass))
-let Explorer: typeof ExplorerClass = connect(mapStateToProps)(ExplorerClass)
+Explorer = connect(mapStateToProps)(Explorer)
 
 export default Explorer
 

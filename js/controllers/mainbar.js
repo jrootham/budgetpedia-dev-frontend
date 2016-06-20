@@ -15,7 +15,7 @@ const RaisedButton_1 = require('material-ui/RaisedButton');
 const FontIcon_1 = require('material-ui/FontIcon');
 const Divider_1 = require('material-ui/Divider');
 const IconMenu_1 = require('material-ui/IconMenu');
-class MainBarClass extends React.Component {
+let MainBar = class extends React.Component {
     constructor(props) {
         super(props);
         this.handleAccountSidebarToggle = () => this.setState({ accountsidebaropen: !this.state.accountsidebaropen });
@@ -156,6 +156,7 @@ class MainBarClass extends React.Component {
             : null));
     }
 }
+;
 function mapStateToProps(state) {
     let { appnavbar, theme, auth, hometiles, workingmessagestate } = state;
     return {
@@ -167,5 +168,6 @@ function mapStateToProps(state) {
         workingmessagestate: workingmessagestate,
     };
 }
-var MainBar = react_redux_1.connect(mapStateToProps)(MainBarClass);
-exports.MainBar = MainBar;
+MainBar = react_redux_1.connect(mapStateToProps)(MainBar);
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = MainBar;

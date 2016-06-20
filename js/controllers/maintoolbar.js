@@ -13,7 +13,7 @@ function mapStateToProps(state) {
         theme: theme,
     };
 }
-class MainToolbarClass extends React.Component {
+let MainToolbar = class extends React.Component {
     constructor(...args) {
         super(...args);
         this.transitionToHome = () => {
@@ -36,5 +36,7 @@ class MainToolbarClass extends React.Component {
         }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "arrow_back")), React.createElement(IconButton_1.default, {onTouchTap: this.transitionToHome}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "radio_button_unchecked")), React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "check_box_outline_blank")), React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")), React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "arrow_forward")))));
     }
 }
-var MainToolbar = react_redux_1.connect(mapStateToProps)(MainToolbarClass);
-exports.MainToolbar = MainToolbar;
+;
+MainToolbar = react_redux_1.connect(mapStateToProps)(MainToolbar);
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = MainToolbar;

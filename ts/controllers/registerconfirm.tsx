@@ -13,7 +13,7 @@ import * as Actions from '../actions/actions'
 
 import { Card, CardText, CardTitle} from 'material-ui/Card'
 
-class RegisterConfirmClass extends Component<any, any> {
+let RegisterConfirm = class extends Component<any, any> {
 
     componentWillMount = () => {
         this.props.dispatch(Actions.confirmUser())
@@ -84,6 +84,6 @@ function mapStateToProps(state) {
 
 }
 
-var RegisterConfirm: typeof RegisterConfirmClass = connect(mapStateToProps)(RegisterConfirmClass)
+RegisterConfirm = connect(mapStateToProps)(RegisterConfirm)
 
 export default RegisterConfirm

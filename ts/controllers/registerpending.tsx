@@ -8,7 +8,7 @@ import * as Actions from '../actions/actions'
 
 import {Card, CardText, CardTitle} from 'material-ui/Card'
 
-class RegisterPendingClass extends Component<any, any> {
+let RegisterPending = class extends Component<any,any> {
     // respond to login form; assume error correction
     render() {
 
@@ -66,6 +66,6 @@ function mapStateToProps(state) {
 
 }
 
-var RegisterPending: typeof RegisterPendingClass = connect(mapStateToProps)(RegisterPendingClass)
+RegisterPending = connect(mapStateToProps)(RegisterPending)
 
 export default RegisterPending

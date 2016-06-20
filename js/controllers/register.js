@@ -6,7 +6,7 @@ const Actions = require('../actions/actions');
 const basicform_1 = require('../components/basicform');
 const Card_1 = require('material-ui/Card');
 const constants_1 = require('../local/constants');
-class RegisterClass extends Component {
+let Register = class extends Component {
     constructor(...args) {
         super(...args);
         this.submitRegistration = elements => {
@@ -90,6 +90,7 @@ class RegisterClass extends Component {
             : registerform);
     }
 }
+;
 function mapStateToProps(state) {
     let { theme, auth, register } = state;
     return {
@@ -99,6 +100,6 @@ function mapStateToProps(state) {
         register: register,
     };
 }
-var Register = react_redux_1.connect(mapStateToProps)(RegisterClass);
+Register = react_redux_1.connect(mapStateToProps)(Register);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Register;

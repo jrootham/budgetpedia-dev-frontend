@@ -43,10 +43,9 @@ import FontIcon from 'material-ui/FontIcon'
 import TextField from 'material-ui/TextField'
 import Divider from 'material-ui/Divider'
 import IconMenu from 'material-ui/IconMenu'
-// console.log(Colors)
 // import FlatButton = require('material-ui/lib/flat-button')
 
-class MainBarClass extends React.Component<any, any> {
+let MainBar = class extends React.Component<any, any> {
 
     constructor(props) {
         super(props);
@@ -117,7 +116,6 @@ class MainBarClass extends React.Component<any, any> {
 
     componentDidMount = () => {
         let auth = this.props.auth
-        // console.log('state in mainbar', auth)
         // close login sidebar after login
         if (auth.isAuthenticated && (!auth.isFetching) && this.state.accountsidebaropen) {
             this.setState({accountsidebaropen:false})
@@ -418,6 +416,8 @@ function mapStateToProps(state) {
 
 }
 
-var MainBar:typeof MainBarClass = connect(mapStateToProps)(MainBarClass)
+// if returned as default all is good; of returned by name then
+// fails to apply result of mapStateToProps (??)
+MainBar = connect(mapStateToProps)(MainBar)
 
-export { MainBar }
+export default MainBar

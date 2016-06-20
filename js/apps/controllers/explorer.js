@@ -9,7 +9,7 @@ const Dialog_1 = require('material-ui/Dialog');
 const explorerbranch_1 = require('../components/explorerbranch');
 const constants_1 = require('../constants');
 const Actions = require('../../actions/actions');
-class ExplorerClass extends Component {
+let Explorer = class extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -58,9 +58,10 @@ class ExplorerClass extends Component {
         return React.createElement("div", null, dialogbox, drilldownsegment);
     }
 }
+;
 let mapStateToProps = state => ({
     budgetdata: state.budgetdata,
 });
-let Explorer = react_redux_1.connect(mapStateToProps)(ExplorerClass);
+Explorer = react_redux_1.connect(mapStateToProps)(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;
