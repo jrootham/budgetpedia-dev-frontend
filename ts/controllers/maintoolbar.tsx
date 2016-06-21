@@ -29,7 +29,7 @@ function mapStateToProps(state) {
 let MainToolbar = class extends React.Component<any, any> {
 
     transitionToHome = () => {
-        this.props.dispatch(Actions.transitionTo('/'))
+        this.props.transitionTo('/')
     }
 
     render() {
@@ -60,6 +60,9 @@ let MainToolbar = class extends React.Component<any, any> {
     } // render
 }
 
-MainToolbar = connect(mapStateToProps)(MainToolbar)
+MainToolbar = connect(mapStateToProps,
+    {
+        transitionTo:Actions.transitionTo
+    })(MainToolbar)
 
 export default MainToolbar

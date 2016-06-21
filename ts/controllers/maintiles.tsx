@@ -31,14 +31,14 @@ class MainTilesClass extends React.Component<any, any> {
 
     handleResize = () => { 
 
-        this.props.dispatch ( Actions.setTileCols() ) 
+        this.props.setTileCols()
 
     }
 
     componentWillMount = () => {
 
         // initialize
-        this.props.dispatch ( Actions.setTileCols() )
+        this.props.setTileCols()
 
     }
 
@@ -74,7 +74,7 @@ class MainTilesClass extends React.Component<any, any> {
                     }
                 }
                 system = { system }
-                transitionTo = { compose(this.props.dispatch, Actions.transitionTo) }
+                transitionTo = { this.props.transitionTo }
                 cellHeight = { 200 }
 
             />
@@ -83,6 +83,10 @@ class MainTilesClass extends React.Component<any, any> {
 }
 
 // dependency injection
-var MainTiles = connect ( mapStateToProps ) ( MainTilesClass )
+var MainTiles = connect ( mapStateToProps,
+    {
+        transitionTo:Actions.transitionTo,
+        setTileCols:Actions.setHomeTileCols,
+    }) ( MainTilesClass )
 
 export { MainTiles }

@@ -92,11 +92,11 @@ let Explorer = class extends Component< any, any > {
     // callbacks
     workingStatus = status => {
         if (status) {
-            this.props.dispatch(Actions.showWaitingMessage())
+            this.props.showWaitingMessage()
             // this.forceUpdate()
         } else {
             setTimeout(() => {
-                this.props.dispatch(Actions.hideWaitingMessage())
+                this.props.hideWaitingMessage()
             }, 250)
         }
 
@@ -346,7 +346,12 @@ let mapStateToProps = state => ({
 // TODO: mapdispatch to props
 
 // let Explorer: typeof ExplorerClass = withRouter(injectStore(mapStateToProps)(ExplorerClass))
-Explorer = connect(mapStateToProps)(Explorer)
+Explorer = connect(mapStateToProps,
+    {
+        showWaitingMessage: Actions.showWaitingMessage,
+        hideWaitingMessage: Actions.hideWaitingMessage,
+    }
+    )(Explorer)
 
 export default Explorer
 

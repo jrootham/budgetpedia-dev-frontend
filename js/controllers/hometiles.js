@@ -1,7 +1,6 @@
 'use strict';
 const React = require('react');
 const react_redux_1 = require('react-redux');
-const redux_1 = require('redux');
 const Actions = require('../actions/actions');
 const apptiles_1 = require("../components/apptiles");
 const mapStateToProps = ({ hometiles, homecols, homepadding, theme, colors, system }) => ({
@@ -16,10 +15,10 @@ class HomeTilesClass extends React.Component {
     constructor(...args) {
         super(...args);
         this.handleHomeResize = () => {
-            this.props.dispatch(Actions.setHomeTileCols());
+            this.props.setHomeTileCols();
         };
         this.componentWillMount = () => {
-            this.props.dispatch(Actions.setHomeTileCols());
+            this.props.setHomeTileCols();
         };
         this.componentDidMount = () => {
             window.addEventListener('resize', this.handleHomeResize);
@@ -34,9 +33,12 @@ class HomeTilesClass extends React.Component {
             front: colors.blue50,
             back: colors.amber50,
             helpbutton: theme.palette.primary3Color,
-        }, system: system, transitionTo: redux_1.compose(this.props.dispatch, Actions.transitionTo), cellHeight: 180}));
+        }, system: system, transitionTo: this.props.transitionTo, cellHeight: 180}));
     }
 }
-var HomeTiles = react_redux_1.connect(mapStateToProps)(HomeTilesClass);
+var HomeTiles = react_redux_1.connect(mapStateToProps, {
+    transitionTo: Actions.transitionTo,
+    setHomeTileCols: Actions.setHomeTileCols,
+})(HomeTilesClass);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = HomeTiles;

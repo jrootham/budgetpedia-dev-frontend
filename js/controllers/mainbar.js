@@ -25,18 +25,18 @@ let MainBar = class extends React.Component {
         };
         this.transitionToHome = () => {
             this.setState({ accountsidebaropen: false });
-            this.props.dispatch(Actions.transitionTo('/'));
+            this.props.transitionTo('/');
         };
         this.transitionToRegister = (e) => {
             this.setState({ accountsidebaropen: false });
-            this.props.dispatch(Actions.transitionTo('/register'));
+            this.props.transitionTo('/register');
         };
         this.transitionToResetPassword = (e) => {
             this.setState({ accountsidebaropen: false });
-            this.props.dispatch(Actions.transitionTo('/resetpassword'));
+            this.props.transitionTo('/resetpassword');
         };
         this.transitionToProfile = (e) => {
-            this.props.dispatch(Actions.transitionTo('/userprofile'));
+            this.props.transitionTo('/userprofile');
         };
         this.submitLogin = (elements) => {
             let creds = {};
@@ -51,10 +51,10 @@ let MainBar = class extends React.Component {
                     });
                 }
             };
-            this.props.dispatch(Actions.loginUser(creds, callback));
+            this.props.loginUser(creds, callback);
         };
         this.logout = () => {
-            this.props.dispatch(Actions.logoutUser());
+            this.props.logoutUser();
         };
         this.componentDidMount = () => {
             let auth = this.props.auth;
@@ -112,7 +112,7 @@ let MainBar = class extends React.Component {
         let loginform = React.createElement(basicform_1.BasicForm, {submit: appbar.submitLogin, elements: elements, submitButtonLabel: 'Sign in', errorMessage: appbar.props.auth.errorMessage});
         let registerprompt = React.createElement("div", null, React.createElement(Card_1.CardText, null, React.createElement("a", {href: "javascript:void(0);", onTouchTap: appbar.transitionToResetPassword}, "Forgot your password?")), React.createElement(Divider_1.default, null), React.createElement(Card_1.CardText, null, "Not a member? Register:"), React.createElement(Card_1.CardActions, null, React.createElement(RaisedButton_1.default, {type: "button", label: "Register", onTouchTap: appbar.transitionToRegister})));
         let loginsidebar = React.createElement(Drawer_1.default, {width: 300, disableSwipeToOpen: true, docked: false, openRight: true, onRequestChange: open => appbar.setState({ accountsidebaropen: open, }), open: appbar.state.accountsidebaropen}, React.createElement(Card_1.Card, {style: { margin: "5px" }}, closeicon, React.createElement(Card_1.CardTitle, {title: "Member Sign In", style: { paddingBottom: 0 }}), loginform, registerprompt));
-        let transitionToFunc = redux_1.compose(menutransition, this.props.dispatch, Actions.transitionTo);
+        let transitionToFunc = redux_1.compose(menutransition, this.props.transitionTo);
         let menuitems = hometiles.map(menutile => {
             return React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: menutile.id, primaryText: menutile.content.title, image: menutile.content.image, route: menutile.route, disabled: menutile.content.disabled});
         });
@@ -168,6 +168,10 @@ function mapStateToProps(state) {
         workingmessagestate: workingmessagestate,
     };
 }
-MainBar = react_redux_1.connect(mapStateToProps)(MainBar);
+MainBar = react_redux_1.connect(mapStateToProps, {
+    transitionTo: Actions.transitionTo,
+    loginUser: Actions.loginUser,
+    logoutUser: Actions.logoutUser,
+})(MainBar);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = MainBar;

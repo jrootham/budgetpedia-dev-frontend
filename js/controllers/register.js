@@ -14,7 +14,7 @@ let Register = class extends Component {
             for (var index in elements) {
                 profile[index] = elements[index].getValue();
             }
-            this.props.dispatch(Actions.registerUser(profile));
+            this.props.registerUser(profile);
         };
     }
     render() {
@@ -100,6 +100,8 @@ function mapStateToProps(state) {
         register: register,
     };
 }
-Register = react_redux_1.connect(mapStateToProps)(Register);
+Register = react_redux_1.connect(mapStateToProps, {
+    registerUser: Actions.registerUser,
+})(Register);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Register;

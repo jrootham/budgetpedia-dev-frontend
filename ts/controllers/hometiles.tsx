@@ -24,14 +24,14 @@ class HomeTilesClass extends React.Component<any, any> {
 
     handleHomeResize = () => { 
 
-        this.props.dispatch ( Actions.setHomeTileCols() ) 
+        this.props.setHomeTileCols()
 
     }
 
     componentWillMount = () => {
 
         // initialize
-        this.props.dispatch ( Actions.setHomeTileCols() )
+        this.props.setHomeTileCols()
 
     }
 
@@ -67,7 +67,7 @@ class HomeTilesClass extends React.Component<any, any> {
                     }
                 }
                 system = { system }
-                transitionTo = { compose(this.props.dispatch, Actions.transitionTo) }
+                transitionTo = { this.props.transitionTo }
                 cellHeight = { 180 }
             />
         )
@@ -75,6 +75,10 @@ class HomeTilesClass extends React.Component<any, any> {
 }
 
 // dependency injection
-var HomeTiles = connect ( mapStateToProps ) ( HomeTilesClass )
+var HomeTiles = connect ( mapStateToProps, 
+    {
+        transitionTo:Actions.transitionTo,
+        setHomeTileCols:Actions.setHomeTileCols,
+    } ) ( HomeTilesClass )
 
 export default HomeTiles

@@ -17,7 +17,7 @@ let MainToolbar = class extends React.Component {
     constructor(...args) {
         super(...args);
         this.transitionToHome = () => {
-            this.props.dispatch(Actions.transitionTo('/'));
+            this.props.transitionTo('/');
         };
     }
     render() {
@@ -37,6 +37,8 @@ let MainToolbar = class extends React.Component {
     }
 }
 ;
-MainToolbar = react_redux_1.connect(mapStateToProps)(MainToolbar);
+MainToolbar = react_redux_1.connect(mapStateToProps, {
+    transitionTo: Actions.transitionTo
+})(MainToolbar);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = MainToolbar;

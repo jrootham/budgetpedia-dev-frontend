@@ -28,11 +28,11 @@ let Explorer = class extends Component {
         };
         this.workingStatus = status => {
             if (status) {
-                this.props.dispatch(Actions.showWaitingMessage());
+                this.props.showWaitingMessage();
             }
             else {
                 setTimeout(() => {
-                    this.props.dispatch(Actions.hideWaitingMessage());
+                    this.props.hideWaitingMessage();
                 }, 250);
             }
         };
@@ -62,6 +62,9 @@ let Explorer = class extends Component {
 let mapStateToProps = state => ({
     budgetdata: state.budgetdata,
 });
-Explorer = react_redux_1.connect(mapStateToProps)(Explorer);
+Explorer = react_redux_1.connect(mapStateToProps, {
+    showWaitingMessage: Actions.showWaitingMessage,
+    hideWaitingMessage: Actions.hideWaitingMessage,
+})(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;

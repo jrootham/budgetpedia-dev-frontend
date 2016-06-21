@@ -25,7 +25,7 @@ let Register = class extends Component<any, any> {
         }
         // console.log('profile', profile)
 
-        this.props.dispatch(Actions.registerUser(profile))
+        this.props.registerUser(profile)
     }
     render() {
 
@@ -133,6 +133,8 @@ function mapStateToProps(state) {
 
 }
 
-Register = connect(mapStateToProps)(Register)
+Register = connect(mapStateToProps, {
+    registerUser:Actions.registerUser,
+})(Register)
 
 export default Register

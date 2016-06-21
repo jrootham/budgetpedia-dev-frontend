@@ -16,7 +16,7 @@ import { Card, CardText, CardTitle} from 'material-ui/Card'
 let RegisterConfirm = class extends Component<any, any> {
 
     componentWillMount = () => {
-        this.props.dispatch(Actions.confirmUser())
+        this.props.confirmUser()
     }
     render() {
 
@@ -84,6 +84,9 @@ function mapStateToProps(state) {
 
 }
 
-RegisterConfirm = connect(mapStateToProps)(RegisterConfirm)
+RegisterConfirm = connect(mapStateToProps,
+    {
+        confirmUser:Actions.confirmUser,
+    })(RegisterConfirm)
 
 export default RegisterConfirm

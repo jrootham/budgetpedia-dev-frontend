@@ -68,26 +68,26 @@ let MainBar = class extends React.Component<any, any> {
         // consistent with other transition calls...
         // setTimeout(()=>{        
             this.setState({ accountsidebaropen: false })
-            this.props.dispatch(Actions.transitionTo('/'))
+            this.props.transitionTo('/')
         // })
     }
 
     transitionToRegister = (e) => {
 
         this.setState({ accountsidebaropen: false })
-        this.props.dispatch(Actions.transitionTo('/register'))
+        this.props.transitionTo('/register')
 
     }
 
     transitionToResetPassword = (e) => {
 
         this.setState({ accountsidebaropen: false })
-        this.props.dispatch(Actions.transitionTo('/resetpassword'))
+        this.props.transitionTo('/resetpassword')
 
     }
 
     transitionToProfile = (e) => {
-        this.props.dispatch(Actions.transitionTo('/userprofile'))
+        this.props.transitionTo('/userprofile')
     }
 
     // respond to login form; assume error correction
@@ -107,11 +107,11 @@ let MainBar = class extends React.Component<any, any> {
             }
         }
 
-        this.props.dispatch(Actions.loginUser(creds,callback))
+        this.props.loginUser(creds,callback)
     }
 
     logout = () => {
-        this.props.dispatch(Actions.logoutUser())
+        this.props.logoutUser()
     }
 
     componentDidMount = () => {
@@ -236,8 +236,9 @@ let MainBar = class extends React.Component<any, any> {
                 </Card>
             </LeftNav >
 
-        let transitionToFunc = compose(menutransition, this.props.dispatch, Actions.transitionTo)
-        let menuitems = hometiles.map(menutile =>{
+        // let transitionToFunc = compose(menutransition, this.props.dispatch, Actions.transitionTo)
+        let transitionToFunc = compose(menutransition, this.props.transitionTo)
+        let menuitems = hometiles.map(menutile => {
             return <MenuTile
                 transitionTo = { transitionToFunc }
                 key = { menutile.id}
@@ -418,6 +419,12 @@ function mapStateToProps(state) {
 
 // if returned as default all is good; of returned by name then
 // fails to apply result of mapStateToProps (??)
-MainBar = connect(mapStateToProps)(MainBar)
+MainBar = connect(
+    mapStateToProps, 
+    {
+        transitionTo:Actions.transitionTo,
+        loginUser:Actions.loginUser,
+        logoutUser:Actions.logoutUser,
+    })(MainBar)
 
 export default MainBar

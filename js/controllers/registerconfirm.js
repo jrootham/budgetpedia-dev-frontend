@@ -8,7 +8,7 @@ let RegisterConfirm = class extends Component {
     constructor(...args) {
         super(...args);
         this.componentWillMount = () => {
-            this.props.dispatch(Actions.confirmUser());
+            this.props.confirmUser();
         };
     }
     render() {
@@ -38,6 +38,8 @@ function mapStateToProps(state) {
         registerconfirm: registerconfirm,
     };
 }
-RegisterConfirm = react_redux_1.connect(mapStateToProps)(RegisterConfirm);
+RegisterConfirm = react_redux_1.connect(mapStateToProps, {
+    confirmUser: Actions.confirmUser,
+})(RegisterConfirm);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = RegisterConfirm;
