@@ -103,10 +103,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let viewpointname = userselections.viewpoint
         let facet = userselections.facet
+        let viewpointdata = budgetdata.Viewpoints[viewpointname]
+        let itemseriesdata = budgetdata.DataSeries[facet]
+        let lookups = budgetdata.Lookups
         databaseapi.setViewpointData({
-            viewpointname, 
+            // viewpointname, 
             dataseriesname: facet, 
-            budgetdata,
+            viewpointdata,
+            itemseriesdata,
+            lookups,
+            // budgetdata,
             wantsInflationAdjusted: userselections.inflationadjusted,
             timeSpecs: {
                 leftyear:null,
@@ -124,8 +130,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             this.initRootNodeConfig(userselections)
         let drilldownindex: any
 
-        let itemseriesdata = budgetdata.DataSeries[userselections.facet]
-        let viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint]
+        itemseriesdata = budgetdata.DataSeries[userselections.facet]
+        viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint]
 
         for (drilldownindex in drilldownnodeconfig.charts) {
             let props: GetChartParmsProps = {
@@ -291,10 +297,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let budgetdata = this.props.budgetdata
         let itemseriesdata = budgetdata.DataSeries[userselections.facet]
         let viewpointdata = budgetdata.Viewpoints[viewpointname]
+        let lookups = budgetdata.Lookups
         databaseapi.setViewpointData({
-            viewpointname,
+            // viewpointname,
             dataseriesname:facetname,
-            budgetdata,
+            // budgetdata,
+            viewpointdata,
+            itemseriesdata,
+            lookups,
             wantsInflationAdjusted:this.state.userselections.inflationadjusted,
             timeSpecs: {
                 leftyear: null,

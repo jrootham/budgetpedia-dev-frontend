@@ -19,9 +19,12 @@ import {
 // -------------------[ SET VIEWPOINT HIERARCHY NODE AMOUNTS ]-----------
 
 export interface SetViewpointDataParms {
-    viewpointname:string,
+    // viewpointname:string,
     dataseriesname: string,
-    budgetdata: any,
+    // budgetdata: any,
+    viewpointdata:any,
+    itemseriesdata:any,
+    lookups:any,
     wantsInflationAdjusted: boolean,
     timeSpecs: {
         leftyear:number,
@@ -34,44 +37,47 @@ export interface SetViewpointDataParms {
 // recursively descends to BASELINE items, then leaves 
 // summaries by year, and Categories by year on ascent
 let setViewpointData = (parms: SetViewpointDataParms) => {
-    let viewpointname = parms.viewpointname,
-        dataseriesname = parms.dataseriesname,
-        budgetdata = parms.budgetdata,
+    // let viewpointname = parms.viewpointname,
+    let dataseriesname = parms.dataseriesname,
+        // budgetdata = parms.budgetdata,
+        viewpointdata = parms.viewpointdata,
+        itemseriesdata = parms.itemseriesdata,
+        lookups = parms.lookups,
         wantsInflationAdjusted = parms.wantsInflationAdjusted
 
-    let viewpoint = budgetdata.Viewpoints[viewpointname]
+    // let viewpointdata = parms.viewpointdata
 
     // already done if currentdataseries matches request
-    if (viewpoint.currentdataseries == dataseriesname)
+    if (viewpointdata.currentdataseries == dataseriesname)
         return
 
-    let itemseries = budgetdata.DataSeries[dataseriesname]
+    // let itemseries = budgetdata.DataSeries[dataseriesname]
 
-    let baselinecat = itemseries.Baseline // use for system lookups
-    let baselinelookups = budgetdata.Lookups[baselinecat]
-    let componentcat = itemseries.Categories
-    let componentlookups = budgetdata.Lookups[componentcat]
-    let categorylookups = viewpoint.Lookups.Categories
+    let baselinecat = itemseriesdata.Baseline // use for system lookups
+    let baselinelookups = lookups[baselinecat]
+    let componentcat = itemseriesdata.Categories
+    let componentlookups = lookups[componentcat]
+    let categorylookups = viewpointdata.Lookups.Categories
 
-    let lookups = {
+    let lookupset = {
         baselinelookups,
         componentlookups,
         categorylookups,
     }
 
-    let items = itemseries.Items
+    let items = itemseriesdata.Items
 
-    let isInflationAdjusted = !!itemseries.InflationAdjusted
+    let isInflationAdjusted = !!itemseriesdata.InflationAdjusted
 
-    let rootcomponent = { "ROOT": viewpoint }
+    let rootcomponent = { "ROOT": viewpointdata }
 
     // set years, and Categories by years
     // initiates recursion
     setComponentAggregates(rootcomponent, items, isInflationAdjusted,
-        lookups, wantsInflationAdjusted)
+        lookupset, wantsInflationAdjusted)
 
     // create sentinel to prevent unnucessary processing
-    viewpoint.currentdataseries = dataseriesname
+    viewpointdata.currentdataseries = dataseriesname
 
     // let text = JSON.stringify(viewpoint, null, 4) + '\n'
 

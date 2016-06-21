@@ -43,10 +43,14 @@ class ExplorerBranch extends Component {
             var matrixlocation, chartParmsObj;
             let viewpointname = userselections.viewpoint;
             let facet = userselections.facet;
+            let viewpointdata = budgetdata.Viewpoints[viewpointname];
+            let itemseriesdata = budgetdata.DataSeries[facet];
+            let lookups = budgetdata.Lookups;
             databaseapi_1.default.setViewpointData({
-                viewpointname: viewpointname,
                 dataseriesname: facet,
-                budgetdata: budgetdata,
+                viewpointdata: viewpointdata,
+                itemseriesdata: itemseriesdata,
+                lookups: lookups,
                 wantsInflationAdjusted: userselections.inflationadjusted,
                 timeSpecs: {
                     leftyear: null,
@@ -56,8 +60,8 @@ class ExplorerBranch extends Component {
             });
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
-            let itemseriesdata = budgetdata.DataSeries[userselections.facet];
-            let viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint];
+            itemseriesdata = budgetdata.DataSeries[userselections.facet];
+            viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint];
             for (drilldownindex in drilldownnodeconfig.charts) {
                 let props = {
                     nodeConfig: drilldownnodeconfig,
@@ -188,10 +192,12 @@ class ExplorerBranch extends Component {
             let budgetdata = this.props.budgetdata;
             let itemseriesdata = budgetdata.DataSeries[userselections.facet];
             let viewpointdata = budgetdata.Viewpoints[viewpointname];
+            let lookups = budgetdata.Lookups;
             databaseapi_1.default.setViewpointData({
-                viewpointname: viewpointname,
                 dataseriesname: facetname,
-                budgetdata: budgetdata,
+                viewpointdata: viewpointdata,
+                itemseriesdata: itemseriesdata,
+                lookups: lookups,
                 wantsInflationAdjusted: this.state.userselections.inflationadjusted,
                 timeSpecs: {
                     leftyear: null,

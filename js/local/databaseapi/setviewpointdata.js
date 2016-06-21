@@ -1,25 +1,23 @@
 "use strict";
 let setViewpointData = (parms) => {
-    let viewpointname = parms.viewpointname, dataseriesname = parms.dataseriesname, budgetdata = parms.budgetdata, wantsInflationAdjusted = parms.wantsInflationAdjusted;
-    let viewpoint = budgetdata.Viewpoints[viewpointname];
-    if (viewpoint.currentdataseries == dataseriesname)
+    let dataseriesname = parms.dataseriesname, viewpointdata = parms.viewpointdata, itemseriesdata = parms.itemseriesdata, lookups = parms.lookups, wantsInflationAdjusted = parms.wantsInflationAdjusted;
+    if (viewpointdata.currentdataseries == dataseriesname)
         return;
-    let itemseries = budgetdata.DataSeries[dataseriesname];
-    let baselinecat = itemseries.Baseline;
-    let baselinelookups = budgetdata.Lookups[baselinecat];
-    let componentcat = itemseries.Categories;
-    let componentlookups = budgetdata.Lookups[componentcat];
-    let categorylookups = viewpoint.Lookups.Categories;
-    let lookups = {
+    let baselinecat = itemseriesdata.Baseline;
+    let baselinelookups = lookups[baselinecat];
+    let componentcat = itemseriesdata.Categories;
+    let componentlookups = lookups[componentcat];
+    let categorylookups = viewpointdata.Lookups.Categories;
+    let lookupset = {
         baselinelookups: baselinelookups,
         componentlookups: componentlookups,
         categorylookups: categorylookups,
     };
-    let items = itemseries.Items;
-    let isInflationAdjusted = !!itemseries.InflationAdjusted;
-    let rootcomponent = { "ROOT": viewpoint };
-    setComponentAggregates(rootcomponent, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
-    viewpoint.currentdataseries = dataseriesname;
+    let items = itemseriesdata.Items;
+    let isInflationAdjusted = !!itemseriesdata.InflationAdjusted;
+    let rootcomponent = { "ROOT": viewpointdata };
+    setComponentAggregates(rootcomponent, items, isInflationAdjusted, lookupset, wantsInflationAdjusted);
+    viewpointdata.currentdataseries = dataseriesname;
 };
 let setComponentAggregates = (components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) => {
     let cumulatingSummaries = {
