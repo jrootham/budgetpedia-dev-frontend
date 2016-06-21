@@ -10,11 +10,14 @@ import { mainReducer } from "../reducers/reducers"
 
 const reduxRouterMiddleware = routerMiddleware(browserHistory)
 
+// could be conditional list of middlewares
+const middlewares = [reduxRouterMiddleware,thunkMiddleware]
+
 // TODO: this is an incorrect construct -- the second argument should be for persisted 
 // stores; the first argument should be the combined reducers
 const store = createStore(
     mainReducer,
-    applyMiddleware(reduxRouterMiddleware, thunkMiddleware)
+    applyMiddleware(...middlewares) // the enhancer has last position
 )
 
 const configureStore = () => {

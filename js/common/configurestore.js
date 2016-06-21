@@ -5,7 +5,8 @@ const react_router_redux_1 = require('react-router-redux');
 const redux_thunk_1 = require('redux-thunk');
 const reducers_1 = require("../reducers/reducers");
 const reduxRouterMiddleware = react_router_redux_1.routerMiddleware(react_router_1.browserHistory);
-const store = redux_1.createStore(reducers_1.mainReducer, redux_1.applyMiddleware(reduxRouterMiddleware, redux_thunk_1.default));
+const middlewares = [reduxRouterMiddleware, redux_thunk_1.default];
+const store = redux_1.createStore(reducers_1.mainReducer, redux_1.applyMiddleware(...middlewares));
 const configureStore = () => {
     return store;
 };
