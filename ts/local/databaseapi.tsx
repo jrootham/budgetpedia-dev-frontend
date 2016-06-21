@@ -2,6 +2,8 @@
 // TEMPORARY DATA SOURCES
 // data sources
 
+// deepclone = JSON.parse(JSON.stringify(obj)) // but this destroys dates, undefined, and functions
+
 import updateViewpointData, { SetViewpointDataParms } from './databaseapi/setviewpointdata'
 
 let db_dataseries = require('../../data/dataseries.json')

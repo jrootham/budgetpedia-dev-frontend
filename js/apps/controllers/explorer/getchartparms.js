@@ -6,7 +6,8 @@ let getChartParms = (props, callbacks) => {
     let nodeConfig = props.nodeConfig;
     let chartIndex = props.chartIndex;
     let userselections = props.userselections;
-    let budgetdata = props.budgetdata;
+    let viewpointdata = props.viewpointdata;
+    let itemseriesdata = props.itemseriesdata;
     let chartmatrixrow = props.chartmatrixrow;
     let refreshPresentation = callbacks.refreshPresentation;
     let onPortalCreation = callbacks.onPortalCreation;
@@ -22,8 +23,8 @@ let getChartParms = (props, callbacks) => {
     }
     let viewpointindex = nodeConfig.viewpoint, path = nodeConfig.datapath, yearscope = nodeConfig.yearscope, year = yearscope.latestyear;
     let dataseriesname = userselections.facet;
-    let viewpointdata = budgetdata.Viewpoints[viewpointindex], itemseries = budgetdata.DataSeries[dataseriesname], units = itemseries.Units, vertlabel;
-    vertlabel = itemseries.UnitsAlias;
+    let units = itemseriesdata.Units, vertlabel;
+    vertlabel = itemseriesdata.UnitsAlias;
     if (units != 'FTE') {
         if (dataseriesname == 'BudgetExpenses')
             vertlabel = 'Expenditures' + ' (' + vertlabel + ')';
@@ -57,7 +58,7 @@ let getChartParms = (props, callbacks) => {
         axistitle = titleref.Alias || titleref.Name;
     }
     else {
-        let portaltitles = itemseries.Titles;
+        let portaltitles = itemseriesdata.Titles;
         axistitle = portaltitles.Categories;
     }
     let title;
@@ -75,7 +76,7 @@ let getChartParms = (props, callbacks) => {
         title = catname + ': ' + nodeConfig.parentdata.Name;
     }
     else {
-        title = itemseries.Title;
+        title = itemseriesdata.Title;
     }
     let titleamount = null;
     if (node.years) {
@@ -151,7 +152,8 @@ let getChartParms = (props, callbacks) => {
                     let props = {
                         context: context,
                         userselections: userselections,
-                        budgetdata: budgetdata,
+                        viewpointdata: viewpointdata,
+                        itemseriesdata: itemseriesdata,
                         chartmatrixrow: chartmatrixrow
                     };
                     let callbacks = {

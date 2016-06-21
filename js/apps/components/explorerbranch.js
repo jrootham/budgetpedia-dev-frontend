@@ -56,12 +56,15 @@ class ExplorerBranch extends Component {
             });
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
+            let itemseriesdata = budgetdata.DataSeries[userselections.facet];
+            let viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint];
             for (drilldownindex in drilldownnodeconfig.charts) {
                 let props = {
                     nodeConfig: drilldownnodeconfig,
                     chartIndex: drilldownindex,
                     userselections: userselections,
-                    budgetdata: budgetdata,
+                    itemseriesdata: itemseriesdata,
+                    viewpointdata: viewpointdata,
                     chartmatrixrow: chartmatrixrow,
                 };
                 let callbacks = {
@@ -183,6 +186,8 @@ class ExplorerBranch extends Component {
             let viewpointname = this.state.userselections.viewpoint;
             let facetname = this.state.userselections.facet;
             let budgetdata = this.props.budgetdata;
+            let itemseriesdata = budgetdata.DataSeries[userselections.facet];
+            let viewpointdata = budgetdata.Viewpoints[viewpointname];
             databaseapi_1.default.setViewpointData({
                 viewpointname: viewpointname,
                 dataseriesname: facetname,
@@ -217,7 +222,8 @@ class ExplorerBranch extends Component {
                         let childprops = {
                             nodeconfig: prevconfig,
                             userselections: userselections,
-                            budgetdata: budgetdata,
+                            viewpointdata: viewpointdata,
+                            itemseriesdata: itemseriesdata,
                             chartmatrixrow: matrixseries,
                             selectionrow: prevconfig.charts[0].chartselection[0].row,
                             matrixcolumn: prevconfig.matrixlocation.column,
@@ -247,11 +253,14 @@ class ExplorerBranch extends Component {
                 }
                 let nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
+                    let itemseriesdata = budgetdata.DataSeries[userselections.facet];
+                    let viewpointdata = budgetdata.Viewpoints[nodeconfig.viewpoint];
                     let props = {
                         nodeConfig: nodeconfig,
                         chartIndex: nodechartindex,
                         userselections: userselections,
-                        budgetdata: budgetdata,
+                        itemseriesdata: itemseriesdata,
+                        viewpointdata: viewpointdata,
                         chartmatrixrow: chartmatrixrow,
                     };
                     let callbacks = {
@@ -303,11 +312,15 @@ class ExplorerBranch extends Component {
             let nodeConfig = chartmatrixrow[location.matrixlocation.column];
             let oldChartType = nodeConfig.charts[portalIndex].googlecharttype;
             nodeConfig.charts[portalIndex].googlecharttype = chartType;
+            let budgetdata = this.props.budgetdata;
+            let itemseriesdata = budgetdata.DataSeries[this.state.userselections.facet];
+            let viewpointdata = budgetdata.Viewpoints[nodeConfig.viewpoint];
             let props = {
                 nodeConfig: nodeConfig,
                 chartIndex: portalIndex,
                 userselections: this.state.userselections,
-                budgetdata: this.props.budgetdata,
+                viewpointdata: viewpointdata,
+                itemseriesdata: itemseriesdata,
                 chartmatrixrow: chartmatrixrow,
             };
             let callbacks = {

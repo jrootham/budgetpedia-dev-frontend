@@ -37,7 +37,9 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
     let context = props.context
     let userselections = props.userselections
-    let budgetdata = props.budgetdata
+    // let budgetdata = props.budgetdata
+    let viewpointdata = props.viewpointdata
+    let itemseriesdata = props.itemseriesdata
     let chartmatrixrow = props.chartmatrixrow
 
     let refreshPresentation = callbacks.refreshPresentation
@@ -93,7 +95,9 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     let childprops: CreateChildNodeProps = {
         nodeconfig, 
         userselections, 
-        budgetdata, 
+        viewpointdata,
+        itemseriesdata,
+        // budgetdata, 
         chartmatrixrow, 
         selectionrow,
         matrixcolumn,
@@ -114,7 +118,9 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     let {
         nodeconfig,
         userselections,
-        budgetdata,
+        // budgetdata,
+        viewpointdata,
+        itemseriesdata,
         chartmatrixrow,
         selectionrow,
         matrixcolumn,
@@ -173,7 +179,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         let newrange = Object.assign({}, nodeconfig.yearscope)
         let charttype = userselections.charttype
         let chartCode = ChartTypeCodes[charttype]
-        let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[facet]
+        let portalcharts = viewpointdata.PortalCharts[facet]
         let charts = []
         for (let type of portalcharts) {
             if (type.Type == 'Components' && !newnode.Components) {
@@ -214,7 +220,9 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
                 nodeConfig: newnodeconfig,
                 chartIndex: newnodeindex,
                 userselections,
-                budgetdata,
+                viewpointdata,
+                itemseriesdata,
+                // budgetdata,
                 chartmatrixrow,
             }
             let callbacks: GetChartParmsCallbacks = {

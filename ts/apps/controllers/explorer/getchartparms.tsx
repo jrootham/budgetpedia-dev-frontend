@@ -39,7 +39,9 @@ let getChartParms = (
     let nodeConfig:MatrixNodeConfig = props.nodeConfig
     let chartIndex = props.chartIndex
     let userselections = props.userselections
-    let budgetdata = props.budgetdata
+    // let budgetdata = props.budgetdata
+    let viewpointdata = props.viewpointdata
+    let itemseriesdata = props.itemseriesdata
     let chartmatrixrow = props.chartmatrixrow
 
     let refreshPresentation = callbacks.refreshPresentation
@@ -69,11 +71,11 @@ let getChartParms = (
     let dataseriesname = userselections.facet
 
     // unpack budgetdata
-    let viewpointdata = budgetdata.Viewpoints[viewpointindex],
-        itemseries = budgetdata.DataSeries[dataseriesname],
-        units = itemseries.Units,
+    // let viewpointdata = budgetdata.Viewpoints[viewpointindex],
+        // itemseries = budgetdata.DataSeries[dataseriesname],
+    let units = itemseriesdata.Units,
         vertlabel
-    vertlabel = itemseries.UnitsAlias
+    vertlabel = itemseriesdata.UnitsAlias
     if (units != 'FTE') {
         if (dataseriesname == 'BudgetExpenses')
             vertlabel = 'Expenditures' + ' (' + vertlabel + ')'
@@ -123,7 +125,7 @@ let getChartParms = (
         let titleref = viewpointdata.Configuration[node.Contents]
         axistitle = titleref.Alias || titleref.Name
     } else {
-        let portaltitles = itemseries.Titles
+        let portaltitles = itemseriesdata.Titles
         axistitle = portaltitles.Categories
     }
 
@@ -142,7 +144,7 @@ let getChartParms = (
         title = catname + ': ' + nodeConfig.parentdata.Name
     }
     else {
-        title = itemseries.Title
+        title = itemseriesdata.Title
     }
     let titleamount = null
     if (node.years) {
@@ -237,7 +239,9 @@ let getChartParms = (
                     let props: OnChartComponentSelectionProps = {
                         context,
                         userselections,
-                        budgetdata,
+                        viewpointdata,
+                        itemseriesdata,
+                        // budgetdata,
                         chartmatrixrow
                     }
                     let callbacks: OnChartComponentSelectionCallbacks = {

@@ -6,7 +6,8 @@ const getchartparms_1 = require('./getchartparms');
 let onChartComponentSelection = (props, callbacks) => {
     let context = props.context;
     let userselections = props.userselections;
-    let budgetdata = props.budgetdata;
+    let viewpointdata = props.viewpointdata;
+    let itemseriesdata = props.itemseriesdata;
     let chartmatrixrow = props.chartmatrixrow;
     let refreshPresentation = callbacks.refreshPresentation;
     let onPortalCreation = callbacks.onPortalCreation;
@@ -40,7 +41,8 @@ let onChartComponentSelection = (props, callbacks) => {
     let childprops = {
         nodeconfig: nodeconfig,
         userselections: userselections,
-        budgetdata: budgetdata,
+        viewpointdata: viewpointdata,
+        itemseriesdata: itemseriesdata,
         chartmatrixrow: chartmatrixrow,
         selectionrow: selectionrow,
         matrixcolumn: matrixcolumn,
@@ -57,7 +59,7 @@ let onChartComponentSelection = (props, callbacks) => {
 };
 exports.onChartComponentSelection = onChartComponentSelection;
 let createChildNode = (props, callbacks) => {
-    let { nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow, matrixcolumn, portalChartIndex, context, chart, } = props;
+    let { nodeconfig, userselections, viewpointdata, itemseriesdata, chartmatrixrow, selectionrow, matrixcolumn, portalChartIndex, context, chart, } = props;
     let viewpoint = nodeconfig.viewpoint, facet = nodeconfig.facet;
     let { workingStatus, refreshPresentation, onPortalCreation, } = callbacks;
     let childdatapath = nodeconfig.datapath.slice();
@@ -89,7 +91,7 @@ let createChildNode = (props, callbacks) => {
     let newrange = Object.assign({}, nodeconfig.yearscope);
     let charttype = userselections.charttype;
     let chartCode = constants_1.ChartTypeCodes[charttype];
-    let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[facet];
+    let portalcharts = viewpointdata.PortalCharts[facet];
     let charts = [];
     for (let type of portalcharts) {
         if (type.Type == 'Components' && !newnode.Components) {
@@ -124,7 +126,8 @@ let createChildNode = (props, callbacks) => {
             nodeConfig: newnodeconfig,
             chartIndex: newnodeindex,
             userselections: userselections,
-            budgetdata: budgetdata,
+            viewpointdata: viewpointdata,
+            itemseriesdata: itemseriesdata,
             chartmatrixrow: chartmatrixrow,
         };
         let callbacks = {
