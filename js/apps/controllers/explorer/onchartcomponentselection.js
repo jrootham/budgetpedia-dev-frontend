@@ -135,7 +135,7 @@ let createChildNode = (props, callbacks) => {
             onPortalCreation: onPortalCreation,
             workingStatus: workingStatus,
         };
-        chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
+        chartParmsObj = getchartparms_1.default(props, callbacks);
         if (chartParmsObj.isError) {
             isError = true;
             break;

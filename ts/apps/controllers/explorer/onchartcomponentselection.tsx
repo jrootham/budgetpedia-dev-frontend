@@ -21,8 +21,9 @@ import {
 
 import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
-import { getChartParms } from './getchartparms'
+import getChartParms from './getchartparms'
 import { getBudgetNode } from './getbudgetnode'
+import { DatasetConfig } from '../../../local/databaseapi'
 
 // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
 
@@ -38,7 +39,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     let context = props.context
     let userselections = props.userselections
     let viewpointdata = props.viewpointdata
-    let itemseriesdata = props.itemseriesdata
+    let itemseriesdata: DatasetConfig = props.itemseriesdata
     let chartmatrixrow = props.chartmatrixrow
 
     let refreshPresentation = callbacks.refreshPresentation

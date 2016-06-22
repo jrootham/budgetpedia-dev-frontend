@@ -56,7 +56,7 @@ class ExplorerBranch extends Component {
             budgetdata.Viewpoints[viewpointname] = viewpointdata;
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
-            let itemseriesdata = budgetdata.DataSeries[userselections.facet];
+            let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
             viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint];
             for (drilldownindex in drilldownnodeconfig.charts) {
                 let props = {
@@ -72,7 +72,7 @@ class ExplorerBranch extends Component {
                     onPortalCreation: this.onPortalCreation,
                     workingStatus: this.props.callbacks.workingStatus,
                 };
-                chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
+                chartParmsObj = getchartparms_1.default(props, callbacks);
                 if (!chartParmsObj.isError) {
                     drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
                     drilldownnodeconfig.charts[drilldownindex].chartCode =
@@ -202,7 +202,7 @@ class ExplorerBranch extends Component {
             let cellptr;
             let isError = false;
             let chartParmsObj = null;
-            let itemseriesdata = budgetdata.DataSeries[userselections.facet];
+            let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
             for (cellptr in matrixseries) {
                 nodeconfig = matrixseries[cellptr];
                 let datanode = nodeconfig.datanode;
@@ -252,7 +252,7 @@ class ExplorerBranch extends Component {
                 }
                 let nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
-                    let itemseriesdata = budgetdata.DataSeries[userselections.facet];
+                    let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
                     let viewpointdata = budgetdata.Viewpoints[nodeconfig.viewpoint];
                     let props = {
                         nodeConfig: nodeconfig,
@@ -267,7 +267,7 @@ class ExplorerBranch extends Component {
                         onPortalCreation: this.onPortalCreation,
                         workingStatus: this.props.callbacks.workingStatus,
                     };
-                    chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
+                    chartParmsObj = getchartparms_1.default(props, callbacks);
                     if (chartParmsObj.isError) {
                         matrixseries.splice(cellptr);
                         if (cellptr > 0) {
@@ -312,7 +312,7 @@ class ExplorerBranch extends Component {
             let oldChartType = nodeConfig.charts[portalIndex].googlecharttype;
             nodeConfig.charts[portalIndex].googlecharttype = chartType;
             let budgetdata = this.props.budgetdata;
-            let itemseriesdata = budgetdata.DataSeries[this.state.userselections.facet];
+            let itemseriesdata = databaseapi_1.default.getDatasetConfig(this.state.userselections.facet);
             let viewpointdata = budgetdata.Viewpoints[nodeConfig.viewpoint];
             let props = {
                 nodeConfig: nodeConfig,
@@ -327,7 +327,7 @@ class ExplorerBranch extends Component {
                 onPortalCreation: this.onPortalCreation,
                 workingStatus: this.props.callbacks.workingStatus,
             };
-            let chartParmsObj = getchartparms_1.getChartParms(props, callbacks);
+            let chartParmsObj = getchartparms_1.default(props, callbacks);
             if (!chartParmsObj.isError) {
                 nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.charts[portalIndex].chartCode =
@@ -354,11 +354,11 @@ class ExplorerBranch extends Component {
         this.getPortals = (matrixrow) => {
             let userselections = this.state.userselections;
             let budgetdata = this.props.budgetdata;
-            let portaltitles = budgetdata.DataSeries[userselections.facet].Titles;
-            let dataseries = budgetdata.DataSeries[userselections.facet];
-            let portalseriesname = dataseries.Name;
-            if (dataseries.Units == 'DOLLAR') {
-                portalseriesname += ' (' + dataseries.UnitsAlias + ')';
+            let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
+            let portaltitles = itemseriesdata.Titles;
+            let portalseriesname = itemseriesdata.Name;
+            if (itemseriesdata.Units == 'DOLLAR') {
+                portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')';
             }
             let portals = matrixrow.map((nodeconfig, index) => {
                 let portalcharts = [];

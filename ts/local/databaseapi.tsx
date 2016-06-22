@@ -68,7 +68,7 @@ interface CurrencyItemType {
     nominal?: ItemType,
 }
 
-interface Dataset<ItemType> {
+export interface DatasetConfig {
     // Action: string,
     Baseline: string,
     Name: string,
@@ -80,6 +80,9 @@ interface Dataset<ItemType> {
     UnitsAlias: string,
     Categories: string,
     Title: string,
+}
+
+interface Dataset<ItemType> extends DatasetConfig {
     InflationAdjusted?: boolean,
     Items: {
         [itemcode:string]:ItemType
@@ -151,6 +154,28 @@ class Database {
 
         return setparms.viewpointdata
 
+    }
+
+    getDatasetConfig = (dataset:string):DatasetConfig => {
+        let datasetdata = this.getDataset(dataset)
+        let { Baseline,
+            Name,
+            Titles,
+            Units,
+            UnitsAlias,
+            Categories,
+            Title } = datasetdata
+
+        let config = {
+            Baseline, 
+            Name, 
+            Titles, 
+            Units, 
+            UnitsAlias,
+            Categories,
+            Title,
+        }
+        return config
     }
 
     private getViewpoint = (viewpoint: string): Viewpoint => {

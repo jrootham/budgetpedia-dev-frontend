@@ -221,4 +221,5 @@ let getChartParms = (props, callbacks) => {
     };
     return chartParmsObj;
 };
-exports.getChartParms = getChartParms;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = getChartParms;

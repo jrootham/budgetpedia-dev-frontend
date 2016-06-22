@@ -26,6 +26,20 @@ class Database {
             this.setViewpointData(setparms);
             return setparms.viewpointdata;
         };
+        this.getDatasetConfig = (dataset) => {
+            let datasetdata = this.getDataset(dataset);
+            let { Baseline, Name, Titles, Units, UnitsAlias, Categories, Title } = datasetdata;
+            let config = {
+                Baseline: Baseline,
+                Name: Name,
+                Titles: Titles,
+                Units: Units,
+                UnitsAlias: UnitsAlias,
+                Categories: Categories,
+                Title: Title,
+            };
+            return config;
+        };
         this.getViewpoint = (viewpoint) => {
             let viewpointdata = db_viewpoints[viewpoint];
             return viewpointdata;

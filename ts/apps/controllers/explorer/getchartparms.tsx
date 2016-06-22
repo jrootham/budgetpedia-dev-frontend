@@ -31,6 +31,7 @@ import { getBudgetNode } from './getbudgetnode'
 import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
 import { onChartComponentSelection } from './onchartcomponentselection'
+import { DatasetConfig } from '../../../local/databaseapi'
 
 let getChartParms = (
         props:GetChartParmsProps, callbacks: GetChartParmsCallbacks
@@ -40,7 +41,7 @@ let getChartParms = (
     let chartIndex = props.chartIndex
     let userselections = props.userselections
     let viewpointdata = props.viewpointdata
-    let itemseriesdata = props.itemseriesdata
+    let itemseriesdata:DatasetConfig = props.itemseriesdata
     let chartmatrixrow = props.chartmatrixrow
 
     let refreshPresentation = callbacks.refreshPresentation
@@ -324,5 +325,5 @@ let getChartParms = (
 
 }
 
-export { getChartParms }
+export default getChartParms
 
