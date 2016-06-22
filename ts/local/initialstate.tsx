@@ -9,7 +9,7 @@
 
 /* ================= theme details: ==================== */
 
-let budgetdata = require('../../explorerprototypedata/2015budgetA.json')
+let budgetdata = { viewpoint: {} } // require('../../explorerprototypedata/2015budgetA.json')
 
 import theme from 'material-ui/styles/baseThemes/lightBaseTheme'
 

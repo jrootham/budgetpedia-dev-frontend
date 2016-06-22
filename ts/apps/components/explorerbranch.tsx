@@ -115,7 +115,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
-        budgetdata.Viewpoints[viewpointname] = viewpointdata
+        // budgetdata.Viewpoints[viewpointname] = viewpointdata
+        budgetdata.viewpoint = viewpointdata
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
 
@@ -126,7 +127,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let drilldownindex: any
 
         let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
-        viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint]
+        // viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint]
+        // viewpointdata = budgetdata.viewpoint
 
         for (drilldownindex in drilldownnodeconfig.charts) {
             let props: GetChartParmsProps = {
@@ -178,7 +180,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let budgetdata = this.props.budgetdata
         let viewpoint = userselections.viewpoint
         let facet = userselections.facet
-        let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[facet]
+        // let viewpointdata = budgetdata.Viewpoints[viewpoint]
+        let viewpointdata = budgetdata.viewpoint
+        let portalcharts = viewpointdata.PortalCharts[facet]
         let charts = []
         for (let type of portalcharts) {
             let chartconfig: MatrixChartConfig = {
@@ -301,7 +305,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
-        budgetdata.Viewpoints[viewpointname] = viewpointdata
+        // budgetdata.Viewpoints[viewpointname] = viewpointdata
+        budgetdata.viewpoint = viewpointdata
 
         let matrixseries = chartmatrixrow
         let nodeconfig: MatrixNodeConfig
@@ -362,7 +367,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             let nodechartindex: any = null
             for (nodechartindex in nodeconfig.charts) {
                 let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
-                let viewpointdata = budgetdata.Viewpoints[nodeconfig.viewpoint]
+                // let viewpointdata = budgetdata.Viewpoints[nodeconfig.viewpoint]
+                let viewpointdata = budgetdata.viewpoint
                 let props: GetChartParmsProps = {
                     nodeConfig: nodeconfig,
                     chartIndex: nodechartindex,
@@ -428,7 +434,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         nodeConfig.charts[portalIndex].googlecharttype = chartType
         let budgetdata = this.props.budgetdata
         let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(this.state.userselections.facet)
-        let viewpointdata = budgetdata.Viewpoints[nodeConfig.viewpoint]
+        // let viewpointdata = budgetdata.Viewpoints[nodeConfig.viewpoint]
+        let viewpointdata = budgetdata.viewpoint
         let props: GetChartParmsProps = {
             nodeConfig: nodeConfig,
             chartIndex: portalIndex,

@@ -53,11 +53,10 @@ class ExplorerBranch extends Component {
                     spanyears: false,
                 }
             });
-            budgetdata.Viewpoints[viewpointname] = viewpointdata;
+            budgetdata.viewpoint = viewpointdata;
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
             let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
-            viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint];
             for (drilldownindex in drilldownnodeconfig.charts) {
                 let props = {
                     nodeConfig: drilldownnodeconfig,
@@ -95,7 +94,8 @@ class ExplorerBranch extends Component {
             let budgetdata = this.props.budgetdata;
             let viewpoint = userselections.viewpoint;
             let facet = userselections.facet;
-            let portalcharts = budgetdata.Viewpoints[viewpoint].PortalCharts[facet];
+            let viewpointdata = budgetdata.viewpoint;
+            let portalcharts = viewpointdata.PortalCharts[facet];
             let charts = [];
             for (let type of portalcharts) {
                 let chartconfig = {
@@ -196,7 +196,7 @@ class ExplorerBranch extends Component {
                     spanyears: false,
                 }
             });
-            budgetdata.Viewpoints[viewpointname] = viewpointdata;
+            budgetdata.viewpoint = viewpointdata;
             let matrixseries = chartmatrixrow;
             let nodeconfig;
             let cellptr;
@@ -253,7 +253,7 @@ class ExplorerBranch extends Component {
                 let nodechartindex = null;
                 for (nodechartindex in nodeconfig.charts) {
                     let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
-                    let viewpointdata = budgetdata.Viewpoints[nodeconfig.viewpoint];
+                    let viewpointdata = budgetdata.viewpoint;
                     let props = {
                         nodeConfig: nodeconfig,
                         chartIndex: nodechartindex,
@@ -313,7 +313,7 @@ class ExplorerBranch extends Component {
             nodeConfig.charts[portalIndex].googlecharttype = chartType;
             let budgetdata = this.props.budgetdata;
             let itemseriesdata = databaseapi_1.default.getDatasetConfig(this.state.userselections.facet);
-            let viewpointdata = budgetdata.Viewpoints[nodeConfig.viewpoint];
+            let viewpointdata = budgetdata.viewpoint;
             let props = {
                 nodeConfig: nodeConfig,
                 chartIndex: portalIndex,

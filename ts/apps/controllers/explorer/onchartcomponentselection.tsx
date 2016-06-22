@@ -143,6 +143,8 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
 
     let node = nodeconfig.datanode
 
+    console.log('node in createChildNode', node)
+
     if (!node.Components) {
         updateChartSelections(chartmatrixrow)
         return
@@ -227,6 +229,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
             }
             chartParmsObj = getChartParms(props, callbacks)
             if (chartParmsObj.isError) {
+                console.log('getChartParms error', chartParmsObj)
                 isError = true
                 break
             }

@@ -64,6 +64,7 @@ let createChildNode = (props, callbacks) => {
     let { workingStatus, refreshPresentation, onPortalCreation, } = callbacks;
     let childdatapath = nodeconfig.datapath.slice();
     let node = nodeconfig.datanode;
+    console.log('node in createChildNode', node);
     if (!node.Components) {
         updatechartselections_1.updateChartSelections(chartmatrixrow);
         return;
@@ -137,6 +138,7 @@ let createChildNode = (props, callbacks) => {
         };
         chartParmsObj = getchartparms_1.default(props, callbacks);
         if (chartParmsObj.isError) {
+            console.log('getChartParms error', chartParmsObj);
             isError = true;
             break;
         }

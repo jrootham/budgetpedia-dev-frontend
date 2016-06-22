@@ -1,5 +1,5 @@
 'use strict';
-let budgetdata = require('../../explorerprototypedata/2015budgetA.json');
+let budgetdata = { viewpoint: {} };
 const lightBaseTheme_1 = require('material-ui/styles/baseThemes/lightBaseTheme');
 const colors = require('material-ui/styles/colors');
 let appnavbar = {
