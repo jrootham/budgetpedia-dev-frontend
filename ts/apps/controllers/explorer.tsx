@@ -41,7 +41,7 @@ import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 
-import { ExplorerBranch } from '../components/explorerbranch'
+import ExplorerBranch from '../components/explorerbranch'
 import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
 
 import { getChartParms } from './explorer/getchartparms'

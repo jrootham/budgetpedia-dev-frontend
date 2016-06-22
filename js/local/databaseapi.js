@@ -6,25 +6,37 @@ let db_viewpoints = require('../../data/viewpoints.json');
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 class Database {
     constructor() {
-        this.getBranch = (viewpoint, path = []) => {
+        this.getBranch = (viewpointname, path = []) => {
         };
         this.setViewpointData = (parms) => {
             setviewpointdata_1.default(parms);
         };
-        this.getViewpoint = (viewpoint) => {
-            let vpt;
-            return vpt;
+        this.getViewpointData = (parms) => {
+            let { viewpointname, dataseriesname, wantsInflationAdjusted, timeSpecs } = parms;
+            let viewpointdata = this.getViewpoint(viewpointname), itemseriesdata = this.getDataset(dataseriesname), lookups = this.getLookup();
+            viewpointdata = JSON.parse(JSON.stringify(viewpointdata));
+            let setparms = {
+                dataseriesname: dataseriesname,
+                wantsInflationAdjusted: wantsInflationAdjusted,
+                timeSpecs: timeSpecs,
+                viewpointdata: viewpointdata,
+                itemseriesdata: itemseriesdata,
+                lookups: lookups,
+            };
+            this.setViewpointData(setparms);
+            return setparms.viewpointdata;
         };
-        this.getDataset = (dataset) => delay(500).then(() => {
-            let dst;
-            dst = db_dataseries[dataset];
-            if (!dst)
-                throw new Error(`dataset "${dataset}" not found`);
-            return dst;
-        });
-        this.getLookup = (lookup) => {
-            let lkp;
-            return lkp;
+        this.getViewpoint = (viewpoint) => {
+            let viewpointdata = db_viewpoints[viewpoint];
+            return viewpointdata;
+        };
+        this.getDataset = (dataset) => {
+            let datasetdata = db_dataseries[dataset];
+            return datasetdata;
+        };
+        this.getLookup = (lookup = undefined) => {
+            let lookupdata = db_lookups;
+            return lookupdata;
         };
     }
 }

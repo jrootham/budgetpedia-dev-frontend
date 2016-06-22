@@ -39,7 +39,6 @@ let getChartParms = (
     let nodeConfig:MatrixNodeConfig = props.nodeConfig
     let chartIndex = props.chartIndex
     let userselections = props.userselections
-    // let budgetdata = props.budgetdata
     let viewpointdata = props.viewpointdata
     let itemseriesdata = props.itemseriesdata
     let chartmatrixrow = props.chartmatrixrow
@@ -70,9 +69,6 @@ let getChartParms = (
     // unpack userselections
     let dataseriesname = userselections.facet
 
-    // unpack budgetdata
-    // let viewpointdata = budgetdata.Viewpoints[viewpointindex],
-        // itemseries = budgetdata.DataSeries[dataseriesname],
     let units = itemseriesdata.Units,
         vertlabel
     vertlabel = itemseriesdata.UnitsAlias
@@ -241,7 +237,6 @@ let getChartParms = (
                         userselections,
                         viewpointdata,
                         itemseriesdata,
-                        // budgetdata,
                         chartmatrixrow
                     }
                     let callbacks: OnChartComponentSelectionCallbacks = {

@@ -37,7 +37,6 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
     let context = props.context
     let userselections = props.userselections
-    // let budgetdata = props.budgetdata
     let viewpointdata = props.viewpointdata
     let itemseriesdata = props.itemseriesdata
     let chartmatrixrow = props.chartmatrixrow
@@ -97,7 +96,6 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
         userselections, 
         viewpointdata,
         itemseriesdata,
-        // budgetdata, 
         chartmatrixrow, 
         selectionrow,
         matrixcolumn,
@@ -118,7 +116,6 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     let {
         nodeconfig,
         userselections,
-        // budgetdata,
         viewpointdata,
         itemseriesdata,
         chartmatrixrow,
@@ -144,8 +141,6 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     let childdatapath = nodeconfig.datapath.slice()
 
     let node = nodeconfig.datanode
-     // getBudgetNode(
-     //    budgetdata.Viewpoints[userselections.viewpoint], childdatapath)
 
     if (!node.Components) {
         updateChartSelections(chartmatrixrow)
@@ -222,7 +217,6 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
                 userselections,
                 viewpointdata,
                 itemseriesdata,
-                // budgetdata,
                 chartmatrixrow,
             }
             let callbacks: GetChartParmsCallbacks = {

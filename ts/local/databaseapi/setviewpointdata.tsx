@@ -21,7 +21,6 @@ import {
 export interface SetViewpointDataParms {
     // viewpointname:string,
     dataseriesname: string,
-    // budgetdata: any,
     viewpointdata:any,
     itemseriesdata:any,
     lookups:any,
@@ -39,7 +38,6 @@ export interface SetViewpointDataParms {
 let setViewpointData = (parms: SetViewpointDataParms) => {
     // let viewpointname = parms.viewpointname,
     let dataseriesname = parms.dataseriesname,
-        // budgetdata = parms.budgetdata,
         viewpointdata = parms.viewpointdata,
         itemseriesdata = parms.itemseriesdata,
         lookups = parms.lookups,
@@ -50,8 +48,6 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
     // already done if currentdataseries matches request
     if (viewpointdata.currentdataseries == dataseriesname)
         return
-
-    // let itemseries = budgetdata.DataSeries[dataseriesname]
 
     let baselinecat = itemseriesdata.Baseline // use for system lookups
     let baselinelookups = lookups[baselinecat]

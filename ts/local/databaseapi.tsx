@@ -90,6 +90,17 @@ interface Datasets {
     [index: string]: Dataset<CurrencyItemType> | Dataset<ItemType>
 }
 
+export interface GetViewpointDataParms {
+    viewpointname:string,
+    dataseriesname: string,
+    wantsInflationAdjusted: boolean,
+    timeSpecs: {
+        leftyear: number,
+        rightyear: number,
+        spanyears: boolean,
+    }
+}
+
 export interface CurrencyDataset extends Dataset<CurrencyItemType> {}
 
 export interface ItemDataset extends Dataset<ItemType> {}
@@ -109,30 +120,58 @@ class Database {
     datasets: Datasets
     lookups: Lookups
 
-    getBranch = (viewpoint, path = []) => {
+    getBranch = (viewpointname, path = []) => {
 
     }
 
-    setViewpointData = (parms: SetViewpointDataParms) => {
+    private setViewpointData = (parms: SetViewpointDataParms) => {
         updateViewpointData(parms)
     }
 
-    private getViewpoint = (viewpoint:string):Viewpoint => {
-        let vpt:Viewpoint
-        return vpt
+    getViewpointData = (parms: GetViewpointDataParms) => {
+
+        let { viewpointname, dataseriesname, wantsInflationAdjusted, timeSpecs } = parms
+
+        let viewpointdata = this.getViewpoint(viewpointname),
+            itemseriesdata = this.getDataset(dataseriesname),
+            lookups = this.getLookup()
+
+        viewpointdata = JSON.parse(JSON.stringify(viewpointdata)) // deep clone
+
+        let setparms:SetViewpointDataParms = {
+            dataseriesname,
+            wantsInflationAdjusted,
+            timeSpecs,
+            viewpointdata,
+            itemseriesdata,
+            lookups,
+        }
+
+        this.setViewpointData(setparms)
+
+        return setparms.viewpointdata
+
     }
 
-    private getDataset = (dataset:string) => 
-        delay(500).then(() => {
-            let dst: CurrencyDataset | ItemDataset
-            dst = db_dataseries[dataset]
-            if (!dst) throw new Error(`dataset "${dataset}" not found`)
-            return dst
-        })
+    private getViewpoint = (viewpoint: string): Viewpoint => {
+        let viewpointdata: Viewpoint = db_viewpoints[viewpoint]
+        return viewpointdata
+    }
 
-    private getLookup = (lookup:string):Lookup => {
-        let lkp: Lookup
-        return lkp
+    private getDataset = (dataset: string) => {
+        let datasetdata: CurrencyDataset | ItemDataset = db_dataseries[dataset]
+        return datasetdata
+        // delay(500).then(() => {
+        //     let dst: CurrencyDataset | ItemDataset
+        //     dst = db_dataseries[dataset]
+        //     if (!dst) throw new Error(`dataset "${dataset}" not found`)
+        //     return dst
+        // })
+    }
+
+    private getLookup = (lookup:string = undefined):Lookup => {
+        let lookupdata: Lookup = db_lookups
+        return lookupdata
     }
 }
 

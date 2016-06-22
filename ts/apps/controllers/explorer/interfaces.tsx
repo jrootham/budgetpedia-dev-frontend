@@ -57,7 +57,6 @@ interface GetChartParmsProps {
     userselections:any, 
     viewpointdata: any,
     itemseriesdata: any,
-    // budgetdata:any, 
     chartmatrixrow:any,
 }
 
@@ -72,7 +71,6 @@ interface OnChartComponentSelectionProps {
     userselections: any,
     viewpointdata:any,
     itemseriesdata: any,
-    // budgetdata: any,
     chartmatrixrow: any,
 }
 interface OnChartComponentSelectionCallbacks {
@@ -123,7 +121,7 @@ interface SortedComponentItem {
     Code: string,
     Index?: number,
     Name: string,
-    datanode?: any // data node from budgetdata model
+    datanode?: any,
 }
 
 // internal component of chart config
@@ -156,7 +154,6 @@ interface CreateChildNodeProps {
     userselections: any,
     viewpointdata: any,
     itemseriesdata: any,
-    // budgetdata: any,
     chartmatrixrow: any,
     selectionrow: any,
     matrixcolumn: any,

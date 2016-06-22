@@ -43,14 +43,9 @@ class ExplorerBranch extends Component {
             var matrixlocation, chartParmsObj;
             let viewpointname = userselections.viewpoint;
             let facet = userselections.facet;
-            let viewpointdata = budgetdata.Viewpoints[viewpointname];
-            let itemseriesdata = budgetdata.DataSeries[facet];
-            let lookups = budgetdata.Lookups;
-            databaseapi_1.default.setViewpointData({
+            let viewpointdata = databaseapi_1.default.getViewpointData({
+                viewpointname: viewpointname,
                 dataseriesname: facet,
-                viewpointdata: viewpointdata,
-                itemseriesdata: itemseriesdata,
-                lookups: lookups,
                 wantsInflationAdjusted: userselections.inflationadjusted,
                 timeSpecs: {
                     leftyear: null,
@@ -58,9 +53,10 @@ class ExplorerBranch extends Component {
                     spanyears: false,
                 }
             });
+            budgetdata.Viewpoints[viewpointname] = viewpointdata;
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
-            itemseriesdata = budgetdata.DataSeries[userselections.facet];
+            let itemseriesdata = budgetdata.DataSeries[userselections.facet];
             viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint];
             for (drilldownindex in drilldownnodeconfig.charts) {
                 let props = {
@@ -190,26 +186,23 @@ class ExplorerBranch extends Component {
             let viewpointname = this.state.userselections.viewpoint;
             let facetname = this.state.userselections.facet;
             let budgetdata = this.props.budgetdata;
-            let itemseriesdata = budgetdata.DataSeries[userselections.facet];
-            let viewpointdata = budgetdata.Viewpoints[viewpointname];
-            let lookups = budgetdata.Lookups;
-            databaseapi_1.default.setViewpointData({
-                dataseriesname: facetname,
-                viewpointdata: viewpointdata,
-                itemseriesdata: itemseriesdata,
-                lookups: lookups,
-                wantsInflationAdjusted: this.state.userselections.inflationadjusted,
+            let viewpointdata = databaseapi_1.default.getViewpointData({
+                viewpointname: viewpointname,
+                dataseriesname: facet,
+                wantsInflationAdjusted: userselections.inflationadjusted,
                 timeSpecs: {
                     leftyear: null,
                     rightyear: null,
                     spanyears: false,
                 }
             });
+            budgetdata.Viewpoints[viewpointname] = viewpointdata;
             let matrixseries = chartmatrixrow;
             let nodeconfig;
             let cellptr;
             let isError = false;
             let chartParmsObj = null;
+            let itemseriesdata = budgetdata.DataSeries[userselections.facet];
             for (cellptr in matrixseries) {
                 nodeconfig = matrixseries[cellptr];
                 let datanode = nodeconfig.datanode;
@@ -448,4 +441,5 @@ class ExplorerBranch extends Component {
         }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));
     }
 }
-exports.ExplorerBranch = ExplorerBranch;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = ExplorerBranch;
