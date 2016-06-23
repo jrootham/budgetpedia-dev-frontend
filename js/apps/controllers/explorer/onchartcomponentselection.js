@@ -7,8 +7,6 @@ let onChartComponentSelection = (props, callbacks) => {
     let context = props.context;
     let userselections = props.userselections;
     let budgetdata = props.budgetdata;
-    let viewpointdata = budgetdata.viewpointdata;
-    let itemseriesdata = budgetdata.itemseriesconfigdata;
     let chartmatrixrow = props.chartmatrixrow;
     let refreshPresentation = callbacks.refreshPresentation;
     let onPortalCreation = callbacks.onPortalCreation;

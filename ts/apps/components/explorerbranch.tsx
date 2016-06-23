@@ -96,7 +96,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let userselections = this.state.userselections,
             chartmatrixrow = this.state.chartmatrixrow
         let budgetdata = this.props.branchdata.data
-
         var matrixlocation,
             chartParmsObj: ChartParmsObj
 
@@ -309,7 +308,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         // budgetdata.Viewpoints[viewpointname] = viewpointdata
         budgetdata.viewpointdata = viewpointdata
         let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
-
+        budgetdata.itemseriesconfigdata = itemseriesdata
         let matrixseries = chartmatrixrow
         let nodeconfig: MatrixNodeConfig
         let cellptr: any
@@ -366,9 +365,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
             let nodechartindex: any = null
             for (nodechartindex in nodeconfig.charts) {
-                let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
-                // let viewpointdata = budgetdata.Viewpoints[nodeconfig.viewpoint]
-                let viewpointdata = budgetdata.viewpointdata
                 let props: GetChartParmsProps = {
                     nodeConfig: nodeconfig,
                     chartIndex: nodechartindex,
@@ -432,9 +428,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let oldChartType = nodeConfig.charts[portalIndex].googlecharttype
         nodeConfig.charts[portalIndex].googlecharttype = chartType
         let budgetdata = this.props.branchdata.data
-        let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(this.state.userselections.facet)
-        // let viewpointdata = budgetdata.Viewpoints[nodeConfig.viewpoint]
-        let viewpointdata = budgetdata.viewpointdata
         let props: GetChartParmsProps = {
             nodeConfig: nodeConfig,
             chartIndex: portalIndex,
@@ -486,7 +479,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let budgetdata = this.props.branchdata.data
 
-        let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
+        if (!budgetdata.itemseriesconfigdata) return []
+
+        let itemseriesdata: DatasetConfig = budgetdata.itemseriesconfigdata
         let portaltitles = itemseriesdata.Titles
         let portalseriesname = itemseriesdata.Name
         if (itemseriesdata.Units == 'DOLLAR') {

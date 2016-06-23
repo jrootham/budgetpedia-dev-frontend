@@ -44,7 +44,7 @@ import Dialog from 'material-ui/Dialog'
 import ExplorerBranch from '../components/explorerbranch'
 import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
 
-import getChartParms from './explorer/getchartparms'
+// import getChartParms from './explorer/getchartparms'
 import { updateChartSelections } from './explorer/updatechartselections'
 import * as Actions from '../../actions/actions'
 
