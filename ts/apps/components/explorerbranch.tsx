@@ -41,8 +41,9 @@ import { createChildNode } from '../controllers/explorer/onchartcomponentselecti
 import * as Actions from '../../actions/actions'
 
 interface ExploreBranchProps {
-    budgetdata: any,
-    matrixrow: any,
+    branchdata: any,
+    // budgetdata: any,
+    // matrixrow: any,
     callbacks:any,
     userselections:any,
     yearscope:any,
@@ -61,7 +62,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // charts exist in a matrix (row/column) which contain a chartconfig object
     // TODO: most of 
     state = {
-        chartmatrixrow:this.props.matrixrow,
+        chartmatrixrow:this.props.branchdata.nodes,
         yearslider: this.props.yearslider,
         yearscope: this.props.yearscope,
         userselections: this.props.userselections,
@@ -94,7 +95,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     initializeChartSeries = () => {
         let userselections = this.state.userselections,
             chartmatrixrow = this.state.chartmatrixrow
-        let budgetdata = this.props.budgetdata
+        let budgetdata = this.props.branchdata.data
 
         var matrixlocation,
             chartParmsObj: ChartParmsObj
@@ -116,7 +117,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         })
 
         // budgetdata.Viewpoints[viewpointname] = viewpointdata
-        budgetdata.viewpoint = viewpointdata
+        budgetdata.viewpointdata = viewpointdata
+        let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
+        budgetdata.itemseriesconfigdata = itemseriesdata
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
 
@@ -126,7 +129,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             this.initRootNodeConfig(userselections)
         let drilldownindex: any
 
-        let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
         // viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint]
         // viewpointdata = budgetdata.viewpoint
 
@@ -134,9 +136,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             let props: GetChartParmsProps = {
                 nodeConfig: drilldownnodeconfig,
                 chartIndex: drilldownindex,
+                budgetdata,
                 userselections,
-                itemseriesdata,
-                viewpointdata,
                 chartmatrixrow,
             }
             let callbacks: GetChartParmsCallbacks = {
@@ -177,11 +178,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     initRootNodeConfig = (userselections): MatrixNodeConfig => {
         let googlecharttype = userselections.charttype
         let chartCode = ChartTypeCodes[googlecharttype]
-        let budgetdata = this.props.budgetdata
+        let budgetdata = this.props.branchdata.data
         let viewpoint = userselections.viewpoint
         let facet = userselections.facet
         // let viewpointdata = budgetdata.Viewpoints[viewpoint]
-        let viewpointdata = budgetdata.viewpoint
+        let viewpointdata = budgetdata.viewpointdata
         let portalcharts = viewpointdata.PortalCharts[facet]
         let charts = []
         for (let type of portalcharts) {
@@ -292,7 +293,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         })
         let viewpointname = this.state.userselections.viewpoint
         let facetname = this.state.userselections.facet
-        let budgetdata = this.props.budgetdata
+        let budgetdata = this.props.branchdata.data
 
         let viewpointdata = databaseapi.getViewpointData({
             viewpointname,
@@ -306,14 +307,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         })
 
         // budgetdata.Viewpoints[viewpointname] = viewpointdata
-        budgetdata.viewpoint = viewpointdata
+        budgetdata.viewpointdata = viewpointdata
+        let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
 
         let matrixseries = chartmatrixrow
         let nodeconfig: MatrixNodeConfig
         let cellptr: any
         let isError = false
         let chartParmsObj: ChartParmsObj = null
-        let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
         for (cellptr in matrixseries) {
             nodeconfig = matrixseries[cellptr]
             let datanode = nodeconfig.datanode
@@ -337,8 +338,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     let childprops: CreateChildNodeProps = {
                         nodeconfig:prevconfig,
                         userselections,
-                        viewpointdata,
-                        itemseriesdata,
+                        budgetdata,
                         chartmatrixrow:matrixseries,
                         selectionrow: prevconfig.charts[0].chartselection[0].row,
                         matrixcolumn: prevconfig.matrixlocation.column,
@@ -368,13 +368,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             for (nodechartindex in nodeconfig.charts) {
                 let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
                 // let viewpointdata = budgetdata.Viewpoints[nodeconfig.viewpoint]
-                let viewpointdata = budgetdata.viewpoint
+                let viewpointdata = budgetdata.viewpointdata
                 let props: GetChartParmsProps = {
                     nodeConfig: nodeconfig,
                     chartIndex: nodechartindex,
                     userselections,
-                    itemseriesdata,
-                    viewpointdata,
+                    budgetdata,
                     chartmatrixrow,
                 }
                 let callbacks: GetChartParmsCallbacks = {
@@ -432,16 +431,15 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let nodeConfig: MatrixNodeConfig = chartmatrixrow[location.matrixlocation.column]
         let oldChartType = nodeConfig.charts[portalIndex].googlecharttype
         nodeConfig.charts[portalIndex].googlecharttype = chartType
-        let budgetdata = this.props.budgetdata
+        let budgetdata = this.props.branchdata.data
         let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(this.state.userselections.facet)
         // let viewpointdata = budgetdata.Viewpoints[nodeConfig.viewpoint]
-        let viewpointdata = budgetdata.viewpoint
+        let viewpointdata = budgetdata.viewpointdata
         let props: GetChartParmsProps = {
             nodeConfig: nodeConfig,
             chartIndex: portalIndex,
             userselections: this.state.userselections,
-            viewpointdata,
-            itemseriesdata,
+            budgetdata,
             chartmatrixrow,
         }
         let callbacks: GetChartParmsCallbacks = {
@@ -486,7 +484,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let userselections = this.state.userselections
 
-        let budgetdata = this.props.budgetdata
+        let budgetdata = this.props.branchdata.data
 
         let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
         let portaltitles = itemseriesdata.Titles

@@ -38,8 +38,9 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
     let context = props.context
     let userselections = props.userselections
-    let viewpointdata = props.viewpointdata
-    let itemseriesdata: DatasetConfig = props.itemseriesdata
+    let budgetdata = props.budgetdata
+    let viewpointdata = budgetdata.viewpointdata
+    let itemseriesdata: DatasetConfig = budgetdata.itemseriesconfigdata
     let chartmatrixrow = props.chartmatrixrow
 
     let refreshPresentation = callbacks.refreshPresentation
@@ -95,8 +96,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     let childprops: CreateChildNodeProps = {
         nodeconfig, 
         userselections, 
-        viewpointdata,
-        itemseriesdata,
+        budgetdata,
         chartmatrixrow, 
         selectionrow,
         matrixcolumn,
@@ -117,8 +117,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     let {
         nodeconfig,
         userselections,
-        viewpointdata,
-        itemseriesdata,
+        budgetdata,
         chartmatrixrow,
         selectionrow,
         matrixcolumn,
@@ -142,8 +141,6 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     let childdatapath = nodeconfig.datapath.slice()
 
     let node = nodeconfig.datanode
-
-    console.log('node in createChildNode', node)
 
     if (!node.Components) {
         updateChartSelections(chartmatrixrow)
@@ -177,7 +174,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         let newrange = Object.assign({}, nodeconfig.yearscope)
         let charttype = userselections.charttype
         let chartCode = ChartTypeCodes[charttype]
-        let portalcharts = viewpointdata.PortalCharts[facet]
+        let portalcharts = budgetdata.viewpointdata.PortalCharts[facet]
         let charts = []
         for (let type of portalcharts) {
             if (type.Type == 'Components' && !newnode.Components) {
@@ -218,8 +215,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
                 nodeConfig: newnodeconfig,
                 chartIndex: newnodeindex,
                 userselections,
-                viewpointdata,
-                itemseriesdata,
+                budgetdata,
                 chartmatrixrow,
             }
             let callbacks: GetChartParmsCallbacks = {
@@ -229,7 +225,6 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
             }
             chartParmsObj = getChartParms(props, callbacks)
             if (chartParmsObj.isError) {
-                console.log('getChartParms error', chartParmsObj)
                 isError = true
                 break
             }

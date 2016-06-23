@@ -40,8 +40,9 @@ let getChartParms = (
     let nodeConfig:MatrixNodeConfig = props.nodeConfig
     let chartIndex = props.chartIndex
     let userselections = props.userselections
-    let viewpointdata = props.viewpointdata
-    let itemseriesdata:DatasetConfig = props.itemseriesdata
+    let budgetdata = props.budgetdata
+    let viewpointdata = budgetdata.viewpointdata
+    let itemseriesdata:DatasetConfig = budgetdata.itemseriesconfigdata
     let chartmatrixrow = props.chartmatrixrow
 
     let refreshPresentation = callbacks.refreshPresentation
@@ -236,8 +237,7 @@ let getChartParms = (
                     let props: OnChartComponentSelectionProps = {
                         context,
                         userselections,
-                        viewpointdata,
-                        itemseriesdata,
+                        budgetdata,
                         chartmatrixrow
                     }
                     let callbacks: OnChartComponentSelectionCallbacks = {

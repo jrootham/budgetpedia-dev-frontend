@@ -6,8 +6,9 @@ let getChartParms = (props, callbacks) => {
     let nodeConfig = props.nodeConfig;
     let chartIndex = props.chartIndex;
     let userselections = props.userselections;
-    let viewpointdata = props.viewpointdata;
-    let itemseriesdata = props.itemseriesdata;
+    let budgetdata = props.budgetdata;
+    let viewpointdata = budgetdata.viewpointdata;
+    let itemseriesdata = budgetdata.itemseriesconfigdata;
     let chartmatrixrow = props.chartmatrixrow;
     let refreshPresentation = callbacks.refreshPresentation;
     let onPortalCreation = callbacks.onPortalCreation;
@@ -152,8 +153,7 @@ let getChartParms = (props, callbacks) => {
                     let props = {
                         context: context,
                         userselections: userselections,
-                        viewpointdata: viewpointdata,
-                        itemseriesdata: itemseriesdata,
+                        budgetdata: budgetdata,
                         chartmatrixrow: chartmatrixrow
                     };
                     let callbacks = {

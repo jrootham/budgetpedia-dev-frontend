@@ -55,8 +55,7 @@ interface GetChartParmsProps {
     nodeConfig: MatrixNodeConfig, 
     chartIndex: number,
     userselections:any, 
-    viewpointdata: any,
-    itemseriesdata: any,
+    budgetdata: any,
     chartmatrixrow:any,
 }
 
@@ -69,8 +68,7 @@ interface GetChartParmsCallbacks {
 interface OnChartComponentSelectionProps {
     context: ChartSelectionContext,
     userselections: any,
-    viewpointdata:any,
-    itemseriesdata: any,
+    budgetdata:any,
     chartmatrixrow: any,
 }
 interface OnChartComponentSelectionCallbacks {
@@ -152,8 +150,7 @@ interface ChartSelectionContext {
 interface CreateChildNodeProps {
     nodeconfig: MatrixNodeConfig,
     userselections: any,
-    viewpointdata: any,
-    itemseriesdata: any,
+    budgetdata:any,
     chartmatrixrow: any,
     selectionrow: any,
     matrixcolumn: any,

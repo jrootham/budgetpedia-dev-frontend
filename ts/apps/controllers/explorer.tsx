@@ -58,6 +58,14 @@ import {
     GetChartParmsCallbacks,
 } from './explorer/interfaces'
 
+interface ChartBranch {
+    data: {
+        viewpointdata: any,
+        itemseriesconfigdata?: any,
+    },
+    nodes: any[]
+}
+
 let Explorer = class extends Component< any, any > {
 
     // ============================================================
@@ -72,7 +80,10 @@ let Explorer = class extends Component< any, any > {
     // charts exist in a matrix (row/column) which contain a chartconfig object
     // TODO: most of 
     state = {
-        chartmatrix: [[], []], // DrillDown, Compare (Later: Differences, Context, Build)
+        // chartmatrix: [[], []], // DrillDown, Compare (Later: Differences, Context, Build)
+        chartbranches:[
+            {data:this.props.budgetdata, nodes:[]}
+        ],
         dialogopen: false,
     }
 
@@ -267,6 +278,9 @@ let Explorer = class extends Component< any, any > {
 */
         // -----------[ DRILLDOWN SEGMENT]-------------
 
+        let branchdata: ChartBranch = explorer.state.chartbranches[ChartSeries.DrillDown]
+
+        this.state.chartbranches[ChartSeries.DrillDown] = branchdata
 
         let drilldownsegment = 
         <Card initiallyExpanded >
@@ -293,9 +307,7 @@ let Explorer = class extends Component< any, any > {
              </CardText>
              <CardText>
              <ExplorerBranch 
-                 budgetdata = {explorer.props.budgetdata}
-                 callbacks = {{ workingStatus: explorer.workingStatus }}
-                 matrixrow = {explorer.state.chartmatrix[ChartSeries.DrillDown]}
+                 branchdata = {branchdata}
                  userselections = {{
                      latestyear: 2015,
                      viewpoint: "FUNCTIONAL",
@@ -306,6 +318,7 @@ let Explorer = class extends Component< any, any > {
                  yearslider = {{ singlevalue: [2015], doublevalue: [2005, 2015] }}
                  yearscope = {"one"}
                  branchkey = {ChartSeries.DrillDown}
+                 callbacks = {{ workingStatus: explorer.workingStatus }}
              />
             </CardText>
 
