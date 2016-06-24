@@ -42,7 +42,7 @@ let getChartParms = (
     let userselections = props.userselections
     let budgetdata = props.budgetdata
     let viewpointdata = budgetdata.viewpointdata
-    let itemseriesdata:DatasetConfig = budgetdata.itemseriesconfigdata
+    let itemseriesdata:DatasetConfig = viewpointdata.itemseriesconfigdata
     let chartmatrixrow = props.chartmatrixrow
 
     let refreshPresentation = callbacks.refreshPresentation

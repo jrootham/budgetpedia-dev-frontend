@@ -61,7 +61,7 @@ import {
 interface ChartBranch {
     data: {
         viewpointdata: any,
-        itemseriesconfigdata?: any,
+        // itemseriesconfigdata?: any,
     },
     nodes: any[]
 }

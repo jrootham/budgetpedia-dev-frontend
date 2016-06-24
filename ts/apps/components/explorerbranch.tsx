@@ -117,10 +117,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
-        // budgetdata.Viewpoints[viewpointname] = viewpointdata
-        budgetdata.viewpointdata = viewpointdata
         let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
-        budgetdata.itemseriesconfigdata = itemseriesdata
+        viewpointdata.itemseriesconfigdata = itemseriesdata
+        budgetdata.viewpointdata = viewpointdata
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
 
@@ -302,10 +301,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
+        let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
+        viewpointdata.itemseriesconfigdata = itemseriesdata
         let budgetdata = this.props.branchdata.data
         budgetdata.viewpointdata = viewpointdata
-        let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
-        budgetdata.itemseriesconfigdata = itemseriesdata
 
         // this.setState({
         //     userselections,
@@ -334,10 +333,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     chartmatrixrow.splice(cellptr)
                     nodeconfig.charts = []
                     isError = true
-                    //!Hack! remove selector from ancestor graph
                     let prevconfig: MatrixNodeConfig = chartmatrixrow[cellptr - 1]
-                    // delete prevconfig.charts[0].chartselection
-                    // delete prevconfig.charts[0].chart
 
                     let context = {
                         selection:prevconfig.charts[0].chartselection,
@@ -490,9 +486,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let budgetdata = this.props.branchdata.data
 
-        if (!budgetdata.itemseriesconfigdata) return []
-
-        let itemseriesdata: DatasetConfig = budgetdata.itemseriesconfigdata
+        if (!budgetdata.viewpointdata) return []
+        let viewpointdata = budgetdata.viewpointdata
+        let itemseriesdata: DatasetConfig = viewpointdata.itemseriesconfigdata
         let portaltitles = itemseriesdata.Titles
         let portalseriesname = itemseriesdata.Name
         if (itemseriesdata.Units == 'DOLLAR') {

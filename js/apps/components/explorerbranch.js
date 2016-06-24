@@ -54,9 +54,9 @@ class ExplorerBranch extends Component {
                     spanyears: false,
                 }
             });
-            budgetdata.viewpointdata = viewpointdata;
             let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
-            budgetdata.itemseriesconfigdata = itemseriesdata;
+            viewpointdata.itemseriesconfigdata = itemseriesdata;
+            budgetdata.viewpointdata = viewpointdata;
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
             for (drilldownindex in drilldownnodeconfig.charts) {
@@ -191,10 +191,10 @@ class ExplorerBranch extends Component {
                     spanyears: false,
                 }
             });
+            let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
+            viewpointdata.itemseriesconfigdata = itemseriesdata;
             let budgetdata = this.props.branchdata.data;
             budgetdata.viewpointdata = viewpointdata;
-            let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
-            budgetdata.itemseriesconfigdata = itemseriesdata;
             let chartmatrixrow = this.state.chartmatrixrow;
             let oldchartmatrixrow = [...chartmatrixrow];
             let nodeconfig = null;
@@ -348,9 +348,10 @@ class ExplorerBranch extends Component {
         this.getPortals = (matrixrow) => {
             let userselections = this.state.userselections;
             let budgetdata = this.props.branchdata.data;
-            if (!budgetdata.itemseriesconfigdata)
+            if (!budgetdata.viewpointdata)
                 return [];
-            let itemseriesdata = budgetdata.itemseriesconfigdata;
+            let viewpointdata = budgetdata.viewpointdata;
+            let itemseriesdata = viewpointdata.itemseriesconfigdata;
             let portaltitles = itemseriesdata.Titles;
             let portalseriesname = itemseriesdata.Name;
             if (itemseriesdata.Units == 'DOLLAR') {
