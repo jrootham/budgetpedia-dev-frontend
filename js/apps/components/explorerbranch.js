@@ -54,8 +54,6 @@ class ExplorerBranch extends Component {
                     spanyears: false,
                 }
             });
-            let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
-            viewpointdata.itemseriesconfigdata = itemseriesdata;
             budgetdata.viewpointdata = viewpointdata;
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
@@ -191,8 +189,6 @@ class ExplorerBranch extends Component {
                     spanyears: false,
                 }
             });
-            let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
-            viewpointdata.itemseriesconfigdata = itemseriesdata;
             let budgetdata = this.props.branchdata.data;
             budgetdata.viewpointdata = viewpointdata;
             let chartmatrixrow = this.state.chartmatrixrow;

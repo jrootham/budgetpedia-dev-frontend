@@ -40,6 +40,7 @@ interface PortalChart {
 
 interface Viewpoint extends Component {
     Lookups: Lookups,
+    itemseriesconfigdata?: any,
     Configuration: {
         [configurationcode:string]:Configuration,
     },
@@ -127,10 +128,6 @@ class Database {
 
     }
 
-    private setViewpointData = (parms: SetViewpointDataParms) => {
-        updateViewpointData(parms)
-    }
-
     getViewpointData = (parms: GetViewpointDataParms) => {
 
         let { viewpointname, dataseriesname, wantsInflationAdjusted, timeSpecs } = parms
@@ -152,11 +149,15 @@ class Database {
 
         this.setViewpointData(setparms)
 
+        viewpointdata = setparms.viewpointdata
+
+        viewpointdata.itemseriesconfigdata = this.getDatasetConfig(parms.dataseriesname)
+
         return setparms.viewpointdata
 
     }
 
-    getDatasetConfig = (dataset:string):DatasetConfig => {
+    private getDatasetConfig = (dataset:string):DatasetConfig => {
         let datasetdata = this.getDataset(dataset)
         let { Baseline,
             Name,
@@ -176,6 +177,10 @@ class Database {
             Title,
         }
         return config
+    }
+
+    private setViewpointData = (parms: SetViewpointDataParms) => {
+        updateViewpointData(parms)
     }
 
     private getViewpoint = (viewpoint: string): Viewpoint => {

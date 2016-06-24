@@ -117,8 +117,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
-        let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
-        viewpointdata.itemseriesconfigdata = itemseriesdata
+        // let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
+        // viewpointdata.itemseriesconfigdata = itemseriesdata
         budgetdata.viewpointdata = viewpointdata
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
@@ -301,8 +301,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
-        let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
-        viewpointdata.itemseriesconfigdata = itemseriesdata
+        // let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
+        // viewpointdata.itemseriesconfigdata = itemseriesdata
         let budgetdata = this.props.branchdata.data
         budgetdata.viewpointdata = viewpointdata
 

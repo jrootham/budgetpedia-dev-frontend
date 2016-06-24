@@ -8,9 +8,6 @@ class Database {
     constructor() {
         this.getBranch = (viewpointname, path = []) => {
         };
-        this.setViewpointData = (parms) => {
-            setviewpointdata_1.default(parms);
-        };
         this.getViewpointData = (parms) => {
             let { viewpointname, dataseriesname, wantsInflationAdjusted, timeSpecs } = parms;
             let viewpointdata = this.getViewpoint(viewpointname), itemseriesdata = this.getDataset(dataseriesname), lookups = this.getLookup();
@@ -24,6 +21,8 @@ class Database {
                 lookups: lookups,
             };
             this.setViewpointData(setparms);
+            viewpointdata = setparms.viewpointdata;
+            viewpointdata.itemseriesconfigdata = this.getDatasetConfig(parms.dataseriesname);
             return setparms.viewpointdata;
         };
         this.getDatasetConfig = (dataset) => {
@@ -39,6 +38,9 @@ class Database {
                 Title: Title,
             };
             return config;
+        };
+        this.setViewpointData = (parms) => {
+            setviewpointdata_1.default(parms);
         };
         this.getViewpoint = (viewpoint) => {
             let viewpointdata = db_viewpoints[viewpoint];
