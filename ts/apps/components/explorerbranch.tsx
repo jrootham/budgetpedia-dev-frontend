@@ -23,6 +23,8 @@ import {
 } from '../controllers/explorer/interfaces'
 
 import { ExplorerPortal } from './explorerportal'
+import { getBudgetNode } from '../controllers/explorer/getbudgetnode'
+
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 
@@ -286,13 +288,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let userselections = this.state.userselections
         userselections.facet = facet
-        let chartmatrixrow = this.state.chartmatrixrow
-        this.setState({
-            userselections,
-        })
+
         let viewpointname = this.state.userselections.viewpoint
-        let facetname = this.state.userselections.facet
-        let budgetdata = this.props.branchdata.data
 
         let viewpointdata = databaseapi.getViewpointData({
             viewpointname,
@@ -305,27 +302,40 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
-        // budgetdata.Viewpoints[viewpointname] = viewpointdata
+        let budgetdata = this.props.branchdata.data
         budgetdata.viewpointdata = viewpointdata
         let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
         budgetdata.itemseriesconfigdata = itemseriesdata
-        let matrixseries = chartmatrixrow
-        let nodeconfig: MatrixNodeConfig
+
+        // this.setState({
+        //     userselections,
+        // })
+
+        let chartmatrixrow = this.state.chartmatrixrow
+        let oldchartmatrixrow = [...chartmatrixrow]
+
+        // let matrixseries = chartmatrixrow
+        let nodeconfig: MatrixNodeConfig = null
+        let parentnodeconfig: MatrixNodeConfig
         let cellptr: any
         let isError = false
         let chartParmsObj: ChartParmsObj = null
-        for (cellptr in matrixseries) {
-            nodeconfig = matrixseries[cellptr]
-            let datanode = nodeconfig.datanode
-            if (datanode) {
-                let deeperdata = (datanode.Components && (nodeconfig.charts.length == 1))
-                let shallowerdata = (!datanode.Components && (nodeconfig.charts.length == 2))
+        for (cellptr in chartmatrixrow) {
+            parentnodeconfig = nodeconfig
+            nodeconfig = chartmatrixrow[cellptr]
+            let nextdatanode = getBudgetNode(viewpointdata, nodeconfig.datapath)
+            // let datanode = nodeconfig.datanode
+            if (nextdatanode) {
+                // there is only one chart where there should be 2
+                let deeperdata = (!!nextdatanode.Components && (nodeconfig.charts.length == 1))
+                // there are two charts where there should be 1
+                let shallowerdata = (!nextdatanode.Components && (nodeconfig.charts.length == 2))
                 if ( deeperdata || shallowerdata) {
-                    matrixseries.splice(cellptr)
+                    chartmatrixrow.splice(cellptr)
                     nodeconfig.charts = []
                     isError = true
                     //!Hack! remove selector from ancestor graph
-                    let prevconfig: MatrixNodeConfig = matrixseries[cellptr - 1]
+                    let prevconfig: MatrixNodeConfig = chartmatrixrow[cellptr - 1]
                     // delete prevconfig.charts[0].chartselection
                     // delete prevconfig.charts[0].chart
 
@@ -338,7 +348,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                         nodeconfig:prevconfig,
                         userselections,
                         budgetdata,
-                        chartmatrixrow:matrixseries,
+                        chartmatrixrow,
                         selectionrow: prevconfig.charts[0].chartselection[0].row,
                         matrixcolumn: prevconfig.matrixlocation.column,
                         portalChartIndex:0,
@@ -379,9 +389,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 }
                 chartParmsObj = getChartParms(props, callbacks)
                 if (chartParmsObj.isError) {
-                    matrixseries.splice(cellptr)
+                    chartmatrixrow.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
-                        let parentconfig: MatrixNodeConfig = matrixseries[cellptr - 1]
+                        let parentconfig: MatrixNodeConfig = chartmatrixrow[cellptr - 1]
                         // disable reselection
                         parentconfig.charts[nodechartindex].chartselection = null
                         parentconfig.charts[nodechartindex].chart = null
@@ -389,15 +399,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     isError = true
                     break
                 } else {
+                    nodeconfig.facet = facet
+                    nodeconfig.datanode = chartParmsObj.datanode
                     nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms
                     nodeconfig.charts[nodechartindex].chartCode =
                         ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType]
+                    if (parentnodeconfig) {
+                        nodeconfig.parentdata.datanode = parentnodeconfig.datanode
+                    }
                 }
             }
-        }
-        if (!isError) {
-            nodeconfig.facet = facet
-            nodeconfig.datanode = chartParmsObj.datanode
         }
         this.refreshPresentation(chartmatrixrow)
         setTimeout(() => {
@@ -411,9 +422,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         })
     }
 
-    refreshPresentation = chartmatrix => {
+    refreshPresentation = chartmatrixrow => {
         this.setState({
-            chartmatrix,
+            chartmatrixrow,
         })
     }
 

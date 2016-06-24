@@ -2,6 +2,7 @@
 const React = require('react');
 var { Component } = React;
 const explorerportal_1 = require('./explorerportal');
+const getbudgetnode_1 = require('../controllers/explorer/getbudgetnode');
 const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
 const FontIcon_1 = require('material-ui/FontIcon');
@@ -179,13 +180,7 @@ class ExplorerBranch extends Component {
         this.switchFacet = (facet) => {
             let userselections = this.state.userselections;
             userselections.facet = facet;
-            let chartmatrixrow = this.state.chartmatrixrow;
-            this.setState({
-                userselections: userselections,
-            });
             let viewpointname = this.state.userselections.viewpoint;
-            let facetname = this.state.userselections.facet;
-            let budgetdata = this.props.branchdata.data;
             let viewpointdata = databaseapi_1.default.getViewpointData({
                 viewpointname: viewpointname,
                 dataseriesname: facet,
@@ -196,25 +191,29 @@ class ExplorerBranch extends Component {
                     spanyears: false,
                 }
             });
+            let budgetdata = this.props.branchdata.data;
             budgetdata.viewpointdata = viewpointdata;
             let itemseriesdata = databaseapi_1.default.getDatasetConfig(userselections.facet);
             budgetdata.itemseriesconfigdata = itemseriesdata;
-            let matrixseries = chartmatrixrow;
-            let nodeconfig;
+            let chartmatrixrow = this.state.chartmatrixrow;
+            let oldchartmatrixrow = [...chartmatrixrow];
+            let nodeconfig = null;
+            let parentnodeconfig;
             let cellptr;
             let isError = false;
             let chartParmsObj = null;
-            for (cellptr in matrixseries) {
-                nodeconfig = matrixseries[cellptr];
-                let datanode = nodeconfig.datanode;
-                if (datanode) {
-                    let deeperdata = (datanode.Components && (nodeconfig.charts.length == 1));
-                    let shallowerdata = (!datanode.Components && (nodeconfig.charts.length == 2));
+            for (cellptr in chartmatrixrow) {
+                parentnodeconfig = nodeconfig;
+                nodeconfig = chartmatrixrow[cellptr];
+                let nextdatanode = getbudgetnode_1.getBudgetNode(viewpointdata, nodeconfig.datapath);
+                if (nextdatanode) {
+                    let deeperdata = (!!nextdatanode.Components && (nodeconfig.charts.length == 1));
+                    let shallowerdata = (!nextdatanode.Components && (nodeconfig.charts.length == 2));
                     if (deeperdata || shallowerdata) {
-                        matrixseries.splice(cellptr);
+                        chartmatrixrow.splice(cellptr);
                         nodeconfig.charts = [];
                         isError = true;
-                        let prevconfig = matrixseries[cellptr - 1];
+                        let prevconfig = chartmatrixrow[cellptr - 1];
                         let context = {
                             selection: prevconfig.charts[0].chartselection,
                             ChartObject: prevconfig.charts[0].ChartObject,
@@ -223,7 +222,7 @@ class ExplorerBranch extends Component {
                             nodeconfig: prevconfig,
                             userselections: userselections,
                             budgetdata: budgetdata,
-                            chartmatrixrow: matrixseries,
+                            chartmatrixrow: chartmatrixrow,
                             selectionrow: prevconfig.charts[0].chartselection[0].row,
                             matrixcolumn: prevconfig.matrixlocation.column,
                             portalChartIndex: 0,
@@ -266,9 +265,9 @@ class ExplorerBranch extends Component {
                     };
                     chartParmsObj = getchartparms_1.default(props, callbacks);
                     if (chartParmsObj.isError) {
-                        matrixseries.splice(cellptr);
+                        chartmatrixrow.splice(cellptr);
                         if (cellptr > 0) {
-                            let parentconfig = matrixseries[cellptr - 1];
+                            let parentconfig = chartmatrixrow[cellptr - 1];
                             parentconfig.charts[nodechartindex].chartselection = null;
                             parentconfig.charts[nodechartindex].chart = null;
                         }
@@ -276,15 +275,16 @@ class ExplorerBranch extends Component {
                         break;
                     }
                     else {
+                        nodeconfig.facet = facet;
+                        nodeconfig.datanode = chartParmsObj.datanode;
                         nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms;
                         nodeconfig.charts[nodechartindex].chartCode =
                             constants_1.ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType];
+                        if (parentnodeconfig) {
+                            nodeconfig.parentdata.datanode = parentnodeconfig.datanode;
+                        }
                     }
                 }
-            }
-            if (!isError) {
-                nodeconfig.facet = facet;
-                nodeconfig.datanode = chartParmsObj.datanode;
             }
             this.refreshPresentation(chartmatrixrow);
             setTimeout(() => {
@@ -296,9 +296,9 @@ class ExplorerBranch extends Component {
                 updatechartselections_1.updateChartSelections(this.state.chartmatrixrow);
             });
         };
-        this.refreshPresentation = chartmatrix => {
+        this.refreshPresentation = chartmatrixrow => {
             this.setState({
-                chartmatrix: chartmatrix,
+                chartmatrixrow: chartmatrixrow,
             });
         };
         this.switchChartCode = (location, chartCode) => {
