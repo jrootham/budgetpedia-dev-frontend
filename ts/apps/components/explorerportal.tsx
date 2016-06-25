@@ -26,7 +26,7 @@ interface ExplorePortalProps {
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     onChangeTab = () => {
-        this.props.onChangePortalChart()
+        this.props.onChangePortalChart() 
     }
 
     componentWillMount = () => {
@@ -45,7 +45,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             let chartsettings = tabChart.chartsettings
             return <Tab style={{fontSize:"12px"}} 
                 label={tabChart.chartblocktitle} 
-                value="programs"
+                value={chartindex}
                 key={chartindex}>
                 <ExplorerChart 
                     chartsettings = {chartsettings}
@@ -55,14 +55,44 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             </Tab>
         })
 
-        // return chartTabs to caller
         return chartTabs
 
+    }
+
+    getTabObject = (chartTabs) => {
+        // this deals with the edge case where switching facets causes current tail
+        // chart to change from 2 charts to one by adding a value attr to tabs component
+        if (chartTabs.length == 1) {
+            return (
+                <Tabs
+                    value = {0}
+                    onChange= { e => {
+                        this.onChangeTab()
+                    } }>
+
+                    { chartTabs }
+
+                </Tabs>
+            )
+        } else {
+            return (
+                <Tabs
+                    onChange= { e => {
+                        this.onChangeTab()
+                    } }>
+
+                    { chartTabs }
+
+                </Tabs>
+            )
+        }
     }
 
     render() {
 
         let chartTabs = this.getChartTabs()
+
+        let tabobject = this.getTabObject(chartTabs)
 
         return <div style={
                 { 
@@ -89,14 +119,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
                     backgroundColor: "#00bcd4",
                 }
             }>{ this.props.budgetPortal.portalName }</div>
-            <Tabs 
-                onChange= { e => {
-                    this.onChangeTab()
-            }}>
-
-                { chartTabs }
-
-            </Tabs>
+            { tabobject }
         </div>
     }
 }

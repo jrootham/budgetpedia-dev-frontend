@@ -330,7 +330,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 // there are two charts where there should be 1
                 let shallowerdata = (!nextdatanode.Components && (nodeconfig.charts.length == 2))
                 if ( deeperdata || shallowerdata) {
-                    chartmatrixrow.splice(cellptr)
+                    chartmatrixrow.splice(cellptr + 1)
                     nodeconfig.charts = []
                     isError = true
                     let prevconfig: MatrixNodeConfig = chartmatrixrow[cellptr - 1]
@@ -365,11 +365,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     }
                     this.state.snackbar.message = message
                     this.state.snackbar.open = true
+                    nodeconfig = chartmatrixrow[cellptr] // created by createChildNode as side effect
                 }
             } else {
-                console.error('no data node',nodeconfig)
+                console.error('no data node')
             }
             let nodechartindex: any = null
+            if (!nodeconfig) break
             for (nodechartindex in nodeconfig.charts) {
                 let props: GetChartParmsProps = {
                     nodeConfig: nodeconfig,

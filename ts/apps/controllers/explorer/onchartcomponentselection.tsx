@@ -167,89 +167,86 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         return
     }
     workingStatus(true)
-    // setTimeout(() => {
-
-        let newrange = Object.assign({}, nodeconfig.yearscope)
-        let charttype = userselections.charttype
-        let chartCode = ChartTypeCodes[charttype]
-        let portalcharts = budgetdata.viewpointdata.PortalCharts[facet]
-        let charts = []
-        for (let type of portalcharts) {
-            if (type.Type == 'Components' && !newnode.Components) {
-                continue
-            }
-            if (type.Type == 'Categories' && !newnode.Categories) {
-                continue
-            }
-            // if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
-            //     continue
-            // }
-            let chartconfig: MatrixChartConfig = {
-                googlecharttype: charttype,
-                chartCode,
-            }
-            chartconfig.nodedatapropertyname = type.Type
-            charts.push(chartconfig)
+    let newrange = Object.assign({}, nodeconfig.yearscope)
+    let charttype = userselections.charttype
+    let chartCode = ChartTypeCodes[charttype]
+    let portalcharts = budgetdata.viewpointdata.PortalCharts[facet]
+    let charts = []
+    for (let type of portalcharts) {
+        if (type.Type == 'Components' && !newnode.Components) {
+            continue
         }
-
-        let newnodeconfig: MatrixNodeConfig = {
-            viewpoint,
-            facet,
-            datapath: childdatapath,
-            matrixlocation: {
-                // row: matrixrow,
-                column: matrixcolumn + 1
-            },
-            parentdata: parentdata,
-            yearscope: newrange,
-            charts,
+        if (type.Type == 'Categories' && !newnode.Categories) {
+            continue
         }
-
-        let newnodeindex: any = null
-        let chartParmsObj: ChartParmsObj = null
-        let isError = false
-        for (newnodeindex in newnodeconfig.charts) {
-            let props: GetChartParmsProps = {
-                nodeConfig: newnodeconfig,
-                chartIndex: newnodeindex,
-                userselections,
-                budgetdata,
-                chartmatrixrow,
-            }
-            let callbacks: GetChartParmsCallbacks = {
-                refreshPresentation,
-                onPortalCreation,
-                workingStatus,
-            }
-            chartParmsObj = getChartParms(props, callbacks)
-            if (chartParmsObj.isError) {
-                isError = true
-                break
-            }
-            newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms
-            newnodeconfig.charts[newnodeindex].chartCode =
-                ChartTypeCodes[newnodeconfig.charts[newnodeindex].googlecharttype]
+        // if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
+        //     continue
+        // }
+        let chartconfig: MatrixChartConfig = {
+            googlecharttype: charttype,
+            chartCode,
         }
+        chartconfig.nodedatapropertyname = type.Type
+        charts.push(chartconfig)
+    }
 
-        if (isError) {
-            updateChartSelections(chartmatrixrow)
-            workingStatus(false)
-            return
+    let newnodeconfig: MatrixNodeConfig = {
+        viewpoint,
+        facet,
+        datapath: childdatapath,
+        matrixlocation: {
+            // row: matrixrow,
+            column: matrixcolumn + 1
+        },
+        parentdata: parentdata,
+        yearscope: newrange,
+        charts,
+    }
+
+    let newnodeindex: any = null
+    let chartParmsObj: ChartParmsObj = null
+    let isError = false
+    for (newnodeindex in newnodeconfig.charts) {
+        let props: GetChartParmsProps = {
+            nodeConfig: newnodeconfig,
+            chartIndex: newnodeindex,
+            userselections,
+            budgetdata,
+            chartmatrixrow,
         }
-        newnodeconfig.datanode = chartParmsObj.datanode
-        let newmatrixcolumn = matrixcolumn + 1
-        chartmatrixrow[newmatrixcolumn] = newnodeconfig
+        let callbacks: GetChartParmsCallbacks = {
+            refreshPresentation,
+            onPortalCreation,
+            workingStatus,
+        }
+        chartParmsObj = getChartParms(props, callbacks)
+        if (chartParmsObj.isError) {
+            isError = true
+            break
+        }
+        newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms
+        newnodeconfig.charts[newnodeindex].chartCode =
+            ChartTypeCodes[newnodeconfig.charts[newnodeindex].googlecharttype]
+    }
 
-        refreshPresentation(chartmatrixrow)
-
-        nodeconfig.charts[portalChartIndex].chartselection = context.selection
-        nodeconfig.charts[portalChartIndex].chart = chart
-        nodeconfig.charts[portalChartIndex].ChartObject = context.ChartObject
-
+    if (isError) {
         updateChartSelections(chartmatrixrow)
-        onPortalCreation()
         workingStatus(false)
-    // })
+        return
+    }
+    newnodeconfig.datanode = chartParmsObj.datanode
+    let newmatrixcolumn = matrixcolumn + 1
+    chartmatrixrow[newmatrixcolumn] = newnodeconfig
+
+    refreshPresentation(chartmatrixrow)
+
+    nodeconfig.charts[portalChartIndex].chartselection = context.selection
+    nodeconfig.charts[portalChartIndex].chart = chart
+    nodeconfig.charts[portalChartIndex].ChartObject = context.ChartObject
+
+    updateChartSelections(chartmatrixrow)
+    onPortalCreation()
+    workingStatus(false)
 }
 
 export { onChartComponentSelection, createChildNode }

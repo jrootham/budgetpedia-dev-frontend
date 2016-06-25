@@ -206,7 +206,7 @@ class ExplorerBranch extends Component {
                     let deeperdata = (!!nextdatanode.Components && (nodeconfig.charts.length == 1));
                     let shallowerdata = (!nextdatanode.Components && (nodeconfig.charts.length == 2));
                     if (deeperdata || shallowerdata) {
-                        chartmatrixrow.splice(cellptr);
+                        chartmatrixrow.splice(cellptr + 1);
                         nodeconfig.charts = [];
                         isError = true;
                         let prevconfig = chartmatrixrow[cellptr - 1];
@@ -240,12 +240,15 @@ class ExplorerBranch extends Component {
                         }
                         this.state.snackbar.message = message;
                         this.state.snackbar.open = true;
+                        nodeconfig = chartmatrixrow[cellptr];
                     }
                 }
                 else {
-                    console.error('no data node', nodeconfig);
+                    console.error('no data node');
                 }
                 let nodechartindex = null;
+                if (!nodeconfig)
+                    break;
                 for (nodechartindex in nodeconfig.charts) {
                     let props = {
                         nodeConfig: nodeconfig,

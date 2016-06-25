@@ -17,13 +17,26 @@ class ExplorerPortal extends Component {
                 let expandable = ((portalcharts.length > 1) && (chartindex == 0));
                 let chartparms = tabChart.chartparms;
                 let chartsettings = tabChart.chartsettings;
-                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: tabChart.chartblocktitle, value: "programs", key: chartindex}, React.createElement(explorerchart_1.ExplorerChart, {chartsettings: chartsettings, chartparms: chartparms, expandable: expandable}));
+                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: tabChart.chartblocktitle, value: chartindex, key: chartindex}, React.createElement(explorerchart_1.ExplorerChart, {chartsettings: chartsettings, chartparms: chartparms, expandable: expandable}));
             });
             return chartTabs;
+        };
+        this.getTabObject = (chartTabs) => {
+            if (chartTabs.length == 1) {
+                return (React.createElement(Tabs_1.Tabs, {value: 0, onChange: e => {
+                    this.onChangeTab();
+                }}, chartTabs));
+            }
+            else {
+                return (React.createElement(Tabs_1.Tabs, {onChange: e => {
+                    this.onChangeTab();
+                }}, chartTabs));
+            }
         };
     }
     render() {
         let chartTabs = this.getChartTabs();
+        let tabobject = this.getTabObject(chartTabs);
         return React.createElement("div", {style: {
             position: "relative",
             display: "inline-block",
@@ -43,9 +56,7 @@ class ExplorerPortal extends Component {
             fontWeight: "bold",
             display: "inline-block",
             backgroundColor: "#00bcd4",
-        }}, this.props.budgetPortal.portalName), React.createElement(Tabs_1.Tabs, {onChange: e => {
-            this.onChangeTab();
-        }}, chartTabs));
+        }}, this.props.budgetPortal.portalName), tabobject);
     }
 }
 exports.ExplorerPortal = ExplorerPortal;
