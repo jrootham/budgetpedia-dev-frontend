@@ -206,7 +206,7 @@ class ExplorerBranch extends Component {
                     let deeperdata = (!!nextdatanode.Components && (nodeconfig.charts.length == 1));
                     let shallowerdata = (!nextdatanode.Components && (nodeconfig.charts.length == 2));
                     if (deeperdata || shallowerdata) {
-                        chartmatrixrow.splice(cellptr + 1);
+                        chartmatrixrow.splice(cellptr);
                         nodeconfig.charts = [];
                         isError = true;
                         let prevconfig = chartmatrixrow[cellptr - 1];
@@ -240,7 +240,7 @@ class ExplorerBranch extends Component {
                         }
                         this.state.snackbar.message = message;
                         this.state.snackbar.open = true;
-                        nodeconfig = chartmatrixrow[cellptr];
+                        nodeconfig = null;
                     }
                 }
                 else {

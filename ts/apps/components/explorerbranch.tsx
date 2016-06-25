@@ -117,20 +117,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
-        // let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
-        // viewpointdata.itemseriesconfigdata = itemseriesdata
         budgetdata.viewpointdata = viewpointdata
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
 
-        // *** TODO: SIMPLIFY
-        // assemble parms to get initial dataset
         let drilldownnodeconfig: MatrixNodeConfig =
             this.initRootNodeConfig(userselections)
         let drilldownindex: any
-
-        // viewpointdata = budgetdata.Viewpoints[drilldownnodeconfig.viewpoint]
-        // viewpointdata = budgetdata.viewpoint
 
         for (drilldownindex in drilldownnodeconfig.charts) {
             let props: GetChartParmsProps = {
@@ -165,11 +158,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         // -------------[ SAVE INITIALIZATION ]----------------
 
-        // make initial dataset available to chart
         this.refreshPresentation(chartmatrixrow)
-        // this.setState({
-        //     chartmatrix,
-        // });
 
     }
 
@@ -227,7 +216,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     // onPortalCreation animates scroll-in of new portal
 
-    // TODO: animate scroll-in from left (currently just from right)
     onPortalCreation = () => {
         let element: Element = this.branchScrollBlock
         if (!element) {
@@ -261,6 +249,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             // }
         })
     }
+
     // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
     easeOutCubic = t => {
         const t1 = t - 1;
@@ -301,19 +290,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
-        // let itemseriesdata: DatasetConfig = databaseapi.getDatasetConfig(userselections.facet)
-        // viewpointdata.itemseriesconfigdata = itemseriesdata
         let budgetdata = this.props.branchdata.data
         budgetdata.viewpointdata = viewpointdata
-
-        // this.setState({
-        //     userselections,
-        // })
 
         let chartmatrixrow = this.state.chartmatrixrow
         let oldchartmatrixrow = [...chartmatrixrow]
 
-        // let matrixseries = chartmatrixrow
         let nodeconfig: MatrixNodeConfig = null
         let parentnodeconfig: MatrixNodeConfig
         let cellptr: any
@@ -330,7 +312,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 // there are two charts where there should be 1
                 let shallowerdata = (!nextdatanode.Components && (nodeconfig.charts.length == 2))
                 if ( deeperdata || shallowerdata) {
-                    chartmatrixrow.splice(cellptr + 1)
+                    chartmatrixrow.splice(cellptr)
                     nodeconfig.charts = []
                     isError = true
                     let prevconfig: MatrixNodeConfig = chartmatrixrow[cellptr - 1]
@@ -365,7 +347,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     }
                     this.state.snackbar.message = message
                     this.state.snackbar.open = true
-                    nodeconfig = chartmatrixrow[cellptr] // created by createChildNode as side effect
+                    // TODO: possibly set nodeconfig = null
+                    nodeconfig = null // chartmatrixrow[cellptr] // created by createChildNode as side effect
                 }
             } else {
                 console.error('no data node')
@@ -459,9 +442,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             nodeConfig.charts[portalIndex].googlecharttype = oldChartType
         }
         this.refreshPresentation(chartmatrixrow)
-        // this.setState({
-        //     chartmatrix,
-        // })
+
         setTimeout(() => {
             if (nodeConfig.charts[portalIndex].chart) {
                 // refresh to new chart created with switch
@@ -556,7 +537,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 key = {index}
                 budgetPortal = { budgetPortal }
                 onChangePortalChart = { this.onChangeBudgetPortalChart }
-                />
+            />
         })
 
         return portals
