@@ -8,9 +8,10 @@ let updateChartSelections = (chartmatrixrow) => {
     let node: BudgetNode = null
     for (node of chartmatrixrow) {
         for (let chartindex in node.cells ) {
-            let chart = node.cells[chartindex].chart
+            let budgetCell = node.cells[chartindex]
+            let chart = budgetCell.chart
             if (chart) {
-                let selection = node.cells[chartindex].chartselection
+                let selection = budgetCell.chartselection
                 chart.setSelection(selection)
             }
         }
