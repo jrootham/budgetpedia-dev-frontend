@@ -81,20 +81,30 @@ interface OnChartComponentSelectionCallbacks {
 
 // used to configure single chart of chart portal
 interface MatrixNodeConfig {
-    // name?: string,
 
-    viewpoint: string,
-    facet: string,
-    datapath: string[],
+    // viewpoint: string,
+    // facet: string,
+    // datapath: string[],
 
-    yearscope: YearScope,
-    parentdata?: SortedComponentItem,
-    datanode?: any,
+    // yearscope: YearScope,
+    // parentdata?: SortedComponentItem,
+    // datanode?: any,
 
-    matrixlocation: MatrixLocation,
+    // matrixlocation: MatrixLocation,
+    // isError?: boolean,
+    // charts: MatrixCellConfig[]
+
+    viewpointName: string,
+    facetName: string,
+    dataPath: string[],
+
+    timeSpecs: YearScope,
+    parentData?: SortedComponentItem,
+    dataNode?: any,
+
+    matrixLocation: MatrixLocation,
     isError?: boolean,
-    charts: MatrixCellConfig[]
-
+    cells: MatrixCellConfig[]
 }
 
 interface MatrixCellConfig {

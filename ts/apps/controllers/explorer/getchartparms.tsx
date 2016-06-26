@@ -49,7 +49,7 @@ let getChartParms = (
     let onPortalCreation = callbacks.onPortalCreation
     let workingStatus = callbacks.workingStatus
 
-    let chartConfig: MatrixCellConfig = nodeConfig.charts[chartIndex]
+    let chartConfig: MatrixCellConfig = nodeConfig.cells[chartIndex]
 
     let nodeDataPropertyName = chartConfig.nodeDataPropertyName
     let sortedlist
@@ -63,9 +63,9 @@ let getChartParms = (
     // -------------------[ INIT VARS ]---------------------
 
     // unpack chartConfig & derivatives
-    let viewpointindex = nodeConfig.viewpoint,
-        path = nodeConfig.datapath,
-        yearscope = nodeConfig.yearscope,
+    let viewpointindex = nodeConfig.viewpointName,
+        path = nodeConfig.dataPath,
+        yearscope = nodeConfig.timeSpecs,
         year = yearscope.latestyear
 
     // unpack userselections
@@ -129,8 +129,8 @@ let getChartParms = (
 
     // assemble chart title
     let title
-    if (nodeConfig.parentdata) {
-        let parentdatanode = nodeConfig.parentdata.datanode
+    if (nodeConfig.parentData) {
+        let parentdatanode = nodeConfig.parentData.datanode
         let configindex = node.Config || parentdatanode.Contents
         let catname = null
         if (configindex) {
@@ -139,7 +139,7 @@ let getChartParms = (
         } else {
             catname = 'Service/Activity'
         }
-        title = catname + ': ' + nodeConfig.parentdata.Name
+        title = catname + ': ' + nodeConfig.parentData.Name
     }
     else {
         title = itemseriesdata.Title
@@ -218,7 +218,7 @@ let getChartParms = (
     // TODO: replace chartconfig with matrix co-ordinates to avoid
     //     need to update chart by destroying chart (thus closure) before replacing it
     // 3. chart events:
-    let matrixlocation = Object.assign({}, nodeConfig.matrixlocation)
+    let matrixlocation = Object.assign({}, nodeConfig.matrixLocation)
     let configlocation: PortalChartLocation = {
         matrixlocation,
         portalindex: chartIndex

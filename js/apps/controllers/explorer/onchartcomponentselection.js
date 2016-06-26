@@ -25,15 +25,15 @@ let onChartComponentSelection = (props, callbacks) => {
     let matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrixrow;
     let nodeconfig = chartmatrixrow[matrixcolumn];
-    if (nodeconfig.charts[portalChartIndex].nodeDataPropertyName == 'Categories') {
+    if (nodeconfig.cells[portalChartIndex].nodeDataPropertyName == 'Categories') {
         return;
     }
-    let viewpoint = nodeconfig.viewpoint, facet = nodeconfig.facet;
+    let viewpoint = nodeconfig.viewpointName, facet = nodeconfig.facetName;
     serieslist.splice(matrixcolumn + 1);
     refreshPresentation(chartmatrixrow);
     if (!selection) {
-        delete nodeconfig.charts[portalChartIndex].chartselection;
-        delete nodeconfig.charts[portalChartIndex].chart;
+        delete nodeconfig.cells[portalChartIndex].chartselection;
+        delete nodeconfig.cells[portalChartIndex].chart;
         updatechartselections_1.updateChartSelections(chartmatrixrow);
         return;
     }
@@ -58,10 +58,10 @@ let onChartComponentSelection = (props, callbacks) => {
 exports.onChartComponentSelection = onChartComponentSelection;
 let createChildNode = (props, callbacks) => {
     let { nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow, matrixcolumn, portalChartIndex, context, chart, } = props;
-    let viewpoint = nodeconfig.viewpoint, facet = nodeconfig.facet;
+    let viewpoint = nodeconfig.viewpointName, facet = nodeconfig.facetName;
     let { workingStatus, refreshPresentation, onPortalCreation, } = callbacks;
-    let childdatapath = nodeconfig.datapath.slice();
-    let node = nodeconfig.datanode;
+    let childdatapath = nodeconfig.dataPath.slice();
+    let node = nodeconfig.dataNode;
     if (!node.Components) {
         updatechartselections_1.updateChartSelections(chartmatrixrow);
         return;
@@ -86,7 +86,7 @@ let createChildNode = (props, callbacks) => {
         return;
     }
     workingStatus(true);
-    let newrange = Object.assign({}, nodeconfig.yearscope);
+    let newrange = Object.assign({}, nodeconfig.timeSpecs);
     let charttype = userselections.charttype;
     let chartCode = constants_1.ChartTypeCodes[charttype];
     let portalcharts = budgetdata.viewpointdata.PortalCharts[facet];
@@ -106,20 +106,20 @@ let createChildNode = (props, callbacks) => {
         charts.push(chartconfig);
     }
     let newnodeconfig = {
-        viewpoint: viewpoint,
-        facet: facet,
-        datapath: childdatapath,
-        matrixlocation: {
+        viewpointName: viewpoint,
+        facetName: facet,
+        dataPath: childdatapath,
+        matrixLocation: {
             column: matrixcolumn + 1
         },
-        parentdata: parentdata,
-        yearscope: newrange,
-        charts: charts,
+        parentData: parentdata,
+        timeSpecs: newrange,
+        cells: charts,
     };
     let newnodeindex = null;
     let chartParmsObj = null;
     let isError = false;
-    for (newnodeindex in newnodeconfig.charts) {
+    for (newnodeindex in newnodeconfig.cells) {
         let props = {
             nodeConfig: newnodeconfig,
             chartIndex: newnodeindex,
@@ -137,22 +137,22 @@ let createChildNode = (props, callbacks) => {
             isError = true;
             break;
         }
-        newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms;
-        newnodeconfig.charts[newnodeindex].chartCode =
-            constants_1.ChartTypeCodes[newnodeconfig.charts[newnodeindex].googleChartType];
+        newnodeconfig.cells[newnodeindex].chartparms = chartParmsObj.chartParms;
+        newnodeconfig.cells[newnodeindex].chartCode =
+            constants_1.ChartTypeCodes[newnodeconfig.cells[newnodeindex].googleChartType];
     }
     if (isError) {
         updatechartselections_1.updateChartSelections(chartmatrixrow);
         workingStatus(false);
         return;
     }
-    newnodeconfig.datanode = chartParmsObj.datanode;
+    newnodeconfig.dataNode = chartParmsObj.datanode;
     let newmatrixcolumn = matrixcolumn + 1;
     chartmatrixrow[newmatrixcolumn] = newnodeconfig;
     refreshPresentation(chartmatrixrow);
-    nodeconfig.charts[portalChartIndex].chartselection = context.selection;
-    nodeconfig.charts[portalChartIndex].chart = chart;
-    nodeconfig.charts[portalChartIndex].ChartObject = context.ChartObject;
+    nodeconfig.cells[portalChartIndex].chartselection = context.selection;
+    nodeconfig.cells[portalChartIndex].chart = chart;
+    nodeconfig.cells[portalChartIndex].ChartObject = context.ChartObject;
     updatechartselections_1.updateChartSelections(chartmatrixrow);
     onPortalCreation();
     workingStatus(false);

@@ -13,7 +13,7 @@ let getChartParms = (props, callbacks) => {
     let refreshPresentation = callbacks.refreshPresentation;
     let onPortalCreation = callbacks.onPortalCreation;
     let workingStatus = callbacks.workingStatus;
-    let chartConfig = nodeConfig.charts[chartIndex];
+    let chartConfig = nodeConfig.cells[chartIndex];
     let nodeDataPropertyName = chartConfig.nodeDataPropertyName;
     let sortedlist;
     if (nodeDataPropertyName == 'Categories') {
@@ -22,7 +22,7 @@ let getChartParms = (props, callbacks) => {
     else {
         sortedlist = 'SortedComponents';
     }
-    let viewpointindex = nodeConfig.viewpoint, path = nodeConfig.datapath, yearscope = nodeConfig.yearscope, year = yearscope.latestyear;
+    let viewpointindex = nodeConfig.viewpointName, path = nodeConfig.dataPath, yearscope = nodeConfig.timeSpecs, year = yearscope.latestyear;
     let dataseriesname = userselections.facet;
     let units = itemseriesdata.Units, vertlabel;
     vertlabel = itemseriesdata.UnitsAlias;
@@ -63,8 +63,8 @@ let getChartParms = (props, callbacks) => {
         axistitle = portaltitles.Categories;
     }
     let title;
-    if (nodeConfig.parentdata) {
-        let parentdatanode = nodeConfig.parentdata.datanode;
+    if (nodeConfig.parentData) {
+        let parentdatanode = nodeConfig.parentData.datanode;
         let configindex = node.Config || parentdatanode.Contents;
         let catname = null;
         if (configindex) {
@@ -74,7 +74,7 @@ let getChartParms = (props, callbacks) => {
         else {
             catname = 'Service/Activity';
         }
-        title = catname + ': ' + nodeConfig.parentdata.Name;
+        title = catname + ': ' + nodeConfig.parentData.Name;
     }
     else {
         title = itemseriesdata.Title;
@@ -137,7 +137,7 @@ let getChartParms = (props, callbacks) => {
             width: chartwidth,
         }
     };
-    let matrixlocation = Object.assign({}, nodeConfig.matrixlocation);
+    let matrixlocation = Object.assign({}, nodeConfig.matrixLocation);
     let configlocation = {
         matrixlocation: matrixlocation,
         portalindex: chartIndex

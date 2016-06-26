@@ -9,10 +9,10 @@ import {
 let updateChartSelections = (chartmatrixrow) => {
     let node: MatrixNodeConfig = null
     for (node of chartmatrixrow) {
-        for (let chartindex in node.charts ) {
-            let chart = node.charts[chartindex].chart
+        for (let chartindex in node.cells ) {
+            let chart = node.cells[chartindex].chart
             if (chart) {
-                let selection = node.charts[chartindex].chartselection
+                let selection = node.cells[chartindex].chartselection
                 chart.setSelection(selection)
             }
         }

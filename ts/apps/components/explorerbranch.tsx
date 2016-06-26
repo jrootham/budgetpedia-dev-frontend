@@ -144,7 +144,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             this.initRootNodeConfig(userselections)
         let drilldownindex: any
 
-        for (drilldownindex in drilldownnodeconfig.charts) {
+        for (drilldownindex in drilldownnodeconfig.cells) {
             let props: GetChartParmsProps = {
                 nodeConfig: drilldownnodeconfig,
                 chartIndex: drilldownindex,
@@ -161,17 +161,17 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
             if (!chartParmsObj.isError) {
 
-                drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms
-                drilldownnodeconfig.charts[drilldownindex].chartCode =
-                    ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType]
+                drilldownnodeconfig.cells[drilldownindex].chartparms = chartParmsObj.chartParms
+                drilldownnodeconfig.cells[drilldownindex].chartCode =
+                    ChartTypeCodes[drilldownnodeconfig.cells[drilldownindex].chartparms.chartType]
 
             } else {
                 break
             }
         }
         if (!chartParmsObj.isError) {
-            drilldownnodeconfig.datanode = chartParmsObj.datanode
-            matrixlocation = drilldownnodeconfig.matrixlocation
+            drilldownnodeconfig.dataNode = chartParmsObj.datanode
+            matrixlocation = drilldownnodeconfig.matrixLocation
             chartmatrixrow[matrixlocation.column] = drilldownnodeconfig
         }
 
@@ -202,18 +202,18 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             charts.push(chartconfig)
         }
         return {
-            viewpoint: viewpoint,
-            facet: facet,
-            datapath: [], // get data from root viewpoint object
-            matrixlocation: {
+            viewpointName: viewpoint,
+            facetName: facet,
+            dataPath: [], // get data from root viewpoint object
+            matrixLocation: {
                 column: 0
             },
-            yearscope: {
+            timeSpecs: {
                 latestyear: userselections.latestyear,
                 earliestyear: null,
                 fullrange: false,
             },
-            charts: charts
+            cells: charts
         }
 
     }
@@ -323,22 +323,22 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         for (cellptr in chartmatrixrow) {
             parentnodeconfig = nodeconfig
             nodeconfig = chartmatrixrow[cellptr]
-            let nextdatanode = getBudgetNode(viewpointdata, nodeconfig.datapath)
+            let nextdatanode = getBudgetNode(viewpointdata, nodeconfig.dataPath)
             // let datanode = nodeconfig.datanode
             if (nextdatanode) {
                 // there is only one chart where there should be 2
-                let deeperdata = (!!nextdatanode.Components && (nodeconfig.charts.length == 1))
+                let deeperdata = (!!nextdatanode.Components && (nodeconfig.cells.length == 1))
                 // there are two charts where there should be 1
-                let shallowerdata = (!nextdatanode.Components && (nodeconfig.charts.length == 2))
+                let shallowerdata = (!nextdatanode.Components && (nodeconfig.cells.length == 2))
                 if ( deeperdata || shallowerdata) {
                     chartmatrixrow.splice(cellptr)
-                    nodeconfig.charts = []
+                    nodeconfig.cells = []
                     isError = true
                     let prevconfig: MatrixNodeConfig = chartmatrixrow[cellptr - 1]
 
                     let context = {
-                        selection:prevconfig.charts[0].chartselection,
-                        ChartObject: prevconfig.charts[0].ChartObject,
+                        selection:prevconfig.cells[0].chartselection,
+                        ChartObject: prevconfig.cells[0].ChartObject,
                     }
 
                     let childprops: CreateChildNodeProps = {
@@ -346,11 +346,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                         userselections,
                         budgetdata,
                         chartmatrixrow,
-                        selectionrow: prevconfig.charts[0].chartselection[0].row,
-                        matrixcolumn: prevconfig.matrixlocation.column,
+                        selectionrow: prevconfig.cells[0].chartselection[0].row,
+                        matrixcolumn: prevconfig.matrixLocation.column,
                         portalChartIndex:0,
                         context,
-                        chart:prevconfig.charts[0].chart,
+                        chart:prevconfig.cells[0].chart,
                     }
                     let childcallbacks: CreateChildNodeCallbacks = {
                         refreshPresentation: this.refreshPresentation,
@@ -374,7 +374,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
             let nodechartindex: any = null
             if (!nodeconfig) break
-            for (nodechartindex in nodeconfig.charts) {
+            for (nodechartindex in nodeconfig.cells) {
                 let props: GetChartParmsProps = {
                     nodeConfig: nodeconfig,
                     chartIndex: nodechartindex,
@@ -393,19 +393,19 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     if (cellptr > 0) { // unset the selection of the parent
                         let parentconfig: MatrixNodeConfig = chartmatrixrow[cellptr - 1]
                         // disable reselection
-                        parentconfig.charts[nodechartindex].chartselection = null
-                        parentconfig.charts[nodechartindex].chart = null
+                        parentconfig.cells[nodechartindex].chartselection = null
+                        parentconfig.cells[nodechartindex].chart = null
                     }
                     isError = true
                     break
                 } else {
-                    nodeconfig.facet = facet
-                    nodeconfig.datanode = chartParmsObj.datanode
-                    nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms
-                    nodeconfig.charts[nodechartindex].chartCode =
-                        ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType]
+                    nodeconfig.facetName = facet
+                    nodeconfig.dataNode = chartParmsObj.datanode
+                    nodeconfig.cells[nodechartindex].chartparms = chartParmsObj.chartParms
+                    nodeconfig.cells[nodechartindex].chartCode =
+                        ChartTypeCodes[nodeconfig.cells[nodechartindex].chartparms.chartType]
                     if (parentnodeconfig) {
-                        nodeconfig.parentdata.datanode = parentnodeconfig.datanode
+                        nodeconfig.parentData.datanode = parentnodeconfig.dataNode
                     }
                 }
             }
@@ -436,8 +436,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let portalIndex = location.portalindex
         let chartmatrixrow = this.state.chartmatrixrow
         let nodeConfig: MatrixNodeConfig = chartmatrixrow[location.matrixlocation.column]
-        let oldChartType = nodeConfig.charts[portalIndex].googleChartType
-        nodeConfig.charts[portalIndex].googleChartType = chartType
+        let oldChartType = nodeConfig.cells[portalIndex].googleChartType
+        nodeConfig.cells[portalIndex].googleChartType = chartType
         let budgetdata = this.props.branchdata.data
         let props: GetChartParmsProps = {
             nodeConfig: nodeConfig,
@@ -453,27 +453,27 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         }
         let chartParmsObj: ChartParmsObj = getChartParms(props, callbacks)
         if (!chartParmsObj.isError) {
-            nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms
-            nodeConfig.charts[portalIndex].chartCode =
-                ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType]
-            nodeConfig.datanode = chartParmsObj.datanode
+            nodeConfig.cells[portalIndex].chartparms = chartParmsObj.chartParms
+            nodeConfig.cells[portalIndex].chartCode =
+                ChartTypeCodes[nodeConfig.cells[portalIndex].chartparms.chartType]
+            nodeConfig.dataNode = chartParmsObj.datanode
         } else {
-            nodeConfig.charts[portalIndex].googleChartType = oldChartType
+            nodeConfig.cells[portalIndex].googleChartType = oldChartType
         }
         this.refreshPresentation(chartmatrixrow)
 
         setTimeout(() => {
-            if (nodeConfig.charts[portalIndex].chart) {
+            if (nodeConfig.cells[portalIndex].chart) {
                 // refresh to new chart created with switch
-                nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].ChartObject.chart
+                nodeConfig.cells[portalIndex].chart = nodeConfig.cells[portalIndex].ChartObject.chart
                 // it turns out that "PieChart" needs column set to null
                 // for setSelection to work
-                if (nodeConfig.charts[portalIndex].googleChartType == "PieChart") {
-                    nodeConfig.charts[portalIndex].chartselection[0].column = null
+                if (nodeConfig.cells[portalIndex].googleChartType == "PieChart") {
+                    nodeConfig.cells[portalIndex].chartselection[0].column = null
                 } else {
                     // "ColumnChart" doesn't seem to care about column value,
                     // but we set it back to original (presumed) for consistency
-                    nodeConfig.charts[portalIndex].chartselection[0].column = 1
+                    nodeConfig.cells[portalIndex].chartselection[0].column = 1
                 }
             }
             updateChartSelections(chartmatrixrow)
@@ -501,20 +501,20 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
             let portalcharts = []
 
-            for (let chartindex in nodeconfig.charts) {
+            for (let chartindex in nodeconfig.cells) {
 
                 let chartblocktitle = null
                 if (//(nodeconfig.datanode.Contents == 'BASELINE') ||
-                    (nodeconfig.charts[chartindex].nodeDataPropertyName == 'Categories')) {
+                    (nodeconfig.cells[chartindex].nodeDataPropertyName == 'Categories')) {
                     chartblocktitle = portaltitles.Categories
                 } else {
                     chartblocktitle = portaltitles.Baseline
                 }
 
-                let chartparms = nodeconfig.charts[chartindex].chartparms
+                let chartparms = nodeconfig.cells[chartindex].chartparms
 
                 let location = {
-                    matrixlocation: nodeconfig.matrixlocation,
+                    matrixlocation: nodeconfig.matrixLocation,
                     portalindex: Number(chartindex)
                 }
                 let explorer = this
@@ -524,7 +524,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                             this.switchChartCode(location, chartCode)
                         }
                     })(location),
-                    chartCode: nodeconfig.charts[chartindex].chartCode,
+                    chartCode: nodeconfig.cells[chartindex].chartCode,
                     graph_id: "ChartID" + this.props.branchkey + '-' + index + '-' + chartindex,
                     // index,
                 }
@@ -539,8 +539,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
             }
             let portalname = null
-            if (nodeconfig.parentdata) {
-                portalname = nodeconfig.parentdata.Name
+            if (nodeconfig.parentData) {
+                portalname = nodeconfig.parentData.Name
             } else {
                 portalname = 'City Budget'
             }

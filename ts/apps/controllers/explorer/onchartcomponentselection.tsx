@@ -71,13 +71,13 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
     let nodeconfig: MatrixNodeConfig = chartmatrixrow[matrixcolumn]
 
-    if (nodeconfig.charts[portalChartIndex].nodeDataPropertyName == 'Categories') {
+    if (nodeconfig.cells[portalChartIndex].nodeDataPropertyName == 'Categories') {
         return
     }
 
     // get taxonomy references
-    let viewpoint = nodeconfig.viewpoint,
-        facet = nodeconfig.facet
+    let viewpoint = nodeconfig.viewpointName,
+        facet = nodeconfig.facetName
 
     // TODO: abandon here if the next one exists and is the same
     serieslist.splice(matrixcolumn + 1) // remove subsequent charts
@@ -86,8 +86,8 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     refreshPresentation(chartmatrixrow)
 
     if (!selection) { // deselected
-        delete nodeconfig.charts[portalChartIndex].chartselection
-        delete nodeconfig.charts[portalChartIndex].chart
+        delete nodeconfig.cells[portalChartIndex].chartselection
+        delete nodeconfig.cells[portalChartIndex].chart
         updateChartSelections(chartmatrixrow)
         return
     }
@@ -124,8 +124,8 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         chart,
     } = props
 
-    let viewpoint = nodeconfig.viewpoint,
-        facet = nodeconfig.facet
+    let viewpoint = nodeconfig.viewpointName,
+        facet = nodeconfig.facetName
 
     let {
         workingStatus,
@@ -136,9 +136,9 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     // ----------------------------------------------------
     // ----------------[ create child ]--------------------
     // copy path
-    let childdatapath = nodeconfig.datapath.slice()
+    let childdatapath = nodeconfig.dataPath.slice()
 
-    let node = nodeconfig.datanode
+    let node = nodeconfig.dataNode
 
     if (!node.Components) {
         updateChartSelections(chartmatrixrow)
@@ -167,7 +167,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         return
     }
     workingStatus(true)
-    let newrange = Object.assign({}, nodeconfig.yearscope)
+    let newrange = Object.assign({}, nodeconfig.timeSpecs)
     let charttype = userselections.charttype
     let chartCode = ChartTypeCodes[charttype]
     let portalcharts = budgetdata.viewpointdata.PortalCharts[facet]
@@ -191,22 +191,22 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     }
 
     let newnodeconfig: MatrixNodeConfig = {
-        viewpoint,
-        facet,
-        datapath: childdatapath,
-        matrixlocation: {
+        viewpointName:viewpoint,
+        facetName:facet,
+        dataPath: childdatapath,
+        matrixLocation: {
             // row: matrixrow,
             column: matrixcolumn + 1
         },
-        parentdata: parentdata,
-        yearscope: newrange,
-        charts,
+        parentData: parentdata,
+        timeSpecs: newrange,
+        cells:charts,
     }
 
     let newnodeindex: any = null
     let chartParmsObj: ChartParmsObj = null
     let isError = false
-    for (newnodeindex in newnodeconfig.charts) {
+    for (newnodeindex in newnodeconfig.cells) {
         let props: GetChartParmsProps = {
             nodeConfig: newnodeconfig,
             chartIndex: newnodeindex,
@@ -224,9 +224,9 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
             isError = true
             break
         }
-        newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms
-        newnodeconfig.charts[newnodeindex].chartCode =
-            ChartTypeCodes[newnodeconfig.charts[newnodeindex].googleChartType]
+        newnodeconfig.cells[newnodeindex].chartparms = chartParmsObj.chartParms
+        newnodeconfig.cells[newnodeindex].chartCode =
+            ChartTypeCodes[newnodeconfig.cells[newnodeindex].googleChartType]
     }
 
     if (isError) {
@@ -234,15 +234,15 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         workingStatus(false)
         return
     }
-    newnodeconfig.datanode = chartParmsObj.datanode
+    newnodeconfig.dataNode = chartParmsObj.datanode
     let newmatrixcolumn = matrixcolumn + 1
     chartmatrixrow[newmatrixcolumn] = newnodeconfig
 
     refreshPresentation(chartmatrixrow)
 
-    nodeconfig.charts[portalChartIndex].chartselection = context.selection
-    nodeconfig.charts[portalChartIndex].chart = chart
-    nodeconfig.charts[portalChartIndex].ChartObject = context.ChartObject
+    nodeconfig.cells[portalChartIndex].chartselection = context.selection
+    nodeconfig.cells[portalChartIndex].chart = chart
+    nodeconfig.cells[portalChartIndex].ChartObject = context.ChartObject
 
     updateChartSelections(chartmatrixrow)
     onPortalCreation()

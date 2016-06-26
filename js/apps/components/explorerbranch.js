@@ -73,7 +73,7 @@ class ExplorerBranch extends Component {
             console.log('budgetnode', budgetnode);
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
-            for (drilldownindex in drilldownnodeconfig.charts) {
+            for (drilldownindex in drilldownnodeconfig.cells) {
                 let props = {
                     nodeConfig: drilldownnodeconfig,
                     chartIndex: drilldownindex,
@@ -88,17 +88,17 @@ class ExplorerBranch extends Component {
                 };
                 chartParmsObj = getchartparms_1.default(props, callbacks);
                 if (!chartParmsObj.isError) {
-                    drilldownnodeconfig.charts[drilldownindex].chartparms = chartParmsObj.chartParms;
-                    drilldownnodeconfig.charts[drilldownindex].chartCode =
-                        constants_1.ChartTypeCodes[drilldownnodeconfig.charts[drilldownindex].chartparms.chartType];
+                    drilldownnodeconfig.cells[drilldownindex].chartparms = chartParmsObj.chartParms;
+                    drilldownnodeconfig.cells[drilldownindex].chartCode =
+                        constants_1.ChartTypeCodes[drilldownnodeconfig.cells[drilldownindex].chartparms.chartType];
                 }
                 else {
                     break;
                 }
             }
             if (!chartParmsObj.isError) {
-                drilldownnodeconfig.datanode = chartParmsObj.datanode;
-                matrixlocation = drilldownnodeconfig.matrixlocation;
+                drilldownnodeconfig.dataNode = chartParmsObj.datanode;
+                matrixlocation = drilldownnodeconfig.matrixLocation;
                 chartmatrixrow[matrixlocation.column] = drilldownnodeconfig;
             }
             this.refreshPresentation(chartmatrixrow);
@@ -121,18 +121,18 @@ class ExplorerBranch extends Component {
                 charts.push(chartconfig);
             }
             return {
-                viewpoint: viewpoint,
-                facet: facet,
-                datapath: [],
-                matrixlocation: {
+                viewpointName: viewpoint,
+                facetName: facet,
+                dataPath: [],
+                matrixLocation: {
                     column: 0
                 },
-                yearscope: {
+                timeSpecs: {
                     latestyear: userselections.latestyear,
                     earliestyear: null,
                     fullrange: false,
                 },
-                charts: charts
+                cells: charts
             };
         };
         this.handleDialogOpen = () => {
@@ -217,29 +217,29 @@ class ExplorerBranch extends Component {
             for (cellptr in chartmatrixrow) {
                 parentnodeconfig = nodeconfig;
                 nodeconfig = chartmatrixrow[cellptr];
-                let nextdatanode = getbudgetnode_1.getBudgetNode(viewpointdata, nodeconfig.datapath);
+                let nextdatanode = getbudgetnode_1.getBudgetNode(viewpointdata, nodeconfig.dataPath);
                 if (nextdatanode) {
-                    let deeperdata = (!!nextdatanode.Components && (nodeconfig.charts.length == 1));
-                    let shallowerdata = (!nextdatanode.Components && (nodeconfig.charts.length == 2));
+                    let deeperdata = (!!nextdatanode.Components && (nodeconfig.cells.length == 1));
+                    let shallowerdata = (!nextdatanode.Components && (nodeconfig.cells.length == 2));
                     if (deeperdata || shallowerdata) {
                         chartmatrixrow.splice(cellptr);
-                        nodeconfig.charts = [];
+                        nodeconfig.cells = [];
                         isError = true;
                         let prevconfig = chartmatrixrow[cellptr - 1];
                         let context = {
-                            selection: prevconfig.charts[0].chartselection,
-                            ChartObject: prevconfig.charts[0].ChartObject,
+                            selection: prevconfig.cells[0].chartselection,
+                            ChartObject: prevconfig.cells[0].ChartObject,
                         };
                         let childprops = {
                             nodeconfig: prevconfig,
                             userselections: userselections,
                             budgetdata: budgetdata,
                             chartmatrixrow: chartmatrixrow,
-                            selectionrow: prevconfig.charts[0].chartselection[0].row,
-                            matrixcolumn: prevconfig.matrixlocation.column,
+                            selectionrow: prevconfig.cells[0].chartselection[0].row,
+                            matrixcolumn: prevconfig.matrixLocation.column,
                             portalChartIndex: 0,
                             context: context,
-                            chart: prevconfig.charts[0].chart,
+                            chart: prevconfig.cells[0].chart,
                         };
                         let childcallbacks = {
                             refreshPresentation: this.refreshPresentation,
@@ -265,7 +265,7 @@ class ExplorerBranch extends Component {
                 let nodechartindex = null;
                 if (!nodeconfig)
                     break;
-                for (nodechartindex in nodeconfig.charts) {
+                for (nodechartindex in nodeconfig.cells) {
                     let props = {
                         nodeConfig: nodeconfig,
                         chartIndex: nodechartindex,
@@ -283,20 +283,20 @@ class ExplorerBranch extends Component {
                         chartmatrixrow.splice(cellptr);
                         if (cellptr > 0) {
                             let parentconfig = chartmatrixrow[cellptr - 1];
-                            parentconfig.charts[nodechartindex].chartselection = null;
-                            parentconfig.charts[nodechartindex].chart = null;
+                            parentconfig.cells[nodechartindex].chartselection = null;
+                            parentconfig.cells[nodechartindex].chart = null;
                         }
                         isError = true;
                         break;
                     }
                     else {
-                        nodeconfig.facet = facet;
-                        nodeconfig.datanode = chartParmsObj.datanode;
-                        nodeconfig.charts[nodechartindex].chartparms = chartParmsObj.chartParms;
-                        nodeconfig.charts[nodechartindex].chartCode =
-                            constants_1.ChartTypeCodes[nodeconfig.charts[nodechartindex].chartparms.chartType];
+                        nodeconfig.facetName = facet;
+                        nodeconfig.dataNode = chartParmsObj.datanode;
+                        nodeconfig.cells[nodechartindex].chartparms = chartParmsObj.chartParms;
+                        nodeconfig.cells[nodechartindex].chartCode =
+                            constants_1.ChartTypeCodes[nodeconfig.cells[nodechartindex].chartparms.chartType];
                         if (parentnodeconfig) {
-                            nodeconfig.parentdata.datanode = parentnodeconfig.datanode;
+                            nodeconfig.parentData.datanode = parentnodeconfig.dataNode;
                         }
                     }
                 }
@@ -321,8 +321,8 @@ class ExplorerBranch extends Component {
             let portalIndex = location.portalindex;
             let chartmatrixrow = this.state.chartmatrixrow;
             let nodeConfig = chartmatrixrow[location.matrixlocation.column];
-            let oldChartType = nodeConfig.charts[portalIndex].googleChartType;
-            nodeConfig.charts[portalIndex].googleChartType = chartType;
+            let oldChartType = nodeConfig.cells[portalIndex].googleChartType;
+            nodeConfig.cells[portalIndex].googleChartType = chartType;
             let budgetdata = this.props.branchdata.data;
             let props = {
                 nodeConfig: nodeConfig,
@@ -338,23 +338,23 @@ class ExplorerBranch extends Component {
             };
             let chartParmsObj = getchartparms_1.default(props, callbacks);
             if (!chartParmsObj.isError) {
-                nodeConfig.charts[portalIndex].chartparms = chartParmsObj.chartParms;
-                nodeConfig.charts[portalIndex].chartCode =
-                    constants_1.ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType];
-                nodeConfig.datanode = chartParmsObj.datanode;
+                nodeConfig.cells[portalIndex].chartparms = chartParmsObj.chartParms;
+                nodeConfig.cells[portalIndex].chartCode =
+                    constants_1.ChartTypeCodes[nodeConfig.cells[portalIndex].chartparms.chartType];
+                nodeConfig.dataNode = chartParmsObj.datanode;
             }
             else {
-                nodeConfig.charts[portalIndex].googleChartType = oldChartType;
+                nodeConfig.cells[portalIndex].googleChartType = oldChartType;
             }
             this.refreshPresentation(chartmatrixrow);
             setTimeout(() => {
-                if (nodeConfig.charts[portalIndex].chart) {
-                    nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].ChartObject.chart;
-                    if (nodeConfig.charts[portalIndex].googleChartType == "PieChart") {
-                        nodeConfig.charts[portalIndex].chartselection[0].column = null;
+                if (nodeConfig.cells[portalIndex].chart) {
+                    nodeConfig.cells[portalIndex].chart = nodeConfig.cells[portalIndex].ChartObject.chart;
+                    if (nodeConfig.cells[portalIndex].googleChartType == "PieChart") {
+                        nodeConfig.cells[portalIndex].chartselection[0].column = null;
                     }
                     else {
-                        nodeConfig.charts[portalIndex].chartselection[0].column = 1;
+                        nodeConfig.cells[portalIndex].chartselection[0].column = 1;
                     }
                 }
                 updatechartselections_1.updateChartSelections(chartmatrixrow);
@@ -374,17 +374,17 @@ class ExplorerBranch extends Component {
             }
             let portals = matrixrow.map((nodeconfig, index) => {
                 let portalcharts = [];
-                for (let chartindex in nodeconfig.charts) {
+                for (let chartindex in nodeconfig.cells) {
                     let chartblocktitle = null;
-                    if ((nodeconfig.charts[chartindex].nodeDataPropertyName == 'Categories')) {
+                    if ((nodeconfig.cells[chartindex].nodeDataPropertyName == 'Categories')) {
                         chartblocktitle = portaltitles.Categories;
                     }
                     else {
                         chartblocktitle = portaltitles.Baseline;
                     }
-                    let chartparms = nodeconfig.charts[chartindex].chartparms;
+                    let chartparms = nodeconfig.cells[chartindex].chartparms;
                     let location = {
-                        matrixlocation: nodeconfig.matrixlocation,
+                        matrixlocation: nodeconfig.matrixLocation,
                         portalindex: Number(chartindex)
                     };
                     let explorer = this;
@@ -394,7 +394,7 @@ class ExplorerBranch extends Component {
                                 this.switchChartCode(location, chartCode);
                             };
                         })(location),
-                        chartCode: nodeconfig.charts[chartindex].chartCode,
+                        chartCode: nodeconfig.cells[chartindex].chartCode,
                         graph_id: "ChartID" + this.props.branchkey + '-' + index + '-' + chartindex,
                     };
                     let portalchart = {
@@ -405,8 +405,8 @@ class ExplorerBranch extends Component {
                     portalcharts.push(portalchart);
                 }
                 let portalname = null;
-                if (nodeconfig.parentdata) {
-                    portalname = nodeconfig.parentdata.Name;
+                if (nodeconfig.parentData) {
+                    portalname = nodeconfig.parentData.Name;
                 }
                 else {
                     portalname = 'City Budget';
