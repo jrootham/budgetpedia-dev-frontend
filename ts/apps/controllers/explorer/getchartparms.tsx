@@ -49,9 +49,9 @@ let getChartParms = (
     let onPortalCreation = callbacks.onPortalCreation
     let workingStatus = callbacks.workingStatus
 
-    let chartConfig: MatrixCellConfig = budgetNode.cells[chartIndex]
+    let budgetCell: MatrixCellConfig = budgetNode.cells[chartIndex]
 
-    let nodeDataPropertyName = chartConfig.nodeDataPropertyName
+    let nodeDataPropertyName = budgetCell.nodeDataPropertyName
     let sortedlist
 
     if (nodeDataPropertyName == 'Categories') {
@@ -114,7 +114,7 @@ let getChartParms = (
 
     // ---------------------[ COLLECT CHART PARMS ]---------------------
     // 1. chart type:
-    let chartType = chartConfig.googleChartType
+    let chartType = budgetCell.googleChartType
 
     // 2. chart options:
     // get axis title

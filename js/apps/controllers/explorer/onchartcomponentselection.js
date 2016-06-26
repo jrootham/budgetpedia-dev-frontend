@@ -13,7 +13,6 @@ let onChartComponentSelection = (props, callbacks) => {
     let refreshPresentation = callbacks.refreshPresentation;
     let onPortalCreation = callbacks.onPortalCreation;
     let workingStatus = callbacks.workingStatus;
-    let portalChartIndex = context.portalchartlocation.portalindex;
     let selection = context.selection[0];
     let selectionrow;
     if (selection) {
@@ -27,15 +26,17 @@ let onChartComponentSelection = (props, callbacks) => {
     let matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrixrow;
     let budgetNode = chartmatrixrow[matrixcolumn];
-    if (budgetNode.cells[portalChartIndex].nodeDataPropertyName == 'Categories') {
+    let portalChartIndex = context.portalchartlocation.portalindex;
+    let budgetCell = budgetNode.cells[portalChartIndex];
+    if (budgetCell.nodeDataPropertyName == 'Categories') {
         return;
     }
     let viewpoint = budgetNode.viewpointName, facet = budgetNode.facetName;
     serieslist.splice(matrixcolumn + 1);
     refreshPresentation(chartmatrixrow);
     if (!selection) {
-        delete budgetNode.cells[portalChartIndex].chartselection;
-        delete budgetNode.cells[portalChartIndex].chart;
+        delete budgetCell.chartselection;
+        delete budgetCell.chart;
         updatechartselections_1.updateChartSelections(chartmatrixrow);
         return;
     }
@@ -128,9 +129,10 @@ let createChildNode = (props, callbacks) => {
             isError = true;
             break;
         }
-        newnodeconfig.cells[newnodeindex].chartparms = chartParmsObj.chartParms;
-        newnodeconfig.cells[newnodeindex].chartCode =
-            constants_1.ChartTypeCodes[newnodeconfig.cells[newnodeindex].googleChartType];
+        let budgetCell = newnodeconfig.cells[newnodeindex];
+        budgetCell.chartparms = chartParmsObj.chartParms;
+        budgetCell.chartCode =
+            constants_1.ChartTypeCodes[budgetCell.googleChartType];
     }
     if (isError) {
         updatechartselections_1.updateChartSelections(chartmatrixrow);
@@ -140,9 +142,10 @@ let createChildNode = (props, callbacks) => {
     let newmatrixcolumn = matrixcolumn + 1;
     chartmatrixrow[newmatrixcolumn] = newnodeconfig;
     refreshPresentation(chartmatrixrow);
-    budgetNode.cells[portalChartIndex].chartselection = context.selection;
-    budgetNode.cells[portalChartIndex].chart = chart;
-    budgetNode.cells[portalChartIndex].ChartObject = context.ChartObject;
+    let budgetCell = budgetNode.cells[portalChartIndex];
+    budgetCell.chartselection = context.selection;
+    budgetCell.chart = chart;
+    budgetCell.ChartObject = context.ChartObject;
     updatechartselections_1.updateChartSelections(chartmatrixrow);
     onPortalCreation();
     workingStatus(false);

@@ -45,8 +45,6 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     let onPortalCreation = callbacks.onPortalCreation
     let workingStatus = callbacks.workingStatus
 
-    let portalChartIndex = context.portalchartlocation.portalindex
-
     // unpack context
     let selection = context.selection[0]
 
@@ -71,7 +69,9 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
     let budgetNode: BudgetNode = chartmatrixrow[matrixcolumn]
 
-    if (budgetNode.cells[portalChartIndex].nodeDataPropertyName == 'Categories') {
+    let portalChartIndex = context.portalchartlocation.portalindex
+    let budgetCell = budgetNode.cells[portalChartIndex]
+    if (budgetCell.nodeDataPropertyName == 'Categories') {
         return
     }
 
@@ -86,8 +86,8 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     refreshPresentation(chartmatrixrow)
 
     if (!selection) { // deselected
-        delete budgetNode.cells[portalChartIndex].chartselection
-        delete budgetNode.cells[portalChartIndex].chart
+        delete budgetCell.chartselection
+        delete budgetCell.chart
         updateChartSelections(chartmatrixrow)
         return
     }
@@ -210,9 +210,10 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
             isError = true
             break
         }
-        newnodeconfig.cells[newnodeindex].chartparms = chartParmsObj.chartParms
-        newnodeconfig.cells[newnodeindex].chartCode =
-            ChartTypeCodes[newnodeconfig.cells[newnodeindex].googleChartType]
+        let budgetCell = newnodeconfig.cells[newnodeindex]
+        budgetCell.chartparms = chartParmsObj.chartParms
+        budgetCell.chartCode =
+            ChartTypeCodes[budgetCell.googleChartType]
     }
 
     if (isError) {
@@ -225,9 +226,11 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
 
     refreshPresentation(chartmatrixrow)
 
-    budgetNode.cells[portalChartIndex].chartselection = context.selection
-    budgetNode.cells[portalChartIndex].chart = chart
-    budgetNode.cells[portalChartIndex].ChartObject = context.ChartObject
+    let budgetCell = budgetNode.cells[portalChartIndex]
+
+    budgetCell.chartselection = context.selection
+    budgetCell.chart = chart
+    budgetCell.ChartObject = context.ChartObject
 
     updateChartSelections(chartmatrixrow)
     onPortalCreation()

@@ -12,8 +12,8 @@ let getChartParms = (props, callbacks) => {
     let refreshPresentation = callbacks.refreshPresentation;
     let onPortalCreation = callbacks.onPortalCreation;
     let workingStatus = callbacks.workingStatus;
-    let chartConfig = budgetNode.cells[chartIndex];
-    let nodeDataPropertyName = chartConfig.nodeDataPropertyName;
+    let budgetCell = budgetNode.cells[chartIndex];
+    let nodeDataPropertyName = budgetCell.nodeDataPropertyName;
     let sortedlist;
     if (nodeDataPropertyName == 'Categories') {
         sortedlist = 'SortedCategories';
@@ -50,7 +50,7 @@ let getChartParms = (props, callbacks) => {
     else {
         components = node.Components;
     }
-    let chartType = chartConfig.googleChartType;
+    let chartType = budgetCell.googleChartType;
     let axistitle = null;
     if ((node.Contents) && (nodeDataPropertyName == 'Components')) {
         let titleref = viewpointdata.Configuration[node.Contents];
