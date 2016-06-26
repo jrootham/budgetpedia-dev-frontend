@@ -73,11 +73,10 @@ class ExplorerBranch extends Component {
                 dataNode: node,
             };
             let budgetNode = new budgetnode_1.default(budgetNodeParms);
-            let drilldownBudgetNode = budgetNode;
             let drilldownindex;
-            for (drilldownindex in drilldownBudgetNode.cells) {
+            for (drilldownindex in budgetNode.cells) {
                 let props = {
-                    budgetNode: drilldownBudgetNode,
+                    budgetNode: budgetNode,
                     chartIndex: drilldownindex,
                     budgetdata: budgetdata,
                     userselections: userselections,
@@ -90,17 +89,17 @@ class ExplorerBranch extends Component {
                 };
                 chartParmsObj = getchartparms_1.default(props, callbacks);
                 if (!chartParmsObj.isError) {
-                    drilldownBudgetNode.cells[drilldownindex].chartparms = chartParmsObj.chartParms;
-                    drilldownBudgetNode.cells[drilldownindex].chartCode =
-                        constants_1.ChartTypeCodes[drilldownBudgetNode.cells[drilldownindex].chartparms.chartType];
+                    budgetNode.cells[drilldownindex].chartparms = chartParmsObj.chartParms;
+                    budgetNode.cells[drilldownindex].chartCode =
+                        constants_1.ChartTypeCodes[budgetNode.cells[drilldownindex].chartparms.chartType];
                 }
                 else {
                     break;
                 }
             }
             if (!chartParmsObj.isError) {
-                matrixlocation = drilldownBudgetNode.matrixLocation;
-                chartmatrixrow[matrixlocation.column] = drilldownBudgetNode;
+                matrixlocation = budgetNode.matrixLocation;
+                chartmatrixrow[matrixlocation.column] = budgetNode;
             }
             this.refreshPresentation(chartmatrixrow);
         };

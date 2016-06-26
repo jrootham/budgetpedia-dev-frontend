@@ -138,15 +138,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             dataNode:node,
         }
 
-        let budgetNode = new BudgetNode(budgetNodeParms)
-
-        let drilldownBudgetNode:BudgetNode = budgetNode
+        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms)
 
         let drilldownindex: any
 
-        for (drilldownindex in drilldownBudgetNode.cells) {
+        for (drilldownindex in budgetNode.cells) {
             let props: GetChartParmsProps = {
-                budgetNode: drilldownBudgetNode,
+                budgetNode: budgetNode,
                 chartIndex: drilldownindex,
                 budgetdata,
                 userselections,
@@ -161,18 +159,17 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
             if (!chartParmsObj.isError) {
 
-                drilldownBudgetNode.cells[drilldownindex].chartparms = chartParmsObj.chartParms
-                drilldownBudgetNode.cells[drilldownindex].chartCode =
-                    ChartTypeCodes[drilldownBudgetNode.cells[drilldownindex].chartparms.chartType]
+                budgetNode.cells[drilldownindex].chartparms = chartParmsObj.chartParms
+                budgetNode.cells[drilldownindex].chartCode =
+                    ChartTypeCodes[budgetNode.cells[drilldownindex].chartparms.chartType]
 
             } else {
                 break
             }
         }
         if (!chartParmsObj.isError) {
-            // drilldownBudgetNode.dataNode = chartParmsObj.dataNode
-            matrixlocation = drilldownBudgetNode.matrixLocation
-            chartmatrixrow[matrixlocation.column] = drilldownBudgetNode
+            matrixlocation = budgetNode.matrixLocation
+            chartmatrixrow[matrixlocation.column] = budgetNode
         }
 
         // -------------[ SAVE INITIALIZATION ]----------------
