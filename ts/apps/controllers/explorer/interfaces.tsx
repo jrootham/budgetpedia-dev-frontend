@@ -52,7 +52,7 @@ interface PortalChartLocation {
 }
     
 interface GetChartParmsProps {
-    nodeConfig: MatrixNodeConfig | BudgetNode, 
+    nodeConfig: BudgetNode, 
     chartIndex: number,
     userselections:any, 
     budgetdata: any,
@@ -80,32 +80,32 @@ interface OnChartComponentSelectionCallbacks {
 // ---------------[ NODE CONFIGURATION ]--------------
 
 // used to configure single chart of chart portal
-interface MatrixNodeConfig {
+// interface MatrixNodeConfig {
 
-    // viewpoint: string,
-    // facet: string,
-    // datapath: string[],
+//     // viewpoint: string,
+//     // facet: string,
+//     // datapath: string[],
 
-    // yearscope: YearScope,
-    // parentdata?: SortedComponentItem,
-    // dataNode?: any,
+//     // yearscope: YearScope,
+//     // parentdata?: SortedComponentItem,
+//     // dataNode?: any,
 
-    // matrixlocation: MatrixLocation,
-    // isError?: boolean,
-    // charts: MatrixCellConfig[]
+//     // matrixlocation: MatrixLocation,
+//     // isError?: boolean,
+//     // charts: MatrixCellConfig[]
 
-    viewpointName: string,
-    facetName: string,
-    dataPath: string[],
+//     viewpointName: string,
+//     facetName: string,
+//     dataPath: string[],
 
-    timeSpecs: YearScope,
-    parentData?: SortedComponentItem,
-    dataNode?: any,
+//     timeSpecs: YearScope,
+//     parentData?: SortedComponentItem,
+//     dataNode?: any,
 
-    matrixLocation: MatrixLocation,
-    isError?: boolean,
-    cells: MatrixCellConfig[]
-}
+//     matrixLocation: MatrixLocation,
+//     isError?: boolean,
+//     cells: MatrixCellConfig[]
+// }
 
 interface MatrixCellConfig {
 
@@ -158,7 +158,7 @@ interface ChartSelectionContext {
 }
 
 interface CreateChildNodeProps {
-    nodeconfig: MatrixNodeConfig | BudgetNode,
+    nodeconfig: BudgetNode,
     userselections: any,
     budgetdata:any,
     chartmatrixrow: any,
@@ -178,7 +178,7 @@ interface CreateChildNodeCallbacks {
 // ---------------[ EXPORT ]--------------
 
 export {
-    MatrixNodeConfig, 
+    // MatrixNodeConfig, 
     MatrixCellConfig,
     MatrixLocation,
     PortalChartLocation, 

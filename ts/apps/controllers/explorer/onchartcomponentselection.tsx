@@ -4,7 +4,7 @@
 var format = require('format-number')
 
 import {
-    MatrixNodeConfig,
+    // MatrixNodeConfig,
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,
@@ -19,6 +19,7 @@ import {
     CreateChildNodeCallbacks,
 } from './interfaces'
 
+import BudgetNode, {BudgetNodeParms} from '../../../local/budgetnode'
 import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
 import getChartParms from './getchartparms'
@@ -69,7 +70,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     // acquire serieslist from matrix
     let serieslist = chartmatrixrow
 
-    let nodeconfig: MatrixNodeConfig = chartmatrixrow[matrixcolumn]
+    let nodeconfig: BudgetNode = chartmatrixrow[matrixcolumn]
 
     if (nodeconfig.cells[portalChartIndex].nodeDataPropertyName == 'Categories') {
         return
@@ -190,7 +191,10 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         charts.push(chartconfig)
     }
 
-    let newnodeconfig: MatrixNodeConfig = {
+
+    let newnodeconfigparms: BudgetNodeParms = {
+        portalCharts: portalcharts,
+        chartType:charttype,
         viewpointName:viewpoint,
         facetName:facet,
         dataPath: childdatapath,
@@ -202,6 +206,8 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         timeSpecs: newrange,
         cells:charts,
     }
+
+    let newnodeconfig = new BudgetNode(newnodeconfigparms)
 
     let newnodeindex: any = null
     let chartParmsObj: ChartParmsObj = null

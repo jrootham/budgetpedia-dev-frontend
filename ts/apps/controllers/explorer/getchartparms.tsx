@@ -20,7 +20,7 @@ import {
     PortalChartLocation,
     SortedComponentItem,
     MatrixCellConfig,
-    MatrixNodeConfig,
+    // MatrixNodeConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
     OnChartComponentSelectionProps,
@@ -38,7 +38,7 @@ let getChartParms = (
         props:GetChartParmsProps, callbacks: GetChartParmsCallbacks
     ):ChartParmsObj => {
 
-    let nodeConfig:MatrixNodeConfig | BudgetNode = props.nodeConfig
+    let nodeConfig: BudgetNode = props.nodeConfig
     let chartIndex = props.chartIndex
     let userselections = props.userselections
     let budgetdata = props.budgetdata

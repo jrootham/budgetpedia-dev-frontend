@@ -1,5 +1,6 @@
 "use strict";
 var format = require('format-number');
+const budgetnode_1 = require('../../../local/budgetnode');
 const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
 const getchartparms_1 = require('./getchartparms');
@@ -105,7 +106,9 @@ let createChildNode = (props, callbacks) => {
         chartconfig.nodeDataPropertyName = type.Type;
         charts.push(chartconfig);
     }
-    let newnodeconfig = {
+    let newnodeconfigparms = {
+        portalCharts: portalcharts,
+        chartType: charttype,
         viewpointName: viewpoint,
         facetName: facet,
         dataPath: childdatapath,
@@ -116,6 +119,7 @@ let createChildNode = (props, callbacks) => {
         timeSpecs: newrange,
         cells: charts,
     };
+    let newnodeconfig = new budgetnode_1.default(newnodeconfigparms);
     let newnodeindex = null;
     let chartParmsObj = null;
     let isError = false;

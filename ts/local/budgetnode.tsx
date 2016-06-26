@@ -20,7 +20,7 @@ import {
     // CreateChildNodeCallbacks,
 } from '../apps/controllers/explorer/interfaces'
 
-interface BudgetNodeParms {
+export interface BudgetNodeParms {
     chartType: string,
     viewpointName: string,
     facetName: string,
@@ -28,6 +28,8 @@ interface BudgetNodeParms {
     timeSpecs: TimeSpecs,
     dataPath: string[],
     matrixLocation: MatrixLocation,
+    parentData?:any,
+    cells?:any,
 }
 
 class BudgetNode {
@@ -38,19 +40,24 @@ class BudgetNode {
         let defaultChartCode = ChartTypeCodes[parms.chartType]
 
         // // create portalCells
-        for (let type in portalcharts) {
-            let cell: MatrixCellConfig = {
-                googleChartType:parms.chartType,
-                chartCode:defaultChartCode,
-                nodeDataPropertyName:portalcharts[type].Type
+        if (parms.cells) {
+            this.cells = parms.cells
+        } else {
+            for (let type in portalcharts) {
+                let cell: MatrixCellConfig = {
+                    googleChartType:parms.chartType,
+                    chartCode:defaultChartCode,
+                    nodeDataPropertyName:portalcharts[type].Type
+                }
+                this.cells.push(cell)
             }
-            this.cells.push(cell)
         }
         this.viewpointName = parms.viewpointName
         this.facetName = parms.facetName
         this.dataPath = parms.dataPath
         this.matrixLocation = parms.matrixLocation
         this.timeSpecs = parms.timeSpecs
+        if (parms.parentData) this.parentData = parms.parentData
 
     }
 

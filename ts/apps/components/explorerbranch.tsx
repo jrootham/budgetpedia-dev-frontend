@@ -6,7 +6,7 @@ import * as React from 'react'
 var { Component } = React
 
 import {
-    MatrixNodeConfig,
+    // MatrixNodeConfig,
     MatrixCellConfig,
     ChartParms,
     ChartParmsObj,
@@ -316,8 +316,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let chartmatrixrow = this.state.chartmatrixrow
         let oldchartmatrixrow = [...chartmatrixrow]
 
-        let nodeconfig: MatrixNodeConfig = null
-        let parentnodeconfig: MatrixNodeConfig
+        let nodeconfig: BudgetNode = null
+        let parentnodeconfig: BudgetNode
         let cellptr: any
         let isError = false
         let chartParmsObj: ChartParmsObj = null
@@ -335,7 +335,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     chartmatrixrow.splice(cellptr)
                     nodeconfig.cells = []
                     isError = true
-                    let prevconfig: MatrixNodeConfig = chartmatrixrow[cellptr - 1]
+                    let prevconfig: BudgetNode = chartmatrixrow[cellptr - 1]
 
                     let context = {
                         selection:prevconfig.cells[0].chartselection,
@@ -392,7 +392,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 if (chartParmsObj.isError) {
                     chartmatrixrow.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
-                        let parentconfig: MatrixNodeConfig = chartmatrixrow[cellptr - 1]
+                        let parentconfig: BudgetNode = chartmatrixrow[cellptr - 1]
                         // disable reselection
                         parentconfig.cells[nodechartindex].chartselection = null
                         parentconfig.cells[nodechartindex].chart = null
@@ -436,7 +436,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let chartType = ChartCodeTypes[chartCode]
         let portalIndex = location.portalindex
         let chartmatrixrow = this.state.chartmatrixrow
-        let nodeConfig: MatrixNodeConfig = chartmatrixrow[location.matrixlocation.column]
+        let nodeConfig: BudgetNode = chartmatrixrow[location.matrixlocation.column]
         let oldChartType = nodeConfig.cells[portalIndex].googleChartType
         nodeConfig.cells[portalIndex].googleChartType = chartType
         let budgetdata = this.props.branchdata.data
@@ -498,7 +498,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')'
         }
 
-        let portals = matrixrow.map((nodeconfig: MatrixNodeConfig, index) => {
+        let portals = matrixrow.map((nodeconfig: BudgetNode, index) => {
 
             let portalcharts = []
 
