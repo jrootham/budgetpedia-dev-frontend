@@ -9,8 +9,6 @@
     - change 'Facets' to 'Perspectives'
     - do systematic check for error handling requirements; protect against 
         unexpected data (extrenal)
-    - consider creating an instance around 'node' for the key abstraction
-        - include getChartParms -> node.getChartParms
     - move state to central store
     ? Classes:
         Explorer
@@ -44,7 +42,6 @@ import Dialog from 'material-ui/Dialog'
 import ExplorerBranch from '../components/explorerbranch'
 import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
 
-// import getChartParms from './explorer/getchartparms'
 import { updateChartSelections } from './explorer/updatechartselections'
 import * as Actions from '../../actions/actions'
 

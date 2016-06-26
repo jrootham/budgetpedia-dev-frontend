@@ -241,7 +241,6 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         workingStatus(false)
         return
     }
-    // newnodeconfig.dataNode = chartParmsObj.dataNode
     let newmatrixcolumn = matrixcolumn + 1
     chartmatrixrow[newmatrixcolumn] = newnodeconfig
 

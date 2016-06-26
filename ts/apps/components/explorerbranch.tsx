@@ -288,7 +288,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             nodeconfig = chartmatrixrow[cellptr]
             let nextdataNode = getBudgetNode(viewpointdata, nodeconfig.dataPath)
             nodeconfig.dataNode = nextdataNode
-            // let dataNode = nodeconfig.dataNode
             if (nextdataNode) {
                 // there is only one chart where there should be 2
                 let deeperdata = (!!nextdataNode.Components && (nodeconfig.cells.length == 1))
@@ -364,7 +363,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     break
                 } else {
                     nodeconfig.facetName = facet
-                    // nodeconfig.dataNode = chartParmsObj.dataNode
                     nodeconfig.cells[nodechartindex].chartparms = chartParmsObj.chartParms
                     nodeconfig.cells[nodechartindex].chartCode =
                         ChartTypeCodes[nodeconfig.cells[nodechartindex].chartparms.chartType]
@@ -420,7 +418,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             nodeConfig.cells[portalIndex].chartparms = chartParmsObj.chartParms
             nodeConfig.cells[portalIndex].chartCode =
                 ChartTypeCodes[nodeConfig.cells[portalIndex].chartparms.chartType]
-            // nodeConfig.dataNode = chartParmsObj.dataNode
         } else {
             nodeConfig.cells[portalIndex].googleChartType = oldChartType
         }
@@ -468,8 +465,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             for (let chartindex in nodeconfig.cells) {
 
                 let chartblocktitle = null
-                if (//(nodeconfig.dataNode.Contents == 'BASELINE') ||
-                    (nodeconfig.cells[chartindex].nodeDataPropertyName == 'Categories')) {
+                if ((nodeconfig.cells[chartindex].nodeDataPropertyName == 'Categories')) {
                     chartblocktitle = portaltitles.Categories
                 } else {
                     chartblocktitle = portaltitles.Baseline
