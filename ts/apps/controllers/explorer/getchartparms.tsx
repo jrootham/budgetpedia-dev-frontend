@@ -37,7 +37,7 @@ let getChartParms = (
         props:GetChartParmsProps, callbacks: GetChartParmsCallbacks
     ):ChartParmsObj => {
 
-    let nodeConfig: BudgetNode = props.nodeConfig
+    let budgetNode: BudgetNode = props.budgetNode
     let chartIndex = props.chartIndex
     let userselections = props.userselections
     let budgetdata = props.budgetdata
@@ -49,7 +49,7 @@ let getChartParms = (
     let onPortalCreation = callbacks.onPortalCreation
     let workingStatus = callbacks.workingStatus
 
-    let chartConfig: MatrixCellConfig = nodeConfig.cells[chartIndex]
+    let chartConfig: MatrixCellConfig = budgetNode.cells[chartIndex]
 
     let nodeDataPropertyName = chartConfig.nodeDataPropertyName
     let sortedlist
@@ -63,11 +63,11 @@ let getChartParms = (
     // -------------------[ INIT VARS ]---------------------
 
     // unpack chartConfig & derivatives
-    let viewpointindex = nodeConfig.viewpointName,
-        // path = nodeConfig.dataPath,
-        yearscope = nodeConfig.timeSpecs,
+    let viewpointindex = budgetNode.viewpointName,
+        // path = budgetNode.dataPath,
+        yearscope = budgetNode.timeSpecs,
         year = yearscope.rightYear,
-        node = nodeConfig.dataNode
+        node = budgetNode.dataNode
 
     // unpack userselections
     let dataseriesname = userselections.facet
@@ -130,8 +130,8 @@ let getChartParms = (
 
     // assemble chart title
     let title
-    if (nodeConfig.parentData) {
-        let parentdataNode = nodeConfig.parentData.dataNode
+    if (budgetNode.parentData) {
+        let parentdataNode = budgetNode.parentData.dataNode
         let configindex = node.Config || parentdataNode.Contents
         let catname = null
         if (configindex) {
@@ -140,7 +140,7 @@ let getChartParms = (
         } else {
             catname = 'Service/Activity'
         }
-        title = catname + ': ' + nodeConfig.parentData.Name
+        title = catname + ': ' + budgetNode.parentData.Name
     }
     else {
         title = itemseriesdata.Title
@@ -219,7 +219,7 @@ let getChartParms = (
     // TODO: replace chartconfig with matrix co-ordinates to avoid
     //     need to update chart by destroying chart (thus closure) before replacing it
     // 3. chart events:
-    let matrixlocation = Object.assign({}, nodeConfig.matrixLocation)
+    let matrixlocation = Object.assign({}, budgetNode.matrixLocation)
     let configlocation: PortalChartLocation = {
         matrixlocation,
         portalindex: chartIndex

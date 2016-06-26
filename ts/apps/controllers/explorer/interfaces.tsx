@@ -52,7 +52,7 @@ interface PortalChartLocation {
 }
     
 interface GetChartParmsProps {
-    nodeConfig: BudgetNode, 
+    budgetNode: BudgetNode, 
     chartIndex: number,
     userselections:any, 
     budgetdata: any,

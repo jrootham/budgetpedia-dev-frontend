@@ -112,7 +112,7 @@ let createChildNode = (props, callbacks) => {
     let isError = false;
     for (newnodeindex in newnodeconfig.cells) {
         let props = {
-            nodeConfig: newnodeconfig,
+            budgetNode: newnodeconfig,
             chartIndex: newnodeindex,
             userselections: userselections,
             budgetdata: budgetdata,

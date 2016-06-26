@@ -2,7 +2,7 @@
 var format = require('format-number');
 const onchartcomponentselection_1 = require('./onchartcomponentselection');
 let getChartParms = (props, callbacks) => {
-    let nodeConfig = props.nodeConfig;
+    let budgetNode = props.budgetNode;
     let chartIndex = props.chartIndex;
     let userselections = props.userselections;
     let budgetdata = props.budgetdata;
@@ -12,7 +12,7 @@ let getChartParms = (props, callbacks) => {
     let refreshPresentation = callbacks.refreshPresentation;
     let onPortalCreation = callbacks.onPortalCreation;
     let workingStatus = callbacks.workingStatus;
-    let chartConfig = nodeConfig.cells[chartIndex];
+    let chartConfig = budgetNode.cells[chartIndex];
     let nodeDataPropertyName = chartConfig.nodeDataPropertyName;
     let sortedlist;
     if (nodeDataPropertyName == 'Categories') {
@@ -21,7 +21,7 @@ let getChartParms = (props, callbacks) => {
     else {
         sortedlist = 'SortedComponents';
     }
-    let viewpointindex = nodeConfig.viewpointName, yearscope = nodeConfig.timeSpecs, year = yearscope.rightYear, node = nodeConfig.dataNode;
+    let viewpointindex = budgetNode.viewpointName, yearscope = budgetNode.timeSpecs, year = yearscope.rightYear, node = budgetNode.dataNode;
     let dataseriesname = userselections.facet;
     let units = itemseriesdata.Units, vertlabel;
     vertlabel = itemseriesdata.UnitsAlias;
@@ -61,8 +61,8 @@ let getChartParms = (props, callbacks) => {
         axistitle = portaltitles.Categories;
     }
     let title;
-    if (nodeConfig.parentData) {
-        let parentdataNode = nodeConfig.parentData.dataNode;
+    if (budgetNode.parentData) {
+        let parentdataNode = budgetNode.parentData.dataNode;
         let configindex = node.Config || parentdataNode.Contents;
         let catname = null;
         if (configindex) {
@@ -72,7 +72,7 @@ let getChartParms = (props, callbacks) => {
         else {
             catname = 'Service/Activity';
         }
-        title = catname + ': ' + nodeConfig.parentData.Name;
+        title = catname + ': ' + budgetNode.parentData.Name;
     }
     else {
         title = itemseriesdata.Title;
@@ -135,7 +135,7 @@ let getChartParms = (props, callbacks) => {
             width: chartwidth,
         }
     };
-    let matrixlocation = Object.assign({}, nodeConfig.matrixLocation);
+    let matrixlocation = Object.assign({}, budgetNode.matrixLocation);
     let configlocation = {
         matrixlocation: matrixlocation,
         portalindex: chartIndex

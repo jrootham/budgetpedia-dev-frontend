@@ -194,7 +194,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     let isError = false
     for (newnodeindex in newnodeconfig.cells) {
         let props: GetChartParmsProps = {
-            nodeConfig: newnodeconfig,
+            budgetNode: newnodeconfig,
             chartIndex: newnodeindex,
             userselections,
             budgetdata,

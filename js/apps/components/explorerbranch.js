@@ -77,7 +77,7 @@ class ExplorerBranch extends Component {
             let drilldownindex;
             for (drilldownindex in drilldownnodeconfig.cells) {
                 let props = {
-                    nodeConfig: drilldownnodeconfig,
+                    budgetNode: drilldownnodeconfig,
                     chartIndex: drilldownindex,
                     budgetdata: budgetdata,
                     userselections: userselections,
@@ -236,7 +236,7 @@ class ExplorerBranch extends Component {
                     break;
                 for (nodechartindex in budgetNode.cells) {
                     let props = {
-                        nodeConfig: budgetNode,
+                        budgetNode: budgetNode,
                         chartIndex: nodechartindex,
                         userselections: userselections,
                         budgetdata: budgetdata,
@@ -288,12 +288,12 @@ class ExplorerBranch extends Component {
             let chartType = constants_1.ChartCodeTypes[chartCode];
             let portalIndex = location.portalindex;
             let chartmatrixrow = this.state.chartmatrixrow;
-            let nodeConfig = chartmatrixrow[location.matrixlocation.column];
-            let oldChartType = nodeConfig.cells[portalIndex].googleChartType;
-            nodeConfig.cells[portalIndex].googleChartType = chartType;
+            let budgetNode = chartmatrixrow[location.matrixlocation.column];
+            let oldChartType = budgetNode.cells[portalIndex].googleChartType;
+            budgetNode.cells[portalIndex].googleChartType = chartType;
             let budgetdata = this.props.branchdata.data;
             let props = {
-                nodeConfig: nodeConfig,
+                budgetNode: budgetNode,
                 chartIndex: portalIndex,
                 userselections: this.state.userselections,
                 budgetdata: budgetdata,
@@ -306,22 +306,22 @@ class ExplorerBranch extends Component {
             };
             let chartParmsObj = getchartparms_1.default(props, callbacks);
             if (!chartParmsObj.isError) {
-                nodeConfig.cells[portalIndex].chartparms = chartParmsObj.chartParms;
-                nodeConfig.cells[portalIndex].chartCode =
-                    constants_1.ChartTypeCodes[nodeConfig.cells[portalIndex].chartparms.chartType];
+                budgetNode.cells[portalIndex].chartparms = chartParmsObj.chartParms;
+                budgetNode.cells[portalIndex].chartCode =
+                    constants_1.ChartTypeCodes[budgetNode.cells[portalIndex].chartparms.chartType];
             }
             else {
-                nodeConfig.cells[portalIndex].googleChartType = oldChartType;
+                budgetNode.cells[portalIndex].googleChartType = oldChartType;
             }
             this.refreshPresentation(chartmatrixrow);
             setTimeout(() => {
-                if (nodeConfig.cells[portalIndex].chart) {
-                    nodeConfig.cells[portalIndex].chart = nodeConfig.cells[portalIndex].ChartObject.chart;
-                    if (nodeConfig.cells[portalIndex].googleChartType == "PieChart") {
-                        nodeConfig.cells[portalIndex].chartselection[0].column = null;
+                if (budgetNode.cells[portalIndex].chart) {
+                    budgetNode.cells[portalIndex].chart = budgetNode.cells[portalIndex].ChartObject.chart;
+                    if (budgetNode.cells[portalIndex].googleChartType == "PieChart") {
+                        budgetNode.cells[portalIndex].chartselection[0].column = null;
                     }
                     else {
-                        nodeConfig.cells[portalIndex].chartselection[0].column = 1;
+                        budgetNode.cells[portalIndex].chartselection[0].column = 1;
                     }
                 }
                 updatechartselections_1.updateChartSelections(chartmatrixrow);

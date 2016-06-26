@@ -146,7 +146,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         for (drilldownindex in drilldownnodeconfig.cells) {
             let props: GetChartParmsProps = {
-                nodeConfig: drilldownnodeconfig,
+                budgetNode: drilldownnodeconfig,
                 chartIndex: drilldownindex,
                 budgetdata,
                 userselections,
@@ -346,7 +346,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             if (!budgetNode) break
             for (nodechartindex in budgetNode.cells) {
                 let props: GetChartParmsProps = {
-                    nodeConfig: budgetNode,
+                    budgetNode: budgetNode,
                     chartIndex: nodechartindex,
                     userselections,
                     budgetdata,
@@ -404,12 +404,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let chartType = ChartCodeTypes[chartCode]
         let portalIndex = location.portalindex
         let chartmatrixrow = this.state.chartmatrixrow
-        let nodeConfig: BudgetNode = chartmatrixrow[location.matrixlocation.column]
-        let oldChartType = nodeConfig.cells[portalIndex].googleChartType
-        nodeConfig.cells[portalIndex].googleChartType = chartType
+        let budgetNode: BudgetNode = chartmatrixrow[location.matrixlocation.column]
+        let oldChartType = budgetNode.cells[portalIndex].googleChartType
+        budgetNode.cells[portalIndex].googleChartType = chartType
         let budgetdata = this.props.branchdata.data
         let props: GetChartParmsProps = {
-            nodeConfig: nodeConfig,
+            budgetNode: budgetNode,
             chartIndex: portalIndex,
             userselections: this.state.userselections,
             budgetdata,
@@ -422,26 +422,26 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         }
         let chartParmsObj: ChartParmsObj = getChartParms(props, callbacks)
         if (!chartParmsObj.isError) {
-            nodeConfig.cells[portalIndex].chartparms = chartParmsObj.chartParms
-            nodeConfig.cells[portalIndex].chartCode =
-                ChartTypeCodes[nodeConfig.cells[portalIndex].chartparms.chartType]
+            budgetNode.cells[portalIndex].chartparms = chartParmsObj.chartParms
+            budgetNode.cells[portalIndex].chartCode =
+                ChartTypeCodes[budgetNode.cells[portalIndex].chartparms.chartType]
         } else {
-            nodeConfig.cells[portalIndex].googleChartType = oldChartType
+            budgetNode.cells[portalIndex].googleChartType = oldChartType
         }
         this.refreshPresentation(chartmatrixrow)
 
         setTimeout(() => {
-            if (nodeConfig.cells[portalIndex].chart) {
+            if (budgetNode.cells[portalIndex].chart) {
                 // refresh to new chart created with switch
-                nodeConfig.cells[portalIndex].chart = nodeConfig.cells[portalIndex].ChartObject.chart
+                budgetNode.cells[portalIndex].chart = budgetNode.cells[portalIndex].ChartObject.chart
                 // it turns out that "PieChart" needs column set to null
                 // for setSelection to work
-                if (nodeConfig.cells[portalIndex].googleChartType == "PieChart") {
-                    nodeConfig.cells[portalIndex].chartselection[0].column = null
+                if (budgetNode.cells[portalIndex].googleChartType == "PieChart") {
+                    budgetNode.cells[portalIndex].chartselection[0].column = null
                 } else {
                     // "ColumnChart" doesn't seem to care about column value,
                     // but we set it back to original (presumed) for consistency
-                    nodeConfig.cells[portalIndex].chartselection[0].column = 1
+                    budgetNode.cells[portalIndex].chartselection[0].column = 1
                 }
             }
             updateChartSelections(chartmatrixrow)
