@@ -20,7 +20,6 @@ import {
     PortalChartLocation,
     SortedComponentItem,
     MatrixCellConfig,
-    // MatrixNodeConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
     OnChartComponentSelectionProps,

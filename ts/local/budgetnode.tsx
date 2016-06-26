@@ -4,20 +4,8 @@
 import { PortalCell, TimeSpecs } from './databaseapi'
 import { ChartTypeCodes, ChartCodeTypes } from '../apps/constants'
 import {
-    // MatrixNodeConfig,
     MatrixCellConfig,
-    // ChartParms,
-    // ChartParmsObj,
-    // ChartSelectionContext,
     MatrixLocation,
-    // PortalConfig,
-    // ChartSettings,
-    // PortalChartLocation,
-    // ChartConfig,
-    // GetChartParmsProps,
-    // GetChartParmsCallbacks,
-    // CreateChildNodeProps,
-    // CreateChildNodeCallbacks,
 } from '../apps/controllers/explorer/interfaces'
 
 export interface BudgetNodeParms {
@@ -39,9 +27,12 @@ class BudgetNode {
         // // TODO: should be default for each chart...
         let defaultChartCode = ChartTypeCodes[parms.chartType]
 
-        // // create portalCells
+        // TODO: resolve need for this -- node children controls type of portalcharts
+        // should perhaps be checked at cell creation time rather than at budgetnode
+        // creation type
         if (parms.cells) {
             this.cells = parms.cells
+        // create portalCells
         } else {
             for (let type in portalcharts) {
                 let cell: MatrixCellConfig = {

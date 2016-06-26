@@ -49,7 +49,6 @@ import { updateChartSelections } from './explorer/updatechartselections'
 import * as Actions from '../../actions/actions'
 
 import {
-    // MatrixNodeConfig,
     MatrixCellConfig,
     ChartParmsObj,
     MatrixLocation,

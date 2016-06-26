@@ -6,7 +6,6 @@ import * as React from 'react'
 var { Component } = React
 
 import {
-    // MatrixNodeConfig,
     MatrixCellConfig,
     ChartParms,
     ChartParmsObj,
@@ -140,8 +139,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let drilldownnodeconfig:BudgetNode = budgetnode
 
-        // let drilldownnodeconfig: MatrixNodeConfig =
-        //     this.initRootNodeConfig(userselections)
         let drilldownindex: any
 
         for (drilldownindex in drilldownnodeconfig.cells) {
@@ -180,44 +177,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         this.refreshPresentation(chartmatrixrow)
 
     }
-
-    // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
-
-    // REPLACED BY BUDGETNODE CLASS
-    // initRootNodeConfig = (userselections): MatrixNodeConfig => {
-    //     let googleChartType = userselections.charttype
-    //     let chartCode = ChartTypeCodes[googleChartType]
-    //     let budgetdata = this.props.branchdata.data
-    //     let viewpoint = userselections.viewpoint
-    //     let facet = userselections.facet
-    //     // let viewpointdata = budgetdata.Viewpoints[viewpoint]
-    //     let viewpointdata = budgetdata.viewpointdata
-    //     let portalcharts = viewpointdata.PortalCharts[facet]
-    //     let charts = []
-    //     for (let type of portalcharts) {
-    //         let chartconfig: MatrixCellConfig = {
-    //             googleChartType,
-    //             chartCode,
-    //         }
-    //         chartconfig.nodeDataPropertyName = type.Type
-    //         charts.push(chartconfig)
-    //     }
-    //     return {
-    //         viewpointName: viewpoint,
-    //         facetName: facet,
-    //         dataPath: [], // get data from root viewpoint object
-    //         matrixLocation: {
-    //             column: 0
-    //         },
-    //         timeSpecs: {
-    //             rightYear: userselections.latestyear,
-    //             leftYear: null,
-    //             spanYears: false,
-    //         },
-    //         cells: charts
-    //     }
-
-    // }
 
     handleDialogOpen = () => {
         this.setState({

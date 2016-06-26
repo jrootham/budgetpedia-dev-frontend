@@ -4,7 +4,6 @@
 var format = require('format-number')
 
 import {
-    // MatrixNodeConfig,
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,

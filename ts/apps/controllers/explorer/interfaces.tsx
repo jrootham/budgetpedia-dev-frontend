@@ -79,34 +79,6 @@ interface OnChartComponentSelectionCallbacks {
 // =====================================================
 // ---------------[ NODE CONFIGURATION ]--------------
 
-// used to configure single chart of chart portal
-// interface MatrixNodeConfig {
-
-//     // viewpoint: string,
-//     // facet: string,
-//     // datapath: string[],
-
-//     // yearscope: YearScope,
-//     // parentdata?: SortedComponentItem,
-//     // dataNode?: any,
-
-//     // matrixlocation: MatrixLocation,
-//     // isError?: boolean,
-//     // charts: MatrixCellConfig[]
-
-//     viewpointName: string,
-//     facetName: string,
-//     dataPath: string[],
-
-//     timeSpecs: YearScope,
-//     parentData?: SortedComponentItem,
-//     dataNode?: any,
-
-//     matrixLocation: MatrixLocation,
-//     isError?: boolean,
-//     cells: MatrixCellConfig[]
-// }
-
 interface MatrixCellConfig {
 
     googleChartType: string,
@@ -178,7 +150,6 @@ interface CreateChildNodeCallbacks {
 // ---------------[ EXPORT ]--------------
 
 export {
-    // MatrixNodeConfig, 
     MatrixCellConfig,
     MatrixLocation,
     PortalChartLocation, 
