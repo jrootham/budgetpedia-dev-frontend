@@ -16,6 +16,7 @@ export interface BudgetNodeParms {
     timeSpecs: TimeSpecs,
     dataPath: string[],
     matrixLocation: MatrixLocation,
+    dataNode:any,
     parentData?:any,
     cells?:any,
 }
@@ -48,8 +49,24 @@ class BudgetNode {
         this.dataPath = parms.dataPath
         this.matrixLocation = parms.matrixLocation
         this.timeSpecs = parms.timeSpecs
+        this.dataNode = parms.dataNode
         if (parms.parentData) this.parentData = parms.parentData
 
+    }
+
+    getAvailableCells = () => {
+        let availablCells = []
+        if (!this.dataNode) return availablCells
+        for (let cell of this.cells) {
+            if (cell.nodeDataPropertyName == 'Components' && !this.dataNode.Components) {
+                continue
+            }
+            if (cell.nodeDataPropertyName == 'Categories' && !this.dataNode.Categories) {
+                continue
+            }
+            availablCells.push(cell)
+        }
+        return availablCells
     }
 
     cells: MatrixCellConfig[] = []
@@ -58,7 +75,7 @@ class BudgetNode {
     dataPath: string[]
     matrixLocation: MatrixLocation
     timeSpecs: TimeSpecs
-    dataNode: any = null
+    dataNode: any
     parentData: any = null
 
 }

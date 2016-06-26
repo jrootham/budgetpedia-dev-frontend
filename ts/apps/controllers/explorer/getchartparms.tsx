@@ -64,9 +64,10 @@ let getChartParms = (
 
     // unpack chartConfig & derivatives
     let viewpointindex = nodeConfig.viewpointName,
-        path = nodeConfig.dataPath,
+        // path = nodeConfig.dataPath,
         yearscope = nodeConfig.timeSpecs,
-        year = yearscope.rightYear
+        year = yearscope.rightYear,
+        node = nodeConfig.dataNode
 
     // unpack userselections
     let dataseriesname = userselections.facet
@@ -93,7 +94,7 @@ let getChartParms = (
     // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
     // collect chart node and its components as data sources for the graph
-    let node = getBudgetNode(viewpointdata, path)
+    // let node = getBudgetNode(viewpointdata, path)
 
     if (!node) {
         return {
@@ -318,7 +319,7 @@ let getChartParms = (
     let chartParmsObj:ChartParmsObj = {
         isError,
         chartParms,
-        dataNode:node,
+        // dataNode:node,
     }
 
     return chartParmsObj

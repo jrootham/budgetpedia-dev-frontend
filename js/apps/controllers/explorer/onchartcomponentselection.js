@@ -4,6 +4,7 @@ const budgetnode_1 = require('../../../local/budgetnode');
 const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
 const getchartparms_1 = require('./getchartparms');
+const getbudgetnode_1 = require('./getbudgetnode');
 let onChartComponentSelection = (props, callbacks) => {
     let context = props.context;
     let userselections = props.userselections;
@@ -106,6 +107,7 @@ let createChildNode = (props, callbacks) => {
         chartconfig.nodeDataPropertyName = type.Type;
         charts.push(chartconfig);
     }
+    let newdatanode = getbudgetnode_1.getBudgetNode(budgetdata.viewpointdata, childdatapath);
     let newnodeconfigparms = {
         portalCharts: portalcharts,
         chartType: charttype,
@@ -118,6 +120,7 @@ let createChildNode = (props, callbacks) => {
         parentData: parentdata,
         timeSpecs: newrange,
         cells: charts,
+        dataNode: newdatanode,
     };
     let newnodeconfig = new budgetnode_1.default(newnodeconfigparms);
     let newnodeindex = null;
@@ -150,7 +153,6 @@ let createChildNode = (props, callbacks) => {
         workingStatus(false);
         return;
     }
-    newnodeconfig.dataNode = chartParmsObj.dataNode;
     let newmatrixcolumn = matrixcolumn + 1;
     chartmatrixrow[newmatrixcolumn] = newnodeconfig;
     refreshPresentation(chartmatrixrow);

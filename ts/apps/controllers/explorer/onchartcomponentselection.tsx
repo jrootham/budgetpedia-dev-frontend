@@ -191,6 +191,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     }
 
 
+    let newdatanode = getBudgetNode(budgetdata.viewpointdata, childdatapath)
     let newnodeconfigparms: BudgetNodeParms = {
         portalCharts: portalcharts,
         chartType:charttype,
@@ -204,6 +205,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         parentData: parentdata,
         timeSpecs: newrange,
         cells:charts,
+        dataNode:newdatanode,
     }
 
     let newnodeconfig = new BudgetNode(newnodeconfigparms)
@@ -239,7 +241,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         workingStatus(false)
         return
     }
-    newnodeconfig.dataNode = chartParmsObj.dataNode
+    // newnodeconfig.dataNode = chartParmsObj.dataNode
     let newmatrixcolumn = matrixcolumn + 1
     chartmatrixrow[newmatrixcolumn] = newnodeconfig
 

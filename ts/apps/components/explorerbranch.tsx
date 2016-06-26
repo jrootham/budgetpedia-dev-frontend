@@ -120,6 +120,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         budgetdata.viewpointdata = viewpointdata
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
+        let datapath = []
+        let node = getBudgetNode(viewpointdata, datapath)
 
         let budgetNodeParms = {
             chartType: userselections.charttype,
@@ -133,6 +135,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             },
             dataPath: [],
             matrixLocation: {column:0},
+            dataNode:node,
         }
 
         let budgetnode = new BudgetNode(budgetNodeParms)
@@ -167,7 +170,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         }
         if (!chartParmsObj.isError) {
-            drilldownnodeconfig.dataNode = chartParmsObj.dataNode
+            // drilldownnodeconfig.dataNode = chartParmsObj.dataNode
             matrixlocation = drilldownnodeconfig.matrixLocation
             chartmatrixrow[matrixlocation.column] = drilldownnodeconfig
         }
@@ -284,6 +287,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             parentnodeconfig = nodeconfig
             nodeconfig = chartmatrixrow[cellptr]
             let nextdataNode = getBudgetNode(viewpointdata, nodeconfig.dataPath)
+            nodeconfig.dataNode = nextdataNode
             // let dataNode = nodeconfig.dataNode
             if (nextdataNode) {
                 // there is only one chart where there should be 2
@@ -360,7 +364,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     break
                 } else {
                     nodeconfig.facetName = facet
-                    nodeconfig.dataNode = chartParmsObj.dataNode
+                    // nodeconfig.dataNode = chartParmsObj.dataNode
                     nodeconfig.cells[nodechartindex].chartparms = chartParmsObj.chartParms
                     nodeconfig.cells[nodechartindex].chartCode =
                         ChartTypeCodes[nodeconfig.cells[nodechartindex].chartparms.chartType]
@@ -416,7 +420,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             nodeConfig.cells[portalIndex].chartparms = chartParmsObj.chartParms
             nodeConfig.cells[portalIndex].chartCode =
                 ChartTypeCodes[nodeConfig.cells[portalIndex].chartparms.chartType]
-            nodeConfig.dataNode = chartParmsObj.dataNode
+            // nodeConfig.dataNode = chartParmsObj.dataNode
         } else {
             nodeConfig.cells[portalIndex].googleChartType = oldChartType
         }

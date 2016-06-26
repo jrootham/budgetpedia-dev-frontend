@@ -1,6 +1,5 @@
 "use strict";
 var format = require('format-number');
-const getbudgetnode_1 = require('./getbudgetnode');
 const onchartcomponentselection_1 = require('./onchartcomponentselection');
 let getChartParms = (props, callbacks) => {
     let nodeConfig = props.nodeConfig;
@@ -22,7 +21,7 @@ let getChartParms = (props, callbacks) => {
     else {
         sortedlist = 'SortedComponents';
     }
-    let viewpointindex = nodeConfig.viewpointName, path = nodeConfig.dataPath, yearscope = nodeConfig.timeSpecs, year = yearscope.rightYear;
+    let viewpointindex = nodeConfig.viewpointName, yearscope = nodeConfig.timeSpecs, year = yearscope.rightYear, node = nodeConfig.dataNode;
     let dataseriesname = userselections.facet;
     let units = itemseriesdata.Units, vertlabel;
     vertlabel = itemseriesdata.UnitsAlias;
@@ -37,7 +36,6 @@ let getChartParms = (props, callbacks) => {
     let rounded = format({ round: 0, integerSeparator: '' });
     let singlerounded = format({ round: 1, integerSeparator: '' });
     let staffrounded = format({ round: 1, integerSeparator: ',' });
-    let node = getbudgetnode_1.getBudgetNode(viewpointdata, path);
     if (!node) {
         return {
             isError: true,
@@ -217,7 +215,6 @@ let getChartParms = (props, callbacks) => {
     let chartParmsObj = {
         isError: isError,
         chartParms: chartParms,
-        dataNode: node,
     };
     return chartParmsObj;
 };

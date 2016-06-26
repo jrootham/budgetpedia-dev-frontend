@@ -5,8 +5,8 @@ import BudgetNode from '../../../local/budgetnode'
 interface ChartParmsObj {
     isError: Boolean,
     errorMessage?: string,
-    chartParms?: ChartParms,
-    dataNode?: any,
+    chartParms: ChartParms,
+    // dataNode?: any,
 }
 
 // parameters to be passed to google chart
@@ -85,7 +85,7 @@ interface MatrixCellConfig {
     chartCode?: string,
     chartparms?: ChartParms,
     nodeDataPropertyName?:string,
-
+    // chart selection data
     chartselection?: ChartSelectionCell[],
     chart?: any,
     ChartObject?: any,

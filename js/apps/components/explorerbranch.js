@@ -56,6 +56,8 @@ class ExplorerBranch extends Component {
                 }
             });
             budgetdata.viewpointdata = viewpointdata;
+            let datapath = [];
+            let node = getbudgetnode_1.getBudgetNode(viewpointdata, datapath);
             let budgetNodeParms = {
                 chartType: userselections.charttype,
                 viewpointName: userselections.viewpoint,
@@ -68,6 +70,7 @@ class ExplorerBranch extends Component {
                 },
                 dataPath: [],
                 matrixLocation: { column: 0 },
+                dataNode: node,
             };
             let budgetnode = new budgetnode_1.default(budgetNodeParms);
             let drilldownnodeconfig = budgetnode;
@@ -96,7 +99,6 @@ class ExplorerBranch extends Component {
                 }
             }
             if (!chartParmsObj.isError) {
-                drilldownnodeconfig.dataNode = chartParmsObj.dataNode;
                 matrixlocation = drilldownnodeconfig.matrixLocation;
                 chartmatrixrow[matrixlocation.column] = drilldownnodeconfig;
             }
@@ -185,6 +187,7 @@ class ExplorerBranch extends Component {
                 parentnodeconfig = nodeconfig;
                 nodeconfig = chartmatrixrow[cellptr];
                 let nextdataNode = getbudgetnode_1.getBudgetNode(viewpointdata, nodeconfig.dataPath);
+                nodeconfig.dataNode = nextdataNode;
                 if (nextdataNode) {
                     let deeperdata = (!!nextdataNode.Components && (nodeconfig.cells.length == 1));
                     let shallowerdata = (!nextdataNode.Components && (nodeconfig.cells.length == 2));
@@ -258,7 +261,6 @@ class ExplorerBranch extends Component {
                     }
                     else {
                         nodeconfig.facetName = facet;
-                        nodeconfig.dataNode = chartParmsObj.dataNode;
                         nodeconfig.cells[nodechartindex].chartparms = chartParmsObj.chartParms;
                         nodeconfig.cells[nodechartindex].chartCode =
                             constants_1.ChartTypeCodes[nodeconfig.cells[nodechartindex].chartparms.chartType];
@@ -308,7 +310,6 @@ class ExplorerBranch extends Component {
                 nodeConfig.cells[portalIndex].chartparms = chartParmsObj.chartParms;
                 nodeConfig.cells[portalIndex].chartCode =
                     constants_1.ChartTypeCodes[nodeConfig.cells[portalIndex].chartparms.chartType];
-                nodeConfig.dataNode = chartParmsObj.dataNode;
             }
             else {
                 nodeConfig.cells[portalIndex].googleChartType = oldChartType;
