@@ -190,10 +190,9 @@ class ExplorerBranch extends Component {
                 if (nextdataNode) {
                     let deeperdata = (!!nextdataNode.Components && (nodeconfig.cells.length == 1));
                     let shallowerdata = (!nextdataNode.Components && (nodeconfig.cells.length == 2));
-                    nodeconfig.dataNode = nextdataNode;
+                    nodeconfig.reset(nextdataNode, viewpointdata.PortalCharts, userselections.charttype);
                     if (deeperdata || shallowerdata) {
                         chartmatrixrow.splice(cellptr);
-                        nodeconfig.cells = [];
                         isError = true;
                         let prevconfig = chartmatrixrow[cellptr - 1];
                         let context = {

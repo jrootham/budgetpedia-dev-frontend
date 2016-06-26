@@ -24,27 +24,31 @@ class BudgetNode {
     constructor(parms: BudgetNodeParms) {
 
         let portalcharts = parms.portalCharts
-        // // TODO: should be default for each chart...
-        let defaultChartCode = ChartTypeCodes[parms.defaultChartType]
 
-        // build cells array
-        for (let type in portalcharts) {
-            let cell: MatrixCellConfig = {
-                googleChartType:parms.defaultChartType,
-                chartCode:defaultChartCode,
-                nodeDataPropertyName:portalcharts[type].Type
-            }
-            this._cells.push(cell)
-        }
+        this.setCells(portalcharts,parms.defaultChartType)
 
         this.viewpointName = parms.viewpointName
         this.facetName = parms.facetName
         this.dataPath = parms.dataPath
         this.matrixLocation = parms.matrixLocation
         this.timeSpecs = parms.timeSpecs
-        this.dataNode = parms.dataNode
+        this._dataNode = parms.dataNode
         if (parms.parentData) this.parentData = parms.parentData
 
+    }
+
+    private setCells = (portalcharts, defaultChartType) => {
+        // // TODO: should be default for each chart...
+        let defaultChartCode = ChartTypeCodes[defaultChartType]
+        // build cells array
+        for (let type in portalcharts) {
+            let cell: MatrixCellConfig = {
+                googleChartType:defaultChartType,
+                chartCode:defaultChartCode,
+                nodeDataPropertyName:portalcharts[type].Type
+            }
+            this._cells.push(cell)
+        }
     }
 
     private getAvailableCells = () => {
@@ -68,16 +72,25 @@ class BudgetNode {
     dataPath: string[]
     matrixLocation: MatrixLocation
     timeSpecs: TimeSpecs
-    dataNode: any
+    private _dataNode: any
+    get dataNode() {
+        return this._dataNode
+    }
     parentData: any = null
 
     get cells() { // only return cells that have appropriate node datasets available
         return this.getAvailableCells()
     }
 
-    set cells(value) {
-        this._cells = value
+    reset = (dataNode, portalCharts, defaultChartType) => {
+        this._dataNode = dataNode
+        this.setCells(portalCharts, defaultChartType)
     }
+
+    // // TODO: TEMPORARY
+    // set cells(value) {
+    //     this._cells = value
+    // }
 
 }
 

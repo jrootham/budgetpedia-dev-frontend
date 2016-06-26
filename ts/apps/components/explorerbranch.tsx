@@ -35,7 +35,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
-import databaseapi , { DatasetConfig, TimeSpecs } from '../../local/databaseapi'
+import databaseapi , { DatasetConfig, TimeSpecs, Viewpoint } from '../../local/databaseapi'
 import getChartParms from '../controllers/explorer/getchartparms'
 import { updateChartSelections } from '../controllers/explorer/updatechartselections'
 import { createChildNode } from '../controllers/explorer/onchartcomponentselection'
@@ -261,7 +261,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let viewpointname = this.state.userselections.viewpoint
 
-        let viewpointdata = databaseapi.getViewpointData({
+        let viewpointdata:Viewpoint = databaseapi.getViewpointData({
             viewpointname,
             dataseriesname: facet,
             wantsInflationAdjusted: userselections.inflationadjusted,
@@ -295,10 +295,15 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 // there are two charts where there should be 1
                 let shallowerdata = (!nextdataNode.Components && (nodeconfig.cells.length == 2))
                 // now set budgetnode with new data node
-                nodeconfig.dataNode = nextdataNode
+                // nodeconfig.dataNode = nextdataNode
+                nodeconfig.reset(
+                    nextdataNode,
+                    viewpointdata.PortalCharts,
+                    userselections.charttype
+                )
                 if ( deeperdata || shallowerdata) {
+                    // replace nodeconfig
                     chartmatrixrow.splice(cellptr)
-                    nodeconfig.cells = []
                     isError = true
                     let prevconfig: BudgetNode = chartmatrixrow[cellptr - 1]
 
@@ -332,7 +337,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     }
                     this.state.snackbar.message = message
                     this.state.snackbar.open = true
-                    // TODO: possibly set nodeconfig = null
                     nodeconfig = null // chartmatrixrow[cellptr] // created by createChildNode as side effect
                 }
             } else {

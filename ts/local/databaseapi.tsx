@@ -38,7 +38,7 @@ export interface PortalCell {
     Type:string,
 }
 
-interface Viewpoint extends Component {
+export interface Viewpoint extends Component {
     Lookups: Lookups,
     itemseriesconfigdata?: any,
     Configuration: {
