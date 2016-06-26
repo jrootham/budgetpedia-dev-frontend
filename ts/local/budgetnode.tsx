@@ -82,8 +82,9 @@ class BudgetNode {
         return this.getAvailableCells()
     }
 
-    reset = (dataNode, portalCharts, defaultChartType) => {
+    reset = (dataNode, portalCharts, defaultChartType, facet) => {
         this._dataNode = dataNode
+        this.facetName = facet
         this.setCells(portalCharts, defaultChartType)
     }
 

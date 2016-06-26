@@ -30,8 +30,9 @@ class BudgetNode {
         };
         this._cells = [];
         this.parentData = null;
-        this.reset = (dataNode, portalCharts, defaultChartType) => {
+        this.reset = (dataNode, portalCharts, defaultChartType, facet) => {
             this._dataNode = dataNode;
+            this.facetName = facet;
             this.setCells(portalCharts, defaultChartType);
         };
         let portalcharts = parms.portalCharts;

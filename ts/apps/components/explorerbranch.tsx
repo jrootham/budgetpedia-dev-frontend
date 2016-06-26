@@ -138,15 +138,15 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             dataNode:node,
         }
 
-        let budgetnode = new BudgetNode(budgetNodeParms)
+        let budgetNode = new BudgetNode(budgetNodeParms)
 
-        let drilldownnodeconfig:BudgetNode = budgetnode
+        let drilldownBudgetNode:BudgetNode = budgetNode
 
         let drilldownindex: any
 
-        for (drilldownindex in drilldownnodeconfig.cells) {
+        for (drilldownindex in drilldownBudgetNode.cells) {
             let props: GetChartParmsProps = {
-                budgetNode: drilldownnodeconfig,
+                budgetNode: drilldownBudgetNode,
                 chartIndex: drilldownindex,
                 budgetdata,
                 userselections,
@@ -161,18 +161,18 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
             if (!chartParmsObj.isError) {
 
-                drilldownnodeconfig.cells[drilldownindex].chartparms = chartParmsObj.chartParms
-                drilldownnodeconfig.cells[drilldownindex].chartCode =
-                    ChartTypeCodes[drilldownnodeconfig.cells[drilldownindex].chartparms.chartType]
+                drilldownBudgetNode.cells[drilldownindex].chartparms = chartParmsObj.chartParms
+                drilldownBudgetNode.cells[drilldownindex].chartCode =
+                    ChartTypeCodes[drilldownBudgetNode.cells[drilldownindex].chartparms.chartType]
 
             } else {
                 break
             }
         }
         if (!chartParmsObj.isError) {
-            // drilldownnodeconfig.dataNode = chartParmsObj.dataNode
-            matrixlocation = drilldownnodeconfig.matrixLocation
-            chartmatrixrow[matrixlocation.column] = drilldownnodeconfig
+            // drilldownBudgetNode.dataNode = chartParmsObj.dataNode
+            matrixlocation = drilldownBudgetNode.matrixLocation
+            chartmatrixrow[matrixlocation.column] = drilldownBudgetNode
         }
 
         // -------------[ SAVE INITIALIZATION ]----------------
@@ -279,12 +279,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let oldchartmatrixrow = [...chartmatrixrow]
 
         let budgetNode: BudgetNode = null
-        let parentnodeconfig: BudgetNode
+        let parentBudgetNode: BudgetNode
         let cellptr: any
         let isError = false
         let chartParmsObj: ChartParmsObj = null
         for (cellptr in chartmatrixrow) {
-            parentnodeconfig = budgetNode
+            parentBudgetNode = budgetNode
             budgetNode = chartmatrixrow[cellptr]
             let nextdataNode = getBudgetNode(viewpointdata, budgetNode.dataPath)
             if (nextdataNode) {
@@ -294,34 +294,34 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1))
                 // there are two charts where there should be 1
                 let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2))
-                // now set budgetnode with new data node
-                // budgetNode.dataNode = nextdataNode
+                // now set budgetNode with new data node
                 budgetNode.reset(
                     nextdataNode,
                     viewpointdata.PortalCharts,
-                    userselections.charttype
+                    userselections.charttype,
+                    userselections.facet
                 )
                 if ( deeperdata || shallowerdata) {
                     // replace budgetNode
                     chartmatrixrow.splice(cellptr)
                     isError = true
-                    let prevconfig: BudgetNode = chartmatrixrow[cellptr - 1]
+                    let prevBudgetNode: BudgetNode = chartmatrixrow[cellptr - 1]
 
                     let context = {
-                        selection:prevconfig.cells[0].chartselection,
-                        ChartObject: prevconfig.cells[0].ChartObject,
+                        selection:prevBudgetNode.cells[0].chartselection,
+                        ChartObject: prevBudgetNode.cells[0].ChartObject,
                     }
 
                     let childprops: CreateChildNodeProps = {
-                        budgetNode:prevconfig,
+                        budgetNode:prevBudgetNode,
                         userselections,
                         budgetdata,
                         chartmatrixrow,
-                        selectionrow: prevconfig.cells[0].chartselection[0].row,
-                        matrixcolumn: prevconfig.matrixLocation.column,
+                        selectionrow: prevBudgetNode.cells[0].chartselection[0].row,
+                        matrixcolumn: prevBudgetNode.matrixLocation.column,
                         portalChartIndex:0,
                         context,
-                        chart:prevconfig.cells[0].chart,
+                        chart:prevBudgetNode.cells[0].chart,
                     }
                     let childcallbacks: CreateChildNodeCallbacks = {
                         refreshPresentation: this.refreshPresentation,
@@ -369,12 +369,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     isError = true
                     break
                 } else {
-                    budgetNode.facetName = facet
+                    // TODO: this should be set through reset
+                    // budgetNode.facetName = facet
                     budgetNode.cells[nodechartindex].chartparms = chartParmsObj.chartParms
                     budgetNode.cells[nodechartindex].chartCode =
                         ChartTypeCodes[budgetNode.cells[nodechartindex].chartparms.chartType]
-                    if (parentnodeconfig) {
-                        budgetNode.parentData.dataNode = parentnodeconfig.dataNode
+                    if (parentBudgetNode) {
+                        budgetNode.parentData.dataNode = parentBudgetNode.dataNode
                     }
                 }
             }
