@@ -187,10 +187,10 @@ class ExplorerBranch extends Component {
                 parentnodeconfig = nodeconfig;
                 nodeconfig = chartmatrixrow[cellptr];
                 let nextdataNode = getbudgetnode_1.getBudgetNode(viewpointdata, nodeconfig.dataPath);
-                nodeconfig.dataNode = nextdataNode;
                 if (nextdataNode) {
                     let deeperdata = (!!nextdataNode.Components && (nodeconfig.cells.length == 1));
                     let shallowerdata = (!nextdataNode.Components && (nodeconfig.cells.length == 2));
+                    nodeconfig.dataNode = nextdataNode;
                     if (deeperdata || shallowerdata) {
                         chartmatrixrow.splice(cellptr);
                         nodeconfig.cells = [];

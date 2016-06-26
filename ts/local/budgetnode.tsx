@@ -18,7 +18,7 @@ export interface BudgetNodeParms {
     matrixLocation: MatrixLocation,
     dataNode:any,
     parentData?:any,
-    cells?:any,
+    // cells?:any,
 }
 
 class BudgetNode {
@@ -31,19 +31,19 @@ class BudgetNode {
         // TODO: resolve need for this -- node children controls type of portalcharts
         // should perhaps be checked at cell creation time rather than at budgetnode
         // creation type
-        if (parms.cells) {
-            this.cells = parms.cells
-        // create portalCells
-        } else {
+        // if (parms.cells) {
+        //     this.cells = parms.cells
+        // // create portalCells
+        // } else {
             for (let type in portalcharts) {
                 let cell: MatrixCellConfig = {
                     googleChartType:parms.chartType,
                     chartCode:defaultChartCode,
                     nodeDataPropertyName:portalcharts[type].Type
                 }
-                this.cells.push(cell)
+                this._cells.push(cell)
             }
-        }
+        // }
         this.viewpointName = parms.viewpointName
         this.facetName = parms.facetName
         this.dataPath = parms.dataPath
@@ -54,10 +54,10 @@ class BudgetNode {
 
     }
 
-    getAvailableCells = () => {
+    private getAvailableCells = () => {
         let availablCells = []
         if (!this.dataNode) return availablCells
-        for (let cell of this.cells) {
+        for (let cell of this._cells) {
             if (cell.nodeDataPropertyName == 'Components' && !this.dataNode.Components) {
                 continue
             }
@@ -69,7 +69,7 @@ class BudgetNode {
         return availablCells
     }
 
-    cells: MatrixCellConfig[] = []
+    private _cells: MatrixCellConfig[] = []
     viewpointName: string
     facetName: string
     dataPath: string[]
@@ -77,6 +77,14 @@ class BudgetNode {
     timeSpecs: TimeSpecs
     dataNode: any
     parentData: any = null
+
+    get cells() {
+        return this.getAvailableCells()
+    }
+
+    set cells(value) {
+        this._cells = value
+    }
 
 }
 

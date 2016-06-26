@@ -287,12 +287,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             parentnodeconfig = nodeconfig
             nodeconfig = chartmatrixrow[cellptr]
             let nextdataNode = getBudgetNode(viewpointdata, nodeconfig.dataPath)
-            nodeconfig.dataNode = nextdataNode
             if (nextdataNode) {
                 // there is only one chart where there should be 2
                 let deeperdata = (!!nextdataNode.Components && (nodeconfig.cells.length == 1))
                 // there are two charts where there should be 1
                 let shallowerdata = (!nextdataNode.Components && (nodeconfig.cells.length == 2))
+                nodeconfig.dataNode = nextdataNode
                 if ( deeperdata || shallowerdata) {
                     chartmatrixrow.splice(cellptr)
                     nodeconfig.cells = []

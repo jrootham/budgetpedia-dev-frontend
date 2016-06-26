@@ -6,7 +6,7 @@ class BudgetNode {
             let availablCells = [];
             if (!this.dataNode)
                 return availablCells;
-            for (let cell of this.cells) {
+            for (let cell of this._cells) {
                 if (cell.nodeDataPropertyName == 'Components' && !this.dataNode.Components) {
                     continue;
                 }
@@ -17,22 +17,17 @@ class BudgetNode {
             }
             return availablCells;
         };
-        this.cells = [];
+        this._cells = [];
         this.parentData = null;
         let portalcharts = parms.portalCharts;
         let defaultChartCode = constants_1.ChartTypeCodes[parms.chartType];
-        if (parms.cells) {
-            this.cells = parms.cells;
-        }
-        else {
-            for (let type in portalcharts) {
-                let cell = {
-                    googleChartType: parms.chartType,
-                    chartCode: defaultChartCode,
-                    nodeDataPropertyName: portalcharts[type].Type
-                };
-                this.cells.push(cell);
-            }
+        for (let type in portalcharts) {
+            let cell = {
+                googleChartType: parms.chartType,
+                chartCode: defaultChartCode,
+                nodeDataPropertyName: portalcharts[type].Type
+            };
+            this._cells.push(cell);
         }
         this.viewpointName = parms.viewpointName;
         this.facetName = parms.facetName;
@@ -42,6 +37,12 @@ class BudgetNode {
         this.dataNode = parms.dataNode;
         if (parms.parentData)
             this.parentData = parms.parentData;
+    }
+    get cells() {
+        return this.getAvailableCells();
+    }
+    set cells(value) {
+        this._cells = value;
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

@@ -92,21 +92,6 @@ let createChildNode = (props, callbacks) => {
     let charttype = userselections.charttype;
     let chartCode = constants_1.ChartTypeCodes[charttype];
     let portalcharts = budgetdata.viewpointdata.PortalCharts[facet];
-    let charts = [];
-    for (let type of portalcharts) {
-        if (type.Type == 'Components' && !newnode.Components) {
-            continue;
-        }
-        if (type.Type == 'Categories' && !newnode.Categories) {
-            continue;
-        }
-        let chartconfig = {
-            googleChartType: charttype,
-            chartCode: chartCode,
-        };
-        chartconfig.nodeDataPropertyName = type.Type;
-        charts.push(chartconfig);
-    }
     let newdatanode = getbudgetnode_1.getBudgetNode(budgetdata.viewpointdata, childdatapath);
     let newnodeconfigparms = {
         portalCharts: portalcharts,
@@ -119,7 +104,6 @@ let createChildNode = (props, callbacks) => {
         },
         parentData: parentdata,
         timeSpecs: newrange,
-        cells: charts,
         dataNode: newdatanode,
     };
     let newnodeconfig = new budgetnode_1.default(newnodeconfigparms);

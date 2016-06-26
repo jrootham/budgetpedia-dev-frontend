@@ -7,6 +7,9 @@ let getBudgetNode = (node, path) => {
 
     for (let index of path) {
 
+        if (!components) {
+            return null
+        }
         node = components[index]
 
         if (!node) { // can happen legitimately switching from one facet to another
