@@ -10,7 +10,7 @@ import {
     ChartSelectionContext,
     PortalChartLocation,
     SortedComponentItem,
-    MatrixChartConfig,
+    MatrixCellConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
     OnChartComponentSelectionProps,
@@ -71,7 +71,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
     let nodeconfig: MatrixNodeConfig = chartmatrixrow[matrixcolumn]
 
-    if (nodeconfig.charts[portalChartIndex].nodedatapropertyname == 'Categories') {
+    if (nodeconfig.charts[portalChartIndex].nodeDataPropertyName == 'Categories') {
         return
     }
 
@@ -182,11 +182,11 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         // if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
         //     continue
         // }
-        let chartconfig: MatrixChartConfig = {
-            googlecharttype: charttype,
+        let chartconfig: MatrixCellConfig = {
+            googleChartType: charttype,
             chartCode,
         }
-        chartconfig.nodedatapropertyname = type.Type
+        chartconfig.nodeDataPropertyName = type.Type
         charts.push(chartconfig)
     }
 
@@ -226,7 +226,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         }
         newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms
         newnodeconfig.charts[newnodeindex].chartCode =
-            ChartTypeCodes[newnodeconfig.charts[newnodeindex].googlecharttype]
+            ChartTypeCodes[newnodeconfig.charts[newnodeindex].googleChartType]
     }
 
     if (isError) {

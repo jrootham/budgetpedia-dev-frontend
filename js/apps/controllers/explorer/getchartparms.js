@@ -14,9 +14,9 @@ let getChartParms = (props, callbacks) => {
     let onPortalCreation = callbacks.onPortalCreation;
     let workingStatus = callbacks.workingStatus;
     let chartConfig = nodeConfig.charts[chartIndex];
-    let nodedatapropertyname = chartConfig.nodedatapropertyname;
+    let nodeDataPropertyName = chartConfig.nodeDataPropertyName;
     let sortedlist;
-    if (nodedatapropertyname == 'Categories') {
+    if (nodeDataPropertyName == 'Categories') {
         sortedlist = 'SortedCategories';
     }
     else {
@@ -46,15 +46,15 @@ let getChartParms = (props, callbacks) => {
         };
     }
     let components;
-    if (nodedatapropertyname == 'Categories') {
+    if (nodeDataPropertyName == 'Categories') {
         components = node.Categories;
     }
     else {
         components = node.Components;
     }
-    let chartType = chartConfig.googlecharttype;
+    let chartType = chartConfig.googleChartType;
     let axistitle = null;
-    if ((node.Contents) && (nodedatapropertyname == 'Components')) {
+    if ((node.Contents) && (nodeDataPropertyName == 'Components')) {
         let titleref = viewpointdata.Configuration[node.Contents];
         axistitle = titleref.Alias || titleref.Name;
     }

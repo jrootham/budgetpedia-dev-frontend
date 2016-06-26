@@ -13,6 +13,7 @@ const databaseapi_1 = require('../../local/databaseapi');
 const getchartparms_1 = require('../controllers/explorer/getchartparms');
 const updatechartselections_1 = require('../controllers/explorer/updatechartselections');
 const onchartcomponentselection_1 = require('../controllers/explorer/onchartcomponentselection');
+const budgetnode_1 = require('../../local/budgetnode');
 class ExplorerBranch extends Component {
     constructor(props) {
         super(props);
@@ -49,12 +50,27 @@ class ExplorerBranch extends Component {
                 dataseriesname: facet,
                 wantsInflationAdjusted: userselections.inflationadjusted,
                 timeSpecs: {
-                    leftyear: null,
-                    rightyear: null,
-                    spanyears: false,
+                    leftYear: null,
+                    rightYear: null,
+                    spanYears: false,
                 }
             });
             budgetdata.viewpointdata = viewpointdata;
+            let budgetNodeParms = {
+                chartType: userselections.charttype,
+                viewpointName: userselections.viewpoint,
+                facetName: userselections.facet,
+                portalCharts: viewpointdata.PortalCharts,
+                timeSpecs: {
+                    leftYear: null,
+                    rightYear: null,
+                    spanYears: null,
+                },
+                dataPath: [],
+                matrixLocation: { column: 0 },
+            };
+            let budgetnode = new budgetnode_1.default(budgetNodeParms);
+            console.log('budgetnode', budgetnode);
             let drilldownnodeconfig = this.initRootNodeConfig(userselections);
             let drilldownindex;
             for (drilldownindex in drilldownnodeconfig.charts) {
@@ -88,8 +104,8 @@ class ExplorerBranch extends Component {
             this.refreshPresentation(chartmatrixrow);
         };
         this.initRootNodeConfig = (userselections) => {
-            let googlecharttype = userselections.charttype;
-            let chartCode = constants_1.ChartTypeCodes[googlecharttype];
+            let googleChartType = userselections.charttype;
+            let chartCode = constants_1.ChartTypeCodes[googleChartType];
             let budgetdata = this.props.branchdata.data;
             let viewpoint = userselections.viewpoint;
             let facet = userselections.facet;
@@ -98,10 +114,10 @@ class ExplorerBranch extends Component {
             let charts = [];
             for (let type of portalcharts) {
                 let chartconfig = {
-                    googlecharttype: googlecharttype,
+                    googleChartType: googleChartType,
                     chartCode: chartCode,
                 };
-                chartconfig.nodedatapropertyname = type.Type;
+                chartconfig.nodeDataPropertyName = type.Type;
                 charts.push(chartconfig);
             }
             return {
@@ -184,9 +200,9 @@ class ExplorerBranch extends Component {
                 dataseriesname: facet,
                 wantsInflationAdjusted: userselections.inflationadjusted,
                 timeSpecs: {
-                    leftyear: null,
-                    rightyear: null,
-                    spanyears: false,
+                    leftYear: null,
+                    rightYear: null,
+                    spanYears: false,
                 }
             });
             let budgetdata = this.props.branchdata.data;
@@ -305,8 +321,8 @@ class ExplorerBranch extends Component {
             let portalIndex = location.portalindex;
             let chartmatrixrow = this.state.chartmatrixrow;
             let nodeConfig = chartmatrixrow[location.matrixlocation.column];
-            let oldChartType = nodeConfig.charts[portalIndex].googlecharttype;
-            nodeConfig.charts[portalIndex].googlecharttype = chartType;
+            let oldChartType = nodeConfig.charts[portalIndex].googleChartType;
+            nodeConfig.charts[portalIndex].googleChartType = chartType;
             let budgetdata = this.props.branchdata.data;
             let props = {
                 nodeConfig: nodeConfig,
@@ -328,13 +344,13 @@ class ExplorerBranch extends Component {
                 nodeConfig.datanode = chartParmsObj.datanode;
             }
             else {
-                nodeConfig.charts[portalIndex].googlecharttype = oldChartType;
+                nodeConfig.charts[portalIndex].googleChartType = oldChartType;
             }
             this.refreshPresentation(chartmatrixrow);
             setTimeout(() => {
                 if (nodeConfig.charts[portalIndex].chart) {
                     nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].ChartObject.chart;
-                    if (nodeConfig.charts[portalIndex].googlecharttype == "PieChart") {
+                    if (nodeConfig.charts[portalIndex].googleChartType == "PieChart") {
                         nodeConfig.charts[portalIndex].chartselection[0].column = null;
                     }
                     else {
@@ -360,7 +376,7 @@ class ExplorerBranch extends Component {
                 let portalcharts = [];
                 for (let chartindex in nodeconfig.charts) {
                     let chartblocktitle = null;
-                    if ((nodeconfig.charts[chartindex].nodedatapropertyname == 'Categories')) {
+                    if ((nodeconfig.charts[chartindex].nodeDataPropertyName == 'Categories')) {
                         chartblocktitle = portaltitles.Categories;
                     }
                     else {

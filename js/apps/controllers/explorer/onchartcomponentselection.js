@@ -25,7 +25,7 @@ let onChartComponentSelection = (props, callbacks) => {
     let matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrixrow;
     let nodeconfig = chartmatrixrow[matrixcolumn];
-    if (nodeconfig.charts[portalChartIndex].nodedatapropertyname == 'Categories') {
+    if (nodeconfig.charts[portalChartIndex].nodeDataPropertyName == 'Categories') {
         return;
     }
     let viewpoint = nodeconfig.viewpoint, facet = nodeconfig.facet;
@@ -99,10 +99,10 @@ let createChildNode = (props, callbacks) => {
             continue;
         }
         let chartconfig = {
-            googlecharttype: charttype,
+            googleChartType: charttype,
             chartCode: chartCode,
         };
-        chartconfig.nodedatapropertyname = type.Type;
+        chartconfig.nodeDataPropertyName = type.Type;
         charts.push(chartconfig);
     }
     let newnodeconfig = {
@@ -139,7 +139,7 @@ let createChildNode = (props, callbacks) => {
         }
         newnodeconfig.charts[newnodeindex].chartparms = chartParmsObj.chartParms;
         newnodeconfig.charts[newnodeindex].chartCode =
-            constants_1.ChartTypeCodes[newnodeconfig.charts[newnodeindex].googlecharttype];
+            constants_1.ChartTypeCodes[newnodeconfig.charts[newnodeindex].googleChartType];
     }
     if (isError) {
         updatechartselections_1.updateChartSelections(chartmatrixrow);

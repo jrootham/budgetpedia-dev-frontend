@@ -19,7 +19,7 @@ import {
     ChartSelectionContext,
     PortalChartLocation,
     SortedComponentItem,
-    MatrixChartConfig,
+    MatrixCellConfig,
     MatrixNodeConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
@@ -49,12 +49,12 @@ let getChartParms = (
     let onPortalCreation = callbacks.onPortalCreation
     let workingStatus = callbacks.workingStatus
 
-    let chartConfig: MatrixChartConfig = nodeConfig.charts[chartIndex]
+    let chartConfig: MatrixCellConfig = nodeConfig.charts[chartIndex]
 
-    let nodedatapropertyname = chartConfig.nodedatapropertyname
+    let nodeDataPropertyName = chartConfig.nodeDataPropertyName
     let sortedlist
 
-    if (nodedatapropertyname == 'Categories') {
+    if (nodeDataPropertyName == 'Categories') {
         sortedlist = 'SortedCategories'
     } else {
         sortedlist = 'SortedComponents'
@@ -105,7 +105,7 @@ let getChartParms = (
 
     let components
 
-    if (nodedatapropertyname == 'Categories') {
+    if (nodeDataPropertyName == 'Categories') {
         components = node.Categories
     } else {
         components = node.Components
@@ -113,13 +113,13 @@ let getChartParms = (
 
     // ---------------------[ COLLECT CHART PARMS ]---------------------
     // 1. chart type:
-    let chartType = chartConfig.googlecharttype
+    let chartType = chartConfig.googleChartType
 
     // 2. chart options:
     // get axis title
     let axistitle = null
-    if ((node.Contents) && (nodedatapropertyname == 'Components')) {
-    // if ((node.Contents) && (node.Contents != 'BASELINE') && (nodedatapropertyname == 'Components')) {
+    if ((node.Contents) && (nodeDataPropertyName == 'Components')) {
+    // if ((node.Contents) && (node.Contents != 'BASELINE') && (nodeDataPropertyName == 'Components')) {
         let titleref = viewpointdata.Configuration[node.Contents]
         axistitle = titleref.Alias || titleref.Name
     } else {

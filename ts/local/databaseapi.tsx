@@ -34,7 +34,7 @@ interface Configuration extends Name {
     Instance: Name,
 }
 
-interface PortalChart {
+export interface PortalCell {
     Type:string,
 }
 
@@ -44,7 +44,7 @@ interface Viewpoint extends Component {
     Configuration: {
         [configurationcode:string]:Configuration,
     },
-    PortalCharts: PortalChart[],
+    PortalCharts: PortalCell[],
 }
 
 interface Viewpoints {
@@ -94,15 +94,17 @@ interface Datasets {
     [index: string]: Dataset<CurrencyItemType> | Dataset<ItemType>
 }
 
+export interface TimeSpecs {
+    leftYear: number,
+    rightYear: number,
+    spanYears: boolean,
+}
+
 export interface GetViewpointDataParms {
     viewpointname:string,
     dataseriesname: string,
     wantsInflationAdjusted: boolean,
-    timeSpecs: {
-        leftyear: number,
-        rightyear: number,
-        spanyears: boolean,
-    }
+    timeSpecs: TimeSpecs,
 }
 
 export interface CurrencyDataset extends Dataset<CurrencyItemType> {}

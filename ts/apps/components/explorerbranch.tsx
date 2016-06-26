@@ -7,7 +7,7 @@ var { Component } = React
 
 import {
     MatrixNodeConfig,
-    MatrixChartConfig,
+    MatrixCellConfig,
     ChartParms,
     ChartParmsObj,
     ChartSelectionContext,
@@ -36,11 +36,12 @@ import Snackbar from 'material-ui/Snackbar';
 
 import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
-import databaseapi , { DatasetConfig } from '../../local/databaseapi'
+import databaseapi , { DatasetConfig, TimeSpecs } from '../../local/databaseapi'
 import getChartParms from '../controllers/explorer/getchartparms'
 import { updateChartSelections } from '../controllers/explorer/updatechartselections'
 import { createChildNode } from '../controllers/explorer/onchartcomponentselection'
 import * as Actions from '../../actions/actions'
+import BudgetNode from '../../local/budgetnode'
 
 interface ExploreBranchProps {
     branchdata: any,
@@ -111,15 +112,33 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             dataseriesname: facet,
             wantsInflationAdjusted: userselections.inflationadjusted,
             timeSpecs: {
-                leftyear: null,
-                rightyear: null,
-                spanyears: false,
+                leftYear: null,
+                rightYear: null,
+                spanYears: false,
             }
         })
 
         budgetdata.viewpointdata = viewpointdata
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
+
+        let budgetNodeParms = {
+            chartType: userselections.charttype,
+            viewpointName: userselections.viewpoint,
+            facetName: userselections.facet,
+            portalCharts:viewpointdata.PortalCharts,
+            timeSpecs: {
+                leftYear:null,
+                rightYear:null,
+                spanYears:null,
+            },
+            dataPath: [],
+            matrixLocation: {column:0},
+        }
+
+        let budgetnode = new BudgetNode(budgetNodeParms)
+
+        console.log('budgetnode', budgetnode)
 
         let drilldownnodeconfig: MatrixNodeConfig =
             this.initRootNodeConfig(userselections)
@@ -165,8 +184,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
 
     initRootNodeConfig = (userselections): MatrixNodeConfig => {
-        let googlecharttype = userselections.charttype
-        let chartCode = ChartTypeCodes[googlecharttype]
+        let googleChartType = userselections.charttype
+        let chartCode = ChartTypeCodes[googleChartType]
         let budgetdata = this.props.branchdata.data
         let viewpoint = userselections.viewpoint
         let facet = userselections.facet
@@ -175,11 +194,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let portalcharts = viewpointdata.PortalCharts[facet]
         let charts = []
         for (let type of portalcharts) {
-            let chartconfig: MatrixChartConfig = {
-                googlecharttype,
+            let chartconfig: MatrixCellConfig = {
+                googleChartType,
                 chartCode,
             }
-            chartconfig.nodedatapropertyname = type.Type
+            chartconfig.nodeDataPropertyName = type.Type
             charts.push(chartconfig)
         }
         return {
@@ -284,9 +303,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             dataseriesname: facet,
             wantsInflationAdjusted: userselections.inflationadjusted,
             timeSpecs: {
-                leftyear: null,
-                rightyear: null,
-                spanyears: false,
+                leftYear: null,
+                rightYear: null,
+                spanYears: false,
             }
         })
 
@@ -417,8 +436,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let portalIndex = location.portalindex
         let chartmatrixrow = this.state.chartmatrixrow
         let nodeConfig: MatrixNodeConfig = chartmatrixrow[location.matrixlocation.column]
-        let oldChartType = nodeConfig.charts[portalIndex].googlecharttype
-        nodeConfig.charts[portalIndex].googlecharttype = chartType
+        let oldChartType = nodeConfig.charts[portalIndex].googleChartType
+        nodeConfig.charts[portalIndex].googleChartType = chartType
         let budgetdata = this.props.branchdata.data
         let props: GetChartParmsProps = {
             nodeConfig: nodeConfig,
@@ -439,7 +458,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 ChartTypeCodes[nodeConfig.charts[portalIndex].chartparms.chartType]
             nodeConfig.datanode = chartParmsObj.datanode
         } else {
-            nodeConfig.charts[portalIndex].googlecharttype = oldChartType
+            nodeConfig.charts[portalIndex].googleChartType = oldChartType
         }
         this.refreshPresentation(chartmatrixrow)
 
@@ -449,7 +468,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 nodeConfig.charts[portalIndex].chart = nodeConfig.charts[portalIndex].ChartObject.chart
                 // it turns out that "PieChart" needs column set to null
                 // for setSelection to work
-                if (nodeConfig.charts[portalIndex].googlecharttype == "PieChart") {
+                if (nodeConfig.charts[portalIndex].googleChartType == "PieChart") {
                     nodeConfig.charts[portalIndex].chartselection[0].column = null
                 } else {
                     // "ColumnChart" doesn't seem to care about column value,
@@ -486,7 +505,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
                 let chartblocktitle = null
                 if (//(nodeconfig.datanode.Contents == 'BASELINE') ||
-                    (nodeconfig.charts[chartindex].nodedatapropertyname == 'Categories')) {
+                    (nodeconfig.charts[chartindex].nodeDataPropertyName == 'Categories')) {
                     chartblocktitle = portaltitles.Categories
                 } else {
                     chartblocktitle = portaltitles.Baseline

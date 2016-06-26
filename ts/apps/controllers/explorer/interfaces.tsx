@@ -93,16 +93,16 @@ interface MatrixNodeConfig {
 
     matrixlocation: MatrixLocation,
     isError?: boolean,
-    charts: MatrixChartConfig[]
+    charts: MatrixCellConfig[]
 
 }
 
-interface MatrixChartConfig {
+interface MatrixCellConfig {
 
-    googlecharttype: string,
+    googleChartType: string,
     chartCode?: string,
     chartparms?: ChartParms,
-    nodedatapropertyname?:string,
+    nodeDataPropertyName?:string,
 
     chartselection?: ChartSelectionCell[],
     chart?: any,
@@ -169,7 +169,7 @@ interface CreateChildNodeCallbacks {
 
 export {
     MatrixNodeConfig, 
-    MatrixChartConfig,
+    MatrixCellConfig,
     MatrixLocation,
     PortalChartLocation, 
     ChartParms, 

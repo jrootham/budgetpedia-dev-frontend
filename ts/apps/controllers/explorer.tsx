@@ -50,7 +50,7 @@ import * as Actions from '../../actions/actions'
 
 import {
     MatrixNodeConfig,
-    MatrixChartConfig,
+    MatrixCellConfig,
     ChartParmsObj,
     MatrixLocation,
     PortalChartLocation,
