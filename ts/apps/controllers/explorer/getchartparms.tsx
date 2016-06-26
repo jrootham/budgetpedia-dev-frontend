@@ -319,7 +319,6 @@ let getChartParms = (
     let chartParmsObj:ChartParmsObj = {
         isError,
         chartParms,
-        // dataNode:node,
     }
 
     return chartParmsObj

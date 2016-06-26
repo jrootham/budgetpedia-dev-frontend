@@ -9,7 +9,7 @@ import {
 } from '../apps/controllers/explorer/interfaces'
 
 export interface BudgetNodeParms {
-    chartType: string,
+    defaultChartType: string,
     viewpointName: string,
     facetName: string,
     portalCharts:PortalCell[],
@@ -18,7 +18,6 @@ export interface BudgetNodeParms {
     matrixLocation: MatrixLocation,
     dataNode:any,
     parentData?:any,
-    // cells?:any,
 }
 
 class BudgetNode {
@@ -26,24 +25,18 @@ class BudgetNode {
 
         let portalcharts = parms.portalCharts
         // // TODO: should be default for each chart...
-        let defaultChartCode = ChartTypeCodes[parms.chartType]
+        let defaultChartCode = ChartTypeCodes[parms.defaultChartType]
 
-        // TODO: resolve need for this -- node children controls type of portalcharts
-        // should perhaps be checked at cell creation time rather than at budgetnode
-        // creation type
-        // if (parms.cells) {
-        //     this.cells = parms.cells
-        // // create portalCells
-        // } else {
-            for (let type in portalcharts) {
-                let cell: MatrixCellConfig = {
-                    googleChartType:parms.chartType,
-                    chartCode:defaultChartCode,
-                    nodeDataPropertyName:portalcharts[type].Type
-                }
-                this._cells.push(cell)
+        // build cells array
+        for (let type in portalcharts) {
+            let cell: MatrixCellConfig = {
+                googleChartType:parms.defaultChartType,
+                chartCode:defaultChartCode,
+                nodeDataPropertyName:portalcharts[type].Type
             }
-        // }
+            this._cells.push(cell)
+        }
+
         this.viewpointName = parms.viewpointName
         this.facetName = parms.facetName
         this.dataPath = parms.dataPath
@@ -78,7 +71,7 @@ class BudgetNode {
     dataNode: any
     parentData: any = null
 
-    get cells() {
+    get cells() { // only return cells that have appropriate node datasets available
         return this.getAvailableCells()
     }
 

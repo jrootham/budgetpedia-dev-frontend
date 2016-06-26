@@ -95,7 +95,7 @@ let createChildNode = (props, callbacks) => {
     let newdatanode = getbudgetnode_1.getBudgetNode(budgetdata.viewpointdata, childdatapath);
     let newnodeconfigparms = {
         portalCharts: portalcharts,
-        chartType: charttype,
+        defaultChartType: charttype,
         viewpointName: viewpoint,
         facetName: facet,
         dataPath: childdatapath,

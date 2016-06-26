@@ -171,40 +171,19 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     let charttype = userselections.charttype
     let chartCode = ChartTypeCodes[charttype]
     let portalcharts = budgetdata.viewpointdata.PortalCharts[facet]
-    // let charts = []
-    // for (let type of portalcharts) {
-    //     if (type.Type == 'Components' && !newnode.Components) {
-    //         continue
-    //     }
-    //     if (type.Type == 'Categories' && !newnode.Categories) {
-    //         continue
-    //     }
-    //     // if ((newnode.Contents == 'BASELINE') && (type.Type == 'Categories')) {
-    //     //     continue
-    //     // }
-    //     let chartconfig: MatrixCellConfig = {
-    //         googleChartType: charttype,
-    //         chartCode,
-    //     }
-    //     chartconfig.nodeDataPropertyName = type.Type
-    //     charts.push(chartconfig)
-    // }
-
 
     let newdatanode = getBudgetNode(budgetdata.viewpointdata, childdatapath)
     let newnodeconfigparms: BudgetNodeParms = {
         portalCharts: portalcharts,
-        chartType:charttype,
+        defaultChartType:charttype,
         viewpointName:viewpoint,
         facetName:facet,
         dataPath: childdatapath,
         matrixLocation: {
-            // row: matrixrow,
             column: matrixcolumn + 1
         },
         parentData: parentdata,
         timeSpecs: newrange,
-        // cells:charts,
         dataNode:newdatanode,
     }
 

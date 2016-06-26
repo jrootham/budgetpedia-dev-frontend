@@ -124,7 +124,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let node = getBudgetNode(viewpointdata, datapath)
 
         let budgetNodeParms = {
-            chartType: userselections.charttype,
+            defaultChartType: userselections.charttype,
             viewpointName: userselections.viewpoint,
             facetName: userselections.facet,
             portalCharts:viewpointdata.PortalCharts,
@@ -288,10 +288,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             nodeconfig = chartmatrixrow[cellptr]
             let nextdataNode = getBudgetNode(viewpointdata, nodeconfig.dataPath)
             if (nextdataNode) {
+                // check previous cell configuration against previous node
+                // TODO: THIS IS A PROXY THAT NEEDS TO BE REPLACED
                 // there is only one chart where there should be 2
                 let deeperdata = (!!nextdataNode.Components && (nodeconfig.cells.length == 1))
                 // there are two charts where there should be 1
                 let shallowerdata = (!nextdataNode.Components && (nodeconfig.cells.length == 2))
+                // now set budgetnode with new data node
                 nodeconfig.dataNode = nextdataNode
                 if ( deeperdata || shallowerdata) {
                     chartmatrixrow.splice(cellptr)

@@ -20,10 +20,10 @@ class BudgetNode {
         this._cells = [];
         this.parentData = null;
         let portalcharts = parms.portalCharts;
-        let defaultChartCode = constants_1.ChartTypeCodes[parms.chartType];
+        let defaultChartCode = constants_1.ChartTypeCodes[parms.defaultChartType];
         for (let type in portalcharts) {
             let cell = {
-                googleChartType: parms.chartType,
+                googleChartType: parms.defaultChartType,
                 chartCode: defaultChartCode,
                 nodeDataPropertyName: portalcharts[type].Type
             };

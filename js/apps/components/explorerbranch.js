@@ -59,7 +59,7 @@ class ExplorerBranch extends Component {
             let datapath = [];
             let node = getbudgetnode_1.getBudgetNode(viewpointdata, datapath);
             let budgetNodeParms = {
-                chartType: userselections.charttype,
+                defaultChartType: userselections.charttype,
                 viewpointName: userselections.viewpoint,
                 facetName: userselections.facet,
                 portalCharts: viewpointdata.PortalCharts,
