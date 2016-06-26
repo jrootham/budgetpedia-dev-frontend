@@ -69,15 +69,15 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     // acquire serieslist from matrix
     let serieslist = chartmatrixrow
 
-    let nodeconfig: BudgetNode = chartmatrixrow[matrixcolumn]
+    let budgetNode: BudgetNode = chartmatrixrow[matrixcolumn]
 
-    if (nodeconfig.cells[portalChartIndex].nodeDataPropertyName == 'Categories') {
+    if (budgetNode.cells[portalChartIndex].nodeDataPropertyName == 'Categories') {
         return
     }
 
     // get taxonomy references
-    let viewpoint = nodeconfig.viewpointName,
-        facet = nodeconfig.facetName
+    let viewpoint = budgetNode.viewpointName,
+        facet = budgetNode.facetName
 
     // TODO: abandon here if the next one exists and is the same
     serieslist.splice(matrixcolumn + 1) // remove subsequent charts
@@ -86,13 +86,13 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     refreshPresentation(chartmatrixrow)
 
     if (!selection) { // deselected
-        delete nodeconfig.cells[portalChartIndex].chartselection
-        delete nodeconfig.cells[portalChartIndex].chart
+        delete budgetNode.cells[portalChartIndex].chartselection
+        delete budgetNode.cells[portalChartIndex].chart
         updateChartSelections(chartmatrixrow)
         return
     }
     let childprops: CreateChildNodeProps = {
-        nodeconfig, 
+        budgetNode, 
         userselections, 
         budgetdata,
         chartmatrixrow, 
@@ -113,7 +113,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCallbacks) => {
 
     let {
-        nodeconfig,
+        budgetNode,
         userselections,
         budgetdata,
         chartmatrixrow,
@@ -124,8 +124,8 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         chart,
     } = props
 
-    let viewpoint = nodeconfig.viewpointName,
-        facet = nodeconfig.facetName
+    let viewpoint = budgetNode.viewpointName,
+        facet = budgetNode.facetName
 
     let {
         workingStatus,
@@ -136,9 +136,9 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     // ----------------------------------------------------
     // ----------------[ create child ]--------------------
     // copy path
-    let childdatapath = nodeconfig.dataPath.slice()
+    let childdatapath = budgetNode.dataPath.slice()
 
-    let node = nodeconfig.dataNode
+    let node = budgetNode.dataNode
 
     if (!node.Components) {
         updateChartSelections(chartmatrixrow)
@@ -167,7 +167,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         return
     }
     workingStatus(true)
-    let newrange = Object.assign({}, nodeconfig.timeSpecs)
+    let newrange = Object.assign({}, budgetNode.timeSpecs)
     let charttype = userselections.charttype
     let chartCode = ChartTypeCodes[charttype]
     let portalcharts = budgetdata.viewpointdata.PortalCharts[facet]
@@ -225,9 +225,9 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
 
     refreshPresentation(chartmatrixrow)
 
-    nodeconfig.cells[portalChartIndex].chartselection = context.selection
-    nodeconfig.cells[portalChartIndex].chart = chart
-    nodeconfig.cells[portalChartIndex].ChartObject = context.ChartObject
+    budgetNode.cells[portalChartIndex].chartselection = context.selection
+    budgetNode.cells[portalChartIndex].chart = chart
+    budgetNode.cells[portalChartIndex].ChartObject = context.ChartObject
 
     updateChartSelections(chartmatrixrow)
     onPortalCreation()

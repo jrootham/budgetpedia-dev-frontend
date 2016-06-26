@@ -26,21 +26,21 @@ let onChartComponentSelection = (props, callbacks) => {
     let selectmatrixlocation = context.portalchartlocation.matrixlocation;
     let matrixcolumn = selectmatrixlocation.column;
     let serieslist = chartmatrixrow;
-    let nodeconfig = chartmatrixrow[matrixcolumn];
-    if (nodeconfig.cells[portalChartIndex].nodeDataPropertyName == 'Categories') {
+    let budgetNode = chartmatrixrow[matrixcolumn];
+    if (budgetNode.cells[portalChartIndex].nodeDataPropertyName == 'Categories') {
         return;
     }
-    let viewpoint = nodeconfig.viewpointName, facet = nodeconfig.facetName;
+    let viewpoint = budgetNode.viewpointName, facet = budgetNode.facetName;
     serieslist.splice(matrixcolumn + 1);
     refreshPresentation(chartmatrixrow);
     if (!selection) {
-        delete nodeconfig.cells[portalChartIndex].chartselection;
-        delete nodeconfig.cells[portalChartIndex].chart;
+        delete budgetNode.cells[portalChartIndex].chartselection;
+        delete budgetNode.cells[portalChartIndex].chart;
         updatechartselections_1.updateChartSelections(chartmatrixrow);
         return;
     }
     let childprops = {
-        nodeconfig: nodeconfig,
+        budgetNode: budgetNode,
         userselections: userselections,
         budgetdata: budgetdata,
         chartmatrixrow: chartmatrixrow,
@@ -59,11 +59,11 @@ let onChartComponentSelection = (props, callbacks) => {
 };
 exports.onChartComponentSelection = onChartComponentSelection;
 let createChildNode = (props, callbacks) => {
-    let { nodeconfig, userselections, budgetdata, chartmatrixrow, selectionrow, matrixcolumn, portalChartIndex, context, chart, } = props;
-    let viewpoint = nodeconfig.viewpointName, facet = nodeconfig.facetName;
+    let { budgetNode, userselections, budgetdata, chartmatrixrow, selectionrow, matrixcolumn, portalChartIndex, context, chart, } = props;
+    let viewpoint = budgetNode.viewpointName, facet = budgetNode.facetName;
     let { workingStatus, refreshPresentation, onPortalCreation, } = callbacks;
-    let childdatapath = nodeconfig.dataPath.slice();
-    let node = nodeconfig.dataNode;
+    let childdatapath = budgetNode.dataPath.slice();
+    let node = budgetNode.dataNode;
     if (!node.Components) {
         updatechartselections_1.updateChartSelections(chartmatrixrow);
         return;
@@ -88,7 +88,7 @@ let createChildNode = (props, callbacks) => {
         return;
     }
     workingStatus(true);
-    let newrange = Object.assign({}, nodeconfig.timeSpecs);
+    let newrange = Object.assign({}, budgetNode.timeSpecs);
     let charttype = userselections.charttype;
     let chartCode = constants_1.ChartTypeCodes[charttype];
     let portalcharts = budgetdata.viewpointdata.PortalCharts[facet];
@@ -140,9 +140,9 @@ let createChildNode = (props, callbacks) => {
     let newmatrixcolumn = matrixcolumn + 1;
     chartmatrixrow[newmatrixcolumn] = newnodeconfig;
     refreshPresentation(chartmatrixrow);
-    nodeconfig.cells[portalChartIndex].chartselection = context.selection;
-    nodeconfig.cells[portalChartIndex].chart = chart;
-    nodeconfig.cells[portalChartIndex].ChartObject = context.ChartObject;
+    budgetNode.cells[portalChartIndex].chartselection = context.selection;
+    budgetNode.cells[portalChartIndex].chart = chart;
+    budgetNode.cells[portalChartIndex].ChartObject = context.ChartObject;
     updatechartselections_1.updateChartSelections(chartmatrixrow);
     onPortalCreation();
     workingStatus(false);

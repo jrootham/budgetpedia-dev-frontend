@@ -130,7 +130,7 @@ interface ChartSelectionContext {
 }
 
 interface CreateChildNodeProps {
-    nodeconfig: BudgetNode,
+    budgetNode: BudgetNode,
     userselections: any,
     budgetdata:any,
     chartmatrixrow: any,

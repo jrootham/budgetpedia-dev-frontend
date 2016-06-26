@@ -278,31 +278,31 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let chartmatrixrow = this.state.chartmatrixrow
         let oldchartmatrixrow = [...chartmatrixrow]
 
-        let nodeconfig: BudgetNode = null
+        let budgetNode: BudgetNode = null
         let parentnodeconfig: BudgetNode
         let cellptr: any
         let isError = false
         let chartParmsObj: ChartParmsObj = null
         for (cellptr in chartmatrixrow) {
-            parentnodeconfig = nodeconfig
-            nodeconfig = chartmatrixrow[cellptr]
-            let nextdataNode = getBudgetNode(viewpointdata, nodeconfig.dataPath)
+            parentnodeconfig = budgetNode
+            budgetNode = chartmatrixrow[cellptr]
+            let nextdataNode = getBudgetNode(viewpointdata, budgetNode.dataPath)
             if (nextdataNode) {
                 // check previous cell configuration against previous node
                 // TODO: THIS IS A PROXY THAT NEEDS TO BE REPLACED
                 // there is only one chart where there should be 2
-                let deeperdata = (!!nextdataNode.Components && (nodeconfig.cells.length == 1))
+                let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1))
                 // there are two charts where there should be 1
-                let shallowerdata = (!nextdataNode.Components && (nodeconfig.cells.length == 2))
+                let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2))
                 // now set budgetnode with new data node
-                // nodeconfig.dataNode = nextdataNode
-                nodeconfig.reset(
+                // budgetNode.dataNode = nextdataNode
+                budgetNode.reset(
                     nextdataNode,
                     viewpointdata.PortalCharts,
                     userselections.charttype
                 )
                 if ( deeperdata || shallowerdata) {
-                    // replace nodeconfig
+                    // replace budgetNode
                     chartmatrixrow.splice(cellptr)
                     isError = true
                     let prevconfig: BudgetNode = chartmatrixrow[cellptr - 1]
@@ -313,7 +313,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     }
 
                     let childprops: CreateChildNodeProps = {
-                        nodeconfig:prevconfig,
+                        budgetNode:prevconfig,
                         userselections,
                         budgetdata,
                         chartmatrixrow,
@@ -337,16 +337,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     }
                     this.state.snackbar.message = message
                     this.state.snackbar.open = true
-                    nodeconfig = null // chartmatrixrow[cellptr] // created by createChildNode as side effect
+                    budgetNode = null // chartmatrixrow[cellptr] // created by createChildNode as side effect
                 }
             } else {
                 console.error('no data node')
             }
             let nodechartindex: any = null
-            if (!nodeconfig) break
-            for (nodechartindex in nodeconfig.cells) {
+            if (!budgetNode) break
+            for (nodechartindex in budgetNode.cells) {
                 let props: GetChartParmsProps = {
-                    nodeConfig: nodeconfig,
+                    nodeConfig: budgetNode,
                     chartIndex: nodechartindex,
                     userselections,
                     budgetdata,
@@ -369,12 +369,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     isError = true
                     break
                 } else {
-                    nodeconfig.facetName = facet
-                    nodeconfig.cells[nodechartindex].chartparms = chartParmsObj.chartParms
-                    nodeconfig.cells[nodechartindex].chartCode =
-                        ChartTypeCodes[nodeconfig.cells[nodechartindex].chartparms.chartType]
+                    budgetNode.facetName = facet
+                    budgetNode.cells[nodechartindex].chartparms = chartParmsObj.chartParms
+                    budgetNode.cells[nodechartindex].chartCode =
+                        ChartTypeCodes[budgetNode.cells[nodechartindex].chartparms.chartType]
                     if (parentnodeconfig) {
-                        nodeconfig.parentData.dataNode = parentnodeconfig.dataNode
+                        budgetNode.parentData.dataNode = parentnodeconfig.dataNode
                     }
                 }
             }
@@ -465,23 +465,23 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')'
         }
 
-        let portals = matrixrow.map((nodeconfig: BudgetNode, index) => {
+        let portals = matrixrow.map((budgetNode: BudgetNode, index) => {
 
             let portalcharts = []
 
-            for (let chartindex in nodeconfig.cells) {
+            for (let chartindex in budgetNode.cells) {
 
                 let chartblocktitle = null
-                if ((nodeconfig.cells[chartindex].nodeDataPropertyName == 'Categories')) {
+                if ((budgetNode.cells[chartindex].nodeDataPropertyName == 'Categories')) {
                     chartblocktitle = portaltitles.Categories
                 } else {
                     chartblocktitle = portaltitles.Baseline
                 }
 
-                let chartparms = nodeconfig.cells[chartindex].chartparms
+                let chartparms = budgetNode.cells[chartindex].chartparms
 
                 let location = {
-                    matrixlocation: nodeconfig.matrixLocation,
+                    matrixlocation: budgetNode.matrixLocation,
                     portalindex: Number(chartindex)
                 }
                 let explorer = this
@@ -491,7 +491,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                             this.switchChartCode(location, chartCode)
                         }
                     })(location),
-                    chartCode: nodeconfig.cells[chartindex].chartCode,
+                    chartCode: budgetNode.cells[chartindex].chartCode,
                     graph_id: "ChartID" + this.props.branchkey + '-' + index + '-' + chartindex,
                     // index,
                 }
@@ -506,8 +506,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
             }
             let portalname = null
-            if (nodeconfig.parentData) {
-                portalname = nodeconfig.parentData.Name
+            if (budgetNode.parentData) {
+                portalname = budgetNode.parentData.Name
             } else {
                 portalname = 'City Budget'
             }
