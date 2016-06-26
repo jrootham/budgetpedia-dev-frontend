@@ -34,13 +34,11 @@ class BudgetNode {
     constructor(parms: BudgetNodeParms) {
 
         let portalcharts = parms.portalCharts
-        console.log('portalcharts',portalcharts)
         // // TODO: should be default for each chart...
         let defaultChartCode = ChartTypeCodes[parms.chartType]
 
         // // create portalCells
         for (let type in portalcharts) {
-            console.log('type',type)
             let cell: MatrixCellConfig = {
                 googleChartType:parms.chartType,
                 chartCode:defaultChartCode,
@@ -62,6 +60,8 @@ class BudgetNode {
     dataPath: string[]
     matrixLocation: MatrixLocation
     timeSpecs: TimeSpecs
+    dataNode: any = null
+    parentData: any = null
 
 }
 

@@ -32,12 +32,13 @@ import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
 import { onChartComponentSelection } from './onchartcomponentselection'
 import { DatasetConfig } from '../../../local/databaseapi'
+import BudgetNode from '../../../local/budgetnode'
 
 let getChartParms = (
         props:GetChartParmsProps, callbacks: GetChartParmsCallbacks
     ):ChartParmsObj => {
 
-    let nodeConfig:MatrixNodeConfig = props.nodeConfig
+    let nodeConfig:MatrixNodeConfig | BudgetNode = props.nodeConfig
     let chartIndex = props.chartIndex
     let userselections = props.userselections
     let budgetdata = props.budgetdata
@@ -66,7 +67,7 @@ let getChartParms = (
     let viewpointindex = nodeConfig.viewpointName,
         path = nodeConfig.dataPath,
         yearscope = nodeConfig.timeSpecs,
-        year = yearscope.latestyear
+        year = yearscope.rightYear
 
     // unpack userselections
     let dataseriesname = userselections.facet
@@ -130,8 +131,8 @@ let getChartParms = (
     // assemble chart title
     let title
     if (nodeConfig.parentData) {
-        let parentdatanode = nodeConfig.parentData.datanode
-        let configindex = node.Config || parentdatanode.Contents
+        let parentdataNode = nodeConfig.parentData.dataNode
+        let configindex = node.Config || parentdataNode.Contents
         let catname = null
         if (configindex) {
             let category = viewpointdata.Configuration[configindex].Instance
@@ -318,7 +319,7 @@ let getChartParms = (
     let chartParmsObj:ChartParmsObj = {
         isError,
         chartParms,
-        datanode:node,
+        dataNode:node,
     }
 
     return chartParmsObj

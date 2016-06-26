@@ -151,7 +151,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     let parentdata: SortedComponentItem = null
     if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
         parentdata = node.SortedComponents[selectionrow]
-        parentdata.datanode = node
+        parentdata.dataNode = node
         code = parentdata.Code
     }
     if (code)
@@ -234,7 +234,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         workingStatus(false)
         return
     }
-    newnodeconfig.dataNode = chartParmsObj.datanode
+    newnodeconfig.dataNode = chartParmsObj.dataNode
     let newmatrixcolumn = matrixcolumn + 1
     chartmatrixrow[newmatrixcolumn] = newnodeconfig
 

@@ -1,12 +1,12 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // interfaces.tsx
-
+import BudgetNode from '../../../local/budgetnode'
 // return by getChartParms; returns isError with ChartParms
 interface ChartParmsObj {
     isError: Boolean,
     errorMessage?: string,
     chartParms?: ChartParms,
-    datanode?: any,
+    dataNode?: any,
 }
 
 // parameters to be passed to google chart
@@ -52,7 +52,7 @@ interface PortalChartLocation {
 }
     
 interface GetChartParmsProps {
-    nodeConfig: MatrixNodeConfig, 
+    nodeConfig: MatrixNodeConfig | BudgetNode, 
     chartIndex: number,
     userselections:any, 
     budgetdata: any,
@@ -88,7 +88,7 @@ interface MatrixNodeConfig {
 
     // yearscope: YearScope,
     // parentdata?: SortedComponentItem,
-    // datanode?: any,
+    // dataNode?: any,
 
     // matrixlocation: MatrixLocation,
     // isError?: boolean,
@@ -129,14 +129,14 @@ interface SortedComponentItem {
     Code: string,
     Index?: number,
     Name: string,
-    datanode?: any,
+    dataNode?: any,
 }
 
 // internal component of chart config
 interface YearScope {
-    latestyear: number,
-    earliestyear: number,
-    fullrange: boolean,
+    rightYear: number,
+    leftYear: number,
+    spanYears: boolean,
 }
 
 // =======================================================
@@ -158,7 +158,7 @@ interface ChartSelectionContext {
 }
 
 interface CreateChildNodeProps {
-    nodeconfig: MatrixNodeConfig,
+    nodeconfig: MatrixNodeConfig | BudgetNode,
     userselections: any,
     budgetdata:any,
     chartmatrixrow: any,

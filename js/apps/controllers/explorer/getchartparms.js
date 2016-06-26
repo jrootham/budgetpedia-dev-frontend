@@ -22,7 +22,7 @@ let getChartParms = (props, callbacks) => {
     else {
         sortedlist = 'SortedComponents';
     }
-    let viewpointindex = nodeConfig.viewpointName, path = nodeConfig.dataPath, yearscope = nodeConfig.timeSpecs, year = yearscope.latestyear;
+    let viewpointindex = nodeConfig.viewpointName, path = nodeConfig.dataPath, yearscope = nodeConfig.timeSpecs, year = yearscope.rightYear;
     let dataseriesname = userselections.facet;
     let units = itemseriesdata.Units, vertlabel;
     vertlabel = itemseriesdata.UnitsAlias;
@@ -64,8 +64,8 @@ let getChartParms = (props, callbacks) => {
     }
     let title;
     if (nodeConfig.parentData) {
-        let parentdatanode = nodeConfig.parentData.datanode;
-        let configindex = node.Config || parentdatanode.Contents;
+        let parentdataNode = nodeConfig.parentData.dataNode;
+        let configindex = node.Config || parentdataNode.Contents;
         let catname = null;
         if (configindex) {
             let category = viewpointdata.Configuration[configindex].Instance;
@@ -217,7 +217,7 @@ let getChartParms = (props, callbacks) => {
     let chartParmsObj = {
         isError: isError,
         chartParms: chartParms,
-        datanode: node,
+        dataNode: node,
     };
     return chartParmsObj;
 };

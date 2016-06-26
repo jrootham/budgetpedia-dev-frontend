@@ -129,8 +129,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             portalCharts:viewpointdata.PortalCharts,
             timeSpecs: {
                 leftYear:null,
-                rightYear:null,
-                spanYears:null,
+                rightYear:userselections.latestyear,
+                spanYears:false,
             },
             dataPath: [],
             matrixLocation: {column:0},
@@ -138,10 +138,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let budgetnode = new BudgetNode(budgetNodeParms)
 
-        console.log('budgetnode', budgetnode)
+        let drilldownnodeconfig:BudgetNode = budgetnode
 
-        let drilldownnodeconfig: MatrixNodeConfig =
-            this.initRootNodeConfig(userselections)
+        // let drilldownnodeconfig: MatrixNodeConfig =
+        //     this.initRootNodeConfig(userselections)
         let drilldownindex: any
 
         for (drilldownindex in drilldownnodeconfig.cells) {
@@ -170,7 +170,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         }
         if (!chartParmsObj.isError) {
-            drilldownnodeconfig.dataNode = chartParmsObj.datanode
+            drilldownnodeconfig.dataNode = chartParmsObj.dataNode
             matrixlocation = drilldownnodeconfig.matrixLocation
             chartmatrixrow[matrixlocation.column] = drilldownnodeconfig
         }
@@ -183,40 +183,41 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     // -------------------[ INITIALIZE ROOT CHART CONFIG ]--------------------
 
-    initRootNodeConfig = (userselections): MatrixNodeConfig => {
-        let googleChartType = userselections.charttype
-        let chartCode = ChartTypeCodes[googleChartType]
-        let budgetdata = this.props.branchdata.data
-        let viewpoint = userselections.viewpoint
-        let facet = userselections.facet
-        // let viewpointdata = budgetdata.Viewpoints[viewpoint]
-        let viewpointdata = budgetdata.viewpointdata
-        let portalcharts = viewpointdata.PortalCharts[facet]
-        let charts = []
-        for (let type of portalcharts) {
-            let chartconfig: MatrixCellConfig = {
-                googleChartType,
-                chartCode,
-            }
-            chartconfig.nodeDataPropertyName = type.Type
-            charts.push(chartconfig)
-        }
-        return {
-            viewpointName: viewpoint,
-            facetName: facet,
-            dataPath: [], // get data from root viewpoint object
-            matrixLocation: {
-                column: 0
-            },
-            timeSpecs: {
-                latestyear: userselections.latestyear,
-                earliestyear: null,
-                fullrange: false,
-            },
-            cells: charts
-        }
+    // REPLACED BY BUDGETNODE CLASS
+    // initRootNodeConfig = (userselections): MatrixNodeConfig => {
+    //     let googleChartType = userselections.charttype
+    //     let chartCode = ChartTypeCodes[googleChartType]
+    //     let budgetdata = this.props.branchdata.data
+    //     let viewpoint = userselections.viewpoint
+    //     let facet = userselections.facet
+    //     // let viewpointdata = budgetdata.Viewpoints[viewpoint]
+    //     let viewpointdata = budgetdata.viewpointdata
+    //     let portalcharts = viewpointdata.PortalCharts[facet]
+    //     let charts = []
+    //     for (let type of portalcharts) {
+    //         let chartconfig: MatrixCellConfig = {
+    //             googleChartType,
+    //             chartCode,
+    //         }
+    //         chartconfig.nodeDataPropertyName = type.Type
+    //         charts.push(chartconfig)
+    //     }
+    //     return {
+    //         viewpointName: viewpoint,
+    //         facetName: facet,
+    //         dataPath: [], // get data from root viewpoint object
+    //         matrixLocation: {
+    //             column: 0
+    //         },
+    //         timeSpecs: {
+    //             rightYear: userselections.latestyear,
+    //             leftYear: null,
+    //             spanYears: false,
+    //         },
+    //         cells: charts
+    //     }
 
-    }
+    // }
 
     handleDialogOpen = () => {
         this.setState({
@@ -323,13 +324,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         for (cellptr in chartmatrixrow) {
             parentnodeconfig = nodeconfig
             nodeconfig = chartmatrixrow[cellptr]
-            let nextdatanode = getBudgetNode(viewpointdata, nodeconfig.dataPath)
-            // let datanode = nodeconfig.datanode
-            if (nextdatanode) {
+            let nextdataNode = getBudgetNode(viewpointdata, nodeconfig.dataPath)
+            // let dataNode = nodeconfig.dataNode
+            if (nextdataNode) {
                 // there is only one chart where there should be 2
-                let deeperdata = (!!nextdatanode.Components && (nodeconfig.cells.length == 1))
+                let deeperdata = (!!nextdataNode.Components && (nodeconfig.cells.length == 1))
                 // there are two charts where there should be 1
-                let shallowerdata = (!nextdatanode.Components && (nodeconfig.cells.length == 2))
+                let shallowerdata = (!nextdataNode.Components && (nodeconfig.cells.length == 2))
                 if ( deeperdata || shallowerdata) {
                     chartmatrixrow.splice(cellptr)
                     nodeconfig.cells = []
@@ -400,12 +401,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     break
                 } else {
                     nodeconfig.facetName = facet
-                    nodeconfig.dataNode = chartParmsObj.datanode
+                    nodeconfig.dataNode = chartParmsObj.dataNode
                     nodeconfig.cells[nodechartindex].chartparms = chartParmsObj.chartParms
                     nodeconfig.cells[nodechartindex].chartCode =
                         ChartTypeCodes[nodeconfig.cells[nodechartindex].chartparms.chartType]
                     if (parentnodeconfig) {
-                        nodeconfig.parentData.datanode = parentnodeconfig.dataNode
+                        nodeconfig.parentData.dataNode = parentnodeconfig.dataNode
                     }
                 }
             }
@@ -456,7 +457,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             nodeConfig.cells[portalIndex].chartparms = chartParmsObj.chartParms
             nodeConfig.cells[portalIndex].chartCode =
                 ChartTypeCodes[nodeConfig.cells[portalIndex].chartparms.chartType]
-            nodeConfig.dataNode = chartParmsObj.datanode
+            nodeConfig.dataNode = chartParmsObj.dataNode
         } else {
             nodeConfig.cells[portalIndex].googleChartType = oldChartType
         }
@@ -504,7 +505,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             for (let chartindex in nodeconfig.cells) {
 
                 let chartblocktitle = null
-                if (//(nodeconfig.datanode.Contents == 'BASELINE') ||
+                if (//(nodeconfig.dataNode.Contents == 'BASELINE') ||
                     (nodeconfig.cells[chartindex].nodeDataPropertyName == 'Categories')) {
                     chartblocktitle = portaltitles.Categories
                 } else {

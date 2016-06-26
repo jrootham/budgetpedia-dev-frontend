@@ -3,11 +3,11 @@ const constants_1 = require('../apps/constants');
 class BudgetNode {
     constructor(parms) {
         this.cells = [];
+        this.dataNode = null;
+        this.parentData = null;
         let portalcharts = parms.portalCharts;
-        console.log('portalcharts', portalcharts);
         let defaultChartCode = constants_1.ChartTypeCodes[parms.chartType];
         for (let type in portalcharts) {
-            console.log('type', type);
             let cell = {
                 googleChartType: parms.chartType,
                 chartCode: defaultChartCode,
