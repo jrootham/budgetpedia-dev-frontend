@@ -41,7 +41,7 @@ interface ChartConfig {
 
 // configuration for budget portal, built on render
 interface PortalConfig {
-    portalCharts: ChartConfig[],
+    budgetCells: ChartConfig[],
     portalName: string,
 }
 

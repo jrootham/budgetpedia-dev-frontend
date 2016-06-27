@@ -342,7 +342,7 @@ class ExplorerBranch extends Component {
                 portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')';
             }
             let portals = matrixrow.map((budgetNode, nodeindex) => {
-                let portalcharts = [];
+                let budgetcells = [];
                 for (let cellindex in budgetNode.cells) {
                     let budgetCell = budgetNode.cells[cellindex];
                     let chartblocktitle = null;
@@ -372,29 +372,29 @@ class ExplorerBranch extends Component {
                         chartsettings: chartsettings,
                         chartblocktitle: "By " + chartblocktitle,
                     };
-                    portalcharts.push(portalchart);
+                    budgetcells.push(portalchart);
                 }
-                let portalname = null;
+                let portalName = null;
                 if (budgetNode.parentData) {
-                    portalname = budgetNode.parentData.Name;
+                    portalName = budgetNode.parentData.Name;
                 }
                 else {
-                    portalname = 'City Budget';
+                    portalName = 'City Budget';
                 }
-                portalname += ' ' + portalseriesname;
-                let budgetPortal = {
-                    portalCharts: portalcharts,
-                    portalName: portalname,
+                portalName += ' ' + portalseriesname;
+                let portalNode = {
+                    budgetCells: budgetcells,
+                    portalName: portalName,
                 };
-                return React.createElement(explorerportal_1.ExplorerPortal, {callbackid: nodeindex, key: nodeindex, budgetPortal: budgetPortal, onChangePortalChart: this.onChangeBudgetPortalChart});
+                return React.createElement(explorerportal_1.ExplorerPortal, {callbackid: nodeindex, key: nodeindex, portalNode: portalNode, onChangePortalChart: this.onChangeBudgetPortalChart});
             });
             return portals;
         };
     }
     render() {
         let branch = this;
-        let drilldownbranch = branch.state.chartmatrixrow;
-        let drilldownportals = branch.getPortals(drilldownbranch);
+        let drilldownrow = branch.state.chartmatrixrow;
+        let drilldownportals = branch.getPortals(drilldownrow);
         return React.createElement("div", null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.state.userselections.viewpoint, style: {}, onChange: (e, index, value) => {
             branch.switchViewpoint(value);
         }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton_1.default, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {

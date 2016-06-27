@@ -471,7 +471,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let portals = matrixrow.map((budgetNode: BudgetNode, nodeindex) => {
 
-            let portalcharts = []
+            let budgetcells = []
 
             for (let cellindex in budgetNode.cells) {
                 let budgetCell = budgetNode.cells[cellindex]
@@ -506,27 +506,27 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     chartblocktitle: "By " + chartblocktitle,
                 }
 
-                portalcharts.push(portalchart)
+                budgetcells.push(portalchart)
 
             }
-            let portalname = null
+            let portalName = null
             if (budgetNode.parentData) {
-                portalname = budgetNode.parentData.Name
+                portalName = budgetNode.parentData.Name
             } else {
-                portalname = 'City Budget'
+                portalName = 'City Budget'
             }
 
-            portalname += ' ' + portalseriesname
+            portalName += ' ' + portalseriesname
 
-            let budgetPortal: PortalConfig = {
-                portalCharts: portalcharts,
-                portalName: portalname,
+            let portalNode: PortalConfig = {
+                budgetCells: budgetcells,
+                portalName: portalName,
             }
 
             return <ExplorerPortal
                 callbackid = {nodeindex}
                 key = {nodeindex}
-                budgetPortal = { budgetPortal }
+                portalNode = { portalNode }
                 onChangePortalChart = { this.onChangeBudgetPortalChart }
             />
         })
@@ -538,9 +538,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     render() {
 
     let branch = this
-    let drilldownbranch = branch.state.chartmatrixrow
+    let drilldownrow = branch.state.chartmatrixrow
 
-    let drilldownportals = branch.getPortals(drilldownbranch)
+    let drilldownportals = branch.getPortals(drilldownrow)
     return <div >
     <div>
         <span style={{ fontStyle: "italic" }}>Viewpoint: </span>

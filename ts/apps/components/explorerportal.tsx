@@ -20,7 +20,7 @@ import { ExplorerChart } from './explorerchart'
 
 interface ExplorePortalProps {
     callbackid: string | number,
-    budgetPortal:PortalConfig,
+    portalNode:PortalConfig,
     onChangePortalChart:Function
 }
 
@@ -37,7 +37,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     getChartTabs = () => {
 
         // generate array of chart tabs
-        let portalcharts = this.props.budgetPortal.portalCharts
+        let portalcharts = this.props.portalNode.budgetCells
         let chartTabs = portalcharts.map(
             (tabChart:ChartConfig,chartindex) => {
                 //!Hack! if more than one chart the first must be expandable
@@ -119,7 +119,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
                     display: "inline-block", 
                     backgroundColor: "#00bcd4",
                 }
-            }>{ this.props.budgetPortal.portalName }</div>
+            }>{ this.props.portalNode.portalName }</div>
             { tabobject }
         </div>
     }

@@ -12,7 +12,7 @@ class ExplorerPortal extends Component {
         this.componentWillMount = () => {
         };
         this.getChartTabs = () => {
-            let portalcharts = this.props.budgetPortal.portalCharts;
+            let portalcharts = this.props.portalNode.budgetCells;
             let chartTabs = portalcharts.map((tabChart, chartindex) => {
                 let expandable = ((portalcharts.length > 1) && (chartindex == 0));
                 let chartparms = tabChart.chartparms;
@@ -56,7 +56,7 @@ class ExplorerPortal extends Component {
             fontWeight: "bold",
             display: "inline-block",
             backgroundColor: "#00bcd4",
-        }}, this.props.budgetPortal.portalName), tabobject);
+        }}, this.props.portalNode.portalName), tabobject);
     }
 }
 exports.ExplorerPortal = ExplorerPortal;
