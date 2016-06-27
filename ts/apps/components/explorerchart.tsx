@@ -13,12 +13,14 @@ import SvgIcon from 'material-ui/SvgIcon'
 import {
     ChartParms,
     ChartSettings,
+    ChartCallbacks,
 } from '../controllers/explorer/interfaces'
 
 interface ExplorerChartProps {
     callbackid: string | number,
-    chartsettings: ChartSettings,
-    chartparms: ChartParms,
+    cellSettings: ChartSettings,
+    cellCallbacks: ChartCallbacks,
+    chartParms: ChartParms,
     expandable: boolean,
 }
 
@@ -26,16 +28,16 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
 
 
     onChangeChartCode = (chartCode) => {
-        this.props.chartsettings.onSwitchChartCode(chartCode)
+        this.props.cellCallbacks.onSwitchChartCode(chartCode)
     }
 
     render() {
 
-        let chartparms = this.props.chartparms
+        let chartparms = this.props.chartParms
         if (!this.props.expandable) {
             chartparms.options['backgroundColor'] = '#E4E4E4'
         }
-        let chartsettings = this.props.chartsettings
+        let chartsettings = this.props.cellSettings
 
         return <div>
             <div style={{ padding: "3px" }}>
@@ -76,7 +78,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (this.props.chartsettings.chartCode == "TimeLine")
+                            backgroundColor: (this.props.cellSettings.chartCode == "TimeLine")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
                             borderRadius: "50%"
@@ -93,7 +95,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (this.props.chartsettings.chartCode == "StackedArea")
+                            backgroundColor: (this.props.cellSettings.chartCode == "StackedArea")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
                             borderRadius: "50%"

@@ -9,15 +9,15 @@ class ExplorerChart extends Component {
     constructor(...args) {
         super(...args);
         this.onChangeChartCode = (chartCode) => {
-            this.props.chartsettings.onSwitchChartCode(chartCode);
+            this.props.cellCallbacks.onSwitchChartCode(chartCode);
         };
     }
     render() {
-        let chartparms = this.props.chartparms;
+        let chartparms = this.props.chartParms;
         if (!this.props.expandable) {
             chartparms.options['backgroundColor'] = '#E4E4E4';
         }
-        let chartsettings = this.props.chartsettings;
+        let chartsettings = this.props.cellSettings;
         return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {
             backgroundColor: (chartsettings.chartCode == "ColumnChart")
                 ? "rgba(144,238,144,0.5)"
@@ -33,14 +33,14 @@ class ExplorerChart extends Component {
         }, onTouchTap: e => {
             this.onChangeChartCode('DonutChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "donut_small")), React.createElement(IconButton_1.default, {tooltip: "Timeline", tooltipPosition: "top-center", style: {
-            backgroundColor: (this.props.chartsettings.chartCode == "TimeLine")
+            backgroundColor: (this.props.cellSettings.chartCode == "TimeLine")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%"
         }, disabled: true, onTouchTap: e => {
             this.onChangeChartCode('Timeline');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "timeline")), React.createElement(IconButton_1.default, {tooltip: "Stacked chart", tooltipPosition: "top-center", style: {
-            backgroundColor: (this.props.chartsettings.chartCode == "StackedArea")
+            backgroundColor: (this.props.cellSettings.chartCode == "StackedArea")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%"

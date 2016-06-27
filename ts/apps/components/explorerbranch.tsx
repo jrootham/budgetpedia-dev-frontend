@@ -13,6 +13,7 @@ import {
     MatrixLocation,
     PortalConfig,
     ChartSettings,
+    ChartCallbacks,
     PortalChartLocation,
     ChartConfig,
     GetChartParmsProps,
@@ -482,28 +483,31 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     chartblocktitle = portaltitles.Baseline
                 }
 
-                let chartparms = budgetCell.chartparms
+                let chartParms = budgetCell.chartparms
 
                 let location: PortalChartLocation = {
                     matrixlocation: budgetNode.matrixLocation,
                     cellIndex: Number(cellindex)
                 }
                 let explorer = this
-                let chartsettings: ChartSettings = {
+                let chartCallbacks: ChartCallbacks = {
                     onSwitchChartCode: ((location) => {
                         return (chartCode) => {
                             this.switchChartCode(location, chartCode)
                         }
                     })(location),
+                }
+                let chartSettings: ChartSettings = {
                     chartCode: budgetCell.chartCode,
                     graph_id: "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
                     // index,
                 }
 
                 let portalchart: ChartConfig = {
-                    chartparms,
-                    chartsettings,
-                    chartblocktitle: "By " + chartblocktitle,
+                    chartParms,
+                    chartCallbacks,
+                    chartSettings,
+                    cellTitle: "By " + chartblocktitle,
                 }
 
                 budgetcells.push(portalchart)

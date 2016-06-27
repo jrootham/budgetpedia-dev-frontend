@@ -352,25 +352,28 @@ class ExplorerBranch extends Component {
                     else {
                         chartblocktitle = portaltitles.Baseline;
                     }
-                    let chartparms = budgetCell.chartparms;
+                    let chartParms = budgetCell.chartparms;
                     let location = {
                         matrixlocation: budgetNode.matrixLocation,
                         cellIndex: Number(cellindex)
                     };
                     let explorer = this;
-                    let chartsettings = {
+                    let chartCallbacks = {
                         onSwitchChartCode: ((location) => {
                             return (chartCode) => {
                                 this.switchChartCode(location, chartCode);
                             };
                         })(location),
+                    };
+                    let chartSettings = {
                         chartCode: budgetCell.chartCode,
                         graph_id: "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
                     };
                     let portalchart = {
-                        chartparms: chartparms,
-                        chartsettings: chartsettings,
-                        chartblocktitle: "By " + chartblocktitle,
+                        chartParms: chartParms,
+                        chartCallbacks: chartCallbacks,
+                        chartSettings: chartSettings,
+                        cellTitle: "By " + chartblocktitle,
                     };
                     budgetcells.push(portalchart);
                 }
