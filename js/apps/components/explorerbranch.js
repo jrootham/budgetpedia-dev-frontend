@@ -18,7 +18,7 @@ class ExplorerBranch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            chartmatrixrow: this.props.branchdata.nodes,
+            chartmatrixrow: this.props.budgetdata.nodes,
             yearslider: this.props.yearslider,
             yearscope: this.props.yearscope,
             userselections: this.props.userselections,
@@ -41,7 +41,7 @@ class ExplorerBranch extends Component {
         };
         this.initializeChartSeries = () => {
             let userselections = this.state.userselections, chartmatrixrow = this.state.chartmatrixrow;
-            let budgetdata = this.props.branchdata.data;
+            let budgetdata = this.props.budgetdata.data;
             var matrixlocation, chartParmsObj;
             let viewpointname = userselections.viewpoint;
             let facet = userselections.facet;
@@ -151,8 +151,7 @@ class ExplorerBranch extends Component {
         this.switchViewpoint = (viewpointname) => {
             let userselections = this.state.userselections;
             let chartmatrixrow = this.state.chartmatrixrow;
-            let chartseries = chartmatrixrow;
-            chartseries.splice(0);
+            chartmatrixrow.splice(0);
             userselections.viewpoint = viewpointname;
             this.setState({
                 userselections: userselections,
@@ -174,7 +173,7 @@ class ExplorerBranch extends Component {
                     spanYears: false,
                 }
             });
-            let budgetdata = this.props.branchdata.data;
+            let budgetdata = this.props.budgetdata.data;
             budgetdata.viewpointdata = viewpointdata;
             let chartmatrixrow = this.state.chartmatrixrow;
             let oldchartmatrixrow = [...chartmatrixrow];
@@ -190,7 +189,7 @@ class ExplorerBranch extends Component {
                 if (nextdataNode) {
                     let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
                     let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2));
-                    budgetNode.reset(nextdataNode, userselections.facet);
+                    budgetNode.update(nextdataNode, userselections.facet);
                     if (deeperdata || shallowerdata) {
                         isError = true;
                         let prevBudgetNode = chartmatrixrow[cellptr - 1];
@@ -293,7 +292,7 @@ class ExplorerBranch extends Component {
             let budgetNode = chartmatrixrow[location.matrixlocation.column];
             let oldChartType = budgetNode.cells[portalIndex].googleChartType;
             budgetNode.cells[portalIndex].googleChartType = chartType;
-            let budgetdata = this.props.branchdata.data;
+            let budgetdata = this.props.budgetdata.data;
             let props = {
                 budgetNode: budgetNode,
                 chartIndex: portalIndex,
@@ -331,10 +330,10 @@ class ExplorerBranch extends Component {
         };
         this.getPortals = (matrixrow) => {
             let userselections = this.state.userselections;
-            let budgetdata = this.props.branchdata.data;
-            if (!budgetdata.viewpointdata)
+            let budgetBranch = this.props.budgetdata.data;
+            if (!budgetBranch.viewpointdata)
                 return [];
-            let viewpointdata = budgetdata.viewpointdata;
+            let viewpointdata = budgetBranch.viewpointdata;
             let itemseriesdata = viewpointdata.itemseriesconfigdata;
             let portaltitles = itemseriesdata.Titles;
             let portalseriesname = itemseriesdata.Name;
@@ -364,7 +363,7 @@ class ExplorerBranch extends Component {
                             };
                         })(location),
                         chartCode: budgetNode.cells[chartindex].chartCode,
-                        graph_id: "ChartID" + this.props.branchkey + '-' + index + '-' + chartindex,
+                        graph_id: "ChartID" + this.props.callbackid + '-' + index + '-' + chartindex,
                     };
                     let portalchart = {
                         chartparms: chartparms,

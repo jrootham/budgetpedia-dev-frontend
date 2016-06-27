@@ -65,7 +65,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     let matrixcolumn = selectmatrixlocation.column
 
     // acquire serieslist from matrix
-    let serieslist = chartmatrixrow
+    // let serieslist = chartmatrixrow
 
     let budgetNode: BudgetNode = chartmatrixrow[matrixcolumn]
 
@@ -80,7 +80,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
         facet = budgetNode.facetName
 
     // TODO: abandon here if the next one exists and is the same
-    serieslist.splice(matrixcolumn + 1) // remove subsequent charts
+    chartmatrixrow.splice(matrixcolumn + 1) // remove subsequent charts
 
     // trigger update to avoid google charts use of cached versions
     refreshPresentation(chartmatrixrow)

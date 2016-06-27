@@ -84,7 +84,7 @@ class BudgetNode {
     }
 
     // reset = (dataNode, portalCharts, defaultChartType, facet) => {
-    reset = (dataNode, facet) => {
+    update = (dataNode, facet) => {
         this._dataNode = dataNode
         this.facetName = facet
         // this.setCells(portalCharts[facet], defaultChartType)

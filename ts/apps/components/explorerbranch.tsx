@@ -43,14 +43,14 @@ import * as Actions from '../../actions/actions'
 import BudgetNode from '../../local/budgetnode'
 
 interface ExploreBranchProps {
-    branchdata: any,
-    // budgetdata: any,
+    budgetdata: any,
     // matrixrow: any,
     callbacks:any,
     userselections:any,
     yearscope:any,
     yearslider:any,
-    branchkey:any,
+    // branchkey:any,
+    callbackid: string | number
 }
 
 class ExplorerBranch extends Component<ExploreBranchProps, any> {
@@ -64,7 +64,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // charts exist in a matrix (row/column) which contain a chartconfig object
     // TODO: most of 
     state = {
-        chartmatrixrow:this.props.branchdata.nodes,
+        chartmatrixrow:this.props.budgetdata.nodes,
         yearslider: this.props.yearslider,
         yearscope: this.props.yearscope,
         userselections: this.props.userselections,
@@ -97,7 +97,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     initializeChartSeries = () => {
         let userselections = this.state.userselections,
             chartmatrixrow = this.state.chartmatrixrow
-        let budgetdata = this.props.branchdata.data
+        let budgetdata = this.props.budgetdata.data
         var matrixlocation,
             chartParmsObj: ChartParmsObj
 
@@ -240,8 +240,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let userselections = this.state.userselections
         let chartmatrixrow = this.state.chartmatrixrow
-        let chartseries = chartmatrixrow
-        chartseries.splice(0) // remove subsequent charts
+        // let chartseries = chartmatrixrow
+        chartmatrixrow.splice(0) // remove subsequent charts
         userselections.viewpoint = viewpointname
         this.setState({
             userselections,
@@ -270,7 +270,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
-        let budgetdata = this.props.branchdata.data
+        let budgetdata = this.props.budgetdata.data
         budgetdata.viewpointdata = viewpointdata
 
         let chartmatrixrow = this.state.chartmatrixrow
@@ -293,7 +293,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 // there are two charts where there should be 1
                 let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2))
                 // now set budgetNode with new data node
-                budgetNode.reset(
+                budgetNode.update(
                     nextdataNode,
                     // viewpointdata.PortalCharts,
                     // userselections.charttype,
@@ -410,7 +410,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let budgetNode: BudgetNode = chartmatrixrow[location.matrixlocation.column]
         let oldChartType = budgetNode.cells[portalIndex].googleChartType
         budgetNode.cells[portalIndex].googleChartType = chartType
-        let budgetdata = this.props.branchdata.data
+        let budgetdata = this.props.budgetdata.data
         let props: GetChartParmsProps = {
             budgetNode: budgetNode,
             chartIndex: portalIndex,
@@ -457,10 +457,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let userselections = this.state.userselections
 
-        let budgetdata = this.props.branchdata.data
+        let budgetBranch = this.props.budgetdata.data
 
-        if (!budgetdata.viewpointdata) return []
-        let viewpointdata = budgetdata.viewpointdata
+        if (!budgetBranch.viewpointdata) return []
+        let viewpointdata = budgetBranch.viewpointdata
         let itemseriesdata: DatasetConfig = viewpointdata.itemseriesconfigdata
         let portaltitles = itemseriesdata.Titles
         let portalseriesname = itemseriesdata.Name
@@ -495,7 +495,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                         }
                     })(location),
                     chartCode: budgetNode.cells[chartindex].chartCode,
-                    graph_id: "ChartID" + this.props.branchkey + '-' + index + '-' + chartindex,
+                    graph_id: "ChartID" + this.props.callbackid + '-' + index + '-' + chartindex,
                     // index,
                 }
 

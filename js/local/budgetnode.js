@@ -30,7 +30,7 @@ class BudgetNode {
             return availablCells;
         };
         this.parentData = null;
-        this.reset = (dataNode, facet) => {
+        this.update = (dataNode, facet) => {
             this._dataNode = dataNode;
             this.facetName = facet;
         };

@@ -274,9 +274,9 @@ let Explorer = class extends Component< any, any > {
 */
         // -----------[ DRILLDOWN SEGMENT]-------------
 
-        let branchdata: ChartBranch = explorer.state.chartbranches[ChartSeries.DrillDown]
+        let budgetdata: ChartBranch = explorer.state.chartbranches[ChartSeries.DrillDown]
 
-        this.state.chartbranches[ChartSeries.DrillDown] = branchdata
+        this.state.chartbranches[ChartSeries.DrillDown] = budgetdata
 
         let drilldownsegment = 
         <Card initiallyExpanded >
@@ -303,7 +303,8 @@ let Explorer = class extends Component< any, any > {
              </CardText>
              <CardText>
              <ExplorerBranch 
-                 branchdata = {branchdata}
+                 callbackid = {ChartSeries.DrillDown}
+                 budgetdata = {budgetdata}
                  userselections = {{
                      latestyear: 2015,
                      viewpoint: "FUNCTIONAL",
@@ -313,7 +314,7 @@ let Explorer = class extends Component< any, any > {
                  }}
                  yearslider = {{ singlevalue: [2015], doublevalue: [2005, 2015] }}
                  yearscope = {"one"}
-                 branchkey = {ChartSeries.DrillDown}
+                 // branchkey = {ChartSeries.DrillDown}
                  callbacks = {{ workingStatus: explorer.workingStatus }}
              />
             </CardText>

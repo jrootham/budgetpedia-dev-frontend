@@ -24,7 +24,6 @@ let onChartComponentSelection = (props, callbacks) => {
     let chart = context.ChartObject.chart;
     let selectmatrixlocation = context.portalchartlocation.matrixlocation;
     let matrixcolumn = selectmatrixlocation.column;
-    let serieslist = chartmatrixrow;
     let budgetNode = chartmatrixrow[matrixcolumn];
     let portalChartIndex = context.portalchartlocation.portalindex;
     let budgetCell = budgetNode.cells[portalChartIndex];
@@ -32,7 +31,7 @@ let onChartComponentSelection = (props, callbacks) => {
         return;
     }
     let viewpoint = budgetNode.viewpointName, facet = budgetNode.facetName;
-    serieslist.splice(matrixcolumn + 1);
+    chartmatrixrow.splice(matrixcolumn + 1);
     refreshPresentation(chartmatrixrow);
     if (!selection) {
         delete budgetCell.chartselection;
