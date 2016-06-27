@@ -18,7 +18,7 @@ class ExplorerBranch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            chartmatrixrow: this.props.budgetdata.nodes,
+            chartmatrixrow: this.props.budgetBranch.nodes,
             yearslider: this.props.yearslider,
             yearscope: this.props.yearscope,
             userselections: this.props.userselections,
@@ -41,7 +41,7 @@ class ExplorerBranch extends Component {
         };
         this.initializeChartSeries = () => {
             let userselections = this.state.userselections, chartmatrixrow = this.state.chartmatrixrow;
-            let budgetdata = this.props.budgetdata.data;
+            let budgetdata = this.props.budgetBranch.data;
             var matrixlocation, chartParmsObj;
             let viewpointname = userselections.viewpoint;
             let facet = userselections.facet;
@@ -173,7 +173,7 @@ class ExplorerBranch extends Component {
                     spanYears: false,
                 }
             });
-            let budgetdata = this.props.budgetdata.data;
+            let budgetdata = this.props.budgetBranch.data;
             budgetdata.viewpointdata = viewpointdata;
             let chartmatrixrow = this.state.chartmatrixrow;
             let oldchartmatrixrow = [...chartmatrixrow];
@@ -287,12 +287,12 @@ class ExplorerBranch extends Component {
         };
         this.switchChartCode = (location, chartCode) => {
             let chartType = constants_1.ChartCodeTypes[chartCode];
-            let portalIndex = location.portalindex;
+            let portalIndex = location.cellIndex;
             let chartmatrixrow = this.state.chartmatrixrow;
             let budgetNode = chartmatrixrow[location.matrixlocation.column];
             let oldChartType = budgetNode.cells[portalIndex].googleChartType;
             budgetNode.cells[portalIndex].googleChartType = chartType;
-            let budgetdata = this.props.budgetdata.data;
+            let budgetdata = this.props.budgetBranch.data;
             let props = {
                 budgetNode: budgetNode,
                 chartIndex: portalIndex,
@@ -330,10 +330,10 @@ class ExplorerBranch extends Component {
         };
         this.getPortals = (matrixrow) => {
             let userselections = this.state.userselections;
-            let budgetBranch = this.props.budgetdata.data;
-            if (!budgetBranch.viewpointdata)
+            let budgetdata = this.props.budgetBranch.data;
+            if (!budgetdata.viewpointdata)
                 return [];
-            let viewpointdata = budgetBranch.viewpointdata;
+            let viewpointdata = budgetdata.viewpointdata;
             let itemseriesdata = viewpointdata.itemseriesconfigdata;
             let portaltitles = itemseriesdata.Titles;
             let portalseriesname = itemseriesdata.Name;

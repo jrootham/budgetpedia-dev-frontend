@@ -54,7 +54,7 @@ import {
     GetChartParmsCallbacks,
 } from './explorer/interfaces'
 
-interface ChartBranch {
+interface BudgetBranch {
     data: {
         viewpointdata: any,
         // itemseriesconfigdata?: any,
@@ -77,7 +77,7 @@ let Explorer = class extends Component< any, any > {
     // TODO: most of 
     state = {
         // chartmatrix: [[], []], // DrillDown, Compare (Later: Differences, Context, Build)
-        chartbranches:[
+        budgetBranches:[
             {data:this.props.budgetdata, nodes:[]}
         ],
         dialogopen: false,
@@ -274,9 +274,9 @@ let Explorer = class extends Component< any, any > {
 */
         // -----------[ DRILLDOWN SEGMENT]-------------
 
-        let budgetdata: ChartBranch = explorer.state.chartbranches[ChartSeries.DrillDown]
+        let budgetBranch: BudgetBranch = explorer.state.budgetBranches[ChartSeries.DrillDown]
 
-        this.state.chartbranches[ChartSeries.DrillDown] = budgetdata
+        this.state.budgetBranches[ChartSeries.DrillDown] = budgetBranch
 
         let drilldownsegment = 
         <Card initiallyExpanded >
@@ -304,7 +304,7 @@ let Explorer = class extends Component< any, any > {
              <CardText>
              <ExplorerBranch 
                  callbackid = {ChartSeries.DrillDown}
-                 budgetdata = {budgetdata}
+                 budgetBranch = {budgetBranch}
                  userselections = {{
                      latestyear: 2015,
                      viewpoint: "FUNCTIONAL",

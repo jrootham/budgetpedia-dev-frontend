@@ -48,7 +48,7 @@ interface PortalConfig {
 // to return value for callback processing
 interface PortalChartLocation {
     matrixlocation: MatrixLocation,
-    portalindex: number,
+    cellIndex: number,
 }
     
 interface GetChartParmsProps {

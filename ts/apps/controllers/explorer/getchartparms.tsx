@@ -222,7 +222,7 @@ let getChartParms = (
     let matrixlocation = Object.assign({}, budgetNode.matrixLocation)
     let configlocation: PortalChartLocation = {
         matrixlocation,
-        portalindex: chartIndex
+        cellIndex: chartIndex
     }
 
     let events = [

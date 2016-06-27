@@ -69,7 +69,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
 
     let budgetNode: BudgetNode = chartmatrixrow[matrixcolumn]
 
-    let portalChartIndex = context.portalchartlocation.portalindex
+    let portalChartIndex = context.portalchartlocation.cellIndex
     let budgetCell = budgetNode.cells[portalChartIndex]
     if (budgetCell.nodeDataPropertyName == 'Categories') {
         return

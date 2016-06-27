@@ -43,7 +43,7 @@ import * as Actions from '../../actions/actions'
 import BudgetNode from '../../local/budgetnode'
 
 interface ExploreBranchProps {
-    budgetdata: any,
+    budgetBranch: any,
     // matrixrow: any,
     callbacks:any,
     userselections:any,
@@ -64,7 +64,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // charts exist in a matrix (row/column) which contain a chartconfig object
     // TODO: most of 
     state = {
-        chartmatrixrow:this.props.budgetdata.nodes,
+        chartmatrixrow:this.props.budgetBranch.nodes,
         yearslider: this.props.yearslider,
         yearscope: this.props.yearscope,
         userselections: this.props.userselections,
@@ -97,7 +97,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     initializeChartSeries = () => {
         let userselections = this.state.userselections,
             chartmatrixrow = this.state.chartmatrixrow
-        let budgetdata = this.props.budgetdata.data
+        let budgetdata = this.props.budgetBranch.data
         var matrixlocation,
             chartParmsObj: ChartParmsObj
 
@@ -270,7 +270,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
-        let budgetdata = this.props.budgetdata.data
+        let budgetdata = this.props.budgetBranch.data
         budgetdata.viewpointdata = viewpointdata
 
         let chartmatrixrow = this.state.chartmatrixrow
@@ -405,12 +405,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // TODO: belongs with explorerchart controller?
     switchChartCode = (location: PortalChartLocation, chartCode) => {
         let chartType = ChartCodeTypes[chartCode]
-        let portalIndex = location.portalindex
+        let portalIndex = location.cellIndex
         let chartmatrixrow = this.state.chartmatrixrow
         let budgetNode: BudgetNode = chartmatrixrow[location.matrixlocation.column]
         let oldChartType = budgetNode.cells[portalIndex].googleChartType
         budgetNode.cells[portalIndex].googleChartType = chartType
-        let budgetdata = this.props.budgetdata.data
+        let budgetdata = this.props.budgetBranch.data
         let props: GetChartParmsProps = {
             budgetNode: budgetNode,
             chartIndex: portalIndex,
@@ -457,10 +457,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let userselections = this.state.userselections
 
-        let budgetBranch = this.props.budgetdata.data
+        let budgetdata = this.props.budgetBranch.data
 
-        if (!budgetBranch.viewpointdata) return []
-        let viewpointdata = budgetBranch.viewpointdata
+        if (!budgetdata.viewpointdata) return []
+        let viewpointdata = budgetdata.viewpointdata
         let itemseriesdata: DatasetConfig = viewpointdata.itemseriesconfigdata
         let portaltitles = itemseriesdata.Titles
         let portalseriesname = itemseriesdata.Name

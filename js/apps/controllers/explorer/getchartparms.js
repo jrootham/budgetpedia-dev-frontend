@@ -138,7 +138,7 @@ let getChartParms = (props, callbacks) => {
     let matrixlocation = Object.assign({}, budgetNode.matrixLocation);
     let configlocation = {
         matrixlocation: matrixlocation,
-        portalindex: chartIndex
+        cellIndex: chartIndex
     };
     let events = [
         {

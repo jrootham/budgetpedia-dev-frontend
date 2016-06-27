@@ -25,7 +25,7 @@ let onChartComponentSelection = (props, callbacks) => {
     let selectmatrixlocation = context.portalchartlocation.matrixlocation;
     let matrixcolumn = selectmatrixlocation.column;
     let budgetNode = chartmatrixrow[matrixcolumn];
-    let portalChartIndex = context.portalchartlocation.portalindex;
+    let portalChartIndex = context.portalchartlocation.cellIndex;
     let budgetCell = budgetNode.cells[portalChartIndex];
     if (budgetCell.nodeDataPropertyName == 'Categories') {
         return;
