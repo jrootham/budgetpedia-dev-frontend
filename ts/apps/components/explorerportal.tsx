@@ -39,16 +39,17 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         // generate array of chart tabs
         let portalcharts = this.props.portalNode.budgetCells
         let chartTabs = portalcharts.map(
-            (tabChart:ChartConfig,chartindex) => {
+            (tabChart:ChartConfig,cellindex) => {
                 //!Hack! if more than one chart the first must be expandable
-            let expandable = ((portalcharts.length > 1) && (chartindex == 0))
+            let expandable = ((portalcharts.length > 1) && (cellindex == 0))
             let chartparms = tabChart.chartparms
             let chartsettings = tabChart.chartsettings
             return <Tab style={{fontSize:"12px"}} 
                 label={tabChart.chartblocktitle} 
-                value={chartindex}
-                key={chartindex}>
+                value={cellindex}
+                key={cellindex}>
                 <ExplorerChart 
+                    callbackid = {cellindex}
                     chartsettings = {chartsettings}
                     chartparms = {chartparms}
                     expandable = {expandable}
@@ -67,7 +68,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             return (
                 <Tabs
                     value = {0}
-                    onChange= { e => {
+                    onChange= { () => {
                         this.onChangeTab()
                     } }>
 
@@ -78,7 +79,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         } else {
             return (
                 <Tabs
-                    onChange= { e => {
+                    onChange= { () => {
                         this.onChangeTab()
                     } }>
 

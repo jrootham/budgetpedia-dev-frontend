@@ -13,22 +13,22 @@ class ExplorerPortal extends Component {
         };
         this.getChartTabs = () => {
             let portalcharts = this.props.portalNode.budgetCells;
-            let chartTabs = portalcharts.map((tabChart, chartindex) => {
-                let expandable = ((portalcharts.length > 1) && (chartindex == 0));
+            let chartTabs = portalcharts.map((tabChart, cellindex) => {
+                let expandable = ((portalcharts.length > 1) && (cellindex == 0));
                 let chartparms = tabChart.chartparms;
                 let chartsettings = tabChart.chartsettings;
-                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: tabChart.chartblocktitle, value: chartindex, key: chartindex}, React.createElement(explorerchart_1.ExplorerChart, {chartsettings: chartsettings, chartparms: chartparms, expandable: expandable}));
+                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: tabChart.chartblocktitle, value: cellindex, key: cellindex}, React.createElement(explorerchart_1.ExplorerChart, {callbackid: cellindex, chartsettings: chartsettings, chartparms: chartparms, expandable: expandable}));
             });
             return chartTabs;
         };
         this.getTabObject = (chartTabs) => {
             if (chartTabs.length == 1) {
-                return (React.createElement(Tabs_1.Tabs, {value: 0, onChange: e => {
+                return (React.createElement(Tabs_1.Tabs, {value: 0, onChange: () => {
                     this.onChangeTab();
                 }}, chartTabs));
             }
             else {
-                return (React.createElement(Tabs_1.Tabs, {onChange: e => {
+                return (React.createElement(Tabs_1.Tabs, {onChange: () => {
                     this.onChangeTab();
                 }}, chartTabs));
             }

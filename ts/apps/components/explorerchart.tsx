@@ -16,6 +16,7 @@ import {
 } from '../controllers/explorer/interfaces'
 
 interface ExplorerChartProps {
+    callbackid: string | number,
     chartsettings: ChartSettings,
     chartparms: ChartParms,
     expandable: boolean,
