@@ -287,15 +287,16 @@ class ExplorerBranch extends Component {
         };
         this.switchChartCode = (location, chartCode) => {
             let chartType = constants_1.ChartCodeTypes[chartCode];
-            let portalIndex = location.cellIndex;
+            let cellIndex = location.cellIndex;
             let chartmatrixrow = this.state.chartmatrixrow;
             let budgetNode = chartmatrixrow[location.matrixlocation.column];
-            let oldChartType = budgetNode.cells[portalIndex].googleChartType;
-            budgetNode.cells[portalIndex].googleChartType = chartType;
+            let budgetCell = budgetNode.cells[cellIndex];
+            let oldChartType = budgetCell.googleChartType;
+            budgetCell.googleChartType = chartType;
             let budgetdata = this.props.budgetBranch.data;
             let props = {
                 budgetNode: budgetNode,
-                chartIndex: portalIndex,
+                chartIndex: cellIndex,
                 userselections: this.state.userselections,
                 budgetdata: budgetdata,
                 chartmatrixrow: chartmatrixrow,
@@ -307,22 +308,22 @@ class ExplorerBranch extends Component {
             };
             let chartParmsObj = getchartparms_1.default(props, callbacks);
             if (!chartParmsObj.isError) {
-                budgetNode.cells[portalIndex].chartparms = chartParmsObj.chartParms;
-                budgetNode.cells[portalIndex].chartCode =
-                    constants_1.ChartTypeCodes[budgetNode.cells[portalIndex].chartparms.chartType];
+                budgetCell.chartparms = chartParmsObj.chartParms;
+                budgetCell.chartCode =
+                    constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
             }
             else {
-                budgetNode.cells[portalIndex].googleChartType = oldChartType;
+                budgetCell.googleChartType = oldChartType;
             }
             this.refreshPresentation(chartmatrixrow);
             setTimeout(() => {
-                if (budgetNode.cells[portalIndex].chart) {
-                    budgetNode.cells[portalIndex].chart = budgetNode.cells[portalIndex].ChartObject.chart;
-                    if (budgetNode.cells[portalIndex].googleChartType == "PieChart") {
-                        budgetNode.cells[portalIndex].chartselection[0].column = null;
+                if (budgetCell.chart) {
+                    budgetCell.chart = budgetCell.ChartObject.chart;
+                    if (budgetCell.googleChartType == "PieChart") {
+                        budgetCell.chartselection[0].column = null;
                     }
                     else {
-                        budgetNode.cells[portalIndex].chartselection[0].column = 1;
+                        budgetCell.chartselection[0].column = 1;
                     }
                 }
                 updatechartselections_1.updateChartSelections(chartmatrixrow);
@@ -340,20 +341,21 @@ class ExplorerBranch extends Component {
             if (itemseriesdata.Units == 'DOLLAR') {
                 portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')';
             }
-            let portals = matrixrow.map((budgetNode, index) => {
+            let portals = matrixrow.map((budgetNode, nodeindex) => {
                 let portalcharts = [];
-                for (let chartindex in budgetNode.cells) {
+                for (let cellindex in budgetNode.cells) {
+                    let budgetCell = budgetNode.cells[cellindex];
                     let chartblocktitle = null;
-                    if ((budgetNode.cells[chartindex].nodeDataPropertyName == 'Categories')) {
+                    if ((budgetCell.nodeDataPropertyName == 'Categories')) {
                         chartblocktitle = portaltitles.Categories;
                     }
                     else {
                         chartblocktitle = portaltitles.Baseline;
                     }
-                    let chartparms = budgetNode.cells[chartindex].chartparms;
+                    let chartparms = budgetCell.chartparms;
                     let location = {
                         matrixlocation: budgetNode.matrixLocation,
-                        portalindex: Number(chartindex)
+                        cellIndex: Number(cellindex)
                     };
                     let explorer = this;
                     let chartsettings = {
@@ -362,8 +364,8 @@ class ExplorerBranch extends Component {
                                 this.switchChartCode(location, chartCode);
                             };
                         })(location),
-                        chartCode: budgetNode.cells[chartindex].chartCode,
-                        graph_id: "ChartID" + this.props.callbackid + '-' + index + '-' + chartindex,
+                        chartCode: budgetCell.chartCode,
+                        graph_id: "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
                     };
                     let portalchart = {
                         chartparms: chartparms,
@@ -384,7 +386,7 @@ class ExplorerBranch extends Component {
                     portalCharts: portalcharts,
                     portalName: portalname,
                 };
-                return React.createElement(explorerportal_1.ExplorerPortal, {key: index, budgetPortal: budgetPortal, onChangePortalChart: this.onChangeBudgetPortalChart});
+                return React.createElement(explorerportal_1.ExplorerPortal, {callbackid: nodeindex, key: nodeindex, budgetPortal: budgetPortal, onChangePortalChart: this.onChangeBudgetPortalChart});
             });
             return portals;
         };

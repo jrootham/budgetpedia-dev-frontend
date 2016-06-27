@@ -44,12 +44,12 @@ import BudgetNode from '../../local/budgetnode'
 
 interface ExploreBranchProps {
     budgetBranch: any,
-    // matrixrow: any,
-    callbacks:any,
+    callbacks:{
+        workingStatus:Function
+    },
     userselections:any,
     yearscope:any,
     yearslider:any,
-    // branchkey:any,
     callbackid: string | number
 }
 
@@ -405,15 +405,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // TODO: belongs with explorerchart controller?
     switchChartCode = (location: PortalChartLocation, chartCode) => {
         let chartType = ChartCodeTypes[chartCode]
-        let portalIndex = location.cellIndex
+        let cellIndex = location.cellIndex
         let chartmatrixrow = this.state.chartmatrixrow
         let budgetNode: BudgetNode = chartmatrixrow[location.matrixlocation.column]
-        let oldChartType = budgetNode.cells[portalIndex].googleChartType
-        budgetNode.cells[portalIndex].googleChartType = chartType
+        let budgetCell = budgetNode.cells[cellIndex]
+        let oldChartType = budgetCell.googleChartType
+        budgetCell.googleChartType = chartType
         let budgetdata = this.props.budgetBranch.data
         let props: GetChartParmsProps = {
             budgetNode: budgetNode,
-            chartIndex: portalIndex,
+            chartIndex: cellIndex,
             userselections: this.state.userselections,
             budgetdata,
             chartmatrixrow,
@@ -425,26 +426,26 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         }
         let chartParmsObj: ChartParmsObj = getChartParms(props, callbacks)
         if (!chartParmsObj.isError) {
-            budgetNode.cells[portalIndex].chartparms = chartParmsObj.chartParms
-            budgetNode.cells[portalIndex].chartCode =
-                ChartTypeCodes[budgetNode.cells[portalIndex].chartparms.chartType]
+            budgetCell.chartparms = chartParmsObj.chartParms
+            budgetCell.chartCode =
+                ChartTypeCodes[budgetCell.chartparms.chartType]
         } else {
-            budgetNode.cells[portalIndex].googleChartType = oldChartType
+            budgetCell.googleChartType = oldChartType
         }
         this.refreshPresentation(chartmatrixrow)
 
         setTimeout(() => {
-            if (budgetNode.cells[portalIndex].chart) {
+            if (budgetCell.chart) {
                 // refresh to new chart created with switch
-                budgetNode.cells[portalIndex].chart = budgetNode.cells[portalIndex].ChartObject.chart
+                budgetCell.chart = budgetCell.ChartObject.chart
                 // it turns out that "PieChart" needs column set to null
                 // for setSelection to work
-                if (budgetNode.cells[portalIndex].googleChartType == "PieChart") {
-                    budgetNode.cells[portalIndex].chartselection[0].column = null
+                if (budgetCell.googleChartType == "PieChart") {
+                    budgetCell.chartselection[0].column = null
                 } else {
                     // "ColumnChart" doesn't seem to care about column value,
                     // but we set it back to original (presumed) for consistency
-                    budgetNode.cells[portalIndex].chartselection[0].column = 1
+                    budgetCell.chartselection[0].column = 1
                 }
             }
             updateChartSelections(chartmatrixrow)
@@ -468,24 +469,24 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')'
         }
 
-        let portals = matrixrow.map((budgetNode: BudgetNode, index) => {
+        let portals = matrixrow.map((budgetNode: BudgetNode, nodeindex) => {
 
             let portalcharts = []
 
-            for (let chartindex in budgetNode.cells) {
-
+            for (let cellindex in budgetNode.cells) {
+                let budgetCell = budgetNode.cells[cellindex]
                 let chartblocktitle = null
-                if ((budgetNode.cells[chartindex].nodeDataPropertyName == 'Categories')) {
+                if ((budgetCell.nodeDataPropertyName == 'Categories')) {
                     chartblocktitle = portaltitles.Categories
                 } else {
                     chartblocktitle = portaltitles.Baseline
                 }
 
-                let chartparms = budgetNode.cells[chartindex].chartparms
+                let chartparms = budgetCell.chartparms
 
-                let location = {
+                let location: PortalChartLocation = {
                     matrixlocation: budgetNode.matrixLocation,
-                    portalindex: Number(chartindex)
+                    cellIndex: Number(cellindex)
                 }
                 let explorer = this
                 let chartsettings: ChartSettings = {
@@ -494,8 +495,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                             this.switchChartCode(location, chartCode)
                         }
                     })(location),
-                    chartCode: budgetNode.cells[chartindex].chartCode,
-                    graph_id: "ChartID" + this.props.callbackid + '-' + index + '-' + chartindex,
+                    chartCode: budgetCell.chartCode,
+                    graph_id: "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
                     // index,
                 }
 
@@ -523,7 +524,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
 
             return <ExplorerPortal
-                key = {index}
+                callbackid = {nodeindex}
+                key = {nodeindex}
                 budgetPortal = { budgetPortal }
                 onChangePortalChart = { this.onChangeBudgetPortalChart }
             />

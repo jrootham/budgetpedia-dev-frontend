@@ -19,6 +19,7 @@ import {
 import { ExplorerChart } from './explorerchart'
 
 interface ExplorePortalProps {
+    callbackid: string | number,
     budgetPortal:PortalConfig,
     onChangePortalChart:Function
 }
