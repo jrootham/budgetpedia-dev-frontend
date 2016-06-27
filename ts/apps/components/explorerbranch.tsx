@@ -140,12 +140,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms)
 
-        let drilldownindex: any
+        let cellindex: any
 
-        for (drilldownindex in budgetNode.cells) {
+        for (cellindex in budgetNode.cells) {
+            let budgetCell = budgetNode.cells[cellindex]
             let props: GetChartParmsProps = {
                 budgetNode: budgetNode,
-                chartIndex: drilldownindex,
+                chartIndex: cellindex,
                 budgetdata,
                 userselections,
                 chartmatrixrow,
@@ -159,9 +160,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
             if (!chartParmsObj.isError) {
 
-                budgetNode.cells[drilldownindex].chartparms = chartParmsObj.chartParms
-                budgetNode.cells[drilldownindex].chartCode =
-                    ChartTypeCodes[budgetNode.cells[drilldownindex].chartparms.chartType]
+                budgetCell.chartparms = chartParmsObj.chartParms
+                budgetCell.chartCode =
+                    ChartTypeCodes[budgetCell.chartparms.chartType]
 
             } else {
                 break
@@ -294,19 +295,21 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 // now set budgetNode with new data node
                 budgetNode.reset(
                     nextdataNode,
-                    viewpointdata.PortalCharts,
-                    userselections.charttype,
+                    // viewpointdata.PortalCharts,
+                    // userselections.charttype,
                     userselections.facet
                 )
                 if ( deeperdata || shallowerdata) {
                     // replace budgetNode
-                    chartmatrixrow.splice(cellptr)
                     isError = true
                     let prevBudgetNode: BudgetNode = chartmatrixrow[cellptr - 1]
+                    chartmatrixrow.splice(cellptr)
+
+                    let prevBudgetCell = prevBudgetNode.cells[0]
 
                     let context = {
-                        selection:prevBudgetNode.cells[0].chartselection,
-                        ChartObject: prevBudgetNode.cells[0].ChartObject,
+                        selection:prevBudgetCell.chartselection,
+                        ChartObject: prevBudgetCell.ChartObject,
                     }
 
                     let childprops: CreateChildNodeProps = {
@@ -314,11 +317,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                         userselections,
                         budgetdata,
                         chartmatrixrow,
-                        selectionrow: prevBudgetNode.cells[0].chartselection[0].row,
+                        selectionrow: prevBudgetCell.chartselection[0].row,
                         matrixcolumn: prevBudgetNode.matrixLocation.column,
                         portalChartIndex:0,
                         context,
-                        chart:prevBudgetNode.cells[0].chart,
+                        chart:prevBudgetCell.chart,
                     }
                     let childcallbacks: CreateChildNodeCallbacks = {
                         refreshPresentation: this.refreshPresentation,
@@ -339,12 +342,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             } else {
                 console.error('no data node')
             }
-            let nodechartindex: any = null
+            let nodecellindex: any = null
             if (!budgetNode) break
-            for (nodechartindex in budgetNode.cells) {
+            for (nodecellindex in budgetNode.cells) {
                 let props: GetChartParmsProps = {
                     budgetNode: budgetNode,
-                    chartIndex: nodechartindex,
+                    chartIndex: nodecellindex,
                     userselections,
                     budgetdata,
                     chartmatrixrow,
@@ -358,19 +361,21 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 if (chartParmsObj.isError) {
                     chartmatrixrow.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
-                        let parentconfig: BudgetNode = chartmatrixrow[cellptr - 1]
+                        let parentBudgetNode: BudgetNode = chartmatrixrow[cellptr - 1]
+                        let parentBudgetCell = parentBudgetNode.cells[nodecellindex]
                         // disable reselection
-                        parentconfig.cells[nodechartindex].chartselection = null
-                        parentconfig.cells[nodechartindex].chart = null
+                        parentBudgetCell.chartselection = null
+                        parentBudgetCell.chart = null
                     }
                     isError = true
                     break
                 } else {
                     // TODO: this should be set through reset
                     // budgetNode.facetName = facet
-                    budgetNode.cells[nodechartindex].chartparms = chartParmsObj.chartParms
-                    budgetNode.cells[nodechartindex].chartCode =
-                        ChartTypeCodes[budgetNode.cells[nodechartindex].chartparms.chartType]
+                    let budgetCell = budgetNode.cells[nodecellindex]
+                    budgetCell.chartparms = chartParmsObj.chartParms
+                    budgetCell.chartCode =
+                        ChartTypeCodes[budgetCell.chartparms.chartType]
                     if (parentBudgetNode) {
                         budgetNode.parentData.dataNode = parentBudgetNode.dataNode
                     }

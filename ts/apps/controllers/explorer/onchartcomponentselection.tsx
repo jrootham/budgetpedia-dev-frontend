@@ -170,7 +170,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     let newrange = Object.assign({}, budgetNode.timeSpecs)
     let charttype = userselections.charttype
     let chartCode = ChartTypeCodes[charttype]
-    let portalcharts = budgetdata.viewpointdata.PortalCharts[facet]
+    let portalcharts = budgetdata.viewpointdata.PortalCharts
 
     let newdatanode = getBudgetNode(budgetdata.viewpointdata, childdatapath)
     let newnodeconfigparms: BudgetNodeParms = {

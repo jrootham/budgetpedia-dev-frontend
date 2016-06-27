@@ -25,7 +25,7 @@ class BudgetNode {
 
         let portalcharts = parms.portalCharts
 
-        this.setCells(portalcharts,parms.defaultChartType)
+        this.setCells(portalcharts[parms.facetName],parms.defaultChartType)
 
         this.viewpointName = parms.viewpointName
         this.facetName = parms.facetName
@@ -38,6 +38,7 @@ class BudgetNode {
     }
 
     private setCells = (portalcharts, defaultChartType) => {
+        this._cells = []
         // // TODO: should be default for each chart...
         let defaultChartCode = ChartTypeCodes[defaultChartType]
         // build cells array
@@ -66,7 +67,7 @@ class BudgetNode {
         return availablCells
     }
 
-    private _cells: MatrixCellConfig[] = []
+    private _cells: MatrixCellConfig[]
     viewpointName: string
     facetName: string
     dataPath: string[]
@@ -82,10 +83,11 @@ class BudgetNode {
         return this.getAvailableCells()
     }
 
-    reset = (dataNode, portalCharts, defaultChartType, facet) => {
+    // reset = (dataNode, portalCharts, defaultChartType, facet) => {
+    reset = (dataNode, facet) => {
         this._dataNode = dataNode
         this.facetName = facet
-        this.setCells(portalCharts, defaultChartType)
+        // this.setCells(portalCharts[facet], defaultChartType)
     }
 
     // // TODO: TEMPORARY

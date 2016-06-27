@@ -3,6 +3,7 @@ const constants_1 = require('../apps/constants');
 class BudgetNode {
     constructor(parms) {
         this.setCells = (portalcharts, defaultChartType) => {
+            this._cells = [];
             let defaultChartCode = constants_1.ChartTypeCodes[defaultChartType];
             for (let type in portalcharts) {
                 let cell = {
@@ -28,15 +29,13 @@ class BudgetNode {
             }
             return availablCells;
         };
-        this._cells = [];
         this.parentData = null;
-        this.reset = (dataNode, portalCharts, defaultChartType, facet) => {
+        this.reset = (dataNode, facet) => {
             this._dataNode = dataNode;
             this.facetName = facet;
-            this.setCells(portalCharts, defaultChartType);
         };
         let portalcharts = parms.portalCharts;
-        this.setCells(portalcharts, parms.defaultChartType);
+        this.setCells(portalcharts[parms.facetName], parms.defaultChartType);
         this.viewpointName = parms.viewpointName;
         this.facetName = parms.facetName;
         this.dataPath = parms.dataPath;

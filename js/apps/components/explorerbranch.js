@@ -73,11 +73,12 @@ class ExplorerBranch extends Component {
                 dataNode: node,
             };
             let budgetNode = new budgetnode_1.default(budgetNodeParms);
-            let drilldownindex;
-            for (drilldownindex in budgetNode.cells) {
+            let cellindex;
+            for (cellindex in budgetNode.cells) {
+                let budgetCell = budgetNode.cells[cellindex];
                 let props = {
                     budgetNode: budgetNode,
-                    chartIndex: drilldownindex,
+                    chartIndex: cellindex,
                     budgetdata: budgetdata,
                     userselections: userselections,
                     chartmatrixrow: chartmatrixrow,
@@ -89,9 +90,9 @@ class ExplorerBranch extends Component {
                 };
                 chartParmsObj = getchartparms_1.default(props, callbacks);
                 if (!chartParmsObj.isError) {
-                    budgetNode.cells[drilldownindex].chartparms = chartParmsObj.chartParms;
-                    budgetNode.cells[drilldownindex].chartCode =
-                        constants_1.ChartTypeCodes[budgetNode.cells[drilldownindex].chartparms.chartType];
+                    budgetCell.chartparms = chartParmsObj.chartParms;
+                    budgetCell.chartCode =
+                        constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
                 }
                 else {
                     break;
@@ -189,25 +190,26 @@ class ExplorerBranch extends Component {
                 if (nextdataNode) {
                     let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
                     let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2));
-                    budgetNode.reset(nextdataNode, viewpointdata.PortalCharts, userselections.charttype, userselections.facet);
+                    budgetNode.reset(nextdataNode, userselections.facet);
                     if (deeperdata || shallowerdata) {
-                        chartmatrixrow.splice(cellptr);
                         isError = true;
                         let prevBudgetNode = chartmatrixrow[cellptr - 1];
+                        chartmatrixrow.splice(cellptr);
+                        let prevBudgetCell = prevBudgetNode.cells[0];
                         let context = {
-                            selection: prevBudgetNode.cells[0].chartselection,
-                            ChartObject: prevBudgetNode.cells[0].ChartObject,
+                            selection: prevBudgetCell.chartselection,
+                            ChartObject: prevBudgetCell.ChartObject,
                         };
                         let childprops = {
                             budgetNode: prevBudgetNode,
                             userselections: userselections,
                             budgetdata: budgetdata,
                             chartmatrixrow: chartmatrixrow,
-                            selectionrow: prevBudgetNode.cells[0].chartselection[0].row,
+                            selectionrow: prevBudgetCell.chartselection[0].row,
                             matrixcolumn: prevBudgetNode.matrixLocation.column,
                             portalChartIndex: 0,
                             context: context,
-                            chart: prevBudgetNode.cells[0].chart,
+                            chart: prevBudgetCell.chart,
                         };
                         let childcallbacks = {
                             refreshPresentation: this.refreshPresentation,
@@ -230,13 +232,13 @@ class ExplorerBranch extends Component {
                 else {
                     console.error('no data node');
                 }
-                let nodechartindex = null;
+                let nodecellindex = null;
                 if (!budgetNode)
                     break;
-                for (nodechartindex in budgetNode.cells) {
+                for (nodecellindex in budgetNode.cells) {
                     let props = {
                         budgetNode: budgetNode,
-                        chartIndex: nodechartindex,
+                        chartIndex: nodecellindex,
                         userselections: userselections,
                         budgetdata: budgetdata,
                         chartmatrixrow: chartmatrixrow,
@@ -250,17 +252,19 @@ class ExplorerBranch extends Component {
                     if (chartParmsObj.isError) {
                         chartmatrixrow.splice(cellptr);
                         if (cellptr > 0) {
-                            let parentconfig = chartmatrixrow[cellptr - 1];
-                            parentconfig.cells[nodechartindex].chartselection = null;
-                            parentconfig.cells[nodechartindex].chart = null;
+                            let parentBudgetNode = chartmatrixrow[cellptr - 1];
+                            let parentBudgetCell = parentBudgetNode.cells[nodecellindex];
+                            parentBudgetCell.chartselection = null;
+                            parentBudgetCell.chart = null;
                         }
                         isError = true;
                         break;
                     }
                     else {
-                        budgetNode.cells[nodechartindex].chartparms = chartParmsObj.chartParms;
-                        budgetNode.cells[nodechartindex].chartCode =
-                            constants_1.ChartTypeCodes[budgetNode.cells[nodechartindex].chartparms.chartType];
+                        let budgetCell = budgetNode.cells[nodecellindex];
+                        budgetCell.chartparms = chartParmsObj.chartParms;
+                        budgetCell.chartCode =
+                            constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
                         if (parentBudgetNode) {
                             budgetNode.parentData.dataNode = parentBudgetNode.dataNode;
                         }
