@@ -389,7 +389,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         })
     }
 
-    onChangeBudgetPortalChart = () => {
+    onChangePortalTab = () => {
         setTimeout(() => {
             updateChartSelections(this.state.chartmatrixrow)
         })
@@ -525,7 +525,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 callbackid = {nodeindex}
                 key = {nodeindex}
                 portalNode = { portalNode }
-                onChangePortalChart = { this.onChangeBudgetPortalChart }
+                onChangePortalTab = { this.onChangePortalTab }
             />
         })
 

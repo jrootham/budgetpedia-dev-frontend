@@ -275,7 +275,7 @@ class ExplorerBranch extends Component {
                 updatechartselections_1.updateChartSelections(chartmatrixrow);
             });
         };
-        this.onChangeBudgetPortalChart = () => {
+        this.onChangePortalTab = () => {
             setTimeout(() => {
                 updatechartselections_1.updateChartSelections(this.state.chartmatrixrow);
             });
@@ -382,7 +382,7 @@ class ExplorerBranch extends Component {
                     budgetCells: budgetcells,
                     portalName: portalName,
                 };
-                return React.createElement(explorerportal_1.ExplorerPortal, {callbackid: nodeindex, key: nodeindex, portalNode: portalNode, onChangePortalChart: this.onChangeBudgetPortalChart});
+                return React.createElement(explorerportal_1.ExplorerPortal, {callbackid: nodeindex, key: nodeindex, portalNode: portalNode, onChangePortalTab: this.onChangePortalTab});
             });
             return portals;
         };

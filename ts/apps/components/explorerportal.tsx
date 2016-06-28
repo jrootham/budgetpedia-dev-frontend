@@ -21,13 +21,13 @@ import { ExplorerChart } from './explorerchart'
 interface ExplorePortalProps {
     callbackid: string | number,
     portalNode:PortalConfig,
-    onChangePortalChart:Function
+    onChangePortalTab:Function
 }
 
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     onChangeTab = () => {
-        this.props.onChangePortalChart() 
+        this.props.onChangePortalTab() 
     }
 
     componentWillMount = () => {
