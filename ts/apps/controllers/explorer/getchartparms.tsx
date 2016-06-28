@@ -25,7 +25,9 @@ import {
 
 import { getBudgetNode } from './getbudgetnode'
 import { ChartTypeCodes } from '../../constants'
-import { applyChartComponentSelection,
+import { 
+    // applyChartComponentSelection,
+    onChartComponentSelection,
     ChartSelectionContext,
     OnChartComponentSelectionProps,
     OnChartComponentSelectionCallbacks,
@@ -253,8 +255,8 @@ let getChartParms = (
                         onPortalCreation,
                         workingStatus,
                     }
-
-                    applyChartComponentSelection(props, callbacks)
+                    onChartComponentSelection(nodeIndex)(cellIndex)(props,callbacks)
+                    // applyChartComponentSelection(props, callbacks)
                 }
             })(configlocation.matrixlocation.column, configlocation.cellIndex)
         }

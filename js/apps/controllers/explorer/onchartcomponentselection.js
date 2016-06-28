@@ -4,7 +4,7 @@ const budgetnode_1 = require('../../../local/budgetnode');
 const constants_1 = require('../../constants');
 const getchartparms_1 = require('./getchartparms');
 const getbudgetnode_1 = require('./getbudgetnode');
-exports.applyChartComponentSelection = (props, callbacks) => {
+let applyChartComponentSelection = (props, callbacks) => {
     let context = props.context;
     let userselections = props.userselections;
     let budgetdata = props.budgetdata;
@@ -150,5 +150,7 @@ exports.createChildNode = (props, callbacks) => {
     workingStatus(false);
 };
 exports.onChartComponentSelection = (nodeIndex) => (cellIndex) => (props, callbacks) => {
-    exports.applyChartComponentSelection(props, callbacks);
+    props.context.nodeIndex = nodeIndex;
+    props.context.cellIndex = cellIndex;
+    applyChartComponentSelection(props, callbacks);
 };

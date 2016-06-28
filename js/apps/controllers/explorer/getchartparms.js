@@ -166,7 +166,7 @@ let getChartParms = (props, callbacks) => {
                         onPortalCreation: onPortalCreation,
                         workingStatus: workingStatus,
                     };
-                    onchartcomponentselection_1.applyChartComponentSelection(props, callbacks);
+                    onchartcomponentselection_1.onChartComponentSelection(nodeIndex)(cellIndex)(props, callbacks);
                 };
             })(configlocation.matrixlocation.column, configlocation.cellIndex)
         }

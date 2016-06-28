@@ -73,7 +73,7 @@ export interface OnChartComponentSelectionCallbacks {
 // chartconfig, not the chartconfig itself
 // on selection, makes a child with the same portalCharts offset
 // TODO: create chile which appropriately sets up correct set of child charts
-export let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
+let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     callbacks: OnChartComponentSelectionCallbacks) => {
 
     let context = props.context
@@ -275,6 +275,8 @@ export let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChil
 }
 
 export const onChartComponentSelection = (nodeIndex) => (cellIndex) => (props, callbacks) => {
+    props.context.nodeIndex = nodeIndex
+    props.context.cellIndex = cellIndex
     applyChartComponentSelection(props, callbacks)
 }
 
