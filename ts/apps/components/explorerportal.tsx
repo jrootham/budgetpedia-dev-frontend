@@ -33,20 +33,20 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     getChartTabs = () => {
 
         // generate array of chart tabs
-        let portalcharts = this.props.portalNode.budgetCells
-        let cellTabs = portalcharts.map(
-            (portalCell:ChartConfig,cellindex) => {
+        let budgetCells = this.props.portalNode.budgetCells
+        let cellTabs = budgetCells.map(
+            (portalCell:ChartConfig,cellIndex) => {
                 //!Hack! if more than one chart the first must be expandable
-            let expandable = ((portalcharts.length > 1) && (cellindex == 0))
+            let expandable = ((budgetCells.length > 1) && (cellIndex == 0))
             let { chartParms, cellCallbacks, cellSettings, cellTitle } = portalCell
             // curry callback
             cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(this.props.callbackid)
             return <Tab style={{fontSize:"12px"}} 
                 label={ cellTitle } 
-                value={ cellindex }
-                key={ cellindex }>
+                value={ cellIndex }
+                key={ cellIndex }>
                 <ExplorerChart 
-                    callbackid = { cellindex }
+                    callbackid = { cellIndex }
                     cellSettings = { cellSettings }
                     cellCallbacks = { cellCallbacks }
                     chartParms = { chartParms }
