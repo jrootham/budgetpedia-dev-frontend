@@ -244,12 +244,12 @@ let getChartParms = (
                     let props: OnChartComponentSelectionProps = {
                         context,
                     }
-                    let callbacks: OnChartComponentSelectionCallbacks = {
-                        updateChartSelections,
-                        refreshPresentation,
-                        onPortalCreation,
-                        workingStatus,
-                    }
+                    // let callbacks: OnChartComponentSelectionCallbacks = {
+                    //     updateChartSelections,
+                    //     refreshPresentation,
+                    //     onPortalCreation,
+                    //     workingStatus,
+                    // }
                     onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)(nodeIndex)(cellIndex)(props)
                 }
             })(configlocation.matrixlocation.column, configlocation.cellIndex)
