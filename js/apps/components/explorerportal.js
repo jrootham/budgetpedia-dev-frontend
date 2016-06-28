@@ -9,17 +9,13 @@ class ExplorerPortal extends Component {
         this.onChangeTab = () => {
             this.props.onChangePortalTab();
         };
-        this.componentWillMount = () => {
-        };
         this.getChartTabs = () => {
             let portalcharts = this.props.portalNode.budgetCells;
             let cellTabs = portalcharts.map((portalCell, cellindex) => {
                 let expandable = ((portalcharts.length > 1) && (cellindex == 0));
-                let chartParms = portalCell.chartParms;
-                let chartCallbacks = portalCell.cellCallbacks;
-                chartCallbacks.onSwitchChartCode = chartCallbacks.onSwitchChartCode(this.props.callbackid);
-                let chartSettings = portalCell.cellSettings;
-                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: portalCell.cellTitle, value: cellindex, key: cellindex}, React.createElement(explorerchart_1.ExplorerChart, {callbackid: cellindex, cellSettings: chartSettings, cellCallbacks: chartCallbacks, chartParms: chartParms, expandable: expandable}));
+                let { chartParms, cellCallbacks, cellSettings, cellTitle } = portalCell;
+                cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(this.props.callbackid);
+                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellindex, key: cellindex}, React.createElement(explorerchart_1.ExplorerChart, {callbackid: cellindex, cellSettings: cellSettings, cellCallbacks: cellCallbacks, chartParms: chartParms, expandable: expandable}));
             });
             return cellTabs;
         };

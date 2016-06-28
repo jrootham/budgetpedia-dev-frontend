@@ -30,10 +30,6 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         this.props.onChangePortalTab() 
     }
 
-    componentWillMount = () => {
-        // console.log('budgetPortal',this.props.budgetPortal)
-    }
-
     getChartTabs = () => {
 
         // generate array of chart tabs
@@ -42,21 +38,19 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             (portalCell:ChartConfig,cellindex) => {
                 //!Hack! if more than one chart the first must be expandable
             let expandable = ((portalcharts.length > 1) && (cellindex == 0))
-            let chartParms = portalCell.chartParms
-            let chartCallbacks = portalCell.cellCallbacks
+            let { chartParms, cellCallbacks, cellSettings, cellTitle } = portalCell
             // curry callback
-            chartCallbacks.onSwitchChartCode = chartCallbacks.onSwitchChartCode(this.props.callbackid)
-            let chartSettings =portalCell.cellSettings
+            cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(this.props.callbackid)
             return <Tab style={{fontSize:"12px"}} 
-                label={portalCell.cellTitle} 
-                value={cellindex}
-                key={cellindex}>
+                label={ cellTitle } 
+                value={ cellindex }
+                key={ cellindex }>
                 <ExplorerChart 
-                    callbackid = {cellindex}
-                    cellSettings = {chartSettings}
-                    cellCallbacks = {chartCallbacks}
-                    chartParms = {chartParms}
-                    expandable = {expandable}
+                    callbackid = { cellindex }
+                    cellSettings = { cellSettings }
+                    cellCallbacks = { cellCallbacks }
+                    chartParms = { chartParms }
+                    expandable = { expandable }
                 />
             </Tab>
         })
