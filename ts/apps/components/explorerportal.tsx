@@ -42,18 +42,20 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             (portalCell:ChartConfig,cellindex) => {
                 //!Hack! if more than one chart the first must be expandable
             let expandable = ((portalcharts.length > 1) && (cellindex == 0))
-            let chartparms = portalCell.chartParms
-            let chartcallbacks = portalCell.cellCallbacks
-            let chartsettings =portalCell.cellSettings
+            let chartParms = portalCell.chartParms
+            let chartCallbacks = portalCell.cellCallbacks
+            // curry callback
+            chartCallbacks.onSwitchChartCode = chartCallbacks.onSwitchChartCode(this.props.callbackid)
+            let chartSettings =portalCell.cellSettings
             return <Tab style={{fontSize:"12px"}} 
                 label={portalCell.cellTitle} 
                 value={cellindex}
                 key={cellindex}>
                 <ExplorerChart 
                     callbackid = {cellindex}
-                    cellSettings = {chartsettings}
-                    cellCallbacks = {chartcallbacks}
-                    chartParms = {chartparms}
+                    cellSettings = {chartSettings}
+                    cellCallbacks = {chartCallbacks}
+                    chartParms = {chartParms}
                     expandable = {expandable}
                 />
             </Tab>

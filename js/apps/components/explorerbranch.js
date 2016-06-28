@@ -354,11 +354,11 @@ class ExplorerBranch extends Component {
                     let chartParms = budgetCell.chartparms;
                     let explorer = this;
                     let cellCallbacks = {
-                        onSwitchChartCode: ((nodeIndex) => {
+                        onSwitchChartCode: (nodeIndex) => {
                             return (cellIndex, chartCode) => {
-                                this.switchChartCode(nodeIndex, cellIndex, chartCode);
+                                explorer.switchChartCode(nodeIndex, cellIndex, chartCode);
                             };
-                        })(nodeindex),
+                        },
                     };
                     let cellSettings = {
                         chartCode: budgetCell.chartCode,
