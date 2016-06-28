@@ -9,50 +9,50 @@ class ExplorerChart extends Component {
     constructor(...args) {
         super(...args);
         this.onChangeChartCode = (chartCode) => {
-            this.props.cellCallbacks.onSwitchChartCode(this.props.callbackid, chartCode);
+            let { cellCallbacks, callbackid } = this.props;
+            cellCallbacks.onSwitchChartCode(callbackid, chartCode);
         };
     }
     render() {
-        let chartparms = this.props.chartParms;
-        if (!this.props.expandable) {
-            chartparms.options['backgroundColor'] = '#E4E4E4';
+        let { chartParms, expandable, cellSettings } = this.props;
+        if (!expandable) {
+            chartParms.options['backgroundColor'] = '#E4E4E4';
         }
-        let chartsettings = this.props.cellSettings;
         return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {
-            backgroundColor: (chartsettings.chartCode == "ColumnChart")
+            backgroundColor: (cellSettings.chartCode == "ColumnChart")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%"
         }, onTouchTap: e => {
             this.onChangeChartCode('ColumnChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "insert_chart")), React.createElement(IconButton_1.default, {tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
-            backgroundColor: (chartsettings.chartCode == "DonutChart")
+            backgroundColor: (cellSettings.chartCode == "DonutChart")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%"
         }, onTouchTap: e => {
             this.onChangeChartCode('DonutChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "donut_small")), React.createElement(IconButton_1.default, {tooltip: "Timeline", tooltipPosition: "top-center", style: {
-            backgroundColor: (this.props.cellSettings.chartCode == "TimeLine")
+            backgroundColor: (cellSettings.chartCode == "TimeLine")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%"
         }, disabled: true, onTouchTap: e => {
             this.onChangeChartCode('Timeline');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "timeline")), React.createElement(IconButton_1.default, {tooltip: "Stacked chart", tooltipPosition: "top-center", style: {
-            backgroundColor: (this.props.cellSettings.chartCode == "StackedArea")
+            backgroundColor: (cellSettings.chartCode == "StackedArea")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%"
         }, disabled: true, onTouchTap: e => {
             this.onChangeChartCode('StackedArea');
-        }}, React.createElement(SvgIcon_1.default, {style: { height: "24px", width: "24px" }}, React.createElement("path", {d: "M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"}), React.createElement("path", {d: "M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"})))), React.createElement("div", {style: { position: "absolute", top: 0, right: "72px", zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Information", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "info_outline"))), React.createElement("div", {style: { position: "absolute", top: 0, right: "36px", zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Shared stories", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "share"))), React.createElement("div", {style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Calls to action", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "announcement"))), React.createElement(Chart, {chartType: chartparms.chartType, options: chartparms.options, chartEvents: chartparms.events, rows: chartparms.rows, columns: chartparms.columns, graph_id: chartsettings.graph_id}), React.createElement("div", {style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list"))), React.createElement("div", {style: { position: "absolute", bottom: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note"))), React.createElement("div", {style: {
+        }}, React.createElement(SvgIcon_1.default, {style: { height: "24px", width: "24px" }}, React.createElement("path", {d: "M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"}), React.createElement("path", {d: "M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"})))), React.createElement("div", {style: { position: "absolute", top: 0, right: "72px", zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Information", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "info_outline"))), React.createElement("div", {style: { position: "absolute", top: 0, right: "36px", zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Shared stories", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "share"))), React.createElement("div", {style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Calls to action", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "announcement"))), React.createElement(Chart, {chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: cellSettings.graph_id}), React.createElement("div", {style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list"))), React.createElement("div", {style: { position: "absolute", bottom: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note"))), React.createElement("div", {style: {
             position: "absolute",
             bottom: 0,
             left: "40px",
             fontSize: "9px",
             fontStyle: "italic",
-        }}, this.props.expandable ? 'drill down' : 'no drill down'));
+        }}, expandable ? 'drill down' : 'no drill down'));
     }
 }
 exports.ExplorerChart = ExplorerChart;

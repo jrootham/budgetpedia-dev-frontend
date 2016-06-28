@@ -28,16 +28,16 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
 
 
     onChangeChartCode = (chartCode) => {
-        this.props.cellCallbacks.onSwitchChartCode(this.props.callbackid,chartCode)
+        let {cellCallbacks, callbackid} = this.props
+        cellCallbacks.onSwitchChartCode(callbackid,chartCode)
     }
 
     render() {
 
-        let chartparms = this.props.chartParms
-        if (!this.props.expandable) {
-            chartparms.options['backgroundColor'] = '#E4E4E4'
+        let { chartParms, expandable, cellSettings} = this.props
+        if (!expandable) {
+            chartParms.options['backgroundColor'] = '#E4E4E4'
         }
-        let chartsettings = this.props.cellSettings
 
         return <div>
             <div style={{ padding: "3px" }}>
@@ -46,7 +46,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (chartsettings.chartCode == "ColumnChart")
+                            backgroundColor: (cellSettings.chartCode == "ColumnChart")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
                             borderRadius: "50%"
@@ -62,7 +62,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (chartsettings.chartCode == "DonutChart")
+                            backgroundColor: (cellSettings.chartCode == "DonutChart")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
                             borderRadius: "50%"
@@ -78,7 +78,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (this.props.cellSettings.chartCode == "TimeLine")
+                            backgroundColor: (cellSettings.chartCode == "TimeLine")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
                             borderRadius: "50%"
@@ -95,7 +95,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (this.props.cellSettings.chartCode == "StackedArea")
+                            backgroundColor: (cellSettings.chartCode == "StackedArea")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
                             borderRadius: "50%"
@@ -127,13 +127,13 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     disabled><FontIcon className="material-icons">announcement</FontIcon></IconButton>
             </div>
             <Chart
-                chartType = { chartparms.chartType }
-                options = { chartparms.options }
-                chartEvents = { chartparms.events }
-                rows = { chartparms.rows }
-                columns = { chartparms.columns }
+                chartType = { chartParms.chartType }
+                options = { chartParms.options }
+                chartEvents = { chartParms.events }
+                rows = { chartParms.rows }
+                columns = { chartParms.columns }
                 // used to create and cache html element id attribute
-                graph_id = { chartsettings.graph_id }
+                graph_id = { cellSettings.graph_id }
                 />
             <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}>
                 <IconButton disabled><FontIcon className="material-icons">view_list</FontIcon></IconButton>
@@ -148,7 +148,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                 fontSize:"9px",
                 fontStyle:"italic",
             }}>
-               {this.props.expandable?'drill down':'no drill down'}
+               {expandable?'drill down':'no drill down'}
             </div>
         </div>
     }
