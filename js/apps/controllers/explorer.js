@@ -8,6 +8,7 @@ const IconButton_1 = require('material-ui/IconButton');
 const Dialog_1 = require('material-ui/Dialog');
 const explorerbranch_1 = require('../components/explorerbranch');
 const constants_1 = require('../constants');
+const updatebranchchartselections_1 = require('./explorer/updatebranchchartselections');
 const Actions = require('../../actions/actions');
 let Explorer = class extends Component {
     constructor(props) {
@@ -38,6 +39,11 @@ let Explorer = class extends Component {
                 }, 250);
             }
         };
+        this.updateIndexChartSelections = branchIndex => {
+            let budgetBranch = this.state.budgetBranches[branchIndex];
+            updatebranchchartselections_1.updateBranchChartSelections(budgetBranch.nodes);
+        };
+        this.updateChartSelections = branchIndex => () => this.updateIndexChartSelections(branchIndex);
     }
     render() {
         let explorer = this;
@@ -58,7 +64,10 @@ let Explorer = class extends Component {
             facet: "BudgetExpenses",
             charttype: "ColumnChart",
             inflationadjusted: true,
-        }, yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] }, yearscope: "one", callbacks: { workingStatus: explorer.workingStatus }})));
+        }, yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] }, yearscope: "one", callbacks: {
+            workingStatus: explorer.workingStatus,
+            updateChartSelections: explorer.updateChartSelections,
+        }})));
         return React.createElement("div", null, dialogbox, drilldownsegment);
     }
 }

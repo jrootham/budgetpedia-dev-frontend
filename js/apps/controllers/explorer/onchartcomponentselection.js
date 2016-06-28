@@ -1,7 +1,6 @@
 "use strict";
 var format = require('format-number');
 const budgetnode_1 = require('../../../local/budgetnode');
-const updatechartselections_1 = require('./updatechartselections');
 const constants_1 = require('../../constants');
 const getchartparms_1 = require('./getchartparms');
 const getbudgetnode_1 = require('./getbudgetnode');
@@ -13,6 +12,7 @@ let onChartComponentSelection = (props, callbacks) => {
     let refreshPresentation = callbacks.refreshPresentation;
     let onPortalCreation = callbacks.onPortalCreation;
     let workingStatus = callbacks.workingStatus;
+    let updateChartSelections = callbacks.updateChartSelections;
     let selection = context.selection[0];
     let selectionrow;
     if (selection) {
@@ -36,7 +36,7 @@ let onChartComponentSelection = (props, callbacks) => {
     if (!selection) {
         delete budgetCell.chartselection;
         delete budgetCell.chart;
-        updatechartselections_1.updateChartSelections(chartmatrixrow);
+        updateChartSelections();
         return;
     }
     let childprops = {
@@ -51,6 +51,7 @@ let onChartComponentSelection = (props, callbacks) => {
         chart: chart,
     };
     let childcallbacks = {
+        updateChartSelections: updateChartSelections,
         workingStatus: workingStatus,
         refreshPresentation: refreshPresentation,
         onPortalCreation: onPortalCreation,
@@ -61,11 +62,11 @@ exports.onChartComponentSelection = onChartComponentSelection;
 let createChildNode = (props, callbacks) => {
     let { budgetNode, userselections, budgetdata, chartmatrixrow, selectionrow, matrixcolumn, portalChartIndex, context, chart, } = props;
     let viewpoint = budgetNode.viewpointName, facet = budgetNode.facetName;
-    let { workingStatus, refreshPresentation, onPortalCreation, } = callbacks;
+    let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, } = callbacks;
     let childdatapath = budgetNode.dataPath.slice();
     let node = budgetNode.dataNode;
     if (!node.Components) {
-        updatechartselections_1.updateChartSelections(chartmatrixrow);
+        updateChartSelections();
         return;
     }
     let components = node.Components;
@@ -79,12 +80,12 @@ let createChildNode = (props, callbacks) => {
     if (code)
         childdatapath.push(code);
     else {
-        updatechartselections_1.updateChartSelections(chartmatrixrow);
+        updateChartSelections();
         return;
     }
     let newnode = node.Components[code];
     if (!newnode.Components && !newnode.Categories) {
-        updatechartselections_1.updateChartSelections(chartmatrixrow);
+        updateChartSelections();
         return;
     }
     workingStatus(true);
@@ -119,6 +120,7 @@ let createChildNode = (props, callbacks) => {
             chartmatrixrow: chartmatrixrow,
         };
         let callbacks = {
+            updateChartSelections: updateChartSelections,
             refreshPresentation: refreshPresentation,
             onPortalCreation: onPortalCreation,
             workingStatus: workingStatus,
@@ -134,7 +136,7 @@ let createChildNode = (props, callbacks) => {
             constants_1.ChartTypeCodes[budgetCell.googleChartType];
     }
     if (isError) {
-        updatechartselections_1.updateChartSelections(chartmatrixrow);
+        updateChartSelections();
         workingStatus(false);
         return;
     }
@@ -145,7 +147,7 @@ let createChildNode = (props, callbacks) => {
     budgetCell.chartselection = context.selection;
     budgetCell.chart = chart;
     budgetCell.ChartObject = context.ChartObject;
-    updatechartselections_1.updateChartSelections(chartmatrixrow);
+    updateChartSelections();
     onPortalCreation();
     workingStatus(false);
 };

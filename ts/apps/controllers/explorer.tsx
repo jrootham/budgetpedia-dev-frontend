@@ -42,7 +42,7 @@ import Dialog from 'material-ui/Dialog'
 import ExplorerBranch from '../components/explorerbranch'
 import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
 
-import { updateChartSelections } from './explorer/updatechartselections'
+import { updateBranchChartSelections } from './explorer/updatebranchchartselections'
 import * as Actions from '../../actions/actions'
 
 import {
@@ -108,6 +108,13 @@ let Explorer = class extends Component< any, any > {
         }
 
     }
+
+    updateIndexChartSelections = branchIndex => {
+        let budgetBranch = this.state.budgetBranches[branchIndex]
+        updateBranchChartSelections(budgetBranch.nodes)
+    }
+
+    updateChartSelections = branchIndex => () => this.updateIndexChartSelections(branchIndex)
 
     // ===================================================================
     // ---------------------------[ RENDER ]------------------------------ 
@@ -315,7 +322,10 @@ let Explorer = class extends Component< any, any > {
                  yearslider = {{ singlevalue: [2015], doublevalue: [2005, 2015] }}
                  yearscope = {"one"}
                  // branchkey = {ChartSeries.DrillDown}
-                 callbacks = {{ workingStatus: explorer.workingStatus }}
+                 callbacks = {{ 
+                     workingStatus: explorer.workingStatus,
+                     updateChartSelections: explorer.updateChartSelections,
+                  }}
              />
             </CardText>
 

@@ -38,7 +38,6 @@ import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
 import databaseapi , { DatasetConfig, TimeSpecs, Viewpoint } from '../../local/databaseapi'
 import getChartParms from '../controllers/explorer/getchartparms'
-import { updateChartSelections } from '../controllers/explorer/updatechartselections'
 import { createChildNode } from '../controllers/explorer/onchartcomponentselection'
 import * as Actions from '../../actions/actions'
 import BudgetNode from '../../local/budgetnode'
@@ -46,7 +45,8 @@ import BudgetNode from '../../local/budgetnode'
 interface ExploreBranchProps {
     budgetBranch: any,
     callbacks:{
-        workingStatus:Function
+        workingStatus:Function,
+        updateChartSelections:Function,
     },
     userselections:any,
     yearscope:any,
@@ -72,6 +72,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         snackbar:{open:false,message:'empty'}
     }
 
+
     handleSnackbarRequestClose = () => {
         this.setState({
             snackbar: {
@@ -79,8 +80,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 message: 'empty',
             }
         })
+        let branch = this
         setTimeout(() => {
-            updateChartSelections(this.state.chartmatrixrow)
+            branch.props.callbacks.updateChartSelections()
         })
     }
 
@@ -91,6 +93,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // initialize once - create root drilldown and compare series
     componentDidMount = () => {
 
+        let { callbacks, callbackid } = this.props
+        callbacks.updateChartSelections = callbacks.updateChartSelections(callbackid)
         this.initializeChartSeries()
 
     }
@@ -151,6 +155,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 chartmatrixrow,
             }
             let callbacks: GetChartParmsCallbacks = {
+                updateChartSelections: this.props.callbacks.updateChartSelections,
                 refreshPresentation: this.refreshPresentation,
                 onPortalCreation: this.onPortalCreation,
                 workingStatus: this.props.callbacks.workingStatus,
@@ -323,6 +328,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                         chart:prevBudgetCell.chart,
                     }
                     let childcallbacks: CreateChildNodeCallbacks = {
+                        updateChartSelections: this.props.callbacks.updateChartSelections,
                         refreshPresentation: this.refreshPresentation,
                         onPortalCreation: this.onPortalCreation,
                         workingStatus: this.props.callbacks.workingStatus,
@@ -352,6 +358,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     chartmatrixrow,
                 }
                 let callbacks: GetChartParmsCallbacks = {
+                    updateChartSelections: this.props.callbacks.updateChartSelections,
                     refreshPresentation: this.refreshPresentation,
                     onPortalCreation: this.onPortalCreation,
                     workingStatus: this.props.callbacks.workingStatus,
@@ -382,14 +389,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         }
         this.refreshPresentation()
+        let branch = this
         setTimeout(() => {
-            updateChartSelections(chartmatrixrow)
+            branch.props.callbacks.updateChartSelections()
         })
     }
 
     onChangePortalTab = () => {
+        let branch = this
         setTimeout(() => {
-            updateChartSelections(this.state.chartmatrixrow)
+            branch.props.callbacks.updateChartSelections()
         })
     }
 
@@ -419,6 +428,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             chartmatrixrow,
         }
         let callbacks: GetChartParmsCallbacks = {
+            updateChartSelections: this.props.callbacks.updateChartSelections,
             refreshPresentation: this.refreshPresentation,
             onPortalCreation: this.onPortalCreation,
             workingStatus: this.props.callbacks.workingStatus,
@@ -432,7 +442,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             budgetCell.googleChartType = oldChartType
         }
         this.refreshPresentation()
-
+        let branch = this
         setTimeout(() => {
             if (budgetCell.chart) {
                 // refresh to new chart created with switch
@@ -447,7 +457,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     budgetCell.chartselection[0].column = 1
                 }
             }
-            updateChartSelections(chartmatrixrow)
+            branch.props.callbacks.updateChartSelections()
         })
     }
 
@@ -470,7 +480,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let portals = matrixrow.map((budgetNode: BudgetNode, nodeindex) => {
 
-            let budgetcells = []
+            let budgetCells = []
 
             for (let cellindex in budgetNode.cells) {
                 let budgetCell = budgetNode.cells[cellindex]
@@ -502,7 +512,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     cellTitle: "By " + chartblocktitle,
                 }
 
-                budgetcells.push(portalchart)
+                budgetCells.push(portalchart)
 
             }
             let portalName = null
@@ -515,10 +525,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             portalName += ' ' + portalseriesname
 
             let portalNode: PortalConfig = {
-                budgetCells: budgetcells,
+                budgetCells: budgetCells,
                 portalName: portalName,
             }
 
+            // TODO: pass budgetNode instead of budgetCells?
             return <ExplorerPortal
                 callbackid = {nodeindex}
                 key = {nodeindex}

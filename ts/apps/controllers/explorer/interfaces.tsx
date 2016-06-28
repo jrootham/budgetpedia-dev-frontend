@@ -67,6 +67,7 @@ interface GetChartParmsCallbacks {
     refreshPresentation: Function,
     onPortalCreation: Function, 
     workingStatus: Function,
+    updateChartSelections: Function,
 }
 
 interface OnChartComponentSelectionProps {
@@ -76,6 +77,7 @@ interface OnChartComponentSelectionProps {
     chartmatrixrow: any,
 }
 interface OnChartComponentSelectionCallbacks {
+    updateChartSelections: Function,
     refreshPresentation: Function,
     onPortalCreation: Function,
     workingStatus: Function,
@@ -145,6 +147,7 @@ interface CreateChildNodeProps {
     chart: any
 }
 interface CreateChildNodeCallbacks {
+    updateChartSelections: Function,
     workingStatus: Function,
     refreshPresentation: Function,
     onPortalCreation: Function,

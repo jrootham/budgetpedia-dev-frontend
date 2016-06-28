@@ -12,6 +12,7 @@ let getChartParms = (props, callbacks) => {
     let refreshPresentation = callbacks.refreshPresentation;
     let onPortalCreation = callbacks.onPortalCreation;
     let workingStatus = callbacks.workingStatus;
+    let updateChartSelections = callbacks.updateChartSelections;
     let budgetCell = budgetNode.cells[chartIndex];
     let nodeDataPropertyName = budgetCell.nodeDataPropertyName;
     let sortedlist;
@@ -155,6 +156,7 @@ let getChartParms = (props, callbacks) => {
                         chartmatrixrow: chartmatrixrow
                     };
                     let callbacks = {
+                        updateChartSelections: updateChartSelections,
                         refreshPresentation: refreshPresentation,
                         onPortalCreation: onPortalCreation,
                         workingStatus: workingStatus,

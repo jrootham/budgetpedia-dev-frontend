@@ -27,7 +27,6 @@ import {
 } from './interfaces'
 
 import { getBudgetNode } from './getbudgetnode'
-import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
 import { onChartComponentSelection } from './onchartcomponentselection'
 import { DatasetConfig } from '../../../local/databaseapi'
@@ -48,6 +47,7 @@ let getChartParms = (
     let refreshPresentation = callbacks.refreshPresentation
     let onPortalCreation = callbacks.onPortalCreation
     let workingStatus = callbacks.workingStatus
+    let updateChartSelections = callbacks.updateChartSelections
 
     let budgetCell: MatrixCellConfig = budgetNode.cells[chartIndex]
 
@@ -242,6 +242,7 @@ let getChartParms = (
                         chartmatrixrow
                     }
                     let callbacks: OnChartComponentSelectionCallbacks = {
+                        updateChartSelections,
                         refreshPresentation,
                         onPortalCreation,
                         workingStatus,

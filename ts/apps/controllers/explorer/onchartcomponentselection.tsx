@@ -19,7 +19,6 @@ import {
 } from './interfaces'
 
 import BudgetNode, {BudgetNodeParms} from '../../../local/budgetnode'
-import { updateChartSelections } from './updatechartselections'
 import { ChartTypeCodes } from '../../constants'
 import getChartParms from './getchartparms'
 import { getBudgetNode } from './getbudgetnode'
@@ -44,6 +43,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     let refreshPresentation = callbacks.refreshPresentation
     let onPortalCreation = callbacks.onPortalCreation
     let workingStatus = callbacks.workingStatus
+    let updateChartSelections = callbacks.updateChartSelections
 
     // unpack context
     let selection = context.selection[0]
@@ -88,7 +88,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     if (!selection) { // deselected
         delete budgetCell.chartselection
         delete budgetCell.chart
-        updateChartSelections(chartmatrixrow)
+        updateChartSelections()
         return
     }
     let childprops: CreateChildNodeProps = {
@@ -103,6 +103,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
         chart,
     }
     let childcallbacks: CreateChildNodeCallbacks = {
+        updateChartSelections,
         workingStatus, 
         refreshPresentation, 
         onPortalCreation,
@@ -131,6 +132,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         workingStatus,
         refreshPresentation,
         onPortalCreation,
+        updateChartSelections,
     } = callbacks
 
     // ----------------------------------------------------
@@ -141,7 +143,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     let node = budgetNode.dataNode
 
     if (!node.Components) {
-        updateChartSelections(chartmatrixrow)
+        updateChartSelections()
         return
     }
 
@@ -157,13 +159,13 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     if (code)
         childdatapath.push(code)
     else {
-        updateChartSelections(chartmatrixrow)
+        updateChartSelections()
         return
     }
 
     let newnode = node.Components[code]
     if (!newnode.Components && !newnode.Categories) {
-        updateChartSelections(chartmatrixrow)
+        updateChartSelections()
         return
     }
     workingStatus(true)
@@ -201,6 +203,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
             chartmatrixrow,
         }
         let callbacks: GetChartParmsCallbacks = {
+            updateChartSelections,
             refreshPresentation,
             onPortalCreation,
             workingStatus,
@@ -217,7 +220,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     }
 
     if (isError) {
-        updateChartSelections(chartmatrixrow)
+        updateChartSelections()
         workingStatus(false)
         return
     }
@@ -232,7 +235,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     budgetCell.chart = chart
     budgetCell.ChartObject = context.ChartObject
 
-    updateChartSelections(chartmatrixrow)
+    updateChartSelections()
     onPortalCreation()
     workingStatus(false)
 }

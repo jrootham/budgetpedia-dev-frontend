@@ -4,7 +4,7 @@
 import BudgetNode from '../../../local/budgetnode'
 
 // update the visual cue for selection that led to user array of graphs
-let updateChartSelections = (chartmatrixrow) => {
+let updateBranchChartSelections = (chartmatrixrow) => {
     let node: BudgetNode = null
     for (node of chartmatrixrow) {
         for (let chartindex in node.cells ) {
@@ -18,4 +18,4 @@ let updateChartSelections = (chartmatrixrow) => {
     }
 }
 
-export { updateChartSelections }
+export { updateBranchChartSelections }

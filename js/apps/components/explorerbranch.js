@@ -11,7 +11,6 @@ const Snackbar_1 = require('material-ui/Snackbar');
 const constants_1 = require('../constants');
 const databaseapi_1 = require('../../local/databaseapi');
 const getchartparms_1 = require('../controllers/explorer/getchartparms');
-const updatechartselections_1 = require('../controllers/explorer/updatechartselections');
 const onchartcomponentselection_1 = require('../controllers/explorer/onchartcomponentselection');
 const budgetnode_1 = require('../../local/budgetnode');
 class ExplorerBranch extends Component {
@@ -31,12 +30,15 @@ class ExplorerBranch extends Component {
                     message: 'empty',
                 }
             });
+            let branch = this;
             setTimeout(() => {
-                updatechartselections_1.updateChartSelections(this.state.chartmatrixrow);
+                branch.props.callbacks.updateChartSelections();
             });
         };
         this.branchScrollBlock = null;
         this.componentDidMount = () => {
+            let { callbacks, callbackid } = this.props;
+            callbacks.updateChartSelections = callbacks.updateChartSelections(callbackid);
             this.initializeChartSeries();
         };
         this.initializeChartSeries = () => {
@@ -83,6 +85,7 @@ class ExplorerBranch extends Component {
                     chartmatrixrow: chartmatrixrow,
                 };
                 let callbacks = {
+                    updateChartSelections: this.props.callbacks.updateChartSelections,
                     refreshPresentation: this.refreshPresentation,
                     onPortalCreation: this.onPortalCreation,
                     workingStatus: this.props.callbacks.workingStatus,
@@ -210,6 +213,7 @@ class ExplorerBranch extends Component {
                             chart: prevBudgetCell.chart,
                         };
                         let childcallbacks = {
+                            updateChartSelections: this.props.callbacks.updateChartSelections,
                             refreshPresentation: this.refreshPresentation,
                             onPortalCreation: this.onPortalCreation,
                             workingStatus: this.props.callbacks.workingStatus,
@@ -242,6 +246,7 @@ class ExplorerBranch extends Component {
                         chartmatrixrow: chartmatrixrow,
                     };
                     let callbacks = {
+                        updateChartSelections: this.props.callbacks.updateChartSelections,
                         refreshPresentation: this.refreshPresentation,
                         onPortalCreation: this.onPortalCreation,
                         workingStatus: this.props.callbacks.workingStatus,
@@ -270,13 +275,15 @@ class ExplorerBranch extends Component {
                 }
             }
             this.refreshPresentation();
+            let branch = this;
             setTimeout(() => {
-                updatechartselections_1.updateChartSelections(chartmatrixrow);
+                branch.props.callbacks.updateChartSelections();
             });
         };
         this.onChangePortalTab = () => {
+            let branch = this;
             setTimeout(() => {
-                updatechartselections_1.updateChartSelections(this.state.chartmatrixrow);
+                branch.props.callbacks.updateChartSelections();
             });
         };
         this.refreshPresentation = () => {
@@ -300,6 +307,7 @@ class ExplorerBranch extends Component {
                 chartmatrixrow: chartmatrixrow,
             };
             let callbacks = {
+                updateChartSelections: this.props.callbacks.updateChartSelections,
                 refreshPresentation: this.refreshPresentation,
                 onPortalCreation: this.onPortalCreation,
                 workingStatus: this.props.callbacks.workingStatus,
@@ -314,6 +322,7 @@ class ExplorerBranch extends Component {
                 budgetCell.googleChartType = oldChartType;
             }
             this.refreshPresentation();
+            let branch = this;
             setTimeout(() => {
                 if (budgetCell.chart) {
                     budgetCell.chart = budgetCell.ChartObject.chart;
@@ -324,7 +333,7 @@ class ExplorerBranch extends Component {
                         budgetCell.chartselection[0].column = 1;
                     }
                 }
-                updatechartselections_1.updateChartSelections(chartmatrixrow);
+                branch.props.callbacks.updateChartSelections();
             });
         };
         this.getPortals = (matrixrow) => {
@@ -340,7 +349,7 @@ class ExplorerBranch extends Component {
                 portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')';
             }
             let portals = matrixrow.map((budgetNode, nodeindex) => {
-                let budgetcells = [];
+                let budgetCells = [];
                 for (let cellindex in budgetNode.cells) {
                     let budgetCell = budgetNode.cells[cellindex];
                     let chartblocktitle = null;
@@ -367,7 +376,7 @@ class ExplorerBranch extends Component {
                         cellSettings: cellSettings,
                         cellTitle: "By " + chartblocktitle,
                     };
-                    budgetcells.push(portalchart);
+                    budgetCells.push(portalchart);
                 }
                 let portalName = null;
                 if (budgetNode.parentData) {
@@ -378,7 +387,7 @@ class ExplorerBranch extends Component {
                 }
                 portalName += ' ' + portalseriesname;
                 let portalNode = {
-                    budgetCells: budgetcells,
+                    budgetCells: budgetCells,
                     portalName: portalName,
                 };
                 return React.createElement(explorerportal_1.ExplorerPortal, {callbackid: nodeindex, key: nodeindex, portalNode: portalNode, onChangePortalTab: this.onChangePortalTab});
