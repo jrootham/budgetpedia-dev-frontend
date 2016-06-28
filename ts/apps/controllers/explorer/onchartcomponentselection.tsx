@@ -83,7 +83,7 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     chartmatrixrow.splice(matrixcolumn + 1) // remove subsequent charts
 
     // trigger update to avoid google charts use of cached versions
-    refreshPresentation(chartmatrixrow)
+    refreshPresentation()
 
     if (!selection) { // deselected
         delete budgetCell.chartselection
@@ -224,7 +224,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     let newmatrixcolumn = matrixcolumn + 1
     chartmatrixrow[newmatrixcolumn] = newnodeconfig
 
-    refreshPresentation(chartmatrixrow)
+    refreshPresentation()
 
     let budgetCell = budgetNode.cells[portalChartIndex]
 

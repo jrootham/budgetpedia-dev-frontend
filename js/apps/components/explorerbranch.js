@@ -102,7 +102,7 @@ class ExplorerBranch extends Component {
                 matrixlocation = budgetNode.matrixLocation;
                 chartmatrixrow[matrixlocation.column] = budgetNode;
             }
-            this.refreshPresentation(chartmatrixrow);
+            this.refreshPresentation();
         };
         this.handleDialogOpen = () => {
             this.setState({
@@ -270,7 +270,7 @@ class ExplorerBranch extends Component {
                     }
                 }
             }
-            this.refreshPresentation(chartmatrixrow);
+            this.refreshPresentation();
             setTimeout(() => {
                 updatechartselections_1.updateChartSelections(chartmatrixrow);
             });
@@ -280,9 +280,9 @@ class ExplorerBranch extends Component {
                 updatechartselections_1.updateChartSelections(this.state.chartmatrixrow);
             });
         };
-        this.refreshPresentation = chartmatrixrow => {
+        this.refreshPresentation = () => {
             this.setState({
-                chartmatrixrow: chartmatrixrow,
+                chartmatrixrow: this.state.chartmatrixrow,
             });
         };
         this.switchChartCode = (nodeIndex, cellIndex, chartCode) => {
@@ -314,7 +314,7 @@ class ExplorerBranch extends Component {
             else {
                 budgetCell.googleChartType = oldChartType;
             }
-            this.refreshPresentation(chartmatrixrow);
+            this.refreshPresentation();
             setTimeout(() => {
                 if (budgetCell.chart) {
                     budgetCell.chart = budgetCell.ChartObject.chart;

@@ -32,7 +32,7 @@ let onChartComponentSelection = (props, callbacks) => {
     }
     let viewpoint = budgetNode.viewpointName, facet = budgetNode.facetName;
     chartmatrixrow.splice(matrixcolumn + 1);
-    refreshPresentation(chartmatrixrow);
+    refreshPresentation();
     if (!selection) {
         delete budgetCell.chartselection;
         delete budgetCell.chart;
@@ -140,7 +140,7 @@ let createChildNode = (props, callbacks) => {
     }
     let newmatrixcolumn = matrixcolumn + 1;
     chartmatrixrow[newmatrixcolumn] = newnodeconfig;
-    refreshPresentation(chartmatrixrow);
+    refreshPresentation();
     let budgetCell = budgetNode.cells[portalChartIndex];
     budgetCell.chartselection = context.selection;
     budgetCell.chart = chart;

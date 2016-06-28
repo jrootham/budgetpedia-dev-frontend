@@ -176,7 +176,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         // -------------[ SAVE INITIALIZATION ]----------------
 
-        this.refreshPresentation(chartmatrixrow)
+        this.refreshPresentation()
 
     }
 
@@ -383,7 +383,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 }
             }
         }
-        this.refreshPresentation(chartmatrixrow)
+        this.refreshPresentation()
         setTimeout(() => {
             updateChartSelections(chartmatrixrow)
         })
@@ -395,9 +395,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         })
     }
 
-    refreshPresentation = chartmatrixrow => {
+    refreshPresentation = () => {
         this.setState({
-            chartmatrixrow,
+            chartmatrixrow:this.state.chartmatrixrow,
         })
     }
 
@@ -433,7 +433,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         } else {
             budgetCell.googleChartType = oldChartType
         }
-        this.refreshPresentation(chartmatrixrow)
+        this.refreshPresentation()
 
         setTimeout(() => {
             if (budgetCell.chart) {
