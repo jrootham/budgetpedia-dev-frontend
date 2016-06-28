@@ -27,8 +27,8 @@ export interface ChartSelectionCell {
 // returned when user clicks on a chart component 
 // for drill-down or other action
 export interface ChartSelectionContext {
-    nodeIndex:number,
-    cellIndex: number,
+    nodeIndex?:number,
+    cellIndex?: number,
     ChartObject: any,
     selection: ChartSelectionCell[],
     err: any,
@@ -54,9 +54,9 @@ export interface CreateChildNodeCallbacks {
 
 export interface OnChartComponentSelectionProps {
     context: ChartSelectionContext,
-    userselections: any,
-    budgetdata:any,
-    chartmatrixrow: any,
+    userselections?: any,
+    budgetdata?:any,
+    chartmatrixrow?: any,
 }
 export interface OnChartComponentSelectionCallbacks {
     updateChartSelections: Function,
@@ -274,9 +274,13 @@ export let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChil
     workingStatus(false)
 }
 
-export const onChartComponentSelection = (nodeIndex) => (cellIndex) => (props, callbacks) => {
+export const onChartComponentSelection = (userselections) => (budgetdata) => (chartmatrixrow) => 
+    (callbacks) => (nodeIndex) => (cellIndex) => (props) => {
     props.context.nodeIndex = nodeIndex
     props.context.cellIndex = cellIndex
+    props.userselections = userselections
+    props.budgetdata = budgetdata
+    props.chartmatrixrow = chartmatrixrow
     applyChartComponentSelection(props, callbacks)
 }
 

@@ -149,16 +149,11 @@ let getChartParms = (props, callbacks) => {
                     let chart = Chart.chart;
                     let selection = chart.getSelection();
                     let context = {
-                        nodeIndex: nodeIndex,
-                        cellIndex: cellIndex,
                         ChartObject: Chart,
                         selection: selection,
                         err: err };
                     let props = {
                         context: context,
-                        userselections: userselections,
-                        budgetdata: budgetdata,
-                        chartmatrixrow: chartmatrixrow
                     };
                     let callbacks = {
                         updateChartSelections: updateChartSelections,
@@ -166,7 +161,7 @@ let getChartParms = (props, callbacks) => {
                         onPortalCreation: onPortalCreation,
                         workingStatus: workingStatus,
                     };
-                    onchartcomponentselection_1.onChartComponentSelection(nodeIndex)(cellIndex)(props, callbacks);
+                    onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)(nodeIndex)(cellIndex)(props);
                 };
             })(configlocation.matrixlocation.column, configlocation.cellIndex)
         }

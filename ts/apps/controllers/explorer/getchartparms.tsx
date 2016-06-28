@@ -237,17 +237,12 @@ let getChartParms = (
                     let chart = Chart.chart
                     let selection = chart.getSelection()
                     let context: ChartSelectionContext = { 
-                        nodeIndex, 
-                        cellIndex,
                         ChartObject:Chart, 
                         selection, 
                         err }
 
                     let props: OnChartComponentSelectionProps = {
                         context,
-                        userselections,
-                        budgetdata,
-                        chartmatrixrow
                     }
                     let callbacks: OnChartComponentSelectionCallbacks = {
                         updateChartSelections,
@@ -255,8 +250,7 @@ let getChartParms = (
                         onPortalCreation,
                         workingStatus,
                     }
-                    onChartComponentSelection(nodeIndex)(cellIndex)(props,callbacks)
-                    // applyChartComponentSelection(props, callbacks)
+                    onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)(nodeIndex)(cellIndex)(props)
                 }
             })(configlocation.matrixlocation.column, configlocation.cellIndex)
         }

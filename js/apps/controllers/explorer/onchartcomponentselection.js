@@ -149,8 +149,11 @@ exports.createChildNode = (props, callbacks) => {
     onPortalCreation();
     workingStatus(false);
 };
-exports.onChartComponentSelection = (nodeIndex) => (cellIndex) => (props, callbacks) => {
+exports.onChartComponentSelection = (userselections) => (budgetdata) => (chartmatrixrow) => (callbacks) => (nodeIndex) => (cellIndex) => (props) => {
     props.context.nodeIndex = nodeIndex;
     props.context.cellIndex = cellIndex;
+    props.userselections = userselections;
+    props.budgetdata = budgetdata;
+    props.chartmatrixrow = chartmatrixrow;
     applyChartComponentSelection(props, callbacks);
 };
