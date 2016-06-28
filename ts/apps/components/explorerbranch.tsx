@@ -404,11 +404,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // ============================================================
     // -------------------[ RENDER METHODS ]---------------------
     // TODO: belongs with explorerchart controller?
-    switchChartCode = (location: PortalChartLocation, chartCode) => {
+    switchChartCode = (nodeIndex,cellIndex, chartCode) => {
         let chartType = ChartCodeTypes[chartCode]
-        let cellIndex = location.cellIndex
+        // let cellIndex = location.cellIndex
         let chartmatrixrow = this.state.chartmatrixrow
-        let budgetNode: BudgetNode = chartmatrixrow[location.matrixlocation.column]
+        let budgetNode: BudgetNode = chartmatrixrow[nodeIndex]
         let budgetCell = budgetNode.cells[cellIndex]
         let oldChartType = budgetCell.googleChartType
         budgetCell.googleChartType = chartType
@@ -485,17 +485,17 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
                 let chartParms = budgetCell.chartparms
 
-                let location: PortalChartLocation = {
-                    matrixlocation: budgetNode.matrixLocation,
-                    cellIndex: Number(cellindex)
-                }
+                // let location: PortalChartLocation = {
+                //     matrixlocation: budgetNode.matrixLocation,
+                //     cellIndex: Number(cellindex)
+                // }
                 let explorer = this
                 let cellCallbacks: CellCallbacks = {
-                    onSwitchChartCode: ((location) => {
-                        return (chartCode) => {
-                            this.switchChartCode(location, chartCode)
+                    onSwitchChartCode: ((nodeIndex) => {
+                        return (cellIndex,chartCode) => {
+                            explorer.switchChartCode(nodeIndex, cellIndex, chartCode)
                         }
-                    })(location),
+                    })(nodeindex),
                 }
                 let cellSettings: CellSettings = {
                     chartCode: budgetCell.chartCode,

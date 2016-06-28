@@ -285,11 +285,10 @@ class ExplorerBranch extends Component {
                 chartmatrixrow: chartmatrixrow,
             });
         };
-        this.switchChartCode = (location, chartCode) => {
+        this.switchChartCode = (nodeIndex, cellIndex, chartCode) => {
             let chartType = constants_1.ChartCodeTypes[chartCode];
-            let cellIndex = location.cellIndex;
             let chartmatrixrow = this.state.chartmatrixrow;
-            let budgetNode = chartmatrixrow[location.matrixlocation.column];
+            let budgetNode = chartmatrixrow[nodeIndex];
             let budgetCell = budgetNode.cells[cellIndex];
             let oldChartType = budgetCell.googleChartType;
             budgetCell.googleChartType = chartType;
@@ -353,17 +352,13 @@ class ExplorerBranch extends Component {
                         chartblocktitle = portaltitles.Baseline;
                     }
                     let chartParms = budgetCell.chartparms;
-                    let location = {
-                        matrixlocation: budgetNode.matrixLocation,
-                        cellIndex: Number(cellindex)
-                    };
                     let explorer = this;
                     let cellCallbacks = {
-                        onSwitchChartCode: ((location) => {
-                            return (chartCode) => {
-                                this.switchChartCode(location, chartCode);
+                        onSwitchChartCode: ((nodeIndex) => {
+                            return (cellIndex, chartCode) => {
+                                this.switchChartCode(nodeIndex, cellIndex, chartCode);
                             };
-                        })(location),
+                        })(nodeindex),
                     };
                     let cellSettings = {
                         chartCode: budgetCell.chartCode,

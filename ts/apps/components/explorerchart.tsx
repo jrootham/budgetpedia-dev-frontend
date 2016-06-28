@@ -28,7 +28,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
 
 
     onChangeChartCode = (chartCode) => {
-        this.props.cellCallbacks.onSwitchChartCode(chartCode)
+        this.props.cellCallbacks.onSwitchChartCode(this.props.callbackid,chartCode)
     }
 
     render() {
