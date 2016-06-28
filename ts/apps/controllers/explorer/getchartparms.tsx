@@ -28,7 +28,7 @@ import {
 
 import { getBudgetNode } from './getbudgetnode'
 import { ChartTypeCodes } from '../../constants'
-import { onChartComponentSelection } from './onchartcomponentselection'
+import { applyChartComponentSelection } from './onchartcomponentselection'
 import { DatasetConfig } from '../../../local/databaseapi'
 import BudgetNode from '../../../local/budgetnode'
 
@@ -248,7 +248,7 @@ let getChartParms = (
                         workingStatus,
                     }
 
-                    onChartComponentSelection(props, callbacks)
+                    applyChartComponentSelection(props, callbacks)
                 }
             })(configlocation)
         }

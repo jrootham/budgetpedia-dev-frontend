@@ -32,7 +32,7 @@ import { DatasetConfig } from '../../../local/databaseapi'
 // chartconfig, not the chartconfig itself
 // on selection, makes a child with the same portalCharts offset
 // TODO: create chile which appropriately sets up correct set of child charts
-let onChartComponentSelection = (props: OnChartComponentSelectionProps,
+let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     callbacks: OnChartComponentSelectionCallbacks) => {
 
     let context = props.context
@@ -63,9 +63,6 @@ let onChartComponentSelection = (props: OnChartComponentSelectionProps,
     // unpack location
     // let matrixrow = selectmatrixlocation.row,
     let matrixcolumn = selectmatrixlocation.column
-
-    // acquire serieslist from matrix
-    // let serieslist = chartmatrixrow
 
     let budgetNode: BudgetNode = chartmatrixrow[matrixcolumn]
 
@@ -240,4 +237,4 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     workingStatus(false)
 }
 
-export { onChartComponentSelection, createChildNode }
+export { applyChartComponentSelection, createChildNode }
