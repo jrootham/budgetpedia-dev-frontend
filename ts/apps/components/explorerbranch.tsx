@@ -485,16 +485,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
                 let chartParms = budgetCell.chartparms
 
-                // let location: PortalChartLocation = {
-                //     matrixlocation: budgetNode.matrixLocation,
-                //     cellIndex: Number(cellindex)
-                // }
                 let explorer = this
                 let cellCallbacks: CellCallbacks = {
-                    onSwitchChartCode: (nodeIndex) => {
-                        return (cellIndex,chartCode) => {
+                    onSwitchChartCode: (nodeIndex) => (cellIndex, chartCode) => {
                             explorer.switchChartCode(nodeIndex, cellIndex, chartCode)
-                        }
                     },
                 }
                 let cellSettings: CellSettings = {
