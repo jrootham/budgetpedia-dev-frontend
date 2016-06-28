@@ -358,21 +358,21 @@ class ExplorerBranch extends Component {
                         cellIndex: Number(cellindex)
                     };
                     let explorer = this;
-                    let chartCallbacks = {
+                    let cellCallbacks = {
                         onSwitchChartCode: ((location) => {
                             return (chartCode) => {
                                 this.switchChartCode(location, chartCode);
                             };
                         })(location),
                     };
-                    let chartSettings = {
+                    let cellSettings = {
                         chartCode: budgetCell.chartCode,
                         graph_id: "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
                     };
                     let portalchart = {
                         chartParms: chartParms,
-                        chartCallbacks: chartCallbacks,
-                        chartSettings: chartSettings,
+                        cellCallbacks: cellCallbacks,
+                        cellSettings: cellSettings,
                         cellTitle: "By " + chartblocktitle,
                     };
                     budgetcells.push(portalchart);

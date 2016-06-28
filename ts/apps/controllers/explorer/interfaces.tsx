@@ -23,20 +23,20 @@ interface ChartParms {
 }
 
 // settings for individual portal chart
-interface ChartSettings {
+interface CellSettings {
     chartCode: string,
     graph_id: string,
 }
 
-interface ChartCallbacks {
+interface CellCallbacks {
     onSwitchChartCode: Function,
 }
 
 // configuration for ExplorerChart
 interface ChartConfig {
     chartParms: ChartParms,
-    chartSettings: ChartSettings,
-    chartCallbacks: ChartCallbacks,
+    cellSettings: CellSettings,
+    cellCallbacks: CellCallbacks,
     cellTitle: string,
 }
 
@@ -160,8 +160,8 @@ export {
     ChartParms, 
     ChartParmsObj, 
     ChartSelectionContext,
-    ChartSettings,
-    ChartCallbacks,
+    CellSettings,
+    CellCallbacks,
     PortalConfig,
     ChartConfig,
     SortedComponentItem,

@@ -12,14 +12,14 @@ import FontIcon from 'material-ui/FontIcon'
 import SvgIcon from 'material-ui/SvgIcon'
 import {
     ChartParms,
-    ChartSettings,
-    ChartCallbacks,
+    CellSettings,
+    CellCallbacks,
 } from '../controllers/explorer/interfaces'
 
 interface ExplorerChartProps {
     callbackid: string | number,
-    cellSettings: ChartSettings,
-    cellCallbacks: ChartCallbacks,
+    cellSettings: CellSettings,
+    cellCallbacks: CellCallbacks,
     chartParms: ChartParms,
     expandable: boolean,
 }
