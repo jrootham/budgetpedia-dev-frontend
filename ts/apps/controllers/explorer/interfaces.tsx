@@ -1,6 +1,7 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // interfaces.tsx
 import BudgetNode from '../../../local/budgetnode'
+import { ChartSelectionCell } from './onchartcomponentselection'
 // return by getChartParms; returns isError with ChartParms
 interface ChartParmsObj {
     isError: Boolean,
@@ -70,18 +71,6 @@ interface GetChartParmsCallbacks {
     updateChartSelections: Function,
 }
 
-interface OnChartComponentSelectionProps {
-    context: ChartSelectionContext,
-    userselections: any,
-    budgetdata:any,
-    chartmatrixrow: any,
-}
-interface OnChartComponentSelectionCallbacks {
-    updateChartSelections: Function,
-    refreshPresentation: Function,
-    onPortalCreation: Function,
-    workingStatus: Function,
-}
 // =====================================================
 // ---------------[ NODE CONFIGURATION ]--------------
 
@@ -121,38 +110,6 @@ interface YearScope {
 // ---------------[ CHART SELECTION OUTPUT ]--------------
 
 
-interface ChartSelectionCell {
-    row:number,
-    column:number
-}
-
-// returned when user clicks on a chart component 
-// for drill-down or other action
-interface ChartSelectionContext {
-    portalchartlocation: PortalChartLocation,
-    ChartObject: any,
-    selection: ChartSelectionCell[],
-    err: any,
-}
-
-interface CreateChildNodeProps {
-    budgetNode: BudgetNode,
-    userselections: any,
-    budgetdata:any,
-    chartmatrixrow: any,
-    selectionrow: any,
-    matrixcolumn: any,
-    portalChartIndex: number,
-    context: any,
-    chart: any
-}
-interface CreateChildNodeCallbacks {
-    updateChartSelections: Function,
-    workingStatus: Function,
-    refreshPresentation: Function,
-    onPortalCreation: Function,
-}
-
 // =====================================================
 // ---------------[ EXPORT ]--------------
 
@@ -162,7 +119,6 @@ export {
     PortalChartLocation, 
     ChartParms, 
     ChartParmsObj, 
-    ChartSelectionContext,
     CellSettings,
     CellCallbacks,
     PortalConfig,
@@ -170,8 +126,4 @@ export {
     SortedComponentItem,
     GetChartParmsProps,
     GetChartParmsCallbacks,
-    OnChartComponentSelectionProps,
-    OnChartComponentSelectionCallbacks,
-    CreateChildNodeProps,
-    CreateChildNodeCallbacks,
 }

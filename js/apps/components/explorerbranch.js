@@ -207,8 +207,8 @@ class ExplorerBranch extends Component {
                             budgetdata: budgetdata,
                             chartmatrixrow: chartmatrixrow,
                             selectionrow: prevBudgetCell.chartselection[0].row,
-                            matrixcolumn: prevBudgetNode.matrixLocation.column,
-                            portalChartIndex: 0,
+                            nodeIndex: prevBudgetNode.matrixLocation.column,
+                            cellIndex: 0,
                             context: context,
                             chart: prevBudgetCell.chart,
                         };

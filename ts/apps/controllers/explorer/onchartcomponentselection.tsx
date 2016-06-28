@@ -6,16 +6,11 @@ var format = require('format-number')
 import {
     ChartParms,
     ChartParmsObj,
-    ChartSelectionContext,
     PortalChartLocation,
     SortedComponentItem,
     MatrixCellConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
-    OnChartComponentSelectionProps,
-    OnChartComponentSelectionCallbacks,
-    CreateChildNodeProps,
-    CreateChildNodeCallbacks,
 } from './interfaces'
 
 import BudgetNode, {BudgetNodeParms} from '../../../local/budgetnode'
@@ -23,6 +18,52 @@ import { ChartTypeCodes } from '../../constants'
 import getChartParms from './getchartparms'
 import { getBudgetNode } from './getbudgetnode'
 import { DatasetConfig } from '../../../local/databaseapi'
+
+export interface ChartSelectionCell {
+    row:number,
+    column:number
+}
+
+// returned when user clicks on a chart component 
+// for drill-down or other action
+export interface ChartSelectionContext {
+    nodeIndex:number,
+    cellIndex: number,
+    ChartObject: any,
+    selection: ChartSelectionCell[],
+    err: any,
+}
+
+export interface CreateChildNodeProps {
+    budgetNode: BudgetNode,
+    userselections: any,
+    budgetdata:any,
+    chartmatrixrow: any,
+    selectionrow: any,
+    nodeIndex: number,
+    cellIndex: number,
+    context: any,
+    chart: any
+}
+export interface CreateChildNodeCallbacks {
+    updateChartSelections: Function,
+    workingStatus: Function,
+    refreshPresentation: Function,
+    onPortalCreation: Function,
+}
+
+export interface OnChartComponentSelectionProps {
+    context: ChartSelectionContext,
+    userselections: any,
+    budgetdata:any,
+    chartmatrixrow: any,
+}
+export interface OnChartComponentSelectionCallbacks {
+    updateChartSelections: Function,
+    refreshPresentation: Function,
+    onPortalCreation: Function,
+    workingStatus: Function,
+}
 
 // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
 
@@ -32,7 +73,7 @@ import { DatasetConfig } from '../../../local/databaseapi'
 // chartconfig, not the chartconfig itself
 // on selection, makes a child with the same portalCharts offset
 // TODO: create chile which appropriately sets up correct set of child charts
-let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
+export let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     callbacks: OnChartComponentSelectionCallbacks) => {
 
     let context = props.context
@@ -58,16 +99,12 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     let chart = context.ChartObject.chart
 
     // unpack chartconfig
-    let selectmatrixlocation = context.portalchartlocation.matrixlocation
+    let nodeIndex = context.nodeIndex
 
-    // unpack location
-    // let matrixrow = selectmatrixlocation.row,
-    let matrixcolumn = selectmatrixlocation.column
+    let budgetNode: BudgetNode = chartmatrixrow[nodeIndex]
 
-    let budgetNode: BudgetNode = chartmatrixrow[matrixcolumn]
-
-    let portalChartIndex = context.portalchartlocation.cellIndex
-    let budgetCell = budgetNode.cells[portalChartIndex]
+    let cellIndex = context.cellIndex
+    let budgetCell = budgetNode.cells[cellIndex]
     if (budgetCell.nodeDataPropertyName == 'Categories') {
         return
     }
@@ -77,7 +114,7 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
         facet = budgetNode.facetName
 
     // TODO: abandon here if the next one exists and is the same
-    chartmatrixrow.splice(matrixcolumn + 1) // remove subsequent charts
+    chartmatrixrow.splice(nodeIndex + 1) // remove subsequent charts
 
     // trigger update to avoid google charts use of cached versions
     refreshPresentation()
@@ -94,8 +131,8 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
         budgetdata,
         chartmatrixrow, 
         selectionrow,
-        matrixcolumn,
-        portalChartIndex, 
+        nodeIndex,
+        cellIndex, 
         context, 
         chart,
     }
@@ -108,7 +145,7 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     createChildNode( childprops, childcallbacks )
 }
 
-let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCallbacks) => {
+export let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCallbacks) => {
 
     let {
         budgetNode,
@@ -116,8 +153,8 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         budgetdata,
         chartmatrixrow,
         selectionrow,
-        matrixcolumn,
-        portalChartIndex,
+        nodeIndex,
+        cellIndex,
         context,
         chart,
     } = props
@@ -179,7 +216,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         facetName:facet,
         dataPath: childdatapath,
         matrixLocation: {
-            column: matrixcolumn + 1
+            column: nodeIndex + 1
         },
         parentData: parentdata,
         timeSpecs: newrange,
@@ -221,12 +258,12 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
         workingStatus(false)
         return
     }
-    let newmatrixcolumn = matrixcolumn + 1
+    let newmatrixcolumn = nodeIndex + 1
     chartmatrixrow[newmatrixcolumn] = newnodeconfig
 
     refreshPresentation()
 
-    let budgetCell = budgetNode.cells[portalChartIndex]
+    let budgetCell = budgetNode.cells[cellIndex]
 
     budgetCell.chartselection = context.selection
     budgetCell.chart = chart
@@ -237,4 +274,7 @@ let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCa
     workingStatus(false)
 }
 
-export { applyChartComponentSelection, createChildNode }
+export const onChartComponentSelection = (nodeIndex) => (cellIndex) => (props, callbacks) => {
+    applyChartComponentSelection(props, callbacks)
+}
+

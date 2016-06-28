@@ -4,7 +4,7 @@ const budgetnode_1 = require('../../../local/budgetnode');
 const constants_1 = require('../../constants');
 const getchartparms_1 = require('./getchartparms');
 const getbudgetnode_1 = require('./getbudgetnode');
-let applyChartComponentSelection = (props, callbacks) => {
+exports.applyChartComponentSelection = (props, callbacks) => {
     let context = props.context;
     let userselections = props.userselections;
     let budgetdata = props.budgetdata;
@@ -22,16 +22,15 @@ let applyChartComponentSelection = (props, callbacks) => {
         selectionrow = null;
     }
     let chart = context.ChartObject.chart;
-    let selectmatrixlocation = context.portalchartlocation.matrixlocation;
-    let matrixcolumn = selectmatrixlocation.column;
-    let budgetNode = chartmatrixrow[matrixcolumn];
-    let portalChartIndex = context.portalchartlocation.cellIndex;
-    let budgetCell = budgetNode.cells[portalChartIndex];
+    let nodeIndex = context.nodeIndex;
+    let budgetNode = chartmatrixrow[nodeIndex];
+    let cellIndex = context.cellIndex;
+    let budgetCell = budgetNode.cells[cellIndex];
     if (budgetCell.nodeDataPropertyName == 'Categories') {
         return;
     }
     let viewpoint = budgetNode.viewpointName, facet = budgetNode.facetName;
-    chartmatrixrow.splice(matrixcolumn + 1);
+    chartmatrixrow.splice(nodeIndex + 1);
     refreshPresentation();
     if (!selection) {
         delete budgetCell.chartselection;
@@ -45,8 +44,8 @@ let applyChartComponentSelection = (props, callbacks) => {
         budgetdata: budgetdata,
         chartmatrixrow: chartmatrixrow,
         selectionrow: selectionrow,
-        matrixcolumn: matrixcolumn,
-        portalChartIndex: portalChartIndex,
+        nodeIndex: nodeIndex,
+        cellIndex: cellIndex,
         context: context,
         chart: chart,
     };
@@ -56,11 +55,10 @@ let applyChartComponentSelection = (props, callbacks) => {
         refreshPresentation: refreshPresentation,
         onPortalCreation: onPortalCreation,
     };
-    createChildNode(childprops, childcallbacks);
+    exports.createChildNode(childprops, childcallbacks);
 };
-exports.applyChartComponentSelection = applyChartComponentSelection;
-let createChildNode = (props, callbacks) => {
-    let { budgetNode, userselections, budgetdata, chartmatrixrow, selectionrow, matrixcolumn, portalChartIndex, context, chart, } = props;
+exports.createChildNode = (props, callbacks) => {
+    let { budgetNode, userselections, budgetdata, chartmatrixrow, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
     let viewpoint = budgetNode.viewpointName, facet = budgetNode.facetName;
     let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, } = callbacks;
     let childdatapath = budgetNode.dataPath.slice();
@@ -101,7 +99,7 @@ let createChildNode = (props, callbacks) => {
         facetName: facet,
         dataPath: childdatapath,
         matrixLocation: {
-            column: matrixcolumn + 1
+            column: nodeIndex + 1
         },
         parentData: parentdata,
         timeSpecs: newrange,
@@ -140,10 +138,10 @@ let createChildNode = (props, callbacks) => {
         workingStatus(false);
         return;
     }
-    let newmatrixcolumn = matrixcolumn + 1;
+    let newmatrixcolumn = nodeIndex + 1;
     chartmatrixrow[newmatrixcolumn] = newnodeconfig;
     refreshPresentation();
-    let budgetCell = budgetNode.cells[portalChartIndex];
+    let budgetCell = budgetNode.cells[cellIndex];
     budgetCell.chartselection = context.selection;
     budgetCell.chart = chart;
     budgetCell.ChartObject = context.ChartObject;
@@ -151,4 +149,6 @@ let createChildNode = (props, callbacks) => {
     onPortalCreation();
     workingStatus(false);
 };
-exports.createChildNode = createChildNode;
+exports.onChartComponentSelection = (nodeIndex) => (cellIndex) => (props, callbacks) => {
+    exports.applyChartComponentSelection(props, callbacks);
+};

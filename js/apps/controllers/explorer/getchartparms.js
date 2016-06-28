@@ -144,11 +144,16 @@ let getChartParms = (props, callbacks) => {
     let events = [
         {
             eventName: 'select',
-            callback: ((configLocation) => {
+            callback: ((nodeIndex, cellIndex) => {
                 return (Chart, err) => {
                     let chart = Chart.chart;
                     let selection = chart.getSelection();
-                    let context = { portalchartlocation: configLocation, ChartObject: Chart, selection: selection, err: err };
+                    let context = {
+                        nodeIndex: nodeIndex,
+                        cellIndex: cellIndex,
+                        ChartObject: Chart,
+                        selection: selection,
+                        err: err };
                     let props = {
                         context: context,
                         userselections: userselections,
@@ -163,7 +168,7 @@ let getChartParms = (props, callbacks) => {
                     };
                     onchartcomponentselection_1.applyChartComponentSelection(props, callbacks);
                 };
-            })(configlocation)
+            })(configlocation.matrixlocation.column, configlocation.cellIndex)
         }
     ];
     let categorylabel = 'Component';

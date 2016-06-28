@@ -16,19 +16,20 @@ var format = require('format-number')
 import {
     ChartParms,
     ChartParmsObj,
-    ChartSelectionContext,
     PortalChartLocation,
     SortedComponentItem,
     MatrixCellConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
-    OnChartComponentSelectionProps,
-    OnChartComponentSelectionCallbacks,
 } from './interfaces'
 
 import { getBudgetNode } from './getbudgetnode'
 import { ChartTypeCodes } from '../../constants'
-import { applyChartComponentSelection } from './onchartcomponentselection'
+import { applyChartComponentSelection,
+    ChartSelectionContext,
+    OnChartComponentSelectionProps,
+    OnChartComponentSelectionCallbacks,
+ } from './onchartcomponentselection'
 import { DatasetConfig } from '../../../local/databaseapi'
 import BudgetNode from '../../../local/budgetnode'
 
@@ -228,12 +229,17 @@ let getChartParms = (
     let events = [
         {
             eventName: 'select',
-            callback: ((configLocation:PortalChartLocation) => {
+            callback: ((nodeIndex,cellIndex) => {
 
                 return (Chart, err) => {
                     let chart = Chart.chart
                     let selection = chart.getSelection()
-                    let context: ChartSelectionContext = { portalchartlocation: configLocation, ChartObject:Chart, selection, err }
+                    let context: ChartSelectionContext = { 
+                        nodeIndex, 
+                        cellIndex,
+                        ChartObject:Chart, 
+                        selection, 
+                        err }
 
                     let props: OnChartComponentSelectionProps = {
                         context,
@@ -250,7 +256,7 @@ let getChartParms = (
 
                     applyChartComponentSelection(props, callbacks)
                 }
-            })(configlocation)
+            })(configlocation.matrixlocation.column, configlocation.cellIndex)
         }
     ]
 

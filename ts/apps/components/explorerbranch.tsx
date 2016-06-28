@@ -9,7 +9,6 @@ import {
     MatrixCellConfig,
     ChartParms,
     ChartParmsObj,
-    ChartSelectionContext,
     MatrixLocation,
     PortalConfig,
     CellSettings,
@@ -18,8 +17,6 @@ import {
     ChartConfig,
     GetChartParmsProps,
     GetChartParmsCallbacks,
-    CreateChildNodeProps,
-    CreateChildNodeCallbacks,
 } from '../controllers/explorer/interfaces'
 
 import { ExplorerPortal } from './explorerportal'
@@ -38,7 +35,11 @@ import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
 import databaseapi , { DatasetConfig, TimeSpecs, Viewpoint } from '../../local/databaseapi'
 import getChartParms from '../controllers/explorer/getchartparms'
-import { createChildNode } from '../controllers/explorer/onchartcomponentselection'
+import { createChildNode,
+    ChartSelectionContext,
+    CreateChildNodeProps,
+    CreateChildNodeCallbacks,
+ } from '../controllers/explorer/onchartcomponentselection'
 import * as Actions from '../../actions/actions'
 import BudgetNode from '../../local/budgetnode'
 
@@ -322,8 +323,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                         budgetdata,
                         chartmatrixrow,
                         selectionrow: prevBudgetCell.chartselection[0].row,
-                        matrixcolumn: prevBudgetNode.matrixLocation.column,
-                        portalChartIndex:0,
+                        nodeIndex: prevBudgetNode.matrixLocation.column,
+                        cellIndex:0,
                         context,
                         chart:prevBudgetCell.chart,
                     }
