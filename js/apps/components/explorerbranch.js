@@ -40,11 +40,10 @@ class ExplorerBranch extends Component {
             this.initializeChartSeries();
         };
         this.initializeChartSeries = () => {
-            let userselections = this.state.userselections, chartmatrixrow = this.state.chartmatrixrow;
+            let { userselections, chartmatrixrow } = this.state;
             let budgetdata = this.props.budgetBranch.data;
-            var matrixlocation, chartParmsObj;
-            let viewpointname = userselections.viewpoint;
-            let facet = userselections.facet;
+            let matrixlocation, chartParmsObj;
+            let { viewpoint: viewpointname, facet } = userselections;
             let viewpointdata = databaseapi_1.default.getViewpointData({
                 viewpointname: viewpointname,
                 dataseriesname: facet,

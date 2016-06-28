@@ -55,4 +55,5 @@ class ExplorerChart extends Component {
         }}, expandable ? 'drill down' : 'no drill down'));
     }
 }
-exports.ExplorerChart = ExplorerChart;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = ExplorerChart;

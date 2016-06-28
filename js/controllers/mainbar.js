@@ -74,11 +74,11 @@ let MainBar = class extends React.Component {
         let { appnavbar, theme, auth } = appbar.props;
         let fieldMessages = appbar.props.auth.fieldMessages || {};
         let hometiles = this.props.hometiles;
-        let menutransition = (func) => {
+        let menutransition = (fn) => {
             this.setState({
                 menusidebaropen: false,
             });
-            return func;
+            return fn;
         };
         let closeicon = React.createElement(IconButton_1.default, {style: {
             top: 0,

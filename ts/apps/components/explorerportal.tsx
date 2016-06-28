@@ -16,7 +16,7 @@ import {
     ChartSelectionContext
 } from '../controllers/explorer/interfaces'
 
-import { ExplorerChart } from './explorerchart'
+import ExplorerChart from './explorerchart'
 
 interface ExplorePortalProps {
     callbackid: string | number,
@@ -33,14 +33,15 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     getChartTabs = () => {
 
         // generate array of chart tabs
-        let budgetCells = this.props.portalNode.budgetCells
+        let { portalNode, callbackid } = this.props
+        let { budgetCells } = portalNode
         let cellTabs = budgetCells.map(
             (portalCell:ChartConfig,cellIndex) => {
                 //!Hack! if more than one chart the first must be expandable
             let expandable = ((budgetCells.length > 1) && (cellIndex == 0))
             let { chartParms, cellCallbacks, cellSettings, cellTitle } = portalCell
             // curry callback
-            cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(this.props.callbackid)
+            cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid)
             return <Tab style={{fontSize:"12px"}} 
                 label={ cellTitle } 
                 value={ cellIndex }

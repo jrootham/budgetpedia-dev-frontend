@@ -29,7 +29,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
 
     onChangeChartCode = (chartCode) => {
         let {cellCallbacks, callbackid} = this.props
-        cellCallbacks.onSwitchChartCode(callbackid,chartCode)
+        cellCallbacks.onSwitchChartCode(callbackid, chartCode)
     }
 
     render() {
@@ -154,4 +154,4 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
     }
 }
 
-export { ExplorerChart }
+export default ExplorerChart

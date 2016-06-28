@@ -96,16 +96,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     }
 
     initializeChartSeries = () => {
-        let userselections = this.state.userselections,
-            chartmatrixrow = this.state.chartmatrixrow
+        let { userselections, chartmatrixrow } = this.state
         let budgetdata = this.props.budgetBranch.data
-        var matrixlocation,
+        let matrixlocation,
             chartParmsObj: ChartParmsObj
 
         // ------------------------[ POPULATE VIEWPOINT WITH VALUES ]-----------------------
 
-        let viewpointname = userselections.viewpoint
-        let facet = userselections.facet
+        let { viewpoint: viewpointname, facet } = userselections
 
         let viewpointdata = databaseapi.getViewpointData({
             viewpointname, 
