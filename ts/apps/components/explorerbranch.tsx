@@ -299,7 +299,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             onPortalCreation: this.onPortalCreation,
             workingStatus: this.props.callbacks.workingStatus,
         }
-        let fn = (userselections)(budgetdata)(chartmatrixrow)(childcallbacks)
+        let fn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(childcallbacks)
 
         for (cellptr in chartmatrixrow) {
             parentBudgetNode = budgetNode
@@ -368,15 +368,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     budgetdata,
                     chartmatrixrow,
                 }
-                let callbacks = {
-                    updateChartSelections: this.props.callbacks.updateChartSelections,
-                    refreshPresentation: this.refreshPresentation,
-                    onPortalCreation: this.onPortalCreation,
-                    workingStatus: this.props.callbacks.workingStatus,
-                }
-                let fnext = fn(callbacks)
-                let fcurrent = fnext(cellptr)(nodecellindex),
-                chartParmsObj = getChartParms(props, {current:fcurrent,next:fnext})
+                let fcurrent = fn(cellptr)(nodecellindex),
+                chartParmsObj = getChartParms(props, {current:fcurrent,next:fn})
                 if (chartParmsObj.isError) {
                     chartmatrixrow.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
@@ -446,7 +439,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             onPortalCreation: this.onPortalCreation,
             workingStatus: this.props.callbacks.workingStatus,
         }
-        let chartParmsObj: ChartParmsObj = getChartParms(props,{current: null, next: null})
+        let fn = onChartComponentSelection(this.state.userselections)(budgetdata)(chartmatrixrow)(callbacks)
+        let fncurrent = fn(nodeIndex)(cellIndex)
+        let chartParmsObj: ChartParmsObj = getChartParms(props,{current: fncurrent, next: fn})
         if (!chartParmsObj.isError) {
             budgetCell.chartparms = chartParmsObj.chartParms
             budgetCell.chartCode =

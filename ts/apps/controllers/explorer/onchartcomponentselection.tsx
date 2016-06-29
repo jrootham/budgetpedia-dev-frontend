@@ -286,7 +286,6 @@ export const onChartComponentSelection = (userselections) => (budgetdata) => (ch
     props.userselections = userselections
     props.budgetdata = budgetdata
     props.chartmatrixrow = chartmatrixrow
-    console.log('onChartComponentSelection',props)
     applyChartComponentSelection(props, callbacks)
 }
 

@@ -192,7 +192,7 @@ class ExplorerBranch extends Component {
                 onPortalCreation: this.onPortalCreation,
                 workingStatus: this.props.callbacks.workingStatus,
             };
-            let fn = (userselections)(budgetdata)(chartmatrixrow)(childcallbacks);
+            let fn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(childcallbacks);
             for (cellptr in chartmatrixrow) {
                 parentBudgetNode = budgetNode;
                 budgetNode = chartmatrixrow[cellptr];
@@ -249,14 +249,7 @@ class ExplorerBranch extends Component {
                         budgetdata: budgetdata,
                         chartmatrixrow: chartmatrixrow,
                     };
-                    let callbacks = {
-                        updateChartSelections: this.props.callbacks.updateChartSelections,
-                        refreshPresentation: this.refreshPresentation,
-                        onPortalCreation: this.onPortalCreation,
-                        workingStatus: this.props.callbacks.workingStatus,
-                    };
-                    let fnext = fn(callbacks);
-                    let fcurrent = fnext(cellptr)(nodecellindex), chartParmsObj = getchartparms_1.default(props, { current: fcurrent, next: fnext });
+                    let fcurrent = fn(cellptr)(nodecellindex), chartParmsObj = getchartparms_1.default(props, { current: fcurrent, next: fn });
                     if (chartParmsObj.isError) {
                         chartmatrixrow.splice(cellptr);
                         if (cellptr > 0) {
@@ -317,7 +310,9 @@ class ExplorerBranch extends Component {
                 onPortalCreation: this.onPortalCreation,
                 workingStatus: this.props.callbacks.workingStatus,
             };
-            let chartParmsObj = getchartparms_1.default(props, { current: null, next: null });
+            let fn = onchartcomponentselection_1.onChartComponentSelection(this.state.userselections)(budgetdata)(chartmatrixrow)(callbacks);
+            let fncurrent = fn(nodeIndex)(cellIndex);
+            let chartParmsObj = getchartparms_1.default(props, { current: fncurrent, next: fn });
             if (!chartParmsObj.isError) {
                 budgetCell.chartparms = chartParmsObj.chartParms;
                 budgetCell.chartCode =
