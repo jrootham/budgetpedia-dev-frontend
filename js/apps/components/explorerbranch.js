@@ -85,12 +85,15 @@ class ExplorerBranch extends Component {
                     chartmatrixrow: chartmatrixrow,
                 };
                 let callbacks = {
+                    onChartComponentSelection: onchartcomponentselection_1.onChartComponentSelection(this.props.userselections)(budgetdata)(chartmatrixrow),
                     updateChartSelections: this.props.callbacks.updateChartSelections,
                     refreshPresentation: this.refreshPresentation,
                     onPortalCreation: this.onPortalCreation,
                     workingStatus: this.props.callbacks.workingStatus,
                 };
-                chartParmsObj = getchartparms_1.default(props, callbacks);
+                callbacks.onChartComponentSelection =
+                    callbacks.onChartComponentSelection(callbacks)(this.props.callbackid)(cellindex),
+                    chartParmsObj = getchartparms_1.default(props, callbacks);
                 if (!chartParmsObj.isError) {
                     budgetCell.chartparms = chartParmsObj.chartParms;
                     budgetCell.chartCode =
@@ -213,12 +216,15 @@ class ExplorerBranch extends Component {
                             chart: prevBudgetCell.chart,
                         };
                         let childcallbacks = {
+                            onChartComponentSelection: onchartcomponentselection_1.onChartComponentSelection(this.props.userselections)(budgetdata)(chartmatrixrow),
                             updateChartSelections: this.props.callbacks.updateChartSelections,
                             refreshPresentation: this.refreshPresentation,
                             onPortalCreation: this.onPortalCreation,
                             workingStatus: this.props.callbacks.workingStatus,
                         };
-                        onchartcomponentselection_1.createChildNode(childprops, childcallbacks);
+                        childcallbacks.onChartComponentSelection =
+                            childcallbacks.onChartComponentSelection(childcallbacks)(this.props.callbackid)(0),
+                            onchartcomponentselection_1.createChildNode(childprops, childcallbacks);
                         let message = null;
                         if (deeperdata) {
                             message = "More drilldown is available for current facet selection";
@@ -246,12 +252,15 @@ class ExplorerBranch extends Component {
                         chartmatrixrow: chartmatrixrow,
                     };
                     let callbacks = {
+                        onChartComponentSelection: onchartcomponentselection_1.onChartComponentSelection(this.props.userselections)(budgetdata)(chartmatrixrow),
                         updateChartSelections: this.props.callbacks.updateChartSelections,
                         refreshPresentation: this.refreshPresentation,
                         onPortalCreation: this.onPortalCreation,
                         workingStatus: this.props.callbacks.workingStatus,
                     };
-                    chartParmsObj = getchartparms_1.default(props, callbacks);
+                    callbacks.onChartComponentSelection =
+                        callbacks.onChartComponentSelection(callbacks)(this.props.callbackid)(nodecellindex),
+                        chartParmsObj = getchartparms_1.default(props, callbacks);
                     if (chartParmsObj.isError) {
                         chartmatrixrow.splice(cellptr);
                         if (cellptr > 0) {
@@ -307,11 +316,14 @@ class ExplorerBranch extends Component {
                 chartmatrixrow: chartmatrixrow,
             };
             let callbacks = {
+                onChartComponentSelection: onchartcomponentselection_1.onChartComponentSelection(this.props.userselections)(budgetdata)(chartmatrixrow),
                 updateChartSelections: this.props.callbacks.updateChartSelections,
                 refreshPresentation: this.refreshPresentation,
                 onPortalCreation: this.onPortalCreation,
                 workingStatus: this.props.callbacks.workingStatus,
             };
+            callbacks.onChartComponentSelection =
+                callbacks.onChartComponentSelection(callbacks)(this.props.callbackid)(cellIndex);
             let chartParmsObj = getchartparms_1.default(props, callbacks);
             if (!chartParmsObj.isError) {
                 budgetCell.chartparms = chartParmsObj.chartParms;

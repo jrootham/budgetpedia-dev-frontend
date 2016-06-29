@@ -46,6 +46,7 @@ export interface CreateChildNodeProps {
     chart: any
 }
 export interface CreateChildNodeCallbacks {
+    onChartComponentSelection: Function,
     updateChartSelections: Function,
     workingStatus: Function,
     refreshPresentation: Function,
@@ -59,6 +60,7 @@ export interface OnChartComponentSelectionProps {
     chartmatrixrow?: any,
 }
 export interface OnChartComponentSelectionCallbacks {
+    onChartComponentSelection:Function,
     updateChartSelections: Function,
     refreshPresentation: Function,
     onPortalCreation: Function,
@@ -136,12 +138,13 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
         context, 
         chart,
     }
-    let childcallbacks: CreateChildNodeCallbacks = {
-        updateChartSelections,
-        workingStatus, 
-        refreshPresentation, 
-        onPortalCreation,
-    }
+    let childcallbacks: CreateChildNodeCallbacks = callbacks
+    // {
+    //     updateChartSelections,
+    //     workingStatus, 
+    //     refreshPresentation, 
+    //     onPortalCreation,
+    // }
     createChildNode( childprops, childcallbacks )
 }
 
@@ -163,6 +166,7 @@ export let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChil
         facet = budgetNode.facetName
 
     let {
+        onChartComponentSelection,
         workingStatus,
         refreshPresentation,
         onPortalCreation,
@@ -236,13 +240,14 @@ export let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChil
             budgetdata,
             chartmatrixrow,
         }
-        let callbacks: GetChartParmsCallbacks = {
-            updateChartSelections,
-            refreshPresentation,
-            onPortalCreation,
-            workingStatus,
-        }
-        chartParmsObj = getChartParms(props, callbacks)
+        let ccallbacks: GetChartParmsCallbacks = callbacks
+        // {
+        //     updateChartSelections,
+        //     refreshPresentation,
+        //     onPortalCreation,
+        //     workingStatus,
+        // }
+        chartParmsObj = getChartParms(props, ccallbacks)
         if (chartParmsObj.isError) {
             isError = true
             break

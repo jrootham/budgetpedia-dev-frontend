@@ -65,6 +65,7 @@ interface GetChartParmsProps {
 }
 
 interface GetChartParmsCallbacks {
+    onChartComponentSelection: Function,
     refreshPresentation: Function,
     onPortalCreation: Function, 
     workingStatus: Function,

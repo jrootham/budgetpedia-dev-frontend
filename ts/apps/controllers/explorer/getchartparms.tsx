@@ -231,9 +231,10 @@ let getChartParms = (
     let events = [
         {
             eventName: 'select',
-            callback: ((nodeIndex,cellIndex) => {
+            callback: //((nodeIndex,cellIndex) => {
 
-                return (Chart, err) => {
+                // return 
+                (Chart, err) => {
                     let chart = Chart.chart
                     let selection = chart.getSelection()
                     let context: ChartSelectionContext = { 
@@ -250,9 +251,10 @@ let getChartParms = (
                     //     onPortalCreation,
                     //     workingStatus,
                     // }
-                    onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)(nodeIndex)(cellIndex)(props)
+                    callbacks.onChartComponentSelection(props)
+                    // onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)(nodeIndex)(cellIndex)(props)
                 }
-            })(configlocation.matrixlocation.column, configlocation.cellIndex)
+            // })(configlocation.matrixlocation.column, configlocation.cellIndex)
         }
     ]
 

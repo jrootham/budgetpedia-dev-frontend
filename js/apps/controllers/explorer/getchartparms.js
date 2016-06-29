@@ -1,6 +1,5 @@
 "use strict";
 var format = require('format-number');
-const onchartcomponentselection_1 = require('./onchartcomponentselection');
 let getChartParms = (props, callbacks) => {
     let budgetNode = props.budgetNode;
     let chartIndex = props.chartIndex;
@@ -144,20 +143,18 @@ let getChartParms = (props, callbacks) => {
     let events = [
         {
             eventName: 'select',
-            callback: ((nodeIndex, cellIndex) => {
-                return (Chart, err) => {
-                    let chart = Chart.chart;
-                    let selection = chart.getSelection();
-                    let context = {
-                        ChartObject: Chart,
-                        selection: selection,
-                        err: err };
-                    let props = {
-                        context: context,
-                    };
-                    onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)(nodeIndex)(cellIndex)(props);
+            callback: (Chart, err) => {
+                let chart = Chart.chart;
+                let selection = chart.getSelection();
+                let context = {
+                    ChartObject: Chart,
+                    selection: selection,
+                    err: err };
+                let props = {
+                    context: context,
                 };
-            })(configlocation.matrixlocation.column, configlocation.cellIndex)
+                callbacks.onChartComponentSelection(props);
+            }
         }
     ];
     let categorylabel = 'Component';

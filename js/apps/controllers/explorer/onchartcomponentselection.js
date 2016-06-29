@@ -49,18 +49,13 @@ let applyChartComponentSelection = (props, callbacks) => {
         context: context,
         chart: chart,
     };
-    let childcallbacks = {
-        updateChartSelections: updateChartSelections,
-        workingStatus: workingStatus,
-        refreshPresentation: refreshPresentation,
-        onPortalCreation: onPortalCreation,
-    };
+    let childcallbacks = callbacks;
     exports.createChildNode(childprops, childcallbacks);
 };
 exports.createChildNode = (props, callbacks) => {
     let { budgetNode, userselections, budgetdata, chartmatrixrow, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
     let viewpoint = budgetNode.viewpointName, facet = budgetNode.facetName;
-    let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, } = callbacks;
+    let { onChartComponentSelection, workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, } = callbacks;
     let childdatapath = budgetNode.dataPath.slice();
     let node = budgetNode.dataNode;
     if (!node.Components) {
@@ -117,13 +112,8 @@ exports.createChildNode = (props, callbacks) => {
             budgetdata: budgetdata,
             chartmatrixrow: chartmatrixrow,
         };
-        let callbacks = {
-            updateChartSelections: updateChartSelections,
-            refreshPresentation: refreshPresentation,
-            onPortalCreation: onPortalCreation,
-            workingStatus: workingStatus,
-        };
-        chartParmsObj = getchartparms_1.default(props, callbacks);
+        let ccallbacks = callbacks;
+        chartParmsObj = getchartparms_1.default(props, ccallbacks);
         if (chartParmsObj.isError) {
             isError = true;
             break;
