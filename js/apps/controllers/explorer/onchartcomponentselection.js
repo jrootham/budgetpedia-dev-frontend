@@ -23,7 +23,7 @@ let applyChartComponentSelection = (props, callbacks) => {
     if (budgetCell.nodeDataPropertyName == 'Categories') {
         return;
     }
-    let viewpoint = budgetNode.viewpointName, facet = budgetNode.facetName;
+    let facet = budgetNode.facetName;
     chartmatrixrow.splice(nodeIndex + 1);
     refreshPresentation();
     if (!selection) {
@@ -48,7 +48,7 @@ let applyChartComponentSelection = (props, callbacks) => {
 };
 exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     let { budgetNode, userselections, budgetdata, chartmatrixrow, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
-    let viewpoint = budgetNode.viewpointName, facet = budgetNode.facetName;
+    let viewpointName = budgetNode.viewpointName, facet = budgetNode.facetName;
     let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, } = callbacks;
     let childdatapath = budgetNode.dataPath.slice();
     let node = budgetNode.dataNode;
@@ -84,7 +84,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     let newnodeconfigparms = {
         portalCharts: portalcharts,
         defaultChartType: charttype,
-        viewpointName: viewpoint,
+        viewpointName: viewpointName,
         facetName: facet,
         dataPath: childdatapath,
         matrixLocation: {
@@ -104,7 +104,6 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
             chartIndex: newcellindex,
             userselections: userselections,
             budgetdata: budgetdata,
-            chartmatrixrow: chartmatrixrow,
         };
         let ccallbacks = {
             updateChartSelections: updateChartSelections,

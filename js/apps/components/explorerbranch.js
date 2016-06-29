@@ -89,7 +89,6 @@ class ExplorerBranch extends Component {
                     chartIndex: cellindex,
                     budgetdata: budgetdata,
                     userselections: userselections,
-                    chartmatrixrow: chartmatrixrow,
                 };
                 let fcurrent = selectfn(0)(cellindex);
                 chartParmsObj = getchartparms_1.default(props, { current: fcurrent, next: selectfn });
@@ -247,7 +246,6 @@ class ExplorerBranch extends Component {
                         chartIndex: nodecellindex,
                         userselections: userselections,
                         budgetdata: budgetdata,
-                        chartmatrixrow: chartmatrixrow,
                     };
                     let fcurrent = fn(cellptr)(nodecellindex), chartParmsObj = getchartparms_1.default(props, { current: fcurrent, next: fn });
                     if (chartParmsObj.isError) {
@@ -302,7 +300,6 @@ class ExplorerBranch extends Component {
                 chartIndex: cellIndex,
                 userselections: this.state.userselections,
                 budgetdata: budgetdata,
-                chartmatrixrow: chartmatrixrow,
             };
             let callbacks = {
                 updateChartSelections: this.props.callbacks.updateChartSelections,

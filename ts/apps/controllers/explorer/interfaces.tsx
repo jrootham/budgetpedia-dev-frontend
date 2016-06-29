@@ -61,7 +61,6 @@ interface GetChartParmsProps {
     chartIndex: number,
     userselections:any, 
     budgetdata: any,
-    chartmatrixrow:any,
 }
 
 // interface GetChartParmsCallbacks {

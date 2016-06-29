@@ -105,8 +105,7 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     }
 
     // get taxonomy references
-    let viewpoint = budgetNode.viewpointName,
-        facet = budgetNode.facetName
+    let facet = budgetNode.facetName
 
     // TODO: abandon here if the next one exists and is the same
     chartmatrixrow.splice(nodeIndex + 1) // remove subsequent charts
@@ -159,7 +158,7 @@ export let createChildNode = (
         chart,
     } = props
 
-    let viewpoint = budgetNode.viewpointName,
+    let viewpointName = budgetNode.viewpointName,
         facet = budgetNode.facetName
 
     let {
@@ -212,7 +211,7 @@ export let createChildNode = (
     let newnodeconfigparms: BudgetNodeParms = {
         portalCharts: portalcharts,
         defaultChartType:charttype,
-        viewpointName:viewpoint,
+        viewpointName:viewpointName,
         facetName:facet,
         dataPath: childdatapath,
         matrixLocation: {
@@ -234,7 +233,6 @@ export let createChildNode = (
             chartIndex: newcellindex,
             userselections,
             budgetdata,
-            chartmatrixrow,
         }
         let ccallbacks = 
         {

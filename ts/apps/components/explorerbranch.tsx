@@ -162,7 +162,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 chartIndex: cellindex,
                 budgetdata,
                 userselections,
-                chartmatrixrow,
             }
 
             let fcurrent = selectfn(0)(cellindex)
@@ -366,7 +365,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     chartIndex: nodecellindex,
                     userselections,
                     budgetdata,
-                    chartmatrixrow,
                 }
                 let fcurrent = fn(cellptr)(nodecellindex),
                 chartParmsObj = getChartParms(props, {current:fcurrent,next:fn})
@@ -431,7 +429,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             chartIndex: cellIndex,
             userselections: this.state.userselections,
             budgetdata,
-            chartmatrixrow,
         }
         let callbacks = {
             updateChartSelections: this.props.callbacks.updateChartSelections,
