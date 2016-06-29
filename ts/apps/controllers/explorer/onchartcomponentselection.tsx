@@ -10,7 +10,7 @@ import {
     SortedComponentItem,
     MatrixCellConfig,
     GetChartParmsProps,
-    GetChartParmsCallbacks,
+    // GetChartParmsCallbacks,
 } from './interfaces'
 
 import BudgetNode, {BudgetNodeParms} from '../../../local/budgetnode'
@@ -46,7 +46,6 @@ export interface CreateChildNodeProps {
     chart: any
 }
 export interface CreateChildNodeCallbacks {
-    onChartComponentSelection: Function,
     updateChartSelections: Function,
     workingStatus: Function,
     refreshPresentation: Function,
@@ -60,7 +59,6 @@ export interface OnChartComponentSelectionProps {
     chartmatrixrow?: any,
 }
 export interface OnChartComponentSelectionCallbacks {
-    onChartComponentSelection:Function,
     updateChartSelections: Function,
     refreshPresentation: Function,
     onPortalCreation: Function,
@@ -145,10 +143,14 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     //     refreshPresentation, 
     //     onPortalCreation,
     // }
-    createChildNode( childprops, childcallbacks )
+    createChildNode( childprops, childcallbacks,{} )
 }
 
-export let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChildNodeCallbacks) => {
+export let createChildNode = (
+    props: CreateChildNodeProps, 
+    callbacks: CreateChildNodeCallbacks,
+    selectionCallbacks
+    ) => {
 
     let {
         budgetNode,
@@ -166,7 +168,6 @@ export let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChil
         facet = budgetNode.facetName
 
     let {
-        onChartComponentSelection,
         workingStatus,
         refreshPresentation,
         onPortalCreation,
@@ -240,14 +241,14 @@ export let createChildNode = (props: CreateChildNodeProps, callbacks: CreateChil
             budgetdata,
             chartmatrixrow,
         }
-        let ccallbacks: GetChartParmsCallbacks = callbacks
-        // {
-        //     updateChartSelections,
-        //     refreshPresentation,
-        //     onPortalCreation,
-        //     workingStatus,
-        // }
-        chartParmsObj = getChartParms(props, ccallbacks)
+        let ccallbacks = 
+        {
+            updateChartSelections,
+            refreshPresentation,
+            onPortalCreation,
+            workingStatus,
+        }
+        chartParmsObj = getChartParms(props, {})
         if (chartParmsObj.isError) {
             isError = true
             break
@@ -286,6 +287,7 @@ export const onChartComponentSelection = (userselections) => (budgetdata) => (ch
     props.userselections = userselections
     props.budgetdata = budgetdata
     props.chartmatrixrow = chartmatrixrow
+    console.log('onChartComponentSelection',props)
     applyChartComponentSelection(props, callbacks)
 }
 

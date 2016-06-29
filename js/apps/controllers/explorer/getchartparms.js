@@ -1,17 +1,9 @@
 "use strict";
 var format = require('format-number');
-let getChartParms = (props, callbacks) => {
-    let budgetNode = props.budgetNode;
-    let chartIndex = props.chartIndex;
-    let userselections = props.userselections;
-    let budgetdata = props.budgetdata;
+let getChartParms = (props, selectionCallbacks) => {
+    let { budgetNode, chartIndex, userselections, budgetdata, chartmatrixrow } = props;
     let viewpointdata = budgetdata.viewpointdata;
     let itemseriesdata = viewpointdata.itemseriesconfigdata;
-    let chartmatrixrow = props.chartmatrixrow;
-    let refreshPresentation = callbacks.refreshPresentation;
-    let onPortalCreation = callbacks.onPortalCreation;
-    let workingStatus = callbacks.workingStatus;
-    let updateChartSelections = callbacks.updateChartSelections;
     let budgetCell = budgetNode.cells[chartIndex];
     let nodeDataPropertyName = budgetCell.nodeDataPropertyName;
     let sortedlist;
@@ -153,7 +145,7 @@ let getChartParms = (props, callbacks) => {
                 let props = {
                     context: context,
                 };
-                callbacks.onChartComponentSelection(props);
+                selectionCallbacks.onChartComponentSelection(props);
             }
         }
     ];

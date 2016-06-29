@@ -64,13 +64,12 @@ interface GetChartParmsProps {
     chartmatrixrow:any,
 }
 
-interface GetChartParmsCallbacks {
-    onChartComponentSelection: Function,
-    refreshPresentation: Function,
-    onPortalCreation: Function, 
-    workingStatus: Function,
-    updateChartSelections: Function,
-}
+// interface GetChartParmsCallbacks {
+//     refreshPresentation: Function,
+//     onPortalCreation: Function, 
+//     workingStatus: Function,
+//     updateChartSelections: Function,
+// }
 
 // =====================================================
 // ---------------[ NODE CONFIGURATION ]--------------
@@ -126,5 +125,5 @@ export {
     ChartConfig,
     SortedComponentItem,
     GetChartParmsProps,
-    GetChartParmsCallbacks,
+    // GetChartParmsCallbacks,
 }

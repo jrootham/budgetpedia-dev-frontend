@@ -75,6 +75,7 @@ class ExplorerBranch extends Component {
             };
             let budgetNode = new budgetnode_1.default(budgetNodeParms);
             let cellindex;
+            let fn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow);
             for (cellindex in budgetNode.cells) {
                 let budgetCell = budgetNode.cells[cellindex];
                 let props = {
@@ -85,15 +86,14 @@ class ExplorerBranch extends Component {
                     chartmatrixrow: chartmatrixrow,
                 };
                 let callbacks = {
-                    onChartComponentSelection: onchartcomponentselection_1.onChartComponentSelection(this.props.userselections)(budgetdata)(chartmatrixrow),
                     updateChartSelections: this.props.callbacks.updateChartSelections,
                     refreshPresentation: this.refreshPresentation,
                     onPortalCreation: this.onPortalCreation,
                     workingStatus: this.props.callbacks.workingStatus,
                 };
-                callbacks.onChartComponentSelection =
-                    callbacks.onChartComponentSelection(callbacks)(this.props.callbackid)(cellindex),
-                    chartParmsObj = getchartparms_1.default(props, callbacks);
+                let fnext = fn(callbacks);
+                let fcurrent = fnext(0)(cellindex);
+                chartParmsObj = getchartparms_1.default(props, { current: fcurrent, new: fnext });
                 if (!chartParmsObj.isError) {
                     budgetCell.chartparms = chartParmsObj.chartParms;
                     budgetCell.chartCode =
@@ -187,6 +187,7 @@ class ExplorerBranch extends Component {
             let cellptr;
             let isError = false;
             let chartParmsObj = null;
+            let fn = onchartcomponentselection_1.onChartComponentSelection(this.props.userselections)(budgetdata)(chartmatrixrow);
             for (cellptr in chartmatrixrow) {
                 parentBudgetNode = budgetNode;
                 budgetNode = chartmatrixrow[cellptr];
@@ -216,15 +217,14 @@ class ExplorerBranch extends Component {
                             chart: prevBudgetCell.chart,
                         };
                         let childcallbacks = {
-                            onChartComponentSelection: onchartcomponentselection_1.onChartComponentSelection(this.props.userselections)(budgetdata)(chartmatrixrow),
                             updateChartSelections: this.props.callbacks.updateChartSelections,
                             refreshPresentation: this.refreshPresentation,
                             onPortalCreation: this.onPortalCreation,
                             workingStatus: this.props.callbacks.workingStatus,
                         };
-                        childcallbacks.onChartComponentSelection =
-                            childcallbacks.onChartComponentSelection(childcallbacks)(this.props.callbackid)(0),
-                            onchartcomponentselection_1.createChildNode(childprops, childcallbacks);
+                        let fnext = fn(childcallbacks);
+                        let fcurrent = fnext(cellptr)(0);
+                        onchartcomponentselection_1.createChildNode(childprops, childcallbacks, { current: fcurrent, next: fnext });
                         let message = null;
                         if (deeperdata) {
                             message = "More drilldown is available for current facet selection";
@@ -252,15 +252,13 @@ class ExplorerBranch extends Component {
                         chartmatrixrow: chartmatrixrow,
                     };
                     let callbacks = {
-                        onChartComponentSelection: onchartcomponentselection_1.onChartComponentSelection(this.props.userselections)(budgetdata)(chartmatrixrow),
                         updateChartSelections: this.props.callbacks.updateChartSelections,
                         refreshPresentation: this.refreshPresentation,
                         onPortalCreation: this.onPortalCreation,
                         workingStatus: this.props.callbacks.workingStatus,
                     };
-                    callbacks.onChartComponentSelection =
-                        callbacks.onChartComponentSelection(callbacks)(this.props.callbackid)(nodecellindex),
-                        chartParmsObj = getchartparms_1.default(props, callbacks);
+                    let fnext = fn(callbacks);
+                    let fcurrent = fnext(cellptr)(nodecellindex), chartParmsObj = getchartparms_1.default(props, { current: fcurrent, next: fnext });
                     if (chartParmsObj.isError) {
                         chartmatrixrow.splice(cellptr);
                         if (cellptr > 0) {
@@ -316,15 +314,12 @@ class ExplorerBranch extends Component {
                 chartmatrixrow: chartmatrixrow,
             };
             let callbacks = {
-                onChartComponentSelection: onchartcomponentselection_1.onChartComponentSelection(this.props.userselections)(budgetdata)(chartmatrixrow),
                 updateChartSelections: this.props.callbacks.updateChartSelections,
                 refreshPresentation: this.refreshPresentation,
                 onPortalCreation: this.onPortalCreation,
                 workingStatus: this.props.callbacks.workingStatus,
             };
-            callbacks.onChartComponentSelection =
-                callbacks.onChartComponentSelection(callbacks)(this.props.callbackid)(cellIndex);
-            let chartParmsObj = getchartparms_1.default(props, callbacks);
+            let chartParmsObj = getchartparms_1.default(props, {});
             if (!chartParmsObj.isError) {
                 budgetCell.chartparms = chartParmsObj.chartParms;
                 budgetCell.chartCode =

@@ -20,14 +20,14 @@ import {
     SortedComponentItem,
     MatrixCellConfig,
     GetChartParmsProps,
-    GetChartParmsCallbacks,
+    // GetChartParmsCallbacks,
 } from './interfaces'
 
 import { getBudgetNode } from './getbudgetnode'
 import { ChartTypeCodes } from '../../constants'
 import { 
     // applyChartComponentSelection,
-    onChartComponentSelection,
+    // onChartComponentSelection,
     ChartSelectionContext,
     OnChartComponentSelectionProps,
     OnChartComponentSelectionCallbacks,
@@ -36,21 +36,12 @@ import { DatasetConfig } from '../../../local/databaseapi'
 import BudgetNode from '../../../local/budgetnode'
 
 let getChartParms = (
-        props:GetChartParmsProps, callbacks: GetChartParmsCallbacks
+        props:GetChartParmsProps, selectionCallbacks
     ):ChartParmsObj => {
 
-    let budgetNode: BudgetNode = props.budgetNode
-    let chartIndex = props.chartIndex
-    let userselections = props.userselections
-    let budgetdata = props.budgetdata
+    let { budgetNode, chartIndex, userselections, budgetdata, chartmatrixrow } = props
     let viewpointdata = budgetdata.viewpointdata
     let itemseriesdata:DatasetConfig = viewpointdata.itemseriesconfigdata
-    let chartmatrixrow = props.chartmatrixrow
-
-    let refreshPresentation = callbacks.refreshPresentation
-    let onPortalCreation = callbacks.onPortalCreation
-    let workingStatus = callbacks.workingStatus
-    let updateChartSelections = callbacks.updateChartSelections
 
     let budgetCell: MatrixCellConfig = budgetNode.cells[chartIndex]
 
@@ -251,7 +242,7 @@ let getChartParms = (
                     //     onPortalCreation,
                     //     workingStatus,
                     // }
-                    callbacks.onChartComponentSelection(props)
+                    selectionCallbacks.onChartComponentSelection(props)
                     // onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)(nodeIndex)(cellIndex)(props)
                 }
             // })(configlocation.matrixlocation.column, configlocation.cellIndex)

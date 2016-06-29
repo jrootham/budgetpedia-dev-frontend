@@ -16,7 +16,7 @@ import {
     PortalChartLocation,
     ChartConfig,
     GetChartParmsProps,
-    GetChartParmsCallbacks,
+    // GetChartParmsCallbacks,
 } from '../controllers/explorer/interfaces'
 
 import { ExplorerPortal } from './explorerportal'
@@ -147,6 +147,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let cellindex: any
 
+        let fn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)
+
         for (cellindex in budgetNode.cells) {
             let budgetCell = budgetNode.cells[cellindex]
             let props: GetChartParmsProps = {
@@ -156,18 +158,17 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 userselections,
                 chartmatrixrow,
             }
-            let callbacks: GetChartParmsCallbacks = {
-                onChartComponentSelection:onChartComponentSelection(
-                    this.props.userselections)(budgetdata)(chartmatrixrow),
+            let callbacks = {
                 updateChartSelections: this.props.callbacks.updateChartSelections,
                 refreshPresentation: this.refreshPresentation,
                 onPortalCreation: this.onPortalCreation,
                 workingStatus: this.props.callbacks.workingStatus,
             }
-            callbacks.onChartComponentSelection =
-                callbacks.onChartComponentSelection(callbacks)(this.props.callbackid)(cellindex),
 
-            chartParmsObj = getChartParms(props, callbacks)
+            let fnext = fn(callbacks)
+            let fcurrent = fnext(0)(cellindex)
+
+            chartParmsObj = getChartParms(props, {current:fcurrent,new:fnext})
 
             if (!chartParmsObj.isError) {
 
@@ -292,6 +293,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let cellptr: any
         let isError = false
         let chartParmsObj: ChartParmsObj = null
+
+        let fn = onChartComponentSelection(
+                            this.props.userselections)(budgetdata)(chartmatrixrow)
+
         for (cellptr in chartmatrixrow) {
             parentBudgetNode = budgetNode
             budgetNode = chartmatrixrow[cellptr]
@@ -335,16 +340,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                         chart:prevBudgetCell.chart,
                     }
                     let childcallbacks: CreateChildNodeCallbacks = {
-                        onChartComponentSelection:onChartComponentSelection(
-                            this.props.userselections)(budgetdata)(chartmatrixrow),
                         updateChartSelections: this.props.callbacks.updateChartSelections,
                         refreshPresentation: this.refreshPresentation,
                         onPortalCreation: this.onPortalCreation,
                         workingStatus: this.props.callbacks.workingStatus,
                     }
-                    childcallbacks.onChartComponentSelection =
-                        childcallbacks.onChartComponentSelection(childcallbacks)(this.props.callbackid)(0),
-                    createChildNode(childprops, childcallbacks)
+                    let fnext = fn(childcallbacks)
+                    let fcurrent = fnext(cellptr)(0)
+                    createChildNode(childprops, childcallbacks,{current:fcurrent,next:fnext})
                     let message = null
                     if (deeperdata) {
                         message = "More drilldown is available for current facet selection"
@@ -368,17 +371,15 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     budgetdata,
                     chartmatrixrow,
                 }
-                let callbacks: GetChartParmsCallbacks = {
-                    onChartComponentSelection:onChartComponentSelection(
-                        this.props.userselections)(budgetdata)(chartmatrixrow),
+                let callbacks = {
                     updateChartSelections: this.props.callbacks.updateChartSelections,
                     refreshPresentation: this.refreshPresentation,
                     onPortalCreation: this.onPortalCreation,
                     workingStatus: this.props.callbacks.workingStatus,
                 }
-                callbacks.onChartComponentSelection = 
-                    callbacks.onChartComponentSelection(callbacks)(this.props.callbackid)(nodecellindex),
-                chartParmsObj = getChartParms(props, callbacks)
+                let fnext = fn(callbacks)
+                let fcurrent = fnext(cellptr)(nodecellindex),
+                chartParmsObj = getChartParms(props, {current:fcurrent,next:fnext})
                 if (chartParmsObj.isError) {
                     chartmatrixrow.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
@@ -442,17 +443,17 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             budgetdata,
             chartmatrixrow,
         }
-        let callbacks: GetChartParmsCallbacks = {
-            onChartComponentSelection:onChartComponentSelection(
-                this.props.userselections)(budgetdata)(chartmatrixrow),
+        let callbacks = {
+            // onChartComponentSelection:onChartComponentSelection(
+            //     this.props.userselections)(budgetdata)(chartmatrixrow),
             updateChartSelections: this.props.callbacks.updateChartSelections,
             refreshPresentation: this.refreshPresentation,
             onPortalCreation: this.onPortalCreation,
             workingStatus: this.props.callbacks.workingStatus,
         }
-        callbacks.onChartComponentSelection = 
-            callbacks.onChartComponentSelection(callbacks)(this.props.callbackid)(cellIndex)
-        let chartParmsObj: ChartParmsObj = getChartParms(props, callbacks)
+        // callbacks.onChartComponentSelection = 
+        //     callbacks.onChartComponentSelection(callbacks)(nodeIndex)(cellIndex)
+        let chartParmsObj: ChartParmsObj = getChartParms(props,{})
         if (!chartParmsObj.isError) {
             budgetCell.chartparms = chartParmsObj.chartParms
             budgetCell.chartCode =
