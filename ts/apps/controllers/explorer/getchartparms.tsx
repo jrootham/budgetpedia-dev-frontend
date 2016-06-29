@@ -35,8 +35,13 @@ import {
 import { DatasetConfig } from '../../../local/databaseapi'
 import BudgetNode from '../../../local/budgetnode'
 
+export interface SelectionCallbackProps {
+    current: Function,
+    next: Function,
+}
+
 let getChartParms = (
-        props:GetChartParmsProps, selectionCallbacks
+        props:GetChartParmsProps, selectionCallbacks: SelectionCallbackProps
     ):ChartParmsObj => {
 
     let { budgetNode, chartIndex, userselections, budgetdata, chartmatrixrow } = props
@@ -222,9 +227,7 @@ let getChartParms = (
     let events = [
         {
             eventName: 'select',
-            callback: //((nodeIndex,cellIndex) => {
-
-                // return 
+            callback: 
                 (Chart, err) => {
                     let chart = Chart.chart
                     let selection = chart.getSelection()
@@ -233,19 +236,17 @@ let getChartParms = (
                         selection, 
                         err }
 
+                    let selectionProps = {
+                        current:null,
+                        next: selectionCallbacks.next
+                    }
+
                     let props: OnChartComponentSelectionProps = {
+                        selectionProps,
                         context,
                     }
-                    // let callbacks: OnChartComponentSelectionCallbacks = {
-                    //     updateChartSelections,
-                    //     refreshPresentation,
-                    //     onPortalCreation,
-                    //     workingStatus,
-                    // }
-                    selectionCallbacks.onChartComponentSelection(props)
-                    // onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)(nodeIndex)(cellIndex)(props)
+                    selectionCallbacks.current(props)
                 }
-            // })(configlocation.matrixlocation.column, configlocation.cellIndex)
         }
     ]
 

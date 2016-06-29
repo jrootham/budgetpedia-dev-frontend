@@ -186,7 +186,13 @@ class ExplorerBranch extends Component {
             let cellptr;
             let isError = false;
             let chartParmsObj = null;
-            let fn = onchartcomponentselection_1.onChartComponentSelection(this.props.userselections)(budgetdata)(chartmatrixrow);
+            let childcallbacks = {
+                updateChartSelections: this.props.callbacks.updateChartSelections,
+                refreshPresentation: this.refreshPresentation,
+                onPortalCreation: this.onPortalCreation,
+                workingStatus: this.props.callbacks.workingStatus,
+            };
+            let fn = (userselections)(budgetdata)(chartmatrixrow)(childcallbacks);
             for (cellptr in chartmatrixrow) {
                 parentBudgetNode = budgetNode;
                 budgetNode = chartmatrixrow[cellptr];
@@ -215,15 +221,8 @@ class ExplorerBranch extends Component {
                             context: context,
                             chart: prevBudgetCell.chart,
                         };
-                        let childcallbacks = {
-                            updateChartSelections: this.props.callbacks.updateChartSelections,
-                            refreshPresentation: this.refreshPresentation,
-                            onPortalCreation: this.onPortalCreation,
-                            workingStatus: this.props.callbacks.workingStatus,
-                        };
-                        let fnext = fn(childcallbacks);
-                        let fcurrent = fnext(cellptr)(0);
-                        onchartcomponentselection_1.createChildNode(childprops, childcallbacks, { current: fcurrent, next: fnext });
+                        let fcurrent = fn(cellptr)(0);
+                        onchartcomponentselection_1.createChildNode(childprops, childcallbacks, { current: fcurrent, next: fn });
                         let message = null;
                         if (deeperdata) {
                             message = "More drilldown is available for current facet selection";
@@ -318,7 +317,7 @@ class ExplorerBranch extends Component {
                 onPortalCreation: this.onPortalCreation,
                 workingStatus: this.props.callbacks.workingStatus,
             };
-            let chartParmsObj = getchartparms_1.default(props, {});
+            let chartParmsObj = getchartparms_1.default(props, { current: null, next: null });
             if (!chartParmsObj.isError) {
                 budgetCell.chartparms = chartParmsObj.chartParms;
                 budgetCell.chartCode =

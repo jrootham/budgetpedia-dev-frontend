@@ -15,7 +15,7 @@ import {
 
 import BudgetNode, {BudgetNodeParms} from '../../../local/budgetnode'
 import { ChartTypeCodes } from '../../constants'
-import getChartParms from './getchartparms'
+import getChartParms, {SelectionCallbackProps} from './getchartparms'
 import { getBudgetNode } from './getbudgetnode'
 import { DatasetConfig } from '../../../local/databaseapi'
 
@@ -54,6 +54,7 @@ export interface CreateChildNodeCallbacks {
 
 export interface OnChartComponentSelectionProps {
     context: ChartSelectionContext,
+    selectionProps: any,
     userselections?: any,
     budgetdata?:any,
     chartmatrixrow?: any,
@@ -76,15 +77,9 @@ export interface OnChartComponentSelectionCallbacks {
 let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     callbacks: OnChartComponentSelectionCallbacks) => {
 
-    let context = props.context
-    let userselections = props.userselections
-    let budgetdata = props.budgetdata
-    let chartmatrixrow = props.chartmatrixrow
+    let { context, userselections, budgetdata, chartmatrixrow, selectionProps } = props
 
-    let refreshPresentation = callbacks.refreshPresentation
-    let onPortalCreation = callbacks.onPortalCreation
-    let workingStatus = callbacks.workingStatus
-    let updateChartSelections = callbacks.updateChartSelections
+    let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks
 
     // unpack context
     let selection = context.selection[0]
@@ -143,13 +138,13 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     //     refreshPresentation, 
     //     onPortalCreation,
     // }
-    createChildNode( childprops, childcallbacks,{} )
+    createChildNode( childprops, childcallbacks, selectionProps)
 }
 
 export let createChildNode = (
     props: CreateChildNodeProps, 
     callbacks: CreateChildNodeCallbacks,
-    selectionCallbacks
+    selectionCallbacks: SelectionCallbackProps
     ) => {
 
     let {
@@ -230,13 +225,13 @@ export let createChildNode = (
 
     let newnodeconfig = new BudgetNode(newnodeconfigparms)
 
-    let newnodeindex: any = null
+    let newcellindex: any = null
     let chartParmsObj: ChartParmsObj = null
     let isError = false
-    for (newnodeindex in newnodeconfig.cells) {
+    for (newcellindex in newnodeconfig.cells) {
         let props: GetChartParmsProps = {
             budgetNode: newnodeconfig,
-            chartIndex: newnodeindex,
+            chartIndex: newcellindex,
             userselections,
             budgetdata,
             chartmatrixrow,
@@ -248,12 +243,16 @@ export let createChildNode = (
             onPortalCreation,
             workingStatus,
         }
-        chartParmsObj = getChartParms(props, {})
+        let childSelectionCallbacks: SelectionCallbackProps = {
+            current: selectionCallbacks.next(nodeIndex + 1)(newcellindex),
+            next: selectionCallbacks.next,
+        }
+        chartParmsObj = getChartParms(props, childSelectionCallbacks)
         if (chartParmsObj.isError) {
             isError = true
             break
         }
-        let budgetCell = newnodeconfig.cells[newnodeindex]
+        let budgetCell = newnodeconfig.cells[newcellindex]
         budgetCell.chartparms = chartParmsObj.chartParms
         budgetCell.chartCode =
             ChartTypeCodes[budgetCell.googleChartType]

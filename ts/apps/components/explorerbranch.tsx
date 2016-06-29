@@ -293,8 +293,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let isError = false
         let chartParmsObj: ChartParmsObj = null
 
-        let fn = onChartComponentSelection(
-                            this.props.userselections)(budgetdata)(chartmatrixrow)
+        let childcallbacks: CreateChildNodeCallbacks = {
+            updateChartSelections: this.props.callbacks.updateChartSelections,
+            refreshPresentation: this.refreshPresentation,
+            onPortalCreation: this.onPortalCreation,
+            workingStatus: this.props.callbacks.workingStatus,
+        }
+        let fn = (userselections)(budgetdata)(chartmatrixrow)(childcallbacks)
 
         for (cellptr in chartmatrixrow) {
             parentBudgetNode = budgetNode
@@ -338,15 +343,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                         context,
                         chart:prevBudgetCell.chart,
                     }
-                    let childcallbacks: CreateChildNodeCallbacks = {
-                        updateChartSelections: this.props.callbacks.updateChartSelections,
-                        refreshPresentation: this.refreshPresentation,
-                        onPortalCreation: this.onPortalCreation,
-                        workingStatus: this.props.callbacks.workingStatus,
-                    }
-                    let fnext = fn(childcallbacks)
-                    let fcurrent = fnext(cellptr)(0)
-                    createChildNode(childprops, childcallbacks,{current:fcurrent,next:fnext})
+                    let fcurrent = fn(cellptr)(0)
+                    createChildNode(childprops, childcallbacks,{current:fcurrent,next:fn})
                     let message = null
                     if (deeperdata) {
                         message = "More drilldown is available for current facet selection"
@@ -448,7 +446,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             onPortalCreation: this.onPortalCreation,
             workingStatus: this.props.callbacks.workingStatus,
         }
-        let chartParmsObj: ChartParmsObj = getChartParms(props,{})
+        let chartParmsObj: ChartParmsObj = getChartParms(props,{current: null, next: null})
         if (!chartParmsObj.isError) {
             budgetCell.chartparms = chartParmsObj.chartParms
             budgetCell.chartCode =

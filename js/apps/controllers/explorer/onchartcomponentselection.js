@@ -5,14 +5,8 @@ const constants_1 = require('../../constants');
 const getchartparms_1 = require('./getchartparms');
 const getbudgetnode_1 = require('./getbudgetnode');
 let applyChartComponentSelection = (props, callbacks) => {
-    let context = props.context;
-    let userselections = props.userselections;
-    let budgetdata = props.budgetdata;
-    let chartmatrixrow = props.chartmatrixrow;
-    let refreshPresentation = callbacks.refreshPresentation;
-    let onPortalCreation = callbacks.onPortalCreation;
-    let workingStatus = callbacks.workingStatus;
-    let updateChartSelections = callbacks.updateChartSelections;
+    let { context, userselections, budgetdata, chartmatrixrow, selectionProps } = props;
+    let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks;
     let selection = context.selection[0];
     let selectionrow;
     if (selection) {
@@ -50,7 +44,7 @@ let applyChartComponentSelection = (props, callbacks) => {
         chart: chart,
     };
     let childcallbacks = callbacks;
-    exports.createChildNode(childprops, childcallbacks, {});
+    exports.createChildNode(childprops, childcallbacks, selectionProps);
 };
 exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     let { budgetNode, userselections, budgetdata, chartmatrixrow, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
@@ -101,13 +95,13 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
         dataNode: newdatanode,
     };
     let newnodeconfig = new budgetnode_1.default(newnodeconfigparms);
-    let newnodeindex = null;
+    let newcellindex = null;
     let chartParmsObj = null;
     let isError = false;
-    for (newnodeindex in newnodeconfig.cells) {
+    for (newcellindex in newnodeconfig.cells) {
         let props = {
             budgetNode: newnodeconfig,
-            chartIndex: newnodeindex,
+            chartIndex: newcellindex,
             userselections: userselections,
             budgetdata: budgetdata,
             chartmatrixrow: chartmatrixrow,
@@ -118,12 +112,16 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
             onPortalCreation: onPortalCreation,
             workingStatus: workingStatus,
         };
-        chartParmsObj = getchartparms_1.default(props, {});
+        let childSelectionCallbacks = {
+            current: selectionCallbacks.next(nodeIndex + 1)(newcellindex),
+            next: selectionCallbacks.next,
+        };
+        chartParmsObj = getchartparms_1.default(props, childSelectionCallbacks);
         if (chartParmsObj.isError) {
             isError = true;
             break;
         }
-        let budgetCell = newnodeconfig.cells[newnodeindex];
+        let budgetCell = newnodeconfig.cells[newcellindex];
         budgetCell.chartparms = chartParmsObj.chartParms;
         budgetCell.chartCode =
             constants_1.ChartTypeCodes[budgetCell.googleChartType];
