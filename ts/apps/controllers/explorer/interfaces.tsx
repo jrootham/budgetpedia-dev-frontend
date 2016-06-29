@@ -60,7 +60,7 @@ interface GetChartParmsProps {
     budgetNode: BudgetNode, 
     chartIndex: number,
     userselections:any, 
-    budgetdata: any,
+    configData: any,
 }
 
 // interface GetChartParmsCallbacks {

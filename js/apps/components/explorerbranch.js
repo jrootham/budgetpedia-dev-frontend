@@ -82,12 +82,16 @@ class ExplorerBranch extends Component {
                 workingStatus: this.props.callbacks.workingStatus,
             };
             let selectfn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks);
+            let configData = {
+                viewpointConfig: budgetdata.viewpointdata.Configuration,
+                itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
+            };
             for (cellindex in budgetNode.cells) {
                 let budgetCell = budgetNode.cells[cellindex];
                 let props = {
                     budgetNode: budgetNode,
                     chartIndex: cellindex,
-                    budgetdata: budgetdata,
+                    configData: configData,
                     userselections: userselections,
                 };
                 let fcurrent = selectfn(0)(cellindex);
@@ -240,12 +244,16 @@ class ExplorerBranch extends Component {
                 let nodecellindex = null;
                 if (!budgetNode)
                     break;
+                let configData = {
+                    viewpointConfig: budgetdata.viewpointdata.Configuration,
+                    itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
+                };
                 for (nodecellindex in budgetNode.cells) {
                     let props = {
                         budgetNode: budgetNode,
                         chartIndex: nodecellindex,
                         userselections: userselections,
-                        budgetdata: budgetdata,
+                        configData: configData,
                     };
                     let fcurrent = fn(cellptr)(nodecellindex), chartParmsObj = getchartparms_1.default(props, { current: fcurrent, next: fn });
                     if (chartParmsObj.isError) {
@@ -295,11 +303,15 @@ class ExplorerBranch extends Component {
             let oldChartType = budgetCell.googleChartType;
             budgetCell.googleChartType = chartType;
             let budgetdata = this.props.budgetBranch.data;
+            let configData = {
+                viewpointConfig: budgetdata.viewpointdata.Configuration,
+                itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
+            };
             let props = {
                 budgetNode: budgetNode,
                 chartIndex: cellIndex,
                 userselections: this.state.userselections,
-                budgetdata: budgetdata,
+                configData: configData,
             };
             let callbacks = {
                 updateChartSelections: this.props.callbacks.updateChartSelections,

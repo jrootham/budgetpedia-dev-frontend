@@ -40,13 +40,18 @@ export interface SelectionCallbackProps {
     next: Function,
 }
 
+interface ConfigData {
+    viewpointConfig: any,
+    itemseriesConfig: any,
+}
+
 let getChartParms = (
         props:GetChartParmsProps, selectionCallbacks: SelectionCallbackProps
     ):ChartParmsObj => {
 
-    let { budgetNode, chartIndex, userselections, budgetdata } = props
-    let viewpointconfigdata = budgetdata.viewpointdata.Configuration
-    let itemseriesconfigdata:DatasetConfig = budgetdata.viewpointdata.itemseriesconfigdata
+    let { budgetNode, chartIndex, userselections, configData }: 
+        {budgetNode: BudgetNode, chartIndex: any, userselections: any, configData: ConfigData} = props
+    let { viewpointConfig, itemseriesConfig }  = configData
 
     let budgetCell: MatrixCellConfig = budgetNode.cells[chartIndex]
 
@@ -71,9 +76,9 @@ let getChartParms = (
     // unpack userselections
     let dataseriesname = userselections.facet
 
-    let units = itemseriesconfigdata.Units,
+    let units = itemseriesConfig.Units,
         vertlabel
-    vertlabel = itemseriesconfigdata.UnitsAlias
+    vertlabel = itemseriesConfig.UnitsAlias
     if (units != 'FTE') {
         if (dataseriesname == 'BudgetExpenses')
             vertlabel = 'Expenditures' + ' (' + vertlabel + ')'
@@ -119,10 +124,10 @@ let getChartParms = (
     let axistitle = null
     if ((node.Contents) && (nodeDataPropertyName == 'Components')) {
     // if ((node.Contents) && (node.Contents != 'BASELINE') && (nodeDataPropertyName == 'Components')) {
-        let titleref = viewpointconfigdata[node.Contents]
+        let titleref = viewpointConfig[node.Contents]
         axistitle = titleref.Alias || titleref.Name
     } else {
-        let portaltitles = itemseriesconfigdata.Titles
+        let portaltitles = itemseriesConfig.Titles
         axistitle = portaltitles.Categories
     }
 
@@ -133,7 +138,7 @@ let getChartParms = (
         let configindex = node.Config || parentdataNode.Contents
         let catname = null
         if (configindex) {
-            let category = viewpointconfigdata[configindex].Instance
+            let category = viewpointConfig[configindex].Instance
             catname = category.Alias || category.Name
         } else {
             catname = 'Service/Activity'
@@ -141,7 +146,7 @@ let getChartParms = (
         title = catname + ': ' + budgetNode.parentData.Name
     }
     else {
-        title = itemseriesconfigdata.Title
+        title = itemseriesConfig.Title
     }
     let titleamount = null
     if (node.years) {

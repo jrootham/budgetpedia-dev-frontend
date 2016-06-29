@@ -154,13 +154,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             workingStatus: this.props.callbacks.workingStatus,
         }
         let selectfn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)
-
+        let configData = {
+            viewpointConfig:budgetdata.viewpointdata.Configuration,
+            itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
+        }
         for (cellindex in budgetNode.cells) {
             let budgetCell = budgetNode.cells[cellindex]
             let props: GetChartParmsProps = {
                 budgetNode: budgetNode,
                 chartIndex: cellindex,
-                budgetdata,
+                configData,
                 userselections,
             }
 
@@ -359,12 +362,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
             let nodecellindex: any = null
             if (!budgetNode) break
+            let configData = {
+                viewpointConfig:budgetdata.viewpointdata.Configuration,
+                itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
+            }
             for (nodecellindex in budgetNode.cells) {
                 let props: GetChartParmsProps = {
                     budgetNode: budgetNode,
                     chartIndex: nodecellindex,
                     userselections,
-                    budgetdata,
+                    configData,
                 }
                 let fcurrent = fn(cellptr)(nodecellindex),
                 chartParmsObj = getChartParms(props, {current:fcurrent,next:fn})
@@ -424,11 +431,15 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let oldChartType = budgetCell.googleChartType
         budgetCell.googleChartType = chartType
         let budgetdata = this.props.budgetBranch.data
+        let configData = {
+            viewpointConfig:budgetdata.viewpointdata.Configuration,
+            itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
+        }        
         let props: GetChartParmsProps = {
             budgetNode: budgetNode,
             chartIndex: cellIndex,
             userselections: this.state.userselections,
-            budgetdata,
+            configData,
         }
         let callbacks = {
             updateChartSelections: this.props.callbacks.updateChartSelections,

@@ -98,12 +98,16 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     let newcellindex = null;
     let chartParmsObj = null;
     let isError = false;
+    let configData = {
+        viewpointConfig: budgetdata.viewpointdata.Configuration,
+        itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
+    };
     for (newcellindex in newnodeconfig.cells) {
         let props = {
             budgetNode: newnodeconfig,
             chartIndex: newcellindex,
             userselections: userselections,
-            budgetdata: budgetdata,
+            configData: configData,
         };
         let ccallbacks = {
             updateChartSelections: updateChartSelections,

@@ -227,12 +227,16 @@ export let createChildNode = (
     let newcellindex: any = null
     let chartParmsObj: ChartParmsObj = null
     let isError = false
+    let configData = {
+        viewpointConfig:budgetdata.viewpointdata.Configuration,
+        itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
+    }
     for (newcellindex in newnodeconfig.cells) {
         let props: GetChartParmsProps = {
             budgetNode: newnodeconfig,
             chartIndex: newcellindex,
             userselections,
-            budgetdata,
+            configData,
         }
         let ccallbacks = 
         {
