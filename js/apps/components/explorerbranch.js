@@ -44,11 +44,11 @@ class ExplorerBranch extends Component {
             let { userselections, chartmatrixrow } = this.state;
             let budgetdata = this.props.budgetBranch.data;
             let matrixlocation, chartParmsObj;
-            let { viewpoint: viewpointname, facet } = userselections;
+            let { viewpoint: viewpointname, facet: dataseriesname, inflationadjusted: wantsInflationAdjusted } = userselections;
             let viewpointdata = databaseapi_1.default.getViewpointData({
                 viewpointname: viewpointname,
-                dataseriesname: facet,
-                wantsInflationAdjusted: userselections.inflationadjusted,
+                dataseriesname: dataseriesname,
+                wantsInflationAdjusted: wantsInflationAdjusted,
                 timeSpecs: {
                     leftYear: null,
                     rightYear: null,
@@ -58,14 +58,15 @@ class ExplorerBranch extends Component {
             budgetdata.viewpointdata = viewpointdata;
             let datapath = [];
             let node = getbudgetnode_1.getBudgetNode(viewpointdata, datapath);
+            let { charttype: defaultChartType, viewpoint: viewpointName, facet: facetName, latestyear: rightYear, } = userselections;
             let budgetNodeParms = {
-                defaultChartType: userselections.charttype,
-                viewpointName: userselections.viewpoint,
-                facetName: userselections.facet,
+                defaultChartType: defaultChartType,
+                viewpointName: viewpointName,
+                facetName: facetName,
                 portalCharts: viewpointdata.PortalCharts,
                 timeSpecs: {
                     leftYear: null,
-                    rightYear: userselections.latestyear,
+                    rightYear: rightYear,
                     spanYears: false,
                 },
                 dataPath: [],
@@ -74,16 +75,18 @@ class ExplorerBranch extends Component {
             };
             let budgetNode = new budgetnode_1.default(budgetNodeParms);
             let cellindex;
+            let { updateChartSelections, workingStatus } = this.props.callbacks;
             let callbacks = {
-                updateChartSelections: this.props.callbacks.updateChartSelections,
+                updateChartSelections: updateChartSelections,
                 refreshPresentation: this.refreshPresentation,
                 onPortalCreation: this.onPortalCreation,
-                workingStatus: this.props.callbacks.workingStatus,
+                workingStatus: workingStatus,
             };
             let selectfn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks);
+            let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = budgetdata.viewpointdata;
             let configData = {
-                viewpointConfig: budgetdata.viewpointdata.Configuration,
-                itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
+                viewpointConfig: viewpointConfig,
+                itemseriesConfig: itemseriesConfig,
             };
             for (cellindex in budgetNode.cells) {
                 let budgetCell = budgetNode.cells[cellindex];

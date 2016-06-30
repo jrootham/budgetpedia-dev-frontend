@@ -109,12 +109,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         // ------------------------[ POPULATE VIEWPOINT WITH VALUES ]-----------------------
 
-        let { viewpoint: viewpointname, facet } = userselections
+        let { 
+            viewpoint: viewpointname, 
+            facet: dataseriesname, 
+            inflationadjusted: wantsInflationAdjusted 
+        } = userselections
 
         let viewpointdata = databaseapi.getViewpointData({
             viewpointname, 
-            dataseriesname: facet,
-            wantsInflationAdjusted: userselections.inflationadjusted,
+            dataseriesname,
+            wantsInflationAdjusted,
             timeSpecs: {
                 leftYear: null,
                 rightYear: null,
@@ -128,14 +132,21 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let datapath = []
         let node = getBudgetNode(viewpointdata, datapath)
 
+        let {
+            charttype:defaultChartType,
+            viewpoint:viewpointName,
+            facet:facetName,
+            latestyear:rightYear,
+        } = userselections
+
         let budgetNodeParms = {
-            defaultChartType: userselections.charttype,
-            viewpointName: userselections.viewpoint,
-            facetName: userselections.facet,
+            defaultChartType,
+            viewpointName,
+            facetName,
             portalCharts:viewpointdata.PortalCharts,
             timeSpecs: {
                 leftYear:null,
-                rightYear:userselections.latestyear,
+                rightYear,
                 spanYears:false,
             },
             dataPath: [],
@@ -146,17 +157,24 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms)
 
         let cellindex: any
-
+        let {
+            updateChartSelections,
+            workingStatus
+        } = this.props.callbacks
         let callbacks = {
-            updateChartSelections: this.props.callbacks.updateChartSelections,
+            updateChartSelections,
             refreshPresentation: this.refreshPresentation,
             onPortalCreation: this.onPortalCreation,
-            workingStatus: this.props.callbacks.workingStatus,
+            workingStatus,
         }
         let selectfn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)
+        let {
+            Configuration: viewpointConfig,
+            itemseriesconfigdata: itemseriesConfig,
+        } = budgetdata.viewpointdata
         let configData = {
-            viewpointConfig:budgetdata.viewpointdata.Configuration,
-            itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
+            viewpointConfig,
+            itemseriesConfig,
         }
         for (cellindex in budgetNode.cells) {
             let budgetCell = budgetNode.cells[cellindex]
