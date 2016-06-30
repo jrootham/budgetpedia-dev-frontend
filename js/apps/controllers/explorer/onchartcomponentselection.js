@@ -93,7 +93,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
         timeSpecs: newrange,
         dataNode: newdatanode,
     };
-    let newnodeconfig = new budgetnode_1.default(newnodeconfigparms);
+    let newBudgetNode = new budgetnode_1.default(newnodeconfigparms);
     let newcellindex = null;
     let chartParmsObj = null;
     let isError = false;
@@ -101,7 +101,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
         viewpointConfig: budgetdata.viewpointdata.Configuration,
         itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
     };
-    for (newcellindex in newnodeconfig.cells) {
+    for (newcellindex in newBudgetNode.cells) {
         let props = {
             chartIndex: newcellindex,
             userselections: userselections,
@@ -117,12 +117,12 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
             current: selectionCallbacks.next(nodeIndex + 1)(newcellindex),
             next: selectionCallbacks.next,
         };
-        chartParmsObj = budgetNode.getChartParms(props, childSelectionCallbacks);
+        chartParmsObj = newBudgetNode.getChartParms(props, childSelectionCallbacks);
         if (chartParmsObj.isError) {
             isError = true;
             break;
         }
-        let budgetCell = newnodeconfig.cells[newcellindex];
+        let budgetCell = newBudgetNode.cells[newcellindex];
         budgetCell.chartparms = chartParmsObj.chartParms;
         budgetCell.chartCode =
             constants_1.ChartTypeCodes[budgetCell.googleChartType];
@@ -133,7 +133,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
         return;
     }
     let newmatrixcolumn = nodeIndex + 1;
-    chartmatrixrow[newmatrixcolumn] = newnodeconfig;
+    chartmatrixrow[newmatrixcolumn] = newBudgetNode;
     refreshPresentation();
     let budgetCell = budgetNode.cells[cellIndex];
     budgetCell.chartselection = context.selection;

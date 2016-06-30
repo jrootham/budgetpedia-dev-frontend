@@ -221,7 +221,7 @@ export let createChildNode = (
         dataNode:newdatanode,
     }
 
-    let newnodeconfig = new BudgetNode(newnodeconfigparms)
+    let newBudgetNode = new BudgetNode(newnodeconfigparms)
 
     let newcellindex: any = null
     let chartParmsObj: ChartParmsObj = null
@@ -230,7 +230,7 @@ export let createChildNode = (
         viewpointConfig:budgetdata.viewpointdata.Configuration,
         itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
     }
-    for (newcellindex in newnodeconfig.cells) {
+    for (newcellindex in newBudgetNode.cells) {
         let props: GetCellChartProps = {
             chartIndex: newcellindex,
             userselections,
@@ -247,12 +247,12 @@ export let createChildNode = (
             current: selectionCallbacks.next(nodeIndex + 1)(newcellindex),
             next: selectionCallbacks.next,
         }
-        chartParmsObj = budgetNode.getChartParms(props, childSelectionCallbacks)
+        chartParmsObj = newBudgetNode.getChartParms(props, childSelectionCallbacks)
         if (chartParmsObj.isError) {
             isError = true
             break
         }
-        let budgetCell = newnodeconfig.cells[newcellindex]
+        let budgetCell = newBudgetNode.cells[newcellindex]
         budgetCell.chartparms = chartParmsObj.chartParms
         budgetCell.chartCode =
             ChartTypeCodes[budgetCell.googleChartType]
@@ -264,7 +264,7 @@ export let createChildNode = (
         return
     }
     let newmatrixcolumn = nodeIndex + 1
-    chartmatrixrow[newmatrixcolumn] = newnodeconfig
+    chartmatrixrow[newmatrixcolumn] = newBudgetNode
 
     refreshPresentation()
 

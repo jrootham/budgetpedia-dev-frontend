@@ -42,7 +42,9 @@ class BudgetNode {
 
     public getChartParms = (props: GetCellChartProps, selectionCallbacks) => {
         let sourceProps: GetChartParmsProps = {} as GetChartParmsProps
-        Object.assign(sourceProps, props, {budgetNode: this})
+        let node = this
+        Object.assign(sourceProps, props, {budgetNode: node})
+        // console.log('sourceProps',sourceProps, selectionCallbacks)
         return getChartParmsSource(sourceProps, selectionCallbacks)
     }
 

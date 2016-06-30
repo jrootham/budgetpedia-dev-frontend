@@ -5,7 +5,8 @@ class BudgetNode {
     constructor(parms) {
         this.getChartParms = (props, selectionCallbacks) => {
             let sourceProps = {};
-            Object.assign(sourceProps, props, { budgetNode: this });
+            let node = this;
+            Object.assign(sourceProps, props, { budgetNode: node });
             return getchartparms_1.default(sourceProps, selectionCallbacks);
         };
         this.setCells = (portalcharts, defaultChartType) => {
