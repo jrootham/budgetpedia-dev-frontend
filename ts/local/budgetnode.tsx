@@ -7,6 +7,7 @@ import {
     MatrixCellConfig,
     MatrixLocation,
 } from '../apps/controllers/explorer/interfaces'
+import getChartParmsSource from '../apps/controllers/explorer/getchartparms'
 
 export interface BudgetNodeParms {
     defaultChartType: string,
@@ -36,6 +37,8 @@ class BudgetNode {
         if (parms.parentData) this.parentData = parms.parentData
 
     }
+
+    public getChartParms = getChartParmsSource
 
     private setCells = (portalcharts, defaultChartType) => {
         this._cells = []

@@ -1,7 +1,9 @@
 "use strict";
 const constants_1 = require('../apps/constants');
+const getchartparms_1 = require('../apps/controllers/explorer/getchartparms');
 class BudgetNode {
     constructor(parms) {
+        this.getChartParms = getchartparms_1.default;
         this.setCells = (portalcharts, defaultChartType) => {
             this._cells = [];
             let defaultChartCode = constants_1.ChartTypeCodes[defaultChartType];

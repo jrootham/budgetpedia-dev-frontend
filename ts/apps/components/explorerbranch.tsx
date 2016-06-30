@@ -34,7 +34,7 @@ import Snackbar from 'material-ui/Snackbar';
 import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
 import databaseapi , { DatasetConfig, TimeSpecs, Viewpoint } from '../../local/databaseapi'
-import getChartParms from '../controllers/explorer/getchartparms'
+// import getChartParms from '../controllers/explorer/getchartparms'
 import { createChildNode,
     ChartSelectionContext,
     CreateChildNodeProps,
@@ -169,7 +169,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
             let fcurrent = selectfn(0)(cellindex)
 
-            chartParmsObj = getChartParms(props, {current:fcurrent,next:selectfn})
+            chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:selectfn})
 
             if (!chartParmsObj.isError) {
 
@@ -374,7 +374,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     configData,
                 }
                 let fcurrent = fn(cellptr)(nodecellindex),
-                chartParmsObj = getChartParms(props, {current:fcurrent,next:fn})
+                chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:fn})
                 if (chartParmsObj.isError) {
                     chartmatrixrow.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
@@ -449,7 +449,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         }
         let fn = onChartComponentSelection(this.state.userselections)(budgetdata)(chartmatrixrow)(callbacks)
         let fncurrent = fn(nodeIndex)(cellIndex)
-        let chartParmsObj: ChartParmsObj = getChartParms(props,{current: fncurrent, next: fn})
+        let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(props,{current: fncurrent, next: fn})
         if (!chartParmsObj.isError) {
             budgetCell.chartparms = chartParmsObj.chartParms
             budgetCell.chartCode =

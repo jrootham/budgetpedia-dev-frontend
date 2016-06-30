@@ -15,7 +15,7 @@ import {
 
 import BudgetNode, {BudgetNodeParms} from '../../../local/budgetnode'
 import { ChartTypeCodes } from '../../constants'
-import getChartParms, {SelectionCallbackProps} from './getchartparms'
+import {SelectionCallbackProps} from './getchartparms'
 import { getBudgetNode } from './getbudgetnode'
 import { DatasetConfig } from '../../../local/databaseapi'
 
@@ -249,7 +249,7 @@ export let createChildNode = (
             current: selectionCallbacks.next(nodeIndex + 1)(newcellindex),
             next: selectionCallbacks.next,
         }
-        chartParmsObj = getChartParms(props, childSelectionCallbacks)
+        chartParmsObj = budgetNode.getChartParms(props, childSelectionCallbacks)
         if (chartParmsObj.isError) {
             isError = true
             break

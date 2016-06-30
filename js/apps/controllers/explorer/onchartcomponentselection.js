@@ -2,7 +2,6 @@
 var format = require('format-number');
 const budgetnode_1 = require('../../../local/budgetnode');
 const constants_1 = require('../../constants');
-const getchartparms_1 = require('./getchartparms');
 const getbudgetnode_1 = require('./getbudgetnode');
 let applyChartComponentSelection = (props, callbacks) => {
     let { context, userselections, budgetdata, chartmatrixrow, selectionProps } = props;
@@ -119,7 +118,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
             current: selectionCallbacks.next(nodeIndex + 1)(newcellindex),
             next: selectionCallbacks.next,
         };
-        chartParmsObj = getchartparms_1.default(props, childSelectionCallbacks);
+        chartParmsObj = budgetNode.getChartParms(props, childSelectionCallbacks);
         if (chartParmsObj.isError) {
             isError = true;
             break;

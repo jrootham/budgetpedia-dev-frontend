@@ -10,7 +10,6 @@ const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
 const constants_1 = require('../constants');
 const databaseapi_1 = require('../../local/databaseapi');
-const getchartparms_1 = require('../controllers/explorer/getchartparms');
 const onchartcomponentselection_1 = require('../controllers/explorer/onchartcomponentselection');
 const budgetnode_1 = require('../../local/budgetnode');
 class ExplorerBranch extends Component {
@@ -95,7 +94,7 @@ class ExplorerBranch extends Component {
                     userselections: userselections,
                 };
                 let fcurrent = selectfn(0)(cellindex);
-                chartParmsObj = getchartparms_1.default(props, { current: fcurrent, next: selectfn });
+                chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: selectfn });
                 if (!chartParmsObj.isError) {
                     budgetCell.chartparms = chartParmsObj.chartParms;
                     budgetCell.chartCode =
@@ -255,7 +254,7 @@ class ExplorerBranch extends Component {
                         userselections: userselections,
                         configData: configData,
                     };
-                    let fcurrent = fn(cellptr)(nodecellindex), chartParmsObj = getchartparms_1.default(props, { current: fcurrent, next: fn });
+                    let fcurrent = fn(cellptr)(nodecellindex), chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: fn });
                     if (chartParmsObj.isError) {
                         chartmatrixrow.splice(cellptr);
                         if (cellptr > 0) {
@@ -321,7 +320,7 @@ class ExplorerBranch extends Component {
             };
             let fn = onchartcomponentselection_1.onChartComponentSelection(this.state.userselections)(budgetdata)(chartmatrixrow)(callbacks);
             let fncurrent = fn(nodeIndex)(cellIndex);
-            let chartParmsObj = getchartparms_1.default(props, { current: fncurrent, next: fn });
+            let chartParmsObj = budgetNode.getChartParms(props, { current: fncurrent, next: fn });
             if (!chartParmsObj.isError) {
                 budgetCell.chartparms = chartParmsObj.chartParms;
                 budgetCell.chartCode =
