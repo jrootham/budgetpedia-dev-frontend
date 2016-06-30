@@ -103,7 +103,6 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     };
     for (newcellindex in newnodeconfig.cells) {
         let props = {
-            budgetNode: newnodeconfig,
             chartIndex: newcellindex,
             userselections: userselections,
             configData: configData,

@@ -55,12 +55,15 @@ interface PortalChartLocation {
     matrixlocation: MatrixLocation,
     cellIndex: number,
 }
-    
-interface GetChartParmsProps {
-    budgetNode: BudgetNode, 
+
+export interface GetCellChartProps {
     chartIndex: number,
     userselections:any, 
     configData: any,
+}
+
+interface GetChartParmsProps extends GetCellChartProps {
+    budgetNode: BudgetNode, 
 }
 
 // interface GetChartParmsCallbacks {

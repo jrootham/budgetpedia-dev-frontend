@@ -3,7 +3,11 @@ const constants_1 = require('../apps/constants');
 const getchartparms_1 = require('../apps/controllers/explorer/getchartparms');
 class BudgetNode {
     constructor(parms) {
-        this.getChartParms = getchartparms_1.default;
+        this.getChartParms = (props, selectionCallbacks) => {
+            let sourceProps = {};
+            Object.assign(sourceProps, props, { budgetNode: this });
+            return getchartparms_1.default(sourceProps, selectionCallbacks);
+        };
         this.setCells = (portalcharts, defaultChartType) => {
             this._cells = [];
             let defaultChartCode = constants_1.ChartTypeCodes[defaultChartType];

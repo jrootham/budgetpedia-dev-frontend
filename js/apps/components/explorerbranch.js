@@ -88,7 +88,6 @@ class ExplorerBranch extends Component {
             for (cellindex in budgetNode.cells) {
                 let budgetCell = budgetNode.cells[cellindex];
                 let props = {
-                    budgetNode: budgetNode,
                     chartIndex: cellindex,
                     configData: configData,
                     userselections: userselections,
@@ -249,7 +248,6 @@ class ExplorerBranch extends Component {
                 };
                 for (nodecellindex in budgetNode.cells) {
                     let props = {
-                        budgetNode: budgetNode,
                         chartIndex: nodecellindex,
                         userselections: userselections,
                         configData: configData,
@@ -307,7 +305,6 @@ class ExplorerBranch extends Component {
                 itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
             };
             let props = {
-                budgetNode: budgetNode,
                 chartIndex: cellIndex,
                 userselections: this.state.userselections,
                 configData: configData,

@@ -15,7 +15,7 @@ import {
     CellCallbacks,
     PortalChartLocation,
     ChartConfig,
-    GetChartParmsProps,
+    GetCellChartProps,
     // GetChartParmsCallbacks,
 } from '../controllers/explorer/interfaces'
 
@@ -160,8 +160,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         }
         for (cellindex in budgetNode.cells) {
             let budgetCell = budgetNode.cells[cellindex]
-            let props: GetChartParmsProps = {
-                budgetNode: budgetNode,
+            let props: GetCellChartProps = {
                 chartIndex: cellindex,
                 configData,
                 userselections,
@@ -367,8 +366,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                 itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
             }
             for (nodecellindex in budgetNode.cells) {
-                let props: GetChartParmsProps = {
-                    budgetNode: budgetNode,
+                let props: GetCellChartProps = {
                     chartIndex: nodecellindex,
                     userselections,
                     configData,
@@ -435,8 +433,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             viewpointConfig:budgetdata.viewpointdata.Configuration,
             itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
         }        
-        let props: GetChartParmsProps = {
-            budgetNode: budgetNode,
+        let props: GetCellChartProps = {
             chartIndex: cellIndex,
             userselections: this.state.userselections,
             configData,

@@ -6,6 +6,8 @@ import { ChartTypeCodes, ChartCodeTypes } from '../apps/constants'
 import {
     MatrixCellConfig,
     MatrixLocation,
+    GetCellChartProps,
+    GetChartParmsProps
 } from '../apps/controllers/explorer/interfaces'
 import getChartParmsSource from '../apps/controllers/explorer/getchartparms'
 
@@ -38,7 +40,11 @@ class BudgetNode {
 
     }
 
-    public getChartParms = getChartParmsSource
+    public getChartParms = (props: GetCellChartProps, selectionCallbacks) => {
+        let sourceProps: GetChartParmsProps = {} as GetChartParmsProps
+        Object.assign(sourceProps, props, {budgetNode: this})
+        return getChartParmsSource(sourceProps, selectionCallbacks)
+    }
 
     private setCells = (portalcharts, defaultChartType) => {
         this._cells = []

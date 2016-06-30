@@ -9,8 +9,7 @@ import {
     PortalChartLocation,
     SortedComponentItem,
     MatrixCellConfig,
-    GetChartParmsProps,
-    // GetChartParmsCallbacks,
+    GetCellChartProps,
 } from './interfaces'
 
 import BudgetNode, {BudgetNodeParms} from '../../../local/budgetnode'
@@ -232,8 +231,7 @@ export let createChildNode = (
         itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
     }
     for (newcellindex in newnodeconfig.cells) {
-        let props: GetChartParmsProps = {
-            budgetNode: newnodeconfig,
+        let props: GetCellChartProps = {
             chartIndex: newcellindex,
             userselections,
             configData,
