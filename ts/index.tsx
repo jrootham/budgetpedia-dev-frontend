@@ -11,7 +11,7 @@
 
 import * as React from 'react'
 import { render } from 'react-dom'
-import Main from './controllers/main'
+import Main from './core/controllers/main'
 // install fetch as global function for browsers (eg Safari) that don't have it
 // require('isomorphic-fetch')
 

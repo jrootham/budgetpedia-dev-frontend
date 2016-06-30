@@ -13,7 +13,7 @@ let budgetdata = {} // require('../../explorerprototypedata/2015budgetA.json')
 
 import theme from 'material-ui/styles/baseThemes/lightBaseTheme'
 
-import database, {CurrencyDataset,ItemDataset} from './databaseapi'
+import database, {CurrencyDataset,ItemDataset} from '../addins/classes/databaseapi'
 
 // fontFamily: "Roboto, sans-serif"
 // palette: Object
