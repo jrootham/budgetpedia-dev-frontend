@@ -9,7 +9,7 @@ import {
     GetCellChartProps,
     GetChartParmsProps
 } from '../controllers/explorer/interfaces'
-import getChartParmsSource from '../controllers/explorer/getchartparms'
+import getChartParmsSource from './modules/getchartparms'
 
 export interface BudgetNodeParms {
     defaultChartType: string,

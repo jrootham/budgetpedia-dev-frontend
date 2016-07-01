@@ -1,6 +1,6 @@
 "use strict";
 const constants_1 = require('../constants');
-const getchartparms_1 = require('../controllers/explorer/getchartparms');
+const getchartparms_1 = require('./modules/getchartparms');
 class BudgetNode {
     constructor(parms) {
         this.getChartParms = (props, selectionCallbacks) => {
