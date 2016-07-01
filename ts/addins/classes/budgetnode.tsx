@@ -8,7 +8,7 @@ import {
     MatrixLocation,
     GetCellChartProps,
     GetChartParmsProps
-} from '../controllers/explorer/interfaces'
+} from '../containers/explorer/interfaces'
 import getChartParmsSource from './modules/getchartparms'
 
 export interface BudgetNodeParms {

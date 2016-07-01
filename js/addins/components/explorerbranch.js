@@ -2,7 +2,7 @@
 const React = require('react');
 var { Component } = React;
 const explorerportal_1 = require('./explorerportal');
-const getbudgetnode_1 = require('../controllers/explorer/getbudgetnode');
+const getbudgetnode_1 = require('../containers/explorer/getbudgetnode');
 const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
 const FontIcon_1 = require('material-ui/FontIcon');
@@ -10,7 +10,7 @@ const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
 const constants_1 = require('../constants');
 const databaseapi_1 = require('../classes/databaseapi');
-const onchartcomponentselection_1 = require('../controllers/explorer/onchartcomponentselection');
+const onchartcomponentselection_1 = require('../containers/explorer/onchartcomponentselection');
 const budgetnode_1 = require('../classes/budgetnode');
 class ExplorerBranch extends Component {
     constructor(props) {

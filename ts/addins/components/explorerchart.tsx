@@ -14,7 +14,7 @@ import {
     ChartParms,
     CellSettings,
     CellCallbacks,
-} from '../controllers/explorer/interfaces'
+} from '../containers/explorer/interfaces'
 
 interface ExplorerChartProps {
     callbackid: string | number,

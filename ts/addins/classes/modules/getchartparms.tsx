@@ -21,9 +21,9 @@ import {
     MatrixCellConfig,
     GetChartParmsProps,
     // GetChartParmsCallbacks,
-} from '../../controllers/explorer/interfaces'
+} from '../../containers/explorer/interfaces'
 
-import { getBudgetNode } from '../../controllers/explorer/getbudgetnode'
+import { getBudgetNode } from '../../containers/explorer/getbudgetnode'
 import { ChartTypeCodes } from '../../constants'
 import { 
     // applyChartComponentSelection,
@@ -31,7 +31,7 @@ import {
     ChartSelectionContext,
     OnChartComponentSelectionProps,
     OnChartComponentSelectionCallbacks,
- } from '../../controllers/explorer/onchartcomponentselection'
+ } from '../../containers/explorer/onchartcomponentselection'
 import { DatasetConfig } from '../../classes/databaseapi'
 import BudgetNode from '../../classes/budgetnode'
 

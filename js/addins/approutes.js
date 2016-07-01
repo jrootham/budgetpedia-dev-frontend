@@ -1,18 +1,18 @@
 'use strict';
 const React = require('react');
 const react_router_1 = require('react-router');
-const about_1 = require('./controllers/about');
-const timeline_1 = require('./controllers/timeline');
-const deputations_1 = require('./controllers/deputations');
-const explorer_1 = require('./controllers/explorer');
-const communities_1 = require('./controllers/communities');
-const socialmedia_1 = require('./controllers/socialmedia');
-const newsletter_1 = require('./controllers/newsletter');
-const resources_1 = require('./controllers/resources');
-const joinus_1 = require('./controllers/joinus');
-const stories_1 = require('./controllers/stories');
-const demos_1 = require('./controllers/demos');
-const pathways_1 = require('./controllers/pathways');
+const about_1 = require('./containers/about');
+const timeline_1 = require('./containers/timeline');
+const deputations_1 = require('./containers/deputations');
+const explorer_1 = require('./containers/explorer');
+const communities_1 = require('./containers/communities');
+const socialmedia_1 = require('./containers/socialmedia');
+const newsletter_1 = require('./containers/newsletter');
+const resources_1 = require('./containers/resources');
+const joinus_1 = require('./containers/joinus');
+const stories_1 = require('./containers/stories');
+const demos_1 = require('./containers/demos');
+const pathways_1 = require('./containers/pathways');
 let routedata = [
     { path: "about", component: about_1.default },
     { path: "timeline", component: timeline_1.default },

@@ -13,7 +13,7 @@ import {
     PortalConfig,
     ChartConfig,
     PortalChartLocation,
-} from '../controllers/explorer/interfaces'
+} from '../containers/explorer/interfaces'
 
 import ExplorerChart from './explorerchart'
 

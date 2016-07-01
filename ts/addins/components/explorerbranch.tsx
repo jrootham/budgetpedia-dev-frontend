@@ -17,10 +17,10 @@ import {
     ChartConfig,
     GetCellChartProps,
     // GetChartParmsCallbacks,
-} from '../controllers/explorer/interfaces'
+} from '../containers/explorer/interfaces'
 
 import { ExplorerPortal } from './explorerportal'
-import { getBudgetNode } from '../controllers/explorer/getbudgetnode'
+import { getBudgetNode } from '../containers/explorer/getbudgetnode'
 
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
@@ -40,7 +40,7 @@ import { createChildNode,
     CreateChildNodeProps,
     CreateChildNodeCallbacks,
     onChartComponentSelection,
-} from '../controllers/explorer/onchartcomponentselection'
+} from '../containers/explorer/onchartcomponentselection'
 import * as Actions from '../../core/actions/actions'
 import BudgetNode from '../classes/budgetnode'
 

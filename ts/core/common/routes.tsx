@@ -10,14 +10,14 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import App from './app'
 
 // TODO: isolate hometiles as plugin
-import HomeTiles from '../controllers/hometiles'
+import HomeTiles from '../containers/hometiles'
 
-import ResetPassword from '../controllers/resetpassword'
-import Register from '../controllers/register'
-import RegisterPending from '../controllers/registerpending'
-import RegisterConfirm from '../controllers/registerconfirm'
-import UserProfile from '../controllers/userprofile'
-import NoMatch  from '../controllers/nomatch'
+import ResetPassword from '../containers/resetpassword'
+import Register from '../containers/register'
+import RegisterPending from '../containers/registerpending'
+import RegisterConfirm from '../containers/registerconfirm'
+import UserProfile from '../containers/userprofile'
+import NoMatch  from '../containers/nomatch'
 
 import approutes from '../../addins/approutes'
 

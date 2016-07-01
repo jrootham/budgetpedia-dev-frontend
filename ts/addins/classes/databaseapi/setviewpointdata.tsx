@@ -14,7 +14,7 @@ interface ComponentAggregates {
 
 import {
     SortedComponentItem,
-} from '../../controllers/explorer/interfaces'
+} from '../../containers/explorer/interfaces'
 
 // -------------------[ SET VIEWPOINT HIERARCHY NODE AMOUNTS ]-----------
 
