@@ -95,131 +95,138 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // initialize once - create root drilldown and compare series
     componentDidMount = () => {
 
-        let { callbacks, callbackid } = this.props
+        let { callbacks, callbackid, budgetBranch } = this.props
+        let { refreshPresentation, onPortalCreation } = this
         callbacks.updateChartSelections = callbacks.updateChartSelections(callbackid)
-        this.initializeChartSeries()
+        let nodecallbacks = {
+            updateChartSelections:callbacks.updateChartSelections,
+            refreshPresentation: refreshPresentation,
+            onPortalCreation: onPortalCreation,
+            workingStatus:callbacks.workingStatus,
+        }
+        budgetBranch.initializeChartSeries(
+            {userselections:this.state.userselections}, nodecallbacks)
+        refreshPresentation()
 
     }
 
-    initializeChartSeries = () => {
-        let { userselections, chartmatrixrow } = this.state
-        let budgetdata = this.props.budgetBranch.data
-        let matrixlocation,
-            chartParmsObj: ChartParmsObj
+    // initializeChartSeries = () => {
+    //     let { userselections, chartmatrixrow } = this.state
+    //     let budgetdata = this.props.budgetBranch.data
+    //     let matrixlocation,
+    //         chartParmsObj: ChartParmsObj
 
-        // ------------------------[ POPULATE VIEWPOINT WITH VALUES ]-----------------------
+    //     // ------------------------[ POPULATE VIEWPOINT WITH VALUES ]-----------------------
 
-        let { 
-            viewpoint: viewpointname, 
-            facet: dataseriesname, 
-            inflationadjusted: wantsInflationAdjusted 
-        } = userselections
+    //     let { 
+    //         viewpoint: viewpointname, 
+    //         facet: dataseriesname, 
+    //         inflationadjusted: wantsInflationAdjusted 
+    //     } = userselections
 
-        let viewpointdata = databaseapi.getViewpointData({
-            viewpointname, 
-            dataseriesname,
-            wantsInflationAdjusted,
-            timeSpecs: {
-                leftYear: null,
-                rightYear: null,
-                spanYears: false,
-            }
-        })
+    //     let viewpointdata = databaseapi.getViewpointData({
+    //         viewpointname, 
+    //         dataseriesname,
+    //         wantsInflationAdjusted,
+    //         timeSpecs: {
+    //             leftYear: null,
+    //             rightYear: null,
+    //             spanYears: false,
+    //         }
+    //     })
 
-        budgetdata.viewpointdata = viewpointdata
-        // *** CREATE BRANCH
-        // -----------------[ THE DRILLDOWN ROOT ]-----------------
-        let datapath = []
-        let node = getBudgetNode(viewpointdata, datapath)
+    //     budgetdata.viewpointdata = viewpointdata
+    //     // *** CREATE BRANCH
+    //     // -----------------[ THE DRILLDOWN ROOT ]-----------------
+    //     let datapath = []
+    //     let node = getBudgetNode(viewpointdata, datapath)
 
-        let {
-            charttype:defaultChartType,
-            viewpoint:viewpointName,
-            facet:facetName,
-            latestyear:rightYear,
-        } = userselections
+    //     let {
+    //         charttype:defaultChartType,
+    //         viewpoint:viewpointName,
+    //         facet:facetName,
+    //         latestyear:rightYear,
+    //     } = userselections
 
-        let budgetNodeParms = {
-            defaultChartType,
-            viewpointName,
-            facetName,
-            portalCharts:viewpointdata.PortalCharts,
-            timeSpecs: {
-                leftYear:null,
-                rightYear,
-                spanYears:false,
-            },
-            dataPath: [],
-            matrixLocation: {column:0},
-            dataNode:node,
-        }
+    //     let budgetNodeParms = {
+    //         defaultChartType,
+    //         viewpointName,
+    //         facetName,
+    //         portalCharts:viewpointdata.PortalCharts,
+    //         timeSpecs: {
+    //             leftYear:null,
+    //             rightYear,
+    //             spanYears:false,
+    //         },
+    //         dataPath: [],
+    //         matrixLocation: {column:0},
+    //         dataNode:node,
+    //     }
 
-        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms)
+    //     let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms)
 
-        let cellindex: any
-        let {
-            updateChartSelections,
-            workingStatus
-        } = this.props.callbacks
-        let callbacks = {
-            updateChartSelections,
-            refreshPresentation: this.refreshPresentation,
-            onPortalCreation: this.onPortalCreation,
-            workingStatus,
-        }
-        let selectfn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)
-        let {
-            Configuration: viewpointConfig,
-            itemseriesconfigdata: itemseriesConfig,
-        } = budgetdata.viewpointdata
-        let configData = {
-            viewpointConfig,
-            itemseriesConfig,
-        }
-        for (cellindex in budgetNode.cells) {
-            let budgetCell = budgetNode.cells[cellindex]
-            let props: GetCellChartProps = {
-                chartIndex: cellindex,
-                configData,
-                userselections,
-            }
+    //     let cellindex: any
+    //     let {
+    //         updateChartSelections,
+    //         workingStatus
+    //     } = this.props.callbacks
+    //     let callbacks = {
+    //         updateChartSelections,
+    //         refreshPresentation: this.refreshPresentation,
+    //         onPortalCreation: this.onPortalCreation,
+    //         workingStatus,
+    //     }
+    //     let selectfn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)
+    //     let {
+    //         Configuration: viewpointConfig,
+    //         itemseriesconfigdata: itemseriesConfig,
+    //     } = budgetdata.viewpointdata
+    //     let configData = {
+    //         viewpointConfig,
+    //         itemseriesConfig,
+    //     }
+    //     for (cellindex in budgetNode.cells) {
+    //         let budgetCell = budgetNode.cells[cellindex]
+    //         let props: GetCellChartProps = {
+    //             chartIndex: cellindex,
+    //             configData,
+    //             userselections,
+    //         }
 
-            let fcurrent = selectfn(0)(cellindex)
+    //         let fcurrent = selectfn(0)(cellindex)
 
-            chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:selectfn})
+    //         chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:selectfn})
 
-            if (!chartParmsObj.isError) {
+    //         if (!chartParmsObj.isError) {
 
-                budgetCell.chartparms = chartParmsObj.chartParms
-                budgetCell.chartCode =
-                    ChartTypeCodes[budgetCell.chartparms.chartType]
+    //             budgetCell.chartparms = chartParmsObj.chartParms
+    //             budgetCell.chartCode =
+    //                 ChartTypeCodes[budgetCell.chartparms.chartType]
 
-            } else {
-                break
-            }
-        }
-        if (!chartParmsObj.isError) {
-            matrixlocation = budgetNode.matrixLocation
-            chartmatrixrow[matrixlocation.column] = budgetNode
-        }
+    //         } else {
+    //             break
+    //         }
+    //     }
+    //     if (!chartParmsObj.isError) {
+    //         matrixlocation = budgetNode.matrixLocation
+    //         chartmatrixrow[matrixlocation.column] = budgetNode
+    //     }
 
-        // -------------[ SAVE INITIALIZATION ]----------------
+    //     // -------------[ SAVE INITIALIZATION ]----------------
 
-        this.refreshPresentation()
+    // }
 
-    }
+    // handleDialogOpen = () => {
+    //     this.setState({
+    //         dialogopen: true
+    //     })
+    // }
 
-    handleDialogOpen = () => {
-        this.setState({
-            dialogopen: true
-        })
-    }
-
-    handleDialogClose = () => {
-        this.setState({
-            dialogopen: false
-        })
-    }
+    // handleDialogClose = () => {
+    //     this.setState({
+    //         dialogopen: false
+    //     })
+    // }
 
     // ============================================================
     // ---------------------[ *** BRANCH *** CONTROL RESPONSES ]------------------
@@ -278,7 +285,22 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             chartmatrixrow,
         })
 
-        this.initializeChartSeries()
+        // this.initializeChartSeries()
+
+        let { callbacks, budgetBranch } = this.props
+        let { refreshPresentation, onPortalCreation } = this
+        let { updateChartSelections, workingStatus } = callbacks
+        // callbacks.updateChartSelections = callbacks.updateChartSelections(callbackid)
+        let nodecallbacks = {
+            updateChartSelections,
+            refreshPresentation,
+            onPortalCreation,
+            workingStatus,
+        }
+        budgetBranch.initializeChartSeries(
+            {userselections}, nodecallbacks)
+
+        this.refreshPresentation()
 
     }
 

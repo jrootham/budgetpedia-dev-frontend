@@ -42,14 +42,7 @@ class BudgetBranch {
             };
             let budgetNode = new budgetnode_1.default(budgetNodeParms);
             let cellindex;
-            let { updateChartSelections, workingStatus, refreshPresentation, onPortalCreation, } = callbacks;
-            let selectioncallbacks = {
-                updateChartSelections: updateChartSelections,
-                refreshPresentation: refreshPresentation,
-                onPortalCreation: onPortalCreation,
-                workingStatus: workingStatus,
-            };
-            let selectfn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(selectioncallbacks);
+            let selectfn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks);
             let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = budgetdata.viewpointdata;
             let configData = {
                 viewpointConfig: viewpointConfig,
@@ -77,7 +70,6 @@ class BudgetBranch {
                 matrixlocation = budgetNode.matrixLocation;
                 chartmatrixrow[matrixlocation.column] = budgetNode;
             }
-            refreshPresentation();
         };
         this.data = parms.data;
         this.nodes = parms.nodes;

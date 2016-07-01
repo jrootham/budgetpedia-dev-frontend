@@ -100,19 +100,7 @@ class BudgetBranch {
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms)
 
         let cellindex: any
-        let {
-            updateChartSelections,
-            workingStatus,
-            refreshPresentation,
-            onPortalCreation,
-        } = callbacks
-        let selectioncallbacks = {
-            updateChartSelections,
-            refreshPresentation,
-            onPortalCreation,
-            workingStatus,
-        }
-        let selectfn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(selectioncallbacks)
+        let selectfn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)
         let {
             Configuration: viewpointConfig,
             itemseriesconfigdata: itemseriesConfig,
@@ -150,7 +138,7 @@ class BudgetBranch {
 
         // -------------[ SAVE INITIALIZATION ]----------------
 
-        refreshPresentation()
+        // refreshPresentation()
 
     }
 

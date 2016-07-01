@@ -11,7 +11,6 @@ const Snackbar_1 = require('material-ui/Snackbar');
 const constants_1 = require('../constants');
 const databaseapi_1 = require('../classes/databaseapi');
 const onchartcomponentselection_1 = require('../containers/explorer/onchartcomponentselection');
-const budgetnode_1 = require('../classes/budgetnode');
 class ExplorerBranch extends Component {
     constructor(props) {
         super(props);
@@ -36,91 +35,17 @@ class ExplorerBranch extends Component {
         };
         this.branchScrollBlock = null;
         this.componentDidMount = () => {
-            let { callbacks, callbackid } = this.props;
+            let { callbacks, callbackid, budgetBranch } = this.props;
+            let { refreshPresentation, onPortalCreation } = this;
             callbacks.updateChartSelections = callbacks.updateChartSelections(callbackid);
-            this.initializeChartSeries();
-        };
-        this.initializeChartSeries = () => {
-            let { userselections, chartmatrixrow } = this.state;
-            let budgetdata = this.props.budgetBranch.data;
-            let matrixlocation, chartParmsObj;
-            let { viewpoint: viewpointname, facet: dataseriesname, inflationadjusted: wantsInflationAdjusted } = userselections;
-            let viewpointdata = databaseapi_1.default.getViewpointData({
-                viewpointname: viewpointname,
-                dataseriesname: dataseriesname,
-                wantsInflationAdjusted: wantsInflationAdjusted,
-                timeSpecs: {
-                    leftYear: null,
-                    rightYear: null,
-                    spanYears: false,
-                }
-            });
-            budgetdata.viewpointdata = viewpointdata;
-            let datapath = [];
-            let node = getbudgetnode_1.default(viewpointdata, datapath);
-            let { charttype: defaultChartType, viewpoint: viewpointName, facet: facetName, latestyear: rightYear, } = userselections;
-            let budgetNodeParms = {
-                defaultChartType: defaultChartType,
-                viewpointName: viewpointName,
-                facetName: facetName,
-                portalCharts: viewpointdata.PortalCharts,
-                timeSpecs: {
-                    leftYear: null,
-                    rightYear: rightYear,
-                    spanYears: false,
-                },
-                dataPath: [],
-                matrixLocation: { column: 0 },
-                dataNode: node,
+            let nodecallbacks = {
+                updateChartSelections: callbacks.updateChartSelections,
+                refreshPresentation: refreshPresentation,
+                onPortalCreation: onPortalCreation,
+                workingStatus: callbacks.workingStatus,
             };
-            let budgetNode = new budgetnode_1.default(budgetNodeParms);
-            let cellindex;
-            let { updateChartSelections, workingStatus } = this.props.callbacks;
-            let callbacks = {
-                updateChartSelections: updateChartSelections,
-                refreshPresentation: this.refreshPresentation,
-                onPortalCreation: this.onPortalCreation,
-                workingStatus: workingStatus,
-            };
-            let selectfn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks);
-            let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = budgetdata.viewpointdata;
-            let configData = {
-                viewpointConfig: viewpointConfig,
-                itemseriesConfig: itemseriesConfig,
-            };
-            for (cellindex in budgetNode.cells) {
-                let budgetCell = budgetNode.cells[cellindex];
-                let props = {
-                    chartIndex: cellindex,
-                    configData: configData,
-                    userselections: userselections,
-                };
-                let fcurrent = selectfn(0)(cellindex);
-                chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: selectfn });
-                if (!chartParmsObj.isError) {
-                    budgetCell.chartparms = chartParmsObj.chartParms;
-                    budgetCell.chartCode =
-                        constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
-                }
-                else {
-                    break;
-                }
-            }
-            if (!chartParmsObj.isError) {
-                matrixlocation = budgetNode.matrixLocation;
-                chartmatrixrow[matrixlocation.column] = budgetNode;
-            }
-            this.refreshPresentation();
-        };
-        this.handleDialogOpen = () => {
-            this.setState({
-                dialogopen: true
-            });
-        };
-        this.handleDialogClose = () => {
-            this.setState({
-                dialogopen: false
-            });
+            budgetBranch.initializeChartSeries({ userselections: this.state.userselections }, nodecallbacks);
+            refreshPresentation();
         };
         this.onPortalCreation = () => {
             let element = this.branchScrollBlock;
@@ -165,7 +90,17 @@ class ExplorerBranch extends Component {
                 userselections: userselections,
                 chartmatrixrow: chartmatrixrow,
             });
-            this.initializeChartSeries();
+            let { callbacks, budgetBranch } = this.props;
+            let { refreshPresentation, onPortalCreation } = this;
+            let { updateChartSelections, workingStatus } = callbacks;
+            let nodecallbacks = {
+                updateChartSelections: updateChartSelections,
+                refreshPresentation: refreshPresentation,
+                onPortalCreation: onPortalCreation,
+                workingStatus: workingStatus,
+            };
+            budgetBranch.initializeChartSeries({ userselections: userselections }, nodecallbacks);
+            this.refreshPresentation();
         };
         this.switchFacet = (facet) => {
             let userselections = this.state.userselections;
