@@ -24,4 +24,4 @@ let getBudgetNode = (node, path) => {
     return node
 }
 
-export { getBudgetNode }
+export default getBudgetNode

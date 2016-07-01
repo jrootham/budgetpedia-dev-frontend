@@ -15,7 +15,7 @@ import {
 import BudgetNode, {BudgetNodeParms} from '../../classes/budgetnode'
 import { ChartTypeCodes } from '../../constants'
 import {SelectionCallbackProps} from '../../classes/modules/getchartparms'
-import { getBudgetNode } from './getbudgetnode'
+import getBudgetNode from './getbudgetnode'
 import { DatasetConfig } from '../../classes/databaseapi'
 
 export interface ChartSelectionCell {

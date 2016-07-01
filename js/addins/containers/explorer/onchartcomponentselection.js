@@ -79,7 +79,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     let charttype = userselections.charttype;
     let chartCode = constants_1.ChartTypeCodes[charttype];
     let portalcharts = budgetdata.viewpointdata.PortalCharts;
-    let newdatanode = getbudgetnode_1.getBudgetNode(budgetdata.viewpointdata, childdatapath);
+    let newdatanode = getbudgetnode_1.default(budgetdata.viewpointdata, childdatapath);
     let newnodeconfigparms = {
         portalCharts: portalcharts,
         defaultChartType: charttype,

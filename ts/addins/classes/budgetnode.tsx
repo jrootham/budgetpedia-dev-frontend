@@ -40,6 +40,9 @@ class BudgetNode {
 
     }
 
+    // ====================================================================
+    // ---------------------[ PUBLIC ]------------------------------------
+
     public getChartParms = (props: GetCellChartProps, selectionCallbacks) => {
         let sourceProps: GetChartParmsProps = {} as GetChartParmsProps
         let node = this
@@ -47,6 +50,30 @@ class BudgetNode {
         // console.log('sourceProps',sourceProps, selectionCallbacks)
         return getChartParmsSource(sourceProps, selectionCallbacks)
     }
+
+    viewpointName: string
+    facetName: string
+    dataPath: string[]
+    matrixLocation: MatrixLocation
+    timeSpecs: TimeSpecs
+    get dataNode() {
+        return this._dataNode
+    }
+    parentData: any = null
+
+    get cells() { // only return cells that have appropriate node datasets available
+        return this.getAvailableCells()
+    }
+
+    // reset = (dataNode, portalCharts, defaultChartType, facet) => {
+    update = (dataNode, facet) => {
+        this._dataNode = dataNode
+        this.facetName = facet
+        // this.setCells(portalCharts[facet], defaultChartType)
+    }
+
+    // ====================================================================
+    // ---------------------[ PRIVATE ]------------------------------------
 
     private setCells = (portalcharts, defaultChartType) => {
         this._cells = []
@@ -79,27 +106,7 @@ class BudgetNode {
     }
 
     private _cells: MatrixCellConfig[]
-    viewpointName: string
-    facetName: string
-    dataPath: string[]
-    matrixLocation: MatrixLocation
-    timeSpecs: TimeSpecs
     private _dataNode: any
-    get dataNode() {
-        return this._dataNode
-    }
-    parentData: any = null
-
-    get cells() { // only return cells that have appropriate node datasets available
-        return this.getAvailableCells()
-    }
-
-    // reset = (dataNode, portalCharts, defaultChartType, facet) => {
-    update = (dataNode, facet) => {
-        this._dataNode = dataNode
-        this.facetName = facet
-        // this.setCells(portalCharts[facet], defaultChartType)
-    }
 
     // // TODO: TEMPORARY
     // set cells(value) {

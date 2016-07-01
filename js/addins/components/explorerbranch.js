@@ -57,7 +57,7 @@ class ExplorerBranch extends Component {
             });
             budgetdata.viewpointdata = viewpointdata;
             let datapath = [];
-            let node = getbudgetnode_1.getBudgetNode(viewpointdata, datapath);
+            let node = getbudgetnode_1.default(viewpointdata, datapath);
             let { charttype: defaultChartType, viewpoint: viewpointName, facet: facetName, latestyear: rightYear, } = userselections;
             let budgetNodeParms = {
                 defaultChartType: defaultChartType,
@@ -200,7 +200,7 @@ class ExplorerBranch extends Component {
             for (cellptr in chartmatrixrow) {
                 parentBudgetNode = budgetNode;
                 budgetNode = chartmatrixrow[cellptr];
-                let nextdataNode = getbudgetnode_1.getBudgetNode(viewpointdata, budgetNode.dataPath);
+                let nextdataNode = getbudgetnode_1.default(viewpointdata, budgetNode.dataPath);
                 if (nextdataNode) {
                     let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
                     let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2));

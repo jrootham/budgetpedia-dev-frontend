@@ -44,6 +44,7 @@ import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
 
 import { updateBranchChartSelections } from './explorer/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
+import BudgetBranch from '../classes/budgetbranch'
 
 import {
     MatrixCellConfig,
@@ -53,14 +54,6 @@ import {
     GetChartParmsProps,
     // GetChartParmsCallbacks,
 } from './explorer/interfaces'
-
-interface BudgetBranch {
-    data: {
-        viewpointdata: any,
-        // itemseriesconfigdata?: any,
-    },
-    nodes: any[]
-}
 
 let Explorer = class extends Component< any, any > {
 
@@ -75,10 +68,11 @@ let Explorer = class extends Component< any, any > {
     // TODO: Take state initialization from external source
     // charts exist in a matrix (row/column) which contain a chartconfig object
     // TODO: most of 
+    
     state = {
         // chartmatrix: [[], []], // DrillDown, Compare (Later: Differences, Context, Build)
         budgetBranches:[
-            {data:this.props.budgetdata, nodes:[]}
+            new BudgetBranch({data:this.props.budgetdata, nodes:[]})
         ],
         dialogopen: false,
     }

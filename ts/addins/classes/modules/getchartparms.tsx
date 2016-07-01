@@ -23,7 +23,7 @@ import {
     // GetChartParmsCallbacks,
 } from '../../containers/explorer/interfaces'
 
-import { getBudgetNode } from '../../containers/explorer/getbudgetnode'
+import getBudgetNode from '../../containers/explorer/getbudgetnode'
 import { ChartTypeCodes } from '../../constants'
 import { 
     // applyChartComponentSelection,

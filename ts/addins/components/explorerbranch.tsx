@@ -20,7 +20,7 @@ import {
 } from '../containers/explorer/interfaces'
 
 import { ExplorerPortal } from './explorerportal'
-import { getBudgetNode } from '../containers/explorer/getbudgetnode'
+import getBudgetNode from '../containers/explorer/getbudgetnode'
 
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'

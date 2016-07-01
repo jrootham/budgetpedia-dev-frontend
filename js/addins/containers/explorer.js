@@ -10,12 +10,13 @@ const explorerbranch_1 = require('../components/explorerbranch');
 const constants_1 = require('../constants');
 const updatebranchchartselections_1 = require('./explorer/updatebranchchartselections');
 const Actions = require('../../core/actions/actions');
+const budgetbranch_1 = require('../classes/budgetbranch');
 let Explorer = class extends Component {
     constructor(props) {
         super(props);
         this.state = {
             budgetBranches: [
-                { data: this.props.budgetdata, nodes: [] }
+                new budgetbranch_1.default({ data: this.props.budgetdata, nodes: [] })
             ],
             dialogopen: false,
         };

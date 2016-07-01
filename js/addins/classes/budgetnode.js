@@ -9,6 +9,11 @@ class BudgetNode {
             Object.assign(sourceProps, props, { budgetNode: node });
             return getchartparms_1.default(sourceProps, selectionCallbacks);
         };
+        this.parentData = null;
+        this.update = (dataNode, facet) => {
+            this._dataNode = dataNode;
+            this.facetName = facet;
+        };
         this.setCells = (portalcharts, defaultChartType) => {
             this._cells = [];
             let defaultChartCode = constants_1.ChartTypeCodes[defaultChartType];
@@ -35,11 +40,6 @@ class BudgetNode {
                 availablCells.push(cell);
             }
             return availablCells;
-        };
-        this.parentData = null;
-        this.update = (dataNode, facet) => {
-            this._dataNode = dataNode;
-            this.facetName = facet;
         };
         let portalcharts = parms.portalCharts;
         this.setCells(portalcharts[parms.facetName], parms.defaultChartType);

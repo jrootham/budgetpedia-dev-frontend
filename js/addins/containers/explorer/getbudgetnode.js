@@ -13,4 +13,5 @@ let getBudgetNode = (node, path) => {
     }
     return node;
 };
-exports.getBudgetNode = getBudgetNode;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = getBudgetNode;
