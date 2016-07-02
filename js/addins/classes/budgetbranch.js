@@ -59,6 +59,97 @@ class BudgetBranch {
                 chartmatrixrow[matrixlocation.column] = budgetNode;
             }
         };
+        this.switchFacet = (props, callbacks) => {
+            let switchResults = {
+                deeperdata: false,
+                shallowerdata: false,
+            };
+            let { viewpointdata, userselections } = props;
+            let budgetdata = this.data;
+            budgetdata.viewpointdata = viewpointdata;
+            let chartmatrixrow = this.nodes;
+            let budgetNode = null;
+            let parentBudgetNode;
+            let cellptr;
+            let isError = false;
+            let chartParmsObj = null;
+            let fn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks);
+            for (cellptr in chartmatrixrow) {
+                parentBudgetNode = budgetNode;
+                budgetNode = chartmatrixrow[cellptr];
+                let nextdataNode = getbudgetnode_1.default(viewpointdata, budgetNode.dataPath);
+                if (nextdataNode) {
+                    let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
+                    let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2));
+                    budgetNode.update(nextdataNode, userselections.facet);
+                    if (deeperdata || shallowerdata) {
+                        switchResults.deeperdata = deeperdata;
+                        switchResults.shallowerdata = shallowerdata;
+                        isError = true;
+                        let prevBudgetNode = chartmatrixrow[cellptr - 1];
+                        chartmatrixrow.splice(cellptr);
+                        let prevBudgetCell = prevBudgetNode.cells[0];
+                        let context = {
+                            selection: prevBudgetCell.chartselection,
+                            ChartObject: prevBudgetCell.ChartObject,
+                        };
+                        let childprops = {
+                            budgetNode: prevBudgetNode,
+                            userselections: userselections,
+                            budgetdata: budgetdata,
+                            chartmatrixrow: chartmatrixrow,
+                            selectionrow: prevBudgetCell.chartselection[0].row,
+                            nodeIndex: prevBudgetNode.matrixLocation.column,
+                            cellIndex: 0,
+                            context: context,
+                            chart: prevBudgetCell.chart,
+                        };
+                        let fcurrent = fn(cellptr)(0);
+                        onchartcomponentselection_1.createChildNode(childprops, callbacks, { current: fcurrent, next: fn });
+                        budgetNode = null;
+                    }
+                }
+                else {
+                    console.error('no data node');
+                }
+                let nodecellindex = null;
+                if (!budgetNode)
+                    break;
+                let configData = {
+                    viewpointConfig: budgetdata.viewpointdata.Configuration,
+                    itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
+                };
+                for (nodecellindex in budgetNode.cells) {
+                    let props = {
+                        chartIndex: nodecellindex,
+                        userselections: userselections,
+                        configData: configData,
+                    };
+                    let fcurrent = fn(cellptr)(nodecellindex), chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: fn });
+                    if (chartParmsObj.isError) {
+                        chartmatrixrow.splice(cellptr);
+                        if (cellptr > 0) {
+                            let parentBudgetNode = chartmatrixrow[cellptr - 1];
+                            let parentBudgetCell = parentBudgetNode.cells[nodecellindex];
+                            parentBudgetCell.chartselection = null;
+                            parentBudgetCell.chart = null;
+                        }
+                        isError = true;
+                        break;
+                    }
+                    else {
+                        let budgetCell = budgetNode.cells[nodecellindex];
+                        budgetCell.chartparms = chartParmsObj.chartParms;
+                        budgetCell.chartCode =
+                            constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
+                        if (parentBudgetNode) {
+                            budgetNode.parentData.dataNode = parentBudgetNode.dataNode;
+                        }
+                    }
+                }
+            }
+            return switchResults;
+        };
         this.data = parms.data;
         this.nodes = parms.nodes;
     }

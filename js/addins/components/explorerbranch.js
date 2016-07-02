@@ -2,7 +2,6 @@
 const React = require('react');
 var { Component } = React;
 const explorerportal_1 = require('./explorerportal');
-const getbudgetnode_1 = require('../containers/explorer/getbudgetnode');
 const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
 const FontIcon_1 = require('material-ui/FontIcon');
@@ -116,113 +115,20 @@ class ExplorerBranch extends Component {
         this.switchFacet = (facet) => {
             let userselections = this.state.userselections;
             userselections.facet = facet;
-            let viewpointname = this.state.userselections.viewpoint;
-            let viewpointdata = databaseapi_1.default.getViewpointData({
-                viewpointname: viewpointname,
-                dataseriesname: facet,
-                wantsInflationAdjusted: userselections.inflationadjusted,
-                timeSpecs: {
-                    leftYear: null,
-                    rightYear: null,
-                    spanYears: false,
-                }
-            });
-            let budgetdata = this.props.budgetBranch.data;
-            budgetdata.viewpointdata = viewpointdata;
-            let chartmatrixrow = this.state.chartmatrixrow;
-            let oldchartmatrixrow = [...chartmatrixrow];
-            let budgetNode = null;
-            let parentBudgetNode;
-            let cellptr;
-            let isError = false;
-            let chartParmsObj = null;
-            let childcallbacks = {
-                updateChartSelections: this.props.callbacks.updateChartSelections,
-                refreshPresentation: this.refreshPresentation,
-                onPortalCreation: this.onPortalCreation,
-                workingStatus: this.props.callbacks.workingStatus,
-            };
-            let fn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(childcallbacks);
-            for (cellptr in chartmatrixrow) {
-                parentBudgetNode = budgetNode;
-                budgetNode = chartmatrixrow[cellptr];
-                let nextdataNode = getbudgetnode_1.default(viewpointdata, budgetNode.dataPath);
-                if (nextdataNode) {
-                    let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
-                    let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2));
-                    budgetNode.update(nextdataNode, userselections.facet);
-                    if (deeperdata || shallowerdata) {
-                        isError = true;
-                        let prevBudgetNode = chartmatrixrow[cellptr - 1];
-                        chartmatrixrow.splice(cellptr);
-                        let prevBudgetCell = prevBudgetNode.cells[0];
-                        let context = {
-                            selection: prevBudgetCell.chartselection,
-                            ChartObject: prevBudgetCell.ChartObject,
-                        };
-                        let childprops = {
-                            budgetNode: prevBudgetNode,
-                            userselections: userselections,
-                            budgetdata: budgetdata,
-                            chartmatrixrow: chartmatrixrow,
-                            selectionrow: prevBudgetCell.chartselection[0].row,
-                            nodeIndex: prevBudgetNode.matrixLocation.column,
-                            cellIndex: 0,
-                            context: context,
-                            chart: prevBudgetCell.chart,
-                        };
-                        let fcurrent = fn(cellptr)(0);
-                        onchartcomponentselection_1.createChildNode(childprops, childcallbacks, { current: fcurrent, next: fn });
-                        let message = null;
-                        if (deeperdata) {
-                            message = "More drilldown is available for current facet selection";
-                        }
-                        else {
-                            message = "Less drilldown is available for current facet selection";
-                        }
-                        this.state.snackbar.message = message;
-                        this.state.snackbar.open = true;
-                        budgetNode = null;
-                    }
+            let viewpointdata = this._getViewpointData();
+            let { budgetBranch } = this.props;
+            let switchResults = budgetBranch.switchFacet({ userselections: userselections, viewpointdata: viewpointdata }, this._nodeCallbacks);
+            let { deeperdata, shallowerdata } = switchResults;
+            if (deeperdata || shallowerdata) {
+                let message = null;
+                if (deeperdata) {
+                    message = "More drilldown is available for current facet selection";
                 }
                 else {
-                    console.error('no data node');
+                    message = "Less drilldown is available for current facet selection";
                 }
-                let nodecellindex = null;
-                if (!budgetNode)
-                    break;
-                let configData = {
-                    viewpointConfig: budgetdata.viewpointdata.Configuration,
-                    itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
-                };
-                for (nodecellindex in budgetNode.cells) {
-                    let props = {
-                        chartIndex: nodecellindex,
-                        userselections: userselections,
-                        configData: configData,
-                    };
-                    let fcurrent = fn(cellptr)(nodecellindex), chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: fn });
-                    if (chartParmsObj.isError) {
-                        chartmatrixrow.splice(cellptr);
-                        if (cellptr > 0) {
-                            let parentBudgetNode = chartmatrixrow[cellptr - 1];
-                            let parentBudgetCell = parentBudgetNode.cells[nodecellindex];
-                            parentBudgetCell.chartselection = null;
-                            parentBudgetCell.chart = null;
-                        }
-                        isError = true;
-                        break;
-                    }
-                    else {
-                        let budgetCell = budgetNode.cells[nodecellindex];
-                        budgetCell.chartparms = chartParmsObj.chartParms;
-                        budgetCell.chartCode =
-                            constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
-                        if (parentBudgetNode) {
-                            budgetNode.parentData.dataNode = parentBudgetNode.dataNode;
-                        }
-                    }
-                }
+                this.state.snackbar.message = message;
+                this.state.snackbar.open = true;
             }
             this.refreshPresentation();
             let branch = this;
