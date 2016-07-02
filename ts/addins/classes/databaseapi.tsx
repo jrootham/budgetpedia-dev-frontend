@@ -126,11 +126,12 @@ class Database {
     datasets: Datasets
     lookups: Lookups
 
-    getBranch = (viewpointname, path = []) => {
+    // pending
+    public getBranch = (viewpointname, path = []) => {
 
     }
 
-    getViewpointData = (parms: GetViewpointDataParms) => {
+    public getViewpointData = (parms: GetViewpointDataParms) => {
 
         let { viewpointname, dataseriesname, wantsInflationAdjusted, timeSpecs } = parms
 
