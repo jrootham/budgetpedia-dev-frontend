@@ -1,5 +1,4 @@
 "use strict";
-const databaseapi_1 = require('./databaseapi');
 const getbudgetnode_1 = require('../containers/explorer/getbudgetnode');
 const budgetnode_1 = require('../classes/budgetnode');
 const onchartcomponentselection_1 = require('../containers/explorer/onchartcomponentselection');
@@ -7,21 +6,10 @@ const constants_1 = require('../constants');
 class BudgetBranch {
     constructor(parms) {
         this.initializeChartSeries = (props, callbacks) => {
-            let { userselections } = props;
+            let { userselections, viewpointdata } = props;
             let chartmatrixrow = this.nodes;
             let budgetdata = this.data;
             let matrixlocation, chartParmsObj;
-            let { viewpoint: viewpointname, facet: dataseriesname, inflationadjusted: wantsInflationAdjusted } = userselections;
-            let viewpointdata = databaseapi_1.default.getViewpointData({
-                viewpointname: viewpointname,
-                dataseriesname: dataseriesname,
-                wantsInflationAdjusted: wantsInflationAdjusted,
-                timeSpecs: {
-                    leftYear: null,
-                    rightYear: null,
-                    spanYears: false,
-                }
-            });
             budgetdata.viewpointdata = viewpointdata;
             let datapath = [];
             let node = getbudgetnode_1.default(viewpointdata, datapath);

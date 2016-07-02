@@ -44,7 +44,7 @@ class BudgetBranch {
 
     public initializeChartSeries = (props, callbacks) => {
 
-        let { userselections } = props
+        let { userselections, viewpointdata } = props
         let chartmatrixrow = this.nodes
         let budgetdata = this.data
         let matrixlocation,
@@ -52,22 +52,22 @@ class BudgetBranch {
 
         // ------------------------[ POPULATE VIEWPOINT WITH VALUES ]-----------------------
 
-        let { 
-            viewpoint: viewpointname, 
-            facet: dataseriesname, 
-            inflationadjusted: wantsInflationAdjusted 
-        } = userselections
+        // let { 
+        //     viewpoint: viewpointname, 
+        //     facet: dataseriesname, 
+        //     inflationadjusted: wantsInflationAdjusted 
+        // } = userselections
 
-        let viewpointdata = databaseapi.getViewpointData({
-            viewpointname, 
-            dataseriesname,
-            wantsInflationAdjusted,
-            timeSpecs: {
-                leftYear: null,
-                rightYear: null,
-                spanYears: false,
-            }
-        })
+        // let viewpointdata = databaseapi.getViewpointData({
+        //     viewpointname, 
+        //     dataseriesname,
+        //     wantsInflationAdjusted,
+        //     timeSpecs: {
+        //         leftYear: null,
+        //         rightYear: null,
+        //         spanYears: false,
+        //     }
+        // })
 
         budgetdata.viewpointdata = viewpointdata
         // *** CREATE BRANCH
@@ -142,14 +142,14 @@ class BudgetBranch {
 
     }
 
-    public switchViewpoint = (props, callbacks) => {
+    // public switchViewpoint = (props, callbacks) => {
 
-        let { userselections } = props
+    //     let { userselections } = props
 
-        this.initializeChartSeries(
-            {userselections}, callbacks)
+    //     this.initializeChartSeries(
+    //         {userselections}, callbacks)
 
-    }
+    // }
 
 }
 

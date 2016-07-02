@@ -38,14 +38,31 @@ class ExplorerBranch extends Component {
             let { callbacks, callbackid, budgetBranch } = this.props;
             let { refreshPresentation, onPortalCreation } = this;
             callbacks.updateChartSelections = callbacks.updateChartSelections(callbackid);
-            let nodecallbacks = {
+            this._nodeCallbacks = {
                 updateChartSelections: callbacks.updateChartSelections,
                 refreshPresentation: refreshPresentation,
                 onPortalCreation: onPortalCreation,
                 workingStatus: callbacks.workingStatus,
             };
-            budgetBranch.initializeChartSeries({ userselections: this.state.userselections }, nodecallbacks);
-            refreshPresentation();
+            this.initializeChartSeries();
+        };
+        this.initializeChartSeries = () => {
+            let userselections = this.state.userselections;
+            let { viewpoint: viewpointname, facet: dataseriesname, inflationadjusted: wantsInflationAdjusted } = userselections;
+            let viewpointdata = databaseapi_1.default.getViewpointData({
+                viewpointname: viewpointname,
+                dataseriesname: dataseriesname,
+                wantsInflationAdjusted: wantsInflationAdjusted,
+                timeSpecs: {
+                    leftYear: null,
+                    rightYear: null,
+                    spanYears: false,
+                }
+            });
+            console.log('viewpointdata', viewpointdata);
+            let { budgetBranch } = this.props;
+            budgetBranch.initializeChartSeries({ userselections: userselections, viewpointdata: viewpointdata }, this._nodeCallbacks);
+            this._nodeCallbacks.refreshPresentation();
         };
         this.onPortalCreation = () => {
             let element = this.branchScrollBlock;
@@ -90,17 +107,7 @@ class ExplorerBranch extends Component {
                 userselections: userselections,
                 chartmatrixrow: chartmatrixrow,
             });
-            let { callbacks, budgetBranch } = this.props;
-            let { refreshPresentation, onPortalCreation } = this;
-            let { updateChartSelections, workingStatus } = callbacks;
-            let nodecallbacks = {
-                updateChartSelections: updateChartSelections,
-                refreshPresentation: refreshPresentation,
-                onPortalCreation: onPortalCreation,
-                workingStatus: workingStatus,
-            };
-            budgetBranch.switchViewpoint({ userselections: userselections }, nodecallbacks);
-            this.refreshPresentation();
+            this.initializeChartSeries();
         };
         this.switchFacet = (facet) => {
             let userselections = this.state.userselections;
