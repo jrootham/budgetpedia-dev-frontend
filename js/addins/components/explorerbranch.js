@@ -46,7 +46,7 @@ class ExplorerBranch extends Component {
             };
             this.initializeChartSeries();
         };
-        this.initializeChartSeries = () => {
+        this._getViewpointData = () => {
             let userselections = this.state.userselections;
             let { viewpoint: viewpointname, facet: dataseriesname, inflationadjusted: wantsInflationAdjusted } = userselections;
             let viewpointdata = databaseapi_1.default.getViewpointData({
@@ -59,7 +59,11 @@ class ExplorerBranch extends Component {
                     spanYears: false,
                 }
             });
-            console.log('viewpointdata', viewpointdata);
+            return viewpointdata;
+        };
+        this.initializeChartSeries = () => {
+            let viewpointdata = this._getViewpointData();
+            let userselections = this.state.userselections;
             let { budgetBranch } = this.props;
             budgetBranch.initializeChartSeries({ userselections: userselections, viewpointdata: viewpointdata }, this._nodeCallbacks);
             this._nodeCallbacks.refreshPresentation();

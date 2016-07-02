@@ -136,20 +136,7 @@ class BudgetBranch {
             chartmatrixrow[matrixlocation.column] = budgetNode
         }
 
-        // -------------[ SAVE INITIALIZATION ]----------------
-
-        // refreshPresentation()
-
     }
-
-    // public switchViewpoint = (props, callbacks) => {
-
-    //     let { userselections } = props
-
-    //     this.initializeChartSeries(
-    //         {userselections}, callbacks)
-
-    // }
 
 }
 

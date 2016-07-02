@@ -110,7 +110,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     private _nodeCallbacks
 
-    initializeChartSeries = () => {
+    private _getViewpointData = () => {
 
         let userselections = this.state.userselections
 
@@ -131,7 +131,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
         })
 
-        console.log('viewpointdata',viewpointdata)
+        return viewpointdata
+    }
+
+    initializeChartSeries = () => {
+
+        let viewpointdata = this._getViewpointData()
+
+        let userselections = this.state.userselections
 
         let { budgetBranch } = this.props
         budgetBranch.initializeChartSeries(
@@ -196,14 +203,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             chartmatrixrow,
         })
 
-        // let { budgetBranch } = this.props
-
         this.initializeChartSeries()
-
-        // budgetBranch.switchViewpoint(
-        //     {userselections}, this._nodeCallbacks)
-
-        // this.refreshPresentation()
 
     }
 
