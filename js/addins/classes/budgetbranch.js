@@ -71,6 +71,10 @@ class BudgetBranch {
                 chartmatrixrow[matrixlocation.column] = budgetNode;
             }
         };
+        this.switchViewpoint = (props, callbacks) => {
+            let { userselections } = props;
+            this.initializeChartSeries({ userselections: userselections }, callbacks);
+        };
         this.data = parms.data;
         this.nodes = parms.nodes;
     }

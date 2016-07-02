@@ -99,7 +99,7 @@ class ExplorerBranch extends Component {
                 onPortalCreation: onPortalCreation,
                 workingStatus: workingStatus,
             };
-            budgetBranch.initializeChartSeries({ userselections: userselections }, nodecallbacks);
+            budgetBranch.switchViewpoint({ userselections: userselections }, nodecallbacks);
             this.refreshPresentation();
         };
         this.switchFacet = (facet) => {

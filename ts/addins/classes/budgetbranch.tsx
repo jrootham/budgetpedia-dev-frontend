@@ -142,6 +142,14 @@ class BudgetBranch {
 
     }
 
+    public switchViewpoint = (props, callbacks) => {
+
+        let { userselections } = props
+
+        this.initializeChartSeries(
+            {userselections}, callbacks)
+
+    }
 
 }
 
