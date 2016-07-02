@@ -231,6 +231,46 @@ class BudgetBranch {
         return switchResults
     }
 
+    switchChartCode = (props, callbacks) => {
+        let {
+            userselections,
+            nodeIndex,
+            cellIndex,
+            chartCode,
+        } = props
+        let chartType = ChartCodeTypes[chartCode]
+        // let cellIndex = location.cellIndex
+        let chartmatrixrow = this.nodes
+        let budgetNode: BudgetNode = chartmatrixrow[nodeIndex]
+        let budgetCell = budgetNode.cells[cellIndex]
+        let switchResults = {
+            budgetCell,
+        }
+        let oldChartType = budgetCell.googleChartType
+        budgetCell.googleChartType = chartType
+        let budgetdata = this.data
+        let configData = {
+            viewpointConfig:budgetdata.viewpointdata.Configuration,
+            itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
+        }        
+        let chartprops: GetCellChartProps = {
+            chartIndex: cellIndex,
+            userselections,
+            configData,
+        }
+        let fn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)
+        let fncurrent = fn(nodeIndex)(cellIndex)
+        let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
+        if (!chartParmsObj.isError) {
+            budgetCell.chartparms = chartParmsObj.chartParms
+            budgetCell.chartCode =
+                ChartTypeCodes[budgetCell.chartparms.chartType]
+        } else {
+            budgetCell.googleChartType = oldChartType
+        }
+        return switchResults
+    }
+
 }
 
 export default BudgetBranch

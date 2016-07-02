@@ -7,9 +7,7 @@ const MenuItem_1 = require('material-ui/MenuItem');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
-const constants_1 = require('../constants');
 const databaseapi_1 = require('../classes/databaseapi');
-const onchartcomponentselection_1 = require('../containers/explorer/onchartcomponentselection');
 class ExplorerBranch extends Component {
     constructor(props) {
         super(props);
@@ -148,39 +146,17 @@ class ExplorerBranch extends Component {
             });
         };
         this.switchChartCode = (nodeIndex, cellIndex, chartCode) => {
-            let chartType = constants_1.ChartCodeTypes[chartCode];
-            let chartmatrixrow = this.state.chartmatrixrow;
-            let budgetNode = chartmatrixrow[nodeIndex];
-            let budgetCell = budgetNode.cells[cellIndex];
-            let oldChartType = budgetCell.googleChartType;
-            budgetCell.googleChartType = chartType;
-            let budgetdata = this.props.budgetBranch.data;
-            let configData = {
-                viewpointConfig: budgetdata.viewpointdata.Configuration,
-                itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
-            };
+            let { userselections } = this.state;
+            let { budgetBranch } = this.props;
             let props = {
-                chartIndex: cellIndex,
-                userselections: this.state.userselections,
-                configData: configData,
+                userselections: userselections,
+                nodeIndex: nodeIndex,
+                cellIndex: cellIndex,
+                chartCode: chartCode,
             };
-            let callbacks = {
-                updateChartSelections: this.props.callbacks.updateChartSelections,
-                refreshPresentation: this.refreshPresentation,
-                onPortalCreation: this.onPortalCreation,
-                workingStatus: this.props.callbacks.workingStatus,
-            };
-            let fn = onchartcomponentselection_1.onChartComponentSelection(this.state.userselections)(budgetdata)(chartmatrixrow)(callbacks);
-            let fncurrent = fn(nodeIndex)(cellIndex);
-            let chartParmsObj = budgetNode.getChartParms(props, { current: fncurrent, next: fn });
-            if (!chartParmsObj.isError) {
-                budgetCell.chartparms = chartParmsObj.chartParms;
-                budgetCell.chartCode =
-                    constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
-            }
-            else {
-                budgetCell.googleChartType = oldChartType;
-            }
+            let callbacks = this._nodeCallbacks;
+            let switchResults = budgetBranch.switchChartCode(props, callbacks);
+            let { budgetCell } = switchResults;
             this.refreshPresentation();
             let branch = this;
             setTimeout(() => {

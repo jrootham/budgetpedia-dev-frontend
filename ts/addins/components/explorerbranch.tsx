@@ -43,9 +43,10 @@ import { createChildNode,
 } from '../containers/explorer/onchartcomponentselection'
 import * as Actions from '../../core/actions/actions'
 import BudgetNode from '../classes/budgetnode'
+import BudgetBranch from '../classes/budgetbranch'
 
 interface ExploreBranchProps {
-    budgetBranch: any,
+    budgetBranch: BudgetBranch,
     callbacks:{
         workingStatus:Function,
         updateChartSelections:Function,
@@ -214,7 +215,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let viewpointdata = this._getViewpointData()
 
-        let { budgetBranch } = this.props
+        let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
 
         let switchResults = budgetBranch.switchFacet({userselections, viewpointdata}, this._nodeCallbacks)
 
@@ -257,39 +258,22 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // -------------------[ RENDER METHODS ]---------------------
     // TODO: belongs with explorerchart controller?
     switchChartCode = (nodeIndex,cellIndex, chartCode) => {
-        let chartType = ChartCodeTypes[chartCode]
-        // let cellIndex = location.cellIndex
-        let chartmatrixrow = this.state.chartmatrixrow
-        let budgetNode: BudgetNode = chartmatrixrow[nodeIndex]
-        let budgetCell = budgetNode.cells[cellIndex]
-        let oldChartType = budgetCell.googleChartType
-        budgetCell.googleChartType = chartType
-        let budgetdata = this.props.budgetBranch.data
-        let configData = {
-            viewpointConfig:budgetdata.viewpointdata.Configuration,
-            itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
-        }        
-        let props: GetCellChartProps = {
-            chartIndex: cellIndex,
-            userselections: this.state.userselections,
-            configData,
+
+        let { userselections } = this.state
+        let { budgetBranch }:{budgetBranch: BudgetBranch } = this.props
+
+        let props = {
+            userselections,
+            nodeIndex,
+            cellIndex,
+            chartCode,
         }
-        let callbacks = {
-            updateChartSelections: this.props.callbacks.updateChartSelections,
-            refreshPresentation: this.refreshPresentation,
-            onPortalCreation: this.onPortalCreation,
-            workingStatus: this.props.callbacks.workingStatus,
-        }
-        let fn = onChartComponentSelection(this.state.userselections)(budgetdata)(chartmatrixrow)(callbacks)
-        let fncurrent = fn(nodeIndex)(cellIndex)
-        let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(props,{current: fncurrent, next: fn})
-        if (!chartParmsObj.isError) {
-            budgetCell.chartparms = chartParmsObj.chartParms
-            budgetCell.chartCode =
-                ChartTypeCodes[budgetCell.chartparms.chartType]
-        } else {
-            budgetCell.googleChartType = oldChartType
-        }
+
+        let callbacks = this._nodeCallbacks
+
+        let switchResults = budgetBranch.switchChartCode(props,callbacks)
+
+        let { budgetCell } = switchResults
         this.refreshPresentation()
         let branch = this
         setTimeout(() => {

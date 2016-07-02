@@ -150,6 +150,40 @@ class BudgetBranch {
             }
             return switchResults;
         };
+        this.switchChartCode = (props, callbacks) => {
+            let { userselections, nodeIndex, cellIndex, chartCode, } = props;
+            let chartType = constants_1.ChartCodeTypes[chartCode];
+            let chartmatrixrow = this.nodes;
+            let budgetNode = chartmatrixrow[nodeIndex];
+            let budgetCell = budgetNode.cells[cellIndex];
+            let switchResults = {
+                budgetCell: budgetCell,
+            };
+            let oldChartType = budgetCell.googleChartType;
+            budgetCell.googleChartType = chartType;
+            let budgetdata = this.data;
+            let configData = {
+                viewpointConfig: budgetdata.viewpointdata.Configuration,
+                itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
+            };
+            let chartprops = {
+                chartIndex: cellIndex,
+                userselections: userselections,
+                configData: configData,
+            };
+            let fn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks);
+            let fncurrent = fn(nodeIndex)(cellIndex);
+            let chartParmsObj = budgetNode.getChartParms(chartprops, { current: fncurrent, next: fn });
+            if (!chartParmsObj.isError) {
+                budgetCell.chartparms = chartParmsObj.chartParms;
+                budgetCell.chartCode =
+                    constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
+            }
+            else {
+                budgetCell.googleChartType = oldChartType;
+            }
+            return switchResults;
+        };
         this.data = parms.data;
         this.nodes = parms.nodes;
     }
