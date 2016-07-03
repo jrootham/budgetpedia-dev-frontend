@@ -1,6 +1,6 @@
 "use strict";
 let setViewpointData = (parms) => {
-    let dataseriesname = parms.dataseriesname, viewpointdata = parms.viewpointdata, itemseriesdata = parms.itemseriesdata, lookups = parms.lookups, wantsInflationAdjusted = parms.wantsInflationAdjusted;
+    let { dataseriesname, viewpointdata, itemseriesdata, lookups, inflationAdjusted } = parms;
     if (viewpointdata.currentdataseries == dataseriesname)
         return;
     let baselinecat = itemseriesdata.Baseline;
@@ -16,7 +16,7 @@ let setViewpointData = (parms) => {
     let items = itemseriesdata.Items;
     let isInflationAdjusted = !!itemseriesdata.InflationAdjusted;
     let rootcomponent = { "ROOT": viewpointdata };
-    setComponentAggregates(rootcomponent, items, isInflationAdjusted, lookupset, wantsInflationAdjusted);
+    setComponentAggregates(rootcomponent, items, isInflationAdjusted, lookupset, inflationAdjusted);
     viewpointdata.currentdataseries = dataseriesname;
 };
 let setComponentAggregates = (components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) => {

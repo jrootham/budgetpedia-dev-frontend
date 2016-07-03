@@ -118,17 +118,19 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         let { 
             viewpoint: viewpointname, 
             facet: dataseriesname, 
-            inflationadjusted: wantsInflationAdjusted 
+            inflationAdjusted,
         } = userselections
 
         let viewpointdata:Viewpoint = databaseapi.getViewpointData({
             viewpointname, 
             dataseriesname,
-            wantsInflationAdjusted,
+            inflationAdjusted,
             timeSpecs: {
                 leftYear: null,
                 rightYear: null,
                 spanYears: false,
+                firstYear: null,
+                lastYear: null,
             }
         })
 

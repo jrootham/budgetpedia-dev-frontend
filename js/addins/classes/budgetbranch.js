@@ -23,6 +23,8 @@ class BudgetBranch {
                     leftYear: null,
                     rightYear: rightYear,
                     spanYears: false,
+                    firstYear: null,
+                    lastYear: null,
                 },
                 dataPath: [],
                 matrixLocation: { column: 0 },

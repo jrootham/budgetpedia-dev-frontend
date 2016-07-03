@@ -64,7 +64,7 @@ let Explorer = class extends Component {
             viewpoint: "FUNCTIONAL",
             facet: "BudgetExpenses",
             charttype: "ColumnChart",
-            inflationadjusted: true,
+            inflationAdjusted: true,
         }, yearslider: { singlevalue: [2015], doublevalue: [2005, 2015] }, yearscope: "one", callbacks: {
             workingStatus: explorer.workingStatus,
             updateChartSelections: explorer.updateChartSelections,

@@ -55,7 +55,13 @@ import {
     // GetChartParmsCallbacks,
 } from './explorer/interfaces'
 
-let Explorer = class extends Component< any, any > {
+interface ExplorerProps {
+    budgetdata:any,
+    showWaitingMessage:Function,
+    hideWaitingMessage:Function,
+}
+
+let Explorer = class extends Component< ExplorerProps, any > {
 
     // ============================================================
     // ---------------------[ INITIALIZE ]-------------------------
@@ -311,7 +317,7 @@ let Explorer = class extends Component< any, any > {
                      viewpoint: "FUNCTIONAL",
                      facet: "BudgetExpenses",
                      charttype: "ColumnChart",
-                     inflationadjusted: true,
+                     inflationAdjusted: true,
                  }}
                  yearslider = {{ singlevalue: [2015], doublevalue: [2005, 2015] }}
                  yearscope = {"one"}

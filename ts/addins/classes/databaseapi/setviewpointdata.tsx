@@ -24,7 +24,7 @@ export interface SetViewpointDataParms {
     viewpointdata:any,
     itemseriesdata:any,
     lookups:any,
-    wantsInflationAdjusted: boolean,
+    inflationAdjusted: boolean,
     timeSpecs: {
         leftYear:number,
         rightYear:number,
@@ -37,11 +37,13 @@ export interface SetViewpointDataParms {
 // summaries by year, and Categories by year on ascent
 let setViewpointData = (parms: SetViewpointDataParms) => {
     // let viewpointname = parms.viewpointname,
-    let dataseriesname = parms.dataseriesname,
-        viewpointdata = parms.viewpointdata,
-        itemseriesdata = parms.itemseriesdata,
-        lookups = parms.lookups,
-        wantsInflationAdjusted = parms.wantsInflationAdjusted
+    let { 
+        dataseriesname, 
+        viewpointdata, 
+        itemseriesdata, 
+        lookups, 
+        inflationAdjusted 
+    } = parms
 
     // let viewpointdata = parms.viewpointdata
 
@@ -70,7 +72,7 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
     // set years, and Categories by years
     // initiates recursion
     setComponentAggregates(rootcomponent, items, isInflationAdjusted,
-        lookupset, wantsInflationAdjusted)
+        lookupset, inflationAdjusted)
 
     // create sentinel to prevent unnucessary processing
     viewpointdata.currentdataseries = dataseriesname

@@ -9,12 +9,12 @@ class Database {
         this.getBranch = (viewpointname, path = []) => {
         };
         this.getViewpointData = (parms) => {
-            let { viewpointname, dataseriesname, wantsInflationAdjusted, timeSpecs } = parms;
+            let { viewpointname, dataseriesname, inflationAdjusted, timeSpecs } = parms;
             let viewpointdata = this.getViewpoint(viewpointname), itemseriesdata = this.getDataset(dataseriesname), lookups = this.getLookup();
             viewpointdata = JSON.parse(JSON.stringify(viewpointdata));
             let setparms = {
                 dataseriesname: dataseriesname,
-                wantsInflationAdjusted: wantsInflationAdjusted,
+                inflationAdjusted: inflationAdjusted,
                 timeSpecs: timeSpecs,
                 viewpointdata: viewpointdata,
                 itemseriesdata: itemseriesdata,

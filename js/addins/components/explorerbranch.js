@@ -45,15 +45,17 @@ class ExplorerBranch extends Component {
         };
         this._getViewpointData = () => {
             let userselections = this.state.userselections;
-            let { viewpoint: viewpointname, facet: dataseriesname, inflationadjusted: wantsInflationAdjusted } = userselections;
+            let { viewpoint: viewpointname, facet: dataseriesname, inflationAdjusted, } = userselections;
             let viewpointdata = databaseapi_1.default.getViewpointData({
                 viewpointname: viewpointname,
                 dataseriesname: dataseriesname,
-                wantsInflationAdjusted: wantsInflationAdjusted,
+                inflationAdjusted: inflationAdjusted,
                 timeSpecs: {
                     leftYear: null,
                     rightYear: null,
                     spanYears: false,
+                    firstYear: null,
+                    lastYear: null,
                 }
             });
             return viewpointdata;

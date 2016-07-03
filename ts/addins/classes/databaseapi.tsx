@@ -98,12 +98,14 @@ export interface TimeSpecs {
     leftYear: number,
     rightYear: number,
     spanYears: boolean,
+    firstYear: number,
+    lastYear: number,
 }
 
 export interface GetViewpointDataParms {
     viewpointname:string,
     dataseriesname: string,
-    wantsInflationAdjusted: boolean,
+    inflationAdjusted: boolean,
     timeSpecs: TimeSpecs,
 }
 
@@ -133,7 +135,7 @@ class Database {
 
     public getViewpointData = (parms: GetViewpointDataParms) => {
 
-        let { viewpointname, dataseriesname, wantsInflationAdjusted, timeSpecs } = parms
+        let { viewpointname, dataseriesname, inflationAdjusted, timeSpecs } = parms
 
         let viewpointdata = this.getViewpoint(viewpointname),
             itemseriesdata = this.getDataset(dataseriesname),
@@ -143,7 +145,7 @@ class Database {
 
         let setparms:SetViewpointDataParms = {
             dataseriesname,
-            wantsInflationAdjusted,
+            inflationAdjusted,
             timeSpecs,
             viewpointdata,
             itemseriesdata,
