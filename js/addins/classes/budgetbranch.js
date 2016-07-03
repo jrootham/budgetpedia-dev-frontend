@@ -9,16 +9,14 @@ class BudgetBranch {
             let { userselections, viewpointdata } = props;
             let chartmatrixrow = this.nodes;
             let budgetdata = this.data;
-            let matrixlocation, chartParmsObj;
+            let chartParmsObj;
             budgetdata.viewpointdata = viewpointdata;
             let datapath = [];
             let node = getbudgetnode_1.default(viewpointdata, datapath);
             let { charttype: defaultChartType, viewpoint: viewpointName, facet: facetName, latestyear: rightYear, } = userselections;
             let budgetNodeParms = {
-                defaultChartType: defaultChartType,
                 viewpointName: viewpointName,
                 facetName: facetName,
-                portalCharts: viewpointdata.PortalCharts,
                 timeSpecs: {
                     leftYear: null,
                     rightYear: rightYear,
@@ -26,8 +24,10 @@ class BudgetBranch {
                     firstYear: null,
                     lastYear: null,
                 },
+                defaultChartType: defaultChartType,
+                portalCharts: viewpointdata.PortalCharts,
                 dataPath: [],
-                matrixLocation: { column: 0 },
+                nodeIndex: 0,
                 dataNode: node,
             };
             let budgetNode = new budgetnode_1.default(budgetNodeParms);
@@ -57,8 +57,8 @@ class BudgetBranch {
                 }
             }
             if (!chartParmsObj.isError) {
-                matrixlocation = budgetNode.matrixLocation;
-                chartmatrixrow[matrixlocation.column] = budgetNode;
+                let { nodeIndex } = budgetNode;
+                chartmatrixrow[nodeIndex] = budgetNode;
             }
         };
         this.switchFacet = (props, callbacks) => {
@@ -101,7 +101,7 @@ class BudgetBranch {
                             budgetdata: budgetdata,
                             chartmatrixrow: chartmatrixrow,
                             selectionrow: prevBudgetCell.chartselection[0].row,
-                            nodeIndex: prevBudgetNode.matrixLocation.column,
+                            nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex: 0,
                             context: context,
                             chart: prevBudgetCell.chart,

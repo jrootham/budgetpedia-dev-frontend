@@ -222,9 +222,9 @@ let getChartParms = (
     // TODO: replace chartconfig with matrix co-ordinates to avoid
     //     need to update chart by destroying chart (thus closure) before replacing it
     // 3. chart events:
-    let matrixlocation = Object.assign({}, budgetNode.matrixLocation)
+    let nodeIndex = budgetNode.nodeIndex
     let configlocation: PortalChartLocation = {
-        matrixlocation,
+        nodeIndex,
         cellIndex: chartIndex
     }
 

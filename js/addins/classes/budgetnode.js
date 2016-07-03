@@ -46,7 +46,7 @@ class BudgetNode {
         this.viewpointName = parms.viewpointName;
         this.facetName = parms.facetName;
         this.dataPath = parms.dataPath;
-        this.matrixLocation = parms.matrixLocation;
+        this.nodeIndex = parms.nodeIndex;
         this.timeSpecs = parms.timeSpecs;
         this._dataNode = parms.dataNode;
         if (parms.parentData)

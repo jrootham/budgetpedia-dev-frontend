@@ -52,7 +52,7 @@ interface PortalConfig {
 
 // to return value for callback processing
 interface PortalChartLocation {
-    matrixlocation: MatrixLocation,
+    nodeIndex: number,
     cellIndex: number,
 }
 
@@ -89,10 +89,10 @@ interface MatrixCellConfig {
 }
 
 // location of chart config in for portal
-interface MatrixLocation {
-    // row: number,
-    column: number,
-}
+// interface MatrixLocation {
+//     // row: number,
+//     column: number,
+// }
 
 interface SortedComponentItem {
     Code: string,
@@ -117,7 +117,7 @@ interface YearScope {
 
 export {
     MatrixCellConfig,
-    MatrixLocation,
+    // MatrixLocation,
     PortalChartLocation, 
     ChartParms, 
     ChartParmsObj, 

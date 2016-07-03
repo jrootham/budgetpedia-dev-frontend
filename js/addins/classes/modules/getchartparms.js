@@ -126,9 +126,9 @@ let getChartParms = (props, selectionCallbacks) => {
             width: chartwidth,
         }
     };
-    let matrixlocation = Object.assign({}, budgetNode.matrixLocation);
+    let nodeIndex = budgetNode.nodeIndex;
     let configlocation = {
-        matrixlocation: matrixlocation,
+        nodeIndex: nodeIndex,
         cellIndex: chartIndex
     };
     let events = [

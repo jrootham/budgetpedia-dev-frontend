@@ -48,8 +48,7 @@ class BudgetBranch {
         let { userselections, viewpointdata } = props
         let chartmatrixrow = this.nodes
         let budgetdata = this.data
-        let matrixlocation,
-            chartParmsObj: ChartParmsObj
+        let chartParmsObj: ChartParmsObj
 
         budgetdata.viewpointdata = viewpointdata
         // *** CREATE BRANCH
@@ -65,10 +64,8 @@ class BudgetBranch {
         } = userselections
 
         let budgetNodeParms = {
-            defaultChartType,
             viewpointName,
             facetName,
-            portalCharts:viewpointdata.PortalCharts,
             timeSpecs: {
                 leftYear:null,
                 rightYear,
@@ -76,8 +73,10 @@ class BudgetBranch {
                 firstYear: null,
                 lastYear: null,
             },
+            defaultChartType,
+            portalCharts:viewpointdata.PortalCharts,
             dataPath: [],
-            matrixLocation: {column:0},
+            nodeIndex:0,
             dataNode:node,
         }
 
@@ -116,8 +115,8 @@ class BudgetBranch {
             }
         }
         if (!chartParmsObj.isError) {
-            matrixlocation = budgetNode.matrixLocation
-            chartmatrixrow[matrixlocation.column] = budgetNode
+            let { nodeIndex } = budgetNode
+            chartmatrixrow[nodeIndex] = budgetNode
         }
 
     }
@@ -180,7 +179,7 @@ class BudgetBranch {
                         budgetdata,
                         chartmatrixrow,
                         selectionrow: prevBudgetCell.chartselection[0].row,
-                        nodeIndex: prevBudgetNode.matrixLocation.column,
+                        nodeIndex: prevBudgetNode.nodeIndex,
                         cellIndex:0,
                         context,
                         chart:prevBudgetCell.chart,

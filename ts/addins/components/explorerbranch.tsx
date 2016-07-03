@@ -9,7 +9,7 @@ import {
     MatrixCellConfig,
     ChartParms,
     ChartParmsObj,
-    MatrixLocation,
+    // MatrixLocation,
     PortalConfig,
     CellSettings,
     CellCallbacks,

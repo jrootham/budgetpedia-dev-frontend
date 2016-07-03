@@ -86,9 +86,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
         viewpointName: viewpointName,
         facetName: facet,
         dataPath: childdatapath,
-        matrixLocation: {
-            column: nodeIndex + 1
-        },
+        nodeIndex: nodeIndex + 1,
         parentData: parentdata,
         timeSpecs: newrange,
         dataNode: newdatanode,

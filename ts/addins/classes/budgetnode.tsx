@@ -5,7 +5,7 @@ import { PortalCell, TimeSpecs } from './databaseapi'
 import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 import {
     MatrixCellConfig,
-    MatrixLocation,
+    // MatrixLocation,
     GetCellChartProps,
     GetChartParmsProps
 } from '../containers/explorer/interfaces'
@@ -18,7 +18,7 @@ export interface BudgetNodeParms {
     portalCharts:PortalCell[],
     timeSpecs: TimeSpecs,
     dataPath: string[],
-    matrixLocation: MatrixLocation,
+    nodeIndex: number,
     dataNode:any,
     parentData?:any,
 }
@@ -33,7 +33,7 @@ class BudgetNode {
         this.viewpointName = parms.viewpointName
         this.facetName = parms.facetName
         this.dataPath = parms.dataPath
-        this.matrixLocation = parms.matrixLocation
+        this.nodeIndex = parms.nodeIndex
         this.timeSpecs = parms.timeSpecs
         this._dataNode = parms.dataNode
         if (parms.parentData) this.parentData = parms.parentData
@@ -54,7 +54,7 @@ class BudgetNode {
     viewpointName: string
     facetName: string
     dataPath: string[]
-    matrixLocation: MatrixLocation
+    nodeIndex: number
     timeSpecs: TimeSpecs
     get dataNode() {
         return this._dataNode
