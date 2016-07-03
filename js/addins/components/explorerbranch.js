@@ -226,7 +226,7 @@ class ExplorerBranch extends Component {
                     chartConfigs: chartConfigs,
                     portalName: portalName,
                 };
-                return React.createElement(explorerportal_1.ExplorerPortal, {callbackid: nodeindex, budgetNode: budgetNode, key: nodeindex, portalConfig: portalConfig, portalCallbacks: { onChangePortalTab: this.onChangePortalTab }});
+                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, callbacks: { onChangePortalTab: this.onChangePortalTab }, portalSettings: portalConfig});
             });
             return portals;
         };

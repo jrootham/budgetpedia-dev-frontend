@@ -20,23 +20,23 @@ import BudgetNode from '../classes/budgetnode'
 
 interface ExplorePortalProps {
     callbackid: string | number,
-    portalConfig:PortalConfig,
-    portalCallbacks: {onChangePortalTab:Function,}
-    budgetNode: BudgetNode,
+    budgetNode: BudgetNode,// not yet used
+    callbacks: {onChangePortalTab:Function,}
+    portalSettings:PortalConfig,
 }
 
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     onChangeTab = () => {
-        this.props.portalCallbacks.onChangePortalTab() 
+        this.props.callbacks.onChangePortalTab() 
     }
 
     getChartTabs = () => {
 
         // generate array of chart tabs
-        let { portalConfig, callbackid, budgetNode } = this.props
+        let { portalSettings, callbackid, budgetNode } = this.props
         // let budgetCells = budgetNode.cells
-        let { chartConfigs } = portalConfig 
+        let { chartConfigs } = portalSettings 
         let cellTabs = chartConfigs.map(
             (portalCell:ChartConfig,cellIndex) => {
                 //!Hack! if more than one chart the first must be expandable
@@ -51,7 +51,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
                 <ExplorerChart 
                     callbackid = { cellIndex }
                     cellSettings = { cellSettings }
-                    cellCallbacks = { cellCallbacks }
+                    callbacks = { cellCallbacks }
                     chartParms = { chartParms }
                     expandable = { expandable }
                 />
@@ -97,7 +97,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
         let tabobject = this.getTabObject(chartTabs)
 
-        let { portalConfig } = this.props
+        let { portalSettings } = this.props
 
         return <div style={
                 { 
@@ -123,7 +123,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
                     display: "inline-block", 
                     backgroundColor: "#00bcd4",
                 }
-            }>{ portalConfig.portalName }</div>
+            }>{ portalSettings.portalName }</div>
             { tabobject }
         </div>
     }

@@ -18,8 +18,9 @@ import {
 
 interface ExplorerChartProps {
     callbackid: string | number,
+    // budgetCell:
+    callbacks: CellCallbacks,
     cellSettings: CellSettings,
-    cellCallbacks: CellCallbacks,
     chartParms: ChartParms,
     expandable: boolean,
 }
@@ -28,8 +29,8 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
 
 
     onChangeChartCode = (chartCode) => {
-        let {cellCallbacks, callbackid} = this.props
-        cellCallbacks.onSwitchChartCode(callbackid, chartCode)
+        let {callbacks, callbackid} = this.props
+        callbacks.onSwitchChartCode(callbackid, chartCode)
     }
 
     render() {

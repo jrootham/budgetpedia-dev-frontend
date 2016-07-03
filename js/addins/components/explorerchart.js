@@ -9,8 +9,8 @@ class ExplorerChart extends Component {
     constructor(...args) {
         super(...args);
         this.onChangeChartCode = (chartCode) => {
-            let { cellCallbacks, callbackid } = this.props;
-            cellCallbacks.onSwitchChartCode(callbackid, chartCode);
+            let { callbacks, callbackid } = this.props;
+            callbacks.onSwitchChartCode(callbackid, chartCode);
         };
     }
     render() {

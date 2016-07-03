@@ -46,6 +46,7 @@ import BudgetNode from '../classes/budgetnode'
 import BudgetBranch from '../classes/budgetbranch'
 
 interface ExploreBranchProps {
+    callbackid: string | number
     budgetBranch: BudgetBranch,
     callbacks:{
         workingStatus:Function,
@@ -54,7 +55,6 @@ interface ExploreBranchProps {
     userselections:any,
     yearscope:any,
     yearslider:any,
-    callbackid: string | number
 }
 
 class ExplorerBranch extends Component<ExploreBranchProps, any> {
@@ -219,7 +219,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let switchResults = budgetBranch.switchFacet({userselections, viewpointdata}, this._nodeCallbacks)
 
-        let {deeperdata, shallowerdata } = switchResults
+        let { deeperdata, shallowerdata } = switchResults
 
         if (deeperdata || shallowerdata) {
 
@@ -364,11 +364,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
             // TODO: pass budgetNode instead of budgetCells?
             return <ExplorerPortal
+                key = {nodeindex}
                 callbackid = {nodeindex}
                 budgetNode = { budgetNode }
-                key = {nodeindex}
-                portalConfig = { portalConfig }
-                portalCallbacks = { {onChangePortalTab: this.onChangePortalTab} }
+                callbacks = { {onChangePortalTab: this.onChangePortalTab} }
+                portalSettings = { portalConfig }
             />
         })
 
