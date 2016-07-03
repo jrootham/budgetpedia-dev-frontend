@@ -7,13 +7,13 @@ class ExplorerPortal extends Component {
     constructor(...args) {
         super(...args);
         this.onChangeTab = () => {
-            this.props.onChangePortalTab();
+            this.props.portalCallbacks.onChangePortalTab();
         };
         this.getChartTabs = () => {
-            let { portalNode, callbackid } = this.props;
-            let { budgetCells } = portalNode;
-            let cellTabs = budgetCells.map((portalCell, cellIndex) => {
-                let expandable = ((budgetCells.length > 1) && (cellIndex == 0));
+            let { portalConfig, callbackid, budgetNode } = this.props;
+            let { chartConfigs } = portalConfig;
+            let cellTabs = chartConfigs.map((portalCell, cellIndex) => {
+                let expandable = ((chartConfigs.length > 1) && (cellIndex == 0));
                 let { chartParms, cellCallbacks, cellSettings, cellTitle } = portalCell;
                 cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid);
                 return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorerchart_1.default, {callbackid: cellIndex, cellSettings: cellSettings, cellCallbacks: cellCallbacks, chartParms: chartParms, expandable: expandable}));
@@ -36,6 +36,7 @@ class ExplorerPortal extends Component {
     render() {
         let chartTabs = this.getChartTabs();
         let tabobject = this.getTabObject(chartTabs);
+        let { portalConfig } = this.props;
         return React.createElement("div", {style: {
             position: "relative",
             display: "inline-block",
@@ -55,7 +56,7 @@ class ExplorerPortal extends Component {
             fontWeight: "bold",
             display: "inline-block",
             backgroundColor: "#00bcd4",
-        }}, this.props.portalNode.portalName), tabobject);
+        }}, portalConfig.portalName), tabobject);
     }
 }
 exports.ExplorerPortal = ExplorerPortal;

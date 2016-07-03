@@ -185,7 +185,7 @@ class ExplorerBranch extends Component {
                 portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')';
             }
             let portals = matrixrow.map((budgetNode, nodeindex) => {
-                let budgetCells = [];
+                let chartConfigs = [];
                 for (let cellindex in budgetNode.cells) {
                     let budgetCell = budgetNode.cells[cellindex];
                     let chartblocktitle = null;
@@ -206,13 +206,13 @@ class ExplorerBranch extends Component {
                         chartCode: budgetCell.chartCode,
                         graph_id: "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
                     };
-                    let portalchart = {
+                    let chartConfig = {
                         chartParms: chartParms,
                         cellCallbacks: cellCallbacks,
                         cellSettings: cellSettings,
                         cellTitle: "By " + chartblocktitle,
                     };
-                    budgetCells.push(portalchart);
+                    chartConfigs.push(chartConfig);
                 }
                 let portalName = null;
                 if (budgetNode.parentData) {
@@ -222,11 +222,11 @@ class ExplorerBranch extends Component {
                     portalName = 'City Budget';
                 }
                 portalName += ' ' + portalseriesname;
-                let portalNode = {
-                    budgetCells: budgetCells,
+                let portalConfig = {
+                    chartConfigs: chartConfigs,
                     portalName: portalName,
                 };
-                return React.createElement(explorerportal_1.ExplorerPortal, {callbackid: nodeindex, key: nodeindex, portalNode: portalNode, onChangePortalTab: this.onChangePortalTab});
+                return React.createElement(explorerportal_1.ExplorerPortal, {callbackid: nodeindex, budgetNode: budgetNode, key: nodeindex, portalConfig: portalConfig, portalCallbacks: { onChangePortalTab: this.onChangePortalTab }});
             });
             return portals;
         };

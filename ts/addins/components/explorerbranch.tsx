@@ -313,7 +313,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let portals = matrixrow.map((budgetNode: BudgetNode, nodeindex) => {
 
-            let budgetCells = []
+            let chartConfigs = []
 
             for (let cellindex in budgetNode.cells) {
                 let budgetCell = budgetNode.cells[cellindex]
@@ -338,14 +338,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     // index,
                 }
 
-                let portalchart: ChartConfig = {
+                let chartConfig: ChartConfig = {
                     chartParms,
                     cellCallbacks,
                     cellSettings,
                     cellTitle: "By " + chartblocktitle,
                 }
 
-                budgetCells.push(portalchart)
+                chartConfigs.push(chartConfig)
 
             }
             let portalName = null
@@ -357,17 +357,18 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
             portalName += ' ' + portalseriesname
 
-            let portalNode: PortalConfig = {
-                budgetCells: budgetCells,
-                portalName: portalName,
+            let portalConfig: PortalConfig = {
+                chartConfigs,
+                portalName,
             }
 
             // TODO: pass budgetNode instead of budgetCells?
             return <ExplorerPortal
                 callbackid = {nodeindex}
+                budgetNode = { budgetNode }
                 key = {nodeindex}
-                portalNode = { portalNode }
-                onChangePortalTab = { this.onChangePortalTab }
+                portalConfig = { portalConfig }
+                portalCallbacks = { {onChangePortalTab: this.onChangePortalTab} }
             />
         })
 
