@@ -339,17 +339,17 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
             { drilldownsegment }
 
-{
-            // { dashboardsegment }
+            {
+                // { dashboardsegment }
 
-            // { comparesegment }
+                // { comparesegment }
 
-            // { differencessegment }
+                // { differencessegment }
 
-            // { contextsegment }
+                // { contextsegment }
 
-            // { buildsegment }
-}
+                // { buildsegment }
+            }
         </div>
     }
 

@@ -43,7 +43,7 @@ class BudgetNode {
     // ====================================================================
     // ---------------------[ PUBLIC ]------------------------------------
 
-    public getChartParms = (props: GetCellChartProps, selectionCallbacks) => {
+    public getChartParms (props: GetCellChartProps, selectionCallbacks) {
         let sourceProps: GetChartParmsProps = {} as GetChartParmsProps
         let node = this
         Object.assign(sourceProps, props, {budgetNode: node})
@@ -75,7 +75,7 @@ class BudgetNode {
     // ====================================================================
     // ---------------------[ PRIVATE ]------------------------------------
 
-    private setCells = (portalcharts, defaultChartType) => {
+    private setCells(portalcharts, defaultChartType) {
         this._cells = []
         // // TODO: should be default for each chart...
         let defaultChartCode = ChartTypeCodes[defaultChartType]
@@ -90,7 +90,7 @@ class BudgetNode {
         }
     }
 
-    private getAvailableCells = () => {
+    private getAvailableCells() {
         let availablCells = []
         if (!this.dataNode) return availablCells
         for (let cell of this._cells) {

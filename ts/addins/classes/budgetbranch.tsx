@@ -43,7 +43,7 @@ class BudgetBranch {
 
     public nodes
 
-    public initializeChartSeries = (props, callbacks) => {
+    public initializeChartSeries(props, callbacks) {
 
         let { userselections, viewpointdata } = props
         let chartmatrixrow = this.nodes
@@ -121,7 +121,7 @@ class BudgetBranch {
 
     }
 
-    switchFacet = (props, callbacks) => {
+    switchFacet(props, callbacks) {
         let switchResults = {
             deeperdata: false,
             shallowerdata: false,
@@ -232,7 +232,7 @@ class BudgetBranch {
         return switchResults
     }
 
-    switchChartCode = (props, callbacks) => {
+    switchChartCode(props, callbacks) {
         let {
             userselections,
             nodeIndex,

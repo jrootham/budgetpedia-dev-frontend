@@ -129,11 +129,11 @@ class Database {
     lookups: Lookups
 
     // pending
-    public getBranch = (viewpointname, path = []) => {
+    public getBranch(viewpointname, path = []) {
 
     }
 
-    public getViewpointData = (parms: GetViewpointDataParms) => {
+    public getViewpointData(parms: GetViewpointDataParms) {
 
         let { viewpointname, dataseriesname, inflationAdjusted, timeSpecs } = parms
 
@@ -162,7 +162,7 @@ class Database {
 
     }
 
-    private getDatasetConfig = (dataset:string):DatasetConfig => {
+    private getDatasetConfig(dataset:string):DatasetConfig {
         let datasetdata = this.getDataset(dataset)
         let { Baseline,
             Name,
@@ -184,16 +184,16 @@ class Database {
         return config
     }
 
-    private setViewpointData = (parms: SetViewpointDataParms) => {
+    private setViewpointData(parms: SetViewpointDataParms) {
         updateViewpointData(parms)
     }
 
-    private getViewpoint = (viewpoint: string): Viewpoint => {
+    private getViewpoint(viewpoint: string): Viewpoint {
         let viewpointdata: Viewpoint = db_viewpoints[viewpoint]
         return viewpointdata
     }
 
-    private getDataset = (dataset: string) => {
+    private getDataset(dataset: string) {
         let datasetdata: CurrencyDataset | ItemDataset = db_dataseries[dataset]
         return datasetdata
         // delay(500).then(() => {
@@ -204,7 +204,7 @@ class Database {
         // })
     }
 
-    private getLookup = (lookup:string = undefined):Lookup => {
+    private getLookup(lookup:string = undefined):Lookup {
         let lookupdata: Lookup = db_lookups
         return lookupdata
     }

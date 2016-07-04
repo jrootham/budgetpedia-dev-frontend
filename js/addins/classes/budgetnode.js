@@ -3,43 +3,10 @@ const constants_1 = require('../constants');
 const getchartparms_1 = require('./modules/getchartparms');
 class BudgetNode {
     constructor(parms) {
-        this.getChartParms = (props, selectionCallbacks) => {
-            let sourceProps = {};
-            let node = this;
-            Object.assign(sourceProps, props, { budgetNode: node });
-            return getchartparms_1.default(sourceProps, selectionCallbacks);
-        };
         this.parentData = null;
         this.update = (dataNode, facet) => {
             this._dataNode = dataNode;
             this.facetName = facet;
-        };
-        this.setCells = (portalcharts, defaultChartType) => {
-            this._cells = [];
-            let defaultChartCode = constants_1.ChartTypeCodes[defaultChartType];
-            for (let type in portalcharts) {
-                let cell = {
-                    googleChartType: defaultChartType,
-                    chartCode: defaultChartCode,
-                    nodeDataPropertyName: portalcharts[type].Type
-                };
-                this._cells.push(cell);
-            }
-        };
-        this.getAvailableCells = () => {
-            let availablCells = [];
-            if (!this.dataNode)
-                return availablCells;
-            for (let cell of this._cells) {
-                if (cell.nodeDataPropertyName == 'Components' && !this.dataNode.Components) {
-                    continue;
-                }
-                if (cell.nodeDataPropertyName == 'Categories' && !this.dataNode.Categories) {
-                    continue;
-                }
-                availablCells.push(cell);
-            }
-            return availablCells;
         };
         let portalcharts = parms.portalCharts;
         this.setCells(portalcharts[parms.facetName], parms.defaultChartType);
@@ -52,11 +19,44 @@ class BudgetNode {
         if (parms.parentData)
             this.parentData = parms.parentData;
     }
+    getChartParms(props, selectionCallbacks) {
+        let sourceProps = {};
+        let node = this;
+        Object.assign(sourceProps, props, { budgetNode: node });
+        return getchartparms_1.default(sourceProps, selectionCallbacks);
+    }
     get dataNode() {
         return this._dataNode;
     }
     get cells() {
         return this.getAvailableCells();
+    }
+    setCells(portalcharts, defaultChartType) {
+        this._cells = [];
+        let defaultChartCode = constants_1.ChartTypeCodes[defaultChartType];
+        for (let type in portalcharts) {
+            let cell = {
+                googleChartType: defaultChartType,
+                chartCode: defaultChartCode,
+                nodeDataPropertyName: portalcharts[type].Type
+            };
+            this._cells.push(cell);
+        }
+    }
+    getAvailableCells() {
+        let availablCells = [];
+        if (!this.dataNode)
+            return availablCells;
+        for (let cell of this._cells) {
+            if (cell.nodeDataPropertyName == 'Components' && !this.dataNode.Components) {
+                continue;
+            }
+            if (cell.nodeDataPropertyName == 'Categories' && !this.dataNode.Categories) {
+                continue;
+            }
+            availablCells.push(cell);
+        }
+        return availablCells;
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
