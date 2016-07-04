@@ -5,23 +5,23 @@ const redux_actions_1 = require('redux-actions');
 const react_router_redux_1 = require('react-router-redux');
 const Actions = require('../actions/actions');
 const initialstate_1 = require("../../local/initialstate");
-let explorerBranchList = (state = [], action) => {
+let branchList = (state = [], action) => {
     return state;
 };
-let explorerBranchesById = (state = {}, action) => {
+let branchesById = (state = {}, action) => {
     return state;
 };
-let explorerNodesById = (state = {}, action) => {
+let nodesById = (state = {}, action) => {
     return state;
 };
-let explorerCellsById = (state = {}, action) => {
+let cellsById = (state = {}, action) => {
     return state;
 };
 let explorer = redux_1.combineReducers({
-    explorerBranchList: explorerBranchList,
-    explorerBranchesById: explorerBranchesById,
-    explorerNodesById: explorerNodesById,
-    explorerCellsById: explorerCellsById,
+    branchList: branchList,
+    branchesById: branchesById,
+    nodesById: nodesById,
+    cellsById: cellsById,
 });
 let theme = (state = initialstate_1.default.theme) => {
     return state;

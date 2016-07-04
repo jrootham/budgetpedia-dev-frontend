@@ -17,27 +17,27 @@ import initialstate from "../../local/initialstate"
 
 // ----------[ app settings ]----------------------
 
-let explorerBranchList = (state = [], action) => {
+let branchList = (state = [], action) => {
     return state
 }
 
-let explorerBranchesById = (state = { }, action) => {
+let branchesById = (state = { }, action) => {
     return state
 }
 
-let explorerNodesById = (state = { }, action) => {
+let nodesById = (state = { }, action) => {
     return state
 }
 
-let explorerCellsById = (state = { }, action) => {
+let cellsById = (state = { }, action) => {
     return state
 }
 
 let explorer = combineReducers({
-        explorerBranchList,
-        explorerBranchesById,
-        explorerNodesById,
-        explorerCellsById,    
+        branchList,
+        branchesById,
+        nodesById,
+        cellsById,    
 })
 
 // -----------[ system resource reducers ]------------
