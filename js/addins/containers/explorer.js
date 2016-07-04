@@ -17,7 +17,7 @@ let Explorer = class extends Component {
         super(props);
         this.state = {
             budgetBranches: [
-                new budgetbranch_1.default({ data: this.props.budgetdata, nodes: [] })
+                new budgetbranch_1.default({ data: {}, nodes: [] })
             ],
             dialogopen: false,
         };

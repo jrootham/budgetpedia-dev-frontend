@@ -57,7 +57,7 @@ import {
 } from './explorer/interfaces'
 
 interface ExplorerProps {
-    budgetdata:any,
+    // budgetdata:any,
     showWaitingMessage:Function,
     hideWaitingMessage:Function,
 }
@@ -79,7 +79,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
     state = {
         // chartmatrix: [[], []], // DrillDown, Compare (Later: Differences, Context, Build)
         budgetBranches:[
-            new BudgetBranch({data:this.props.budgetdata, nodes:[]})
+            new BudgetBranch({data:{}, nodes:[]})
         ],
         dialogopen: false,
     }

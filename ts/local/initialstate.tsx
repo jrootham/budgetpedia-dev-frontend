@@ -9,7 +9,7 @@
 
 /* ================= theme details: ==================== */
 
-let budgetdata = {} // require('../../explorerprototypedata/2015budgetA.json')
+// let budgetdata = {} // require('../../explorerprototypedata/2015budgetA.json')
 
 import theme from 'material-ui/styles/baseThemes/lightBaseTheme'
 
@@ -218,7 +218,7 @@ var initialstate = {
 	theme,
 	colors,
 	system,
-    budgetdata,
+    // budgetdata,
     workingmessagestate,
 }
 

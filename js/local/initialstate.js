@@ -1,5 +1,4 @@
 'use strict';
-let budgetdata = {};
 const lightBaseTheme_1 = require('material-ui/styles/baseThemes/lightBaseTheme');
 const colors = require('material-ui/styles/colors');
 let appnavbar = {
@@ -108,7 +107,6 @@ var initialstate = {
     theme: lightBaseTheme_1.default,
     colors: colors,
     system: system,
-    budgetdata: budgetdata,
     workingmessagestate: workingmessagestate,
 };
 Object.defineProperty(exports, "__esModule", { value: true });

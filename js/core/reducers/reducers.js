@@ -14,9 +14,6 @@ let system = (state = initialstate_1.default.system) => {
 let colors = (state = initialstate_1.default.colors) => {
     return state;
 };
-let budgetdata = (state = initialstate_1.default.budgetdata, action) => {
-    return state;
-};
 let appnavbar = (state = initialstate_1.default.appnavbar, action) => {
     return state;
 };
@@ -198,7 +195,6 @@ function registerconfirm(state = {
     }
 }
 let mainReducerCore = redux_1.combineReducers({
-    budgetdata: budgetdata,
     theme: theme,
     colors: colors,
     system: system,

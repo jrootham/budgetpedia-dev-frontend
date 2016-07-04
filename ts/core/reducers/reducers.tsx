@@ -31,9 +31,9 @@ let colors = (state: any = initialstate.colors) => {
 
 // ------------------[ app data reducers ]---------------------
 
-let budgetdata = (state: any = initialstate.budgetdata, action) => {
-    return state
-}
+// let budgetdata = (state: any = initialstate.budgetdata, action) => {
+//     return state
+// }
 
 let appnavbar = (state: any = initialstate.appnavbar, action) => {
     return state
@@ -304,7 +304,7 @@ function registerconfirm(state = {
 let mainReducerCore = combineReducers(
     { 
         // app data
-        budgetdata,
+        // budgetdata,
 
         // system data
         theme,
