@@ -45,7 +45,7 @@ import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
 import { updateBranchChartSelections } from './explorer/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
 import BudgetBranch from '../classes/budgetbranch'
-let uuid = require('node-uuid')
+let uuid = require('node-uuid') // use uuid.v4() for unique id
 
 import {
     MatrixCellConfig,
