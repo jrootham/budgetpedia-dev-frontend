@@ -31,11 +31,11 @@ let RegisterConfirm = class extends Component {
 }
 ;
 function mapStateToProps(state) {
-    let { auth, register, registerconfirm } = state;
+    let { login } = state;
     return {
         state: state,
-        auth: auth,
-        registerconfirm: registerconfirm,
+        auth: login.auth,
+        registerconfirm: login.registerconfirm,
     };
 }
 RegisterConfirm = react_redux_1.connect(mapStateToProps, {

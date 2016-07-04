@@ -55,13 +55,13 @@ let RegisterPending = class extends Component<any,any> {
 
 function mapStateToProps(state) {
 
-    let { auth, register } = state
+    let { login } = state
 
     return {
 
         state,
-        auth,
-        register,
+        auth:login.auth,
+        register:login.register,
     }
 
 }

@@ -10,14 +10,14 @@ import * as Actions from '../actions/actions'
 
 import { AppTiles } from "../components/apptiles"
 
-const mapStateToProps = ( { hometiles, homecols, homepadding, theme, colors, system } ) => 
+const mapStateToProps = ( { homegrid, resources } ) => 
 ({ 
-    hometiles,
-    homecols,
-    homepadding,
-    theme,
-    colors,
-    system,
+    hometiles:homegrid.hometiles,
+    homecols:homegrid.homecols,
+    homepadding:homegrid.homepadding,
+    theme:resources.theme,
+    colors:resources.colors,
+    system:resources.system,
 })
 
 class HomeTilesClass extends React.Component<any, any> {

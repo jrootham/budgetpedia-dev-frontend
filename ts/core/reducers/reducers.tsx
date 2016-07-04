@@ -33,6 +33,13 @@ let explorerCellsById = (state = { }, action) => {
     return state
 }
 
+let explorer = combineReducers({
+        explorerBranchList,
+        explorerBranchesById,
+        explorerNodesById,
+        explorerCellsById,    
+})
+
 // -----------[ system resource reducers ]------------
 
 let theme = (state: any = initialstate.theme) => {
@@ -47,19 +54,17 @@ let colors = (state: any = initialstate.colors) => {
     return state
 }
 
-// ------------------[ app data reducers ]---------------------
+let resources = combineReducers({
+    theme,
+    system,
+    colors,
+})
 
-// let budgetdata = (state: any = initialstate.budgetdata, action) => {
-//     return state
-// }
+// ------------------[ app data reducers ]---------------------
 
 let appnavbar = (state: any = initialstate.appnavbar, action) => {
     return state
 }
-
-// let toolsnavbar = (state: any = initialstate.toolsnavbar, action) => {
-//     return state
-// }
 
 // ---------------------[ ui core services reducers ]------------------------
 
@@ -130,6 +135,12 @@ let homecolsreducer = (state: any = initialstate.homecols, action) => {
 let homecols = handleActions({
     [Actions.SET_HOMETILECOLS]: homecolsreducer,
 }, initialstate.homecols)
+
+let homegrid = combineReducers({
+    homepadding,
+    hometiles,
+    homecols,
+})
 
 // ==================================================================
 // -------------------[ LOGIN AND AUTO-LOGIN ]-----------------------
@@ -319,30 +330,41 @@ function registerconfirm(state = {
 
 }
 
+let login = combineReducers({
+    auth,
+    register,
+    registerconfirm,    
+})
+
 let mainReducerCore = combineReducers(
     { 
         // app data
-        explorerBranchList,
-        explorerBranchesById,
-        explorerNodesById,
-        explorerCellsById,
+        explorer,
+        // explorerBranchList,
+        // explorerBranchesById,
+        // explorerNodesById,
+        // explorerCellsById,
         // system data
-        theme,
-        colors,
-        system,
+        resources,
+        // theme,
+        // colors,
+        // system,
         
         routing:routerReducer, // import
 
         // user login management
-        auth,
-        register,
-        registerconfirm,
+        login,
+        // auth,
+        // register,
+        // registerconfirm,
+
+        homegrid,
+        // hometiles,
+        // homecols,
+        // homepadding,
 
         // ui management
         workingmessagestate,
-        hometiles,
-        homecols,
-        homepadding,
         appnavbar,
     }
 )

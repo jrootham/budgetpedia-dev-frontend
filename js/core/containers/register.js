@@ -92,12 +92,12 @@ let Register = class extends Component {
 }
 ;
 function mapStateToProps(state) {
-    let { theme, auth, register } = state;
+    let { resources, login } = state;
     return {
         state: state,
-        auth: auth,
-        theme: theme,
-        register: register,
+        auth: login.auth,
+        theme: resources.theme,
+        register: login.register,
     };
 }
 Register = react_redux_1.connect(mapStateToProps, {

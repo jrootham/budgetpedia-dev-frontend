@@ -121,14 +121,14 @@ let Register = class extends Component<any, any> {
 
 function mapStateToProps(state) {
 
-    let { theme, auth, register } = state
+    let { resources, login } = state
 
     return {
 
         state,
-        auth,
-        theme,
-        register,
+        auth:login.auth,
+        theme:resources.theme,
+        register:login.register,
     }
 
 }

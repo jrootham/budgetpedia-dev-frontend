@@ -72,13 +72,13 @@ let RegisterConfirm = class extends Component<any, any> {
 
 function mapStateToProps(state) {
 
-    let { auth, register, registerconfirm } = state
+    let { login } = state
 
     return {
 
         state,
-        auth,
-        registerconfirm,
+        auth:login.auth,
+        registerconfirm:login.registerconfirm,
         
     }
 

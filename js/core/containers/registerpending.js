@@ -21,11 +21,11 @@ let RegisterPending = class extends Component {
 }
 ;
 function mapStateToProps(state) {
-    let { auth, register } = state;
+    let { login } = state;
     return {
         state: state,
-        auth: auth,
-        register: register,
+        auth: login.auth,
+        register: login.register,
     };
 }
 RegisterPending = react_redux_1.connect(mapStateToProps)(RegisterPending);

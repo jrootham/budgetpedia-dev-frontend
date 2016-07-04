@@ -16,7 +16,7 @@ import { autoLoginUser } from '../actions/actions'
 
 const store = configureStore()
 
-let { auth } = store.getState()
+let { auth } = store.getState().login
 
 if (!auth.isAuthenticated) {
     let token = localStorage.getItem('jsonwebtoken')

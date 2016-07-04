@@ -15,12 +15,12 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group'
 
 function mapStateToProps(state) {
 
-    let { toolsnavbar, theme } = state
+    let { toolsnavbar, resources } = state
 
     return {
 
         toolsnavbar,
-        theme,
+        theme:resources.theme,
 
     }
 

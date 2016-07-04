@@ -403,15 +403,15 @@ let MainBar = class extends React.Component<any, any> {
 
 function mapStateToProps(state) {
 
-    let { appnavbar, theme, auth, hometiles, workingmessagestate } = state
+    let { appnavbar, resources, login, homegrid, workingmessagestate } = state
 
     return {
 
         state,
-        auth,
+        auth:login.auth,
         appnavbar,
-        theme,
-        hometiles,
+        theme:resources.theme,
+        hometiles:homegrid.hometiles,
         workingmessagestate,
     }
 

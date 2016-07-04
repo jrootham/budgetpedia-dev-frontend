@@ -7,10 +7,10 @@ const FontIcon_1 = require('material-ui/FontIcon');
 const toolbar_1 = require('material-ui/lib/toolbar/toolbar');
 const toolbar_group_1 = require('material-ui/lib/toolbar/toolbar-group');
 function mapStateToProps(state) {
-    let { toolsnavbar, theme } = state;
+    let { toolsnavbar, resources } = state;
     return {
         toolsnavbar: toolsnavbar,
-        theme: theme,
+        theme: resources.theme,
     };
 }
 let MainToolbar = class extends React.Component {

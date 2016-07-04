@@ -17,6 +17,12 @@ let explorerNodesById = (state = {}, action) => {
 let explorerCellsById = (state = {}, action) => {
     return state;
 };
+let explorer = redux_1.combineReducers({
+    explorerBranchList: explorerBranchList,
+    explorerBranchesById: explorerBranchesById,
+    explorerNodesById: explorerNodesById,
+    explorerCellsById: explorerCellsById,
+});
 let theme = (state = initialstate_1.default.theme) => {
     return state;
 };
@@ -26,6 +32,11 @@ let system = (state = initialstate_1.default.system) => {
 let colors = (state = initialstate_1.default.colors) => {
     return state;
 };
+let resources = redux_1.combineReducers({
+    theme: theme,
+    system: system,
+    colors: colors,
+});
 let appnavbar = (state = initialstate_1.default.appnavbar, action) => {
     return state;
 };
@@ -77,6 +88,11 @@ let homecolsreducer = (state = initialstate_1.default.homecols, action) => {
 let homecols = redux_actions_1.handleActions({
     [Actions.SET_HOMETILECOLS]: homecolsreducer,
 }, initialstate_1.default.homecols);
+let homegrid = redux_1.combineReducers({
+    homepadding: homepadding,
+    hometiles: hometiles,
+    homecols: homecols,
+});
 let { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, AUTO_LOGIN_REQUEST, AUTO_LOGIN_SUCCESS, AUTO_LOGIN_FAILURE, } = Actions;
 function auth(state = {
         isFetching: false,
@@ -203,22 +219,18 @@ function registerconfirm(state = {
             return state;
     }
 }
-let mainReducerCore = redux_1.combineReducers({
-    explorerBranchList: explorerBranchList,
-    explorerBranchesById: explorerBranchesById,
-    explorerNodesById: explorerNodesById,
-    explorerCellsById: explorerCellsById,
-    theme: theme,
-    colors: colors,
-    system: system,
-    routing: react_router_redux_1.routerReducer,
+let login = redux_1.combineReducers({
     auth: auth,
     register: register,
     registerconfirm: registerconfirm,
+});
+let mainReducerCore = redux_1.combineReducers({
+    explorer: explorer,
+    resources: resources,
+    routing: react_router_redux_1.routerReducer,
+    login: login,
+    homegrid: homegrid,
     workingmessagestate: workingmessagestate,
-    hometiles: hometiles,
-    homecols: homecols,
-    homepadding: homepadding,
     appnavbar: appnavbar,
 });
 let mainReducer = (state, action) => {

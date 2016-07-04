@@ -7,7 +7,7 @@ const configurestore_1 = require('../common/configurestore');
 const root_1 = require('../common/root');
 const actions_1 = require('../actions/actions');
 const store = configurestore_1.default();
-let { auth } = store.getState();
+let { auth } = store.getState().login;
 if (!auth.isAuthenticated) {
     let token = localStorage.getItem('jsonwebtoken');
     if (token) {
