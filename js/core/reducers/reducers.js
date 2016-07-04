@@ -5,25 +5,25 @@ const redux_actions_1 = require('redux-actions');
 const react_router_redux_1 = require('react-router-redux');
 const Actions = require('../actions/actions');
 const initialstate_1 = require("../../local/initialstate");
-let budgetdata = (state = initialstate_1.initialstate.budgetdata, action) => {
+let theme = (state = initialstate_1.default.theme) => {
     return state;
 };
-let appnavbar = (state = initialstate_1.initialstate.appnavbar, action) => {
+let system = (state = initialstate_1.default.system) => {
     return state;
 };
-let toolsnavbar = (state = initialstate_1.initialstate.toolsnavbar, action) => {
+let colors = (state = initialstate_1.default.colors) => {
     return state;
 };
-let theme = (state = initialstate_1.initialstate.theme) => {
+let budgetdata = (state = initialstate_1.default.budgetdata, action) => {
     return state;
 };
-let system = (state = initialstate_1.initialstate.system) => {
+let appnavbar = (state = initialstate_1.default.appnavbar, action) => {
     return state;
 };
-let colors = (state = initialstate_1.initialstate.colors) => {
+let toolsnavbar = (state = initialstate_1.default.toolsnavbar, action) => {
     return state;
 };
-let workingmessagestate = (state = initialstate_1.initialstate.workingmessagestate, action) => {
+let workingmessagestate = (state = initialstate_1.default.workingmessagestate, action) => {
     switch (action.type) {
         case Actions.SHOW_WORKING_MESSAGE: {
             return true;
@@ -35,13 +35,13 @@ let workingmessagestate = (state = initialstate_1.initialstate.workingmessagesta
             return state;
     }
 };
-let homepadding = (state = initialstate_1.initialstate.homepadding, action) => {
+let homepadding = (state = initialstate_1.default.homepadding, action) => {
     return state;
 };
-let hometiles = (state = initialstate_1.initialstate.hometiles, action) => {
+let hometiles = (state = initialstate_1.default.hometiles, action) => {
     return state;
 };
-let homecolsreducer = (state = initialstate_1.initialstate.homecols, action) => {
+let homecolsreducer = (state = initialstate_1.default.homecols, action) => {
     switch (action.type) {
         case Actions.SET_HOMETILECOLS: {
             let mainElement = document.getElementById('main');
@@ -70,7 +70,7 @@ let homecolsreducer = (state = initialstate_1.initialstate.homecols, action) => 
 };
 let homecols = redux_actions_1.handleActions({
     [Actions.SET_HOMETILECOLS]: homecolsreducer,
-}, initialstate_1.initialstate.homecols);
+}, initialstate_1.default.homecols);
 let { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, AUTO_LOGIN_REQUEST, AUTO_LOGIN_SUCCESS, AUTO_LOGIN_FAILURE, } = Actions;
 function auth(state = {
         isFetching: false,
@@ -198,10 +198,6 @@ function registerconfirm(state = {
     }
 }
 let mainReducerCore = redux_1.combineReducers({
-    hometiles: hometiles,
-    homecols: homecols,
-    homepadding: homepadding,
-    appnavbar: appnavbar,
     budgetdata: budgetdata,
     theme: theme,
     colors: colors,
@@ -211,6 +207,10 @@ let mainReducerCore = redux_1.combineReducers({
     register: register,
     registerconfirm: registerconfirm,
     workingmessagestate: workingmessagestate,
+    hometiles: hometiles,
+    homecols: homecols,
+    homepadding: homepadding,
+    appnavbar: appnavbar,
 });
 let mainReducer = (state, action) => {
     if (!flux_standard_action_1.isFSA(action)) {

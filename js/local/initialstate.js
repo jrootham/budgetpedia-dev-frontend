@@ -99,7 +99,7 @@ let hometiles = [
     },
 ];
 let workingmessagestate = false;
-exports.initialstate = {
+var initialstate = {
     hometiles: hometiles,
     homecols: homecols,
     homepadding: homepadding,
@@ -111,3 +111,5 @@ exports.initialstate = {
     budgetdata: budgetdata,
     workingmessagestate: workingmessagestate,
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = initialstate;

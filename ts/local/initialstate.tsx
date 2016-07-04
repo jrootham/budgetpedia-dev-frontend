@@ -209,7 +209,7 @@ let hometiles: [Object] = [
 
 let workingmessagestate = false
 
-export var initialstate = {
+var initialstate = {
     hometiles,
     homecols,
     homepadding,
@@ -221,3 +221,5 @@ export var initialstate = {
     budgetdata,
     workingmessagestate,
 }
+
+export default initialstate

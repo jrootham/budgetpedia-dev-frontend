@@ -9,9 +9,27 @@ import { combineReducers } from 'redux'
 import { isFSA } from 'flux-standard-action'
 import { handleActions } from 'redux-actions'; // handleAction doesn't work with combineReducers
 import { routerReducer } from 'react-router-redux'
-// ==============================================
+
+// -------------[ app resources ]---------------
 import * as Actions from '../actions/actions'
-import { initialstate } from "../../local/initialstate"
+
+import initialstate from "../../local/initialstate"
+
+// -----------[ system resource reducers ]------------
+
+let theme = (state: any = initialstate.theme) => {
+    return state
+}
+
+let system = (state:any = initialstate.system) => {
+    return state
+}
+
+let colors = (state: any = initialstate.colors) => {
+    return state
+}
+
+// ------------------[ app data reducers ]---------------------
 
 let budgetdata = (state: any = initialstate.budgetdata, action) => {
     return state
@@ -25,17 +43,7 @@ let toolsnavbar = (state: any = initialstate.toolsnavbar, action) => {
     return state
 }
 
-let theme = (state: any = initialstate.theme) => {
-    return state
-}
-
-let system = (state:any = initialstate.system) => {
-    return state
-}
-
-let colors = (state: any = initialstate.colors) => {
-    return state
-}
+// ---------------------[ ui core services reducers ]------------------------
 
 let workingmessagestate = (state:any = initialstate.workingmessagestate, action) => {
     switch (action.type) {
@@ -295,24 +303,27 @@ function registerconfirm(state = {
 
 let mainReducerCore = combineReducers(
     { 
-        // maintiles,
-        // maincols,
-        // mainpadding,
-        hometiles,
-        homecols,
-        homepadding,
-        appnavbar,
+        // app data
         budgetdata,
-        // toolsnavbar, 
+
+        // system data
         theme,
         colors,
         system,
         
-        routing:routerReducer, 
+        routing:routerReducer, // import
+
+        // user login management
         auth,
         register,
         registerconfirm,
+
+        // ui management
         workingmessagestate,
+        hometiles,
+        homecols,
+        homepadding,
+        appnavbar,
     }
 )
 
