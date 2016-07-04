@@ -11,6 +11,7 @@ const constants_1 = require('../constants');
 const updatebranchchartselections_1 = require('./explorer/updatebranchchartselections');
 const Actions = require('../../core/actions/actions');
 const budgetbranch_1 = require('../classes/budgetbranch');
+let uuid = require('node-uuid');
 let Explorer = class extends Component {
     constructor(props) {
         super(props);
