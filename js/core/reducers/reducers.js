@@ -17,9 +17,6 @@ let colors = (state = initialstate_1.default.colors) => {
 let appnavbar = (state = initialstate_1.default.appnavbar, action) => {
     return state;
 };
-let toolsnavbar = (state = initialstate_1.default.toolsnavbar, action) => {
-    return state;
-};
 let workingmessagestate = (state = initialstate_1.default.workingmessagestate, action) => {
     switch (action.type) {
         case Actions.SHOW_WORKING_MESSAGE: {

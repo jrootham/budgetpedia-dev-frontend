@@ -39,9 +39,9 @@ let appnavbar = (state: any = initialstate.appnavbar, action) => {
     return state
 }
 
-let toolsnavbar = (state: any = initialstate.toolsnavbar, action) => {
-    return state
-}
+// let toolsnavbar = (state: any = initialstate.toolsnavbar, action) => {
+//     return state
+// }
 
 // ---------------------[ ui core services reducers ]------------------------
 

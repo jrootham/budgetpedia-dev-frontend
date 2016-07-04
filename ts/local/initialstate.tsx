@@ -54,9 +54,9 @@ let appnavbar = {
 	menuoptions: [],
 }
 
-let toolsnavbar = {
+// let toolsnavbar = {
 
-}
+// }
 
 // TODO: no longer needed with switch away from flipcards
 // for more detail: https://www.npmjs.com/package/snifferjs
@@ -214,7 +214,7 @@ var initialstate = {
     homecols,
     homepadding,
     appnavbar,
-	toolsnavbar,
+	// toolsnavbar,
 	theme,
 	colors,
 	system,

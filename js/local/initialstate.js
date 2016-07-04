@@ -7,7 +7,6 @@ let appnavbar = {
     accountoptions: [],
     menuoptions: [],
 };
-let toolsnavbar = {};
 let system = {
     ischrome: /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
 };
@@ -103,7 +102,6 @@ var initialstate = {
     homecols: homecols,
     homepadding: homepadding,
     appnavbar: appnavbar,
-    toolsnavbar: toolsnavbar,
     theme: lightBaseTheme_1.default,
     colors: colors,
     system: system,
