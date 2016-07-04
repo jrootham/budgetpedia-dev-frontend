@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router'
 import { routerMiddleware } from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 
-import { mainReducer } from "../reducers/reducers"
+import mainReducer from "../reducers/reducers"
 
 const reduxRouterMiddleware = routerMiddleware(browserHistory)
 
@@ -20,8 +20,6 @@ const store = createStore(
     applyMiddleware(...middlewares) // the enhancer has last position
 )
 
-const configureStore = () => {
-    return store
-}
+const configureStore = () => store
 
 export default configureStore

@@ -221,4 +221,5 @@ let mainReducer = (state, action) => {
         return mainReducerCore(state, action);
     }
 };
-exports.mainReducer = mainReducer;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = mainReducer;

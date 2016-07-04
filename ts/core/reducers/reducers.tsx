@@ -329,4 +329,4 @@ let mainReducer = (state,action) => {
     }
 }
 
-export { mainReducer }
+export default mainReducer
