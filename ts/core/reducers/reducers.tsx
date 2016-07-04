@@ -15,6 +15,24 @@ import * as Actions from '../actions/actions'
 
 import initialstate from "../../local/initialstate"
 
+// ----------[ app settings ]----------------------
+
+let explorerBranchList = (state = [], action) => {
+    return state
+}
+
+let explorerBranchesById = (state = { }, action) => {
+    return state
+}
+
+let explorerNodesById = (state = { }, action) => {
+    return state
+}
+
+let explorerCellsById = (state = { }, action) => {
+    return state
+}
+
 // -----------[ system resource reducers ]------------
 
 let theme = (state: any = initialstate.theme) => {
@@ -304,8 +322,10 @@ function registerconfirm(state = {
 let mainReducerCore = combineReducers(
     { 
         // app data
-        // budgetdata,
-
+        explorerBranchList,
+        explorerBranchesById,
+        explorerNodesById,
+        explorerCellsById,
         // system data
         theme,
         colors,

@@ -5,6 +5,18 @@ const redux_actions_1 = require('redux-actions');
 const react_router_redux_1 = require('react-router-redux');
 const Actions = require('../actions/actions');
 const initialstate_1 = require("../../local/initialstate");
+let explorerBranchList = (state = [], action) => {
+    return state;
+};
+let explorerBranchesById = (state = {}, action) => {
+    return state;
+};
+let explorerNodesById = (state = {}, action) => {
+    return state;
+};
+let explorerCellsById = (state = {}, action) => {
+    return state;
+};
 let theme = (state = initialstate_1.default.theme) => {
     return state;
 };
@@ -192,6 +204,10 @@ function registerconfirm(state = {
     }
 }
 let mainReducerCore = redux_1.combineReducers({
+    explorerBranchList: explorerBranchList,
+    explorerBranchesById: explorerBranchesById,
+    explorerNodesById: explorerNodesById,
+    explorerCellsById: explorerCellsById,
     theme: theme,
     colors: colors,
     system: system,
