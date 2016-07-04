@@ -37,9 +37,9 @@ let colors = (state: any = initialstate.colors) => {
     return state
 }
 
-let mainpadding = (state: any = initialstate.mainpadding, action) => {
-    return state
-}
+// let mainpadding = (state: any = initialstate.mainpadding, action) => {
+//     return state
+// }
 
 /*let maintiles = (state: any = initialstate.maintiles, action) => {
     return state
@@ -48,53 +48,53 @@ let mainpadding = (state: any = initialstate.mainpadding, action) => {
 // ========================================================================
 // -----------------------[ SET TILE COLUMNS ]-----------------------------
 
-let maincolsreducer = (state: any = initialstate.maincols, action) => {
-    switch (action.type) {
-        case Actions.SET_TILECOLS: {
+// let maincolsreducer = (state: any = initialstate.maincols, action) => {
+//     switch (action.type) {
+//         case Actions.SET_TILECOLS: {
 
-            let mainElement = document.getElementById('main')
+//             let mainElement = document.getElementById('main')
 
-            let elementwidth: number = mainElement.getBoundingClientRect().width
+//             let elementwidth: number = mainElement.getBoundingClientRect().width
 
-            let columns: number;
+//             let columns: number;
 
-            // breakpoints should be parameterized
-            if (elementwidth > 960) {
+//             // breakpoints should be parameterized
+//             if (elementwidth > 960) {
 
-                columns = 4
+//                 columns = 4
 
-            } else if (elementwidth > 680) {
+//             } else if (elementwidth > 680) {
 
-                columns = 3
+//                 columns = 3
 
-            } else if (elementwidth > 400) {
+//             } else if (elementwidth > 400) {
 
-                columns = 2
+//                 columns = 2
 
-            } else {
+//             } else {
 
-                columns = 1
+//                 columns = 1
 
-            }
+//             }
 
-            return columns
+//             return columns
 
-        }
-        default:
+//         }
+//         default:
 
-            return state
+//             return state
 
-    }
-}
+//     }
+// }
 
 // handleAction not usable with combineReducers
 // https://github.com/acdlite/redux-actions/issues/23
 // let maincols = handleAction(Actions.SET_TILECOLS, maincolsreducer)
 
 // compatible with flux standard action; quickly filter out non-matching calls
-let maincols = handleActions({
-    [Actions.SET_TILECOLS]: maincolsreducer,
-}, initialstate.maincols )
+// let maincols = handleActions({
+//     [Actions.SET_TILECOLS]: maincolsreducer,
+// }, initialstate.maincols )
 
 let workingmessagestate = (state:any = initialstate.workingmessagestate, action) => {
     switch (action.type) {
@@ -355,8 +355,8 @@ function registerconfirm(state = {
 let mainReducerCore = combineReducers(
     { 
         // maintiles,
-        maincols,
-        mainpadding,
+        // maincols,
+        // mainpadding,
         hometiles,
         homecols,
         homepadding,

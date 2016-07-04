@@ -23,36 +23,6 @@ let system = (state = initialstate_1.initialstate.system) => {
 let colors = (state = initialstate_1.initialstate.colors) => {
     return state;
 };
-let mainpadding = (state = initialstate_1.initialstate.mainpadding, action) => {
-    return state;
-};
-let maincolsreducer = (state = initialstate_1.initialstate.maincols, action) => {
-    switch (action.type) {
-        case Actions.SET_TILECOLS: {
-            let mainElement = document.getElementById('main');
-            let elementwidth = mainElement.getBoundingClientRect().width;
-            let columns;
-            if (elementwidth > 960) {
-                columns = 4;
-            }
-            else if (elementwidth > 680) {
-                columns = 3;
-            }
-            else if (elementwidth > 400) {
-                columns = 2;
-            }
-            else {
-                columns = 1;
-            }
-            return columns;
-        }
-        default:
-            return state;
-    }
-};
-let maincols = redux_actions_1.handleActions({
-    [Actions.SET_TILECOLS]: maincolsreducer,
-}, initialstate_1.initialstate.maincols);
 let workingmessagestate = (state = initialstate_1.initialstate.workingmessagestate, action) => {
     switch (action.type) {
         case Actions.SHOW_WORKING_MESSAGE: {
@@ -228,8 +198,6 @@ function registerconfirm(state = {
     }
 }
 let mainReducerCore = redux_1.combineReducers({
-    maincols: maincols,
-    mainpadding: mainpadding,
     hometiles: hometiles,
     homecols: homecols,
     homepadding: homepadding,

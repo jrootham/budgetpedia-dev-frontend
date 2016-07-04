@@ -12,8 +12,6 @@ let toolsnavbar = {};
 let system = {
     ischrome: /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
 };
-let maincols = 2;
-let mainpadding = 0;
 let homecols = 2;
 let homepadding = 20;
 let hometiles = [
@@ -102,8 +100,6 @@ let hometiles = [
 ];
 let workingmessagestate = false;
 exports.initialstate = {
-    maincols: maincols,
-    mainpadding: mainpadding,
     hometiles: hometiles,
     homecols: homecols,
     homepadding: homepadding,

@@ -13,7 +13,7 @@ let budgetdata = {} // require('../../explorerprototypedata/2015budgetA.json')
 
 import theme from 'material-ui/styles/baseThemes/lightBaseTheme'
 
-import database, {CurrencyDataset,ItemDataset} from '../addins/classes/databaseapi'
+// import database, {CurrencyDataset,ItemDataset} from '../addins/classes/databaseapi'
 
 // fontFamily: "Roboto, sans-serif"
 // palette: Object
@@ -64,8 +64,8 @@ let system = {
 	ischrome: /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
 }
 
-let maincols: number = 2 // default
-let mainpadding: number = 0
+// let maincols: number = 2 // default
+// let mainpadding: number = 0
 /*let maintiles: [Object] = [
 	{
 		id: 6,
@@ -342,8 +342,8 @@ let workingmessagestate = false
 
 export var initialstate = {
 	// maintiles,
-	maincols,
-	mainpadding,
+	// maincols,
+	// mainpadding,
     hometiles,
     homecols,
     homepadding,
