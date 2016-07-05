@@ -7,9 +7,11 @@ class BudgetBranch {
     constructor(parms) {
         this.data = parms.data;
         this.nodes = parms.nodes;
+        this.settings = parms.settings;
     }
     initializeChartSeries(props, callbacks) {
-        let { branchsettings, viewpointdata } = props;
+        let branchsettings = this.settings;
+        let { viewpointdata } = props;
         let chartmatrixrow = this.nodes;
         let budgetdata = this.data;
         let chartParmsObj;
@@ -69,7 +71,8 @@ class BudgetBranch {
             deeperdata: false,
             shallowerdata: false,
         };
-        let { viewpointdata, branchsettings } = props;
+        let branchsettings = this.settings;
+        let { viewpointdata } = props;
         let budgetdata = this.data;
         budgetdata.viewpointdata = viewpointdata;
         let chartmatrixrow = this.nodes;
@@ -156,7 +159,8 @@ class BudgetBranch {
         return switchResults;
     }
     switchChartCode(props, callbacks) {
-        let { branchsettings, nodeIndex, cellIndex, chartCode, } = props;
+        let branchsettings = this.settings;
+        let { nodeIndex, cellIndex, chartCode, } = props;
         let chartType = constants_1.ChartCodeTypes[chartCode];
         let chartmatrixrow = this.nodes;
         let budgetNode = chartmatrixrow[nodeIndex];

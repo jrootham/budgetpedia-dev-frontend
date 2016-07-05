@@ -73,7 +73,7 @@ interface ExploreBranchProps {
     branchsettings:BranchSettings,
 }
 
-class ExplorerBranch extends Component<ExploreBranchProps, any> {
+class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any, snackbar?:any} > {
 
     constructor(props) {
         super(props);
@@ -87,7 +87,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         chartmatrixrow:this.props.budgetBranch.nodes,
         // yearslider: this.props.yearslider,
         // yearscope: this.props.yearscope,
-        branchsettings: this.props.branchsettings,
+        // branchsettings: this.props.branchsettings,
         snackbar:{open:false,message:'empty'}
     }
 
@@ -129,7 +129,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     private _getViewpointData = () => {
 
-        let branchsettings:BranchSettings = this.state.branchsettings
+        let branchsettings:BranchSettings = this.props.budgetBranch.settings
 
         let { 
             viewpoint: viewpointname, 
@@ -157,11 +157,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let viewpointdata = this._getViewpointData()
 
-        let branchsettings = this.state.branchsettings
+        let branchsettings = this.props.budgetBranch.settings
 
         let { budgetBranch } = this.props
         budgetBranch.initializeChartSeries(
-            {branchsettings, viewpointdata}, this._nodeCallbacks)
+            {viewpointdata}, this._nodeCallbacks)
         this._nodeCallbacks.refreshPresentation()
     }
 
@@ -212,13 +212,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     switchViewpoint = (viewpointname) => {
 
-        let branchsettings = this.state.branchsettings
+        let branchsettings = this.props.budgetBranch.settings
         let chartmatrixrow = this.state.chartmatrixrow
         // let chartseries = chartmatrixrow
         chartmatrixrow.splice(0) // remove subsequent charts
         branchsettings.viewpoint = viewpointname
         this.setState({
-            branchsettings,
             chartmatrixrow,
         })
 
@@ -228,14 +227,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     switchFacet = (facet) => {
 
-        let branchsettings = this.state.branchsettings
+        let branchsettings = this.props.budgetBranch.settings
         branchsettings.facet = facet
 
         let viewpointdata = this._getViewpointData()
 
         let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
 
-        let switchResults = budgetBranch.switchFacet({branchsettings, viewpointdata}, this._nodeCallbacks)
+        let switchResults = budgetBranch.switchFacet({viewpointdata}, this._nodeCallbacks)
 
         let { deeperdata, shallowerdata } = switchResults
 
@@ -277,11 +276,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // TODO: belongs with explorerchart controller?
     switchChartCode = (nodeIndex,cellIndex, chartCode) => {
 
-        let { branchsettings }:{branchsettings:BranchSettings} = this.state
         let { budgetBranch }:{budgetBranch: BudgetBranch } = this.props
+        // let { settings } = budgetBranch
 
         let props = {
-            branchsettings,
             nodeIndex,
             cellIndex,
             chartCode,
@@ -316,7 +314,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // get React components to render
     getPortals = (matrixrow) => {
 
-        let branchsettings = this.state.branchsettings
+        let branchsettings = this.props.budgetBranch.settings
 
         let budgetdata = this.props.budgetBranch.data
 
@@ -404,7 +402,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     <div>
         <span style={{ fontStyle: "italic" }}>Viewpoint: </span>
         <DropDownMenu
-            value={this.state.branchsettings.viewpoint}
+            value={this.props.budgetBranch.settings.viewpoint}
             style={{
             }}
             onChange={
@@ -429,7 +427,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
             style={
                 {
-                    backgroundColor: (this.state.branchsettings.facet == 'BudgetExpenses')
+                    backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetExpenses')
                         ? "rgba(144,238,144,0.5)"
                         : 'transparent',
                     borderRadius: "50%"
@@ -448,7 +446,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
             style={
                 {
-                    backgroundColor: (this.state.branchsettings.facet == 'BudgetRevenues')
+                    backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetRevenues')
                         ? "rgba(144,238,144,0.5)"
                         : 'transparent',
                     borderRadius: "50%"
@@ -467,7 +465,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
             style={
                 {
-                    backgroundColor: (this.state.branchsettings.facet == 'BudgetStaffing')
+                    backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetStaffing')
                         ? "rgba(144,238,144,0.5)"
                         : 'transparent',
                     borderRadius: "50%"

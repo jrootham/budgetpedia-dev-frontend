@@ -32,21 +32,26 @@ import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 interface BudgetBranchParms {
     data:any,
     nodes:any[],
+    settings:BranchSettings
 }
 
 class BudgetBranch {
-    constructor(parms) {
+    constructor(parms:BudgetBranchParms) {
         this.data = parms.data
         this.nodes = parms.nodes
+        this.settings = parms.settings
     }
 
     public data
 
     public nodes
 
+    public settings:BranchSettings
+
     public initializeChartSeries(props, callbacks) {
 
-        let { branchsettings, viewpointdata }:{branchsettings:BranchSettings,viewpointdata:any}= props
+        let branchsettings = this.settings
+        let { viewpointdata }:{viewpointdata:any} = props
         let chartmatrixrow = this.nodes
         let budgetdata = this.data
         let chartParmsObj: ChartParmsObj
@@ -127,7 +132,8 @@ class BudgetBranch {
             deeperdata: false,
             shallowerdata: false,
         }
-        let {viewpointdata, branchsettings} = props
+        let branchsettings: BranchSettings = this.settings
+        let {viewpointdata} = props
         let budgetdata = this.data
         budgetdata.viewpointdata = viewpointdata
 
@@ -234,8 +240,8 @@ class BudgetBranch {
     }
 
     switchChartCode(props, callbacks) {
+        let branchsettings: BranchSettings = this.settings
         let {
-            branchsettings,
             nodeIndex,
             cellIndex,
             chartCode,

@@ -13,7 +13,6 @@ class ExplorerBranch extends Component {
         super(props);
         this.state = {
             chartmatrixrow: this.props.budgetBranch.nodes,
-            branchsettings: this.props.branchsettings,
             snackbar: { open: false, message: 'empty' }
         };
         this.handleSnackbarRequestClose = () => {
@@ -42,7 +41,7 @@ class ExplorerBranch extends Component {
             this.initializeChartSeries();
         };
         this._getViewpointData = () => {
-            let branchsettings = this.state.branchsettings;
+            let branchsettings = this.props.budgetBranch.settings;
             let { viewpoint: viewpointname, facet: dataseriesname, inflationAdjusted, } = branchsettings;
             let viewpointdata = databaseapi_1.default.getViewpointData({
                 viewpointname: viewpointname,
@@ -60,9 +59,9 @@ class ExplorerBranch extends Component {
         };
         this.initializeChartSeries = () => {
             let viewpointdata = this._getViewpointData();
-            let branchsettings = this.state.branchsettings;
+            let branchsettings = this.props.budgetBranch.settings;
             let { budgetBranch } = this.props;
-            budgetBranch.initializeChartSeries({ branchsettings: branchsettings, viewpointdata: viewpointdata }, this._nodeCallbacks);
+            budgetBranch.initializeChartSeries({ viewpointdata: viewpointdata }, this._nodeCallbacks);
             this._nodeCallbacks.refreshPresentation();
         };
         this.onPortalCreation = () => {
@@ -100,22 +99,21 @@ class ExplorerBranch extends Component {
             return t1 * t1 * t1 + 1;
         };
         this.switchViewpoint = (viewpointname) => {
-            let branchsettings = this.state.branchsettings;
+            let branchsettings = this.props.budgetBranch.settings;
             let chartmatrixrow = this.state.chartmatrixrow;
             chartmatrixrow.splice(0);
             branchsettings.viewpoint = viewpointname;
             this.setState({
-                branchsettings: branchsettings,
                 chartmatrixrow: chartmatrixrow,
             });
             this.initializeChartSeries();
         };
         this.switchFacet = (facet) => {
-            let branchsettings = this.state.branchsettings;
+            let branchsettings = this.props.budgetBranch.settings;
             branchsettings.facet = facet;
             let viewpointdata = this._getViewpointData();
             let { budgetBranch } = this.props;
-            let switchResults = budgetBranch.switchFacet({ branchsettings: branchsettings, viewpointdata: viewpointdata }, this._nodeCallbacks);
+            let switchResults = budgetBranch.switchFacet({ viewpointdata: viewpointdata }, this._nodeCallbacks);
             let { deeperdata, shallowerdata } = switchResults;
             if (deeperdata || shallowerdata) {
                 let message = null;
@@ -146,10 +144,8 @@ class ExplorerBranch extends Component {
             });
         };
         this.switchChartCode = (nodeIndex, cellIndex, chartCode) => {
-            let { branchsettings } = this.state;
             let { budgetBranch } = this.props;
             let props = {
-                branchsettings: branchsettings,
                 nodeIndex: nodeIndex,
                 cellIndex: cellIndex,
                 chartCode: chartCode,
@@ -173,7 +169,7 @@ class ExplorerBranch extends Component {
             });
         };
         this.getPortals = (matrixrow) => {
-            let branchsettings = this.state.branchsettings;
+            let branchsettings = this.props.budgetBranch.settings;
             let budgetdata = this.props.budgetBranch.data;
             if (!budgetdata.viewpointdata)
                 return [];
@@ -235,26 +231,26 @@ class ExplorerBranch extends Component {
         let branch = this;
         let drilldownrow = branch.state.chartmatrixrow;
         let drilldownportals = branch.getPortals(drilldownrow);
-        return React.createElement("div", null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.state.branchsettings.viewpoint, style: {}, onChange: (e, index, value) => {
+        return React.createElement("div", null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.props.budgetBranch.settings.viewpoint, style: {}, onChange: (e, index, value) => {
             branch.switchViewpoint(value);
         }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton_1.default, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {
             branch.switchFacet('BudgetExpenses');
         }, style: {
-            backgroundColor: (this.state.branchsettings.facet == 'BudgetExpenses')
+            backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetExpenses')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "attach_money")), React.createElement(IconButton_1.default, {tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: e => {
             branch.switchFacet('BudgetRevenues');
         }, style: {
-            backgroundColor: (this.state.branchsettings.facet == 'BudgetRevenues')
+            backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetRevenues')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "receipt")), React.createElement(IconButton_1.default, {tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: e => {
             branch.switchFacet('BudgetStaffing');
         }, style: {
-            backgroundColor: (this.state.branchsettings.facet == 'BudgetStaffing')
+            backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetStaffing')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"

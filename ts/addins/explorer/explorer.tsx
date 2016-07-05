@@ -81,7 +81,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
     state = {
         // chartmatrix: [[], []], // DrillDown, Compare (Later: Differences, Context, Build)
         budgetBranches:[
-            new BudgetBranch({data:{}, nodes:[]})
+            new BudgetBranch({data:{}, nodes:[], settings: this.props.settings.defaults.branch})
         ],
         dialogopen: false,
     }
@@ -208,7 +208,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
              <ExplorerBranch 
                  callbackid = {ChartSeries.DrillDown}
                  budgetBranch = {budgetBranch}
-                 branchsettings = {this.props.settings.defaults.branch}
+                 branchsettings = {branchsettings}
                  displaycallbacks = {{ 
                      workingStatus: explorer.workingStatus,
                      updateChartSelections: explorer.updateChartSelections,
