@@ -4,7 +4,7 @@ const budgetnode_1 = require('../classes/budgetnode');
 const constants_1 = require('../../constants');
 const getbudgetnode_1 = require('./getbudgetnode');
 let applyChartComponentSelection = (props, callbacks) => {
-    let { context, userselections, budgetdata, chartmatrixrow, selectionProps } = props;
+    let { context, branchsettings, budgetdata, chartmatrixrow, selectionProps } = props;
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks;
     let selection = context.selection[0];
     let selectionrow;
@@ -33,7 +33,7 @@ let applyChartComponentSelection = (props, callbacks) => {
     }
     let childprops = {
         budgetNode: budgetNode,
-        userselections: userselections,
+        branchsettings: branchsettings,
         budgetdata: budgetdata,
         chartmatrixrow: chartmatrixrow,
         selectionrow: selectionrow,
@@ -46,7 +46,7 @@ let applyChartComponentSelection = (props, callbacks) => {
     exports.createChildNode(childprops, childcallbacks, selectionProps);
 };
 exports.createChildNode = (props, callbacks, selectionCallbacks) => {
-    let { budgetNode, userselections, budgetdata, chartmatrixrow, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
+    let { budgetNode, branchsettings, budgetdata, chartmatrixrow, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
     let viewpointName = budgetNode.viewpointName, facet = budgetNode.facetName;
     let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, } = callbacks;
     let childdatapath = budgetNode.dataPath.slice();
@@ -76,7 +76,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     }
     workingStatus(true);
     let newrange = Object.assign({}, budgetNode.timeSpecs);
-    let charttype = userselections.charttype;
+    let charttype = branchsettings.charttype;
     let chartCode = constants_1.ChartTypeCodes[charttype];
     let portalcharts = budgetdata.viewpointdata.PortalCharts;
     let newdatanode = getbudgetnode_1.default(budgetdata.viewpointdata, childdatapath);
@@ -102,7 +102,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     for (newcellindex in newBudgetNode.cells) {
         let props = {
             chartIndex: newcellindex,
-            userselections: userselections,
+            branchsettings: branchsettings,
             configData: configData,
         };
         let ccallbacks = {
@@ -141,10 +141,10 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     onPortalCreation();
     workingStatus(false);
 };
-exports.onChartComponentSelection = userselections => budgetdata => chartmatrixrow => callbacks => nodeIndex => cellIndex => props => {
+exports.onChartComponentSelection = branchsettings => budgetdata => chartmatrixrow => callbacks => nodeIndex => cellIndex => props => {
     props.context.nodeIndex = nodeIndex;
     props.context.cellIndex = cellIndex;
-    props.userselections = userselections;
+    props.branchsettings = branchsettings;
     props.budgetdata = budgetdata;
     props.chartmatrixrow = chartmatrixrow;
     applyChartComponentSelection(props, callbacks);

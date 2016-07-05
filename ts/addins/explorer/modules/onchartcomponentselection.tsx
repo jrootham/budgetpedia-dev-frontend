@@ -35,7 +35,7 @@ export interface ChartSelectionContext {
 
 export interface CreateChildNodeProps {
     budgetNode: BudgetNode,
-    userselections: any,
+    branchsettings: any,
     budgetdata:any,
     chartmatrixrow: any,
     selectionrow: any,
@@ -54,7 +54,7 @@ export interface CreateChildNodeCallbacks {
 export interface OnChartComponentSelectionProps {
     context: ChartSelectionContext,
     selectionProps: any,
-    userselections?: any,
+    branchsettings?: any,
     budgetdata?:any,
     chartmatrixrow?: any,
 }
@@ -76,7 +76,7 @@ export interface OnChartComponentSelectionCallbacks {
 let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     callbacks: OnChartComponentSelectionCallbacks) => {
 
-    let { context, userselections, budgetdata, chartmatrixrow, selectionProps } = props
+    let { context, branchsettings, budgetdata, chartmatrixrow, selectionProps } = props
 
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks
 
@@ -120,7 +120,7 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     }
     let childprops: CreateChildNodeProps = {
         budgetNode, 
-        userselections, 
+        branchsettings, 
         budgetdata,
         chartmatrixrow, 
         selectionrow,
@@ -147,7 +147,7 @@ export let createChildNode = (
 
     let {
         budgetNode,
-        userselections,
+        branchsettings,
         budgetdata,
         chartmatrixrow,
         selectionrow,
@@ -202,7 +202,7 @@ export let createChildNode = (
     }
     workingStatus(true)
     let newrange = Object.assign({}, budgetNode.timeSpecs)
-    let charttype = userselections.charttype
+    let charttype = branchsettings.charttype
     let chartCode = ChartTypeCodes[charttype]
     let portalcharts = budgetdata.viewpointdata.PortalCharts
 
@@ -231,7 +231,7 @@ export let createChildNode = (
     for (newcellindex in newBudgetNode.cells) {
         let props: GetCellChartProps = {
             chartIndex: newcellindex,
-            userselections,
+            branchsettings,
             configData,
         }
         let ccallbacks = 
@@ -278,11 +278,11 @@ export let createChildNode = (
 }
 
 export const onChartComponentSelection = 
-    userselections => budgetdata => chartmatrixrow => 
+    branchsettings => budgetdata => chartmatrixrow => 
         callbacks => nodeIndex => cellIndex => props => {
     props.context.nodeIndex = nodeIndex
     props.context.cellIndex = cellIndex
-    props.userselections = userselections
+    props.branchsettings = branchsettings
     props.budgetdata = budgetdata
     props.chartmatrixrow = chartmatrixrow
     applyChartComponentSelection(props, callbacks)

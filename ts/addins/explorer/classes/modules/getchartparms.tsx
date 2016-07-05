@@ -49,8 +49,8 @@ let getChartParms = (
         props:GetChartParmsProps, selectionCallbacks: SelectionCallbackProps
     ):ChartParmsObj => {
 
-    let { budgetNode, chartIndex, userselections, configData }: 
-        {budgetNode: BudgetNode, chartIndex: any, userselections: any, configData: ConfigData} = props
+    let { budgetNode, chartIndex, branchsettings, configData }: 
+        {budgetNode: BudgetNode, chartIndex: any, branchsettings: any, configData: ConfigData} = props
     let { viewpointConfig, itemseriesConfig }  = configData
 
     let budgetCell: MatrixCellConfig = budgetNode.cells[chartIndex]
@@ -73,8 +73,8 @@ let getChartParms = (
         year = yearscope.rightYear,
         node = budgetNode.dataNode
 
-    // unpack userselections
-    let dataseriesname = userselections.facet
+    // unpack branchsettings
+    let dataseriesname = branchsettings.facet
 
     let units = itemseriesConfig.Units,
         vertlabel

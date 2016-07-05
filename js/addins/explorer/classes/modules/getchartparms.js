@@ -1,7 +1,7 @@
 "use strict";
 var format = require('format-number');
 let getChartParms = (props, selectionCallbacks) => {
-    let { budgetNode, chartIndex, userselections, configData } = props;
+    let { budgetNode, chartIndex, branchsettings, configData } = props;
     let { viewpointConfig, itemseriesConfig } = configData;
     let budgetCell = budgetNode.cells[chartIndex];
     let nodeDataPropertyName = budgetCell.nodeDataPropertyName;
@@ -13,7 +13,7 @@ let getChartParms = (props, selectionCallbacks) => {
         sortedlist = 'SortedComponents';
     }
     let viewpointindex = budgetNode.viewpointName, yearscope = budgetNode.timeSpecs, year = yearscope.rightYear, node = budgetNode.dataNode;
-    let dataseriesname = userselections.facet;
+    let dataseriesname = branchsettings.facet;
     let units = itemseriesConfig.Units, vertlabel;
     vertlabel = itemseriesConfig.UnitsAlias;
     if (units != 'FTE') {

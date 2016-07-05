@@ -58,7 +58,7 @@ interface PortalChartLocation {
 
 export interface GetCellChartProps {
     chartIndex: number,
-    userselections:any, 
+    branchsettings:any, 
     configData: any,
 }
 

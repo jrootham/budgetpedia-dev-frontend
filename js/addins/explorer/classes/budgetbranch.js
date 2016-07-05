@@ -9,14 +9,14 @@ class BudgetBranch {
         this.nodes = parms.nodes;
     }
     initializeChartSeries(props, callbacks) {
-        let { userselections, viewpointdata } = props;
+        let { branchsettings, viewpointdata } = props;
         let chartmatrixrow = this.nodes;
         let budgetdata = this.data;
         let chartParmsObj;
         budgetdata.viewpointdata = viewpointdata;
         let datapath = [];
         let node = getbudgetnode_1.default(viewpointdata, datapath);
-        let { charttype: defaultChartType, viewpoint: viewpointName, facet: facetName, latestyear: rightYear, } = userselections;
+        let { charttype: defaultChartType, viewpoint: viewpointName, facet: facetName, latestyear: rightYear, } = branchsettings;
         let budgetNodeParms = {
             viewpointName: viewpointName,
             facetName: facetName,
@@ -35,7 +35,7 @@ class BudgetBranch {
         };
         let budgetNode = new budgetnode_1.default(budgetNodeParms);
         let cellindex;
-        let selectfn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks);
+        let selectfn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks);
         let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = budgetdata.viewpointdata;
         let configData = {
             viewpointConfig: viewpointConfig,
@@ -46,7 +46,7 @@ class BudgetBranch {
             let props = {
                 chartIndex: cellindex,
                 configData: configData,
-                userselections: userselections,
+                branchsettings: branchsettings,
             };
             let fcurrent = selectfn(0)(cellindex);
             chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: selectfn });
@@ -69,7 +69,7 @@ class BudgetBranch {
             deeperdata: false,
             shallowerdata: false,
         };
-        let { viewpointdata, userselections } = props;
+        let { viewpointdata, branchsettings } = props;
         let budgetdata = this.data;
         budgetdata.viewpointdata = viewpointdata;
         let chartmatrixrow = this.nodes;
@@ -78,7 +78,7 @@ class BudgetBranch {
         let cellptr;
         let isError = false;
         let chartParmsObj = null;
-        let fn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks);
+        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks);
         for (cellptr in chartmatrixrow) {
             parentBudgetNode = budgetNode;
             budgetNode = chartmatrixrow[cellptr];
@@ -86,7 +86,7 @@ class BudgetBranch {
             if (nextdataNode) {
                 let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
                 let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2));
-                budgetNode.update(nextdataNode, userselections.facet);
+                budgetNode.update(nextdataNode, branchsettings.facet);
                 if (deeperdata || shallowerdata) {
                     switchResults.deeperdata = deeperdata;
                     switchResults.shallowerdata = shallowerdata;
@@ -100,7 +100,7 @@ class BudgetBranch {
                     };
                     let childprops = {
                         budgetNode: prevBudgetNode,
-                        userselections: userselections,
+                        branchsettings: branchsettings,
                         budgetdata: budgetdata,
                         chartmatrixrow: chartmatrixrow,
                         selectionrow: prevBudgetCell.chartselection[0].row,
@@ -127,7 +127,7 @@ class BudgetBranch {
             for (nodecellindex in budgetNode.cells) {
                 let props = {
                     chartIndex: nodecellindex,
-                    userselections: userselections,
+                    branchsettings: branchsettings,
                     configData: configData,
                 };
                 let fcurrent = fn(cellptr)(nodecellindex), chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: fn });
@@ -156,7 +156,7 @@ class BudgetBranch {
         return switchResults;
     }
     switchChartCode(props, callbacks) {
-        let { userselections, nodeIndex, cellIndex, chartCode, } = props;
+        let { branchsettings, nodeIndex, cellIndex, chartCode, } = props;
         let chartType = constants_1.ChartCodeTypes[chartCode];
         let chartmatrixrow = this.nodes;
         let budgetNode = chartmatrixrow[nodeIndex];
@@ -173,10 +173,10 @@ class BudgetBranch {
         };
         let chartprops = {
             chartIndex: cellIndex,
-            userselections: userselections,
+            branchsettings: branchsettings,
             configData: configData,
         };
-        let fn = onchartcomponentselection_1.onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks);
+        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks);
         let fncurrent = fn(nodeIndex)(cellIndex);
         let chartParmsObj = budgetNode.getChartParms(chartprops, { current: fncurrent, next: fn });
         if (!chartParmsObj.isError) {

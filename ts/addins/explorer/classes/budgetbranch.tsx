@@ -45,7 +45,7 @@ class BudgetBranch {
 
     public initializeChartSeries(props, callbacks) {
 
-        let { userselections, viewpointdata } = props
+        let { branchsettings, viewpointdata } = props
         let chartmatrixrow = this.nodes
         let budgetdata = this.data
         let chartParmsObj: ChartParmsObj
@@ -61,7 +61,7 @@ class BudgetBranch {
             viewpoint:viewpointName,
             facet:facetName,
             latestyear:rightYear,
-        } = userselections
+        } = branchsettings
 
         let budgetNodeParms = {
             viewpointName,
@@ -83,7 +83,7 @@ class BudgetBranch {
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms)
 
         let cellindex: any
-        let selectfn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)
+        let selectfn = onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks)
         let {
             Configuration: viewpointConfig,
             itemseriesconfigdata: itemseriesConfig,
@@ -97,7 +97,7 @@ class BudgetBranch {
             let props: GetCellChartProps = {
                 chartIndex: cellindex,
                 configData,
-                userselections,
+                branchsettings,
             }
 
             let fcurrent = selectfn(0)(cellindex)
@@ -126,7 +126,7 @@ class BudgetBranch {
             deeperdata: false,
             shallowerdata: false,
         }
-        let {viewpointdata, userselections} = props
+        let {viewpointdata, branchsettings} = props
         let budgetdata = this.data
         budgetdata.viewpointdata = viewpointdata
 
@@ -138,7 +138,7 @@ class BudgetBranch {
         let isError = false
         let chartParmsObj: ChartParmsObj = null
 
-        let fn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)
+        let fn = onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks)
 
         for (cellptr in chartmatrixrow) {
             parentBudgetNode = budgetNode
@@ -155,8 +155,8 @@ class BudgetBranch {
                 budgetNode.update(
                     nextdataNode,
                     // viewpointdata.PortalCharts,
-                    // userselections.charttype,
-                    userselections.facet
+                    // branchsettings.charttype,
+                    branchsettings.facet
                 )
                 if ( deeperdata || shallowerdata) {
                     switchResults.deeperdata = deeperdata
@@ -175,7 +175,7 @@ class BudgetBranch {
 
                     let childprops: CreateChildNodeProps = {
                         budgetNode:prevBudgetNode,
-                        userselections,
+                        branchsettings,
                         budgetdata,
                         chartmatrixrow,
                         selectionrow: prevBudgetCell.chartselection[0].row,
@@ -200,7 +200,7 @@ class BudgetBranch {
             for (nodecellindex in budgetNode.cells) {
                 let props: GetCellChartProps = {
                     chartIndex: nodecellindex,
-                    userselections,
+                    branchsettings,
                     configData,
                 }
                 let fcurrent = fn(cellptr)(nodecellindex),
@@ -234,7 +234,7 @@ class BudgetBranch {
 
     switchChartCode(props, callbacks) {
         let {
-            userselections,
+            branchsettings,
             nodeIndex,
             cellIndex,
             chartCode,
@@ -256,10 +256,10 @@ class BudgetBranch {
         }        
         let chartprops: GetCellChartProps = {
             chartIndex: cellIndex,
-            userselections,
+            branchsettings,
             configData,
         }
-        let fn = onChartComponentSelection(userselections)(budgetdata)(chartmatrixrow)(callbacks)
+        let fn = onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks)
         let fncurrent = fn(nodeIndex)(cellIndex)
         let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
         if (!chartParmsObj.isError) {

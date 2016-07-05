@@ -48,13 +48,11 @@ import BudgetBranch from '../classes/budgetbranch'
 interface ExploreBranchProps {
     callbackid: string | number
     budgetBranch: BudgetBranch,
-    callbacks:{
+    displaycallbacks:{
         workingStatus:Function,
         updateChartSelections:Function,
     },
-    userselections:any,
-    yearscope:any,
-    yearslider:any,
+    branchsettings:any,
 }
 
 class ExplorerBranch extends Component<ExploreBranchProps, any> {
@@ -69,9 +67,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // TODO: most of 
     state = {
         chartmatrixrow:this.props.budgetBranch.nodes,
-        yearslider: this.props.yearslider,
-        yearscope: this.props.yearscope,
-        userselections: this.props.userselections,
+        // yearslider: this.props.yearslider,
+        // yearscope: this.props.yearscope,
+        branchsettings: this.props.branchsettings,
         snackbar:{open:false,message:'empty'}
     }
 
@@ -85,7 +83,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         })
         let branch = this
         setTimeout(() => {
-            branch.props.callbacks.updateChartSelections()
+            branch.props.displaycallbacks.updateChartSelections()
         })
     }
 
@@ -96,14 +94,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // initialize once - create root drilldown and compare series
     componentDidMount = () => {
 
-        let { callbacks, callbackid, budgetBranch } = this.props
+        let { displaycallbacks, callbackid, budgetBranch } = this.props
         let { refreshPresentation, onPortalCreation } = this
-        callbacks.updateChartSelections = callbacks.updateChartSelections(callbackid)
+        displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid)
         this._nodeCallbacks = {
-            updateChartSelections:callbacks.updateChartSelections,
+            updateChartSelections:displaycallbacks.updateChartSelections,
             refreshPresentation: refreshPresentation,
             onPortalCreation: onPortalCreation,
-            workingStatus:callbacks.workingStatus,
+            workingStatus:displaycallbacks.workingStatus,
         }
         this.initializeChartSeries()
 
@@ -113,13 +111,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     private _getViewpointData = () => {
 
-        let userselections = this.state.userselections
+        let branchsettings = this.state.branchsettings
 
         let { 
             viewpoint: viewpointname, 
             facet: dataseriesname, 
             inflationAdjusted,
-        } = userselections
+        } = branchsettings
 
         let viewpointdata:Viewpoint = databaseapi.getViewpointData({
             viewpointname, 
@@ -141,11 +139,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
         let viewpointdata = this._getViewpointData()
 
-        let userselections = this.state.userselections
+        let branchsettings = this.state.branchsettings
 
         let { budgetBranch } = this.props
         budgetBranch.initializeChartSeries(
-            {userselections, viewpointdata}, this._nodeCallbacks)
+            {branchsettings, viewpointdata}, this._nodeCallbacks)
         this._nodeCallbacks.refreshPresentation()
     }
 
@@ -196,13 +194,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     switchViewpoint = (viewpointname) => {
 
-        let userselections = this.state.userselections
+        let branchsettings = this.state.branchsettings
         let chartmatrixrow = this.state.chartmatrixrow
         // let chartseries = chartmatrixrow
         chartmatrixrow.splice(0) // remove subsequent charts
-        userselections.viewpoint = viewpointname
+        branchsettings.viewpoint = viewpointname
         this.setState({
-            userselections,
+            branchsettings,
             chartmatrixrow,
         })
 
@@ -212,14 +210,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     switchFacet = (facet) => {
 
-        let userselections = this.state.userselections
-        userselections.facet = facet
+        let branchsettings = this.state.branchsettings
+        branchsettings.facet = facet
 
         let viewpointdata = this._getViewpointData()
 
         let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
 
-        let switchResults = budgetBranch.switchFacet({userselections, viewpointdata}, this._nodeCallbacks)
+        let switchResults = budgetBranch.switchFacet({branchsettings, viewpointdata}, this._nodeCallbacks)
 
         let { deeperdata, shallowerdata } = switchResults
 
@@ -239,14 +237,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
         this.refreshPresentation()
         let branch = this
         setTimeout(() => {
-            branch.props.callbacks.updateChartSelections()
+            branch.props.displaycallbacks.updateChartSelections()
         })
     }
 
     onChangePortalTab = () => {
         let branch = this
         setTimeout(() => {
-            branch.props.callbacks.updateChartSelections()
+            branch.props.displaycallbacks.updateChartSelections()
         })
     }
 
@@ -261,11 +259,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // TODO: belongs with explorerchart controller?
     switchChartCode = (nodeIndex,cellIndex, chartCode) => {
 
-        let { userselections } = this.state
+        let { branchsettings } = this.state
         let { budgetBranch }:{budgetBranch: BudgetBranch } = this.props
 
         let props = {
-            userselections,
+            branchsettings,
             nodeIndex,
             cellIndex,
             chartCode,
@@ -292,7 +290,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
                     budgetCell.chartselection[0].column = 1
                 }
             }
-            branch.props.callbacks.updateChartSelections()
+            branch.props.displaycallbacks.updateChartSelections()
         })
     }
 
@@ -300,7 +298,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // get React components to render
     getPortals = (matrixrow) => {
 
-        let userselections = this.state.userselections
+        let branchsettings = this.state.branchsettings
 
         let budgetdata = this.props.budgetBranch.data
 
@@ -388,7 +386,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     <div>
         <span style={{ fontStyle: "italic" }}>Viewpoint: </span>
         <DropDownMenu
-            value={this.state.userselections.viewpoint}
+            value={this.state.branchsettings.viewpoint}
             style={{
             }}
             onChange={
@@ -413,7 +411,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
             style={
                 {
-                    backgroundColor: (this.state.userselections.facet == 'BudgetExpenses')
+                    backgroundColor: (this.state.branchsettings.facet == 'BudgetExpenses')
                         ? "rgba(144,238,144,0.5)"
                         : 'transparent',
                     borderRadius: "50%"
@@ -432,7 +430,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
             style={
                 {
-                    backgroundColor: (this.state.userselections.facet == 'BudgetRevenues')
+                    backgroundColor: (this.state.branchsettings.facet == 'BudgetRevenues')
                         ? "rgba(144,238,144,0.5)"
                         : 'transparent',
                     borderRadius: "50%"
@@ -451,7 +449,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
             }
             style={
                 {
-                    backgroundColor: (this.state.userselections.facet == 'BudgetStaffing')
+                    backgroundColor: (this.state.branchsettings.facet == 'BudgetStaffing')
                         ? "rgba(144,238,144,0.5)"
                         : 'transparent',
                     borderRadius: "50%"
