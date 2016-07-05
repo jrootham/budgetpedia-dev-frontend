@@ -14,18 +14,18 @@ import {
     // ChartConfig,
     GetCellChartProps,
     // GetChartParmsCallbacks,
-} from '../containers/explorer/interfaces'
-import getBudgetNode from '../containers/explorer/getbudgetnode'
-import BudgetNode from '../classes/budgetnode'
+} from '../modules/interfaces'
+import getBudgetNode from '../modules/getbudgetnode'
+import BudgetNode from './budgetnode'
 import { 
     createChildNode,
     // ChartSelectionContext,
     CreateChildNodeProps,
     // CreateChildNodeCallbacks,
     onChartComponentSelection,
-} from '../containers/explorer/onchartcomponentselection'
+} from '../modules/onchartcomponentselection'
 
-import { ChartTypeCodes, ChartCodeTypes } from '../constants'
+import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 
 
 interface BudgetBranchParms {

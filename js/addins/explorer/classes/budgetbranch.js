@@ -1,8 +1,8 @@
 "use strict";
-const getbudgetnode_1 = require('../containers/explorer/getbudgetnode');
-const budgetnode_1 = require('../classes/budgetnode');
-const onchartcomponentselection_1 = require('../containers/explorer/onchartcomponentselection');
-const constants_1 = require('../constants');
+const getbudgetnode_1 = require('../modules/getbudgetnode');
+const budgetnode_1 = require('./budgetnode');
+const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
+const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
         this.data = parms.data;

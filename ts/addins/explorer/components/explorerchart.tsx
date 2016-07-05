@@ -5,7 +5,7 @@
 'use strict'
 import * as React from 'react'
 var { Component } = React
-var { Chart } = require('../../../forked/react-google-charts/Chart.js')
+var { Chart } = require('../../../../forked/react-google-charts/Chart.js')
 // var { Chart } = require('react-google-charts')
 import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
@@ -14,7 +14,7 @@ import {
     ChartParms,
     CellSettings,
     CellCallbacks,
-} from '../containers/explorer/interfaces'
+} from '../modules/interfaces'
 
 interface ExplorerChartProps {
     callbackid: string | number,

@@ -13,7 +13,7 @@ import {
     PortalConfig,
     ChartConfig,
     PortalChartLocation,
-} from '../containers/explorer/interfaces'
+} from '../modules/interfaces'
 
 import ExplorerChart from './explorerchart'
 import BudgetNode from '../classes/budgetnode'

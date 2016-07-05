@@ -12,11 +12,11 @@ import {
     GetCellChartProps,
 } from './interfaces'
 
-import BudgetNode, {BudgetNodeParms} from '../../classes/budgetnode'
+import BudgetNode, {BudgetNodeParms} from '../classes/budgetnode'
 import { ChartTypeCodes } from '../../constants'
-import {SelectionCallbackProps} from '../../classes/modules/getchartparms'
+import {SelectionCallbackProps} from '../classes/modules/getchartparms'
 import getBudgetNode from './getbudgetnode'
-import { DatasetConfig } from '../../classes/databaseapi'
+import { DatasetConfig } from '../classes/databaseapi'
 
 export interface ChartSelectionCell {
     row:number,

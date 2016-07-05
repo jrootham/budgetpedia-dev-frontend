@@ -39,12 +39,12 @@ import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 
-import ExplorerBranch from '../components/explorerbranch'
+import ExplorerBranch from './components/explorerbranch'
 import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
 
-import { updateBranchChartSelections } from './explorer/updatebranchchartselections'
+import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
-import BudgetBranch from '../classes/budgetbranch'
+import BudgetBranch from './classes/budgetbranch'
 let uuid = require('node-uuid') // use uuid.v4() for unique id
 
 import {
@@ -54,7 +54,7 @@ import {
     PortalChartLocation,
     GetChartParmsProps,
     // GetChartParmsCallbacks,
-} from './explorer/interfaces'
+} from './modules/interfaces'
 
 interface ExplorerProps {
     // budgetdata:any,
@@ -284,8 +284,6 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
         let budgetBranch: BudgetBranch = explorer.state.budgetBranches[ChartSeries.DrillDown]
 
-        this.state.budgetBranches[ChartSeries.DrillDown] = budgetBranch
-
         let drilldownsegment = 
         <Card initiallyExpanded >
 
@@ -360,7 +358,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
 let mapStateToProps = state => ({
 
-    budgetdata:state.budgetdata,
+    settings:state.explorer,
 
 })
 

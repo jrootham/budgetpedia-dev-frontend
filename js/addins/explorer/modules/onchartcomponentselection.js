@@ -1,6 +1,6 @@
 "use strict";
 var format = require('format-number');
-const budgetnode_1 = require('../../classes/budgetnode');
+const budgetnode_1 = require('../classes/budgetnode');
 const constants_1 = require('../../constants');
 const getbudgetnode_1 = require('./getbudgetnode');
 let applyChartComponentSelection = (props, callbacks) => {

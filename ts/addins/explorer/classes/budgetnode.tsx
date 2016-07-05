@@ -2,13 +2,13 @@
 // budgetnode.tsx
 
 import { PortalCell, TimeSpecs } from './databaseapi'
-import { ChartTypeCodes, ChartCodeTypes } from '../constants'
+import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 import {
     MatrixCellConfig,
     // MatrixLocation,
     GetCellChartProps,
     GetChartParmsProps
-} from '../containers/explorer/interfaces'
+} from '../modules/interfaces'
 import getChartParmsSource from './modules/getchartparms'
 
 export interface BudgetNodeParms {

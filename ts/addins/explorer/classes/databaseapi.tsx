@@ -6,11 +6,11 @@
 
 import updateViewpointData, { SetViewpointDataParms } from './databaseapi/setviewpointdata'
 
-let db_dataseries = require('../../../data/dataseries.json')
+let db_dataseries = require('../../../../data/dataseries.json')
 // common lookups
-let db_lookups = require('../../../data/lookups.json')
+let db_lookups = require('../../../../data/lookups.json')
 // top level taxonomies
-let db_viewpoints = require('../../../data/viewpoints.json')
+let db_viewpoints = require('../../../../data/viewpoints.json')
 
 const delay = ms => 
     new Promise(resolve => setTimeout(resolve,ms))

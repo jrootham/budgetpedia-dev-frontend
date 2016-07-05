@@ -21,17 +21,17 @@ import {
     MatrixCellConfig,
     GetChartParmsProps,
     // GetChartParmsCallbacks,
-} from '../../containers/explorer/interfaces'
+} from '../../modules/interfaces'
 
-import getBudgetNode from '../../containers/explorer/getbudgetnode'
-import { ChartTypeCodes } from '../../constants'
+import getBudgetNode from '../../modules/getbudgetnode'
+import { ChartTypeCodes } from '../../../constants'
 import { 
     // applyChartComponentSelection,
     // onChartComponentSelection,
     ChartSelectionContext,
     OnChartComponentSelectionProps,
     OnChartComponentSelectionCallbacks,
- } from '../../containers/explorer/onchartcomponentselection'
+ } from '../../modules/onchartcomponentselection'
 import { DatasetConfig } from '../../classes/databaseapi'
 import BudgetNode from '../../classes/budgetnode'
 
