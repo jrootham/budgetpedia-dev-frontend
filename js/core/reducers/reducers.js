@@ -5,6 +5,9 @@ const redux_actions_1 = require('redux-actions');
 const react_router_redux_1 = require('react-router-redux');
 const Actions = require('../actions/actions');
 const initialstate_1 = require("../../local/initialstate");
+let defaults = (state = {}, action) => {
+    return state;
+};
 let branchList = (state = [], action) => {
     return state;
 };
@@ -18,6 +21,7 @@ let cellsById = (state = {}, action) => {
     return state;
 };
 let explorer = redux_1.combineReducers({
+    defaults: defaults,
     branchList: branchList,
     branchesById: branchesById,
     nodesById: nodesById,
@@ -52,6 +56,10 @@ let workingmessagestate = (state = initialstate_1.default.workingmessagestate, a
             return state;
     }
 };
+let ui = redux_1.combineReducers({
+    appnavbar: appnavbar,
+    workingmessagestate: workingmessagestate,
+});
 let homepadding = (state = initialstate_1.default.homepadding, action) => {
     return state;
 };
@@ -230,8 +238,7 @@ let mainReducerCore = redux_1.combineReducers({
     routing: react_router_redux_1.routerReducer,
     login: login,
     homegrid: homegrid,
-    workingmessagestate: workingmessagestate,
-    appnavbar: appnavbar,
+    ui: ui,
 });
 let mainReducer = (state, action) => {
     if (!flux_standard_action_1.isFSA(action)) {

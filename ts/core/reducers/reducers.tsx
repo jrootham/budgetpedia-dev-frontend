@@ -17,6 +17,10 @@ import initialstate from "../../local/initialstate"
 
 // ----------[ app settings ]----------------------
 
+let defaults = (state = {}, action) => {
+    return state
+}
+
 let branchList = (state = [], action) => {
     return state
 }
@@ -34,6 +38,7 @@ let cellsById = (state = { }, action) => {
 }
 
 let explorer = combineReducers({
+        defaults,
         branchList,
         branchesById,
         nodesById,
@@ -60,13 +65,11 @@ let resources = combineReducers({
     colors,
 })
 
-// ------------------[ app data reducers ]---------------------
+// ---------------------[ ui core services reducers ]------------------------
 
 let appnavbar = (state: any = initialstate.appnavbar, action) => {
     return state
 }
-
-// ---------------------[ ui core services reducers ]------------------------
 
 let workingmessagestate = (state:any = initialstate.workingmessagestate, action) => {
     switch (action.type) {
@@ -80,6 +83,11 @@ let workingmessagestate = (state:any = initialstate.workingmessagestate, action)
             return state
     }
 }
+
+let ui = combineReducers({
+    appnavbar,
+    workingmessagestate,
+})
 
 let homepadding = (state: any = initialstate.homepadding, action) => {
     return state
@@ -340,32 +348,20 @@ let mainReducerCore = combineReducers(
     { 
         // app data
         explorer,
-        // explorerBranchList,
-        // explorerBranchesById,
-        // explorerNodesById,
-        // explorerCellsById,
         // system data
         resources,
-        // theme,
-        // colors,
-        // system,
         
         routing:routerReducer, // import
 
         // user login management
         login,
-        // auth,
-        // register,
-        // registerconfirm,
 
         homegrid,
-        // hometiles,
-        // homecols,
-        // homepadding,
 
         // ui management
-        workingmessagestate,
-        appnavbar,
+        ui,
+        // workingmessagestate,
+        // appnavbar,
     }
 )
 

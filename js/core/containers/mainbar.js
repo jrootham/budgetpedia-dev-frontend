@@ -158,14 +158,14 @@ let MainBar = class extends React.Component {
 }
 ;
 function mapStateToProps(state) {
-    let { appnavbar, resources, login, homegrid, workingmessagestate } = state;
+    let { resources, login, homegrid, ui } = state;
     return {
         state: state,
         auth: login.auth,
-        appnavbar: appnavbar,
+        appnavbar: ui.appnavbar,
         theme: resources.theme,
         hometiles: homegrid.hometiles,
-        workingmessagestate: workingmessagestate,
+        workingmessagestate: ui.workingmessagestate,
     };
 }
 MainBar = react_redux_1.connect(mapStateToProps, {
