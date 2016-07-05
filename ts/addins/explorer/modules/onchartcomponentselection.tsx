@@ -17,6 +17,7 @@ import { ChartTypeCodes } from '../../constants'
 import {SelectionCallbackProps} from '../classes/modules/getchartparms'
 import getBudgetNode from './getbudgetnode'
 import { DatasetConfig } from '../classes/databaseapi'
+import { BranchSettings } from '../components/explorerbranch'
 
 export interface ChartSelectionCell {
     row:number,
@@ -35,7 +36,7 @@ export interface ChartSelectionContext {
 
 export interface CreateChildNodeProps {
     budgetNode: BudgetNode,
-    branchsettings: any,
+    branchsettings: BranchSettings,
     budgetdata:any,
     chartmatrixrow: any,
     selectionrow: any,
@@ -54,7 +55,7 @@ export interface CreateChildNodeCallbacks {
 export interface OnChartComponentSelectionProps {
     context: ChartSelectionContext,
     selectionProps: any,
-    branchsettings?: any,
+    branchsettings?: BranchSettings,
     budgetdata?:any,
     chartmatrixrow?: any,
 }
@@ -202,7 +203,7 @@ export let createChildNode = (
     }
     workingStatus(true)
     let newrange = Object.assign({}, budgetNode.timeSpecs)
-    let charttype = branchsettings.charttype
+    let charttype = branchsettings.chartType
     let chartCode = ChartTypeCodes[charttype]
     let portalcharts = budgetdata.viewpointdata.PortalCharts
 

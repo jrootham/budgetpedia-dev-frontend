@@ -76,7 +76,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     }
     workingStatus(true);
     let newrange = Object.assign({}, budgetNode.timeSpecs);
-    let charttype = branchsettings.charttype;
+    let charttype = branchsettings.chartType;
     let chartCode = constants_1.ChartTypeCodes[charttype];
     let portalcharts = budgetdata.viewpointdata.PortalCharts;
     let newdatanode = getbudgetnode_1.default(budgetdata.viewpointdata, childdatapath);

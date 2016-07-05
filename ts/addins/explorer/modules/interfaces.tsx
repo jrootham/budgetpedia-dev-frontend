@@ -2,6 +2,7 @@
 // interfaces.tsx
 import BudgetNode from '../classes/budgetnode'
 import { ChartSelectionCell } from './onchartcomponentselection'
+import { BranchSettings } from '../components/explorerbranch'
 // return by getChartParms; returns isError with ChartParms
 interface ChartParmsObj {
     isError: Boolean,
@@ -58,7 +59,7 @@ interface PortalChartLocation {
 
 export interface GetCellChartProps {
     chartIndex: number,
-    branchsettings:any, 
+    branchsettings:BranchSettings, 
     configData: any,
 }
 

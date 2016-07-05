@@ -5,7 +5,7 @@ const redux_actions_1 = require('redux-actions');
 const react_router_redux_1 = require('react-router-redux');
 const Actions = require('../actions/actions');
 const initialstate_1 = require("../../local/initialstate");
-let defaults = (state = {}, action) => {
+let defaults = (state = initialstate_1.default.explorer.defaults, action) => {
     return state;
 };
 let branchList = (state = [], action) => {

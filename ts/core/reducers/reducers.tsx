@@ -17,7 +17,7 @@ import initialstate from "../../local/initialstate"
 
 // ----------[ app settings ]----------------------
 
-let defaults = (state = {}, action) => {
+let defaults = (state = initialstate.explorer.defaults, action) => {
     return state
 }
 
@@ -88,6 +88,8 @@ let ui = combineReducers({
     appnavbar,
     workingmessagestate,
 })
+
+// ---------------------[ home grid reducers ]------------------------
 
 let homepadding = (state: any = initialstate.homepadding, action) => {
     return state
@@ -343,6 +345,8 @@ let login = combineReducers({
     register,
     registerconfirm,    
 })
+
+// ---------------------------[ main reducer ]--------------------------------
 
 let mainReducerCore = combineReducers(
     { 

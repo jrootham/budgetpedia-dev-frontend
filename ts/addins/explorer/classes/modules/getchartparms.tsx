@@ -34,6 +34,7 @@ import {
  } from '../../modules/onchartcomponentselection'
 import { DatasetConfig } from '../../classes/databaseapi'
 import BudgetNode from '../../classes/budgetnode'
+import {BranchSettings} from '../../components/explorerbranch'
 
 export interface SelectionCallbackProps {
     current: Function,
@@ -50,7 +51,7 @@ let getChartParms = (
     ):ChartParmsObj => {
 
     let { budgetNode, chartIndex, branchsettings, configData }: 
-        {budgetNode: BudgetNode, chartIndex: any, branchsettings: any, configData: ConfigData} = props
+        {budgetNode: BudgetNode, chartIndex: any, branchsettings: BranchSettings, configData: ConfigData} = props
     let { viewpointConfig, itemseriesConfig }  = configData
 
     let budgetCell: MatrixCellConfig = budgetNode.cells[chartIndex]

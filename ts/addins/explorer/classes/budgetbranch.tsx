@@ -17,6 +17,7 @@ import {
 } from '../modules/interfaces'
 import getBudgetNode from '../modules/getbudgetnode'
 import BudgetNode from './budgetnode'
+import { BranchSettings } from '../components/explorerbranch'
 import { 
     createChildNode,
     // ChartSelectionContext,
@@ -45,7 +46,7 @@ class BudgetBranch {
 
     public initializeChartSeries(props, callbacks) {
 
-        let { branchsettings, viewpointdata } = props
+        let { branchsettings, viewpointdata }:{branchsettings:BranchSettings,viewpointdata:any}= props
         let chartmatrixrow = this.nodes
         let budgetdata = this.data
         let chartParmsObj: ChartParmsObj
@@ -57,10 +58,10 @@ class BudgetBranch {
         let node = getBudgetNode(viewpointdata, datapath)
 
         let {
-            charttype:defaultChartType,
+            chartType:defaultChartType,
             viewpoint:viewpointName,
             facet:facetName,
-            latestyear:rightYear,
+            latestYear:rightYear,
         } = branchsettings
 
         let budgetNodeParms = {

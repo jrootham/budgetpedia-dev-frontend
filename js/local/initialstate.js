@@ -97,6 +97,23 @@ let hometiles = [
     },
 ];
 let workingmessagestate = false;
+let explorer = {
+    defaults: {
+        branch: {
+            latestYear: 2015,
+            viewpoint: "FUNCTIONAL",
+            facet: "BudgetExpenses",
+            chartType: "ColumnChart",
+            inflationAdjusted: true,
+            yearSlider: { singlevalue: [2015], doublevalue: [2005, 2015] },
+            yearScope: "one",
+        },
+        node: {},
+        cell: {
+            chartType: "ColumnChart",
+        }
+    }
+};
 var initialstate = {
     hometiles: hometiles,
     homecols: homecols,
@@ -105,6 +122,7 @@ var initialstate = {
     theme: lightBaseTheme_1.default,
     colors: colors,
     system: system,
+    explorer: explorer,
     workingmessagestate: workingmessagestate,
 };
 Object.defineProperty(exports, "__esModule", { value: true });

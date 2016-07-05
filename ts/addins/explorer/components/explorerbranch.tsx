@@ -45,6 +45,24 @@ import * as Actions from '../../../core/actions/actions'
 import BudgetNode from '../classes/budgetnode'
 import BudgetBranch from '../classes/budgetbranch'
 
+export interface BranchSettings {
+    latestYear: number,
+    viewpoint: string,
+    facet: string,
+    chartType: string,
+    inflationAdjusted: boolean,
+    yearSlider: { 
+        singlevalue: {
+            rightYear: number, 
+        },
+        doublevalue: {
+            leftYear: number,
+            rightYear: number,
+        } 
+    },
+    yearScope:"one",
+}
+
 interface ExploreBranchProps {
     callbackid: string | number
     budgetBranch: BudgetBranch,
@@ -52,7 +70,7 @@ interface ExploreBranchProps {
         workingStatus:Function,
         updateChartSelections:Function,
     },
-    branchsettings:any,
+    branchsettings:BranchSettings,
 }
 
 class ExplorerBranch extends Component<ExploreBranchProps, any> {
@@ -111,7 +129,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
 
     private _getViewpointData = () => {
 
-        let branchsettings = this.state.branchsettings
+        let branchsettings:BranchSettings = this.state.branchsettings
 
         let { 
             viewpoint: viewpointname, 
@@ -259,7 +277,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, any> {
     // TODO: belongs with explorerchart controller?
     switchChartCode = (nodeIndex,cellIndex, chartCode) => {
 
-        let { branchsettings } = this.state
+        let { branchsettings }:{branchsettings:BranchSettings} = this.state
         let { budgetBranch }:{budgetBranch: BudgetBranch } = this.props
 
         let props = {

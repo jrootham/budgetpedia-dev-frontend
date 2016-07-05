@@ -45,6 +45,7 @@ import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
 import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
 import BudgetBranch from './classes/budgetbranch'
+import { BranchSettings } from './components/explorerbranch'
 let uuid = require('node-uuid') // use uuid.v4() for unique id
 
 import {
@@ -60,6 +61,7 @@ interface ExplorerProps {
     // budgetdata:any,
     showWaitingMessage:Function,
     hideWaitingMessage:Function,
+    settings:any,
 }
 
 let Explorer = class extends Component< ExplorerProps, any > {
@@ -177,6 +179,8 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
         let budgetBranch: BudgetBranch = explorer.state.budgetBranches[ChartSeries.DrillDown]
 
+        let branchsettings: BranchSettings = this.props.settings.defaults.branch
+
         let drilldownsegment = 
         <Card initiallyExpanded >
 
@@ -204,16 +208,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
              <ExplorerBranch 
                  callbackid = {ChartSeries.DrillDown}
                  budgetBranch = {budgetBranch}
-                 branchsettings = {{
-                     latestyear: 2015,
-                     viewpoint: "FUNCTIONAL",
-                     facet: "BudgetExpenses",
-                     charttype: "ColumnChart",
-                     inflationAdjusted: true,
-                     yearslider:{ singlevalue: [2015], doublevalue: [2005, 2015] },
-                     yearscope:"one",
-                 }}
-                 // branchkey = {ChartSeries.DrillDown}
+                 branchsettings = {this.props.settings.defaults.branch}
                  displaycallbacks = {{ 
                      workingStatus: explorer.workingStatus,
                      updateChartSelections: explorer.updateChartSelections,

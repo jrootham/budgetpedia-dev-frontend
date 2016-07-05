@@ -16,7 +16,7 @@ class BudgetBranch {
         budgetdata.viewpointdata = viewpointdata;
         let datapath = [];
         let node = getbudgetnode_1.default(viewpointdata, datapath);
-        let { charttype: defaultChartType, viewpoint: viewpointName, facet: facetName, latestyear: rightYear, } = branchsettings;
+        let { chartType: defaultChartType, viewpoint: viewpointName, facet: facetName, latestYear: rightYear, } = branchsettings;
         let budgetNodeParms = {
             viewpointName: viewpointName,
             facetName: facetName,
