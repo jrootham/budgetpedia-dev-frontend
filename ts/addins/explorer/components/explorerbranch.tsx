@@ -195,7 +195,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
 
     switchViewpoint = (viewpointname) => {
 
-        let branchsettings = this.props.budgetBranch.settings
+        let { settings:branchsettings } = this.props.budgetBranch
         let chartmatrixrow = this.state.chartmatrixrow
         // let chartseries = chartmatrixrow
         chartmatrixrow.splice(0) // remove subsequent charts
@@ -297,9 +297,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
     // get React components to render
     getPortals = (matrixrow) => {
 
-        let branchsettings = this.props.budgetBranch.settings
-
-        let budgetdata = this.props.budgetBranch.data
+        let { settings:branchsettings, data:budgetdata } = this.props.budgetBranch
 
         if (!budgetdata.viewpointdata) return []
         let viewpointdata = budgetdata.viewpointdata

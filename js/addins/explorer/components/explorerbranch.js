@@ -99,7 +99,7 @@ class ExplorerBranch extends Component {
             return t1 * t1 * t1 + 1;
         };
         this.switchViewpoint = (viewpointname) => {
-            let branchsettings = this.props.budgetBranch.settings;
+            let { settings: branchsettings } = this.props.budgetBranch;
             let chartmatrixrow = this.state.chartmatrixrow;
             chartmatrixrow.splice(0);
             branchsettings.viewpoint = viewpointname;
@@ -169,8 +169,7 @@ class ExplorerBranch extends Component {
             });
         };
         this.getPortals = (matrixrow) => {
-            let branchsettings = this.props.budgetBranch.settings;
-            let budgetdata = this.props.budgetBranch.data;
+            let { settings: branchsettings, data: budgetdata } = this.props.budgetBranch;
             if (!budgetdata.viewpointdata)
                 return [];
             let viewpointdata = budgetdata.viewpointdata;
