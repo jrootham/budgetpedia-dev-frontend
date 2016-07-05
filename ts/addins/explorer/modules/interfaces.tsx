@@ -2,8 +2,26 @@
 // interfaces.tsx
 import BudgetNode from '../classes/budgetnode'
 import { ChartSelectionCell } from './onchartcomponentselection'
-import { BranchSettings } from '../components/explorerbranch'
 // return by getChartParms; returns isError with ChartParms
+
+interface BranchSettings {
+    latestYear: number,
+    viewpoint: string,
+    facet: string,
+    chartType: string,
+    inflationAdjusted: boolean,
+    yearSlider: { 
+        singlevalue: {
+            rightYear: number, 
+        },
+        doublevalue: {
+            leftYear: number,
+            rightYear: number,
+        } 
+    },
+    yearScope:"one",
+}
+
 interface ChartParmsObj {
     isError: Boolean,
     errorMessage?: string,
@@ -128,5 +146,6 @@ export {
     ChartConfig,
     SortedComponentItem,
     GetChartParmsProps,
+    BranchSettings
     // GetChartParmsCallbacks,
 }

@@ -16,6 +16,7 @@ import {
     PortalChartLocation,
     ChartConfig,
     GetCellChartProps,
+    BranchSettings,
     // GetChartParmsCallbacks,
 } from '../modules/interfaces'
 
@@ -44,24 +45,6 @@ import { createChildNode,
 import * as Actions from '../../../core/actions/actions'
 import BudgetNode from '../classes/budgetnode'
 import BudgetBranch from '../classes/budgetbranch'
-
-export interface BranchSettings {
-    latestYear: number,
-    viewpoint: string,
-    facet: string,
-    chartType: string,
-    inflationAdjusted: boolean,
-    yearSlider: { 
-        singlevalue: {
-            rightYear: number, 
-        },
-        doublevalue: {
-            leftYear: number,
-            rightYear: number,
-        } 
-    },
-    yearScope:"one",
-}
 
 interface ExploreBranchProps {
     callbackid: string | number

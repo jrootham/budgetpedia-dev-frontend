@@ -45,7 +45,6 @@ import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
 import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
 import BudgetBranch from './classes/budgetbranch'
-import { BranchSettings } from './components/explorerbranch'
 let uuid = require('node-uuid') // use uuid.v4() for unique id
 
 import {
@@ -54,6 +53,7 @@ import {
     // MatrixLocation,
     PortalChartLocation,
     GetChartParmsProps,
+    BranchSettings,
     // GetChartParmsCallbacks,
 } from './modules/interfaces'
 

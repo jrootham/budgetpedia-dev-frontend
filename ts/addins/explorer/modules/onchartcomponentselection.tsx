@@ -10,6 +10,7 @@ import {
     SortedComponentItem,
     MatrixCellConfig,
     GetCellChartProps,
+    BranchSettings,
 } from './interfaces'
 
 import BudgetNode, {BudgetNodeParms} from '../classes/budgetnode'
@@ -17,7 +18,6 @@ import { ChartTypeCodes } from '../../constants'
 import {SelectionCallbackProps} from '../classes/modules/getchartparms'
 import getBudgetNode from './getbudgetnode'
 import { DatasetConfig } from '../classes/databaseapi'
-import { BranchSettings } from '../components/explorerbranch'
 
 export interface ChartSelectionCell {
     row:number,

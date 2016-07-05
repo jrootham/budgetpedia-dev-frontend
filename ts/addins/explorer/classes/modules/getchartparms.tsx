@@ -20,6 +20,7 @@ import {
     SortedComponentItem,
     MatrixCellConfig,
     GetChartParmsProps,
+    BranchSettings,
     // GetChartParmsCallbacks,
 } from '../../modules/interfaces'
 
@@ -34,7 +35,6 @@ import {
  } from '../../modules/onchartcomponentselection'
 import { DatasetConfig } from '../../classes/databaseapi'
 import BudgetNode from '../../classes/budgetnode'
-import {BranchSettings} from '../../components/explorerbranch'
 
 export interface SelectionCallbackProps {
     current: Function,

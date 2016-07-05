@@ -13,11 +13,11 @@ import {
     // PortalChartLocation,
     // ChartConfig,
     GetCellChartProps,
+    BranchSettings,
     // GetChartParmsCallbacks,
 } from '../modules/interfaces'
 import getBudgetNode from '../modules/getbudgetnode'
 import BudgetNode from './budgetnode'
-import { BranchSettings } from '../components/explorerbranch'
 import { 
     createChildNode,
     // ChartSelectionContext,
