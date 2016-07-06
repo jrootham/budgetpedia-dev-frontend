@@ -1,21 +1,39 @@
 "use strict";
+const databaseapi_1 = require('./databaseapi');
 const getbudgetnode_1 = require('../modules/getbudgetnode');
 const budgetnode_1 = require('./budgetnode');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
+        this.getViewpointData = () => {
+            let branchsettings = this.settings;
+            let { viewpoint: viewpointname, facet: dataseriesname, inflationAdjusted, } = branchsettings;
+            let viewpointdata = databaseapi_1.default.getViewpointData({
+                viewpointname: viewpointname,
+                dataseriesname: dataseriesname,
+                inflationAdjusted: inflationAdjusted,
+                timeSpecs: {
+                    leftYear: null,
+                    rightYear: null,
+                    spanYears: false,
+                    firstYear: null,
+                    lastYear: null,
+                }
+            });
+            this.data.viewpointdata = viewpointdata;
+            return viewpointdata;
+        };
         this.data = parms.data;
         this.nodes = parms.nodes;
         this.settings = parms.settings;
     }
-    initializeChartSeries(props, callbacks) {
+    initializeChartSeries(callbacks) {
         let branchsettings = this.settings;
-        let { viewpointdata } = props;
+        let viewpointdata = this.getViewpointData();
         let chartmatrixrow = this.nodes;
         let budgetdata = this.data;
         let chartParmsObj;
-        budgetdata.viewpointdata = viewpointdata;
         let datapath = [];
         let node = getbudgetnode_1.default(viewpointdata, datapath);
         let { chartType: defaultChartType, viewpoint: viewpointName, facet: facetName, latestYear: rightYear, } = branchsettings;
@@ -66,15 +84,14 @@ class BudgetBranch {
             chartmatrixrow[nodeIndex] = budgetNode;
         }
     }
-    switchFacet(props, callbacks) {
+    switchFacet(callbacks) {
         let switchResults = {
             deeperdata: false,
             shallowerdata: false,
         };
         let branchsettings = this.settings;
-        let { viewpointdata } = props;
+        let viewpointdata = this.getViewpointData();
         let budgetdata = this.data;
-        budgetdata.viewpointdata = viewpointdata;
         let chartmatrixrow = this.nodes;
         let budgetNode = null;
         let parentBudgetNode;

@@ -110,41 +110,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
 
     private _nodeCallbacks
 
-    private _getViewpointData = () => {
-
-        let branchsettings:BranchSettings = this.props.budgetBranch.settings
-
-        let { 
-            viewpoint: viewpointname, 
-            facet: dataseriesname, 
-            inflationAdjusted,
-        } = branchsettings
-
-        let viewpointdata:Viewpoint = databaseapi.getViewpointData({
-            viewpointname, 
-            dataseriesname,
-            inflationAdjusted,
-            timeSpecs: {
-                leftYear: null,
-                rightYear: null,
-                spanYears: false,
-                firstYear: null,
-                lastYear: null,
-            }
-        })
-
-        return viewpointdata
-    }
-
     initializeChartSeries = () => {
 
-        let viewpointdata = this._getViewpointData()
-
-        let branchsettings = this.props.budgetBranch.settings
-
         let { budgetBranch } = this.props
-        budgetBranch.initializeChartSeries(
-            {viewpointdata}, this._nodeCallbacks)
+
+        budgetBranch.initializeChartSeries(this._nodeCallbacks)
+
         this._nodeCallbacks.refreshPresentation()
     }
 
@@ -197,7 +168,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
 
         let { settings:branchsettings } = this.props.budgetBranch
         let chartmatrixrow = this.state.chartmatrixrow
-        // let chartseries = chartmatrixrow
+
         chartmatrixrow.splice(0) // remove subsequent charts
         branchsettings.viewpoint = viewpointname
         this.setState({
@@ -210,14 +181,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
 
     switchFacet = (facet) => {
 
-        let branchsettings = this.props.budgetBranch.settings
-        branchsettings.facet = facet
-
-        let viewpointdata = this._getViewpointData()
-
         let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
 
-        let switchResults = budgetBranch.switchFacet({viewpointdata}, this._nodeCallbacks)
+        let branchsettings = budgetBranch.settings
+        
+        branchsettings.facet = facet
+
+        let switchResults = budgetBranch.switchFacet(this._nodeCallbacks)
 
         let { deeperdata, shallowerdata } = switchResults
 

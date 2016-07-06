@@ -48,15 +48,16 @@ class BudgetBranch {
 
     public settings:BranchSettings
 
-    public initializeChartSeries(props, callbacks) {
+    public initializeChartSeries(callbacks) {
 
         let branchsettings = this.settings
-        let { viewpointdata }:{viewpointdata:any} = props
+        // let { viewpointdata }:{viewpointdata:any} = props
+        let viewpointdata = this.getViewpointData()
         let chartmatrixrow = this.nodes
         let budgetdata = this.data
         let chartParmsObj: ChartParmsObj
 
-        budgetdata.viewpointdata = viewpointdata
+        // budgetdata.viewpointdata = viewpointdata
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
         let datapath = []
@@ -127,15 +128,16 @@ class BudgetBranch {
 
     }
 
-    switchFacet(props, callbacks) {
+    switchFacet(callbacks) {
         let switchResults = {
             deeperdata: false,
             shallowerdata: false,
         }
         let branchsettings: BranchSettings = this.settings
-        let {viewpointdata} = props
+        let viewpointdata = this.getViewpointData()
+        // let {viewpointdata} = props
         let budgetdata = this.data
-        budgetdata.viewpointdata = viewpointdata
+        // budgetdata.viewpointdata = viewpointdata
 
         let chartmatrixrow = this.nodes
 
@@ -247,7 +249,7 @@ class BudgetBranch {
             chartCode,
         } = props
         let chartType = ChartCodeTypes[chartCode]
-        // let cellIndex = location.cellIndex
+
         let chartmatrixrow = this.nodes
         let budgetNode: BudgetNode = chartmatrixrow[nodeIndex]
         let budgetCell = budgetNode.cells[cellIndex]
@@ -279,6 +281,35 @@ class BudgetBranch {
         return switchResults
     }
 
+    public getViewpointData = () => {
+
+        let branchsettings:BranchSettings = this.settings
+
+        let { 
+            viewpoint: viewpointname, 
+            facet: dataseriesname, 
+            inflationAdjusted,
+        } = branchsettings
+
+        let viewpointdata:Viewpoint = databaseapi.getViewpointData({
+            viewpointname, 
+            dataseriesname,
+            inflationAdjusted,
+            timeSpecs: {
+                leftYear: null,
+                rightYear: null,
+                spanYears: false,
+                firstYear: null,
+                lastYear: null,
+            }
+        })
+
+        this.data.viewpointdata = viewpointdata
+
+        return viewpointdata
+    }
+
 }
+
 
 export default BudgetBranch

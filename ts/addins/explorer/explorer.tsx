@@ -244,11 +244,15 @@ let Explorer = class extends Component< ExplorerProps, any > {
 // ====================================================================================
 // ------------------------------[ INJECT DATA STORE ]---------------------------------
 
-let mapStateToProps = state => ({
+let mapStateToProps = state => {
 
-    settings:state.explorer,
+    // mapStateToBranches()
+    return {
 
-})
+        settings:state.explorer,
+
+    }
+}
 
 // TODO: mapdispatch to props
 

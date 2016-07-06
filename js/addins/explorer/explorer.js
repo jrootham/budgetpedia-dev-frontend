@@ -68,9 +68,11 @@ let Explorer = class extends Component {
     }
 }
 ;
-let mapStateToProps = state => ({
-    settings: state.explorer,
-});
+let mapStateToProps = state => {
+    return {
+        settings: state.explorer,
+    };
+};
 Explorer = react_redux_1.connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,

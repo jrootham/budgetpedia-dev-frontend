@@ -7,7 +7,6 @@ const MenuItem_1 = require('material-ui/MenuItem');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
-const databaseapi_1 = require('../classes/databaseapi');
 class ExplorerBranch extends Component {
     constructor(props) {
         super(props);
@@ -40,28 +39,9 @@ class ExplorerBranch extends Component {
             };
             this.initializeChartSeries();
         };
-        this._getViewpointData = () => {
-            let branchsettings = this.props.budgetBranch.settings;
-            let { viewpoint: viewpointname, facet: dataseriesname, inflationAdjusted, } = branchsettings;
-            let viewpointdata = databaseapi_1.default.getViewpointData({
-                viewpointname: viewpointname,
-                dataseriesname: dataseriesname,
-                inflationAdjusted: inflationAdjusted,
-                timeSpecs: {
-                    leftYear: null,
-                    rightYear: null,
-                    spanYears: false,
-                    firstYear: null,
-                    lastYear: null,
-                }
-            });
-            return viewpointdata;
-        };
         this.initializeChartSeries = () => {
-            let viewpointdata = this._getViewpointData();
-            let branchsettings = this.props.budgetBranch.settings;
             let { budgetBranch } = this.props;
-            budgetBranch.initializeChartSeries({ viewpointdata: viewpointdata }, this._nodeCallbacks);
+            budgetBranch.initializeChartSeries(this._nodeCallbacks);
             this._nodeCallbacks.refreshPresentation();
         };
         this.onPortalCreation = () => {
@@ -109,11 +89,10 @@ class ExplorerBranch extends Component {
             this.initializeChartSeries();
         };
         this.switchFacet = (facet) => {
-            let branchsettings = this.props.budgetBranch.settings;
-            branchsettings.facet = facet;
-            let viewpointdata = this._getViewpointData();
             let { budgetBranch } = this.props;
-            let switchResults = budgetBranch.switchFacet({ viewpointdata: viewpointdata }, this._nodeCallbacks);
+            let branchsettings = budgetBranch.settings;
+            branchsettings.facet = facet;
+            let switchResults = budgetBranch.switchFacet(this._nodeCallbacks);
             let { deeperdata, shallowerdata } = switchResults;
             if (deeperdata || shallowerdata) {
                 let message = null;
