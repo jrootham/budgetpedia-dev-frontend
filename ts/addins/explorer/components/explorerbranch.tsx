@@ -263,7 +263,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
         })
     }
 
-    // callbacks = this.props.callbacks
     // get React components to render
     getPortals = (matrixrow) => {
 

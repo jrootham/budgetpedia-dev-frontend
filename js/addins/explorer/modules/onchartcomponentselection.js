@@ -132,11 +132,11 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     }
     let newmatrixcolumn = nodeIndex + 1;
     chartmatrixrow[newmatrixcolumn] = newBudgetNode;
-    refreshPresentation();
     let budgetCell = budgetNode.cells[cellIndex];
     budgetCell.chartselection = context.selection;
     budgetCell.chart = chart;
     budgetCell.ChartObject = context.ChartObject;
+    refreshPresentation();
     updateChartSelections();
     onPortalCreation();
     workingStatus(false);
