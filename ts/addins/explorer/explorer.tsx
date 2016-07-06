@@ -175,12 +175,18 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
         // -----------[ DRILLDOWN SEGMENT]-------------
 
-        let budgetBranch: BudgetBranch = explorer.state.budgetBranches[0]
+        // let budgetBranch: BudgetBranch = explorer.state.budgetBranches[0]
 
         // let branchsettings: BranchSettings = this.props.settings.defaults.branch
 
-        let drilldownsegment = 
-        <Card initiallyExpanded >
+        let drilldownsegments = () => {
+
+            let budgetbranches = explorer.state.budgetBranches
+
+            let segments = budgetbranches.map((budgetBranch, branchIndex) => {
+
+         return <Card initiallyExpanded 
+             key = {branchIndex}>
 
             <CardTitle
                 actAsExpander={true}
@@ -192,7 +198,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
              <CardText expandable>
              <ExplorerBranch 
-                 callbackid = {0}
+                 callbackid = {branchIndex}
                  budgetBranch = {budgetBranch}
                  displaycallbacks = {{ 
                      workingStatus: explorer.workingStatus,
@@ -202,8 +208,13 @@ let Explorer = class extends Component< ExplorerProps, any > {
             </CardText>
 
         </Card >
+            })
 
+        return segments
+    }
         // -----------[ COMBINE SEGMENTS ]---------------
+
+        let segments = drilldownsegments()
 
         return <div>
 
@@ -231,7 +242,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
         </Card>
             { dialogbox }
 
-            { drilldownsegment }
+            { segments }
 
         </div>
     }

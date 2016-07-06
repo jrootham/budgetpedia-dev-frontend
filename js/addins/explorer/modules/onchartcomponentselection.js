@@ -49,7 +49,6 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     let { budgetNode, branchsettings, budgetdata, chartmatrixrow, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
     let viewpointName = budgetNode.viewpointName, facet = budgetNode.facetName;
     let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, } = callbacks;
-    console.log('callbacks in CreateChildNode', callbacks);
     let childdatapath = budgetNode.dataPath.slice();
     let node = budgetNode.dataNode;
     if (!node.Components) {
