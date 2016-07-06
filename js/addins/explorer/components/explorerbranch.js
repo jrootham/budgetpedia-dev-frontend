@@ -42,7 +42,7 @@ class ExplorerBranch extends Component {
         this.initializeChartSeries = () => {
             let { budgetBranch } = this.props;
             budgetBranch.initializeChartSeries(this._nodeCallbacks);
-            this._nodeCallbacks.refreshPresentation();
+            this.refreshPresentation();
         };
         this.onPortalCreation = () => {
             let element = this.branchScrollBlock;

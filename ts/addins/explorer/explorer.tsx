@@ -177,7 +177,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
         let budgetBranch: BudgetBranch = explorer.state.budgetBranches[ChartSeries.DrillDown]
 
-        let branchsettings: BranchSettings = this.props.settings.defaults.branch
+        // let branchsettings: BranchSettings = this.props.settings.defaults.branch
 
         let drilldownsegment = 
         <Card initiallyExpanded >
@@ -206,7 +206,6 @@ let Explorer = class extends Component< ExplorerProps, any > {
              <ExplorerBranch 
                  callbackid = {ChartSeries.DrillDown}
                  budgetBranch = {budgetBranch}
-                 branchsettings = {branchsettings}
                  displaycallbacks = {{ 
                      workingStatus: explorer.workingStatus,
                      updateChartSelections: explorer.updateChartSelections,

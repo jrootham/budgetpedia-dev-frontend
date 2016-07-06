@@ -51,7 +51,6 @@ interface ExploreBranchProps {
         workingStatus:Function,
         updateChartSelections:Function,
     },
-    branchsettings:BranchSettings,
 }
 
 class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any, snackbar?:any} > {
