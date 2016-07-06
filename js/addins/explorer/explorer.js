@@ -7,7 +7,6 @@ const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Dialog_1 = require('material-ui/Dialog');
 const explorerbranch_1 = require('./components/explorerbranch');
-const constants_1 = require('../constants');
 const updatebranchchartselections_1 = require('./modules/updatebranchchartselections');
 const Actions = require('../../core/actions/actions');
 const budgetbranch_1 = require('./classes/budgetbranch');
@@ -58,12 +57,12 @@ let Explorer = class extends Component {
             position: "absolute",
             zIndex: 2,
         }, onTouchTap: this.handleDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
-        let budgetBranch = explorer.state.budgetBranches[constants_1.ChartSeries.DrillDown];
-        let drilldownsegment = React.createElement(Card_1.Card, {initiallyExpanded: true}, React.createElement(Card_1.CardTitle, {actAsExpander: false, showExpandableButton: false}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: this.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline"))), React.createElement(Card_1.CardText, null, React.createElement(explorerbranch_1.default, {callbackid: constants_1.ChartSeries.DrillDown, budgetBranch: budgetBranch, displaycallbacks: {
+        let budgetBranch = explorer.state.budgetBranches[0];
+        let drilldownsegment = React.createElement(Card_1.Card, {initiallyExpanded: true}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {callbackid: 0, budgetBranch: budgetBranch, displaycallbacks: {
             workingStatus: explorer.workingStatus,
             updateChartSelections: explorer.updateChartSelections,
         }})));
-        return React.createElement("div", null, dialogbox, drilldownsegment);
+        return React.createElement("div", null, React.createElement(Card_1.Card, {initiallyExpanded: true}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: this.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")))), dialogbox, drilldownsegment);
     }
 }
 ;

@@ -40,7 +40,7 @@ import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 
 import ExplorerBranch from './components/explorerbranch'
-import { ChartTypeCodes, ChartCodeTypes, ChartSeries } from '../constants'
+import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
 import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
@@ -175,7 +175,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
         // -----------[ DRILLDOWN SEGMENT]-------------
 
-        let budgetBranch: BudgetBranch = explorer.state.budgetBranches[ChartSeries.DrillDown]
+        let budgetBranch: BudgetBranch = explorer.state.budgetBranches[0]
 
         // let branchsettings: BranchSettings = this.props.settings.defaults.branch
 
@@ -183,28 +183,16 @@ let Explorer = class extends Component< ExplorerProps, any > {
         <Card initiallyExpanded >
 
             <CardTitle
-                actAsExpander={false}
-                showExpandableButton={false} >
+                actAsExpander={true}
+                showExpandableButton={true} >
 
-                Budget Explorer
+                Explorer Branch
 
             </CardTitle>
 
-            <CardText expandable >
-
-                If you're new here, <a href="javascript:void(0)" 
-                    onTouchTap={this.handleDialogOpen}>
-                    read the help text</a> first.
-                <IconButton tooltip="help"tooltipPosition="top-center"
-                    onTouchTap = {
-                        this.handleDialogOpen
-                    }>
-                    <FontIcon className="material-icons">help_outline</FontIcon>
-                </IconButton>
-             </CardText>
-             <CardText>
+             <CardText expandable>
              <ExplorerBranch 
-                 callbackid = {ChartSeries.DrillDown}
+                 callbackid = {0}
                  budgetBranch = {budgetBranch}
                  displaycallbacks = {{ 
                      workingStatus: explorer.workingStatus,
@@ -219,21 +207,32 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
         return <div>
 
+        <Card initiallyExpanded >
+
+            <CardTitle
+                actAsExpander={true}
+                showExpandableButton={true} >
+
+                Budget Explorer
+
+            </CardTitle>
+            <CardText expandable >
+
+                If you're new here, <a href="javascript:void(0)" 
+                    onTouchTap={this.handleDialogOpen}>
+                    read the help text</a> first.
+                <IconButton tooltip="help"tooltipPosition="top-center"
+                    onTouchTap = {
+                        this.handleDialogOpen
+                    }>
+                    <FontIcon className="material-icons">help_outline</FontIcon>
+                </IconButton>
+            </CardText>
+        </Card>
             { dialogbox }
 
             { drilldownsegment }
 
-            {
-                // { dashboardsegment }
-
-                // { comparesegment }
-
-                // { differencessegment }
-
-                // { contextsegment }
-
-                // { buildsegment }
-            }
         </div>
     }
 
