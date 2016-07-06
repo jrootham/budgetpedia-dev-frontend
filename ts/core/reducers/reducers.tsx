@@ -25,7 +25,7 @@ let branchList = (state = [], action) => {
     return state
 }
 
-let branchesById = (state = { }, action) => {
+let branchesById:{[index:string]:any} = (state = { }, action) => {
     return state
 }
 
@@ -71,7 +71,7 @@ let appnavbar = (state: any = initialstate.appnavbar, action) => {
     return state
 }
 
-let workingmessagestate = (state:any = initialstate.workingmessagestate, action) => {
+let workingmessagestate = (state: any = initialstate.workingmessagestate, action) => {
     switch (action.type) {
         case Actions.SHOW_WORKING_MESSAGE: {
             return true

@@ -54,11 +54,9 @@ import {
     PortalChartLocation,
     GetChartParmsProps,
     BranchSettings,
-    // GetChartParmsCallbacks,
 } from './modules/interfaces'
 
 interface ExplorerProps {
-    // budgetdata:any,
     showWaitingMessage:Function,
     hideWaitingMessage:Function,
     settings:any,

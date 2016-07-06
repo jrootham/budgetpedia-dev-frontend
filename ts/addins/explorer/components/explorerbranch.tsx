@@ -9,7 +9,6 @@ import {
     MatrixCellConfig,
     ChartParms,
     ChartParmsObj,
-    // MatrixLocation,
     PortalConfig,
     CellSettings,
     CellCallbacks,
@@ -17,7 +16,6 @@ import {
     ChartConfig,
     GetCellChartProps,
     BranchSettings,
-    // GetChartParmsCallbacks,
 } from '../modules/interfaces'
 
 import { ExplorerPortal } from './explorerportal'
@@ -68,9 +66,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
     // TODO: most of 
     state = {
         chartmatrixrow:this.props.budgetBranch.nodes,
-        // yearslider: this.props.yearslider,
-        // yearscope: this.props.yearscope,
-        // branchsettings: this.props.branchsettings,
         snackbar:{open:false,message:'empty'}
     }
 
@@ -116,7 +111,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
 
         budgetBranch.initializeChartSeries(this._nodeCallbacks)
 
-        this._nodeCallbacks.refreshPresentation()
+        this.refreshPresentation()
     }
 
     // ============================================================
@@ -162,6 +157,21 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
     easeOutCubic = t => {
         const t1 = t - 1;
         return t1 * t1 * t1 + 1;
+    }
+
+    refreshPresentation = () => {
+        this.setState({
+            chartmatrixrow:this.state.chartmatrixrow,
+        })
+    }
+
+    // ---------------------[ user interactions ]---------------------------
+
+    onChangePortalTab = () => {
+        let branch = this
+        setTimeout(() => {
+            branch.props.displaycallbacks.updateChartSelections()
+        })
     }
 
     switchViewpoint = (viewpointname) => {
@@ -211,21 +221,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
         })
     }
 
-    onChangePortalTab = () => {
-        let branch = this
-        setTimeout(() => {
-            branch.props.displaycallbacks.updateChartSelections()
-        })
-    }
-
-    refreshPresentation = () => {
-        this.setState({
-            chartmatrixrow:this.state.chartmatrixrow,
-        })
-    }
-
-    // ============================================================
-    // -------------------[ RENDER METHODS ]---------------------
     // TODO: belongs with explorerchart controller?
     switchChartCode = (nodeIndex,cellIndex, chartCode) => {
 
@@ -262,6 +257,8 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
             branch.props.displaycallbacks.updateChartSelections()
         })
     }
+
+    // -----------------------------[ prepare for rencer ]---------------------------------
 
     // get React components to render
     getPortals = (matrixrow) => {

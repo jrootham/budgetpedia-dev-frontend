@@ -78,6 +78,17 @@ class ExplorerBranch extends Component {
             const t1 = t - 1;
             return t1 * t1 * t1 + 1;
         };
+        this.refreshPresentation = () => {
+            this.setState({
+                chartmatrixrow: this.state.chartmatrixrow,
+            });
+        };
+        this.onChangePortalTab = () => {
+            let branch = this;
+            setTimeout(() => {
+                branch.props.displaycallbacks.updateChartSelections();
+            });
+        };
         this.switchViewpoint = (viewpointname) => {
             let { settings: branchsettings } = this.props.budgetBranch;
             let chartmatrixrow = this.state.chartmatrixrow;
@@ -109,17 +120,6 @@ class ExplorerBranch extends Component {
             let branch = this;
             setTimeout(() => {
                 branch.props.displaycallbacks.updateChartSelections();
-            });
-        };
-        this.onChangePortalTab = () => {
-            let branch = this;
-            setTimeout(() => {
-                branch.props.displaycallbacks.updateChartSelections();
-            });
-        };
-        this.refreshPresentation = () => {
-            this.setState({
-                chartmatrixrow: this.state.chartmatrixrow,
             });
         };
         this.switchChartCode = (nodeIndex, cellIndex, chartCode) => {

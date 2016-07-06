@@ -14,7 +14,6 @@ import {
     // ChartConfig,
     GetCellChartProps,
     BranchSettings,
-    // GetChartParmsCallbacks,
 } from '../modules/interfaces'
 import getBudgetNode from '../modules/getbudgetnode'
 import BudgetNode from './budgetnode'

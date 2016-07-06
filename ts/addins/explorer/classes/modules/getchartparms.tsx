@@ -21,7 +21,6 @@ import {
     MatrixCellConfig,
     GetChartParmsProps,
     BranchSettings,
-    // GetChartParmsCallbacks,
 } from '../../modules/interfaces'
 
 import getBudgetNode from '../../modules/getbudgetnode'

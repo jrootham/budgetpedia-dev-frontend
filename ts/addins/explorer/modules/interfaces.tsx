@@ -85,13 +85,6 @@ interface GetChartParmsProps extends GetCellChartProps {
     budgetNode: BudgetNode, 
 }
 
-// interface GetChartParmsCallbacks {
-//     refreshPresentation: Function,
-//     onPortalCreation: Function, 
-//     workingStatus: Function,
-//     updateChartSelections: Function,
-// }
-
 // =====================================================
 // ---------------[ NODE CONFIGURATION ]--------------
 
@@ -147,5 +140,4 @@ export {
     SortedComponentItem,
     GetChartParmsProps,
     BranchSettings
-    // GetChartParmsCallbacks,
 }
