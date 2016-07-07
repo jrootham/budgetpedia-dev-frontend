@@ -47,7 +47,6 @@ class BudgetNode {
         let sourceProps: GetChartParmsProps = {} as GetChartParmsProps
         let node = this
         Object.assign(sourceProps, props, {budgetNode: node})
-        // console.log('sourceProps',sourceProps, selectionCallbacks)
         return getChartParmsSource(sourceProps, selectionCallbacks)
     }
 

@@ -33,7 +33,6 @@ var { Component } = React
 // doesn't require .d.ts...! (reference available in index.tsx)
 import { connect } from 'react-redux'
 // import { withRouter } from 'react-router' // not ready yet!!
-// console.log('withrouter',withRouter)
 import {Card, CardTitle, CardText} from 'material-ui/Card'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
@@ -44,9 +43,9 @@ import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 
 import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
+import * as ExplorerActions from './actions'
 import BudgetBranch from './classes/budgetbranch'
 import { getExplorerControlData } from './reducers'
-let uuid = require('node-uuid') // use uuid.v4() for unique id
 
 import {
     MatrixCellConfig,
@@ -60,6 +59,7 @@ import {
 interface ExplorerProps {
     showWaitingMessage:Function,
     hideWaitingMessage:Function,
+    addBranch:Function,
     controlData:any,
 }
 
@@ -87,25 +87,24 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
     // see if any initialization is required
     componentDidMount() {
-        let branchSettingsList:BranchConfig[] = this.props.controlData.branchList
+        let { branchList } = this.props.controlData
         let defaultSettings:BranchSettings = this.props.controlData.defaults.branch
-        if (branchSettingsList.length == 0) {
-            // TODO: do this using actions
-            branchSettingsList.push({settings:defaultSettings, uid:''})
-            this.forceUpdate()
+        if (branchList.length == 0) { // initialize explorer with first branch
+            this.props.addBranch(defaultSettings)
         }
     }
 
-    componentWillUpdate() {
-        let branchConfigList:BranchConfig[] = this.props.controlData.branchList
+    componentWillUpdate(nextProps) {
+        let { branchList, branchesById } = nextProps.controlData
         let budgetBranches:BudgetBranch[] = this.budgetBranches
-        if (budgetBranches.length < branchConfigList.length) {
-            let {settings, uid} = branchConfigList[0]
+        if (budgetBranches.length < branchList.length) {
+            let uid = branchList[0]
+            let settings = branchesById[uid]
             budgetBranches.push(new BudgetBranch({settings,uid}))
         } else {
             // TODO: do extensive matching checks using uid
-            for (let i = 0; i < branchConfigList.length; i++) {
-                budgetBranches[i].settings = branchConfigList[i].settings
+            for (let i = 0; i < branchList.length; i++) {
+                budgetBranches[i].settings = branchesById[branchList[i]].settings
             }
         }
     }
@@ -294,6 +293,7 @@ Explorer = connect(mapStateToProps,
     {
         showWaitingMessage: Actions.showWaitingMessage,
         hideWaitingMessage: Actions.hideWaitingMessage,
+        addBranch:ExplorerActions.addBranch,
     }
     )(Explorer)
 

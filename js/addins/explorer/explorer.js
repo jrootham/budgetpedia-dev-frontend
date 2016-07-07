@@ -9,9 +9,9 @@ const Dialog_1 = require('material-ui/Dialog');
 const explorerbranch_1 = require('./components/explorerbranch');
 const updatebranchchartselections_1 = require('./modules/updatebranchchartselections');
 const Actions = require('../../core/actions/actions');
+const ExplorerActions = require('./actions');
 const budgetbranch_1 = require('./classes/budgetbranch');
 const reducers_1 = require('./reducers');
-let uuid = require('node-uuid');
 let Explorer = class extends Component {
     constructor(props) {
         super(props);
@@ -46,23 +46,23 @@ let Explorer = class extends Component {
         this.updateChartSelections = branchIndex => () => this.updateIndexChartSelections(branchIndex);
     }
     componentDidMount() {
-        let branchSettingsList = this.props.controlData.branchList;
+        let { branchList } = this.props.controlData;
         let defaultSettings = this.props.controlData.defaults.branch;
-        if (branchSettingsList.length == 0) {
-            branchSettingsList.push({ settings: defaultSettings, uid: '' });
-            this.forceUpdate();
+        if (branchList.length == 0) {
+            this.props.addBranch(defaultSettings);
         }
     }
-    componentWillUpdate() {
-        let branchConfigList = this.props.controlData.branchList;
+    componentWillUpdate(nextProps) {
+        let { branchList, branchesById } = nextProps.controlData;
         let budgetBranches = this.budgetBranches;
-        if (budgetBranches.length < branchConfigList.length) {
-            let { settings, uid } = branchConfigList[0];
+        if (budgetBranches.length < branchList.length) {
+            let uid = branchList[0];
+            let settings = branchesById[uid];
             budgetBranches.push(new budgetbranch_1.default({ settings: settings, uid: uid }));
         }
         else {
-            for (let i = 0; i < branchConfigList.length; i++) {
-                budgetBranches[i].settings = branchConfigList[i].settings;
+            for (let i = 0; i < branchList.length; i++) {
+                budgetBranches[i].settings = branchesById[branchList[i]].settings;
             }
         }
     }
@@ -100,6 +100,7 @@ let mapStateToProps = state => {
 Explorer = react_redux_1.connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
+    addBranch: ExplorerActions.addBranch,
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;

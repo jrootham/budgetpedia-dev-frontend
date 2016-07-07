@@ -168,8 +168,6 @@ export let createChildNode = (
         updateChartSelections,
     } = callbacks
 
-    // console.log('callbacks in CreateChildNode',callbacks)
-
     // ----------------------------------------------------
     // ----------------[ create child ]--------------------
     // copy path
