@@ -10,41 +10,14 @@ import { isFSA } from 'flux-standard-action'
 import { handleActions } from 'redux-actions'; // handleAction doesn't work with combineReducers
 import { routerReducer } from 'react-router-redux'
 
+
 // -------------[ app resources ]---------------
 import * as Actions from '../actions/actions'
 
 import initialstate from "../../local/initialstate"
 
 // ----------[ app settings ]----------------------
-
-let defaults = (state = initialstate.explorer.defaults, action) => {
-    return state
-}
-
-let branchList = (state = [], action) => {
-    return state
-}
-
-let branchesById:{[index:string]:any} = (state = { }, action) => {
-    return state
-}
-
-let nodesById = (state = { }, action) => {
-    return state
-}
-
-let cellsById = (state = { }, action) => {
-    return state
-}
-
-let explorer = combineReducers({
-        defaults,
-        branchList,
-        branchesById,
-        nodesById,
-        cellsById,    
-})
-
+import explorer from '../../addins/explorer/reducers'
 // -----------[ system resource reducers ]------------
 
 let theme = (state: any = initialstate.theme) => {

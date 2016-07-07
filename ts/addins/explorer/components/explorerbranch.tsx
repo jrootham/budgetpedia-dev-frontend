@@ -68,6 +68,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
         snackbar:{open:false,message:'empty'}
     }
 
+    componentWillMount() {
+        let { budgetBranch } = this.props
+        budgetBranch.state = this.state
+        budgetBranch.setState = this.setState
+
+    }
+
+    // numbered scroll elements, which self-register for response to 
+    // chart column select clicks
+    branchScrollBlock = null
 
     handleSnackbarRequestClose = () => {
         this.setState({
@@ -81,10 +91,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
             branch.props.displaycallbacks.updateChartSelections()
         })
     }
-
-    // numbered scroll elements, which self-register for response to 
-    // chart column select clicks
-    branchScrollBlock = null
 
     // initialize once - create root drilldown and compare series
     componentDidMount = () => {

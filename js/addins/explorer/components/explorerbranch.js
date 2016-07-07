@@ -14,6 +14,7 @@ class ExplorerBranch extends Component {
             chartmatrixrow: this.props.budgetBranch.nodes,
             snackbar: { open: false, message: 'empty' }
         };
+        this.branchScrollBlock = null;
         this.handleSnackbarRequestClose = () => {
             this.setState({
                 snackbar: {
@@ -26,7 +27,6 @@ class ExplorerBranch extends Component {
                 branch.props.displaycallbacks.updateChartSelections();
             });
         };
-        this.branchScrollBlock = null;
         this.componentDidMount = () => {
             let { displaycallbacks, callbackid, budgetBranch } = this.props;
             let { refreshPresentation, onPortalCreation } = this;
@@ -204,6 +204,11 @@ class ExplorerBranch extends Component {
             });
             return portals;
         };
+    }
+    componentWillMount() {
+        let { budgetBranch } = this.props;
+        budgetBranch.state = this.state;
+        budgetBranch.setState = this.setState;
     }
     render() {
         let branch = this;

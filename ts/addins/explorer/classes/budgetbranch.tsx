@@ -51,6 +51,10 @@ class BudgetBranch {
 
     public uid:string
 
+    public state: any
+
+    public setState: Function
+
     public initializeChartSeries(callbacks) {
 
         let branchsettings = this.settings

@@ -45,6 +45,7 @@ import { ChartTypeCodes, ChartCodeTypes } from '../constants'
 import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
 import BudgetBranch from './classes/budgetbranch'
+import { getExplorerControlData } from './reducers'
 let uuid = require('node-uuid') // use uuid.v4() for unique id
 
 import {
@@ -59,7 +60,7 @@ import {
 interface ExplorerProps {
     showWaitingMessage:Function,
     hideWaitingMessage:Function,
-    configs:any,
+    controlData:any,
 }
 
 let Explorer = class extends Component< ExplorerProps, any > {
@@ -86,8 +87,8 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
     // see if any initialization is required
     componentDidMount() {
-        let branchSettingsList:BranchConfig[] = this.props.configs.branchList
-        let defaultSettings:BranchSettings = this.props.configs.defaults.branch
+        let branchSettingsList:BranchConfig[] = this.props.controlData.branchList
+        let defaultSettings:BranchSettings = this.props.controlData.defaults.branch
         if (branchSettingsList.length == 0) {
             // TODO: do this using actions
             branchSettingsList.push({settings:defaultSettings, uid:''})
@@ -96,7 +97,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
     }
 
     componentWillUpdate() {
-        let branchConfigList:BranchConfig[] = this.props.configs.branchList
+        let branchConfigList:BranchConfig[] = this.props.controlData.branchList
         let budgetBranches:BudgetBranch[] = this.budgetBranches
         if (budgetBranches.length < branchConfigList.length) {
             let {settings, uid} = branchConfigList[0]
@@ -279,10 +280,9 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
 let mapStateToProps = state => {
 
-    // mapStateToBranches()
     return {
-
-        configs:state.explorer,
+        // TODO: should be assignment from selector imported from reducer file
+        controlData:getExplorerControlData(state),
 
     }
 }

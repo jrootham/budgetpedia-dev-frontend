@@ -10,6 +10,7 @@ const explorerbranch_1 = require('./components/explorerbranch');
 const updatebranchchartselections_1 = require('./modules/updatebranchchartselections');
 const Actions = require('../../core/actions/actions');
 const budgetbranch_1 = require('./classes/budgetbranch');
+const reducers_1 = require('./reducers');
 let uuid = require('node-uuid');
 let Explorer = class extends Component {
     constructor(props) {
@@ -45,15 +46,15 @@ let Explorer = class extends Component {
         this.updateChartSelections = branchIndex => () => this.updateIndexChartSelections(branchIndex);
     }
     componentDidMount() {
-        let branchSettingsList = this.props.configs.branchList;
-        let defaultSettings = this.props.configs.defaults.branch;
+        let branchSettingsList = this.props.controlData.branchList;
+        let defaultSettings = this.props.controlData.defaults.branch;
         if (branchSettingsList.length == 0) {
             branchSettingsList.push({ settings: defaultSettings, uid: '' });
             this.forceUpdate();
         }
     }
     componentWillUpdate() {
-        let branchConfigList = this.props.configs.branchList;
+        let branchConfigList = this.props.controlData.branchList;
         let budgetBranches = this.budgetBranches;
         if (budgetBranches.length < branchConfigList.length) {
             let { settings, uid } = branchConfigList[0];
@@ -93,7 +94,7 @@ let Explorer = class extends Component {
 ;
 let mapStateToProps = state => {
     return {
-        configs: state.explorer,
+        controlData: reducers_1.getExplorerControlData(state),
     };
 };
 Explorer = react_redux_1.connect(mapStateToProps, {
