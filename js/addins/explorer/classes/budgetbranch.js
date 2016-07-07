@@ -24,8 +24,8 @@ class BudgetBranch {
             this.data.viewpointdata = viewpointdata;
             return viewpointdata;
         };
-        this.data = parms.data;
-        this.nodes = parms.nodes;
+        this.data = parms.data || { viewpointdata: null };
+        this.nodes = parms.nodes || [];
         this.settings = parms.settings;
     }
     initializeChartSeries(callbacks) {

@@ -29,15 +29,15 @@ import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 
 
 interface BudgetBranchParms {
-    data:any,
-    nodes:any[],
+    data?:{viewpointdata:Viewpoint},
+    nodes?:BudgetNode[],
     settings:BranchSettings
 }
 
 class BudgetBranch {
     constructor(parms:BudgetBranchParms) {
-        this.data = parms.data
-        this.nodes = parms.nodes
+        this.data = parms.data || {viewpointdata:null}
+        this.nodes = parms.nodes || []
         this.settings = parms.settings
     }
 
