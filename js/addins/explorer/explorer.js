@@ -9,6 +9,7 @@ const Dialog_1 = require('material-ui/Dialog');
 const explorerbranch_1 = require('./components/explorerbranch');
 const updatebranchchartselections_1 = require('./modules/updatebranchchartselections');
 const Actions = require('../../core/actions/actions');
+const budgetbranch_1 = require('./classes/budgetbranch');
 let uuid = require('node-uuid');
 let Explorer = class extends Component {
     constructor(props) {
@@ -16,7 +17,7 @@ let Explorer = class extends Component {
         this.state = {
             dialogopen: false,
         };
-        this.budgetBranches = [];
+        this.budgetBranches = [new budgetbranch_1.default({ settings: this.props.settings.defaults.branch })];
         this.handleDialogOpen = () => {
             this.setState({
                 dialogopen: true

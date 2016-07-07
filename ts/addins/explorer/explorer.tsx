@@ -83,7 +83,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
         dialogopen: false,
     }
 
-    budgetBranches:BudgetBranch[] = []
+    budgetBranches:BudgetBranch[] = [new BudgetBranch({settings: this.props.settings.defaults.branch})]
 
     handleDialogOpen = () => {
         this.setState({
