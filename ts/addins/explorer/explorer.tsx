@@ -50,7 +50,6 @@ let uuid = require('node-uuid') // use uuid.v4() for unique id
 import {
     MatrixCellConfig,
     ChartParmsObj,
-    // MatrixLocation,
     PortalChartLocation,
     GetChartParmsProps,
     BranchSettings,
@@ -78,12 +77,13 @@ let Explorer = class extends Component< ExplorerProps, any > {
     
     state = {
         // chartmatrix: [[], []], // DrillDown, Compare (Later: Differences, Context, Build)
-        budgetBranches:[
-            new BudgetBranch({data:{}, nodes:[], settings: this.props.settings.defaults.branch})
-        ],
+        // budgetBranches:[
+        //     // new BudgetBranch({data:{}, nodes:[], settings: this.props.settings.defaults.branch})
+        // ],
         dialogopen: false,
     }
 
+    budgetBranches:BudgetBranch[] = []
 
     handleDialogOpen = () => {
         this.setState({
@@ -111,7 +111,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
     }
 
     updateIndexChartSelections = branchIndex => {
-        let budgetBranch = this.state.budgetBranches[branchIndex]
+        let budgetBranch = this.budgetBranches[branchIndex]
         updateBranchChartSelections(budgetBranch.nodes)
     }
 
@@ -181,7 +181,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
         let drilldownsegments = () => {
 
-            let budgetbranches = explorer.state.budgetBranches
+            let budgetbranches = explorer.budgetBranches
 
             let segments = budgetbranches.map((budgetBranch, branchIndex) => {
 
