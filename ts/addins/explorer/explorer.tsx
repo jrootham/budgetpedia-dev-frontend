@@ -83,7 +83,30 @@ let Explorer = class extends Component< ExplorerProps, any > {
         dialogopen: false,
     }
 
-    budgetBranches:BudgetBranch[] = [new BudgetBranch({settings: this.props.settings.defaults.branch})]
+    componentDidMount() {
+        let branchSettingsList:BranchSettings[] = this.props.settings.branchList
+        let defaultSettings:BranchSettings = this.props.settings.defaults.branch
+        if (branchSettingsList.length == 0) {
+            // TODO: do this using actions
+            branchSettingsList.push(defaultSettings)
+            this.forceUpdate()
+        }
+    }
+
+    componentWillUpdate() {
+        let branchSettingsList:BranchSettings[] = this.props.settings.branchList
+        let budgetBranches:BudgetBranch[] = this.budgetBranches
+        if (budgetBranches.length < branchSettingsList.length) {
+            budgetBranches.push(new BudgetBranch({settings:branchSettingsList[0]}))
+        } else {
+            // TODO: do extensive matching checks using uid
+            for (let i = 0; i < branchSettingsList.length; i++) {
+                budgetBranches[i].settings = branchSettingsList[i]
+            }
+        }
+    }
+
+    budgetBranches:BudgetBranch[] = []
 
     handleDialogOpen = () => {
         this.setState({
@@ -128,8 +151,8 @@ let Explorer = class extends Component< ExplorerProps, any > {
             <Dialog
                 title = "Budget Explorer Help"
                 modal = { false}
-                open = { this.state.dialogopen }
-                onRequestClose = { this.handleDialogClose }
+                open = { explorer.state.dialogopen }
+                onRequestClose = { explorer.handleDialogClose }
                 autoScrollBodyContent
             >
                 <IconButton
@@ -142,7 +165,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
                         position: "absolute",
                         zIndex: 2,
                     }}
-                    onTouchTap={ this.handleDialogClose } >
+                    onTouchTap={ explorer.handleDialogClose } >
 
                     <FontIcon
                         className="material-icons"
@@ -230,11 +253,11 @@ let Explorer = class extends Component< ExplorerProps, any > {
             <CardText expandable >
 
                 If you're new here, <a href="javascript:void(0)" 
-                    onTouchTap={this.handleDialogOpen}>
+                    onTouchTap={explorer.handleDialogOpen}>
                     read the help text</a> first.
                 <IconButton tooltip="help"tooltipPosition="top-center"
                     onTouchTap = {
-                        this.handleDialogOpen
+                        explorer.handleDialogOpen
                     }>
                     <FontIcon className="material-icons">help_outline</FontIcon>
                 </IconButton>

@@ -17,7 +17,7 @@ let Explorer = class extends Component {
         this.state = {
             dialogopen: false,
         };
-        this.budgetBranches = [new budgetbranch_1.default({ settings: this.props.settings.defaults.branch })];
+        this.budgetBranches = [];
         this.handleDialogOpen = () => {
             this.setState({
                 dialogopen: true
@@ -44,9 +44,29 @@ let Explorer = class extends Component {
         };
         this.updateChartSelections = branchIndex => () => this.updateIndexChartSelections(branchIndex);
     }
+    componentDidMount() {
+        let branchSettingsList = this.props.settings.branchList;
+        let defaultSettings = this.props.settings.defaults.branch;
+        if (branchSettingsList.length == 0) {
+            branchSettingsList.push(defaultSettings);
+            this.forceUpdate();
+        }
+    }
+    componentWillUpdate() {
+        let branchSettingsList = this.props.settings.branchList;
+        let budgetBranches = this.budgetBranches;
+        if (budgetBranches.length < branchSettingsList.length) {
+            budgetBranches.push(new budgetbranch_1.default({ settings: branchSettingsList[0] }));
+        }
+        else {
+            for (let i = 0; i < branchSettingsList.length; i++) {
+                budgetBranches[i].settings = branchSettingsList[i];
+            }
+        }
+    }
     render() {
         let explorer = this;
-        let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: this.state.dialogopen, onRequestClose: this.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
+        let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogopen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,
             padding: 0,
@@ -54,7 +74,7 @@ let Explorer = class extends Component {
             width: "36px",
             position: "absolute",
             zIndex: 2,
-        }, onTouchTap: this.handleDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
+        }, onTouchTap: explorer.handleDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
         let drilldownsegments = () => {
             let budgetbranches = explorer.budgetBranches;
             let segments = budgetbranches.map((budgetBranch, branchIndex) => {
@@ -66,7 +86,7 @@ let Explorer = class extends Component {
             return segments;
         };
         let segments = drilldownsegments();
-        return React.createElement("div", null, React.createElement(Card_1.Card, {initiallyExpanded: true}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: this.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")))), dialogbox, segments);
+        return React.createElement("div", null, React.createElement(Card_1.Card, {initiallyExpanded: true}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: explorer.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: explorer.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")))), dialogbox, segments);
     }
 }
 ;
