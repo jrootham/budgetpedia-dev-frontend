@@ -27,6 +27,7 @@ class BudgetBranch {
         this.data = parms.data || { viewpointdata: null };
         this.nodes = parms.nodes || [];
         this.settings = parms.settings;
+        this.uid = parms.uid;
     }
     initializeChartSeries(callbacks) {
         let branchsettings = this.settings;

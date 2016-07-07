@@ -22,6 +22,11 @@ interface BranchSettings {
     yearScope:"one",
 }
 
+interface BranchConfig {
+    settings: BranchSettings,
+    uid: string,
+}
+
 interface ChartParmsObj {
     isError: Boolean,
     errorMessage?: string,
@@ -139,5 +144,6 @@ export {
     ChartConfig,
     SortedComponentItem,
     GetChartParmsProps,
-    BranchSettings
+    BranchSettings,
+    BranchConfig,
 }

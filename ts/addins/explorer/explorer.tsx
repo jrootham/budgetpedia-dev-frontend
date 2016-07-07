@@ -53,12 +53,13 @@ import {
     PortalChartLocation,
     GetChartParmsProps,
     BranchSettings,
+    BranchConfig,
 } from './modules/interfaces'
 
 interface ExplorerProps {
     showWaitingMessage:Function,
     hideWaitingMessage:Function,
-    settings:any,
+    configs:any,
 }
 
 let Explorer = class extends Component< ExplorerProps, any > {
@@ -83,25 +84,27 @@ let Explorer = class extends Component< ExplorerProps, any > {
         dialogopen: false,
     }
 
+    // see if any initialization is required
     componentDidMount() {
-        let branchSettingsList:BranchSettings[] = this.props.settings.branchList
-        let defaultSettings:BranchSettings = this.props.settings.defaults.branch
+        let branchSettingsList:BranchConfig[] = this.props.configs.branchList
+        let defaultSettings:BranchSettings = this.props.configs.defaults.branch
         if (branchSettingsList.length == 0) {
             // TODO: do this using actions
-            branchSettingsList.push(defaultSettings)
+            branchSettingsList.push({settings:defaultSettings, uid:''})
             this.forceUpdate()
         }
     }
 
     componentWillUpdate() {
-        let branchSettingsList:BranchSettings[] = this.props.settings.branchList
+        let branchConfigList:BranchConfig[] = this.props.configs.branchList
         let budgetBranches:BudgetBranch[] = this.budgetBranches
-        if (budgetBranches.length < branchSettingsList.length) {
-            budgetBranches.push(new BudgetBranch({settings:branchSettingsList[0]}))
+        if (budgetBranches.length < branchConfigList.length) {
+            let {settings, uid} = branchConfigList[0]
+            budgetBranches.push(new BudgetBranch({settings,uid}))
         } else {
             // TODO: do extensive matching checks using uid
-            for (let i = 0; i < branchSettingsList.length; i++) {
-                budgetBranches[i].settings = branchSettingsList[i]
+            for (let i = 0; i < branchConfigList.length; i++) {
+                budgetBranches[i].settings = branchConfigList[i].settings
             }
         }
     }
@@ -279,7 +282,7 @@ let mapStateToProps = state => {
     // mapStateToBranches()
     return {
 
-        settings:state.explorer,
+        configs:state.explorer,
 
     }
 }

@@ -31,7 +31,8 @@ import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 interface BudgetBranchParms {
     data?:{viewpointdata:Viewpoint},
     nodes?:BudgetNode[],
-    settings:BranchSettings
+    settings:BranchSettings,
+    uid:string,
 }
 
 class BudgetBranch {
@@ -39,6 +40,7 @@ class BudgetBranch {
         this.data = parms.data || {viewpointdata:null}
         this.nodes = parms.nodes || []
         this.settings = parms.settings
+        this.uid = parms.uid
     }
 
     public data
@@ -46,6 +48,8 @@ class BudgetBranch {
     public nodes
 
     public settings:BranchSettings
+
+    public uid:string
 
     public initializeChartSeries(callbacks) {
 

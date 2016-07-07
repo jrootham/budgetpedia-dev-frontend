@@ -45,22 +45,23 @@ let Explorer = class extends Component {
         this.updateChartSelections = branchIndex => () => this.updateIndexChartSelections(branchIndex);
     }
     componentDidMount() {
-        let branchSettingsList = this.props.settings.branchList;
-        let defaultSettings = this.props.settings.defaults.branch;
+        let branchSettingsList = this.props.configs.branchList;
+        let defaultSettings = this.props.configs.defaults.branch;
         if (branchSettingsList.length == 0) {
-            branchSettingsList.push(defaultSettings);
+            branchSettingsList.push({ settings: defaultSettings, uid: '' });
             this.forceUpdate();
         }
     }
     componentWillUpdate() {
-        let branchSettingsList = this.props.settings.branchList;
+        let branchConfigList = this.props.configs.branchList;
         let budgetBranches = this.budgetBranches;
-        if (budgetBranches.length < branchSettingsList.length) {
-            budgetBranches.push(new budgetbranch_1.default({ settings: branchSettingsList[0] }));
+        if (budgetBranches.length < branchConfigList.length) {
+            let { settings, uid } = branchConfigList[0];
+            budgetBranches.push(new budgetbranch_1.default({ settings: settings, uid: uid }));
         }
         else {
-            for (let i = 0; i < branchSettingsList.length; i++) {
-                budgetBranches[i].settings = branchSettingsList[i];
+            for (let i = 0; i < branchConfigList.length; i++) {
+                budgetBranches[i].settings = branchConfigList[i].settings;
             }
         }
     }
@@ -92,7 +93,7 @@ let Explorer = class extends Component {
 ;
 let mapStateToProps = state => {
     return {
-        settings: state.explorer,
+        configs: state.explorer,
     };
 };
 Explorer = react_redux_1.connect(mapStateToProps, {
