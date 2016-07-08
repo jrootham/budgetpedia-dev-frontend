@@ -196,6 +196,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
         this.setState({
             branchNodes,
         })
+        // wait for state to be updated
         setTimeout(()=>{
             this.initializeChartSeries()
         })
