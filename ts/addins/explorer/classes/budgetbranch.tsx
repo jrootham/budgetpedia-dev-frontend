@@ -153,15 +153,15 @@ class BudgetBranch {
 
         let budgetNode: BudgetNode = null
         let parentBudgetNode: BudgetNode
-        let cellptr: any
+        let nodeIndex: any
         let isError = false
         let chartParmsObj: ChartParmsObj = null
 
         let fn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)
 
-        for (cellptr in branchNodes) {
+        for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode
-            budgetNode = branchNodes[cellptr]
+            budgetNode = branchNodes[nodeIndex]
             let nextdataNode = getBudgetNode(viewpointdata, budgetNode.dataPath)
             if (nextdataNode) {
                 // check previous cell configuration against previous node
@@ -180,8 +180,8 @@ class BudgetBranch {
                     switchResults.shallowerdata = shallowerdata
                     // replace budgetNode
                     isError = true
-                    let prevBudgetNode: BudgetNode = branchNodes[cellptr - 1]
-                    branchNodes.splice(cellptr)
+                    let prevBudgetNode: BudgetNode = branchNodes[nodeIndex - 1]
+                    branchNodes.splice(nodeIndex)
 
                     let prevBudgetCell = prevBudgetNode.cells[0]
 
@@ -201,32 +201,32 @@ class BudgetBranch {
                         context,
                         chart:prevBudgetCell.chart,
                     }
-                    let fcurrent = fn(cellptr)(0)
+                    let fcurrent = fn(nodeIndex)(0)
                     createChildNode(childprops, callbacks,{current:fcurrent,next:fn})
-                    budgetNode = null // branchNodes[cellptr] // created by createChildNode as side effect
+                    budgetNode = null // branchNodes[nodeIndex] // created by createChildNode as side effect
                 }
             } else {
                 console.error('no data node')
             }
-            let nodecellindex: any = null
+            let nodeCellIndex: any = null
             if (!budgetNode) break
             let configData = {
                 viewpointConfig:budgetdata.viewpointdata.Configuration,
                 itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
             }
-            for (nodecellindex in budgetNode.cells) {
+            for (nodeCellIndex in budgetNode.cells) {
                 let props: GetCellChartProps = {
-                    chartIndex: nodecellindex,
+                    chartIndex: nodeCellIndex,
                     branchsettings,
                     configData,
                 }
-                let fcurrent = fn(cellptr)(nodecellindex),
+                let fcurrent = fn(nodeIndex)(nodeCellIndex),
                 chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:fn})
                 if (chartParmsObj.isError) {
-                    branchNodes.splice(cellptr)
-                    if (cellptr > 0) { // unset the selection of the parent
-                        let parentBudgetNode: BudgetNode = branchNodes[cellptr - 1]
-                        let parentBudgetCell = parentBudgetNode.cells[nodecellindex]
+                    branchNodes.splice(nodeIndex)
+                    if (nodeIndex > 0) { // unset the selection of the parent
+                        let parentBudgetNode: BudgetNode = branchNodes[nodeIndex - 1]
+                        let parentBudgetCell = parentBudgetNode.cells[nodeCellIndex]
                         // disable reselection
                         parentBudgetCell.chartselection = null
                         parentBudgetCell.chart = null
@@ -236,7 +236,7 @@ class BudgetBranch {
                 } else {
                     // TODO: this should be set through reset
                     // budgetNode.facetName = facet
-                    let budgetCell = budgetNode.cells[nodecellindex]
+                    let budgetCell = budgetNode.cells[nodeCellIndex]
                     budgetCell.chartparms = chartParmsObj.chartParms
                     budgetCell.chartCode =
                         ChartTypeCodes[budgetCell.chartparms.chartType]

@@ -106,13 +106,13 @@ class BudgetBranch {
         let branchNodes = this.nodes;
         let budgetNode = null;
         let parentBudgetNode;
-        let cellptr;
+        let nodeIndex;
         let isError = false;
         let chartParmsObj = null;
         let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks);
-        for (cellptr in branchNodes) {
+        for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode;
-            budgetNode = branchNodes[cellptr];
+            budgetNode = branchNodes[nodeIndex];
             let nextdataNode = getbudgetnode_1.default(viewpointdata, budgetNode.dataPath);
             if (nextdataNode) {
                 let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
@@ -122,8 +122,8 @@ class BudgetBranch {
                     switchResults.deeperdata = deeperdata;
                     switchResults.shallowerdata = shallowerdata;
                     isError = true;
-                    let prevBudgetNode = branchNodes[cellptr - 1];
-                    branchNodes.splice(cellptr);
+                    let prevBudgetNode = branchNodes[nodeIndex - 1];
+                    branchNodes.splice(nodeIndex);
                     let prevBudgetCell = prevBudgetNode.cells[0];
                     let context = {
                         selection: prevBudgetCell.chartselection,
@@ -140,7 +140,7 @@ class BudgetBranch {
                         context: context,
                         chart: prevBudgetCell.chart,
                     };
-                    let fcurrent = fn(cellptr)(0);
+                    let fcurrent = fn(nodeIndex)(0);
                     onchartcomponentselection_1.createChildNode(childprops, callbacks, { current: fcurrent, next: fn });
                     budgetNode = null;
                 }
@@ -148,25 +148,25 @@ class BudgetBranch {
             else {
                 console.error('no data node');
             }
-            let nodecellindex = null;
+            let nodeCellIndex = null;
             if (!budgetNode)
                 break;
             let configData = {
                 viewpointConfig: budgetdata.viewpointdata.Configuration,
                 itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
             };
-            for (nodecellindex in budgetNode.cells) {
+            for (nodeCellIndex in budgetNode.cells) {
                 let props = {
-                    chartIndex: nodecellindex,
+                    chartIndex: nodeCellIndex,
                     branchsettings: branchsettings,
                     configData: configData,
                 };
-                let fcurrent = fn(cellptr)(nodecellindex), chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: fn });
+                let fcurrent = fn(nodeIndex)(nodeCellIndex), chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: fn });
                 if (chartParmsObj.isError) {
-                    branchNodes.splice(cellptr);
-                    if (cellptr > 0) {
-                        let parentBudgetNode = branchNodes[cellptr - 1];
-                        let parentBudgetCell = parentBudgetNode.cells[nodecellindex];
+                    branchNodes.splice(nodeIndex);
+                    if (nodeIndex > 0) {
+                        let parentBudgetNode = branchNodes[nodeIndex - 1];
+                        let parentBudgetCell = parentBudgetNode.cells[nodeCellIndex];
                         parentBudgetCell.chartselection = null;
                         parentBudgetCell.chart = null;
                     }
@@ -174,7 +174,7 @@ class BudgetBranch {
                     break;
                 }
                 else {
-                    let budgetCell = budgetNode.cells[nodecellindex];
+                    let budgetCell = budgetNode.cells[nodeCellIndex];
                     budgetCell.chartparms = chartParmsObj.chartParms;
                     budgetCell.chartCode =
                         constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
