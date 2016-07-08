@@ -68,18 +68,46 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
         snackbar:{open:false,message:'empty'}
     }
 
+    // return fresh copy of state object; changes after being set
+    // used by budgetBranch instance
+    getState = () => this.state
+
     componentWillMount() {
         let { budgetBranch } = this.props
         budgetBranch.getState = this.getState
         budgetBranch.setState = this.setState.bind(this)
     }
 
-    // numbered scroll elements, which self-register for response to 
-    // chart column select clicks
-    branchScrollBlock = null
+    // initialize once - create root drilldown and compare series
+    componentDidMount() {
 
-    // return fresh copy of state object; changes after being set
-    getState = () => this.state
+        let { displaycallbacks, callbackid, budgetBranch } = this.props
+        let { refreshPresentation, onPortalCreation, updateBranchNodes } = this
+        displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid)
+        this._nodeCallbacks = {
+            updateChartSelections:displaycallbacks.updateChartSelections,
+            workingStatus:displaycallbacks.workingStatus,
+            // local
+            onPortalCreation,
+            updateBranchNodes,
+            refreshPresentation,
+        }
+        this.initializeChartSeries()
+
+    }
+
+    // used by callbacks; set by componentDidMount
+    private _nodeCallbacks
+
+    refreshPresentation = () => {
+        this.forceUpdate()
+    }
+
+    updateBranchNodes = branchNodes => {
+        this.setState({
+            branchNodes,
+        })
+    }
 
     handleSnackbarRequestClose = () => {
         this.setState({
@@ -94,45 +122,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
         })
     }
 
-    // initialize once - create root drilldown and compare series
-    componentDidMount = () => {
-
-        let { displaycallbacks, callbackid, budgetBranch } = this.props
-        let { refreshPresentation, onPortalCreation, updateBranchNodes } = this
-        displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid)
-        this._nodeCallbacks = {
-            updateChartSelections:displaycallbacks.updateChartSelections,
-            refreshPresentation: refreshPresentation,
-            onPortalCreation: onPortalCreation,
-            workingStatus:displaycallbacks.workingStatus,
-            updateBranchNodes,
-        }
-        this.initializeChartSeries()
-
-    }
-
-    private _nodeCallbacks
-
-    public updateBranchNodes = branchNodes => {
-        this.setState({
-            branchNodes,
-        })
-    }
-
-    initializeChartSeries = () => {
-
-        let { budgetBranch } = this.props
-
-        budgetBranch.initializeChartSeries(this._nodeCallbacks)
-
-        this.refreshPresentation()
-
-    }
-
     // ============================================================
     // ---------------------[ *** BRANCH *** CONTROL RESPONSES ]------------------
 
     // onPortalCreation animates scroll-in of new portal
+
+    branchScrollBlock = null
 
     onPortalCreation = () => {
         let element: Element = this.branchScrollBlock
@@ -174,17 +169,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
         return t1 * t1 * t1 + 1;
     }
 
-    refreshPresentation = () => {
-        this.forceUpdate()
-    }
-
     // ---------------------[ user interactions ]---------------------------
 
-    onChangePortalTab = () => {
-        let branch = this
-        setTimeout(() => {
-            branch.props.displaycallbacks.updateChartSelections()
-        })
+    initializeChartSeries = () => {
+
+        let { budgetBranch } = this.props
+
+        budgetBranch.initializeChartSeries(this._nodeCallbacks)
+
+        this.refreshPresentation()
+
     }
 
     switchViewpoint = (viewpointname) => {
@@ -272,7 +266,14 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
         })
     }
 
-    // -----------------------------[ prepare for rencer ]---------------------------------
+    // -----------------------------[ prepare for render ]---------------------------------
+
+    onChangePortalTab = () => {
+        let branch = this
+        setTimeout(() => {
+            branch.props.displaycallbacks.updateChartSelections()
+        })
+    }
 
     // get React components to render
     getPortals = (matrixrow) => {

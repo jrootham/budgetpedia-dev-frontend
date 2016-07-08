@@ -91,7 +91,6 @@ class BudgetBranch {
             let { nodeIndex } = budgetNode;
             branchNodes[nodeIndex] = budgetNode;
             this.setState({
-                something: 'test',
                 branchNodes: branchNodes,
             });
         }

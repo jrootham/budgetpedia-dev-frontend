@@ -14,8 +14,15 @@ class ExplorerBranch extends Component {
             branchNodes: [],
             snackbar: { open: false, message: 'empty' }
         };
-        this.branchScrollBlock = null;
         this.getState = () => this.state;
+        this.refreshPresentation = () => {
+            this.forceUpdate();
+        };
+        this.updateBranchNodes = branchNodes => {
+            this.setState({
+                branchNodes: branchNodes,
+            });
+        };
         this.handleSnackbarRequestClose = () => {
             this.setState({
                 snackbar: {
@@ -28,29 +35,7 @@ class ExplorerBranch extends Component {
                 branch.props.displaycallbacks.updateChartSelections();
             });
         };
-        this.componentDidMount = () => {
-            let { displaycallbacks, callbackid, budgetBranch } = this.props;
-            let { refreshPresentation, onPortalCreation, updateBranchNodes } = this;
-            displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid);
-            this._nodeCallbacks = {
-                updateChartSelections: displaycallbacks.updateChartSelections,
-                refreshPresentation: refreshPresentation,
-                onPortalCreation: onPortalCreation,
-                workingStatus: displaycallbacks.workingStatus,
-                updateBranchNodes: updateBranchNodes,
-            };
-            this.initializeChartSeries();
-        };
-        this.updateBranchNodes = branchNodes => {
-            this.setState({
-                branchNodes: branchNodes,
-            });
-        };
-        this.initializeChartSeries = () => {
-            let { budgetBranch } = this.props;
-            budgetBranch.initializeChartSeries(this._nodeCallbacks);
-            this.refreshPresentation();
-        };
+        this.branchScrollBlock = null;
         this.onPortalCreation = () => {
             let element = this.branchScrollBlock;
             if (!element) {
@@ -85,14 +70,10 @@ class ExplorerBranch extends Component {
             const t1 = t - 1;
             return t1 * t1 * t1 + 1;
         };
-        this.refreshPresentation = () => {
-            this.forceUpdate();
-        };
-        this.onChangePortalTab = () => {
-            let branch = this;
-            setTimeout(() => {
-                branch.props.displaycallbacks.updateChartSelections();
-            });
+        this.initializeChartSeries = () => {
+            let { budgetBranch } = this.props;
+            budgetBranch.initializeChartSeries(this._nodeCallbacks);
+            this.refreshPresentation();
         };
         this.switchViewpoint = (viewpointname) => {
             let { settings: branchsettings, nodes: branchNodes } = this.props.budgetBranch;
@@ -150,6 +131,12 @@ class ExplorerBranch extends Component {
                         budgetCell.chartselection[0].column = 1;
                     }
                 }
+                branch.props.displaycallbacks.updateChartSelections();
+            });
+        };
+        this.onChangePortalTab = () => {
+            let branch = this;
+            setTimeout(() => {
                 branch.props.displaycallbacks.updateChartSelections();
             });
         };
@@ -215,6 +202,19 @@ class ExplorerBranch extends Component {
         let { budgetBranch } = this.props;
         budgetBranch.getState = this.getState;
         budgetBranch.setState = this.setState.bind(this);
+    }
+    componentDidMount() {
+        let { displaycallbacks, callbackid, budgetBranch } = this.props;
+        let { refreshPresentation, onPortalCreation, updateBranchNodes } = this;
+        displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid);
+        this._nodeCallbacks = {
+            updateChartSelections: displaycallbacks.updateChartSelections,
+            workingStatus: displaycallbacks.workingStatus,
+            onPortalCreation: onPortalCreation,
+            updateBranchNodes: updateBranchNodes,
+            refreshPresentation: refreshPresentation,
+        };
+        this.initializeChartSeries();
     }
     render() {
         let branch = this;

@@ -62,13 +62,11 @@ class BudgetBranch {
     public initializeChartSeries(callbacks) {
 
         let branchsettings = this.settings
-        // let { viewpointdata }:{viewpointdata:any} = props
         let viewpointdata = this.getViewpointData()
         let branchNodes = this.nodes
         let budgetdata = this.data
         let chartParmsObj: ChartParmsObj
 
-        // budgetdata.viewpointdata = viewpointdata
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
         let datapath = []
@@ -136,7 +134,6 @@ class BudgetBranch {
             let { nodeIndex } = budgetNode
             branchNodes[nodeIndex] = budgetNode
             this.setState({
-                something: 'test',
                 branchNodes,
             })
         }
@@ -150,9 +147,7 @@ class BudgetBranch {
         }
         let branchsettings: BranchSettings = this.settings
         let viewpointdata = this.getViewpointData()
-        // let {viewpointdata} = props
         let budgetdata = this.data
-        // budgetdata.viewpointdata = viewpointdata
 
         let branchNodes = this.nodes
 
@@ -178,8 +173,6 @@ class BudgetBranch {
                 // now set budgetNode with new data node
                 budgetNode.update(
                     nextdataNode,
-                    // viewpointdata.PortalCharts,
-                    // branchsettings.charttype,
                     branchsettings.facet
                 )
                 if ( deeperdata || shallowerdata) {

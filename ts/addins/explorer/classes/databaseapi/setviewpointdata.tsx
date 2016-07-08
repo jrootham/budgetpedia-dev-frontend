@@ -45,8 +45,6 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
         inflationAdjusted 
     } = parms
 
-    // let viewpointdata = parms.viewpointdata
-
     // already done if currentdataseries matches request
     if (viewpointdata.currentdataseries == dataseriesname)
         return
