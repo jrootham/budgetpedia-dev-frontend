@@ -38,14 +38,18 @@ interface BudgetBranchParms {
 class BudgetBranch {
     constructor(parms:BudgetBranchParms) {
         this.data = parms.data || {viewpointdata:null}
-        this.nodes = parms.nodes || []
+        this._nodes = parms.nodes || []
         this.settings = parms.settings
         this.uid = parms.uid
     }
 
     public data
 
-    public nodes
+    private _nodes
+
+    get nodes() {
+        return this._nodes
+    }
 
     public settings:BranchSettings
 
@@ -60,7 +64,7 @@ class BudgetBranch {
         let branchsettings = this.settings
         // let { viewpointdata }:{viewpointdata:any} = props
         let viewpointdata = this.getViewpointData()
-        let chartmatrixrow = this.nodes
+        let branchNodes = this.nodes
         let budgetdata = this.data
         let chartParmsObj: ChartParmsObj
 
@@ -97,7 +101,7 @@ class BudgetBranch {
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms)
 
         let cellindex: any
-        let selectfn = onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks)
+        let selectfn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)
         let {
             Configuration: viewpointConfig,
             itemseriesconfigdata: itemseriesConfig,
@@ -130,7 +134,7 @@ class BudgetBranch {
         }
         if (!chartParmsObj.isError) {
             let { nodeIndex } = budgetNode
-            chartmatrixrow[nodeIndex] = budgetNode
+            branchNodes[nodeIndex] = budgetNode
         }
 
     }
@@ -146,7 +150,7 @@ class BudgetBranch {
         let budgetdata = this.data
         // budgetdata.viewpointdata = viewpointdata
 
-        let chartmatrixrow = this.nodes
+        let branchNodes = this.nodes
 
         let budgetNode: BudgetNode = null
         let parentBudgetNode: BudgetNode
@@ -154,11 +158,11 @@ class BudgetBranch {
         let isError = false
         let chartParmsObj: ChartParmsObj = null
 
-        let fn = onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks)
+        let fn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)
 
-        for (cellptr in chartmatrixrow) {
+        for (cellptr in branchNodes) {
             parentBudgetNode = budgetNode
-            budgetNode = chartmatrixrow[cellptr]
+            budgetNode = branchNodes[cellptr]
             let nextdataNode = getBudgetNode(viewpointdata, budgetNode.dataPath)
             if (nextdataNode) {
                 // check previous cell configuration against previous node
@@ -179,8 +183,8 @@ class BudgetBranch {
                     switchResults.shallowerdata = shallowerdata
                     // replace budgetNode
                     isError = true
-                    let prevBudgetNode: BudgetNode = chartmatrixrow[cellptr - 1]
-                    chartmatrixrow.splice(cellptr)
+                    let prevBudgetNode: BudgetNode = branchNodes[cellptr - 1]
+                    branchNodes.splice(cellptr)
 
                     let prevBudgetCell = prevBudgetNode.cells[0]
 
@@ -193,7 +197,7 @@ class BudgetBranch {
                         budgetNode:prevBudgetNode,
                         branchsettings,
                         budgetdata,
-                        chartmatrixrow,
+                        branchNodes,
                         selectionrow: prevBudgetCell.chartselection[0].row,
                         nodeIndex: prevBudgetNode.nodeIndex,
                         cellIndex:0,
@@ -202,7 +206,7 @@ class BudgetBranch {
                     }
                     let fcurrent = fn(cellptr)(0)
                     createChildNode(childprops, callbacks,{current:fcurrent,next:fn})
-                    budgetNode = null // chartmatrixrow[cellptr] // created by createChildNode as side effect
+                    budgetNode = null // branchNodes[cellptr] // created by createChildNode as side effect
                 }
             } else {
                 console.error('no data node')
@@ -222,9 +226,9 @@ class BudgetBranch {
                 let fcurrent = fn(cellptr)(nodecellindex),
                 chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:fn})
                 if (chartParmsObj.isError) {
-                    chartmatrixrow.splice(cellptr)
+                    branchNodes.splice(cellptr)
                     if (cellptr > 0) { // unset the selection of the parent
-                        let parentBudgetNode: BudgetNode = chartmatrixrow[cellptr - 1]
+                        let parentBudgetNode: BudgetNode = branchNodes[cellptr - 1]
                         let parentBudgetCell = parentBudgetNode.cells[nodecellindex]
                         // disable reselection
                         parentBudgetCell.chartselection = null
@@ -257,8 +261,8 @@ class BudgetBranch {
         } = props
         let chartType = ChartCodeTypes[chartCode]
 
-        let chartmatrixrow = this.nodes
-        let budgetNode: BudgetNode = chartmatrixrow[nodeIndex]
+        let branchNodes = this.nodes
+        let budgetNode: BudgetNode = branchNodes[nodeIndex]
         let budgetCell = budgetNode.cells[cellIndex]
         let switchResults = {
             budgetCell,
@@ -275,7 +279,7 @@ class BudgetBranch {
             branchsettings,
             configData,
         }
-        let fn = onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks)
+        let fn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)
         let fncurrent = fn(nodeIndex)(cellIndex)
         let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
         if (!chartParmsObj.isError) {

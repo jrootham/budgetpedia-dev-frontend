@@ -53,7 +53,7 @@ interface ExploreBranchProps {
     },
 }
 
-class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any, snackbar?:any} > {
+class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, snackbar?:any} > {
 
     constructor(props) {
         super(props);
@@ -64,7 +64,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
     // charts exist in a matrix (row/column) which contain a chartconfig object
     // TODO: most of 
     state = {
-        chartmatrixrow:this.props.budgetBranch.nodes,
+        branchNodes:this.props.budgetBranch.nodes,
         snackbar:{open:false,message:'empty'}
     }
 
@@ -166,7 +166,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
 
     refreshPresentation = () => {
         this.setState({
-            chartmatrixrow:this.state.chartmatrixrow,
+            branchNodes:this.state.branchNodes,
         })
     }
 
@@ -182,12 +182,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
     switchViewpoint = (viewpointname) => {
 
         let { settings:branchsettings } = this.props.budgetBranch
-        let chartmatrixrow = this.state.chartmatrixrow
+        let branchNodes = this.state.branchNodes
 
-        chartmatrixrow.splice(0) // remove subsequent charts
+        branchNodes.splice(0) // remove subsequent charts
         branchsettings.viewpoint = viewpointname
         this.setState({
-            chartmatrixrow,
+            branchNodes,
         })
 
         this.initializeChartSeries()
@@ -347,7 +347,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {chartmatrixrow?:any,
     render() {
 
     let branch = this
-    let drilldownrow = branch.state.chartmatrixrow
+    let drilldownrow = branch.state.branchNodes
 
     let drilldownportals = branch.getPortals(drilldownrow)
     return <div >

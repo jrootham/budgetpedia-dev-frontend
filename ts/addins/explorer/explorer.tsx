@@ -60,14 +60,16 @@ interface ExplorerProps {
     showWaitingMessage:Function, // dispatcher from Actions 
     hideWaitingMessage:Function, // dispatcher from Actions
     addBranch:Function, // dispatcher from ExplorerActions through connect
-    controlData:any, // from global state
+    controlData:any, // from global state.explorer
 }
 
-let Explorer = class extends Component< ExplorerProps, 
-    {
-        budgetBranches?:BudgetBranch[],
-        dialogopen?: boolean,
-    } > {
+interface ExplorerState {
+    budgetBranches?:BudgetBranch[],
+    dialogopen?: boolean,
+}
+
+let Explorer = class extends Component< ExplorerProps, ExplorerState > 
+{
 
     // ============================================================
     // ---------------------[ INITIALIZE ]-------------------------
@@ -90,6 +92,7 @@ let Explorer = class extends Component< ExplorerProps,
         }
     }
 
+    // update budgetBranches objects based on control data
     componentWillReceiveProps(nextProps) {
         let { branchList, branchesById } = nextProps.controlData
         let budgetBranches:BudgetBranch[] = this.state.budgetBranches
@@ -109,7 +112,7 @@ let Explorer = class extends Component< ExplorerProps,
         // in any case update settings in case change made
         for (let i = 0; i < branchList.length; i++) {
             if (branchList[i] != budgetBranches[i].uid) {
-                throw Error('mismatch between controlData list and branch list')
+                throw Error('mismatched order between controlData list and branch list')
             }
             budgetBranches[i].settings = branchesById[branchList[i]]
         }
@@ -246,7 +249,7 @@ let Explorer = class extends Component< ExplorerProps,
 
         return <div>
 
-        <Card initiallyExpanded >
+        <Card initiallyExpanded = {false}>
 
             <CardTitle
                 actAsExpander={true}
@@ -268,6 +271,7 @@ let Explorer = class extends Component< ExplorerProps,
                 </IconButton>
             </CardText>
         </Card>
+        
             { dialogbox }
 
             { branches }
@@ -283,13 +287,11 @@ let mapStateToProps = state => ({
     controlData:getExplorerControlData(state), 
 })
 
-Explorer = connect(mapStateToProps,
-    {
-        showWaitingMessage: Actions.showWaitingMessage,
-        hideWaitingMessage: Actions.hideWaitingMessage,
-        addBranch:ExplorerActions.addBranch,
-    }
-    )(Explorer)
+Explorer = connect(mapStateToProps, {
+    showWaitingMessage: Actions.showWaitingMessage,
+    hideWaitingMessage: Actions.hideWaitingMessage,
+    addBranch:ExplorerActions.addBranch,
+})(Explorer)
 
 export default Explorer
 

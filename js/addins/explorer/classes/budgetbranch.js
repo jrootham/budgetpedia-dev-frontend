@@ -25,14 +25,17 @@ class BudgetBranch {
             return viewpointdata;
         };
         this.data = parms.data || { viewpointdata: null };
-        this.nodes = parms.nodes || [];
+        this._nodes = parms.nodes || [];
         this.settings = parms.settings;
         this.uid = parms.uid;
+    }
+    get nodes() {
+        return this._nodes;
     }
     initializeChartSeries(callbacks) {
         let branchsettings = this.settings;
         let viewpointdata = this.getViewpointData();
-        let chartmatrixrow = this.nodes;
+        let branchNodes = this.nodes;
         let budgetdata = this.data;
         let chartParmsObj;
         let datapath = [];
@@ -56,7 +59,7 @@ class BudgetBranch {
         };
         let budgetNode = new budgetnode_1.default(budgetNodeParms);
         let cellindex;
-        let selectfn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks);
+        let selectfn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks);
         let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = budgetdata.viewpointdata;
         let configData = {
             viewpointConfig: viewpointConfig,
@@ -82,7 +85,7 @@ class BudgetBranch {
         }
         if (!chartParmsObj.isError) {
             let { nodeIndex } = budgetNode;
-            chartmatrixrow[nodeIndex] = budgetNode;
+            branchNodes[nodeIndex] = budgetNode;
         }
     }
     switchFacet(callbacks) {
@@ -93,16 +96,16 @@ class BudgetBranch {
         let branchsettings = this.settings;
         let viewpointdata = this.getViewpointData();
         let budgetdata = this.data;
-        let chartmatrixrow = this.nodes;
+        let branchNodes = this.nodes;
         let budgetNode = null;
         let parentBudgetNode;
         let cellptr;
         let isError = false;
         let chartParmsObj = null;
-        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks);
-        for (cellptr in chartmatrixrow) {
+        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks);
+        for (cellptr in branchNodes) {
             parentBudgetNode = budgetNode;
-            budgetNode = chartmatrixrow[cellptr];
+            budgetNode = branchNodes[cellptr];
             let nextdataNode = getbudgetnode_1.default(viewpointdata, budgetNode.dataPath);
             if (nextdataNode) {
                 let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
@@ -112,8 +115,8 @@ class BudgetBranch {
                     switchResults.deeperdata = deeperdata;
                     switchResults.shallowerdata = shallowerdata;
                     isError = true;
-                    let prevBudgetNode = chartmatrixrow[cellptr - 1];
-                    chartmatrixrow.splice(cellptr);
+                    let prevBudgetNode = branchNodes[cellptr - 1];
+                    branchNodes.splice(cellptr);
                     let prevBudgetCell = prevBudgetNode.cells[0];
                     let context = {
                         selection: prevBudgetCell.chartselection,
@@ -123,7 +126,7 @@ class BudgetBranch {
                         budgetNode: prevBudgetNode,
                         branchsettings: branchsettings,
                         budgetdata: budgetdata,
-                        chartmatrixrow: chartmatrixrow,
+                        branchNodes: branchNodes,
                         selectionrow: prevBudgetCell.chartselection[0].row,
                         nodeIndex: prevBudgetNode.nodeIndex,
                         cellIndex: 0,
@@ -153,9 +156,9 @@ class BudgetBranch {
                 };
                 let fcurrent = fn(cellptr)(nodecellindex), chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: fn });
                 if (chartParmsObj.isError) {
-                    chartmatrixrow.splice(cellptr);
+                    branchNodes.splice(cellptr);
                     if (cellptr > 0) {
-                        let parentBudgetNode = chartmatrixrow[cellptr - 1];
+                        let parentBudgetNode = branchNodes[cellptr - 1];
                         let parentBudgetCell = parentBudgetNode.cells[nodecellindex];
                         parentBudgetCell.chartselection = null;
                         parentBudgetCell.chart = null;
@@ -180,8 +183,8 @@ class BudgetBranch {
         let branchsettings = this.settings;
         let { nodeIndex, cellIndex, chartCode, } = props;
         let chartType = constants_1.ChartCodeTypes[chartCode];
-        let chartmatrixrow = this.nodes;
-        let budgetNode = chartmatrixrow[nodeIndex];
+        let branchNodes = this.nodes;
+        let budgetNode = branchNodes[nodeIndex];
         let budgetCell = budgetNode.cells[cellIndex];
         let switchResults = {
             budgetCell: budgetCell,
@@ -198,7 +201,7 @@ class BudgetBranch {
             branchsettings: branchsettings,
             configData: configData,
         };
-        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(chartmatrixrow)(callbacks);
+        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks);
         let fncurrent = fn(nodeIndex)(cellIndex);
         let chartParmsObj = budgetNode.getChartParms(chartprops, { current: fncurrent, next: fn });
         if (!chartParmsObj.isError) {

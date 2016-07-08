@@ -1,7 +1,7 @@
 "use strict";
-let updateBranchChartSelections = (chartmatrixrow) => {
+let updateBranchChartSelections = (branchNodes) => {
     let node = null;
-    for (node of chartmatrixrow) {
+    for (node of branchNodes) {
         for (let chartindex in node.cells) {
             let budgetCell = node.cells[chartindex];
             let chart = budgetCell.chart;

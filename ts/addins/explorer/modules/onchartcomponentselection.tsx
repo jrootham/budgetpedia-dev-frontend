@@ -38,7 +38,7 @@ export interface CreateChildNodeProps {
     budgetNode: BudgetNode,
     branchsettings: BranchSettings,
     budgetdata:any,
-    chartmatrixrow: any,
+    branchNodes: any,
     selectionrow: any,
     nodeIndex: number,
     cellIndex: number,
@@ -57,7 +57,7 @@ export interface OnChartComponentSelectionProps {
     selectionProps: any,
     branchsettings?: BranchSettings,
     budgetdata?:any,
-    chartmatrixrow?: any,
+    branchNodes?: any,
 }
 export interface OnChartComponentSelectionCallbacks {
     updateChartSelections: Function,
@@ -77,7 +77,7 @@ export interface OnChartComponentSelectionCallbacks {
 let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     callbacks: OnChartComponentSelectionCallbacks) => {
 
-    let { context, branchsettings, budgetdata, chartmatrixrow, selectionProps } = props
+    let { context, branchsettings, budgetdata, branchNodes, selectionProps } = props
 
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks
 
@@ -96,7 +96,7 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     // unpack chartconfig
     let nodeIndex = context.nodeIndex
 
-    let budgetNode: BudgetNode = chartmatrixrow[nodeIndex]
+    let budgetNode: BudgetNode = branchNodes[nodeIndex]
 
     let cellIndex = context.cellIndex
     let budgetCell = budgetNode.cells[cellIndex]
@@ -108,7 +108,7 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     let facet = budgetNode.facetName
 
     // TODO: abandon here if the next one exists and is the same
-    chartmatrixrow.splice(nodeIndex + 1) // remove subsequent charts
+    branchNodes.splice(nodeIndex + 1) // remove subsequent charts
 
     // trigger update to avoid google charts use of cached versions
     refreshPresentation()
@@ -123,7 +123,7 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
         budgetNode, 
         branchsettings, 
         budgetdata,
-        chartmatrixrow, 
+        branchNodes, 
         selectionrow,
         nodeIndex,
         cellIndex, 
@@ -150,7 +150,7 @@ export let createChildNode = (
         budgetNode,
         branchsettings,
         budgetdata,
-        chartmatrixrow,
+        branchNodes,
         selectionrow,
         nodeIndex,
         cellIndex,
@@ -263,7 +263,7 @@ export let createChildNode = (
         return
     }
     let newmatrixcolumn = nodeIndex + 1
-    chartmatrixrow[newmatrixcolumn] = newBudgetNode
+    branchNodes[newmatrixcolumn] = newBudgetNode
 
     let budgetCell = budgetNode.cells[cellIndex]
 
@@ -278,13 +278,13 @@ export let createChildNode = (
 }
 
 export const onChartComponentSelection = 
-    branchsettings => budgetdata => chartmatrixrow => 
+    branchsettings => budgetdata => branchNodes => 
         callbacks => nodeIndex => cellIndex => props => {
     props.context.nodeIndex = nodeIndex
     props.context.cellIndex = cellIndex
     props.branchsettings = branchsettings
     props.budgetdata = budgetdata
-    props.chartmatrixrow = chartmatrixrow
+    props.branchNodes = branchNodes
     applyChartComponentSelection(props, callbacks)
 }
 
