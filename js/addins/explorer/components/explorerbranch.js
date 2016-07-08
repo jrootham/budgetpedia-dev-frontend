@@ -11,10 +11,11 @@ class ExplorerBranch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            branchNodes: this.props.budgetBranch.nodes,
+            branchNodes: [],
             snackbar: { open: false, message: 'empty' }
         };
         this.branchScrollBlock = null;
+        this.getState = () => this.state;
         this.handleSnackbarRequestClose = () => {
             this.setState({
                 snackbar: {
@@ -29,15 +30,21 @@ class ExplorerBranch extends Component {
         };
         this.componentDidMount = () => {
             let { displaycallbacks, callbackid, budgetBranch } = this.props;
-            let { refreshPresentation, onPortalCreation } = this;
+            let { refreshPresentation, onPortalCreation, updateBranchNodes } = this;
             displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid);
             this._nodeCallbacks = {
                 updateChartSelections: displaycallbacks.updateChartSelections,
                 refreshPresentation: refreshPresentation,
                 onPortalCreation: onPortalCreation,
                 workingStatus: displaycallbacks.workingStatus,
+                updateBranchNodes: updateBranchNodes,
             };
             this.initializeChartSeries();
+        };
+        this.updateBranchNodes = branchNodes => {
+            this.setState({
+                branchNodes: branchNodes,
+            });
         };
         this.initializeChartSeries = () => {
             let { budgetBranch } = this.props;
@@ -79,9 +86,7 @@ class ExplorerBranch extends Component {
             return t1 * t1 * t1 + 1;
         };
         this.refreshPresentation = () => {
-            this.setState({
-                branchNodes: this.state.branchNodes,
-            });
+            this.forceUpdate();
         };
         this.onChangePortalTab = () => {
             let branch = this;
@@ -90,14 +95,15 @@ class ExplorerBranch extends Component {
             });
         };
         this.switchViewpoint = (viewpointname) => {
-            let { settings: branchsettings } = this.props.budgetBranch;
-            let branchNodes = this.state.branchNodes;
+            let { settings: branchsettings, nodes: branchNodes } = this.props.budgetBranch;
             branchNodes.splice(0);
             branchsettings.viewpoint = viewpointname;
             this.setState({
                 branchNodes: branchNodes,
             });
-            this.initializeChartSeries();
+            setTimeout(() => {
+                this.initializeChartSeries();
+            });
         };
         this.switchFacet = (facet) => {
             let { budgetBranch } = this.props;
@@ -207,12 +213,12 @@ class ExplorerBranch extends Component {
     }
     componentWillMount() {
         let { budgetBranch } = this.props;
-        budgetBranch.state = this.state;
-        budgetBranch.setState = this.setState;
+        budgetBranch.getState = this.getState;
+        budgetBranch.setState = this.setState.bind(this);
     }
     render() {
         let branch = this;
-        let drilldownrow = branch.state.branchNodes;
+        let drilldownrow = branch.props.budgetBranch.nodes;
         let drilldownportals = branch.getPortals(drilldownrow);
         return React.createElement("div", null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.props.budgetBranch.settings.viewpoint, style: {}, onChange: (e, index, value) => {
             branch.switchViewpoint(value);

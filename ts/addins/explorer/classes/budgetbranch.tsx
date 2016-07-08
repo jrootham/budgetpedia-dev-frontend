@@ -29,33 +29,33 @@ import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 
 
 interface BudgetBranchParms {
-    data?:{viewpointdata:Viewpoint},
-    nodes?:BudgetNode[],
     settings:BranchSettings,
     uid:string,
 }
 
 class BudgetBranch {
     constructor(parms:BudgetBranchParms) {
-        this.data = parms.data || {viewpointdata:null}
-        this._nodes = parms.nodes || []
         this.settings = parms.settings
         this.uid = parms.uid
     }
 
-    public data
-
-    private _nodes
+    public data = {viewpointdata:null}
 
     get nodes() {
-        return this._nodes
+        let branchNodes = this.state.branchNodes
+        let copy = [...branchNodes]
+        return copy // new copy
     }
 
     public settings:BranchSettings
 
     public uid:string
 
-    public state: any
+    get state() {
+        return this.getState()
+    }
+
+    public getState: Function
 
     public setState: Function
 
@@ -135,6 +135,10 @@ class BudgetBranch {
         if (!chartParmsObj.isError) {
             let { nodeIndex } = budgetNode
             branchNodes[nodeIndex] = budgetNode
+            this.setState({
+                something: 'test',
+                branchNodes,
+            })
         }
 
     }
@@ -249,6 +253,9 @@ class BudgetBranch {
                 }
             }
         }
+        this.setState({
+            branchNodes,
+        })
         return switchResults
     }
 

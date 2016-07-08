@@ -50,6 +50,7 @@ export interface CreateChildNodeCallbacks {
     workingStatus: Function,
     refreshPresentation: Function,
     onPortalCreation: Function,
+    updateBranchNodes: Function,
 }
 
 export interface OnChartComponentSelectionProps {
@@ -60,6 +61,7 @@ export interface OnChartComponentSelectionProps {
     branchNodes?: any,
 }
 export interface OnChartComponentSelectionCallbacks {
+    updateBranchNodes: Function,
     updateChartSelections: Function,
     refreshPresentation: Function,
     onPortalCreation: Function,
@@ -131,12 +133,6 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
         chart,
     }
     let childcallbacks: CreateChildNodeCallbacks = callbacks
-    // {
-    //     updateChartSelections,
-    //     workingStatus, 
-    //     refreshPresentation, 
-    //     onPortalCreation,
-    // }
     createChildNode( childprops, childcallbacks, selectionProps)
 }
 
@@ -166,6 +162,7 @@ export let createChildNode = (
         refreshPresentation,
         onPortalCreation,
         updateChartSelections,
+        updateBranchNodes,
     } = callbacks
 
     // ----------------------------------------------------
@@ -271,7 +268,8 @@ export let createChildNode = (
     budgetCell.chart = chart
     budgetCell.ChartObject = context.ChartObject
 
-    refreshPresentation()
+    updateBranchNodes(branchNodes)
+    // refreshPresentation()
     updateChartSelections()
     onPortalCreation()
     workingStatus(false)

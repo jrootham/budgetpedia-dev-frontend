@@ -64,20 +64,22 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
     // charts exist in a matrix (row/column) which contain a chartconfig object
     // TODO: most of 
     state = {
-        branchNodes:this.props.budgetBranch.nodes,
+        branchNodes:[],
         snackbar:{open:false,message:'empty'}
     }
 
     componentWillMount() {
         let { budgetBranch } = this.props
-        budgetBranch.state = this.state
-        budgetBranch.setState = this.setState
-
+        budgetBranch.getState = this.getState
+        budgetBranch.setState = this.setState.bind(this)
     }
 
     // numbered scroll elements, which self-register for response to 
     // chart column select clicks
     branchScrollBlock = null
+
+    // return fresh copy of state object; changes after being set
+    getState = () => this.state
 
     handleSnackbarRequestClose = () => {
         this.setState({
@@ -96,19 +98,26 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
     componentDidMount = () => {
 
         let { displaycallbacks, callbackid, budgetBranch } = this.props
-        let { refreshPresentation, onPortalCreation } = this
+        let { refreshPresentation, onPortalCreation, updateBranchNodes } = this
         displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid)
         this._nodeCallbacks = {
             updateChartSelections:displaycallbacks.updateChartSelections,
             refreshPresentation: refreshPresentation,
             onPortalCreation: onPortalCreation,
             workingStatus:displaycallbacks.workingStatus,
+            updateBranchNodes,
         }
         this.initializeChartSeries()
 
     }
 
     private _nodeCallbacks
+
+    public updateBranchNodes = branchNodes => {
+        this.setState({
+            branchNodes,
+        })
+    }
 
     initializeChartSeries = () => {
 
@@ -117,6 +126,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
         budgetBranch.initializeChartSeries(this._nodeCallbacks)
 
         this.refreshPresentation()
+
     }
 
     // ============================================================
@@ -165,9 +175,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
     }
 
     refreshPresentation = () => {
-        this.setState({
-            branchNodes:this.state.branchNodes,
-        })
+        this.forceUpdate()
     }
 
     // ---------------------[ user interactions ]---------------------------
@@ -181,16 +189,16 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
 
     switchViewpoint = (viewpointname) => {
 
-        let { settings:branchsettings } = this.props.budgetBranch
-        let branchNodes = this.state.branchNodes
+        let { settings:branchsettings, nodes:branchNodes } = this.props.budgetBranch
 
         branchNodes.splice(0) // remove subsequent charts
         branchsettings.viewpoint = viewpointname
         this.setState({
             branchNodes,
         })
-
-        this.initializeChartSeries()
+        setTimeout(()=>{
+            this.initializeChartSeries()
+        })
 
     }
 
@@ -347,7 +355,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
     render() {
 
     let branch = this
-    let drilldownrow = branch.state.branchNodes
+    let drilldownrow = branch.props.budgetBranch.nodes
 
     let drilldownportals = branch.getPortals(drilldownrow)
     return <div >

@@ -6,6 +6,7 @@ const onchartcomponentselection_1 = require('../modules/onchartcomponentselectio
 const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
+        this.data = { viewpointdata: null };
         this.getViewpointData = () => {
             let branchsettings = this.settings;
             let { viewpoint: viewpointname, facet: dataseriesname, inflationAdjusted, } = branchsettings;
@@ -24,13 +25,16 @@ class BudgetBranch {
             this.data.viewpointdata = viewpointdata;
             return viewpointdata;
         };
-        this.data = parms.data || { viewpointdata: null };
-        this._nodes = parms.nodes || [];
         this.settings = parms.settings;
         this.uid = parms.uid;
     }
     get nodes() {
-        return this._nodes;
+        let branchNodes = this.state.branchNodes;
+        let copy = [...branchNodes];
+        return copy;
+    }
+    get state() {
+        return this.getState();
     }
     initializeChartSeries(callbacks) {
         let branchsettings = this.settings;
@@ -86,6 +90,10 @@ class BudgetBranch {
         if (!chartParmsObj.isError) {
             let { nodeIndex } = budgetNode;
             branchNodes[nodeIndex] = budgetNode;
+            this.setState({
+                something: 'test',
+                branchNodes: branchNodes,
+            });
         }
     }
     switchFacet(callbacks) {
@@ -177,6 +185,9 @@ class BudgetBranch {
                 }
             }
         }
+        this.setState({
+            branchNodes: branchNodes,
+        });
         return switchResults;
     }
     switchChartCode(props, callbacks) {
