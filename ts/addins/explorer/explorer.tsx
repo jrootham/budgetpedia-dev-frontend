@@ -57,10 +57,10 @@ import {
 } from './modules/interfaces'
 
 interface ExplorerProps {
-    showWaitingMessage:Function,
-    hideWaitingMessage:Function,
-    addBranch:Function,
-    controlData:any,
+    showWaitingMessage:Function, // dispatcher from Actions 
+    hideWaitingMessage:Function, // dispatcher from Actions
+    addBranch:Function, // dispatcher from ExplorerActions through connect
+    controlData:any, // from global state
 }
 
 let Explorer = class extends Component< ExplorerProps, 
@@ -82,7 +82,6 @@ let Explorer = class extends Component< ExplorerProps,
     // TODO: most of 
     
     state = {
-        // chartmatrix: [[], []], // DrillDown, Compare (Later: Differences, Context, Build)
         budgetBranches:[],
         dialogopen: false,
     }
@@ -99,15 +98,24 @@ let Explorer = class extends Component< ExplorerProps,
     componentWillUpdate(nextProps) {
         let { branchList, branchesById } = nextProps.controlData
         let budgetBranches:BudgetBranch[] = this.state.budgetBranches
-        if (budgetBranches.length < branchList.length) {
-            let uid = branchList[0]
-            let settings = branchesById[uid]
-            budgetBranches.push(new BudgetBranch({settings,uid}))
-        } else {
-            // TODO: do extensive matching checks using uid
-            for (let i = 0; i < branchList.length; i++) {
-                budgetBranches[i].settings = branchesById[branchList[i]].settings
+        // remove deleted branches
+        budgetBranches.filter(budgetBranch => {
+            return !!branchesById[budgetBranch.uid]
+        })
+        // add new branch
+        if (budgetBranches.length < branchList.length ) { // new branch
+            let length = budgetBranches.length
+            for ( let i = length; i < branchList.length ; i++ ) {
+                let uid = branchList[i]
+                let settings = branchesById[uid]
+                budgetBranches.push(new BudgetBranch({settings,uid}))
             }
+        }
+        // in any case update settings in case change made
+        for (let i = 0; i < branchList.length; i++) {
+            if (branchList[i] != budgetBranches[i].uid) 
+                throw Error('mismatch between controlData list and branch list')
+            budgetBranches[i].settings = branchesById[branchList[i]]
         }
     }
 
@@ -127,7 +135,6 @@ let Explorer = class extends Component< ExplorerProps,
     workingStatus = status => {
         if (status) {
             this.props.showWaitingMessage()
-            // this.forceUpdate()
         } else {
             setTimeout(() => {
                 this.props.hideWaitingMessage()
@@ -236,7 +243,7 @@ let Explorer = class extends Component< ExplorerProps,
     }
         // -----------[ COMBINE SEGMENTS ]---------------
 
-        let segments = drilldownsegments()
+        let branches = drilldownsegments()
 
         return <div>
 
@@ -264,7 +271,7 @@ let Explorer = class extends Component< ExplorerProps,
         </Card>
             { dialogbox }
 
-            { segments }
+            { branches }
 
         </div>
     }
@@ -273,14 +280,9 @@ let Explorer = class extends Component< ExplorerProps,
 // ====================================================================================
 // ------------------------------[ INJECT DATA STORE ]---------------------------------
 
-let mapStateToProps = state => {
-
-    return {
-        // TODO: should be assignment from selector imported from reducer file
-        controlData:getExplorerControlData(state),
-
-    }
-}
+let mapStateToProps = state => ({ 
+    controlData:getExplorerControlData(state), 
+})
 
 Explorer = connect(mapStateToProps,
     {

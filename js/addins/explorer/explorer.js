@@ -55,15 +55,21 @@ let Explorer = class extends Component {
     componentWillUpdate(nextProps) {
         let { branchList, branchesById } = nextProps.controlData;
         let budgetBranches = this.state.budgetBranches;
+        budgetBranches.filter(budgetBranch => {
+            return !!branchesById[budgetBranch.uid];
+        });
         if (budgetBranches.length < branchList.length) {
-            let uid = branchList[0];
-            let settings = branchesById[uid];
-            budgetBranches.push(new budgetbranch_1.default({ settings: settings, uid: uid }));
-        }
-        else {
-            for (let i = 0; i < branchList.length; i++) {
-                budgetBranches[i].settings = branchesById[branchList[i]].settings;
+            let length = budgetBranches.length;
+            for (let i = length; i < branchList.length; i++) {
+                let uid = branchList[i];
+                let settings = branchesById[uid];
+                budgetBranches.push(new budgetbranch_1.default({ settings: settings, uid: uid }));
             }
+        }
+        for (let i = 0; i < branchList.length; i++) {
+            if (branchList[i] != budgetBranches[i].uid)
+                throw Error('mismatch between controlData list and branch list');
+            budgetBranches[i].settings = branchesById[branchList[i]];
         }
     }
     render() {
@@ -87,16 +93,14 @@ let Explorer = class extends Component {
             });
             return segments;
         };
-        let segments = drilldownsegments();
-        return React.createElement("div", null, React.createElement(Card_1.Card, {initiallyExpanded: true}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: explorer.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: explorer.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")))), dialogbox, segments);
+        let branches = drilldownsegments();
+        return React.createElement("div", null, React.createElement(Card_1.Card, {initiallyExpanded: true}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: explorer.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: explorer.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")))), dialogbox, branches);
     }
 }
 ;
-let mapStateToProps = state => {
-    return {
-        controlData: reducers_1.getExplorerControlData(state),
-    };
-};
+let mapStateToProps = state => ({
+    controlData: reducers_1.getExplorerControlData(state),
+});
 Explorer = react_redux_1.connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
