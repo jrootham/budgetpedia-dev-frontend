@@ -47,15 +47,15 @@ let Explorer = class extends Component {
     }
     componentDidMount() {
         let { branchList } = this.props.controlData;
-        let defaultSettings = this.props.controlData.defaults.branch;
         if (branchList.length == 0) {
+            let defaultSettings = this.props.controlData.defaults.branch;
             this.props.addBranch(defaultSettings);
         }
     }
-    componentWillUpdate(nextProps) {
+    componentWillReceiveProps(nextProps) {
         let { branchList, branchesById } = nextProps.controlData;
         let budgetBranches = this.state.budgetBranches;
-        budgetBranches.filter(budgetBranch => {
+        budgetBranches = budgetBranches.filter(budgetBranch => {
             return !!branchesById[budgetBranch.uid];
         });
         if (budgetBranches.length < branchList.length) {
@@ -67,10 +67,14 @@ let Explorer = class extends Component {
             }
         }
         for (let i = 0; i < branchList.length; i++) {
-            if (branchList[i] != budgetBranches[i].uid)
+            if (branchList[i] != budgetBranches[i].uid) {
                 throw Error('mismatch between controlData list and branch list');
+            }
             budgetBranches[i].settings = branchesById[branchList[i]];
         }
+        this.setState({
+            budgetBranches: budgetBranches,
+        });
     }
     render() {
         let explorer = this;

@@ -10,6 +10,6 @@ exports.addBranch = redux_actions_1.createAction(types.ADD_BRANCH, settings => (
     settings: settings,
     uid: uuid.v4(),
 }));
-exports.removeBranch = redux_actions_1.createAction(types.ADD_BRANCH, uid => ({
+exports.removeBranch = redux_actions_1.createAction(types.REMOVE_BRANCH, uid => ({
     uid: uid,
 }));

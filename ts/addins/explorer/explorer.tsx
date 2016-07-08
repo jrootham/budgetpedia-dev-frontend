@@ -66,7 +66,7 @@ interface ExplorerProps {
 let Explorer = class extends Component< ExplorerProps, 
     {
         budgetBranches?:BudgetBranch[],
-        dialogopen: boolean,
+        dialogopen?: boolean,
     } > {
 
     // ============================================================
@@ -76,11 +76,6 @@ let Explorer = class extends Component< ExplorerProps,
         super(props);
     }
 
-    // TODO: these values should be in global state to allow for re-creation after return visit
-    // TODO: Take state initialization from external source
-    // charts exist in a matrix (row/column) which contain a chartconfig object
-    // TODO: most of 
-    
     state = {
         budgetBranches:[],
         dialogopen: false,
@@ -89,17 +84,17 @@ let Explorer = class extends Component< ExplorerProps,
     // see if any initialization is required
     componentDidMount() {
         let { branchList } = this.props.controlData
-        let defaultSettings:BranchSettings = this.props.controlData.defaults.branch
         if (branchList.length == 0) { // initialize explorer with first branch
+            let defaultSettings:BranchSettings = this.props.controlData.defaults.branch
             this.props.addBranch(defaultSettings)
         }
     }
 
-    componentWillUpdate(nextProps) {
+    componentWillReceiveProps(nextProps) {
         let { branchList, branchesById } = nextProps.controlData
         let budgetBranches:BudgetBranch[] = this.state.budgetBranches
         // remove deleted branches
-        budgetBranches.filter(budgetBranch => {
+        budgetBranches = budgetBranches.filter(budgetBranch => {
             return !!branchesById[budgetBranch.uid]
         })
         // add new branch
@@ -113,10 +108,14 @@ let Explorer = class extends Component< ExplorerProps,
         }
         // in any case update settings in case change made
         for (let i = 0; i < branchList.length; i++) {
-            if (branchList[i] != budgetBranches[i].uid) 
+            if (branchList[i] != budgetBranches[i].uid) {
                 throw Error('mismatch between controlData list and branch list')
+            }
             budgetBranches[i].settings = branchesById[branchList[i]]
         }
+        this.setState({
+            budgetBranches,
+        })
     }
 
     handleDialogOpen = () => {

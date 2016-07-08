@@ -15,7 +15,7 @@ export const addBranch = createAction(
 )
     
 export const removeBranch = createAction(
-    types.ADD_BRANCH,uid => ({
+    types.REMOVE_BRANCH,uid => ({
         uid,
     })
 )
