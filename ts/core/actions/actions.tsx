@@ -428,53 +428,53 @@ export const confirmUser = () => {
 
             dispatch(requestConfirmRegister(data))
             fetch('/api/register/confirm', config)
-                .then(response => {
+            .then(response => {
 
-                    if (response.status >= 500) {
-                        throw new Error("Response from server: " +
-                            response.statusText + ' (' +
-                            response.status + ')')
-                    }
-                    return response.text().then(text => {
-                        return { text, response }
-                    })
+                if (response.status >= 500) {
+                    throw new Error("Response from server: " +
+                        response.statusText + ' (' +
+                        response.status + ')')
+                }
+                return response.text().then(text => {
+                    return { text, response }
                 })
-                .then(({text, response}) => {
-                    let json, isJson
-                    try {
-                        json = JSON.parse(text)
-                        isJson = true
-                        console.log('reply json', json)
-                    } catch (e) {
-                        isJson = false
-                    }
-                    if (!isJson || !response.ok) {
-                        // If there was a problem, we want to
-                        // dispatch the error condition
-                        if (isJson) {
-                            // json.data = field level data
-                            dispatch(registerConfirmError(json.message || json.error))
-                        } else {
-                            dispatch(registerConfirmError(text))
-                        }
+            })
+            .then(({text, response}) => {
+                let json, isJson
+                try {
+                    json = JSON.parse(text)
+                    isJson = true
+                    console.log('reply json', json)
+                } catch (e) {
+                    isJson = false
+                }
+                if (!isJson || !response.ok) {
+                    // If there was a problem, we want to
+                    // dispatch the error condition
+                    if (isJson) {
+                        // json.data = field level data
+                        dispatch(registerConfirmError(json.message || json.error))
                     } else {
-                        // Dispatch the success action
-                        dispatch(receiveConfirmRegister(json))
-
-                        // auto-login
-                        let state = getState()
-                        let token = state.registerconfirm.confirmtoken
-                        if (token) {
-                            dispatch(autoLoginUser(token, result => { }))
-                        }
+                        dispatch(registerConfirmError(text))
                     }
-                })
-                .catch(err => {
+                } else {
+                    // Dispatch the success action
+                    dispatch(receiveConfirmRegister(json))
 
-                    console.log('err.message',err.message)
-                    dispatch(registerConfirmError(err.message))
+                    // auto-login
+                    let state = getState()
+                    let token = state.registerconfirm.confirmtoken
+                    if (token) {
+                        dispatch(autoLoginUser(token, result => { }))
+                    }
+                }
+            })
+            .catch(err => {
 
-                })
+                console.log('err.message',err.message)
+                dispatch(registerConfirmError(err.message))
+
+            })
         }
 
     }

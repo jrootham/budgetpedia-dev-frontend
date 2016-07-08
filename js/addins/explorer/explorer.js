@@ -16,9 +16,9 @@ let Explorer = class extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            budgetBranches: [],
             dialogopen: false,
         };
-        this.budgetBranches = [];
         this.handleDialogOpen = () => {
             this.setState({
                 dialogopen: true
@@ -40,7 +40,7 @@ let Explorer = class extends Component {
             }
         };
         this.updateIndexChartSelections = branchIndex => {
-            let budgetBranch = this.budgetBranches[branchIndex];
+            let budgetBranch = this.state.budgetBranches[branchIndex];
             updatebranchchartselections_1.updateBranchChartSelections(budgetBranch.nodes);
         };
         this.updateChartSelections = branchIndex => () => this.updateIndexChartSelections(branchIndex);
@@ -54,7 +54,7 @@ let Explorer = class extends Component {
     }
     componentWillUpdate(nextProps) {
         let { branchList, branchesById } = nextProps.controlData;
-        let budgetBranches = this.budgetBranches;
+        let budgetBranches = this.state.budgetBranches;
         if (budgetBranches.length < branchList.length) {
             let uid = branchList[0];
             let settings = branchesById[uid];
@@ -78,7 +78,7 @@ let Explorer = class extends Component {
             zIndex: 2,
         }, onTouchTap: explorer.handleDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
         let drilldownsegments = () => {
-            let budgetbranches = explorer.budgetBranches;
+            let budgetbranches = explorer.state.budgetBranches;
             let segments = budgetbranches.map((budgetBranch, branchIndex) => {
                 return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {callbackid: branchIndex, budgetBranch: budgetBranch, displaycallbacks: {
                     workingStatus: explorer.workingStatus,

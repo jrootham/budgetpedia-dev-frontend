@@ -63,7 +63,11 @@ interface ExplorerProps {
     controlData:any,
 }
 
-let Explorer = class extends Component< ExplorerProps, any > {
+let Explorer = class extends Component< ExplorerProps, 
+    {
+        budgetBranches?:BudgetBranch[],
+        dialogopen: boolean,
+    } > {
 
     // ============================================================
     // ---------------------[ INITIALIZE ]-------------------------
@@ -79,9 +83,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
     
     state = {
         // chartmatrix: [[], []], // DrillDown, Compare (Later: Differences, Context, Build)
-        // budgetBranches:[
-        //     // new BudgetBranch({data:{}, nodes:[], settings: this.props.settings.defaults.branch})
-        // ],
+        budgetBranches:[],
         dialogopen: false,
     }
 
@@ -96,7 +98,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
     componentWillUpdate(nextProps) {
         let { branchList, branchesById } = nextProps.controlData
-        let budgetBranches:BudgetBranch[] = this.budgetBranches
+        let budgetBranches:BudgetBranch[] = this.state.budgetBranches
         if (budgetBranches.length < branchList.length) {
             let uid = branchList[0]
             let settings = branchesById[uid]
@@ -108,8 +110,6 @@ let Explorer = class extends Component< ExplorerProps, any > {
             }
         }
     }
-
-    budgetBranches:BudgetBranch[] = []
 
     handleDialogOpen = () => {
         this.setState({
@@ -137,7 +137,7 @@ let Explorer = class extends Component< ExplorerProps, any > {
     }
 
     updateIndexChartSelections = branchIndex => {
-        let budgetBranch = this.budgetBranches[branchIndex]
+        let budgetBranch = this.state.budgetBranches[branchIndex]
         updateBranchChartSelections(budgetBranch.nodes)
     }
 
@@ -201,13 +201,9 @@ let Explorer = class extends Component< ExplorerProps, any > {
 
         // -----------[ DRILLDOWN SEGMENT]-------------
 
-        // let budgetBranch: BudgetBranch = explorer.state.budgetBranches[0]
-
-        // let branchsettings: BranchSettings = this.props.settings.defaults.branch
-
         let drilldownsegments = () => {
 
-            let budgetbranches = explorer.budgetBranches
+            let budgetbranches = explorer.state.budgetBranches
 
             let segments = budgetbranches.map((budgetBranch, branchIndex) => {
 
@@ -286,9 +282,6 @@ let mapStateToProps = state => {
     }
 }
 
-// TODO: mapdispatch to props
-
-// let Explorer: typeof ExplorerClass = withRouter(injectStore(mapStateToProps)(ExplorerClass))
 Explorer = connect(mapStateToProps,
     {
         showWaitingMessage: Actions.showWaitingMessage,
