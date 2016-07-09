@@ -89,9 +89,8 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
         nodeIndex: nodeIndex + 1,
         parentData: parentdata,
         timeSpecs: newrange,
-        dataNode: newdatanode,
     };
-    let newBudgetNode = new budgetnode_1.default(newnodeconfigparms);
+    let newBudgetNode = new budgetnode_1.default(newnodeconfigparms, newdatanode);
     let newcellindex = null;
     let chartParmsObj = null;
     let isError = false;

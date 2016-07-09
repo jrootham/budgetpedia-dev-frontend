@@ -214,10 +214,9 @@ export let createChildNode = (
         nodeIndex: nodeIndex + 1,
         parentData: parentdata,
         timeSpecs: newrange,
-        dataNode:newdatanode,
     }
 
-    let newBudgetNode = new BudgetNode(newnodeconfigparms)
+    let newBudgetNode = new BudgetNode(newnodeconfigparms, newdatanode)
 
     let newcellindex: any = null
     let chartParmsObj: ChartParmsObj = null

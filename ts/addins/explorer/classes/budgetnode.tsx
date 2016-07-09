@@ -19,12 +19,11 @@ export interface BudgetNodeParms {
     timeSpecs: TimeSpecs,
     dataPath: string[],
     nodeIndex: number,
-    dataNode:any,
     parentData?:any,
 }
 
 class BudgetNode {
-    constructor(parms: BudgetNodeParms) {
+    constructor(parms: BudgetNodeParms, node:any) {
 
         let portalcharts = parms.portalCharts
 
@@ -35,7 +34,7 @@ class BudgetNode {
         this.dataPath = parms.dataPath
         this.nodeIndex = parms.nodeIndex
         this.timeSpecs = parms.timeSpecs
-        this._dataNode = parms.dataNode
+        this._dataNode = node
         if (parms.parentData) this.parentData = parms.parentData
 
     }

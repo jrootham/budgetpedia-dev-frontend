@@ -39,11 +39,7 @@ class BudgetBranch {
     initializeChartSeries(callbacks) {
         let branchsettings = this.settings;
         let viewpointdata = this.getViewpointData();
-        let branchNodes = this.nodes;
-        let budgetdata = this.data;
-        let chartParmsObj;
         let datapath = [];
-        let node = getbudgetnode_1.default(viewpointdata, datapath);
         let { chartType: defaultChartType, viewpoint: viewpointName, facet: facetName, latestYear: rightYear, } = branchsettings;
         let budgetNodeParms = {
             viewpointName: viewpointName,
@@ -59,9 +55,12 @@ class BudgetBranch {
             portalCharts: viewpointdata.PortalCharts,
             dataPath: [],
             nodeIndex: 0,
-            dataNode: node,
         };
-        let budgetNode = new budgetnode_1.default(budgetNodeParms);
+        let node = getbudgetnode_1.default(viewpointdata, datapath);
+        let budgetNode = new budgetnode_1.default(budgetNodeParms, node);
+        let branchNodes = this.nodes;
+        let budgetdata = this.data;
+        let chartParmsObj;
         let cellindex;
         let selectfn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks);
         let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = budgetdata.viewpointdata;

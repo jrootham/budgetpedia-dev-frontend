@@ -65,14 +65,10 @@ class BudgetBranch {
 
         let branchsettings = this.settings
         let viewpointdata = this.getViewpointData()
-        let branchNodes = this.nodes
-        let budgetdata = this.data
-        let chartParmsObj: ChartParmsObj
 
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
         let datapath = []
-        let node = getBudgetNode(viewpointdata, datapath)
 
         let {
             chartType:defaultChartType,
@@ -95,14 +91,18 @@ class BudgetBranch {
             portalCharts:viewpointdata.PortalCharts,
             dataPath: [],
             nodeIndex:0,
-            dataNode:node, // TODO: this should not be included in parms, but rather derived!!
         }
-
+        // do this:
+        // let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, dataNode)
         // TEMPORARILY COMMENTED OUT
         // this.actions.addNode(this.uid,budgetNodeParms)
 
-        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms)
+        let node = getBudgetNode(viewpointdata, datapath)
+        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, node)
 
+        let branchNodes = this.nodes
+        let budgetdata = this.data
+        let chartParmsObj: ChartParmsObj
         let cellindex: any
         let selectfn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)
         let {
