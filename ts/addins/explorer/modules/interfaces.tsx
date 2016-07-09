@@ -115,7 +115,7 @@ interface SortedComponentItem {
     Code: string,
     Index?: number,
     Name: string,
-    dataNode?: any,
+    // dataNode?: any,
 }
 
 // internal component of chart config

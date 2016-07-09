@@ -181,9 +181,10 @@ export let createChildNode = (
 
     let code = null
     let parentdata: SortedComponentItem = null
+    let parentNode: any = null
     if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
         parentdata = node.SortedComponents[selectionrow]
-        parentdata.dataNode = node
+        parentNode = node
         code = parentdata.Code
     }
     if (code)
@@ -216,7 +217,7 @@ export let createChildNode = (
         timeSpecs: newrange,
     }
 
-    let newBudgetNode = new BudgetNode(newnodeconfigparms, newdatanode)
+    let newBudgetNode = new BudgetNode(newnodeconfigparms, newdatanode, parentNode)
 
     let newcellindex: any = null
     let chartParmsObj: ChartParmsObj = null

@@ -58,9 +58,10 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
     let components = node.Components;
     let code = null;
     let parentdata = null;
+    let parentNode = null;
     if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
         parentdata = node.SortedComponents[selectionrow];
-        parentdata.dataNode = node;
+        parentNode = node;
         code = parentdata.Code;
     }
     if (code)
@@ -90,7 +91,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks) => {
         parentData: parentdata,
         timeSpecs: newrange,
     };
-    let newBudgetNode = new budgetnode_1.default(newnodeconfigparms, newdatanode);
+    let newBudgetNode = new budgetnode_1.default(newnodeconfigparms, newdatanode, parentNode);
     let newcellindex = null;
     let chartParmsObj = null;
     let isError = false;

@@ -23,7 +23,7 @@ export interface BudgetNodeParms {
 }
 
 class BudgetNode {
-    constructor(parms: BudgetNodeParms, node:any) {
+    constructor(parms: BudgetNodeParms, node:any, parentNode:any = null) {
 
         let portalcharts = parms.portalCharts
 
@@ -35,7 +35,9 @@ class BudgetNode {
         this.nodeIndex = parms.nodeIndex
         this.timeSpecs = parms.timeSpecs
         this._dataNode = node
+        // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
         if (parms.parentData) this.parentData = parms.parentData
+        if (parentNode) this.parentData.dataNode = parentNode
 
     }
 
@@ -58,6 +60,7 @@ class BudgetNode {
         return this._dataNode
     }
     parentData: any = null
+    parentNode: any = null
 
     get cells() { // only return cells that have appropriate node datasets available
         return this.getAvailableCells()

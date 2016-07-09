@@ -2,8 +2,9 @@
 const constants_1 = require('../../constants');
 const getchartparms_1 = require('./modules/getchartparms');
 class BudgetNode {
-    constructor(parms, node) {
+    constructor(parms, node, parentNode = null) {
         this.parentData = null;
+        this.parentNode = null;
         this.update = (dataNode, facet) => {
             this._dataNode = dataNode;
             this.facetName = facet;
@@ -18,6 +19,8 @@ class BudgetNode {
         this._dataNode = node;
         if (parms.parentData)
             this.parentData = parms.parentData;
+        if (parentNode)
+            this.parentData.dataNode = parentNode;
     }
     getChartParms(props, selectionCallbacks) {
         let sourceProps = {};
