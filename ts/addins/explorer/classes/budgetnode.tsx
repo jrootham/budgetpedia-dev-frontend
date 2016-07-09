@@ -59,8 +59,8 @@ class BudgetNode {
     get dataNode() {
         return this._dataNode
     }
-    parentData: any = null
-    parentNode: any = null
+    parentData: any = null // includes parentNode for now
+    // parentNode: any = null
 
     get cells() { // only return cells that have appropriate node datasets available
         return this.getAvailableCells()

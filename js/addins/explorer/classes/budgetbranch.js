@@ -36,7 +36,7 @@ class BudgetBranch {
     get state() {
         return this.getState();
     }
-    initializeChartSeries(callbacks) {
+    initializeChartSeries(callbacks, actions) {
         let branchsettings = this.settings;
         let viewpointdata = this.getViewpointData();
         let datapath = [];
@@ -62,7 +62,7 @@ class BudgetBranch {
         let budgetdata = this.data;
         let chartParmsObj;
         let cellindex;
-        let selectfn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks);
+        let selectfn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions);
         let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = budgetdata.viewpointdata;
         let configData = {
             viewpointConfig: viewpointConfig,
@@ -94,7 +94,7 @@ class BudgetBranch {
             });
         }
     }
-    switchFacet(callbacks) {
+    switchFacet(callbacks, actions) {
         let switchResults = {
             deeperdata: false,
             shallowerdata: false,
@@ -108,7 +108,7 @@ class BudgetBranch {
         let nodeIndex;
         let isError = false;
         let chartParmsObj = null;
-        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks);
+        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions);
         for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode;
             budgetNode = branchNodes[nodeIndex];
@@ -188,7 +188,7 @@ class BudgetBranch {
         });
         return switchResults;
     }
-    switchChartCode(props, callbacks) {
+    switchChartCode(props, callbacks, actions) {
         let branchsettings = this.settings;
         let { nodeIndex, cellIndex, chartCode, } = props;
         let chartType = constants_1.ChartCodeTypes[chartCode];
@@ -210,7 +210,7 @@ class BudgetBranch {
             branchsettings: branchsettings,
             configData: configData,
         };
-        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks);
+        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions);
         let fncurrent = fn(nodeIndex)(cellIndex);
         let chartParmsObj = budgetNode.getChartParms(chartprops, { current: fncurrent, next: fn });
         if (!chartParmsObj.isError) {

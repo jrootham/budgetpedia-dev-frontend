@@ -4,7 +4,6 @@ const getchartparms_1 = require('./modules/getchartparms');
 class BudgetNode {
     constructor(parms, node, parentNode = null) {
         this.parentData = null;
-        this.parentNode = null;
         this.update = (dataNode, facet) => {
             this._dataNode = dataNode;
             this.facetName = facet;

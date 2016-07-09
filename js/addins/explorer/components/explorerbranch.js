@@ -72,7 +72,7 @@ class ExplorerBranch extends Component {
         };
         this.initializeChartSeries = () => {
             let { budgetBranch } = this.props;
-            budgetBranch.initializeChartSeries(this._nodeCallbacks);
+            budgetBranch.initializeChartSeries(this._nodeCallbacks, this.props.actions);
             this.refreshPresentation();
         };
         this.switchViewpoint = (viewpointname) => {
@@ -90,7 +90,7 @@ class ExplorerBranch extends Component {
             let { budgetBranch } = this.props;
             let branchsettings = budgetBranch.settings;
             branchsettings.facet = facet;
-            let switchResults = budgetBranch.switchFacet(this._nodeCallbacks);
+            let switchResults = budgetBranch.switchFacet(this._nodeCallbacks, this.props.actions);
             let { deeperdata, shallowerdata } = switchResults;
             if (deeperdata || shallowerdata) {
                 let message = null;
@@ -117,7 +117,7 @@ class ExplorerBranch extends Component {
                 chartCode: chartCode,
             };
             let callbacks = this._nodeCallbacks;
-            let switchResults = budgetBranch.switchChartCode(props, callbacks);
+            let switchResults = budgetBranch.switchChartCode(props, callbacks, this.props.actions);
             let { budgetCell } = switchResults;
             this.refreshPresentation();
             let branch = this;

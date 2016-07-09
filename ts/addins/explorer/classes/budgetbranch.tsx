@@ -61,7 +61,7 @@ class BudgetBranch {
 
     public setState: Function
 
-    public initializeChartSeries(callbacks) {
+    public initializeChartSeries(callbacks, actions) {
 
         let branchsettings = this.settings
         let viewpointdata = this.getViewpointData()
@@ -104,7 +104,7 @@ class BudgetBranch {
         let budgetdata = this.data
         let chartParmsObj: ChartParmsObj
         let cellindex: any
-        let selectfn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)
+        let selectfn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions)
         let {
             Configuration: viewpointConfig,
             itemseriesconfigdata: itemseriesConfig,
@@ -145,7 +145,7 @@ class BudgetBranch {
 
     }
 
-    switchFacet(callbacks) {
+    switchFacet(callbacks, actions) {
         let switchResults = {
             deeperdata: false,
             shallowerdata: false,
@@ -162,7 +162,7 @@ class BudgetBranch {
         let isError = false
         let chartParmsObj: ChartParmsObj = null
 
-        let fn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)
+        let fn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions)
 
         for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode
@@ -257,7 +257,7 @@ class BudgetBranch {
         return switchResults
     }
 
-    switchChartCode(props, callbacks) {
+    switchChartCode(props, callbacks, actions) {
         let branchsettings: BranchSettings = this.settings
         let {
             nodeIndex,
@@ -284,7 +284,7 @@ class BudgetBranch {
             branchsettings,
             configData,
         }
-        let fn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)
+        let fn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions)
         let fncurrent = fn(nodeIndex)(cellIndex)
         let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
         if (!chartParmsObj.isError) {
