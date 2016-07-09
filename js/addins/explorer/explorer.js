@@ -78,6 +78,7 @@ let Explorer = class extends Component {
     }
     render() {
         let explorer = this;
+        console.log('controlData', explorer.props.controlData);
         let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogopen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,
@@ -89,11 +90,14 @@ let Explorer = class extends Component {
         }, onTouchTap: explorer.handleDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
         let drilldownsegments = () => {
             let budgetbranches = explorer.state.budgetBranches;
+            let explorerActions = {
+                addNode: this.props.addNode,
+            };
             let segments = budgetbranches.map((budgetBranch, branchIndex) => {
                 return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {callbackid: branchIndex, budgetBranch: budgetBranch, displaycallbacks: {
                     workingStatus: explorer.workingStatus,
                     updateChartSelections: explorer.updateChartSelections,
-                }, actions: { addNode: this.props.addNode }})));
+                }, actions: explorerActions})));
             });
             return segments;
         };

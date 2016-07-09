@@ -135,13 +135,14 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
         chart,
     }
     let childcallbacks: CreateChildNodeCallbacks = callbacks
-    createChildNode( childprops, childcallbacks, selectionProps)
+    createChildNode( childprops, childcallbacks, selectionProps, actions)
 }
 
 export let createChildNode = (
     props: CreateChildNodeProps, 
     callbacks: CreateChildNodeCallbacks,
-    selectionCallbacks: SelectionCallbackProps
+    selectionCallbacks: SelectionCallbackProps,
+    actions
     ) => {
 
     let {
@@ -218,6 +219,8 @@ export let createChildNode = (
         parentData: parentdata,
         timeSpecs: newrange,
     }
+
+    // actions.addNode(newnodeconfigparms)
 
     let newBudgetNode = new BudgetNode(newnodeconfigparms, newdatanode, parentNode)
 

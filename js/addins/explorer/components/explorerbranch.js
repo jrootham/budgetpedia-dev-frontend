@@ -15,6 +15,9 @@ class ExplorerBranch extends Component {
             snackbar: { open: false, message: 'empty' }
         };
         this.getState = () => this.state;
+        this.addNode = uid => settings => {
+            return this.props.actions.addNode(uid, settings);
+        };
         this.refreshPresentation = () => {
             this.forceUpdate();
         };
@@ -72,7 +75,7 @@ class ExplorerBranch extends Component {
         };
         this.initializeChartSeries = () => {
             let { budgetBranch } = this.props;
-            budgetBranch.initializeChartSeries(this._nodeCallbacks, this.props.actions);
+            budgetBranch.initializeChartSeries(this._nodeCallbacks, this._actions);
             this.refreshPresentation();
         };
         this.switchViewpoint = (viewpointname) => {
@@ -202,7 +205,9 @@ class ExplorerBranch extends Component {
         let { budgetBranch, actions } = this.props;
         budgetBranch.getState = this.getState;
         budgetBranch.setState = this.setState.bind(this);
-        budgetBranch.actions = actions;
+        this._actions = Object.assign({}, actions);
+        this._actions.addNode = this.addNode(budgetBranch.uid);
+        budgetBranch.actions = this._actions;
     }
     componentDidMount() {
         let { displaycallbacks, callbackid, budgetBranch } = this.props;

@@ -140,7 +140,7 @@ class BudgetBranch {
                         chart: prevBudgetCell.chart,
                     };
                     let fcurrent = fn(nodeIndex)(0);
-                    onchartcomponentselection_1.createChildNode(childprops, callbacks, { current: fcurrent, next: fn });
+                    onchartcomponentselection_1.createChildNode(childprops, callbacks, { current: fcurrent, next: fn }, actions);
                     budgetNode = null;
                 }
             }

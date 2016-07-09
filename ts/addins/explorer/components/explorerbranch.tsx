@@ -75,11 +75,19 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
     // used by budgetBranch instance
     getState = () => this.state
 
+    addNode = uid => settings => {
+        return this.props.actions.addNode(uid, settings)
+    }
+
+    private _actions: any
+
     componentWillMount() {
         let { budgetBranch, actions } = this.props
         budgetBranch.getState = this.getState
         budgetBranch.setState = this.setState.bind(this)
-        budgetBranch.actions = actions 
+        this._actions = Object.assign({},actions)
+        this._actions.addNode = this.addNode(budgetBranch.uid)
+        budgetBranch.actions = this._actions
     }
 
     // initialize once - create root drilldown and compare series
@@ -179,7 +187,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
 
         let { budgetBranch } = this.props
 
-        budgetBranch.initializeChartSeries(this._nodeCallbacks, this.props.actions)
+        budgetBranch.initializeChartSeries(this._nodeCallbacks, this._actions)
 
         this.refreshPresentation()
 

@@ -47,6 +47,10 @@ import * as ExplorerActions from './actions'
 import BudgetBranch from './classes/budgetbranch'
 import { getExplorerControlData } from './reducers'
 
+interface ExplorerActions {
+    addNode: Function,
+}
+
 import {
     MatrixCellConfig,
     ChartParmsObj,
@@ -159,7 +163,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     render() {
 
         let explorer = this
-        // console.log('controlData',explorer.props.controlData)
+        console.log('controlData',explorer.props.controlData)
         let dialogbox =  
             <Dialog
                 title = "Budget Explorer Help"
@@ -213,9 +217,13 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         let drilldownsegments = () => {
 
-            let budgetbranches = explorer.state.budgetBranches
+        let budgetbranches = explorer.state.budgetBranches
 
-            let segments = budgetbranches.map((budgetBranch, branchIndex) => {
+        let explorerActions:ExplorerActions = {
+            addNode: this.props.addNode,
+        }
+
+        let segments = budgetbranches.map((budgetBranch, branchIndex) => {
 
          return <Card initiallyExpanded 
              key = {branchIndex}>
@@ -236,7 +244,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                      workingStatus: explorer.workingStatus,
                      updateChartSelections: explorer.updateChartSelections,
                   }}
-                  actions = {{addNode: this.props.addNode}}
+                  actions = {explorerActions}
              />
             </CardText>
 

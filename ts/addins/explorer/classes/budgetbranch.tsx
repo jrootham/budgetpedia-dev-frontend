@@ -95,7 +95,7 @@ class BudgetBranch {
         // do this:
         // let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, dataNode)
         // TEMPORARILY COMMENTED OUT
-        // this.actions.addNode(this.uid,budgetNodeParms)
+        // this.actions.addNode(budgetNodeParms)
 
         let node = getBudgetNode(viewpointdata, datapath)
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, node)
@@ -207,7 +207,7 @@ class BudgetBranch {
                         chart:prevBudgetCell.chart,
                     }
                     let fcurrent = fn(nodeIndex)(0)
-                    createChildNode(childprops, callbacks,{current:fcurrent,next:fn})
+                    createChildNode(childprops, callbacks,{current:fcurrent,next:fn}, actions)
                     budgetNode = null // branchNodes[nodeIndex] // created by createChildNode as side effect
                 }
             } else {
