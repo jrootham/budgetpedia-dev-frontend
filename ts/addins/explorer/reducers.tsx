@@ -37,13 +37,41 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             delete newstate[action.payload.uid]
             return newstate
         
+        case actiontypes.ADD_NODE:
+            newstate = Object.assign({},state)
+            newstate[action.payload.branchuid].nodeList = 
+                [...state[action.payload.branchuid].nodeList,action.payload.uid]
+            return newstate
+
+        case actiontypes.REMOVE_NODE:
+            newstate = Object.assign({},state)
+            let newList = newstate[action.payload.branchuid].nodeList.filter((uid) => {
+                return !!(uid != action.payload.uid)
+            }) 
+            newstate[action.payload.branchid].nodeList = newList
+            return newstate
+
         default:
             return state
     }
 }
 
 let nodesById = (state = { }, action) => {
-    return state
+    let { type } = action
+    let newstate
+    switch (type) {
+        case actiontypes.ADD_NODE:
+            newstate = Object.assign({},state,{[action.payload.uid]:action.payload.settings})
+            return newstate
+
+        case actiontypes.REMOVE_NODE:
+            newstate = Object.assign({},state)
+            delete newstate[action.payload.uid]
+            return newstate
+
+        default:
+            return state
+    }
 }
 
 let cellsById = (state = { }, action) => {

@@ -51,6 +51,9 @@ interface ExploreBranchProps {
         workingStatus:Function,
         updateChartSelections:Function,
     },
+    actions: {
+        addNode:Function,
+    }
 }
 
 class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, snackbar?:any} > {
@@ -73,9 +76,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
     getState = () => this.state
 
     componentWillMount() {
-        let { budgetBranch } = this.props
+        let { budgetBranch, actions } = this.props
         budgetBranch.getState = this.getState
         budgetBranch.setState = this.setState.bind(this)
+        budgetBranch.actions = actions 
     }
 
     // initialize once - create root drilldown and compare series
@@ -276,7 +280,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
     }
 
     // get React components to render
-    getPortals = (matrixrow) => {
+    getPortals = (budgetNodes) => {
 
         let { settings:branchsettings, data:budgetdata } = this.props.budgetBranch
 
@@ -289,7 +293,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
             portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')'
         }
 
-        let portals = matrixrow.map((budgetNode: BudgetNode, nodeindex) => {
+        let portals = budgetNodes.map((budgetNode: BudgetNode, nodeindex) => {
 
             let chartConfigs = []
 
@@ -345,7 +349,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
                 key = {nodeindex}
                 callbackid = {nodeindex}
                 budgetNode = { budgetNode }
-                callbacks = { {onChangePortalTab: this.onChangePortalTab} }
+                displaycallbacks = { {onChangePortalTab: this.onChangePortalTab} }
                 portalSettings = { portalConfig }
             />
         })

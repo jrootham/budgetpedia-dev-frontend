@@ -30,12 +30,36 @@ let branchesById = (state = {}, action) => {
             newstate = Object.assign({}, state);
             delete newstate[action.payload.uid];
             return newstate;
+        case actions_1.types.ADD_NODE:
+            newstate = Object.assign({}, state);
+            newstate[action.payload.branchuid].nodeList =
+                [...state[action.payload.branchuid].nodeList, action.payload.uid];
+            return newstate;
+        case actions_1.types.REMOVE_NODE:
+            newstate = Object.assign({}, state);
+            let newList = newstate[action.payload.branchuid].nodeList.filter((uid) => {
+                return !!(uid != action.payload.uid);
+            });
+            newstate[action.payload.branchid].nodeList = newList;
+            return newstate;
         default:
             return state;
     }
 };
 let nodesById = (state = {}, action) => {
-    return state;
+    let { type } = action;
+    let newstate;
+    switch (type) {
+        case actions_1.types.ADD_NODE:
+            newstate = Object.assign({}, state, { [action.payload.uid]: action.payload.settings });
+            return newstate;
+        case actions_1.types.REMOVE_NODE:
+            newstate = Object.assign({}, state);
+            delete newstate[action.payload.uid];
+            return newstate;
+        default:
+            return state;
+    }
 };
 let cellsById = (state = {}, action) => {
     return state;

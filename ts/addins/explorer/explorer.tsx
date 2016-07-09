@@ -60,6 +60,7 @@ interface ExplorerProps {
     showWaitingMessage:Function, // dispatcher from Actions 
     hideWaitingMessage:Function, // dispatcher from Actions
     addBranch:Function, // dispatcher from ExplorerActions through connect
+    addNode:Function,
     controlData:any, // from global state.explorer
 }
 
@@ -158,7 +159,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     render() {
 
         let explorer = this
-
+        // console.log('controlData',explorer.props.controlData)
         let dialogbox =  
             <Dialog
                 title = "Budget Explorer Help"
@@ -235,6 +236,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                      workingStatus: explorer.workingStatus,
                      updateChartSelections: explorer.updateChartSelections,
                   }}
+                  actions = {{addNode: this.props.addNode}}
              />
             </CardText>
 
@@ -291,6 +293,7 @@ Explorer = connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
     addBranch:ExplorerActions.addBranch,
+    addNode:ExplorerActions.addNode,
 })(Explorer)
 
 export default Explorer

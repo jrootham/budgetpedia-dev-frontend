@@ -21,14 +21,14 @@ import BudgetNode from '../classes/budgetnode'
 interface ExplorePortalProps {
     callbackid: string | number,
     budgetNode: BudgetNode,// not yet used
-    callbacks: {onChangePortalTab:Function,}
+    displaycallbacks: {onChangePortalTab:Function,}
     portalSettings:PortalConfig,
 }
 
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     onChangeTab = () => {
-        this.props.callbacks.onChangePortalTab() 
+        this.props.displaycallbacks.onChangePortalTab() 
     }
 
     getChartTabs = () => {

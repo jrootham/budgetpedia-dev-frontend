@@ -51,6 +51,8 @@ class BudgetBranch {
 
     public uid:string
 
+    public actions:any
+
     get state() {
         return this.getState()
     }
@@ -93,8 +95,11 @@ class BudgetBranch {
             portalCharts:viewpointdata.PortalCharts,
             dataPath: [],
             nodeIndex:0,
-            dataNode:node,
+            dataNode:node, // TODO: this should not be included in parms, but rather derived!!
         }
+
+        // TEMPORARILY COMMENTED OUT
+        // this.actions.addNode(this.uid,budgetNodeParms)
 
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms)
 

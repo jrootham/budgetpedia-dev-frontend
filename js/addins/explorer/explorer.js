@@ -93,7 +93,7 @@ let Explorer = class extends Component {
                 return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {callbackid: branchIndex, budgetBranch: budgetBranch, displaycallbacks: {
                     workingStatus: explorer.workingStatus,
                     updateChartSelections: explorer.updateChartSelections,
-                }})));
+                }, actions: { addNode: this.props.addNode }})));
             });
             return segments;
         };
@@ -109,6 +109,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
     addBranch: ExplorerActions.addBranch,
+    addNode: ExplorerActions.addNode,
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;

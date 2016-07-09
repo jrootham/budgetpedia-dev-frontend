@@ -140,7 +140,7 @@ class ExplorerBranch extends Component {
                 branch.props.displaycallbacks.updateChartSelections();
             });
         };
-        this.getPortals = (matrixrow) => {
+        this.getPortals = (budgetNodes) => {
             let { settings: branchsettings, data: budgetdata } = this.props.budgetBranch;
             if (!budgetdata.viewpointdata)
                 return [];
@@ -151,7 +151,7 @@ class ExplorerBranch extends Component {
             if (itemseriesdata.Units == 'DOLLAR') {
                 portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')';
             }
-            let portals = matrixrow.map((budgetNode, nodeindex) => {
+            let portals = budgetNodes.map((budgetNode, nodeindex) => {
                 let chartConfigs = [];
                 for (let cellindex in budgetNode.cells) {
                     let budgetCell = budgetNode.cells[cellindex];
@@ -193,15 +193,16 @@ class ExplorerBranch extends Component {
                     chartConfigs: chartConfigs,
                     portalName: portalName,
                 };
-                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, callbacks: { onChangePortalTab: this.onChangePortalTab }, portalSettings: portalConfig});
+                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, displaycallbacks: { onChangePortalTab: this.onChangePortalTab }, portalSettings: portalConfig});
             });
             return portals;
         };
     }
     componentWillMount() {
-        let { budgetBranch } = this.props;
+        let { budgetBranch, actions } = this.props;
         budgetBranch.getState = this.getState;
         budgetBranch.setState = this.setState.bind(this);
+        budgetBranch.actions = actions;
     }
     componentDidMount() {
         let { displaycallbacks, callbackid, budgetBranch } = this.props;
