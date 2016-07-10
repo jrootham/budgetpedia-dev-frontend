@@ -45,8 +45,12 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
 
         case actiontypes.REMOVE_NODE:
             newstate = Object.assign({},state)
+            let removelist = action.payload.uid
+            if (!Array.isArray(removelist)) {
+                removelist = [removelist]
+            }
             let newList = newstate[action.payload.branchuid].nodeList.filter((uid) => {
-                return !!(uid != action.payload.uid)
+                return (removelist.indexOf(uid) == -1)
             }) 
             newstate[action.payload.branchid].nodeList = newList
             return newstate
@@ -66,7 +70,13 @@ let nodesById = (state = { }, action) => {
 
         case actiontypes.REMOVE_NODE:
             newstate = Object.assign({},state)
-            delete newstate[action.payload.uid]
+            let removelist = action.payload.uid
+            if (!Array.isArray(removelist)) {
+                removelist = [removelist]
+            }
+            for (let removeid in removelist) {
+                delete newstate[removeid]
+            }
             return newstate
 
         default:

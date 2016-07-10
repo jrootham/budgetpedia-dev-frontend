@@ -47,8 +47,9 @@ import * as ExplorerActions from './actions'
 import BudgetBranch from './classes/budgetbranch'
 import { getExplorerControlData } from './reducers'
 
-interface ExplorerActions {
+export interface ExplorerActions {
     addNode: Function,
+    removeNode: Function,
 }
 
 import {
@@ -65,6 +66,7 @@ interface ExplorerProps {
     hideWaitingMessage:Function, // dispatcher from Actions
     addBranch:Function, // dispatcher from ExplorerActions through connect
     addNode:Function,
+    removeNode: Function,
     controlData:any, // from global state.explorer
 }
 
@@ -163,7 +165,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     render() {
 
         let explorer = this
-        // console.log('controlData',explorer.props.controlData)
+        console.log('controlData',explorer.props.controlData)
         let dialogbox =  
             <Dialog
                 title = "Budget Explorer Help"
@@ -221,9 +223,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         let explorerActions:ExplorerActions = {
             addNode: this.props.addNode,
+            removeNode: this.props.removeNode,
         }
 
         let segments = budgetbranches.map((budgetBranch, branchIndex) => {
+        let actionprops = {
+            addNode:explorerActions.addNode,
+            removeNode:explorerActions.removeNode,
+        }
 
          return <Card initiallyExpanded 
              key = {branchIndex}>
@@ -238,13 +245,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
              <CardText expandable>
              <ExplorerBranch 
+                 callbackuid = {budgetBranch.uid}
                  callbackid = {branchIndex}
                  budgetBranch = {budgetBranch}
                  displaycallbacks = {{ 
                      workingStatus: explorer.workingStatus,
                      updateChartSelections: explorer.updateChartSelections,
                   }}
-                  actions = {explorerActions}
+                  actions = {actionprops}
              />
             </CardText>
 
@@ -302,6 +310,7 @@ Explorer = connect(mapStateToProps, {
     hideWaitingMessage: Actions.hideWaitingMessage,
     addBranch:ExplorerActions.addBranch,
     addNode:ExplorerActions.addNode,
+    removeNode:ExplorerActions.removeNode,
 })(Explorer)
 
 export default Explorer

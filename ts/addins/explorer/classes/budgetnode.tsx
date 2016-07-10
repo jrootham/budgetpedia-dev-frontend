@@ -23,7 +23,7 @@ export interface BudgetNodeParms {
 }
 
 class BudgetNode {
-    constructor(parms: BudgetNodeParms, node:any, parentNode:any = null) {
+    constructor(parms: BudgetNodeParms, uid:string, node:any, parentNode:any = null) {
 
         let portalcharts = parms.portalCharts
 
@@ -35,6 +35,7 @@ class BudgetNode {
         this.nodeIndex = parms.nodeIndex
         this.timeSpecs = parms.timeSpecs
         this._dataNode = node
+        this.uid = uid
         // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
         if (parms.parentData) this.parentData = parms.parentData
         if (parentNode) this.parentData.dataNode = parentNode
@@ -50,7 +51,7 @@ class BudgetNode {
         Object.assign(sourceProps, props, {budgetNode: node})
         return getChartParmsSource(sourceProps, selectionCallbacks)
     }
-
+    uid:string
     viewpointName: string
     facetName: string
     dataPath: string[]

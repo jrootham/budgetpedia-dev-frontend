@@ -45,7 +45,8 @@ import BudgetNode from '../classes/budgetnode'
 import BudgetBranch from '../classes/budgetbranch'
 
 interface ExploreBranchProps {
-    callbackid: string | number
+    callbackid: string | number,
+    callbackuid: string,
     budgetBranch: BudgetBranch,
     displaycallbacks:{
         workingStatus:Function,
@@ -53,6 +54,7 @@ interface ExploreBranchProps {
     },
     actions: {
         addNode:Function,
+        removeNode:Function,
     }
 }
 
@@ -74,6 +76,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
     // return fresh copy of state object; changes after being set
     // used by budgetBranch instance
     getState = () => this.state
+    getProps = () => this.props
 
     addNode = uid => settings => {
         return this.props.actions.addNode(uid, settings)
@@ -84,9 +87,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
     componentWillMount() {
         let { budgetBranch, actions } = this.props
         budgetBranch.getState = this.getState
+        budgetBranch.getProps = this.getProps
         budgetBranch.setState = this.setState.bind(this)
         this._actions = Object.assign({},actions)
-        this._actions.addNode = this.addNode(budgetBranch.uid)
+        // this._actions.addNode = this.addNode(budgetBranch.uid)
         budgetBranch.actions = this._actions
     }
 
@@ -197,7 +201,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
 
         let { settings:branchsettings, nodes:branchNodes } = this.props.budgetBranch
 
-        branchNodes.splice(0) // remove subsequent charts
+        let removed = branchNodes.splice(0) // remove subsequent charts
+        let removedids = removed.map((item) => {
+            return item.uid
+        })
+        // this.props.actions.removeNode(this.props.callbackuid, removedids)
         branchsettings.viewpoint = viewpointname
         this.setState({
             branchNodes,

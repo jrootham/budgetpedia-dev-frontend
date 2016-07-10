@@ -15,6 +15,7 @@ class ExplorerBranch extends Component {
             snackbar: { open: false, message: 'empty' }
         };
         this.getState = () => this.state;
+        this.getProps = () => this.props;
         this.addNode = uid => settings => {
             return this.props.actions.addNode(uid, settings);
         };
@@ -80,7 +81,10 @@ class ExplorerBranch extends Component {
         };
         this.switchViewpoint = (viewpointname) => {
             let { settings: branchsettings, nodes: branchNodes } = this.props.budgetBranch;
-            branchNodes.splice(0);
+            let removed = branchNodes.splice(0);
+            let removedids = removed.map((item) => {
+                return item.uid;
+            });
             branchsettings.viewpoint = viewpointname;
             this.setState({
                 branchNodes: branchNodes,
@@ -204,9 +208,9 @@ class ExplorerBranch extends Component {
     componentWillMount() {
         let { budgetBranch, actions } = this.props;
         budgetBranch.getState = this.getState;
+        budgetBranch.getProps = this.getProps;
         budgetBranch.setState = this.setState.bind(this);
         this._actions = Object.assign({}, actions);
-        this._actions.addNode = this.addNode(budgetBranch.uid);
         budgetBranch.actions = this._actions;
     }
     componentDidMount() {

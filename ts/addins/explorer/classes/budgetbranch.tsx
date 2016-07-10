@@ -24,6 +24,7 @@ import {
     // CreateChildNodeCallbacks,
     onChartComponentSelection,
 } from '../modules/onchartcomponentselection'
+import { ExplorerActions } from '../explorer'
 
 import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 
@@ -61,6 +62,8 @@ class BudgetBranch {
 
     public setState: Function
 
+    public getProps: Function
+
     public initializeChartSeries(callbacks, actions) {
 
         let branchsettings = this.settings
@@ -93,18 +96,19 @@ class BudgetBranch {
             nodeIndex:0,
         }
         // do this:
-        // let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, dataNode)
+        // let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, branchuid, dataNode)
         // TEMPORARILY COMMENTED OUT
         // this.actions.addNode(budgetNodeParms)
 
         let node = getBudgetNode(viewpointdata, datapath)
-        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, node)
+        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, 'x', node)
 
         let branchNodes = this.nodes
         let budgetdata = this.data
         let chartParmsObj: ChartParmsObj
         let cellindex: any
-        let selectfn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions)
+        let branchuid = this.uid
+        let selectfn = onChartComponentSelection(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions)
         let {
             Configuration: viewpointConfig,
             itemseriesconfigdata: itemseriesConfig,
@@ -145,7 +149,7 @@ class BudgetBranch {
 
     }
 
-    switchFacet(callbacks, actions) {
+    switchFacet(callbacks, actions:ExplorerActions) {
         let switchResults = {
             deeperdata: false,
             shallowerdata: false,
@@ -161,8 +165,8 @@ class BudgetBranch {
         let nodeIndex: any
         let isError = false
         let chartParmsObj: ChartParmsObj = null
-
-        let fn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions)
+        let branchuid = this.uid
+        let fn = onChartComponentSelection(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions)
 
         for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode
@@ -186,8 +190,11 @@ class BudgetBranch {
                     // replace budgetNode
                     isError = true
                     let prevBudgetNode: BudgetNode = branchNodes[nodeIndex - 1]
-                    branchNodes.splice(nodeIndex)
-
+                    let removed = branchNodes.splice(nodeIndex)
+                    let removedids = removed.map((item) => {
+                        return item.uid
+                    })
+                    // actions.removeNode(this.getProps().callbackuid, removedids)
                     let prevBudgetCell = prevBudgetNode.cells[0]
 
                     let context = {
@@ -228,7 +235,11 @@ class BudgetBranch {
                 let fcurrent = fn(nodeIndex)(nodeCellIndex),
                 chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:fn})
                 if (chartParmsObj.isError) {
-                    branchNodes.splice(nodeIndex)
+                    let removed = branchNodes.splice(nodeIndex)
+                    let removedids = removed.map((item) => {
+                        return item.uid
+                    })
+                    // actions.removeNode(this.getProps().callbackuid, removedids)
                     if (nodeIndex > 0) { // unset the selection of the parent
                         let parentBudgetNode: BudgetNode = branchNodes[nodeIndex - 1]
                         let parentBudgetCell = parentBudgetNode.cells[nodeCellIndex]
@@ -284,7 +295,8 @@ class BudgetBranch {
             branchsettings,
             configData,
         }
-        let fn = onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions)
+        let branchuid = this.uid
+        let fn = onChartComponentSelection(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions)
         let fncurrent = fn(nodeIndex)(cellIndex)
         let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
         if (!chartParmsObj.isError) {

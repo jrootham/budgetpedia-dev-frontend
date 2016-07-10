@@ -59,6 +59,7 @@ export interface OnChartComponentSelectionProps {
     branchsettings?: BranchSettings,
     budgetdata?:any,
     branchNodes?: any,
+    branchuid?:string,
 }
 export interface OnChartComponentSelectionCallbacks {
     updateBranchNodes: Function,
@@ -79,7 +80,7 @@ export interface OnChartComponentSelectionCallbacks {
 let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     callbacks: OnChartComponentSelectionCallbacks, actions: any) => {
 
-    let { context, branchsettings, budgetdata, branchNodes, selectionProps } = props
+    let { context, branchsettings, budgetdata, branchNodes, selectionProps, branchuid } = props
 
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks
 
@@ -112,7 +113,11 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
     let facet = budgetNode.facetName
 
     // TODO: abandon here if the next one exists and is the same
-    branchNodes.splice(nodeIndex + 1) // remove subsequent charts
+    let removed = branchNodes.splice(nodeIndex + 1) // remove subsequent charts
+    let removedids = removed.map((item) => {
+        return item.uid
+    })
+    // actions.removeNode(branchuid, removedids)
 
     // trigger update to avoid google charts use of cached versions
     refreshPresentation()
@@ -222,7 +227,7 @@ export let createChildNode = (
 
     // actions.addNode(newnodeconfigparms)
 
-    let newBudgetNode = new BudgetNode(newnodeconfigparms, newdatanode, parentNode)
+    let newBudgetNode = new BudgetNode(newnodeconfigparms, 'x', newdatanode, parentNode)
 
     let newcellindex: any = null
     let chartParmsObj: ChartParmsObj = null
@@ -281,13 +286,14 @@ export let createChildNode = (
 }
 
 export const onChartComponentSelection = 
-    branchsettings => budgetdata => branchNodes => 
+    branchsettings => branchuid => budgetdata => branchNodes => 
         callbacks => actions => nodeIndex => cellIndex => props => {
     props.context.nodeIndex = nodeIndex
     props.context.cellIndex = cellIndex
     props.branchsettings = branchsettings
     props.budgetdata = budgetdata
     props.branchNodes = branchNodes
+    props.branchuid = branchuid
     applyChartComponentSelection(props, callbacks, actions)
 }
 

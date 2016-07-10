@@ -57,12 +57,13 @@ class BudgetBranch {
             nodeIndex: 0,
         };
         let node = getbudgetnode_1.default(viewpointdata, datapath);
-        let budgetNode = new budgetnode_1.default(budgetNodeParms, node);
+        let budgetNode = new budgetnode_1.default(budgetNodeParms, 'x', node);
         let branchNodes = this.nodes;
         let budgetdata = this.data;
         let chartParmsObj;
         let cellindex;
-        let selectfn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions);
+        let branchuid = this.uid;
+        let selectfn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions);
         let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = budgetdata.viewpointdata;
         let configData = {
             viewpointConfig: viewpointConfig,
@@ -108,7 +109,8 @@ class BudgetBranch {
         let nodeIndex;
         let isError = false;
         let chartParmsObj = null;
-        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions);
+        let branchuid = this.uid;
+        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions);
         for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode;
             budgetNode = branchNodes[nodeIndex];
@@ -122,7 +124,10 @@ class BudgetBranch {
                     switchResults.shallowerdata = shallowerdata;
                     isError = true;
                     let prevBudgetNode = branchNodes[nodeIndex - 1];
-                    branchNodes.splice(nodeIndex);
+                    let removed = branchNodes.splice(nodeIndex);
+                    let removedids = removed.map((item) => {
+                        return item.uid;
+                    });
                     let prevBudgetCell = prevBudgetNode.cells[0];
                     let context = {
                         selection: prevBudgetCell.chartselection,
@@ -162,7 +167,10 @@ class BudgetBranch {
                 };
                 let fcurrent = fn(nodeIndex)(nodeCellIndex), chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: fn });
                 if (chartParmsObj.isError) {
-                    branchNodes.splice(nodeIndex);
+                    let removed = branchNodes.splice(nodeIndex);
+                    let removedids = removed.map((item) => {
+                        return item.uid;
+                    });
                     if (nodeIndex > 0) {
                         let parentBudgetNode = branchNodes[nodeIndex - 1];
                         let parentBudgetCell = parentBudgetNode.cells[nodeCellIndex];
@@ -210,7 +218,8 @@ class BudgetBranch {
             branchsettings: branchsettings,
             configData: configData,
         };
-        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(budgetdata)(branchNodes)(callbacks)(actions);
+        let branchuid = this.uid;
+        let fn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions);
         let fncurrent = fn(nodeIndex)(cellIndex);
         let chartParmsObj = budgetNode.getChartParms(chartprops, { current: fncurrent, next: fn });
         if (!chartParmsObj.isError) {

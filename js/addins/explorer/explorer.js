@@ -78,6 +78,7 @@ let Explorer = class extends Component {
     }
     render() {
         let explorer = this;
+        console.log('controlData', explorer.props.controlData);
         let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogopen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,
@@ -91,12 +92,17 @@ let Explorer = class extends Component {
             let budgetbranches = explorer.state.budgetBranches;
             let explorerActions = {
                 addNode: this.props.addNode,
+                removeNode: this.props.removeNode,
             };
             let segments = budgetbranches.map((budgetBranch, branchIndex) => {
-                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {callbackid: branchIndex, budgetBranch: budgetBranch, displaycallbacks: {
+                let actionprops = {
+                    addNode: explorerActions.addNode,
+                    removeNode: explorerActions.removeNode,
+                };
+                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {callbackuid: budgetBranch.uid, callbackid: branchIndex, budgetBranch: budgetBranch, displaycallbacks: {
                     workingStatus: explorer.workingStatus,
                     updateChartSelections: explorer.updateChartSelections,
-                }, actions: explorerActions})));
+                }, actions: actionprops})));
             });
             return segments;
         };
@@ -113,6 +119,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     hideWaitingMessage: Actions.hideWaitingMessage,
     addBranch: ExplorerActions.addBranch,
     addNode: ExplorerActions.addNode,
+    removeNode: ExplorerActions.removeNode,
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;
