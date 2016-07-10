@@ -163,7 +163,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     render() {
 
         let explorer = this
-        console.log('controlData',explorer.props.controlData)
+        // console.log('controlData',explorer.props.controlData)
         let dialogbox =  
             <Dialog
                 title = "Budget Explorer Help"
