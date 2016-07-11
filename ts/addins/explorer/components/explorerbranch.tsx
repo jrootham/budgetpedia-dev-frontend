@@ -32,7 +32,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 
-import databaseapi , { DatasetConfig, TimeSpecs, Viewpoint } from '../classes/databaseapi'
+import databaseapi , { DatasetConfig, TimeSpecs, ViewpointData } from '../classes/databaseapi'
 // import getChartParms from '../controllers/explorer/getchartparms'
 import { createChildNode,
     ChartSelectionContext,
@@ -58,7 +58,8 @@ interface ExploreBranchProps {
     }
 }
 
-class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, snackbar?:any} > {
+class ExplorerBranch extends Component<ExploreBranchProps, 
+    {branchNodes?:BudgetNode[], snackbar?:any, viewpointData?:ViewpointData} > {
 
     constructor(props) {
         super(props);
@@ -70,6 +71,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
     // TODO: most of 
     state = {
         branchNodes:[],
+        viewpointData:null,
         snackbar:{open:false,message:'empty'}
     }
 
@@ -84,20 +86,17 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
 
     private _actions: any
 
+    // complete initialization of budgetBranch and branch explorer objects object
     componentWillMount() {
-        let { budgetBranch, actions } = this.props
+        let { budgetBranch, actions, displaycallbacks, callbackid } = this.props
         budgetBranch.getState = this.getState
         budgetBranch.getProps = this.getProps
         budgetBranch.setState = this.setState.bind(this)
+
         this._actions = Object.assign({},actions)
         // this._actions.addNode = this.addNode(budgetBranch.uid)
         budgetBranch.actions = this._actions
-    }
 
-    // initialize once - create root drilldown and compare series
-    componentDidMount() {
-
-        let { displaycallbacks, callbackid, budgetBranch } = this.props
         let { refreshPresentation, onPortalCreation, updateBranchNodes } = this
         displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid)
         this._nodeCallbacks = {
@@ -108,7 +107,19 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
             updateBranchNodes,
             refreshPresentation,
         }
-        this.initializeChartSeries()
+    }
+
+    // initialize once -- set controlData
+    componentDidMount() {
+        let { budgetBranch } = this.props
+        budgetBranch.getViewpointData()
+        setTimeout(()=>{
+            this.initializeBranch()
+        })
+    }
+
+    // harmonize node controlData and object structures
+    componentWillReceiveProps(nextProps) {
 
     }
 
@@ -187,13 +198,13 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
 
     // ---------------------[ user interactions ]---------------------------
 
-    initializeChartSeries = () => {
+    initializeBranch = () => {
 
         let { budgetBranch } = this.props
 
-        budgetBranch.initializeChartSeries(this._nodeCallbacks, this._actions)
+        budgetBranch.initializeBranch(this._nodeCallbacks, this._actions)
 
-        this.refreshPresentation()
+        // this.refreshPresentation()
 
     }
 
@@ -212,7 +223,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
         })
         // wait for state to be updated
         setTimeout(()=>{
-            this.initializeChartSeries()
+            this.initializeBranch()
         })
 
     }
@@ -298,7 +309,9 @@ class ExplorerBranch extends Component<ExploreBranchProps, {branchNodes?:any, sn
     // get React components to render
     getPortals = (budgetNodes) => {
 
-        let { settings:branchsettings, data:budgetdata } = this.props.budgetBranch
+        let { settings:branchsettings } = this.props.budgetBranch
+
+        let budgetdata = {viewpointdata:this.getState().viewpointData}
 
         if (!budgetdata.viewpointdata) return []
         let viewpointdata = budgetdata.viewpointdata

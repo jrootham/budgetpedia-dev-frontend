@@ -38,7 +38,7 @@ export interface PortalCell {
     Type:string,
 }
 
-export interface Viewpoint extends Component {
+export interface ViewpointData extends Component {
     Lookups: Lookups,
     itemseriesconfigdata?: any,
     Configuration: {
@@ -48,7 +48,7 @@ export interface Viewpoint extends Component {
 }
 
 interface Viewpoints {
-    [index:string]: Viewpoint
+    [index:string]: ViewpointData
 }
 
 interface YearsContent {
@@ -188,8 +188,8 @@ class Database {
         updateViewpointData(parms)
     }
 
-    private getViewpoint(viewpoint: string): Viewpoint {
-        let viewpointdata: Viewpoint = db_viewpoints[viewpoint]
+    private getViewpoint(viewpoint: string): ViewpointData {
+        let viewpointdata: ViewpointData = db_viewpoints[viewpoint]
         return viewpointdata
     }
 

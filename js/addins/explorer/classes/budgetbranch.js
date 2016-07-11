@@ -6,7 +6,6 @@ const onchartcomponentselection_1 = require('../modules/onchartcomponentselectio
 const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
-        this.data = { viewpointdata: null };
         this.getViewpointData = () => {
             let branchsettings = this.settings;
             let { viewpoint: viewpointname, facet: dataseriesname, inflationAdjusted, } = branchsettings;
@@ -22,7 +21,9 @@ class BudgetBranch {
                     lastYear: null,
                 }
             });
-            this.data.viewpointdata = viewpointdata;
+            this.setState({
+                viewpointData: viewpointdata
+            });
             return viewpointdata;
         };
         this.settings = parms.settings;
@@ -36,9 +37,9 @@ class BudgetBranch {
     get state() {
         return this.getState();
     }
-    initializeChartSeries(callbacks, actions) {
+    initializeBranch(callbacks, actions) {
         let branchsettings = this.settings;
-        let viewpointdata = this.getViewpointData();
+        let viewpointdata = this.getState().viewpointData;
         let datapath = [];
         let { chartType: defaultChartType, viewpoint: viewpointName, facet: facetName, latestYear: rightYear, } = branchsettings;
         let budgetNodeParms = {
@@ -59,7 +60,7 @@ class BudgetBranch {
         let node = getbudgetnode_1.default(viewpointdata, datapath);
         let budgetNode = new budgetnode_1.default(budgetNodeParms, 'x', node);
         let branchNodes = this.nodes;
-        let budgetdata = this.data;
+        let budgetdata = { viewpointdata: this.getState().viewpointData };
         let chartParmsObj;
         let cellindex;
         let branchuid = this.uid;
@@ -101,8 +102,8 @@ class BudgetBranch {
             shallowerdata: false,
         };
         let branchsettings = this.settings;
-        let viewpointdata = this.getViewpointData();
-        let budgetdata = this.data;
+        let viewpointdata = this.getState().viewpointData;
+        let budgetdata = { viewpointdata: this.getState().viewpointData };
         let branchNodes = this.nodes;
         let budgetNode = null;
         let parentBudgetNode;
@@ -208,7 +209,7 @@ class BudgetBranch {
         };
         let oldChartType = budgetCell.googleChartType;
         budgetCell.googleChartType = chartType;
-        let budgetdata = this.data;
+        let budgetdata = { viewpointdata: this.getState().viewpointData };
         let configData = {
             viewpointConfig: budgetdata.viewpointdata.Configuration,
             itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,

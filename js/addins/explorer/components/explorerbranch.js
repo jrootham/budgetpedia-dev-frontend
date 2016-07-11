@@ -12,6 +12,7 @@ class ExplorerBranch extends Component {
         super(props);
         this.state = {
             branchNodes: [],
+            viewpointData: null,
             snackbar: { open: false, message: 'empty' }
         };
         this.getState = () => this.state;
@@ -74,10 +75,9 @@ class ExplorerBranch extends Component {
             const t1 = t - 1;
             return t1 * t1 * t1 + 1;
         };
-        this.initializeChartSeries = () => {
+        this.initializeBranch = () => {
             let { budgetBranch } = this.props;
-            budgetBranch.initializeChartSeries(this._nodeCallbacks, this._actions);
-            this.refreshPresentation();
+            budgetBranch.initializeBranch(this._nodeCallbacks, this._actions);
         };
         this.switchViewpoint = (viewpointname) => {
             let { settings: branchsettings, nodes: branchNodes } = this.props.budgetBranch;
@@ -90,7 +90,7 @@ class ExplorerBranch extends Component {
                 branchNodes: branchNodes,
             });
             setTimeout(() => {
-                this.initializeChartSeries();
+                this.initializeBranch();
             });
         };
         this.switchFacet = (facet) => {
@@ -148,7 +148,8 @@ class ExplorerBranch extends Component {
             });
         };
         this.getPortals = (budgetNodes) => {
-            let { settings: branchsettings, data: budgetdata } = this.props.budgetBranch;
+            let { settings: branchsettings } = this.props.budgetBranch;
+            let budgetdata = { viewpointdata: this.getState().viewpointData };
             if (!budgetdata.viewpointdata)
                 return [];
             let viewpointdata = budgetdata.viewpointdata;
@@ -206,15 +207,12 @@ class ExplorerBranch extends Component {
         };
     }
     componentWillMount() {
-        let { budgetBranch, actions } = this.props;
+        let { budgetBranch, actions, displaycallbacks, callbackid } = this.props;
         budgetBranch.getState = this.getState;
         budgetBranch.getProps = this.getProps;
         budgetBranch.setState = this.setState.bind(this);
         this._actions = Object.assign({}, actions);
         budgetBranch.actions = this._actions;
-    }
-    componentDidMount() {
-        let { displaycallbacks, callbackid, budgetBranch } = this.props;
         let { refreshPresentation, onPortalCreation, updateBranchNodes } = this;
         displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid);
         this._nodeCallbacks = {
@@ -224,7 +222,15 @@ class ExplorerBranch extends Component {
             updateBranchNodes: updateBranchNodes,
             refreshPresentation: refreshPresentation,
         };
-        this.initializeChartSeries();
+    }
+    componentDidMount() {
+        let { budgetBranch } = this.props;
+        budgetBranch.getViewpointData();
+        setTimeout(() => {
+            this.initializeBranch();
+        });
+    }
+    componentWillReceiveProps(nextProps) {
     }
     render() {
         let branch = this;

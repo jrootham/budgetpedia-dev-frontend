@@ -1,7 +1,7 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetbranch.tsx
 
-import databaseapi , { DatasetConfig, TimeSpecs, Viewpoint } from './databaseapi'
+import databaseapi , { DatasetConfig, TimeSpecs, ViewpointData } from './databaseapi'
 import {
     // MatrixCellConfig,
     // ChartParms,
@@ -40,7 +40,7 @@ class BudgetBranch {
         this.uid = parms.uid
     }
 
-    public data = {viewpointdata:null}
+    // public data = {viewpointdata:null}
 
     get nodes() {
         let branchNodes = this.state.branchNodes
@@ -64,10 +64,10 @@ class BudgetBranch {
 
     public getProps: Function
 
-    public initializeChartSeries(callbacks, actions) {
+    public initializeBranch(callbacks, actions) {
 
         let branchsettings = this.settings
-        let viewpointdata = this.getViewpointData()
+        let viewpointdata = this.getState().viewpointData
 
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
@@ -104,7 +104,7 @@ class BudgetBranch {
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, 'x', node)
 
         let branchNodes = this.nodes
-        let budgetdata = this.data
+        let budgetdata = {viewpointdata:this.getState().viewpointData}
         let chartParmsObj: ChartParmsObj
         let cellindex: any
         let branchuid = this.uid
@@ -155,8 +155,8 @@ class BudgetBranch {
             shallowerdata: false,
         }
         let branchsettings: BranchSettings = this.settings
-        let viewpointdata = this.getViewpointData()
-        let budgetdata = this.data
+        let viewpointdata = this.getState().viewpointData
+        let budgetdata = {viewpointdata:this.getState().viewpointData}
 
         let branchNodes = this.nodes
 
@@ -285,7 +285,7 @@ class BudgetBranch {
         }
         let oldChartType = budgetCell.googleChartType
         budgetCell.googleChartType = chartType
-        let budgetdata = this.data
+        let budgetdata = {viewpointdata:this.getState().viewpointData}
         let configData = {
             viewpointConfig:budgetdata.viewpointdata.Configuration,
             itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
@@ -319,7 +319,7 @@ class BudgetBranch {
             inflationAdjusted,
         } = branchsettings
 
-        let viewpointdata:Viewpoint = databaseapi.getViewpointData({
+        let viewpointdata:ViewpointData = databaseapi.getViewpointData({
             viewpointname, 
             dataseriesname,
             inflationAdjusted,
@@ -332,7 +332,11 @@ class BudgetBranch {
             }
         })
 
-        this.data.viewpointdata = viewpointdata
+        // this.data.viewpointdata = viewpointdata
+
+        this.setState({
+            viewpointData:viewpointdata
+        })
 
         return viewpointdata
     }

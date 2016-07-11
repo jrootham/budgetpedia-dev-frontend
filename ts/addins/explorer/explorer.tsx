@@ -99,7 +99,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         }
     }
 
-    // update budgetBranches objects based on control data
+    // harmonize budgetBranches objects  with control data
     componentWillReceiveProps(nextProps) {
         let { branchList, branchesById } = nextProps.controlData
         let budgetBranches:BudgetBranch[] = this.state.budgetBranches
