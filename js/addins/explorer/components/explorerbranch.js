@@ -75,12 +75,9 @@ class ExplorerBranch extends Component {
             const t1 = t - 1;
             return t1 * t1 * t1 + 1;
         };
-        this.initializeBranch = () => {
-            let { budgetBranch } = this.props;
-            budgetBranch.initializeBranch(this._nodeCallbacks, this._actions);
-        };
         this.switchViewpoint = (viewpointname) => {
-            let { settings: branchsettings, nodes: branchNodes } = this.props.budgetBranch;
+            let { budgetBranch } = this.props;
+            let { settings: branchsettings, nodes: branchNodes } = budgetBranch;
             let removed = branchNodes.splice(0);
             let removedids = removed.map((item) => {
                 return item.uid;
@@ -90,7 +87,7 @@ class ExplorerBranch extends Component {
                 branchNodes: branchNodes,
             });
             setTimeout(() => {
-                this.initializeBranch();
+                budgetBranch.initializeBranch();
             });
         };
         this.switchFacet = (facet) => {
@@ -228,7 +225,7 @@ class ExplorerBranch extends Component {
         let { budgetBranch } = this.props;
         budgetBranch.getViewpointData();
         setTimeout(() => {
-            this.initializeBranch();
+            budgetBranch.initializeBranch();
         });
     }
     componentWillReceiveProps(nextProps) {

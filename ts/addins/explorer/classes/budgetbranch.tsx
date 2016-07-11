@@ -64,7 +64,7 @@ class BudgetBranch {
 
     public getProps: Function
 
-    public initializeBranch(callbacks, actions) {
+    public initializeBranch() {
 
         let branchsettings = this.settings
         let viewpointdata = this.getState().viewpointData
@@ -95,13 +95,19 @@ class BudgetBranch {
             dataPath: [],
             nodeIndex:0,
         }
-        // do this:
-        // let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, branchuid, dataNode)
-        // TEMPORARILY COMMENTED OUT
+
         this.actions.addNode(budgetNodeParms)
 
-        let node = getBudgetNode(viewpointdata, datapath)
-        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, 'x', node)
+    }
+
+    addBranchNode = (budgetNodeUid, nodeIndex, budgetNodeParms,callbacks, actions) => {
+
+        let { datapath } = budgetNodeParms
+        let branchsettings = this.settings
+
+        let viewpointdata = this.getState().viewpointData
+        let datanode = getBudgetNode(viewpointdata, datapath)
+        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, datanode)
 
         let branchNodes = this.nodes
         let budgetdata = {viewpointdata:this.getState().viewpointData}
@@ -125,7 +131,7 @@ class BudgetBranch {
                 branchsettings,
             }
 
-            let fcurrent = selectfn(0)(cellindex)
+            let fcurrent = selectfn(nodeIndex)(cellindex)
 
             chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:selectfn})
 

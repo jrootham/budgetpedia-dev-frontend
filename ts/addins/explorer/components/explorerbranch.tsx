@@ -114,7 +114,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let { budgetBranch } = this.props
         budgetBranch.getViewpointData()
         setTimeout(()=>{
-            this.initializeBranch()
+            budgetBranch.initializeBranch()
         })
     }
 
@@ -198,19 +198,10 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // ---------------------[ user interactions ]---------------------------
 
-    initializeBranch = () => {
-
-        let { budgetBranch } = this.props
-
-        budgetBranch.initializeBranch(this._nodeCallbacks, this._actions)
-
-        // this.refreshPresentation()
-
-    }
-
     switchViewpoint = (viewpointname) => {
 
-        let { settings:branchsettings, nodes:branchNodes } = this.props.budgetBranch
+        let { budgetBranch } = this.props
+        let { settings:branchsettings, nodes:branchNodes } = budgetBranch
 
         let removed = branchNodes.splice(0) // remove subsequent charts
         let removedids = removed.map((item) => {
@@ -223,7 +214,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         })
         // wait for state to be updated
         setTimeout(()=>{
-            this.initializeBranch()
+            budgetBranch.initializeBranch()
         })
 
     }

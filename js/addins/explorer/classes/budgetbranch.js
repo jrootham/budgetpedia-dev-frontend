@@ -6,6 +6,49 @@ const onchartcomponentselection_1 = require('../modules/onchartcomponentselectio
 const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
+        this.addBranchNode = (budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions) => {
+            let { datapath } = budgetNodeParms;
+            let branchsettings = this.settings;
+            let viewpointdata = this.getState().viewpointData;
+            let datanode = getbudgetnode_1.default(viewpointdata, datapath);
+            let budgetNode = new budgetnode_1.default(budgetNodeParms, budgetNodeUid, datanode);
+            let branchNodes = this.nodes;
+            let budgetdata = { viewpointdata: this.getState().viewpointData };
+            let chartParmsObj;
+            let cellindex;
+            let branchuid = this.uid;
+            let selectfn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions);
+            let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = budgetdata.viewpointdata;
+            let configData = {
+                viewpointConfig: viewpointConfig,
+                itemseriesConfig: itemseriesConfig,
+            };
+            for (cellindex in budgetNode.cells) {
+                let budgetCell = budgetNode.cells[cellindex];
+                let props = {
+                    chartIndex: cellindex,
+                    configData: configData,
+                    branchsettings: branchsettings,
+                };
+                let fcurrent = selectfn(nodeIndex)(cellindex);
+                chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: selectfn });
+                if (!chartParmsObj.isError) {
+                    budgetCell.chartparms = chartParmsObj.chartParms;
+                    budgetCell.chartCode =
+                        constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
+                }
+                else {
+                    break;
+                }
+            }
+            if (!chartParmsObj.isError) {
+                let { nodeIndex } = budgetNode;
+                branchNodes[nodeIndex] = budgetNode;
+                this.setState({
+                    branchNodes: branchNodes,
+                });
+            }
+        };
         this.getViewpointData = () => {
             let branchsettings = this.settings;
             let { viewpoint: viewpointname, facet: dataseriesname, inflationAdjusted, } = branchsettings;
@@ -37,7 +80,7 @@ class BudgetBranch {
     get state() {
         return this.getState();
     }
-    initializeBranch(callbacks, actions) {
+    initializeBranch() {
         let branchsettings = this.settings;
         let viewpointdata = this.getState().viewpointData;
         let datapath = [];
@@ -58,44 +101,6 @@ class BudgetBranch {
             nodeIndex: 0,
         };
         this.actions.addNode(budgetNodeParms);
-        let node = getbudgetnode_1.default(viewpointdata, datapath);
-        let budgetNode = new budgetnode_1.default(budgetNodeParms, 'x', node);
-        let branchNodes = this.nodes;
-        let budgetdata = { viewpointdata: this.getState().viewpointData };
-        let chartParmsObj;
-        let cellindex;
-        let branchuid = this.uid;
-        let selectfn = onchartcomponentselection_1.onChartComponentSelection(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions);
-        let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = budgetdata.viewpointdata;
-        let configData = {
-            viewpointConfig: viewpointConfig,
-            itemseriesConfig: itemseriesConfig,
-        };
-        for (cellindex in budgetNode.cells) {
-            let budgetCell = budgetNode.cells[cellindex];
-            let props = {
-                chartIndex: cellindex,
-                configData: configData,
-                branchsettings: branchsettings,
-            };
-            let fcurrent = selectfn(0)(cellindex);
-            chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: selectfn });
-            if (!chartParmsObj.isError) {
-                budgetCell.chartparms = chartParmsObj.chartParms;
-                budgetCell.chartCode =
-                    constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
-            }
-            else {
-                break;
-            }
-        }
-        if (!chartParmsObj.isError) {
-            let { nodeIndex } = budgetNode;
-            branchNodes[nodeIndex] = budgetNode;
-            this.setState({
-                branchNodes: branchNodes,
-            });
-        }
     }
     switchFacet(callbacks, actions) {
         let switchResults = {
