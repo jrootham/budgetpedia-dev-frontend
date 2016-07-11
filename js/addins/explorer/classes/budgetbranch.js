@@ -57,6 +57,7 @@ class BudgetBranch {
             dataPath: [],
             nodeIndex: 0,
         };
+        this.actions.addNode(budgetNodeParms);
         let node = getbudgetnode_1.default(viewpointdata, datapath);
         let budgetNode = new budgetnode_1.default(budgetNodeParms, 'x', node);
         let branchNodes = this.nodes;

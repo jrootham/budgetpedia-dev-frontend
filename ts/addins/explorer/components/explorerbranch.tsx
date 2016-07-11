@@ -94,7 +94,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         budgetBranch.setState = this.setState.bind(this)
 
         this._actions = Object.assign({},actions)
-        // this._actions.addNode = this.addNode(budgetBranch.uid)
+        this._actions.addNode = this.addNode(budgetBranch.uid)
         budgetBranch.actions = this._actions
 
         let { refreshPresentation, onPortalCreation, updateBranchNodes } = this

@@ -98,7 +98,7 @@ class BudgetBranch {
         // do this:
         // let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, branchuid, dataNode)
         // TEMPORARILY COMMENTED OUT
-        // this.actions.addNode(budgetNodeParms)
+        this.actions.addNode(budgetNodeParms)
 
         let node = getBudgetNode(viewpointdata, datapath)
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, 'x', node)
