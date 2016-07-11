@@ -243,17 +243,18 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             </CardTitle>
 
-             <CardText expandable>
-             <ExplorerBranch 
-                 callbackuid = {budgetBranch.uid}
-                 callbackid = {branchIndex}
-                 budgetBranch = {budgetBranch}
-                 displaycallbacks = {{ 
-                     workingStatus: explorer.workingStatus,
-                     updateChartSelections: explorer.updateChartSelections,
-                  }}
-                  actions = {actionprops}
-             />
+            <CardText expandable>
+            <ExplorerBranch 
+                callbackuid = {budgetBranch.uid}
+                callbackid = {branchIndex}
+                budgetBranch = {budgetBranch}
+                displaycallbacks = {{ 
+                    workingStatus: explorer.workingStatus,
+                    updateChartSelections: explorer.updateChartSelections,
+                }}
+                actions = {actionprops}
+                controlData = {explorer.props.controlData}
+            />
             </CardText>
 
         </Card >

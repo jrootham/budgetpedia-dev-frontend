@@ -102,7 +102,7 @@ let Explorer = class extends Component {
                 return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {callbackuid: budgetBranch.uid, callbackid: branchIndex, budgetBranch: budgetBranch, displaycallbacks: {
                     workingStatus: explorer.workingStatus,
                     updateChartSelections: explorer.updateChartSelections,
-                }, actions: actionprops})));
+                }, actions: actionprops, controlData: explorer.props.controlData})));
             });
             return segments;
         };

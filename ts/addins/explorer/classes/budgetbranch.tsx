@@ -102,11 +102,13 @@ class BudgetBranch {
 
     addBranchNode = (budgetNodeUid, nodeIndex, budgetNodeParms,callbacks, actions) => {
 
-        let { datapath } = budgetNodeParms
+        console.log('addBranchNode parms', budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions)
+
+        let { dataPath } = budgetNodeParms
         let branchsettings = this.settings
 
         let viewpointdata = this.getState().viewpointData
-        let datanode = getBudgetNode(viewpointdata, datapath)
+        let datanode = getBudgetNode(viewpointdata, dataPath)
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, datanode)
 
         let branchNodes = this.nodes

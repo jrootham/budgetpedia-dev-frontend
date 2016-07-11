@@ -7,10 +7,11 @@ const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
         this.addBranchNode = (budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions) => {
-            let { datapath } = budgetNodeParms;
+            console.log('addBranchNode parms', budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions);
+            let { dataPath } = budgetNodeParms;
             let branchsettings = this.settings;
             let viewpointdata = this.getState().viewpointData;
-            let datanode = getbudgetnode_1.default(viewpointdata, datapath);
+            let datanode = getbudgetnode_1.default(viewpointdata, dataPath);
             let budgetNode = new budgetnode_1.default(budgetNodeParms, budgetNodeUid, datanode);
             let branchNodes = this.nodes;
             let budgetdata = { viewpointdata: this.getState().viewpointData };

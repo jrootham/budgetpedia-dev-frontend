@@ -55,7 +55,8 @@ interface ExploreBranchProps {
     actions: {
         addNode:Function,
         removeNode:Function,
-    }
+    },
+    controlData:any,
 }
 
 class ExplorerBranch extends Component<ExploreBranchProps, 
@@ -120,8 +121,47 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // harmonize node controlData and object structures
     componentWillReceiveProps(nextProps) {
-
+        console.log('explorerbranch will receive props', nextProps)
+        let { controlData } = nextProps
+        let branchData = controlData.branchesById[nextProps.callbackuid]
+        let { nodesById } = controlData
+        let { nodeList } = branchData
+        console.log('nodeList, nodesById',nodeList,nodesById)
+        let { budgetBranch } = this.props
+        let branchNodes = budgetBranch.nodes
+        let nodeIndex:any
+        // filter out deleted versions
+        branchNodes.filter((node) => {
+            return !!nodesById[node.uid]
+        })
+        this.setState({
+            branchNodes,
+        })
     }
+
+    componentDidUpdate() {
+        // refresh branchnodes
+        let { budgetBranch } = this.props
+        let branchNodes = budgetBranch.nodes
+        let { controlData } = this.props
+        let branchData = controlData.branchesById[this.props.callbackuid]
+        let { nodesById } = controlData
+        let { nodeList } = branchData
+        let nodeIndex:any
+        for (nodeIndex in nodeList) {
+            if (nodeIndex >= branchNodes.length) {
+                let budgetNodeId = nodeList[nodeIndex]
+                budgetBranch.addBranchNode(
+                    budgetNodeId,
+                    nodeIndex,
+                    nodesById[budgetNodeId],
+                    this._nodeCallbacks,
+                    this._actions
+                )
+                break
+            }
+        }
+    }    
 
     // used by callbacks; set by componentDidMount
     private _nodeCallbacks
