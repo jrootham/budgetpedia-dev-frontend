@@ -78,7 +78,6 @@ let Explorer = class extends Component {
     }
     render() {
         let explorer = this;
-        console.log('controlData', explorer.props.controlData);
         let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogopen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,

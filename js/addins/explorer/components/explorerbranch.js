@@ -76,18 +76,19 @@ class ExplorerBranch extends Component {
             return t1 * t1 * t1 + 1;
         };
         this.switchViewpoint = (viewpointname) => {
-            let { budgetBranch } = this.props;
+            let { budgetBranch, callbackuid } = this.props;
             let { settings: branchsettings, nodes: branchNodes } = budgetBranch;
             let removed = branchNodes.splice(0);
             let removedids = removed.map((item) => {
                 return item.uid;
             });
             branchsettings.viewpoint = viewpointname;
-            this.setState({
-                branchNodes: branchNodes,
-            });
+            this.props.actions.removeNode(callbackuid, removedids);
             setTimeout(() => {
-                budgetBranch.initializeBranch();
+                budgetBranch.getViewpointData();
+                setTimeout(() => {
+                    budgetBranch.initializeBranch();
+                });
             });
         };
         this.switchFacet = (facet) => {
@@ -229,16 +230,14 @@ class ExplorerBranch extends Component {
         });
     }
     componentWillReceiveProps(nextProps) {
-        console.log('explorerbranch will receive props', nextProps);
         let { controlData } = nextProps;
         let branchData = controlData.branchesById[nextProps.callbackuid];
         let { nodesById } = controlData;
         let { nodeList } = branchData;
-        console.log('nodeList, nodesById', nodeList, nodesById);
         let { budgetBranch } = this.props;
         let branchNodes = budgetBranch.nodes;
         let nodeIndex;
-        branchNodes.filter((node) => {
+        branchNodes = branchNodes.filter((node) => {
             return !!nodesById[node.uid];
         });
         this.setState({

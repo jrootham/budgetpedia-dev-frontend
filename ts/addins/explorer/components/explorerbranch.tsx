@@ -121,19 +121,21 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // harmonize node controlData and object structures
     componentWillReceiveProps(nextProps) {
-        console.log('explorerbranch will receive props', nextProps)
+        // console.log('explorerbranch will receive props', nextProps)
         let { controlData } = nextProps
         let branchData = controlData.branchesById[nextProps.callbackuid]
         let { nodesById } = controlData
         let { nodeList } = branchData
-        console.log('nodeList, nodesById',nodeList,nodesById)
+        // console.log('nodeList, nodesById',nodeList,nodesById)
         let { budgetBranch } = this.props
         let branchNodes = budgetBranch.nodes
         let nodeIndex:any
         // filter out deleted versions
-        branchNodes.filter((node) => {
+        // console.log('branchNodes before filter',[...branchNodes])
+        branchNodes = branchNodes.filter((node) => {
             return !!nodesById[node.uid]
         })
+        // console.log('branchNodes after filter',nodesById,[...branchNodes])
         this.setState({
             branchNodes,
         })
@@ -145,6 +147,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let branchNodes = budgetBranch.nodes
         let { controlData } = this.props
         let branchData = controlData.branchesById[this.props.callbackuid]
+        // console.log('branchData',branchData)
         let { nodesById } = controlData
         let { nodeList } = branchData
         let nodeIndex:any
@@ -240,23 +243,23 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     switchViewpoint = (viewpointname) => {
 
-        let { budgetBranch } = this.props
+        let { budgetBranch, callbackuid } = this.props
         let { settings:branchsettings, nodes:branchNodes } = budgetBranch
 
         let removed = branchNodes.splice(0) // remove subsequent charts
         let removedids = removed.map((item) => {
             return item.uid
         })
-        // this.props.actions.removeNode(this.props.callbackuid, removedids)
         branchsettings.viewpoint = viewpointname
-        this.setState({
-            branchNodes,
-        })
-        // wait for state to be updated
+        // console.log('calling from switchviewpoint',branchsettings, viewpointname, callbackuid, removedids)
+        // TODO: use promises instead of timeouts
+        this.props.actions.removeNode(callbackuid, removedids)
         setTimeout(()=>{
-            budgetBranch.initializeBranch()
+            budgetBranch.getViewpointData()
+            setTimeout(()=>{
+                budgetBranch.initializeBranch()
+            })
         })
-
     }
 
     switchFacet = (facet) => {

@@ -7,7 +7,6 @@ const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
         this.addBranchNode = (budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions) => {
-            console.log('addBranchNode parms', budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions);
             let { dataPath } = budgetNodeParms;
             let branchsettings = this.settings;
             let viewpointdata = this.getState().viewpointData;
@@ -68,7 +67,6 @@ class BudgetBranch {
             this.setState({
                 viewpointData: viewpointdata
             });
-            return viewpointdata;
         };
         this.settings = parms.settings;
         this.uid = parms.uid;

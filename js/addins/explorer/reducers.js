@@ -44,7 +44,7 @@ let branchesById = (state = {}, action) => {
             let newList = newstate[action.payload.branchuid].nodeList.filter((uid) => {
                 return (removelist.indexOf(uid) == -1);
             });
-            newstate[action.payload.branchid].nodeList = newList;
+            newstate[action.payload.branchuid].nodeList = newList;
             return newstate;
         default:
             return state;
@@ -63,7 +63,7 @@ let nodesById = (state = {}, action) => {
             if (!Array.isArray(removelist)) {
                 removelist = [removelist];
             }
-            for (let removeid in removelist) {
+            for (let removeid of removelist) {
                 delete newstate[removeid];
             }
             return newstate;

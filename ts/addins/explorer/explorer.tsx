@@ -122,6 +122,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 throw Error('mismatched order between controlData list and branch list')
             }
             budgetBranches[i].settings = branchesById[branchList[i]]
+            // console.log('budgetBranches.settings',budgetBranches[i].settings)
         }
         this.setState({
             budgetBranches,
@@ -165,7 +166,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     render() {
 
         let explorer = this
-        console.log('controlData',explorer.props.controlData)
+        // console.log('controlData',explorer.props.controlData)
         let dialogbox =  
             <Dialog
                 title = "Budget Explorer Help"
