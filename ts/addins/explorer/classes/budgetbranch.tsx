@@ -24,7 +24,7 @@ import {
     // CreateChildNodeCallbacks,
     onChartComponentSelection,
 } from '../modules/onchartcomponentselection'
-import { ExplorerActions } from '../explorer'
+import * as ExplorerActions from '../actions'
 
 import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 
@@ -157,7 +157,7 @@ class BudgetBranch {
 
     }
 
-    switchFacet(callbacks, actions:ExplorerActions) {
+    switchFacet(callbacks, actions) {
         let switchResults = {
             deeperdata: false,
             shallowerdata: false,

@@ -9,11 +9,13 @@ export namespace types {
     export const REMOVE_NODE = 'REMOVE_NODE'
     export const ADD_CELL = 'ADD_CELL'
     export const REMOVE_CELL = 'REMOVE_CELL'
+    export const CHANGE_VIEWPOINT = 'CHANGE_VIEWPOINT'
 }
 
 export namespace branchtypes {
     export import ADD_NODE = types.ADD_NODE
     export import REMOVE_NODE = types.REMOVE_NODE
+    export import CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT
 }
 
 export const addBranch = createAction(
@@ -26,6 +28,13 @@ export const addBranch = createAction(
 export const removeBranch = createAction(
     types.REMOVE_BRANCH,uid => ({
         uid,
+    })
+)
+
+export const changeViewpoint = createAction(
+    types.CHANGE_VIEWPOINT, (branchuid, viewpointname) => ({
+        branchuid,
+        viewpointname,        
     })
 )
 

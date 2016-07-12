@@ -58,6 +58,11 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             newstate[action.payload.branchuid].nodeList = newList
             return newstate
 
+        case actiontypes.CHANGE_VIEWPOINT:
+            newstate = Object.assign({},state)
+            newstate[action.payload.branchuid] = Object.assign({},newstate[action.payload.branchuid])
+            newstate[action.payload.branchuid].viewpoint = action.payload.viewpointname            
+            return newstate
         default:
             return state
     }

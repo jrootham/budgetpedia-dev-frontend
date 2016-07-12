@@ -41,7 +41,7 @@ import { createChildNode,
     onChartComponentSelection,
 } from '../modules/onchartcomponentselection'
 import * as Actions from '../../../core/actions/actions'
-import { branchtypes } from '../actions'
+import {branchtypes} from '../actions'
 import BudgetNode from '../classes/budgetnode'
 import BudgetBranch from '../classes/budgetbranch'
 
@@ -56,6 +56,7 @@ interface ExploreBranchProps {
     actions: {
         addNode:Function,
         removeNode:Function,
+        changeViewpoint:Function,
     },
     controlData:any,
 }
@@ -153,7 +154,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         // console.log('branchData',branchData)
         let { nodesById } = controlData
         let { nodeList } = branchData
-        this.onGlobalStateChange()
+
         // this well keep adding nodes on each render cycle triggere by 
         // addBranchNode, until all nodes are drawn
         // console.log('nodeList, branchNodes', nodeList, branchNodes)
@@ -167,6 +168,8 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 this._nodeCallbacks,
                 this._actions
             )
+        } else {
+            this.onGlobalStateChange()
         }
     }
 
@@ -175,13 +178,24 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     private onGlobalStateChange = () => {
         let previousControlData = this._previousControlData
         let currentControlData = this.props.controlData
-        if (!branchtypes[currentControlData.lastAction]) {
+        let {lastAction} = currentControlData
+        if (!branchtypes[lastAction]) {
             return
         }
         if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
             return
         }
         console.log('onChange',previousControlData, currentControlData)
+        let { budgetBranch } = this.props
+        switch (lastAction) {
+            case branchtypes.CHANGE_VIEWPOINT:
+                budgetBranch.getViewpointData()
+                setTimeout(()=>{
+                    budgetBranch.initializeBranch()
+                })
+                break;
+                    
+            }
         this._previousControlData = currentControlData
     }
 
@@ -272,13 +286,8 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         // console.log('calling from switchviewpoint',branchsettings, viewpointname, callbackuid, removedids)
         // this will trigger render cycle that will delete the component state's stored nodes
         this.props.actions.removeNode(callbackuid, removedids)
-        setTimeout(()=>{
-            // TODO: use an action to do this
-            branchsettings.viewpoint = viewpointname
-            budgetBranch.getViewpointData()
-            setTimeout(()=>{
-                budgetBranch.initializeBranch()
-            })
+        setTimeout(() => {
+            this.props.actions.changeViewpoint(callbackuid, viewpointname)
         })
     }
 

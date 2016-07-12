@@ -24,13 +24,23 @@ class ExplorerBranch extends Component {
         this.onGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
             let currentControlData = this.props.controlData;
-            if (!actions_1.branchtypes[currentControlData.lastAction]) {
+            let { lastAction } = currentControlData;
+            if (!actions_1.branchtypes[lastAction]) {
                 return;
             }
             if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
                 return;
             }
             console.log('onChange', previousControlData, currentControlData);
+            let { budgetBranch } = this.props;
+            switch (lastAction) {
+                case actions_1.branchtypes.CHANGE_VIEWPOINT:
+                    budgetBranch.getViewpointData();
+                    setTimeout(() => {
+                        budgetBranch.initializeBranch();
+                    });
+                    break;
+            }
             this._previousControlData = currentControlData;
         };
         this.refreshPresentation = () => {
@@ -98,11 +108,7 @@ class ExplorerBranch extends Component {
             });
             this.props.actions.removeNode(callbackuid, removedids);
             setTimeout(() => {
-                branchsettings.viewpoint = viewpointname;
-                budgetBranch.getViewpointData();
-                setTimeout(() => {
-                    budgetBranch.initializeBranch();
-                });
+                this.props.actions.changeViewpoint(callbackuid, viewpointname);
             });
         };
         this.switchFacet = (facet) => {
@@ -266,11 +272,13 @@ class ExplorerBranch extends Component {
         let branchData = controlData.branchesById[this.props.callbackuid];
         let { nodesById } = controlData;
         let { nodeList } = branchData;
-        this.onGlobalStateChange();
         if (nodeList.length > branchNodes.length) {
             let nodeIndex = branchNodes.length;
             let budgetNodeId = nodeList[nodeIndex];
             budgetBranch.addNode(budgetNodeId, nodeIndex, nodesById[budgetNodeId], this._nodeCallbacks, this._actions);
+        }
+        else {
+            this.onGlobalStateChange();
         }
     }
     render() {

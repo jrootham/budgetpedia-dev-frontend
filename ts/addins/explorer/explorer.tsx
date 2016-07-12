@@ -47,11 +47,6 @@ import * as ExplorerActions from './actions'
 import BudgetBranch from './classes/budgetbranch'
 import { getExplorerControlData } from './reducers'
 
-export interface ExplorerActions {
-    addNode: Function,
-    removeNode: Function,
-}
-
 import {
     MatrixCellConfig,
     ChartParmsObj,
@@ -61,13 +56,24 @@ import {
     BranchConfig,
 } from './modules/interfaces'
 
-interface ExplorerProps {
-    showWaitingMessage:Function, // dispatcher from Actions 
-    hideWaitingMessage:Function, // dispatcher from Actions
+interface MappedBranchActions {
+    addNode:Function,
+    changeViewpoint: Function,
+    removeNode: Function,
+}
+
+interface MappedExplorerActions extends MappedBranchActions {
+    // actions composed with dispatch
     addBranch:Function, // dispatcher from ExplorerActions through connect
     removeBranch:Function,
-    addNode:Function,
-    removeNode: Function,
+}
+
+interface MappedActions extends MappedExplorerActions{
+    showWaitingMessage:Function, // dispatcher from Actions 
+    hideWaitingMessage:Function, // dispatcher from Actions
+}
+
+interface ExplorerProps extends MappedActions {
     controlData:any, // from global state.explorer
 }
 
@@ -223,15 +229,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         let budgetbranches = explorer.state.budgetBranches
 
-        let explorerActions:ExplorerActions = {
+        let segments = budgetbranches.map((budgetBranch, branchIndex) => {
+        let actionprops:MappedBranchActions = {
             addNode: this.props.addNode,
             removeNode: this.props.removeNode,
-        }
-
-        let segments = budgetbranches.map((budgetBranch, branchIndex) => {
-        let actionprops = {
-            addNode:explorerActions.addNode,
-            removeNode:explorerActions.removeNode,
+            changeViewpoint: this.props.changeViewpoint,
         }
 
          return <Card initiallyExpanded 
@@ -308,13 +310,16 @@ let mapStateToProps = state => ({
     controlData:getExplorerControlData(state), 
 })
 
+
 Explorer = connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
+
     addBranch:ExplorerActions.addBranch,
     removeBranch: ExplorerActions.removeBranch,
     addNode:ExplorerActions.addNode,
     removeNode:ExplorerActions.removeNode,
+    changeViewpoint: ExplorerActions.changeViewpoint,
 })(Explorer)
 
 export default Explorer

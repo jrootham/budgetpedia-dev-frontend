@@ -89,14 +89,11 @@ let Explorer = class extends Component {
         }, onTouchTap: explorer.handleDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
         let drilldownsegments = () => {
             let budgetbranches = explorer.state.budgetBranches;
-            let explorerActions = {
-                addNode: this.props.addNode,
-                removeNode: this.props.removeNode,
-            };
             let segments = budgetbranches.map((budgetBranch, branchIndex) => {
                 let actionprops = {
-                    addNode: explorerActions.addNode,
-                    removeNode: explorerActions.removeNode,
+                    addNode: this.props.addNode,
+                    removeNode: this.props.removeNode,
+                    changeViewpoint: this.props.changeViewpoint,
                 };
                 return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {callbackuid: budgetBranch.uid, callbackid: branchIndex, budgetBranch: budgetBranch, displaycallbacks: {
                     workingStatus: explorer.workingStatus,
@@ -120,6 +117,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     removeBranch: ExplorerActions.removeBranch,
     addNode: ExplorerActions.addNode,
     removeNode: ExplorerActions.removeNode,
+    changeViewpoint: ExplorerActions.changeViewpoint,
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;
