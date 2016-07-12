@@ -258,12 +258,14 @@ class ExplorerBranch extends Component {
         let { budgetBranch } = this.props;
         let branchNodes = budgetBranch.nodes;
         let nodeIndex;
-        branchNodes = branchNodes.filter((node) => {
+        let newBranchNodes = branchNodes.filter((node) => {
             return !!nodesById[node.uid];
         });
-        this.setState({
-            branchNodes: branchNodes,
-        });
+        if (newBranchNodes.length != branchNodes.length) {
+            this.setState({
+                branchNodes: newBranchNodes,
+            });
+        }
     }
     componentDidUpdate() {
         let { budgetBranch } = this.props;

@@ -136,13 +136,14 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let nodeIndex:any
         // filter out deleted versions
         // console.log('branchNodes before filter',[...branchNodes])
-        branchNodes = branchNodes.filter((node) => {
+        let newBranchNodes = branchNodes.filter((node) => {
             return !!nodesById[node.uid]
         })
-        // console.log('branchNodes after filter',nodesById,[...branchNodes])
-        this.setState({
-            branchNodes,
-        })
+        if (newBranchNodes.length != branchNodes.length) {
+            this.setState({
+                branchNodes:newBranchNodes,
+            })
+        }
     }
 
     componentDidUpdate() {
