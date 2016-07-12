@@ -101,7 +101,7 @@ class ExplorerBranch extends Component {
         };
         this.switchViewpoint = (viewpointname) => {
             let { budgetBranch, callbackuid } = this.props;
-            let { settings: branchsettings, nodes: branchNodes } = budgetBranch;
+            let { nodes: branchNodes } = budgetBranch;
             let removed = branchNodes.splice(0);
             let removedids = removed.map((item) => {
                 return item.uid;

@@ -156,9 +156,9 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let { nodesById } = controlData
         let { nodeList } = branchData
 
-        // this well keep adding nodes on each render cycle triggere by 
+        // first task is to harmonize controlData nodeList list with local branchNode list
+        // this condition will keep adding nodes on each render cycle triggered by 
         // addBranchNode, until all nodes are drawn
-        // console.log('nodeList, branchNodes', nodeList, branchNodes)
         if (nodeList.length > branchNodes.length) {
             let nodeIndex = branchNodes.length
             let budgetNodeId = nodeList[nodeIndex]
@@ -169,13 +169,15 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 this._nodeCallbacks,
                 this._actions
             )
-        } else {
+        } else { // otherwise see if there are other cascading actions that have to be taken
             this.onGlobalStateChange()
         }
     }
 
+    // _previousControlData is not in a closure to allow for initializing in componentDidMount
     private _previousControlData: any
 
+    // state change machine
     private onGlobalStateChange = () => {
         let previousControlData = this._previousControlData
         let currentControlData = this.props.controlData
@@ -183,6 +185,8 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         if (!branchtypes[lastAction]) {
             return
         }
+        // the generation counter could be the same if render is being triggered
+        // solely by a local state change, which we want to ignore here
         if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
             return
         }
@@ -277,7 +281,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     switchViewpoint = (viewpointname) => {
 
         let { budgetBranch, callbackuid } = this.props
-        let { settings:branchsettings, nodes:branchNodes } = budgetBranch
+        let { nodes:branchNodes } = budgetBranch
 
         // branchNodes is just a copy of the component state's BranchNodes
         let removed = branchNodes.splice(0) // identify nodes to remove
@@ -287,6 +291,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         // console.log('calling from switchviewpoint',branchsettings, viewpointname, callbackuid, removedids)
         // this will trigger render cycle that will delete the component state's stored nodes
         this.props.actions.removeNode(callbackuid, removedids)
+        // now the viewpoint can be changed, triggering a change in viewpoint data
         setTimeout(() => {
             this.props.actions.changeViewpoint(callbackuid, viewpointname)
         })
