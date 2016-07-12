@@ -10,6 +10,11 @@ var types;
     types.ADD_CELL = 'ADD_CELL';
     types.REMOVE_CELL = 'REMOVE_CELL';
 })(types = exports.types || (exports.types = {}));
+var branchtypes;
+(function (branchtypes) {
+    branchtypes.ADD_NODE = types.ADD_NODE;
+    branchtypes.REMOVE_NODE = types.REMOVE_NODE;
+})(branchtypes = exports.branchtypes || (exports.branchtypes = {}));
 exports.addBranch = redux_actions_1.createAction(types.ADD_BRANCH, settings => ({
     settings: settings,
     uid: uuid.v4(),

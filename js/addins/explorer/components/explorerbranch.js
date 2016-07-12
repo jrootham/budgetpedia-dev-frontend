@@ -7,6 +7,7 @@ const MenuItem_1 = require('material-ui/MenuItem');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
+const actions_1 = require('../actions');
 class ExplorerBranch extends Component {
     constructor(props) {
         super(props);
@@ -19,6 +20,18 @@ class ExplorerBranch extends Component {
         this.getProps = () => this.props;
         this.addNode = uid => settings => {
             return this.props.actions.addNode(uid, settings);
+        };
+        this.onGlobalStateChange = () => {
+            let previousControlData = this._previousControlData;
+            let currentControlData = this.props.controlData;
+            if (!actions_1.branchtypes[currentControlData.lastAction]) {
+                return;
+            }
+            if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
+                return;
+            }
+            console.log('onChange', previousControlData, currentControlData);
+            this._previousControlData = currentControlData;
         };
         this.refreshPresentation = () => {
             this.forceUpdate();
@@ -54,8 +67,9 @@ class ExplorerBranch extends Component {
                 let scrollright = scrollleft + clientwidth;
                 let targetright = scrollwidth - 500;
                 let adjustment = scrollright - targetright;
-                if (adjustment > 0)
+                if (adjustment > 0) {
                     adjustment = Math.min(adjustment, scrollleft);
+                }
                 let frames = 60;
                 let t = 1 / frames;
                 let counter = 0;
@@ -82,9 +96,9 @@ class ExplorerBranch extends Component {
             let removedids = removed.map((item) => {
                 return item.uid;
             });
-            branchsettings.viewpoint = viewpointname;
             this.props.actions.removeNode(callbackuid, removedids);
             setTimeout(() => {
+                branchsettings.viewpoint = viewpointname;
                 budgetBranch.getViewpointData();
                 setTimeout(() => {
                     budgetBranch.initializeBranch();
@@ -224,6 +238,7 @@ class ExplorerBranch extends Component {
     }
     componentDidMount() {
         let { budgetBranch } = this.props;
+        this._previousControlData = this.props.controlData;
         budgetBranch.getViewpointData();
         setTimeout(() => {
             budgetBranch.initializeBranch();
@@ -251,13 +266,11 @@ class ExplorerBranch extends Component {
         let branchData = controlData.branchesById[this.props.callbackuid];
         let { nodesById } = controlData;
         let { nodeList } = branchData;
-        let nodeIndex;
-        for (nodeIndex in nodeList) {
-            if (nodeIndex >= branchNodes.length) {
-                let budgetNodeId = nodeList[nodeIndex];
-                budgetBranch.addBranchNode(budgetNodeId, nodeIndex, nodesById[budgetNodeId], this._nodeCallbacks, this._actions);
-                break;
-            }
+        this.onGlobalStateChange();
+        if (nodeList.length > branchNodes.length) {
+            let nodeIndex = branchNodes.length;
+            let budgetNodeId = nodeList[nodeIndex];
+            budgetBranch.addNode(budgetNodeId, nodeIndex, nodesById[budgetNodeId], this._nodeCallbacks, this._actions);
         }
     }
     render() {

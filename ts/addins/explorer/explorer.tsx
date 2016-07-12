@@ -65,6 +65,7 @@ interface ExplorerProps {
     showWaitingMessage:Function, // dispatcher from Actions 
     hideWaitingMessage:Function, // dispatcher from Actions
     addBranch:Function, // dispatcher from ExplorerActions through connect
+    removeBranch:Function,
     addNode:Function,
     removeNode: Function,
     controlData:any, // from global state.explorer
@@ -311,6 +312,7 @@ Explorer = connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
     addBranch:ExplorerActions.addBranch,
+    removeBranch: ExplorerActions.removeBranch,
     addNode:ExplorerActions.addNode,
     removeNode:ExplorerActions.removeNode,
 })(Explorer)

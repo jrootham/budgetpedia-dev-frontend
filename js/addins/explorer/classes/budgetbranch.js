@@ -6,7 +6,7 @@ const onchartcomponentselection_1 = require('../modules/onchartcomponentselectio
 const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
-        this.addBranchNode = (budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions) => {
+        this.addNode = (budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions) => {
             let { dataPath } = budgetNodeParms;
             let branchsettings = this.settings;
             let viewpointdata = this.getState().viewpointData;

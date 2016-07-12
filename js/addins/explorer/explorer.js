@@ -117,6 +117,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
     addBranch: ExplorerActions.addBranch,
+    removeBranch: ExplorerActions.removeBranch,
     addNode: ExplorerActions.addNode,
     removeNode: ExplorerActions.removeNode,
 })(Explorer);

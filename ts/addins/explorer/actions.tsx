@@ -11,6 +11,11 @@ export namespace types {
     export const REMOVE_CELL = 'REMOVE_CELL'
 }
 
+export namespace branchtypes {
+    export import ADD_NODE = types.ADD_NODE
+    export import REMOVE_NODE = types.REMOVE_NODE
+}
+
 export const addBranch = createAction(
     types.ADD_BRANCH,settings => ({
         settings,

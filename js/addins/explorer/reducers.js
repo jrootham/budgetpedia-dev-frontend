@@ -2,6 +2,7 @@
 const redux_1 = require('redux');
 const initialstate_1 = require("../../local/initialstate");
 const actions_1 = require('./actions');
+let generationcounter = 0;
 let defaults = (state = initialstate_1.default.explorer.defaults, action) => {
     return state;
 };
@@ -32,6 +33,7 @@ let branchesById = (state = {}, action) => {
             return newstate;
         case actions_1.types.ADD_NODE:
             newstate = Object.assign({}, state);
+            newstate[action.payload.branchuid] = Object.assign({}, newstate[action.payload.branchuid]);
             newstate[action.payload.branchuid].nodeList =
                 [...state[action.payload.branchuid].nodeList, action.payload.uid];
             return newstate;
@@ -74,12 +76,20 @@ let nodesById = (state = {}, action) => {
 let cellsById = (state = {}, action) => {
     return state;
 };
+let lastAction = (state = null, action) => {
+    return action.type;
+};
+let generation = (state = null, action) => {
+    return generationcounter++;
+};
 let explorer = redux_1.combineReducers({
     defaults: defaults,
     branchList: branchList,
     branchesById: branchesById,
     nodesById: nodesById,
     cellsById: cellsById,
+    lastAction: lastAction,
+    generation: generation,
 });
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = explorer;

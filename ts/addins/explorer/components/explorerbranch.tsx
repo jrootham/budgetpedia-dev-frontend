@@ -41,6 +41,7 @@ import { createChildNode,
     onChartComponentSelection,
 } from '../modules/onchartcomponentselection'
 import * as Actions from '../../../core/actions/actions'
+import { branchtypes } from '../actions'
 import BudgetNode from '../classes/budgetnode'
 import BudgetBranch from '../classes/budgetbranch'
 
@@ -76,6 +77,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         snackbar:{open:false,message:'empty'}
     }
 
+    // for budgetBranch object:
     // return fresh copy of state object; changes after being set
     // used by budgetBranch instance
     getState = () => this.state
@@ -113,13 +115,14 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     // initialize once -- set controlData
     componentDidMount() {
         let { budgetBranch } = this.props
+        this._previousControlData = this.props.controlData // initialize
         budgetBranch.getViewpointData()
         setTimeout(()=>{
             budgetBranch.initializeBranch()
         })
     }
 
-    // harmonize node controlData and object structures
+    // remove obsolete node objects
     componentWillReceiveProps(nextProps) {
         // console.log('explorerbranch will receive props', nextProps)
         let { controlData } = nextProps
@@ -150,21 +153,37 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         // console.log('branchData',branchData)
         let { nodesById } = controlData
         let { nodeList } = branchData
-        let nodeIndex:any
-        for (nodeIndex in nodeList) {
-            if (nodeIndex >= branchNodes.length) {
-                let budgetNodeId = nodeList[nodeIndex]
-                budgetBranch.addBranchNode(
-                    budgetNodeId,
-                    nodeIndex,
-                    nodesById[budgetNodeId],
-                    this._nodeCallbacks,
-                    this._actions
-                )
-                break
-            }
+        this.onGlobalStateChange()
+        // this well keep adding nodes on each render cycle triggere by 
+        // addBranchNode, until all nodes are drawn
+        // console.log('nodeList, branchNodes', nodeList, branchNodes)
+        if (nodeList.length > branchNodes.length) {
+            let nodeIndex = branchNodes.length
+            let budgetNodeId = nodeList[nodeIndex]
+            budgetBranch.addNode(
+                budgetNodeId,
+                nodeIndex,
+                nodesById[budgetNodeId],
+                this._nodeCallbacks,
+                this._actions
+            )
         }
-    }    
+    }
+
+    private _previousControlData: any
+
+    private onGlobalStateChange = () => {
+        let previousControlData = this._previousControlData
+        let currentControlData = this.props.controlData
+        if (!branchtypes[currentControlData.lastAction]) {
+            return
+        }
+        if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
+            return
+        }
+        console.log('onChange',previousControlData, currentControlData)
+        this._previousControlData = currentControlData
+    }
 
     // used by callbacks; set by componentDidMount
     private _nodeCallbacks
@@ -213,23 +232,22 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             let scrollright = scrollleft + clientwidth
             let targetright = scrollwidth - 500
             let adjustment = scrollright - targetright
-            if (adjustment > 0)
+            if (adjustment > 0) {
                 adjustment = Math.min(adjustment,scrollleft)
-            // if (adjustment < 0) {
-                let frames = 60
-                let t = 1 / frames
-                let counter = 0
-                let tick = () => {
-                    counter++
-                    let factor = this.easeOutCubic(counter * t)
-                    let scrollinterval = adjustment * factor
-                    element.scrollLeft = scrollleft - scrollinterval
-                    if (counter < frames) {
-                        requestAnimationFrame(tick)
-                    }
+            }
+            let frames = 60
+            let t = 1 / frames
+            let counter = 0
+            let tick = () => {
+                counter++
+                let factor = this.easeOutCubic(counter * t)
+                let scrollinterval = adjustment * factor
+                element.scrollLeft = scrollleft - scrollinterval
+                if (counter < frames) {
+                    requestAnimationFrame(tick)
                 }
-                requestAnimationFrame(tick)
-            // }
+            }
+            requestAnimationFrame(tick)
         })
     }
 
@@ -246,15 +264,17 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let { budgetBranch, callbackuid } = this.props
         let { settings:branchsettings, nodes:branchNodes } = budgetBranch
 
-        let removed = branchNodes.splice(0) // remove subsequent charts
+        // branchNodes is just a copy of the component state's BranchNodes
+        let removed = branchNodes.splice(0) // identify nodes to remove
         let removedids = removed.map((item) => {
             return item.uid
         })
-        branchsettings.viewpoint = viewpointname
         // console.log('calling from switchviewpoint',branchsettings, viewpointname, callbackuid, removedids)
-        // TODO: use promises instead of timeouts
+        // this will trigger render cycle that will delete the component state's stored nodes
         this.props.actions.removeNode(callbackuid, removedids)
         setTimeout(()=>{
+            // TODO: use an action to do this
+            branchsettings.viewpoint = viewpointname
             budgetBranch.getViewpointData()
             setTimeout(()=>{
                 budgetBranch.initializeBranch()

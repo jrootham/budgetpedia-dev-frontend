@@ -3,6 +3,8 @@ import { combineReducers } from 'redux'
 import initialstate from "../../local/initialstate"
 import { types as actiontypes} from './actions'
 
+let generationcounter = 0
+
 let defaults = (state = initialstate.explorer.defaults, action) => {
     return state
 }
@@ -39,6 +41,7 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
         
         case actiontypes.ADD_NODE:
             newstate = Object.assign({},state)
+            newstate[action.payload.branchuid] = Object.assign({},newstate[action.payload.branchuid])
             newstate[action.payload.branchuid].nodeList = 
                 [...state[action.payload.branchuid].nodeList,action.payload.uid]
             return newstate
@@ -52,7 +55,6 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             let newList = newstate[action.payload.branchuid].nodeList.filter((uid) => {
                 return (removelist.indexOf(uid) == -1)
             }) 
-            // console.log('remove node',newList)
             newstate[action.payload.branchuid].nodeList = newList
             return newstate
 
@@ -78,7 +80,6 @@ let nodesById = (state = { }, action) => {
             for (let removeid of removelist) {
                 delete newstate[removeid]
             }
-            // console.log('newstate in nodesById')
             return newstate
 
         default:
@@ -90,12 +91,22 @@ let cellsById = (state = { }, action) => {
     return state
 }
 
+let lastAction = (state = null, action) => {
+    return action.type
+}
+
+let generation = (state = null, action) => {
+    return generationcounter++
+}
+
 let explorer = combineReducers({
         defaults,
         branchList,
         branchesById,
         nodesById,
-        cellsById,    
+        cellsById,
+        lastAction,
+        generation,
 })
 
 export default explorer
