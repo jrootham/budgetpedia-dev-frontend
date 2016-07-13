@@ -2,24 +2,10 @@
 // explorerbranch.tsx
 
 'use strict'
+
+// -------------------[ libraries ]---------------------
 import * as React from 'react'
 var { Component } = React
-
-import {
-    MatrixCellConfig,
-    ChartParms,
-    ChartParmsObj,
-    PortalConfig,
-    CellSettings,
-    CellCallbacks,
-    PortalChartLocation,
-    ChartConfig,
-    GetCellChartProps,
-    BranchSettings,
-} from '../modules/interfaces'
-
-import { ExplorerPortal } from './explorerportal'
-import getBudgetNode from '../modules/getbudgetnode'
 
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
@@ -30,18 +16,38 @@ import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 import Snackbar from 'material-ui/Snackbar';
 
-import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
+// ------------------------[ modules ]-----------------------------
 
-import databaseapi , { DatasetConfig, TimeSpecs, ViewpointData } from '../classes/databaseapi'
+import {
+    // MatrixCellConfig,
+    // ChartParms,
+    // ChartParmsObj,
+    PortalConfig,
+    CellSettings,
+    CellCallbacks,
+    // PortalChartLocation,
+    ChartConfig,
+    // GetCellChartProps,
+    // BranchSettings,
+} from '../modules/interfaces'
+
+import { ExplorerPortal } from './explorerportal'
+
+// import getBudgetNode from '../modules/getbudgetnode'
+
+// import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
+
+import { DatasetConfig, TimeSpecs, ViewpointData } from '../classes/databaseapi'
 // import getChartParms from '../controllers/explorer/getchartparms'
-import { createChildNode,
-    ChartSelectionContext,
-    CreateChildNodeProps,
-    CreateChildNodeCallbacks,
-    onChartComponentSelection,
-} from '../modules/onchartcomponentselection'
-import * as Actions from '../../../core/actions/actions'
-import {branchtypes} from '../actions'
+// import { createChildNode,
+//     ChartSelectionContext,
+//     CreateChildNodeProps,
+//     CreateChildNodeCallbacks,
+//     onChartComponentSelection,
+// } from '../modules/onchartcomponentselection'
+
+// import * as Actions from '../../../core/actions/actions'
+import {branchtypes as branchactiontypes} from '../actions'
 import BudgetNode from '../classes/budgetnode'
 import BudgetBranch from '../classes/budgetbranch'
 
@@ -84,13 +90,13 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     getState = () => this.state
     getProps = () => this.props
 
-    addNode = uid => settings => {
-        return this.props.actions.addNode(uid, settings)
+    addNode = branchuid => settings => {
+        return this.props.actions.addNode(branchuid, settings)
     }
 
     private _actions: any
 
-    // complete initialization of budgetBranch and branch explorer objects object
+    // complete initialization of budgetBranch and branch explorer objects
     componentWillMount() {
         let { budgetBranch, actions, displaycallbacks, callbackid } = this.props
         budgetBranch.getState = this.getState
@@ -116,11 +122,14 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     // initialize once -- set controlData
     componentDidMount() {
         let { budgetBranch } = this.props
-        this._previousControlData = this.props.controlData // initialize
+        let {controlData} = this.props
+        this._previousControlData = controlData // initialize
         budgetBranch.getViewpointData()
-        setTimeout(()=>{
-            budgetBranch.initializeBranch()
-        })
+        if (controlData.branchesById[budgetBranch.uid].nodeList.length == 0) {
+            setTimeout(()=>{
+                budgetBranch.initializeBranch()
+            })
+        }
     }
 
     // remove obsolete node objects
@@ -146,6 +155,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         }
     }
 
+    // add pending node objects, and process state changes
     componentDidUpdate() {
         // refresh branchnodes
         let { budgetBranch } = this.props
@@ -182,7 +192,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let previousControlData = this._previousControlData
         let currentControlData = this.props.controlData
         let {lastAction} = currentControlData
-        if (!branchtypes[lastAction]) {
+        if (!branchactiontypes[lastAction]) {
             return
         }
         // the generation counter could be the same if render is being triggered
@@ -193,7 +203,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         console.log('onChange',previousControlData, currentControlData)
         let { budgetBranch } = this.props
         switch (lastAction) {
-            case branchtypes.CHANGE_VIEWPOINT:
+            case branchactiontypes.CHANGE_VIEWPOINT:
                 budgetBranch.getViewpointData()
                 setTimeout(()=>{
                     budgetBranch.initializeBranch()
@@ -366,14 +376,14 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         })
     }
 
-    // -----------------------------[ prepare for render ]---------------------------------
-
     onChangePortalTab = () => {
         let branch = this
         setTimeout(() => {
             branch.props.displaycallbacks.updateChartSelections()
         })
     }
+
+    // -----------------------------[ prepare for render ]---------------------------------
 
     // get React components to render
     getPortals = (budgetNodes) => {

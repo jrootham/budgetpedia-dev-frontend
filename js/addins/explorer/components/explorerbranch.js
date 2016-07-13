@@ -1,12 +1,12 @@
 'use strict';
 const React = require('react');
 var { Component } = React;
-const explorerportal_1 = require('./explorerportal');
 const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
+const explorerportal_1 = require('./explorerportal');
 const actions_1 = require('../actions');
 class ExplorerBranch extends Component {
     constructor(props) {
@@ -18,8 +18,8 @@ class ExplorerBranch extends Component {
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
-        this.addNode = uid => settings => {
-            return this.props.actions.addNode(uid, settings);
+        this.addNode = branchuid => settings => {
+            return this.props.actions.addNode(branchuid, settings);
         };
         this.onGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
@@ -244,11 +244,14 @@ class ExplorerBranch extends Component {
     }
     componentDidMount() {
         let { budgetBranch } = this.props;
-        this._previousControlData = this.props.controlData;
+        let { controlData } = this.props;
+        this._previousControlData = controlData;
         budgetBranch.getViewpointData();
-        setTimeout(() => {
-            budgetBranch.initializeBranch();
-        });
+        if (controlData.branchesById[budgetBranch.uid].nodeList.length == 0) {
+            setTimeout(() => {
+                budgetBranch.initializeBranch();
+            });
+        }
     }
     componentWillReceiveProps(nextProps) {
         let { controlData } = nextProps;
