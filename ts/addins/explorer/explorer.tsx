@@ -99,15 +99,31 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     // see if any initialization is required
     componentDidMount() {
-        let { branchList } = this.props.controlData
+        console.log('explorer did mount')
+        let { branchList, branchesById } = this.props.controlData
         if (branchList.length == 0) { // initialize explorer with first branch
             let defaultSettings:BranchSettings = this.props.controlData.defaults.branch
             this.props.addBranch(defaultSettings)
+        } else {
+            // TODO: this is duplicated in will receive props
+            let budgetBranches:BudgetBranch[] = this.state.budgetBranches
+            if (budgetBranches.length < branchList.length ) { // new branch
+                let length = budgetBranches.length
+                for ( let i = length; i < branchList.length ; i++ ) {
+                    let uid = branchList[i]
+                    let settings = branchesById[uid]
+                    budgetBranches.push(new BudgetBranch({settings,uid}))
+                }
+                this.setState({
+                    budgetBranches,
+                })
+            }
         }
     }
 
     // harmonize budgetBranches objects  with control data
     componentWillReceiveProps(nextProps) {
+        console.log('explorer will receive')
         let { branchList, branchesById } = nextProps.controlData
         let budgetBranches:BudgetBranch[] = this.state.budgetBranches
         // remove deleted branches
@@ -173,7 +189,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     render() {
 
         let explorer = this
-        // console.log('controlData',explorer.props.controlData)
+        console.log('controlData',explorer.props.controlData)
         let dialogbox =  
             <Dialog
                 title = "Budget Explorer Help"
@@ -227,13 +243,13 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         let drilldownsegments = () => {
 
-        let budgetbranches = explorer.state.budgetBranches
+            let budgetbranches = explorer.state.budgetBranches
 
-        let segments = budgetbranches.map((budgetBranch, branchIndex) => {
-        let actionprops:MappedBranchActions = {
-            addNode: this.props.addNode,
-            removeNode: this.props.removeNode,
-            changeViewpoint: this.props.changeViewpoint,
+            let segments = budgetbranches.map((budgetBranch, branchIndex) => {
+            let actionprops:MappedBranchActions = {
+                addNode: this.props.addNode,
+                removeNode: this.props.removeNode,
+                changeViewpoint: this.props.changeViewpoint,
         }
 
          return <Card initiallyExpanded 
@@ -269,6 +285,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         // -----------[ COMBINE SEGMENTS ]---------------
 
         let branches = drilldownsegments()
+
+        console.log('branches', branches)
 
         return <div>
 

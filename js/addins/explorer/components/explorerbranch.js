@@ -225,6 +225,7 @@ class ExplorerBranch extends Component {
         };
     }
     componentWillMount() {
+        console.log('will mount');
         let { budgetBranch, actions, displaycallbacks, callbackid } = this.props;
         budgetBranch.getState = this.getState;
         budgetBranch.getProps = this.getProps;
@@ -243,6 +244,7 @@ class ExplorerBranch extends Component {
         };
     }
     componentDidMount() {
+        console.log('did mount');
         let { budgetBranch } = this.props;
         let { controlData } = this.props;
         this._previousControlData = controlData;
@@ -254,6 +256,7 @@ class ExplorerBranch extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
+        console.log('will receive');
         let { controlData } = nextProps;
         let branchData = controlData.branchesById[nextProps.callbackuid];
         let { nodesById } = controlData;
@@ -271,12 +274,14 @@ class ExplorerBranch extends Component {
         }
     }
     componentDidUpdate() {
+        console.log('did update');
         let { budgetBranch } = this.props;
         let branchNodes = budgetBranch.nodes;
         let { controlData } = this.props;
         let branchData = controlData.branchesById[this.props.callbackuid];
         let { nodesById } = controlData;
         let { nodeList } = branchData;
+        console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length);
         if (nodeList.length > branchNodes.length) {
             let nodeIndex = branchNodes.length;
             let budgetNodeId = nodeList[nodeIndex];

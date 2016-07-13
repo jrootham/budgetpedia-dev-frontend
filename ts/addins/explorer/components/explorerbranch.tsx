@@ -98,6 +98,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // complete initialization of budgetBranch and branch explorer objects
     componentWillMount() {
+        console.log('will mount')
         let { budgetBranch, actions, displaycallbacks, callbackid } = this.props
         budgetBranch.getState = this.getState
         budgetBranch.getProps = this.getProps
@@ -121,6 +122,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // initialize once -- set controlData
     componentDidMount() {
+        console.log('did mount')
         let { budgetBranch } = this.props
         let {controlData} = this.props
         this._previousControlData = controlData // initialize
@@ -134,6 +136,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // remove obsolete node objects
     componentWillReceiveProps(nextProps) {
+        console.log('will receive')
         // console.log('explorerbranch will receive props', nextProps)
         let { controlData } = nextProps
         let branchData = controlData.branchesById[nextProps.callbackuid]
@@ -157,6 +160,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // add pending node objects, and process state changes
     componentDidUpdate() {
+        console.log('did update')
         // refresh branchnodes
         let { budgetBranch } = this.props
         let branchNodes = budgetBranch.nodes
@@ -169,6 +173,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         // first task is to harmonize controlData nodeList list with local branchNode list
         // this condition will keep adding nodes on each render cycle triggered by 
         // addBranchNode, until all nodes are drawn
+        console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length)
         if (nodeList.length > branchNodes.length) {
             let nodeIndex = branchNodes.length
             let budgetNodeId = nodeList[nodeIndex]

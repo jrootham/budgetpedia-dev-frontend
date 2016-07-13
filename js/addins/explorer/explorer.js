@@ -46,13 +46,29 @@ let Explorer = class extends Component {
         this.updateChartSelections = branchIndex => () => this.updateIndexChartSelections(branchIndex);
     }
     componentDidMount() {
-        let { branchList } = this.props.controlData;
+        console.log('explorer did mount');
+        let { branchList, branchesById } = this.props.controlData;
         if (branchList.length == 0) {
             let defaultSettings = this.props.controlData.defaults.branch;
             this.props.addBranch(defaultSettings);
         }
+        else {
+            let budgetBranches = this.state.budgetBranches;
+            if (budgetBranches.length < branchList.length) {
+                let length = budgetBranches.length;
+                for (let i = length; i < branchList.length; i++) {
+                    let uid = branchList[i];
+                    let settings = branchesById[uid];
+                    budgetBranches.push(new budgetbranch_1.default({ settings: settings, uid: uid }));
+                }
+                this.setState({
+                    budgetBranches: budgetBranches,
+                });
+            }
+        }
     }
     componentWillReceiveProps(nextProps) {
+        console.log('explorer will receive');
         let { branchList, branchesById } = nextProps.controlData;
         let budgetBranches = this.state.budgetBranches;
         budgetBranches = budgetBranches.filter(budgetBranch => {
@@ -78,6 +94,7 @@ let Explorer = class extends Component {
     }
     render() {
         let explorer = this;
+        console.log('controlData', explorer.props.controlData);
         let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogopen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,
@@ -103,6 +120,7 @@ let Explorer = class extends Component {
             return segments;
         };
         let branches = drilldownsegments();
+        console.log('branches', branches);
         return React.createElement("div", null, React.createElement(Card_1.Card, {initiallyExpanded: false}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: explorer.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: explorer.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")))), dialogbox, branches);
     }
 }
