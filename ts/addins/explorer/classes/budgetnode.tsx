@@ -14,7 +14,7 @@ import getChartParmsSource from './modules/getchartparms'
 export interface BudgetNodeParms {
     defaultChartType: string,
     viewpointName: string,
-    facetName: string,
+    facetName: string, // used to select chartset to display
     portalCharts:PortalCell[],
     timeSpecs: TimeSpecs,
     dataPath: string[],

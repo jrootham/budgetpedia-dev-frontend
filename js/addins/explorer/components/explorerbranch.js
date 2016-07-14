@@ -34,12 +34,41 @@ class ExplorerBranch extends Component {
             console.log('onChange', previousControlData, currentControlData);
             let { budgetBranch } = this.props;
             switch (lastAction) {
-                case actions_1.branchtypes.CHANGE_VIEWPOINT:
+                case actions_1.branchtypes.CHANGE_VIEWPOINT: {
                     budgetBranch.getViewpointData();
                     setTimeout(() => {
                         budgetBranch.initializeBranch();
                     });
                     break;
+                }
+                case actions_1.branchtypes.CHANGE_FACET: {
+                    budgetBranch.getViewpointData();
+                    setTimeout(() => {
+                        let switchResults = budgetBranch.switchFacet(this._nodeCallbacks, this.props.actions);
+                        let { deeperdata, shallowerdata } = switchResults;
+                        if (deeperdata || shallowerdata) {
+                            let message = null;
+                            if (deeperdata) {
+                                message = "More drilldown is available for current facet selection";
+                            }
+                            else {
+                                message = "Less drilldown is available for current facet selection";
+                            }
+                            let { snackbar } = this.state;
+                            snackbar = Object.assign({}, snackbar);
+                            snackbar.message = message;
+                            snackbar.open = true;
+                            this.setState({
+                                snackbar: snackbar,
+                            });
+                        }
+                        let branch = this;
+                        setTimeout(() => {
+                            branch.props.displaycallbacks.updateChartSelections();
+                        });
+                    });
+                    break;
+                }
             }
             this._previousControlData = currentControlData;
         };
@@ -112,27 +141,9 @@ class ExplorerBranch extends Component {
             });
         };
         this.switchFacet = (facet) => {
-            let { budgetBranch } = this.props;
-            let branchsettings = budgetBranch.settings;
-            branchsettings.facet = facet;
-            let switchResults = budgetBranch.switchFacet(this._nodeCallbacks, this.props.actions);
-            let { deeperdata, shallowerdata } = switchResults;
-            if (deeperdata || shallowerdata) {
-                let message = null;
-                if (deeperdata) {
-                    message = "More drilldown is available for current facet selection";
-                }
-                else {
-                    message = "Less drilldown is available for current facet selection";
-                }
-                this.state.snackbar.message = message;
-                this.state.snackbar.open = true;
-            }
-            this.refreshPresentation();
-            let branch = this;
-            setTimeout(() => {
-                branch.props.displaycallbacks.updateChartSelections();
-            });
+            console.log('calling changeFacet', facet);
+            let { callbackuid } = this.props;
+            this.props.actions.changeFacet(callbackuid, facet);
         };
         this.switchChartCode = (nodeIndex, cellIndex, chartCode) => {
             let { budgetBranch } = this.props;
@@ -225,7 +236,6 @@ class ExplorerBranch extends Component {
         };
     }
     componentWillMount() {
-        console.log('will mount');
         let { budgetBranch, actions, displaycallbacks, callbackid } = this.props;
         budgetBranch.getState = this.getState;
         budgetBranch.getProps = this.getProps;
@@ -244,7 +254,6 @@ class ExplorerBranch extends Component {
         };
     }
     componentDidMount() {
-        console.log('did mount');
         let { budgetBranch } = this.props;
         let { controlData } = this.props;
         this._previousControlData = controlData;
@@ -256,7 +265,6 @@ class ExplorerBranch extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        console.log('will receive');
         let { controlData } = nextProps;
         let branchData = controlData.branchesById[nextProps.callbackuid];
         let { nodesById } = controlData;
@@ -274,14 +282,12 @@ class ExplorerBranch extends Component {
         }
     }
     componentDidUpdate() {
-        console.log('did update');
         let { budgetBranch } = this.props;
         let branchNodes = budgetBranch.nodes;
         let { controlData } = this.props;
         let branchData = controlData.branchesById[this.props.callbackuid];
         let { nodesById } = controlData;
         let { nodeList } = branchData;
-        console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length);
         if (nodeList.length > branchNodes.length) {
             let nodeIndex = branchNodes.length;
             let budgetNodeId = nodeList[nodeIndex];
@@ -297,7 +303,7 @@ class ExplorerBranch extends Component {
         let drilldownportals = branch.getPortals(drilldownrow);
         return React.createElement("div", null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.props.budgetBranch.settings.viewpoint, style: {}, onChange: (e, index, value) => {
             branch.switchViewpoint(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton_1.default, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {
+        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Budget (by function)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Budget (by structure)"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton_1.default, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {
             branch.switchFacet('BudgetExpenses');
         }, style: {
             backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetExpenses')

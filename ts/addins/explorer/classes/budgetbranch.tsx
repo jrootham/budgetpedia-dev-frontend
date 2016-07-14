@@ -188,6 +188,7 @@ class BudgetBranch {
                 // there are two charts where there should be 1
                 let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2))
                 // now set budgetNode with new data node
+                console.log('updating facet', branchsettings.facet)
                 budgetNode.update(
                     nextdataNode,
                     branchsettings.facet
@@ -202,7 +203,8 @@ class BudgetBranch {
                     let removedids = removed.map((item) => {
                         return item.uid
                     })
-                    // actions.removeNode(this.getProps().callbackuid, removedids)
+                    actions.removeNode(this.getProps().callbackuid, removedids)
+
                     let prevBudgetCell = prevBudgetNode.cells[0]
 
                     let context = {
@@ -259,7 +261,7 @@ class BudgetBranch {
                     break
                 } else {
                     // TODO: this should be set through reset
-                    // budgetNode.facetName = facet
+                    budgetNode.facetName = branchsettings.facet
                     let budgetCell = budgetNode.cells[nodeCellIndex]
                     budgetCell.chartparms = chartParmsObj.chartParms
                     budgetCell.chartCode =

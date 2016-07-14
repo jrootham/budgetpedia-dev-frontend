@@ -240,13 +240,13 @@ let getChartParms = (
                         selection, 
                         err }
 
-                    let selectionProps = {
+                    let selectionCallbackVersions = {
                         current:null,
                         next: selectionCallbacks.next
                     }
 
                     let props: OnChartComponentSelectionProps = {
-                        selectionProps,
+                        selectionCallbackVersions,
                         context,
                     }
                     selectionCallbacks.current(props)

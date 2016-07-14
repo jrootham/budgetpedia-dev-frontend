@@ -59,6 +59,7 @@ import {
 interface MappedBranchActions {
     addNode:Function,
     changeViewpoint: Function,
+    changeFacet: Function,
     removeNode: Function,
 }
 
@@ -250,6 +251,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 addNode: this.props.addNode,
                 removeNode: this.props.removeNode,
                 changeViewpoint: this.props.changeViewpoint,
+                changeFacet: this.props.changeFacet,
         }
 
          return <Card initiallyExpanded 
@@ -338,6 +340,7 @@ Explorer = connect(mapStateToProps, {
     addNode:ExplorerActions.addNode,
     removeNode:ExplorerActions.removeNode,
     changeViewpoint: ExplorerActions.changeViewpoint,
+    changeFacet: ExplorerActions.changeFacet,
 })(Explorer)
 
 export default Explorer

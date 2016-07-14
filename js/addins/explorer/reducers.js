@@ -24,35 +24,51 @@ let branchesById = (state = {}, action) => {
     let { type } = action;
     let newstate;
     switch (type) {
-        case actions_1.types.ADD_BRANCH:
+        case actions_1.types.ADD_BRANCH: {
             newstate = Object.assign({}, state, { [action.payload.uid]: action.payload.settings });
             return newstate;
-        case actions_1.types.REMOVE_BRANCH:
+        }
+        case actions_1.types.REMOVE_BRANCH: {
             newstate = Object.assign({}, state);
             delete newstate[action.payload.uid];
             return newstate;
-        case actions_1.types.ADD_NODE:
+        }
+        case actions_1.types.ADD_NODE: {
+            let { branchuid } = action.payload;
             newstate = Object.assign({}, state);
-            newstate[action.payload.branchuid] = Object.assign({}, newstate[action.payload.branchuid]);
-            newstate[action.payload.branchuid].nodeList =
-                [...state[action.payload.branchuid].nodeList, action.payload.uid];
+            newstate[branchuid] = Object.assign({}, newstate[branchuid]);
+            newstate[branchuid].nodeList =
+                [...state[branchuid].nodeList, action.payload.uid];
             return newstate;
-        case actions_1.types.REMOVE_NODE:
+        }
+        case actions_1.types.REMOVE_NODE: {
+            let { branchuid } = action.payload;
             newstate = Object.assign({}, state);
             let removelist = action.payload.uid;
             if (!Array.isArray(removelist)) {
                 removelist = [removelist];
             }
-            let newList = newstate[action.payload.branchuid].nodeList.filter((uid) => {
+            let newList = newstate[branchuid].nodeList.filter((uid) => {
                 return (removelist.indexOf(uid) == -1);
             });
-            newstate[action.payload.branchuid].nodeList = newList;
+            newstate[branchuid].nodeList = newList;
             return newstate;
-        case actions_1.types.CHANGE_VIEWPOINT:
+        }
+        case actions_1.types.CHANGE_VIEWPOINT: {
+            let { branchuid } = action.payload;
             newstate = Object.assign({}, state);
-            newstate[action.payload.branchuid] = Object.assign({}, newstate[action.payload.branchuid]);
-            newstate[action.payload.branchuid].viewpoint = action.payload.viewpointname;
+            newstate[branchuid] = Object.assign({}, newstate[branchuid]);
+            newstate[branchuid].viewpoint = action.payload.viewpointname;
             return newstate;
+        }
+        case actions_1.types.CHANGE_FACET: {
+            console.log('change facet', action);
+            let { branchuid } = action.payload;
+            newstate = Object.assign({}, state);
+            newstate[branchuid] = Object.assign({}, newstate[branchuid]);
+            newstate[branchuid].facet = action.payload.facetname;
+            return newstate;
+        }
         default:
             return state;
     }

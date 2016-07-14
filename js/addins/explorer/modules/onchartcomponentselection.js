@@ -4,7 +4,7 @@ const budgetnode_1 = require('../classes/budgetnode');
 const constants_1 = require('../../constants');
 const getbudgetnode_1 = require('./getbudgetnode');
 let applyChartComponentSelection = (props, callbacks, actions) => {
-    let { context, branchsettings, budgetdata, branchNodes, selectionProps, branchuid } = props;
+    let { context, branchsettings, budgetdata, branchNodes, selectionCallbackVersions, branchuid } = props;
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks;
     let { addNode } = actions;
     let selection = context.selection[0];
@@ -47,7 +47,7 @@ let applyChartComponentSelection = (props, callbacks, actions) => {
         chart: chart,
     };
     let childcallbacks = callbacks;
-    exports.createChildNode(childprops, childcallbacks, selectionProps, actions);
+    exports.createChildNode(childprops, childcallbacks, selectionCallbackVersions, actions);
 };
 exports.createChildNode = (props, callbacks, selectionCallbacks, actions) => {
     let { budgetNode, branchsettings, budgetdata, branchNodes, selectionrow, nodeIndex, cellIndex, context, chart, } = props;

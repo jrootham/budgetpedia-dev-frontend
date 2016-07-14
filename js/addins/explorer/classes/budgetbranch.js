@@ -124,6 +124,7 @@ class BudgetBranch {
             if (nextdataNode) {
                 let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
                 let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2));
+                console.log('updating facet', branchsettings.facet);
                 budgetNode.update(nextdataNode, branchsettings.facet);
                 if (deeperdata || shallowerdata) {
                     switchResults.deeperdata = deeperdata;
@@ -134,6 +135,7 @@ class BudgetBranch {
                     let removedids = removed.map((item) => {
                         return item.uid;
                     });
+                    actions.removeNode(this.getProps().callbackuid, removedids);
                     let prevBudgetCell = prevBudgetNode.cells[0];
                     let context = {
                         selection: prevBudgetCell.chartselection,
@@ -187,6 +189,7 @@ class BudgetBranch {
                     break;
                 }
                 else {
+                    budgetNode.facetName = branchsettings.facet;
                     let budgetCell = budgetNode.cells[nodeCellIndex];
                     budgetCell.chartparms = chartParmsObj.chartParms;
                     budgetCell.chartCode =

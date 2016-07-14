@@ -63,6 +63,7 @@ interface ExploreBranchProps {
         addNode:Function,
         removeNode:Function,
         changeViewpoint:Function,
+        changeFacet: Function,
     },
     controlData:any,
 }
@@ -98,7 +99,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // complete initialization of budgetBranch and branch explorer objects
     componentWillMount() {
-        console.log('will mount')
+        // console.log('will mount')
         let { budgetBranch, actions, displaycallbacks, callbackid } = this.props
         budgetBranch.getState = this.getState
         budgetBranch.getProps = this.getProps
@@ -122,7 +123,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // initialize once -- set controlData
     componentDidMount() {
-        console.log('did mount')
+        // console.log('did mount')
         let { budgetBranch } = this.props
         let {controlData} = this.props
         this._previousControlData = controlData // initialize
@@ -136,7 +137,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // remove obsolete node objects
     componentWillReceiveProps(nextProps) {
-        console.log('will receive')
+        // console.log('will receive')
         // console.log('explorerbranch will receive props', nextProps)
         let { controlData } = nextProps
         let branchData = controlData.branchesById[nextProps.callbackuid]
@@ -160,7 +161,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // add pending node objects, and process state changes
     componentDidUpdate() {
-        console.log('did update')
+        // console.log('did update')
         // refresh branchnodes
         let { budgetBranch } = this.props
         let branchNodes = budgetBranch.nodes
@@ -173,7 +174,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         // first task is to harmonize controlData nodeList list with local branchNode list
         // this condition will keep adding nodes on each render cycle triggered by 
         // addBranchNode, until all nodes are drawn
-        console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length)
+        // console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length)
         if (nodeList.length > branchNodes.length) {
             let nodeIndex = branchNodes.length
             let budgetNodeId = nodeList[nodeIndex]
@@ -208,14 +209,50 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         console.log('onChange',previousControlData, currentControlData)
         let { budgetBranch } = this.props
         switch (lastAction) {
-            case branchactiontypes.CHANGE_VIEWPOINT:
+            case branchactiontypes.CHANGE_VIEWPOINT: {
                 budgetBranch.getViewpointData()
                 setTimeout(()=>{
                     budgetBranch.initializeBranch()
                 })
-                break;
-                    
+                break
             }
+            case branchactiontypes.CHANGE_FACET: {
+
+                budgetBranch.getViewpointData()
+
+                setTimeout(() => {
+
+                    let switchResults = budgetBranch.switchFacet(this._nodeCallbacks, this.props.actions)
+
+                    let { deeperdata, shallowerdata } = switchResults
+
+                    if (deeperdata || shallowerdata) {
+
+                        let message = null
+                        if (deeperdata) {
+                            message = "More drilldown is available for current facet selection"
+                        } else {
+                            message = "Less drilldown is available for current facet selection"
+                        }
+                        let { snackbar } = this.state
+                        snackbar = Object.assign ({},snackbar)
+                        snackbar.message = message
+                        snackbar.open = true
+                        this.setState({
+                            snackbar,
+                        })
+
+                    }
+                    // this.refreshPresentation()
+                    let branch = this
+                    setTimeout(() => {
+                        branch.props.displaycallbacks.updateChartSelections()
+                    })
+
+                })
+                break
+            }
+        }
         this._previousControlData = currentControlData
     }
 
@@ -313,37 +350,12 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     }
 
     switchFacet = (facet) => {
+        console.log('calling changeFacet',facet)
+        let { callbackuid } = this.props
+        this.props.actions.changeFacet(callbackuid, facet)
 
-        let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
-
-        let branchsettings = budgetBranch.settings
-        
-        branchsettings.facet = facet
-
-        let switchResults = budgetBranch.switchFacet(this._nodeCallbacks, this.props.actions)
-
-        let { deeperdata, shallowerdata } = switchResults
-
-        if (deeperdata || shallowerdata) {
-
-            let message = null
-            if (deeperdata) {
-                message = "More drilldown is available for current facet selection"
-            } else {
-                message = "Less drilldown is available for current facet selection"
-            }
-            this.state.snackbar.message = message
-            this.state.snackbar.open = true
-
-        }
-
-        this.refreshPresentation()
-        let branch = this
-        setTimeout(() => {
-            branch.props.displaycallbacks.updateChartSelections()
-        })
     }
-
+    
     // TODO: belongs with explorerchart controller?
     switchChartCode = (nodeIndex,cellIndex, chartCode) => {
 
@@ -490,8 +502,8 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 }
             }
             >
-            <MenuItem value={'FUNCTIONAL'} primaryText="Functional"/>
-            <MenuItem value={'STRUCTURAL'} primaryText="Structural"/>
+            <MenuItem value={'FUNCTIONAL'} primaryText="Budget (by function)"/>
+            <MenuItem value={'STRUCTURAL'} primaryText="Budget (by structure)"/>
         </DropDownMenu>
 
         <span style={{ margin: "0 10px 0 10px", fontStyle: "italic" }}>Facets: </span>

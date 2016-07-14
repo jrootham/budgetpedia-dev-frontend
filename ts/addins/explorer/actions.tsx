@@ -10,12 +10,14 @@ export namespace types {
     export const ADD_CELL = 'ADD_CELL'
     export const REMOVE_CELL = 'REMOVE_CELL'
     export const CHANGE_VIEWPOINT = 'CHANGE_VIEWPOINT'
+    export const CHANGE_FACET = 'CHANGE_FACET'
 }
 
 export namespace branchtypes {
     export import ADD_NODE = types.ADD_NODE
     export import REMOVE_NODE = types.REMOVE_NODE
     export import CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT
+    export import CHANGE_FACET = types.CHANGE_FACET
 }
 
 export const addBranch = createAction(
@@ -38,6 +40,13 @@ export const changeViewpoint = createAction(
     })
 )
 
+export const changeFacet = createAction(
+    types.CHANGE_FACET, (branchuid, facetname) => ({
+        branchuid,
+        facetname,        
+    })
+)
+
 export const addNode = createAction(
     types.ADD_NODE,(branchuid,settings) => ({
         settings,
@@ -52,6 +61,7 @@ export const removeNode = createAction(
         branchuid,
     })
 )
+
 export const addCell = createAction(
     types.ADD_CELL,(nodeuid,settings) => ({
         settings,

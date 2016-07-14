@@ -111,6 +111,7 @@ let Explorer = class extends Component {
                     addNode: this.props.addNode,
                     removeNode: this.props.removeNode,
                     changeViewpoint: this.props.changeViewpoint,
+                    changeFacet: this.props.changeFacet,
                 };
                 return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {callbackuid: budgetBranch.uid, callbackid: branchIndex, budgetBranch: budgetBranch, displaycallbacks: {
                     workingStatus: explorer.workingStatus,
@@ -136,6 +137,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     addNode: ExplorerActions.addNode,
     removeNode: ExplorerActions.removeNode,
     changeViewpoint: ExplorerActions.changeViewpoint,
+    changeFacet: ExplorerActions.changeFacet,
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;
