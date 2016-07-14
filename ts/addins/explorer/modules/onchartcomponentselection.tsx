@@ -229,7 +229,7 @@ export let createChildNode = (
     actions.addNode(newnodeconfigparms)
 
     // let newBudgetNode = new BudgetNode(newnodeconfigparms, 'x', newdatanode, parentNode)
-    setTimeout(()=>{
+    setTimeout(() => {
         let newBudgetNode = budgetBranch.nodes[nodeIndex + 1]
         let newcellindex: any = null
         let chartParmsObj: ChartParmsObj = null
@@ -238,41 +238,6 @@ export let createChildNode = (
             viewpointConfig:budgetdata.viewpointdata.Configuration,
             itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
         }
-        // for (newcellindex in newBudgetNode.cells) {
-        //     let props: GetCellChartProps = {
-        //         chartIndex: newcellindex,
-        //         branchsettings,
-        //         configData,
-        //     }
-        //     let ccallbacks = 
-        //     {
-        //         updateChartSelections,
-        //         refreshPresentation,
-        //         onPortalCreation,
-        //         workingStatus,
-        //     }
-        //     let childSelectionCallbacks: SelectionCallbackProps = {
-        //         current: selectionCallbacks.next(nodeIndex + 1)(newcellindex),
-        //         next: selectionCallbacks.next,
-        //     }
-        //     chartParmsObj = newBudgetNode.getChartParms(props, childSelectionCallbacks)
-        //     if (chartParmsObj.isError) {
-        //         isError = true
-        //         break
-        //     }
-        //     let budgetCell = newBudgetNode.cells[newcellindex]
-        //     budgetCell.chartparms = chartParmsObj.chartParms
-        //     budgetCell.chartCode =
-        //         ChartTypeCodes[budgetCell.googleChartType]
-        // }
-
-        // if (isError) {
-        //     updateChartSelections()
-        //     workingStatus(false)
-        //     return
-        // }
-        // let newmatrixcolumn = nodeIndex + 1
-        // branchNodes[newmatrixcolumn] = newBudgetNode
 
         let budgetCell = budgetNode.cells[cellIndex]
 
@@ -280,8 +245,6 @@ export let createChildNode = (
         budgetCell.chart = chart
         budgetCell.ChartObject = context.ChartObject
 
-        // updateBranchNodesState(branchNodes)
-        // refreshPresentation()
         updateChartSelections()
         onPortalCreation()
     })

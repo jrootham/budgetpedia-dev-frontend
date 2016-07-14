@@ -191,7 +191,6 @@ function registerconfirm(state = {
                 user: null,
             });
         case REGISTER_CONFIRM_SUCCESS:
-            console.log('register confirm success', action);
             return Object.assign({}, state, {
                 isFetching: false,
                 isConfirmed: true,

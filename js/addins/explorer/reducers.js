@@ -35,7 +35,6 @@ let branchesById = (state = {}, action) => {
         }
         case actions_1.types.ADD_NODE: {
             let { branchuid } = action.payload;
-            console.log('branchuid in ADD_NODE', branchuid, action, state);
             newstate = Object.assign({}, state);
             newstate[branchuid] = Object.assign({}, newstate[branchuid]);
             newstate[branchuid].nodeList =
@@ -63,7 +62,6 @@ let branchesById = (state = {}, action) => {
             return newstate;
         }
         case actions_1.types.CHANGE_FACET: {
-            console.log('change facet', action);
             let { branchuid } = action.payload;
             newstate = Object.assign({}, state);
             newstate[branchuid] = Object.assign({}, newstate[branchuid]);

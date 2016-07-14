@@ -100,7 +100,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     // see if any initialization is required
     componentDidMount() {
-        console.log('explorer did mount')
+        // console.log('explorer did mount')
         let { branchList, branchesById } = this.props.controlData
         if (branchList.length == 0) { // initialize explorer with first branch
             let defaultSettings:BranchSettings = this.props.controlData.defaults.branch
@@ -126,7 +126,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
     // harmonize budgetBranches objects  with control data
     componentWillReceiveProps(nextProps) {
-        console.log('explorer will receive')
+        // console.log('explorer will receive')
         let { branchList, branchesById } = nextProps.controlData
         let budgetBranches:BudgetBranch[] = this.state.budgetBranches
         // remove deleted branches
@@ -184,7 +184,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     render() {
 
         let explorer = this
-        console.log('controlData',explorer.props.controlData)
+        // console.log('controlData',explorer.props.controlData)
         let dialogbox =  
             <Dialog
                 title = "Budget Explorer Help"
@@ -282,7 +282,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         let branches = drilldownsegments()
 
-        console.log('branches', branches)
+        // console.log('branches', branches)
 
         return <div>
 

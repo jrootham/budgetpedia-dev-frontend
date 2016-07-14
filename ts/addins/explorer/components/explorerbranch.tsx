@@ -179,7 +179,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
             return
         }
-        console.log('onChange',previousControlData, currentControlData)
+        // console.log('onChange',previousControlData, currentControlData)
         let { budgetBranch } = this.props
         switch (lastAction) {
             case branchactiontypes.CHANGE_VIEWPOINT: {
@@ -323,7 +323,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     }
 
     switchFacet = (facet) => {
-        console.log('calling changeFacet',facet)
+        // console.log('calling changeFacet',facet)
         let { callbackuid } = this.props
         this.props.actions.changeFacet(callbackuid, facet)
 
