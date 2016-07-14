@@ -19,6 +19,16 @@ let Explorer = class extends Component {
             budgetBranches: [],
             dialogopen: false,
         };
+        this.harmonizeBudgetBranches = (budgetBranches, branchList, branchesById) => {
+            if (budgetBranches.length < branchList.length) {
+                let length = budgetBranches.length;
+                for (let i = length; i < branchList.length; i++) {
+                    let uid = branchList[i];
+                    let settings = branchesById[uid];
+                    budgetBranches.push(new budgetbranch_1.default({ settings: settings, uid: uid }));
+                }
+            }
+        };
         this.handleDialogOpen = () => {
             this.setState({
                 dialogopen: true
@@ -54,17 +64,10 @@ let Explorer = class extends Component {
         }
         else {
             let budgetBranches = this.state.budgetBranches;
-            if (budgetBranches.length < branchList.length) {
-                let length = budgetBranches.length;
-                for (let i = length; i < branchList.length; i++) {
-                    let uid = branchList[i];
-                    let settings = branchesById[uid];
-                    budgetBranches.push(new budgetbranch_1.default({ settings: settings, uid: uid }));
-                }
-                this.setState({
-                    budgetBranches: budgetBranches,
-                });
-            }
+            this.harmonizeBudgetBranches(budgetBranches, branchList, branchesById);
+            this.setState({
+                budgetBranches: budgetBranches,
+            });
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -74,14 +77,7 @@ let Explorer = class extends Component {
         budgetBranches = budgetBranches.filter(budgetBranch => {
             return !!branchesById[budgetBranch.uid];
         });
-        if (budgetBranches.length < branchList.length) {
-            let length = budgetBranches.length;
-            for (let i = length; i < branchList.length; i++) {
-                let uid = branchList[i];
-                let settings = branchesById[uid];
-                budgetBranches.push(new budgetbranch_1.default({ settings: settings, uid: uid }));
-            }
-        }
+        this.harmonizeBudgetBranches(budgetBranches, branchList, branchesById);
         for (let i = 0; i < branchList.length; i++) {
             if (branchList[i] != budgetBranches[i].uid) {
                 throw Error('mismatched order between controlData list and branch list');

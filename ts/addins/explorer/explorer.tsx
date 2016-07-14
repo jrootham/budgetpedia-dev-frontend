@@ -106,22 +106,24 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             let defaultSettings:BranchSettings = this.props.controlData.defaults.branch
             this.props.addBranch(defaultSettings)
         } else {
-            // TODO: this is duplicated in will receive props
             let budgetBranches:BudgetBranch[] = this.state.budgetBranches
-            if (budgetBranches.length < branchList.length ) { // new branch
-                let length = budgetBranches.length
-                for ( let i = length; i < branchList.length ; i++ ) {
-                    let uid = branchList[i]
-                    let settings = branchesById[uid]
-                    budgetBranches.push(new BudgetBranch({settings,uid}))
-                }
-                this.setState({
-                    budgetBranches,
-                })
-            }
+            this.harmonizeBudgetBranches(budgetBranches, branchList, branchesById)
+            this.setState({
+                budgetBranches,
+            })
         }
     }
 
+    harmonizeBudgetBranches = (budgetBranches, branchList, branchesById) => {
+        if (budgetBranches.length < branchList.length ) { // new branch
+            let length = budgetBranches.length
+            for ( let i = length; i < branchList.length ; i++ ) {
+                let uid = branchList[i]
+                let settings = branchesById[uid]
+                budgetBranches.push(new BudgetBranch({settings,uid}))
+            }
+        }
+    }
     // harmonize budgetBranches objects  with control data
     componentWillReceiveProps(nextProps) {
         console.log('explorer will receive')
@@ -131,15 +133,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         budgetBranches = budgetBranches.filter(budgetBranch => {
             return !!branchesById[budgetBranch.uid]
         })
-        // add new branch
-        if (budgetBranches.length < branchList.length ) { // new branch
-            let length = budgetBranches.length
-            for ( let i = length; i < branchList.length ; i++ ) {
-                let uid = branchList[i]
-                let settings = branchesById[uid]
-                budgetBranches.push(new BudgetBranch({settings,uid}))
-            }
-        }
+        this.harmonizeBudgetBranches(budgetBranches, branchList, branchesById)
         // in any case update settings in case change made
         for (let i = 0; i < branchList.length; i++) {
             if (branchList[i] != budgetBranches[i].uid) {
