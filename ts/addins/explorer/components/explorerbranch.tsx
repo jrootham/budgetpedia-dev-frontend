@@ -121,7 +121,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         }
     }
 
-    // initialize once -- set controlData
+    // initialize once -- set controlData; initialize branch
     componentDidMount() {
         // console.log('did mount')
         let { budgetBranch } = this.props
@@ -137,18 +137,8 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // remove obsolete node objects
     componentWillReceiveProps(nextProps) {
-        // console.log('will receive')
-        // console.log('explorerbranch will receive props', nextProps)
-        let { controlData } = nextProps
-        let branchData = controlData.branchesById[nextProps.callbackuid]
-        let { nodesById } = controlData
-        let { nodeList } = branchData
-        // console.log('nodeList, nodesById',nodeList,nodesById)
-        let { budgetBranch } = this.props
-        let branchNodes = budgetBranch.nodes
-        let nodeIndex:any
-        // filter out deleted versions
-        // console.log('branchNodes before filter',[...branchNodes])
+        let { nodesById } = nextProps.controlData
+        let branchNodes = this.props.budgetBranch.nodes
         let newBranchNodes = branchNodes.filter((node) => {
             return !!nodesById[node.uid]
         })
@@ -166,10 +156,10 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let { budgetBranch } = this.props
         let branchNodes = budgetBranch.nodes
         let { controlData } = this.props
-        let branchData = controlData.branchesById[this.props.callbackuid]
+        let branchSettings = controlData.branchesById[this.props.callbackuid]
         // console.log('branchData',branchData)
         let { nodesById } = controlData
-        let { nodeList } = branchData
+        let { nodeList } = branchSettings
 
         // first task is to harmonize controlData nodeList list with local branchNode list
         // this condition will keep adding nodes on each render cycle triggered by 
@@ -181,7 +171,8 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             budgetBranch.addNode(
                 budgetNodeId,
                 nodeIndex,
-                nodesById[budgetNodeId],
+                nodesById[budgetNodeId], // settings
+                // standard callbacks...
                 this._nodeCallbacks,
                 this._actions
             )

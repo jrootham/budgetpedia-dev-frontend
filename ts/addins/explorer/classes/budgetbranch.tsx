@@ -111,9 +111,10 @@ class BudgetBranch {
 
         let viewpointdata = this.getState().viewpointData
         let datanode = getBudgetNode(viewpointdata, dataPath)
-        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, datanode)
-
         let branchNodes = this.nodes
+        let parentNode = (nodeIndex == 0)?undefined:branchNodes[branchNodes.length - 1].dataNode
+        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, datanode, parentNode)
+
         let budgetdata = {viewpointdata:this.getState().viewpointData}
         let chartParmsObj: ChartParmsObj
         let cellindex: any

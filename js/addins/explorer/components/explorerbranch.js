@@ -265,13 +265,8 @@ class ExplorerBranch extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        let { controlData } = nextProps;
-        let branchData = controlData.branchesById[nextProps.callbackuid];
-        let { nodesById } = controlData;
-        let { nodeList } = branchData;
-        let { budgetBranch } = this.props;
-        let branchNodes = budgetBranch.nodes;
-        let nodeIndex;
+        let { nodesById } = nextProps.controlData;
+        let branchNodes = this.props.budgetBranch.nodes;
         let newBranchNodes = branchNodes.filter((node) => {
             return !!nodesById[node.uid];
         });
@@ -285,9 +280,9 @@ class ExplorerBranch extends Component {
         let { budgetBranch } = this.props;
         let branchNodes = budgetBranch.nodes;
         let { controlData } = this.props;
-        let branchData = controlData.branchesById[this.props.callbackuid];
+        let branchSettings = controlData.branchesById[this.props.callbackuid];
         let { nodesById } = controlData;
-        let { nodeList } = branchData;
+        let { nodeList } = branchSettings;
         if (nodeList.length > branchNodes.length) {
             let nodeIndex = branchNodes.length;
             let budgetNodeId = nodeList[nodeIndex];

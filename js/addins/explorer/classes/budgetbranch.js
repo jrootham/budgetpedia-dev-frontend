@@ -11,8 +11,9 @@ class BudgetBranch {
             let branchsettings = this.settings;
             let viewpointdata = this.getState().viewpointData;
             let datanode = getbudgetnode_1.default(viewpointdata, dataPath);
-            let budgetNode = new budgetnode_1.default(budgetNodeParms, budgetNodeUid, datanode);
             let branchNodes = this.nodes;
+            let parentNode = (nodeIndex == 0) ? undefined : branchNodes[branchNodes.length - 1].dataNode;
+            let budgetNode = new budgetnode_1.default(budgetNodeParms, budgetNodeUid, datanode, parentNode);
             let budgetdata = { viewpointdata: this.getState().viewpointData };
             let chartParmsObj;
             let cellindex;
