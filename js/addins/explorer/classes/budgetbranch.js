@@ -124,7 +124,6 @@ class BudgetBranch {
             if (nextdataNode) {
                 let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
                 let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2));
-                console.log('updating facet', branchsettings.facet);
                 budgetNode.update(nextdataNode, branchsettings.facet);
                 if (deeperdata || shallowerdata) {
                     switchResults.deeperdata = deeperdata;
@@ -136,24 +135,26 @@ class BudgetBranch {
                         return item.uid;
                     });
                     actions.removeNode(this.getProps().callbackuid, removedids);
-                    let prevBudgetCell = prevBudgetNode.cells[0];
-                    let context = {
-                        selection: prevBudgetCell.chartselection,
-                        ChartObject: prevBudgetCell.ChartObject,
-                    };
-                    let childprops = {
-                        budgetNode: prevBudgetNode,
-                        branchsettings: branchsettings,
-                        budgetdata: budgetdata,
-                        branchNodes: branchNodes,
-                        selectionrow: prevBudgetCell.chartselection[0].row,
-                        nodeIndex: prevBudgetNode.nodeIndex,
-                        cellIndex: 0,
-                        context: context,
-                        chart: prevBudgetCell.chart,
-                    };
-                    let fcurrent = fn(nodeIndex)(0);
-                    onchartcomponentselection_1.createChildNode(childprops, callbacks, { current: fcurrent, next: fn }, actions);
+                    setTimeout(() => {
+                        let prevBudgetCell = prevBudgetNode.cells[0];
+                        let context = {
+                            selection: prevBudgetCell.chartselection,
+                            ChartObject: prevBudgetCell.ChartObject,
+                        };
+                        let childprops = {
+                            parentNode: prevBudgetNode,
+                            branchsettings: branchsettings,
+                            budgetdata: budgetdata,
+                            branchNodes: branchNodes,
+                            selectionrow: prevBudgetCell.chartselection[0].row,
+                            nodeIndex: prevBudgetNode.nodeIndex,
+                            cellIndex: 0,
+                            context: context,
+                            chart: prevBudgetCell.chart,
+                        };
+                        let fcurrent = fn(nodeIndex)(0);
+                        onchartcomponentselection_1.createChildNode(childprops, callbacks, { current: fcurrent, next: fn }, actions);
+                    });
                     budgetNode = null;
                 }
             }

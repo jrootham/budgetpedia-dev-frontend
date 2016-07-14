@@ -75,7 +75,7 @@ class ExplorerBranch extends Component {
         this.refreshPresentation = () => {
             this.forceUpdate();
         };
-        this.updateBranchNodes = branchNodes => {
+        this.updateBranchNodesState = branchNodes => {
             this.setState({
                 branchNodes: branchNodes,
             });
@@ -243,13 +243,13 @@ class ExplorerBranch extends Component {
         this._actions = Object.assign({}, actions);
         this._actions.addNode = this.addNode(budgetBranch.uid);
         budgetBranch.actions = this._actions;
-        let { refreshPresentation, onPortalCreation, updateBranchNodes } = this;
+        let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this;
         displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid);
         this._nodeCallbacks = {
             updateChartSelections: displaycallbacks.updateChartSelections,
             workingStatus: displaycallbacks.workingStatus,
             onPortalCreation: onPortalCreation,
-            updateBranchNodes: updateBranchNodes,
+            updateBranchNodesState: updateBranchNodesState,
             refreshPresentation: refreshPresentation,
         };
     }

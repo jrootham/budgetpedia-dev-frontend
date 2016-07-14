@@ -36,7 +36,7 @@ let applyChartComponentSelection = (props, callbacks, actions) => {
         return;
     }
     let childprops = {
-        budgetNode: budgetNode,
+        parentNode: budgetNode,
         branchsettings: branchsettings,
         budgetdata: budgetdata,
         branchNodes: branchNodes,
@@ -50,9 +50,9 @@ let applyChartComponentSelection = (props, callbacks, actions) => {
     exports.createChildNode(childprops, childcallbacks, selectionCallbackVersions, actions);
 };
 exports.createChildNode = (props, callbacks, selectionCallbacks, actions) => {
-    let { budgetNode, branchsettings, budgetdata, branchNodes, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
+    let { parentNode: budgetNode, branchsettings, budgetdata, branchNodes, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
     let viewpointName = budgetNode.viewpointName, facet = budgetNode.facetName;
-    let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, updateBranchNodes, } = callbacks;
+    let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, updateBranchNodesState, } = callbacks;
     let childdatapath = budgetNode.dataPath.slice();
     let node = budgetNode.dataNode;
     if (!node.Components) {
@@ -140,7 +140,7 @@ exports.createChildNode = (props, callbacks, selectionCallbacks, actions) => {
     budgetCell.chartselection = context.selection;
     budgetCell.chart = chart;
     budgetCell.ChartObject = context.ChartObject;
-    updateBranchNodes(branchNodes);
+    updateBranchNodesState(branchNodes);
     updateChartSelections();
     onPortalCreation();
     workingStatus(false);

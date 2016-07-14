@@ -26,6 +26,8 @@ import {
 } from '../modules/onchartcomponentselection'
 import * as ExplorerActions from '../actions'
 
+import { BudgetNodeParms } from './budgetnode'
+
 import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 
 
@@ -100,7 +102,7 @@ class BudgetBranch {
 
     }
 
-    addNode = (budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions) => {
+    addNode = (budgetNodeUid, nodeIndex, budgetNodeParms:BudgetNodeParms, callbacks, actions) => {
 
         // console.log('addNode parms', budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions)
 
@@ -188,7 +190,6 @@ class BudgetBranch {
                 // there are two charts where there should be 1
                 let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2))
                 // now set budgetNode with new data node
-                console.log('updating facet', branchsettings.facet)
                 budgetNode.update(
                     nextdataNode,
                     branchsettings.facet
@@ -204,27 +205,29 @@ class BudgetBranch {
                         return item.uid
                     })
                     actions.removeNode(this.getProps().callbackuid, removedids)
+                    setTimeout(()=> {
 
-                    let prevBudgetCell = prevBudgetNode.cells[0]
+                        let prevBudgetCell = prevBudgetNode.cells[0]
 
-                    let context = {
-                        selection:prevBudgetCell.chartselection,
-                        ChartObject: prevBudgetCell.ChartObject,
-                    }
+                        let context = {
+                            selection:prevBudgetCell.chartselection,
+                            ChartObject: prevBudgetCell.ChartObject,
+                        }
 
-                    let childprops: CreateChildNodeProps = {
-                        budgetNode:prevBudgetNode,
-                        branchsettings,
-                        budgetdata,
-                        branchNodes,
-                        selectionrow: prevBudgetCell.chartselection[0].row,
-                        nodeIndex: prevBudgetNode.nodeIndex,
-                        cellIndex:0,
-                        context,
-                        chart:prevBudgetCell.chart,
-                    }
-                    let fcurrent = fn(nodeIndex)(0)
-                    createChildNode(childprops, callbacks,{current:fcurrent,next:fn}, actions)
+                        let childprops: CreateChildNodeProps = {
+                            parentNode:prevBudgetNode,
+                            branchsettings,
+                            budgetdata,
+                            branchNodes,
+                            selectionrow: prevBudgetCell.chartselection[0].row,
+                            nodeIndex: prevBudgetNode.nodeIndex,
+                            cellIndex:0,
+                            context,
+                            chart:prevBudgetCell.chart,
+                        }
+                        let fcurrent = fn(nodeIndex)(0)
+                        createChildNode(childprops, callbacks,{current:fcurrent,next:fn}, actions)
+                    })
                     budgetNode = null // branchNodes[nodeIndex] // created by createChildNode as side effect
                 }
             } else {

@@ -109,14 +109,14 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         this._actions.addNode = this.addNode(budgetBranch.uid)
         budgetBranch.actions = this._actions
 
-        let { refreshPresentation, onPortalCreation, updateBranchNodes } = this
+        let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this
         displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid)
         this._nodeCallbacks = {
             updateChartSelections:displaycallbacks.updateChartSelections,
             workingStatus:displaycallbacks.workingStatus,
             // local
             onPortalCreation,
-            updateBranchNodes,
+            updateBranchNodesState,
             refreshPresentation,
         }
     }
@@ -263,7 +263,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         this.forceUpdate()
     }
 
-    updateBranchNodes = branchNodes => {
+    updateBranchNodesState = branchNodes => {
         this.setState({
             branchNodes,
         })
@@ -355,7 +355,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         this.props.actions.changeFacet(callbackuid, facet)
 
     }
-    
+
     // TODO: belongs with explorerchart controller?
     switchChartCode = (nodeIndex,cellIndex, chartCode) => {
 
