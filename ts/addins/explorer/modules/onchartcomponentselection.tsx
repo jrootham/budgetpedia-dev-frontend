@@ -77,7 +77,7 @@ export interface OnChartComponentSelectionCallbacks {
 // chartconfig, not the chartconfig itself
 // on selection, makes a child with the same portalCharts offset
 // TODO: create chile which appropriately sets up correct set of child charts
-let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
+let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelectionProps,
     callbacks: OnChartComponentSelectionCallbacks, actions: any) => {
 
     let { context, branchsettings, budgetdata, branchNodes, selectionCallbackVersions, branchuid } = props
@@ -140,10 +140,11 @@ let applyChartComponentSelection = (props: OnChartComponentSelectionProps,
         chart,
     }
     let childcallbacks: CreateChildNodeCallbacks = callbacks
-    createChildNode( childprops, childcallbacks, selectionCallbackVersions, actions)
+    createChildNode( budgetBranch, childprops, childcallbacks, selectionCallbackVersions, actions)
 }
 
 export let createChildNode = (
+    budgetBranch: any,
     props: CreateChildNodeProps, 
     callbacks: CreateChildNodeCallbacks,
     selectionCallbacks: SelectionCallbackProps,
@@ -225,68 +226,70 @@ export let createChildNode = (
         timeSpecs: newrange,
     }
 
-    // actions.addNode(newnodeconfigparms)
+    actions.addNode(newnodeconfigparms)
 
-    let newBudgetNode = new BudgetNode(newnodeconfigparms, 'x', newdatanode, parentNode)
+    // let newBudgetNode = new BudgetNode(newnodeconfigparms, 'x', newdatanode, parentNode)
+    setTimeout(()=>{
+        let newBudgetNode = budgetBranch.nodes[nodeIndex + 1]
+        let newcellindex: any = null
+        let chartParmsObj: ChartParmsObj = null
+        let isError = false
+        let configData = {
+            viewpointConfig:budgetdata.viewpointdata.Configuration,
+            itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
+        }
+        for (newcellindex in newBudgetNode.cells) {
+            let props: GetCellChartProps = {
+                chartIndex: newcellindex,
+                branchsettings,
+                configData,
+            }
+            let ccallbacks = 
+            {
+                updateChartSelections,
+                refreshPresentation,
+                onPortalCreation,
+                workingStatus,
+            }
+            let childSelectionCallbacks: SelectionCallbackProps = {
+                current: selectionCallbacks.next(nodeIndex + 1)(newcellindex),
+                next: selectionCallbacks.next,
+            }
+            chartParmsObj = newBudgetNode.getChartParms(props, childSelectionCallbacks)
+            if (chartParmsObj.isError) {
+                isError = true
+                break
+            }
+            let budgetCell = newBudgetNode.cells[newcellindex]
+            budgetCell.chartparms = chartParmsObj.chartParms
+            budgetCell.chartCode =
+                ChartTypeCodes[budgetCell.googleChartType]
+        }
 
-    let newcellindex: any = null
-    let chartParmsObj: ChartParmsObj = null
-    let isError = false
-    let configData = {
-        viewpointConfig:budgetdata.viewpointdata.Configuration,
-        itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
-    }
-    for (newcellindex in newBudgetNode.cells) {
-        let props: GetCellChartProps = {
-            chartIndex: newcellindex,
-            branchsettings,
-            configData,
+        if (isError) {
+            updateChartSelections()
+            workingStatus(false)
+            return
         }
-        let ccallbacks = 
-        {
-            updateChartSelections,
-            refreshPresentation,
-            onPortalCreation,
-            workingStatus,
-        }
-        let childSelectionCallbacks: SelectionCallbackProps = {
-            current: selectionCallbacks.next(nodeIndex + 1)(newcellindex),
-            next: selectionCallbacks.next,
-        }
-        chartParmsObj = newBudgetNode.getChartParms(props, childSelectionCallbacks)
-        if (chartParmsObj.isError) {
-            isError = true
-            break
-        }
-        let budgetCell = newBudgetNode.cells[newcellindex]
-        budgetCell.chartparms = chartParmsObj.chartParms
-        budgetCell.chartCode =
-            ChartTypeCodes[budgetCell.googleChartType]
-    }
+        // let newmatrixcolumn = nodeIndex + 1
+        // branchNodes[newmatrixcolumn] = newBudgetNode
 
-    if (isError) {
+        let budgetCell = budgetNode.cells[cellIndex]
+
+        budgetCell.chartselection = context.selection
+        budgetCell.chart = chart
+        budgetCell.ChartObject = context.ChartObject
+
+        updateBranchNodesState(branchNodes)
+        // refreshPresentation()
         updateChartSelections()
-        workingStatus(false)
-        return
-    }
-    let newmatrixcolumn = nodeIndex + 1
-    branchNodes[newmatrixcolumn] = newBudgetNode
-
-    let budgetCell = budgetNode.cells[cellIndex]
-
-    budgetCell.chartselection = context.selection
-    budgetCell.chart = chart
-    budgetCell.ChartObject = context.ChartObject
-
-    updateBranchNodesState(branchNodes)
-    // refreshPresentation()
-    updateChartSelections()
-    onPortalCreation()
+        onPortalCreation()
+    })
     workingStatus(false)
 }
 
 export const onChartComponentSelection = 
-    branchsettings => branchuid => budgetdata => branchNodes => 
+    budgetBranch => branchsettings => branchuid => budgetdata => branchNodes => 
         callbacks => actions => nodeIndex => cellIndex => props => {
     props.context.nodeIndex = nodeIndex
     props.context.cellIndex = cellIndex
@@ -294,6 +297,6 @@ export const onChartComponentSelection =
     props.budgetdata = budgetdata
     props.branchNodes = branchNodes
     props.branchuid = branchuid
-    applyChartComponentSelection(props, callbacks, actions)
+    applyChartComponentSelection(budgetBranch,props, callbacks, actions)
 }
 
