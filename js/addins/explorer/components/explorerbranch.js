@@ -44,7 +44,7 @@ class ExplorerBranch extends Component {
                 case actions_1.branchtypes.CHANGE_FACET: {
                     budgetBranch.getViewpointData();
                     setTimeout(() => {
-                        let switchResults = budgetBranch.switchFacet(this._nodeCallbacks, this.props.actions);
+                        let switchResults = budgetBranch.switchFacet(this._nodeCallbacks, this._actions);
                         let { deeperdata, shallowerdata } = switchResults;
                         if (deeperdata || shallowerdata) {
                             let message = null;

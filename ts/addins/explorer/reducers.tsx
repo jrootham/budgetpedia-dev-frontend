@@ -43,6 +43,7 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
         
         case actiontypes.ADD_NODE: {
             let { branchuid } = action.payload
+            console.log('branchuid in ADD_NODE', branchuid, action, state)
             newstate = Object.assign({},state)
             newstate[branchuid] = Object.assign({},newstate[branchuid])
             newstate[branchuid].nodeList = 

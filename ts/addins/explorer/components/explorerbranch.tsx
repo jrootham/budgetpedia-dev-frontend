@@ -19,34 +19,16 @@ import Snackbar from 'material-ui/Snackbar';
 // ------------------------[ modules ]-----------------------------
 
 import {
-    // MatrixCellConfig,
-    // ChartParms,
-    // ChartParmsObj,
     PortalConfig,
     CellSettings,
     CellCallbacks,
-    // PortalChartLocation,
     ChartConfig,
-    // GetCellChartProps,
-    // BranchSettings,
 } from '../modules/interfaces'
 
 import { ExplorerPortal } from './explorerportal'
 
-// import getBudgetNode from '../modules/getbudgetnode'
-
-// import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
-
 import { DatasetConfig, TimeSpecs, ViewpointData } from '../classes/databaseapi'
-// import getChartParms from '../controllers/explorer/getchartparms'
-// import { createChildNode,
-//     ChartSelectionContext,
-//     CreateChildNodeProps,
-//     CreateChildNodeCallbacks,
-//     onChartComponentSelection,
-// } from '../modules/onchartcomponentselection'
 
-// import * as Actions from '../../../core/actions/actions'
 import {branchtypes as branchactiontypes} from '../actions'
 import BudgetNode from '../classes/budgetnode'
 import BudgetBranch from '../classes/budgetbranch'
@@ -213,7 +195,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
                 setTimeout(() => {
 
-                    let switchResults = budgetBranch.switchFacet(this._nodeCallbacks, this.props.actions)
+                    let switchResults = budgetBranch.switchFacet(this._nodeCallbacks, this._actions)
 
                     let { deeperdata, shallowerdata } = switchResults
 

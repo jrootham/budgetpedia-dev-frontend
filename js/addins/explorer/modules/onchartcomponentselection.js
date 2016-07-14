@@ -104,42 +104,10 @@ exports.createChildNode = (budgetBranch, props, callbacks, selectionCallbacks, a
             viewpointConfig: budgetdata.viewpointdata.Configuration,
             itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
         };
-        for (newcellindex in newBudgetNode.cells) {
-            let props = {
-                chartIndex: newcellindex,
-                branchsettings: branchsettings,
-                configData: configData,
-            };
-            let ccallbacks = {
-                updateChartSelections: updateChartSelections,
-                refreshPresentation: refreshPresentation,
-                onPortalCreation: onPortalCreation,
-                workingStatus: workingStatus,
-            };
-            let childSelectionCallbacks = {
-                current: selectionCallbacks.next(nodeIndex + 1)(newcellindex),
-                next: selectionCallbacks.next,
-            };
-            chartParmsObj = newBudgetNode.getChartParms(props, childSelectionCallbacks);
-            if (chartParmsObj.isError) {
-                isError = true;
-                break;
-            }
-            let budgetCell = newBudgetNode.cells[newcellindex];
-            budgetCell.chartparms = chartParmsObj.chartParms;
-            budgetCell.chartCode =
-                constants_1.ChartTypeCodes[budgetCell.googleChartType];
-        }
-        if (isError) {
-            updateChartSelections();
-            workingStatus(false);
-            return;
-        }
         let budgetCell = budgetNode.cells[cellIndex];
         budgetCell.chartselection = context.selection;
         budgetCell.chart = chart;
         budgetCell.ChartObject = context.ChartObject;
-        updateBranchNodesState(branchNodes);
         updateChartSelections();
         onPortalCreation();
     });

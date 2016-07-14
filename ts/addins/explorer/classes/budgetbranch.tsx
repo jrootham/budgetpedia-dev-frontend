@@ -227,7 +227,8 @@ class BudgetBranch {
                             chart:prevBudgetCell.chart,
                         }
                         let fcurrent = fn(nodeIndex)(0)
-                        createChildNode(this,childprops, callbacks,{current:fcurrent,next:fn}, actions)
+                        let budgetBranch = this
+                        createChildNode(budgetBranch,childprops, callbacks,{current:fcurrent,next:fn}, actions)
                     })
                     budgetNode = null // branchNodes[nodeIndex] // created by createChildNode as side effect
                 }
