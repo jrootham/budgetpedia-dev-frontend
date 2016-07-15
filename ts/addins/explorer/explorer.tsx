@@ -166,7 +166,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         } else {
             setTimeout(() => {
                 this.props.hideWaitingMessage()
-            }, 250)
+            })
         }
 
     }
@@ -176,7 +176,9 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         updateBranchChartSelections(budgetBranch.nodes)
     }
 
-    updateChartSelections = branchIndex => () => this.updateIndexChartSelections(branchIndex)
+    updateChartSelections = branchIndex => () => {
+        return this.updateIndexChartSelections(branchIndex)
+    }
 
     // ===================================================================
     // ---------------------------[ RENDER ]------------------------------ 
@@ -266,7 +268,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 budgetBranch = {budgetBranch}
                 displaycallbacks = {{ 
                     workingStatus: explorer.workingStatus,
-                    updateChartSelections: explorer.updateChartSelections,
+                    updateChartSelections: explorer.updateChartSelections(branchIndex),
                 }}
                 actions = {actionprops}
                 controlData = {explorer.props.controlData}

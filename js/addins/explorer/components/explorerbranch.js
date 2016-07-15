@@ -142,6 +142,10 @@ class ExplorerBranch extends Component {
         this.switchFacet = (facet) => {
             let { callbackuid } = this.props;
             this.props.actions.changeFacet(callbackuid, facet);
+            let branch = this;
+            setTimeout(() => {
+                branch.props.displaycallbacks.updateChartSelections();
+            });
         };
         this.switchChartCode = (nodeIndex, cellIndex, chartCode) => {
             let { budgetBranch } = this.props;
@@ -242,7 +246,6 @@ class ExplorerBranch extends Component {
         this._actions.addNode = this.addNode(budgetBranch.uid);
         budgetBranch.actions = this._actions;
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this;
-        displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid);
         this._nodeCallbacks = {
             updateChartSelections: displaycallbacks.updateChartSelections,
             workingStatus: displaycallbacks.workingStatus,
@@ -281,11 +284,9 @@ class ExplorerBranch extends Component {
         let branchSettings = controlData.branchesById[this.props.callbackuid];
         let { nodesById } = controlData;
         let { nodeList } = branchSettings;
-        console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length, nodeList, branchNodes);
         if (nodeList.length > branchNodes.length) {
             let nodeIndex = branchNodes.length;
             let budgetNodeId = nodeList[nodeIndex];
-            console.log('harmonize', nodeIndex, budgetNodeId);
             budgetBranch.addNode(budgetNodeId, nodeIndex, nodesById[budgetNodeId], this._nodeCallbacks, this._actions);
         }
         else {

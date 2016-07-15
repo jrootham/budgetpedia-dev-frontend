@@ -7,7 +7,6 @@ let applyChartComponentSelection = (budgetBranch, props, callbacks, actions) => 
     branchNodes = budgetBranch.nodes;
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks;
     let { addNode } = actions;
-    console.log('in appluChartComponentSelection', props);
     let selection = context.selection[0];
     let selectionrow;
     if (selection) {
@@ -29,7 +28,6 @@ let applyChartComponentSelection = (budgetBranch, props, callbacks, actions) => 
     let removedids = removed.map((item) => {
         return item.uid;
     });
-    console.log('removed', removed, removedids);
     if (removedids.length > 0) {
         actions.removeNode(branchuid, removedids);
     }
@@ -62,13 +60,11 @@ exports.createChildNode = (budgetBranch, props, callbacks, selectionCallbacks, a
     let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, updateBranchNodesState, } = callbacks;
     let childdatapath = budgetNode.dataPath.slice();
     let node = budgetNode.dataNode;
-    console.log('before node components', node);
     if (!node.Components) {
         updateChartSelections();
         return;
     }
     let components = node.Components;
-    console.log('after node components', components);
     let code = null;
     let parentdata = null;
     let parentNode = null;
@@ -104,12 +100,9 @@ exports.createChildNode = (budgetBranch, props, callbacks, selectionCallbacks, a
         parentData: parentdata,
         timeSpecs: newrange,
     };
-    console.log('before add child node', newnodeconfigparms);
     actions.addNode(newnodeconfigparms);
-    console.log('after add child node');
     setTimeout(() => {
         let newBudgetNode = budgetBranch.nodes[nodeIndex + 1];
-        console.log('newBudgetNode', newBudgetNode, nodeIndex + 1);
         let newcellindex = null;
         let chartParmsObj = null;
         let isError = false;
@@ -122,8 +115,10 @@ exports.createChildNode = (budgetBranch, props, callbacks, selectionCallbacks, a
         budgetCell.chart = chart;
         budgetCell.ChartObject = context.ChartObject;
         workingStatus(false);
-        updateChartSelections();
-        onPortalCreation();
+        setTimeout(() => {
+            updateChartSelections();
+            onPortalCreation();
+        });
     });
 };
 exports.onChartComponentSelection = budgetBranch => branchsettings => branchuid => budgetdata => branchNodes => callbacks => actions => nodeIndex => cellIndex => props => {

@@ -92,7 +92,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         budgetBranch.actions = this._actions
 
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this
-        displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid)
+        // displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid)
         this._nodeCallbacks = {
             updateChartSelections:displaycallbacks.updateChartSelections,
             workingStatus:displaycallbacks.workingStatus,
@@ -146,11 +146,11 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         // first task is to harmonize controlData nodeList list with local branchNode list
         // this condition will keep adding nodes on each render cycle triggered by 
         // addBranchNode, until all nodes are drawn
-        console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length, nodeList, branchNodes)
+        // console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length, nodeList, branchNodes)
         if (nodeList.length > branchNodes.length) {
             let nodeIndex = branchNodes.length
             let budgetNodeId = nodeList[nodeIndex]
-            console.log('harmonize', nodeIndex, budgetNodeId)
+            // console.log('harmonize', nodeIndex, budgetNodeId)
             budgetBranch.addNode(
                 budgetNodeId,
                 nodeIndex,
@@ -327,7 +327,10 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         // console.log('calling changeFacet',facet)
         let { callbackuid } = this.props
         this.props.actions.changeFacet(callbackuid, facet)
-
+        let branch = this
+        setTimeout(() => {
+            branch.props.displaycallbacks.updateChartSelections()
+        })
     }
 
     // TODO: belongs with explorerchart controller?

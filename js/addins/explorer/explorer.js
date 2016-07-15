@@ -46,14 +46,16 @@ let Explorer = class extends Component {
             else {
                 setTimeout(() => {
                     this.props.hideWaitingMessage();
-                }, 250);
+                });
             }
         };
         this.updateIndexChartSelections = branchIndex => {
             let budgetBranch = this.state.budgetBranches[branchIndex];
             updatebranchchartselections_1.updateBranchChartSelections(budgetBranch.nodes);
         };
-        this.updateChartSelections = branchIndex => () => this.updateIndexChartSelections(branchIndex);
+        this.updateChartSelections = branchIndex => () => {
+            return this.updateIndexChartSelections(branchIndex);
+        };
     }
     componentDidMount() {
         let { branchList, branchesById } = this.props.controlData;
@@ -108,7 +110,7 @@ let Explorer = class extends Component {
                 };
                 return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {callbackuid: budgetBranch.uid, callbackid: branchIndex, budgetBranch: budgetBranch, displaycallbacks: {
                     workingStatus: explorer.workingStatus,
-                    updateChartSelections: explorer.updateChartSelections,
+                    updateChartSelections: explorer.updateChartSelections(branchIndex),
                 }, actions: actionprops, controlData: explorer.props.controlData})));
             });
             return segments;

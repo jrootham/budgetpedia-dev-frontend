@@ -88,8 +88,6 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
 
     let { addNode } = actions
 
-    console.log('in appluChartComponentSelection', props)
-
     // unpack context
     let selection = context.selection[0]
 
@@ -107,6 +105,8 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
 
     let budgetNode: BudgetNode = branchNodes[nodeIndex]
 
+    // console.log('nodeIndex, selection and budgetNode of selected chart', nodeIndex, selection, budgetNode)
+
     let cellIndex = context.cellIndex
     let budgetCell = budgetNode.cells[cellIndex]
     if (budgetCell.nodeDataPropertyName == 'Categories') {
@@ -121,7 +121,7 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
     let removedids = removed.map((item) => {
         return item.uid
     })
-    console.log('removed', removed, removedids)
+    // console.log('removed', removed, removedids)
     if (removedids.length > 0) {
         actions.removeNode(branchuid, removedids)
     }
@@ -130,6 +130,7 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
     // refreshPresentation()
     setTimeout(()=>{
         branchNodes = budgetBranch.nodes
+        // console.log('revised branchNodes', [...branchNodes])
         if (!selection) { // deselected
             delete budgetCell.chartselection
             delete budgetCell.chart
@@ -191,16 +192,12 @@ export let createChildNode = (
 
     let node = budgetNode.dataNode
 
-    console.log('before node components', node)
-
     if (!node.Components) {
         updateChartSelections()
         return
     }
 
     let components = node.Components
-
-    console.log('after node components', components)
 
     let code = null
     let parentdata: SortedComponentItem = null
@@ -240,16 +237,14 @@ export let createChildNode = (
         timeSpecs: newrange,
     }
 
-    console.log('before add child node', newnodeconfigparms)
+    // console.log('before add child node', newnodeconfigparms)
 
     actions.addNode(newnodeconfigparms)
-
-    console.log('after add child node')
 
     // let newBudgetNode = new BudgetNode(newnodeconfigparms, 'x', newdatanode, parentNode)
     setTimeout(() => {
         let newBudgetNode = budgetBranch.nodes[nodeIndex + 1]
-        console.log('newBudgetNode',newBudgetNode,nodeIndex + 1)
+        // console.log('newBudgetNode',newBudgetNode,nodeIndex + 1)
         let newcellindex: any = null
         let chartParmsObj: ChartParmsObj = null
         let isError = false
@@ -265,8 +260,10 @@ export let createChildNode = (
         budgetCell.ChartObject = context.ChartObject
 
         workingStatus(false)
-        updateChartSelections()
-        onPortalCreation()
+        setTimeout(()=>{
+            updateChartSelections()
+            onPortalCreation()
+        })
     })
 }
 
