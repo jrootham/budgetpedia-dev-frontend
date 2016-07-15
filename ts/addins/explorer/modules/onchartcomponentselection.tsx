@@ -264,10 +264,10 @@ export let createChildNode = (
         budgetCell.chart = chart
         budgetCell.ChartObject = context.ChartObject
 
+        workingStatus(false)
         updateChartSelections()
         onPortalCreation()
     })
-    workingStatus(false)
 }
 
 export const onChartComponentSelection = 

@@ -121,10 +121,10 @@ exports.createChildNode = (budgetBranch, props, callbacks, selectionCallbacks, a
         budgetCell.chartselection = context.selection;
         budgetCell.chart = chart;
         budgetCell.ChartObject = context.ChartObject;
+        workingStatus(false);
         updateChartSelections();
         onPortalCreation();
     });
-    workingStatus(false);
 };
 exports.onChartComponentSelection = budgetBranch => branchsettings => branchuid => budgetdata => branchNodes => callbacks => actions => nodeIndex => cellIndex => props => {
     props.context.nodeIndex = nodeIndex;
