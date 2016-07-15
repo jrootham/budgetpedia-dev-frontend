@@ -31,6 +31,12 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         this.props.displaycallbacks.onChangePortalTab() 
     }
 
+    componentDidMount() {
+        console.log('chartrefs',this._chartrefs)
+    }
+
+    _chartrefs:any[] = []
+
     getChartTabs = () => {
 
         // generate array of chart tabs
@@ -48,7 +54,8 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
                 label={ cellTitle } 
                 value={ cellIndex }
                 key={ cellIndex }>
-                <ExplorerChart 
+                <ExplorerChart
+                    ref = {node => {this._chartrefs[cellIndex] = node}} 
                     callbackid = { cellIndex }
                     cellSettings = { cellSettings }
                     callbacks = { cellCallbacks }

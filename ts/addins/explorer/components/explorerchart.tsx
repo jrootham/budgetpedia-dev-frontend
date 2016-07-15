@@ -27,10 +27,15 @@ interface ExplorerChartProps {
 
 class ExplorerChart extends Component<ExplorerChartProps, any> {
 
+    chartnode:any
 
     onChangeChartCode = (chartCode) => {
         let {callbacks, callbackid} = this.props
         callbacks.onSwitchChartCode(callbackid, chartCode)
+    }
+
+    componentDidMount() {
+        console.log('explorerchart chart, node', this.chartnode)
     }
 
     render() {
@@ -39,6 +44,17 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
         if (!expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4'
         }
+
+        let chart =  <Chart
+                ref = {node => {this.chartnode = node}}
+                chartType = { chartParms.chartType }
+                options = { chartParms.options }
+                chartEvents = { chartParms.events }
+                rows = { chartParms.rows }
+                columns = { chartParms.columns }
+                // used to create and cache html element id attribute
+                graph_id = { cellSettings.graph_id }
+                />
 
         return <div>
             <div style={{ padding: "3px" }}>
@@ -127,15 +143,8 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     tooltipPosition="top-center"
                     disabled><FontIcon className="material-icons">announcement</FontIcon></IconButton>
             </div>
-            <Chart
-                chartType = { chartParms.chartType }
-                options = { chartParms.options }
-                chartEvents = { chartParms.events }
-                rows = { chartParms.rows }
-                columns = { chartParms.columns }
-                // used to create and cache html element id attribute
-                graph_id = { cellSettings.graph_id }
-                />
+
+            { chart }
             <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}>
                 <IconButton disabled><FontIcon className="material-icons">view_list</FontIcon></IconButton>
             </div>
