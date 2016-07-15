@@ -281,9 +281,11 @@ class ExplorerBranch extends Component {
         let branchSettings = controlData.branchesById[this.props.callbackuid];
         let { nodesById } = controlData;
         let { nodeList } = branchSettings;
+        console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length, nodeList, branchNodes);
         if (nodeList.length > branchNodes.length) {
             let nodeIndex = branchNodes.length;
             let budgetNodeId = nodeList[nodeIndex];
+            console.log('harmonize', nodeIndex, budgetNodeId);
             budgetBranch.addNode(budgetNodeId, nodeIndex, nodesById[budgetNodeId], this._nodeCallbacks, this._actions);
         }
         else {

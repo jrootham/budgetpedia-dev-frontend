@@ -82,9 +82,13 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
 
     let { context, branchsettings, budgetdata, branchNodes, selectionCallbackVersions, branchuid } = props
 
+    branchNodes = budgetBranch.nodes
+
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks
 
     let { addNode } = actions
+
+    console.log('in appluChartComponentSelection', props)
 
     // unpack context
     let selection = context.selection[0]
@@ -117,30 +121,36 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
     let removedids = removed.map((item) => {
         return item.uid
     })
-    // actions.removeNode(branchuid, removedids)
+    console.log('removed', removed, removedids)
+    if (removedids.length > 0) {
+        actions.removeNode(branchuid, removedids)
+    }
 
     // trigger update to avoid google charts use of cached versions
-    refreshPresentation()
+    // refreshPresentation()
+    setTimeout(()=>{
+        branchNodes = budgetBranch.nodes
+        if (!selection) { // deselected
+            delete budgetCell.chartselection
+            delete budgetCell.chart
+            updateChartSelections()
+            return
+        }
+        let childprops: CreateChildNodeProps = {
+            parentNode:budgetNode, 
+            branchsettings, 
+            budgetdata,
+            branchNodes, 
+            selectionrow,
+            nodeIndex,
+            cellIndex, 
+            context, 
+            chart,
+        }
+        let childcallbacks: CreateChildNodeCallbacks = callbacks
+        createChildNode( budgetBranch, childprops, childcallbacks, selectionCallbackVersions, actions)
+    })
 
-    if (!selection) { // deselected
-        delete budgetCell.chartselection
-        delete budgetCell.chart
-        updateChartSelections()
-        return
-    }
-    let childprops: CreateChildNodeProps = {
-        parentNode:budgetNode, 
-        branchsettings, 
-        budgetdata,
-        branchNodes, 
-        selectionrow,
-        nodeIndex,
-        cellIndex, 
-        context, 
-        chart,
-    }
-    let childcallbacks: CreateChildNodeCallbacks = callbacks
-    createChildNode( budgetBranch, childprops, childcallbacks, selectionCallbackVersions, actions)
 }
 
 export let createChildNode = (
@@ -181,12 +191,16 @@ export let createChildNode = (
 
     let node = budgetNode.dataNode
 
+    console.log('before node components', node)
+
     if (!node.Components) {
         updateChartSelections()
         return
     }
 
     let components = node.Components
+
+    console.log('after node components', components)
 
     let code = null
     let parentdata: SortedComponentItem = null
@@ -226,11 +240,16 @@ export let createChildNode = (
         timeSpecs: newrange,
     }
 
+    console.log('before add child node', newnodeconfigparms)
+
     actions.addNode(newnodeconfigparms)
+
+    console.log('after add child node')
 
     // let newBudgetNode = new BudgetNode(newnodeconfigparms, 'x', newdatanode, parentNode)
     setTimeout(() => {
         let newBudgetNode = budgetBranch.nodes[nodeIndex + 1]
+        console.log('newBudgetNode',newBudgetNode,nodeIndex + 1)
         let newcellindex: any = null
         let chartParmsObj: ChartParmsObj = null
         let isError = false

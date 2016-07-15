@@ -146,10 +146,11 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         // first task is to harmonize controlData nodeList list with local branchNode list
         // this condition will keep adding nodes on each render cycle triggered by 
         // addBranchNode, until all nodes are drawn
-        // console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length)
+        console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length, nodeList, branchNodes)
         if (nodeList.length > branchNodes.length) {
             let nodeIndex = branchNodes.length
             let budgetNodeId = nodeList[nodeIndex]
+            console.log('harmonize', nodeIndex, budgetNodeId)
             budgetBranch.addNode(
                 budgetNodeId,
                 nodeIndex,
