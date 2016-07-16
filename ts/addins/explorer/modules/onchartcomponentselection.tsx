@@ -73,18 +73,17 @@ export interface OnChartComponentSelectionCallbacks {
 // chartconfig, not the chartconfig itself
 // on selection, makes a child with the same portalCharts offset
 // TODO: create chile which appropriately sets up correct set of child charts
-let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelectionProps,
-    callbacks: OnChartComponentSelectionCallbacks, actions: any) => {
+let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelectionProps) => {
 
-    let { context, selectionCallbackVersions } = props
+    let { context } = props
 
     let { nodes:branchNodes, settings:branchsettings, uid:branchuid } = budgetBranch
 
     let viewpointData = budgetBranch.getState().viewpointData
 
-    let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks
+    let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = budgetBranch.nodeCallbacks
 
-    let { addNode } = actions
+    let { addNode, removeNode } = budgetBranch.actions
 
     // unpack context
     let selection = context.selection[0]
@@ -121,7 +120,7 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
     })
     // console.log('removed', removed, removedids)
     if (removedids.length > 0) {
-        actions.removeNode(branchuid, removedids)
+        removeNode(branchuid, removedids)
     }
 
     // trigger update to avoid google charts use of cached versions
@@ -146,8 +145,8 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
             context, 
             chart,
         }
-        let childcallbacks: CreateChildNodeCallbacks = callbacks
-        createChildNode( budgetBranch, childprops, childcallbacks, selectionCallbackVersions, actions)
+        let childcallbacks: CreateChildNodeCallbacks = budgetBranch.nodeCallbacks
+        createChildNode( budgetBranch, childprops, childcallbacks, budgetBranch.actions)
     })
 
 }
@@ -156,7 +155,6 @@ export let createChildNode = (
     budgetBranch: any,
     props: CreateChildNodeProps, 
     callbacks: CreateChildNodeCallbacks,
-    selectionCallbacks: SelectionCallbackProps,
     actions
     ) => {
 
@@ -265,9 +263,9 @@ export let createChildNode = (
 }
 
 export const onChartComponentSelection = 
-    budgetBranch => callbacks => actions => nodeIndex => cellIndex => props => {
+    budgetBranch => nodeIndex => cellIndex => props => {
     props.context.nodeIndex = nodeIndex
     props.context.cellIndex = cellIndex
-    applyChartComponentSelection(budgetBranch,props, callbacks, actions)
+    applyChartComponentSelection(budgetBranch,props)
 }
 
