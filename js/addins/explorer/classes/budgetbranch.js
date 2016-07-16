@@ -10,12 +10,12 @@ class BudgetBranch {
             let { actions, nodeCallbacks: callbacks } = this;
             let { dataPath } = budgetNodeParms;
             let branchsettings = this.settings;
-            let viewpointdata = this.getState().viewpointData;
+            let viewpointdata = this.state.viewpointData;
             let datanode = getbudgetnode_1.default(viewpointdata, dataPath);
             let branchNodes = this.nodes;
             let parentNode = (nodeIndex == 0) ? undefined : branchNodes[branchNodes.length - 1].dataNode;
             let budgetNode = new budgetnode_1.default(budgetNodeParms, budgetNodeUid, datanode, parentNode);
-            let budgetdata = { viewpointdata: this.getState().viewpointData };
+            let budgetdata = { viewpointdata: this.state.viewpointData };
             let chartParmsObj;
             let cellindex;
             let branchuid = this.uid;
@@ -83,7 +83,7 @@ class BudgetBranch {
     }
     initializeBranch() {
         let branchsettings = this.settings;
-        let viewpointdata = this.getState().viewpointData;
+        let viewpointdata = this.state.viewpointData;
         let datapath = [];
         let { chartType: defaultChartType, viewpoint: viewpointName, facet: facetName, latestYear: rightYear, } = branchsettings;
         let budgetNodeParms = {
@@ -110,7 +110,7 @@ class BudgetBranch {
             shallowerdata: false,
         };
         let branchsettings = this.settings;
-        let viewpointData = this.getState().viewpointData;
+        let viewpointData = this.state.viewpointData;
         let branchNodes = this.nodes;
         let budgetNode = null;
         let parentBudgetNode;
@@ -222,7 +222,7 @@ class BudgetBranch {
         };
         let oldChartType = budgetCell.googleChartType;
         budgetCell.googleChartType = chartType;
-        let budgetdata = { viewpointdata: this.getState().viewpointData };
+        let budgetdata = { viewpointdata: this.state.viewpointData };
         let configData = {
             viewpointConfig: budgetdata.viewpointdata.Configuration,
             itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,

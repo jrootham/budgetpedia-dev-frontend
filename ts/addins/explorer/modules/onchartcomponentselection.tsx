@@ -71,7 +71,7 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
 
     let { nodes:branchNodes, settings:branchsettings, uid:branchuid } = budgetBranch
 
-    let viewpointData = budgetBranch.getState().viewpointData
+    let viewpointData = budgetBranch.state.viewpointData
 
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = budgetBranch.nodeCallbacks
 

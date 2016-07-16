@@ -400,7 +400,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
         let { settings:branchsettings } = this.props.budgetBranch
 
-        let budgetdata = {viewpointdata:this.getState().viewpointData}
+        let budgetdata = {viewpointdata:this.state.viewpointData}
 
         if (!budgetdata.viewpointdata) return []
         let viewpointdata = budgetdata.viewpointdata

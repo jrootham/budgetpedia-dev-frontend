@@ -5,7 +5,7 @@ const getbudgetnode_1 = require('./getbudgetnode');
 let applyChartComponentSelection = (budgetBranch, props) => {
     let { context } = props;
     let { nodes: branchNodes, settings: branchsettings, uid: branchuid } = budgetBranch;
-    let viewpointData = budgetBranch.getState().viewpointData;
+    let viewpointData = budgetBranch.state.viewpointData;
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = budgetBranch.nodeCallbacks;
     let { addNode, removeNode } = budgetBranch.actions;
     let selection = context.selection[0];

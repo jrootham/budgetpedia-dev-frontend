@@ -71,7 +71,7 @@ class BudgetBranch {
     public initializeBranch() {
 
         let branchsettings = this.settings
-        let viewpointdata = this.getState().viewpointData
+        let viewpointdata = this.state.viewpointData
 
         // *** CREATE BRANCH
         // -----------------[ THE DRILLDOWN ROOT ]-----------------
@@ -111,13 +111,13 @@ class BudgetBranch {
         let { dataPath } = budgetNodeParms
         let branchsettings = this.settings
 
-        let viewpointdata = this.getState().viewpointData
+        let viewpointdata = this.state.viewpointData
         let datanode = getBudgetNode(viewpointdata, dataPath)
         let branchNodes = this.nodes
         let parentNode = (nodeIndex == 0)?undefined:branchNodes[branchNodes.length - 1].dataNode
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, datanode, parentNode)
 
-        let budgetdata = {viewpointdata:this.getState().viewpointData}
+        let budgetdata = {viewpointdata:this.state.viewpointData}
         let chartParmsObj: ChartParmsObj
         let cellindex: any
         let branchuid = this.uid
@@ -169,7 +169,7 @@ class BudgetBranch {
             shallowerdata: false,
         }
         let branchsettings: BranchSettings = this.settings
-        let viewpointData = this.getState().viewpointData
+        let viewpointData = this.state.viewpointData
 
         let branchNodes = this.nodes
 
@@ -303,7 +303,7 @@ class BudgetBranch {
         }
         let oldChartType = budgetCell.googleChartType
         budgetCell.googleChartType = chartType
-        let budgetdata = {viewpointdata:this.getState().viewpointData}
+        let budgetdata = {viewpointdata:this.state.viewpointData}
         let configData = {
             viewpointConfig:budgetdata.viewpointdata.Configuration,
             itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
