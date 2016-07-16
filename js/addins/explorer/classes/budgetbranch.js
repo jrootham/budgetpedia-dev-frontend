@@ -19,7 +19,7 @@ class BudgetBranch {
             let chartParmsObj;
             let cellindex;
             let branchuid = this.uid;
-            let selectfn = onchartcomponentselection_1.onChartComponentSelection(this)(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions);
+            let selectfn = onchartcomponentselection_1.onChartComponentSelection(this)(budgetdata)(callbacks)(actions);
             let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = budgetdata.viewpointdata;
             let configData = {
                 viewpointConfig: viewpointConfig,
@@ -119,7 +119,7 @@ class BudgetBranch {
         let isError = false;
         let chartParmsObj = null;
         let branchuid = this.uid;
-        let fn = onchartcomponentselection_1.onChartComponentSelection(this)(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions);
+        let fn = onchartcomponentselection_1.onChartComponentSelection(this)(budgetdata)(callbacks)(actions);
         for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode;
             budgetNode = branchNodes[nodeIndex];
@@ -234,7 +234,7 @@ class BudgetBranch {
             configData: configData,
         };
         let branchuid = this.uid;
-        let fn = onchartcomponentselection_1.onChartComponentSelection(this)(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions);
+        let fn = onchartcomponentselection_1.onChartComponentSelection(this)(budgetdata)(callbacks)(actions);
         let fncurrent = fn(nodeIndex)(cellIndex);
         let chartParmsObj = budgetNode.getChartParms(chartprops, { current: fncurrent, next: fn });
         if (!chartParmsObj.isError) {

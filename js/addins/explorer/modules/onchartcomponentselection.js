@@ -3,8 +3,8 @@ var format = require('format-number');
 const constants_1 = require('../../constants');
 const getbudgetnode_1 = require('./getbudgetnode');
 let applyChartComponentSelection = (budgetBranch, props, callbacks, actions) => {
-    let { context, branchsettings, budgetdata, branchNodes, selectionCallbackVersions, branchuid } = props;
-    branchNodes = budgetBranch.nodes;
+    let { context, budgetdata, selectionCallbackVersions } = props;
+    let { nodes: branchNodes, settings: branchsettings, uid: branchuid } = budgetBranch;
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks;
     let { addNode } = actions;
     let selection = context.selection[0];
@@ -121,12 +121,9 @@ exports.createChildNode = (budgetBranch, props, callbacks, selectionCallbacks, a
         });
     });
 };
-exports.onChartComponentSelection = budgetBranch => branchsettings => branchuid => budgetdata => branchNodes => callbacks => actions => nodeIndex => cellIndex => props => {
+exports.onChartComponentSelection = budgetBranch => budgetdata => callbacks => actions => nodeIndex => cellIndex => props => {
     props.context.nodeIndex = nodeIndex;
     props.context.cellIndex = cellIndex;
-    props.branchsettings = branchsettings;
     props.budgetdata = budgetdata;
-    props.branchNodes = branchNodes;
-    props.branchuid = branchuid;
     applyChartComponentSelection(budgetBranch, props, callbacks, actions);
 };

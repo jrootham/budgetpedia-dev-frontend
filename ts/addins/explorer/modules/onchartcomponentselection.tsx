@@ -80,9 +80,9 @@ export interface OnChartComponentSelectionCallbacks {
 let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelectionProps,
     callbacks: OnChartComponentSelectionCallbacks, actions: any) => {
 
-    let { context, branchsettings, budgetdata, branchNodes, selectionCallbackVersions, branchuid } = props
+    let { context, budgetdata, selectionCallbackVersions } = props
 
-    branchNodes = budgetBranch.nodes
+    let { nodes:branchNodes, settings:branchsettings, uid:branchuid } = budgetBranch
 
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks
 
@@ -267,14 +267,11 @@ export let createChildNode = (
 }
 
 export const onChartComponentSelection = 
-    budgetBranch => branchsettings => branchuid => budgetdata => branchNodes => 
+    budgetBranch => budgetdata => 
         callbacks => actions => nodeIndex => cellIndex => props => {
     props.context.nodeIndex = nodeIndex
     props.context.cellIndex = cellIndex
-    props.branchsettings = branchsettings
     props.budgetdata = budgetdata
-    props.branchNodes = branchNodes
-    props.branchuid = branchuid
     applyChartComponentSelection(budgetBranch,props, callbacks, actions)
 }
 

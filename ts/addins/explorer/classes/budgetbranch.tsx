@@ -121,7 +121,7 @@ class BudgetBranch {
         let chartParmsObj: ChartParmsObj
         let cellindex: any
         let branchuid = this.uid
-        let selectfn = onChartComponentSelection(this)(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions)
+        let selectfn = onChartComponentSelection(this)(budgetdata)(callbacks)(actions)
         let {
             Configuration: viewpointConfig,
             itemseriesconfigdata: itemseriesConfig,
@@ -180,7 +180,7 @@ class BudgetBranch {
         let isError = false
         let chartParmsObj: ChartParmsObj = null
         let branchuid = this.uid
-        let fn = onChartComponentSelection(this)(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions)
+        let fn = onChartComponentSelection(this)(budgetdata)(callbacks)(actions)
 
         for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode
@@ -315,7 +315,7 @@ class BudgetBranch {
             configData,
         }
         let branchuid = this.uid
-        let fn = onChartComponentSelection(this)(branchsettings)(branchuid)(budgetdata)(branchNodes)(callbacks)(actions)
+        let fn = onChartComponentSelection(this)(budgetdata)(callbacks)(actions)
         let fncurrent = fn(nodeIndex)(cellIndex)
         let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
         if (!chartParmsObj.isError) {
