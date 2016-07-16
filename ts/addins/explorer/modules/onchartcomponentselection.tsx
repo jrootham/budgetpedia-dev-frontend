@@ -37,7 +37,7 @@ export interface ChartSelectionContext {
 export interface CreateChildNodeProps {
     parentNode: BudgetNode,
     branchsettings: BranchSettings,
-    budgetdata:any,
+    viewpointData:any,
     branchNodes: any,
     selectionrow: any,
     nodeIndex: number,
@@ -56,10 +56,6 @@ export interface CreateChildNodeCallbacks {
 export interface OnChartComponentSelectionProps {
     context: ChartSelectionContext,
     selectionCallbackVersions: any,
-    branchsettings?: BranchSettings,
-    budgetdata?:any,
-    branchNodes?: any,
-    branchuid?:string,
 }
 export interface OnChartComponentSelectionCallbacks {
     updateBranchNodesState: Function,
@@ -80,9 +76,11 @@ export interface OnChartComponentSelectionCallbacks {
 let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelectionProps,
     callbacks: OnChartComponentSelectionCallbacks, actions: any) => {
 
-    let { context, budgetdata, selectionCallbackVersions } = props
+    let { context, selectionCallbackVersions } = props
 
     let { nodes:branchNodes, settings:branchsettings, uid:branchuid } = budgetBranch
+
+    let viewpointData = budgetBranch.getState().viewpointData
 
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks
 
@@ -140,7 +138,7 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
         let childprops: CreateChildNodeProps = {
             parentNode:budgetNode, 
             branchsettings, 
-            budgetdata,
+            viewpointData,
             branchNodes, 
             selectionrow,
             nodeIndex,
@@ -165,7 +163,7 @@ export let createChildNode = (
     let {
         parentNode: budgetNode,
         branchsettings,
-        budgetdata,
+        viewpointData,
         branchNodes,
         selectionrow,
         nodeIndex,
@@ -223,9 +221,9 @@ export let createChildNode = (
     let newrange = Object.assign({}, budgetNode.timeSpecs)
     let charttype = branchsettings.chartType
     let chartCode = ChartTypeCodes[charttype]
-    let portalcharts = budgetdata.viewpointdata.PortalCharts
+    let portalcharts = viewpointData.PortalCharts
 
-    let newdatanode = getBudgetNode(budgetdata.viewpointdata, childdatapath)
+    let newdatanode = getBudgetNode(viewpointData, childdatapath)
     let newnodeconfigparms: BudgetNodeParms = {
         portalCharts: portalcharts,
         defaultChartType:charttype,
@@ -248,8 +246,8 @@ export let createChildNode = (
         let chartParmsObj: ChartParmsObj = null
         let isError = false
         let configData = {
-            viewpointConfig:budgetdata.viewpointdata.Configuration,
-            itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
+            viewpointConfig:viewpointData.Configuration,
+            itemseriesConfig:viewpointData.itemseriesconfigdata,
         }
 
         let budgetCell = budgetNode.cells[cellIndex]
@@ -267,11 +265,9 @@ export let createChildNode = (
 }
 
 export const onChartComponentSelection = 
-    budgetBranch => budgetdata => 
-        callbacks => actions => nodeIndex => cellIndex => props => {
+    budgetBranch => callbacks => actions => nodeIndex => cellIndex => props => {
     props.context.nodeIndex = nodeIndex
     props.context.cellIndex = cellIndex
-    props.budgetdata = budgetdata
     applyChartComponentSelection(budgetBranch,props, callbacks, actions)
 }
 

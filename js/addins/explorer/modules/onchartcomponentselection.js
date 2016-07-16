@@ -3,8 +3,9 @@ var format = require('format-number');
 const constants_1 = require('../../constants');
 const getbudgetnode_1 = require('./getbudgetnode');
 let applyChartComponentSelection = (budgetBranch, props, callbacks, actions) => {
-    let { context, budgetdata, selectionCallbackVersions } = props;
+    let { context, selectionCallbackVersions } = props;
     let { nodes: branchNodes, settings: branchsettings, uid: branchuid } = budgetBranch;
+    let viewpointData = budgetBranch.getState().viewpointData;
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = callbacks;
     let { addNode } = actions;
     let selection = context.selection[0];
@@ -42,7 +43,7 @@ let applyChartComponentSelection = (budgetBranch, props, callbacks, actions) => 
         let childprops = {
             parentNode: budgetNode,
             branchsettings: branchsettings,
-            budgetdata: budgetdata,
+            viewpointData: viewpointData,
             branchNodes: branchNodes,
             selectionrow: selectionrow,
             nodeIndex: nodeIndex,
@@ -55,7 +56,7 @@ let applyChartComponentSelection = (budgetBranch, props, callbacks, actions) => 
     });
 };
 exports.createChildNode = (budgetBranch, props, callbacks, selectionCallbacks, actions) => {
-    let { parentNode: budgetNode, branchsettings, budgetdata, branchNodes, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
+    let { parentNode: budgetNode, branchsettings, viewpointData, branchNodes, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
     let viewpointName = budgetNode.viewpointName, facet = budgetNode.facetName;
     let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, updateBranchNodesState, } = callbacks;
     let childdatapath = budgetNode.dataPath.slice();
@@ -88,8 +89,8 @@ exports.createChildNode = (budgetBranch, props, callbacks, selectionCallbacks, a
     let newrange = Object.assign({}, budgetNode.timeSpecs);
     let charttype = branchsettings.chartType;
     let chartCode = constants_1.ChartTypeCodes[charttype];
-    let portalcharts = budgetdata.viewpointdata.PortalCharts;
-    let newdatanode = getbudgetnode_1.default(budgetdata.viewpointdata, childdatapath);
+    let portalcharts = viewpointData.PortalCharts;
+    let newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
     let newnodeconfigparms = {
         portalCharts: portalcharts,
         defaultChartType: charttype,
@@ -107,8 +108,8 @@ exports.createChildNode = (budgetBranch, props, callbacks, selectionCallbacks, a
         let chartParmsObj = null;
         let isError = false;
         let configData = {
-            viewpointConfig: budgetdata.viewpointdata.Configuration,
-            itemseriesConfig: budgetdata.viewpointdata.itemseriesconfigdata,
+            viewpointConfig: viewpointData.Configuration,
+            itemseriesConfig: viewpointData.itemseriesconfigdata,
         };
         let budgetCell = budgetNode.cells[cellIndex];
         budgetCell.chartselection = context.selection;
@@ -121,9 +122,8 @@ exports.createChildNode = (budgetBranch, props, callbacks, selectionCallbacks, a
         });
     });
 };
-exports.onChartComponentSelection = budgetBranch => budgetdata => callbacks => actions => nodeIndex => cellIndex => props => {
+exports.onChartComponentSelection = budgetBranch => callbacks => actions => nodeIndex => cellIndex => props => {
     props.context.nodeIndex = nodeIndex;
     props.context.cellIndex = cellIndex;
-    props.budgetdata = budgetdata;
     applyChartComponentSelection(budgetBranch, props, callbacks, actions);
 };

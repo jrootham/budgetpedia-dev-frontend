@@ -121,7 +121,7 @@ class BudgetBranch {
         let chartParmsObj: ChartParmsObj
         let cellindex: any
         let branchuid = this.uid
-        let selectfn = onChartComponentSelection(this)(budgetdata)(callbacks)(actions)
+        let selectfn = onChartComponentSelection(this)(callbacks)(actions)
         let {
             Configuration: viewpointConfig,
             itemseriesconfigdata: itemseriesConfig,
@@ -169,8 +169,7 @@ class BudgetBranch {
             shallowerdata: false,
         }
         let branchsettings: BranchSettings = this.settings
-        let viewpointdata = this.getState().viewpointData
-        let budgetdata = {viewpointdata:this.getState().viewpointData}
+        let viewpointData = this.getState().viewpointData
 
         let branchNodes = this.nodes
 
@@ -180,12 +179,12 @@ class BudgetBranch {
         let isError = false
         let chartParmsObj: ChartParmsObj = null
         let branchuid = this.uid
-        let fn = onChartComponentSelection(this)(budgetdata)(callbacks)(actions)
+        let fn = onChartComponentSelection(this)(callbacks)(actions)
 
         for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode
             budgetNode = branchNodes[nodeIndex]
-            let nextdataNode = getBudgetNode(viewpointdata, budgetNode.dataPath)
+            let nextdataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
             if (nextdataNode) {
                 // check previous cell configuration against previous node
                 // TODO: THIS IS A PROXY THAT NEEDS TO BE REPLACED
@@ -221,7 +220,7 @@ class BudgetBranch {
                         let childprops: CreateChildNodeProps = {
                             parentNode:prevBudgetNode,
                             branchsettings,
-                            budgetdata,
+                            viewpointData,
                             branchNodes,
                             selectionrow: prevBudgetCell.chartselection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
@@ -241,8 +240,8 @@ class BudgetBranch {
             let nodeCellIndex: any = null
             if (!budgetNode) break
             let configData = {
-                viewpointConfig:budgetdata.viewpointdata.Configuration,
-                itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
+                viewpointConfig:viewpointData.Configuration,
+                itemseriesConfig:viewpointData.itemseriesconfigdata,
             }
             for (nodeCellIndex in budgetNode.cells) {
                 let props: GetCellChartProps = {
@@ -315,7 +314,7 @@ class BudgetBranch {
             configData,
         }
         let branchuid = this.uid
-        let fn = onChartComponentSelection(this)(budgetdata)(callbacks)(actions)
+        let fn = onChartComponentSelection(this)(callbacks)(actions)
         let fncurrent = fn(nodeIndex)(cellIndex)
         let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
         if (!chartParmsObj.isError) {
