@@ -18,7 +18,7 @@ class ExplorerBranch extends Component {
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
-        this.addNode = branchuid => settings => {
+        this.addBranchNode = branchuid => settings => {
             return this.props.actions.addNode(branchuid, settings);
         };
         this.harmonizecount = null;
@@ -35,42 +35,48 @@ class ExplorerBranch extends Component {
             let { budgetBranch } = this.props;
             switch (lastAction) {
                 case actions_1.branchtypes.CHANGE_VIEWPOINT: {
-                    budgetBranch.getViewpointData();
-                    setTimeout(() => {
-                        budgetBranch.initializeBranch();
-                    });
+                    this.processChangeViewpointStateChange(budgetBranch);
                     break;
                 }
                 case actions_1.branchtypes.CHANGE_FACET: {
-                    budgetBranch.getViewpointData();
-                    setTimeout(() => {
-                        let switchResults = budgetBranch.switchFacet();
-                        let { deeperdata, shallowerdata } = switchResults;
-                        if (deeperdata || shallowerdata) {
-                            let message = null;
-                            if (deeperdata) {
-                                message = "More drilldown is available for current facet selection";
-                            }
-                            else {
-                                message = "Less drilldown is available for current facet selection";
-                            }
-                            let { snackbar } = this.state;
-                            snackbar = Object.assign({}, snackbar);
-                            snackbar.message = message;
-                            snackbar.open = true;
-                            this.setState({
-                                snackbar: snackbar,
-                            });
-                        }
-                        let branch = this;
-                        setTimeout(() => {
-                            branch.props.displaycallbacks.updateChartSelections();
-                        });
-                    });
+                    this.processChangeFacetStateChange(budgetBranch);
                     break;
                 }
             }
             this._previousControlData = currentControlData;
+        };
+        this.processChangeViewpointStateChange = budgetBranch => {
+            budgetBranch.getViewpointData();
+            setTimeout(() => {
+                budgetBranch.initializeBranch();
+            });
+        };
+        this.processChangeFacetStateChange = budgetBranch => {
+            budgetBranch.getViewpointData();
+            setTimeout(() => {
+                let switchResults = budgetBranch.switchFacet();
+                let { deeperdata, shallowerdata } = switchResults;
+                if (deeperdata || shallowerdata) {
+                    let message = null;
+                    if (deeperdata) {
+                        message = "More drilldown is available for current facet selection";
+                    }
+                    else {
+                        message = "Less drilldown is available for current facet selection";
+                    }
+                    let { snackbar } = this.state;
+                    snackbar = Object.assign({}, snackbar);
+                    snackbar.message = message;
+                    snackbar.open = true;
+                    this.setState({
+                        snackbar: snackbar,
+                    });
+                }
+                let branch = this;
+                setTimeout(() => {
+                    branch.props.displaycallbacks.updateChartSelections();
+                });
+            });
         };
         this.refreshPresentation = () => {
             this.forceUpdate();
@@ -89,7 +95,7 @@ class ExplorerBranch extends Component {
             });
             let branch = this;
             setTimeout(() => {
-                branch.props.displaycallbacks.updateChartSelections();
+                this._nodeCallbacks.updateChartSelections();
             });
         };
         this.branchScrollBlock = null;
@@ -145,7 +151,7 @@ class ExplorerBranch extends Component {
             this.props.actions.changeFacet(callbackuid, facet);
             let branch = this;
             setTimeout(() => {
-                branch.props.displaycallbacks.updateChartSelections();
+                this._nodeCallbacks.updateChartSelections();
             });
         };
         this.switchChartCode = (nodeIndex, cellIndex, chartCode) => {
@@ -175,7 +181,7 @@ class ExplorerBranch extends Component {
         this.onChangePortalTab = () => {
             let branch = this;
             setTimeout(() => {
-                branch.props.displaycallbacks.updateChartSelections();
+                this._nodeCallbacks.updateChartSelections();
             });
         };
         this.getPortals = (budgetNodes) => {
@@ -243,7 +249,7 @@ class ExplorerBranch extends Component {
         budgetBranch.getProps = this.getProps;
         budgetBranch.setState = this.setState.bind(this);
         this._actions = Object.assign({}, actions);
-        this._actions.addNode = this.addNode(budgetBranch.uid);
+        this._actions.addNode = this.addBranchNode(budgetBranch.uid);
         budgetBranch.actions = this._actions;
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this;
         this._nodeCallbacks = {
@@ -290,7 +296,7 @@ class ExplorerBranch extends Component {
         }
         if (nodeList.length > branchNodes.length) {
             if (this.harmonizecount <= 0) {
-                throw Error('error harmonzing branch nodes');
+                throw Error('error harmonizing branch nodes');
             }
             this.harmonizecount--;
             let nodeIndex = branchNodes.length;

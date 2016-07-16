@@ -63,7 +63,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     // TODO: most of 
     state = {
         branchNodes:[],
-        viewpointData:null,
+        viewpointData:null, // TODO
         snackbar:{open:false,message:'empty'}
     }
 
@@ -73,7 +73,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     getState = () => this.state
     getProps = () => this.props
 
-    addNode = branchuid => settings => {
+    addBranchNode = branchuid => settings => {
         return this.props.actions.addNode(branchuid, settings)
     }
 
@@ -90,7 +90,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         budgetBranch.setState = this.setState.bind(this)
 
         this._actions = Object.assign({}, actions)
-        this._actions.addNode = this.addNode(budgetBranch.uid)
+        this._actions.addNode = this.addBranchNode(budgetBranch.uid)
         budgetBranch.actions = this._actions
 
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this
@@ -106,7 +106,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         budgetBranch.nodeCallbacks = this._nodeCallbacks
     }
 
-    // initialize once -- set controlData; initialize branch
+    // initialize once -- set controlData; initialize viewpointData; initialize branch
     componentDidMount() {
         // console.log('did mount')
         let { budgetBranch } = this.props
@@ -135,7 +135,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     }
 
     harmonizecount: any = null
-    // add pending node objects, and process state changes
+    // harmonize branch nodes; add pending node objects, and process state changes
     componentDidUpdate() {
         // console.log('did update')
         // refresh branchnodes
@@ -147,7 +147,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let { nodesById } = controlData
         let { nodeList } = branchSettings
 
-        if (this.harmonizecount === null) {
+        if (this.harmonizecount === null) { // initialize harmonization count
             this.harmonizecount = (nodeList.length - branchNodes.length)
         }
 
@@ -159,7 +159,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             // places sentinal in place in case addNode below fails
             //   generating an infinite loop
             if (this.harmonizecount <= 0) {
-                throw Error('error harmonzing branch nodes')
+                throw Error('error harmonizing branch nodes')
             }
             this.harmonizecount--
             let nodeIndex = branchNodes.length
@@ -186,7 +186,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     private controlGlobalStateChange = () => {
         let previousControlData = this._previousControlData
         let currentControlData = this.props.controlData
-        let {lastAction} = currentControlData
+        let { lastAction } = currentControlData
         if (!branchactiontypes[lastAction]) {
             return
         }
@@ -195,53 +195,60 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
             return
         }
-        // console.log('onChange',previousControlData, currentControlData)
+
         let { budgetBranch } = this.props
         switch (lastAction) {
             case branchactiontypes.CHANGE_VIEWPOINT: {
-                budgetBranch.getViewpointData()
-                setTimeout(()=>{
-                    budgetBranch.initializeBranch()
-                })
+                this.processChangeViewpointStateChange(budgetBranch)
                 break
             }
             case branchactiontypes.CHANGE_FACET: {
-
-                budgetBranch.getViewpointData()
-
-                setTimeout(() => {
-
-                    let switchResults = budgetBranch.switchFacet()
-
-                    let { deeperdata, shallowerdata } = switchResults
-
-                    if (deeperdata || shallowerdata) {
-
-                        let message = null
-                        if (deeperdata) {
-                            message = "More drilldown is available for current facet selection"
-                        } else {
-                            message = "Less drilldown is available for current facet selection"
-                        }
-                        let { snackbar } = this.state
-                        snackbar = Object.assign ({},snackbar)
-                        snackbar.message = message
-                        snackbar.open = true
-                        this.setState({
-                            snackbar,
-                        })
-
-                    }
-                    let branch = this
-                    setTimeout(() => {
-                        branch.props.displaycallbacks.updateChartSelections()
-                    })
-
-                })
+                this.processChangeFacetStateChange(budgetBranch)
                 break
             }
         }
         this._previousControlData = currentControlData
+    }
+
+    private processChangeViewpointStateChange = budgetBranch => {
+        budgetBranch.getViewpointData()
+        setTimeout(()=>{
+            budgetBranch.initializeBranch()
+        })
+    }
+
+    private processChangeFacetStateChange = budgetBranch => {
+        budgetBranch.getViewpointData()
+
+        setTimeout(() => {
+
+            let switchResults = budgetBranch.switchFacet()
+
+            let { deeperdata, shallowerdata } = switchResults
+
+            if (deeperdata || shallowerdata) {
+
+                let message = null
+                if (deeperdata) {
+                    message = "More drilldown is available for current facet selection"
+                } else {
+                    message = "Less drilldown is available for current facet selection"
+                }
+                let { snackbar } = this.state
+                snackbar = Object.assign ({},snackbar)
+                snackbar.message = message
+                snackbar.open = true
+                this.setState({
+                    snackbar,
+                })
+
+            }
+            let branch = this
+            setTimeout(() => {
+                branch.props.displaycallbacks.updateChartSelections()
+            })
+
+        })
     }
 
     refreshPresentation = () => {
@@ -263,7 +270,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         })
         let branch = this
         setTimeout(() => {
-            branch.props.displaycallbacks.updateChartSelections()
+            this._nodeCallbacks.updateChartSelections()
         })
     }
 
@@ -340,7 +347,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         this.props.actions.changeFacet(callbackuid, facet)
         let branch = this
         setTimeout(() => {
-            branch.props.displaycallbacks.updateChartSelections()
+            this._nodeCallbacks.updateChartSelections()
         })
     }
 
@@ -382,7 +389,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     onChangePortalTab = () => {
         let branch = this
         setTimeout(() => {
-            branch.props.displaycallbacks.updateChartSelections()
+            this._nodeCallbacks.updateChartSelections()
         })
     }
 
