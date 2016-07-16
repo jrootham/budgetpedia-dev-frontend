@@ -99,7 +99,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
 
     // see if any initialization is required
-    componentDidMount() {
+    componentWillMount() {
         // console.log('explorer did mount')
         let { branchList, branchesById } = this.props.controlData
         if (branchList.length == 0) { // initialize explorer with first branch

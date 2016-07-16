@@ -21,7 +21,8 @@ class ExplorerBranch extends Component {
         this.addNode = branchuid => settings => {
             return this.props.actions.addNode(branchuid, settings);
         };
-        this.onGlobalStateChange = () => {
+        this.harmonizecount = null;
+        this.controlGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
             let currentControlData = this.props.controlData;
             let { lastAction } = currentControlData;
@@ -284,13 +285,21 @@ class ExplorerBranch extends Component {
         let branchSettings = controlData.branchesById[this.props.callbackuid];
         let { nodesById } = controlData;
         let { nodeList } = branchSettings;
+        if (this.harmonizecount === null) {
+            this.harmonizecount = (nodeList.length - branchNodes.length);
+        }
         if (nodeList.length > branchNodes.length) {
+            if (this.harmonizecount <= 0) {
+                throw Error('error harmonzing branch nodes');
+            }
+            this.harmonizecount--;
             let nodeIndex = branchNodes.length;
             let budgetNodeId = nodeList[nodeIndex];
             budgetBranch.addNode(budgetNodeId, nodeIndex, nodesById[budgetNodeId], this._nodeCallbacks, this._actions);
         }
         else {
-            this.onGlobalStateChange();
+            this.harmonizecount = null;
+            this.controlGlobalStateChange();
         }
     }
     render() {

@@ -35,7 +35,6 @@ class ExplorerPortal extends Component {
         };
     }
     componentDidMount() {
-        console.log('chartrefs', this._chartrefs);
     }
     render() {
         let chartTabs = this.getChartTabs();

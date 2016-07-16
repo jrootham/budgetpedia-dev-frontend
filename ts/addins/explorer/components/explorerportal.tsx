@@ -32,7 +32,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     }
 
     componentDidMount() {
-        console.log('chartrefs',this._chartrefs)
+        // console.log('chartrefs',this._chartrefs)
     }
 
     _chartrefs:any[] = []

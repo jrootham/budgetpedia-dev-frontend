@@ -124,13 +124,14 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let newBranchNodes = branchNodes.filter((node) => {
             return !!nodesById[node.uid]
         })
-        if (newBranchNodes.length != branchNodes.length) {
+        if (newBranchNodes.length != branchNodes.length) { // some nodes were deleted
             this.setState({
                 branchNodes:newBranchNodes,
             })
         }
     }
 
+    harmonizecount: any = null
     // add pending node objects, and process state changes
     componentDidUpdate() {
         // console.log('did update')
@@ -143,11 +144,21 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let { nodesById } = controlData
         let { nodeList } = branchSettings
 
+        if (this.harmonizecount === null) {
+            this.harmonizecount = (nodeList.length - branchNodes.length)
+        }
+
         // first task is to harmonize controlData nodeList list with local branchNode list
         // this condition will keep adding nodes on each render cycle triggered by 
         // addBranchNode, until all nodes are drawn
         // console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length, nodeList, branchNodes)
         if (nodeList.length > branchNodes.length) {
+            // places sentinal in place in case addNode below fails
+            //   generating an infinite loop
+            if (this.harmonizecount <= 0) {
+                throw Error('error harmonzing branch nodes')
+            }
+            this.harmonizecount--
             let nodeIndex = branchNodes.length
             let budgetNodeId = nodeList[nodeIndex]
             // console.log('harmonize', nodeIndex, budgetNodeId)
@@ -159,8 +170,12 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 this._nodeCallbacks,
                 this._actions
             )
+            // setTimeout(() => {
+            //     this.props.displaycallbacks.updateChartSelections()
+            // })
         } else { // otherwise see if there are other cascading actions that have to be taken
-            this.onGlobalStateChange()
+            this.harmonizecount = null
+            this.controlGlobalStateChange()
         }
     }
 
@@ -168,7 +183,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     private _previousControlData: any
 
     // state change machine
-    private onGlobalStateChange = () => {
+    private controlGlobalStateChange = () => {
         let previousControlData = this._previousControlData
         let currentControlData = this.props.controlData
         let {lastAction} = currentControlData
@@ -217,7 +232,6 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                         })
 
                     }
-                    // this.refreshPresentation()
                     let branch = this
                     setTimeout(() => {
                         branch.props.displaycallbacks.updateChartSelections()

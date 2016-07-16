@@ -35,7 +35,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
     }
 
     componentDidMount() {
-        console.log('explorerchart chart, node', this.chartnode)
+        // console.log('explorerchart chart, node', this.chartnode)
     }
 
     render() {

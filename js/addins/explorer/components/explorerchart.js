@@ -14,7 +14,6 @@ class ExplorerChart extends Component {
         };
     }
     componentDidMount() {
-        console.log('explorerchart chart, node', this.chartnode);
     }
     render() {
         let { chartParms, expandable, cellSettings } = this.props;

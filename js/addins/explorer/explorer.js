@@ -57,7 +57,7 @@ let Explorer = class extends Component {
             return this.updateIndexChartSelections(branchIndex);
         };
     }
-    componentDidMount() {
+    componentWillMount() {
         let { branchList, branchesById } = this.props.controlData;
         if (branchList.length == 0) {
             let defaultSettings = this.props.controlData.defaults.branch;
