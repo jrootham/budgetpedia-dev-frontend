@@ -55,14 +55,6 @@ export interface CreateChildNodeCallbacks {
 
 export interface OnChartComponentSelectionProps {
     context: ChartSelectionContext,
-    selectionCallbackVersions: any,
-}
-export interface OnChartComponentSelectionCallbacks {
-    updateBranchNodesState: Function,
-    updateChartSelections: Function,
-    refreshPresentation: Function,
-    onPortalCreation: Function,
-    workingStatus: Function,
 }
 
 // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
