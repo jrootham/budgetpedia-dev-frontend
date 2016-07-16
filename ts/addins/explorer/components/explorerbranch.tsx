@@ -170,9 +170,6 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 nodeIndex,
                 nodesById[budgetNodeId] // settings
             )
-            // setTimeout(() => {
-            //     this.props.displaycallbacks.updateChartSelections()
-            // })
         } else { // otherwise see if there are other cascading actions that have to be taken
             this.harmonizecount = null
             this.controlGlobalStateChange()

@@ -66,10 +66,8 @@ let MainBar = class extends React.Component<any, any> {
 
     transitionToHome = () => {
         // consistent with other transition calls...
-        // setTimeout(()=>{        
-            this.setState({ accountsidebaropen: false })
-            this.props.transitionTo('/')
-        // })
+        this.setState({ accountsidebaropen: false })
+        this.props.transitionTo('/')
     }
 
     transitionToRegister = (e) => {
