@@ -241,7 +241,6 @@ export let createChildNode = (
 
     actions.addNode(newnodeconfigparms)
 
-    // let newBudgetNode = new BudgetNode(newnodeconfigparms, 'x', newdatanode, parentNode)
     setTimeout(() => {
         let newBudgetNode = budgetBranch.nodes[nodeIndex + 1]
         // console.log('newBudgetNode',newBudgetNode,nodeIndex + 1)

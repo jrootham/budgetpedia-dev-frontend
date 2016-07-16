@@ -6,7 +6,8 @@ const onchartcomponentselection_1 = require('../modules/onchartcomponentselectio
 const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
-        this.addNode = (budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions) => {
+        this.addNode = (budgetNodeUid, nodeIndex, budgetNodeParms) => {
+            let { actions, nodeCallbacks: callbacks } = this;
             let { dataPath } = budgetNodeParms;
             let branchsettings = this.settings;
             let viewpointdata = this.getState().viewpointData;
@@ -102,7 +103,8 @@ class BudgetBranch {
         };
         this.actions.addNode(budgetNodeParms);
     }
-    switchFacet(callbacks, actions) {
+    switchFacet() {
+        let { actions, nodeCallbacks: callbacks } = this;
         let switchResults = {
             deeperdata: false,
             shallowerdata: false,
@@ -208,7 +210,8 @@ class BudgetBranch {
         });
         return switchResults;
     }
-    switchChartCode(props, callbacks, actions) {
+    switchChartCode(props) {
+        let { actions, nodeCallbacks: callbacks } = this;
         let branchsettings = this.settings;
         let { nodeIndex, cellIndex, chartCode, } = props;
         let chartType = constants_1.ChartCodeTypes[chartCode];

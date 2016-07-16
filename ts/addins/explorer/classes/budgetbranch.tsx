@@ -52,9 +52,11 @@ class BudgetBranch {
 
     public settings:BranchSettings
 
-    public uid:string
+    public uid: string
 
-    public actions:any
+    public actions: any
+
+    public nodeCallbacks: any
 
     get state() {
         return this.getState()
@@ -102,9 +104,9 @@ class BudgetBranch {
 
     }
 
-    addNode = (budgetNodeUid, nodeIndex, budgetNodeParms:BudgetNodeParms, callbacks, actions) => {
+    addNode = (budgetNodeUid, nodeIndex, budgetNodeParms:BudgetNodeParms) => {
 
-        // console.log('addNode parms', budgetNodeUid, nodeIndex, budgetNodeParms, callbacks, actions)
+        let { actions, nodeCallbacks:callbacks } = this
 
         let { dataPath } = budgetNodeParms
         let branchsettings = this.settings
@@ -160,7 +162,8 @@ class BudgetBranch {
 
     }
 
-    switchFacet(callbacks, actions) {
+    switchFacet() {
+        let { actions, nodeCallbacks:callbacks } = this
         let switchResults = {
             deeperdata: false,
             shallowerdata: false,
@@ -283,7 +286,8 @@ class BudgetBranch {
         return switchResults
     }
 
-    switchChartCode(props, callbacks, actions) {
+    switchChartCode(props) {
+        let { actions, nodeCallbacks:callbacks } = this
         let branchsettings: BranchSettings = this.settings
         let {
             nodeIndex,

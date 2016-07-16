@@ -44,7 +44,7 @@ class ExplorerBranch extends Component {
                 case actions_1.branchtypes.CHANGE_FACET: {
                     budgetBranch.getViewpointData();
                     setTimeout(() => {
-                        let switchResults = budgetBranch.switchFacet(this._nodeCallbacks, this._actions);
+                        let switchResults = budgetBranch.switchFacet();
                         let { deeperdata, shallowerdata } = switchResults;
                         if (deeperdata || shallowerdata) {
                             let message = null;
@@ -155,8 +155,7 @@ class ExplorerBranch extends Component {
                 cellIndex: cellIndex,
                 chartCode: chartCode,
             };
-            let callbacks = this._nodeCallbacks;
-            let switchResults = budgetBranch.switchChartCode(props, callbacks, this.props.actions);
+            let switchResults = budgetBranch.switchChartCode(props);
             let { budgetCell } = switchResults;
             this.refreshPresentation();
             let branch = this;
@@ -254,6 +253,7 @@ class ExplorerBranch extends Component {
             updateBranchNodesState: updateBranchNodesState,
             refreshPresentation: refreshPresentation,
         };
+        budgetBranch.nodeCallbacks = this._nodeCallbacks;
     }
     componentDidMount() {
         let { budgetBranch } = this.props;
@@ -295,7 +295,7 @@ class ExplorerBranch extends Component {
             this.harmonizecount--;
             let nodeIndex = branchNodes.length;
             let budgetNodeId = nodeList[nodeIndex];
-            budgetBranch.addNode(budgetNodeId, nodeIndex, nodesById[budgetNodeId], this._nodeCallbacks, this._actions);
+            budgetBranch.addNode(budgetNodeId, nodeIndex, nodesById[budgetNodeId]);
         }
         else {
             this.harmonizecount = null;

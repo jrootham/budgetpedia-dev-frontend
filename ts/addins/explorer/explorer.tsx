@@ -100,7 +100,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     // see if any initialization is required
     componentWillMount() {
-        // console.log('explorer did mount')
         let { branchList, branchesById } = this.props.controlData
         if (branchList.length == 0) { // initialize explorer with first branch
             let defaultSettings:BranchSettings = this.props.controlData.defaults.branch
@@ -126,22 +125,27 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
     // harmonize budgetBranches objects  with control data
     componentWillReceiveProps(nextProps) {
-        // console.log('explorer will receive')
+
         let { branchList, branchesById } = nextProps.controlData
         let budgetBranches:BudgetBranch[] = this.state.budgetBranches
+
         // remove deleted branches
         budgetBranches = budgetBranches.filter(budgetBranch => {
             return !!branchesById[budgetBranch.uid]
         })
+
         this.harmonizeBudgetBranches(budgetBranches, branchList, branchesById)
+        
         // in any case update settings in case change made
         for (let i = 0; i < branchList.length; i++) {
             if (branchList[i] != budgetBranches[i].uid) {
                 throw Error('mismatched order between controlData list and branch list')
             }
+
             budgetBranches[i].settings = branchesById[branchList[i]]
-            // console.log('budgetBranches.settings',budgetBranches[i].settings)
+
         }
+
         this.setState({
             budgetBranches,
         })
@@ -243,43 +247,43 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             let budgetbranches = explorer.state.budgetBranches
 
             let segments = budgetbranches.map((budgetBranch, branchIndex) => {
-            let actionprops:MappedBranchActions = {
-                addNode: this.props.addNode,
-                removeNode: this.props.removeNode,
-                changeViewpoint: this.props.changeViewpoint,
-                changeFacet: this.props.changeFacet,
-        }
+                let actionprops:MappedBranchActions = {
+                    addNode: this.props.addNode,
+                    removeNode: this.props.removeNode,
+                    changeViewpoint: this.props.changeViewpoint,
+                    changeFacet: this.props.changeFacet,
+                }
 
-         return <Card initiallyExpanded 
-             key = {branchIndex}>
+                 return <Card initiallyExpanded 
+                     key = {branchIndex}>
 
-            <CardTitle
-                actAsExpander={true}
-                showExpandableButton={true} >
+                    <CardTitle
+                        actAsExpander={true}
+                        showExpandableButton={true} >
 
-                Explorer Branch
+                        Explorer Branch
 
-            </CardTitle>
+                    </CardTitle>
 
-            <CardText expandable>
-            <ExplorerBranch 
-                callbackuid = {budgetBranch.uid}
-                callbackid = {branchIndex}
-                budgetBranch = {budgetBranch}
-                displaycallbacks = {{ 
-                    workingStatus: explorer.workingStatus,
-                    updateChartSelections: explorer.updateChartSelections(branchIndex),
-                }}
-                actions = {actionprops}
-                controlData = {explorer.props.controlData}
-            />
-            </CardText>
+                    <CardText expandable>
+                    <ExplorerBranch 
+                        callbackuid = { budgetBranch.uid }
+                        callbackid = { branchIndex }
+                        budgetBranch = {budgetBranch}
+                        displaycallbacks = {{ 
+                            workingStatus: explorer.workingStatus,
+                            updateChartSelections: explorer.updateChartSelections(branchIndex),
+                        }}
+                        actions = { actionprops }
+                        controlData = {explorer.props.controlData}
+                    />
+                    </CardText>
 
-        </Card >
+                </Card >
             })
 
-        return segments
-    }
+            return segments
+        }
         // -----------[ COMBINE SEGMENTS ]---------------
 
         let branches = drilldownsegments()
@@ -326,11 +330,10 @@ let mapStateToProps = state => ({
     controlData:getExplorerControlData(state), 
 })
 
-
 Explorer = connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
-
+    // branch actions
     addBranch:ExplorerActions.addBranch,
     removeBranch: ExplorerActions.removeBranch,
     addNode:ExplorerActions.addNode,

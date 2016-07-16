@@ -78,21 +78,23 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     }
 
     private _actions: any
+    // used by callbacks; set by componentDidMount
+    private _nodeCallbacks: any
 
     // complete initialization of budgetBranch and branch explorer objects
     componentWillMount() {
-        // console.log('will mount')
+
         let { budgetBranch, actions, displaycallbacks, callbackid } = this.props
         budgetBranch.getState = this.getState
         budgetBranch.getProps = this.getProps
         budgetBranch.setState = this.setState.bind(this)
 
-        this._actions = Object.assign({},actions)
+        this._actions = Object.assign({}, actions)
         this._actions.addNode = this.addNode(budgetBranch.uid)
         budgetBranch.actions = this._actions
 
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this
-        // displaycallbacks.updateChartSelections = displaycallbacks.updateChartSelections(callbackid)
+
         this._nodeCallbacks = {
             updateChartSelections:displaycallbacks.updateChartSelections,
             workingStatus:displaycallbacks.workingStatus,
@@ -101,6 +103,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             updateBranchNodesState,
             refreshPresentation,
         }
+        budgetBranch.nodeCallbacks = this._nodeCallbacks
     }
 
     // initialize once -- set controlData; initialize branch
@@ -165,10 +168,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             budgetBranch.addNode(
                 budgetNodeId,
                 nodeIndex,
-                nodesById[budgetNodeId], // settings
-                // standard callbacks...
-                this._nodeCallbacks,
-                this._actions
+                nodesById[budgetNodeId] // settings
             )
             // setTimeout(() => {
             //     this.props.displaycallbacks.updateChartSelections()
@@ -211,7 +211,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
                 setTimeout(() => {
 
-                    let switchResults = budgetBranch.switchFacet(this._nodeCallbacks, this._actions)
+                    let switchResults = budgetBranch.switchFacet()
 
                     let { deeperdata, shallowerdata } = switchResults
 
@@ -243,9 +243,6 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         }
         this._previousControlData = currentControlData
     }
-
-    // used by callbacks; set by componentDidMount
-    private _nodeCallbacks
 
     refreshPresentation = () => {
         this.forceUpdate()
@@ -359,9 +356,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             chartCode,
         }
 
-        let callbacks = this._nodeCallbacks
-
-        let switchResults = budgetBranch.switchChartCode(props,callbacks, this.props.actions)
+        let switchResults = budgetBranch.switchChartCode(props)
 
         let { budgetCell } = switchResults
         this.refreshPresentation()
