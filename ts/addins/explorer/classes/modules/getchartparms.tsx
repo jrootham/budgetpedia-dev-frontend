@@ -29,7 +29,7 @@ import {
     // applyChartComponentSelection,
     // onChartComponentSelection,
     ChartSelectionContext,
-    OnChartComponentSelectionProps,
+    // OnChartComponentSelectionProps,
 } from '../../modules/onchartcomponentselection'
 import { DatasetConfig } from '../../classes/databaseapi'
 import BudgetNode from '../../classes/budgetnode'
@@ -239,11 +239,11 @@ let getChartParms = (
                         selection, 
                         err }
 
-                    let props: OnChartComponentSelectionProps = {
-                        context,
-                    }
+                    // let props: OnChartComponentSelectionProps = {
+                    //     context,
+                    // }
 
-                    selectionCallbacks.current(props)
+                    selectionCallbacks.current(context)
                 }
         }
     ]

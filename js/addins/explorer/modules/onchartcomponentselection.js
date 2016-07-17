@@ -2,8 +2,7 @@
 var format = require('format-number');
 const constants_1 = require('../../constants');
 const getbudgetnode_1 = require('./getbudgetnode');
-let applyChartComponentSelection = (budgetBranch, props) => {
-    let { context } = props;
+let applyChartComponentSelection = (budgetBranch, context) => {
     let { nodes: branchNodes, settings: branchsettings, uid: branchuid } = budgetBranch;
     let viewpointData = budgetBranch.state.viewpointData;
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = budgetBranch.nodeCallbacks;
@@ -16,7 +15,6 @@ let applyChartComponentSelection = (budgetBranch, props) => {
     else {
         selectionrow = null;
     }
-    let chart = context.ChartObject.chart;
     let nodeIndex = context.nodeIndex;
     let budgetNode = branchNodes[nodeIndex];
     let cellIndex = context.cellIndex;
@@ -24,7 +22,6 @@ let applyChartComponentSelection = (budgetBranch, props) => {
     if (budgetCell.nodeDataPropertyName == 'Categories') {
         return;
     }
-    let facet = budgetNode.facetName;
     let removed = branchNodes.splice(nodeIndex + 1);
     let removedids = removed.map((item) => {
         return item.uid;
@@ -42,21 +39,20 @@ let applyChartComponentSelection = (budgetBranch, props) => {
         }
         let childprops = {
             parentNode: budgetNode,
-            branchsettings: branchsettings,
-            viewpointData: viewpointData,
-            branchNodes: branchNodes,
             selectionrow: selectionrow,
             nodeIndex: nodeIndex,
             cellIndex: cellIndex,
             context: context,
-            chart: chart,
         };
-        let childcallbacks = budgetBranch.nodeCallbacks;
-        exports.createChildNode(budgetBranch, childprops, childcallbacks, budgetBranch.actions);
+        exports.createChildNode(budgetBranch, childprops, budgetBranch.nodeCallbacks, budgetBranch.actions);
     });
 };
 exports.createChildNode = (budgetBranch, props, callbacks, actions) => {
-    let { parentNode: budgetNode, branchsettings, viewpointData, branchNodes, selectionrow, nodeIndex, cellIndex, context, chart, } = props;
+    let { parentNode: budgetNode, selectionrow, nodeIndex, cellIndex, context, } = props;
+    let chart = context.ChartObject.chart;
+    let { settings: branchsettings } = budgetBranch;
+    let viewpointData = budgetBranch.state.viewpointData;
+    let branchNodes = budgetBranch.nodes;
     let viewpointName = budgetNode.viewpointName, facet = budgetNode.facetName;
     let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, updateBranchNodesState, } = callbacks;
     let childdatapath = budgetNode.dataPath.slice();
@@ -122,8 +118,8 @@ exports.createChildNode = (budgetBranch, props, callbacks, actions) => {
         });
     });
 };
-exports.onChartComponentSelection = budgetBranch => nodeIndex => cellIndex => props => {
-    props.context.nodeIndex = nodeIndex;
-    props.context.cellIndex = cellIndex;
-    applyChartComponentSelection(budgetBranch, props);
+exports.onChartComponentSelection = budgetBranch => nodeIndex => cellIndex => context => {
+    context.nodeIndex = nodeIndex;
+    context.cellIndex = cellIndex;
+    applyChartComponentSelection(budgetBranch, context);
 };

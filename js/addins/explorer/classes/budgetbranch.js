@@ -145,14 +145,10 @@ class BudgetBranch {
                         };
                         let childprops = {
                             parentNode: prevBudgetNode,
-                            branchsettings: branchsettings,
-                            viewpointData: viewpointData,
-                            branchNodes: branchNodes,
                             selectionrow: prevBudgetCell.chartselection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex: 0,
                             context: context,
-                            chart: prevBudgetCell.chart,
                         };
                         let fcurrent = fn(nodeIndex)(0);
                         let budgetBranch = this;

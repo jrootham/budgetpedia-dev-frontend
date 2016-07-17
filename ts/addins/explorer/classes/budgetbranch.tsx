@@ -219,14 +219,10 @@ class BudgetBranch {
 
                         let childprops: CreateChildNodeProps = {
                             parentNode:prevBudgetNode,
-                            branchsettings,
-                            viewpointData,
-                            branchNodes,
                             selectionrow: prevBudgetCell.chartselection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex:0,
                             context,
-                            chart:prevBudgetCell.chart,
                         }
                         let fcurrent = fn(nodeIndex)(0)
                         let budgetBranch = this

@@ -141,10 +141,7 @@ let getChartParms = (props, selectionCallbacks) => {
                     ChartObject: Chart,
                     selection: selection,
                     err: err };
-                let props = {
-                    context: context,
-                };
-                selectionCallbacks.current(props);
+                selectionCallbacks.current(context);
             }
         }
     ];

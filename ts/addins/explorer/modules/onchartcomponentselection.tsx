@@ -14,6 +14,7 @@ import {
 } from './interfaces'
 
 import BudgetNode, {BudgetNodeParms} from '../classes/budgetnode'
+import BudgetBranch from '../classes/budgetbranch'
 import { ChartTypeCodes } from '../../constants'
 import {SelectionCallbackProps} from '../classes/modules/getchartparms'
 import getBudgetNode from './getbudgetnode'
@@ -34,27 +35,16 @@ export interface ChartSelectionContext {
     err: any,
 }
 
+// export interface OnChartComponentSelectionProps {
+//     context: ChartSelectionContext,
+// }
+
 export interface CreateChildNodeProps {
     parentNode: BudgetNode,
-    branchsettings: BranchSettings,
-    viewpointData:any,
-    branchNodes: any,
     selectionrow: any,
     nodeIndex: number,
     cellIndex: number,
     context: any,
-    chart: any
-}
-export interface CreateChildNodeCallbacks {
-    updateChartSelections: Function,
-    workingStatus: Function,
-    refreshPresentation: Function,
-    onPortalCreation: Function,
-    updateBranchNodesState: Function,
-}
-
-export interface OnChartComponentSelectionProps {
-    context: ChartSelectionContext,
 }
 
 // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
@@ -65,9 +55,7 @@ export interface OnChartComponentSelectionProps {
 // chartconfig, not the chartconfig itself
 // on selection, makes a child with the same portalCharts offset
 // TODO: create chile which appropriately sets up correct set of child charts
-let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelectionProps) => {
-
-    let { context } = props
+let applyChartComponentSelection = (budgetBranch: BudgetBranch, context:ChartSelectionContext) => {
 
     let { nodes:branchNodes, settings:branchsettings, uid:branchuid } = budgetBranch
 
@@ -87,8 +75,6 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
         selectionrow = null
     }
 
-    let chart = context.ChartObject.chart
-
     // unpack chartconfig
     let nodeIndex = context.nodeIndex
 
@@ -102,24 +88,19 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
         return
     }
 
-    // get taxonomy references
-    let facet = budgetNode.facetName
-
     // TODO: abandon here if the next one exists and is the same
     let removed = branchNodes.splice(nodeIndex + 1) // remove subsequent charts
     let removedids = removed.map((item) => {
         return item.uid
     })
-    // console.log('removed', removed, removedids)
+
     if (removedids.length > 0) {
         removeNode(branchuid, removedids)
     }
 
-    // trigger update to avoid google charts use of cached versions
-    // refreshPresentation()
     setTimeout(()=>{
         branchNodes = budgetBranch.nodes
-        // console.log('revised branchNodes', [...branchNodes])
+
         if (!selection) { // deselected
             delete budgetCell.chartselection
             delete budgetCell.chart
@@ -128,17 +109,13 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
         }
         let childprops: CreateChildNodeProps = {
             parentNode:budgetNode, 
-            branchsettings, 
-            viewpointData,
-            branchNodes, 
             selectionrow,
             nodeIndex,
             cellIndex, 
             context, 
-            chart,
         }
-        let childcallbacks: CreateChildNodeCallbacks = budgetBranch.nodeCallbacks
-        createChildNode( budgetBranch, childprops, childcallbacks, budgetBranch.actions)
+
+        createChildNode( budgetBranch, childprops, budgetBranch.nodeCallbacks, budgetBranch.actions)
     })
 
 }
@@ -146,21 +123,23 @@ let applyChartComponentSelection = (budgetBranch, props: OnChartComponentSelecti
 export let createChildNode = (
     budgetBranch: any,
     props: CreateChildNodeProps, 
-    callbacks: CreateChildNodeCallbacks,
+    callbacks,
     actions
     ) => {
 
     let {
         parentNode: budgetNode,
-        branchsettings,
-        viewpointData,
-        branchNodes,
         selectionrow,
         nodeIndex,
         cellIndex,
         context,
-        chart,
     } = props
+
+    let chart = context.ChartObject.chart
+
+    let { settings:branchsettings } = budgetBranch
+    let viewpointData = budgetBranch.state.viewpointData
+    let branchNodes = budgetBranch.nodes
 
     let viewpointName = budgetNode.viewpointName,
         facet = budgetNode.facetName
@@ -225,8 +204,6 @@ export let createChildNode = (
         timeSpecs: newrange,
     }
 
-    // console.log('before add child node', newnodeconfigparms)
-
     actions.addNode(newnodeconfigparms)
 
     setTimeout(() => {
@@ -247,7 +224,7 @@ export let createChildNode = (
         budgetCell.ChartObject = context.ChartObject
 
         workingStatus(false)
-        setTimeout(()=>{
+        setTimeout(() => {
             updateChartSelections()
             onPortalCreation()
         })
@@ -255,9 +232,9 @@ export let createChildNode = (
 }
 
 export const onChartComponentSelection = 
-    budgetBranch => nodeIndex => cellIndex => props => {
-    props.context.nodeIndex = nodeIndex
-    props.context.cellIndex = cellIndex
-    applyChartComponentSelection(budgetBranch,props)
+    budgetBranch => nodeIndex => cellIndex => context => {
+    context.nodeIndex = nodeIndex
+    context.cellIndex = cellIndex
+    applyChartComponentSelection(budgetBranch,context)
 }
 
