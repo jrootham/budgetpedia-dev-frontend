@@ -40,7 +40,6 @@ export interface ChartSelectionContext {
 // }
 
 export interface CreateChildNodeProps {
-    parentNode: BudgetNode,
     selectionrow: any,
     nodeIndex: number,
     cellIndex: number,
@@ -108,128 +107,130 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, context:ChartSel
             return
         }
         let childprops: CreateChildNodeProps = {
-            parentNode:budgetNode, 
             selectionrow,
             nodeIndex,
             cellIndex, 
             context, 
         }
 
-        createChildNode( budgetBranch, childprops, budgetBranch.nodeCallbacks, budgetBranch.actions)
+        budgetBranch.createChildNode( childprops )
+
     })
 
 }
 
-export let createChildNode = (
-    budgetBranch: any,
-    props: CreateChildNodeProps, 
-    callbacks,
-    actions
-    ) => {
+// export let createChildNode = (
+//     budgetBranch: any,
+//     props: CreateChildNodeProps
+//     ) => {
 
-    let {
-        parentNode: budgetNode,
-        selectionrow,
-        nodeIndex,
-        cellIndex,
-        context,
-    } = props
+//     let callbacks = budgetBranch.nodeCallbacks
+//     let actions = budgetBranch.actions
 
-    let chart = context.ChartObject.chart
+//     let {
+//         selectionrow,
+//         nodeIndex,
+//         cellIndex,
+//         context,
+//     } = props
 
-    let { settings:branchsettings } = budgetBranch
-    let viewpointData = budgetBranch.state.viewpointData
-    let branchNodes = budgetBranch.nodes
+//     let chart = context.ChartObject.chart
 
-    let viewpointName = budgetNode.viewpointName,
-        facet = budgetNode.facetName
+//     let { settings:branchsettings } = budgetBranch
+//     let viewpointData = budgetBranch.state.viewpointData
+//     let branchNodes = budgetBranch.nodes
 
-    let {
-        workingStatus,
-        refreshPresentation,
-        onPortalCreation,
-        updateChartSelections,
-        updateBranchNodesState,
-    } = callbacks
+//     let budgetNode = branchNodes[nodeIndex]
 
-    // ----------------------------------------------------
-    // ----------------[ create child ]--------------------
-    // copy path
-    let childdatapath = budgetNode.dataPath.slice()
+//     let viewpointName = budgetNode.viewpointName,
+//         facet = budgetNode.facetName
 
-    let node = budgetNode.dataNode
+//     let {
+//         workingStatus,
+//         refreshPresentation,
+//         onPortalCreation,
+//         updateChartSelections,
+//         updateBranchNodesState,
+//     } = callbacks
 
-    if (!node.Components) {
-        updateChartSelections()
-        return
-    }
+//     // ----------------------------------------------------
+//     // ----------------[ create child ]--------------------
+//     // copy path
+//     let childdatapath = budgetNode.dataPath.slice()
 
-    let components = node.Components
+//     let node = budgetNode.dataNode
 
-    let code = null
-    let parentdata: SortedComponentItem = null
-    let parentNode: any = null
-    if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
-        parentdata = node.SortedComponents[selectionrow]
-        parentNode = node
-        code = parentdata.Code
-    }
-    if (code)
-        childdatapath.push(code)
-    else {
-        updateChartSelections()
-        return
-    }
+//     if (!node.Components) {
+//         updateChartSelections()
+//         return
+//     }
 
-    let newnode = node.Components[code]
-    if (!newnode.Components && !newnode.Categories) {
-        updateChartSelections()
-        return
-    }
-    workingStatus(true)
-    let newrange = Object.assign({}, budgetNode.timeSpecs)
-    let charttype = branchsettings.chartType
-    let chartCode = ChartTypeCodes[charttype]
-    let portalcharts = viewpointData.PortalCharts
+//     let components = node.Components
 
-    let newdatanode = getBudgetNode(viewpointData, childdatapath)
-    let newnodeconfigparms: BudgetNodeParms = {
-        portalCharts: portalcharts,
-        defaultChartType:charttype,
-        viewpointName:viewpointName,
-        facetName:facet,
-        dataPath: childdatapath,
-        nodeIndex: nodeIndex + 1,
-        parentData: parentdata,
-        timeSpecs: newrange,
-    }
+//     let code = null
+//     let parentdata: SortedComponentItem = null
+//     let parentNode: any = null
+//     if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
+//         parentdata = node.SortedComponents[selectionrow]
+//         parentNode = node
+//         code = parentdata.Code
+//     }
+//     if (code)
+//         childdatapath.push(code)
+//     else {
+//         updateChartSelections()
+//         return
+//     }
 
-    actions.addNode(newnodeconfigparms)
+//     let newnode = node.Components[code]
+//     if (!newnode.Components && !newnode.Categories) {
+//         updateChartSelections()
+//         return
+//     }
+//     workingStatus(true)
+//     let newrange = Object.assign({}, budgetNode.timeSpecs)
+//     let charttype = branchsettings.chartType
+//     let chartCode = ChartTypeCodes[charttype]
+//     let portalcharts = viewpointData.PortalCharts
 
-    setTimeout(() => {
-        let newBudgetNode = budgetBranch.nodes[nodeIndex + 1]
-        // console.log('newBudgetNode',newBudgetNode,nodeIndex + 1)
-        let newcellindex: any = null
-        let chartParmsObj: ChartParmsObj = null
-        let isError = false
-        let configData = {
-            viewpointConfig:viewpointData.Configuration,
-            itemseriesConfig:viewpointData.itemseriesconfigdata,
-        }
+//     let newdatanode = getBudgetNode(viewpointData, childdatapath)
+//     let newnodeconfigparms: BudgetNodeParms = {
+//         portalCharts: portalcharts,
+//         defaultChartType:charttype,
+//         viewpointName:viewpointName,
+//         facetName:facet,
+//         dataPath: childdatapath,
+//         nodeIndex: nodeIndex + 1,
+//         parentData: parentdata,
+//         timeSpecs: newrange,
+//     }
 
-        let budgetCell = budgetNode.cells[cellIndex]
+//     actions.addNode(newnodeconfigparms)
 
-        budgetCell.chartselection = context.selection
-        budgetCell.chart = chart
-        budgetCell.ChartObject = context.ChartObject
+//     setTimeout(() => {
+//         let newBudgetNode = budgetBranch.nodes[nodeIndex + 1]
+//         // console.log('newBudgetNode',newBudgetNode,nodeIndex + 1)
+//         let newcellindex: any = null
+//         let chartParmsObj: ChartParmsObj = null
+//         let isError = false
+//         let configData = {
+//             viewpointConfig:viewpointData.Configuration,
+//             itemseriesConfig:viewpointData.itemseriesconfigdata,
+//         }
 
-        workingStatus(false)
-        setTimeout(() => {
-            updateChartSelections()
-            onPortalCreation()
-        })
-    })
-}
+//         let budgetCell = budgetNode.cells[cellIndex]
+
+//         budgetCell.chartselection = context.selection
+//         budgetCell.chart = chart
+//         budgetCell.ChartObject = context.ChartObject
+
+//         workingStatus(false)
+//         setTimeout(() => {
+//             updateChartSelections()
+//             onPortalCreation()
+//         })
+//     })
+// }
 
 export const onChartComponentSelection = 
     budgetBranch => nodeIndex => cellIndex => context => {

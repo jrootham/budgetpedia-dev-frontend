@@ -70,6 +70,81 @@ class BudgetBranch {
                 viewpointData: viewpointdata
             });
         };
+        this.createChildNode = (props) => {
+            let budgetBranch = this;
+            let callbacks = budgetBranch.nodeCallbacks;
+            let actions = budgetBranch.actions;
+            let { selectionrow, nodeIndex, cellIndex, context, } = props;
+            let chart = context.ChartObject.chart;
+            let { settings: branchsettings } = budgetBranch;
+            let viewpointData = budgetBranch.state.viewpointData;
+            let branchNodes = budgetBranch.nodes;
+            let budgetNode = branchNodes[nodeIndex];
+            let viewpointName = budgetNode.viewpointName, facet = budgetNode.facetName;
+            let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, updateBranchNodesState, } = callbacks;
+            let childdatapath = budgetNode.dataPath.slice();
+            let node = budgetNode.dataNode;
+            if (!node.Components) {
+                updateChartSelections();
+                return;
+            }
+            let components = node.Components;
+            let code = null;
+            let parentdata = null;
+            let parentNode = null;
+            if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
+                parentdata = node.SortedComponents[selectionrow];
+                parentNode = node;
+                code = parentdata.Code;
+            }
+            if (code)
+                childdatapath.push(code);
+            else {
+                updateChartSelections();
+                return;
+            }
+            let newnode = node.Components[code];
+            if (!newnode.Components && !newnode.Categories) {
+                updateChartSelections();
+                return;
+            }
+            workingStatus(true);
+            let newrange = Object.assign({}, budgetNode.timeSpecs);
+            let charttype = branchsettings.chartType;
+            let chartCode = constants_1.ChartTypeCodes[charttype];
+            let portalcharts = viewpointData.PortalCharts;
+            let newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
+            let newnodeconfigparms = {
+                portalCharts: portalcharts,
+                defaultChartType: charttype,
+                viewpointName: viewpointName,
+                facetName: facet,
+                dataPath: childdatapath,
+                nodeIndex: nodeIndex + 1,
+                parentData: parentdata,
+                timeSpecs: newrange,
+            };
+            actions.addNode(newnodeconfigparms);
+            setTimeout(() => {
+                let newBudgetNode = budgetBranch.nodes[nodeIndex + 1];
+                let newcellindex = null;
+                let chartParmsObj = null;
+                let isError = false;
+                let configData = {
+                    viewpointConfig: viewpointData.Configuration,
+                    itemseriesConfig: viewpointData.itemseriesconfigdata,
+                };
+                let budgetCell = budgetNode.cells[cellIndex];
+                budgetCell.chartselection = context.selection;
+                budgetCell.chart = chart;
+                budgetCell.ChartObject = context.ChartObject;
+                workingStatus(false);
+                setTimeout(() => {
+                    updateChartSelections();
+                    onPortalCreation();
+                });
+            });
+        };
         this.settings = parms.settings;
         this.uid = parms.uid;
     }
@@ -144,7 +219,6 @@ class BudgetBranch {
                             ChartObject: prevBudgetCell.ChartObject,
                         };
                         let childprops = {
-                            parentNode: prevBudgetNode,
                             selectionrow: prevBudgetCell.chartselection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex: 0,
@@ -152,7 +226,7 @@ class BudgetBranch {
                         };
                         let fcurrent = fn(nodeIndex)(0);
                         let budgetBranch = this;
-                        onchartcomponentselection_1.createChildNode(budgetBranch, childprops, callbacks, actions);
+                        budgetBranch.createChildNode(childprops);
                     });
                     budgetNode = null;
                 }
