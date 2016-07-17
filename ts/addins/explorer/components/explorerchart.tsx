@@ -15,14 +15,11 @@ import {
     CellSettings,
     CellCallbacks,
 } from '../modules/interfaces'
+import BudgetCell from '../classes/budgetcell'
 
 interface ExplorerChartProps {
     callbackid: string | number,
-    // budgetCell:
-    callbacks: CellCallbacks,
-    cellSettings: CellSettings,
-    chartParms: ChartParms,
-    expandable: boolean,
+    budgetCell: BudgetCell,
 }
 
 class ExplorerChart extends Component<ExplorerChartProps, any> {
@@ -30,7 +27,8 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
     chartnode:any
 
     onChangeChartCode = (chartCode) => {
-        let {callbacks, callbackid} = this.props
+        let {callbackid} = this.props
+        let { cellCallbacks:callbacks } = this.props.budgetCell.chartConfig
         callbacks.onSwitchChartCode(callbackid, chartCode)
     }
 
@@ -40,8 +38,8 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
 
     render() {
 
-        let { chartParms, expandable, cellSettings} = this.props
-        if (!expandable) {
+        let { chartParms, cellSettings} = this.props.budgetCell.chartConfig
+        if (!cellSettings.expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4'
         }
 
@@ -158,7 +156,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                 fontSize:"9px",
                 fontStyle:"italic",
             }}>
-               {expandable?'drill down':'no drill down'}
+               {cellSettings.expandable?'drill down':'no drill down'}
             </div>
         </div>
     }

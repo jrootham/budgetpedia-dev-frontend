@@ -51,6 +51,7 @@ interface ChartParms {
 interface CellSettings {
     chartCode: string,
     graph_id: string,
+    expandable?: boolean,
 }
 
 interface CellCallbacks {

@@ -16,10 +16,11 @@ class ExplorerPortal extends Component {
             let portalSettings = budgetNode.portalConfig;
             let cellTabs = budgetCells.map((budgetCell, cellIndex) => {
                 let expandable = ((budgetCells.length > 1) && (cellIndex == 0));
-                let portalCell = budgetCell.chartConfig;
-                let { chartParms, cellCallbacks, cellSettings, cellTitle } = portalCell;
+                let cellConfig = budgetCell.chartConfig;
+                cellConfig.cellSettings.expandable = expandable;
+                let { chartParms, cellCallbacks, cellSettings, cellTitle } = cellConfig;
                 cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid);
-                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorerchart_1.default, {ref: node => { this._chartrefs[cellIndex] = node; }, callbackid: cellIndex, cellSettings: cellSettings, callbacks: cellCallbacks, chartParms: chartParms, expandable: expandable}));
+                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorerchart_1.default, {ref: node => { budgetCell.chartComponent = node; }, budgetCell: budgetCell, callbackid: cellIndex}));
             });
             return cellTabs;
         };

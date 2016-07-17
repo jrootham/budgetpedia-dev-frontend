@@ -11,12 +11,14 @@ import {
 
 class BudgetCell {
 
+    chartComponent: any // the react Chart component, allows access to google chart objects
     googleChartType: string
     chartCode: string
     chartparms: ChartParms
     nodeDataPropertyName:string
     // chart selection data
     chartselection: ChartSelectionCell[]
+    // get chart() {return this.chartComponent.chart}
     chart: any
     ChartObject: any
     chartConfig: any

@@ -9,15 +9,16 @@ class ExplorerChart extends Component {
     constructor(...args) {
         super(...args);
         this.onChangeChartCode = (chartCode) => {
-            let { callbacks, callbackid } = this.props;
+            let { callbackid } = this.props;
+            let { cellCallbacks: callbacks } = this.props.budgetCell.chartConfig;
             callbacks.onSwitchChartCode(callbackid, chartCode);
         };
     }
     componentDidMount() {
     }
     render() {
-        let { chartParms, expandable, cellSettings } = this.props;
-        if (!expandable) {
+        let { chartParms, cellSettings } = this.props.budgetCell.chartConfig;
+        if (!cellSettings.expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4';
         }
         let chart = React.createElement(Chart, {ref: node => { this.chartnode = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: cellSettings.graph_id});
@@ -55,7 +56,7 @@ class ExplorerChart extends Component {
             left: "40px",
             fontSize: "9px",
             fontStyle: "italic",
-        }}, expandable ? 'drill down' : 'no drill down'));
+        }}, cellSettings.expandable ? 'drill down' : 'no drill down'));
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

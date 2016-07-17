@@ -21,7 +21,7 @@ import BudgetCell from '../classes/budgetcell'
 
 interface ExplorePortalProps {
     callbackid: string | number,
-    budgetNode: BudgetNode,// not yet used
+    budgetNode: BudgetNode,
     displaycallbacks: {onChangePortalTab:Function,}
 }
 
@@ -48,8 +48,9 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             (budgetCell:BudgetCell,cellIndex) => {
                 //!Hack! if more than one chart the first must be expandable
             let expandable = ((budgetCells.length > 1) && (cellIndex == 0))
-            let portalCell = budgetCell.chartConfig
-            let { chartParms, cellCallbacks, cellSettings, cellTitle } = portalCell
+            let cellConfig = budgetCell.chartConfig
+            cellConfig.cellSettings.expandable = expandable
+            let { chartParms, cellCallbacks, cellSettings, cellTitle } = cellConfig
             // curry callback, prepare for passing to exportchart
             cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid)
             return <Tab style={{fontSize:"12px"}} 
@@ -57,12 +58,9 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
                 value={ cellIndex }
                 key={ cellIndex }>
                 <ExplorerChart
-                    ref = {node => {this._chartrefs[cellIndex] = node}} 
+                    ref = {node => {budgetCell.chartComponent = node}} 
+                    budgetCell = { budgetCell }
                     callbackid = { cellIndex }
-                    cellSettings = { cellSettings }
-                    callbacks = { cellCallbacks }
-                    chartParms = { chartParms }
-                    expandable = { expandable }
                 />
             </Tab>
         })
