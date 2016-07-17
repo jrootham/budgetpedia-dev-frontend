@@ -4,10 +4,9 @@ let updateBranchChartSelections = (branchNodes) => {
     for (node of branchNodes) {
         for (let chartindex in node.cells) {
             let budgetCell = node.cells[chartindex];
-            let chart = budgetCell.chart;
-            if (chart) {
-                let selection = budgetCell.chartselection;
-                chart.setSelection(selection);
+            let chartselection = budgetCell.chartselection;
+            if (chartselection) {
+                budgetCell.chart.setSelection(chartselection);
             }
         }
     }

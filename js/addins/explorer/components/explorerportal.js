@@ -20,7 +20,7 @@ class ExplorerPortal extends Component {
                 cellConfig.cellSettings.expandable = expandable;
                 let { chartParms, cellCallbacks, cellSettings, cellTitle } = cellConfig;
                 cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid);
-                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorerchart_1.default, {ref: node => { budgetCell.chartComponent = node; }, budgetCell: budgetCell, callbackid: cellIndex}));
+                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorerchart_1.default, {budgetCell: budgetCell, callbackid: cellIndex}));
             });
             return cellTabs;
         };

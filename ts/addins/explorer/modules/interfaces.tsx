@@ -94,24 +94,6 @@ interface GetChartParmsProps extends GetCellChartProps {
 // =====================================================
 // ---------------[ NODE CONFIGURATION ]--------------
 
-// interface MatrixCellConfig {
-
-//     googleChartType: string,
-//     chartCode?: string,
-//     chartparms?: ChartParms,
-//     nodeDataPropertyName?:string,
-//     // chart selection data
-//     chartselection?: ChartSelectionCell[],
-//     chart?: any,
-//     ChartObject?: any,
-// }
-
-// location of chart config in for portal
-// interface MatrixLocation {
-//     // row: number,
-//     column: number,
-// }
-
 interface SortedComponentItem {
     Code: string,
     Index?: number,

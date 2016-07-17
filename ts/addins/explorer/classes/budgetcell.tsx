@@ -18,9 +18,7 @@ class BudgetCell {
     nodeDataPropertyName:string
     // chart selection data
     chartselection: ChartSelectionCell[]
-    // get chart() {return this.chartComponent.chart}
-    chart: any
-    ChartObject: any
+    get chart() {return this.chartComponent.chart}
     chartConfig: any
 
 }

@@ -58,7 +58,6 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
                 value={ cellIndex }
                 key={ cellIndex }>
                 <ExplorerChart
-                    ref = {node => {budgetCell.chartComponent = node}} 
                     budgetCell = { budgetCell }
                     callbackid = { cellIndex }
                 />

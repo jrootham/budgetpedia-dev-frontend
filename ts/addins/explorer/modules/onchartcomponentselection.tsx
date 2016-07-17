@@ -12,7 +12,6 @@ export interface ChartSelectionCell {
 // returned when user clicks on a chart component 
 // for drill-down or other action
 export interface ChartSelectionContext {
-    ChartObject: any,
     selection: ChartSelectionCell[],
     err: any,
 }
@@ -77,7 +76,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         // 3. if deselected, update parms and quit
         if (!selection) { // deselected
             delete budgetCell.chartselection
-            delete budgetCell.chart
+            // delete budgetCell.chart
             updateChartSelections()
             return
         }

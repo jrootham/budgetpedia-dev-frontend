@@ -24,8 +24,6 @@ interface ExplorerChartProps {
 
 class ExplorerChart extends Component<ExplorerChartProps, any> {
 
-    chartnode:any
-
     onChangeChartCode = (chartCode) => {
         let {callbackid} = this.props
         let { cellCallbacks:callbacks } = this.props.budgetCell.chartConfig
@@ -44,7 +42,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
         }
 
         let chart =  <Chart
-                ref = {node => {this.chartnode = node}}
+                ref = {node => {this.props.budgetCell.chartComponent = node}} 
                 chartType = { chartParms.chartType }
                 options = { chartParms.options }
                 chartEvents = { chartParms.events }
@@ -143,6 +141,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
             </div>
 
             { chart }
+            
             <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}>
                 <IconButton disabled><FontIcon className="material-icons">view_list</FontIcon></IconButton>
             </div>

@@ -27,7 +27,6 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         let { updateChartSelections } = budgetBranch.nodeCallbacks;
         if (!selection) {
             delete budgetCell.chartselection;
-            delete budgetCell.chart;
             updateChartSelections();
             return;
         }

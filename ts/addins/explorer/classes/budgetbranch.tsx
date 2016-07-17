@@ -213,7 +213,6 @@ class BudgetBranch {
 
                         let chartSelectionData = {
                             selection:prevBudgetCell.chartselection,
-                            ChartObject: prevBudgetCell.ChartObject,
                         }
 
                         let childprops: CreateChildNodeProps = {
@@ -256,7 +255,7 @@ class BudgetBranch {
                         let parentBudgetCell = parentBudgetNode.cells[nodeCellIndex]
                         // disable reselection
                         parentBudgetCell.chartselection = null
-                        parentBudgetCell.chart = null
+                        // parentBudgetCell.chart = null
                     }
                     isError = true
                     break
@@ -369,8 +368,6 @@ class BudgetBranch {
             chartSelectionData,
         } = props
 
-        let chart = chartSelectionData.ChartObject.chart
-
         let budgetNode = branchNodes[nodeIndex]
 
         let { facetName:facet, viewpointName } = budgetNode
@@ -451,8 +448,6 @@ class BudgetBranch {
             let budgetCell = budgetNode.cells[cellIndex]
 
             budgetCell.chartselection = chartSelectionData.selection
-            budgetCell.chart = chart
-            budgetCell.ChartObject = chartSelectionData.ChartObject
 
             workingStatus(false)
             setTimeout(() => {

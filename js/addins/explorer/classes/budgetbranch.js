@@ -97,7 +97,6 @@ class BudgetBranch {
             let { nodes: branchNodes, nodeCallbacks: callbacks, actions, settings: branchsettings } = budgetBranch;
             let viewpointData = budgetBranch.state.viewpointData;
             let { selectionrow, nodeIndex, cellIndex, chartSelectionData, } = props;
-            let chart = chartSelectionData.ChartObject.chart;
             let budgetNode = branchNodes[nodeIndex];
             let { facetName: facet, viewpointName } = budgetNode;
             let { workingStatus, onPortalCreation, updateChartSelections, } = callbacks;
@@ -155,8 +154,6 @@ class BudgetBranch {
                 };
                 let budgetCell = budgetNode.cells[cellIndex];
                 budgetCell.chartselection = chartSelectionData.selection;
-                budgetCell.chart = chart;
-                budgetCell.ChartObject = chartSelectionData.ChartObject;
                 workingStatus(false);
                 setTimeout(() => {
                     updateChartSelections();
@@ -213,7 +210,6 @@ class BudgetBranch {
                         let prevBudgetCell = prevBudgetNode.cells[0];
                         let chartSelectionData = {
                             selection: prevBudgetCell.chartselection,
-                            ChartObject: prevBudgetCell.ChartObject,
                         };
                         let childprops = {
                             selectionrow: prevBudgetCell.chartselection[0].row,
@@ -254,7 +250,6 @@ class BudgetBranch {
                         let parentBudgetNode = branchNodes[nodeIndex - 1];
                         let parentBudgetCell = parentBudgetNode.cells[nodeCellIndex];
                         parentBudgetCell.chartselection = null;
-                        parentBudgetCell.chart = null;
                     }
                     isError = true;
                     break;

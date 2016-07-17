@@ -237,9 +237,9 @@ let getChartParms = (
                     let chart = Chart.chart
                     let selection = chart.getSelection()
                     let chartSelectionData: ChartSelectionContext = { 
-                        ChartObject:Chart, 
                         selection, 
-                        err }
+                        err 
+                    }
 
                     selectionCallbacks.current(chartSelectionData)
                 }

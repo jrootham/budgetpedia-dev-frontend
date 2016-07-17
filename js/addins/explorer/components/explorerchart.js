@@ -21,7 +21,7 @@ class ExplorerChart extends Component {
         if (!cellSettings.expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4';
         }
-        let chart = React.createElement(Chart, {ref: node => { this.chartnode = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: cellSettings.graph_id});
+        let chart = React.createElement(Chart, {ref: node => { this.props.budgetCell.chartComponent = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: cellSettings.graph_id});
         return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {
             backgroundColor: (cellSettings.chartCode == "ColumnChart")
                 ? "rgba(144,238,144,0.5)"

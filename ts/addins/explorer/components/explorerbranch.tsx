@@ -366,9 +366,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         this.refreshPresentation()
         let branch = this
         setTimeout(() => {
-            if (budgetCell.chart) {
-                // refresh to new chart created with switch
-                budgetCell.chart = budgetCell.ChartObject.chart
+            if (budgetCell.chartselection) {
                 // it turns out that "PieChart" needs column set to null
                 // for setSelection to work
                 if (budgetCell.googleChartType == "PieChart") {

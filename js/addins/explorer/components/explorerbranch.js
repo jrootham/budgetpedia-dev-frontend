@@ -166,8 +166,7 @@ class ExplorerBranch extends Component {
             this.refreshPresentation();
             let branch = this;
             setTimeout(() => {
-                if (budgetCell.chart) {
-                    budgetCell.chart = budgetCell.ChartObject.chart;
+                if (budgetCell.chartselection) {
                     if (budgetCell.googleChartType == "PieChart") {
                         budgetCell.chartselection[0].column = null;
                     }
