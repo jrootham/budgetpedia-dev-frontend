@@ -213,7 +213,7 @@ class BudgetBranch {
 
                         let prevBudgetCell = prevBudgetNode.cells[0]
 
-                        let context = {
+                        let chartSelectionData = {
                             selection:prevBudgetCell.chartselection,
                             ChartObject: prevBudgetCell.ChartObject,
                         }
@@ -222,7 +222,7 @@ class BudgetBranch {
                             selectionrow: prevBudgetCell.chartselection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex:0,
-                            context,
+                            chartSelectionData,
                         }
                         let fcurrent = fn(nodeIndex)(0)
                         let budgetBranch = this
@@ -352,9 +352,7 @@ class BudgetBranch {
 
     }
 
-    createChildNode = (
-        props: CreateChildNodeProps
-        ) => {
+    createChildNode = ( props: CreateChildNodeProps ) => {
 
         let budgetBranch = this
 
@@ -365,10 +363,10 @@ class BudgetBranch {
             selectionrow,
             nodeIndex,
             cellIndex,
-            context,
+            chartSelectionData,
         } = props
 
-        let chart = context.ChartObject.chart
+        let chart = chartSelectionData.ChartObject.chart
 
         let { settings:branchsettings } = budgetBranch
         let viewpointData = budgetBranch.state.viewpointData
@@ -454,9 +452,9 @@ class BudgetBranch {
 
             let budgetCell = budgetNode.cells[cellIndex]
 
-            budgetCell.chartselection = context.selection
+            budgetCell.chartselection = chartSelectionData.selection
             budgetCell.chart = chart
-            budgetCell.ChartObject = context.ChartObject
+            budgetCell.ChartObject = chartSelectionData.ChartObject
 
             workingStatus(false)
             setTimeout(() => {

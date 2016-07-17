@@ -234,16 +234,12 @@ let getChartParms = (
                 (Chart, err) => {
                     let chart = Chart.chart
                     let selection = chart.getSelection()
-                    let context: ChartSelectionContext = { 
+                    let chartSelectionData: ChartSelectionContext = { 
                         ChartObject:Chart, 
                         selection, 
                         err }
 
-                    // let props: OnChartComponentSelectionProps = {
-                    //     context,
-                    // }
-
-                    selectionCallbacks.current(context)
+                    selectionCallbacks.current(chartSelectionData)
                 }
         }
     ]

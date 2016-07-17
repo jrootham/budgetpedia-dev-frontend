@@ -137,11 +137,11 @@ let getChartParms = (props, selectionCallbacks) => {
             callback: (Chart, err) => {
                 let chart = Chart.chart;
                 let selection = chart.getSelection();
-                let context = {
+                let chartSelectionData = {
                     ChartObject: Chart,
                     selection: selection,
                     err: err };
-                selectionCallbacks.current(context);
+                selectionCallbacks.current(chartSelectionData);
             }
         }
     ];

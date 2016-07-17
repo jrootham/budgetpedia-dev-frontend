@@ -1,11 +1,11 @@
 "use strict";
 var format = require('format-number');
-let applyChartComponentSelection = (budgetBranch, context) => {
+let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSelectionData) => {
     let { nodes: branchNodes, settings: branchsettings, uid: branchuid } = budgetBranch;
     let viewpointData = budgetBranch.state.viewpointData;
     let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = budgetBranch.nodeCallbacks;
     let { addNode, removeNode } = budgetBranch.actions;
-    let selection = context.selection[0];
+    let selection = chartSelectionData.selection[0];
     let selectionrow;
     if (selection) {
         selectionrow = selection.row;
@@ -13,9 +13,7 @@ let applyChartComponentSelection = (budgetBranch, context) => {
     else {
         selectionrow = null;
     }
-    let nodeIndex = context.nodeIndex;
     let budgetNode = branchNodes[nodeIndex];
-    let cellIndex = context.cellIndex;
     let budgetCell = budgetNode.cells[cellIndex];
     if (budgetCell.nodeDataPropertyName == 'Categories') {
         return;
@@ -39,13 +37,11 @@ let applyChartComponentSelection = (budgetBranch, context) => {
             selectionrow: selectionrow,
             nodeIndex: nodeIndex,
             cellIndex: cellIndex,
-            context: context,
+            chartSelectionData: chartSelectionData,
         };
         budgetBranch.createChildNode(childprops);
     });
 };
-exports.onChartComponentSelection = budgetBranch => nodeIndex => cellIndex => context => {
-    context.nodeIndex = nodeIndex;
-    context.cellIndex = cellIndex;
-    applyChartComponentSelection(budgetBranch, context);
+exports.onChartComponentSelection = budgetBranch => nodeIndex => cellIndex => chartSelectionData => {
+    applyChartComponentSelection(budgetBranch, nodeIndex, cellIndex, chartSelectionData);
 };

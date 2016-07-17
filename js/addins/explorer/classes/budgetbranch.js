@@ -74,8 +74,8 @@ class BudgetBranch {
             let budgetBranch = this;
             let callbacks = budgetBranch.nodeCallbacks;
             let actions = budgetBranch.actions;
-            let { selectionrow, nodeIndex, cellIndex, context, } = props;
-            let chart = context.ChartObject.chart;
+            let { selectionrow, nodeIndex, cellIndex, chartSelectionData, } = props;
+            let chart = chartSelectionData.ChartObject.chart;
             let { settings: branchsettings } = budgetBranch;
             let viewpointData = budgetBranch.state.viewpointData;
             let branchNodes = budgetBranch.nodes;
@@ -135,9 +135,9 @@ class BudgetBranch {
                     itemseriesConfig: viewpointData.itemseriesconfigdata,
                 };
                 let budgetCell = budgetNode.cells[cellIndex];
-                budgetCell.chartselection = context.selection;
+                budgetCell.chartselection = chartSelectionData.selection;
                 budgetCell.chart = chart;
-                budgetCell.ChartObject = context.ChartObject;
+                budgetCell.ChartObject = chartSelectionData.ChartObject;
                 workingStatus(false);
                 setTimeout(() => {
                     updateChartSelections();
@@ -214,7 +214,7 @@ class BudgetBranch {
                     actions.removeNode(this.getProps().callbackuid, removedids);
                     setTimeout(() => {
                         let prevBudgetCell = prevBudgetNode.cells[0];
-                        let context = {
+                        let chartSelectionData = {
                             selection: prevBudgetCell.chartselection,
                             ChartObject: prevBudgetCell.ChartObject,
                         };
@@ -222,7 +222,7 @@ class BudgetBranch {
                             selectionrow: prevBudgetCell.chartselection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex: 0,
-                            context: context,
+                            chartSelectionData: chartSelectionData,
                         };
                         let fcurrent = fn(nodeIndex)(0);
                         let budgetBranch = this;
