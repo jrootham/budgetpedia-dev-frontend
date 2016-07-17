@@ -19,7 +19,7 @@ class BudgetCell {
     chartselection: ChartSelectionCell[]
     chart: any
     ChartObject: any
-    chartConfigs: any
+    chartConfig: any
 
 }
 

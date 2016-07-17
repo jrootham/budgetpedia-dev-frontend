@@ -224,6 +224,7 @@ class ExplorerBranch extends Component {
                         cellSettings: cellSettings,
                         cellTitle: "By " + chartblocktitle,
                     };
+                    budgetCell.chartConfig = chartConfig;
                     chartConfigs.push(chartConfig);
                 }
                 let portalName = null;
@@ -235,7 +236,6 @@ class ExplorerBranch extends Component {
                 }
                 portalName += ' ' + portalseriesname;
                 let portalConfig = {
-                    chartConfigs: chartConfigs,
                     portalName: portalName,
                 };
                 return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, displaycallbacks: { onChangePortalTab: this.onChangePortalTab }, portalSettings: portalConfig});

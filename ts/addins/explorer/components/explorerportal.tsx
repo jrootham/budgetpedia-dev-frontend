@@ -17,6 +17,7 @@ import {
 
 import ExplorerChart from './explorerchart'
 import BudgetNode from '../classes/budgetnode'
+import BudgetCell from '../classes/budgetcell'
 
 interface ExplorePortalProps {
     callbackid: string | number,
@@ -41,12 +42,13 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
         // generate array of chart tabs
         let { portalSettings, callbackid, budgetNode } = this.props
-        // let budgetCells = budgetNode.cells
-        let { chartConfigs } = portalSettings 
-        let cellTabs = chartConfigs.map(
-            (portalCell:ChartConfig,cellIndex) => {
+        let budgetCells = budgetNode.cells
+        // let { chartConfigs } = portalSettings 
+        let cellTabs = budgetCells.map(
+            (budgetCell:BudgetCell,cellIndex) => {
                 //!Hack! if more than one chart the first must be expandable
-            let expandable = ((chartConfigs.length > 1) && (cellIndex == 0))
+            let expandable = ((budgetCells.length > 1) && (cellIndex == 0))
+            let portalCell = budgetCell.chartConfig
             let { chartParms, cellCallbacks, cellSettings, cellTitle } = portalCell
             // curry callback, prepare for passing to exportchart
             cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid)

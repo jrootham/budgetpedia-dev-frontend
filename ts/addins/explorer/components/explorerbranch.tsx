@@ -442,6 +442,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                     cellTitle: "By " + chartblocktitle,
                 }
 
+                budgetCell.chartConfig = chartConfig
                 chartConfigs.push(chartConfig)
 
             }
@@ -455,7 +456,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             portalName += ' ' + portalseriesname
 
             let portalConfig: PortalConfig = {
-                chartConfigs,
+                // chartConfigs,
                 portalName,
             }
 
