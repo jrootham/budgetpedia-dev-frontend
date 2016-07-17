@@ -1,24 +1,8 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // onchartcomponentselection.tsx
 
-var format = require('format-number')
-
-import {
-    ChartParms,
-    ChartParmsObj,
-    PortalChartLocation,
-    SortedComponentItem,
-    MatrixCellConfig,
-    GetCellChartProps,
-    BranchSettings,
-} from './interfaces'
-
-import BudgetNode, {BudgetNodeParms} from '../classes/budgetnode'
+import BudgetNode from '../classes/budgetnode'
 import BudgetBranch from '../classes/budgetbranch'
-import { ChartTypeCodes } from '../../constants'
-import {SelectionCallbackProps} from '../classes/modules/getchartparms'
-import getBudgetNode from './getbudgetnode'
-import { DatasetConfig } from '../classes/databaseapi'
 
 export interface ChartSelectionCell {
     row:number,
@@ -33,10 +17,6 @@ export interface ChartSelectionContext {
     err: any,
 }
 
-// export interface OnChartComponentSelectionProps {
-//     chartSelectionData: ChartSelectionContext,
-// }
-
 export interface CreateChildNodeProps {
     selectionrow: any,
     nodeIndex: number,
@@ -48,19 +28,10 @@ export interface CreateChildNodeProps {
 
 // response to user selection of a chart component (such as a column )
 // called by chart callback
-// TODO: the chartSelectionData object should include matrix location of 
-// chartconfig, not the chartconfig itself
 // on selection, makes a child with the same portalCharts offset
-// TODO: create chile which appropriately sets up correct set of child charts
 let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellIndex, chartSelectionData:ChartSelectionContext) => {
 
-    let { nodes:branchNodes, settings:branchsettings, uid:branchuid } = budgetBranch
-
-    let viewpointData = budgetBranch.state.viewpointData
-
-    let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = budgetBranch.nodeCallbacks
-
-    let { addNode, removeNode } = budgetBranch.actions
+    let { nodes:branchNodes, uid:branchuid } = budgetBranch
 
     // unpack chartSelectionData
     let selection = chartSelectionData.selection[0]
@@ -72,33 +43,46 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         selectionrow = null
     }
 
-    // unpack chartconfig
     let budgetNode: BudgetNode = branchNodes[nodeIndex]
 
     let budgetCell = budgetNode.cells[cellIndex]
+
+    // 1. stop if chart is not not drillable
     if (budgetCell.nodeDataPropertyName == 'Categories') {
         return
     }
 
-    // TODO: abandon here if the next one exists and is the same
+    // 2. remove any nodes to be replaced or abandoned
+
     let removed = branchNodes.splice(nodeIndex + 1) // remove subsequent charts
     let removedids = removed.map((item) => {
         return item.uid
     })
 
     if (removedids.length > 0) {
+
+        let { removeNode } = budgetBranch.actions
+
         removeNode(branchuid, removedids)
+
     }
 
     setTimeout(()=>{
+
+        // refresh nodes after removenode operation above
         branchNodes = budgetBranch.nodes
 
+        let { updateChartSelections } = budgetBranch.nodeCallbacks
+
+        // 3. if deselected, update parms and quit
         if (!selection) { // deselected
             delete budgetCell.chartselection
             delete budgetCell.chart
             updateChartSelections()
             return
         }
+
+        // 4. otherwise create new child node
         let childprops: CreateChildNodeProps = {
             selectionrow,
             nodeIndex,

@@ -6,6 +6,28 @@ const onchartcomponentselection_1 = require('../modules/onchartcomponentselectio
 const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
+        this.initializeBranch = () => {
+            let branchsettings = this.settings;
+            let viewpointdata = this.state.viewpointData;
+            let datapath = [];
+            let { chartType: defaultChartType, viewpoint: viewpointName, facet: facetName, latestYear: rightYear, } = branchsettings;
+            let budgetNodeParms = {
+                viewpointName: viewpointName,
+                facetName: facetName,
+                timeSpecs: {
+                    leftYear: null,
+                    rightYear: rightYear,
+                    spanYears: false,
+                    firstYear: null,
+                    lastYear: null,
+                },
+                defaultChartType: defaultChartType,
+                portalCharts: viewpointdata.PortalCharts,
+                dataPath: [],
+                nodeIndex: 0,
+            };
+            this.actions.addNode(budgetNodeParms);
+        };
         this.addNode = (budgetNodeUid, nodeIndex, budgetNodeParms) => {
             let { actions, nodeCallbacks: callbacks } = this;
             let { dataPath } = budgetNodeParms;
@@ -72,29 +94,26 @@ class BudgetBranch {
         };
         this.createChildNode = (props) => {
             let budgetBranch = this;
-            let callbacks = budgetBranch.nodeCallbacks;
-            let actions = budgetBranch.actions;
+            let { nodes: branchNodes, nodeCallbacks: callbacks, actions, settings: branchsettings } = budgetBranch;
+            let viewpointData = budgetBranch.state.viewpointData;
             let { selectionrow, nodeIndex, cellIndex, chartSelectionData, } = props;
             let chart = chartSelectionData.ChartObject.chart;
-            let { settings: branchsettings } = budgetBranch;
-            let viewpointData = budgetBranch.state.viewpointData;
-            let branchNodes = budgetBranch.nodes;
             let budgetNode = branchNodes[nodeIndex];
-            let viewpointName = budgetNode.viewpointName, facet = budgetNode.facetName;
-            let { workingStatus, refreshPresentation, onPortalCreation, updateChartSelections, updateBranchNodesState, } = callbacks;
+            let { facetName: facet, viewpointName } = budgetNode;
+            let { workingStatus, onPortalCreation, updateChartSelections, } = callbacks;
             let childdatapath = budgetNode.dataPath.slice();
-            let node = budgetNode.dataNode;
-            if (!node.Components) {
+            let dataNode = budgetNode.dataNode;
+            if (!dataNode.Components) {
                 updateChartSelections();
                 return;
             }
-            let components = node.Components;
+            let components = dataNode.Components;
             let code = null;
             let parentdata = null;
             let parentNode = null;
-            if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
-                parentdata = node.SortedComponents[selectionrow];
-                parentNode = node;
+            if (dataNode && dataNode.SortedComponents && dataNode.SortedComponents[selectionrow]) {
+                parentdata = dataNode.SortedComponents[selectionrow];
+                parentNode = dataNode;
                 code = parentdata.Code;
             }
             if (code)
@@ -103,7 +122,7 @@ class BudgetBranch {
                 updateChartSelections();
                 return;
             }
-            let newnode = node.Components[code];
+            let newnode = dataNode.Components[code];
             if (!newnode.Components && !newnode.Categories) {
                 updateChartSelections();
                 return;
@@ -155,28 +174,6 @@ class BudgetBranch {
     }
     get state() {
         return this.getState();
-    }
-    initializeBranch() {
-        let branchsettings = this.settings;
-        let viewpointdata = this.state.viewpointData;
-        let datapath = [];
-        let { chartType: defaultChartType, viewpoint: viewpointName, facet: facetName, latestYear: rightYear, } = branchsettings;
-        let budgetNodeParms = {
-            viewpointName: viewpointName,
-            facetName: facetName,
-            timeSpecs: {
-                leftYear: null,
-                rightYear: rightYear,
-                spanYears: false,
-                firstYear: null,
-                lastYear: null,
-            },
-            defaultChartType: defaultChartType,
-            portalCharts: viewpointdata.PortalCharts,
-            dataPath: [],
-            nodeIndex: 0,
-        };
-        this.actions.addNode(budgetNodeParms);
     }
     switchFacet() {
         let { actions, nodeCallbacks: callbacks } = this;

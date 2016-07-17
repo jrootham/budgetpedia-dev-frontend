@@ -1,10 +1,6 @@
 "use strict";
-var format = require('format-number');
 let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSelectionData) => {
-    let { nodes: branchNodes, settings: branchsettings, uid: branchuid } = budgetBranch;
-    let viewpointData = budgetBranch.state.viewpointData;
-    let { refreshPresentation, onPortalCreation, workingStatus, updateChartSelections } = budgetBranch.nodeCallbacks;
-    let { addNode, removeNode } = budgetBranch.actions;
+    let { nodes: branchNodes, uid: branchuid } = budgetBranch;
     let selection = chartSelectionData.selection[0];
     let selectionrow;
     if (selection) {
@@ -23,10 +19,12 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         return item.uid;
     });
     if (removedids.length > 0) {
+        let { removeNode } = budgetBranch.actions;
         removeNode(branchuid, removedids);
     }
     setTimeout(() => {
         branchNodes = budgetBranch.nodes;
+        let { updateChartSelections } = budgetBranch.nodeCallbacks;
         if (!selection) {
             delete budgetCell.chartselection;
             delete budgetCell.chart;

@@ -43,8 +43,6 @@ class BudgetBranch {
         this.uid = parms.uid
     }
 
-    // public data = {viewpointdata:null}
-
     get nodes() {
         let branchNodes = this.state.branchNodes
         let copy = [...branchNodes]
@@ -69,7 +67,7 @@ class BudgetBranch {
 
     public getProps: Function
 
-    public initializeBranch() {
+    public initializeBranch = () => {
 
         let branchsettings = this.settings
         let viewpointdata = this.state.viewpointData
@@ -356,8 +354,13 @@ class BudgetBranch {
 
         let budgetBranch = this
 
-        let callbacks = budgetBranch.nodeCallbacks
-        let actions = budgetBranch.actions
+        let { 
+            nodes: branchNodes, 
+            nodeCallbacks:callbacks, 
+            actions, settings:branchsettings 
+        } = budgetBranch
+
+        let viewpointData = budgetBranch.state.viewpointData
 
         let {
             selectionrow,
@@ -368,21 +371,16 @@ class BudgetBranch {
 
         let chart = chartSelectionData.ChartObject.chart
 
-        let { settings:branchsettings } = budgetBranch
-        let viewpointData = budgetBranch.state.viewpointData
-        let branchNodes = budgetBranch.nodes
-
         let budgetNode = branchNodes[nodeIndex]
 
-        let viewpointName = budgetNode.viewpointName,
-            facet = budgetNode.facetName
+        let { facetName:facet, viewpointName } = budgetNode
 
         let {
             workingStatus,
-            refreshPresentation,
+            // refreshPresentation,
             onPortalCreation,
             updateChartSelections,
-            updateBranchNodesState,
+            // updateBranchNodesState,
         } = callbacks
 
         // ----------------------------------------------------
@@ -390,21 +388,21 @@ class BudgetBranch {
         // copy path
         let childdatapath = budgetNode.dataPath.slice()
 
-        let node = budgetNode.dataNode
+        let dataNode = budgetNode.dataNode
 
-        if (!node.Components) {
+        if (!dataNode.Components) {
             updateChartSelections()
             return
         }
 
-        let components = node.Components
+        let components = dataNode.Components
 
         let code = null
         let parentdata: SortedComponentItem = null
         let parentNode: any = null
-        if (node && node.SortedComponents && node.SortedComponents[selectionrow]) {
-            parentdata = node.SortedComponents[selectionrow]
-            parentNode = node
+        if (dataNode && dataNode.SortedComponents && dataNode.SortedComponents[selectionrow]) {
+            parentdata = dataNode.SortedComponents[selectionrow]
+            parentNode = dataNode
             code = parentdata.Code
         }
         if (code)
@@ -414,7 +412,7 @@ class BudgetBranch {
             return
         }
 
-        let newnode = node.Components[code]
+        let newnode = dataNode.Components[code]
         if (!newnode.Components && !newnode.Categories) {
             updateChartSelections()
             return
