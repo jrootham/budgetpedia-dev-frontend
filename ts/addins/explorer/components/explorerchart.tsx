@@ -30,11 +30,9 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
         callbacks.onSwitchChartCode(callbackid, chartCode)
     }
 
-    componentDidMount() {
-        // console.log('explorerchart chart, node', this.chartnode)
-    }
-
     render() {
+
+        console.log('explorerchart budgetCell', this.props.budgetCell)
 
         let { chartParms, cellSettings} = this.props.budgetCell.chartConfig
         if (!cellSettings.expandable) {
@@ -141,7 +139,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
             </div>
 
             { chart }
-            
+
             <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}>
                 <IconButton disabled><FontIcon className="material-icons">view_list</FontIcon></IconButton>
             </div>

@@ -17,7 +17,7 @@ class BudgetCell {
     chartparms: ChartParms
     nodeDataPropertyName:string
     // chart selection data
-    chartselection: ChartSelectionCell[]
+    chartselection: ChartSelectionCell[] = null
     get chart() {return this.chartComponent.chart}
     chartConfig: any
 
