@@ -18,10 +18,12 @@ import {
     ChartParmsObj,
     PortalChartLocation,
     SortedComponentItem,
-    MatrixCellConfig,
+    // MatrixCellConfig,
     GetChartParmsProps,
     BranchSettings,
 } from '../../modules/interfaces'
+
+import BudgetCell from '../budgetcell'
 
 import getBudgetNode from '../../modules/getbudgetnode'
 import { ChartTypeCodes } from '../../../constants'
@@ -52,7 +54,7 @@ let getChartParms = (
         {budgetNode: BudgetNode, chartIndex: any, branchsettings: BranchSettings, configData: ConfigData} = props
     let { viewpointConfig, itemseriesConfig }  = configData
 
-    let budgetCell: MatrixCellConfig = budgetNode.cells[chartIndex]
+    let budgetCell: BudgetCell = budgetNode.cells[chartIndex]
 
     let nodeDataPropertyName = budgetCell.nodeDataPropertyName
     let sortedlist

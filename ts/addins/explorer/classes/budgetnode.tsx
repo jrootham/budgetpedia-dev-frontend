@@ -4,12 +4,13 @@
 import { PortalCell, TimeSpecs } from './databaseapi'
 import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 import {
-    MatrixCellConfig,
+    // MatrixCellConfig,
     // MatrixLocation,
     GetCellChartProps,
     GetChartParmsProps
 } from '../modules/interfaces'
 import getChartParmsSource from './modules/getchartparms'
+import BudgetCell from './budgetcell'
 
 export interface BudgetNodeParms {
     defaultChartType: string,
@@ -71,7 +72,6 @@ class BudgetNode {
     update = (dataNode, facet) => {
         this._dataNode = dataNode
         this.facetName = facet
-        // this.setCells(portalCharts[facet], defaultChartType)
     }
 
     // ====================================================================
@@ -83,11 +83,10 @@ class BudgetNode {
         let defaultChartCode = ChartTypeCodes[defaultChartType]
         // build cells array
         for (let type in portalcharts) {
-            let cell: MatrixCellConfig = {
-                googleChartType:defaultChartType,
-                chartCode:defaultChartCode,
-                nodeDataPropertyName:portalcharts[type].Type
-            }
+            let cell = new BudgetCell
+            cell.googleChartType = defaultChartType,
+            cell.chartCode = defaultChartCode,
+            cell.nodeDataPropertyName = portalcharts[type].Type
             this._cells.push(cell)
         }
     }
@@ -107,7 +106,7 @@ class BudgetNode {
         return availablCells
     }
 
-    private _cells: MatrixCellConfig[]
+    private _cells: BudgetCell[]
     private _dataNode: any
 
     // // TODO: TEMPORARY

@@ -1,6 +1,7 @@
 "use strict";
 const constants_1 = require('../../constants');
 const getchartparms_1 = require('./modules/getchartparms');
+const budgetcell_1 = require('./budgetcell');
 class BudgetNode {
     constructor(parms, uid, node, parentNode = null) {
         this.parentData = null;
@@ -38,11 +39,10 @@ class BudgetNode {
         this._cells = [];
         let defaultChartCode = constants_1.ChartTypeCodes[defaultChartType];
         for (let type in portalcharts) {
-            let cell = {
-                googleChartType: defaultChartType,
-                chartCode: defaultChartCode,
-                nodeDataPropertyName: portalcharts[type].Type
-            };
+            let cell = new budgetcell_1.default;
+            cell.googleChartType = defaultChartType,
+                cell.chartCode = defaultChartCode,
+                cell.nodeDataPropertyName = portalcharts[type].Type;
             this._cells.push(cell);
         }
     }

@@ -93,17 +93,17 @@ interface GetChartParmsProps extends GetCellChartProps {
 // =====================================================
 // ---------------[ NODE CONFIGURATION ]--------------
 
-interface MatrixCellConfig {
+// interface MatrixCellConfig {
 
-    googleChartType: string,
-    chartCode?: string,
-    chartparms?: ChartParms,
-    nodeDataPropertyName?:string,
-    // chart selection data
-    chartselection?: ChartSelectionCell[],
-    chart?: any,
-    ChartObject?: any,
-}
+//     googleChartType: string,
+//     chartCode?: string,
+//     chartparms?: ChartParms,
+//     nodeDataPropertyName?:string,
+//     // chart selection data
+//     chartselection?: ChartSelectionCell[],
+//     chart?: any,
+//     ChartObject?: any,
+// }
 
 // location of chart config in for portal
 // interface MatrixLocation {
@@ -133,7 +133,7 @@ interface YearScope {
 // ---------------[ EXPORT ]--------------
 
 export {
-    MatrixCellConfig,
+    // MatrixCellConfig,
     // MatrixLocation,
     PortalChartLocation, 
     ChartParms, 
