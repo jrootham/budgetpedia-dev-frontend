@@ -197,7 +197,6 @@ class ExplorerBranch extends Component {
                 portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')';
             }
             let portals = budgetNodes.map((budgetNode, nodeindex) => {
-                let chartConfigs = [];
                 for (let cellindex in budgetNode.cells) {
                     let budgetCell = budgetNode.cells[cellindex];
                     let chartblocktitle = null;
@@ -225,7 +224,6 @@ class ExplorerBranch extends Component {
                         cellTitle: "By " + chartblocktitle,
                     };
                     budgetCell.chartConfig = chartConfig;
-                    chartConfigs.push(chartConfig);
                 }
                 let portalName = null;
                 if (budgetNode.parentData) {
@@ -238,7 +236,8 @@ class ExplorerBranch extends Component {
                 let portalConfig = {
                     portalName: portalName,
                 };
-                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, displaycallbacks: { onChangePortalTab: this.onChangePortalTab }, portalSettings: portalConfig});
+                budgetNode.portalConfig = portalConfig;
+                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, displaycallbacks: { onChangePortalTab: this.onChangePortalTab }});
             });
             return portals;
         };

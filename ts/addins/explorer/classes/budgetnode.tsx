@@ -6,6 +6,7 @@ import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 import {
     // MatrixCellConfig,
     // MatrixLocation,
+    PortalConfig,
     GetCellChartProps,
     GetChartParmsProps
 } from '../modules/interfaces'
@@ -63,6 +64,8 @@ class BudgetNode {
     }
     parentData: any = null // includes parentNode for now
     // parentNode: any = null
+
+    portalConfig: PortalConfig
 
     get cells() { // only return cells that have appropriate node datasets available
         return this.getAvailableCells()

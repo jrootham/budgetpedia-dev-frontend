@@ -410,7 +410,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
         let portals = budgetNodes.map((budgetNode: BudgetNode, nodeindex) => {
 
-            let chartConfigs = []
+            // let chartConfigs = []
 
             for (let cellindex in budgetNode.cells) {
                 let budgetCell = budgetNode.cells[cellindex]
@@ -443,7 +443,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 }
 
                 budgetCell.chartConfig = chartConfig
-                chartConfigs.push(chartConfig)
+                // chartConfigs.push(chartConfig)
 
             }
             let portalName = null
@@ -460,13 +460,14 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 portalName,
             }
 
+            budgetNode.portalConfig = portalConfig
+
             // TODO: pass budgetNode instead of budgetCells?
             return <ExplorerPortal
                 key = {nodeindex}
                 callbackid = {nodeindex}
                 budgetNode = { budgetNode }
                 displaycallbacks = { {onChangePortalTab: this.onChangePortalTab} }
-                portalSettings = { portalConfig }
             />
         })
 

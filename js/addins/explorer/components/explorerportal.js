@@ -11,8 +11,9 @@ class ExplorerPortal extends Component {
         };
         this._chartrefs = [];
         this.getChartTabs = () => {
-            let { portalSettings, callbackid, budgetNode } = this.props;
+            let { callbackid, budgetNode } = this.props;
             let budgetCells = budgetNode.cells;
+            let portalSettings = budgetNode.portalConfig;
             let cellTabs = budgetCells.map((budgetCell, cellIndex) => {
                 let expandable = ((budgetCells.length > 1) && (cellIndex == 0));
                 let portalCell = budgetCell.chartConfig;
@@ -40,7 +41,7 @@ class ExplorerPortal extends Component {
     render() {
         let chartTabs = this.getChartTabs();
         let tabobject = this.getTabObject(chartTabs);
-        let { portalSettings } = this.props;
+        let { portalConfig: portalSettings } = this.props.budgetNode;
         return React.createElement("div", {style: {
             position: "relative",
             display: "inline-block",

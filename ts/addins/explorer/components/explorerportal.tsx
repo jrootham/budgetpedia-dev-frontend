@@ -23,7 +23,6 @@ interface ExplorePortalProps {
     callbackid: string | number,
     budgetNode: BudgetNode,// not yet used
     displaycallbacks: {onChangePortalTab:Function,}
-    portalSettings:PortalConfig,
 }
 
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
@@ -41,8 +40,9 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     getChartTabs = () => {
 
         // generate array of chart tabs
-        let { portalSettings, callbackid, budgetNode } = this.props
+        let { callbackid, budgetNode } = this.props
         let budgetCells = budgetNode.cells
+        let portalSettings = budgetNode.portalConfig
         // let { chartConfigs } = portalSettings 
         let cellTabs = budgetCells.map(
             (budgetCell:BudgetCell,cellIndex) => {
@@ -106,7 +106,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
         let tabobject = this.getTabObject(chartTabs)
 
-        let { portalSettings } = this.props
+        let { portalConfig:portalSettings } = this.props.budgetNode
 
         return <div style={
                 { 
