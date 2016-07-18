@@ -21,9 +21,18 @@ class ExplorerPortal extends Component {
                 cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid);
                 return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorerchart_1.default, {budgetCell: budgetCell, callbackid: cellIndex}));
             });
+            console.log('cellTabs', cellTabs);
             return cellTabs;
         };
         this.getTabObject = (chartTabs) => {
+            if (chartTabs.length == 0) {
+                return React.createElement("div", {style: {
+                    height: "400px",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                    lineHeight: "400px"
+                }}, "No data...");
+            }
             if (chartTabs.length == 1) {
                 return (React.createElement(Tabs_1.Tabs, {value: 0, onChange: () => {
                     this.onChangeTab();

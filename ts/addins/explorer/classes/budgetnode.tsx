@@ -29,8 +29,6 @@ class BudgetNode {
 
         let portalcharts = parms.portalCharts
 
-        this.setCells(portalcharts[parms.facetName],parms.defaultChartType)
-
         this.viewpointName = parms.viewpointName
         this.facetName = parms.facetName
         this.dataPath = parms.dataPath
@@ -41,6 +39,8 @@ class BudgetNode {
         // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
         if (parms.parentData) this.parentData = parms.parentData
         if (parentNode) this.parentData.dataNode = parentNode
+
+        // this.setCells(portalcharts[parms.facetName],parms.defaultChartType)
 
     }
 
@@ -80,7 +80,7 @@ class BudgetNode {
     // ====================================================================
     // ---------------------[ PRIVATE ]------------------------------------
 
-    private setCells(portalcharts, defaultChartType) {
+    public setCells(portalcharts, defaultChartType) {
         this._cells = []
         // // TODO: should be default for each chart...
         let defaultChartCode = ChartTypeCodes[defaultChartType]
@@ -109,7 +109,7 @@ class BudgetNode {
         return availablCells
     }
 
-    private _cells: BudgetCell[]
+    private _cells: BudgetCell[] = []
     private _dataNode: any
 
     // // TODO: TEMPORARY

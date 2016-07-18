@@ -9,8 +9,8 @@ class BudgetNode {
             this._dataNode = dataNode;
             this.facetName = facet;
         };
+        this._cells = [];
         let portalcharts = parms.portalCharts;
-        this.setCells(portalcharts[parms.facetName], parms.defaultChartType);
         this.viewpointName = parms.viewpointName;
         this.facetName = parms.facetName;
         this.dataPath = parms.dataPath;

@@ -63,6 +63,8 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             </Tab>
         })
 
+        console.log('cellTabs',cellTabs)
+
         return cellTabs
 
     }
@@ -70,6 +72,17 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     getTabObject = (chartTabs) => {
         // this deals with the edge case where switching facets causes current tail
         // chart to change from 2 charts to one by adding a value attr to tabs component
+        if (chartTabs.length == 0) {
+            return <div style={
+                {
+                    height:"400px",
+                    textAlign:"center", 
+                    verticalAlign:"middle", 
+                    lineHeight:"400px"
+                }}>
+            No data...
+            </div>
+        }
         if (chartTabs.length == 1) {
             return (
                 <Tabs

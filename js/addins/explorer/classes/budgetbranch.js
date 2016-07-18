@@ -38,7 +38,7 @@ class BudgetBranch {
             let parentNode = (nodeIndex == 0) ? undefined : branchNodes[branchNodes.length - 1].dataNode;
             let budgetNode = new budgetnode_1.default(budgetNodeParms, budgetNodeUid, datanode, parentNode);
             let budgetdata = { viewpointdata: this.state.viewpointData };
-            let chartParmsObj;
+            let chartParmsObj = {};
             let cellindex;
             let branchuid = this.uid;
             let selectfn = onchartcomponentselection_1.onChartComponentSelection(this);

@@ -118,7 +118,7 @@ class BudgetBranch {
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, datanode, parentNode)
 
         let budgetdata = {viewpointdata:this.state.viewpointData}
-        let chartParmsObj: ChartParmsObj
+        let chartParmsObj: ChartParmsObj = {} as ChartParmsObj
         let cellindex: any
         let branchuid = this.uid
         let selectfn = onChartComponentSelection(this)
