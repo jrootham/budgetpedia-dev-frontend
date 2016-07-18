@@ -22,7 +22,6 @@ import {
     PortalConfig,
     CellSettings,
     CellCallbacks,
-    ChartConfig,
 } from '../modules/interfaces'
 
 import { ExplorerPortal } from './explorerportal'
@@ -428,14 +427,8 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                             explorer.switchChartCode(nodeIndex, cellIndex, chartCode)
                     },
                 }
-                let cellSettings: CellSettings = {
-                    // chartCode: budgetCell.chartCode,
-                    graph_id: "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
-                    // index,
-                }
-
+                budgetCell.graph_id = "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
                 budgetCell.cellCallbacks = cellCallbacks
-                budgetCell.cellSettings = cellSettings
                 budgetCell.cellTitle = "By " + chartblocktitle
 
             }

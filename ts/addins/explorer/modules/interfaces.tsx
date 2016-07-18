@@ -57,13 +57,6 @@ interface CellCallbacks {
     onSwitchChartCode: Function,
 }
 
-// configuration for ExplorerChart
-interface ChartConfig {
-    cellSettings: CellSettings,
-    cellCallbacks: CellCallbacks,
-    cellTitle: string,
-}
-
 // =====================================================
 // ---------------[ PORTAL CONFIGURATION ]--------------
 
@@ -122,7 +115,6 @@ export {
     CellSettings,
     CellCallbacks,
     PortalConfig,
-    ChartConfig,
     SortedComponentItem,
     GetChartParmsProps,
     BranchSettings,

@@ -212,11 +212,8 @@ class ExplorerBranch extends Component {
                             explorer.switchChartCode(nodeIndex, cellIndex, chartCode);
                         },
                     };
-                    let cellSettings = {
-                        graph_id: "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
-                    };
-                    budgetCell.cellCallbacks = cellCallbacks;
-                    budgetCell.cellSettings = cellSettings;
+                    budgetCell.graph_id = "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
+                        budgetCell.cellCallbacks = cellCallbacks;
                     budgetCell.cellTitle = "By " + chartblocktitle;
                 }
                 let portalName = null;

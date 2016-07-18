@@ -11,7 +11,6 @@ import { Tabs, Tab } from 'material-ui/Tabs'
 import {
     ChartParms,
     PortalConfig,
-    ChartConfig,
     PortalChartLocation,
 } from '../modules/interfaces'
 
@@ -48,7 +47,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             (budgetCell:BudgetCell,cellIndex) => {
                 //!Hack! if more than one chart the first must be expandable
             let expandable = ((budgetCells.length > 1) && (cellIndex == 0))
-            budgetCell.cellSettings.expandable = expandable
+            budgetCell.expandable = expandable
             let {cellCallbacks, cellTitle } = budgetCell
             // curry callback, prepare for passing to exportchart
             cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid)

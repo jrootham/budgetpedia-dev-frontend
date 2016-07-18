@@ -3,7 +3,6 @@
 
 import {
     ChartParms,
-    CellSettings,
     CellCallbacks
 } from '../modules/interfaces'
 
@@ -22,7 +21,8 @@ class BudgetCell {
     chartSelection: ChartSelectionCell[] = null
     get chart() {return this.chartComponent.chart}
     cellCallbacks: CellCallbacks
-    cellSettings: CellSettings
+    expandable: boolean
+    graph_id: string
     cellTitle: string
 
 }

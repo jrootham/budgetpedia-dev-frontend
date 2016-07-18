@@ -34,9 +34,8 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
 
         console.log('explorerchart budgetCell', this.props.budgetCell)
 
-        let { cellSettings } = this.props.budgetCell
-        let { chartParms, chartCode } = this.props.budgetCell
-        if (!cellSettings.expandable) {
+        let { chartParms, chartCode, expandable, graph_id } = this.props.budgetCell
+        if (!expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4'
         }
 
@@ -48,7 +47,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                 rows = { chartParms.rows }
                 columns = { chartParms.columns }
                 // used to create and cache html element id attribute
-                graph_id = { cellSettings.graph_id }
+                graph_id = { graph_id }
                 />
 
         return <div>
@@ -154,7 +153,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                 fontSize:"9px",
                 fontStyle:"italic",
             }}>
-               {cellSettings.expandable?'drill down':'no drill down'}
+               {expandable?'drill down':'no drill down'}
             </div>
         </div>
     }
