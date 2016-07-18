@@ -429,19 +429,14 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                     },
                 }
                 let cellSettings: CellSettings = {
-                    chartCode: budgetCell.chartCode,
+                    // chartCode: budgetCell.chartCode,
                     graph_id: "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
                     // index,
                 }
 
-                let chartConfig: ChartConfig = {
-                    cellCallbacks,
-                    cellSettings,
-                    cellTitle: "By " + chartblocktitle,
-                }
-
-                budgetCell.chartConfig = chartConfig
-                // chartConfigs.push(chartConfig)
+                budgetCell.cellCallbacks = cellCallbacks
+                budgetCell.cellSettings = cellSettings
+                budgetCell.cellTitle = "By " + chartblocktitle
 
             }
             let portalName = null

@@ -10,41 +10,41 @@ class ExplorerChart extends Component {
         super(...args);
         this.onChangeChartCode = (chartCode) => {
             let { callbackid } = this.props;
-            let { cellCallbacks: callbacks } = this.props.budgetCell.chartConfig;
+            let { cellCallbacks: callbacks } = this.props.budgetCell;
             callbacks.onSwitchChartCode(callbackid, chartCode);
         };
     }
     render() {
         console.log('explorerchart budgetCell', this.props.budgetCell);
-        let { cellSettings } = this.props.budgetCell.chartConfig;
-        let { chartParms } = this.props.budgetCell;
+        let { cellSettings } = this.props.budgetCell;
+        let { chartParms, chartCode } = this.props.budgetCell;
         if (!cellSettings.expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4';
         }
         let chart = React.createElement(Chart, {ref: node => { this.props.budgetCell.chartComponent = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: cellSettings.graph_id});
         return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {
-            backgroundColor: (cellSettings.chartCode == "ColumnChart")
+            backgroundColor: (chartCode == "ColumnChart")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%"
         }, onTouchTap: e => {
             this.onChangeChartCode('ColumnChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "insert_chart")), React.createElement(IconButton_1.default, {tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
-            backgroundColor: (cellSettings.chartCode == "DonutChart")
+            backgroundColor: (chartCode == "DonutChart")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%"
         }, onTouchTap: e => {
             this.onChangeChartCode('DonutChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "donut_small")), React.createElement(IconButton_1.default, {tooltip: "Timeline", tooltipPosition: "top-center", style: {
-            backgroundColor: (cellSettings.chartCode == "TimeLine")
+            backgroundColor: (chartCode == "TimeLine")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%"
         }, disabled: true, onTouchTap: e => {
             this.onChangeChartCode('Timeline');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "timeline")), React.createElement(IconButton_1.default, {tooltip: "Stacked chart", tooltipPosition: "top-center", style: {
-            backgroundColor: (cellSettings.chartCode == "StackedArea")
+            backgroundColor: (chartCode == "StackedArea")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%"

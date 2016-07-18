@@ -213,15 +213,11 @@ class ExplorerBranch extends Component {
                         },
                     };
                     let cellSettings = {
-                        chartCode: budgetCell.chartCode,
                         graph_id: "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
                     };
-                    let chartConfig = {
-                        cellCallbacks: cellCallbacks,
-                        cellSettings: cellSettings,
-                        cellTitle: "By " + chartblocktitle,
-                    };
-                    budgetCell.chartConfig = chartConfig;
+                    budgetCell.cellCallbacks = cellCallbacks;
+                    budgetCell.cellSettings = cellSettings;
+                    budgetCell.cellTitle = "By " + chartblocktitle;
                 }
                 let portalName = null;
                 if (budgetNode.parentData) {

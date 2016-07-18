@@ -67,7 +67,6 @@ let getChartParms = (
 
     // -------------------[ INIT VARS ]---------------------
 
-    // unpack chartConfig & derivatives
     let viewpointindex = budgetNode.viewpointName,
         // path = budgetNode.dataPath,
         yearscope = budgetNode.timeSpecs,

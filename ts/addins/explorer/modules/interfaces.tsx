@@ -49,7 +49,6 @@ interface ChartParms {
 
 // settings for individual portal chart
 interface CellSettings {
-    chartCode: string,
     graph_id: string,
     expandable?: boolean,
 }

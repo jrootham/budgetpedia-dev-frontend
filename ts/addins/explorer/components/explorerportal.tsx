@@ -48,9 +48,8 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             (budgetCell:BudgetCell,cellIndex) => {
                 //!Hack! if more than one chart the first must be expandable
             let expandable = ((budgetCells.length > 1) && (cellIndex == 0))
-            let cellConfig:ChartConfig = budgetCell.chartConfig
-            cellConfig.cellSettings.expandable = expandable
-            let {cellCallbacks, cellTitle } = cellConfig
+            budgetCell.cellSettings.expandable = expandable
+            let {cellCallbacks, cellTitle } = budgetCell
             // curry callback, prepare for passing to exportchart
             cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid)
             return <Tab style={{fontSize:"12px"}} 
