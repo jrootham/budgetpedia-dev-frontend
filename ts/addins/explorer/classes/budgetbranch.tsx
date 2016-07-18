@@ -440,21 +440,13 @@ class BudgetBranch {
         actions.addNode(newnodeconfigparms)
 
         setTimeout(() => {
-            // let newBudgetNode = budgetBranch.nodes[nodeIndex + 1]
-            // console.log('newBudgetNode',newBudgetNode,nodeIndex + 1)
-            // let newcellindex: any = null
-            // let chartParmsObj: ChartParmsObj = null
-            // let isError = false
-            // let configData = {
-            //     viewpointConfig:viewpointData.Configuration,
-            //     itemseriesConfig:viewpointData.itemseriesconfigdata,
-            // }
 
             workingStatus(false)
             setTimeout(() => {
                 updateChartSelections()
                 onPortalCreation()
             })
+            
         })
     }
 
