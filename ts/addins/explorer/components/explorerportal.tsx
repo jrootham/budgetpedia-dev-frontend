@@ -21,7 +21,8 @@ import BudgetCell from '../classes/budgetcell'
 interface ExplorePortalProps {
     callbackid: string | number,
     budgetNode: BudgetNode,
-    displaycallbacks: {onChangePortalTab:Function,}
+    displaycallbacks: {onChangePortalTab:Function}
+    controlData: any,
 }
 
 class ExplorerPortal extends Component<ExplorePortalProps, any> {

@@ -12,13 +12,14 @@ import {
 
 class BudgetCell {
 
+    // primary
+    nodeDatasetName:string
+    chartSelection: ChartSelectionCell[] = null
+    chartCode: string
+    // derivative
     chartComponent: any // the react Chart component, allows access to google chart objects
     googleChartType: string
-    chartCode: string
     chartParms: ChartParms
-    nodeDatasetName:string
-    // chart selection data
-    chartSelection: ChartSelectionCell[] = null
     get chart() {return this.chartComponent.chart}
     cellCallbacks: CellCallbacks
     expandable: boolean

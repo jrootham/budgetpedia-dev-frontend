@@ -63,7 +63,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     // TODO: most of 
     state = {
         branchNodes:[],
-        viewpointData:null, // TODO
+        viewpointData:null,
         snackbar:{open:false,message:'empty'}
     }
 
@@ -453,6 +453,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 key = {nodeindex}
                 callbackid = {nodeindex}
                 budgetNode = { budgetNode }
+                controlData = {this.props.controlData}
                 displaycallbacks = { {onChangePortalTab: this.onChangePortalTab} }
             />
         })
