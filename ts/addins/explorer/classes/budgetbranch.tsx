@@ -357,7 +357,8 @@ class BudgetBranch {
         let { 
             nodes: branchNodes, 
             nodeCallbacks:callbacks, 
-            actions, settings:branchsettings 
+            actions, 
+            settings:branchsettings,
         } = budgetBranch
 
         let viewpointData = budgetBranch.state.viewpointData
@@ -446,7 +447,7 @@ class BudgetBranch {
                 updateChartSelections()
                 onPortalCreation()
             })
-            
+
         })
     }
 

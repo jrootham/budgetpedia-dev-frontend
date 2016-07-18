@@ -48,7 +48,8 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
 
     // 1. stop if chart is not not drillable
-    if (budgetCell.nodeDataPropertyName == 'Categories') {
+    // TODO replace with reference to budgetCell.expandable
+    if (budgetCell.nodeDatasetName == 'Categories') {
         return
     }
 
@@ -77,7 +78,6 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         // 3. if deselected, update parms and quit
         if (!selection) { // deselected
             budgetCell.chartSelection = null
-            // delete budgetCell.chart
             updateChartSelections()
             return
         }

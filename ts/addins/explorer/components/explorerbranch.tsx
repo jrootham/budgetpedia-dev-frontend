@@ -413,7 +413,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             for (let cellindex in budgetNode.cells) {
                 let budgetCell:BudgetCell = budgetNode.cells[cellindex]
                 let chartblocktitle = null
-                if ((budgetCell.nodeDataPropertyName == 'Categories')) {
+                if ((budgetCell.nodeDatasetName == 'Categories')) {
                     chartblocktitle = portaltitles.Categories
                 } else {
                     chartblocktitle = portaltitles.Baseline

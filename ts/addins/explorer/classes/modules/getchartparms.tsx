@@ -50,31 +50,38 @@ let getChartParms = (
         props:GetChartParmsProps, selectionCallbacks: SelectionCallbackProps
     ):ChartParmsObj => {
 
-    let { budgetNode, chartIndex, branchsettings, configData }: 
-        {budgetNode: BudgetNode, chartIndex: any, branchsettings: BranchSettings, configData: ConfigData} = props
+    let { 
+        budgetNode, 
+        chartIndex, 
+        branchsettings, 
+        configData 
+    } : { 
+        budgetNode: BudgetNode, 
+        chartIndex: number, 
+        branchsettings: BranchSettings, 
+        configData: ConfigData
+    } = props
+
     let { viewpointConfig, itemseriesConfig }  = configData
 
     let budgetCell: BudgetCell = budgetNode.cells[chartIndex]
 
-    let nodeDataPropertyName = budgetCell.nodeDataPropertyName
-    let sortedlist
+    let { nodeDatasetName } = budgetCell
 
-    if (nodeDataPropertyName == 'Categories') {
-        sortedlist = 'SortedCategories'
-    } else {
-        sortedlist = 'SortedComponents'
-    }
+    let sortedlist = 'Sorted' + nodeDatasetName
+    // if (nodeDatasetName == 'Categories') {
+    //     sortedlist = 'SortedCategories'
+    // } else {
+    //     sortedlist = 'SortedComponents'
+    // }
 
     // -------------------[ INIT VARS ]---------------------
 
-    let viewpointindex = budgetNode.viewpointName,
-        // path = budgetNode.dataPath,
-        yearscope = budgetNode.timeSpecs,
-        year = yearscope.rightYear,
-        node = budgetNode.dataNode
+    let { viewpointName:viewpointindex, dataNode, timeSpecs:yearscope } = budgetNode
 
+    let { rightYear:year } = yearscope
     // unpack branchsettings
-    let dataseriesname = branchsettings.facet
+    let { facet:dataseriesname } = branchsettings
 
     let units = itemseriesConfig.Units,
         vertlabel
@@ -99,7 +106,7 @@ let getChartParms = (
 
     // collect chart node and its components as data sources for the graph
 
-    if (!node) {
+    if (!dataNode) {
         return {
             isError: true,
             errorMessage: 'node not found',
@@ -109,10 +116,10 @@ let getChartParms = (
 
     let components
 
-    if (nodeDataPropertyName == 'Categories') {
-        components = node.Categories
+    if (nodeDatasetName == 'Categories') {
+        components = dataNode.Categories
     } else {
-        components = node.Components
+        components = dataNode.Components
     }
 
     // ---------------------[ COLLECT CHART PARMS ]---------------------
@@ -122,9 +129,8 @@ let getChartParms = (
     // 2. chart options:
     // get axis title
     let axistitle = null
-    if ((node.Contents) && (nodeDataPropertyName == 'Components')) {
-    // if ((node.Contents) && (node.Contents != 'BASELINE') && (nodeDataPropertyName == 'Components')) {
-        let titleref = viewpointConfig[node.Contents]
+    if ((dataNode.Contents) && (nodeDatasetName == 'Components')) {
+        let titleref = viewpointConfig[dataNode.Contents]
         axistitle = titleref.Alias || titleref.Name
     } else {
         let portaltitles = itemseriesConfig.Titles
@@ -135,7 +141,7 @@ let getChartParms = (
     let title
     if (budgetNode.parentData) {
         let parentdataNode = budgetNode.parentData.dataNode
-        let configindex = node.Config || parentdataNode.Contents
+        let configindex = dataNode.Config || parentdataNode.Contents
         let catname = null
         if (configindex) {
             let category = viewpointConfig[configindex].Instance
@@ -149,8 +155,8 @@ let getChartParms = (
         title = itemseriesConfig.Title
     }
     let titleamount = null
-    if (node.years) {
-        titleamount = node.years[year]
+    if (dataNode.years) {
+        titleamount = dataNode.years[year]
     }
     if (units == 'DOLLAR') {
         titleamount = parseInt(rounded(titleamount / 1000))
@@ -192,7 +198,7 @@ let getChartParms = (
             break
     }
 
-    // TODO: animation breaks draswing; probably conflict with react render
+    // TODO: animation breaks drawing; probably conflict with react render
     //    needs to be investigated
     let options = {
         // animation:{
@@ -219,8 +225,6 @@ let getChartParms = (
     }
 
     // TODO: watch for memory leaks when the chart is destroyed
-    // TODO: replace chartconfig with matrix co-ordinates to avoid
-    //     need to update chart by destroying chart (thus closure) before replacing it
     // 3. chart events:
     let nodeIndex = budgetNode.nodeIndex
     let configlocation: PortalChartLocation = {
@@ -256,19 +260,19 @@ let getChartParms = (
     ]
 
     // 5. chart rows:
-    if (!node[sortedlist]) {
+    if (!dataNode[sortedlist]) {
         return { 
             isError: true, 
             errorMessage:'sorted list "' + sortedlist + '" not available',
             chartParms: {} 
         }
     }
-    let rows = node[sortedlist].map((item:SortedComponentItem) => {
+    let rows = dataNode[sortedlist].map((item:SortedComponentItem) => {
         // TODO: get determination of amount processing from Unit value
         let component = components[item.Code]
         if (!component) {
             console.error('component not found for (node, sortedlist components, item, item.Code) ',
-                node, sortedlist, components, item.Code, item)
+                dataNode, sortedlist, components, item.Code, item)
         }
         let amount
         if (component.years)

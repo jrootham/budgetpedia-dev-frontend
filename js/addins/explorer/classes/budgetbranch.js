@@ -94,7 +94,7 @@ class BudgetBranch {
         };
         this.createChildNode = (props) => {
             let budgetBranch = this;
-            let { nodes: branchNodes, nodeCallbacks: callbacks, actions, settings: branchsettings } = budgetBranch;
+            let { nodes: branchNodes, nodeCallbacks: callbacks, actions, settings: branchsettings, } = budgetBranch;
             let viewpointData = budgetBranch.state.viewpointData;
             let { selectionrow, nodeIndex, cellIndex, chartSelectionData, } = props;
             let budgetNode = branchNodes[nodeIndex];

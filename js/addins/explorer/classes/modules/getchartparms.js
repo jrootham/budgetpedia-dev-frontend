@@ -4,16 +4,11 @@ let getChartParms = (props, selectionCallbacks) => {
     let { budgetNode, chartIndex, branchsettings, configData } = props;
     let { viewpointConfig, itemseriesConfig } = configData;
     let budgetCell = budgetNode.cells[chartIndex];
-    let nodeDataPropertyName = budgetCell.nodeDataPropertyName;
-    let sortedlist;
-    if (nodeDataPropertyName == 'Categories') {
-        sortedlist = 'SortedCategories';
-    }
-    else {
-        sortedlist = 'SortedComponents';
-    }
-    let viewpointindex = budgetNode.viewpointName, yearscope = budgetNode.timeSpecs, year = yearscope.rightYear, node = budgetNode.dataNode;
-    let dataseriesname = branchsettings.facet;
+    let nodeDatasetName = budgetCell.nodeDatasetName;
+    let sortedlist = 'Sorted' + nodeDatasetName;
+    let { viewpointName: viewpointindex, dataNode, timeSpecs: yearscope } = budgetNode;
+    let { rightYear: year } = yearscope;
+    let { facet: dataseriesname } = branchsettings;
     let units = itemseriesConfig.Units, vertlabel;
     vertlabel = itemseriesConfig.UnitsAlias;
     if (units != 'FTE') {
@@ -27,7 +22,7 @@ let getChartParms = (props, selectionCallbacks) => {
     let rounded = format({ round: 0, integerSeparator: '' });
     let singlerounded = format({ round: 1, integerSeparator: '' });
     let staffrounded = format({ round: 1, integerSeparator: ',' });
-    if (!node) {
+    if (!dataNode) {
         return {
             isError: true,
             errorMessage: 'node not found',
@@ -35,16 +30,16 @@ let getChartParms = (props, selectionCallbacks) => {
         };
     }
     let components;
-    if (nodeDataPropertyName == 'Categories') {
-        components = node.Categories;
+    if (nodeDatasetName == 'Categories') {
+        components = dataNode.Categories;
     }
     else {
-        components = node.Components;
+        components = dataNode.Components;
     }
     let chartType = budgetCell.googleChartType;
     let axistitle = null;
-    if ((node.Contents) && (nodeDataPropertyName == 'Components')) {
-        let titleref = viewpointConfig[node.Contents];
+    if ((dataNode.Contents) && (nodeDatasetName == 'Components')) {
+        let titleref = viewpointConfig[dataNode.Contents];
         axistitle = titleref.Alias || titleref.Name;
     }
     else {
@@ -54,7 +49,7 @@ let getChartParms = (props, selectionCallbacks) => {
     let title;
     if (budgetNode.parentData) {
         let parentdataNode = budgetNode.parentData.dataNode;
-        let configindex = node.Config || parentdataNode.Contents;
+        let configindex = dataNode.Config || parentdataNode.Contents;
         let catname = null;
         if (configindex) {
             let category = viewpointConfig[configindex].Instance;
@@ -69,8 +64,8 @@ let getChartParms = (props, selectionCallbacks) => {
         title = itemseriesConfig.Title;
     }
     let titleamount = null;
-    if (node.years) {
-        titleamount = node.years[year];
+    if (dataNode.years) {
+        titleamount = dataNode.years[year];
     }
     if (units == 'DOLLAR') {
         titleamount = parseInt(rounded(titleamount / 1000));
@@ -151,17 +146,17 @@ let getChartParms = (props, selectionCallbacks) => {
         { type: 'number', label: year.toString() },
         { type: 'string', role: 'annotation' }
     ];
-    if (!node[sortedlist]) {
+    if (!dataNode[sortedlist]) {
         return {
             isError: true,
             errorMessage: 'sorted list "' + sortedlist + '" not available',
             chartParms: {}
         };
     }
-    let rows = node[sortedlist].map((item) => {
+    let rows = dataNode[sortedlist].map((item) => {
         let component = components[item.Code];
         if (!component) {
-            console.error('component not found for (node, sortedlist components, item, item.Code) ', node, sortedlist, components, item.Code, item);
+            console.error('component not found for (node, sortedlist components, item, item.Code) ', dataNode, sortedlist, components, item.Code, item);
         }
         let amount;
         if (component.years)

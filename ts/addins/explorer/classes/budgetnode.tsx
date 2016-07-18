@@ -89,7 +89,7 @@ class BudgetNode {
             let cell = new BudgetCell()
             cell.googleChartType = defaultChartType,
             cell.chartCode = defaultChartCode,
-            cell.nodeDataPropertyName = portalcharts[type].Type
+            cell.nodeDatasetName = portalcharts[type].Type
             this._cells.push(cell)
         }
     }
@@ -98,10 +98,10 @@ class BudgetNode {
         let availablCells = []
         if (!this.dataNode) return availablCells
         for (let cell of this._cells) {
-            if (cell.nodeDataPropertyName == 'Components' && !this.dataNode.Components) {
+            if (cell.nodeDatasetName == 'Components' && !this.dataNode.Components) {
                 continue
             }
-            if (cell.nodeDataPropertyName == 'Categories' && !this.dataNode.Categories) {
+            if (cell.nodeDatasetName == 'Categories' && !this.dataNode.Categories) {
                 continue
             }
             availablCells.push(cell)

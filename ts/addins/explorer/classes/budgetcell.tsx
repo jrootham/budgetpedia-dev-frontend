@@ -16,7 +16,7 @@ class BudgetCell {
     googleChartType: string
     chartCode: string
     chartParms: ChartParms
-    nodeDataPropertyName:string
+    nodeDatasetName:string
     // chart selection data
     chartSelection: ChartSelectionCell[] = null
     get chart() {return this.chartComponent.chart}
