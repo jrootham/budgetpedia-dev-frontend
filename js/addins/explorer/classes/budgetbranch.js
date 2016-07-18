@@ -127,6 +127,8 @@ class BudgetBranch {
                 return;
             }
             workingStatus(true);
+            let budgetCell = budgetNode.cells[cellIndex];
+            budgetCell.chartSelection = chartSelectionData.selection;
             let newrange = Object.assign({}, budgetNode.timeSpecs);
             let charttype = branchsettings.chartType;
             let chartCode = constants_1.ChartTypeCodes[charttype];
@@ -144,16 +146,6 @@ class BudgetBranch {
             };
             actions.addNode(newnodeconfigparms);
             setTimeout(() => {
-                let newBudgetNode = budgetBranch.nodes[nodeIndex + 1];
-                let newcellindex = null;
-                let chartParmsObj = null;
-                let isError = false;
-                let configData = {
-                    viewpointConfig: viewpointData.Configuration,
-                    itemseriesConfig: viewpointData.itemseriesconfigdata,
-                };
-                let budgetCell = budgetNode.cells[cellIndex];
-                budgetCell.chartSelection = chartSelectionData.selection;
                 workingStatus(false);
                 setTimeout(() => {
                     updateChartSelections();

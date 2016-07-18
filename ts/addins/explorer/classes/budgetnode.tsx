@@ -86,7 +86,7 @@ class BudgetNode {
         let defaultChartCode = ChartTypeCodes[defaultChartType]
         // build cells array
         for (let type in portalcharts) {
-            let cell = new BudgetCell
+            let cell = new BudgetCell()
             cell.googleChartType = defaultChartType,
             cell.chartCode = defaultChartCode,
             cell.nodeDataPropertyName = portalcharts[type].Type
