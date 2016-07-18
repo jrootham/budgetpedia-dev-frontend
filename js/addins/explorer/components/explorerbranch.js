@@ -166,12 +166,12 @@ class ExplorerBranch extends Component {
             this.refreshPresentation();
             let branch = this;
             setTimeout(() => {
-                if (budgetCell.chartselection) {
+                if (budgetCell.chartSelection) {
                     if (budgetCell.googleChartType == "PieChart") {
-                        budgetCell.chartselection[0].column = null;
+                        budgetCell.chartSelection[0].column = null;
                     }
                     else {
-                        budgetCell.chartselection[0].column = 1;
+                        budgetCell.chartSelection[0].column = 1;
                     }
                 }
                 branch.props.displaycallbacks.updateChartSelections();
@@ -205,7 +205,7 @@ class ExplorerBranch extends Component {
                     else {
                         chartblocktitle = portaltitles.Baseline;
                     }
-                    let chartParms = budgetCell.chartparms;
+                    let chartParms = budgetCell.chartParms;
                     let explorer = this;
                     let cellCallbacks = {
                         onSwitchChartCode: (nodeIndex) => (cellIndex, chartCode) => {
@@ -217,7 +217,6 @@ class ExplorerBranch extends Component {
                         graph_id: "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
                     };
                     let chartConfig = {
-                        chartParms: chartParms,
                         cellCallbacks: cellCallbacks,
                         cellSettings: cellSettings,
                         cellTitle: "By " + chartblocktitle,

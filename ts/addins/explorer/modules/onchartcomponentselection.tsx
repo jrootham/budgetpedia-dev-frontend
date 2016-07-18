@@ -3,6 +3,7 @@
 
 import BudgetNode from '../classes/budgetnode'
 import BudgetBranch from '../classes/budgetbranch'
+import BudgetCell from '../classes/budgetcell'
 
 export interface ChartSelectionCell {
     row:number,
@@ -44,7 +45,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
     let budgetNode: BudgetNode = branchNodes[nodeIndex]
 
-    let budgetCell = budgetNode.cells[cellIndex]
+    let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
 
     // 1. stop if chart is not not drillable
     if (budgetCell.nodeDataPropertyName == 'Categories') {
@@ -75,7 +76,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
         // 3. if deselected, update parms and quit
         if (!selection) { // deselected
-            budgetCell.chartselection = null
+            budgetCell.chartSelection = null
             // delete budgetCell.chart
             updateChartSelections()
             return

@@ -16,7 +16,8 @@ class ExplorerChart extends Component {
     }
     render() {
         console.log('explorerchart budgetCell', this.props.budgetCell);
-        let { chartParms, cellSettings } = this.props.budgetCell.chartConfig;
+        let { cellSettings } = this.props.budgetCell.chartConfig;
+        let { chartParms } = this.props.budgetCell;
         if (!cellSettings.expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4';
         }

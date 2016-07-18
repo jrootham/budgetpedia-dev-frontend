@@ -1,7 +1,7 @@
 "use strict";
 class BudgetCell {
     constructor() {
-        this.chartselection = null;
+        this.chartSelection = null;
     }
     get chart() { return this.chartComponent.chart; }
 }

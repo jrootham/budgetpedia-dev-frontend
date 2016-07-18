@@ -57,9 +57,9 @@ class BudgetBranch {
                 let fcurrent = selectfn(nodeIndex)(cellindex);
                 chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: selectfn });
                 if (!chartParmsObj.isError) {
-                    budgetCell.chartparms = chartParmsObj.chartParms;
+                    budgetCell.chartParms = chartParmsObj.chartParms;
                     budgetCell.chartCode =
-                        constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
+                        constants_1.ChartTypeCodes[budgetCell.chartParms.chartType];
                 }
                 else {
                     break;
@@ -153,7 +153,7 @@ class BudgetBranch {
                     itemseriesConfig: viewpointData.itemseriesconfigdata,
                 };
                 let budgetCell = budgetNode.cells[cellIndex];
-                budgetCell.chartselection = chartSelectionData.selection;
+                budgetCell.chartSelection = chartSelectionData.selection;
                 workingStatus(false);
                 setTimeout(() => {
                     updateChartSelections();
@@ -209,10 +209,10 @@ class BudgetBranch {
                     setTimeout(() => {
                         let prevBudgetCell = prevBudgetNode.cells[0];
                         let chartSelectionData = {
-                            selection: prevBudgetCell.chartselection,
+                            selection: prevBudgetCell.chartSelection,
                         };
                         let childprops = {
-                            selectionrow: prevBudgetCell.chartselection[0].row,
+                            selectionrow: prevBudgetCell.chartSelection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex: 0,
                             chartSelectionData: chartSelectionData,
@@ -249,7 +249,7 @@ class BudgetBranch {
                     if (nodeIndex > 0) {
                         let parentBudgetNode = branchNodes[nodeIndex - 1];
                         let parentBudgetCell = parentBudgetNode.cells[nodeCellIndex];
-                        parentBudgetCell.chartselection = null;
+                        parentBudgetCell.chartSelection = null;
                     }
                     isError = true;
                     break;
@@ -257,9 +257,9 @@ class BudgetBranch {
                 else {
                     budgetNode.facetName = branchsettings.facet;
                     let budgetCell = budgetNode.cells[nodeCellIndex];
-                    budgetCell.chartparms = chartParmsObj.chartParms;
+                    budgetCell.chartParms = chartParmsObj.chartParms;
                     budgetCell.chartCode =
-                        constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
+                        constants_1.ChartTypeCodes[budgetCell.chartParms.chartType];
                     if (parentBudgetNode) {
                         budgetNode.parentData.dataNode = parentBudgetNode.dataNode;
                     }
@@ -299,9 +299,9 @@ class BudgetBranch {
         let fncurrent = fn(nodeIndex)(cellIndex);
         let chartParmsObj = budgetNode.getChartParms(chartprops, { current: fncurrent, next: fn });
         if (!chartParmsObj.isError) {
-            budgetCell.chartparms = chartParmsObj.chartParms;
+            budgetCell.chartParms = chartParmsObj.chartParms;
             budgetCell.chartCode =
-                constants_1.ChartTypeCodes[budgetCell.chartparms.chartType];
+                constants_1.ChartTypeCodes[budgetCell.chartParms.chartType];
         }
         else {
             budgetCell.googleChartType = oldChartType;

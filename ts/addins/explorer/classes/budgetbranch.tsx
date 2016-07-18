@@ -28,6 +28,7 @@ import {
 import * as ExplorerActions from '../actions'
 
 import { BudgetNodeParms } from './budgetnode'
+import BudgetCell from './budgetcell'
 
 import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 
@@ -130,7 +131,7 @@ class BudgetBranch {
             itemseriesConfig,
         }
         for (cellindex in budgetNode.cells) {
-            let budgetCell = budgetNode.cells[cellindex]
+            let budgetCell:BudgetCell = budgetNode.cells[cellindex]
             let props: GetCellChartProps = {
                 chartIndex: cellindex,
                 configData,
@@ -143,9 +144,9 @@ class BudgetBranch {
 
             if (!chartParmsObj.isError) {
 
-                budgetCell.chartparms = chartParmsObj.chartParms
+                budgetCell.chartParms = chartParmsObj.chartParms
                 budgetCell.chartCode =
-                    ChartTypeCodes[budgetCell.chartparms.chartType]
+                    ChartTypeCodes[budgetCell.chartParms.chartType]
 
             } else {
                 break
@@ -209,14 +210,14 @@ class BudgetBranch {
                     actions.removeNode(this.getProps().callbackuid, removedids)
                     setTimeout(()=> {
 
-                        let prevBudgetCell = prevBudgetNode.cells[0]
+                        let prevBudgetCell:BudgetCell = prevBudgetNode.cells[0]
 
                         let chartSelectionData = {
-                            selection:prevBudgetCell.chartselection,
+                            selection:prevBudgetCell.chartSelection,
                         }
 
                         let childprops: CreateChildNodeProps = {
-                            selectionrow: prevBudgetCell.chartselection[0].row,
+                            selectionrow: prevBudgetCell.chartSelection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex:0,
                             chartSelectionData,
@@ -254,7 +255,7 @@ class BudgetBranch {
                         let parentBudgetNode: BudgetNode = branchNodes[nodeIndex - 1]
                         let parentBudgetCell = parentBudgetNode.cells[nodeCellIndex]
                         // disable reselection
-                        parentBudgetCell.chartselection = null
+                        parentBudgetCell.chartSelection = null
                         // parentBudgetCell.chart = null
                     }
                     isError = true
@@ -262,10 +263,10 @@ class BudgetBranch {
                 } else {
                     // TODO: this should be set through reset
                     budgetNode.facetName = branchsettings.facet
-                    let budgetCell = budgetNode.cells[nodeCellIndex]
-                    budgetCell.chartparms = chartParmsObj.chartParms
+                    let budgetCell:BudgetCell = budgetNode.cells[nodeCellIndex]
+                    budgetCell.chartParms = chartParmsObj.chartParms
                     budgetCell.chartCode =
-                        ChartTypeCodes[budgetCell.chartparms.chartType]
+                        ChartTypeCodes[budgetCell.chartParms.chartType]
                     if (parentBudgetNode) {
                         budgetNode.parentData.dataNode = parentBudgetNode.dataNode
                     }
@@ -290,7 +291,7 @@ class BudgetBranch {
 
         let branchNodes = this.nodes
         let budgetNode: BudgetNode = branchNodes[nodeIndex]
-        let budgetCell = budgetNode.cells[cellIndex]
+        let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
         let switchResults = {
             budgetCell,
         }
@@ -311,9 +312,9 @@ class BudgetBranch {
         let fncurrent = fn(nodeIndex)(cellIndex)
         let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
         if (!chartParmsObj.isError) {
-            budgetCell.chartparms = chartParmsObj.chartParms
+            budgetCell.chartParms = chartParmsObj.chartParms
             budgetCell.chartCode =
-                ChartTypeCodes[budgetCell.chartparms.chartType]
+                ChartTypeCodes[budgetCell.chartParms.chartType]
         } else {
             budgetCell.googleChartType = oldChartType
         }
@@ -445,9 +446,9 @@ class BudgetBranch {
                 itemseriesConfig:viewpointData.itemseriesconfigdata,
             }
 
-            let budgetCell = budgetNode.cells[cellIndex]
+            let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
 
-            budgetCell.chartselection = chartSelectionData.selection
+            budgetCell.chartSelection = chartSelectionData.selection
 
             workingStatus(false)
             setTimeout(() => {

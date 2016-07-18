@@ -31,6 +31,7 @@ import { DatasetConfig, TimeSpecs, ViewpointData } from '../classes/databaseapi'
 
 import {branchtypes as branchactiontypes} from '../actions'
 import BudgetNode from '../classes/budgetnode'
+import BudgetCell from '../classes/budgetcell'
 import BudgetBranch from '../classes/budgetbranch'
 
 interface ExploreBranchProps {
@@ -366,15 +367,15 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         this.refreshPresentation()
         let branch = this
         setTimeout(() => {
-            if (budgetCell.chartselection) {
+            if (budgetCell.chartSelection) {
                 // it turns out that "PieChart" needs column set to null
                 // for setSelection to work
                 if (budgetCell.googleChartType == "PieChart") {
-                    budgetCell.chartselection[0].column = null
+                    budgetCell.chartSelection[0].column = null
                 } else {
                     // "ColumnChart" doesn't seem to care about column value,
                     // but we set it back to original (presumed) for consistency
-                    budgetCell.chartselection[0].column = 1
+                    budgetCell.chartSelection[0].column = 1
                 }
             }
             branch.props.displaycallbacks.updateChartSelections()
@@ -411,7 +412,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             // let chartConfigs = []
 
             for (let cellindex in budgetNode.cells) {
-                let budgetCell = budgetNode.cells[cellindex]
+                let budgetCell:BudgetCell = budgetNode.cells[cellindex]
                 let chartblocktitle = null
                 if ((budgetCell.nodeDataPropertyName == 'Categories')) {
                     chartblocktitle = portaltitles.Categories
@@ -419,7 +420,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                     chartblocktitle = portaltitles.Baseline
                 }
 
-                let chartParms = budgetCell.chartparms
+                let chartParms = budgetCell.chartParms
 
                 let explorer = this
                 let cellCallbacks: CellCallbacks = {
@@ -434,7 +435,6 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 }
 
                 let chartConfig: ChartConfig = {
-                    chartParms,
                     cellCallbacks,
                     cellSettings,
                     cellTitle: "By " + chartblocktitle,

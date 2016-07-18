@@ -60,7 +60,6 @@ interface CellCallbacks {
 
 // configuration for ExplorerChart
 interface ChartConfig {
-    chartParms: ChartParms,
     cellSettings: CellSettings,
     cellCallbacks: CellCallbacks,
     cellTitle: string,
