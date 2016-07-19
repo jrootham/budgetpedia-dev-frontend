@@ -1,7 +1,11 @@
 "use strict";
 class BudgetCell {
-    constructor() {
-        this.chartSelection = null;
+    constructor(specs) {
+        let { nodeDatasetName, chartCode, chartSelection, uid } = specs;
+        this.nodeDatasetName = nodeDatasetName;
+        this.chartCode = chartCode;
+        this.chartSelection = chartSelection;
+        this.uid = uid;
     }
     get chart() { return this.chartComponent.chart; }
 }

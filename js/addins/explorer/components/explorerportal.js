@@ -21,7 +21,6 @@ class ExplorerPortal extends Component {
                 cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid);
                 return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorerchart_1.default, {budgetCell: budgetCell, callbackid: cellIndex}));
             });
-            console.log('cellTabs', cellTabs);
             return cellTabs;
         };
         this.getTabObject = (chartTabs) => {

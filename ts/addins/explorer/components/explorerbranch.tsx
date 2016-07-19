@@ -442,7 +442,6 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             portalName += ' ' + portalseriesname
 
             let portalConfig: PortalConfig = {
-                // chartConfigs,
                 portalName,
             }
 

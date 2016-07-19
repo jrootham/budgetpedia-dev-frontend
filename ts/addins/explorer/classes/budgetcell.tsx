@@ -10,13 +10,30 @@ import {
     ChartSelectionCell,
 } from '../modules/onchartcomponentselection'
 
+export interface CellSpecParms {
+    nodeDatasetName:string, 
+    chartCode:string, 
+    chartSelection:ChartSelectionCell[],
+    uid: string,
+}
+
 class BudgetCell {
 
-    // primary
+    constructor(specs:CellSpecParms) {
+        let { nodeDatasetName, chartCode, chartSelection, uid } = specs
+        this.nodeDatasetName = nodeDatasetName
+        this.chartCode = chartCode
+        this.chartSelection = chartSelection
+        this.uid = uid
+    }
+
+    // primary properties
     nodeDatasetName:string
-    chartSelection: ChartSelectionCell[] = null
+    chartSelection: ChartSelectionCell[]
     chartCode: string
-    // derivative
+    uid: string
+
+    // derivative properties
     chartComponent: any // the react Chart component, allows access to google chart objects
     googleChartType: string
     chartParms: ChartParms

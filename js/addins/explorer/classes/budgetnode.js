@@ -1,5 +1,4 @@
 "use strict";
-const constants_1 = require('../../constants');
 const getchartparms_1 = require('./modules/getchartparms');
 const budgetcell_1 = require('./budgetcell');
 class BudgetNode {
@@ -18,6 +17,7 @@ class BudgetNode {
         this.timeSpecs = parms.timeSpecs;
         this._dataNode = node;
         this.uid = uid;
+        this.portalCharts = parms.portalCharts;
         if (parms.parentData)
             this.parentData = parms.parentData;
         if (parentNode)
@@ -35,14 +35,17 @@ class BudgetNode {
     get cells() {
         return this.getAvailableCells();
     }
-    setCells(portalcharts, defaultChartType) {
+    setCells(cellSpecs) {
         this._cells = [];
-        let defaultChartCode = constants_1.ChartTypeCodes[defaultChartType];
-        for (let type in portalcharts) {
-            let cell = new budgetcell_1.default();
-            cell.googleChartType = defaultChartType,
-                cell.chartCode = defaultChartCode,
-                cell.nodeDatasetName = portalcharts[type].Type;
+        let cellSpec;
+        for (let cellSpec of cellSpecs) {
+            let { chartSelection, chartCode, nodeDatasetName, uid } = cellSpec;
+            let cell = new budgetcell_1.default({
+                nodeDatasetName: nodeDatasetName,
+                chartCode: chartCode,
+                chartSelection: chartSelection,
+                uid: uid,
+            });
             this._cells.push(cell);
         }
     }

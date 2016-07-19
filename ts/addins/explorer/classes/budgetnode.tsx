@@ -11,7 +11,10 @@ import {
     GetChartParmsProps
 } from '../modules/interfaces'
 import getChartParmsSource from './modules/getchartparms'
-import BudgetCell from './budgetcell'
+import BudgetCell, {CellSpecParms} from './budgetcell'
+import {
+    ChartSelectionCell,
+} from '../modules/onchartcomponentselection'
 
 export interface BudgetNodeParms {
     defaultChartType: string,
@@ -36,6 +39,7 @@ class BudgetNode {
         this.timeSpecs = parms.timeSpecs
         this._dataNode = node
         this.uid = uid
+        this.portalCharts = parms.portalCharts
         // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
         if (parms.parentData) this.parentData = parms.parentData
         if (parentNode) this.parentData.dataNode = parentNode
@@ -59,6 +63,7 @@ class BudgetNode {
     dataPath: string[]
     nodeIndex: number
     timeSpecs: TimeSpecs
+    portalCharts:PortalCell[]
     get dataNode() {
         return this._dataNode
     }
@@ -80,16 +85,21 @@ class BudgetNode {
     // ====================================================================
     // ---------------------[ PRIVATE ]------------------------------------
 
-    public setCells(portalcharts, defaultChartType) {
+    public setCells(cellSpecs:CellSpecParms[]) {
         this._cells = []
         // // TODO: should be default for each chart...
-        let defaultChartCode = ChartTypeCodes[defaultChartType]
         // build cells array
-        for (let type in portalcharts) {
-            let cell = new BudgetCell()
-            cell.googleChartType = defaultChartType,
-            cell.chartCode = defaultChartCode,
-            cell.nodeDatasetName = portalcharts[type].Type
+        let cellSpec: CellSpecParms
+        for (let cellSpec of cellSpecs) {
+            let {chartSelection, chartCode, nodeDatasetName, uid} = cellSpec
+            let cell = new BudgetCell(
+                {
+                    nodeDatasetName,
+                    chartCode,
+                    chartSelection,
+                    uid,
+                }
+            )
             this._cells.push(cell)
         }
     }

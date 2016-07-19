@@ -63,8 +63,6 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             </Tab>
         })
 
-        console.log('cellTabs',cellTabs)
-
         return cellTabs
 
     }

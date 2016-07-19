@@ -84,7 +84,7 @@ class BudgetBranch {
             latestYear:rightYear,
         } = branchsettings
 
-        let budgetNodeParms = {
+        let budgetNodeParms:BudgetNodeParms = {
             viewpointName,
             facetName,
             timeSpecs: {
