@@ -7,7 +7,6 @@ class ExplorerPortal extends Component {
     constructor(...args) {
         super(...args);
         this.onChangeTab = () => {
-            this.props.displaycallbacks.onChangePortalTab();
         };
         this._chartrefs = [];
         this.getChartTabs = () => {
@@ -45,6 +44,7 @@ class ExplorerPortal extends Component {
         };
     }
     componentDidMount() {
+        let { budgetNode, controlData } = this.props;
     }
     render() {
         let chartTabs = this.getChartTabs();

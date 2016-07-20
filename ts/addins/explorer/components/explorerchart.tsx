@@ -30,6 +30,48 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
         callbacks.onSwitchChartCode(callbackid, chartCode)
     }
 
+    // TODO: belongs with explorerchart controller?
+    // switchChartCode = (nodeIndex,cellIndex, chartCode) => {
+
+    //     let { budgetBranch }:{budgetBranch: BudgetBranch } = this.props
+    //     // let { settings } = budgetBranch
+
+    //     let props = {
+    //         nodeIndex,
+    //         cellIndex,
+    //         chartCode,
+    //     }
+
+    //     let switchResults = budgetBranch.switchChartCode(props)
+
+    //     let { budgetCell } = switchResults
+    //     this.refreshPresentation()
+    //     let branch = this
+    //     setTimeout(() => {
+    //         if (budgetCell.chartSelection) {
+    //             // it turns out that "PieChart" needs column set to null
+    //             // for setSelection to work
+    //             if (budgetCell.googleChartType == "PieChart") {
+    //                 budgetCell.chartSelection[0].column = null
+    //             } else {
+    //                 // "ColumnChart" doesn't seem to care about column value,
+    //                 // but we set it back to original (presumed) for consistency
+    //                 budgetCell.chartSelection[0].column = 1
+    //             }
+    //         }
+    //         branch.props.displaycallbacks.updateChartSelections()
+    //     })
+    // }
+
+    // onChangePortalTab = () => {
+    //     let branch = this
+    //     setTimeout(() => {
+    //         this._nodeCallbacks.updateChartSelections()
+    //     })
+    // }
+
+
+
     render() {
 
         console.log('explorerchart budgetCell', this.props.budgetCell)

@@ -21,18 +21,41 @@ import BudgetCell from '../classes/budgetcell'
 interface ExplorePortalProps {
     callbackid: string | number,
     budgetNode: BudgetNode,
-    displaycallbacks: {onChangePortalTab:Function}
+    // displaycallbacks: {onChangePortalTab:Function}
     controlData: any,
 }
+
+// for (let cellindex in budgetNode.cells) {
+//     let budgetCell:BudgetCell = budgetNode.cells[cellindex]
+//     let chartblocktitle = null
+//     if ((budgetCell.nodeDatasetName == 'Categories')) {
+//         chartblocktitle = portaltitles.Categories
+//     } else {
+//         chartblocktitle = portaltitles.Baseline
+//     }
+
+//     let chartParms = budgetCell.chartParms
+
+//     let explorer = this
+//     let cellCallbacks: CellCallbacks = {
+//         onSwitchChartCode: (nodeIndex) => (cellIndex, chartCode) => {
+//                 explorer.switchChartCode(nodeIndex, cellIndex, chartCode)
+//         },
+//     }
+//     budgetCell.graph_id = "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
+//     budgetCell.cellCallbacks = cellCallbacks
+//     budgetCell.cellTitle = "By " + chartblocktitle
+
+// }
 
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     onChangeTab = () => {
-        this.props.displaycallbacks.onChangePortalTab() 
+        // this.props.displaycallbacks.onChangePortalTab() 
     }
 
     componentDidMount() {
-        // console.log('chartrefs',this._chartrefs)
+        let { budgetNode, controlData } = this.props
     }
 
     _chartrefs:any[] = []

@@ -35,7 +35,7 @@
     "react-dom": "^15.2.1",
     "react-google-charts": "^1.0.2",
     "react-redux": "^4.4.2",
-    "react-router": "^2.5.2",
+    "react-router": "^2.6.0",
     "react-router-redux": "^4.0.5",
     "react-slider": "^0.6.1",
     "react-tap-event-plugin": "^1.0.0",

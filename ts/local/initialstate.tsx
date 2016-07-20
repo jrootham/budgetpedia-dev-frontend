@@ -222,11 +222,10 @@ let explorer = {
             nodeList:[],
         },
         node: {
-            chartType: "ColumnChart",
-            cellList:[]
+            cellList:null
         },
         cell: {
-            chartType: "ColumnChart",
+            chartCode: "ColumnChart",
         }
     }
 }

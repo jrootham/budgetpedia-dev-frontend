@@ -154,35 +154,6 @@ class ExplorerBranch extends Component {
                 this._nodeCallbacks.updateChartSelections();
             });
         };
-        this.switchChartCode = (nodeIndex, cellIndex, chartCode) => {
-            let { budgetBranch } = this.props;
-            let props = {
-                nodeIndex: nodeIndex,
-                cellIndex: cellIndex,
-                chartCode: chartCode,
-            };
-            let switchResults = budgetBranch.switchChartCode(props);
-            let { budgetCell } = switchResults;
-            this.refreshPresentation();
-            let branch = this;
-            setTimeout(() => {
-                if (budgetCell.chartSelection) {
-                    if (budgetCell.googleChartType == "PieChart") {
-                        budgetCell.chartSelection[0].column = null;
-                    }
-                    else {
-                        budgetCell.chartSelection[0].column = 1;
-                    }
-                }
-                branch.props.displaycallbacks.updateChartSelections();
-            });
-        };
-        this.onChangePortalTab = () => {
-            let branch = this;
-            setTimeout(() => {
-                this._nodeCallbacks.updateChartSelections();
-            });
-        };
         this.getPortals = (budgetNodes) => {
             let { settings: branchsettings } = this.props.budgetBranch;
             let budgetdata = { viewpointdata: this.state.viewpointData };
@@ -196,26 +167,6 @@ class ExplorerBranch extends Component {
                 portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')';
             }
             let portals = budgetNodes.map((budgetNode, nodeindex) => {
-                for (let cellindex in budgetNode.cells) {
-                    let budgetCell = budgetNode.cells[cellindex];
-                    let chartblocktitle = null;
-                    if ((budgetCell.nodeDatasetName == 'Categories')) {
-                        chartblocktitle = portaltitles.Categories;
-                    }
-                    else {
-                        chartblocktitle = portaltitles.Baseline;
-                    }
-                    let chartParms = budgetCell.chartParms;
-                    let explorer = this;
-                    let cellCallbacks = {
-                        onSwitchChartCode: (nodeIndex) => (cellIndex, chartCode) => {
-                            explorer.switchChartCode(nodeIndex, cellIndex, chartCode);
-                        },
-                    };
-                    budgetCell.graph_id = "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
-                        budgetCell.cellCallbacks = cellCallbacks;
-                    budgetCell.cellTitle = "By " + chartblocktitle;
-                }
                 let portalName = null;
                 if (budgetNode.parentData) {
                     portalName = budgetNode.parentData.Name;
@@ -228,7 +179,7 @@ class ExplorerBranch extends Component {
                     portalName: portalName,
                 };
                 budgetNode.portalConfig = portalConfig;
-                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, controlData: this.props.controlData, displaycallbacks: { onChangePortalTab: this.onChangePortalTab }});
+                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, controlData: this.props.controlData});
             });
             return portals;
         };
@@ -252,8 +203,7 @@ class ExplorerBranch extends Component {
         budgetBranch.nodeCallbacks = this._nodeCallbacks;
     }
     componentDidMount() {
-        let { budgetBranch } = this.props;
-        let { controlData } = this.props;
+        let { budgetBranch, controlData } = this.props;
         this._previousControlData = controlData;
         budgetBranch.getViewpointData();
         if (controlData.branchesById[budgetBranch.uid].nodeList.length == 0) {
@@ -286,6 +236,7 @@ class ExplorerBranch extends Component {
         }
         if (nodeList.length > branchNodes.length) {
             if (this.harmonizecount <= 0) {
+                console.log('harmonize error', nodeList, branchNodes);
                 throw Error('error harmonizing branch nodes');
             }
             this.harmonizecount--;

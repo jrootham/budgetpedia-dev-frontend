@@ -43,6 +43,50 @@ class BudgetCell {
     graph_id: string
     cellTitle: string
 
+
+    // switchChartCode(props) {
+    //     let { actions, nodeCallbacks:callbacks } = this
+    //     let branchsettings: BranchSettings = this.settings
+    //     let {
+    //         nodeIndex,
+    //         cellIndex,
+    //         chartCode,
+    //     } = props
+    //     let chartType = ChartCodeTypes[chartCode]
+
+    //     let branchNodes = this.nodes
+    //     let budgetNode: BudgetNode = branchNodes[nodeIndex]
+    //     let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
+    //     let switchResults = {
+    //         budgetCell,
+    //     }
+    //     let oldChartType = budgetCell.googleChartType
+    //     budgetCell.googleChartType = chartType
+    //     let viewpointdata = this.state.viewpointData
+    //     let configData = {
+    //         viewpointConfig:viewpointdata.Configuration,
+    //         itemseriesConfig:viewpointdata.itemseriesconfigdata,
+    //     }        
+    //     let chartprops: GetCellChartProps = {
+    //         chartIndex: cellIndex,
+    //         branchsettings,
+    //         configData,
+    //     }
+    //     let branchuid = this.uid
+    //     let fn = onChartComponentSelection(this)
+    //     let fncurrent = fn(nodeIndex)(cellIndex)
+    //     let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
+    //     if (!chartParmsObj.isError) {
+    //         budgetCell.chartParms = chartParmsObj.chartParms
+    //         budgetCell.chartCode =
+    //             ChartTypeCodes[budgetCell.chartParms.chartType]
+    //     } else {
+    //         budgetCell.googleChartType = oldChartType
+    //     }
+    //     return switchResults
+    // }
+
+
 }
 
 export default BudgetCell

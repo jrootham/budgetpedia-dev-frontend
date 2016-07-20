@@ -92,7 +92,9 @@ let nodesById = (state = { }, action) => {
     let newstate
     switch (type) {
         case actiontypes.ADD_NODE:
-            newstate = Object.assign({},state,{[action.payload.uid]:action.payload.settings})
+            let node = state[action.payload.uid] || {}
+            node = Object.assign(node,action.payload.settings)
+            newstate = Object.assign({},state,{[action.payload.uid]:node})
             return newstate
 
         case actiontypes.REMOVE_NODE:

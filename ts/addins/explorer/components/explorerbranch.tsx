@@ -108,9 +108,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // initialize once -- set controlData; initialize viewpointData; initialize branch
     componentDidMount() {
-        // console.log('did mount')
-        let { budgetBranch } = this.props
-        let {controlData} = this.props
+        let { budgetBranch, controlData } = this.props
         this._previousControlData = controlData // initialize
         budgetBranch.getViewpointData()
         if (controlData.branchesById[budgetBranch.uid].nodeList.length == 0) {
@@ -159,6 +157,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             // places sentinal in place in case addNode below fails
             //   generating an infinite loop
             if (this.harmonizecount <= 0) {
+                console.log('harmonize error', nodeList, branchNodes)
                 throw Error('error harmonizing branch nodes')
             }
             this.harmonizecount--
@@ -348,46 +347,6 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         })
     }
 
-    // TODO: belongs with explorerchart controller?
-    switchChartCode = (nodeIndex,cellIndex, chartCode) => {
-
-        let { budgetBranch }:{budgetBranch: BudgetBranch } = this.props
-        // let { settings } = budgetBranch
-
-        let props = {
-            nodeIndex,
-            cellIndex,
-            chartCode,
-        }
-
-        let switchResults = budgetBranch.switchChartCode(props)
-
-        let { budgetCell } = switchResults
-        this.refreshPresentation()
-        let branch = this
-        setTimeout(() => {
-            if (budgetCell.chartSelection) {
-                // it turns out that "PieChart" needs column set to null
-                // for setSelection to work
-                if (budgetCell.googleChartType == "PieChart") {
-                    budgetCell.chartSelection[0].column = null
-                } else {
-                    // "ColumnChart" doesn't seem to care about column value,
-                    // but we set it back to original (presumed) for consistency
-                    budgetCell.chartSelection[0].column = 1
-                }
-            }
-            branch.props.displaycallbacks.updateChartSelections()
-        })
-    }
-
-    onChangePortalTab = () => {
-        let branch = this
-        setTimeout(() => {
-            this._nodeCallbacks.updateChartSelections()
-        })
-    }
-
     // -----------------------------[ prepare for render ]---------------------------------
 
     // get React components to render
@@ -410,28 +369,6 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
             // let chartConfigs = []
 
-            for (let cellindex in budgetNode.cells) {
-                let budgetCell:BudgetCell = budgetNode.cells[cellindex]
-                let chartblocktitle = null
-                if ((budgetCell.nodeDatasetName == 'Categories')) {
-                    chartblocktitle = portaltitles.Categories
-                } else {
-                    chartblocktitle = portaltitles.Baseline
-                }
-
-                let chartParms = budgetCell.chartParms
-
-                let explorer = this
-                let cellCallbacks: CellCallbacks = {
-                    onSwitchChartCode: (nodeIndex) => (cellIndex, chartCode) => {
-                            explorer.switchChartCode(nodeIndex, cellIndex, chartCode)
-                    },
-                }
-                budgetCell.graph_id = "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
-                budgetCell.cellCallbacks = cellCallbacks
-                budgetCell.cellTitle = "By " + chartblocktitle
-
-            }
             let portalName = null
             if (budgetNode.parentData) {
                 portalName = budgetNode.parentData.Name
@@ -453,7 +390,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 callbackid = {nodeindex}
                 budgetNode = { budgetNode }
                 controlData = {this.props.controlData}
-                displaycallbacks = { {onChangePortalTab: this.onChangePortalTab} }
+                // displaycallbacks = { {onChangePortalTab: this.onChangePortalTab} }
             />
         })
 

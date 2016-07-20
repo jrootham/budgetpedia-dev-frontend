@@ -17,7 +17,6 @@ import {
 } from '../modules/onchartcomponentselection'
 
 export interface BudgetNodeParms {
-    defaultChartType: string,
     viewpointName: string,
     facetName: string, // used to select chartset to display
     portalCharts:PortalCell[],
@@ -26,6 +25,49 @@ export interface BudgetNodeParms {
     nodeIndex: number,
     parentData?:any,
 }
+
+// let chartParmsObj: ChartParmsObj = {} as ChartParmsObj
+// let cellindex: any
+// let branchuid = this.uid
+// let selectfn = onChartComponentSelection(this)
+// let {
+//     Configuration: viewpointConfig,
+//     itemseriesconfigdata: itemseriesConfig,
+// } = viewpointdata
+// let configData = {
+//     viewpointConfig,
+//     itemseriesConfig,
+// }
+// for (cellindex in budgetNode.cells) {
+//     let budgetCell:BudgetCell = budgetNode.cells[cellindex]
+//     let props: GetCellChartProps = {
+//         chartIndex: cellindex,
+//         configData,
+//         branchsettings,
+//     }
+
+//     let fcurrent = selectfn(nodeIndex)(cellindex)
+
+//     chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:selectfn})
+
+//     if (!chartParmsObj.isError) {
+
+//         budgetCell.chartParms = chartParmsObj.chartParms
+//         budgetCell.chartCode =
+//             ChartTypeCodes[budgetCell.chartParms.chartType]
+
+//     } else {
+//         break
+//     }
+// }
+// if (!chartParmsObj.isError) {
+//     let { nodeIndex } = budgetNode
+//     branchNodes[nodeIndex] = budgetNode
+//     this.setState({
+//         branchNodes,
+//     })
+// }
+
 
 class BudgetNode {
     constructor(parms: BudgetNodeParms, uid:string, node:any, parentNode:any = null) {

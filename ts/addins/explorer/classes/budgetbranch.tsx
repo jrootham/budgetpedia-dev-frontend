@@ -70,6 +70,8 @@ class BudgetBranch {
 
     public initializeBranch = () => {
 
+        let defaults = this.getProps().controlData.defaults.node
+
         let branchsettings = this.settings
         let viewpointdata = this.state.viewpointData
 
@@ -78,7 +80,6 @@ class BudgetBranch {
         let datapath = []
 
         let {
-            chartType:defaultChartType,
             viewpoint:viewpointName,
             facet:facetName,
             latestYear:rightYear,
@@ -94,11 +95,12 @@ class BudgetBranch {
                 firstYear: null,
                 lastYear: null,
             },
-            defaultChartType,
             portalCharts:viewpointdata.PortalCharts,
             dataPath: [],
             nodeIndex:0,
         }
+
+        budgetNodeParms = Object.assign(defaults, budgetNodeParms )
 
         this.actions.addNode(budgetNodeParms)
 
@@ -114,51 +116,12 @@ class BudgetBranch {
         let viewpointdata = this.state.viewpointData
         let datanode = getBudgetNode(viewpointdata, dataPath)
         let branchNodes = this.nodes
-        let parentNode = (nodeIndex == 0)?undefined:branchNodes[branchNodes.length - 1].dataNode
+        let parentNode = (nodeIndex == 0)? undefined: branchNodes[branchNodes.length - 1].dataNode
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, datanode, parentNode)
-
-        let budgetdata = {viewpointdata:this.state.viewpointData}
-        let chartParmsObj: ChartParmsObj = {} as ChartParmsObj
-        let cellindex: any
-        let branchuid = this.uid
-        let selectfn = onChartComponentSelection(this)
-        let {
-            Configuration: viewpointConfig,
-            itemseriesconfigdata: itemseriesConfig,
-        } = budgetdata.viewpointdata
-        let configData = {
-            viewpointConfig,
-            itemseriesConfig,
-        }
-        for (cellindex in budgetNode.cells) {
-            let budgetCell:BudgetCell = budgetNode.cells[cellindex]
-            let props: GetCellChartProps = {
-                chartIndex: cellindex,
-                configData,
-                branchsettings,
-            }
-
-            let fcurrent = selectfn(nodeIndex)(cellindex)
-
-            chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:selectfn})
-
-            if (!chartParmsObj.isError) {
-
-                budgetCell.chartParms = chartParmsObj.chartParms
-                budgetCell.chartCode =
-                    ChartTypeCodes[budgetCell.chartParms.chartType]
-
-            } else {
-                break
-            }
-        }
-        if (!chartParmsObj.isError) {
-            let { nodeIndex } = budgetNode
-            branchNodes[nodeIndex] = budgetNode
-            this.setState({
-                branchNodes,
-            })
-        }
+        branchNodes[nodeIndex] = budgetNode
+        this.setState({
+            branchNodes,
+        })
 
     }
 
@@ -279,48 +242,6 @@ class BudgetBranch {
         return switchResults
     }
 
-    switchChartCode(props) {
-        let { actions, nodeCallbacks:callbacks } = this
-        let branchsettings: BranchSettings = this.settings
-        let {
-            nodeIndex,
-            cellIndex,
-            chartCode,
-        } = props
-        let chartType = ChartCodeTypes[chartCode]
-
-        let branchNodes = this.nodes
-        let budgetNode: BudgetNode = branchNodes[nodeIndex]
-        let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
-        let switchResults = {
-            budgetCell,
-        }
-        let oldChartType = budgetCell.googleChartType
-        budgetCell.googleChartType = chartType
-        let budgetdata = {viewpointdata:this.state.viewpointData}
-        let configData = {
-            viewpointConfig:budgetdata.viewpointdata.Configuration,
-            itemseriesConfig:budgetdata.viewpointdata.itemseriesconfigdata,
-        }        
-        let chartprops: GetCellChartProps = {
-            chartIndex: cellIndex,
-            branchsettings,
-            configData,
-        }
-        let branchuid = this.uid
-        let fn = onChartComponentSelection(this)
-        let fncurrent = fn(nodeIndex)(cellIndex)
-        let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
-        if (!chartParmsObj.isError) {
-            budgetCell.chartParms = chartParmsObj.chartParms
-            budgetCell.chartCode =
-                ChartTypeCodes[budgetCell.chartParms.chartType]
-        } else {
-            budgetCell.googleChartType = oldChartType
-        }
-        return switchResults
-    }
-
     public getViewpointData = () => {
 
         let branchsettings:BranchSettings = this.settings
@@ -422,14 +343,11 @@ class BudgetBranch {
         budgetCell.chartSelection = chartSelectionData.selection
 
         let newrange = Object.assign({}, budgetNode.timeSpecs)
-        let charttype = branchsettings.chartType
-        let chartCode = ChartTypeCodes[charttype]
         let portalcharts = viewpointData.PortalCharts
 
         let newdatanode = getBudgetNode(viewpointData, childdatapath)
         let newnodeconfigparms: BudgetNodeParms = {
             portalCharts: portalcharts,
-            defaultChartType:charttype,
             viewpointName:viewpointName,
             facetName:facet,
             dataPath: childdatapath,
