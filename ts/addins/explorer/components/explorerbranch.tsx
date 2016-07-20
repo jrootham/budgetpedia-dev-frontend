@@ -390,12 +390,19 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 callbackid = {nodeindex}
                 budgetNode = { budgetNode }
                 controlData = {this.props.controlData}
-                // displaycallbacks = { {onChangePortalTab: this.onChangePortalTab} }
+                displaycallbacks = { {onChangePortalTab: this.onChangePortalTab} }
             />
         })
 
         return portals
 
+    }
+
+    onChangePortalTab = () => {
+        let branch = this
+        setTimeout(() => {
+            this._nodeCallbacks.updateChartSelections()
+        })
     }
 
     render() {

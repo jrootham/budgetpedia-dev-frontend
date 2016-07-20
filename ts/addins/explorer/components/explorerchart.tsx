@@ -63,15 +63,6 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
     //     })
     // }
 
-    // onChangePortalTab = () => {
-    //     let branch = this
-    //     setTimeout(() => {
-    //         this._nodeCallbacks.updateChartSelections()
-    //     })
-    // }
-
-
-
     render() {
 
         console.log('explorerchart budgetCell', this.props.budgetCell)

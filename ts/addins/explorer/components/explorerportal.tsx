@@ -21,7 +21,7 @@ import BudgetCell from '../classes/budgetcell'
 interface ExplorePortalProps {
     callbackid: string | number,
     budgetNode: BudgetNode,
-    // displaycallbacks: {onChangePortalTab:Function}
+    displaycallbacks: {onChangePortalTab:Function}
     controlData: any,
 }
 
@@ -51,7 +51,7 @@ interface ExplorePortalProps {
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     onChangeTab = () => {
-        // this.props.displaycallbacks.onChangePortalTab() 
+        this.props.displaycallbacks.onChangePortalTab() 
     }
 
     componentDidMount() {

@@ -7,6 +7,7 @@ class ExplorerPortal extends Component {
     constructor(...args) {
         super(...args);
         this.onChangeTab = () => {
+            this.props.displaycallbacks.onChangePortalTab();
         };
         this._chartrefs = [];
         this.getChartTabs = () => {
