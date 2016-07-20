@@ -114,12 +114,13 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
 
     harmonizeBudgetBranches = (budgetBranches, branchList, branchesById) => {
-        if (budgetBranches.length < branchList.length ) { // new branch
+        if (budgetBranches.length < branchList.length ) { // new branch object must be created
             let length = budgetBranches.length
             for ( let i = length; i < branchList.length ; i++ ) {
                 let uid = branchList[i]
                 let settings = branchesById[uid]
-                budgetBranches.push(new BudgetBranch({settings,uid}))
+                let budgetBranch = new BudgetBranch({settings,uid})
+                budgetBranches.push(budgetBranch)
             }
         }
     }

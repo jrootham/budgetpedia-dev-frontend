@@ -21,7 +21,7 @@ export interface CreateChildNodeProps {
     selectionrow: any,
     nodeIndex: number,
     cellIndex: number,
-    chartSelectionData: any,
+    // chartSelectionData: any,
 }
 
 // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
@@ -87,7 +87,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
             selectionrow,
             nodeIndex,
             cellIndex, 
-            chartSelectionData, 
+            // chartSelectionData, 
         }
 
         budgetBranch.createChildNode( childprops )

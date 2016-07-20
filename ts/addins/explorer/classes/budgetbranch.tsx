@@ -68,6 +68,7 @@ class BudgetBranch {
 
     public getProps: Function
 
+    // this generates a trigger to create a budget node object
     public initializeBranch = () => {
 
         let defaults = this.getProps().controlData.defaults.node
@@ -106,6 +107,7 @@ class BudgetBranch {
 
     }
 
+    // this is a response to the addNode action
     addNode = (budgetNodeUid, nodeIndex, budgetNodeParms:BudgetNodeParms) => {
 
         let { actions, nodeCallbacks:callbacks } = this
@@ -125,6 +127,7 @@ class BudgetBranch {
 
     }
 
+    // this resets the branch in response to the change facet user request
     switchFacet() {
         let { actions, nodeCallbacks:callbacks } = this
         let switchResults = {
@@ -183,7 +186,7 @@ class BudgetBranch {
                             selectionrow: prevBudgetCell.chartSelection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex:0,
-                            chartSelectionData,
+                            // chartSelectionData,
                         }
                         let fcurrent = fn(nodeIndex)(0)
                         let budgetBranch = this
@@ -194,48 +197,8 @@ class BudgetBranch {
             } else {
                 console.error('no data node')
             }
-            let nodeCellIndex: any = null
-            if (!budgetNode) break
-            let configData = {
-                viewpointConfig:viewpointData.Configuration,
-                itemseriesConfig:viewpointData.itemseriesconfigdata,
-            }
-            for (nodeCellIndex in budgetNode.cells) {
-                let props: GetCellChartProps = {
-                    chartIndex: nodeCellIndex,
-                    branchsettings,
-                    configData,
-                }
-                let fcurrent = fn(nodeIndex)(nodeCellIndex),
-                chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:fn})
-                if (chartParmsObj.isError) {
-                    let removed = branchNodes.splice(nodeIndex)
-                    let removedids = removed.map((item) => {
-                        return item.uid
-                    })
-                    // actions.removeNode(this.getProps().callbackuid, removedids)
-                    if (nodeIndex > 0) { // unset the selection of the parent
-                        let parentBudgetNode: BudgetNode = branchNodes[nodeIndex - 1]
-                        let parentBudgetCell = parentBudgetNode.cells[nodeCellIndex]
-                        // disable reselection
-                        parentBudgetCell.chartSelection = null
-                        // parentBudgetCell.chart = null
-                    }
-                    isError = true
-                    break
-                } else {
-                    // TODO: this should be set through reset
-                    budgetNode.facetName = branchsettings.facet
-                    let budgetCell:BudgetCell = budgetNode.cells[nodeCellIndex]
-                    budgetCell.chartParms = chartParmsObj.chartParms
-                    budgetCell.chartCode =
-                        ChartTypeCodes[budgetCell.chartParms.chartType]
-                    if (parentBudgetNode) {
-                        budgetNode.parentData.dataNode = parentBudgetNode.dataNode
-                    }
-                }
-            }
         }
+
         this.setState({
             branchNodes,
         })
@@ -288,7 +251,7 @@ class BudgetBranch {
             selectionrow,
             nodeIndex,
             cellIndex,
-            chartSelectionData,
+            // chartSelectionData,
         } = props
 
         let budgetNode = branchNodes[nodeIndex]
@@ -338,10 +301,6 @@ class BudgetBranch {
             return
         }
         workingStatus(true)
-        let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
-
-        budgetCell.chartSelection = chartSelectionData.selection
-
         let newrange = Object.assign({}, budgetNode.timeSpecs)
         let portalcharts = viewpointData.PortalCharts
 
@@ -370,7 +329,6 @@ class BudgetBranch {
     }
 
 }
-
 
 
 export default BudgetBranch

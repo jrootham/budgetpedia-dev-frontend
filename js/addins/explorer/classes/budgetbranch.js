@@ -66,7 +66,7 @@ class BudgetBranch {
             let budgetBranch = this;
             let { nodes: branchNodes, nodeCallbacks: callbacks, actions, settings: branchsettings, } = budgetBranch;
             let viewpointData = budgetBranch.state.viewpointData;
-            let { selectionrow, nodeIndex, cellIndex, chartSelectionData, } = props;
+            let { selectionrow, nodeIndex, cellIndex, } = props;
             let budgetNode = branchNodes[nodeIndex];
             let { facetName: facet, viewpointName } = budgetNode;
             let { workingStatus, onPortalCreation, updateChartSelections, } = callbacks;
@@ -97,8 +97,6 @@ class BudgetBranch {
                 return;
             }
             workingStatus(true);
-            let budgetCell = budgetNode.cells[cellIndex];
-            budgetCell.chartSelection = chartSelectionData.selection;
             let newrange = Object.assign({}, budgetNode.timeSpecs);
             let portalcharts = viewpointData.PortalCharts;
             let newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
@@ -174,7 +172,6 @@ class BudgetBranch {
                             selectionrow: prevBudgetCell.chartSelection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex: 0,
-                            chartSelectionData: chartSelectionData,
                         };
                         let fcurrent = fn(nodeIndex)(0);
                         let budgetBranch = this;

@@ -34,7 +34,6 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
             selectionrow: selectionrow,
             nodeIndex: nodeIndex,
             cellIndex: cellIndex,
-            chartSelectionData: chartSelectionData,
         };
         budgetBranch.createChildNode(childprops);
     });

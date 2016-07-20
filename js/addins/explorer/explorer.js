@@ -25,7 +25,8 @@ let Explorer = class extends Component {
                 for (let i = length; i < branchList.length; i++) {
                     let uid = branchList[i];
                     let settings = branchesById[uid];
-                    budgetBranches.push(new budgetbranch_1.default({ settings: settings, uid: uid }));
+                    let budgetBranch = new budgetbranch_1.default({ settings: settings, uid: uid });
+                    budgetBranches.push(budgetBranch);
                 }
             }
         };

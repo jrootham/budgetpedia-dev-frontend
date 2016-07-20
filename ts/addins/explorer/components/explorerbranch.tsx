@@ -164,6 +164,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             let nodeIndex = branchNodes.length
             let budgetNodeId = nodeList[nodeIndex]
             // console.log('harmonize', nodeIndex, budgetNodeId)
+            // TODO: perhaps this should be addNodes (plural)
             budgetBranch.addNode(
                 budgetNodeId,
                 nodeIndex,
