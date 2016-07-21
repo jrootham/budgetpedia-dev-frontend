@@ -20,14 +20,14 @@ export namespace branchtypes {
     export import CHANGE_FACET = types.CHANGE_FACET
 }
 
-export const addBranch = createAction(
+export const addBranchDeclaration = createAction(
     types.ADD_BRANCH,settings => ({
         settings,
         uid: uuid.v4(),
     })
 )
     
-export const removeBranch = createAction(
+export const removeBranchDeclaration = createAction(
     types.REMOVE_BRANCH,uid => ({
         uid,
     })
@@ -47,7 +47,7 @@ export const changeFacet = createAction(
     })
 )
 
-export const addNode = createAction(
+export const addNodeDeclaration = createAction(
     types.ADD_NODE,(branchuid,settings) => ({
         settings,
         uid: uuid.v4(),
@@ -55,14 +55,14 @@ export const addNode = createAction(
     })
 )
     
-export const removeNode = createAction(
+export const removeNodeDeclaration = createAction(
     types.REMOVE_NODE,(branchuid,uid) => ({
         uid,
         branchuid,
     })
 )
 
-export const addCell = createAction(
+export const addCellDeclaration = createAction(
     types.ADD_CELL,(nodeuid,settings) => ({
         settings,
         uid: uuid.v4(),
@@ -70,7 +70,7 @@ export const addCell = createAction(
     })
 )
     
-export const removeCell = createAction(
+export const removeCellDeclaration = createAction(
     types.REMOVE_CELL,(nodeuid,uid) => ({
         uid,
         nodeuid,

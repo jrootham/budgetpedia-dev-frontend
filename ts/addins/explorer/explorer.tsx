@@ -57,16 +57,16 @@ import {
 } from './modules/interfaces'
 
 interface MappedBranchActions {
-    addNode:Function,
+    addNodeDeclaration:Function,
     changeViewpoint: Function,
     changeFacet: Function,
-    removeNode: Function,
+    removeNodeDeclaration: Function,
 }
 
 interface MappedExplorerActions extends MappedBranchActions {
     // actions composed with dispatch
-    addBranch:Function, // dispatcher from ExplorerActions through connect
-    removeBranch:Function,
+    addBranchDeclaration:Function, // dispatcher from ExplorerActions through connect
+    removeBranchDeclaration:Function,
 }
 
 interface MappedActions extends MappedExplorerActions{
@@ -99,11 +99,15 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
 
     // see if any initialization is required
+    /*
+        branchList will have a count of zero from a cold start
+        A count above zero signifies a return to the page or loading of a saved workspace
+    */
     componentWillMount() {
         let { branchList, branchesById } = this.props.controlData
         if (branchList.length == 0) { // initialize explorer with first branch
             let defaultSettings:BranchSettings = this.props.controlData.defaults.branch
-            this.props.addBranch(defaultSettings)
+            this.props.addBranchDeclaration(defaultSettings)
         } else {
             let budgetBranches:BudgetBranch[] = this.state.budgetBranches
             this.harmonizeBudgetBranches(budgetBranches, branchList, branchesById)
@@ -251,8 +255,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             let segments = budgetbranches.map((budgetBranch, branchIndex) => {
                 let actionprops:MappedBranchActions = {
-                    addNode: this.props.addNode,
-                    removeNode: this.props.removeNode,
+                    addNodeDeclaration: this.props.addNodeDeclaration,
+                    removeNodeDeclaration: this.props.removeNodeDeclaration,
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                 }
@@ -278,7 +282,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                             updateChartSelections: explorer.updateChartSelections(branchIndex),
                         }}
                         actions = { actionprops }
-                        controlData = {explorer.props.controlData}
+                        controlData = { explorer.props.controlData }
                     />
                     </CardText>
 
@@ -334,15 +338,25 @@ let mapStateToProps = state => ({
 })
 
 Explorer = connect(mapStateToProps, {
+    // presentation
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
-    // branch actions
-    addBranch:ExplorerActions.addBranch,
-    removeBranch: ExplorerActions.removeBranch,
-    addNode:ExplorerActions.addNode,
-    removeNode:ExplorerActions.removeNode,
+
+    // branch actions - components
+    addBranchDeclaration:ExplorerActions.addBranchDeclaration,
+    removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
+    addNodeDeclaration:ExplorerActions.addNodeDeclaration,
+    removeNodeDeclaration:ExplorerActions.removeNodeDeclaration,
+    // addCell
+    // removeCell
+
+    // branch actions - variations
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeFacet: ExplorerActions.changeFacet,
+    // changeChart
+    // changeSelection
+    // toggleInflation
+    // toggleDelta
 })(Explorer)
 
 export default Explorer

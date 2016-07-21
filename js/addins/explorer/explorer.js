@@ -62,7 +62,7 @@ let Explorer = class extends Component {
         let { branchList, branchesById } = this.props.controlData;
         if (branchList.length == 0) {
             let defaultSettings = this.props.controlData.defaults.branch;
-            this.props.addBranch(defaultSettings);
+            this.props.addBranchDeclaration(defaultSettings);
         }
         else {
             let budgetBranches = this.state.budgetBranches;
@@ -105,8 +105,8 @@ let Explorer = class extends Component {
             let budgetbranches = explorer.state.budgetBranches;
             let segments = budgetbranches.map((budgetBranch, branchIndex) => {
                 let actionprops = {
-                    addNode: this.props.addNode,
-                    removeNode: this.props.removeNode,
+                    addNodeDeclaration: this.props.addNodeDeclaration,
+                    removeNodeDeclaration: this.props.removeNodeDeclaration,
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                 };
@@ -128,10 +128,10 @@ let mapStateToProps = state => ({
 Explorer = react_redux_1.connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
-    addBranch: ExplorerActions.addBranch,
-    removeBranch: ExplorerActions.removeBranch,
-    addNode: ExplorerActions.addNode,
-    removeNode: ExplorerActions.removeNode,
+    addBranchDeclaration: ExplorerActions.addBranchDeclaration,
+    removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
+    addNodeDeclaration: ExplorerActions.addNodeDeclaration,
+    removeNodeDeclaration: ExplorerActions.removeNodeDeclaration,
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeFacet: ExplorerActions.changeFacet,
 })(Explorer);

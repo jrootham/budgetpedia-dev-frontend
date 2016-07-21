@@ -33,6 +33,13 @@ import BudgetNode from '../classes/budgetnode'
 import BudgetCell from '../classes/budgetcell'
 import BudgetBranch from '../classes/budgetbranch'
 
+export interface ExplorerBranchActions {
+    addNodeDeclaration:Function,
+    removeNodeDeclaration:Function,
+    changeViewpoint:Function,
+    changeFacet: Function,    
+}
+
 interface ExploreBranchProps {
     callbackid: string | number,
     callbackuid: string,
@@ -41,12 +48,7 @@ interface ExploreBranchProps {
         workingStatus:Function,
         updateChartSelections:Function,
     },
-    actions: {
-        addNode:Function,
-        removeNode:Function,
-        changeViewpoint:Function,
-        changeFacet: Function,
-    },
+    actions: ExplorerBranchActions,
     controlData:any,
 }
 
@@ -73,11 +75,11 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     getState = () => this.state
     getProps = () => this.props
 
-    addBranchNode = branchuid => settings => {
-        return this.props.actions.addNode(branchuid, settings)
+    addBranchNodeDeclaration = branchuid => settings => {
+        return this.props.actions.addNodeDeclaration(branchuid, settings)
     }
 
-    private _actions: any
+    private _actions: ExplorerBranchActions
     // used by callbacks; set by componentDidMount
     private _nodeCallbacks: any
 
@@ -90,7 +92,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         budgetBranch.setState = this.setState.bind(this)
 
         this._actions = Object.assign({}, actions)
-        this._actions.addNode = this.addBranchNode(budgetBranch.uid)
+        this._actions.addNodeDeclaration = this.addBranchNodeDeclaration(budgetBranch.uid)
         budgetBranch.actions = this._actions
 
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this
@@ -331,7 +333,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         })
         // console.log('calling from switchviewpoint',branchsettings, viewpointname, callbackuid, removedids)
         // this will trigger render cycle that will delete the component state's stored nodes
-        this.props.actions.removeNode(callbackuid, removedids)
+        this.props.actions.removeNodeDeclaration(callbackuid, removedids)
         // now the viewpoint can be changed, triggering a change in viewpoint data
         setTimeout(() => {
             this.props.actions.changeViewpoint(callbackuid, viewpointname)

@@ -18,8 +18,8 @@ class ExplorerBranch extends Component {
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
-        this.addBranchNode = branchuid => settings => {
-            return this.props.actions.addNode(branchuid, settings);
+        this.addBranchNodeDeclaration = branchuid => settings => {
+            return this.props.actions.addNodeDeclaration(branchuid, settings);
         };
         this.harmonizecount = null;
         this.controlGlobalStateChange = () => {
@@ -141,7 +141,7 @@ class ExplorerBranch extends Component {
             let removedids = removed.map((item) => {
                 return item.uid;
             });
-            this.props.actions.removeNode(callbackuid, removedids);
+            this.props.actions.removeNodeDeclaration(callbackuid, removedids);
             setTimeout(() => {
                 this.props.actions.changeViewpoint(callbackuid, viewpointname);
             });
@@ -196,7 +196,7 @@ class ExplorerBranch extends Component {
         budgetBranch.getProps = this.getProps;
         budgetBranch.setState = this.setState.bind(this);
         this._actions = Object.assign({}, actions);
-        this._actions.addNode = this.addBranchNode(budgetBranch.uid);
+        this._actions.addNodeDeclaration = this.addBranchNodeDeclaration(budgetBranch.uid);
         budgetBranch.actions = this._actions;
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this;
         this._nodeCallbacks = {

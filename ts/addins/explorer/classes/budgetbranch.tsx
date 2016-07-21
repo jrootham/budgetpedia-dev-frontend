@@ -29,6 +29,7 @@ import * as ExplorerActions from '../actions'
 
 import { BudgetNodeParms } from './budgetnode'
 import BudgetCell from './budgetcell'
+import { ExplorerBranchActions } from '../components/explorerbranch'
 
 import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
 
@@ -54,7 +55,7 @@ class BudgetBranch {
 
     public uid: string
 
-    public actions: any
+    public actions: ExplorerBranchActions
 
     public nodeCallbacks: any
 
@@ -103,7 +104,7 @@ class BudgetBranch {
 
         budgetNodeParms = Object.assign(defaults, budgetNodeParms )
 
-        this.actions.addNode(budgetNodeParms)
+        this.actions.addNodeDeclaration(budgetNodeParms)
 
     }
 
@@ -173,7 +174,7 @@ class BudgetBranch {
                     let removedids = removed.map((item) => {
                         return item.uid
                     })
-                    actions.removeNode(this.getProps().callbackuid, removedids)
+                    actions.removeNodeDeclaration(this.getProps().callbackuid, removedids)
                     setTimeout(()=> {
 
                         let prevBudgetCell:BudgetCell = prevBudgetNode.cells[0]
@@ -315,7 +316,7 @@ class BudgetBranch {
             timeSpecs: newrange,
         }
 
-        actions.addNode(newnodeconfigparms)
+        actions.addNodeDeclaration(newnodeconfigparms)
 
         setTimeout(() => {
 

@@ -19,8 +19,8 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         return item.uid;
     });
     if (removedids.length > 0) {
-        let { removeNode } = budgetBranch.actions;
-        removeNode(branchuid, removedids);
+        let { removeNodeDeclaration } = budgetBranch.actions;
+        removeNodeDeclaration(branchuid, removedids);
     }
     setTimeout(() => {
         branchNodes = budgetBranch.nodes;

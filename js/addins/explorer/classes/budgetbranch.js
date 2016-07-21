@@ -3,7 +3,6 @@ const databaseapi_1 = require('./databaseapi');
 const getbudgetnode_1 = require('../modules/getbudgetnode');
 const budgetnode_1 = require('./budgetnode');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
-const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
         this.initializeBranch = () => {
@@ -27,7 +26,7 @@ class BudgetBranch {
                 nodeIndex: 0,
             };
             budgetNodeParms = Object.assign(defaults, budgetNodeParms);
-            this.actions.addNode(budgetNodeParms);
+            this.actions.addNodeDeclaration(budgetNodeParms);
         };
         this.addNode = (budgetNodeUid, nodeIndex, budgetNodeParms) => {
             let { actions, nodeCallbacks: callbacks } = this;
@@ -109,7 +108,7 @@ class BudgetBranch {
                 parentData: parentdata,
                 timeSpecs: newrange,
             };
-            actions.addNode(newnodeconfigparms);
+            actions.addNodeDeclaration(newnodeconfigparms);
             setTimeout(() => {
                 workingStatus(false);
                 setTimeout(() => {
@@ -162,7 +161,7 @@ class BudgetBranch {
                     let removedids = removed.map((item) => {
                         return item.uid;
                     });
-                    actions.removeNode(this.getProps().callbackuid, removedids);
+                    actions.removeNodeDeclaration(this.getProps().callbackuid, removedids);
                     setTimeout(() => {
                         let prevBudgetCell = prevBudgetNode.cells[0];
                         let chartSelectionData = {
@@ -182,44 +181,6 @@ class BudgetBranch {
             }
             else {
                 console.error('no data node');
-            }
-            let nodeCellIndex = null;
-            if (!budgetNode)
-                break;
-            let configData = {
-                viewpointConfig: viewpointData.Configuration,
-                itemseriesConfig: viewpointData.itemseriesconfigdata,
-            };
-            for (nodeCellIndex in budgetNode.cells) {
-                let props = {
-                    chartIndex: nodeCellIndex,
-                    branchsettings: branchsettings,
-                    configData: configData,
-                };
-                let fcurrent = fn(nodeIndex)(nodeCellIndex), chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: fn });
-                if (chartParmsObj.isError) {
-                    let removed = branchNodes.splice(nodeIndex);
-                    let removedids = removed.map((item) => {
-                        return item.uid;
-                    });
-                    if (nodeIndex > 0) {
-                        let parentBudgetNode = branchNodes[nodeIndex - 1];
-                        let parentBudgetCell = parentBudgetNode.cells[nodeCellIndex];
-                        parentBudgetCell.chartSelection = null;
-                    }
-                    isError = true;
-                    break;
-                }
-                else {
-                    budgetNode.facetName = branchsettings.facet;
-                    let budgetCell = budgetNode.cells[nodeCellIndex];
-                    budgetCell.chartParms = chartParmsObj.chartParms;
-                    budgetCell.chartCode =
-                        constants_1.ChartTypeCodes[budgetCell.chartParms.chartType];
-                    if (parentBudgetNode) {
-                        budgetNode.parentData.dataNode = parentBudgetNode.dataNode;
-                    }
-                }
             }
         }
         this.setState({
