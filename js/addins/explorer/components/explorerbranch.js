@@ -9,8 +9,8 @@ const Snackbar_1 = require('material-ui/Snackbar');
 const explorerportal_1 = require('./explorerportal');
 const actions_1 = require('../actions');
 class ExplorerBranch extends Component {
-    constructor(props) {
-        super(props);
+    constructor(...args) {
+        super(...args);
         this.state = {
             branchNodes: [],
             viewpointData: null,
@@ -135,20 +135,20 @@ class ExplorerBranch extends Component {
             return t1 * t1 * t1 + 1;
         };
         this.switchViewpoint = (viewpointname) => {
-            let { budgetBranch, callbackuid } = this.props;
+            let { budgetBranch } = this.props;
             let { nodes: branchNodes } = budgetBranch;
             let removed = branchNodes.splice(0);
             let removedids = removed.map((item) => {
                 return item.uid;
             });
-            this.props.actions.removeNodeDeclaration(callbackuid, removedids);
+            this.props.actions.removeNodeDeclaration(budgetBranch.uid, removedids);
             setTimeout(() => {
-                this.props.actions.changeViewpoint(callbackuid, viewpointname);
+                this.props.actions.changeViewpoint(budgetBranch.uid, viewpointname);
             });
         };
         this.switchFacet = (facet) => {
-            let { callbackuid } = this.props;
-            this.props.actions.changeFacet(callbackuid, facet);
+            let { budgetBranch } = this.props;
+            this.props.actions.changeFacet(budgetBranch.uid, facet);
             let branch = this;
             setTimeout(() => {
                 this._nodeCallbacks.updateChartSelections();
@@ -199,9 +199,10 @@ class ExplorerBranch extends Component {
         this._actions.addNodeDeclaration = this.addBranchNodeDeclaration(budgetBranch.uid);
         budgetBranch.actions = this._actions;
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this;
+        let { updateChartSelections, workingStatus } = displaycallbacks;
         this._nodeCallbacks = {
-            updateChartSelections: displaycallbacks.updateChartSelections,
-            workingStatus: displaycallbacks.workingStatus,
+            updateChartSelections: updateChartSelections,
+            workingStatus: workingStatus,
             onPortalCreation: onPortalCreation,
             updateBranchNodesState: updateBranchNodesState,
             refreshPresentation: refreshPresentation,
@@ -234,7 +235,7 @@ class ExplorerBranch extends Component {
         let { budgetBranch } = this.props;
         let branchNodes = budgetBranch.nodes;
         let { controlData } = this.props;
-        let branchSettings = controlData.branchesById[this.props.callbackuid];
+        let branchSettings = controlData.branchesById[budgetBranch.uid];
         let { nodesById } = controlData;
         let { nodeList } = branchSettings;
         if (this.harmonizecount === null) {

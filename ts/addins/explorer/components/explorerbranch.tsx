@@ -42,7 +42,6 @@ export interface ExplorerBranchActions {
 
 interface ExploreBranchProps {
     callbackid: string | number,
-    callbackuid: string,
     budgetBranch: BudgetBranch,
     displaycallbacks:{
         workingStatus:Function,
@@ -52,17 +51,14 @@ interface ExploreBranchProps {
     controlData:any,
 }
 
+interface SnackbarProps {
+    open:boolean,
+    message: string,
+}
+
 class ExplorerBranch extends Component<ExploreBranchProps, 
-    {branchNodes?:BudgetNode[], snackbar?:any, viewpointData?:ViewpointData} > {
+    {branchNodes?:BudgetNode[], snackbar?:SnackbarProps, viewpointData?:ViewpointData} > {
 
-    constructor(props) {
-        super(props);
-    }
-
-    // TODO: these values should be in global state to allow for re-creation after return visit
-    // TODO: Take state initialization from external source
-    // charts exist in a matrix (row/column) which contain a chartconfig object
-    // TODO: most of 
     state = {
         branchNodes:[],
         viewpointData:null,
@@ -75,6 +71,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     getState = () => this.state
     getProps = () => this.props
 
+    // curry branchuid
     addBranchNodeDeclaration = branchuid => settings => {
         return this.props.actions.addNodeDeclaration(branchuid, settings)
     }
@@ -96,10 +93,11 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         budgetBranch.actions = this._actions
 
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this
+        let { updateChartSelections, workingStatus } = displaycallbacks
 
         this._nodeCallbacks = {
-            updateChartSelections:displaycallbacks.updateChartSelections,
-            workingStatus:displaycallbacks.workingStatus,
+            updateChartSelections,
+            workingStatus,
             // local
             onPortalCreation,
             updateBranchNodesState,
@@ -142,7 +140,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let { budgetBranch } = this.props
         let branchNodes = budgetBranch.nodes
         let { controlData } = this.props
-        let branchSettings = controlData.branchesById[this.props.callbackuid]
+        let branchSettings = controlData.branchesById[budgetBranch.uid]
         // console.log('branchData',branchData)
         let { nodesById } = controlData
         let { nodeList } = branchSettings
@@ -323,7 +321,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     switchViewpoint = (viewpointname) => {
 
-        let { budgetBranch, callbackuid } = this.props
+        let { budgetBranch } = this.props
         let { nodes:branchNodes } = budgetBranch
 
         // branchNodes is just a copy of the component state's BranchNodes
@@ -333,17 +331,17 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         })
         // console.log('calling from switchviewpoint',branchsettings, viewpointname, callbackuid, removedids)
         // this will trigger render cycle that will delete the component state's stored nodes
-        this.props.actions.removeNodeDeclaration(callbackuid, removedids)
+        this.props.actions.removeNodeDeclaration(budgetBranch.uid, removedids)
         // now the viewpoint can be changed, triggering a change in viewpoint data
         setTimeout(() => {
-            this.props.actions.changeViewpoint(callbackuid, viewpointname)
+            this.props.actions.changeViewpoint(budgetBranch.uid, viewpointname)
         })
     }
 
     switchFacet = (facet) => {
         // console.log('calling changeFacet',facet)
-        let { callbackuid } = this.props
-        this.props.actions.changeFacet(callbackuid, facet)
+        let { budgetBranch } = this.props
+        this.props.actions.changeFacet(budgetBranch.uid, facet)
         let branch = this
         setTimeout(() => {
             this._nodeCallbacks.updateChartSelections()

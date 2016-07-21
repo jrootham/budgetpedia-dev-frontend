@@ -174,7 +174,7 @@ class BudgetBranch {
                     let removedids = removed.map((item) => {
                         return item.uid
                     })
-                    actions.removeNodeDeclaration(this.getProps().callbackuid, removedids)
+                    actions.removeNodeDeclaration(this.uid, removedids)
                     setTimeout(()=> {
 
                         let prevBudgetCell:BudgetCell = prevBudgetNode.cells[0]

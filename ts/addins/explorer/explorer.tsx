@@ -58,9 +58,9 @@ import {
 
 interface MappedBranchActions {
     addNodeDeclaration:Function,
+    removeNodeDeclaration: Function,
     changeViewpoint: Function,
     changeFacet: Function,
-    removeNodeDeclaration: Function,
 }
 
 interface MappedExplorerActions extends MappedBranchActions {
@@ -75,7 +75,7 @@ interface MappedActions extends MappedExplorerActions{
 }
 
 interface ExplorerProps extends MappedActions {
-    controlData:any, // from global state.explorer
+    controlData:any, // from global state.explorer; contains object declarations
 }
 
 interface ExplorerState {
@@ -117,6 +117,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         }
     }
 
+    /*
+        harmonizeBudgetBranches creates branches to match branch declarations
+        called from componentWillMount for initialization of imported workspaces
+        and from componentWillReceiveProps to modify branch list
+    */
     harmonizeBudgetBranches = (budgetBranches, branchList, branchesById) => {
         if (budgetBranches.length < branchList.length ) { // new branch object must be created
             let length = budgetBranches.length
@@ -128,7 +133,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             }
         }
     }
+
     // harmonize budgetBranches objects  with control data
+    // also update branch settings from declarations
+    // then setState to trigger render
     componentWillReceiveProps(nextProps) {
 
         let { branchList, branchesById } = nextProps.controlData
@@ -274,7 +282,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                     <CardText expandable>
                     <ExplorerBranch 
-                        callbackuid = { budgetBranch.uid }
                         callbackid = { branchIndex }
                         budgetBranch = {budgetBranch}
                         displaycallbacks = {{ 
