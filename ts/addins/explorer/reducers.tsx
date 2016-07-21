@@ -137,4 +137,4 @@ let explorer = combineReducers({
 
 export default explorer
 
-export const getExplorerControlData = state => state.explorer
+export const getExplorerDeclarationData = state => state.explorer

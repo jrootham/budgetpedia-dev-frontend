@@ -26,9 +26,9 @@ import {
 
 import { ExplorerPortal } from './explorerportal'
 
-import { DatasetConfig, TimeSpecs, ViewpointData } from '../classes/databaseapi'
+import { DatasetConfig, ViewpointData } from '../classes/databaseapi'
 
-import {branchtypes as branchactiontypes} from '../actions'
+import { branchtypes as branchActionTypes } from '../actions'
 import BudgetNode from '../classes/budgetnode'
 import BudgetCell from '../classes/budgetcell'
 import BudgetBranch from '../classes/budgetbranch'
@@ -40,14 +40,21 @@ export interface ExplorerBranchActions {
     changeFacet: Function,    
 }
 
+interface DeclarationData {
+    branchesById: Object,
+    generation: number,
+    nodesById: Object,
+    lastAction: string,
+}
+
 interface ExploreBranchProps {
     budgetBranch: BudgetBranch,
-    displaycallbacks:{
+    displayCallbacks:{
         workingStatus:Function,
         updateChartSelections:Function,
     },
-    actions: ExplorerBranchActions,
-    controlData:any,
+    globalStateActions: ExplorerBranchActions,
+    declarationData: DeclarationData
 }
 
 interface SnackbarProps {
@@ -70,31 +77,29 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     getState = () => this.state
     getProps = () => this.props
 
-    // curry branchuid
+    // to curry branchuid
     addBranchNodeDeclaration = branchuid => settings => {
-        return this.props.actions.addNodeDeclaration(branchuid, settings)
+        return this.props.globalStateActions.addNodeDeclaration(branchuid, settings)
     }
 
-    private _actions: ExplorerBranchActions
+    private _stateActions: ExplorerBranchActions
     // used by callbacks; set by componentDidMount
-    private _nodeCallbacks: any
+    private _nodeDisplayCallbacks: any
 
     // complete initialization of budgetBranch and branch explorer objects
     componentWillMount() {
 
-        let { budgetBranch, actions, displaycallbacks } = this.props
-        budgetBranch.getState = this.getState
-        budgetBranch.getProps = this.getProps
-        budgetBranch.setState = this.setState.bind(this)
+        let { budgetBranch, globalStateActions:actions, displayCallbacks } = this.props
 
-        this._actions = Object.assign({}, actions)
-        this._actions.addNodeDeclaration = this.addBranchNodeDeclaration(budgetBranch.uid)
-        budgetBranch.actions = this._actions
+        // create global actions bundle for children
+        this._stateActions = Object.assign({}, actions)
+        this._stateActions.addNodeDeclaration = this.addBranchNodeDeclaration(budgetBranch.uid)
 
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this
-        let { updateChartSelections, workingStatus } = displaycallbacks
+        let { updateChartSelections, workingStatus } = displayCallbacks
 
-        this._nodeCallbacks = {
+        // create display callbacks bundle for children
+        this._nodeDisplayCallbacks = {
             updateChartSelections,
             workingStatus,
             // local
@@ -102,25 +107,33 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             updateBranchNodesState,
             refreshPresentation,
         }
-        budgetBranch.nodeCallbacks = this._nodeCallbacks
+
+        // complete initialization of budgetBranch class instance
+        budgetBranch.getState = this.getState
+        budgetBranch.getProps = this.getProps
+        budgetBranch.setState = this.setState.bind(this)
+        budgetBranch.actions = this._stateActions
+        budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks
     }
 
-    // initialize once -- set controlData; initialize viewpointData; initialize branch
+    // initialize once -- set declarationData; initialize viewpointData; initialize branch
     componentDidMount() {
-        let { budgetBranch, controlData } = this.props
-        this._previousControlData = controlData // initialize
+        let { budgetBranch, declarationData } = this.props
+        this._previousControlData = declarationData // initialize
         budgetBranch.getViewpointData()
-        if (controlData.branchesById[budgetBranch.uid].nodeList.length == 0) {
+        if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
             setTimeout(()=>{
-                budgetBranch.initializeBranch()
+                // this will trigger harmonization between declarations 
+                // and local node instances in componentDidUpdate
+                budgetBranch.initializeBranchNodeDeclarations()
             })
         }
     }
 
     // remove obsolete node objects
     componentWillReceiveProps(nextProps) {
-        let { nodesById } = nextProps.controlData
-        let branchNodes = this.props.budgetBranch.nodes
+        let { nodesById } = nextProps.declarationData
+        let branchNodes = this.props.budgetBranch.nodes // copy
         let newBranchNodes = branchNodes.filter((node) => {
             return !!nodesById[node.uid]
         })
@@ -131,24 +144,25 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         }
     }
 
+    // harmonization means creating local nodes to match global declarations
+    // acts as a sentinel; if count goes below zero, means that some 
+    // harmonization operation has failed, which is a system error
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes
     componentDidUpdate() {
         // console.log('did update')
         // refresh branchnodes
-        let { budgetBranch } = this.props
+        let { budgetBranch, declarationData } = this.props
         let branchNodes = budgetBranch.nodes
-        let { controlData } = this.props
-        let branchSettings = controlData.branchesById[budgetBranch.uid]
-        // console.log('branchData',branchData)
-        let { nodesById } = controlData
-        let { nodeList } = branchSettings
+        let { nodesById } = declarationData
+        let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
+        let { nodeList } = branchDeclarations
 
         if (this.harmonizecount === null) { // initialize harmonization count
             this.harmonizecount = (nodeList.length - branchNodes.length)
         }
 
-        // first task is to harmonize controlData nodeList list with local branchNode list
+        // first task is to harmonize declarationData nodeList list with local branchNode list
         // this condition will keep adding nodes on each render cycle triggered by 
         // addBranchNode, until all nodes are drawn
         // console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length, nodeList, branchNodes)
@@ -167,7 +181,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             budgetBranch.addNode(
                 budgetNodeId,
                 nodeIndex,
-                nodesById[budgetNodeId] // settings
+                nodesById[budgetNodeId] // declarations
             )
         } else { // otherwise see if there are other cascading actions that have to be taken
             this.harmonizecount = null
@@ -181,9 +195,9 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     // state change machine
     private controlGlobalStateChange = () => {
         let previousControlData = this._previousControlData
-        let currentControlData = this.props.controlData
+        let currentControlData = this.props.declarationData
         let { lastAction } = currentControlData
-        if (!branchactiontypes[lastAction]) {
+        if (!branchActionTypes[lastAction]) {
             return
         }
         // the generation counter could be the same if render is being triggered
@@ -194,11 +208,11 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
         let { budgetBranch } = this.props
         switch (lastAction) {
-            case branchactiontypes.CHANGE_VIEWPOINT: {
+            case branchActionTypes.CHANGE_VIEWPOINT: {
                 this.processChangeViewpointStateChange(budgetBranch)
                 break
             }
-            case branchactiontypes.CHANGE_FACET: {
+            case branchActionTypes.CHANGE_FACET: {
                 this.processChangeFacetStateChange(budgetBranch)
                 break
             }
@@ -241,7 +255,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             }
             let branch = this
             setTimeout(() => {
-                branch.props.displaycallbacks.updateChartSelections()
+                branch.props.displayCallbacks.updateChartSelections()
             })
 
         })
@@ -266,7 +280,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         })
         let branch = this
         setTimeout(() => {
-            this._nodeCallbacks.updateChartSelections()
+            this._nodeDisplayCallbacks.updateChartSelections()
         })
     }
 
@@ -330,20 +344,21 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         })
         // console.log('calling from switchviewpoint',branchsettings, viewpointname, callbackuid, removedids)
         // this will trigger render cycle that will delete the component state's stored nodes
-        this.props.actions.removeNodeDeclaration(budgetBranch.uid, removedids)
+        let { globalStateActions } = this.props
+        globalStateActions.removeNodeDeclaration(budgetBranch.uid, removedids)
         // now the viewpoint can be changed, triggering a change in viewpoint data
         setTimeout(() => {
-            this.props.actions.changeViewpoint(budgetBranch.uid, viewpointname)
+            globalStateActions.changeViewpoint(budgetBranch.uid, viewpointname)
         })
     }
 
     switchFacet = (facet) => {
         // console.log('calling changeFacet',facet)
         let { budgetBranch } = this.props
-        this.props.actions.changeFacet(budgetBranch.uid, facet)
+        this.props.globalStateActions.changeFacet(budgetBranch.uid, facet)
         let branch = this
         setTimeout(() => {
-            this._nodeCallbacks.updateChartSelections()
+            this._nodeDisplayCallbacks.updateChartSelections()
         })
     }
 
@@ -367,8 +382,6 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
         let portals = budgetNodes.map((budgetNode: BudgetNode, nodeindex) => {
 
-            // let chartConfigs = []
-
             let portalName = null
             if (budgetNode.parentData) {
                 portalName = budgetNode.parentData.Name
@@ -387,9 +400,10 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             // TODO: pass budgetNode instead of budgetCells?
             return <ExplorerPortal
                 key = {nodeindex}
-                callbackid = {nodeindex}
+                callbackid = { nodeindex }
                 budgetNode = { budgetNode }
-                controlData = {this.props.controlData}
+                declarationData = {this.props.declarationData}
+                actions = { this._stateActions }
                 displaycallbacks = { {onChangePortalTab: this.onChangePortalTab} }
             />
         })
@@ -401,7 +415,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     onChangePortalTab = () => {
         let branch = this
         setTimeout(() => {
-            this._nodeCallbacks.updateChartSelections()
+            branch._nodeDisplayCallbacks.updateChartSelections()
         })
     }
 

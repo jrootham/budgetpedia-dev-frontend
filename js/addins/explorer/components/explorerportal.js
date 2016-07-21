@@ -45,7 +45,7 @@ class ExplorerPortal extends Component {
         };
     }
     componentDidMount() {
-        let { budgetNode, controlData } = this.props;
+        let { budgetNode, declarationData } = this.props;
     }
     render() {
         let chartTabs = this.getChartTabs();

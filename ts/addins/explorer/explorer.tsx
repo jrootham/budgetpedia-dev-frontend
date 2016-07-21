@@ -45,7 +45,7 @@ import { updateBranchChartSelections } from './modules/updatebranchchartselectio
 import * as Actions from '../../core/actions/actions'
 import * as ExplorerActions from './actions'
 import BudgetBranch from './classes/budgetbranch'
-import { getExplorerControlData } from './reducers'
+import { getExplorerDeclarationData } from './reducers'
 
 import {
     // MatrixCellConfig,
@@ -75,7 +75,7 @@ interface MappedActions extends MappedExplorerActions{
 }
 
 interface ExplorerProps extends MappedActions {
-    controlData:any, // from global state.explorer; contains object declarations
+    declarationData:any, // from global state.explorer; contains object declarations
 }
 
 interface ExplorerState {
@@ -104,9 +104,9 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         A count above zero signifies a return to the page or loading of a saved workspace
     */
     componentWillMount() {
-        let { branchList, branchesById } = this.props.controlData
+        let { branchList, branchesById } = this.props.declarationData
         if (branchList.length == 0) { // initialize explorer with first branch
-            let defaultSettings:BranchSettings = this.props.controlData.defaults.branch
+            let defaultSettings:BranchSettings = this.props.declarationData.defaults.branch
             this.props.addBranchDeclaration(defaultSettings)
         } else {
             let budgetBranches:BudgetBranch[] = this.state.budgetBranches
@@ -139,7 +139,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     // then setState to trigger render
     componentWillReceiveProps(nextProps) {
 
-        let { branchList, branchesById } = nextProps.controlData
+        let { branchList, branchesById } = nextProps.declarationData
         let budgetBranches:BudgetBranch[] = this.state.budgetBranches
 
         // remove deleted branches
@@ -152,7 +152,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         // in any case update settings in case change made
         for (let i = 0; i < branchList.length; i++) {
             if (branchList[i] != budgetBranches[i].uid) {
-                throw Error('mismatched order between controlData list and branch list')
+                throw Error('mismatched order between declarationData list and branch list')
             }
 
             budgetBranches[i].settings = branchesById[branchList[i]]
@@ -204,7 +204,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         let explorer = this
 
-        console.log('controlData',explorer.props.controlData)
+        console.log('declarationData',explorer.props.declarationData)
         
         let dialogbox =  
             <Dialog
@@ -283,12 +283,12 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     <CardText expandable>
                     <ExplorerBranch 
                         budgetBranch = {budgetBranch}
-                        displaycallbacks = {{ 
+                        displayCallbacks = {{ 
                             workingStatus: explorer.workingStatus,
                             updateChartSelections: explorer.updateChartSelections(branchIndex),
                         }}
-                        actions = { actionprops }
-                        controlData = { explorer.props.controlData }
+                        globalStateActions = { actionprops }
+                        declarationData = { explorer.props.declarationData }
                     />
                     </CardText>
 
@@ -340,7 +340,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 // ------------------------------[ INJECT DATA STORE ]---------------------------------
 
 let mapStateToProps = state => ({ 
-    controlData:getExplorerControlData(state), 
+    declarationData:getExplorerDeclarationData(state), 
 })
 
 Explorer = connect(mapStateToProps, {

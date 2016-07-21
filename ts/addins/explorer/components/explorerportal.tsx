@@ -22,7 +22,8 @@ interface ExplorePortalProps {
     callbackid: string | number,
     budgetNode: BudgetNode,
     displaycallbacks: {onChangePortalTab:Function}
-    controlData: any,
+    actions: any,
+    declarationData: any,
 }
 
 // for (let cellindex in budgetNode.cells) {
@@ -55,7 +56,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     }
 
     componentDidMount() {
-        let { budgetNode, controlData } = this.props
+        let { budgetNode, declarationData } = this.props
     }
 
     _chartrefs:any[] = []

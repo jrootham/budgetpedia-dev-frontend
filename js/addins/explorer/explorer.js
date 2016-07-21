@@ -59,9 +59,9 @@ let Explorer = class extends Component {
         };
     }
     componentWillMount() {
-        let { branchList, branchesById } = this.props.controlData;
+        let { branchList, branchesById } = this.props.declarationData;
         if (branchList.length == 0) {
-            let defaultSettings = this.props.controlData.defaults.branch;
+            let defaultSettings = this.props.declarationData.defaults.branch;
             this.props.addBranchDeclaration(defaultSettings);
         }
         else {
@@ -73,7 +73,7 @@ let Explorer = class extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        let { branchList, branchesById } = nextProps.controlData;
+        let { branchList, branchesById } = nextProps.declarationData;
         let budgetBranches = this.state.budgetBranches;
         budgetBranches = budgetBranches.filter(budgetBranch => {
             return !!branchesById[budgetBranch.uid];
@@ -81,7 +81,7 @@ let Explorer = class extends Component {
         this.harmonizeBudgetBranches(budgetBranches, branchList, branchesById);
         for (let i = 0; i < branchList.length; i++) {
             if (branchList[i] != budgetBranches[i].uid) {
-                throw Error('mismatched order between controlData list and branch list');
+                throw Error('mismatched order between declarationData list and branch list');
             }
             budgetBranches[i].settings = branchesById[branchList[i]];
         }
@@ -91,7 +91,7 @@ let Explorer = class extends Component {
     }
     render() {
         let explorer = this;
-        console.log('controlData', explorer.props.controlData);
+        console.log('declarationData', explorer.props.declarationData);
         let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogopen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,
@@ -110,10 +110,10 @@ let Explorer = class extends Component {
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                 };
-                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, displaycallbacks: {
+                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, displayCallbacks: {
                     workingStatus: explorer.workingStatus,
                     updateChartSelections: explorer.updateChartSelections(branchIndex),
-                }, actions: actionprops, controlData: explorer.props.controlData})));
+                }, globalStateActions: actionprops, declarationData: explorer.props.declarationData})));
             });
             return segments;
         };
@@ -123,7 +123,7 @@ let Explorer = class extends Component {
 }
 ;
 let mapStateToProps = state => ({
-    controlData: reducers_1.getExplorerControlData(state),
+    declarationData: reducers_1.getExplorerDeclarationData(state),
 });
 Explorer = react_redux_1.connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,

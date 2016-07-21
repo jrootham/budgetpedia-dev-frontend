@@ -70,9 +70,9 @@ class BudgetBranch {
     public getProps: Function
 
     // this generates a trigger to create a budget node object
-    public initializeBranch = () => {
+    public initializeBranchNodeDeclarations = () => {
 
-        let defaults = this.getProps().controlData.defaults.node
+        let defaults = this.getProps().declarationData.defaults.node
 
         let branchsettings = this.settings
         let viewpointdata = this.state.viewpointData

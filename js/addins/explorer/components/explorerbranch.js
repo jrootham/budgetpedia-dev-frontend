@@ -19,12 +19,12 @@ class ExplorerBranch extends Component {
         this.getState = () => this.state;
         this.getProps = () => this.props;
         this.addBranchNodeDeclaration = branchuid => settings => {
-            return this.props.actions.addNodeDeclaration(branchuid, settings);
+            return this.props.globalStateActions.addNodeDeclaration(branchuid, settings);
         };
         this.harmonizecount = null;
         this.controlGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
-            let currentControlData = this.props.controlData;
+            let currentControlData = this.props.declarationData;
             let { lastAction } = currentControlData;
             if (!actions_1.branchtypes[lastAction]) {
                 return;
@@ -74,7 +74,7 @@ class ExplorerBranch extends Component {
                 }
                 let branch = this;
                 setTimeout(() => {
-                    branch.props.displaycallbacks.updateChartSelections();
+                    branch.props.displayCallbacks.updateChartSelections();
                 });
             });
         };
@@ -95,7 +95,7 @@ class ExplorerBranch extends Component {
             });
             let branch = this;
             setTimeout(() => {
-                this._nodeCallbacks.updateChartSelections();
+                this._nodeDisplayCallbacks.updateChartSelections();
             });
         };
         this.branchScrollBlock = null;
@@ -141,17 +141,18 @@ class ExplorerBranch extends Component {
             let removedids = removed.map((item) => {
                 return item.uid;
             });
-            this.props.actions.removeNodeDeclaration(budgetBranch.uid, removedids);
+            let { globalStateActions } = this.props;
+            globalStateActions.removeNodeDeclaration(budgetBranch.uid, removedids);
             setTimeout(() => {
-                this.props.actions.changeViewpoint(budgetBranch.uid, viewpointname);
+                globalStateActions.changeViewpoint(budgetBranch.uid, viewpointname);
             });
         };
         this.switchFacet = (facet) => {
             let { budgetBranch } = this.props;
-            this.props.actions.changeFacet(budgetBranch.uid, facet);
+            this.props.globalStateActions.changeFacet(budgetBranch.uid, facet);
             let branch = this;
             setTimeout(() => {
-                this._nodeCallbacks.updateChartSelections();
+                this._nodeDisplayCallbacks.updateChartSelections();
             });
         };
         this.getPortals = (budgetNodes) => {
@@ -179,48 +180,48 @@ class ExplorerBranch extends Component {
                     portalName: portalName,
                 };
                 budgetNode.portalConfig = portalConfig;
-                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, controlData: this.props.controlData, displaycallbacks: { onChangePortalTab: this.onChangePortalTab }});
+                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, actions: this._stateActions, displaycallbacks: { onChangePortalTab: this.onChangePortalTab }});
             });
             return portals;
         };
         this.onChangePortalTab = () => {
             let branch = this;
             setTimeout(() => {
-                this._nodeCallbacks.updateChartSelections();
+                branch._nodeDisplayCallbacks.updateChartSelections();
             });
         };
     }
     componentWillMount() {
-        let { budgetBranch, actions, displaycallbacks } = this.props;
-        budgetBranch.getState = this.getState;
-        budgetBranch.getProps = this.getProps;
-        budgetBranch.setState = this.setState.bind(this);
-        this._actions = Object.assign({}, actions);
-        this._actions.addNodeDeclaration = this.addBranchNodeDeclaration(budgetBranch.uid);
-        budgetBranch.actions = this._actions;
+        let { budgetBranch, globalStateActions: actions, displayCallbacks } = this.props;
+        this._stateActions = Object.assign({}, actions);
+        this._stateActions.addNodeDeclaration = this.addBranchNodeDeclaration(budgetBranch.uid);
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this;
-        let { updateChartSelections, workingStatus } = displaycallbacks;
-        this._nodeCallbacks = {
+        let { updateChartSelections, workingStatus } = displayCallbacks;
+        this._nodeDisplayCallbacks = {
             updateChartSelections: updateChartSelections,
             workingStatus: workingStatus,
             onPortalCreation: onPortalCreation,
             updateBranchNodesState: updateBranchNodesState,
             refreshPresentation: refreshPresentation,
         };
-        budgetBranch.nodeCallbacks = this._nodeCallbacks;
+        budgetBranch.getState = this.getState;
+        budgetBranch.getProps = this.getProps;
+        budgetBranch.setState = this.setState.bind(this);
+        budgetBranch.actions = this._stateActions;
+        budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks;
     }
     componentDidMount() {
-        let { budgetBranch, controlData } = this.props;
-        this._previousControlData = controlData;
+        let { budgetBranch, declarationData } = this.props;
+        this._previousControlData = declarationData;
         budgetBranch.getViewpointData();
-        if (controlData.branchesById[budgetBranch.uid].nodeList.length == 0) {
+        if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
             setTimeout(() => {
-                budgetBranch.initializeBranch();
+                budgetBranch.initializeBranchNodeDeclarations();
             });
         }
     }
     componentWillReceiveProps(nextProps) {
-        let { nodesById } = nextProps.controlData;
+        let { nodesById } = nextProps.declarationData;
         let branchNodes = this.props.budgetBranch.nodes;
         let newBranchNodes = branchNodes.filter((node) => {
             return !!nodesById[node.uid];
@@ -232,12 +233,11 @@ class ExplorerBranch extends Component {
         }
     }
     componentDidUpdate() {
-        let { budgetBranch } = this.props;
+        let { budgetBranch, declarationData } = this.props;
         let branchNodes = budgetBranch.nodes;
-        let { controlData } = this.props;
-        let branchSettings = controlData.branchesById[budgetBranch.uid];
-        let { nodesById } = controlData;
-        let { nodeList } = branchSettings;
+        let { nodesById } = declarationData;
+        let branchDeclarations = declarationData.branchesById[budgetBranch.uid];
+        let { nodeList } = branchDeclarations;
         if (this.harmonizecount === null) {
             this.harmonizecount = (nodeList.length - branchNodes.length);
         }

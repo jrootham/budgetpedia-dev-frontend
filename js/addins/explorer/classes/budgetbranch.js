@@ -5,8 +5,8 @@ const budgetnode_1 = require('./budgetnode');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 class BudgetBranch {
     constructor(parms) {
-        this.initializeBranch = () => {
-            let defaults = this.getProps().controlData.defaults.node;
+        this.initializeBranchNodeDeclarations = () => {
+            let defaults = this.getProps().declarationData.defaults.node;
             let branchsettings = this.settings;
             let viewpointdata = this.state.viewpointData;
             let datapath = [];

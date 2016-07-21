@@ -115,4 +115,4 @@ let explorer = redux_1.combineReducers({
 });
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = explorer;
-exports.getExplorerControlData = state => state.explorer;
+exports.getExplorerDeclarationData = state => state.explorer;
