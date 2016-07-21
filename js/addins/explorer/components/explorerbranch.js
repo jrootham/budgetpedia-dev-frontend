@@ -45,13 +45,13 @@ class ExplorerBranch extends Component {
             }
             this._previousControlData = currentControlData;
         };
-        this.processChangeViewpointStateChange = budgetBranch => {
+        this.processChangeViewpointStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData();
             setTimeout(() => {
-                budgetBranch.initializeBranch();
+                budgetBranch.initializeBranchNodeDeclarations();
             });
         };
-        this.processChangeFacetStateChange = budgetBranch => {
+        this.processChangeFacetStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData();
             setTimeout(() => {
                 let switchResults = budgetBranch.switchFacet();
@@ -156,16 +156,13 @@ class ExplorerBranch extends Component {
             });
         };
         this.getPortals = (budgetNodes) => {
-            let { settings: branchsettings } = this.props.budgetBranch;
-            let budgetdata = { viewpointdata: this.state.viewpointData };
-            if (!budgetdata.viewpointdata)
+            let { viewpointData } = this.state;
+            if (!viewpointData)
                 return [];
-            let viewpointdata = budgetdata.viewpointdata;
-            let itemseriesdata = viewpointdata.itemseriesconfigdata;
-            let portaltitles = itemseriesdata.Titles;
-            let portalseriesname = itemseriesdata.Name;
-            if (itemseriesdata.Units == 'DOLLAR') {
-                portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')';
+            let itemSeriesData = viewpointData.itemseriesconfigdata;
+            let portalSeriesName = itemSeriesData.Name;
+            if (itemSeriesData.Units == 'DOLLAR') {
+                portalSeriesName += ' (' + itemSeriesData.UnitsAlias + ')';
             }
             let portals = budgetNodes.map((budgetNode, nodeindex) => {
                 let portalName = null;
@@ -175,12 +172,12 @@ class ExplorerBranch extends Component {
                 else {
                     portalName = 'City Budget';
                 }
-                portalName += ' ' + portalseriesname;
+                portalName += ' ' + portalSeriesName;
                 let portalConfig = {
                     portalName: portalName,
                 };
                 budgetNode.portalConfig = portalConfig;
-                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, actions: this._stateActions, displaycallbacks: { onChangePortalTab: this.onChangePortalTab }});
+                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: this._stateActions, displayCallbacks: { onChangePortalTab: this.onChangePortalTab }});
             });
             return portals;
         };

@@ -74,7 +74,7 @@ class BudgetBranch {
 
         let defaults = this.getProps().declarationData.defaults.node
 
-        let branchsettings = this.settings
+        let branchSettings = this.settings
         let viewpointdata = this.state.viewpointData
 
         // *** CREATE BRANCH
@@ -85,7 +85,7 @@ class BudgetBranch {
             viewpoint:viewpointName,
             facet:facetName,
             latestYear:rightYear,
-        } = branchsettings
+        } = branchSettings
 
         let budgetNodeParms:BudgetNodeParms = {
             viewpointName,
@@ -114,13 +114,13 @@ class BudgetBranch {
         let { actions, nodeCallbacks:callbacks } = this
 
         let { dataPath } = budgetNodeParms
-        let branchsettings = this.settings
+        let branchSettings = this.settings
 
-        let viewpointdata = this.state.viewpointData
-        let datanode = getBudgetNode(viewpointdata, dataPath)
+        let viewpointData = this.state.viewpointData
+        let dataNode = getBudgetNode(viewpointData, dataPath)
         let branchNodes = this.nodes
         let parentNode = (nodeIndex == 0)? undefined: branchNodes[branchNodes.length - 1].dataNode
-        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, datanode, parentNode)
+        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, dataNode, parentNode)
         branchNodes[nodeIndex] = budgetNode
         this.setState({
             branchNodes,
@@ -135,7 +135,7 @@ class BudgetBranch {
             deeperdata: false,
             shallowerdata: false,
         }
-        let branchsettings: BranchSettings = this.settings
+        let branchSettings: BranchSettings = this.settings
         let viewpointData = this.state.viewpointData
 
         let branchNodes = this.nodes
@@ -162,7 +162,7 @@ class BudgetBranch {
                 // now set budgetNode with new data node
                 budgetNode.update(
                     nextdataNode,
-                    branchsettings.facet
+                    branchSettings.facet
                 )
                 if ( deeperdata || shallowerdata) {
                     switchResults.deeperdata = deeperdata
@@ -208,13 +208,13 @@ class BudgetBranch {
 
     public getViewpointData = () => {
 
-        let branchsettings:BranchSettings = this.settings
+        let branchSettings:BranchSettings = this.settings
 
         let { 
             viewpoint: viewpointname, 
             facet: dataseriesname, 
             inflationAdjusted,
-        } = branchsettings
+        } = branchSettings
 
         let viewpointdata:ViewpointData = databaseapi.getViewpointData({
             viewpointname, 
@@ -243,7 +243,7 @@ class BudgetBranch {
             nodes: branchNodes, 
             nodeCallbacks:callbacks, 
             actions, 
-            settings:branchsettings,
+            settings:branchSettings,
         } = budgetBranch
 
         let viewpointData = budgetBranch.state.viewpointData

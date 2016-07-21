@@ -220,14 +220,14 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         this._previousControlData = currentControlData
     }
 
-    private processChangeViewpointStateChange = budgetBranch => {
+    private processChangeViewpointStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData()
         setTimeout(()=>{
-            budgetBranch.initializeBranch()
+            budgetBranch.initializeBranchNodeDeclarations()
         })
     }
 
-    private processChangeFacetStateChange = budgetBranch => {
+    private processChangeFacetStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData()
 
         setTimeout(() => {
@@ -332,7 +332,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     // ---------------------[ user interactions ]---------------------------
 
-    switchViewpoint = (viewpointname) => {
+    switchViewpoint = (viewpointname:string) => {
 
         let { budgetBranch } = this.props
         let { nodes:branchNodes } = budgetBranch
@@ -352,7 +352,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         })
     }
 
-    switchFacet = (facet) => {
+    switchFacet = (facet:string) => {
         // console.log('calling changeFacet',facet)
         let { budgetBranch } = this.props
         this.props.globalStateActions.changeFacet(budgetBranch.uid, facet)
@@ -365,19 +365,18 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     // -----------------------------[ prepare for render ]---------------------------------
 
     // get React components to render
-    getPortals = (budgetNodes) => {
+    getPortals = (budgetNodes:BudgetNode[]) => {
 
-        let { settings:branchsettings } = this.props.budgetBranch
+        // let { settings:branchSettings } = this.props.budgetBranch
 
-        let budgetdata = {viewpointdata:this.state.viewpointData}
+        let { viewpointData } = this.state
 
-        if (!budgetdata.viewpointdata) return []
-        let viewpointdata = budgetdata.viewpointdata
-        let itemseriesdata: DatasetConfig = viewpointdata.itemseriesconfigdata
-        let portaltitles = itemseriesdata.Titles
-        let portalseriesname = itemseriesdata.Name
-        if (itemseriesdata.Units == 'DOLLAR') {
-            portalseriesname += ' (' + itemseriesdata.UnitsAlias + ')'
+        if (!viewpointData) return []
+        let itemSeriesData: DatasetConfig = viewpointData.itemseriesconfigdata
+        // let portalTitles = itemSeriesData.Titles
+        let portalSeriesName = itemSeriesData.Name
+        if (itemSeriesData.Units == 'DOLLAR') {
+            portalSeriesName += ' (' + itemSeriesData.UnitsAlias + ')'
         }
 
         let portals = budgetNodes.map((budgetNode: BudgetNode, nodeindex) => {
@@ -389,7 +388,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 portalName = 'City Budget'
             }
 
-            portalName += ' ' + portalseriesname
+            portalName += ' ' + portalSeriesName
 
             let portalConfig: PortalConfig = {
                 portalName,
@@ -403,8 +402,8 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 callbackid = { nodeindex }
                 budgetNode = { budgetNode }
                 declarationData = {this.props.declarationData}
-                actions = { this._stateActions }
-                displaycallbacks = { {onChangePortalTab: this.onChangePortalTab} }
+                globalStateActions = { this._stateActions }
+                displayCallbacks = { {onChangePortalTab: this.onChangePortalTab} }
             />
         })
 
