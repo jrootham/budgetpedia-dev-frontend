@@ -41,7 +41,6 @@ export interface ExplorerBranchActions {
 }
 
 interface ExploreBranchProps {
-    callbackid: string | number,
     budgetBranch: BudgetBranch,
     displaycallbacks:{
         workingStatus:Function,
@@ -83,7 +82,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     // complete initialization of budgetBranch and branch explorer objects
     componentWillMount() {
 
-        let { budgetBranch, actions, displaycallbacks, callbackid } = this.props
+        let { budgetBranch, actions, displaycallbacks } = this.props
         budgetBranch.getState = this.getState
         budgetBranch.getProps = this.getProps
         budgetBranch.setState = this.setState.bind(this)

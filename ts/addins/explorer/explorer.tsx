@@ -282,7 +282,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                     <CardText expandable>
                     <ExplorerBranch 
-                        callbackid = { branchIndex }
                         budgetBranch = {budgetBranch}
                         displaycallbacks = {{ 
                             workingStatus: explorer.workingStatus,

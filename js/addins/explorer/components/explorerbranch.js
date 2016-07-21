@@ -191,7 +191,7 @@ class ExplorerBranch extends Component {
         };
     }
     componentWillMount() {
-        let { budgetBranch, actions, displaycallbacks, callbackid } = this.props;
+        let { budgetBranch, actions, displaycallbacks } = this.props;
         budgetBranch.getState = this.getState;
         budgetBranch.getProps = this.getProps;
         budgetBranch.setState = this.setState.bind(this);
