@@ -6,6 +6,9 @@ const explorerchart_1 = require('./explorerchart');
 class ExplorerPortal extends Component {
     constructor(...args) {
         super(...args);
+        this.state = {
+            nodeCells: [],
+        };
         this.onChangeTab = () => {
             this.props.displayCallbacks.onChangePortalTab();
         };

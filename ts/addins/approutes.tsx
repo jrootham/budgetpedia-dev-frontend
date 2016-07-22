@@ -36,7 +36,7 @@ let routedata = [
 ]
 
 const approutes = routedata.map((item, index) => (
-   <Route key = {'approute'+index} path={item.path} component = {item.component} />
+   <Route key = { 'approute'+ index } path={item.path} component = {item.component} />
 ))
 
 export default approutes

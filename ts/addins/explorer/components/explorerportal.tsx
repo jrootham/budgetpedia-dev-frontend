@@ -51,6 +51,10 @@ interface ExplorePortalProps {
 
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
+    state = {
+        nodeCells:[],
+    }
+
     onChangeTab = () => {
         this.props.displayCallbacks.onChangePortalTab() 
     }

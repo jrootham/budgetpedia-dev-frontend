@@ -46,8 +46,7 @@ class BudgetBranch {
     }
 
     get nodes() {
-        let branchNodes = this.state.branchNodes
-        let copy = [...branchNodes]
+        let copy = [...this.state.branchNodes]
         return copy // new copy
     }
 
@@ -77,8 +76,6 @@ class BudgetBranch {
         let branchSettings = this.settings
         let viewpointdata = this.state.viewpointData
 
-        // *** CREATE BRANCH
-        // -----------------[ THE DRILLDOWN ROOT ]-----------------
         let datapath = []
 
         let {
@@ -257,7 +254,7 @@ class BudgetBranch {
 
         let budgetNode = branchNodes[nodeIndex]
 
-        let { facetName:facet, viewpointName } = budgetNode
+        let { facetName, viewpointName } = budgetNode
 
         let {
             workingStatus,
@@ -282,12 +279,12 @@ class BudgetBranch {
         let components = dataNode.Components
 
         let code = null
-        let parentdata: SortedComponentItem = null
+        let parentData: SortedComponentItem = null
         let parentNode: any = null
         if (dataNode && dataNode.SortedComponents && dataNode.SortedComponents[selectionrow]) {
-            parentdata = dataNode.SortedComponents[selectionrow]
+            parentData = dataNode.SortedComponents[selectionrow]
             parentNode = dataNode
-            code = parentdata.Code
+            code = parentData.Code
         }
         if (code)
             childdatapath.push(code)
@@ -303,16 +300,16 @@ class BudgetBranch {
         }
         workingStatus(true)
         let newrange = Object.assign({}, budgetNode.timeSpecs)
-        let portalcharts = viewpointData.PortalCharts
+        let portalCharts = viewpointData.PortalCharts
 
         let newdatanode = getBudgetNode(viewpointData, childdatapath)
         let newnodeconfigparms: BudgetNodeParms = {
-            portalCharts: portalcharts,
-            viewpointName:viewpointName,
-            facetName:facet,
+            portalCharts,
+            viewpointName,
+            facetName,
             dataPath: childdatapath,
             nodeIndex: nodeIndex + 1,
-            parentData: parentdata,
+            parentData,
             timeSpecs: newrange,
         }
 

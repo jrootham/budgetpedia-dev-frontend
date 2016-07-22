@@ -17,27 +17,32 @@ let Explorer = class extends Component {
         super(props);
         this.state = {
             budgetBranches: [],
-            dialogopen: false,
+            dialogOpen: false,
         };
-        this.harmonizeBudgetBranches = (budgetBranches, branchList, branchesById) => {
-            if (budgetBranches.length < branchList.length) {
-                let length = budgetBranches.length;
-                for (let i = length; i < branchList.length; i++) {
-                    let uid = branchList[i];
-                    let settings = branchesById[uid];
-                    let budgetBranch = new budgetbranch_1.default({ settings: settings, uid: uid });
-                    budgetBranches.push(budgetBranch);
+        this.harmonizeBranches = (budgetBranches, branchList, branchesById) => {
+            let newBranches = budgetBranches.filter((node) => {
+                return !!branchesById[node.uid];
+            });
+            let length = budgetBranches.length;
+            for (let i = 0; i < branchList.length; i++) {
+                let uid = branchList[i];
+                let matchingNode = budgetBranches[i];
+                if (matchingNode && matchingNode.uid == uid) {
+                    continue;
                 }
+                let settings = branchesById[uid];
+                let budgetBranch = new budgetbranch_1.default({ settings: settings, uid: uid });
+                budgetBranches.splice(i, 0, budgetBranch);
             }
         };
         this.handleDialogOpen = () => {
             this.setState({
-                dialogopen: true
+                dialogOpen: true
             });
         };
         this.handleDialogClose = () => {
             this.setState({
-                dialogopen: false
+                dialogOpen: false
             });
         };
         this.workingStatus = status => {
@@ -65,8 +70,8 @@ let Explorer = class extends Component {
             this.props.addBranchDeclaration(defaultSettings);
         }
         else {
-            let budgetBranches = this.state.budgetBranches;
-            this.harmonizeBudgetBranches(budgetBranches, branchList, branchesById);
+            let budgetBranches = [...this.state.budgetBranches];
+            this.harmonizeBranches(budgetBranches, branchList, branchesById);
             this.setState({
                 budgetBranches: budgetBranches,
             });
@@ -78,7 +83,7 @@ let Explorer = class extends Component {
         budgetBranches = budgetBranches.filter(budgetBranch => {
             return !!branchesById[budgetBranch.uid];
         });
-        this.harmonizeBudgetBranches(budgetBranches, branchList, branchesById);
+        this.harmonizeBranches(budgetBranches, branchList, branchesById);
         for (let i = 0; i < branchList.length; i++) {
             if (branchList[i] != budgetBranches[i].uid) {
                 throw Error('mismatched order between declarationData list and branch list');
@@ -92,7 +97,7 @@ let Explorer = class extends Component {
     render() {
         let explorer = this;
         console.log('declarationData', explorer.props.declarationData);
-        let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogopen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
+        let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,
             padding: 0,

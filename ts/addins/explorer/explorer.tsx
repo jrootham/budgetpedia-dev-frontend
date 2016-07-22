@@ -80,7 +80,7 @@ interface ExplorerProps extends MappedActions {
 
 interface ExplorerState {
     budgetBranches?:BudgetBranch[],
-    dialogopen?: boolean,
+    dialogOpen?: boolean,
 }
 
 let Explorer = class extends Component< ExplorerProps, ExplorerState > 
@@ -95,13 +95,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     state = {
         budgetBranches:[],
-        dialogopen: false,
+        dialogOpen: false,
     }
 
     // see if any initialization is required
     /*
         branchList will have a count of zero from a cold start
-        A count above zero signifies a return to the page or loading of a saved workspace
+        A count above zero signifies a return to the page during the same session 
+        or loading of a saved workspace
     */
     componentWillMount() {
         let { branchList, branchesById } = this.props.declarationData
@@ -109,8 +110,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             let defaultSettings:BranchSettings = this.props.declarationData.defaults.branch
             this.props.addBranchDeclaration(defaultSettings)
         } else {
-            let budgetBranches:BudgetBranch[] = this.state.budgetBranches
-            this.harmonizeBudgetBranches(budgetBranches, branchList, branchesById)
+            let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
+            this.harmonizeBranches(budgetBranches, branchList, branchesById)
             this.setState({
                 budgetBranches,
             })
@@ -118,19 +119,24 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
 
     /*
-        harmonizeBudgetBranches creates branches to match branch declarations
+        harmonizeBranches creates branches to match branch declarations
         called from componentWillMount for initialization of imported workspaces
         and from componentWillReceiveProps to modify branch list
     */
-    harmonizeBudgetBranches = (budgetBranches, branchList, branchesById) => {
-        if (budgetBranches.length < branchList.length ) { // new branch object must be created
-            let length = budgetBranches.length
-            for ( let i = length; i < branchList.length ; i++ ) {
-                let uid = branchList[i]
-                let settings = branchesById[uid]
-                let budgetBranch = new BudgetBranch({settings,uid})
-                budgetBranches.push(budgetBranch)
+    harmonizeBranches = (budgetBranches, branchList, branchesById) => {
+        let newBranches = budgetBranches.filter((node) => {
+            return !!branchesById[node.uid]
+        })
+        let length = budgetBranches.length
+        for ( let i = 0; i < branchList.length ; i++ ) {
+            let uid = branchList[i]
+            let matchingNode = budgetBranches[i]
+            if (matchingNode && matchingNode.uid == uid) {
+                continue
             }
+            let settings = branchesById[uid]
+            let budgetBranch = new BudgetBranch({settings,uid})
+            budgetBranches.splice(i,0,budgetBranch)
         }
     }
 
@@ -147,7 +153,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             return !!branchesById[budgetBranch.uid]
         })
 
-        this.harmonizeBudgetBranches(budgetBranches, branchList, branchesById)
+        this.harmonizeBranches(budgetBranches, branchList, branchesById)
         
         // in any case update settings in case change made
         for (let i = 0; i < branchList.length; i++) {
@@ -166,13 +172,13 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     handleDialogOpen = () => {
         this.setState({
-            dialogopen: true
+            dialogOpen: true
         })
     }
 
     handleDialogClose = () => {
         this.setState({
-            dialogopen: false
+            dialogOpen: false
         })
     }
 
@@ -210,7 +216,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             <Dialog
                 title = "Budget Explorer Help"
                 modal = { false}
-                open = { explorer.state.dialogopen }
+                open = { explorer.state.dialogOpen }
                 onRequestClose = { explorer.handleDialogClose }
                 autoScrollBodyContent
             >

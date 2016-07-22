@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 // custom...
 import MainBar from '../containers/mainbar'
 // import { MainToolbar } from './maintoolbar'
-import routes from '../common/routes'
+import routes from './routes'
 
 const Root = ({store, globalmessage}) => (
     <MuiThemeProvider muiTheme = {getMuiTheme()}>

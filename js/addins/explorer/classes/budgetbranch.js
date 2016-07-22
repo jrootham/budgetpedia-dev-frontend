@@ -67,7 +67,7 @@ class BudgetBranch {
             let viewpointData = budgetBranch.state.viewpointData;
             let { selectionrow, nodeIndex, cellIndex, } = props;
             let budgetNode = branchNodes[nodeIndex];
-            let { facetName: facet, viewpointName } = budgetNode;
+            let { facetName, viewpointName } = budgetNode;
             let { workingStatus, onPortalCreation, updateChartSelections, } = callbacks;
             let childdatapath = budgetNode.dataPath.slice();
             let dataNode = budgetNode.dataNode;
@@ -77,12 +77,12 @@ class BudgetBranch {
             }
             let components = dataNode.Components;
             let code = null;
-            let parentdata = null;
+            let parentData = null;
             let parentNode = null;
             if (dataNode && dataNode.SortedComponents && dataNode.SortedComponents[selectionrow]) {
-                parentdata = dataNode.SortedComponents[selectionrow];
+                parentData = dataNode.SortedComponents[selectionrow];
                 parentNode = dataNode;
-                code = parentdata.Code;
+                code = parentData.Code;
             }
             if (code)
                 childdatapath.push(code);
@@ -97,15 +97,15 @@ class BudgetBranch {
             }
             workingStatus(true);
             let newrange = Object.assign({}, budgetNode.timeSpecs);
-            let portalcharts = viewpointData.PortalCharts;
+            let portalCharts = viewpointData.PortalCharts;
             let newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
             let newnodeconfigparms = {
-                portalCharts: portalcharts,
+                portalCharts: portalCharts,
                 viewpointName: viewpointName,
-                facetName: facet,
+                facetName: facetName,
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
-                parentData: parentdata,
+                parentData: parentData,
                 timeSpecs: newrange,
             };
             actions.addNodeDeclaration(newnodeconfigparms);
@@ -121,8 +121,7 @@ class BudgetBranch {
         this.uid = parms.uid;
     }
     get nodes() {
-        let branchNodes = this.state.branchNodes;
-        let copy = [...branchNodes];
+        let copy = [...this.state.branchNodes];
         return copy;
     }
     get state() {
