@@ -181,13 +181,13 @@ class BudgetNode {
     // ====================================================================
     // ---------------------[ PRIVATE ]------------------------------------
 
-    public setCells(cellSpecs:CellDeclaration[]) {
+    public setCells(cellDeclarations:CellDeclaration[]) {
         this._cells = []
         // // TODO: should be default for each chart...
         // build cells array
-        let cellSpec: CellDeclaration
-        for (let cellSpec of cellSpecs) {
-            let {chartSelection, chartCode, nodeDatasetName, uid} = cellSpec
+        let cellDeclaration: CellDeclaration
+        for (cellDeclaration of cellDeclarations) {
+            let {chartSelection, chartCode, nodeDatasetName, uid} = cellDeclaration
             let cell = new BudgetCell(
                 {
                     nodeDatasetName,
@@ -204,10 +204,13 @@ class BudgetNode {
         let availablCells = []
         if (!this.dataNode) return availablCells
         for (let cell of this._cells) {
-            if (cell.nodeDatasetName == 'Components' && !this.dataNode.Components) {
-                continue
-            }
-            if (cell.nodeDatasetName == 'Categories' && !this.dataNode.Categories) {
+            // if (cell.nodeDatasetName == 'Components' && !this.dataNode.Components) {
+            //     continue
+            // }
+            // if (cell.nodeDatasetName == 'Categories' && !this.dataNode.Categories) {
+            //     continue
+            // }
+            if (!this.dataNode[cell.nodeDatasetName]) {
                 continue
             }
             availablCells.push(cell)

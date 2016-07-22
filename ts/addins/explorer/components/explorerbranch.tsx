@@ -81,8 +81,11 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     // used by callbacks; set by componentDidMount
     private _nodeDisplayCallbacks: any
 
-    private addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid,settings)
-    private removeNodeDeclaration = branchUid => nodeUid => this.props.globalStateActions.removeNodeDeclaration(branchUid, nodeUid)
+    // provide for curried versions
+    private addNodeDeclaration = 
+        branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid,settings)
+    private removeNodeDeclaration = 
+        branchUid => nodeUid => this.props.globalStateActions.removeNodeDeclaration(branchUid, nodeUid)
 
     // complete initialization of budgetBranch and branch explorer objects
     componentWillMount() {
@@ -91,6 +94,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
         // create global actions bundle for children
         this._stateActions = Object.assign({}, actions)
+        // replace originals with curried versions
         this._stateActions.addNodeDeclaration = this.addNodeDeclaration(budgetBranch.uid)
         this._stateActions.removeNodeDeclaration = this.removeNodeDeclaration(budgetBranch.uid)
 
