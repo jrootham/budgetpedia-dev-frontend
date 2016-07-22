@@ -23,17 +23,18 @@ let Explorer = class extends Component {
             let newBranches = budgetBranches.filter((node) => {
                 return !!branchesById[node.uid];
             });
-            let length = budgetBranches.length;
+            let length = newBranches.length;
             for (let i = 0; i < branchList.length; i++) {
                 let uid = branchList[i];
-                let matchingNode = budgetBranches[i];
+                let matchingNode = newBranches[i];
                 if (matchingNode && matchingNode.uid == uid) {
                     continue;
                 }
                 let settings = branchesById[uid];
                 let budgetBranch = new budgetbranch_1.default({ settings: settings, uid: uid });
-                budgetBranches.splice(i, 0, budgetBranch);
+                newBranches.splice(i, 0, budgetBranch);
             }
+            return newBranches;
         };
         this.handleDialogOpen = () => {
             this.setState({
@@ -71,7 +72,7 @@ let Explorer = class extends Component {
         }
         else {
             let budgetBranches = [...this.state.budgetBranches];
-            this.harmonizeBranches(budgetBranches, branchList, branchesById);
+            budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById);
             this.setState({
                 budgetBranches: budgetBranches,
             });
@@ -79,11 +80,8 @@ let Explorer = class extends Component {
     }
     componentWillReceiveProps(nextProps) {
         let { branchList, branchesById } = nextProps.declarationData;
-        let budgetBranches = this.state.budgetBranches;
-        budgetBranches = budgetBranches.filter(budgetBranch => {
-            return !!branchesById[budgetBranch.uid];
-        });
-        this.harmonizeBranches(budgetBranches, branchList, branchesById);
+        let budgetBranches = [...this.state.budgetBranches];
+        budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById);
         for (let i = 0; i < branchList.length; i++) {
             if (branchList[i] != budgetBranches[i].uid) {
                 throw Error('mismatched order between declarationData list and branch list');
@@ -106,23 +104,24 @@ let Explorer = class extends Component {
             position: "absolute",
             zIndex: 2,
         }, onTouchTap: explorer.handleDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("p", null, "In the explorer charts, Viewpoints include: "), React.createElement("dl", null, React.createElement("dt", null, React.createElement("strong", null, "Functional")), React.createElement("dd", null, "combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) "), React.createElement("dt", null, React.createElement("strong", null, "Structural")), React.createElement("dd", null, "more traditional: separates Agencies from Divisions; groupings are closer to those found" + ' ' + "in City annual Budget Summaries")), React.createElement("p", null, "Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) "), React.createElement("p", null, "This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal"), React.createElement("p", null, "Click or tap on any column in the \"By Programs\" charts to drill-down. Other charts do not" + ' ' + "currently support drill-down."));
-        let drilldownsegments = () => {
-            let budgetbranches = explorer.state.budgetBranches;
-            let segments = budgetbranches.map((budgetBranch, branchIndex) => {
-                let actionprops = {
+        let drilldownSegments = () => {
+            let budgetBranches = explorer.state.budgetBranches;
+            let segments = budgetBranches.map((budgetBranch, branchIndex) => {
+                let actionFunctions = {
                     addNodeDeclaration: this.props.addNodeDeclaration,
                     removeNodeDeclaration: this.props.removeNodeDeclaration,
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                 };
-                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, displayCallbacks: {
+                let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,
                     updateChartSelections: explorer.updateChartSelections(branchIndex),
-                }, globalStateActions: actionprops, declarationData: explorer.props.declarationData})));
+                };
+                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, displayCallbacks: displayCallbackFunctions, globalStateActions: actionFunctions, declarationData: explorer.props.declarationData})));
             });
             return segments;
         };
-        let branches = drilldownsegments();
+        let branches = drilldownSegments();
         return React.createElement("div", null, React.createElement(Card_1.Card, {initiallyExpanded: false}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: explorer.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: explorer.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")))), dialogbox, branches);
     }
 }

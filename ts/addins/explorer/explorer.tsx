@@ -111,7 +111,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             this.props.addBranchDeclaration(defaultSettings)
         } else {
             let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
-            this.harmonizeBranches(budgetBranches, branchList, branchesById)
+            budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById)
             this.setState({
                 budgetBranches,
             })
@@ -127,17 +127,18 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         let newBranches = budgetBranches.filter((node) => {
             return !!branchesById[node.uid]
         })
-        let length = budgetBranches.length
+        let length = newBranches.length
         for ( let i = 0; i < branchList.length ; i++ ) {
             let uid = branchList[i]
-            let matchingNode = budgetBranches[i]
+            let matchingNode = newBranches[i]
             if (matchingNode && matchingNode.uid == uid) {
                 continue
             }
             let settings = branchesById[uid]
             let budgetBranch = new BudgetBranch({settings,uid})
-            budgetBranches.splice(i,0,budgetBranch)
+            newBranches.splice(i,0,budgetBranch)
         }
+        return newBranches
     }
 
     // harmonize budgetBranches objects  with control data
@@ -146,14 +147,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     componentWillReceiveProps(nextProps) {
 
         let { branchList, branchesById } = nextProps.declarationData
-        let budgetBranches:BudgetBranch[] = this.state.budgetBranches
+        let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
 
-        // remove deleted branches
-        budgetBranches = budgetBranches.filter(budgetBranch => {
-            return !!branchesById[budgetBranch.uid]
-        })
 
-        this.harmonizeBranches(budgetBranches, branchList, branchesById)
+        budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById)
         
         // in any case update settings in case change made
         for (let i = 0; i < branchList.length; i++) {
@@ -263,20 +260,25 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         // -----------[ DRILLDOWN SEGMENT]-------------
 
-        let drilldownsegments = () => {
+        let drilldownSegments = () => {
 
-            let budgetbranches = explorer.state.budgetBranches
+            let budgetBranches = explorer.state.budgetBranches
 
-            let segments = budgetbranches.map((budgetBranch, branchIndex) => {
-                let actionprops:MappedBranchActions = {
+            let segments = budgetBranches.map((budgetBranch, branchIndex) => {
+                let actionFunctions:MappedBranchActions = {
                     addNodeDeclaration: this.props.addNodeDeclaration,
                     removeNodeDeclaration: this.props.removeNodeDeclaration,
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                 }
 
-                 return <Card initiallyExpanded 
-                     key = {branchIndex}>
+                let displayCallbackFunctions = { 
+                    workingStatus: explorer.workingStatus,
+                    updateChartSelections: explorer.updateChartSelections(branchIndex),
+                }
+
+                return <Card initiallyExpanded 
+                    key = {branchIndex}>
 
                     <CardTitle
                         actAsExpander={true}
@@ -288,12 +290,9 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                     <CardText expandable>
                     <ExplorerBranch 
-                        budgetBranch = {budgetBranch}
-                        displayCallbacks = {{ 
-                            workingStatus: explorer.workingStatus,
-                            updateChartSelections: explorer.updateChartSelections(branchIndex),
-                        }}
-                        globalStateActions = { actionprops }
+                        budgetBranch = { budgetBranch }
+                        displayCallbacks = { displayCallbackFunctions }
+                        globalStateActions = { actionFunctions }
                         declarationData = { explorer.props.declarationData }
                     />
                     </CardText>
@@ -305,7 +304,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         }
         // -----------[ COMBINE SEGMENTS ]---------------
 
-        let branches = drilldownsegments()
+        let branches = drilldownSegments()
 
         // console.log('branches', branches)
 
