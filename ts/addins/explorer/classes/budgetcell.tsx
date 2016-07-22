@@ -10,7 +10,7 @@ import {
     ChartSelectionCell,
 } from '../modules/onchartcomponentselection'
 
-export interface CellSpecParms {
+export interface CellDeclaration {
     nodeDatasetName:string, 
     chartCode:string, 
     chartSelection:ChartSelectionCell[],
@@ -19,7 +19,7 @@ export interface CellSpecParms {
 
 class BudgetCell {
 
-    constructor(specs:CellSpecParms) {
+    constructor(specs:CellDeclaration) {
         let { nodeDatasetName, chartCode, chartSelection, uid } = specs
         this.nodeDatasetName = nodeDatasetName
         this.chartCode = chartCode
@@ -52,7 +52,7 @@ class BudgetCell {
     //         cellIndex,
     //         chartCode,
     //     } = props
-    //     let chartType = ChartCodeTypes[chartCode]
+    //     let chartType = ChartCodeToGoogleChartType[chartCode]
 
     //     let branchNodes = this.nodes
     //     let budgetNode: BudgetNode = branchNodes[nodeIndex]
@@ -79,7 +79,7 @@ class BudgetCell {
     //     if (!chartParmsObj.isError) {
     //         budgetCell.chartParms = chartParmsObj.chartParms
     //         budgetCell.chartCode =
-    //             ChartTypeCodes[budgetCell.chartParms.chartType]
+    //             GoogleChartTypeToChartCode[budgetCell.chartParms.chartType]
     //     } else {
     //         budgetCell.googleChartType = oldChartType
     //     }

@@ -108,6 +108,8 @@ let Explorer = class extends Component {
             let budgetBranches = explorer.state.budgetBranches;
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
                 let actionFunctions = {
+                    addCellDeclaration: this.props.addCellDeclaration,
+                    removeCellDeclaration: this.props.removeCellDeclaration,
                     addNodeDeclaration: this.props.addNodeDeclaration,
                     removeNodeDeclaration: this.props.removeNodeDeclaration,
                     changeViewpoint: this.props.changeViewpoint,
@@ -136,6 +138,8 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
     addNodeDeclaration: ExplorerActions.addNodeDeclaration,
     removeNodeDeclaration: ExplorerActions.removeNodeDeclaration,
+    addCellDeclaration: ExplorerActions.addCellDeclaration,
+    removeCellDeclaration: ExplorerActions.removeCellDeclaration,
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeFacet: ExplorerActions.changeFacet,
 })(Explorer);

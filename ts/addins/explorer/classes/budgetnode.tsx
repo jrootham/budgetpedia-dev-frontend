@@ -2,7 +2,7 @@
 // budgetnode.tsx
 
 import { PortalCell, TimeSpecs } from './databaseapi'
-import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
+import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../../constants'
 import {
     // MatrixCellConfig,
     // MatrixLocation,
@@ -11,7 +11,7 @@ import {
     GetChartParmsProps
 } from '../modules/interfaces'
 import getChartParmsSource from './modules/getchartparms'
-import BudgetCell, {CellSpecParms} from './budgetcell'
+import BudgetCell, { CellDeclaration } from './budgetcell'
 import {
     ChartSelectionCell,
 } from '../modules/onchartcomponentselection'
@@ -63,7 +63,7 @@ export interface BudgetNodeParms {
 //         let budgetCell:BudgetCell = budgetNode.cells[nodeCellIndex]
 //         budgetCell.chartParms = chartParmsObj.chartParms
 //         budgetCell.chartCode =
-//             ChartTypeCodes[budgetCell.chartParms.chartType]
+//             GoogleChartTypeToChartCode[budgetCell.chartParms.chartType]
 //         if (parentBudgetNode) {
 //             budgetNode.parentData.dataNode = parentBudgetNode.dataNode
 //         }
@@ -108,7 +108,7 @@ export interface BudgetNodeParms {
 
 //         budgetCell.chartParms = chartParmsObj.chartParms
 //         budgetCell.chartCode =
-//             ChartTypeCodes[budgetCell.chartParms.chartType]
+//             GoogleChartTypeToChartCode[budgetCell.chartParms.chartType]
 
 //     } else {
 //         break
@@ -181,11 +181,11 @@ class BudgetNode {
     // ====================================================================
     // ---------------------[ PRIVATE ]------------------------------------
 
-    public setCells(cellSpecs:CellSpecParms[]) {
+    public setCells(cellSpecs:CellDeclaration[]) {
         this._cells = []
         // // TODO: should be default for each chart...
         // build cells array
-        let cellSpec: CellSpecParms
+        let cellSpec: CellDeclaration
         for (let cellSpec of cellSpecs) {
             let {chartSelection, chartCode, nodeDatasetName, uid} = cellSpec
             let cell = new BudgetCell(

@@ -160,7 +160,7 @@ class BudgetBranch {
                     let removedids = removed.map((item) => {
                         return item.uid;
                     });
-                    actions.removeNodeDeclaration(this.uid, removedids);
+                    actions.removeNodeDeclaration(removedids);
                     setTimeout(() => {
                         let prevBudgetCell = prevBudgetNode.cells[0];
                         let childprops = {

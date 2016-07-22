@@ -64,7 +64,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
         let { removeNodeDeclaration } = budgetBranch.actions
 
-        removeNodeDeclaration(branchuid, removedids)
+        removeNodeDeclaration(removedids)
 
     }
 

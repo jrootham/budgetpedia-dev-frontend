@@ -18,15 +18,14 @@ class ExplorerBranch extends Component {
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
-        this.addBranchNodeDeclaration = branchuid => settings => {
-            return this.props.globalStateActions.addNodeDeclaration(branchuid, settings);
-        };
+        this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
+        this.removeNodeDeclaration = branchUid => nodeUid => this.props.globalStateActions.removeNodeDeclaration(branchUid, nodeUid);
         this.harmonizecount = null;
         this.controlGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
             let currentControlData = this.props.declarationData;
             let { lastAction } = currentControlData;
-            if (!actions_1.branchtypes[lastAction]) {
+            if (!actions_1.branchTypes[lastAction]) {
                 return;
             }
             if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
@@ -34,11 +33,11 @@ class ExplorerBranch extends Component {
             }
             let { budgetBranch } = this.props;
             switch (lastAction) {
-                case actions_1.branchtypes.CHANGE_VIEWPOINT: {
+                case actions_1.branchTypes.CHANGE_VIEWPOINT: {
                     this.processChangeViewpointStateChange(budgetBranch);
                     break;
                 }
-                case actions_1.branchtypes.CHANGE_FACET: {
+                case actions_1.branchTypes.CHANGE_FACET: {
                     this.processChangeFacetStateChange(budgetBranch);
                     break;
                 }
@@ -143,7 +142,7 @@ class ExplorerBranch extends Component {
                 return item.uid;
             });
             let globalStateActions = this._stateActions;
-            globalStateActions.removeNodeDeclaration(budgetBranch.uid, removedids);
+            globalStateActions.removeNodeDeclaration(removedids);
             setTimeout(() => {
                 globalStateActions.changeViewpoint(budgetBranch.uid, viewpointname);
             });
@@ -192,7 +191,8 @@ class ExplorerBranch extends Component {
     componentWillMount() {
         let { budgetBranch, globalStateActions: actions, displayCallbacks } = this.props;
         this._stateActions = Object.assign({}, actions);
-        this._stateActions.addNodeDeclaration = this.addBranchNodeDeclaration(budgetBranch.uid);
+        this._stateActions.addNodeDeclaration = this.addNodeDeclaration(budgetBranch.uid);
+        this._stateActions.removeNodeDeclaration = this.removeNodeDeclaration(budgetBranch.uid);
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this;
         let { updateChartSelections, workingStatus } = displayCallbacks;
         this._nodeDisplayCallbacks = {

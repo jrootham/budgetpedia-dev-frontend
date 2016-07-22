@@ -39,7 +39,7 @@ import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 
 import ExplorerBranch from './components/explorerbranch'
-import { ChartTypeCodes, ChartCodeTypes } from '../constants'
+import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../constants'
 
 import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
@@ -56,11 +56,20 @@ import {
     BranchConfig,
 } from './modules/interfaces'
 
-interface MappedBranchActions {
+interface MappedNodeActions {
+    addCellDeclaration:Function,
+    removeCellDeclaration:Function,
+    // changeChart:Function,
+    // changeSelection:Function,
+    // toggleDelta:Function,
+}
+
+interface MappedBranchActions extends MappedNodeActions {
     addNodeDeclaration:Function,
     removeNodeDeclaration: Function,
     changeViewpoint: Function,
     changeFacet: Function,
+    // toggleInflationAdjustement:Function
 }
 
 interface MappedExplorerActions extends MappedBranchActions {
@@ -266,6 +275,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
                 let actionFunctions:MappedBranchActions = {
+                    addCellDeclaration: this.props.addCellDeclaration,
+                    removeCellDeclaration: this.props.removeCellDeclaration,
                     addNodeDeclaration: this.props.addNodeDeclaration,
                     removeNodeDeclaration: this.props.removeNodeDeclaration,
                     changeViewpoint: this.props.changeViewpoint,
@@ -358,15 +369,15 @@ Explorer = connect(mapStateToProps, {
     removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
     addNodeDeclaration:ExplorerActions.addNodeDeclaration,
     removeNodeDeclaration:ExplorerActions.removeNodeDeclaration,
-    // addCell
-    // removeCell
+    addCellDeclaration:ExplorerActions.addCellDeclaration,
+    removeCellDeclaration:ExplorerActions.removeCellDeclaration,
 
     // branch actions - variations
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeFacet: ExplorerActions.changeFacet,
     // changeChart
     // changeSelection
-    // toggleInflation
+    // toggleInflationAdjustment
     // toggleDelta
 })(Explorer)
 

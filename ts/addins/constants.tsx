@@ -1,21 +1,21 @@
 // constants.tsx
-export enum ChartSeries { DrillDown, Compare, Differences, Context }
-export var categoryaliases = {
-    'Types': 'Program Activity Types',
-    'Groups': 'Program Activity Clusters',
-    'Divisions':'Programs',
-    'Expenditures':'Expenditure Categories'
-}
-export var ChartTypeCodes = {
-    'PieChart':'DonutChart',
+// export var categoryAliases = {
+//     'Types': 'Program Activity Types',
+//     'Groups': 'Program Activity Clusters',
+//     'Divisions':'Programs',
+//     'Expenditures':'Expenditure Categories'
+// }
+let ChartCodeToGoogleChartType = {
+    'DonutChart':'PieChart',
     'ColumnChart':'ColumnChart',
-    'LineChart':'Timelines'
+    'Timelines':'LineChart'
 }
 
-let ChartCodeTypes = {}
-
-for (let chartType in ChartTypeCodes) {
-    ChartCodeTypes[ChartTypeCodes[chartType]] = chartType
+export var GoogleChartTypeToChartCode = {
 }
 
-export { ChartCodeTypes }
+for (let chartCode in ChartCodeToGoogleChartType) {
+    GoogleChartTypeToChartCode[ChartCodeToGoogleChartType[chartCode]] = chartCode
+}
+
+export { ChartCodeToGoogleChartType }

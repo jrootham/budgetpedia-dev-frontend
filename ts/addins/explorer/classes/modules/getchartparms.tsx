@@ -26,7 +26,7 @@ import {
 import BudgetCell from '../budgetcell'
 
 import getBudgetNode from '../../modules/getbudgetnode'
-import { ChartTypeCodes } from '../../../constants'
+import { GoogleChartTypeToChartCode } from '../../../constants'
 import { 
     // applyChartComponentSelection,
     // onChartComponentSelection,

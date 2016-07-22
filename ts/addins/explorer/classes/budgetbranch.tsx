@@ -31,7 +31,7 @@ import { BudgetNodeParms } from './budgetnode'
 import BudgetCell from './budgetcell'
 import { ExplorerBranchActions } from '../components/explorerbranch'
 
-import { ChartTypeCodes, ChartCodeTypes } from '../../constants'
+import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../../constants'
 
 
 interface BudgetBranchParms {
@@ -171,7 +171,7 @@ class BudgetBranch {
                     let removedids = removed.map((item) => {
                         return item.uid
                     })
-                    actions.removeNodeDeclaration(this.uid, removedids)
+                    actions.removeNodeDeclaration(removedids)
                     setTimeout(()=> {
 
                         let prevBudgetCell:BudgetCell = prevBudgetNode.cells[0]
