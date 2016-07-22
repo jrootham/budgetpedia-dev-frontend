@@ -5,7 +5,7 @@ const budgetnode_1 = require('./budgetnode');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 class BudgetBranch {
     constructor(parms) {
-        this.initializeBranchNodeDeclarations = () => {
+        this.getInitialBranchNodeParms = () => {
             let defaults = this.getProps().declarationData.defaults.node;
             let branchSettings = this.settings;
             let viewpointdata = this.state.viewpointData;
@@ -26,7 +26,7 @@ class BudgetBranch {
                 nodeIndex: 0,
             };
             budgetNodeParms = Object.assign(defaults, budgetNodeParms);
-            this.actions.addNodeDeclaration(budgetNodeParms);
+            return budgetNodeParms;
         };
         this.addNode = (budgetNodeUid, nodeIndex, budgetNodeParms) => {
             let { actions, nodeCallbacks: callbacks } = this;
@@ -163,9 +163,6 @@ class BudgetBranch {
                     actions.removeNodeDeclaration(this.uid, removedids);
                     setTimeout(() => {
                         let prevBudgetCell = prevBudgetNode.cells[0];
-                        let chartSelectionData = {
-                            selection: prevBudgetCell.chartSelection,
-                        };
                         let childprops = {
                             selectionrow: prevBudgetCell.chartSelection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,

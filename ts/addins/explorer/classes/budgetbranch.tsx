@@ -69,7 +69,7 @@ class BudgetBranch {
     public getProps: Function
 
     // this generates a trigger to create a budget node object
-    public initializeBranchNodeDeclarations = () => {
+    public getInitialBranchNodeParms = () => {
 
         let defaults = this.getProps().declarationData.defaults.node
 
@@ -101,7 +101,7 @@ class BudgetBranch {
 
         budgetNodeParms = Object.assign(defaults, budgetNodeParms )
 
-        this.actions.addNodeDeclaration(budgetNodeParms)
+        return budgetNodeParms
 
     }
 
@@ -176,9 +176,9 @@ class BudgetBranch {
 
                         let prevBudgetCell:BudgetCell = prevBudgetNode.cells[0]
 
-                        let chartSelectionData = {
-                            selection:prevBudgetCell.chartSelection,
-                        }
+                        // let chartSelectionData = {
+                        //     selection:prevBudgetCell.chartSelection,
+                        // }
 
                         let childprops: CreateChildNodeProps = {
                             selectionrow: prevBudgetCell.chartSelection[0].row,

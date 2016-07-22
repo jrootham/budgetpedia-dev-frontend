@@ -109,9 +109,11 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         }
 
         // complete initialization of budgetBranch class instance
+        // assign helpful getters and setters to budgetBranch
         budgetBranch.getState = this.getState
         budgetBranch.getProps = this.getProps
         budgetBranch.setState = this.setState.bind(this)
+        // assign callbacks to budgetBranch
         budgetBranch.actions = this._stateActions
         budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks
     }
@@ -125,7 +127,8 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             setTimeout(()=>{
                 // this will trigger harmonization between declarations 
                 // and local node instances in componentDidUpdate
-                budgetBranch.initializeBranchNodeDeclarations()
+                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
+                this._stateActions.addNodeDeclaration(budgetNodeParms)
             })
         }
     }
@@ -143,10 +146,11 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             })
         }
     }
-
-    // harmonization means creating local nodes to match global declarations
-    // acts as a sentinel; if count goes below zero, means that some 
-    // harmonization operation has failed, which is a system error
+/*
+    harmonization means creating local nodes to match global declarations
+    acts as a sentinel; if count goes below zero, means that some 
+    harmonization operation has failed, which is a system error
+*/    
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes
     componentDidUpdate() {
@@ -176,9 +180,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             this.harmonizecount--
             let nodeIndex = branchNodes.length
             let budgetNodeId = nodeList[nodeIndex]
-            // console.log('harmonize', nodeIndex, budgetNodeId)
-            // TODO: perhaps this should be addNodes (plural)
-            budgetBranch.addNode(
+            budgetBranch.addNode( // sets state to trigger a render, and re-visitation of this code
                 budgetNodeId,
                 nodeIndex,
                 nodesById[budgetNodeId] // declarations
@@ -223,7 +225,8 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     private processChangeViewpointStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData()
         setTimeout(()=>{
-            budgetBranch.initializeBranchNodeDeclarations()
+            let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
+            this._stateActions.addNodeDeclaration(budgetNodeParms)
         })
     }
 
@@ -344,7 +347,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         })
         // console.log('calling from switchviewpoint',branchsettings, viewpointname, callbackuid, removedids)
         // this will trigger render cycle that will delete the component state's stored nodes
-        let { globalStateActions } = this.props
+        let globalStateActions = this._stateActions
         globalStateActions.removeNodeDeclaration(budgetBranch.uid, removedids)
         // now the viewpoint can be changed, triggering a change in viewpoint data
         setTimeout(() => {
@@ -396,7 +399,6 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
             budgetNode.portalConfig = portalConfig
 
-            // TODO: pass budgetNode instead of budgetCells?
             return <ExplorerPortal
                 key = {nodeindex}
                 callbackid = { nodeindex }

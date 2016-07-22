@@ -48,7 +48,8 @@ class ExplorerBranch extends Component {
         this.processChangeViewpointStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData();
             setTimeout(() => {
-                budgetBranch.initializeBranchNodeDeclarations();
+                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
+                this._stateActions.addNodeDeclaration(budgetNodeParms);
             });
         };
         this.processChangeFacetStateChange = (budgetBranch) => {
@@ -141,7 +142,7 @@ class ExplorerBranch extends Component {
             let removedids = removed.map((item) => {
                 return item.uid;
             });
-            let { globalStateActions } = this.props;
+            let globalStateActions = this._stateActions;
             globalStateActions.removeNodeDeclaration(budgetBranch.uid, removedids);
             setTimeout(() => {
                 globalStateActions.changeViewpoint(budgetBranch.uid, viewpointname);
@@ -213,7 +214,8 @@ class ExplorerBranch extends Component {
         budgetBranch.getViewpointData();
         if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
             setTimeout(() => {
-                budgetBranch.initializeBranchNodeDeclarations();
+                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
+                this._stateActions.addNodeDeclaration(budgetNodeParms);
             });
         }
     }
