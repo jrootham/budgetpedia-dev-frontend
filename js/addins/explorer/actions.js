@@ -11,7 +11,6 @@ var types;
     types.ADD_NODE = 'ADD_NODE';
     types.REMOVE_NODES = 'REMOVE_NODES';
     types.ADD_CELLS = 'ADD_CELLS';
-    types.REMOVE_CELLS = 'REMOVE_CELLS';
     types.CHANGE_CHART_CODE = 'CHANGE_CHART_CODE';
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
 })(types = exports.types || (exports.types = {}));
@@ -25,7 +24,6 @@ var branchTypes;
 var nodeTypes;
 (function (nodeTypes) {
     nodeTypes.ADD_CELLS = types.ADD_CELLS;
-    nodeTypes.REMOVE_CELLS = types.REMOVE_CELLS;
     nodeTypes.CHANGE_CHART_CODE = types.CHANGE_CHART_CODE;
     nodeTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
 })(nodeTypes = exports.nodeTypes || (exports.nodeTypes = {}));
@@ -65,7 +63,3 @@ exports.addCellDeclarations = (nodeuid, settingslist) => {
         dispatch(_addCellDeclaration(nodeuid, settingslist));
     };
 };
-exports.removeCellDeclarations = redux_actions_1.createAction(types.REMOVE_CELLS, (nodeuid, uidlist) => ({
-    uidlist: uidlist,
-    nodeuid: nodeuid,
-}));

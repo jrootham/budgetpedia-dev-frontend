@@ -11,7 +11,7 @@ export namespace types {
     export const ADD_NODE = 'ADD_NODE'
     export const REMOVE_NODES = 'REMOVE_NODES'
     export const ADD_CELLS = 'ADD_CELLS'
-    export const REMOVE_CELLS = 'REMOVE_CELLS'
+    // export const REMOVE_CELLS = 'REMOVE_CELLS'
     export const CHANGE_CHART_CODE = 'CHANGE_CHART_CODE'
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
 }
@@ -25,7 +25,7 @@ export namespace branchTypes {
 
 export namespace nodeTypes {
     export import ADD_CELLS = types.ADD_CELLS
-    export import REMOVE_CELLS = types.REMOVE_CELLS
+    // export import REMOVE_CELLS = types.REMOVE_CELLS
     export import CHANGE_CHART_CODE = types.CHANGE_CHART_CODE
     export import TOGGLE_DELTA = types.TOGGLE_DELTA
 }
@@ -88,9 +88,9 @@ export const addCellDeclarations = (nodeuid,settingslist) => {
     }
 }
     
-export const removeCellDeclarations = createAction(
-    types.REMOVE_CELLS,(nodeuid,uidlist) => ({
-        uidlist,
-        nodeuid,
-    })
-)
+// export const removeCellDeclarations = createAction(
+//     types.REMOVE_CELLS,(nodeuid,uidlist) => ({
+//         uidlist,
+//         nodeuid,
+//     })
+// )

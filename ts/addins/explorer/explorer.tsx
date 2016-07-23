@@ -58,7 +58,7 @@ import {
 
 interface MappedNodeActions {
     addCellDeclarations:Function,
-    removeCellDeclarations:Function,
+    // removeCellDeclarations:Function,
     // changeChart:Function,
     // changeSelection:Function,
     // toggleDelta:Function,
@@ -277,7 +277,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
                 let actionFunctions:MappedBranchActions = {
                     addCellDeclarations: this.props.addCellDeclarations,
-                    removeCellDeclarations: this.props.removeCellDeclarations,
+                    // removeCellDeclarations: this.props.removeCellDeclarations,
                     addNodeDeclaration: this.props.addNodeDeclaration,
                     removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
@@ -373,7 +373,7 @@ Explorer = connect(mapStateToProps, {
     addNodeDeclaration:ExplorerActions.addNodeDeclaration,
     removeNodeDeclarations:ExplorerActions.removeNodeDeclarations,
     addCellDeclarations:ExplorerActions.addCellDeclarations,
-    removeCellDeclarations:ExplorerActions.removeCellDeclarations,
+    // removeCellDeclarations:ExplorerActions.removeCellDeclarations,
 
     // branch actions - variations
     changeViewpoint: ExplorerActions.changeViewpoint,

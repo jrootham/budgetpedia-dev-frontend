@@ -28,7 +28,7 @@ interface ExplorePortalProps {
 
 export interface ExplorerPortalActions {
     addCellDeclarations:Function,
-    removeCellDeclarations:Function,
+    // removeCellDeclarations:Function,
 }
 
 // for (let cellindex in budgetNode.cells) {
