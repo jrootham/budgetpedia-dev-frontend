@@ -62,11 +62,15 @@ class BudgetBranch {
         return this.getState()
     }
 
+    get props() {
+        return this.getProps()
+    }
+
     public getState: Function
 
-    public setState: Function
-
     public getProps: Function
+
+    public setState: Function
 
     // this generates a trigger to create a budget node object
     public getInitialBranchNodeParms = () => {
@@ -99,7 +103,7 @@ class BudgetBranch {
             nodeIndex:0,
         }
 
-        budgetNodeParms = Object.assign(defaults, budgetNodeParms )
+        budgetNodeParms = Object.assign( defaults, budgetNodeParms )
 
         return budgetNodeParms
 
@@ -127,6 +131,7 @@ class BudgetBranch {
 
     // this resets the branch in response to the change facet user request
     switchFacet() {
+
         let { actions, nodeCallbacks:callbacks } = this
         let switchResults = {
             deeperdata: false,

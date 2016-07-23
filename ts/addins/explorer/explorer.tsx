@@ -162,6 +162,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById)
         
         // in any case update settings in case change made
+        // TODO: only update when actual change made
         for (let i = 0; i < branchList.length; i++) {
             if (branchList[i] != budgetBranches[i].uid) {
                 throw Error('mismatched order between declarationData list and branch list')
@@ -287,6 +288,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     workingStatus: explorer.workingStatus,
                     updateChartSelections: explorer.updateChartSelections(branchIndex),
                 }
+
+                // ----------------[ Contains ExplorerBranch ]-------------------------
 
                 return <Card initiallyExpanded 
                     key = {branchIndex}>

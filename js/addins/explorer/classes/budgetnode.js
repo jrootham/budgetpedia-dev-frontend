@@ -8,6 +8,24 @@ class BudgetNode {
             this._dataNode = dataNode;
             this.facetName = facet;
         };
+        this.getCellDeclarationParms = () => {
+            let parmsList = [];
+            let chartSpecs = this.portalCharts[this.facetName];
+            let defaultCellDeclaration = this.props.declarationData.defaults.cell;
+            for (let chartSpec of chartSpecs) {
+                console.log('chartSpec', chartSpec);
+                let nodeDatasetName = chartSpec.Type;
+                let chartSelection = null;
+                let chartCode = defaultCellDeclaration.chartCode;
+                parmsList.push({
+                    nodeDatasetName: nodeDatasetName,
+                    chartSelection: chartSelection,
+                    chartCode: chartCode,
+                });
+            }
+            console.log('parmsList', parmsList);
+            return parmsList;
+        };
         this._cells = [];
         let portalcharts = parms.portalCharts;
         this.viewpointName = parms.viewpointName;
@@ -31,6 +49,12 @@ class BudgetNode {
     }
     get dataNode() {
         return this._dataNode;
+    }
+    get state() {
+        return this.getState();
+    }
+    get props() {
+        return this.getProps();
     }
     get cells() {
         return this.getAvailableCells();

@@ -4,8 +4,7 @@
 import { PortalCell, TimeSpecs } from './databaseapi'
 import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../../constants'
 import {
-    // MatrixCellConfig,
-    // MatrixLocation,
+    CellSettings,
     PortalConfig,
     GetCellChartProps,
     GetChartParmsProps
@@ -163,6 +162,20 @@ class BudgetNode {
     get dataNode() {
         return this._dataNode
     }
+    get state() {
+        return this.getState()
+    }
+
+    get props() {
+        return this.getProps()
+    }
+
+    public getState: Function
+
+    public setState: Function
+
+    public getProps: Function
+
     parentData: any = null // includes parentNode for now
     // parentNode: any = null
 
@@ -180,6 +193,25 @@ class BudgetNode {
 
     // ====================================================================
     // ---------------------[ PRIVATE ]------------------------------------
+
+    getCellDeclarationParms = () => {
+        let parmsList:CellDeclaration[] = []
+        let chartSpecs = this.portalCharts[this.facetName]
+        let defaultCellDeclaration = this.props.declarationData.defaults.cell
+        for (let chartSpec of chartSpecs) {
+            console.log('chartSpec', chartSpec)
+            let nodeDatasetName = chartSpec.Type
+            let chartSelection = null
+            let chartCode = defaultCellDeclaration.chartCode
+            parmsList.push({
+                nodeDatasetName,
+                chartSelection,
+                chartCode,
+            })
+        }
+        console.log('parmsList',parmsList)
+        return parmsList
+    }
 
     public setCells(cellDeclarations:CellDeclaration[]) {
         this._cells = []

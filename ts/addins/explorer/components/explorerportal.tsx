@@ -26,6 +26,11 @@ interface ExplorePortalProps {
     declarationData: any,
 }
 
+export interface ExplorerPortalActions {
+    addCellDeclaration:Function,
+    removeCellDeclaration:Function,
+}
+
 // for (let cellindex in budgetNode.cells) {
 //     let budgetCell:BudgetCell = budgetNode.cells[cellindex]
 //     let chartblocktitle = null
@@ -49,11 +54,6 @@ interface ExplorePortalProps {
 
 // }
 
-export interface ExplorerPortalActions {
-    addCellDeclaration:Function,
-    removeCellDeclaration:Function,
-}
-
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     state = {
@@ -66,11 +66,20 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     private _stateActions: ExplorerPortalActions
 
     componentWillMount() {
-        
+        let { budgetNode } = this.props
+        budgetNode.getState = this.getState
+        budgetNode.getProps = this.getProps
+        budgetNode.setState = this.setState.bind(this)
     }
 
     componentDidMount() {
         let { budgetNode, declarationData } = this.props
+        let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
+        console.log('nodeDeclaration, portalCharts',nodeDeclaration, budgetNode.portalCharts)
+        if (nodeDeclaration.cellList == null) {
+            // get controlData for cellList
+            let cellDeclarationParms = budgetNode.getCellDeclarationParms()
+        }
     }
 
     onChangeTab = () => {

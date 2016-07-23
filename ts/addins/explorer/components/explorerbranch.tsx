@@ -71,9 +71,11 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         snackbar:{open:false,message:'empty'}
     }
 
-    // for budgetBranch object:
-    // return fresh copy of state object; changes after being set
-    // used by budgetBranch instance
+/*    
+    getState() and getProps() for budgetBranch object:
+    return fresh copy of state object; changes after being set
+    used by budgetBranch instance
+*/
     getState = () => this.state
     getProps = () => this.props
 
@@ -160,7 +162,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         // console.log('did update')
         // refresh branchnodes
         let { budgetBranch, declarationData } = this.props
-        let branchNodes = budgetBranch.nodes
+        let { nodes:branchNodes } = budgetBranch
         let { nodesById } = declarationData
         let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
         let { nodeList } = branchDeclarations
@@ -189,7 +191,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 nodesById[budgetNodeId] // declarations
             )
         } else { // otherwise see if there are other cascading actions that have to be taken
-            this.harmonizecount = null
+            this.harmonizecount = null // reset
             this.controlGlobalStateChange()
         }
     }

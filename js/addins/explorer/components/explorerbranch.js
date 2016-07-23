@@ -233,7 +233,7 @@ class ExplorerBranch extends Component {
     }
     componentDidUpdate() {
         let { budgetBranch, declarationData } = this.props;
-        let branchNodes = budgetBranch.nodes;
+        let { nodes: branchNodes } = budgetBranch;
         let { nodesById } = declarationData;
         let branchDeclarations = declarationData.branchesById[budgetBranch.uid];
         let { nodeList } = branchDeclarations;

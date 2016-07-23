@@ -14,7 +14,7 @@ export interface CellDeclaration {
     nodeDatasetName:string, 
     chartCode:string, 
     chartSelection:ChartSelectionCell[],
-    uid: string,
+    uid?: string,
 }
 
 class BudgetCell {

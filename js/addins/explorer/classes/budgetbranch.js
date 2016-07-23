@@ -127,6 +127,9 @@ class BudgetBranch {
     get state() {
         return this.getState();
     }
+    get props() {
+        return this.getProps();
+    }
     switchFacet() {
         let { actions, nodeCallbacks: callbacks } = this;
         let switchResults = {

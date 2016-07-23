@@ -9,6 +9,8 @@ class ExplorerPortal extends Component {
         this.state = {
             nodeCells: [],
         };
+        this.getState = () => this.state;
+        this.getProps = () => this.props;
         this.onChangeTab = () => {
             this.props.displayCallbacks.onChangePortalTab();
         };
@@ -47,8 +49,19 @@ class ExplorerPortal extends Component {
             }
         };
     }
+    componentWillMount() {
+        let { budgetNode } = this.props;
+        budgetNode.getState = this.getState;
+        budgetNode.getProps = this.getProps;
+        budgetNode.setState = this.setState.bind(this);
+    }
     componentDidMount() {
         let { budgetNode, declarationData } = this.props;
+        let nodeDeclaration = declarationData.nodesById[budgetNode.uid];
+        console.log('nodeDeclaration, portalCharts', nodeDeclaration, budgetNode.portalCharts);
+        if (nodeDeclaration.cellList == null) {
+            let cellDeclarationParms = budgetNode.getCellDeclarationParms();
+        }
     }
     render() {
         let chartTabs = this.getChartTabs();
