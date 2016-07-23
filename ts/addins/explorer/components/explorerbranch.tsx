@@ -347,7 +347,6 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
         // branchNodes is just a copy of the component state's BranchNodes
         let removed = branchNodes.splice(0) // identify nodes to remove
-        console.log('removed in switchViewpoint', removed)
         let removeditems = removed.map((item) => {
             return {uid:item.uid, cellList:item.cellList}
         })

@@ -64,14 +64,20 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     getProps = () => this.props
 
     private _stateActions: ExplorerPortalActions
+    private _nodeDisplayCallbacks
 
     componentWillMount() {
         let { budgetNode } = this.props
+
+        this._stateActions = this.props.globalStateActions
+        this._nodeDisplayCallbacks = this.props.displayCallbacks
+
         budgetNode.getState = this.getState
         budgetNode.getProps = this.getProps
         budgetNode.setState = this.setState.bind(this)
+        budgetNode.actions = this._stateActions
+        budgetNode.nodeCallbacks = this._nodeDisplayCallbacks
 
-        this._stateActions = this.props.globalStateActions
     }
 
     componentDidMount() {
@@ -81,8 +87,44 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         if (nodeDeclaration.cellList == null) {
             // get controlData for cellList
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
-            console.log('parmsList',cellDeclarationParms)
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
+        }
+    }
+
+    // remove obsolete cell objects
+    componentWillReceiveProps(nextProps) {
+        let { budgetNode, declarationData } = this.props
+        let cells = budgetNode.allCells
+        let { cellsById } = declarationData
+        let newCells = cells.filter(cell =>{
+            return !!cellsById[cell.uid]
+        })
+        if (newCells.length != cells.length) {
+            this.setState({
+                nodeCells:newCells
+            })
+        }
+    }
+
+    harmonizecount: any = null
+    // harmonize branch nodes; add pending node objects, and process state changes
+    componentDidUpdate() {
+        let { budgetNode, declarationData } = this.props
+        let cells = budgetNode.allCells
+        let { cellList } = declarationData.nodesById[budgetNode.uid]
+        console.log('cells, cellList in componentDidUpdate',cells, cellList)
+        if ((cells.length != cellList.length) && (this.harmonizecount == null)) {
+            this.harmonizecount = cellList.length - cells.length
+            let cellParms = []
+            let { cellsById } = declarationData
+            console.log('cellsById, cellList',cellsById, [...cellList])
+            for (let cellid of cellList) {
+                cellParms.push(cellsById[cellid])
+            }
+            console.log('cellParms',cellParms)
+            setTimeout(()=>{
+                budgetNode.setCells(cellParms)
+            })
         }
     }
 
@@ -106,7 +148,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             budgetCell.expandable = expandable
             let {cellCallbacks, cellTitle } = budgetCell
             // curry callback, prepare for passing to exportchart
-            cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid)
+            // cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid)
             return <Tab style={{fontSize:"12px"}} 
                 label={ cellTitle } 
                 value={ cellIndex }

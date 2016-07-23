@@ -138,7 +138,6 @@ class ExplorerBranch extends Component {
             let { budgetBranch } = this.props;
             let { nodes: branchNodes } = budgetBranch;
             let removed = branchNodes.splice(0);
-            console.log('removed in switchViewpoint', removed);
             let removeditems = removed.map((item) => {
                 return { uid: item.uid, cellList: item.cellList };
             });

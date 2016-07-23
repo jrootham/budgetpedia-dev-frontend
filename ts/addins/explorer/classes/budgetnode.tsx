@@ -159,6 +159,8 @@ class BudgetNode {
     nodeIndex: number
     timeSpecs: TimeSpecs
     portalCharts:PortalCell[]
+    actions: any
+    nodeCallbacks: any
     get dataNode() {
         return this._dataNode
     }
@@ -185,6 +187,10 @@ class BudgetNode {
         return this.getAvailableCells()
     }
 
+    get allCells() {
+        return [...this.state.nodeCells]
+    }
+
     // reset = (dataNode, portalCharts, defaultChartType, facet) => {
     update = (dataNode, facet) => {
         this._dataNode = dataNode
@@ -206,10 +212,11 @@ class BudgetNode {
     }
 
     public setCells(cellDeclarations:CellDeclaration[]) {
-        this._cells = []
+        let cells = []
         // // TODO: should be default for each chart...
         // build cells array
         let cellDeclaration: CellDeclaration
+        console.log('cellDeclarations')
         for (cellDeclaration of cellDeclarations) {
             let {chartSelection, chartCode, nodeDatasetName, uid} = cellDeclaration
             let cell = new BudgetCell(
@@ -220,8 +227,13 @@ class BudgetNode {
                     uid,
                 }
             )
-            this._cells.push(cell)
+            console.log('cellDelcaration',cellDeclaration,cell)
+            cells.push(cell)
         }
+        console.log('cells for setState',cells)
+        this.setState({
+            nodeCells:cells
+        })
     }
 
     get cellList() {
@@ -229,15 +241,10 @@ class BudgetNode {
     }
 
     private getAvailableCells() {
+        let cells = [...this.state.nodeCells]
         let availablCells = []
         if (!this.dataNode) return availablCells
-        for (let cell of this._cells) {
-            // if (cell.nodeDatasetName == 'Components' && !this.dataNode.Components) {
-            //     continue
-            // }
-            // if (cell.nodeDatasetName == 'Categories' && !this.dataNode.Categories) {
-            //     continue
-            // }
+        for (let cell of cells) {
             if (!this.dataNode[cell.nodeDatasetName]) {
                 continue
             }
@@ -246,7 +253,6 @@ class BudgetNode {
         return availablCells
     }
 
-    private _cells: BudgetCell[] = []
     private _dataNode: any
 
     // // TODO: TEMPORARY

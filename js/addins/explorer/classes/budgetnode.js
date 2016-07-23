@@ -18,7 +18,6 @@ class BudgetNode {
             }
             return parmsList;
         };
-        this._cells = [];
         let portalcharts = parms.portalCharts;
         this.viewpointName = parms.viewpointName;
         this.facetName = parms.facetName;
@@ -51,9 +50,13 @@ class BudgetNode {
     get cells() {
         return this.getAvailableCells();
     }
+    get allCells() {
+        return [...this.state.nodeCells];
+    }
     setCells(cellDeclarations) {
-        this._cells = [];
+        let cells = [];
         let cellDeclaration;
+        console.log('cellDeclarations');
         for (cellDeclaration of cellDeclarations) {
             let { chartSelection, chartCode, nodeDatasetName, uid } = cellDeclaration;
             let cell = new budgetcell_1.default({
@@ -62,17 +65,23 @@ class BudgetNode {
                 chartSelection: chartSelection,
                 uid: uid,
             });
-            this._cells.push(cell);
+            console.log('cellDelcaration', cellDeclaration, cell);
+            cells.push(cell);
         }
+        console.log('cells for setState', cells);
+        this.setState({
+            nodeCells: cells
+        });
     }
     get cellList() {
         return [...this.getProps().declarationData.nodesById[this.uid].cellList];
     }
     getAvailableCells() {
+        let cells = [...this.state.nodeCells];
         let availablCells = [];
         if (!this.dataNode)
             return availablCells;
-        for (let cell of this._cells) {
+        for (let cell of cells) {
             if (!this.dataNode[cell.nodeDatasetName]) {
                 continue;
             }

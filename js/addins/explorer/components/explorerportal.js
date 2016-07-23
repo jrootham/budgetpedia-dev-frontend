@@ -11,6 +11,7 @@ class ExplorerPortal extends Component {
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
+        this.harmonizecount = null;
         this.onChangeTab = () => {
             this.props.displayCallbacks.onChangePortalTab();
         };
@@ -23,7 +24,6 @@ class ExplorerPortal extends Component {
                 let expandable = ((budgetCells.length > 1) && (cellIndex == 0));
                 budgetCell.expandable = expandable;
                 let { cellCallbacks, cellTitle } = budgetCell;
-                cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid);
                 return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorerchart_1.default, {budgetCell: budgetCell, callbackid: cellIndex}));
             });
             return cellTabs;
@@ -51,18 +51,52 @@ class ExplorerPortal extends Component {
     }
     componentWillMount() {
         let { budgetNode } = this.props;
+        this._stateActions = this.props.globalStateActions;
+        this._nodeDisplayCallbacks = this.props.displayCallbacks;
         budgetNode.getState = this.getState;
         budgetNode.getProps = this.getProps;
         budgetNode.setState = this.setState.bind(this);
-        this._stateActions = this.props.globalStateActions;
+        budgetNode.actions = this._stateActions;
+        budgetNode.nodeCallbacks = this._nodeDisplayCallbacks;
     }
     componentDidMount() {
         let { budgetNode, declarationData } = this.props;
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid];
         if (nodeDeclaration.cellList == null) {
             let cellDeclarationParms = budgetNode.getCellDeclarationParms();
-            console.log('parmsList', cellDeclarationParms);
             this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        let { budgetNode, declarationData } = this.props;
+        let cells = budgetNode.allCells;
+        let { cellsById } = declarationData;
+        let newCells = cells.filter(cell => {
+            return !!cellsById[cell.uid];
+        });
+        if (newCells.length != cells.length) {
+            this.setState({
+                nodeCells: newCells
+            });
+        }
+    }
+    componentDidUpdate() {
+        let { budgetNode, declarationData } = this.props;
+        let cells = budgetNode.allCells;
+        let { cellList } = declarationData.nodesById[budgetNode.uid];
+        console.log('cells, cellList in componentDidUpdate', cells, cellList);
+        if ((cells.length != cellList.length) && (this.harmonizecount == null)) {
+            this.harmonizecount = cellList.length - cells.length;
+            let cellParms = [];
+            let { cellsById } = declarationData;
+            console.log('cellsById, cellList', cellsById, [...cellList]);
+            for (let cellid of cellList) {
+                cellParms.push(cellsById[cellid]);
+            }
+            console.log('cellParms', cellParms);
+            setTimeout(() => {
+                budgetNode.setCells(cellParms);
+            });
         }
     }
     render() {
