@@ -199,10 +199,9 @@ class BudgetNode {
         let chartSpecs = this.portalCharts[this.facetName]
         for (let chartSpec of chartSpecs) {
             let cellDeclaration:CellDeclaration = Object.assign({},this.props.declarationData.defaults.cell)
-            cellDeclaration.nodeDatasetName = chartSpec.Type
+            cellDeclaration.nodeDatasetName = chartSpec.Type // s/b datasetName
             parmsList.push(cellDeclaration)
         }
-        console.log('parmsList',parmsList)
         return parmsList
     }
 

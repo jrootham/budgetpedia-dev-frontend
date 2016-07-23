@@ -16,7 +16,6 @@ class BudgetNode {
                 cellDeclaration.nodeDatasetName = chartSpec.Type;
                 parmsList.push(cellDeclaration);
             }
-            console.log('parmsList', parmsList);
             return parmsList;
         };
         this._cells = [];

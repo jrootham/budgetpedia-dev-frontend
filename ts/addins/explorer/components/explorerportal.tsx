@@ -75,10 +75,11 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     componentDidMount() {
         let { budgetNode, declarationData } = this.props
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
-        console.log('nodeDeclaration, portalCharts',nodeDeclaration, budgetNode.portalCharts)
+        // console.log('nodeDeclaration, portalCharts',nodeDeclaration, budgetNode.portalCharts)
         if (nodeDeclaration.cellList == null) {
             // get controlData for cellList
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
+            console.log('parmsList',cellDeclarationParms)
         }
     }
 
