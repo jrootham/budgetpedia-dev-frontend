@@ -19,6 +19,7 @@ class ExplorerPortal extends Component {
         this.getChartTabs = () => {
             let { callbackid, budgetNode } = this.props;
             let budgetCells = budgetNode.cells;
+            console.log('budgetCells in getChartTabs', budgetCells);
             let portalSettings = budgetNode.portalConfig;
             let cellTabs = budgetCells.map((budgetCell, cellIndex) => {
                 let expandable = ((budgetCells.length > 1) && (cellIndex == 0));
@@ -60,6 +61,7 @@ class ExplorerPortal extends Component {
         budgetNode.nodeCallbacks = this._nodeDisplayCallbacks;
     }
     componentDidMount() {
+        console.log('explorer portal componentDidMount');
         let { budgetNode, declarationData } = this.props;
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid];
         if (nodeDeclaration.cellList == null) {
@@ -94,8 +96,14 @@ class ExplorerPortal extends Component {
                 cellParms.push(cellsById[cellid]);
             }
             console.log('cellParms', cellParms);
-            setTimeout(() => {
-                budgetNode.setCells(cellParms);
+            let newcells = budgetNode.setCells(cellParms);
+            console.log('cells for setState', newcells);
+            if (newcells.length == cellList.length) {
+                console.log('harmonization achieved');
+                this.harmonizecount = null;
+            }
+            this.setState({
+                nodeCells: newcells
             });
         }
     }

@@ -81,6 +81,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     }
 
     componentDidMount() {
+        console.log('explorer portal componentDidMount')
         let { budgetNode, declarationData } = this.props
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
         // console.log('nodeDeclaration, portalCharts',nodeDeclaration, budgetNode.portalCharts)
@@ -122,9 +123,17 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
                 cellParms.push(cellsById[cellid])
             }
             console.log('cellParms',cellParms)
-            setTimeout(()=>{
-                budgetNode.setCells(cellParms)
-            })
+            // setTimeout(()=>{
+                let newcells = budgetNode.setCells(cellParms)
+                console.log('cells for setState',newcells)
+                if (newcells.length == cellList.length) {
+                    console.log('harmonization achieved')
+                    this.harmonizecount = null
+                }
+                this.setState({
+                    nodeCells:newcells
+                })
+            // })
         }
     }
 
@@ -139,6 +148,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         // generate array of chart tabs
         let { callbackid, budgetNode } = this.props
         let budgetCells = budgetNode.cells
+        console.log('budgetCells in getChartTabs',budgetCells)
         let portalSettings = budgetNode.portalConfig
         // let { chartConfigs } = portalSettings 
         let cellTabs = budgetCells.map(

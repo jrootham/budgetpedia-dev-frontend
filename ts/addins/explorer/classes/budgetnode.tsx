@@ -230,10 +230,7 @@ class BudgetNode {
             console.log('cellDelcaration',cellDeclaration,cell)
             cells.push(cell)
         }
-        console.log('cells for setState',cells)
-        this.setState({
-            nodeCells:cells
-        })
+        return cells
     }
 
     get cellList() {
