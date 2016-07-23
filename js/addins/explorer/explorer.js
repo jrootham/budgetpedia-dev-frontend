@@ -94,6 +94,7 @@ let Explorer = class extends Component {
     }
     render() {
         let explorer = this;
+        console.log('declarationData', explorer.props.declarationData);
         let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,
@@ -107,10 +108,10 @@ let Explorer = class extends Component {
             let budgetBranches = explorer.state.budgetBranches;
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
                 let actionFunctions = {
-                    addCellDeclaration: this.props.addCellDeclaration,
-                    removeCellDeclaration: this.props.removeCellDeclaration,
+                    addCellDeclarations: this.props.addCellDeclarations,
+                    removeCellDeclarations: this.props.removeCellDeclarations,
                     addNodeDeclaration: this.props.addNodeDeclaration,
-                    removeNodeDeclaration: this.props.removeNodeDeclaration,
+                    removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                 };
@@ -136,9 +137,9 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     addBranchDeclaration: ExplorerActions.addBranchDeclaration,
     removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
     addNodeDeclaration: ExplorerActions.addNodeDeclaration,
-    removeNodeDeclaration: ExplorerActions.removeNodeDeclaration,
-    addCellDeclaration: ExplorerActions.addCellDeclaration,
-    removeCellDeclaration: ExplorerActions.removeCellDeclaration,
+    removeNodeDeclarations: ExplorerActions.removeNodeDeclarations,
+    addCellDeclarations: ExplorerActions.addCellDeclarations,
+    removeCellDeclarations: ExplorerActions.removeCellDeclarations,
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeFacet: ExplorerActions.changeFacet,
 })(Explorer);

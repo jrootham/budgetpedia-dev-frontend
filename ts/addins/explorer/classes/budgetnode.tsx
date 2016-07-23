@@ -224,6 +224,10 @@ class BudgetNode {
         }
     }
 
+    get cellList() {
+        return [...this.getProps().declarationData.nodesById[this.uid].cellList]
+    }
+
     private getAvailableCells() {
         let availablCells = []
         if (!this.dataNode) return availablCells

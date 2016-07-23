@@ -35,7 +35,7 @@ import BudgetBranch from '../classes/budgetbranch'
 
 export interface ExplorerBranchActions {
     addNodeDeclaration:Function,
-    removeNodeDeclaration:Function,
+    removeNodeDeclarations:Function,
     changeViewpoint:Function,
     changeFacet: Function,    
 }
@@ -86,8 +86,8 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     // provide for curried versions
     private addNodeDeclaration = 
         branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid,settings)
-    private removeNodeDeclaration = 
-        branchUid => nodeUid => this.props.globalStateActions.removeNodeDeclaration(branchUid, nodeUid)
+    private removeNodeDeclarations = 
+        branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems)
 
     // complete initialization of budgetBranch and branch explorer objects
     componentWillMount() {
@@ -98,7 +98,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         this._stateActions = Object.assign({}, actions)
         // replace originals with curried versions
         this._stateActions.addNodeDeclaration = this.addNodeDeclaration(budgetBranch.uid)
-        this._stateActions.removeNodeDeclaration = this.removeNodeDeclaration(budgetBranch.uid)
+        this._stateActions.removeNodeDeclarations = this.removeNodeDeclarations(budgetBranch.uid)
 
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this
         let { updateChartSelections, workingStatus } = displayCallbacks
@@ -347,13 +347,14 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
         // branchNodes is just a copy of the component state's BranchNodes
         let removed = branchNodes.splice(0) // identify nodes to remove
-        let removedids = removed.map((item) => {
-            return item.uid
+        console.log('removed in switchViewpoint', removed)
+        let removeditems = removed.map((item) => {
+            return {uid:item.uid, cellList:item.cellList}
         })
         // console.log('calling from switchviewpoint',branchsettings, viewpointname, callbackuid, removedids)
         // this will trigger render cycle that will delete the component state's stored nodes
         let globalStateActions = this._stateActions
-        globalStateActions.removeNodeDeclaration(removedids)
+        globalStateActions.removeNodeDeclarations(removeditems)
         // now the viewpoint can be changed, triggering a change in viewpoint data
         setTimeout(() => {
             globalStateActions.changeViewpoint(budgetBranch.uid, viewpointname)

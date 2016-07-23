@@ -41,15 +41,15 @@ let branchesById = (state = {}, action) => {
                 [...state[branchuid].nodeList, action.payload.uid];
             return newstate;
         }
-        case actions_1.types.REMOVE_NODE: {
+        case actions_1.types.REMOVE_NODES: {
             let { branchuid } = action.payload;
             newstate = Object.assign({}, state);
-            let removelist = action.payload.uid;
-            if (!Array.isArray(removelist)) {
-                removelist = [removelist];
-            }
+            let removelist = action.payload.items;
             let newList = newstate[branchuid].nodeList.filter((uid) => {
-                return (removelist.indexOf(uid) == -1);
+                let foundlist = removelist.filter(item => {
+                    return item.uid == uid;
+                });
+                return foundlist.length == 0;
             });
             newstate[branchuid].nodeList = newList;
             return newstate;
@@ -76,27 +76,56 @@ let nodesById = (state = {}, action) => {
     let { type } = action;
     let newstate;
     switch (type) {
-        case actions_1.types.ADD_NODE:
+        case actions_1.types.ADD_NODE: {
             let node = state[action.payload.uid] || {};
             node = Object.assign(node, action.payload.settings);
             newstate = Object.assign({}, state, { [action.payload.uid]: node });
             return newstate;
-        case actions_1.types.REMOVE_NODE:
+        }
+        case actions_1.types.REMOVE_NODES: {
             newstate = Object.assign({}, state);
-            let removelist = action.payload.uid;
-            if (!Array.isArray(removelist)) {
-                removelist = [removelist];
-            }
-            for (let removeid of removelist) {
-                delete newstate[removeid];
+            let removelist = action.payload.items;
+            for (let removeitem of removelist) {
+                delete newstate[removeitem.uid];
             }
             return newstate;
+        }
+        case actions_1.types.ADD_CELLS: {
+            let newstate = Object.assign({}, state);
+            let nodeuid = action.payload.nodeuid;
+            let newnode = newstate[nodeuid] = Object.assign({}, newstate[nodeuid]);
+            newnode.cellList = newnode.cellList || [];
+            let newcellList = action.payload.settings.map(setting => setting.uid);
+            newnode.cellList = [...newnode.cellList, ...newcellList];
+            newstate[nodeuid] = newnode;
+            return newstate;
+        }
         default:
             return state;
     }
 };
 let cellsById = (state = {}, action) => {
-    return state;
+    let { type } = action;
+    let newstate;
+    switch (type) {
+        case actions_1.types.ADD_CELLS: {
+            newstate = Object.assign({}, state);
+            for (let setting of action.payload.settings) {
+                newstate[setting.uid] = setting;
+            }
+            return newstate;
+        }
+        case actions_1.types.REMOVE_NODES: {
+            newstate = Object.assign({}, state);
+            for (let removeitem of action.payload.items) {
+                for (let celluid of removeitem.cellList)
+                    delete newstate[celluid];
+            }
+            return newstate;
+        }
+        default:
+            return state;
+    }
 };
 let lastAction = (state = null, action) => {
     return action.type;

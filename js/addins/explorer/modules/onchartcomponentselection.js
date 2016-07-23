@@ -15,12 +15,12 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         return;
     }
     let removed = branchNodes.splice(nodeIndex + 1);
-    let removedids = removed.map((item) => {
-        return item.uid;
+    let removeditems = removed.map((item) => {
+        return { uid: item.uid, cellList: item.cellList };
     });
-    if (removedids.length > 0) {
-        let { removeNodeDeclaration } = budgetBranch.actions;
-        removeNodeDeclaration(removedids);
+    if (removeditems.length > 0) {
+        let { removeNodeDeclarations } = budgetBranch.actions;
+        removeNodeDeclarations(removeditems);
     }
     setTimeout(() => {
         branchNodes = budgetBranch.nodes;

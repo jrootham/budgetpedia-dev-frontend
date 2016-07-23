@@ -19,7 +19,7 @@ class ExplorerBranch extends Component {
         this.getState = () => this.state;
         this.getProps = () => this.props;
         this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
-        this.removeNodeDeclaration = branchUid => nodeUid => this.props.globalStateActions.removeNodeDeclaration(branchUid, nodeUid);
+        this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
         this.harmonizecount = null;
         this.controlGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
@@ -138,11 +138,12 @@ class ExplorerBranch extends Component {
             let { budgetBranch } = this.props;
             let { nodes: branchNodes } = budgetBranch;
             let removed = branchNodes.splice(0);
-            let removedids = removed.map((item) => {
-                return item.uid;
+            console.log('removed in switchViewpoint', removed);
+            let removeditems = removed.map((item) => {
+                return { uid: item.uid, cellList: item.cellList };
             });
             let globalStateActions = this._stateActions;
-            globalStateActions.removeNodeDeclaration(removedids);
+            globalStateActions.removeNodeDeclarations(removeditems);
             setTimeout(() => {
                 globalStateActions.changeViewpoint(budgetBranch.uid, viewpointname);
             });
@@ -192,7 +193,7 @@ class ExplorerBranch extends Component {
         let { budgetBranch, globalStateActions: actions, displayCallbacks } = this.props;
         this._stateActions = Object.assign({}, actions);
         this._stateActions.addNodeDeclaration = this.addNodeDeclaration(budgetBranch.uid);
-        this._stateActions.removeNodeDeclaration = this.removeNodeDeclaration(budgetBranch.uid);
+        this._stateActions.removeNodeDeclarations = this.removeNodeDeclarations(budgetBranch.uid);
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this;
         let { updateChartSelections, workingStatus } = displayCallbacks;
         this._nodeDisplayCallbacks = {

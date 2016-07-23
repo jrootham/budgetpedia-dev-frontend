@@ -9,23 +9,23 @@ var types;
     types.CHANGE_FACET = 'CHANGE_FACET';
     types.TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED';
     types.ADD_NODE = 'ADD_NODE';
-    types.REMOVE_NODE = 'REMOVE_NODE';
-    types.ADD_CELL = 'ADD_CELL';
-    types.REMOVE_CELL = 'REMOVE_CELL';
+    types.REMOVE_NODES = 'REMOVE_NODES';
+    types.ADD_CELLS = 'ADD_CELLS';
+    types.REMOVE_CELLS = 'REMOVE_CELLS';
     types.CHANGE_CHART_CODE = 'CHANGE_CHART_CODE';
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
 })(types = exports.types || (exports.types = {}));
 var branchTypes;
 (function (branchTypes) {
     branchTypes.ADD_NODE = types.ADD_NODE;
-    branchTypes.REMOVE_NODE = types.REMOVE_NODE;
+    branchTypes.REMOVE_NODES = types.REMOVE_NODES;
     branchTypes.CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT;
     branchTypes.CHANGE_FACET = types.CHANGE_FACET;
 })(branchTypes = exports.branchTypes || (exports.branchTypes = {}));
 var nodeTypes;
 (function (nodeTypes) {
-    nodeTypes.ADD_CELL = types.ADD_CELL;
-    nodeTypes.REMOVE_CELL = types.REMOVE_CELL;
+    nodeTypes.ADD_CELLS = types.ADD_CELLS;
+    nodeTypes.REMOVE_CELLS = types.REMOVE_CELLS;
     nodeTypes.CHANGE_CHART_CODE = types.CHANGE_CHART_CODE;
     nodeTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
 })(nodeTypes = exports.nodeTypes || (exports.nodeTypes = {}));
@@ -49,16 +49,23 @@ exports.addNodeDeclaration = redux_actions_1.createAction(types.ADD_NODE, (branc
     uid: uuid.v4(),
     branchuid: branchuid,
 }));
-exports.removeNodeDeclaration = redux_actions_1.createAction(types.REMOVE_NODE, (branchuid, uid) => ({
-    uid: uid,
+exports.removeNodeDeclarations = redux_actions_1.createAction(types.REMOVE_NODES, (branchuid, items) => ({
+    items: items,
     branchuid: branchuid,
 }));
-exports.addCellDeclaration = redux_actions_1.createAction(types.ADD_CELL, (nodeuid, settings) => ({
+const _addCellDeclaration = redux_actions_1.createAction(types.ADD_CELLS, (nodeuid, settings) => ({
     settings: settings,
-    uid: uuid.v4(),
     nodeuid: nodeuid,
 }));
-exports.removeCellDeclaration = redux_actions_1.createAction(types.REMOVE_CELL, (nodeuid, uid) => ({
-    uid: uid,
+exports.addCellDeclarations = (nodeuid, settingslist) => {
+    return dispatch => {
+        for (let settings of settingslist) {
+            settings.uid = uuid.v4();
+        }
+        dispatch(_addCellDeclaration(nodeuid, settingslist));
+    };
+};
+exports.removeCellDeclarations = redux_actions_1.createAction(types.REMOVE_CELLS, (nodeuid, uidlist) => ({
+    uidlist: uidlist,
     nodeuid: nodeuid,
 }));

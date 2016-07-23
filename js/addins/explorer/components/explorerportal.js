@@ -54,6 +54,7 @@ class ExplorerPortal extends Component {
         budgetNode.getState = this.getState;
         budgetNode.getProps = this.getProps;
         budgetNode.setState = this.setState.bind(this);
+        this._stateActions = this.props.globalStateActions;
     }
     componentDidMount() {
         let { budgetNode, declarationData } = this.props;
@@ -61,6 +62,7 @@ class ExplorerPortal extends Component {
         if (nodeDeclaration.cellList == null) {
             let cellDeclarationParms = budgetNode.getCellDeclarationParms();
             console.log('parmsList', cellDeclarationParms);
+            this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
         }
     }
     render() {

@@ -9,23 +9,23 @@ export namespace types {
     export const CHANGE_FACET = 'CHANGE_FACET'
     export const TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED'
     export const ADD_NODE = 'ADD_NODE'
-    export const REMOVE_NODE = 'REMOVE_NODE'
-    export const ADD_CELL = 'ADD_CELL'
-    export const REMOVE_CELL = 'REMOVE_CELL'
+    export const REMOVE_NODES = 'REMOVE_NODES'
+    export const ADD_CELLS = 'ADD_CELLS'
+    export const REMOVE_CELLS = 'REMOVE_CELLS'
     export const CHANGE_CHART_CODE = 'CHANGE_CHART_CODE'
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
 }
 
 export namespace branchTypes {
     export import ADD_NODE = types.ADD_NODE
-    export import REMOVE_NODE = types.REMOVE_NODE
+    export import REMOVE_NODES = types.REMOVE_NODES
     export import CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT
     export import CHANGE_FACET = types.CHANGE_FACET
 }
 
 export namespace nodeTypes {
-    export import ADD_CELL = types.ADD_CELL
-    export import REMOVE_CELL = types.REMOVE_CELL
+    export import ADD_CELLS = types.ADD_CELLS
+    export import REMOVE_CELLS = types.REMOVE_CELLS
     export import CHANGE_CHART_CODE = types.CHANGE_CHART_CODE
     export import TOGGLE_DELTA = types.TOGGLE_DELTA
 }
@@ -65,24 +65,32 @@ export const addNodeDeclaration = createAction(
     })
 )
 
-export const removeNodeDeclaration = createAction(
-    types.REMOVE_NODE,(branchuid,uid) => ({
-        uid,
+export const removeNodeDeclarations = createAction(
+    types.REMOVE_NODES,(branchuid,items) => ({
+        items,
         branchuid,
     })
 )
 
-export const addCellDeclaration = createAction(
-    types.ADD_CELL,(nodeuid,settings) => ({
+const _addCellDeclaration = createAction(
+    types.ADD_CELLS,(nodeuid,settings) => ({
         settings,
-        uid: uuid.v4(),
         nodeuid,
     })
 )
+
+export const addCellDeclarations = (nodeuid,settingslist) => {
+    return dispatch => {
+        for (let settings of settingslist) {
+            settings.uid = uuid.v4()
+        }
+        dispatch(_addCellDeclaration(nodeuid,settingslist))
+    }
+}
     
-export const removeCellDeclaration = createAction(
-    types.REMOVE_CELL,(nodeuid,uid) => ({
-        uid,
+export const removeCellDeclarations = createAction(
+    types.REMOVE_CELLS,(nodeuid,uidlist) => ({
+        uidlist,
         nodeuid,
     })
 )

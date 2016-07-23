@@ -27,8 +27,8 @@ interface ExplorePortalProps {
 }
 
 export interface ExplorerPortalActions {
-    addCellDeclaration:Function,
-    removeCellDeclaration:Function,
+    addCellDeclarations:Function,
+    removeCellDeclarations:Function,
 }
 
 // for (let cellindex in budgetNode.cells) {
@@ -70,6 +70,8 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         budgetNode.getState = this.getState
         budgetNode.getProps = this.getProps
         budgetNode.setState = this.setState.bind(this)
+
+        this._stateActions = this.props.globalStateActions
     }
 
     componentDidMount() {
@@ -80,6 +82,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             // get controlData for cellList
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             console.log('parmsList',cellDeclarationParms)
+            this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
         }
     }
 

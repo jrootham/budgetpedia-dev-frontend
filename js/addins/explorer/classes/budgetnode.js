@@ -65,6 +65,9 @@ class BudgetNode {
             this._cells.push(cell);
         }
     }
+    get cellList() {
+        return [...this.getProps().declarationData.nodesById[this.uid].cellList];
+    }
     getAvailableCells() {
         let availablCells = [];
         if (!this.dataNode)

@@ -57,8 +57,8 @@ import {
 } from './modules/interfaces'
 
 interface MappedNodeActions {
-    addCellDeclaration:Function,
-    removeCellDeclaration:Function,
+    addCellDeclarations:Function,
+    removeCellDeclarations:Function,
     // changeChart:Function,
     // changeSelection:Function,
     // toggleDelta:Function,
@@ -66,7 +66,7 @@ interface MappedNodeActions {
 
 interface MappedBranchActions extends MappedNodeActions {
     addNodeDeclaration:Function,
-    removeNodeDeclaration: Function,
+    removeNodeDeclarations: Function,
     changeViewpoint: Function,
     changeFacet: Function,
     // toggleInflationAdjustement:Function
@@ -217,7 +217,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         let explorer = this
 
-        // console.log('declarationData',explorer.props.declarationData)
+        console.log('declarationData',explorer.props.declarationData)
         
         let dialogbox =  
             <Dialog
@@ -276,10 +276,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
                 let actionFunctions:MappedBranchActions = {
-                    addCellDeclaration: this.props.addCellDeclaration,
-                    removeCellDeclaration: this.props.removeCellDeclaration,
+                    addCellDeclarations: this.props.addCellDeclarations,
+                    removeCellDeclarations: this.props.removeCellDeclarations,
                     addNodeDeclaration: this.props.addNodeDeclaration,
-                    removeNodeDeclaration: this.props.removeNodeDeclaration,
+                    removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                 }
@@ -371,9 +371,9 @@ Explorer = connect(mapStateToProps, {
     addBranchDeclaration:ExplorerActions.addBranchDeclaration,
     removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
     addNodeDeclaration:ExplorerActions.addNodeDeclaration,
-    removeNodeDeclaration:ExplorerActions.removeNodeDeclaration,
-    addCellDeclaration:ExplorerActions.addCellDeclaration,
-    removeCellDeclaration:ExplorerActions.removeCellDeclaration,
+    removeNodeDeclarations:ExplorerActions.removeNodeDeclarations,
+    addCellDeclarations:ExplorerActions.addCellDeclarations,
+    removeCellDeclarations:ExplorerActions.removeCellDeclarations,
 
     // branch actions - variations
     changeViewpoint: ExplorerActions.changeViewpoint,
