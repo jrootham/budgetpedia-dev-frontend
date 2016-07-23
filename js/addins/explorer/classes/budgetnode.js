@@ -11,17 +11,10 @@ class BudgetNode {
         this.getCellDeclarationParms = () => {
             let parmsList = [];
             let chartSpecs = this.portalCharts[this.facetName];
-            let defaultCellDeclaration = this.props.declarationData.defaults.cell;
             for (let chartSpec of chartSpecs) {
-                console.log('chartSpec', chartSpec);
-                let nodeDatasetName = chartSpec.Type;
-                let chartSelection = null;
-                let chartCode = defaultCellDeclaration.chartCode;
-                parmsList.push({
-                    nodeDatasetName: nodeDatasetName,
-                    chartSelection: chartSelection,
-                    chartCode: chartCode,
-                });
+                let cellDeclaration = Object.assign({}, this.props.declarationData.defaults.cell);
+                cellDeclaration.nodeDatasetName = chartSpec.Type;
+                parmsList.push(cellDeclaration);
             }
             console.log('parmsList', parmsList);
             return parmsList;

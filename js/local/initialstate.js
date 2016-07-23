@@ -113,6 +113,7 @@ let explorer = {
             cellList: null
         },
         cell: {
+            chartSelection: null,
             chartCode: "ColumnChart",
         }
     }
