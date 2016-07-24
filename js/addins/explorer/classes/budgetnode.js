@@ -1,6 +1,8 @@
 "use strict";
+const constants_1 = require('../../constants');
 const getchartparms_1 = require('./modules/getchartparms');
 const budgetcell_1 = require('./budgetcell');
+const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 class BudgetNode {
     constructor(parms, uid, node, parentNode = null) {
         this.parentData = null;
@@ -17,6 +19,34 @@ class BudgetNode {
                 parmsList.push(cellDeclaration);
             }
             return parmsList;
+        };
+        this._assignCellChartParms = cell => {
+            let budgetNode = this;
+            let chartParmsObj = {};
+            let cellindex;
+            let branchuid = this.uid;
+            let selectfn = onchartcomponentselection_1.onChartComponentSelection(this);
+            let viewpointdata = this.getProps().viewpointData;
+            let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = viewpointdata;
+            let configData = {
+                viewpointConfig: viewpointConfig,
+                itemseriesConfig: itemseriesConfig,
+            };
+            let budgetCell = cell;
+            let props = {
+                chartIndex: cellindex,
+                configData: configData,
+                branchsettings: this.getProps().budgetBranch.settings,
+                budgetCell: cell,
+            };
+            let fcurrent = selectfn(this.nodeIndex)(cellindex);
+            chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: selectfn });
+            console.log('chartParmsObj', chartParmsObj);
+            if (!chartParmsObj.isError) {
+                budgetCell.chartParms = chartParmsObj.chartParms;
+                budgetCell.chartCode =
+                    constants_1.GoogleChartTypeToChartCode[budgetCell.chartParms.chartType];
+            }
         };
         let portalcharts = parms.portalCharts;
         this.viewpointName = parms.viewpointName;
@@ -55,8 +85,8 @@ class BudgetNode {
     }
     setCells(cellDeclarations) {
         let cells = [];
-        let cellDeclaration;
-        for (cellDeclaration of cellDeclarations) {
+        for (let cellIndex in cellDeclarations) {
+            let cellDeclaration = cellDeclarations[cellIndex];
             let { chartSelection, chartCode, nodeDatasetName, uid } = cellDeclaration;
             let cell = new budgetcell_1.default({
                 nodeDatasetName: nodeDatasetName,
@@ -64,6 +94,7 @@ class BudgetNode {
                 chartSelection: chartSelection,
                 uid: uid,
             });
+            this._assignCellChartParms(cell);
             cells.push(cell);
         }
         return cells;

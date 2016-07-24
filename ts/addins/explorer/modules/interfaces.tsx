@@ -76,6 +76,7 @@ export interface GetCellChartProps {
     chartIndex: number,
     branchsettings:BranchSettings, 
     configData: any,
+    budgetCell?:any,
 }
 
 interface GetChartParmsProps extends GetCellChartProps {

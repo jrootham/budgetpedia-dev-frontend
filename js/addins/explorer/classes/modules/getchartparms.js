@@ -3,7 +3,7 @@ var format = require('format-number');
 let getChartParms = (props, selectionCallbacks) => {
     let { budgetNode, chartIndex, branchsettings, configData } = props;
     let { viewpointConfig, itemseriesConfig } = configData;
-    let budgetCell = budgetNode.cells[chartIndex];
+    let budgetCell = budgetNode.cells[chartIndex] || props.budgetCell;
     let { nodeDatasetName } = budgetCell;
     let sortedlist = 'Sorted' + nodeDatasetName;
     let { viewpointName: viewpointindex, dataNode, timeSpecs: yearscope } = budgetNode;

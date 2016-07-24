@@ -407,8 +407,10 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             return <ExplorerPortal
                 key = {nodeindex}
                 callbackid = { nodeindex }
+                budgetBranch = {this.props.budgetBranch}
                 budgetNode = { budgetNode }
                 declarationData = {this.props.declarationData}
+                viewpointData = {this.state.viewpointData}
                 globalStateActions = { this._stateActions }
                 displayCallbacks = { {onChangePortalTab: this.onChangePortalTab} }
             />

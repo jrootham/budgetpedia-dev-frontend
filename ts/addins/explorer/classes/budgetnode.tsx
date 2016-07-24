@@ -7,12 +7,13 @@ import {
     CellSettings,
     PortalConfig,
     GetCellChartProps,
-    GetChartParmsProps
+    GetChartParmsProps,
+    ChartParmsObj,
 } from '../modules/interfaces'
 import getChartParmsSource from './modules/getchartparms'
 import BudgetCell, { CellDeclaration } from './budgetcell'
 import {
-    ChartSelectionCell,
+    ChartSelectionCell, onChartComponentSelection,
 } from '../modules/onchartcomponentselection'
 
 export interface BudgetNodeParms {
@@ -215,8 +216,8 @@ class BudgetNode {
         let cells = []
         // // TODO: should be default for each chart...
         // build cells array
-        let cellDeclaration: CellDeclaration
-        for (cellDeclaration of cellDeclarations) {
+        for (let cellIndex in cellDeclarations) {
+            let cellDeclaration: CellDeclaration = cellDeclarations[cellIndex]
             let {chartSelection, chartCode, nodeDatasetName, uid} = cellDeclaration
             let cell = new BudgetCell(
                 {
@@ -226,9 +227,49 @@ class BudgetNode {
                     uid,
                 }
             )
+            this._assignCellChartParms(cell)
             cells.push(cell)
         }
         return cells
+    }
+
+    private _assignCellChartParms = cell => {
+        let budgetNode = this
+        let chartParmsObj: ChartParmsObj = {} as ChartParmsObj
+        let cellindex: any
+        let branchuid = this.uid
+        let selectfn = onChartComponentSelection(this)
+        let viewpointdata = this.getProps().viewpointData
+        let {
+            Configuration: viewpointConfig,
+            itemseriesconfigdata: itemseriesConfig,
+        } = viewpointdata
+        let configData = {
+            viewpointConfig,
+            itemseriesConfig,
+        }
+        let budgetCell:BudgetCell = cell
+        let props: GetCellChartProps = {
+            chartIndex: cellindex,
+            configData,
+            branchsettings:this.getProps().budgetBranch.settings,
+            budgetCell: cell,
+        }
+
+        let fcurrent = selectfn(this.nodeIndex)(cellindex)
+
+        chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:selectfn})
+
+        console.log('chartParmsObj', chartParmsObj)
+
+        if (!chartParmsObj.isError) {
+
+            budgetCell.chartParms = chartParmsObj.chartParms
+            budgetCell.chartCode =
+                GoogleChartTypeToChartCode[budgetCell.chartParms.chartType]
+
+        }
+
     }
 
     get cellList() {
@@ -249,11 +290,6 @@ class BudgetNode {
     }
 
     private _dataNode: any
-
-    // // TODO: TEMPORARY
-    // set cells(value) {
-    //     this._cells = value
-    // }
 
 }
 

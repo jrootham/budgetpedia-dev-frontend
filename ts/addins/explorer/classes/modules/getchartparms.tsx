@@ -64,7 +64,7 @@ let getChartParms = (
 
     let { viewpointConfig, itemseriesConfig }  = configData
 
-    let budgetCell: BudgetCell = budgetNode.cells[chartIndex]
+    let budgetCell: BudgetCell = budgetNode.cells[chartIndex] || props.budgetCell
 
     let { nodeDatasetName } = budgetCell
 
