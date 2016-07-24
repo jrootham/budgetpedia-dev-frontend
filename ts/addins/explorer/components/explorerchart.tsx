@@ -68,21 +68,23 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
         console.log('explorerchart budgetCell', this.props.budgetCell)
 
         let { chartParms, chartCode, expandable, graph_id } = this.props.budgetCell
-        if (!expandable) {
-            chartParms.options['backgroundColor'] = '#E4E4E4'
-        }
+        // if (!expandable) {
+        //     chartParms.options['backgroundColor'] = '#E4E4E4'
+        // }
 
-        let chart =  <Chart
-                ref = {node => {this.props.budgetCell.chartComponent = node}} 
-                chartType = { chartParms.chartType }
-                options = { chartParms.options }
-                chartEvents = { chartParms.events }
-                rows = { chartParms.rows }
-                columns = { chartParms.columns }
-                // used to create and cache html element id attribute
-                graph_id = { graph_id }
-                />
+        // let chart =  <Chart
+        //         ref = {node => {this.props.budgetCell.chartComponent = node}} 
+        //         chartType = { chartParms.chartType }
+        //         options = { chartParms.options }
+        //         chartEvents = { chartParms.events }
+        //         rows = { chartParms.rows }
+        //         columns = { chartParms.columns }
+        //         // used to create and cache html element id attribute
+        //         graph_id = { graph_id }
+        //         />
 
+        let chart = []
+        // return <div></div>
         return <div>
             <div style={{ padding: "3px" }}>
                 <IconButton

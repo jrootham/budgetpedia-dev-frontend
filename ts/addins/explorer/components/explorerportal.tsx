@@ -114,6 +114,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         let cells = budgetNode.allCells
         let { cellList } = declarationData.nodesById[budgetNode.uid]
         console.log('cells, cellList in componentDidUpdate',cells, cellList)
+        // harmonization required if there is a mismatch between cells and cellList
         if ((cells.length != cellList.length) && (this.harmonizecount == null)) {
             this.harmonizecount = cellList.length - cells.length
             let cellParms = []
@@ -123,17 +124,15 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
                 cellParms.push(cellsById[cellid])
             }
             console.log('cellParms',cellParms)
-            // setTimeout(()=>{
-                let newcells = budgetNode.setCells(cellParms)
-                console.log('cells for setState',newcells)
-                if (newcells.length == cellList.length) {
-                    console.log('harmonization achieved')
-                    this.harmonizecount = null
-                }
-                this.setState({
-                    nodeCells:newcells
-                })
-            // })
+            let newcells = budgetNode.setCells(cellParms)
+            console.log('cells for setState',newcells)
+            if (newcells.length == cellList.length) {
+                console.log('harmonization achieved')
+                this.harmonizecount = null
+            }
+            this.setState({
+                nodeCells:newcells
+            })
         }
     }
 
