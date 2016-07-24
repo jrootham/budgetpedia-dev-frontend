@@ -9,6 +9,7 @@ import {
 import {
     ChartSelectionCell,
 } from '../modules/onchartcomponentselection'
+import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../../constants'
 
 export interface CellDeclaration {
     nodeDatasetName:string, 
@@ -35,9 +36,13 @@ class BudgetCell {
 
     // derivative properties
     chartComponent: any // the react Chart component, allows access to google chart objects
-    googleChartType: string
+    get googleChartType() {
+        return ChartCodeToGoogleChartType[this.chartCode]
+    }
     chartParms: ChartParms
-    get chart() {return this.chartComponent.chart}
+    get chart() {
+        return this.chartComponent.chart
+    }
     cellCallbacks: CellCallbacks
     expandable: boolean
     graph_id: string

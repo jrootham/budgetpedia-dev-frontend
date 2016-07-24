@@ -39,7 +39,7 @@ import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 
 import ExplorerBranch from './components/explorerbranch'
-import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../constants'
+// import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../constants'
 
 import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
