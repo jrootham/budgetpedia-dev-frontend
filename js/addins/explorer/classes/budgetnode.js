@@ -20,7 +20,7 @@ class BudgetNode {
         };
         this._assignCellChartParms = (cell) => {
             let budgetNode = this;
-            let selectfn = this.getProps().onChartComponentSelection;
+            let selectfn = this.onChartComponentSelection;
             let fcurrent = selectfn(budgetNode.nodeIndex)(cell.cellIndex);
             let chartParmsObj = cell.getChartParms({ current: fcurrent, next: selectfn });
             console.log('chartParmsObj', chartParmsObj);
@@ -71,8 +71,8 @@ class BudgetNode {
                 uid: uid,
             });
             cell.cellIndex = parseInt(cellIndex);
-            let configData = this.getProps().configData;
-            cell.configData = configData;
+            let viewpointConfigData = this.viewpointConfigData;
+            cell.viewpointConfigData = viewpointConfigData;
             let { dataNode, timeSpecs, parentData, nodeIndex } = this;
             let nodeData = {
                 dataNode: dataNode,
@@ -81,7 +81,7 @@ class BudgetNode {
                 nodeIndex: nodeIndex,
             };
             cell.nodeData = nodeData;
-            cell.branchSettings = this.getProps().branchSettings,
+            cell.branchSettings = this.branchSettings,
                 this._assignCellChartParms(cell);
             cells.push(cell);
         }

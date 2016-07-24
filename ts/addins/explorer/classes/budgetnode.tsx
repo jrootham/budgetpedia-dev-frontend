@@ -165,6 +165,9 @@ class BudgetNode {
     portalCharts:PortalCell[]
     actions: any
     nodeCallbacks: any
+    viewpointConfigData: any
+    branchSettings:any
+    onChartComponentSelection: Function
     get dataNode() {
         return this._dataNode
     }
@@ -232,8 +235,8 @@ class BudgetNode {
             )
             cell.cellIndex = parseInt(cellIndex) // parseInt is a compiler requirement
 
-            let configData = this.getProps().configData
-            cell.configData = configData
+            let viewpointConfigData = this.viewpointConfigData
+            cell.viewpointConfigData = viewpointConfigData
 
             let { dataNode, timeSpecs, parentData, nodeIndex } = this
             let nodeData = {
@@ -244,7 +247,7 @@ class BudgetNode {
             }
             cell.nodeData = nodeData
 
-            cell.branchSettings = this.getProps().branchSettings,
+            cell.branchSettings = this.branchSettings,
 
             this._assignCellChartParms(cell)
             cells.push(cell)
@@ -255,7 +258,7 @@ class BudgetNode {
     private _assignCellChartParms = (cell:BudgetCell) => {
         let budgetNode = this
 
-        let selectfn = this.getProps().onChartComponentSelection
+        let selectfn = this.onChartComponentSelection
         let fcurrent = selectfn(budgetNode.nodeIndex)(cell.cellIndex)
 
         let chartParmsObj:ChartParmsObj = cell.getChartParms({current:fcurrent,next:selectfn})

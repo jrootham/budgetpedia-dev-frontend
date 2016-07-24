@@ -24,9 +24,6 @@ interface ExplorePortalProps {
     displayCallbacks: { onChangePortalTab:Function }
     globalStateActions: any,
     declarationData: any,
-    configData: any, // needs to be carefully defined
-    branchSettings: any, // TEMP!! for getChartParms
-    onChartComponentSelection: Function
 }
 
 export interface ExplorerPortalActions {

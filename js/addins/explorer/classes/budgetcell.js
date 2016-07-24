@@ -8,7 +8,7 @@ class BudgetCell {
             let { cellIndex: chartIndex, nodeDatasetName } = budgetCell;
             let sortedlist = 'Sorted' + nodeDatasetName;
             let { branchSettings } = this;
-            let { viewpointConfig, itemseriesConfig } = this.configData;
+            let { viewpointConfig, itemseriesConfig } = this.viewpointConfigData;
             let { dataNode, timeSpecs: yearscope, parentData, nodeIndex } = this.nodeData;
             let { rightYear: year } = yearscope;
             let { facet: dataseriesname } = branchSettings;

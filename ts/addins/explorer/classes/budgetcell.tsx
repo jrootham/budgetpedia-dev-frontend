@@ -30,7 +30,7 @@ export interface SelectionCallbackProps {
     next: Function,
 }
 
-interface ConfigData {
+interface viewpointConfigData {
     viewpointConfig: any,
     itemseriesConfig: any,
 }
@@ -80,7 +80,7 @@ class BudgetCell {
     graph_id: string
     cellTitle: string
     cellIndex: number
-    configData: ConfigData
+    viewpointConfigData: viewpointConfigData
     nodeData: NodeData
     branchSettings: BranchSettings
 
@@ -136,7 +136,7 @@ class BudgetCell {
 
         let { branchSettings } = this 
 
-        let { viewpointConfig, itemseriesConfig }  = this.configData
+        let { viewpointConfig, itemseriesConfig }  = this.viewpointConfigData
 
         // -------------------[ INIT VARS ]---------------------
 
