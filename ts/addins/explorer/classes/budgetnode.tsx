@@ -147,15 +147,15 @@ class BudgetNode {
     // ====================================================================
     // ---------------------[ PUBLIC ]------------------------------------
 
-    public getChartParms (props: GetCellChartProps, selectionCallbacks, cell?:BudgetCell) {
-        // let node = this
-        // if (cell) {
-            console.log('calling cell version of getChartParms')
-            return cell.getChartParms(selectionCallbacks) 
-        // } else {
-        //     return getChartParmsSource(sourceProps, selectionCallbacks)
-        // }
-    }
+    // public getChartParms (props: GetCellChartProps, selectionCallbacks, cell?:BudgetCell) {
+    //     // let node = this
+    //     // if (cell) {
+    //         console.log('calling cell version of getChartParms')
+    //         return cell.getChartParms(selectionCallbacks) 
+    //     // } else {
+    //     //     return getChartParmsSource(sourceProps, selectionCallbacks)
+    //     // }
+    // }
     uid:string
     viewpointName: string
     facetName: string
@@ -252,31 +252,23 @@ class BudgetNode {
         return cells
     }
 
-    private _assignCellChartParms = cell => {
+    private _assignCellChartParms = (cell:BudgetCell) => {
         let budgetNode = this
-        let chartParmsObj: ChartParmsObj = {} as ChartParmsObj
-        let cellindex: any
-        let branchuid = this.uid
-        let selectfn = onChartComponentSelection(this)
-        let budgetCell:BudgetCell = cell
-        let props: GetCellChartProps = {
-            branchsettings:this.getProps().branchSettings,
-        }
 
-        let fcurrent = selectfn(this.nodeIndex)(cellindex)
+        let selectfn = this.getProps().onChartComponentSelection
+        let fcurrent = selectfn(budgetNode.nodeIndex)(cell.cellIndex)
 
-        chartParmsObj = cell.getChartParms({current:fcurrent,next:selectfn})
+        let chartParmsObj:ChartParmsObj = cell.getChartParms({current:fcurrent,next:selectfn})
 
         console.log('chartParmsObj', chartParmsObj)
 
         if (!chartParmsObj.isError) {
 
-            budgetCell.chartParms = chartParmsObj.chartParms
-            budgetCell.chartCode =
-                GoogleChartTypeToChartCode[budgetCell.chartParms.chartType]
+            cell.chartParms = chartParmsObj.chartParms
+            cell.chartCode =
+                GoogleChartTypeToChartCode[cell.chartParms.chartType]
 
         }
-
     }
 
     get cellList() {

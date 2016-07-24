@@ -44,7 +44,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     }
 
     let budgetNode: BudgetNode = branchNodes[nodeIndex]
-
+    console.log('budgetNode, cellIndex in applyChartComponentSelection',budgetNode, cellIndex)
     let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
 
     // 1. stop if chart is not not drillable

@@ -10,6 +10,7 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         selectionrow = null;
     }
     let budgetNode = branchNodes[nodeIndex];
+    console.log('budgetNode, cellIndex in applyChartComponentSelection', budgetNode, cellIndex);
     let budgetCell = budgetNode.cells[cellIndex];
     if (budgetCell.nodeDatasetName == 'Categories') {
         return;

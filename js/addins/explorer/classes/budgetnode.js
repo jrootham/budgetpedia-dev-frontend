@@ -1,7 +1,6 @@
 "use strict";
 const constants_1 = require('../../constants');
 const budgetcell_1 = require('./budgetcell');
-const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 class BudgetNode {
     constructor(parms, uid, node, parentNode = null) {
         this.parentData = null;
@@ -19,23 +18,16 @@ class BudgetNode {
             }
             return parmsList;
         };
-        this._assignCellChartParms = cell => {
+        this._assignCellChartParms = (cell) => {
             let budgetNode = this;
-            let chartParmsObj = {};
-            let cellindex;
-            let branchuid = this.uid;
-            let selectfn = onchartcomponentselection_1.onChartComponentSelection(this);
-            let budgetCell = cell;
-            let props = {
-                branchsettings: this.getProps().branchSettings,
-            };
-            let fcurrent = selectfn(this.nodeIndex)(cellindex);
-            chartParmsObj = cell.getChartParms({ current: fcurrent, next: selectfn });
+            let selectfn = this.getProps().onChartComponentSelection;
+            let fcurrent = selectfn(budgetNode.nodeIndex)(cell.cellIndex);
+            let chartParmsObj = cell.getChartParms({ current: fcurrent, next: selectfn });
             console.log('chartParmsObj', chartParmsObj);
             if (!chartParmsObj.isError) {
-                budgetCell.chartParms = chartParmsObj.chartParms;
-                budgetCell.chartCode =
-                    constants_1.GoogleChartTypeToChartCode[budgetCell.chartParms.chartType];
+                cell.chartParms = chartParmsObj.chartParms;
+                cell.chartCode =
+                    constants_1.GoogleChartTypeToChartCode[cell.chartParms.chartType];
             }
         };
         let portalcharts = parms.portalCharts;
@@ -51,10 +43,6 @@ class BudgetNode {
             this.parentData = parms.parentData;
         if (parentNode)
             this.parentData.dataNode = parentNode;
-    }
-    getChartParms(props, selectionCallbacks, cell) {
-        console.log('calling cell version of getChartParms');
-        return cell.getChartParms(selectionCallbacks);
     }
     get dataNode() {
         return this._dataNode;

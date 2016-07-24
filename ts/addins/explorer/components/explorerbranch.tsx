@@ -17,6 +17,9 @@ import Dialog from 'material-ui/Dialog'
 import Snackbar from 'material-ui/Snackbar';
 
 // ------------------------[ modules ]-----------------------------
+import { 
+    onChartComponentSelection,
+} from '../modules/onchartcomponentselection'
 
 import {
     PortalConfig,
@@ -423,6 +426,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 configData = {configData}
                 globalStateActions = { this._stateActions }
                 displayCallbacks = { {onChangePortalTab: this.onChangePortalTab} }
+                onChartComponentSelection = {onChartComponentSelection(this.props.budgetBranch)}
             />
         })
 

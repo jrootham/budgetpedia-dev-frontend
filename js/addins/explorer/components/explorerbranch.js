@@ -6,6 +6,7 @@ const MenuItem_1 = require('material-ui/MenuItem');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
+const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 const explorerportal_1 = require('./explorerportal');
 const actions_1 = require('../actions');
 class ExplorerBranch extends Component {
@@ -183,7 +184,7 @@ class ExplorerBranch extends Component {
                     viewpointConfig: viewpointConfig,
                     itemseriesConfig: itemseriesConfig,
                 };
-                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, branchSettings: this.props.budgetBranch.settings, budgetNode: budgetNode, declarationData: this.props.declarationData, configData: configData, globalStateActions: this._stateActions, displayCallbacks: { onChangePortalTab: this.onChangePortalTab }});
+                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, branchSettings: this.props.budgetBranch.settings, budgetNode: budgetNode, declarationData: this.props.declarationData, configData: configData, globalStateActions: this._stateActions, displayCallbacks: { onChangePortalTab: this.onChangePortalTab }, onChartComponentSelection: onchartcomponentselection_1.onChartComponentSelection(this.props.budgetBranch)});
             });
             return portals;
         };
