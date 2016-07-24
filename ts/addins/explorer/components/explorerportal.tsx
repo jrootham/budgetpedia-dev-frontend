@@ -81,7 +81,6 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
     }
 
     componentDidMount() {
-        console.log('explorer portal componentDidMount')
         let { budgetNode, declarationData } = this.props
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
         // console.log('nodeDeclaration, portalCharts',nodeDeclaration, budgetNode.portalCharts)
@@ -113,21 +112,16 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         let { budgetNode, declarationData } = this.props
         let cells = budgetNode.allCells
         let { cellList } = declarationData.nodesById[budgetNode.uid]
-        console.log('cells, cellList in componentDidUpdate',cells, cellList)
         // harmonization required if there is a mismatch between cells and cellList
         if ((cells.length != cellList.length) && (this.harmonizecount == null)) {
             this.harmonizecount = cellList.length - cells.length
             let cellParms = []
             let { cellsById } = declarationData
-            console.log('cellsById, cellList',cellsById, [...cellList])
             for (let cellid of cellList) {
                 cellParms.push(cellsById[cellid])
             }
-            console.log('cellParms',cellParms)
             let newcells = budgetNode.setCells(cellParms)
-            console.log('cells for setState',newcells)
             if (newcells.length == cellList.length) {
-                console.log('harmonization achieved')
                 this.harmonizecount = null
             }
             this.setState({
@@ -147,7 +141,6 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         // generate array of chart tabs
         let { callbackid, budgetNode } = this.props
         let budgetCells = budgetNode.cells
-        console.log('budgetCells in getChartTabs',budgetCells)
         let portalSettings = budgetNode.portalConfig
         // let { chartConfigs } = portalSettings 
         let cellTabs = budgetCells.map(

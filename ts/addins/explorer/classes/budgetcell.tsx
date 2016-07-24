@@ -86,7 +86,6 @@ class BudgetCell {
     //     return switchResults
     // }
 
-
 }
 
 export default BudgetCell

@@ -15,7 +15,6 @@ class ExplorerChart extends Component {
         };
     }
     render() {
-        console.log('explorerchart budgetCell', this.props.budgetCell);
         let { chartParms, chartCode, expandable, graph_id } = this.props.budgetCell;
         let chart = [];
         return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {

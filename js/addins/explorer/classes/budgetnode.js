@@ -56,7 +56,6 @@ class BudgetNode {
     setCells(cellDeclarations) {
         let cells = [];
         let cellDeclaration;
-        console.log('cellDeclarations');
         for (cellDeclaration of cellDeclarations) {
             let { chartSelection, chartCode, nodeDatasetName, uid } = cellDeclaration;
             let cell = new budgetcell_1.default({
@@ -65,7 +64,6 @@ class BudgetNode {
                 chartSelection: chartSelection,
                 uid: uid,
             });
-            console.log('cellDelcaration', cellDeclaration, cell);
             cells.push(cell);
         }
         return cells;

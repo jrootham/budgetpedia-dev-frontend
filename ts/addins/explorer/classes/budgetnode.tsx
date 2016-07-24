@@ -71,7 +71,7 @@ export interface BudgetNodeParms {
 
 
 
-// FROM CREATECHILDNODE
+// FROM createChildNode
 
         // let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
 
@@ -216,7 +216,6 @@ class BudgetNode {
         // // TODO: should be default for each chart...
         // build cells array
         let cellDeclaration: CellDeclaration
-        console.log('cellDeclarations')
         for (cellDeclaration of cellDeclarations) {
             let {chartSelection, chartCode, nodeDatasetName, uid} = cellDeclaration
             let cell = new BudgetCell(
@@ -227,7 +226,6 @@ class BudgetNode {
                     uid,
                 }
             )
-            console.log('cellDelcaration',cellDeclaration,cell)
             cells.push(cell)
         }
         return cells
