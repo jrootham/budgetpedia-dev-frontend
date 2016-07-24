@@ -147,11 +147,16 @@ class BudgetNode {
     // ====================================================================
     // ---------------------[ PUBLIC ]------------------------------------
 
-    public getChartParms (props: GetCellChartProps, selectionCallbacks) {
+    public getChartParms (props: GetCellChartProps, selectionCallbacks, cell?:BudgetCell) {
         let sourceProps: GetChartParmsProps = {} as GetChartParmsProps
         let node = this
         Object.assign(sourceProps, props, {budgetNode: node})
-        return getChartParmsSource(sourceProps, selectionCallbacks)
+        if (cell) {
+            console.log('calling cell version of getChartParms')
+            return cell.getChartParms(sourceProps, selectionCallbacks) 
+        } else {
+            return getChartParmsSource(sourceProps, selectionCallbacks)
+        }
     }
     uid:string
     viewpointName: string
@@ -258,7 +263,7 @@ class BudgetNode {
 
         let fcurrent = selectfn(this.nodeIndex)(cellindex)
 
-        chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:selectfn})
+        chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:selectfn}, cell)
 
         console.log('chartParmsObj', chartParmsObj)
 

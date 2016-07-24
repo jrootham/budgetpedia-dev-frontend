@@ -40,7 +40,7 @@ class BudgetNode {
                 budgetCell: cell,
             };
             let fcurrent = selectfn(this.nodeIndex)(cellindex);
-            chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: selectfn });
+            chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: selectfn }, cell);
             console.log('chartParmsObj', chartParmsObj);
             if (!chartParmsObj.isError) {
                 budgetCell.chartParms = chartParmsObj.chartParms;
@@ -62,11 +62,17 @@ class BudgetNode {
         if (parentNode)
             this.parentData.dataNode = parentNode;
     }
-    getChartParms(props, selectionCallbacks) {
+    getChartParms(props, selectionCallbacks, cell) {
         let sourceProps = {};
         let node = this;
         Object.assign(sourceProps, props, { budgetNode: node });
-        return getchartparms_1.default(sourceProps, selectionCallbacks);
+        if (cell) {
+            console.log('calling cell version of getChartParms');
+            return cell.getChartParms(sourceProps, selectionCallbacks);
+        }
+        else {
+            return getchartparms_1.default(sourceProps, selectionCallbacks);
+        }
     }
     get dataNode() {
         return this._dataNode;
