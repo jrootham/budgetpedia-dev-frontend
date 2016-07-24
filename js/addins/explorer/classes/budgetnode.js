@@ -1,6 +1,5 @@
 "use strict";
 const constants_1 = require('../../constants');
-const getchartparms_1 = require('./modules/getchartparms');
 const budgetcell_1 = require('./budgetcell');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 class BudgetNode {
@@ -26,21 +25,12 @@ class BudgetNode {
             let cellindex;
             let branchuid = this.uid;
             let selectfn = onchartcomponentselection_1.onChartComponentSelection(this);
-            let viewpointdata = this.getProps().viewpointData;
-            let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = viewpointdata;
-            let configData = {
-                viewpointConfig: viewpointConfig,
-                itemseriesConfig: itemseriesConfig,
-            };
             let budgetCell = cell;
             let props = {
-                chartIndex: cellindex,
-                configData: configData,
-                branchsettings: this.getProps().budgetBranch.settings,
-                budgetCell: cell,
+                branchsettings: this.getProps().branchSettings,
             };
             let fcurrent = selectfn(this.nodeIndex)(cellindex);
-            chartParmsObj = budgetNode.getChartParms(props, { current: fcurrent, next: selectfn }, cell);
+            chartParmsObj = cell.getChartParms({ current: fcurrent, next: selectfn });
             console.log('chartParmsObj', chartParmsObj);
             if (!chartParmsObj.isError) {
                 budgetCell.chartParms = chartParmsObj.chartParms;
@@ -63,16 +53,8 @@ class BudgetNode {
             this.parentData.dataNode = parentNode;
     }
     getChartParms(props, selectionCallbacks, cell) {
-        let sourceProps = {};
-        let node = this;
-        Object.assign(sourceProps, props, { budgetNode: node });
-        if (cell) {
-            console.log('calling cell version of getChartParms');
-            return cell.getChartParms(sourceProps, selectionCallbacks);
-        }
-        else {
-            return getchartparms_1.default(sourceProps, selectionCallbacks);
-        }
+        console.log('calling cell version of getChartParms');
+        return cell.getChartParms(selectionCallbacks);
     }
     get dataNode() {
         return this._dataNode;
@@ -100,7 +82,19 @@ class BudgetNode {
                 chartSelection: chartSelection,
                 uid: uid,
             });
-            this._assignCellChartParms(cell);
+            cell.cellIndex = parseInt(cellIndex);
+            let configData = this.getProps().configData;
+            cell.configData = configData;
+            let { dataNode, timeSpecs, parentData, nodeIndex } = this;
+            let nodeData = {
+                dataNode: dataNode,
+                timeSpecs: timeSpecs,
+                parentData: parentData,
+                nodeIndex: nodeIndex,
+            };
+            cell.nodeData = nodeData;
+            cell.branchSettings = this.getProps().branchSettings,
+                this._assignCellChartParms(cell);
             cells.push(cell);
         }
         return cells;

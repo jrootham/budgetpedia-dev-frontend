@@ -57,9 +57,9 @@ let getChartParms = (
         configData 
     } : { 
         budgetNode: BudgetNode, 
-        chartIndex: number, 
+        chartIndex?: number, 
         branchsettings: BranchSettings, 
-        configData: ConfigData
+        configData?: ConfigData
     } = props
 
     let { viewpointConfig, itemseriesConfig }  = configData

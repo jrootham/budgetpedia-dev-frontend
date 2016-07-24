@@ -3,15 +3,15 @@ const constants_1 = require('../../constants');
 var format = require('format-number');
 class BudgetCell {
     constructor(specs) {
-        this.getChartParms = (props, selectionCallbacks) => {
-            let { budgetNode, chartIndex, branchsettings, configData } = props;
-            let { viewpointConfig, itemseriesConfig } = configData;
-            let budgetCell = budgetNode.cells[chartIndex] || props.budgetCell;
-            let { nodeDatasetName } = budgetCell;
+        this.getChartParms = (selectionCallbacks) => {
+            let budgetCell = this;
+            let { cellIndex: chartIndex, nodeDatasetName } = budgetCell;
             let sortedlist = 'Sorted' + nodeDatasetName;
-            let { viewpointName: viewpointindex, dataNode, timeSpecs: yearscope } = budgetNode;
+            let { branchSettings } = this;
+            let { viewpointConfig, itemseriesConfig } = this.configData;
+            let { dataNode, timeSpecs: yearscope, parentData, nodeIndex } = this.nodeData;
             let { rightYear: year } = yearscope;
-            let { facet: dataseriesname } = branchsettings;
+            let { facet: dataseriesname } = branchSettings;
             let units = itemseriesConfig.Units, vertlabel;
             vertlabel = itemseriesConfig.UnitsAlias;
             if (units != 'FTE') {
@@ -50,8 +50,8 @@ class BudgetCell {
                 axistitle = portaltitles.Categories;
             }
             let title;
-            if (budgetNode.parentData) {
-                let parentdataNode = budgetNode.parentData.dataNode;
+            if (parentData) {
+                let parentdataNode = parentData.dataNode;
                 let configindex = dataNode.Config || parentdataNode.Contents;
                 let catname = null;
                 if (configindex) {
@@ -61,7 +61,7 @@ class BudgetCell {
                 else {
                     catname = 'Service/Activity';
                 }
-                title = catname + ': ' + budgetNode.parentData.Name;
+                title = catname + ': ' + parentData.Name;
             }
             else {
                 title = itemseriesConfig.Title;
@@ -124,7 +124,6 @@ class BudgetCell {
                     width: chartwidth,
                 }
             };
-            let nodeIndex = budgetNode.nodeIndex;
             let configlocation = {
                 nodeIndex: nodeIndex,
                 cellIndex: chartIndex

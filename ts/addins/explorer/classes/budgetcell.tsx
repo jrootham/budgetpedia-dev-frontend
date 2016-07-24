@@ -12,8 +12,6 @@ import {
     BranchSettings,
 } from '../modules/interfaces'
 
-import getBudgetNode from '../modules/getbudgetnode'
-
 import {
     ChartSelectionCell,
     ChartSelectionContext,
@@ -44,6 +42,14 @@ export interface CellDeclaration {
     uid?: string,
 }
 
+interface NodeData {
+    dataNode:any,
+    timeSpecs: any,
+    parentData: any,
+    nodeIndex: number,
+}
+
+
 class BudgetCell {
 
     constructor(specs:CellDeclaration) {
@@ -73,7 +79,10 @@ class BudgetCell {
     expandable: boolean
     graph_id: string
     cellTitle: string
-
+    cellIndex: number
+    configData: ConfigData
+    nodeData: NodeData
+    branchSettings: BranchSettings
 
     // switchChartCode(props) {
     //     let { actions, nodeCallbacks:callbacks } = this
@@ -117,42 +126,25 @@ class BudgetCell {
     //     return switchResults
     // }
 
-    getChartParms = (
-        props:GetChartParmsProps, selectionCallbacks: SelectionCallbackProps
-        ):ChartParmsObj => {
+    getChartParms = (selectionCallbacks: SelectionCallbackProps):ChartParmsObj => {
 
-        let { 
-            budgetNode, 
-            chartIndex, 
-            branchsettings, 
-            configData 
-        } : { 
-            budgetNode: BudgetNode, 
-            chartIndex: number, 
-            branchsettings: BranchSettings, 
-            configData: ConfigData
-        } = props
+        let budgetCell: BudgetCell = this
 
-        let { viewpointConfig, itemseriesConfig }  = configData
-
-        let budgetCell: BudgetCell = budgetNode.cells[chartIndex] || props.budgetCell
-
-        let { nodeDatasetName } = budgetCell
+        let { cellIndex:chartIndex, nodeDatasetName } = budgetCell
 
         let sortedlist = 'Sorted' + nodeDatasetName
-        // if (nodeDatasetName == 'Categories') {
-        //     sortedlist = 'SortedCategories'
-        // } else {
-        //     sortedlist = 'SortedComponents'
-        // }
+
+        let { branchSettings } = this 
+
+        let { viewpointConfig, itemseriesConfig }  = this.configData
 
         // -------------------[ INIT VARS ]---------------------
 
-        let { viewpointName:viewpointindex, dataNode, timeSpecs:yearscope } = budgetNode
+        let { dataNode, timeSpecs:yearscope, parentData, nodeIndex } = this.nodeData
 
         let { rightYear:year } = yearscope
         // unpack branchsettings
-        let { facet:dataseriesname } = branchsettings
+        let { facet:dataseriesname } = branchSettings
 
         let units = itemseriesConfig.Units,
             vertlabel
@@ -210,8 +202,8 @@ class BudgetCell {
 
         // assemble chart title
         let title
-        if (budgetNode.parentData) {
-            let parentdataNode = budgetNode.parentData.dataNode
+        if (parentData) {
+            let parentdataNode = parentData.dataNode
             let configindex = dataNode.Config || parentdataNode.Contents
             let catname = null
             if (configindex) {
@@ -220,7 +212,7 @@ class BudgetCell {
             } else {
                 catname = 'Service/Activity'
             }
-            title = catname + ': ' + budgetNode.parentData.Name
+            title = catname + ': ' + parentData.Name
         }
         else {
             title = itemseriesConfig.Title
@@ -297,7 +289,6 @@ class BudgetCell {
 
         // TODO: watch for memory leaks when the chart is destroyed
         // 3. chart events:
-        let nodeIndex = budgetNode.nodeIndex
         let configlocation: PortalChartLocation = {
             nodeIndex,
             cellIndex: chartIndex

@@ -148,15 +148,13 @@ class BudgetNode {
     // ---------------------[ PUBLIC ]------------------------------------
 
     public getChartParms (props: GetCellChartProps, selectionCallbacks, cell?:BudgetCell) {
-        let sourceProps: GetChartParmsProps = {} as GetChartParmsProps
-        let node = this
-        Object.assign(sourceProps, props, {budgetNode: node})
-        if (cell) {
+        // let node = this
+        // if (cell) {
             console.log('calling cell version of getChartParms')
-            return cell.getChartParms(sourceProps, selectionCallbacks) 
-        } else {
-            return getChartParmsSource(sourceProps, selectionCallbacks)
-        }
+            return cell.getChartParms(selectionCallbacks) 
+        // } else {
+        //     return getChartParmsSource(sourceProps, selectionCallbacks)
+        // }
     }
     uid:string
     viewpointName: string
@@ -232,6 +230,22 @@ class BudgetNode {
                     uid,
                 }
             )
+            cell.cellIndex = parseInt(cellIndex) // parseInt is a compiler requirement
+
+            let configData = this.getProps().configData
+            cell.configData = configData
+
+            let { dataNode, timeSpecs, parentData, nodeIndex } = this
+            let nodeData = {
+                dataNode,
+                timeSpecs,
+                parentData,
+                nodeIndex,
+            }
+            cell.nodeData = nodeData
+
+            cell.branchSettings = this.getProps().branchSettings,
+
             this._assignCellChartParms(cell)
             cells.push(cell)
         }
@@ -244,26 +258,14 @@ class BudgetNode {
         let cellindex: any
         let branchuid = this.uid
         let selectfn = onChartComponentSelection(this)
-        let viewpointdata = this.getProps().viewpointData
-        let {
-            Configuration: viewpointConfig,
-            itemseriesconfigdata: itemseriesConfig,
-        } = viewpointdata
-        let configData = {
-            viewpointConfig,
-            itemseriesConfig,
-        }
         let budgetCell:BudgetCell = cell
         let props: GetCellChartProps = {
-            chartIndex: cellindex,
-            configData,
-            branchsettings:this.getProps().budgetBranch.settings,
-            budgetCell: cell,
+            branchsettings:this.getProps().branchSettings,
         }
 
         let fcurrent = selectfn(this.nodeIndex)(cellindex)
 
-        chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:selectfn}, cell)
+        chartParmsObj = cell.getChartParms({current:fcurrent,next:selectfn})
 
         console.log('chartParmsObj', chartParmsObj)
 

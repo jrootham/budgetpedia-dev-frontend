@@ -177,7 +177,13 @@ class ExplorerBranch extends Component {
                     portalName: portalName,
                 };
                 budgetNode.portalConfig = portalConfig;
-                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetBranch: this.props.budgetBranch, budgetNode: budgetNode, declarationData: this.props.declarationData, viewpointData: this.state.viewpointData, globalStateActions: this._stateActions, displayCallbacks: { onChangePortalTab: this.onChangePortalTab }});
+                let viewpointdata = this.state.viewpointData;
+                let { Configuration: viewpointConfig, itemseriesconfigdata: itemseriesConfig, } = viewpointdata;
+                let configData = {
+                    viewpointConfig: viewpointConfig,
+                    itemseriesConfig: itemseriesConfig,
+                };
+                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, branchSettings: this.props.budgetBranch.settings, budgetNode: budgetNode, declarationData: this.props.declarationData, configData: configData, globalStateActions: this._stateActions, displayCallbacks: { onChangePortalTab: this.onChangePortalTab }});
             });
             return portals;
         };

@@ -404,13 +404,23 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
             budgetNode.portalConfig = portalConfig
 
+            let viewpointdata = this.state.viewpointData
+            let {
+                Configuration: viewpointConfig,
+                itemseriesconfigdata: itemseriesConfig,
+            } = viewpointdata
+            let configData = {
+                viewpointConfig,
+                itemseriesConfig,
+            }
+
             return <ExplorerPortal
                 key = {nodeindex}
                 callbackid = { nodeindex }
-                budgetBranch = {this.props.budgetBranch}
+                branchSettings = {this.props.budgetBranch.settings}
                 budgetNode = { budgetNode }
                 declarationData = {this.props.declarationData}
-                viewpointData = {this.state.viewpointData}
+                configData = {configData}
                 globalStateActions = { this._stateActions }
                 displayCallbacks = { {onChangePortalTab: this.onChangePortalTab} }
             />
