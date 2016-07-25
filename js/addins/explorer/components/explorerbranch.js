@@ -182,7 +182,10 @@ class ExplorerBranch extends Component {
                 budgetNode.viewpointConfigData = viewpointConfigData;
                 budgetNode.branchSettings = this.props.budgetBranch.settings;
                 budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(this.props.budgetBranch);
-                return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: this._stateActions, displayCallbacks: { onChangePortalTab: this.onChangePortalTab }});
+                return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: this._stateActions, displayCallbacks: {
+                    onChangePortalTab: this.onChangePortalTab,
+                    updateChartSelections: this.props.displayCallbacks.updateChartSelections,
+                }});
             });
             return portals;
         };
@@ -255,7 +258,9 @@ class ExplorerBranch extends Component {
         else {
             this.harmonizecount = null;
             if (!this._controlGlobalStateChange()) {
-                this.props.displayCallbacks.updateChartSelections();
+                setTimeout(() => {
+                    this.props.displayCallbacks.updateChartSelections();
+                });
             }
         }
     }

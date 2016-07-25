@@ -3,6 +3,7 @@ const React = require('react');
 var { Component } = React;
 const Tabs_1 = require('material-ui/Tabs');
 const explorercell_1 = require('./explorercell');
+const actions_1 = require('../actions');
 class ExporerNode extends Component {
     constructor(...args) {
         super(...args);
@@ -11,8 +12,40 @@ class ExporerNode extends Component {
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
+        this._controlGlobalStateChange = () => {
+            let previousControlData = this._previousControlData;
+            let currentControlData = this.props.declarationData;
+            let { lastAction } = currentControlData;
+            let returnvalue = true;
+            if (!actions_1.cellTypes[lastAction]) {
+                return false;
+            }
+            if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
+                return false;
+            }
+            switch (lastAction) {
+                case actions_1.cellTypes.UPDATE_CELL_SELECTION: {
+                    this._processUpdateCellSelection();
+                    break;
+                }
+                default:
+                    returnvalue = false;
+            }
+            this._previousControlData = currentControlData;
+            return returnvalue;
+        };
+        this._processUpdateCellSelection = () => {
+            let nodeCells = [...this.state.nodeCells];
+            nodeCells.map((budgetCell) => {
+                budgetCell.chartSelection = this.props.declarationData.cellsById[budgetCell.uid].chartSelection;
+            });
+            this.setState({
+                nodeCells: nodeCells,
+            });
+        };
         this.harmonizecount = null;
-        this._harmomonizeCells = () => {
+        this._harmonizeCells = () => {
+            let returnvalue = false;
             let { budgetNode, declarationData } = this.props;
             let cells = budgetNode.allCells;
             let { cellList } = declarationData.nodesById[budgetNode.uid];
@@ -27,10 +60,12 @@ class ExporerNode extends Component {
                 if (newcells.length == cellList.length) {
                     this.harmonizecount = null;
                 }
+                returnvalue = true;
                 this.setState({
                     nodeCells: newcells
                 });
             }
+            return returnvalue;
         };
         this.onChangeTab = () => {
             this.props.displayCallbacks.onChangePortalTab();
@@ -44,7 +79,7 @@ class ExporerNode extends Component {
                 let expandable = ((budgetCells.length > 1) && (cellIndex == 0));
                 budgetCell.expandable = expandable;
                 let { cellCallbacks, cellTitle } = budgetCell;
-                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorercell_1.default, {callbackid: cellIndex, budgetCell: budgetCell}));
+                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorercell_1.default, {declarationData: this.props.declarationData, callbackid: cellIndex, budgetCell: budgetCell}));
             });
             return cellTabs;
         };
@@ -87,7 +122,7 @@ class ExporerNode extends Component {
             this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
         }
         else {
-            this._harmomonizeCells();
+            this._harmonizeCells();
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -104,7 +139,9 @@ class ExporerNode extends Component {
         }
     }
     componentDidUpdate() {
-        this._harmomonizeCells();
+        if (!this._harmonizeCells()) {
+            this._controlGlobalStateChange();
+        }
     }
     render() {
         let chartTabs = this.getChartTabs();

@@ -40,7 +40,8 @@ export interface ExplorerBranchActions {
     addNodeDeclaration:Function,
     removeNodeDeclarations:Function,
     changeViewpoint:Function,
-    changeFacet: Function,    
+    changeFacet: Function,
+    updateCellChartSelection: Function,  
 }
 
 interface DeclarationData {
@@ -201,8 +202,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
         } else { // otherwise see if there are other cascading actions that have to be taken
             this.harmonizecount = null // reset
             if (!this._controlGlobalStateChange()) {
-                // console.log('finished branch update')
-                this.props.displayCallbacks.updateChartSelections()
+                setTimeout(()=>{
+                    // console.log('finished branch update')
+                    this.props.displayCallbacks.updateChartSelections()
+                })
             }
         }
     }
@@ -438,7 +441,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
                 budgetNode = { budgetNode }
                 declarationData = {this.props.declarationData}
                 globalStateActions = { this._stateActions }
-                displayCallbacks = { {onChangePortalTab: this.onChangePortalTab} }
+                displayCallbacks = { 
+                    { 
+                        onChangePortalTab: this.onChangePortalTab,
+                        updateChartSelections: this.props.displayCallbacks.updateChartSelections,
+                    } 
+                }
             />
         })
 

@@ -20,6 +20,7 @@ import BudgetCell from '../classes/cell.class'
 interface ExplorerCellProps {
     callbackid: string | number,
     budgetCell: BudgetCell,
+    declarationData: any,
 }
 
 class ExplorerCell extends Component<ExplorerCellProps, any> {
@@ -31,7 +32,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     }
 
     // componentDidUpdate() {
-    //     console.log('explorer chart did update')
+    //     console.log('explorer cell did update',this.props.budgetCell)
     // }
 
     render() {

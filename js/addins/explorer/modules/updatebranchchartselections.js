@@ -6,7 +6,9 @@ let updateBranchChartSelections = (branchNodes) => {
             let budgetCell = node.cells[chartindex];
             let chartSelection = budgetCell.chartSelection;
             if (chartSelection) {
-                budgetCell.chart.setSelection(chartSelection);
+                if (budgetCell.chart) {
+                    budgetCell.chart.setSelection(chartSelection);
+                }
             }
         }
     }

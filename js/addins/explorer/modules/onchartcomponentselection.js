@@ -28,7 +28,6 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         branchNodes = budgetBranch.nodes;
         let { updateChartSelections } = budgetBranch.nodeCallbacks;
         if (!selection) {
-            updateChartSelections();
             return;
         }
         let childprops = {

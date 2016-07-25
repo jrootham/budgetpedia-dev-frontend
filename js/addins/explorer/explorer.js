@@ -112,6 +112,7 @@ let Explorer = class extends Component {
                     removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
+                    updateCellChartSelection: this.props.updateCellChartSelection,
                 };
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,
@@ -139,6 +140,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     addCellDeclarations: ExplorerActions.addCellDeclarations,
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeFacet: ExplorerActions.changeFacet,
+    updateCellChartSelection: ExplorerActions.updateCellChartSelection,
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;

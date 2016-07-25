@@ -123,6 +123,14 @@ let cellsById = (state = {}, action) => {
             }
             return newstate;
         }
+        case actions_1.types.UPDATE_CELL_SELECTION: {
+            let { celluid } = action.payload;
+            newstate = Object.assign({}, state);
+            let newcell = Object.assign({}, newstate[celluid]);
+            newcell.chartSelection = action.payload.selection;
+            newstate[celluid] = newcell;
+            return newstate;
+        }
         default:
             return state;
     }

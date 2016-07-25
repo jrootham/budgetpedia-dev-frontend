@@ -13,8 +13,9 @@ let updateBranchChartSelections = (branchNodes) => {
             let budgetCell:BudgetCell = node.cells[chartindex]
             let chartSelection = budgetCell.chartSelection
             if (chartSelection) {
-                // console.log('updating chart selections', node, chartindex)
-                budgetCell.chart.setSelection(chartSelection)
+                if (budgetCell.chart) { // may not yet have been instantiated (!!)              
+                    budgetCell.chart.setSelection(chartSelection)
+                }
             }
         }
     }

@@ -11,6 +11,7 @@ export namespace types {
     export const ADD_NODE = 'ADD_NODE'
     export const REMOVE_NODES = 'REMOVE_NODES'
     export const ADD_CELLS = 'ADD_CELLS'
+    export const UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION'
     // export const REMOVE_CELLS = 'REMOVE_CELLS'
     export const CHANGE_CHART_CODE = 'CHANGE_CHART_CODE'
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
@@ -28,6 +29,10 @@ export namespace nodeTypes {
     // export import REMOVE_CELLS = types.REMOVE_CELLS
     export import CHANGE_CHART_CODE = types.CHANGE_CHART_CODE
     export import TOGGLE_DELTA = types.TOGGLE_DELTA
+}
+
+export namespace cellTypes {
+    export import UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION
 }
 
 export const addBranchDeclaration = createAction(
@@ -87,6 +92,13 @@ export const addCellDeclarations = (nodeuid,settingslist) => {
         dispatch(_addCellDeclaration(nodeuid,settingslist))
     }
 }
+
+export const updateCellChartSelection = createAction(
+    types.UPDATE_CELL_SELECTION,(celluid, selection) => ({
+        celluid,
+        selection,
+    })
+)
     
 // export const removeCellDeclarations = createAction(
 //     types.REMOVE_CELLS,(nodeuid,uidlist) => ({

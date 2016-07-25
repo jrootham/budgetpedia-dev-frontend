@@ -17,11 +17,15 @@ import {
 import ExplorerCell from './explorercell'
 import BudgetNode from '../classes/node.class'
 import BudgetCell from '../classes/cell.class'
+import { cellTypes } from '../actions'
 
 interface ExplorerNodeProps {
     callbackid: string | number,
     budgetNode: BudgetNode,
-    displayCallbacks: { onChangePortalTab:Function }
+    displayCallbacks: { 
+        onChangePortalTab:Function,
+        updateChartSelections:Function, 
+    }
     globalStateActions: any,
     declarationData: any,
 }
@@ -66,8 +70,9 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
         } else {
-            this._harmomonizeCells()
+            this._harmonizeCells()
         }
+        // console.log('node did mount', budgetNode.allCells)
     }
 
     // remove obsolete cell objects
@@ -86,12 +91,56 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     }
 
     componentDidUpdate() {
-        this._harmomonizeCells()
+        if (!this._harmonizeCells()) {
+            this._controlGlobalStateChange()
+        }
+        // console.log('node did update', this.props.budgetNode)
+    }
+
+    // _previousControlData is not in a closure to allow for initializing in componentDidMount
+    private _previousControlData: any
+
+    // state change machine
+    private _controlGlobalStateChange = () => {
+        let previousControlData = this._previousControlData
+        let currentControlData = this.props.declarationData
+        let { lastAction } = currentControlData
+        let returnvalue = true
+        if (!cellTypes[lastAction]) {
+            return false
+        }
+        // the generation counter could be the same if render is being triggered
+        // solely by a local state change, which we want to ignore here
+        if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
+            return false
+        }
+
+        switch (lastAction) {
+            case cellTypes.UPDATE_CELL_SELECTION: {
+                this._processUpdateCellSelection()
+                break
+            }
+            default:
+                returnvalue = false
+        }
+        this._previousControlData = currentControlData
+        return returnvalue
+    }
+
+    private _processUpdateCellSelection = () => {
+        let nodeCells = [ ...this.state.nodeCells ]
+        nodeCells.map((budgetCell)=>{
+            budgetCell.chartSelection = this.props.declarationData.cellsById[budgetCell.uid].chartSelection
+        })
+        this.setState({
+            nodeCells,
+        })
     }
 
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes
-    private _harmomonizeCells = () => {
+    private _harmonizeCells = () => {
+        let returnvalue = false
         let { budgetNode, declarationData } = this.props
         let cells = budgetNode.allCells
         let { cellList } = declarationData.nodesById[budgetNode.uid]
@@ -107,11 +156,13 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
             if (newcells.length == cellList.length) {
                 this.harmonizecount = null
             }
-            // console.log('newcells',[...newcells])
+            returnvalue = true
             this.setState({
                 nodeCells:newcells
             })
+            // console.log('setting new cells', newcells)
         }
+        return returnvalue
     }
 
     onChangeTab = () => {
@@ -140,6 +191,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                 value={ cellIndex }
                 key={ cellIndex }>
                 <ExplorerCell
+                    declarationData = { this.props.declarationData }
                     callbackid = { cellIndex }
                     budgetCell = { budgetCell }
                 />

@@ -83,7 +83,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         // 3. if deselected, update parms and quit
         if (!selection) { // deselected
             // budgetCell.chartSelection = null
-            updateChartSelections()
+            // updateChartSelections()
             return
         }
 
