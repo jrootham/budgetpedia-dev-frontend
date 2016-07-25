@@ -1,9 +1,9 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // onchartcomponentselection.tsx
 
-import BudgetNode from '../classes/budgetnode'
-import BudgetBranch from '../classes/budgetbranch'
-import BudgetCell from '../classes/budgetcell'
+import BudgetNode from '../classes/node.class'
+import BudgetBranch from '../classes/branch.class'
+import BudgetCell from '../classes/cell.class'
 
 export interface ChartSelectionCell {
     row:number,

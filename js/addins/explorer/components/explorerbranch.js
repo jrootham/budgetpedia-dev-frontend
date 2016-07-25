@@ -7,7 +7,7 @@ const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
-const explorerportal_1 = require('./explorerportal');
+const explorernode_1 = require('./explorernode');
 const actions_1 = require('../actions');
 class ExplorerBranch extends Component {
     constructor(...args) {
@@ -22,7 +22,7 @@ class ExplorerBranch extends Component {
         this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
         this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
         this.harmonizecount = null;
-        this.controlGlobalStateChange = () => {
+        this._controlGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
             let currentControlData = this.props.declarationData;
             let { lastAction } = currentControlData;
@@ -36,11 +36,11 @@ class ExplorerBranch extends Component {
             let { budgetBranch } = this.props;
             switch (lastAction) {
                 case actions_1.branchTypes.CHANGE_VIEWPOINT: {
-                    this.processChangeViewpointStateChange(budgetBranch);
+                    this._processChangeViewpointStateChange(budgetBranch);
                     break;
                 }
                 case actions_1.branchTypes.CHANGE_FACET: {
-                    this.processChangeFacetStateChange(budgetBranch);
+                    this._processChangeFacetStateChange(budgetBranch);
                     break;
                 }
                 default:
@@ -49,14 +49,14 @@ class ExplorerBranch extends Component {
             this._previousControlData = currentControlData;
             return returnvalue;
         };
-        this.processChangeViewpointStateChange = (budgetBranch) => {
+        this._processChangeViewpointStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData();
             setTimeout(() => {
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             });
         };
-        this.processChangeFacetStateChange = (budgetBranch) => {
+        this._processChangeFacetStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData();
             setTimeout(() => {
                 let switchResults = budgetBranch.switchFacet();
@@ -182,7 +182,7 @@ class ExplorerBranch extends Component {
                 budgetNode.viewpointConfigData = viewpointConfigData;
                 budgetNode.branchSettings = this.props.budgetBranch.settings;
                 budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(this.props.budgetBranch);
-                return React.createElement(explorerportal_1.ExplorerPortal, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: this._stateActions, displayCallbacks: { onChangePortalTab: this.onChangePortalTab }});
+                return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: this._stateActions, displayCallbacks: { onChangePortalTab: this.onChangePortalTab }});
             });
             return portals;
         };
@@ -254,7 +254,7 @@ class ExplorerBranch extends Component {
         }
         else {
             this.harmonizecount = null;
-            if (!this.controlGlobalStateChange()) {
+            if (!this._controlGlobalStateChange()) {
                 this.props.displayCallbacks.updateChartSelections();
             }
         }

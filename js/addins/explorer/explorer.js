@@ -10,7 +10,7 @@ const explorerbranch_1 = require('./components/explorerbranch');
 const updatebranchchartselections_1 = require('./modules/updatebranchchartselections');
 const Actions = require('../../core/actions/actions');
 const ExplorerActions = require('./actions');
-const budgetbranch_1 = require('./classes/budgetbranch');
+const branch_class_1 = require('./classes/branch.class');
 const reducers_1 = require('./reducers');
 let Explorer = class extends Component {
     constructor(props) {
@@ -31,7 +31,7 @@ let Explorer = class extends Component {
                     continue;
                 }
                 let settings = branchesById[uid];
-                let budgetBranch = new budgetbranch_1.default({ settings: settings, uid: uid });
+                let budgetBranch = new branch_class_1.default({ settings: settings, uid: uid });
                 newBranches.splice(i, 0, budgetBranch);
             }
             return newBranches;
@@ -117,7 +117,7 @@ let Explorer = class extends Component {
                     workingStatus: explorer.workingStatus,
                     updateChartSelections: explorer.updateChartSelections(branchIndex),
                 };
-                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, displayCallbacks: displayCallbackFunctions, globalStateActions: actionFunctions, declarationData: explorer.props.declarationData})));
+                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})));
             });
             return segments;
         };

@@ -1,8 +1,8 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // updatechartselections.tsx
 
-import BudgetNode from '../classes/budgetnode'
-import BudgetCell from '../classes/budgetcell'
+import BudgetNode from '../classes/node.class'
+import BudgetCell from '../classes/cell.class'
 
 // update the visual cue for selection that led to user array of graphs
 let updateBranchChartSelections = (branchNodes) => {

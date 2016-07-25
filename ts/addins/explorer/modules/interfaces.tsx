@@ -1,6 +1,6 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // interfaces.tsx
-import BudgetNode from '../classes/budgetnode'
+import BudgetNode from '../classes/node.class'
 import { ChartSelectionCell } from './onchartcomponentselection'
 // return by getChartParms; returns isError with ChartParms
 

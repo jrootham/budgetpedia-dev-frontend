@@ -27,14 +27,14 @@ import {
     CellCallbacks,
 } from '../modules/interfaces'
 
-import { ExplorerPortal } from './explorerportal'
+import { ExporerNode } from './explorernode'
 
 import { DatasetConfig, ViewpointData } from '../classes/databaseapi'
 
 import { branchTypes as branchActionTypes } from '../actions'
-import BudgetNode from '../classes/budgetnode'
-import BudgetCell from '../classes/budgetcell'
-import BudgetBranch from '../classes/budgetbranch'
+import BudgetNode from '../classes/node.class'
+import BudgetCell from '../classes/cell.class'
+import BudgetBranch from '../classes/branch.class'
 
 export interface ExplorerBranchActions {
     addNodeDeclaration:Function,
@@ -50,6 +50,11 @@ interface DeclarationData {
     lastAction: string,
 }
 
+interface SnackbarProps {
+    open:boolean,
+    message: string,
+}
+
 interface ExploreBranchProps {
     budgetBranch: BudgetBranch,
     displayCallbacks:{
@@ -60,13 +65,13 @@ interface ExploreBranchProps {
     declarationData: DeclarationData
 }
 
-interface SnackbarProps {
-    open:boolean,
-    message: string,
+interface ExplorerBranchState {
+    branchNodes?:BudgetNode[], 
+    snackbar?:SnackbarProps, 
+    viewpointData?:ViewpointData,
 }
 
-class ExplorerBranch extends Component<ExploreBranchProps, 
-    {branchNodes?:BudgetNode[], snackbar?:SnackbarProps, viewpointData?:ViewpointData} > {
+class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> {
 
     state = {
         branchNodes:[],
@@ -92,7 +97,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     private removeNodeDeclarations = 
         branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems)
 
-    // complete initialization of budgetBranch and branch explorer objects
+    // finish initialization of budgetBranch and branch explorer objects
     componentWillMount() {
 
         let { budgetBranch, globalStateActions:actions, displayCallbacks } = this.props
@@ -195,7 +200,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             )
         } else { // otherwise see if there are other cascading actions that have to be taken
             this.harmonizecount = null // reset
-            if (!this.controlGlobalStateChange()) {
+            if (!this._controlGlobalStateChange()) {
                 // console.log('finished branch update')
                 this.props.displayCallbacks.updateChartSelections()
             }
@@ -206,7 +211,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     private _previousControlData: any
 
     // state change machine
-    private controlGlobalStateChange = () => {
+    private _controlGlobalStateChange = () => {
         let previousControlData = this._previousControlData
         let currentControlData = this.props.declarationData
         let { lastAction } = currentControlData
@@ -223,11 +228,11 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let { budgetBranch } = this.props
         switch (lastAction) {
             case branchActionTypes.CHANGE_VIEWPOINT: {
-                this.processChangeViewpointStateChange(budgetBranch)
+                this._processChangeViewpointStateChange(budgetBranch)
                 break
             }
             case branchActionTypes.CHANGE_FACET: {
-                this.processChangeFacetStateChange(budgetBranch)
+                this._processChangeFacetStateChange(budgetBranch)
                 break
             }
             default:
@@ -237,7 +242,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         return returnvalue
     }
 
-    private processChangeViewpointStateChange = (budgetBranch:BudgetBranch) => {
+    private _processChangeViewpointStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData()
         setTimeout(()=>{
             let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
@@ -245,7 +250,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         })
     }
 
-    private processChangeFacetStateChange = (budgetBranch:BudgetBranch) => {
+    private _processChangeFacetStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData()
 
         setTimeout(() => {
@@ -427,7 +432,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             budgetNode.branchSettings = this.props.budgetBranch.settings
             budgetNode.onChartComponentSelection = onChartComponentSelection(this.props.budgetBranch)
 
-            return <ExplorerPortal
+            return <ExporerNode
                 key = {nodeindex}
                 callbackid = { nodeindex }
                 budgetNode = { budgetNode }

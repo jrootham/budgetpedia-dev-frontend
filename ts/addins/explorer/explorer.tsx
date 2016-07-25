@@ -12,7 +12,7 @@
     - move state to central store
     ? Classes:
         Explorer
-        ExplorerPortal
+        ExporerNode
         BudgetData = budgetdata -- package of facets, lookup, and viewpoint data
         BudgetExplorer (set of BudgetNodes)
         BudgetNode (derive from chartconfig) Node within Hierarchy
@@ -44,7 +44,7 @@ import ExplorerBranch from './components/explorerbranch'
 import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
 import * as ExplorerActions from './actions'
-import BudgetBranch from './classes/budgetbranch'
+import BudgetBranch from './classes/branch.class'
 import { getExplorerDeclarationData } from './reducers'
 
 import {
@@ -133,6 +133,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         and from componentWillReceiveProps to modify branch list
     */
     harmonizeBranches = (budgetBranches, branchList, branchesById) => {
+        // delete branches no longer required
         let newBranches = budgetBranches.filter((node) => {
             return !!branchesById[node.uid]
         })
@@ -150,9 +151,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         return newBranches
     }
 
-    // harmonize budgetBranches objects  with control data
-    // also update branch settings from declarations
-    // then setState to trigger render
+    /*    
+        harmonize budgetBranches objects  with control data
+        also update branch settings from declarations
+        then setState to trigger render
+    */    
     componentWillReceiveProps(nextProps) {
 
         let { branchList, branchesById } = nextProps.declarationData
@@ -305,9 +308,9 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     <CardText expandable>
                     <ExplorerBranch 
                         budgetBranch = { budgetBranch }
-                        displayCallbacks = { displayCallbackFunctions }
-                        globalStateActions = { actionFunctions }
                         declarationData = { explorer.props.declarationData }
+                        globalStateActions = { actionFunctions }
+                        displayCallbacks = { displayCallbackFunctions }
                     />
                     </CardText>
 
