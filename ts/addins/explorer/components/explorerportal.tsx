@@ -88,6 +88,8 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             // get controlData for cellList
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
+        } else {
+            this._harmomonizeCells()
         }
     }
 
@@ -106,9 +108,13 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
         }
     }
 
+    componentDidUpdate() {
+        this._harmomonizeCells()
+    }
+
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes
-    componentDidUpdate() {
+    private _harmomonizeCells = () => {
         let { budgetNode, declarationData } = this.props
         let cells = budgetNode.allCells
         let { cellList } = declarationData.nodesById[budgetNode.uid]
@@ -124,6 +130,7 @@ class ExplorerPortal extends Component<ExplorePortalProps, any> {
             if (newcells.length == cellList.length) {
                 this.harmonizecount = null
             }
+            // console.log('newcells',[...newcells])
             this.setState({
                 nodeCells:newcells
             })

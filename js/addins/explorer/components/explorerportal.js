@@ -12,6 +12,26 @@ class ExplorerPortal extends Component {
         this.getState = () => this.state;
         this.getProps = () => this.props;
         this.harmonizecount = null;
+        this._harmomonizeCells = () => {
+            let { budgetNode, declarationData } = this.props;
+            let cells = budgetNode.allCells;
+            let { cellList } = declarationData.nodesById[budgetNode.uid];
+            if ((cells.length != cellList.length) && (this.harmonizecount == null)) {
+                this.harmonizecount = cellList.length - cells.length;
+                let cellParms = [];
+                let { cellsById } = declarationData;
+                for (let cellid of cellList) {
+                    cellParms.push(cellsById[cellid]);
+                }
+                let newcells = budgetNode.setCells(cellParms);
+                if (newcells.length == cellList.length) {
+                    this.harmonizecount = null;
+                }
+                this.setState({
+                    nodeCells: newcells
+                });
+            }
+        };
         this.onChangeTab = () => {
             this.props.displayCallbacks.onChangePortalTab();
         };
@@ -66,6 +86,9 @@ class ExplorerPortal extends Component {
             let cellDeclarationParms = budgetNode.getCellDeclarationParms();
             this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
         }
+        else {
+            this._harmomonizeCells();
+        }
     }
     componentWillReceiveProps(nextProps) {
         let { budgetNode, declarationData } = this.props;
@@ -81,24 +104,7 @@ class ExplorerPortal extends Component {
         }
     }
     componentDidUpdate() {
-        let { budgetNode, declarationData } = this.props;
-        let cells = budgetNode.allCells;
-        let { cellList } = declarationData.nodesById[budgetNode.uid];
-        if ((cells.length != cellList.length) && (this.harmonizecount == null)) {
-            this.harmonizecount = cellList.length - cells.length;
-            let cellParms = [];
-            let { cellsById } = declarationData;
-            for (let cellid of cellList) {
-                cellParms.push(cellsById[cellid]);
-            }
-            let newcells = budgetNode.setCells(cellParms);
-            if (newcells.length == cellList.length) {
-                this.harmonizecount = null;
-            }
-            this.setState({
-                nodeCells: newcells
-            });
-        }
+        this._harmomonizeCells();
     }
     render() {
         let chartTabs = this.getChartTabs();
