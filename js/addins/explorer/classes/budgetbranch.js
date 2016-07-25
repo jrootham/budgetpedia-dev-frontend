@@ -72,7 +72,6 @@ class BudgetBranch {
             let childdatapath = budgetNode.dataPath.slice();
             let dataNode = budgetNode.dataNode;
             if (!dataNode.Components) {
-                updateChartSelections();
                 return;
             }
             let components = dataNode.Components;
@@ -87,12 +86,10 @@ class BudgetBranch {
             if (code)
                 childdatapath.push(code);
             else {
-                updateChartSelections();
                 return;
             }
             let newnode = dataNode.Components[code];
             if (!newnode.Components && !newnode.Categories) {
-                updateChartSelections();
                 return;
             }
             workingStatus(true);
@@ -112,7 +109,6 @@ class BudgetBranch {
             setTimeout(() => {
                 workingStatus(false);
                 setTimeout(() => {
-                    updateChartSelections();
                     onPortalCreation();
                 });
             });

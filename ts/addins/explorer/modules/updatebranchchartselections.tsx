@@ -12,7 +12,6 @@ let updateBranchChartSelections = (branchNodes) => {
         for (let chartindex in node.cells ) {
             let budgetCell:BudgetCell = node.cells[chartindex]
             let chartSelection = budgetCell.chartSelection
-            // console.log('processing node', node)
             if (chartSelection) {
                 // console.log('updating chart selections', node, chartindex)
                 budgetCell.chart.setSelection(chartSelection)

@@ -277,7 +277,7 @@ class BudgetBranch {
         let dataNode = budgetNode.dataNode
 
         if (!dataNode.Components) {
-            updateChartSelections()
+            // updateChartSelections()
             return
         }
 
@@ -294,13 +294,13 @@ class BudgetBranch {
         if (code)
             childdatapath.push(code)
         else {
-            updateChartSelections()
+            // updateChartSelections()
             return
         }
 
         let newnode = dataNode.Components[code]
         if (!newnode.Components && !newnode.Categories) {
-            updateChartSelections()
+            // updateChartSelections()
             return
         }
         workingStatus(true)
@@ -324,7 +324,7 @@ class BudgetBranch {
 
             workingStatus(false)
             setTimeout(() => {
-                updateChartSelections()
+                // updateChartSelections()
                 onPortalCreation()
             })
 

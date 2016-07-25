@@ -78,11 +78,12 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         // 3. if deselected, update parms and quit
         if (!selection) { // deselected
             budgetCell.chartSelection = null
-            updateChartSelections()
+            // updateChartSelections()
             return
         }
 
         // 4. otherwise create new child node
+        budgetCell.chartSelection = chartSelectionData.selection
         let childprops: CreateChildNodeProps = {
             selectionrow,
             nodeIndex,

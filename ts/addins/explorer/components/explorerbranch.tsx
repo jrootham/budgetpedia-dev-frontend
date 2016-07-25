@@ -162,7 +162,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes
     componentDidUpdate() {
-        // console.log('did update')
+        console.log('branch did update')
         // refresh branchnodes
         let { budgetBranch, declarationData } = this.props
         let { nodes:branchNodes } = budgetBranch
@@ -195,7 +195,10 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             )
         } else { // otherwise see if there are other cascading actions that have to be taken
             this.harmonizecount = null // reset
-            this.controlGlobalStateChange()
+            if (!this.controlGlobalStateChange()) {
+                console.log('finished branch update')
+                this.props.displayCallbacks.updateChartSelections()
+            }
         }
     }
 
@@ -207,13 +210,14 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let previousControlData = this._previousControlData
         let currentControlData = this.props.declarationData
         let { lastAction } = currentControlData
+        let returnvalue = true
         if (!branchActionTypes[lastAction]) {
-            return
+            return false
         }
         // the generation counter could be the same if render is being triggered
         // solely by a local state change, which we want to ignore here
         if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
-            return
+            return false
         }
 
         let { budgetBranch } = this.props
@@ -226,8 +230,11 @@ class ExplorerBranch extends Component<ExploreBranchProps,
                 this.processChangeFacetStateChange(budgetBranch)
                 break
             }
+            default:
+                returnvalue = false
         }
         this._previousControlData = currentControlData
+        return returnvalue
     }
 
     private processChangeViewpointStateChange = (budgetBranch:BudgetBranch) => {
@@ -265,9 +272,9 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
             }
             let branch = this
-            setTimeout(() => {
-                branch.props.displayCallbacks.updateChartSelections()
-            })
+            // setTimeout(() => {
+            //     branch.props.displayCallbacks.updateChartSelections()
+            // })
 
         })
     }
@@ -290,9 +297,9 @@ class ExplorerBranch extends Component<ExploreBranchProps,
             }
         })
         let branch = this
-        setTimeout(() => {
-            this._nodeDisplayCallbacks.updateChartSelections()
-        })
+        // setTimeout(() => {
+        //     this._nodeDisplayCallbacks.updateChartSelections()
+        // })
     }
 
     // ============================================================
@@ -368,9 +375,9 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         let { budgetBranch } = this.props
         this.props.globalStateActions.changeFacet(budgetBranch.uid, facet)
         let branch = this
-        setTimeout(() => {
-            this._nodeDisplayCallbacks.updateChartSelections()
-        })
+        // setTimeout(() => {
+        //     this._nodeDisplayCallbacks.updateChartSelections()
+        // })
     }
 
     // -----------------------------[ prepare for render ]---------------------------------
@@ -436,9 +443,9 @@ class ExplorerBranch extends Component<ExploreBranchProps,
 
     onChangePortalTab = () => {
         let branch = this
-        setTimeout(() => {
-            branch._nodeDisplayCallbacks.updateChartSelections()
-        })
+        // setTimeout(() => {
+        //     branch._nodeDisplayCallbacks.updateChartSelections()
+        // })
     }
 
     render() {

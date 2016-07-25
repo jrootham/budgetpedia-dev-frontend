@@ -26,11 +26,12 @@ class ExplorerBranch extends Component {
             let previousControlData = this._previousControlData;
             let currentControlData = this.props.declarationData;
             let { lastAction } = currentControlData;
+            let returnvalue = true;
             if (!actions_1.branchTypes[lastAction]) {
-                return;
+                return false;
             }
             if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
-                return;
+                return false;
             }
             let { budgetBranch } = this.props;
             switch (lastAction) {
@@ -42,8 +43,11 @@ class ExplorerBranch extends Component {
                     this.processChangeFacetStateChange(budgetBranch);
                     break;
                 }
+                default:
+                    returnvalue = false;
             }
             this._previousControlData = currentControlData;
+            return returnvalue;
         };
         this.processChangeViewpointStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData();
@@ -74,9 +78,6 @@ class ExplorerBranch extends Component {
                     });
                 }
                 let branch = this;
-                setTimeout(() => {
-                    branch.props.displayCallbacks.updateChartSelections();
-                });
             });
         };
         this.refreshPresentation = () => {
@@ -95,9 +96,6 @@ class ExplorerBranch extends Component {
                 }
             });
             let branch = this;
-            setTimeout(() => {
-                this._nodeDisplayCallbacks.updateChartSelections();
-            });
         };
         this.branchScrollBlock = null;
         this.onPortalCreation = () => {
@@ -152,9 +150,6 @@ class ExplorerBranch extends Component {
             let { budgetBranch } = this.props;
             this.props.globalStateActions.changeFacet(budgetBranch.uid, facet);
             let branch = this;
-            setTimeout(() => {
-                this._nodeDisplayCallbacks.updateChartSelections();
-            });
         };
         this.getPortals = (budgetNodes) => {
             let { viewpointData } = this.state;
@@ -193,9 +188,6 @@ class ExplorerBranch extends Component {
         };
         this.onChangePortalTab = () => {
             let branch = this;
-            setTimeout(() => {
-                branch._nodeDisplayCallbacks.updateChartSelections();
-            });
         };
     }
     componentWillMount() {
@@ -242,6 +234,7 @@ class ExplorerBranch extends Component {
         }
     }
     componentDidUpdate() {
+        console.log('branch did update');
         let { budgetBranch, declarationData } = this.props;
         let { nodes: branchNodes } = budgetBranch;
         let { nodesById } = declarationData;
@@ -262,7 +255,10 @@ class ExplorerBranch extends Component {
         }
         else {
             this.harmonizecount = null;
-            this.controlGlobalStateChange();
+            if (!this.controlGlobalStateChange()) {
+                console.log('finished branch update');
+                this.props.displayCallbacks.updateChartSelections();
+            }
         }
     }
     render() {
