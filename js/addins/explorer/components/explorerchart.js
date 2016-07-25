@@ -14,11 +14,7 @@ class ExplorerChart extends Component {
             callbacks.onSwitchChartCode(callbackid, chartCode);
         };
     }
-    componentDidUpdate() {
-        console.log('explorer chart did update');
-    }
     render() {
-        console.log('explorerchart budgetCell', this.props.budgetCell);
         let { chartParms, chartCode, expandable, graph_id } = this.props.budgetCell;
         if (!expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4';

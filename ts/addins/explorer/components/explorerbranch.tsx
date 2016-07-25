@@ -162,7 +162,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes
     componentDidUpdate() {
-        console.log('branch did update')
+        // console.log('branch did update')
         // refresh branchnodes
         let { budgetBranch, declarationData } = this.props
         let { nodes:branchNodes } = budgetBranch
@@ -196,7 +196,7 @@ class ExplorerBranch extends Component<ExploreBranchProps,
         } else { // otherwise see if there are other cascading actions that have to be taken
             this.harmonizecount = null // reset
             if (!this.controlGlobalStateChange()) {
-                console.log('finished branch update')
+                // console.log('finished branch update')
                 this.props.displayCallbacks.updateChartSelections()
             }
         }

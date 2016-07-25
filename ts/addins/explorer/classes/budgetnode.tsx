@@ -263,7 +263,7 @@ class BudgetNode {
 
         let chartParmsObj:ChartParmsObj = cell.getChartParms({current:fcurrent,next:selectfn})
 
-        console.log('chartParmsObj', chartParmsObj)
+        // console.log('chartParmsObj', chartParmsObj)
 
         if (!chartParmsObj.isError) {
 

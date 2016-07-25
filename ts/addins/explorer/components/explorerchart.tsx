@@ -63,13 +63,13 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
     //     })
     // }
 
-    componentDidUpdate() {
-        console.log('explorer chart did update')
-    }
+    // componentDidUpdate() {
+    //     console.log('explorer chart did update')
+    // }
 
     render() {
 
-        console.log('explorerchart budgetCell', this.props.budgetCell)
+        // console.log('explorerchart budgetCell', this.props.budgetCell)
 
         let { chartParms, chartCode, expandable, graph_id } = this.props.budgetCell
         if (!expandable) {

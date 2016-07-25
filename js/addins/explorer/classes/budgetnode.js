@@ -23,7 +23,6 @@ class BudgetNode {
             let selectfn = this.onChartComponentSelection;
             let fcurrent = selectfn(budgetNode.nodeIndex)(cell.cellIndex);
             let chartParmsObj = cell.getChartParms({ current: fcurrent, next: selectfn });
-            console.log('chartParmsObj', chartParmsObj);
             if (!chartParmsObj.isError) {
                 cell.chartParms = chartParmsObj.chartParms;
                 cell.chartCode =

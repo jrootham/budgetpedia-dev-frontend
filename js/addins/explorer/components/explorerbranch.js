@@ -234,7 +234,6 @@ class ExplorerBranch extends Component {
         }
     }
     componentDidUpdate() {
-        console.log('branch did update');
         let { budgetBranch, declarationData } = this.props;
         let { nodes: branchNodes } = budgetBranch;
         let { nodesById } = declarationData;
@@ -256,7 +255,6 @@ class ExplorerBranch extends Component {
         else {
             this.harmonizecount = null;
             if (!this.controlGlobalStateChange()) {
-                console.log('finished branch update');
                 this.props.displayCallbacks.updateChartSelections();
             }
         }

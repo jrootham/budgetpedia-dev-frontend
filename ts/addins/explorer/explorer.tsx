@@ -217,7 +217,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         let explorer = this
 
-        console.log('declarationData',explorer.props.declarationData)
+        // console.log('declarationData',explorer.props.declarationData)
         
         let dialogbox =  
             <Dialog
