@@ -18,6 +18,17 @@ class BudgetNode {
             }
             return parmsList;
         };
+        this._setCellTitle = (budgetCell) => {
+            let portaltitles = budgetCell.viewpointConfigData.itemseriesConfig.Titles;
+            let chartblocktitle = null;
+            if ((budgetCell.nodeDatasetName == 'Categories')) {
+                chartblocktitle = portaltitles.Categories;
+            }
+            else {
+                chartblocktitle = portaltitles.Baseline;
+            }
+            budgetCell.cellTitle = "By " + chartblocktitle;
+        };
         this._assignCellChartParms = (cell) => {
             let budgetNode = this;
             let selectfn = this.onChartComponentSelection;
@@ -25,7 +36,7 @@ class BudgetNode {
             let chartParmsObj = cell.getChartParms({ current: fcurrent, next: selectfn });
             if (!chartParmsObj.isError) {
                 cell.chartParms = chartParmsObj.chartParms;
-                cell.chartCode =
+                cell.explorerChartCode =
                     constants_1.GoogleChartTypeToChartCode[cell.chartParms.chartType];
             }
         };
@@ -62,10 +73,10 @@ class BudgetNode {
         let cells = [];
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration = cellDeclarations[cellIndex];
-            let { chartSelection, chartCode, nodeDatasetName, uid } = cellDeclaration;
+            let { chartSelection, explorerChartCode, nodeDatasetName, uid } = cellDeclaration;
             let cell = new budgetcell_1.default({
                 nodeDatasetName: nodeDatasetName,
-                chartCode: chartCode,
+                explorerChartCode: explorerChartCode,
                 chartSelection: chartSelection,
                 uid: uid,
             });
@@ -82,6 +93,7 @@ class BudgetNode {
             cell.nodeData = nodeData;
             cell.branchSettings = this.branchSettings,
                 this._assignCellChartParms(cell);
+            this._setCellTitle(cell);
             cells.push(cell);
         }
         return cells;

@@ -37,7 +37,7 @@ interface viewpointConfigData {
 
 export interface CellDeclaration {
     nodeDatasetName:string, 
-    chartCode:string, 
+    explorerChartCode:string, 
     chartSelection:ChartSelectionCell[],
     uid?: string,
 }
@@ -53,9 +53,9 @@ interface NodeData {
 class BudgetCell {
 
     constructor(specs:CellDeclaration) {
-        let { nodeDatasetName, chartCode, chartSelection, uid } = specs
+        let { nodeDatasetName, explorerChartCode, chartSelection, uid } = specs
         this.nodeDatasetName = nodeDatasetName
-        this.chartCode = chartCode
+        this.explorerChartCode = explorerChartCode
         this.chartSelection = chartSelection
         this.uid = uid
     }
@@ -63,13 +63,13 @@ class BudgetCell {
     // primary properties
     nodeDatasetName:string
     chartSelection: ChartSelectionCell[]
-    chartCode: string
+    explorerChartCode: string
     uid: string
 
     // derivative properties
     chartComponent: any // the react Chart component, allows access to google chart objects
     get googleChartType() {
-        return ChartCodeToGoogleChartType[this.chartCode]
+        return ChartCodeToGoogleChartType[this.explorerChartCode]
     }
     chartParms: ChartParms
     get chart() {
@@ -90,9 +90,9 @@ class BudgetCell {
     //     let {
     //         nodeIndex,
     //         cellIndex,
-    //         chartCode,
+    //         explorerChartCode,
     //     } = props
-    //     let chartType = ChartCodeToGoogleChartType[chartCode]
+    //     let chartType = ChartCodeToGoogleChartType[explorerChartCode]
 
     //     let branchNodes = this.nodes
     //     let budgetNode: BudgetNode = branchNodes[nodeIndex]
@@ -118,7 +118,7 @@ class BudgetCell {
     //     let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
     //     if (!chartParmsObj.isError) {
     //         budgetCell.chartParms = chartParmsObj.chartParms
-    //         budgetCell.chartCode =
+    //         budgetCell.explorerChartCode =
     //             GoogleChartTypeToChartCode[budgetCell.chartParms.chartType]
     //     } else {
     //         budgetCell.googleChartType = oldChartType

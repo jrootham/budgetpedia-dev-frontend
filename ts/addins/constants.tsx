@@ -14,8 +14,8 @@ let ChartCodeToGoogleChartType = {
 export var GoogleChartTypeToChartCode = {
 }
 
-for (let chartCode in ChartCodeToGoogleChartType) {
-    GoogleChartTypeToChartCode[ChartCodeToGoogleChartType[chartCode]] = chartCode
+for (let explorerChartCode in ChartCodeToGoogleChartType) {
+    GoogleChartTypeToChartCode[ChartCodeToGoogleChartType[explorerChartCode]] = explorerChartCode
 }
 
 export { ChartCodeToGoogleChartType }

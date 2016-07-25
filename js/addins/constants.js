@@ -6,6 +6,6 @@ let ChartCodeToGoogleChartType = {
 };
 exports.ChartCodeToGoogleChartType = ChartCodeToGoogleChartType;
 exports.GoogleChartTypeToChartCode = {};
-for (let chartCode in ChartCodeToGoogleChartType) {
-    exports.GoogleChartTypeToChartCode[ChartCodeToGoogleChartType[chartCode]] = chartCode;
+for (let explorerChartCode in ChartCodeToGoogleChartType) {
+    exports.GoogleChartTypeToChartCode[ChartCodeToGoogleChartType[explorerChartCode]] = explorerChartCode;
 }

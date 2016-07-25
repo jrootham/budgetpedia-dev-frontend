@@ -24,14 +24,14 @@ interface ExplorerChartProps {
 
 class ExplorerChart extends Component<ExplorerChartProps, any> {
 
-    onChangeChartCode = (chartCode) => {
+    onChangeChartCode = (explorerChartCode) => {
         let { callbackid } = this.props
         let { cellCallbacks:callbacks } = this.props.budgetCell
-        callbacks.onSwitchChartCode(callbackid, chartCode)
+        callbacks.onSwitchChartCode(callbackid, explorerChartCode)
     }
 
     // TODO: belongs with explorerchart controller?
-    // switchChartCode = (nodeIndex,cellIndex, chartCode) => {
+    // switchChartCode = (nodeIndex,cellIndex, explorerChartCode) => {
 
     //     let { budgetBranch }:{budgetBranch: BudgetBranch } = this.props
     //     // let { settings } = budgetBranch
@@ -39,7 +39,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
     //     let props = {
     //         nodeIndex,
     //         cellIndex,
-    //         chartCode,
+    //         explorerChartCode,
     //     }
 
     //     let switchResults = budgetBranch.switchChartCode(props)
@@ -71,7 +71,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
 
         // console.log('explorerchart budgetCell', this.props.budgetCell)
 
-        let { chartParms, chartCode, expandable, graph_id } = this.props.budgetCell
+        let { chartParms, explorerChartCode, expandable, graph_id } = this.props.budgetCell
         if (!expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4'
         }
@@ -96,7 +96,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (chartCode == "ColumnChart")
+                            backgroundColor: (explorerChartCode == "ColumnChart")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
                             borderRadius: "50%"
@@ -112,7 +112,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (chartCode == "DonutChart")
+                            backgroundColor: (explorerChartCode == "DonutChart")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
                             borderRadius: "50%"
@@ -128,7 +128,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (chartCode == "TimeLine")
+                            backgroundColor: (explorerChartCode == "TimeLine")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
                             borderRadius: "50%"
@@ -145,7 +145,7 @@ class ExplorerChart extends Component<ExplorerChartProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (chartCode == "StackedArea")
+                            backgroundColor: (explorerChartCode == "StackedArea")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
                             borderRadius: "50%"

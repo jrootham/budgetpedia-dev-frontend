@@ -31,29 +31,6 @@ export interface ExplorerPortalActions {
     // removeCellDeclarations:Function,
 }
 
-// for (let cellindex in budgetNode.cells) {
-//     let budgetCell:BudgetCell = budgetNode.cells[cellindex]
-//     let chartblocktitle = null
-//     if ((budgetCell.nodeDatasetName == 'Categories')) {
-//         chartblocktitle = portaltitles.Categories
-//     } else {
-//         chartblocktitle = portaltitles.Baseline
-//     }
-
-//     let chartParms = budgetCell.chartParms
-
-//     let explorer = this
-//     let cellCallbacks: CellCallbacks = {
-//         onSwitchChartCode: (nodeIndex) => (cellIndex, chartCode) => {
-//                 explorer.switchChartCode(nodeIndex, cellIndex, chartCode)
-//         },
-//     }
-//     budgetCell.graph_id = "ChartID" + this.props.callbackid + '-' + nodeindex + '-' + cellindex,
-//     budgetCell.cellCallbacks = cellCallbacks
-//     budgetCell.cellTitle = "By " + chartblocktitle
-
-// }
-
 class ExplorerPortal extends Component<ExplorePortalProps, any> {
 
     state = {

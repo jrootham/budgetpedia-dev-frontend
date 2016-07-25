@@ -196,14 +196,14 @@ class BudgetCell {
             };
             return chartParmsObj;
         };
-        let { nodeDatasetName, chartCode, chartSelection, uid } = specs;
+        let { nodeDatasetName, explorerChartCode, chartSelection, uid } = specs;
         this.nodeDatasetName = nodeDatasetName;
-        this.chartCode = chartCode;
+        this.explorerChartCode = explorerChartCode;
         this.chartSelection = chartSelection;
         this.uid = uid;
     }
     get googleChartType() {
-        return constants_1.ChartCodeToGoogleChartType[this.chartCode];
+        return constants_1.ChartCodeToGoogleChartType[this.explorerChartCode];
     }
     get chart() {
         return this.chartComponent.chart;

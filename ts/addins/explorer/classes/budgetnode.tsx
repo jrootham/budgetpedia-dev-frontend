@@ -62,7 +62,7 @@ export interface BudgetNodeParms {
 //         budgetNode.facetName = branchsettings.facet
 //         let budgetCell:BudgetCell = budgetNode.cells[nodeCellIndex]
 //         budgetCell.chartParms = chartParmsObj.chartParms
-//         budgetCell.chartCode =
+//         budgetCell.explorerChartCode =
 //             GoogleChartTypeToChartCode[budgetCell.chartParms.chartType]
 //         if (parentBudgetNode) {
 //             budgetNode.parentData.dataNode = parentBudgetNode.dataNode
@@ -107,7 +107,7 @@ export interface BudgetNodeParms {
 //     if (!chartParmsObj.isError) {
 
 //         budgetCell.chartParms = chartParmsObj.chartParms
-//         budgetCell.chartCode =
+//         budgetCell.explorerChartCode =
 //             GoogleChartTypeToChartCode[budgetCell.chartParms.chartType]
 
 //     } else {
@@ -224,11 +224,11 @@ class BudgetNode {
         // build cells array
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration: CellDeclaration = cellDeclarations[cellIndex]
-            let {chartSelection, chartCode, nodeDatasetName, uid} = cellDeclaration
+            let {chartSelection, explorerChartCode, nodeDatasetName, uid} = cellDeclaration
             let cell = new BudgetCell(
                 {
                     nodeDatasetName,
-                    chartCode,
+                    explorerChartCode,
                     chartSelection,
                     uid,
                 }
@@ -250,9 +250,21 @@ class BudgetNode {
             cell.branchSettings = this.branchSettings,
 
             this._assignCellChartParms(cell)
+            this._setCellTitle(cell)
             cells.push(cell)
         }
         return cells
+    }
+
+    private _setCellTitle = (budgetCell:BudgetCell) => {
+        let portaltitles = budgetCell.viewpointConfigData.itemseriesConfig.Titles
+        let chartblocktitle = null
+        if ((budgetCell.nodeDatasetName == 'Categories')) {
+            chartblocktitle = portaltitles.Categories
+        } else {
+            chartblocktitle = portaltitles.Baseline
+        }
+        budgetCell.cellTitle = "By " + chartblocktitle
     }
 
     private _assignCellChartParms = (cell:BudgetCell) => {
@@ -268,7 +280,7 @@ class BudgetNode {
         if (!chartParmsObj.isError) {
 
             cell.chartParms = chartParmsObj.chartParms
-            cell.chartCode =
+            cell.explorerChartCode =
                 GoogleChartTypeToChartCode[cell.chartParms.chartType]
 
         }

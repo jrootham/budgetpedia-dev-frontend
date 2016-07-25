@@ -226,7 +226,7 @@ let explorer = {
         },
         cell: {
             chartSelection: null,
-            chartCode: "ColumnChart",
+            explorerChartCode: "ColumnChart",
         }
     }
 }
