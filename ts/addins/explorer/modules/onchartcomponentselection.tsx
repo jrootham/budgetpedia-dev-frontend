@@ -52,6 +52,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     if (budgetCell.nodeDatasetName == 'Categories') {
         return
     }
+    budgetCell.chartSelection = chartSelectionData.selection
 
     // 2. remove any nodes to be replaced or abandoned
 
@@ -78,12 +79,12 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         // 3. if deselected, update parms and quit
         if (!selection) { // deselected
             budgetCell.chartSelection = null
-            // updateChartSelections()
+            updateChartSelections()
             return
         }
 
         // 4. otherwise create new child node
-        budgetCell.chartSelection = chartSelectionData.selection
+        // budgetCell.chartSelection = chartSelectionData.selection
         let childprops: CreateChildNodeProps = {
             selectionrow,
             nodeIndex,

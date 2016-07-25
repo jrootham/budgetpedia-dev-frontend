@@ -14,6 +14,7 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     if (budgetCell.nodeDatasetName == 'Categories') {
         return;
     }
+    budgetCell.chartSelection = chartSelectionData.selection;
     let removed = branchNodes.splice(nodeIndex + 1);
     let removeditems = removed.map((item) => {
         return { uid: item.uid, cellList: item.cellList };
@@ -27,9 +28,9 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         let { updateChartSelections } = budgetBranch.nodeCallbacks;
         if (!selection) {
             budgetCell.chartSelection = null;
+            updateChartSelections();
             return;
         }
-        budgetCell.chartSelection = chartSelectionData.selection;
         let childprops = {
             selectionrow: selectionrow,
             nodeIndex: nodeIndex,
