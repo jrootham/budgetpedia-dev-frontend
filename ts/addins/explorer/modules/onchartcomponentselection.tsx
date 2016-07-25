@@ -1,6 +1,8 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // onchartcomponentselection.tsx
 
+// TODO: should be moved to branch.class
+
 import BudgetNode from '../classes/node.class'
 import BudgetBranch from '../classes/branch.class'
 import BudgetCell from '../classes/cell.class'

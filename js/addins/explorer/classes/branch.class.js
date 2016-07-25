@@ -2,7 +2,6 @@
 const databaseapi_1 = require('./databaseapi');
 const getbudgetnode_1 = require('../modules/getbudgetnode');
 const node_class_1 = require('./node.class');
-const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 class BudgetBranch {
     constructor(parms) {
         this.getInitialBranchNodeParms = () => {
@@ -141,7 +140,6 @@ class BudgetBranch {
         let isError = false;
         let chartParmsObj = null;
         let branchuid = this.uid;
-        let fn = onchartcomponentselection_1.onChartComponentSelection(this);
         for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode;
             budgetNode = branchNodes[nodeIndex];
@@ -167,7 +165,6 @@ class BudgetBranch {
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex: 0,
                         };
-                        let fcurrent = fn(nodeIndex)(0);
                         let budgetBranch = this;
                         budgetBranch.createChildNode(childprops);
                     });

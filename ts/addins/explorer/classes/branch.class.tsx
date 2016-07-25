@@ -3,28 +3,13 @@
 
 import databaseapi , { DatasetConfig, TimeSpecs, ViewpointData } from './databaseapi'
 import {
-    // MatrixCellConfig,
-    // ChartParms,
     ChartParmsObj,
-    // MatrixLocation,
-    // PortalConfig,
-    // CellSettings,
-    // CellCallbacks,
-    // PortalChartLocation,
-    // ChartConfig,
     SortedComponentItem,
     GetCellChartProps,
     BranchSettings,
 } from '../modules/interfaces'
 import getBudgetNode from '../modules/getbudgetnode'
 import BudgetNode,{ BudgetNodeParms } from './node.class'
-import { 
-    // createChildNode,
-    // ChartSelectionContext,
-    CreateChildNodeProps,
-    // CreateChildNodeCallbacks,
-    onChartComponentSelection,
-} from '../modules/onchartcomponentselection'
 import * as ExplorerActions from '../actions'
 
 import BudgetCell from './cell.class'
@@ -32,6 +17,12 @@ import { ExplorerBranchActions } from '../components/explorerbranch'
 
 // import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../../constants'
 
+export interface CreateChildNodeProps {
+    selectionrow: any,
+    nodeIndex: number,
+    cellIndex: number,
+    // chartSelectionData: any,
+}
 
 interface BudgetBranchParms {
     settings:BranchSettings,
@@ -147,7 +138,6 @@ class BudgetBranch {
         let isError = false
         let chartParmsObj: ChartParmsObj = null
         let branchuid = this.uid
-        let fn = onChartComponentSelection(this)
 
         for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode
@@ -180,17 +170,13 @@ class BudgetBranch {
 
                         let prevBudgetCell:BudgetCell = prevBudgetNode.cells[0]
 
-                        // let chartSelectionData = {
-                        //     selection:prevBudgetCell.chartSelection,
-                        // }
-
                         let childprops: CreateChildNodeProps = {
                             selectionrow: prevBudgetCell.chartSelection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex:0,
                             // chartSelectionData,
                         }
-                        let fcurrent = fn(nodeIndex)(0)
+                        // let fcurrent = fn(nodeIndex)(0)
                         let budgetBranch = this
                         budgetBranch.createChildNode(childprops)
                     })
