@@ -43,10 +43,10 @@ class BudgetBranch {
         };
         this.getViewpointData = () => {
             let branchSettings = this.settings;
-            let { viewpoint: viewpointname, facet: dataseriesname, inflationAdjusted, } = branchSettings;
+            let { viewpoint: viewpointName, facet: datasetName, inflationAdjusted, } = branchSettings;
             let viewpointdata = databaseapi_1.default.getViewpointData({
-                viewpointname: viewpointname,
-                dataseriesname: dataseriesname,
+                viewpointName: viewpointName,
+                datasetName: datasetName,
                 inflationAdjusted: inflationAdjusted,
                 timeSpecs: {
                     leftYear: null,

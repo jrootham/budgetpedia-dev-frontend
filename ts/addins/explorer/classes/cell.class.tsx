@@ -55,7 +55,7 @@
     //     let viewpointdata = this.state.viewpointData
     //     let configData = {
     //         viewpointConfig:viewpointdata.Configuration,
-    //         itemseriesConfig:viewpointdata.itemseriesconfigdata,
+    //         datasetConfig:viewpointdata.datasetConfig,
     //     }        
     //     let chartprops: GetCellChartProps = {
     //         chartIndex: cellIndex,
@@ -106,7 +106,7 @@ export interface SelectionCallbackProps {
 
 interface viewpointConfigData {
     viewpointConfig: any,
-    itemseriesConfig: any,
+    datasetConfig: any,
 }
 
 export interface CellDeclaration {
@@ -167,7 +167,7 @@ class BudgetCell {
 
         let { branchSettings } = this 
 
-        let { viewpointConfig, itemseriesConfig }  = this.viewpointConfigData
+        let { viewpointConfig, datasetConfig }  = this.viewpointConfigData
 
         // -------------------[ INIT VARS ]---------------------
 
@@ -175,13 +175,13 @@ class BudgetCell {
 
         let { rightYear:year } = yearscope
         // unpack branchsettings
-        let { facet:dataseriesname } = branchSettings
+        let { facet:datasetName } = branchSettings
 
-        let units = itemseriesConfig.Units,
+        let units = datasetConfig.Units,
             vertlabel
-        vertlabel = itemseriesConfig.UnitsAlias
+        vertlabel = datasetConfig.UnitsAlias
         if (units != 'FTE') {
-            if (dataseriesname == 'BudgetExpenses')
+            if (datasetName == 'BudgetExpenses')
                 vertlabel = 'Expenditures' + ' (' + vertlabel + ')'
             else
                 vertlabel = 'Revenues' + ' (' + vertlabel + ')'
@@ -227,7 +227,7 @@ class BudgetCell {
             let titleref = viewpointConfig[dataNode.Contents]
             axistitle = titleref.Alias || titleref.Name
         } else {
-            let portaltitles = itemseriesConfig.Titles
+            let portaltitles = datasetConfig.Titles
             axistitle = portaltitles.Categories
         }
 
@@ -246,7 +246,7 @@ class BudgetCell {
             title = catname + ': ' + parentData.Name
         }
         else {
-            title = itemseriesConfig.Title
+            title = datasetConfig.Title
         }
         let titleamount = null
         if (dataNode.years) {

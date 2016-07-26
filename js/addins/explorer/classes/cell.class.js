@@ -8,14 +8,14 @@ class BudgetCell {
             let { cellIndex: chartIndex, nodeDataseriesName } = budgetCell;
             let sortedlist = 'Sorted' + nodeDataseriesName;
             let { branchSettings } = this;
-            let { viewpointConfig, itemseriesConfig } = this.viewpointConfigData;
+            let { viewpointConfig, datasetConfig } = this.viewpointConfigData;
             let { dataNode, timeSpecs: yearscope, parentData, nodeIndex } = this.nodeData;
             let { rightYear: year } = yearscope;
-            let { facet: dataseriesname } = branchSettings;
-            let units = itemseriesConfig.Units, vertlabel;
-            vertlabel = itemseriesConfig.UnitsAlias;
+            let { facet: datasetName } = branchSettings;
+            let units = datasetConfig.Units, vertlabel;
+            vertlabel = datasetConfig.UnitsAlias;
             if (units != 'FTE') {
-                if (dataseriesname == 'BudgetExpenses')
+                if (datasetName == 'BudgetExpenses')
                     vertlabel = 'Expenditures' + ' (' + vertlabel + ')';
                 else
                     vertlabel = 'Revenues' + ' (' + vertlabel + ')';
@@ -46,7 +46,7 @@ class BudgetCell {
                 axistitle = titleref.Alias || titleref.Name;
             }
             else {
-                let portaltitles = itemseriesConfig.Titles;
+                let portaltitles = datasetConfig.Titles;
                 axistitle = portaltitles.Categories;
             }
             let title;
@@ -64,7 +64,7 @@ class BudgetCell {
                 title = catname + ': ' + parentData.Name;
             }
             else {
-                title = itemseriesConfig.Title;
+                title = datasetConfig.Title;
             }
             let titleamount = null;
             if (dataNode.years) {

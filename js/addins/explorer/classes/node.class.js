@@ -35,7 +35,7 @@ class BudgetNode {
             this._setCellTitle(cell);
         };
         this._setCellTitle = (budgetCell) => {
-            let portaltitles = budgetCell.viewpointConfigData.itemseriesConfig.Titles;
+            let portaltitles = budgetCell.viewpointConfigData.datasetConfig.Titles;
             let chartblocktitle = null;
             if ((budgetCell.nodeDataseriesName == 'Categories')) {
                 chartblocktitle = portaltitles.Categories;

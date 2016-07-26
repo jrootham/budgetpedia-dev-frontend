@@ -43,7 +43,7 @@ export interface SelectionCallbackProps {
 
 interface ConfigData {
     viewpointConfig: any,
-    itemseriesConfig: any,
+    datasetConfig: any,
 }
 
 let getChartParms = (
@@ -62,7 +62,7 @@ let getChartParms = (
         configData?: ConfigData
     } = props
 
-    let { viewpointConfig, itemseriesConfig }  = configData
+    let { viewpointConfig, datasetConfig }  = configData
 
     let budgetCell: BudgetCell = budgetNode.cells[chartIndex] || props.budgetCell
 
@@ -83,9 +83,9 @@ let getChartParms = (
     // unpack branchsettings
     let { facet:dataseriesname } = branchsettings
 
-    let units = itemseriesConfig.Units,
+    let units = datasetConfig.Units,
         vertlabel
-    vertlabel = itemseriesConfig.UnitsAlias
+    vertlabel = datasetConfig.UnitsAlias
     if (units != 'FTE') {
         if (dataseriesname == 'BudgetExpenses')
             vertlabel = 'Expenditures' + ' (' + vertlabel + ')'
@@ -133,7 +133,7 @@ let getChartParms = (
         let titleref = viewpointConfig[dataNode.Contents]
         axistitle = titleref.Alias || titleref.Name
     } else {
-        let portaltitles = itemseriesConfig.Titles
+        let portaltitles = datasetConfig.Titles
         axistitle = portaltitles.Categories
     }
 
@@ -152,7 +152,7 @@ let getChartParms = (
         title = catname + ': ' + budgetNode.parentData.Name
     }
     else {
-        title = itemseriesConfig.Title
+        title = datasetConfig.Title
     }
     let titleamount = null
     if (dataNode.years) {

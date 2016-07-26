@@ -1,23 +1,23 @@
 "use strict";
 let setViewpointData = (parms) => {
-    let { dataseriesname, viewpointdata, itemseriesdata, lookups, inflationAdjusted } = parms;
-    if (viewpointdata.currentdataseries == dataseriesname)
+    let { datasetName, viewpointData, datasetData, lookups, inflationAdjusted } = parms;
+    if (viewpointData.currentDataset == datasetName)
         return;
-    let baselinecat = itemseriesdata.Baseline;
+    let baselinecat = datasetData.Baseline;
     let baselinelookups = lookups[baselinecat];
-    let componentcat = itemseriesdata.Categories;
+    let componentcat = datasetData.Categories;
     let componentlookups = lookups[componentcat];
-    let categorylookups = viewpointdata.Lookups.Categories;
+    let categorylookups = viewpointData.Lookups.Categories;
     let lookupset = {
         baselinelookups: baselinelookups,
         componentlookups: componentlookups,
         categorylookups: categorylookups,
     };
-    let items = itemseriesdata.Items;
-    let isInflationAdjusted = !!itemseriesdata.InflationAdjusted;
-    let rootcomponent = { "ROOT": viewpointdata };
+    let items = datasetData.Items;
+    let isInflationAdjusted = !!datasetData.InflationAdjusted;
+    let rootcomponent = { "ROOT": viewpointData };
     setComponentAggregates(rootcomponent, items, isInflationAdjusted, lookupset, inflationAdjusted);
-    viewpointdata.currentdataseries = dataseriesname;
+    viewpointData.currentDataset = datasetName;
 };
 let setComponentAggregates = (components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) => {
     let cumulatingSummaries = {

@@ -386,7 +386,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
         let { viewpointData } = this.state
 
         if (!viewpointData) return []
-        let itemSeriesData: DatasetConfig = viewpointData.itemseriesconfigdata
+        let itemSeriesData: DatasetConfig = viewpointData.datasetConfig
 
         let portalSeriesName = itemSeriesData.Name
         if (itemSeriesData.Units == 'DOLLAR') {
@@ -413,11 +413,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
             let viewpointdata = this.state.viewpointData
             let {
                 Configuration: viewpointConfig,
-                itemseriesconfigdata: itemseriesConfig,
+                datasetConfig: datasetConfig,
             } = viewpointdata
             let viewpointConfigData = {
                 viewpointConfig,
-                itemseriesConfig,
+                datasetConfig,
             }
             budgetNode.viewpointConfigData = viewpointConfigData
             budgetNode.branchSettings = this.props.budgetBranch.settings

@@ -20,9 +20,9 @@ import {
 
 export interface SetViewpointDataParms {
     // viewpointname:string,
-    dataseriesname: string,
-    viewpointdata:any,
-    itemseriesdata:any,
+    datasetName: string,
+    viewpointData:any,
+    datasetData:any,
     lookups:any,
     inflationAdjusted: boolean,
     timeSpecs: {
@@ -38,22 +38,22 @@ export interface SetViewpointDataParms {
 let setViewpointData = (parms: SetViewpointDataParms) => {
     // let viewpointname = parms.viewpointname,
     let { 
-        dataseriesname, 
-        viewpointdata, 
-        itemseriesdata, 
+        datasetName, 
+        viewpointData, 
+        datasetData, 
         lookups, 
         inflationAdjusted 
     } = parms
 
-    // already done if currentdataseries matches request
-    if (viewpointdata.currentdataseries == dataseriesname)
+    // already done if currentDataset matches request
+    if (viewpointData.currentDataset == datasetName)
         return
 
-    let baselinecat = itemseriesdata.Baseline // use for system lookups
+    let baselinecat = datasetData.Baseline // use for system lookups
     let baselinelookups = lookups[baselinecat]
-    let componentcat = itemseriesdata.Categories
+    let componentcat = datasetData.Categories
     let componentlookups = lookups[componentcat]
-    let categorylookups = viewpointdata.Lookups.Categories
+    let categorylookups = viewpointData.Lookups.Categories
 
     let lookupset = {
         baselinelookups,
@@ -61,11 +61,11 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
         categorylookups,
     }
 
-    let items = itemseriesdata.Items
+    let items = datasetData.Items
 
-    let isInflationAdjusted = !!itemseriesdata.InflationAdjusted
+    let isInflationAdjusted = !!datasetData.InflationAdjusted
 
-    let rootcomponent = { "ROOT": viewpointdata }
+    let rootcomponent = { "ROOT": viewpointData }
 
     // set years, and Categories by years
     // initiates recursion
@@ -73,7 +73,7 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
         lookupset, inflationAdjusted)
 
     // create sentinel to prevent unnucessary processing
-    viewpointdata.currentdataseries = dataseriesname
+    viewpointData.currentDataset = datasetName
 
     // let text = JSON.stringify(viewpoint, null, 4) + '\n'
 

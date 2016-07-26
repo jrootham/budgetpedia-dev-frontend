@@ -8,21 +8,21 @@ class Database {
     getBranch(viewpointname, path = []) {
     }
     getViewpointData(parms) {
-        let { viewpointname, dataseriesname, inflationAdjusted, timeSpecs } = parms;
-        let viewpointdata = this.getViewpoint(viewpointname), itemseriesdata = this.getDataset(dataseriesname), lookups = this.getLookup();
-        viewpointdata = JSON.parse(JSON.stringify(viewpointdata));
+        let { viewpointName, datasetName, inflationAdjusted, timeSpecs } = parms;
+        let viewpointData = this.getViewpoint(viewpointName), datasetData = this.getDataset(datasetName), lookups = this.getLookup();
+        viewpointData = JSON.parse(JSON.stringify(viewpointData));
         let setparms = {
-            dataseriesname: dataseriesname,
+            datasetName: datasetName,
             inflationAdjusted: inflationAdjusted,
             timeSpecs: timeSpecs,
-            viewpointdata: viewpointdata,
-            itemseriesdata: itemseriesdata,
+            viewpointData: viewpointData,
+            datasetData: datasetData,
             lookups: lookups,
         };
         this.setViewpointData(setparms);
-        viewpointdata = setparms.viewpointdata;
-        viewpointdata.itemseriesconfigdata = this.getDatasetConfig(parms.dataseriesname);
-        return setparms.viewpointdata;
+        viewpointData = setparms.viewpointData;
+        viewpointData.datasetConfig = this.getDatasetConfig(parms.datasetName);
+        return setparms.viewpointData;
     }
     getDatasetConfig(dataset) {
         let datasetdata = this.getDataset(dataset);

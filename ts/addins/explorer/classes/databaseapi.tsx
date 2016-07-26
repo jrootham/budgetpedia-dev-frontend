@@ -40,7 +40,7 @@ export interface PortalCell {
 
 export interface ViewpointData extends Component {
     Lookups: Lookups,
-    itemseriesconfigdata?: any,
+    datasetConfig?: any,
     Configuration: {
         [configurationcode:string]:Configuration,
     },
@@ -103,8 +103,8 @@ export interface TimeSpecs {
 }
 
 export interface GetViewpointDataParms {
-    viewpointname:string,
-    dataseriesname: string,
+    viewpointName:string,
+    datasetName: string,
     inflationAdjusted: boolean,
     timeSpecs: TimeSpecs,
 }
@@ -135,30 +135,30 @@ class Database {
 
     public getViewpointData(parms: GetViewpointDataParms) {
 
-        let { viewpointname, dataseriesname, inflationAdjusted, timeSpecs } = parms
+        let { viewpointName, datasetName, inflationAdjusted, timeSpecs } = parms
 
-        let viewpointdata = this.getViewpoint(viewpointname),
-            itemseriesdata = this.getDataset(dataseriesname),
+        let viewpointData = this.getViewpoint(viewpointName),
+            datasetData = this.getDataset(datasetName),
             lookups = this.getLookup()
 
-        viewpointdata = JSON.parse(JSON.stringify(viewpointdata)) // deep clone
+        viewpointData = JSON.parse(JSON.stringify(viewpointData)) // deep clone
 
         let setparms:SetViewpointDataParms = {
-            dataseriesname,
+            datasetName,
             inflationAdjusted,
             timeSpecs,
-            viewpointdata,
-            itemseriesdata,
+            viewpointData,
+            datasetData,
             lookups,
         }
 
         this.setViewpointData(setparms)
 
-        viewpointdata = setparms.viewpointdata
+        viewpointData = setparms.viewpointData
 
-        viewpointdata.itemseriesconfigdata = this.getDatasetConfig(parms.dataseriesname)
+        viewpointData.datasetConfig = this.getDatasetConfig(parms.datasetName)
 
-        return setparms.viewpointdata
+        return setparms.viewpointData
 
     }
 

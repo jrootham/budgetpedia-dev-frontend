@@ -32,7 +32,7 @@ export interface BudgetNodeParms {
 // if (!budgetNode) break
 // let configData = {
 //     viewpointConfig:viewpointData.Configuration,
-//     itemseriesConfig:viewpointData.itemseriesconfigdata,
+//     datasetConfig:viewpointData.datasetConfig,
 // }
 // for (nodeCellIndex in budgetNode.cells) {
 //     let props: GetCellChartProps = {
@@ -200,7 +200,7 @@ class BudgetNode {
     }
 
     private _setCellTitle = (budgetCell:BudgetCell) => {
-        let portaltitles = budgetCell.viewpointConfigData.itemseriesConfig.Titles
+        let portaltitles = budgetCell.viewpointConfigData.datasetConfig.Titles
         let chartblocktitle = null
         if ((budgetCell.nodeDataseriesName == 'Categories')) {
             chartblocktitle = portaltitles.Categories
