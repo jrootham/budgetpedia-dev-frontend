@@ -19,7 +19,7 @@ import BudgetCell, { CellDeclaration } from './cell.class'
 export interface BudgetNodeParms {
     viewpointName: string,
     facetName: string, // used to select chartset to display
-    portalCharts:DataseriesMeta[],
+    datasetSpecs:DataseriesMeta[],
     timeSpecs: TimeSpecs,
     dataPath: string[],
     nodeIndex: number,
@@ -73,7 +73,7 @@ export interface BudgetNodeParms {
 class BudgetNode {
     constructor(parms: BudgetNodeParms, uid:string, node:any, parentNode:any = null) {
 
-        let portalcharts = parms.portalCharts
+        let portalcharts = parms.datasetSpecs
 
         this.viewpointName = parms.viewpointName
         this.facetName = parms.facetName
@@ -82,7 +82,7 @@ class BudgetNode {
         this.timeSpecs = parms.timeSpecs
         this._dataNode = node
         this.uid = uid
-        this.portalCharts = parms.portalCharts
+        this.datasetSpecs = parms.datasetSpecs
         // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
         if (parms.parentData) this.parentData = parms.parentData
         if (parentNode) this.parentData.dataNode = parentNode
@@ -100,7 +100,7 @@ class BudgetNode {
     dataPath: string[]
     nodeIndex: number
     timeSpecs: TimeSpecs
-    portalCharts:DataseriesMeta[]
+    datasetSpecs:DataseriesMeta[]
     actions: any
     nodeCallbacks: any
     viewpointConfigData: any
@@ -137,7 +137,7 @@ class BudgetNode {
         return [...this.state.nodeCells]
     }
 
-    // reset = (dataNode, portalCharts, defaultChartType, facet) => {
+    // reset = (dataNode, datasetSpecs, defaultChartType, facet) => {
     update = (dataNode, facet) => {
         this._dataNode = dataNode
         this.facetName = facet
@@ -148,7 +148,7 @@ class BudgetNode {
 
     getCellDeclarationParms = () => {
         let parmsList:CellDeclaration[] = []
-        let chartSpecs = this.portalCharts[this.facetName]
+        let chartSpecs = this.datasetSpecs[this.facetName]
         for (let chartSpec of chartSpecs) {
             let cellDeclaration:CellDeclaration = Object.assign({},this.props.declarationData.defaults.cell)
             cellDeclaration.nodeDataseriesName = chartSpec.Type // s/b dataseriesName

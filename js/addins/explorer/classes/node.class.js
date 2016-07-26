@@ -11,7 +11,7 @@ class BudgetNode {
         };
         this.getCellDeclarationParms = () => {
             let parmsList = [];
-            let chartSpecs = this.portalCharts[this.facetName];
+            let chartSpecs = this.datasetSpecs[this.facetName];
             for (let chartSpec of chartSpecs) {
                 let cellDeclaration = Object.assign({}, this.props.declarationData.defaults.cell);
                 cellDeclaration.nodeDataseriesName = chartSpec.Type;
@@ -56,7 +56,7 @@ class BudgetNode {
                     constants_1.GoogleChartTypeToChartCode[cell.chartParms.chartType];
             }
         };
-        let portalcharts = parms.portalCharts;
+        let portalcharts = parms.datasetSpecs;
         this.viewpointName = parms.viewpointName;
         this.facetName = parms.facetName;
         this.dataPath = parms.dataPath;
@@ -64,7 +64,7 @@ class BudgetNode {
         this.timeSpecs = parms.timeSpecs;
         this._dataNode = node;
         this.uid = uid;
-        this.portalCharts = parms.portalCharts;
+        this.datasetSpecs = parms.datasetSpecs;
         if (parms.parentData)
             this.parentData = parms.parentData;
         if (parentNode)

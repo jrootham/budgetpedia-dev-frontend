@@ -20,7 +20,7 @@ class BudgetBranch {
                     firstYear: null,
                     lastYear: null,
                 },
-                portalCharts: viewpointData.DatasetSeries,
+                datasetSpecs: viewpointData.DatasetSeries,
                 dataPath: [],
                 nodeIndex: 0,
             };
@@ -93,10 +93,10 @@ class BudgetBranch {
             }
             workingStatus(true);
             let newrange = Object.assign({}, budgetNode.timeSpecs);
-            let portalCharts = viewpointData.DatasetSeries;
+            let datasetSpecs = viewpointData.DatasetSeries;
             let newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
             let newnodeconfigparms = {
-                portalCharts: portalCharts,
+                datasetSpecs: datasetSpecs,
                 viewpointName: viewpointName,
                 facetName: facetName,
                 dataPath: childdatapath,

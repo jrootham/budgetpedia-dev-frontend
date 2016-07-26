@@ -30,7 +30,7 @@ export interface CreateChildNodeProps {
 
 // response to user selection of a chart component (such as a column )
 // called by chart callback
-// on selection, makes a child with the same portalCharts offset
+// on selection, makes a child with the same datasetSpecs offset
 let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellIndex, chartSelectionData:ChartSelectionContext) => {
 
     let { nodes:branchNodes, uid:branchuid } = budgetBranch

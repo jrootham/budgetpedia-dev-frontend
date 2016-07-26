@@ -31,10 +31,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         callbacks.onSwitchChartCode(callbackid, explorerChartCode)
     }
 
-    // componentDidUpdate() {
-    //     console.log('explorer cell did update',this.props.budgetCell)
-    // }
-
     render() {
 
         // console.log('explorerchart budgetCell', this.props.budgetCell)

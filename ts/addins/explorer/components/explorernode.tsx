@@ -64,7 +64,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     componentDidMount() {
         let { budgetNode, declarationData } = this.props
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
-        // console.log('nodeDeclaration, portalCharts',nodeDeclaration, budgetNode.portalCharts)
+
         if (nodeDeclaration.cellList == null) {
             // get controlData for cellList
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
@@ -72,7 +72,6 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         } else {
             this._harmonizeCells()
         }
-        // console.log('node did mount', budgetNode.allCells)
     }
 
     // remove obsolete cell objects
