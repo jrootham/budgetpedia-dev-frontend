@@ -39,7 +39,6 @@ import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 
 import ExplorerBranch from './components/explorerbranch'
-// import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../constants'
 
 import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
@@ -48,7 +47,6 @@ import BudgetBranch from './classes/branch.class'
 import { getExplorerDeclarationData } from './reducers'
 
 import {
-    // MatrixCellConfig,
     ChartParmsObj,
     PortalChartLocation,
     GetChartParmsProps,
@@ -60,7 +58,6 @@ interface MappedNodeActions {
     addCellDeclarations:Function,
     // removeCellDeclarations:Function,
     // changeChart:Function,
-    // changeSelection:Function,
     // toggleDelta:Function,
 }
 
@@ -115,6 +112,13 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         or loading of a saved workspace
     */
     componentWillMount() {
+        // global var used to suppress
+        // unnecessary renders
+        // global var is defined in typings-custom/general.d.ts
+        window.nodeUpdateControl = {
+            nodeuid:null,
+            new: null,
+        }
         let { branchList, branchesById } = this.props.declarationData
         if (branchList.length == 0) { // initialize explorer with first branch
             let defaultSettings:BranchSettings = this.props.declarationData.defaults.branch

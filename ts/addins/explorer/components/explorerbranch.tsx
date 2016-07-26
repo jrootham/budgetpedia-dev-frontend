@@ -203,6 +203,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
             this.harmonizecount = null // reset
             if (!this._controlGlobalStateChange()) {
                 setTimeout(()=>{
+                    // window.nodeUpdateControl.nodeuid = null
                     // console.log('finished branch update')
                     this.props.displayCallbacks.updateChartSelections()
                 })

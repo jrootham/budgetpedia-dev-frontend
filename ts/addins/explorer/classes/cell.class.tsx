@@ -1,54 +1,6 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetcell.tsx
 
-import {
-    CellCallbacks,
-    ChartParms,
-    ChartParmsObj,
-    PortalChartLocation,
-    SortedComponentItem,
-    // MatrixCellConfig,
-    GetChartParmsProps,
-    BranchSettings,
-} from '../modules/interfaces'
-
-import {
-    ChartSelectionCell,
-    ChartSelectionContext,
-} from '../modules/onchartcomponentselection'
-import { 
-    GoogleChartTypeToChartCode, 
-    ChartCodeToGoogleChartType 
-} from '../../constants'
-
-import BudgetNode from './node.class'
-
-var format = require('format-number')
-
-export interface SelectionCallbackProps {
-    current: Function,
-    next: Function,
-}
-
-interface viewpointConfigData {
-    viewpointConfig: any,
-    itemseriesConfig: any,
-}
-
-export interface CellDeclaration {
-    nodeDatasetName:string, 
-    explorerChartCode:string, 
-    chartSelection:ChartSelectionCell[],
-    uid?: string,
-}
-
-interface NodeData {
-    dataNode:any,
-    timeSpecs: any,
-    parentData: any,
-    nodeIndex: number,
-}
-
     // TODO: belongs with explorerchart controller?
     // switchChartCode = (nodeIndex,cellIndex, explorerChartCode) => {
 
@@ -81,40 +33,6 @@ interface NodeData {
     //         branch.props.displaycallbacks.updateChartSelections()
     //     })
     // }
-
-class BudgetCell {
-
-    constructor(specs:CellDeclaration) {
-        let { nodeDatasetName, explorerChartCode, chartSelection, uid } = specs
-        this.nodeDatasetName = nodeDatasetName
-        this.explorerChartCode = explorerChartCode
-        this.chartSelection = chartSelection
-        this.uid = uid
-    }
-
-    // primary properties
-    nodeDatasetName:string
-    chartSelection: ChartSelectionCell[]
-    explorerChartCode: string
-    uid: string
-
-    // derivative properties
-    chartComponent: any // the react Chart component, allows access to google chart objects
-    get googleChartType() {
-        return ChartCodeToGoogleChartType[this.explorerChartCode]
-    }
-    chartParms: ChartParms
-    get chart() {
-        return this.chartComponent.chart
-    }
-    cellCallbacks: CellCallbacks
-    expandable: boolean
-    graph_id: string
-    cellTitle: string
-    cellIndex: number
-    viewpointConfigData: viewpointConfigData
-    nodeData: NodeData
-    branchSettings: BranchSettings
 
     // switchChartCode(props) {
     //     let { actions, nodeCallbacks:callbacks } = this
@@ -157,6 +75,87 @@ class BudgetCell {
     //     }
     //     return switchResults
     // }
+
+import {
+    CellCallbacks,
+    ChartParms,
+    ChartParmsObj,
+    PortalChartLocation,
+    SortedComponentItem,
+    GetChartParmsProps,
+    BranchSettings,
+} from '../modules/interfaces'
+
+import {
+    ChartSelectionCell,
+    ChartSelectionContext,
+} from '../modules/onchartcomponentselection'
+import { 
+    GoogleChartTypeToChartCode, 
+    ChartCodeToGoogleChartType 
+} from '../../constants'
+
+import BudgetNode from './node.class'
+
+var format = require('format-number')
+
+export interface SelectionCallbackProps {
+    current: Function,
+    next: Function,
+}
+
+interface viewpointConfigData {
+    viewpointConfig: any,
+    itemseriesConfig: any,
+}
+
+export interface CellDeclaration {
+    nodeDatasetName:string, 
+    explorerChartCode:string, 
+    chartSelection:ChartSelectionCell[],
+    uid?: string,
+}
+
+interface NodeData {
+    dataNode:any,
+    timeSpecs: any,
+    parentData: any,
+    nodeIndex: number,
+}
+
+class BudgetCell {
+
+    constructor(specs:CellDeclaration) {
+        let { nodeDatasetName, explorerChartCode, chartSelection, uid } = specs
+        this.nodeDatasetName = nodeDatasetName
+        this.explorerChartCode = explorerChartCode
+        this.chartSelection = chartSelection
+        this.uid = uid
+    }
+
+    // primary properties
+    nodeDatasetName:string
+    chartSelection: ChartSelectionCell[]
+    explorerChartCode: string
+    uid: string
+
+    // derivative properties
+    chartComponent: any // the react Chart component, allows access to google chart objects
+    get googleChartType() {
+        return ChartCodeToGoogleChartType[this.explorerChartCode]
+    }
+    chartParms: ChartParms
+    get chart() {
+        return this.chartComponent.chart
+    }
+    cellCallbacks: CellCallbacks
+    expandable: boolean
+    graph_id: string
+    cellTitle: string
+    cellIndex: number
+    viewpointConfigData: viewpointConfigData
+    nodeData: NodeData
+    branchSettings: BranchSettings
 
     getChartParms = (selectionCallbacks: SelectionCallbackProps):ChartParmsObj => {
 

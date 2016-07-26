@@ -138,10 +138,20 @@ class ExporerNode extends Component {
             });
         }
     }
+    shouldComponentUpdate(nextProps, nextState) {
+        let { nodeuid, new: newval } = window.nodeUpdateControl;
+        let noderetval = nodeuid ? (nodeuid == this.props.budgetNode.uid) : true;
+        let newretval = newval ? (this.props.budgetNode.new == true) : true;
+        let retval = noderetval || newretval;
+        return retval;
+    }
     componentDidUpdate() {
         if (!this._harmonizeCells()) {
             this._controlGlobalStateChange();
         }
+        setTimeout(() => {
+            this.props.budgetNode.new = false;
+        });
     }
     render() {
         let chartTabs = this.getChartTabs();

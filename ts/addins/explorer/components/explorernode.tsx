@@ -90,10 +90,27 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         }
     }
 
+/*  
+    return false for redundant updates
+    this reduces updates by about half, therefore 
+    reducing update delay caused by generating cascading events
+*/    
+    shouldComponentUpdate(nextProps, nextState) {
+        let { nodeuid, new:newval } = window.nodeUpdateControl
+        let noderetval = nodeuid? (nodeuid == this.props.budgetNode.uid): true
+        let newretval = newval? (this.props.budgetNode.new == true): true
+        let retval = noderetval || newretval
+        // console.log('shouldComponentUpdate',retval)
+        return retval
+    }
+
     componentDidUpdate() {
         if (!this._harmonizeCells()) {
             this._controlGlobalStateChange()
         }
+        setTimeout(()=>{
+            this.props.budgetNode.new = false
+        })
         // console.log('node did update', this.props.budgetNode)
     }
 

@@ -108,8 +108,6 @@ interface YearScope {
 // ---------------[ EXPORT ]--------------
 
 export {
-    // MatrixCellConfig,
-    // MatrixLocation,
     PortalChartLocation, 
     ChartParms, 
     ChartParmsObj, 

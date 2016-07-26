@@ -3,6 +3,7 @@ const constants_1 = require('../../constants');
 const cell_class_1 = require('./cell.class');
 class BudgetNode {
     constructor(parms, uid, node, parentNode = null) {
+        this.new = true;
         this.parentData = null;
         this.update = (dataNode, facet) => {
             this._dataNode = dataNode;

@@ -147,15 +147,6 @@ class BudgetNode {
     // ====================================================================
     // ---------------------[ PUBLIC ]------------------------------------
 
-    // public getChartParms (props: GetCellChartProps, selectionCallbacks, cell?:BudgetCell) {
-    //     // let node = this
-    //     // if (cell) {
-    //         console.log('calling cell version of getChartParms')
-    //         return cell.getChartParms(selectionCallbacks) 
-    //     // } else {
-    //     //     return getChartParmsSource(sourceProps, selectionCallbacks)
-    //     // }
-    // }
     uid:string
     viewpointName: string
     facetName: string
@@ -168,6 +159,7 @@ class BudgetNode {
     viewpointConfigData: any
     branchSettings:any
     onChartComponentSelection: Function
+    new:boolean = true
     get dataNode() {
         return this._dataNode
     }
