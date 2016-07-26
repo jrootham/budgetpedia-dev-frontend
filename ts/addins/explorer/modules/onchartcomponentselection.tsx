@@ -51,7 +51,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
     // 1. stop if chart is not not drillable
     // TODO: replace with reference to budgetCell.expandable
-    if (budgetCell.nodeDatasetName == 'Categories') {
+    if (budgetCell.nodeDataseriesName == 'Categories') {
         return
     }
     // budgetCell.chartSelection = chartSelectionData.selection

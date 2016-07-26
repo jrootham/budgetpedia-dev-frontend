@@ -23,7 +23,7 @@ interface ExplorerNodeProps {
     callbackid: string | number,
     budgetNode: BudgetNode,
     displayCallbacks: { 
-        onChangePortalTab:Function,
+        // onChangePortalTab:Function,
         updateChartSelections:Function, 
     }
     globalStateActions: any,
@@ -93,14 +93,13 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
 /*  
     return false for redundant updates
     this reduces updates by about half, therefore 
-    reducing update delay caused by generating cascading events
+    reducing update delay caused by cascading events
 */    
     shouldComponentUpdate(nextProps, nextState) {
         let { nodeuid, new:newval } = window.nodeUpdateControl
         let noderetval = nodeuid? (nodeuid == this.props.budgetNode.uid): true
         let newretval = newval? (this.props.budgetNode.new == true): true
         let retval = noderetval || newretval
-        // console.log('shouldComponentUpdate',retval)
         return retval
     }
 
@@ -183,7 +182,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     }
 
     onChangeTab = () => {
-        this.props.displayCallbacks.onChangePortalTab() 
+        // this.props.displayCallbacks.onChangePortalTab() 
     }
 
     _chartrefs:any[] = []

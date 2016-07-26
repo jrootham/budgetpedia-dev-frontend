@@ -6,7 +6,7 @@
 
 import updateViewpointData, { SetViewpointDataParms } from './databaseapi/setviewpointdata'
 
-let db_dataseries = require('../../../../data/dataseries.json')
+let db_datasets = require('../../../../data/datasets.json')
 // common lookups
 let db_lookups = require('../../../../data/lookups.json')
 // top level taxonomies
@@ -194,7 +194,7 @@ class Database {
     }
 
     private getDataset(dataset: string) {
-        let datasetdata: CurrencyDataset | ItemDataset = db_dataseries[dataset]
+        let datasetdata: CurrencyDataset | ItemDataset = db_datasets[dataset]
         return datasetdata
         // delay(500).then(() => {
         //     let dst: CurrencyDataset | ItemDataset

@@ -14,15 +14,30 @@ class BudgetNode {
             let chartSpecs = this.portalCharts[this.facetName];
             for (let chartSpec of chartSpecs) {
                 let cellDeclaration = Object.assign({}, this.props.declarationData.defaults.cell);
-                cellDeclaration.nodeDatasetName = chartSpec.Type;
+                cellDeclaration.nodeDataseriesName = chartSpec.Type;
                 parmsList.push(cellDeclaration);
             }
             return parmsList;
         };
+        this._updateCell = cell => {
+            let viewpointConfigData = this.viewpointConfigData;
+            let { dataNode, timeSpecs, parentData, nodeIndex } = this;
+            let nodeData = {
+                dataNode: dataNode,
+                timeSpecs: timeSpecs,
+                parentData: parentData,
+                nodeIndex: nodeIndex,
+            };
+            cell.viewpointConfigData = viewpointConfigData;
+            cell.nodeData = nodeData;
+            cell.branchSettings = this.branchSettings,
+                this._assignCellChartParms(cell);
+            this._setCellTitle(cell);
+        };
         this._setCellTitle = (budgetCell) => {
             let portaltitles = budgetCell.viewpointConfigData.itemseriesConfig.Titles;
             let chartblocktitle = null;
-            if ((budgetCell.nodeDatasetName == 'Categories')) {
+            if ((budgetCell.nodeDataseriesName == 'Categories')) {
                 chartblocktitle = portaltitles.Categories;
             }
             else {
@@ -74,27 +89,15 @@ class BudgetNode {
         let cells = [];
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration = cellDeclarations[cellIndex];
-            let { chartSelection, explorerChartCode, nodeDatasetName, uid } = cellDeclaration;
+            let { chartSelection, explorerChartCode, nodeDataseriesName, uid } = cellDeclaration;
             let cell = new cell_class_1.default({
-                nodeDatasetName: nodeDatasetName,
+                nodeDataseriesName: nodeDataseriesName,
                 explorerChartCode: explorerChartCode,
                 chartSelection: chartSelection,
                 uid: uid,
             });
             cell.cellIndex = parseInt(cellIndex);
-            let viewpointConfigData = this.viewpointConfigData;
-            cell.viewpointConfigData = viewpointConfigData;
-            let { dataNode, timeSpecs, parentData, nodeIndex } = this;
-            let nodeData = {
-                dataNode: dataNode,
-                timeSpecs: timeSpecs,
-                parentData: parentData,
-                nodeIndex: nodeIndex,
-            };
-            cell.nodeData = nodeData;
-            cell.branchSettings = this.branchSettings,
-                this._assignCellChartParms(cell);
-            this._setCellTitle(cell);
+            this._updateCell(cell);
             cells.push(cell);
         }
         return cells;
@@ -108,7 +111,7 @@ class BudgetNode {
         if (!this.dataNode)
             return availablCells;
         for (let cell of cells) {
-            if (!this.dataNode[cell.nodeDatasetName]) {
+            if (!this.dataNode[cell.nodeDataseriesName]) {
                 continue;
             }
             availablCells.push(cell);

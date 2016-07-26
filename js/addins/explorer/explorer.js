@@ -13,8 +13,8 @@ const ExplorerActions = require('./actions');
 const branch_class_1 = require('./classes/branch.class');
 const reducers_1 = require('./reducers');
 let Explorer = class extends Component {
-    constructor(props) {
-        super(props);
+    constructor(...args) {
+        super(...args);
         this.state = {
             budgetBranches: [],
             dialogOpen: false,

@@ -77,7 +77,6 @@ class ExplorerBranch extends Component {
                         snackbar: snackbar,
                     });
                 }
-                let branch = this;
             });
         };
         this.refreshPresentation = () => {
@@ -95,7 +94,6 @@ class ExplorerBranch extends Component {
                     message: 'empty',
                 }
             });
-            let branch = this;
         };
         this.branchScrollBlock = null;
         this.onPortalCreation = () => {
@@ -149,7 +147,6 @@ class ExplorerBranch extends Component {
         this.switchFacet = (facet) => {
             let { budgetBranch } = this.props;
             this.props.globalStateActions.changeFacet(budgetBranch.uid, facet);
-            let branch = this;
         };
         this.getPortals = (budgetNodes) => {
             let { viewpointData } = this.state;
@@ -183,14 +180,10 @@ class ExplorerBranch extends Component {
                 budgetNode.branchSettings = this.props.budgetBranch.settings;
                 budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(this.props.budgetBranch);
                 return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: this._stateActions, displayCallbacks: {
-                    onChangePortalTab: this.onChangePortalTab,
                     updateChartSelections: this.props.displayCallbacks.updateChartSelections,
                 }});
             });
             return portals;
-        };
-        this.onChangePortalTab = () => {
-            let branch = this;
         };
     }
     componentWillMount() {

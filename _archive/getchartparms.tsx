@@ -66,10 +66,10 @@ let getChartParms = (
 
     let budgetCell: BudgetCell = budgetNode.cells[chartIndex] || props.budgetCell
 
-    let { nodeDatasetName } = budgetCell
+    let { nodeDataseriesName } = budgetCell
 
-    let sortedlist = 'Sorted' + nodeDatasetName
-    // if (nodeDatasetName == 'Categories') {
+    let sortedlist = 'Sorted' + nodeDataseriesName
+    // if (nodeDataseriesName == 'Categories') {
     //     sortedlist = 'SortedCategories'
     // } else {
     //     sortedlist = 'SortedComponents'
@@ -116,7 +116,7 @@ let getChartParms = (
 
     let components
 
-    if (nodeDatasetName == 'Categories') {
+    if (nodeDataseriesName == 'Categories') {
         components = dataNode.Categories
     } else {
         components = dataNode.Components
@@ -129,7 +129,7 @@ let getChartParms = (
     // 2. chart options:
     // get axis title
     let axistitle = null
-    if ((dataNode.Contents) && (nodeDatasetName == 'Components')) {
+    if ((dataNode.Contents) && (nodeDataseriesName == 'Components')) {
         let titleref = viewpointConfig[dataNode.Contents]
         axistitle = titleref.Alias || titleref.Name
     } else {

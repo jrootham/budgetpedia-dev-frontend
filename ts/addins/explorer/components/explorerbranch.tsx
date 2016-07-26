@@ -136,7 +136,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
     componentDidMount() {
         let { budgetBranch, declarationData } = this.props
         this._previousControlData = declarationData // initialize
-        budgetBranch.getViewpointData()
+        budgetBranch.getViewpointData() // .then(...)
         if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
             setTimeout(()=>{
                 // this will trigger harmonization between declarations 
@@ -280,10 +280,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
                 })
 
             }
-            let branch = this
-            // setTimeout(() => {
-            //     branch.props.displayCallbacks.updateChartSelections()
-            // })
 
         })
     }
@@ -305,10 +301,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
                 message: 'empty',
             }
         })
-        let branch = this
-        // setTimeout(() => {
-        //     this._nodeDisplayCallbacks.updateChartSelections()
-        // })
+
     }
 
     // ============================================================
@@ -369,7 +362,6 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
         let removeditems = removed.map((item) => {
             return {uid:item.uid, cellList:item.cellList}
         })
-        // console.log('calling from switchviewpoint',branchsettings, viewpointname, callbackuid, removedids)
         // this will trigger render cycle that will delete the component state's stored nodes
         let globalStateActions = this._stateActions
         globalStateActions.removeNodeDeclarations(removeditems)
@@ -380,13 +372,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
     }
 
     switchFacet = (facet:string) => {
-        // console.log('calling changeFacet',facet)
+
         let { budgetBranch } = this.props
         this.props.globalStateActions.changeFacet(budgetBranch.uid, facet)
-        let branch = this
-        // setTimeout(() => {
-        //     this._nodeDisplayCallbacks.updateChartSelections()
-        // })
+
     }
 
     // -----------------------------[ prepare for render ]---------------------------------
@@ -394,13 +383,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
     // get React components to render
     getPortals = (budgetNodes:BudgetNode[]) => {
 
-        // let { settings:branchSettings } = this.props.budgetBranch
-
         let { viewpointData } = this.state
 
         if (!viewpointData) return []
         let itemSeriesData: DatasetConfig = viewpointData.itemseriesconfigdata
-        // let portalTitles = itemSeriesData.Titles
+
         let portalSeriesName = itemSeriesData.Name
         if (itemSeriesData.Units == 'DOLLAR') {
             portalSeriesName += ' (' + itemSeriesData.UnitsAlias + ')'
@@ -444,7 +431,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
                 globalStateActions = { this._stateActions }
                 displayCallbacks = { 
                     { 
-                        onChangePortalTab: this.onChangePortalTab,
+                        // onChangePortalTab: this.onChangePortalTab,
                         updateChartSelections: this.props.displayCallbacks.updateChartSelections,
                     } 
                 }
@@ -455,12 +442,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
 
     }
 
-    onChangePortalTab = () => {
-        let branch = this
+    // onChangePortalTab = () => {
+        // let branch = this
         // setTimeout(() => {
         //     branch._nodeDisplayCallbacks.updateChartSelections()
         // })
-    }
+    // }
 
     render() {
 

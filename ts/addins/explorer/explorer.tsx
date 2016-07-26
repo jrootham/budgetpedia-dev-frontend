@@ -96,10 +96,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     // ============================================================
     // ---------------------[ INITIALIZE ]-------------------------
 
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         budgetBranches:[],
         dialogOpen: false,

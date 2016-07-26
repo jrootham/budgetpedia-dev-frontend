@@ -11,7 +11,7 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     }
     let budgetNode = branchNodes[nodeIndex];
     let budgetCell = budgetNode.cells[cellIndex];
-    if (budgetCell.nodeDatasetName == 'Categories') {
+    if (budgetCell.nodeDataseriesName == 'Categories') {
         return;
     }
     let removed = branchNodes.splice(nodeIndex + 1);

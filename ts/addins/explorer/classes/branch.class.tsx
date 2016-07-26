@@ -21,7 +21,6 @@ export interface CreateChildNodeProps {
     selectionrow: any,
     nodeIndex: number,
     cellIndex: number,
-    // chartSelectionData: any,
 }
 
 interface BudgetBranchParms {
@@ -68,7 +67,7 @@ class BudgetBranch {
         let defaults = this.getProps().declarationData.defaults.node
 
         let branchSettings = this.settings
-        let viewpointdata = this.state.viewpointData
+        let viewpointData = this.state.viewpointData
 
         let datapath = []
 
@@ -88,7 +87,7 @@ class BudgetBranch {
                 firstYear: null,
                 lastYear: null,
             },
-            portalCharts:viewpointdata.PortalCharts,
+            portalCharts:viewpointData.PortalCharts,
             dataPath: [],
             nodeIndex:0,
         }

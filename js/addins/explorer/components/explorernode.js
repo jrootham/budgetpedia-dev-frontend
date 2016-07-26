@@ -68,7 +68,6 @@ class ExporerNode extends Component {
             return returnvalue;
         };
         this.onChangeTab = () => {
-            this.props.displayCallbacks.onChangePortalTab();
         };
         this._chartrefs = [];
         this.getChartTabs = () => {

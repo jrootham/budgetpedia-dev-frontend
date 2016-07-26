@@ -5,8 +5,8 @@ class BudgetCell {
     constructor(specs) {
         this.getChartParms = (selectionCallbacks) => {
             let budgetCell = this;
-            let { cellIndex: chartIndex, nodeDatasetName } = budgetCell;
-            let sortedlist = 'Sorted' + nodeDatasetName;
+            let { cellIndex: chartIndex, nodeDataseriesName } = budgetCell;
+            let sortedlist = 'Sorted' + nodeDataseriesName;
             let { branchSettings } = this;
             let { viewpointConfig, itemseriesConfig } = this.viewpointConfigData;
             let { dataNode, timeSpecs: yearscope, parentData, nodeIndex } = this.nodeData;
@@ -33,7 +33,7 @@ class BudgetCell {
                 };
             }
             let components;
-            if (nodeDatasetName == 'Categories') {
+            if (nodeDataseriesName == 'Categories') {
                 components = dataNode.Categories;
             }
             else {
@@ -41,7 +41,7 @@ class BudgetCell {
             }
             let chartType = budgetCell.googleChartType;
             let axistitle = null;
-            if ((dataNode.Contents) && (nodeDatasetName == 'Components')) {
+            if ((dataNode.Contents) && (nodeDataseriesName == 'Components')) {
                 let titleref = viewpointConfig[dataNode.Contents];
                 axistitle = titleref.Alias || titleref.Name;
             }
@@ -196,8 +196,8 @@ class BudgetCell {
             };
             return chartParmsObj;
         };
-        let { nodeDatasetName, explorerChartCode, chartSelection, uid } = specs;
-        this.nodeDatasetName = nodeDatasetName;
+        let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs;
+        this.nodeDataseriesName = nodeDataseriesName;
         this.explorerChartCode = explorerChartCode;
         this.chartSelection = chartSelection;
         this.uid = uid;

@@ -7,7 +7,7 @@ class BudgetBranch {
         this.getInitialBranchNodeParms = () => {
             let defaults = this.getProps().declarationData.defaults.node;
             let branchSettings = this.settings;
-            let viewpointdata = this.state.viewpointData;
+            let viewpointData = this.state.viewpointData;
             let datapath = [];
             let { viewpoint: viewpointName, facet: facetName, latestYear: rightYear, } = branchSettings;
             let budgetNodeParms = {
@@ -20,7 +20,7 @@ class BudgetBranch {
                     firstYear: null,
                     lastYear: null,
                 },
-                portalCharts: viewpointdata.PortalCharts,
+                portalCharts: viewpointData.PortalCharts,
                 dataPath: [],
                 nodeIndex: 0,
             };

@@ -110,7 +110,7 @@ interface viewpointConfigData {
 }
 
 export interface CellDeclaration {
-    nodeDatasetName:string, 
+    nodeDataseriesName:string, 
     explorerChartCode:string, 
     chartSelection:ChartSelectionCell[],
     uid?: string,
@@ -126,15 +126,15 @@ interface NodeData {
 class BudgetCell {
 
     constructor(specs:CellDeclaration) {
-        let { nodeDatasetName, explorerChartCode, chartSelection, uid } = specs
-        this.nodeDatasetName = nodeDatasetName
+        let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs
+        this.nodeDataseriesName = nodeDataseriesName
         this.explorerChartCode = explorerChartCode
         this.chartSelection = chartSelection
         this.uid = uid
     }
 
     // primary properties
-    nodeDatasetName:string
+    nodeDataseriesName:string
     chartSelection: ChartSelectionCell[]
     explorerChartCode: string
     uid: string
@@ -161,9 +161,9 @@ class BudgetCell {
 
         let budgetCell: BudgetCell = this
 
-        let { cellIndex:chartIndex, nodeDatasetName } = budgetCell
+        let { cellIndex:chartIndex, nodeDataseriesName } = budgetCell
 
-        let sortedlist = 'Sorted' + nodeDatasetName
+        let sortedlist = 'Sorted' + nodeDataseriesName
 
         let { branchSettings } = this 
 
@@ -210,7 +210,7 @@ class BudgetCell {
 
         let components
 
-        if (nodeDatasetName == 'Categories') {
+        if (nodeDataseriesName == 'Categories') {
             components = dataNode.Categories
         } else {
             components = dataNode.Components
@@ -223,7 +223,7 @@ class BudgetCell {
         // 2. chart options:
         // get axis title
         let axistitle = null
-        if ((dataNode.Contents) && (nodeDatasetName == 'Components')) {
+        if ((dataNode.Contents) && (nodeDataseriesName == 'Components')) {
             let titleref = viewpointConfig[dataNode.Contents]
             axistitle = titleref.Alias || titleref.Name
         } else {

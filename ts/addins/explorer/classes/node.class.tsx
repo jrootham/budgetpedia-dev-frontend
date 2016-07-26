@@ -70,59 +70,6 @@ export interface BudgetNodeParms {
 //     }
 // }
 
-
-
-// FROM createChildNode
-
-        // let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
-
-        // budgetCell.chartSelection = chartSelectionData.selection
-
-
-
-// let chartParmsObj: ChartParmsObj = {} as ChartParmsObj
-// let cellindex: any
-// let branchuid = this.uid
-// let selectfn = onChartComponentSelection(this)
-// let {
-//     Configuration: viewpointConfig,
-//     itemseriesconfigdata: itemseriesConfig,
-// } = viewpointdata
-// let configData = {
-//     viewpointConfig,
-//     itemseriesConfig,
-// }
-// for (cellindex in budgetNode.cells) {
-//     let budgetCell:BudgetCell = budgetNode.cells[cellindex]
-//     let props: GetCellChartProps = {
-//         chartIndex: cellindex,
-//         configData,
-//         branchsettings,
-//     }
-
-//     let fcurrent = selectfn(nodeIndex)(cellindex)
-
-//     chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:selectfn})
-
-//     if (!chartParmsObj.isError) {
-
-//         budgetCell.chartParms = chartParmsObj.chartParms
-//         budgetCell.explorerChartCode =
-//             GoogleChartTypeToChartCode[budgetCell.chartParms.chartType]
-
-//     } else {
-//         break
-//     }
-// }
-// if (!chartParmsObj.isError) {
-//     let { nodeIndex } = budgetNode
-//     branchNodes[nodeIndex] = budgetNode
-//     this.setState({
-//         branchNodes,
-//     })
-// }
-
-
 class BudgetNode {
     constructor(parms: BudgetNodeParms, uid:string, node:any, parentNode:any = null) {
 
@@ -204,7 +151,7 @@ class BudgetNode {
         let chartSpecs = this.portalCharts[this.facetName]
         for (let chartSpec of chartSpecs) {
             let cellDeclaration:CellDeclaration = Object.assign({},this.props.declarationData.defaults.cell)
-            cellDeclaration.nodeDatasetName = chartSpec.Type // s/b datasetName
+            cellDeclaration.nodeDataseriesName = chartSpec.Type // s/b dataseriesName
             parmsList.push(cellDeclaration)
         }
         return parmsList
@@ -216,42 +163,46 @@ class BudgetNode {
         // build cells array
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration: CellDeclaration = cellDeclarations[cellIndex]
-            let {chartSelection, explorerChartCode, nodeDatasetName, uid} = cellDeclaration
+            let {chartSelection, explorerChartCode, nodeDataseriesName, uid} = cellDeclaration
             let cell = new BudgetCell(
                 {
-                    nodeDatasetName,
+                    nodeDataseriesName,
                     explorerChartCode,
                     chartSelection,
                     uid,
                 }
             )
+
             cell.cellIndex = parseInt(cellIndex) // parseInt is a compiler requirement
-
-            let viewpointConfigData = this.viewpointConfigData
-            cell.viewpointConfigData = viewpointConfigData
-
-            let { dataNode, timeSpecs, parentData, nodeIndex } = this
-            let nodeData = {
-                dataNode,
-                timeSpecs,
-                parentData,
-                nodeIndex,
-            }
-            cell.nodeData = nodeData
-
-            cell.branchSettings = this.branchSettings,
-
-            this._assignCellChartParms(cell)
-            this._setCellTitle(cell)
+            this._updateCell(cell)
             cells.push(cell)
         }
         return cells
     }
 
+    private _updateCell = cell => {
+        let viewpointConfigData = this.viewpointConfigData
+
+        let { dataNode, timeSpecs, parentData, nodeIndex } = this
+        let nodeData = {
+            dataNode,
+            timeSpecs,
+            parentData,
+            nodeIndex,
+        }
+
+        cell.viewpointConfigData = viewpointConfigData
+        cell.nodeData = nodeData
+        cell.branchSettings = this.branchSettings,
+
+        this._assignCellChartParms(cell)
+        this._setCellTitle(cell)
+    }
+
     private _setCellTitle = (budgetCell:BudgetCell) => {
         let portaltitles = budgetCell.viewpointConfigData.itemseriesConfig.Titles
         let chartblocktitle = null
-        if ((budgetCell.nodeDatasetName == 'Categories')) {
+        if ((budgetCell.nodeDataseriesName == 'Categories')) {
             chartblocktitle = portaltitles.Categories
         } else {
             chartblocktitle = portaltitles.Baseline
@@ -287,7 +238,7 @@ class BudgetNode {
         let availablCells = []
         if (!this.dataNode) return availablCells
         for (let cell of cells) {
-            if (!this.dataNode[cell.nodeDatasetName]) {
+            if (!this.dataNode[cell.nodeDataseriesName]) {
                 continue
             }
             availablCells.push(cell)
