@@ -1,7 +1,7 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetnode.tsx
 
-import { PortalCell, TimeSpecs } from './databaseapi'
+import { DataseriesMeta, TimeSpecs } from './databaseapi'
 import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../../constants'
 import {
     CellSettings,
@@ -19,7 +19,7 @@ import BudgetCell, { CellDeclaration } from './cell.class'
 export interface BudgetNodeParms {
     viewpointName: string,
     facetName: string, // used to select chartset to display
-    portalCharts:PortalCell[],
+    portalCharts:DataseriesMeta[],
     timeSpecs: TimeSpecs,
     dataPath: string[],
     nodeIndex: number,
@@ -100,7 +100,7 @@ class BudgetNode {
     dataPath: string[]
     nodeIndex: number
     timeSpecs: TimeSpecs
-    portalCharts:PortalCell[]
+    portalCharts:DataseriesMeta[]
     actions: any
     nodeCallbacks: any
     viewpointConfigData: any

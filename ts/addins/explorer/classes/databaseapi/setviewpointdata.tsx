@@ -53,12 +53,12 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
     let baselinelookups = lookups[baselinecat]
     let componentcat = datasetData.Categories
     let componentlookups = lookups[componentcat]
-    let categorylookups = viewpointData.Lookups.Categories
+    let taxonomylookups = viewpointData.Lookups.Taxonomy
 
     let lookupset = {
         baselinelookups,
         componentlookups,
-        categorylookups,
+        taxonomylookups,
     }
 
     let items = datasetData.Items
@@ -229,7 +229,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
 
 let getIndexSortedComponents = (components, lookups):SortedComponentItem[] => {
     let sorted = []
-    let catlookups = lookups.categorylookups
+    let catlookups = lookups.taxonomylookups
     for (let componentcode in components) {
         let component = components[componentcode]
         let config = component.Contents

@@ -152,10 +152,10 @@ class ExplorerBranch extends Component {
             let { viewpointData } = this.state;
             if (!viewpointData)
                 return [];
-            let itemSeriesData = viewpointData.datasetConfig;
-            let portalSeriesName = itemSeriesData.Name;
-            if (itemSeriesData.Units == 'DOLLAR') {
-                portalSeriesName += ' (' + itemSeriesData.UnitsAlias + ')';
+            let datasetConfig = viewpointData.datasetConfig;
+            let portalSeriesName = datasetConfig.Name;
+            if (datasetConfig.Units == 'DOLLAR') {
+                portalSeriesName += ' (' + datasetConfig.UnitsAlias + ')';
             }
             let portals = budgetNodes.map((budgetNode, nodeindex) => {
                 let portalName = null;

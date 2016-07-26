@@ -7,11 +7,11 @@ let setViewpointData = (parms) => {
     let baselinelookups = lookups[baselinecat];
     let componentcat = datasetData.Categories;
     let componentlookups = lookups[componentcat];
-    let categorylookups = viewpointData.Lookups.Categories;
+    let taxonomylookups = viewpointData.Lookups.Taxonomy;
     let lookupset = {
         baselinelookups: baselinelookups,
         componentlookups: componentlookups,
-        categorylookups: categorylookups,
+        taxonomylookups: taxonomylookups,
     };
     let items = datasetData.Items;
     let isInflationAdjusted = !!datasetData.InflationAdjusted;
@@ -126,7 +126,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
 };
 let getIndexSortedComponents = (components, lookups) => {
     let sorted = [];
-    let catlookups = lookups.categorylookups;
+    let catlookups = lookups.taxonomylookups;
     for (let componentcode in components) {
         let component = components[componentcode];
         let config = component.Contents;

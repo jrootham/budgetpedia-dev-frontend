@@ -2,28 +2,28 @@
         "FUNCTIONAL": {
             "Index": 0,
             "Lookups": {
-                "Categories": {
-                    "SHARED": "Shared Services",
-                    "WASTEWATER": "Waste & Water Services",
-                    "TRANSTRANSIT": "Transportation & Transit Services",
-                    "COMMONS": "City Commons",
-                    "DESTINATIONS": "Public Destinations",
-                    "CONSERVATION": "Conservation & Heritage",
-                    "SUPPORT": "Citizen Support Services",
-                    "EMERGSERV": "Emergency Services",
-                    "WELLBEING": "Health & Education Services",
-                    "WELFARE": "Income & Housing Services",
-                    "MUNICIPAL": "Municipal Services",
-                    "CORPMANAGEMENT": "Senior Corporate Offices",
+                "Taxonomy": {
                     "ACCOUNTABILITY": "Accountability Offices",
-                    "MAINTSTANDARDS": "Division Support",
-                    "INITIATIVES": "Municipal Planning & Development",
-                    "PLANNINGDEV": "Permits, Licensing & Standards",
-                    "INTERNALSERV": "Internal Services",
+                    "CITYMANAGEMENT": "General Municipal Management",
+                    "COMMONS": "City Commons",
+                    "CONSERVATION": "Conservation & Heritage",
+                    "CORPMANAGEMENT": "Senior Corporate Offices",
                     "CORPORATEACCOUNTS": "Corporate Accounts",
+                    "DESTINATIONS": "Public Destinations",
+                    "EMERGSERV": "Emergency Services",
+                    "INITIATIVES": "Municipal Planning & Development",
+                    "INTERNALSERV": "Internal Services",
+                    "MAINTSTANDARDS": "Division Support",
+                    "MUNICIPAL": "Municipal Services",
                     "PARKSACTIVITIES": "Parks & Activity Centres",
+                    "PLANNINGDEV": "Permits, Licensing & Standards",
                     "POLICECOURT": "Police & Court Services",
-                    "CITYMANAGEMENT": "General Municipal Management"
+                    "SHARED": "Shared Services",
+                    "SUPPORT": "Citizen Support Services",
+                    "TRANSTRANSIT": "Transportation & Transit Services",
+                    "WASTEWATER": "Waste & Water Services",
+                    "WELFARE": "Income & Housing Services",
+                    "WELLBEING": "Health & Education Services"
                 }
             },
             "Configuration": {
@@ -84,7 +84,7 @@
                 }
             },
             "Contents": "TYPES",
-            "PortalCharts": {
+            "DatasetSeries": {
                 "BudgetExpenses": [
                     {
                         "Type": "Components"
@@ -464,7 +464,7 @@
         "STRUCTURAL": {
             "Index": 1,
             "Lookups": {
-                "Categories": {
+                "Taxonomy": {
                     "ACCOUNTABILITYAPPEAL2": "Accountability & Appeal Offices",
                     "ADMINOPS": "Core Administrative Operations",
                     "AGENCIES": "Agencies",
@@ -547,7 +547,7 @@
                 }
             },
             "Contents": "STRUCTURES",
-            "PortalCharts": {
+            "DatasetSeries": {
                 "BudgetExpenses": [
                     {
                         "Type": "Components"

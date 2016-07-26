@@ -386,11 +386,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
         let { viewpointData } = this.state
 
         if (!viewpointData) return []
-        let itemSeriesData: DatasetConfig = viewpointData.datasetConfig
+        let datasetConfig: DatasetConfig = viewpointData.datasetConfig
 
-        let portalSeriesName = itemSeriesData.Name
-        if (itemSeriesData.Units == 'DOLLAR') {
-            portalSeriesName += ' (' + itemSeriesData.UnitsAlias + ')'
+        let portalSeriesName = datasetConfig.Name
+        if (datasetConfig.Units == 'DOLLAR') {
+            portalSeriesName += ' (' + datasetConfig.UnitsAlias + ')'
         }
 
         let portals = budgetNodes.map((budgetNode: BudgetNode, nodeindex) => {

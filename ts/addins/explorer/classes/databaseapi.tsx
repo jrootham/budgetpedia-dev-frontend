@@ -34,7 +34,7 @@ interface Configuration extends Name {
     Instance: Name,
 }
 
-export interface PortalCell {
+export interface DataseriesMeta {
     Type:string,
 }
 
@@ -44,7 +44,7 @@ export interface ViewpointData extends Component {
     Configuration: {
         [configurationcode:string]:Configuration,
     },
-    PortalCharts: PortalCell[],
+    DatasetSeries: DataseriesMeta[],
 }
 
 interface Viewpoints {
