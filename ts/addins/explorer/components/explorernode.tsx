@@ -81,7 +81,6 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         let newCells = cells.filter(cell =>{
             return !!cellsById[cell.uid]
         })
-        console.log('filtered cells',newCells)
         if (newCells.length != cells.length) {
             this.setState({
                 nodeCells:newCells
@@ -120,7 +119,6 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         let currentControlData = this.props.declarationData
         let { lastAction } = currentControlData
         let returnvalue = true
-        console.log('controlData',currentControlData)
         if (!cellTypes[lastAction]) {
             return false
         }
@@ -194,7 +192,9 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         return returnvalue
     }
 
-    onChangeTab = () => {
+    onChangeTab = (tabref) => {
+        console.log('onChangeTab',tabref)
+        this.props.globalStateActions.changeTab(this.props.budgetNode.uid,tabref)
         // this.props.displayCallbacks.onChangePortalTab() 
     }
 
@@ -234,6 +234,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     getTabObject = (chartTabs) => {
         // this deals with the edge case where switching facets causes current tail
         // chart to change from 2 charts to one by adding a value attr to tabs component
+        let tabSelection = this.props.declarationData.nodesById[this.props.budgetNode.uid].cellIndex
         if (chartTabs.length == 0) {
             return <div style={
                 {
@@ -245,33 +246,22 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
             No data...
             </div>
         }
-        if (chartTabs.length == 1) {
-            return (
-                <Tabs
-                    value = {0}
-                    onChange= { () => {
-                        this.onChangeTab()
-                    } }>
+        return (
+            <Tabs
+                value = {tabSelection}
+                onChange= { (tabref) => {
+                    this.onChangeTab(tabref)
+                } }>
 
-                    { chartTabs }
+                { chartTabs }
 
-                </Tabs>
-            )
-        } else {
-            return (
-                <Tabs
-                    onChange= { () => {
-                        this.onChangeTab()
-                    } }>
-
-                    { chartTabs }
-
-                </Tabs>
-            )
-        }
+            </Tabs>
+        )
     }
 
     render() {
+
+        console.log('rendering ExplorerNode', this.props.budgetNode)
 
         let chartTabs = this.getChartTabs()
 

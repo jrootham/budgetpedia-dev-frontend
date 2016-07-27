@@ -98,6 +98,7 @@ let Explorer = class extends Component {
     }
     render() {
         let explorer = this;
+        console.log('rendering Explorer');
         let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,
@@ -117,6 +118,7 @@ let Explorer = class extends Component {
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                     updateCellChartSelection: this.props.updateCellChartSelection,
+                    changeTab: this.props.changeTab,
                 };
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,
@@ -145,6 +147,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeFacet: ExplorerActions.changeFacet,
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
+    changeTab: ExplorerActions.changeTab,
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;

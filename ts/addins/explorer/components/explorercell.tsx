@@ -33,7 +33,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     render() {
 
-        // console.log('explorerchart budgetCell', this.props.budgetCell)
+        console.log('rendering ExplorerCell', this.props.budgetCell)
 
         let { chartParms, explorerChartCode, expandable, graph_id } = this.props.budgetCell
         if (!expandable) {

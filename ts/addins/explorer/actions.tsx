@@ -15,6 +15,7 @@ export namespace types {
     // export const REMOVE_CELLS = 'REMOVE_CELLS'
     export const CHANGE_CHART_CODE = 'CHANGE_CHART_CODE'
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
+    export const CHANGE_TAB = 'CHANGE_TAB'
 }
 
 export namespace branchTypes {
@@ -29,6 +30,7 @@ export namespace nodeTypes {
     // export import REMOVE_CELLS = types.REMOVE_CELLS
     export import CHANGE_CHART_CODE = types.CHANGE_CHART_CODE
     export import TOGGLE_DELTA = types.TOGGLE_DELTA
+    export import CHANGE_TAB = types.CHANGE_TAB
 }
 
 export namespace cellTypes {
@@ -53,6 +55,13 @@ export const changeViewpoint = createAction(
     types.CHANGE_VIEWPOINT, (branchuid, viewpointname) => ({
         branchuid,
         viewpointname,        
+    })
+)
+
+export const changeTab = createAction(
+    types.CHANGE_TAB, (nodeuid, tabvalue) => ({
+        nodeuid,
+        tabvalue,
     })
 )
 

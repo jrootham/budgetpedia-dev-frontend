@@ -17,7 +17,6 @@ class ExporerNode extends Component {
             let currentControlData = this.props.declarationData;
             let { lastAction } = currentControlData;
             let returnvalue = true;
-            console.log('controlData', currentControlData);
             if (!actions_1.cellTypes[lastAction]) {
                 return false;
             }
@@ -80,7 +79,9 @@ class ExporerNode extends Component {
             }
             return returnvalue;
         };
-        this.onChangeTab = () => {
+        this.onChangeTab = (tabref) => {
+            console.log('onChangeTab', tabref);
+            this.props.globalStateActions.changeTab(this.props.budgetNode.uid, tabref);
         };
         this._chartrefs = [];
         this.getChartTabs = () => {
@@ -96,6 +97,7 @@ class ExporerNode extends Component {
             return cellTabs;
         };
         this.getTabObject = (chartTabs) => {
+            let tabSelection = this.props.declarationData.nodesById[this.props.budgetNode.uid].cellIndex;
             if (chartTabs.length == 0) {
                 return React.createElement("div", {style: {
                     height: "400px",
@@ -104,16 +106,9 @@ class ExporerNode extends Component {
                     lineHeight: "400px"
                 }}, "No data...");
             }
-            if (chartTabs.length == 1) {
-                return (React.createElement(Tabs_1.Tabs, {value: 0, onChange: () => {
-                    this.onChangeTab();
-                }}, chartTabs));
-            }
-            else {
-                return (React.createElement(Tabs_1.Tabs, {onChange: () => {
-                    this.onChangeTab();
-                }}, chartTabs));
-            }
+            return (React.createElement(Tabs_1.Tabs, {value: tabSelection, onChange: (tabref) => {
+                this.onChangeTab(tabref);
+            }}, chartTabs));
         };
     }
     componentWillMount() {
@@ -144,7 +139,6 @@ class ExporerNode extends Component {
         let newCells = cells.filter(cell => {
             return !!cellsById[cell.uid];
         });
-        console.log('filtered cells', newCells);
         if (newCells.length != cells.length) {
             this.setState({
                 nodeCells: newCells
@@ -167,6 +161,7 @@ class ExporerNode extends Component {
         });
     }
     render() {
+        console.log('rendering ExplorerNode', this.props.budgetNode);
         let chartTabs = this.getChartTabs();
         let tabobject = this.getTabObject(chartTabs);
         let { portalConfig: portalSettings } = this.props.budgetNode;

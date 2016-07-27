@@ -222,6 +222,7 @@ let explorer = {
             nodeList:[],
         },
         node: {
+            cellIndex:0,
             cellList:null
         },
         cell: {

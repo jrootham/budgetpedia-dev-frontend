@@ -110,6 +110,14 @@ let nodesById = (state = {}, action) => {
             }
             return newstate;
         }
+        case actions_1.types.CHANGE_TAB: {
+            let newstate = Object.assign({}, state);
+            let { nodeuid } = action.payload;
+            let newnode = Object.assign({}, newstate[action.payload.nodeuid]);
+            newnode.cellIndex = action.payload.tabvalue;
+            newstate[nodeuid] = newnode;
+            return newstate;
+        }
         default:
             return state;
     }

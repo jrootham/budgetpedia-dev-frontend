@@ -14,6 +14,7 @@ var types;
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
     types.CHANGE_CHART_CODE = 'CHANGE_CHART_CODE';
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
+    types.CHANGE_TAB = 'CHANGE_TAB';
 })(types = exports.types || (exports.types = {}));
 var branchTypes;
 (function (branchTypes) {
@@ -27,6 +28,7 @@ var nodeTypes;
     nodeTypes.ADD_CELLS = types.ADD_CELLS;
     nodeTypes.CHANGE_CHART_CODE = types.CHANGE_CHART_CODE;
     nodeTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
+    nodeTypes.CHANGE_TAB = types.CHANGE_TAB;
 })(nodeTypes = exports.nodeTypes || (exports.nodeTypes = {}));
 var cellTypes;
 (function (cellTypes) {
@@ -43,6 +45,10 @@ exports.removeBranchDeclaration = redux_actions_1.createAction(types.REMOVE_BRAN
 exports.changeViewpoint = redux_actions_1.createAction(types.CHANGE_VIEWPOINT, (branchuid, viewpointname) => ({
     branchuid: branchuid,
     viewpointname: viewpointname,
+}));
+exports.changeTab = redux_actions_1.createAction(types.CHANGE_TAB, (nodeuid, tabvalue) => ({
+    nodeuid: nodeuid,
+    tabvalue: tabvalue,
 }));
 exports.changeFacet = redux_actions_1.createAction(types.CHANGE_FACET, (branchuid, facetname, nodeidlist, cellidlist) => ({
     branchuid: branchuid,

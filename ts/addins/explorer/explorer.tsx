@@ -56,6 +56,7 @@ import {
 
 interface MappedNodeActions {
     addCellDeclarations:Function,
+    changeTab:Function,
     // removeCellDeclarations:Function,
     // changeChart:Function,
     // toggleDelta:Function,
@@ -222,6 +223,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         let explorer = this
 
         // console.log('declarationData',explorer.props.declarationData)
+        console.log('rendering Explorer')
         
         let dialogbox =  
             <Dialog
@@ -287,6 +289,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                     updateCellChartSelection: this.props.updateCellChartSelection,
+                    changeTab: this.props.changeTab,
                 }
 
                 let displayCallbackFunctions = { 
@@ -384,6 +387,7 @@ Explorer = connect(mapStateToProps, {
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeFacet: ExplorerActions.changeFacet,
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
+    changeTab: ExplorerActions.changeTab,
     // changeChart
     // changeSelection
     // toggleInflationAdjustment

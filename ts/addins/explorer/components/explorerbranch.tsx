@@ -459,6 +459,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
     // }
 
     render() {
+        console.log('rendering ExplorerBranch', this.props.budgetBranch)
 
     let branch = this
     let drilldownrow = branch.props.budgetBranch.nodes

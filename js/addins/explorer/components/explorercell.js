@@ -15,6 +15,7 @@ class ExplorerCell extends Component {
         };
     }
     render() {
+        console.log('rendering ExplorerCell', this.props.budgetCell);
         let { chartParms, explorerChartCode, expandable, graph_id } = this.props.budgetCell;
         if (!expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4';
