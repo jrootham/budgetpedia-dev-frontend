@@ -17,7 +17,8 @@ class BudgetNode {
         };
         this.getCellDeclarationParms = () => {
             let parmsList = [];
-            let chartSpecs = this.datasetSpecs[this.facetName];
+            let datasetName = constants_1.FacetNameToDatasetName[this.facetName];
+            let chartSpecs = this.datasetSpecs[datasetName];
             for (let chartSpec of chartSpecs) {
                 let cellDeclaration = Object.assign({}, this.props.declarationData.defaults.cell);
                 cellDeclaration.nodeDataseriesName = chartSpec.Type;
@@ -109,7 +110,8 @@ class BudgetNode {
         return cells;
     }
     resetCells() {
-        let chartSpecs = this.datasetSpecs[this.facetName];
+        let datasetName = constants_1.FacetNameToDatasetName[this.facetName];
+        let chartSpecs = this.datasetSpecs[datasetName];
         let cells = this.allCells;
         for (let cellIndex in cells) {
             let cell = cells[cellIndex];

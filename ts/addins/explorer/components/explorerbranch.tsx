@@ -491,12 +491,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
             tooltipPosition="top-center"
             onTouchTap= {
                 e => {
-                    branch.switchFacet('BudgetExpenses')
+                    branch.switchFacet('Expenses')
                 }
             }
             style={
                 {
-                    backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetExpenses')
+                    backgroundColor: (this.props.budgetBranch.settings.facet == 'Expenses')
                         ? "rgba(144,238,144,0.5)"
                         : 'transparent',
                     borderRadius: "50%"
@@ -510,12 +510,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
             tooltipPosition="top-center"
             onTouchTap= {
                 e => {
-                    branch.switchFacet('BudgetRevenues')
+                    branch.switchFacet('Revenues')
                 }
             }
             style={
                 {
-                    backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetRevenues')
+                    backgroundColor: (this.props.budgetBranch.settings.facet == 'Revenues')
                         ? "rgba(144,238,144,0.5)"
                         : 'transparent',
                     borderRadius: "50%"
@@ -529,12 +529,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
             tooltipPosition="top-center"
             onTouchTap= {
                 e => {
-                    branch.switchFacet('BudgetStaffing')
+                    branch.switchFacet('Staffing')
                 }
             }
             style={
                 {
-                    backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetStaffing')
+                    backgroundColor: (this.props.budgetBranch.settings.facet == 'Staffing')
                         ? "rgba(144,238,144,0.5)"
                         : 'transparent',
                     borderRadius: "50%"

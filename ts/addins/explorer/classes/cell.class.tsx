@@ -92,7 +92,8 @@ import {
 } from '../modules/onchartcomponentselection'
 import { 
     GoogleChartTypeToChartCode, 
-    ChartCodeToGoogleChartType 
+    ChartCodeToGoogleChartType,
+    FacetNameToDatasetName,
 } from '../../constants'
 
 import BudgetNode from './node.class'
@@ -175,7 +176,9 @@ class BudgetCell {
 
         let { rightYear:year } = yearscope
         // unpack branchsettings
-        let { facet:datasetName } = branchSettings
+        let { facet } = branchSettings
+
+        let datasetName = FacetNameToDatasetName[facet]
 
         let units = datasetConfig.Units,
             vertlabel

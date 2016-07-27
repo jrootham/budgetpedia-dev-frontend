@@ -264,23 +264,23 @@ class ExplorerBranch extends Component {
         return React.createElement("div", null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.props.budgetBranch.settings.viewpoint, style: {}, onChange: (e, index, value) => {
             branch.switchViewpoint(value);
         }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Budget (by function)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Budget (by structure)"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Facets: "), React.createElement(IconButton_1.default, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchFacet('BudgetExpenses');
+            branch.switchFacet('Expenses');
         }, style: {
-            backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetExpenses')
+            backgroundColor: (this.props.budgetBranch.settings.facet == 'Expenses')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "attach_money")), React.createElement(IconButton_1.default, {tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchFacet('BudgetRevenues');
+            branch.switchFacet('Revenues');
         }, style: {
-            backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetRevenues')
+            backgroundColor: (this.props.budgetBranch.settings.facet == 'Revenues')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "receipt")), React.createElement(IconButton_1.default, {tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchFacet('BudgetStaffing');
+            branch.switchFacet('Staffing');
         }, style: {
-            backgroundColor: (this.props.budgetBranch.settings.facet == 'BudgetStaffing')
+            backgroundColor: (this.props.budgetBranch.settings.facet == 'Staffing')
                 ? "rgba(144,238,144,0.5)"
                 : 'transparent',
             borderRadius: "50%"

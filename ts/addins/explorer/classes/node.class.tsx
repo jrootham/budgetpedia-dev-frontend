@@ -2,7 +2,11 @@
 // budgetnode.tsx
 
 import { DataseriesMeta, TimeSpecs } from './databaseapi'
-import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../../constants'
+import { 
+    FacetNameToDatasetName, 
+    GoogleChartTypeToChartCode, 
+    ChartCodeToGoogleChartType 
+} from '../../constants'
 import {
     CellSettings,
     PortalConfig,
@@ -154,7 +158,8 @@ class BudgetNode {
 
     getCellDeclarationParms = () => {
         let parmsList:CellDeclaration[] = []
-        let chartSpecs = this.datasetSpecs[this.facetName]
+        let datasetName:string = FacetNameToDatasetName[this.facetName]
+        let chartSpecs = this.datasetSpecs[datasetName]
         for (let chartSpec of chartSpecs) {
             let cellDeclaration:CellDeclaration = Object.assign({},this.props.declarationData.defaults.cell)
             cellDeclaration.nodeDataseriesName = chartSpec.Type // s/b dataseriesName
@@ -187,7 +192,8 @@ class BudgetNode {
     }
 
     public resetCells() {
-        let chartSpecs = this.datasetSpecs[this.facetName]
+        let datasetName:string = FacetNameToDatasetName[this.facetName]
+        let chartSpecs = this.datasetSpecs[datasetName]
         let cells = this.allCells
         for (let cellIndex in cells) {
             let cell:BudgetCell = cells[cellIndex]

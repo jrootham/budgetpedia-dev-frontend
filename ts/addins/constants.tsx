@@ -19,3 +19,18 @@ for (let explorerChartCode in ChartCodeToGoogleChartType) {
 }
 
 export { ChartCodeToGoogleChartType }
+
+let FacetNameToDatasetName = {
+    'Expenses':'BudgetExpenses',
+    'Revenues':'BudgetRevenues',
+    'Staffing':'BudgetStaffing'
+}
+
+export var DatasetNameToFacetName = {
+}
+
+for (let FacetName in FacetNameToDatasetName) {
+    DatasetNameToFacetName[FacetNameToDatasetName[FacetName]] = FacetName
+}
+
+export { FacetNameToDatasetName }

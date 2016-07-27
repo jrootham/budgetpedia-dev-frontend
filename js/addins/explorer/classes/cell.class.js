@@ -11,7 +11,8 @@ class BudgetCell {
             let { viewpointConfig, datasetConfig } = this.viewpointConfigData;
             let { dataNode, timeSpecs: yearscope, parentData, nodeIndex } = this.nodeData;
             let { rightYear: year } = yearscope;
-            let { facet: datasetName } = branchSettings;
+            let { facet } = branchSettings;
+            let datasetName = constants_1.FacetNameToDatasetName[facet];
             let units = datasetConfig.Units, vertlabel;
             vertlabel = datasetConfig.UnitsAlias;
             if (units != 'FTE') {

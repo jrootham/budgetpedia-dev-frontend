@@ -14,6 +14,9 @@ import * as ExplorerActions from '../actions'
 
 import BudgetCell from './cell.class'
 import { ExplorerBranchActions } from '../components/explorerbranch'
+import { 
+    FacetNameToDatasetName, 
+} from '../../constants'
 
 // import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../../constants'
 
@@ -206,9 +209,11 @@ class BudgetBranch {
 
         let { 
             viewpoint: viewpointName, 
-            facet: datasetName, 
+            facet: facetName, 
             inflationAdjusted,
         } = branchSettings
+
+        let datasetName = FacetNameToDatasetName[facetName]
 
         let viewpointdata:ViewpointData = databaseapi.getViewpointData({
             viewpointName, 

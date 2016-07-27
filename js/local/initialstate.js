@@ -102,7 +102,7 @@ let explorer = {
         branch: {
             latestYear: 2015,
             viewpoint: "FUNCTIONAL",
-            facet: "BudgetExpenses",
+            facet: "Expenses",
             chartType: "ColumnChart",
             inflationAdjusted: true,
             yearSlider: { singlevalue: [2015], doublevalue: [2005, 2015] },

@@ -2,6 +2,7 @@
 const databaseapi_1 = require('./databaseapi');
 const getbudgetnode_1 = require('../modules/getbudgetnode');
 const node_class_1 = require('./node.class');
+const constants_1 = require('../../constants');
 class BudgetBranch {
     constructor(parms) {
         this.getInitialBranchNodeParms = () => {
@@ -43,7 +44,8 @@ class BudgetBranch {
         };
         this.getViewpointData = () => {
             let branchSettings = this.settings;
-            let { viewpoint: viewpointName, facet: datasetName, inflationAdjusted, } = branchSettings;
+            let { viewpoint: viewpointName, facet: facetName, inflationAdjusted, } = branchSettings;
+            let datasetName = constants_1.FacetNameToDatasetName[facetName];
             let viewpointdata = databaseapi_1.default.getViewpointData({
                 viewpointName: viewpointName,
                 datasetName: datasetName,
