@@ -74,7 +74,6 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
         }
 
         case actiontypes.CHANGE_FACET: {
-            // console.log('change facet',action)
             let { branchuid } = action.payload
             newstate = Object.assign({},state)
             newstate[branchuid] = Object.assign({},newstate[branchuid])

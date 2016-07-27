@@ -175,7 +175,6 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
             this.setState({
                 nodeCells:newcells
             })
-            // console.log('setting new cells', newcells)
         }
         return returnvalue
     }

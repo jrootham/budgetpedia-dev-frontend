@@ -154,6 +154,13 @@ class BudgetBranch {
                     nextdataNode,
                     branchSettings.facet
                 )
+                // let parmsList = budgetNode.getCellDeclarationParms()
+                // let newcells = budgetNode.setCells(parmsList)
+                // let oldcells = budgetNode.cells
+                // console.log('newcells, oldcells', newcells, oldcells)
+                // budgetNode.setState({
+                //     nodeCells:newcells,
+                // })
                 if ( deeperdata || shallowerdata) {
                     switchResults.deeperdata = deeperdata
                     switchResults.shallowerdata = shallowerdata
