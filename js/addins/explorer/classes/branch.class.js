@@ -133,6 +133,7 @@ class BudgetBranch {
         };
         let branchSettings = this.settings;
         let viewpointData = this.state.viewpointData;
+        console.log('viewpointData', viewpointData);
         let branchNodes = this.nodes;
         let budgetNode = null;
         let parentBudgetNode;
@@ -144,6 +145,7 @@ class BudgetBranch {
             parentBudgetNode = budgetNode;
             budgetNode = branchNodes[nodeIndex];
             let nextdataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
+            console.log('nextdataNode', nextdataNode);
             if (nextdataNode) {
                 let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
                 let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2));

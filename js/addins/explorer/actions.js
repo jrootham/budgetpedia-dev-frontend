@@ -31,6 +31,7 @@ var nodeTypes;
 var cellTypes;
 (function (cellTypes) {
     cellTypes.UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION;
+    cellTypes.CHANGE_FACET = types.CHANGE_FACET;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, settings => ({
     settings: settings,
@@ -43,9 +44,11 @@ exports.changeViewpoint = redux_actions_1.createAction(types.CHANGE_VIEWPOINT, (
     branchuid: branchuid,
     viewpointname: viewpointname,
 }));
-exports.changeFacet = redux_actions_1.createAction(types.CHANGE_FACET, (branchuid, facetname) => ({
+exports.changeFacet = redux_actions_1.createAction(types.CHANGE_FACET, (branchuid, facetname, nodeidlist, cellidlist) => ({
     branchuid: branchuid,
     facetname: facetname,
+    nodeidlist: nodeidlist,
+    cellidlist: cellidlist,
 }));
 exports.addNodeDeclaration = redux_actions_1.createAction(types.ADD_NODE, (branchuid, settings) => ({
     settings: settings,

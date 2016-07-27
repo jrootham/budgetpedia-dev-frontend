@@ -17,6 +17,7 @@ class ExporerNode extends Component {
             let currentControlData = this.props.declarationData;
             let { lastAction } = currentControlData;
             let returnvalue = true;
+            console.log('controlData', currentControlData);
             if (!actions_1.cellTypes[lastAction]) {
                 return false;
             }
@@ -26,6 +27,10 @@ class ExporerNode extends Component {
             switch (lastAction) {
                 case actions_1.cellTypes.UPDATE_CELL_SELECTION: {
                     this._processUpdateCellSelection();
+                    break;
+                }
+                case actions_1.cellTypes.CHANGE_FACET: {
+                    this._processChangeFacet();
                     break;
                 }
                 default:
@@ -41,6 +46,14 @@ class ExporerNode extends Component {
             });
             this.setState({
                 nodeCells: nodeCells,
+            });
+        };
+        this._processChangeFacet = () => {
+            setTimeout(() => {
+                let { budgetNode } = this.props;
+                console.log('processing node change facet');
+                let cellDeclarationParms = budgetNode.getCellDeclarationParms();
+                this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
             });
         };
         this.harmonizecount = null;
@@ -131,6 +144,7 @@ class ExporerNode extends Component {
         let newCells = cells.filter(cell => {
             return !!cellsById[cell.uid];
         });
+        console.log('filtered cells', newCells);
         if (newCells.length != cells.length) {
             this.setState({
                 nodeCells: newCells

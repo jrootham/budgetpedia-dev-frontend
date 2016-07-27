@@ -33,6 +33,7 @@ export namespace nodeTypes {
 
 export namespace cellTypes {
     export import UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION
+    export import CHANGE_FACET = types.CHANGE_FACET
 }
 
 export const addBranchDeclaration = createAction(
@@ -56,9 +57,11 @@ export const changeViewpoint = createAction(
 )
 
 export const changeFacet = createAction(
-    types.CHANGE_FACET, (branchuid, facetname) => ({
+    types.CHANGE_FACET, (branchuid, facetname, nodeidlist, cellidlist) => ({
         branchuid,
-        facetname,        
+        facetname,
+        nodeidlist,
+        cellidlist,        
     })
 )
 

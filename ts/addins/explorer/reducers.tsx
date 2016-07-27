@@ -109,11 +109,22 @@ let nodesById = (state = { }, action) => {
         case actiontypes.ADD_CELLS: {
             let newstate = Object.assign({},state)
             let nodeuid = action.payload.nodeuid
-            let newnode = newstate[nodeuid] = Object.assign({},newstate[nodeuid])
+            let newnode = Object.assign({},newstate[nodeuid])
             newnode.cellList = newnode.cellList || []
             let newcellList = action.payload.settings.map(setting => setting.uid)
             newnode.cellList = [...newnode.cellList, ...newcellList]
             newstate[nodeuid] = newnode
+            return newstate
+        }
+
+        case actiontypes.CHANGE_FACET: {
+            let newstate = Object.assign({}, state)
+            let nodeidlist = action.payload.nodeidlist
+            for (let nodeid of nodeidlist) {
+                let newnode = Object.assign({},newstate[nodeid])
+                newnode.cellList = []
+                newstate[nodeid] = newnode
+            }
             return newstate
         }
 
@@ -137,6 +148,13 @@ let cellsById = (state = { }, action) => {
             newstate = Object.assign({},state)
             for (let removeitem of action.payload.items) {
                 for (let celluid of removeitem.cellList)
+                    delete newstate[celluid]
+            }
+            return newstate
+        }
+        case actiontypes.CHANGE_FACET: {
+            newstate = Object.assign({}, state)
+            for (let celluid of action.payload.cellidlist) {
                 delete newstate[celluid]
             }
             return newstate

@@ -128,6 +128,7 @@ class BudgetBranch {
         }
         let branchSettings: BranchSettings = this.settings
         let viewpointData = this.state.viewpointData
+        console.log('viewpointData',viewpointData)
 
         let branchNodes = this.nodes
 
@@ -142,6 +143,7 @@ class BudgetBranch {
             parentBudgetNode = budgetNode
             budgetNode = branchNodes[nodeIndex]
             let nextdataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
+            console.log('nextdataNode',nextdataNode)
             if (nextdataNode) {
                 // check previous cell configuration against previous node
                 // TODO: THIS IS A PROXY THAT NEEDS TO BE REPLACED
@@ -154,13 +156,6 @@ class BudgetBranch {
                     nextdataNode,
                     branchSettings.facet
                 )
-                // let parmsList = budgetNode.getCellDeclarationParms()
-                // let newcells = budgetNode.setCells(parmsList)
-                // let oldcells = budgetNode.cells
-                // console.log('newcells, oldcells', newcells, oldcells)
-                // budgetNode.setState({
-                //     nodeCells:newcells,
-                // })
                 if ( deeperdata || shallowerdata) {
                     switchResults.deeperdata = deeperdata
                     switchResults.shallowerdata = shallowerdata

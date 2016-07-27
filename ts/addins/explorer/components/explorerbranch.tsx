@@ -252,10 +252,12 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
     }
 
     private _processChangeFacetStateChange = (budgetBranch:BudgetBranch) => {
+        console.log('processing branch change facet')
         budgetBranch.getViewpointData()
 
         setTimeout(() => {
 
+            console.log('calling budgetBranch.switchFacet',budgetBranch)
             let switchResults = budgetBranch.switchFacet()
 
             let { deeperdata, shallowerdata } = switchResults
@@ -370,8 +372,18 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
 
     switchFacet = (facet:string) => {
 
-        let { budgetBranch } = this.props
-        this.props.globalStateActions.changeFacet(budgetBranch.uid, facet)
+        let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
+        let { nodes } = budgetBranch
+        let cellidlist = []
+        let nodeidlist = nodes.map((node:BudgetNode) => {
+            let cells:BudgetCell[] = node.allCells
+            for (let cell of cells) {
+                cellidlist.push(cell.uid)
+            }
+            return node.uid
+        })
+
+        this.props.globalStateActions.changeFacet(budgetBranch.uid, facet, nodeidlist, cellidlist)
 
     }
 

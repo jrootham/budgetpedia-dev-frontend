@@ -191,6 +191,7 @@ class BudgetNode {
             nodeIndex,
         }
 
+        console.log('updating cell', nodeData)
         cell.viewpointConfigData = viewpointConfigData
         cell.nodeData = nodeData
         cell.branchSettings = this.branchSettings,

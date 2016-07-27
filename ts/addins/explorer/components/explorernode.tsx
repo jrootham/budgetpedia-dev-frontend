@@ -32,7 +32,6 @@ interface ExplorerNodeProps {
 
 export interface ExporerNodeActions {
     addCellDeclarations:Function,
-    // removeCellDeclarations:Function,
 }
 
 class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
@@ -82,6 +81,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         let newCells = cells.filter(cell =>{
             return !!cellsById[cell.uid]
         })
+        console.log('filtered cells',newCells)
         if (newCells.length != cells.length) {
             this.setState({
                 nodeCells:newCells
@@ -109,7 +109,6 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         setTimeout(()=>{
             this.props.budgetNode.new = false
         })
-        // console.log('node did update', this.props.budgetNode)
     }
 
     // _previousControlData is not in a closure to allow for initializing in componentDidMount
@@ -121,6 +120,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         let currentControlData = this.props.declarationData
         let { lastAction } = currentControlData
         let returnvalue = true
+        console.log('controlData',currentControlData)
         if (!cellTypes[lastAction]) {
             return false
         }
@@ -133,6 +133,10 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         switch (lastAction) {
             case cellTypes.UPDATE_CELL_SELECTION: {
                 this._processUpdateCellSelection()
+                break
+            }
+            case cellTypes.CHANGE_FACET: {
+                this._processChangeFacet()
                 break
             }
             default:
@@ -149,6 +153,17 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         })
         this.setState({
             nodeCells,
+        })
+    }
+
+    private _processChangeFacet = () => {
+        setTimeout(()=>{
+
+            let { budgetNode } = this.props
+            console.log('processing node change facet')
+            let cellDeclarationParms = budgetNode.getCellDeclarationParms()
+            this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
+            
         })
     }
 
