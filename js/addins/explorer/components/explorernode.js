@@ -129,7 +129,6 @@ class ExporerNode extends Component {
     componentWillReceiveProps(nextProps) {
         let { budgetNode, declarationData } = nextProps;
         if (budgetNode.updated) {
-            console.log('newCells in node', budgetNode);
             this.setState({
                 nodeCells: budgetNode.newCells
             });

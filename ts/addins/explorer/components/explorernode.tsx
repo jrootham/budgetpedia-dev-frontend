@@ -73,11 +73,11 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         }
     }
 
-    // remove obsolete cell objects
+    // TODO: generate action to update cell nodeDataseriesName
+    // remove obsolete cell objects; update cell list if needed
     componentWillReceiveProps(nextProps) {
         let { budgetNode, declarationData } = nextProps // this.props
         if (budgetNode.updated) {
-            console.log('newCells in node', budgetNode)
             this.setState({
                 nodeCells:budgetNode.newCells
             })
