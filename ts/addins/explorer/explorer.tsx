@@ -68,6 +68,7 @@ interface MappedBranchActions extends MappedNodeActions {
     changeViewpoint: Function,
     changeFacet: Function,
     updateCellChartSelection:Function,
+    updateCellsDataseriesName: Function,
     // toggleInflationAdjustement:Function
 }
 
@@ -290,6 +291,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     changeFacet: this.props.changeFacet,
                     updateCellChartSelection: this.props.updateCellChartSelection,
                     changeTab: this.props.changeTab,
+                    updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                 }
 
                 let displayCallbackFunctions = { 
@@ -388,6 +390,7 @@ Explorer = connect(mapStateToProps, {
     changeFacet: ExplorerActions.changeFacet,
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
     changeTab: ExplorerActions.changeTab,
+    updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
     // changeChart
     // changeSelection
     // toggleInflationAdjustment

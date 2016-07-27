@@ -16,6 +16,7 @@ export namespace types {
     export const CHANGE_CHART_CODE = 'CHANGE_CHART_CODE'
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
     export const CHANGE_TAB = 'CHANGE_TAB'
+    export const UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME'
 }
 
 export namespace branchTypes {
@@ -31,12 +32,16 @@ export namespace nodeTypes {
     export import CHANGE_CHART_CODE = types.CHANGE_CHART_CODE
     export import TOGGLE_DELTA = types.TOGGLE_DELTA
     export import CHANGE_TAB = types.CHANGE_TAB
+    export import UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME
+
 }
 
 export namespace cellTypes {
     export import UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION
     export import CHANGE_FACET = types.CHANGE_FACET
 }
+
+// --------------------[ Branch ]---------------------
 
 export const addBranchDeclaration = createAction(
     types.ADD_BRANCH,settings => ({
@@ -58,19 +63,21 @@ export const changeViewpoint = createAction(
     })
 )
 
-export const changeTab = createAction(
-    types.CHANGE_TAB, (nodeuid, tabvalue) => ({
-        nodeuid,
-        tabvalue,
-    })
-)
-
 export const changeFacet = createAction(
     types.CHANGE_FACET, (branchuid, facetname) => ({ //, nodeidlist, cellidlist) => ({
         branchuid,
         facetname
         // nodeidlist,
         // cellidlist,        
+    })
+)
+
+// ----------------------[ Node ]-----------------------------
+
+export const changeTab = createAction(
+    types.CHANGE_TAB, (nodeuid, tabvalue) => ({
+        nodeuid,
+        tabvalue,
     })
 )
 
@@ -88,6 +95,8 @@ export const removeNodeDeclarations = createAction(
         branchuid,
     })
 )
+
+// ---------------------[ Cell ]---------------------
 
 const _addCellDeclaration = createAction(
     types.ADD_CELLS,(nodeuid,settings) => ({
@@ -109,6 +118,17 @@ export const updateCellChartSelection = createAction(
     types.UPDATE_CELL_SELECTION,(celluid, selection) => ({
         celluid,
         selection,
+    })
+)
+
+interface CellDataseriesNameItem {
+    celluid: string,
+    nodeDataseriesName: string,
+}
+
+export const updateCellsDataseriesName = createAction(
+    types.UPDATE_CELLS_DATASERIESNAME, (cellItemList:CellDataseriesNameItem[]) => ({
+        cellItemList,
     })
 )
     

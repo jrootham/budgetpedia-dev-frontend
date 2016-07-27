@@ -117,17 +117,6 @@ let nodesById = (state = { }, action) => {
             return newstate
         }
 
-        // case actiontypes.CHANGE_FACET: {
-        //     let newstate = Object.assign({}, state)
-        //     let nodeidlist = action.payload.nodeidlist
-        //     for (let nodeid of nodeidlist) {
-        //         let newnode = Object.assign({},newstate[nodeid])
-        //         newnode.cellList = []
-        //         newstate[nodeid] = newnode
-        //     }
-        //     return newstate
-        // }
-
         case actiontypes.CHANGE_TAB: {
             let newstate = Object.assign({},state)
             let { nodeuid } = action.payload
@@ -144,38 +133,45 @@ let nodesById = (state = { }, action) => {
 
 let cellsById = (state = { }, action) => {
     let { type } = action
-    let newstate
+    let newstate = Object.assign({},state)
     switch (type) {
         case actiontypes.ADD_CELLS: {
-            newstate = Object.assign({},state)
+
             for (let setting of action.payload.settings) {
                 newstate[setting.uid] = setting
             }
             return newstate
         }
         case actiontypes.REMOVE_NODES: {
-            newstate = Object.assign({},state)
+
             for (let removeitem of action.payload.items) {
                 for (let celluid of removeitem.cellList)
                     delete newstate[celluid]
             }
             return newstate
         }
-        // case actiontypes.CHANGE_FACET: {
-        //     newstate = Object.assign({}, state)
-        //     for (let celluid of action.payload.cellidlist) {
-        //         delete newstate[celluid]
-        //     }
-        //     return newstate
-        // }
+
         case actiontypes.UPDATE_CELL_SELECTION: {
+
             let { celluid } = action.payload
-            newstate = Object.assign({},state)
             let newcell = Object.assign({},newstate[celluid])
             newcell.chartSelection = action.payload.selection
             newstate[celluid] = newcell
             return newstate
         }
+
+        case actiontypes.UPDATE_CELLS_DATASERIESNAME: {
+
+            let cellItems = action.payload.cellItemList
+            for ( let cellItem of cellItems) {
+                let { celluid } = cellItem
+                let newcell = Object.assign({},newstate[celluid])
+                newcell.nodeDataseriesName = cellItem.nodeDataseriesName
+                newstate[celluid] = newcell
+            }
+            return newstate
+        }
+
         default:
             return state
     }

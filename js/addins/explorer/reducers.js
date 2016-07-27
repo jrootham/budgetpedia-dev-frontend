@@ -114,17 +114,15 @@ let nodesById = (state = {}, action) => {
 };
 let cellsById = (state = {}, action) => {
     let { type } = action;
-    let newstate;
+    let newstate = Object.assign({}, state);
     switch (type) {
         case actions_1.types.ADD_CELLS: {
-            newstate = Object.assign({}, state);
             for (let setting of action.payload.settings) {
                 newstate[setting.uid] = setting;
             }
             return newstate;
         }
         case actions_1.types.REMOVE_NODES: {
-            newstate = Object.assign({}, state);
             for (let removeitem of action.payload.items) {
                 for (let celluid of removeitem.cellList)
                     delete newstate[celluid];
@@ -133,10 +131,19 @@ let cellsById = (state = {}, action) => {
         }
         case actions_1.types.UPDATE_CELL_SELECTION: {
             let { celluid } = action.payload;
-            newstate = Object.assign({}, state);
             let newcell = Object.assign({}, newstate[celluid]);
             newcell.chartSelection = action.payload.selection;
             newstate[celluid] = newcell;
+            return newstate;
+        }
+        case actions_1.types.UPDATE_CELLS_DATASERIESNAME: {
+            let cellItems = action.payload.cellItemList;
+            for (let cellItem of cellItems) {
+                let { celluid } = cellItem;
+                let newcell = Object.assign({}, newstate[celluid]);
+                newcell.nodeDataseriesName = cellItem.nodeDataseriesName;
+                newstate[celluid] = newcell;
+            }
             return newstate;
         }
         default:

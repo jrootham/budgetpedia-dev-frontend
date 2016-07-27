@@ -132,6 +132,15 @@ class ExporerNode extends Component {
             this.setState({
                 nodeCells: budgetNode.newCells
             });
+            let updatedCells = budgetNode.newCells;
+            let cellslist = [];
+            for (let cell of cellslist) {
+                cellslist.push({
+                    celluid: cell.uid,
+                    nodeDataseriesName: cell.nodeDataseriesName
+                });
+            }
+            this._stateActions.updateCellsDataseriesName(cellslist);
             budgetNode.newCells = null;
             budgetNode.updated = false;
         }

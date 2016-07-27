@@ -15,6 +15,7 @@ var types;
     types.CHANGE_CHART_CODE = 'CHANGE_CHART_CODE';
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
     types.CHANGE_TAB = 'CHANGE_TAB';
+    types.UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME';
 })(types = exports.types || (exports.types = {}));
 var branchTypes;
 (function (branchTypes) {
@@ -29,6 +30,7 @@ var nodeTypes;
     nodeTypes.CHANGE_CHART_CODE = types.CHANGE_CHART_CODE;
     nodeTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
     nodeTypes.CHANGE_TAB = types.CHANGE_TAB;
+    nodeTypes.UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME;
 })(nodeTypes = exports.nodeTypes || (exports.nodeTypes = {}));
 var cellTypes;
 (function (cellTypes) {
@@ -46,13 +48,13 @@ exports.changeViewpoint = redux_actions_1.createAction(types.CHANGE_VIEWPOINT, (
     branchuid: branchuid,
     viewpointname: viewpointname,
 }));
-exports.changeTab = redux_actions_1.createAction(types.CHANGE_TAB, (nodeuid, tabvalue) => ({
-    nodeuid: nodeuid,
-    tabvalue: tabvalue,
-}));
 exports.changeFacet = redux_actions_1.createAction(types.CHANGE_FACET, (branchuid, facetname) => ({
     branchuid: branchuid,
     facetname: facetname
+}));
+exports.changeTab = redux_actions_1.createAction(types.CHANGE_TAB, (nodeuid, tabvalue) => ({
+    nodeuid: nodeuid,
+    tabvalue: tabvalue,
 }));
 exports.addNodeDeclaration = redux_actions_1.createAction(types.ADD_NODE, (branchuid, settings) => ({
     settings: settings,
@@ -78,4 +80,7 @@ exports.addCellDeclarations = (nodeuid, settingslist) => {
 exports.updateCellChartSelection = redux_actions_1.createAction(types.UPDATE_CELL_SELECTION, (celluid, selection) => ({
     celluid: celluid,
     selection: selection,
+}));
+exports.updateCellsDataseriesName = redux_actions_1.createAction(types.UPDATE_CELLS_DATASERIESNAME, (cellItemList) => ({
+    cellItemList: cellItemList,
 }));

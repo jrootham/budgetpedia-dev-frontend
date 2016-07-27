@@ -32,6 +32,7 @@ interface ExplorerNodeProps {
 
 export interface ExporerNodeActions {
     addCellDeclarations:Function,
+    updateCellsDataseriesName: Function,
 }
 
 class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
@@ -81,6 +82,17 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
             this.setState({
                 nodeCells:budgetNode.newCells
             })
+            let updatedCells = budgetNode.newCells
+            let cellslist = []
+            for (let cell of cellslist) {
+                cellslist.push(
+                    {
+                        celluid: cell.uid, 
+                        nodeDataseriesName: cell.nodeDataseriesName 
+                    }
+                )
+            }
+            this._stateActions.updateCellsDataseriesName(cellslist)
             budgetNode.newCells = null
             budgetNode.updated = false
         } else {
