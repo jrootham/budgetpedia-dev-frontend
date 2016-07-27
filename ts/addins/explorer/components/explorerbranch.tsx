@@ -160,6 +160,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
             })
         }
     }
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return nextProps.declarationData.lastAction != branchActionTypes.CHANGE_FACET
+    // }
 /*
     harmonization means creating local nodes to match global declarations
     acts as a sentinel; if count goes below zero, means that some 
@@ -252,12 +256,10 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
     }
 
     private _processChangeFacetStateChange = (budgetBranch:BudgetBranch) => {
-        console.log('processing branch change facet')
         budgetBranch.getViewpointData()
 
         setTimeout(() => {
 
-            console.log('calling budgetBranch.switchFacet',budgetBranch)
             let switchResults = budgetBranch.switchFacet()
 
             let { deeperdata, shallowerdata } = switchResults
@@ -373,17 +375,17 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
     switchFacet = (facet:string) => {
 
         let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
-        let { nodes } = budgetBranch
-        let cellidlist = []
-        let nodeidlist = nodes.map((node:BudgetNode) => {
-            let cells:BudgetCell[] = node.allCells
-            for (let cell of cells) {
-                cellidlist.push(cell.uid)
-            }
-            return node.uid
-        })
+        // let { nodes } = budgetBranch
+        // let cellidlist = []
+        // let nodeidlist = nodes.map((node:BudgetNode) => {
+        //     let cells:BudgetCell[] = node.allCells
+        //     for (let cell of cells) {
+        //         cellidlist.push(cell.uid)
+        //     }
+        //     return node.uid
+        // })
 
-        this.props.globalStateActions.changeFacet(budgetBranch.uid, facet, nodeidlist, cellidlist)
+        this.props.globalStateActions.changeFacet(budgetBranch.uid, facet) // , nodeidlist, cellidlist)
 
     }
 
@@ -459,7 +461,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
     // }
 
     render() {
-        console.log('rendering ExplorerBranch', this.props.budgetBranch)
+        // console.log('rendering ExplorerBranch', this.props.budgetBranch)
 
     let branch = this
     let drilldownrow = branch.props.budgetBranch.nodes

@@ -128,7 +128,6 @@ class BudgetBranch {
         }
         let branchSettings: BranchSettings = this.settings
         let viewpointData = this.state.viewpointData
-        console.log('viewpointData',viewpointData)
 
         let branchNodes = this.nodes
 
@@ -143,7 +142,6 @@ class BudgetBranch {
             parentBudgetNode = budgetNode
             budgetNode = branchNodes[nodeIndex]
             let nextdataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
-            console.log('nextdataNode',nextdataNode)
             if (nextdataNode) {
                 // check previous cell configuration against previous node
                 // TODO: THIS IS A PROXY THAT NEEDS TO BE REPLACED
@@ -152,10 +150,10 @@ class BudgetBranch {
                 // there are two charts where there should be 1
                 let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2))
                 // now set budgetNode with new data node
-                budgetNode.update(
-                    nextdataNode,
-                    branchSettings.facet
-                )
+                let parentDataNode = null
+                if (nodeIndex > 0) {
+                    parentDataNode = branchNodes[nodeIndex-1].dataNode
+                }
                 if ( deeperdata || shallowerdata) {
                     switchResults.deeperdata = deeperdata
                     switchResults.shallowerdata = shallowerdata
@@ -182,6 +180,14 @@ class BudgetBranch {
                         budgetBranch.createChildNode(childprops)
                     })
                     budgetNode = null // branchNodes[nodeIndex] // created by createChildNode as side effect
+                } else {
+                    budgetNode.update(
+                        branchSettings.facet,
+                        nextdataNode,
+                        parentDataNode
+                    )
+                    let newCells = budgetNode.resetCells()
+                    budgetNode.newCells = newCells
                 }
             } else {
                 console.error('no data node')

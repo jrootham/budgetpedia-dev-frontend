@@ -57,10 +57,8 @@ class ExplorerBranch extends Component {
             });
         };
         this._processChangeFacetStateChange = (budgetBranch) => {
-            console.log('processing branch change facet');
             budgetBranch.getViewpointData();
             setTimeout(() => {
-                console.log('calling budgetBranch.switchFacet', budgetBranch);
                 let switchResults = budgetBranch.switchFacet();
                 let { deeperdata, shallowerdata } = switchResults;
                 if (deeperdata || shallowerdata) {
@@ -148,16 +146,7 @@ class ExplorerBranch extends Component {
         };
         this.switchFacet = (facet) => {
             let { budgetBranch } = this.props;
-            let { nodes } = budgetBranch;
-            let cellidlist = [];
-            let nodeidlist = nodes.map((node) => {
-                let cells = node.allCells;
-                for (let cell of cells) {
-                    cellidlist.push(cell.uid);
-                }
-                return node.uid;
-            });
-            this.props.globalStateActions.changeFacet(budgetBranch.uid, facet, nodeidlist, cellidlist);
+            this.props.globalStateActions.changeFacet(budgetBranch.uid, facet);
         };
         this.getPortals = (budgetNodes) => {
             let { viewpointData } = this.state;
@@ -269,7 +258,6 @@ class ExplorerBranch extends Component {
         }
     }
     render() {
-        console.log('rendering ExplorerBranch', this.props.budgetBranch);
         let branch = this;
         let drilldownrow = branch.props.budgetBranch.nodes;
         let drilldownportals = branch.getPortals(drilldownrow);

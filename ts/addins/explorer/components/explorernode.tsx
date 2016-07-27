@@ -75,16 +75,25 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
 
     // remove obsolete cell objects
     componentWillReceiveProps(nextProps) {
-        let { budgetNode, declarationData } = this.props
-        let cells = budgetNode.allCells
-        let { cellsById } = declarationData
-        let newCells = cells.filter(cell =>{
-            return !!cellsById[cell.uid]
-        })
-        if (newCells.length != cells.length) {
+        let { budgetNode, declarationData } = nextProps // this.props
+        if (budgetNode.updated) {
+            console.log('newCells in node', budgetNode)
             this.setState({
-                nodeCells:newCells
+                nodeCells:budgetNode.newCells
             })
+            budgetNode.newCells = null
+            budgetNode.updated = false
+        } else {
+            let cells = budgetNode.allCells
+            let { cellsById } = declarationData
+            let newCells = cells.filter(cell =>{
+                return !!cellsById[cell.uid]
+            })
+            if (newCells.length != cells.length) {
+                this.setState({
+                    nodeCells:newCells
+                })
+            }
         }
     }
 
@@ -134,7 +143,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                 break
             }
             case cellTypes.CHANGE_FACET: {
-                this._processChangeFacet()
+                // this._processChangeFacet()
                 break
             }
             default:
@@ -155,14 +164,10 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     }
 
     private _processChangeFacet = () => {
-        setTimeout(()=>{
-
-            let { budgetNode } = this.props
-            console.log('processing node change facet')
-            let cellDeclarationParms = budgetNode.getCellDeclarationParms()
-            this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
-            
-        })
+        let { budgetNode } = this.props
+        console.log('processing node change facet')
+        // let cellDeclarationParms = budgetNode.getCellDeclarationParms()
+        // this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
     }
 
     harmonizecount: any = null
@@ -193,7 +198,6 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     }
 
     onChangeTab = (tabref) => {
-        console.log('onChangeTab',tabref)
         this.props.globalStateActions.changeTab(this.props.budgetNode.uid,tabref)
         // this.props.displayCallbacks.onChangePortalTab() 
     }
@@ -261,7 +265,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
 
     render() {
 
-        console.log('rendering ExplorerNode', this.props.budgetNode)
+        // console.log('rendering ExplorerNode', this.props.budgetNode)
 
         let chartTabs = this.getChartTabs()
 

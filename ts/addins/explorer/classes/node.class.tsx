@@ -107,6 +107,8 @@ class BudgetNode {
     branchSettings:any
     onChartComponentSelection: Function
     new:boolean = true
+    updated:boolean = false
+    newCells:BudgetCell[] = null
     get dataNode() {
         return this._dataNode
     }
@@ -138,9 +140,13 @@ class BudgetNode {
     }
 
     // reset = (dataNode, datasetSpecs, defaultChartType, facet) => {
-    update = (dataNode, facet) => {
+    update = (facet, dataNode, parentDataNode = null) => {
         this._dataNode = dataNode
         this.facetName = facet
+        if (this.parentData && parentDataNode) {
+            this.parentData.dataNode = parentDataNode
+        }
+        this.updated = true
     }
 
     // ====================================================================
@@ -180,7 +186,18 @@ class BudgetNode {
         return cells
     }
 
-    private _updateCell = cell => {
+    public resetCells() {
+        let chartSpecs = this.datasetSpecs[this.facetName]
+        let cells = this.allCells
+        for (let cellIndex in cells) {
+            let cell:BudgetCell = cells[cellIndex]
+            cell.nodeDataseriesName = chartSpecs[cellIndex].Type
+            this._updateCell(cell)
+        }
+        return cells
+    }
+
+    private _updateCell = (cell:BudgetCell) => {
         let viewpointConfigData = this.viewpointConfigData
 
         let { dataNode, timeSpecs, parentData, nodeIndex } = this
@@ -238,6 +255,7 @@ class BudgetNode {
         let availablCells = []
         if (!this.dataNode) return availablCells
         for (let cell of cells) {
+            let budgetNode = this
             if (!this.dataNode[cell.nodeDataseriesName]) {
                 continue
             }

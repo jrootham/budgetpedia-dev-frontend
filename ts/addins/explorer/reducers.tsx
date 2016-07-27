@@ -117,16 +117,16 @@ let nodesById = (state = { }, action) => {
             return newstate
         }
 
-        case actiontypes.CHANGE_FACET: {
-            let newstate = Object.assign({}, state)
-            let nodeidlist = action.payload.nodeidlist
-            for (let nodeid of nodeidlist) {
-                let newnode = Object.assign({},newstate[nodeid])
-                newnode.cellList = []
-                newstate[nodeid] = newnode
-            }
-            return newstate
-        }
+        // case actiontypes.CHANGE_FACET: {
+        //     let newstate = Object.assign({}, state)
+        //     let nodeidlist = action.payload.nodeidlist
+        //     for (let nodeid of nodeidlist) {
+        //         let newnode = Object.assign({},newstate[nodeid])
+        //         newnode.cellList = []
+        //         newstate[nodeid] = newnode
+        //     }
+        //     return newstate
+        // }
 
         case actiontypes.CHANGE_TAB: {
             let newstate = Object.assign({},state)
@@ -161,13 +161,13 @@ let cellsById = (state = { }, action) => {
             }
             return newstate
         }
-        case actiontypes.CHANGE_FACET: {
-            newstate = Object.assign({}, state)
-            for (let celluid of action.payload.cellidlist) {
-                delete newstate[celluid]
-            }
-            return newstate
-        }
+        // case actiontypes.CHANGE_FACET: {
+        //     newstate = Object.assign({}, state)
+        //     for (let celluid of action.payload.cellidlist) {
+        //         delete newstate[celluid]
+        //     }
+        //     return newstate
+        // }
         case actiontypes.UPDATE_CELL_SELECTION: {
             let { celluid } = action.payload
             newstate = Object.assign({},state)

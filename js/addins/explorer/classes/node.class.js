@@ -4,10 +4,16 @@ const cell_class_1 = require('./cell.class');
 class BudgetNode {
     constructor(parms, uid, node, parentNode = null) {
         this.new = true;
+        this.updated = false;
+        this.newCells = null;
         this.parentData = null;
-        this.update = (dataNode, facet) => {
+        this.update = (facet, dataNode, parentDataNode = null) => {
             this._dataNode = dataNode;
             this.facetName = facet;
+            if (this.parentData && parentDataNode) {
+                this.parentData.dataNode = parentDataNode;
+            }
+            this.updated = true;
         };
         this.getCellDeclarationParms = () => {
             let parmsList = [];
@@ -19,7 +25,7 @@ class BudgetNode {
             }
             return parmsList;
         };
-        this._updateCell = cell => {
+        this._updateCell = (cell) => {
             let viewpointConfigData = this.viewpointConfigData;
             let { dataNode, timeSpecs, parentData, nodeIndex } = this;
             let nodeData = {
@@ -102,6 +108,16 @@ class BudgetNode {
         }
         return cells;
     }
+    resetCells() {
+        let chartSpecs = this.datasetSpecs[this.facetName];
+        let cells = this.allCells;
+        for (let cellIndex in cells) {
+            let cell = cells[cellIndex];
+            cell.nodeDataseriesName = chartSpecs[cellIndex].Type;
+            this._updateCell(cell);
+        }
+        return cells;
+    }
     get cellList() {
         return [...this.getProps().declarationData.nodesById[this.uid].cellList];
     }
@@ -111,6 +127,7 @@ class BudgetNode {
         if (!this.dataNode)
             return availablCells;
         for (let cell of cells) {
+            let budgetNode = this;
             if (!this.dataNode[cell.nodeDataseriesName]) {
                 continue;
             }

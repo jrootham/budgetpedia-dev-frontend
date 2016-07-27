@@ -66,11 +66,11 @@ export const changeTab = createAction(
 )
 
 export const changeFacet = createAction(
-    types.CHANGE_FACET, (branchuid, facetname, nodeidlist, cellidlist) => ({
+    types.CHANGE_FACET, (branchuid, facetname) => ({ //, nodeidlist, cellidlist) => ({
         branchuid,
-        facetname,
-        nodeidlist,
-        cellidlist,        
+        facetname
+        // nodeidlist,
+        // cellidlist,        
     })
 )
 
