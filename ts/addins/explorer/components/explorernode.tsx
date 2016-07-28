@@ -33,6 +33,7 @@ interface ExplorerNodeProps {
 export interface ExporerNodeActions {
     addCellDeclarations:Function,
     updateCellsDataseriesName: Function,
+    updateCellChartCode: Function,
 }
 
 class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
@@ -239,6 +240,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                     declarationData = { this.props.declarationData }
                     callbackid = { cellIndex }
                     budgetCell = { budgetCell }
+                    globalStateActions = { {updateCellChartCode: this.props.globalStateActions.updateCellChartCode } }
                 />
             </Tab>
         })

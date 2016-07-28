@@ -146,6 +146,13 @@ let cellsById = (state = {}, action) => {
             }
             return newstate;
         }
+        case actions_1.types.UPDATE_CELL_CHART_CODE: {
+            let { celluid, explorerChartCode } = action.payload;
+            let newcell = Object.assign({}, newstate[celluid]);
+            newcell.explorerChartCode = explorerChartCode;
+            newstate[celluid] = newcell;
+            return newstate;
+        }
         default:
             return state;
     }

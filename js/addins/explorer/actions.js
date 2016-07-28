@@ -12,6 +12,7 @@ var types;
     types.REMOVE_NODES = 'REMOVE_NODES';
     types.ADD_CELLS = 'ADD_CELLS';
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
+    types.UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE';
     types.CHANGE_CHART_CODE = 'CHANGE_CHART_CODE';
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
     types.CHANGE_TAB = 'CHANGE_TAB';
@@ -35,6 +36,7 @@ var nodeTypes;
 var cellTypes;
 (function (cellTypes) {
     cellTypes.UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION;
+    cellTypes.UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE;
     cellTypes.CHANGE_FACET = types.CHANGE_FACET;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, settings => ({
@@ -80,6 +82,10 @@ exports.addCellDeclarations = (nodeuid, settingslist) => {
 exports.updateCellChartSelection = redux_actions_1.createAction(types.UPDATE_CELL_SELECTION, (celluid, selection) => ({
     celluid: celluid,
     selection: selection,
+}));
+exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHART_CODE, (celluid, explorerChartCode) => ({
+    celluid: celluid,
+    explorerChartCode: explorerChartCode,
 }));
 exports.updateCellsDataseriesName = redux_actions_1.createAction(types.UPDATE_CELLS_DATASERIESNAME, (cellItemList) => ({
     cellItemList: cellItemList,

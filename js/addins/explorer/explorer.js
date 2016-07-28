@@ -119,6 +119,7 @@ let Explorer = class extends Component {
                     updateCellChartSelection: this.props.updateCellChartSelection,
                     changeTab: this.props.changeTab,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
+                    updateCellChartCode: this.props.updateCellChartCode,
                 };
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,
@@ -149,6 +150,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
     changeTab: ExplorerActions.changeTab,
     updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
+    updateCellChartCode: ExplorerActions.updateCellChartCode
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;

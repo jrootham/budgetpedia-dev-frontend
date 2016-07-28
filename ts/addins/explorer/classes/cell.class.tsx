@@ -168,6 +168,19 @@ class BudgetCell {
     branchSettings: BranchSettings
     chartCallbacks: ChartCallbacks
 
+    switchChartCode = chartCode => {
+
+        this.explorerChartCode = chartCode
+
+        let chartParmsObj:ChartParmsObj = this.getChartParms()
+
+        if (!chartParmsObj.isError) {
+
+            this.chartParms = chartParmsObj.chartParms
+
+        }
+    }
+
     getChartParms = ():ChartParmsObj => {
 
         let selectionCallbacks = this.chartCallbacks

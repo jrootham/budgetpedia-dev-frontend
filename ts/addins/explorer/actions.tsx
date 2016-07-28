@@ -12,6 +12,7 @@ export namespace types {
     export const REMOVE_NODES = 'REMOVE_NODES'
     export const ADD_CELLS = 'ADD_CELLS'
     export const UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION'
+    export const UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE'
     // export const REMOVE_CELLS = 'REMOVE_CELLS'
     export const CHANGE_CHART_CODE = 'CHANGE_CHART_CODE'
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
@@ -38,6 +39,7 @@ export namespace nodeTypes {
 
 export namespace cellTypes {
     export import UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION
+    export import UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE
     export import CHANGE_FACET = types.CHANGE_FACET
 }
 
@@ -118,6 +120,13 @@ export const updateCellChartSelection = createAction(
     types.UPDATE_CELL_SELECTION,(celluid, selection) => ({
         celluid,
         selection,
+    })
+)
+
+export const updateCellChartCode = createAction(
+    types.UPDATE_CELL_CHART_CODE, (celluid, explorerChartCode) => ({
+        celluid,
+        explorerChartCode,
     })
 )
 

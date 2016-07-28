@@ -3,6 +3,13 @@ const constants_1 = require('../../constants');
 var format = require('format-number');
 class BudgetCell {
     constructor(specs) {
+        this.switchChartCode = chartCode => {
+            this.explorerChartCode = chartCode;
+            let chartParmsObj = this.getChartParms();
+            if (!chartParmsObj.isError) {
+                this.chartParms = chartParmsObj.chartParms;
+            }
+        };
         this.getChartParms = () => {
             let selectionCallbacks = this.chartCallbacks;
             let budgetCell = this;

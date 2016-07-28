@@ -57,6 +57,7 @@ import {
 interface MappedNodeActions {
     addCellDeclarations:Function,
     changeTab:Function,
+    updateCellChartCode:Function,
     // removeCellDeclarations:Function,
     // changeChart:Function,
     // toggleDelta:Function,
@@ -292,6 +293,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     updateCellChartSelection: this.props.updateCellChartSelection,
                     changeTab: this.props.changeTab,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
+                    updateCellChartCode: this.props.updateCellChartCode,
                 }
 
                 let displayCallbackFunctions = { 
@@ -391,6 +393,7 @@ Explorer = connect(mapStateToProps, {
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
     changeTab: ExplorerActions.changeTab,
     updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
+    updateCellChartCode: ExplorerActions.updateCellChartCode
     // changeChart
     // changeSelection
     // toggleInflationAdjustment

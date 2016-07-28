@@ -201,8 +201,6 @@ class BudgetNode {
         if (!chartParmsObj.isError) {
 
             cell.chartParms = chartParmsObj.chartParms
-            // cell.explorerChartCode =
-            //     GoogleChartTypeToChartCode[cell.chartParms.chartType]
 
         }
     }
