@@ -3,7 +3,8 @@ const constants_1 = require('../../constants');
 var format = require('format-number');
 class BudgetCell {
     constructor(specs) {
-        this.getChartParms = (selectionCallbacks) => {
+        this.getChartParms = () => {
+            let selectionCallbacks = this.chartCallbacks;
             let budgetCell = this;
             let { cellIndex: chartIndex, nodeDataseriesName } = budgetCell;
             let sortedlist = 'Sorted' + nodeDataseriesName;
@@ -139,7 +140,7 @@ class BudgetCell {
                             selection: selection,
                             err: err
                         };
-                        selectionCallbacks.current(chartSelectionData);
+                        selectionCallbacks.selectionCallback(chartSelectionData);
                     }
                 }
             ];

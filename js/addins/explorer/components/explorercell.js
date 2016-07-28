@@ -11,7 +11,6 @@ class ExplorerCell extends Component {
         this.onChangeChartCode = (explorerChartCode) => {
             let { callbackid } = this.props;
             let { cellCallbacks: callbacks } = this.props.budgetCell;
-            callbacks.onSwitchChartCode(callbackid, explorerChartCode);
         };
     }
     render() {

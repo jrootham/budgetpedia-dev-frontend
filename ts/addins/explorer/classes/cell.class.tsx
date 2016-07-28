@@ -77,7 +77,6 @@
     // }
 
 import {
-    CellCallbacks,
     ChartParms,
     ChartParmsObj,
     PortalChartLocation,
@@ -100,9 +99,19 @@ import BudgetNode from './node.class'
 
 var format = require('format-number')
 
-export interface SelectionCallbackProps {
-    current: Function,
-    next: Function,
+// settings for individual portal chart
+export interface CellSettings {
+    graph_id: string,
+    expandable?: boolean,
+}
+
+export interface CellCallbacks {
+    onSwitchChartCode: Function,
+}
+
+export interface ChartCallbacks {
+    selectionCallback: Function,
+    // next: Function,
 }
 
 interface viewpointConfigData {
@@ -157,8 +166,11 @@ class BudgetCell {
     viewpointConfigData: viewpointConfigData
     nodeData: NodeData
     branchSettings: BranchSettings
+    chartCallbacks: ChartCallbacks
 
-    getChartParms = (selectionCallbacks: SelectionCallbackProps):ChartParmsObj => {
+    getChartParms = ():ChartParmsObj => {
+
+        let selectionCallbacks = this.chartCallbacks
 
         let budgetCell: BudgetCell = this
 
@@ -340,7 +352,7 @@ class BudgetCell {
                             err 
                         }
 
-                        selectionCallbacks.current(chartSelectionData)
+                        selectionCallbacks.selectionCallback(chartSelectionData)
                     }
             }
         ]

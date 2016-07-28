@@ -2,7 +2,6 @@
 // interfaces.tsx
 import BudgetNode from '../classes/node.class'
 import { ChartSelectionCell } from './onchartcomponentselection'
-// return by getChartParms; returns isError with ChartParms
 
 interface BranchSettings {
     latestYear: number,
@@ -45,16 +44,6 @@ interface ChartParms {
     }[]
     rows?: any[],
     columns?: any[],
-}
-
-// settings for individual portal chart
-interface CellSettings {
-    graph_id: string,
-    expandable?: boolean,
-}
-
-interface CellCallbacks {
-    onSwitchChartCode: Function,
 }
 
 // =====================================================
@@ -111,8 +100,6 @@ export {
     PortalChartLocation, 
     ChartParms, 
     ChartParmsObj, 
-    CellSettings,
-    CellCallbacks,
     PortalConfig,
     SortedComponentItem,
     GetChartParmsProps,

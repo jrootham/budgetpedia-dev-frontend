@@ -23,8 +23,6 @@ import {
 
 import {
     PortalConfig,
-    CellSettings,
-    CellCallbacks,
 } from '../modules/interfaces'
 
 import { ExporerNode } from './explorernode'

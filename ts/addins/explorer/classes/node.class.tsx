@@ -8,13 +8,12 @@ import {
     ChartCodeToGoogleChartType 
 } from '../../constants'
 import {
-    CellSettings,
     PortalConfig,
     GetCellChartProps,
     GetChartParmsProps,
     ChartParmsObj,
 } from '../modules/interfaces'
-// import getChartParmsSource from './modules/getchartparms'
+
 import BudgetCell, { CellDeclaration } from './cell.class'
 // import {
 //     ChartSelectionCell, onChartComponentSelection,
@@ -29,50 +28,6 @@ export interface BudgetNodeParms {
     nodeIndex: number,
     parentData?:any,
 }
-
-// RESPONSE TO SWITCH FACET
-
-// let nodeCellIndex: any = null
-// if (!budgetNode) break
-// let configData = {
-//     viewpointConfig:viewpointData.Configuration,
-//     datasetConfig:viewpointData.datasetConfig,
-// }
-// for (nodeCellIndex in budgetNode.cells) {
-//     let props: GetCellChartProps = {
-//         chartIndex: nodeCellIndex,
-//         branchsettings,
-//         configData,
-//     }
-//     let fcurrent = fn(nodeIndex)(nodeCellIndex),
-//     chartParmsObj = budgetNode.getChartParms(props, {current:fcurrent,next:fn})
-//     if (chartParmsObj.isError) {
-//         let removed = branchNodes.splice(nodeIndex)
-//         let removedids = removed.map((item) => {
-//             return item.uid
-//         })
-//         // actions.removeNode(this.getProps().callbackuid, removedids)
-//         if (nodeIndex > 0) { // unset the selection of the parent
-//             let parentBudgetNode: BudgetNode = branchNodes[nodeIndex - 1]
-//             let parentBudgetCell = parentBudgetNode.cells[nodeCellIndex]
-//             // disable reselection
-//             parentBudgetCell.chartSelection = null
-//             // parentBudgetCell.chart = null
-//         }
-//         isError = true
-//         break
-//     } else {
-//         // TODO: this should be set through reset
-//         budgetNode.facetName = branchsettings.facet
-//         let budgetCell:BudgetCell = budgetNode.cells[nodeCellIndex]
-//         budgetCell.chartParms = chartParmsObj.chartParms
-//         budgetCell.explorerChartCode =
-//             GoogleChartTypeToChartCode[budgetCell.chartParms.chartType]
-//         if (parentBudgetNode) {
-//             budgetNode.parentData.dataNode = parentBudgetNode.dataNode
-//         }
-//     }
-// }
 
 class BudgetNode {
     constructor(parms: BudgetNodeParms, uid:string, node:any, parentNode:any = null) {
@@ -239,15 +194,15 @@ class BudgetNode {
         let selectfn = this.onChartComponentSelection
         let fcurrent = selectfn(budgetNode.nodeIndex)(cell.cellIndex)
 
-        let chartParmsObj:ChartParmsObj = cell.getChartParms({current:fcurrent,next:selectfn})
+        cell.chartCallbacks = {selectionCallback:fcurrent}
 
-        // console.log('chartParmsObj', chartParmsObj)
+        let chartParmsObj:ChartParmsObj = cell.getChartParms()
 
         if (!chartParmsObj.isError) {
 
             cell.chartParms = chartParmsObj.chartParms
-            cell.explorerChartCode =
-                GoogleChartTypeToChartCode[cell.chartParms.chartType]
+            // cell.explorerChartCode =
+            //     GoogleChartTypeToChartCode[cell.chartParms.chartType]
 
         }
     }

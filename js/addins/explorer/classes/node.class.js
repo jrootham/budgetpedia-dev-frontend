@@ -56,11 +56,10 @@ class BudgetNode {
             let budgetNode = this;
             let selectfn = this.onChartComponentSelection;
             let fcurrent = selectfn(budgetNode.nodeIndex)(cell.cellIndex);
-            let chartParmsObj = cell.getChartParms({ current: fcurrent, next: selectfn });
+            cell.chartCallbacks = { selectionCallback: fcurrent };
+            let chartParmsObj = cell.getChartParms();
             if (!chartParmsObj.isError) {
                 cell.chartParms = chartParmsObj.chartParms;
-                cell.explorerChartCode =
-                    constants_1.GoogleChartTypeToChartCode[cell.chartParms.chartType];
             }
         };
         let portalcharts = parms.datasetSpecs;

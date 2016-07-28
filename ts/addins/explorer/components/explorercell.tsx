@@ -12,8 +12,6 @@ import FontIcon from 'material-ui/FontIcon'
 import SvgIcon from 'material-ui/SvgIcon'
 import {
     ChartParms,
-    CellSettings,
-    CellCallbacks,
 } from '../modules/interfaces'
 import BudgetCell from '../classes/cell.class'
 
@@ -28,7 +26,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     onChangeChartCode = (explorerChartCode) => {
         let { callbackid } = this.props
         let { cellCallbacks:callbacks } = this.props.budgetCell
-        callbacks.onSwitchChartCode(callbackid, explorerChartCode)
+        // callbacks.onSwitchChartCode(callbackid, explorerChartCode)
     }
 
     render() {
@@ -51,8 +49,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 graph_id = { graph_id }
                 />
 
-        // let chart = []
-        // return <div></div>
         return <div>
             <div style={{ padding: "3px" }}>
                 <IconButton
