@@ -64,7 +64,8 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     if (budgetCell.nodeDataseriesName == 'Categories') {
         return
     }
-    budgetCell.chartSelection = chartSelectionData.selection
+    budgetCell.chartSelection = selection? chartSelectionData.selection: null
+    // console.log('setting chart selection', selection, budgetCell)
 
     // 2. remove any nodes to be replaced or abandoned
 

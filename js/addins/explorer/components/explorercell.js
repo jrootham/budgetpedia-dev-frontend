@@ -11,8 +11,14 @@ class ExplorerCell extends Component {
         this.onChangeChartCode = (explorerChartCode) => {
             let { budgetCell } = this.props;
             budgetCell.switchChartCode(explorerChartCode);
+            this.props.globalStateActions.updateCellChartCode(this.props.budgetCell.uid, explorerChartCode);
+        };
+    }
+    componentDidUpdate() {
+        setTimeout(() => {
+            let { budgetCell } = this.props;
             if (budgetCell.chartSelection) {
-                if (budgetCell.chartSelection[0]) {
+                if (budgetCell.chartSelection[0] && budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
                     if (budgetCell.googleChartType == "PieChart") {
                         budgetCell.chartSelection[0].column = null;
                     }
@@ -22,8 +28,7 @@ class ExplorerCell extends Component {
                     budgetCell.chart.setSelection(budgetCell.chartSelection);
                 }
             }
-            this.props.globalStateActions.updateCellChartCode(this.props.budgetCell.uid, explorerChartCode);
-        };
+        });
     }
     render() {
         let { chartParms, explorerChartCode, expandable, graph_id } = this.props.budgetCell;

@@ -167,13 +167,13 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     }
 
     private _processUpdateCellSelection = () => {
-        let nodeCells = [ ...this.state.nodeCells ]
-        nodeCells.map((budgetCell)=>{
-            budgetCell.chartSelection = this.props.declarationData.cellsById[budgetCell.uid].chartSelection
-        })
-        this.setState({
-            nodeCells,
-        })
+        // let nodeCells = [ ...this.state.nodeCells ]
+        // nodeCells.map((budgetCell)=>{
+        //     budgetCell.chartSelection = this.props.declarationData.cellsById[budgetCell.uid].chartSelection
+        // })
+        // this.setState({
+        //     nodeCells,
+        // })
     }
 
     private _processChangeFacet = () => {

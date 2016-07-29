@@ -294,6 +294,18 @@ class BudgetCell {
 
                         selectionCallbacks.selectionCallback(chartSelectionData)
                     }
+            },
+            {
+                eventName:'animationfinish',
+                callback: ((cell:BudgetCell) => Chart => {
+                    let selection = Chart.chart.getSelection()
+                    // console.log('finished animation', selection , cell)
+                    if (selection.length == 0 && cell.chartSelection && cell.chartSelection.length > 0) {
+                        if (cell.chart) {
+                            cell.chart.setSelection(cell.chartSelection)
+                        }
+                    }
+                })(budgetCell)
             }
         ]
 

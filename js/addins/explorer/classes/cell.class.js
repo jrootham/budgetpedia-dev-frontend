@@ -155,6 +155,17 @@ class BudgetCell {
                         };
                         selectionCallbacks.selectionCallback(chartSelectionData);
                     }
+                },
+                {
+                    eventName: 'animationfinish',
+                    callback: ((cell) => Chart => {
+                        let selection = Chart.chart.getSelection();
+                        if (selection.length == 0 && cell.chartSelection && cell.chartSelection.length > 0) {
+                            if (cell.chart) {
+                                cell.chart.setSelection(cell.chartSelection);
+                            }
+                        }
+                    })(budgetCell)
                 }
             ];
             let categorylabel = 'Component';

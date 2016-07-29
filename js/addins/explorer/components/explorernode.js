@@ -38,13 +38,6 @@ class ExporerNode extends Component {
             return returnvalue;
         };
         this._processUpdateCellSelection = () => {
-            let nodeCells = [...this.state.nodeCells];
-            nodeCells.map((budgetCell) => {
-                budgetCell.chartSelection = this.props.declarationData.cellsById[budgetCell.uid].chartSelection;
-            });
-            this.setState({
-                nodeCells: nodeCells,
-            });
         };
         this._processChangeFacet = () => {
             let { budgetNode } = this.props;

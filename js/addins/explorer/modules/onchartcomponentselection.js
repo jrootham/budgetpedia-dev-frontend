@@ -14,7 +14,7 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     if (budgetCell.nodeDataseriesName == 'Categories') {
         return;
     }
-    budgetCell.chartSelection = chartSelectionData.selection;
+    budgetCell.chartSelection = selection ? chartSelectionData.selection : null;
     let removed = branchNodes.splice(nodeIndex + 1);
     let removeditems = removed.map((item) => {
         return { uid: item.uid, cellList: item.cellList };
