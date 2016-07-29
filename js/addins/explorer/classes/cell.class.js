@@ -144,6 +144,7 @@ class BudgetCell {
                         let chart = Chart.chart;
                         let selection = chart.getSelection();
                         let chartSelectionData = {
+                            Chart: Chart,
                             selection: selection,
                             err: err
                         };

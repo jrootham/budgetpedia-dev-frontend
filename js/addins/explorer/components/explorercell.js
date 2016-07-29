@@ -12,13 +12,15 @@ class ExplorerCell extends Component {
             let { budgetCell } = this.props;
             budgetCell.switchChartCode(explorerChartCode);
             if (budgetCell.chartSelection) {
-                if (budgetCell.googleChartType == "PieChart") {
-                    budgetCell.chartSelection[0].column = null;
+                if (budgetCell.chartSelection[0]) {
+                    if (budgetCell.googleChartType == "PieChart") {
+                        budgetCell.chartSelection[0].column = null;
+                    }
+                    else {
+                        budgetCell.chartSelection[0].column = 1;
+                    }
+                    budgetCell.chart.setSelection(budgetCell.chartSelection);
                 }
-                else {
-                    budgetCell.chartSelection[0].column = 1;
-                }
-                budgetCell.chart.setSelection(budgetCell.chartSelection);
             }
             this.props.globalStateActions.updateCellChartCode(this.props.budgetCell.uid, explorerChartCode);
         };

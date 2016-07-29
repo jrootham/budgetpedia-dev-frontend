@@ -124,7 +124,6 @@ class Chart extends React.Component {
         this.wrapper.setChartType(this.props.chartType)
         var self = this
         google.visualization.events.addOneTimeListener(this.wrapper, 'ready', function () {
-          // google.visualization.events.removeAllListeners(this.wrapper)
           self.chart = self.wrapper.getChart();
           self.listenToChartEvents.call(self);
         });
@@ -147,16 +146,19 @@ class Chart extends React.Component {
   }
   listenToChartEvents() {
     // debug('listenToChartEvents', this.props.legend_toggle, this.props.chartEvents);
+    // console.log('listenToChartEvents')
     if (this.props.legend_toggle) {
       google.visualization.events.addListener(this.wrapper, 'select', this.onSelectToggle.bind(this));
     }
     this.props.chartEvents.forEach((chartEvent)=>{
       if (chartEvent.eventName === 'ready') {
+        console.log('ready event')
         chartEvent.callback(this);
       }
       else {
         ((chartEvent)=>{
             google.visualization.events.addListener(this.chart, chartEvent.eventName, (e)=>{
+              // console.log('chart event', this.chart)
               chartEvent.callback(this, e);
             });
         })(chartEvent);

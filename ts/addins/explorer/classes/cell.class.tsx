@@ -1,81 +1,6 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetcell.tsx
 
-    // TODO: belongs with explorerchart controller?
-    // switchChartCode = (nodeIndex,cellIndex, explorerChartCode) => {
-
-    //     let { budgetBranch }:{budgetBranch: BudgetBranch } = this.props
-    //     // let { settings } = budgetBranch
-
-    //     let props = {
-    //         nodeIndex,
-    //         cellIndex,
-    //         explorerChartCode,
-    //     }
-
-    //     let switchResults = budgetBranch.switchChartCode(props)
-
-    //     let { budgetCell } = switchResults
-    //     this.refreshPresentation()
-    //     let branch = this
-    //     setTimeout(() => {
-    //         if (budgetCell.chartSelection) {
-    //             // it turns out that "PieChart" needs column set to null
-    //             // for setSelection to work
-    //             if (budgetCell.googleChartType == "PieChart") {
-    //                 budgetCell.chartSelection[0].column = null
-    //             } else {
-    //                 // "ColumnChart" doesn't seem to care about column value,
-    //                 // but we set it back to original (presumed) for consistency
-    //                 budgetCell.chartSelection[0].column = 1
-    //             }
-    //         }
-    //         branch.props.displaycallbacks.updateChartSelections()
-    //     })
-    // }
-
-    // switchChartCode(props) {
-    //     let { actions, nodeCallbacks:callbacks } = this
-    //     let branchsettings: BranchSettings = this.settings
-    //     let {
-    //         nodeIndex,
-    //         cellIndex,
-    //         explorerChartCode,
-    //     } = props
-    //     let chartType = ChartCodeToGoogleChartType[explorerChartCode]
-
-    //     let branchNodes = this.nodes
-    //     let budgetNode: BudgetNode = branchNodes[nodeIndex]
-    //     let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
-    //     let switchResults = {
-    //         budgetCell,
-    //     }
-    //     let oldChartType = budgetCell.googleChartType
-    //     budgetCell.googleChartType = chartType
-    //     let viewpointdata = this.state.viewpointData
-    //     let configData = {
-    //         viewpointConfig:viewpointdata.Configuration,
-    //         datasetConfig:viewpointdata.datasetConfig,
-    //     }        
-    //     let chartprops: GetCellChartProps = {
-    //         chartIndex: cellIndex,
-    //         branchsettings,
-    //         configData,
-    //     }
-    //     let branchuid = this.uid
-    //     let fn = onChartComponentSelection(this)
-    //     let fncurrent = fn(nodeIndex)(cellIndex)
-    //     let chartParmsObj: ChartParmsObj = budgetNode.getChartParms(chartprops,{current: fncurrent, next: fn})
-    //     if (!chartParmsObj.isError) {
-    //         budgetCell.chartParms = chartParmsObj.chartParms
-    //         budgetCell.explorerChartCode =
-    //             GoogleChartTypeToChartCode[budgetCell.chartParms.chartType]
-    //     } else {
-    //         budgetCell.googleChartType = oldChartType
-    //     }
-    //     return switchResults
-    // }
-
 import {
     ChartParms,
     ChartParmsObj,
@@ -325,7 +250,7 @@ class BudgetCell {
         let options = {
             // animation:{
             //     startup: true,
-            //     duration: 1000,
+            //     duration: 500,
             //     easing: 'out',
             // },
             title: title,
@@ -358,9 +283,11 @@ class BudgetCell {
                 eventName: 'select',
                 callback: 
                     (Chart, err) => {
+                        // console.log('Chart, chart', Chart, Chart.chart)
                         let chart = Chart.chart
                         let selection = chart.getSelection()
                         let chartSelectionData: ChartSelectionContext = { 
+                            Chart,
                             selection, 
                             err 
                         }

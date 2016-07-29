@@ -15,6 +15,7 @@ export interface ChartSelectionCell {
 // returned when user clicks on a chart component 
 // for drill-down or other action
 export interface ChartSelectionContext {
+    Chart: any,
     selection: ChartSelectionCell[],
     err: any,
 }
@@ -40,14 +41,21 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
     let selectionrow
     if (selection) {
+        // TODO: understand this: setting column to null avoids bugs
+        // when chart animation is present
+        // selection.column = null
         selectionrow = selection.row
     } else {
         selectionrow = null
+        // return
     }
 
     let budgetNode: BudgetNode = branchNodes[nodeIndex]
     // console.log('budgetNode, cellIndex in applyChartComponentSelection',budgetNode, cellIndex)
     let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
+    let { chart } = budgetCell.chartComponent
+    // console.log('CHART ts, wz, Im, Ok',selection, chart.ts, chart.wz, chart.Im, chart.Ok )
+
 
     // 1. stop if chart is not not drillable
     // TODO: replace with reference to budgetCell.expandable
@@ -86,7 +94,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         if (!selection) { // deselected
             window.nodeUpdateControl.nodeuid = null
             window.nodeUpdateControl.new = null
-            // budgetCell.chartSelection = null
+            budgetCell.chartSelection = null
             // updateChartSelections()
             return
         }
