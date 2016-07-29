@@ -24,7 +24,7 @@ interface ExplorerNodeProps {
     budgetNode: BudgetNode,
     displayCallbacks: { 
         // onChangePortalTab:Function,
-        updateChartSelections:Function, 
+        // updateChartSelections:Function, 
     }
     globalStateActions: any,
     declarationData: any,

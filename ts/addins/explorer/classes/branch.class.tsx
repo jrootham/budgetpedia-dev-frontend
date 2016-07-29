@@ -142,6 +142,7 @@ class BudgetBranch {
         let branchuid = this.uid
 
         for (nodeIndex in branchNodes) {
+            // console.log('switch facet nodeIndex', nodeIndex)
             parentBudgetNode = budgetNode
             budgetNode = branchNodes[nodeIndex]
             let nextdataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
@@ -262,7 +263,7 @@ class BudgetBranch {
             workingStatus,
             // refreshPresentation,
             onPortalCreation,
-            updateChartSelections,
+            // updateChartSelections,
             // updateBranchNodesState,
         } = callbacks
 

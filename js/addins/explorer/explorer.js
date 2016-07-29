@@ -7,7 +7,6 @@ const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Dialog_1 = require('material-ui/Dialog');
 const explorerbranch_1 = require('./components/explorerbranch');
-const updatebranchchartselections_1 = require('./modules/updatebranchchartselections');
 const Actions = require('../../core/actions/actions');
 const ExplorerActions = require('./actions');
 const branch_class_1 = require('./classes/branch.class');
@@ -55,13 +54,6 @@ let Explorer = class extends Component {
                     this.props.hideWaitingMessage();
                 });
             }
-        };
-        this.updateIndexChartSelections = branchIndex => {
-            let budgetBranch = this.state.budgetBranches[branchIndex];
-            updatebranchchartselections_1.updateBranchChartSelections(budgetBranch.nodes);
-        };
-        this.updateChartSelections = branchIndex => () => {
-            return this.updateIndexChartSelections(branchIndex);
         };
     }
     componentWillMount() {
@@ -123,7 +115,6 @@ let Explorer = class extends Component {
                 };
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,
-                    updateChartSelections: explorer.updateChartSelections(branchIndex),
                 };
                 return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})));
             });

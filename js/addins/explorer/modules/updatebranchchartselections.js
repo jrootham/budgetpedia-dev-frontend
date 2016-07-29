@@ -1,6 +1,7 @@
 "use strict";
 let updateBranchChartSelections = (branchNodes) => {
     setTimeout(() => {
+        console.log('setting selections');
         let node = null;
         for (node of branchNodes) {
             for (let chartindex in node.cells) {
@@ -11,6 +12,6 @@ let updateBranchChartSelections = (branchNodes) => {
                 }
             }
         }
-    }, 600);
+    }, 4000);
 };
 exports.updateBranchChartSelections = updateBranchChartSelections;

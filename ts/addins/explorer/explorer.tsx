@@ -40,7 +40,7 @@ import Dialog from 'material-ui/Dialog'
 
 import ExplorerBranch from './components/explorerbranch'
 
-import { updateBranchChartSelections } from './modules/updatebranchchartselections'
+// import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
 import * as ExplorerActions from './actions'
 import BudgetBranch from './classes/branch.class'
@@ -208,14 +208,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     }
 
-    updateIndexChartSelections = branchIndex => {
-        let budgetBranch = this.state.budgetBranches[branchIndex]
-        updateBranchChartSelections(budgetBranch.nodes)
-    }
+    // updateIndexChartSelections = branchIndex => {
+    //     let budgetBranch = this.state.budgetBranches[branchIndex]
+    //     updateBranchChartSelections(budgetBranch.nodes)
+    // }
 
-    updateChartSelections = branchIndex => () => {
-        return this.updateIndexChartSelections(branchIndex)
-    }
+    // updateChartSelections = branchIndex => () => {
+    //     return this.updateIndexChartSelections(branchIndex)
+    // }
 
     // ===================================================================
     // ---------------------------[ RENDER ]------------------------------ 
@@ -298,7 +298,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                 let displayCallbackFunctions = { 
                     workingStatus: explorer.workingStatus,
-                    updateChartSelections: explorer.updateChartSelections(branchIndex),
+                    // updateChartSelections: explorer.updateChartSelections(branchIndex),
                 }
 
                 // ----------------[ Contains ExplorerBranch ]-------------------------

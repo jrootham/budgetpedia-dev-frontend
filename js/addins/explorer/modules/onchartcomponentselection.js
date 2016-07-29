@@ -11,10 +11,10 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     }
     let budgetNode = branchNodes[nodeIndex];
     let budgetCell = budgetNode.cells[cellIndex];
-    let { chart } = budgetCell.chartComponent;
     if (budgetCell.nodeDataseriesName == 'Categories') {
         return;
     }
+    budgetCell.chartSelection = chartSelectionData.selection;
     let removed = branchNodes.splice(nodeIndex + 1);
     let removeditems = removed.map((item) => {
         return { uid: item.uid, cellList: item.cellList };
@@ -29,13 +29,13 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     updateCellChartSelection(budgetCell.uid, chartSelectionData.selection);
     setTimeout(() => {
         branchNodes = budgetBranch.nodes;
-        let { updateChartSelections } = budgetBranch.nodeCallbacks;
         if (!selection) {
             window.nodeUpdateControl.nodeuid = null;
             window.nodeUpdateControl.new = null;
             budgetCell.chartSelection = null;
             return;
         }
+        budgetCell.chartSelection = chartSelectionData.selection;
         let childprops = {
             selectionrow: selectionrow,
             nodeIndex: nodeIndex,

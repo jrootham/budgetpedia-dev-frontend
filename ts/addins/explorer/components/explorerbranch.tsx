@@ -58,7 +58,7 @@ interface ExploreBranchProps {
     budgetBranch: BudgetBranch,
     displayCallbacks:{
         workingStatus:Function,
-        updateChartSelections:Function,
+        // updateChartSelections:Function,
     },
     globalStateActions: ExplorerBranchActions,
     declarationData: DeclarationData
@@ -108,11 +108,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
         this._stateActions.removeNodeDeclarations = this.removeNodeDeclarations(budgetBranch.uid)
 
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this
-        let { updateChartSelections, workingStatus } = displayCallbacks
+        let { workingStatus } = displayCallbacks
 
         // create display callbacks bundle for children
         this._nodeDisplayCallbacks = {
-            updateChartSelections,
+            // updateChartSelections,
             workingStatus,
             // local
             onPortalCreation,
@@ -202,11 +202,11 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
             )
         } else { // otherwise see if there are other cascading actions that have to be taken
             this.harmonizecount = null // reset
-            if (!this._controlGlobalStateChange()) {
-                setTimeout(()=>{
-                    this.props.displayCallbacks.updateChartSelections()
-                })
-            }
+            this._controlGlobalStateChange()
+            //     setTimeout(()=>{
+            //         this.props.displayCallbacks.updateChartSelections()
+            //     })
+            // }
         }
     }
 
@@ -254,6 +254,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
     }
 
     private _processChangeFacetStateChange = (budgetBranch:BudgetBranch) => {
+        // console.log('processing change facet state change')
         budgetBranch.getViewpointData()
 
         setTimeout(() => {
@@ -441,7 +442,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
                 displayCallbacks = { 
                     { 
                         // onChangePortalTab: this.onChangePortalTab,
-                        updateChartSelections: this.props.displayCallbacks.updateChartSelections,
+                        // updateChartSelections: this.props.displayCallbacks.updateChartSelections,
                     } 
                 }
             />

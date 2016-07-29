@@ -117,6 +117,11 @@ class BudgetCell {
                     break;
             }
             let options = {
+                animation: {
+                    startup: true,
+                    duration: 500,
+                    easing: 'out',
+                },
                 title: title,
                 vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
                 hAxis: { title: axistitle, textStyle: { fontSize: 10 } },

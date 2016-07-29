@@ -36,6 +36,8 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
     let { nodes:branchNodes, uid:branchuid } = budgetBranch
 
+    // console.log('on selection')
+
     // unpack chartSelectionData
     let selection = chartSelectionData.selection[0]
 
@@ -53,16 +55,16 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     let budgetNode: BudgetNode = branchNodes[nodeIndex]
     // console.log('budgetNode, cellIndex in applyChartComponentSelection',budgetNode, cellIndex)
     let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
-    let { chart } = budgetCell.chartComponent
+    // let { chart } = budgetCell.chartComponent
     // console.log('CHART ts, wz, Im, Ok',selection, chart.ts, chart.wz, chart.Im, chart.Ok )
-
+    // budgetCell.chartSelection = selection? [selection]: null
 
     // 1. stop if chart is not not drillable
     // TODO: replace with reference to budgetCell.expandable
     if (budgetCell.nodeDataseriesName == 'Categories') {
         return
     }
-    // budgetCell.chartSelection = chartSelectionData.selection
+    budgetCell.chartSelection = chartSelectionData.selection
 
     // 2. remove any nodes to be replaced or abandoned
 
@@ -88,7 +90,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         // refresh nodes after removenode operation above
         branchNodes = budgetBranch.nodes
 
-        let { updateChartSelections } = budgetBranch.nodeCallbacks
+        // let { updateChartSelections } = budgetBranch.nodeCallbacks
 
         // 3. if deselected, update parms and quit
         if (!selection) { // deselected
@@ -100,7 +102,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         }
 
         // 4. otherwise create new child node
-        // budgetCell.chartSelection = chartSelectionData.selection
+        budgetCell.chartSelection = chartSelectionData.selection
         let childprops: CreateChildNodeProps = {
             selectionrow,
             nodeIndex,
@@ -113,7 +115,6 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
             window.nodeUpdateControl.nodeuid = null
             window.nodeUpdateControl.new = null            
         })
-
 
     })
 

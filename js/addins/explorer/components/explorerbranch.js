@@ -179,9 +179,7 @@ class ExplorerBranch extends Component {
                 budgetNode.viewpointConfigData = viewpointConfigData;
                 budgetNode.branchSettings = this.props.budgetBranch.settings;
                 budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(this.props.budgetBranch);
-                return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: this._stateActions, displayCallbacks: {
-                    updateChartSelections: this.props.displayCallbacks.updateChartSelections,
-                }});
+                return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: this._stateActions, displayCallbacks: {}});
             });
             return portals;
         };
@@ -192,9 +190,8 @@ class ExplorerBranch extends Component {
         this._stateActions.addNodeDeclaration = this.addNodeDeclaration(budgetBranch.uid);
         this._stateActions.removeNodeDeclarations = this.removeNodeDeclarations(budgetBranch.uid);
         let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this;
-        let { updateChartSelections, workingStatus } = displayCallbacks;
+        let { workingStatus } = displayCallbacks;
         this._nodeDisplayCallbacks = {
-            updateChartSelections: updateChartSelections,
             workingStatus: workingStatus,
             onPortalCreation: onPortalCreation,
             updateBranchNodesState: updateBranchNodesState,
@@ -250,11 +247,7 @@ class ExplorerBranch extends Component {
         }
         else {
             this.harmonizecount = null;
-            if (!this._controlGlobalStateChange()) {
-                setTimeout(() => {
-                    this.props.displayCallbacks.updateChartSelections();
-                });
-            }
+            this._controlGlobalStateChange();
         }
     }
     render() {

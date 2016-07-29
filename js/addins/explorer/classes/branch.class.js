@@ -69,7 +69,7 @@ class BudgetBranch {
             let { selectionrow, nodeIndex, cellIndex, } = props;
             let budgetNode = branchNodes[nodeIndex];
             let { facetName, viewpointName } = budgetNode;
-            let { workingStatus, onPortalCreation, updateChartSelections, } = callbacks;
+            let { workingStatus, onPortalCreation, } = callbacks;
             let childdatapath = budgetNode.dataPath.slice();
             let dataNode = budgetNode.dataNode;
             if (!dataNode.Components) {
