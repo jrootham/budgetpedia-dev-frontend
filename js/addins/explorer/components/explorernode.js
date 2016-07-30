@@ -188,7 +188,7 @@ class ExporerNode extends Component {
             fontWeight: "bold",
             display: "inline-block",
             backgroundColor: "#00bcd4",
-        }}, portalSettings.portalName), tabobject);
+        }}, (this.props.budgetNode.nodeIndex + 1) + ". " + portalSettings.portalName), tabobject);
     }
 }
 exports.ExporerNode = ExporerNode;

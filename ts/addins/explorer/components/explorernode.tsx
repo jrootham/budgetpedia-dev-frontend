@@ -311,7 +311,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                     display: "inline-block", 
                     backgroundColor: "#00bcd4",
                 }
-            }>{ portalSettings.portalName }</div>
+            }>{ (this.props.budgetNode.nodeIndex + 1) + ". " + portalSettings.portalName }</div>
             { tabobject }
         </div>
     }

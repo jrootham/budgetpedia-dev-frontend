@@ -2028,7 +2028,7 @@ declare module 'material-ui/lib/flat-button' {
     export default FlatButton;
 }
 
-declare module 'material-ui/lib/floating-action-button' {
+declare module 'material-ui/FloatingActionButton' {
     export import FloatingActionButton = __MaterialUI.FloatingActionButton;
     export default FloatingActionButton;
 }
@@ -4310,8 +4310,8 @@ declare module 'material-ui/lib/svg-icons/content/text-format' {
   export import ContentTextFormat = __MaterialUI.SvgIcon;
   export default ContentTextFormat;
 }
-
-declare module 'material-ui/lib/svg-icons/content/add' {
+                
+declare module 'material-ui/svg-icons/content/add' {
   export import ContentAdd = __MaterialUI.SvgIcon;
   export default ContentAdd;
 }
@@ -4401,7 +4401,7 @@ declare module 'material-ui/lib/svg-icons/content/reply-all' {
   export default ContentReplyAll;
 }
 
-declare module 'material-ui/lib/svg-icons/content/remove' {
+declare module 'material-ui/svg-icons/content/remove' {
   export import ContentRemove = __MaterialUI.SvgIcon;
   export default ContentRemove;
 }

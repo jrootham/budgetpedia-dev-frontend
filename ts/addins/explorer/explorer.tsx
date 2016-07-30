@@ -33,7 +33,7 @@ var { Component } = React
 // doesn't require .d.ts...! (reference available in index.tsx)
 import { connect } from 'react-redux'
 // import { withRouter } from 'react-router' // not ready yet!!
-import {Card, CardTitle, CardText} from 'material-ui/Card'
+import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
@@ -45,6 +45,9 @@ import * as Actions from '../../core/actions/actions'
 import * as ExplorerActions from './actions'
 import BudgetBranch from './classes/branch.class'
 import { getExplorerDeclarationData } from './reducers'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import ContentRemove from 'material-ui/svg-icons/content/remove'
 
 import {
     ChartParmsObj,
@@ -120,7 +123,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         }
         let { branchList, branchesById } = this.props.declarationData
         if (branchList.length == 0) { // initialize explorer with first branch
-            let defaultSettings:BranchSettings = this.props.declarationData.defaults.branch
+            let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
             this.props.addBranchDeclaration(defaultSettings)
         } else {
             let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
@@ -129,6 +132,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 budgetBranches,
             })
         }
+    }
+
+    doAddBranch = () => {
+        let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
+        this.props.addBranchDeclaration(defaultSettings)        
     }
 
     /*
@@ -310,7 +318,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         actAsExpander={true}
                         showExpandableButton={true} >
 
-                        Explorer Branch
+                        {"Explorer Branch " + (branchIndex +1) } 
 
                     </CardTitle>
 
@@ -322,6 +330,20 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         displayCallbacks = { displayCallbackFunctions }
                     />
                     </CardText>
+                    <CardActions expandable>
+                        <FloatingActionButton
+                            onTouchTap = {
+                                () => {
+                                    this.doAddBranch()
+                                }
+                            }
+                        >
+                            <ContentAdd />
+                        </FloatingActionButton>
+                        {(branchIndex!=0)?<FloatingActionButton secondary={true}>
+                            <ContentRemove />
+                        </FloatingActionButton>:null}
+                    </CardActions>
 
                 </Card >
             })
