@@ -36,8 +36,6 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
     let { nodes:branchNodes, uid:branchuid } = budgetBranch
 
-    // console.log('on selection')
-
     // unpack chartSelectionData
     let selection = chartSelectionData.selection[0]
 
@@ -55,6 +53,9 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     let budgetNode: BudgetNode = branchNodes[nodeIndex]
     // console.log('budgetNode, cellIndex in applyChartComponentSelection',budgetNode, cellIndex)
     let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
+
+    // console.log('on selection',budgetCell)
+
     // let { chart } = budgetCell.chartComponent
     // console.log('CHART ts, wz, Im, Ok',selection, chart.ts, chart.wz, chart.Im, chart.Ok )
     // budgetCell.chartSelection = selection? [selection]: null

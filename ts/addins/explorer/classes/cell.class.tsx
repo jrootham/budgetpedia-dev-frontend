@@ -303,6 +303,7 @@ class BudgetCell {
                     if (selection.length == 0 && cell.chartSelection && cell.chartSelection.length > 0) {
                         if (cell.chart) {
                             cell.chart.setSelection(cell.chartSelection)
+                            // console.log('have invoked setSelection from animationfinish', budgetCell)
                         }
                     }
                 })(budgetCell)

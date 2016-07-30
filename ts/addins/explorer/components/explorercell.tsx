@@ -31,24 +31,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         // console.log('onChangeChartCode',explorerChartCode, this.props)
         let { budgetCell } = this.props
         budgetCell.switchChartCode(explorerChartCode)
-        // if (budgetCell.chartSelection) {
-        //     // TODO find out why on leave page and return this is correct; must 
-        //     //    be getting read from chart
-        //     // TODO this is a hack -- needs to be straighened out
-        //     // it turns out that "PieChart" needs column set to null
-        //     // for setSelection to work
-        //     if (budgetCell.chartSelection[0]) {
-        //         if (budgetCell.googleChartType == "PieChart" ) {
-        //             budgetCell.chartSelection[0].column = null
-        //         } else {
-        //             // "ColumnChart" doesn't seem to care about column value,
-        //             // but we set it back to original (presumed) for consistency
-        //             budgetCell.chartSelection[0].column = 1
-        //         }
-        //         budgetCell.chart.setSelection(budgetCell.chartSelection)
-        //     }
-        // }
-
+ 
         this.props.globalStateActions.updateCellChartCode(this.props.budgetCell.uid,explorerChartCode)
     }
 
@@ -67,7 +50,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         budgetCell.chartSelection[0].column = 1
                     }
                     budgetCell.chart.setSelection(budgetCell.chartSelection)
-                    // console.log('have updated', budgetCell, budgetCell.chart.getSelection())
+                    // console.log('have invoked setSelection from componentDidUpdate', budgetCell)
                 }
             }        
         })

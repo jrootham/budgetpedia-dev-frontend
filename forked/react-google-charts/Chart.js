@@ -34,6 +34,7 @@ class Chart extends React.Component {
   componentDidMount(){
     // debug('componentDidMount');
     googleChartLoader.init(this.props.chartPackages, this.props.chartVersion).then((asd)=>{
+      // console.log('drawchart from did mount')
       this.drawChart()
     });
   }
@@ -49,11 +50,14 @@ class Chart extends React.Component {
     // debug('componentDidUpdate');
     if (googleChartLoader.isLoading){
       googleChartLoader.initPromise.then(()=>{
+        console.log('drawchart from did update/loading')
         this.drawChart.bind(this)();
       })
 		}
     else if (googleChartLoader.isLoaded) {
+      // console.log('drawchart from did update',this.chart.getSelection())
       this.drawChart.bind(this)();
+      // console.log(this.chart.getSelection())
     }
   }
   buildDataTableFromProps() {
@@ -97,7 +101,7 @@ class Chart extends React.Component {
     return this.props.data !== null ? this.props.data : this.buildDataTableFromProps.bind(this)();
   }
   drawChart() {
-    // debug("drawChart", this);
+    // console.log("drawChart", this);
     if (!this.wrapper) {
       let chartConfig = {
         chartType: this.props.chartType,
@@ -152,7 +156,7 @@ class Chart extends React.Component {
     }
     this.props.chartEvents.forEach((chartEvent)=>{
       if (chartEvent.eventName === 'ready') {
-        console.log('ready event')
+        // console.log('ready event')
         chartEvent.callback(this);
       }
       else {
