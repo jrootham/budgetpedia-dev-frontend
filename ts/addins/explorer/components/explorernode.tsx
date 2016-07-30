@@ -120,6 +120,12 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         let noderetval = nodeuid? (nodeuid == this.props.budgetNode.uid): true
         let newretval = newval? (this.props.budgetNode.new == true): true
         let retval = noderetval || newretval
+        // if (nodeuid == this.props.budgetNode.uid) {
+        //     window.nodeUpdateControl.nodeuid = null
+        // }
+        // if (newval == true && this.props.budgetNode.new == true) {
+        //     window.nodeUpdateControl.new = null
+        // }
         return retval
     }
 
@@ -211,6 +217,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     }
 
     onChangeTab = (tabref) => {
+        // window.nodeUpdateControl.nodeuid = this.props.budgetNode.uid
         this.props.globalStateActions.changeTab(this.props.budgetNode.uid,tabref)
         // this.props.displayCallbacks.onChangePortalTab() 
     }

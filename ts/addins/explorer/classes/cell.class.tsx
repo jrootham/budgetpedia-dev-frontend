@@ -279,13 +279,20 @@ class BudgetCell {
         }
 
         let events = [
+            // {
+            //     eventName:'ready',
+            //     callback: (Chart) => {
+            //         let selection = Chart.chart.getSelection()
+            //         console.log('ready', selection)
+            //     }
+            // },
             {
                 eventName: 'select',
                 callback: 
                     (Chart, err) => {
-                        // console.log('Chart, chart', Chart, Chart.chart)
                         let chart = Chart.chart
                         let selection = chart.getSelection()
+                        // console.log('selection', selection)
                         let chartSelectionData: ChartSelectionContext = { 
                             Chart,
                             selection, 

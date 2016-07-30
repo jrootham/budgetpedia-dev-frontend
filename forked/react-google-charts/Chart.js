@@ -55,7 +55,7 @@ class Chart extends React.Component {
       })
 		}
     else if (googleChartLoader.isLoaded) {
-      // console.log('drawchart from did update',this.chart.getSelection())
+      // console.log('drawchart from did update' + this.state.graphID,this.chart.getSelection())
       this.drawChart.bind(this)();
       // console.log(this.chart.getSelection())
     }
@@ -117,12 +117,13 @@ class Chart extends React.Component {
         this.listenToChartEvents.bind(this)();
         this.addChartActions.bind(this)();
       });
+      this.wrapper.draw();
     }
     else {
       this.updateDataTable.bind(this)();
       this.wrapper.setDataTable(this.dataTable);
-      // this.wrapper.setChartType(this.props.chartType)
       this.wrapper.setOptions(this.props.options)
+      // console.log(this.wrapper.getChartType(), this.props.chartType)
       if (this.wrapper.getChartType() != this.props.chartType) {
         google.visualization.events.removeAllListeners(this.wrapper)
         this.wrapper.setChartType(this.props.chartType)
@@ -132,8 +133,11 @@ class Chart extends React.Component {
           self.listenToChartEvents.call(self);
         });
       }
+      // let selection = this.chart.getSelection()
+      this.wrapper.draw();
+      // this.chart.setSelection(selection)
     }
-    this.wrapper.draw();
+    // this.wrapper.draw();
   }
 
   addChartActions() {
