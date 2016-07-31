@@ -23,15 +23,11 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         let { removeNodeDeclarations } = budgetBranch.actions;
         removeNodeDeclarations(removeditems);
     }
-    window.nodeUpdateControl.nodeuid = budgetNode.uid;
-    window.nodeUpdateControl.new = true;
     let { updateCellChartSelection } = budgetBranch.actions;
     updateCellChartSelection(budgetCell.uid, chartSelectionData.selection);
     setTimeout(() => {
         branchNodes = budgetBranch.nodes;
         if (!selection) {
-            window.nodeUpdateControl.nodeuid = null;
-            window.nodeUpdateControl.new = null;
             budgetCell.chartSelection = null;
             return;
         }
@@ -42,10 +38,6 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
             cellIndex: cellIndex,
         };
         budgetBranch.createChildNode(childprops);
-        setTimeout(() => {
-            window.nodeUpdateControl.nodeuid = null;
-            window.nodeUpdateControl.new = null;
-        });
     });
 };
 exports.onChartComponentSelection = budgetBranch => nodeIndex => cellIndex => chartSelectionData => {

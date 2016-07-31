@@ -64,10 +64,6 @@ let Explorer = class extends Component {
         };
     }
     componentWillMount() {
-        window.nodeUpdateControl = {
-            nodeuid: null,
-            new: null,
-        };
         let { branchList, branchesById } = this.props.declarationData;
         if (branchList.length == 0) {
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));

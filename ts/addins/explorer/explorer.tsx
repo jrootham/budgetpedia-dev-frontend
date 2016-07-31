@@ -117,10 +117,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         // global var used to suppress
         // unnecessary renders
         // global var is defined in typings-custom/general.d.ts
-        window.nodeUpdateControl = {
-            nodeuid:null,
-            new: null,
-        }
+        // window.nodeUpdateControl = {
+        //     nodeuid:null,
+        //     new: null,
+        // }
         let { branchList, branchesById } = this.props.declarationData
         if (branchList.length == 0) { // initialize explorer with first branch
             let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))

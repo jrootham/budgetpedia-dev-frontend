@@ -82,8 +82,8 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         removeNodeDeclarations(removeditems)
 
     }
-    window.nodeUpdateControl.nodeuid = budgetNode.uid
-    window.nodeUpdateControl.new = true
+    // window.nodeUpdateControl.nodeuid = budgetNode.uid
+    // window.nodeUpdateControl.new = true
     let { updateCellChartSelection } = budgetBranch.actions
     updateCellChartSelection(budgetCell.uid,chartSelectionData.selection)
 
@@ -96,8 +96,8 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
         // 3. if deselected, update parms and quit
         if (!selection) { // deselected
-            window.nodeUpdateControl.nodeuid = null
-            window.nodeUpdateControl.new = null
+            // window.nodeUpdateControl.nodeuid = null
+            // window.nodeUpdateControl.new = null
             budgetCell.chartSelection = null
             // updateChartSelections()
             return
@@ -113,10 +113,10 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         }
 
         budgetBranch.createChildNode( childprops )
-        setTimeout(()=>{
-            window.nodeUpdateControl.nodeuid = null
-            window.nodeUpdateControl.new = null            
-        })
+        // setTimeout(()=>{
+        //     window.nodeUpdateControl.nodeuid = null
+        //     window.nodeUpdateControl.new = null            
+        // })
 
     })
 

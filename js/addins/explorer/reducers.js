@@ -157,11 +157,15 @@ let cellsById = (state = {}, action) => {
             return state;
     }
 };
-let lastAction = (state = {
-        type: undefined, branchuid: undefined, nodeuid: undefined, celluid: undefined,
-    }, action) => {
-    if (!action.payload)
+let defaultState = {
+    type: undefined, branchuid: undefined, nodeuid: undefined, celluid: undefined,
+};
+let lastAction = (state = defaultState, action) => {
+    if (!action.payload) {
+        let newstate = Object.assign({}, defaultState);
+        newstate.type = action.type;
         return state;
+    }
     let newstate = Object.assign({}, state);
     newstate.type = action.type;
     newstate.branchuid = action.payload.branchuid;
