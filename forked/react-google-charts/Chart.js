@@ -117,7 +117,7 @@ class Chart extends React.Component {
         this.listenToChartEvents.bind(this)();
         this.addChartActions.bind(this)();
       });
-      this.wrapper.draw();
+      // this.wrapper.draw();
     }
     else {
       this.updateDataTable.bind(this)();
@@ -133,11 +133,10 @@ class Chart extends React.Component {
           self.listenToChartEvents.call(self);
         });
       }
-      // let selection = this.chart.getSelection()
-      this.wrapper.draw();
-      // this.chart.setSelection(selection)
+      // issue: this draw clears selection
+      // this.wrapper.draw();
     }
-    // this.wrapper.draw();
+    this.wrapper.draw();
   }
 
   addChartActions() {
