@@ -68,16 +68,17 @@ exports.removeNodeDeclarations = redux_actions_1.createAction(types.REMOVE_NODES
     items: items,
     branchuid: branchuid,
 }));
-const _addCellDeclaration = redux_actions_1.createAction(types.ADD_CELLS, (nodeuid, settings) => ({
+const _addCellDeclaration = redux_actions_1.createAction(types.ADD_CELLS, (branchuid, nodeuid, settings) => ({
+    branchuid: branchuid,
     settings: settings,
     nodeuid: nodeuid,
 }));
-exports.addCellDeclarations = (nodeuid, settingslist) => {
+exports.addCellDeclarations = (branchuid, nodeuid, settingslist) => {
     return dispatch => {
         for (let settings of settingslist) {
             settings.celluid = uuid.v4();
         }
-        dispatch(_addCellDeclaration(nodeuid, settingslist));
+        dispatch(_addCellDeclaration(branchuid, nodeuid, settingslist));
     };
 };
 exports.updateCellChartSelection = redux_actions_1.createAction(types.UPDATE_CELL_SELECTION, (branchuid, nodeuid, celluid, selection) => ({
@@ -86,7 +87,9 @@ exports.updateCellChartSelection = redux_actions_1.createAction(types.UPDATE_CEL
     nodeuid: nodeuid,
     branchuid: branchuid,
 }));
-exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHART_CODE, (celluid, explorerChartCode) => ({
+exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHART_CODE, (branchuid, nodeuid, celluid, explorerChartCode) => ({
+    branchuid: branchuid,
+    nodeuid: nodeuid,
     celluid: celluid,
     explorerChartCode: explorerChartCode,
 }));

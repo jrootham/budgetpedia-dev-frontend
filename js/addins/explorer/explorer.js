@@ -63,7 +63,9 @@ let Explorer = class extends Component {
             }
         };
         this.changeTab = branchuid => (nodeuid, tabvalue) => this.props.changeTab(branchuid, nodeuid, tabvalue);
+        this.addCellDeclarations = branchuid => (nodeuid, settingslist) => this.props.addCellDeclarations(branchuid, nodeuid, settingslist);
         this.updateCellChartSelection = branchuid => nodeuid => (celluid, selection) => (this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection));
+        this.updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode);
     }
     componentWillMount() {
         let { branchList, branchesById } = this.props.declarationData;
@@ -108,15 +110,15 @@ let Explorer = class extends Component {
             let budgetBranches = explorer.state.budgetBranches;
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
                 let actionFunctions = {
-                    addCellDeclarations: this.props.addCellDeclarations,
+                    addCellDeclarations: this.addCellDeclarations(budgetBranch.uid),
+                    updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
+                    changeTab: this.changeTab(budgetBranch.uid),
+                    updateCellChartCode: this.updateCellChartCode(budgetBranch.uid),
                     addNodeDeclaration: this.props.addNodeDeclaration,
                     removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
-                    updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
-                    changeTab: this.changeTab(budgetBranch.uid),
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
-                    updateCellChartCode: this.props.updateCellChartCode,
                 };
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,

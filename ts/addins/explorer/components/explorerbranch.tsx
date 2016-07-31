@@ -40,6 +40,7 @@ export interface ExplorerBranchActions {
     changeViewpoint:Function,
     changeFacet: Function,
     updateCellChartSelection: Function,  
+    updateCellChartCode: Function,
 }
 
 interface DeclarationData {
@@ -442,6 +443,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             budgetNode.onChartComponentSelection = onChartComponentSelection(this.props.budgetBranch)
             let actions = Object.assign({}, this._stateActions)
             actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid)
+            actions.updateCellChartCode = this._stateActions.updateCellChartCode(budgetNode.uid)
 
             return <ExporerNode
                 key = {nodeindex}

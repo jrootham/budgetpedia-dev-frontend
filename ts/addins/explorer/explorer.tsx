@@ -218,9 +218,13 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     private changeTab = branchuid => (nodeuid, tabvalue) => this.props.changeTab(branchuid, nodeuid,tabvalue)
 
+    private addCellDeclarations = branchuid => (nodeuid, settingslist) => this.props.addCellDeclarations(branchuid, nodeuid, settingslist)
+
     private updateCellChartSelection = branchuid => nodeuid => (celluid,selection) => (
         this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection )
     )
+
+    private updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode)
 
     // updateIndexChartSelections = branchIndex => {
     //     let budgetBranch = this.state.budgetBranches[branchIndex]
@@ -298,16 +302,16 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
                 let actionFunctions:MappedBranchActions = {
-                    addCellDeclarations: this.props.addCellDeclarations,
+                    addCellDeclarations: this.addCellDeclarations(budgetBranch.uid),
+                    updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
+                    changeTab: this.changeTab(budgetBranch.uid),
+                    updateCellChartCode: this.updateCellChartCode(budgetBranch.uid),
                     // removeCellDeclarations: this.props.removeCellDeclarations,
                     addNodeDeclaration: this.props.addNodeDeclaration,
                     removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
-                    updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
-                    changeTab: this.changeTab(budgetBranch.uid),
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
-                    updateCellChartCode: this.props.updateCellChartCode,
                 }
 
                 let displayCallbackFunctions = { 

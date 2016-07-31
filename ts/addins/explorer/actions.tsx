@@ -102,18 +102,19 @@ export const removeNodeDeclarations = createAction(
 // ---------------------[ Cell ]---------------------
 
 const _addCellDeclaration = createAction(
-    types.ADD_CELLS,(nodeuid,settings) => ({
+    types.ADD_CELLS,(branchuid, nodeuid,settings) => ({
+        branchuid,
         settings,
         nodeuid,
     })
 )
 
-export const addCellDeclarations = (nodeuid,settingslist) => {
+export const addCellDeclarations = (branchuid, nodeuid,settingslist) => {
     return dispatch => {
         for (let settings of settingslist) {
             settings.celluid = uuid.v4()
         }
-        dispatch(_addCellDeclaration(nodeuid,settingslist))
+        dispatch(_addCellDeclaration(branchuid,nodeuid,settingslist))
     }
 }
 
@@ -127,7 +128,9 @@ export const updateCellChartSelection = createAction(
 )
 
 export const updateCellChartCode = createAction(
-    types.UPDATE_CELL_CHART_CODE, (celluid, explorerChartCode) => ({
+    types.UPDATE_CELL_CHART_CODE, (branchuid, nodeuid, celluid, explorerChartCode) => ({
+        branchuid,
+        nodeuid,
         celluid,
         explorerChartCode,
     })
