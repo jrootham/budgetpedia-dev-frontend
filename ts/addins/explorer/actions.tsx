@@ -77,9 +77,10 @@ export const changeFacet = createAction(
 // ----------------------[ Node ]-----------------------------
 
 export const changeTab = createAction(
-    types.CHANGE_TAB, (nodeuid, tabvalue) => ({
+    types.CHANGE_TAB, (branchuid, nodeuid, tabvalue) => ({
         nodeuid,
         tabvalue,
+        branchuid,
     })
 )
 

@@ -54,7 +54,7 @@ interface SnackbarProps {
     message: string,
 }
 
-interface ExploreBranchProps {
+interface ExplorerBranchProps {
     budgetBranch: BudgetBranch,
     displayCallbacks:{
         workingStatus:Function,
@@ -70,7 +70,7 @@ interface ExplorerBranchState {
     viewpointData?:ViewpointData,
 }
 
-class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> {
+class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState> {
 
     state = {
         branchNodes:[],
@@ -159,9 +159,17 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
         }
     }
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     return nextProps.declarationData.lastAction != branchActionTypes.CHANGE_FACET
-    // }
+    shouldComponentUpdate(nextProps: ExplorerBranchProps, nextState) {
+        let { lastAction } = nextProps.declarationData
+        // console.log('lastAction',lastAction)
+        let { branchuid } = lastAction
+        if (branchuid) {
+            let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
+            console.log('branch',retval, branchuid, lastAction.type)
+            return retval
+        }
+        return true
+    }
 /*
     harmonization means creating local nodes to match global declarations
     acts as a sentinel; if count goes below zero, means that some 

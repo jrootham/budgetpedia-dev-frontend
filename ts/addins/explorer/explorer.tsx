@@ -216,6 +216,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     }
 
+    private changeTab = branchuid => (nodeuid, tabvalue) => this.props.changeTab(branchuid, nodeuid,tabvalue)
+
     // updateIndexChartSelections = branchIndex => {
     //     let budgetBranch = this.state.budgetBranches[branchIndex]
     //     updateBranchChartSelections(budgetBranch.nodes)
@@ -299,7 +301,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                     updateCellChartSelection: this.props.updateCellChartSelection,
-                    changeTab: this.props.changeTab,
+                    changeTab: this.changeTab(budgetBranch.uid),
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     updateCellChartCode: this.props.updateCellChartCode,
                 }

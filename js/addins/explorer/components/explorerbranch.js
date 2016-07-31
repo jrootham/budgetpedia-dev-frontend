@@ -226,6 +226,16 @@ class ExplorerBranch extends Component {
             });
         }
     }
+    shouldComponentUpdate(nextProps, nextState) {
+        let { lastAction } = nextProps.declarationData;
+        let { branchuid } = lastAction;
+        if (branchuid) {
+            let retval = (nextProps.budgetBranch.uid == branchuid) ? true : false;
+            console.log('branch', retval, branchuid, lastAction.type);
+            return retval;
+        }
+        return true;
+    }
     componentDidUpdate() {
         let { budgetBranch, declarationData } = this.props;
         let { nodes: branchNodes } = budgetBranch;

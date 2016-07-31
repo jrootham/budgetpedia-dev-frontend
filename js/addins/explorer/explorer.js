@@ -62,6 +62,7 @@ let Explorer = class extends Component {
                 });
             }
         };
+        this.changeTab = branchuid => (nodeuid, tabvalue) => this.props.changeTab(branchuid, nodeuid, tabvalue);
     }
     componentWillMount() {
         let { branchList, branchesById } = this.props.declarationData;
@@ -112,7 +113,7 @@ let Explorer = class extends Component {
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                     updateCellChartSelection: this.props.updateCellChartSelection,
-                    changeTab: this.props.changeTab,
+                    changeTab: this.changeTab(budgetBranch.uid),
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     updateCellChartCode: this.props.updateCellChartCode,
                 };

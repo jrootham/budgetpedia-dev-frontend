@@ -54,9 +54,10 @@ exports.changeFacet = redux_actions_1.createAction(types.CHANGE_FACET, (branchui
     branchuid: branchuid,
     facetname: facetname
 }));
-exports.changeTab = redux_actions_1.createAction(types.CHANGE_TAB, (nodeuid, tabvalue) => ({
+exports.changeTab = redux_actions_1.createAction(types.CHANGE_TAB, (branchuid, nodeuid, tabvalue) => ({
     nodeuid: nodeuid,
     tabvalue: tabvalue,
+    branchuid: branchuid,
 }));
 exports.addNodeDeclaration = redux_actions_1.createAction(types.ADD_NODE, (branchuid, settings) => ({
     settings: settings,
