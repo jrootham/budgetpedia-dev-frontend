@@ -27,14 +27,14 @@ class ExplorerBranch extends Component {
             let currentControlData = this.props.declarationData;
             let { lastAction } = currentControlData;
             let returnvalue = true;
-            if (!actions_1.branchTypes[lastAction]) {
+            if (!actions_1.branchTypes[lastAction.type]) {
                 return false;
             }
             if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
                 return false;
             }
             let { budgetBranch } = this.props;
-            switch (lastAction) {
+            switch (lastAction.type) {
                 case actions_1.branchTypes.CHANGE_VIEWPOINT: {
                     this._processChangeViewpointStateChange(budgetBranch);
                     break;
@@ -136,7 +136,7 @@ class ExplorerBranch extends Component {
             let { nodes: branchNodes } = budgetBranch;
             let removed = branchNodes.splice(0);
             let removeditems = removed.map((item) => {
-                return { uid: item.uid, cellList: item.cellList };
+                return { nodeuid: item.uid, cellList: item.cellList };
             });
             let globalStateActions = this._stateActions;
             globalStateActions.removeNodeDeclarations(removeditems);

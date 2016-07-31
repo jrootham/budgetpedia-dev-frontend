@@ -48,13 +48,13 @@ export namespace cellTypes {
 export const addBranchDeclaration = createAction(
     types.ADD_BRANCH,settings => ({
         settings,
-        uid: uuid.v4(),
+        branchuid: uuid.v4(),
     })
 )
     
 export const removeBranchDeclaration = createAction(
-    types.REMOVE_BRANCH,uid => ({
-        uid,
+    types.REMOVE_BRANCH,branchuid => ({
+        branchuid,
     })
 )
 
@@ -86,7 +86,7 @@ export const changeTab = createAction(
 export const addNodeDeclaration = createAction(
     types.ADD_NODE,(branchuid,settings) => ({
         settings,
-        uid: uuid.v4(),
+        nodeuid: uuid.v4(),
         branchuid,
     })
 )
@@ -110,7 +110,7 @@ const _addCellDeclaration = createAction(
 export const addCellDeclarations = (nodeuid,settingslist) => {
     return dispatch => {
         for (let settings of settingslist) {
-            settings.uid = uuid.v4()
+            settings.celluid = uuid.v4()
         }
         dispatch(_addCellDeclaration(nodeuid,settingslist))
     }

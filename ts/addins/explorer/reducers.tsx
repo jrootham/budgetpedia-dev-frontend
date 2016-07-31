@@ -14,11 +14,11 @@ let branchList = (state = [], action) => {
     let newstate
     switch (type) {
         case actiontypes.ADD_BRANCH:
-            newstate = [...state,action.payload.uid]
+            newstate = [...state,action.payload.branchuid]
             return newstate
             
         case actiontypes.REMOVE_BRANCH:
-            newstate = state.filter(item => item != action.payload.uid)
+            newstate = state.filter(item => item != action.payload.branchuid)
             return newstate
 
         default:
@@ -31,13 +31,13 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
     let newstate
     switch (type) {
         case actiontypes.ADD_BRANCH: {
-            newstate = Object.assign({},state,{[action.payload.uid]:action.payload.settings})
+            newstate = Object.assign({},state,{[action.payload.branchuid]:action.payload.settings})
             return newstate
         }
 
         case actiontypes.REMOVE_BRANCH: {
             newstate = Object.assign({},state)
-            delete newstate[action.payload.uid]
+            delete newstate[action.payload.branchuid]
             return newstate
         }
         
@@ -47,7 +47,7 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             newstate = Object.assign({},state)
             newstate[branchuid] = Object.assign({},newstate[branchuid])
             newstate[branchuid].nodeList = 
-                [...state[branchuid].nodeList,action.payload.uid]
+                [...state[branchuid].nodeList,action.payload.nodeuid]
             return newstate
         }
 
@@ -55,9 +55,9 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             let { branchuid } = action.payload
             newstate = Object.assign({},state)
             let removelist = action.payload.items
-            let newList = newstate[branchuid].nodeList.filter((uid) => {
+            let newList = newstate[branchuid].nodeList.filter((nodeuid) => {
                 let foundlist = removelist.filter(item => {
-                    return item.uid == uid
+                    return item.nodeuid == nodeuid
                 })
                 return foundlist.length == 0
             }) 
@@ -91,9 +91,9 @@ let nodesById = (state = { }, action) => {
     let newstate
     switch (type) {
         case actiontypes.ADD_NODE: {
-            let node = state[action.payload.uid] || {}
+            let node = state[action.payload.nodeuid] || {}
             node = Object.assign(node,action.payload.settings)
-            newstate = Object.assign({},state,{[action.payload.uid]:node})
+            newstate = Object.assign({},state,{[action.payload.nodeuid]:node})
             return newstate
         }
 
@@ -101,7 +101,7 @@ let nodesById = (state = { }, action) => {
             newstate = Object.assign({},state)
             let removelist = action.payload.items
             for (let removeitem of removelist) {
-                delete newstate[removeitem.uid]
+                delete newstate[removeitem.nodeuid]
             }
             return newstate
         }
@@ -111,7 +111,7 @@ let nodesById = (state = { }, action) => {
             let nodeuid = action.payload.nodeuid
             let newnode = Object.assign({},newstate[nodeuid])
             newnode.cellList = newnode.cellList || []
-            let newcellList = action.payload.settings.map(setting => setting.uid)
+            let newcellList = action.payload.settings.map(setting => setting.celluid)
             newnode.cellList = [...newnode.cellList, ...newcellList]
             newstate[nodeuid] = newnode
             return newstate
@@ -138,7 +138,7 @@ let cellsById = (state = { }, action) => {
         case actiontypes.ADD_CELLS: {
 
             for (let setting of action.payload.settings) {
-                newstate[setting.uid] = setting
+                newstate[setting.celluid] = setting
             }
             return newstate
         }
@@ -185,8 +185,17 @@ let cellsById = (state = { }, action) => {
     }
 }
 
-let lastAction = (state = null, action) => {
-    return action.type
+let lastAction = (state = {
+    type:undefined, branchuid:undefined, nodeuid:undefined,celluid:undefined,
+}, action) => {
+    // console.log('action',action)
+    if (!action.payload) return state
+    let newstate = Object.assign({},state)
+    newstate.type = action.type
+    newstate.branchuid = action.payload.branchuid
+    newstate.nodeuid = action.payload.nodeuid
+    newstate.celluid = action.payload.celluid
+    return newstate
 }
 
 let generation = (state = null, action) => {

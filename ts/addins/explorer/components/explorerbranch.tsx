@@ -46,7 +46,7 @@ interface DeclarationData {
     branchesById: Object,
     generation: number,
     nodesById: Object,
-    lastAction: string,
+    lastAction: any,
 }
 
 interface SnackbarProps {
@@ -219,7 +219,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
         let currentControlData = this.props.declarationData
         let { lastAction } = currentControlData
         let returnvalue = true
-        if (!branchActionTypes[lastAction]) {
+        if (!branchActionTypes[lastAction.type]) {
             return false
         }
         // the generation counter could be the same if render is being triggered
@@ -229,7 +229,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
         }
 
         let { budgetBranch } = this.props
-        switch (lastAction) {
+        switch (lastAction.type) {
             case branchActionTypes.CHANGE_VIEWPOINT: {
                 this._processChangeViewpointStateChange(budgetBranch)
                 break
@@ -360,7 +360,7 @@ class ExplorerBranch extends Component<ExploreBranchProps, ExplorerBranchState> 
         // branchNodes is just a copy of the component state's BranchNodes
         let removed = branchNodes.splice(0) // identify nodes to remove
         let removeditems = removed.map((item) => {
-            return {uid:item.uid, cellList:item.cellList}
+            return {nodeuid:item.uid, cellList:item.cellList}
         })
         // this will trigger render cycle that will delete the component state's stored nodes
         let globalStateActions = this._stateActions

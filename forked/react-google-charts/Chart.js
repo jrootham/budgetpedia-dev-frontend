@@ -40,7 +40,7 @@ class Chart extends React.Component {
   }
   componentWillUnmount() {
       try {
-         google.visualization.events.removeAllListeners(this.wrapper);
+          google.visualization.events.removeAllListeners(this.wrapper);
       }
       catch(err) {
         console.error("Error removing events, error : ", err);
@@ -50,7 +50,7 @@ class Chart extends React.Component {
     // debug('componentDidUpdate');
     if (googleChartLoader.isLoading){
       googleChartLoader.initPromise.then(()=>{
-        console.log('drawchart from did update/loading')
+        // console.log('drawchart from did update/loading')
         this.drawChart.bind(this)();
       })
 		}

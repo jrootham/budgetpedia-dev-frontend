@@ -41,10 +41,10 @@ var cellTypes;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, settings => ({
     settings: settings,
-    uid: uuid.v4(),
+    branchuid: uuid.v4(),
 }));
-exports.removeBranchDeclaration = redux_actions_1.createAction(types.REMOVE_BRANCH, uid => ({
-    uid: uid,
+exports.removeBranchDeclaration = redux_actions_1.createAction(types.REMOVE_BRANCH, branchuid => ({
+    branchuid: branchuid,
 }));
 exports.changeViewpoint = redux_actions_1.createAction(types.CHANGE_VIEWPOINT, (branchuid, viewpointname) => ({
     branchuid: branchuid,
@@ -60,7 +60,7 @@ exports.changeTab = redux_actions_1.createAction(types.CHANGE_TAB, (nodeuid, tab
 }));
 exports.addNodeDeclaration = redux_actions_1.createAction(types.ADD_NODE, (branchuid, settings) => ({
     settings: settings,
-    uid: uuid.v4(),
+    nodeuid: uuid.v4(),
     branchuid: branchuid,
 }));
 exports.removeNodeDeclarations = redux_actions_1.createAction(types.REMOVE_NODES, (branchuid, items) => ({
@@ -74,7 +74,7 @@ const _addCellDeclaration = redux_actions_1.createAction(types.ADD_CELLS, (nodeu
 exports.addCellDeclarations = (nodeuid, settingslist) => {
     return dispatch => {
         for (let settings of settingslist) {
-            settings.uid = uuid.v4();
+            settings.celluid = uuid.v4();
         }
         dispatch(_addCellDeclaration(nodeuid, settingslist));
     };

@@ -17,13 +17,13 @@ class ExporerNode extends Component {
             let currentControlData = this.props.declarationData;
             let { lastAction } = currentControlData;
             let returnvalue = true;
-            if (!actions_1.cellTypes[lastAction]) {
+            if (!actions_1.cellTypes[lastAction.type]) {
                 return false;
             }
             if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
                 return false;
             }
-            switch (lastAction) {
+            switch (lastAction.type) {
                 case actions_1.cellTypes.UPDATE_CELL_SELECTION: {
                     this._processUpdateCellSelection();
                     break;
@@ -151,11 +151,13 @@ class ExporerNode extends Component {
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
-        let { nodeuid, new: newval } = window.nodeUpdateControl;
-        let noderetval = nodeuid ? (nodeuid == this.props.budgetNode.uid) : true;
-        let newretval = newval ? (this.props.budgetNode.new == true) : true;
-        let retval = noderetval || newretval;
-        return retval;
+        let { lastAction } = nextProps.declarationData;
+        let { nodeuid } = lastAction;
+        if (nodeuid) {
+            let retval = (nextProps.budgetNode.uid == nodeuid) ? true : false;
+            return retval;
+        }
+        return true;
     }
     componentDidUpdate() {
         if (!this._harmonizeCells()) {
