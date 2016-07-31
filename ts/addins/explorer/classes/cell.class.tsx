@@ -48,6 +48,13 @@ export interface CellDeclaration {
     nodeDataseriesName:string, 
     explorerChartCode:string, 
     chartSelection:ChartSelectionCell[],
+    celluid?: string,
+}
+
+export interface CellConstructorArgs {
+    nodeDataseriesName:string, 
+    explorerChartCode:string, 
+    chartSelection:ChartSelectionCell[],
     uid?: string,
 }
 
@@ -60,7 +67,7 @@ interface NodeData {
 
 class BudgetCell {
 
-    constructor(specs:CellDeclaration) {
+    constructor(specs:CellConstructorArgs) {
         let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs
         this.nodeDataseriesName = nodeDataseriesName
         this.explorerChartCode = explorerChartCode
@@ -81,7 +88,10 @@ class BudgetCell {
     }
     chartParms: ChartParms
     get chart() {
-        return this.chartComponent.chart
+        if (this.chartComponent)
+            return this.chartComponent.chart
+        else 
+            return null
     }
     cellCallbacks: CellCallbacks
     expandable: boolean

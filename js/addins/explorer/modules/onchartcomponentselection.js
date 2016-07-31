@@ -23,10 +23,9 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         let { removeNodeDeclarations } = budgetBranch.actions;
         removeNodeDeclarations(removeditems);
     }
-    let { updateCellChartSelection } = budgetBranch.actions;
+    let { updateCellChartSelection } = budgetNode.actions;
     updateCellChartSelection(budgetCell.uid, chartSelectionData.selection);
     setTimeout(() => {
-        branchNodes = budgetBranch.nodes;
         if (!selection) {
             budgetCell.chartSelection = null;
             return;

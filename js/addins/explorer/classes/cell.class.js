@@ -232,7 +232,10 @@ class BudgetCell {
         return constants_1.ChartCodeToGoogleChartType[this.explorerChartCode];
     }
     get chart() {
-        return this.chartComponent.chart;
+        if (this.chartComponent)
+            return this.chartComponent.chart;
+        else
+            return null;
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

@@ -31,8 +31,20 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         // console.log('onChangeChartCode',explorerChartCode, this.props)
         let { budgetCell } = this.props
         budgetCell.switchChartCode(explorerChartCode)
- 
-        this.props.globalStateActions.updateCellChartCode(this.props.budgetCell.uid,explorerChartCode)
+         // console.log('budgetCell in explorercell on ChangeChartCode', budgetCell)
+        this.props.globalStateActions.updateCellChartCode(budgetCell.uid,explorerChartCode)
+    }
+
+    shouldComponentUpdate(nextProps: ExplorerCellProps, nextState) {
+        let { lastAction } = nextProps.declarationData
+        // console.log('lastAction in cell',lastAction)
+        let { celluid } = lastAction
+        if (celluid) {
+            let retval = (nextProps.budgetCell.uid == celluid)? true: false
+            console.log('cell',retval, celluid, lastAction.type)
+            return retval
+        }
+        return true
     }
 
     componentDidUpdate() {

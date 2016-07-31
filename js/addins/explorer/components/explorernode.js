@@ -100,7 +100,7 @@ class ExporerNode extends Component {
     }
     componentWillMount() {
         let { budgetNode } = this.props;
-        this._stateActions = this.props.globalStateActions;
+        this._stateActions = Object.assign({}, this.props.globalStateActions);
         this._nodeDisplayCallbacks = this.props.displayCallbacks;
         budgetNode.getState = this.getState;
         budgetNode.getProps = this.getProps;

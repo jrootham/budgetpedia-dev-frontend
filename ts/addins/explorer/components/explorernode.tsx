@@ -34,6 +34,7 @@ export interface ExporerNodeActions {
     addCellDeclarations:Function,
     updateCellsDataseriesName: Function,
     updateCellChartCode: Function,
+    updateCellChartSelection: Function,
 }
 
 class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
@@ -51,7 +52,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     componentWillMount() {
         let { budgetNode } = this.props
 
-        this._stateActions = this.props.globalStateActions
+        this._stateActions = Object.assign({},this.props.globalStateActions)
         this._nodeDisplayCallbacks = this.props.displayCallbacks
 
         budgetNode.getState = this.getState

@@ -95,12 +95,12 @@ class BudgetNode {
         let cells = [];
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration = cellDeclarations[cellIndex];
-            let { chartSelection, explorerChartCode, nodeDataseriesName, uid } = cellDeclaration;
+            let { chartSelection, explorerChartCode, nodeDataseriesName, celluid } = cellDeclaration;
             let cell = new cell_class_1.default({
                 nodeDataseriesName: nodeDataseriesName,
                 explorerChartCode: explorerChartCode,
                 chartSelection: chartSelection,
-                uid: uid,
+                uid: celluid,
             });
             cell.cellIndex = parseInt(cellIndex);
             this._updateCell(cell);

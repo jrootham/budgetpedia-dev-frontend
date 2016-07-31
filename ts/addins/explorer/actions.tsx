@@ -118,9 +118,11 @@ export const addCellDeclarations = (nodeuid,settingslist) => {
 }
 
 export const updateCellChartSelection = createAction(
-    types.UPDATE_CELL_SELECTION,(celluid, selection) => ({
+    types.UPDATE_CELL_SELECTION,(branchuid,nodeuid,celluid, selection) => ({
         celluid,
         selection,
+        nodeuid,
+        branchuid,
     })
 )
 

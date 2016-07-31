@@ -440,13 +440,15 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             budgetNode.viewpointConfigData = viewpointConfigData
             budgetNode.branchSettings = this.props.budgetBranch.settings
             budgetNode.onChartComponentSelection = onChartComponentSelection(this.props.budgetBranch)
+            let actions = Object.assign({}, this._stateActions)
+            actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid)
 
             return <ExporerNode
                 key = {nodeindex}
                 callbackid = { nodeindex }
                 budgetNode = { budgetNode }
                 declarationData = {this.props.declarationData}
-                globalStateActions = { this._stateActions }
+                globalStateActions = { actions }
                 displayCallbacks = { 
                     { 
                         // onChangePortalTab: this.onChangePortalTab,

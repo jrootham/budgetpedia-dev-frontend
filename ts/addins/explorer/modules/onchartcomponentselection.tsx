@@ -84,13 +84,13 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     }
     // window.nodeUpdateControl.nodeuid = budgetNode.uid
     // window.nodeUpdateControl.new = true
-    let { updateCellChartSelection } = budgetBranch.actions
+    let { updateCellChartSelection } = budgetNode.actions
     updateCellChartSelection(budgetCell.uid,chartSelectionData.selection)
 
     setTimeout(()=>{
 
         // refresh nodes after removenode operation above
-        branchNodes = budgetBranch.nodes
+        // branchNodes = budgetBranch.nodes
 
         // let { updateChartSelections } = budgetBranch.nodeCallbacks
 

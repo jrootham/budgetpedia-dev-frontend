@@ -125,17 +125,18 @@ class BudgetNode {
 
     public setCells(cellDeclarations:CellDeclaration[]) {
         let cells = []
+        // console.log('cellDeclarations in setCells', cellDeclarations)
         // // TODO: should be default for each chart...
         // build cells array
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration: CellDeclaration = cellDeclarations[cellIndex]
-            let {chartSelection, explorerChartCode, nodeDataseriesName, uid} = cellDeclaration
+            let {chartSelection, explorerChartCode, nodeDataseriesName, celluid} = cellDeclaration
             let cell = new BudgetCell(
                 {
                     nodeDataseriesName,
                     explorerChartCode,
                     chartSelection,
-                    uid,
+                    uid:celluid,
                 }
             )
 

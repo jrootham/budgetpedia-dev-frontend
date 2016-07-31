@@ -11,8 +11,18 @@ class ExplorerCell extends Component {
         this.onChangeChartCode = (explorerChartCode) => {
             let { budgetCell } = this.props;
             budgetCell.switchChartCode(explorerChartCode);
-            this.props.globalStateActions.updateCellChartCode(this.props.budgetCell.uid, explorerChartCode);
+            this.props.globalStateActions.updateCellChartCode(budgetCell.uid, explorerChartCode);
         };
+    }
+    shouldComponentUpdate(nextProps, nextState) {
+        let { lastAction } = nextProps.declarationData;
+        let { celluid } = lastAction;
+        if (celluid) {
+            let retval = (nextProps.budgetCell.uid == celluid) ? true : false;
+            console.log('cell', retval, celluid, lastAction.type);
+            return retval;
+        }
+        return true;
     }
     componentDidUpdate() {
         setTimeout(() => {

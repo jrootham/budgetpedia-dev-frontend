@@ -80,9 +80,11 @@ exports.addCellDeclarations = (nodeuid, settingslist) => {
         dispatch(_addCellDeclaration(nodeuid, settingslist));
     };
 };
-exports.updateCellChartSelection = redux_actions_1.createAction(types.UPDATE_CELL_SELECTION, (celluid, selection) => ({
+exports.updateCellChartSelection = redux_actions_1.createAction(types.UPDATE_CELL_SELECTION, (branchuid, nodeuid, celluid, selection) => ({
     celluid: celluid,
     selection: selection,
+    nodeuid: nodeuid,
+    branchuid: branchuid,
 }));
 exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHART_CODE, (celluid, explorerChartCode) => ({
     celluid: celluid,
