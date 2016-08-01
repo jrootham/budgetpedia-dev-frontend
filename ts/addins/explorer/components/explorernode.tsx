@@ -124,7 +124,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         let { nodeuid } = lastAction
         if (nodeuid) {
             let retval = (nextProps.budgetNode.uid == nodeuid)? true: false
-            // console.log('node',retval, nodeuid, lastAction.type)
+            // console.log('node',retval, nodeuid, nextProps.budgetNode.uid, lastAction.type)
             return retval
         }
         return true

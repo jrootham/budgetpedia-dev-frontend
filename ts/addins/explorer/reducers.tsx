@@ -186,7 +186,7 @@ let cellsById = (state = { }, action) => {
 }
 
 let defaultState = {
-    type:undefined, branchuid:undefined, nodeuid:undefined,celluid:undefined,
+    type:undefined, branchuid:undefined, nodeuid:undefined,celluid:undefined, explorer:undefined,
 }
 
 let lastAction = (state = defaultState , action) => {
@@ -207,6 +207,9 @@ let lastAction = (state = defaultState , action) => {
         }
 
         default: {
+            if (action.meta) {
+                newstate.explorer = action.meta.explorer
+            }
             newstate.type = action.type
             newstate.branchuid = action.payload.branchuid
             newstate.nodeuid = action.payload.nodeuid

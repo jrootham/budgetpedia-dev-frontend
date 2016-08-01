@@ -43,36 +43,52 @@ var cellTypes;
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, settings => ({
     settings: settings,
     branchuid: uuid.v4(),
+}), () => ({
+    explorer: true
 }));
 exports.removeBranchDeclaration = redux_actions_1.createAction(types.REMOVE_BRANCH, branchuid => ({
     branchuid: branchuid,
+}), () => ({
+    explorer: true
 }));
 exports.changeViewpoint = redux_actions_1.createAction(types.CHANGE_VIEWPOINT, (branchuid, viewpointname) => ({
     branchuid: branchuid,
     viewpointname: viewpointname,
+}), () => ({
+    explorer: true
 }));
 exports.changeFacet = redux_actions_1.createAction(types.CHANGE_FACET, (branchuid, facetname) => ({
     branchuid: branchuid,
     facetname: facetname
+}), () => ({
+    explorer: true
 }));
 exports.changeTab = redux_actions_1.createAction(types.CHANGE_TAB, (branchuid, nodeuid, tabvalue) => ({
     nodeuid: nodeuid,
     tabvalue: tabvalue,
     branchuid: branchuid,
+}), () => ({
+    explorer: true
 }));
 exports.addNodeDeclaration = redux_actions_1.createAction(types.ADD_NODE, (branchuid, settings) => ({
     settings: settings,
     nodeuid: uuid.v4(),
     branchuid: branchuid,
+}), () => ({
+    explorer: true
 }));
 exports.removeNodeDeclarations = redux_actions_1.createAction(types.REMOVE_NODES, (branchuid, items) => ({
     items: items,
     branchuid: branchuid,
+}), () => ({
+    explorer: true
 }));
 const _addCellDeclaration = redux_actions_1.createAction(types.ADD_CELLS, (branchuid, nodeuid, settings) => ({
     branchuid: branchuid,
     settings: settings,
     nodeuid: nodeuid,
+}), () => ({
+    explorer: true
 }));
 exports.addCellDeclarations = (branchuid, nodeuid, settingslist) => {
     return dispatch => {
@@ -87,14 +103,22 @@ exports.updateCellChartSelection = redux_actions_1.createAction(types.UPDATE_CEL
     selection: selection,
     nodeuid: nodeuid,
     branchuid: branchuid,
+}), () => ({
+    explorer: true
 }));
 exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHART_CODE, (branchuid, nodeuid, celluid, explorerChartCode) => ({
     branchuid: branchuid,
     nodeuid: nodeuid,
     celluid: celluid,
     explorerChartCode: explorerChartCode,
+}), () => ({
+    explorer: true
 }));
 exports.updateCellsDataseriesName = redux_actions_1.createAction(types.UPDATE_CELLS_DATASERIESNAME, (cellItemList) => ({
     cellItemList: cellItemList,
+}), () => ({
+    explorer: true
 }));
-exports.resetLastAction = redux_actions_1.createAction(types.RESET_LAST_ACTION, () => ({}));
+exports.resetLastAction = redux_actions_1.createAction(types.RESET_LAST_ACTION, () => ({}), () => ({
+    explorer: true
+}));

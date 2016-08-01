@@ -231,6 +231,8 @@ class ExplorerBranch extends Component {
     }
     shouldComponentUpdate(nextProps, nextState) {
         let { lastAction } = nextProps.declarationData;
+        if (!lastAction.explorer)
+            return false;
         let { branchuid } = lastAction;
         if (branchuid) {
             let retval = (nextProps.budgetBranch.uid == branchuid) ? true : false;

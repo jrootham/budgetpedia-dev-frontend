@@ -41,14 +41,14 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         let { celluid } = lastAction
         if (celluid) {
             let retval = (nextProps.budgetCell.uid == celluid)? true: false
-            // console.log('cell',retval, celluid, lastAction.type)
+            // console.log('cell should update',retval, celluid, nextProps.budgetCell.uid, lastAction.type)
             return retval
         }
         return true
     }
 
     componentDidUpdate() {
-        setTimeout(()=>{
+        // setTimeout(()=>{
             let { budgetCell }:{budgetCell:BudgetCell} = this.props
             // console.log('will update with setSelection', budgetCell, budgetCell.chart.getSelection())
             if (budgetCell.chartSelection) {
@@ -65,12 +65,12 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     // console.log('have invoked setSelection from componentDidUpdate', budgetCell)
                 }
             }        
-        })
+        // })
     }
 
     render() {
 
-        // console.log('rendering ExplorerCell', this.props.budgetCell)
+        // console.log('rendering ExplorerCell', this.props.budgetCell.uid)
 
         let { chartParms, explorerChartCode, expandable, graph_id } = this.props.budgetCell
         if (!expandable) {

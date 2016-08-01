@@ -50,12 +50,16 @@ export const addBranchDeclaration = createAction(
     types.ADD_BRANCH,settings => ({
         settings,
         branchuid: uuid.v4(),
+    }), () => ({
+        explorer:true
     })
 )
     
 export const removeBranchDeclaration = createAction(
     types.REMOVE_BRANCH,branchuid => ({
-        branchuid,
+        branchuid, 
+    }), () => ({
+        explorer:true
     })
 )
 
@@ -63,6 +67,8 @@ export const changeViewpoint = createAction(
     types.CHANGE_VIEWPOINT, (branchuid, viewpointname) => ({
         branchuid,
         viewpointname,        
+    }), () => ({
+        explorer:true
     })
 )
 
@@ -72,6 +78,8 @@ export const changeFacet = createAction(
         facetname
         // nodeidlist,
         // cellidlist,        
+    }), () => ({
+        explorer:true
     })
 )
 
@@ -82,6 +90,8 @@ export const changeTab = createAction(
         nodeuid,
         tabvalue,
         branchuid,
+    }), () => ({
+        explorer:true
     })
 )
 
@@ -90,6 +100,8 @@ export const addNodeDeclaration = createAction(
         settings,
         nodeuid: uuid.v4(),
         branchuid,
+    }), () => ({
+        explorer:true
     })
 )
 
@@ -97,6 +109,8 @@ export const removeNodeDeclarations = createAction(
     types.REMOVE_NODES,(branchuid,items) => ({
         items,
         branchuid,
+    }), () => ({
+        explorer:true
     })
 )
 
@@ -107,6 +121,8 @@ const _addCellDeclaration = createAction(
         branchuid,
         settings,
         nodeuid,
+    }), () => ({
+        explorer:true
     })
 )
 
@@ -125,6 +141,8 @@ export const updateCellChartSelection = createAction(
         selection,
         nodeuid,
         branchuid,
+    }), () => ({
+        explorer:true
     })
 )
 
@@ -134,6 +152,8 @@ export const updateCellChartCode = createAction(
         nodeuid,
         celluid,
         explorerChartCode,
+    }), () => ({
+        explorer:true
     })
 )
 
@@ -145,12 +165,16 @@ interface CellDataseriesNameItem {
 export const updateCellsDataseriesName = createAction(
     types.UPDATE_CELLS_DATASERIESNAME, (cellItemList:CellDataseriesNameItem[]) => ({
         cellItemList,
+    }), () => ({
+        explorer:true
     })
 )
 
 export const resetLastAction = createAction(
     types.RESET_LAST_ACTION, () => ({
 
+    }), () => ({
+        explorer:true
     })
 )
     
