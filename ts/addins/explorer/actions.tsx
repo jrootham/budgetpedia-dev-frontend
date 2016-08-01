@@ -166,7 +166,7 @@ export const updateCellsDataseriesName = createAction(
     types.UPDATE_CELLS_DATASERIESNAME, (cellItemList:CellDataseriesNameItem[]) => ({
         cellItemList,
     }), () => ({
-        explorer:true
+        explorer:false // state change only!
     })
 )
 

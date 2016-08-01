@@ -162,6 +162,8 @@ let cellsById = (state = { }, action) => {
 
         case actiontypes.UPDATE_CELLS_DATASERIESNAME: {
 
+            // console.log('reducer update_cells_dataseriesname')
+
             let cellItems = action.payload.cellItemList
             for ( let cellItem of cellItems) {
                 let { celluid } = cellItem

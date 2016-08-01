@@ -117,7 +117,7 @@ exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHA
 exports.updateCellsDataseriesName = redux_actions_1.createAction(types.UPDATE_CELLS_DATASERIESNAME, (cellItemList) => ({
     cellItemList: cellItemList,
 }), () => ({
-    explorer: true
+    explorer: false
 }));
 exports.resetLastAction = redux_actions_1.createAction(types.RESET_LAST_ACTION, () => ({}), () => ({
     explorer: true

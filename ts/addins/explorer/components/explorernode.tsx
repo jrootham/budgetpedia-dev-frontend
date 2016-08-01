@@ -96,6 +96,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                     }
                 )
             }
+            // console.log('sending updateCellsDataseriesName', budgetNode)
             this._stateActions.updateCellsDataseriesName(cellslist)
             budgetNode.newCells = null
             budgetNode.updated = false

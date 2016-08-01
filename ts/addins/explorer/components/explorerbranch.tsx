@@ -5,6 +5,7 @@
     - add input fields to title, explorer header, and branch rightmost box
       to allow textual explanations of pages
     - add control to explorer header to toggle show/hide controls of charts
+    - have per unit and performance views
 */
 'use strict'
 
@@ -46,6 +47,7 @@ export interface ExplorerBranchActions {
     changeFacet: Function,
     updateCellChartSelection: Function,  
     updateCellChartCode: Function,
+    updateCellsDataseriesName: Function,
 }
 
 interface DeclarationData {
@@ -248,6 +250,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 break
             }
             case branchActionTypes.CHANGE_FACET: {
+                // console.log('processing change facet')
                 this._processChangeFacetStateChange(budgetBranch)
                 break
             }
@@ -448,6 +451,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let actions = Object.assign({}, this._stateActions)
             actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid)
             actions.updateCellChartCode = this._stateActions.updateCellChartCode(budgetNode.uid)
+            // actions.updateCellsDataseriesName = this._stateActions.updateCellsDataseriesName(budgetNode.uid)
 
             return <ExporerNode
                 key = {nodeindex}
