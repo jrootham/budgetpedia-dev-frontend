@@ -137,9 +137,15 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         }
     }
 
-    doAddBranch = () => {
+    addBranch = branchuid => {
+        // console.log('adding branch from', branchuid)
         let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
         this.props.addBranchDeclaration(defaultSettings)        
+    }
+
+    removeBranch = branchuid => {
+        // console.log('removing branch', branchuid)
+        this.props.removeBranchDeclaration(branchuid)
     }
 
     /*
@@ -314,7 +320,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             let budgetBranches = explorer.state.budgetBranches
 
-            let segments = budgetBranches.map((budgetBranch, branchIndex) => {
+            let segments = budgetBranches.map((budgetBranch:BudgetBranch, branchIndex) => {
                 let actionFunctions:MappedBranchActions = {
                     addCellDeclarations: this.addCellDeclarations(budgetBranch.uid),
                     updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
@@ -336,7 +342,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 // ----------------[ Contains ExplorerBranch ]-------------------------
 
                 return <Card initiallyExpanded 
-                    key = {branchIndex}
+                    key = {budgetBranch.uid}
                     onExpandChange = {() => {
                         this.onExpandChange()
                     }}
@@ -361,14 +367,20 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     <CardActions expandable>
                         <FloatingActionButton
                             onTouchTap = {
-                                () => {
-                                    this.doAddBranch()
-                                }
+                                (uid => () => {
+                                    this.addBranch(uid)
+                                })(budgetBranch.uid)
                             }
                         >
                             <ContentAdd />
                         </FloatingActionButton>
-                        {(branchIndex!=0)?<FloatingActionButton secondary={true}>
+                        {(branchIndex!=0)?<FloatingActionButton 
+                            onTouchTap = {
+                                (uid => () => {
+                                    this.removeBranch(uid)
+                                })(budgetBranch.uid)
+                            }
+                            secondary={true}>
                             <ContentRemove />
                         </FloatingActionButton>:null}
                     </CardActions>

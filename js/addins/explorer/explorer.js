@@ -21,9 +21,12 @@ let Explorer = class extends Component {
             budgetBranches: [],
             dialogOpen: false,
         };
-        this.doAddBranch = () => {
+        this.addBranch = branchuid => {
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
             this.props.addBranchDeclaration(defaultSettings);
+        };
+        this.removeBranch = branchuid => {
+            this.props.removeBranchDeclaration(branchuid);
         };
         this.harmonizeBranches = (budgetBranches, branchList, branchesById) => {
             let newBranches = budgetBranches.filter((branch) => {
@@ -129,11 +132,13 @@ let Explorer = class extends Component {
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,
                 };
-                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex, onExpandChange: () => {
+                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: budgetBranch.uid, onExpandChange: () => {
                     this.onExpandChange();
-                }}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch " + (branchIndex + 1)), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: () => {
-                    this.doAddBranch();
-                }}, React.createElement(add_1.default, null)), (branchIndex != 0) ? React.createElement(FloatingActionButton_1.default, {secondary: true}, React.createElement(remove_1.default, null)) : null));
+                }}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch " + (branchIndex + 1)), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
+                    this.addBranch(uid);
+                })(budgetBranch.uid)}, React.createElement(add_1.default, null)), (branchIndex != 0) ? React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
+                    this.removeBranch(uid);
+                })(budgetBranch.uid), secondary: true}, React.createElement(remove_1.default, null)) : null));
             });
             return segments;
         };
