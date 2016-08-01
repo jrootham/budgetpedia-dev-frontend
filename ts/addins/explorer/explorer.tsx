@@ -374,7 +374,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         >
                             <ContentAdd />
                         </FloatingActionButton>
-                        {(branchIndex!=0)?<FloatingActionButton 
+                        {( budgetBranches.length > 1 )?<FloatingActionButton 
                             onTouchTap = {
                                 (uid => () => {
                                     this.removeBranch(uid)

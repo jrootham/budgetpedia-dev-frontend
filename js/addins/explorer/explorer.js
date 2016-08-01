@@ -136,7 +136,7 @@ let Explorer = class extends Component {
                     this.onExpandChange();
                 }}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch " + (branchIndex + 1)), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
                     this.addBranch(uid);
-                })(budgetBranch.uid)}, React.createElement(add_1.default, null)), (branchIndex != 0) ? React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
+                })(budgetBranch.uid)}, React.createElement(add_1.default, null)), (budgetBranches.length > 1) ? React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
                     this.removeBranch(uid);
                 })(budgetBranch.uid), secondary: true}, React.createElement(remove_1.default, null)) : null));
             });
