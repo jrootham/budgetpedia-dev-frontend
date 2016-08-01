@@ -66,6 +66,9 @@ let Explorer = class extends Component {
         this.addCellDeclarations = branchuid => (nodeuid, settingslist) => this.props.addCellDeclarations(branchuid, nodeuid, settingslist);
         this.updateCellChartSelection = branchuid => nodeuid => (celluid, selection) => (this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection));
         this.updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode);
+        this.onExpandChange = () => {
+            this.props.resetLastAction();
+        };
     }
     componentWillMount() {
         let { branchList, branchesById } = this.props.declarationData;
@@ -126,7 +129,9 @@ let Explorer = class extends Component {
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,
                 };
-                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch " + (branchIndex + 1)), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: () => {
+                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: branchIndex, onExpandChange: () => {
+                    this.onExpandChange();
+                }}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch " + (branchIndex + 1)), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: () => {
                     this.doAddBranch();
                 }}, React.createElement(add_1.default, null)), (branchIndex != 0) ? React.createElement(FloatingActionButton_1.default, {secondary: true}, React.createElement(remove_1.default, null)) : null));
             });

@@ -161,7 +161,7 @@ let defaultState = {
     type: undefined, branchuid: undefined, nodeuid: undefined, celluid: undefined, explorer: undefined,
 };
 let lastAction = (state = defaultState, action) => {
-    if (!action.payload) {
+    if (!action.payload && !(action.type == actions_1.types.RESET_LAST_ACTION)) {
         let newstate = Object.assign({}, defaultState);
         newstate.type = action.type;
         return newstate;
@@ -172,6 +172,7 @@ let lastAction = (state = defaultState, action) => {
         case actions_1.types.RESET_LAST_ACTION: {
             let newstate = Object.assign({}, defaultState);
             newstate.type = action.type;
+            newstate.explorer = action.meta.explorer;
             return newstate;
         }
         default: {

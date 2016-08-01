@@ -191,7 +191,7 @@ let defaultState = {
 
 let lastAction = (state = defaultState , action) => {
     // console.log('action',action)
-    if (!action.payload) {
+    if (!action.payload && !(action.type == actiontypes.RESET_LAST_ACTION)) {
         let newstate = Object.assign({}, defaultState)
         newstate.type = action.type
         return newstate
@@ -203,6 +203,7 @@ let lastAction = (state = defaultState , action) => {
         case actiontypes.RESET_LAST_ACTION: {
             let newstate = Object.assign({}, defaultState)
             newstate.type = action.type
+            newstate.explorer = action.meta.explorer
             return newstate
         }
 

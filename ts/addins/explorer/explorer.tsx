@@ -233,6 +233,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     private updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode)
 
+    onExpandChange = () => {
+        // console.log('sending resetLastAction')
+        this.props.resetLastAction()
+    }
+
     // updateIndexChartSelections = branchIndex => {
     //     let budgetBranch = this.state.budgetBranches[branchIndex]
     //     updateBranchChartSelections(budgetBranch.nodes)
@@ -329,7 +334,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 // ----------------[ Contains ExplorerBranch ]-------------------------
 
                 return <Card initiallyExpanded 
-                    key = {branchIndex}>
+                    key = {branchIndex}
+                    onExpandChange = {() => {
+                        this.onExpandChange()
+                    }}
+                    >
 
                     <CardTitle
                         actAsExpander={true}
