@@ -234,7 +234,6 @@ class ExplorerBranch extends Component {
         let { branchuid } = lastAction;
         if (branchuid) {
             let retval = (nextProps.budgetBranch.uid == branchuid) ? true : false;
-            console.log('branch', retval, branchuid, lastAction.type);
             return retval;
         }
         return true;
@@ -251,7 +250,6 @@ class ExplorerBranch extends Component {
         if (nodeList.length > branchNodes.length) {
             if (this.harmonizecount <= 0) {
                 console.log('harmonize error', nodeList, branchNodes);
-                throw Error('error harmonizing branch nodes');
             }
             this.harmonizecount--;
             let nodeIndex = branchNodes.length;

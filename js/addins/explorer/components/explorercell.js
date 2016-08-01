@@ -19,7 +19,6 @@ class ExplorerCell extends Component {
         let { celluid } = lastAction;
         if (celluid) {
             let retval = (nextProps.budgetCell.uid == celluid) ? true : false;
-            console.log('cell', retval, celluid, lastAction.type);
             return retval;
         }
         return true;

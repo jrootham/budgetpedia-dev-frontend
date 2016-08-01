@@ -80,6 +80,7 @@ interface MappedExplorerActions extends MappedBranchActions {
     // actions composed with dispatch
     addBranchDeclaration:Function, // dispatcher from ExplorerActions through connect
     removeBranchDeclaration:Function,
+    resetLastAction:Function,
 }
 
 interface MappedActions extends MappedExplorerActions{
@@ -126,8 +127,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
             this.props.addBranchDeclaration(defaultSettings)
         } else {
+            // this.props.restoreBranches()
             let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
             budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById)
+            // console.log('setState for branches')
             this.setState({
                 budgetBranches,
             })
@@ -146,8 +149,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     */
     harmonizeBranches = (budgetBranches, branchList, branchesById) => {
         // delete branches no longer required
-        let newBranches = budgetBranches.filter((node) => {
-            return !!branchesById[node.uid]
+        let newBranches = budgetBranches.filter((branch) => {
+            return !!branchesById[branch.uid]
         })
         let length = newBranches.length
         for ( let i = 0; i < branchList.length ; i++ ) {
@@ -190,6 +193,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         this.setState({
             budgetBranches,
         })
+    }
+
+    componentWillUnmount() {
+        this.props.resetLastAction()
     }
 
     handleDialogOpen = () => {
@@ -425,7 +432,8 @@ Explorer = connect(mapStateToProps, {
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
     changeTab: ExplorerActions.changeTab,
     updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
-    updateCellChartCode: ExplorerActions.updateCellChartCode
+    updateCellChartCode: ExplorerActions.updateCellChartCode,
+    resetLastAction: ExplorerActions.resetLastAction,
     // changeChart
     // changeSelection
     // toggleInflationAdjustment

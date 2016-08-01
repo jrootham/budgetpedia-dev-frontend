@@ -18,6 +18,7 @@ export namespace types {
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
     export const CHANGE_TAB = 'CHANGE_TAB'
     export const UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME'
+    export const RESET_LAST_ACTION = 'RESET_LAST_ACTION'
 }
 
 export namespace branchTypes {
@@ -109,7 +110,7 @@ const _addCellDeclaration = createAction(
     })
 )
 
-export const addCellDeclarations = (branchuid, nodeuid,settingslist) => {
+export const addCellDeclarations = (branchuid, nodeuid, settingslist) => {
     return dispatch => {
         for (let settings of settingslist) {
             settings.celluid = uuid.v4()
@@ -144,6 +145,12 @@ interface CellDataseriesNameItem {
 export const updateCellsDataseriesName = createAction(
     types.UPDATE_CELLS_DATASERIESNAME, (cellItemList:CellDataseriesNameItem[]) => ({
         cellItemList,
+    })
+)
+
+export const resetLastAction = createAction(
+    types.RESET_LAST_ACTION, () => ({
+
     })
 )
     

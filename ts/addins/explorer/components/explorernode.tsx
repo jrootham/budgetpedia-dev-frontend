@@ -68,10 +68,12 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
 
         if (nodeDeclaration.cellList == null) {
+            // console.log('creating new cell declarations', budgetNode)
             // get controlData for cellList
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
         } else {
+            // console.log('harmonizing cells', budgetNode)
             this._harmonizeCells()
         }
     }
@@ -122,7 +124,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         let { nodeuid } = lastAction
         if (nodeuid) {
             let retval = (nextProps.budgetNode.uid == nodeuid)? true: false
-            console.log('node',retval, nodeuid, lastAction.type)
+            // console.log('node',retval, nodeuid, lastAction.type)
             return retval
         }
         return true
@@ -203,6 +205,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
             for (let cellid of cellList) {
                 cellParms.push(cellsById[cellid])
             }
+            // this.props.restoreCells()
             let newcells = budgetNode.setCells(cellParms)
             if (newcells.length == cellList.length) {
                 this.harmonizecount = null

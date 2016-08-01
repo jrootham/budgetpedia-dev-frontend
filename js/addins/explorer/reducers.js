@@ -164,14 +164,24 @@ let lastAction = (state = defaultState, action) => {
     if (!action.payload) {
         let newstate = Object.assign({}, defaultState);
         newstate.type = action.type;
-        return state;
+        return newstate;
     }
+    let { type } = action;
     let newstate = Object.assign({}, state);
-    newstate.type = action.type;
-    newstate.branchuid = action.payload.branchuid;
-    newstate.nodeuid = action.payload.nodeuid;
-    newstate.celluid = action.payload.celluid;
-    return newstate;
+    switch (type) {
+        case actions_1.types.RESET_LAST_ACTION: {
+            let newstate = Object.assign({}, defaultState);
+            newstate.type = action.type;
+            return newstate;
+        }
+        default: {
+            newstate.type = action.type;
+            newstate.branchuid = action.payload.branchuid;
+            newstate.nodeuid = action.payload.nodeuid;
+            newstate.celluid = action.payload.celluid;
+            return newstate;
+        }
+    }
 };
 let generation = (state = null, action) => {
     return generationcounter++;

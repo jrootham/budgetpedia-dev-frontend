@@ -26,8 +26,8 @@ let Explorer = class extends Component {
             this.props.addBranchDeclaration(defaultSettings);
         };
         this.harmonizeBranches = (budgetBranches, branchList, branchesById) => {
-            let newBranches = budgetBranches.filter((node) => {
-                return !!branchesById[node.uid];
+            let newBranches = budgetBranches.filter((branch) => {
+                return !!branchesById[branch.uid];
             });
             let length = newBranches.length;
             for (let i = 0; i < branchList.length; i++) {
@@ -95,6 +95,9 @@ let Explorer = class extends Component {
             budgetBranches: budgetBranches,
         });
     }
+    componentWillUnmount() {
+        this.props.resetLastAction();
+    }
     render() {
         let explorer = this;
         let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
@@ -150,7 +153,8 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
     changeTab: ExplorerActions.changeTab,
     updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
-    updateCellChartCode: ExplorerActions.updateCellChartCode
+    updateCellChartCode: ExplorerActions.updateCellChartCode,
+    resetLastAction: ExplorerActions.resetLastAction,
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;

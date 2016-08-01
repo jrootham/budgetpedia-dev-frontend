@@ -137,7 +137,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         this._previousControlData = declarationData // initialize
         budgetBranch.getViewpointData() // .then(...)
         if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
-            setTimeout(()=>{
+            setTimeout(()=> {
                 // this will trigger harmonization between declarations 
                 // and local node instances in componentDidUpdate
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
@@ -166,7 +166,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let { branchuid } = lastAction
         if (branchuid) {
             let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
-            console.log('branch',retval, branchuid, lastAction.type)
+            // console.log('branch',retval, branchuid, lastAction.type)
             return retval
         }
         return true
@@ -197,13 +197,15 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         if (nodeList.length > branchNodes.length) {
             // places sentinal in place in case addNode below fails
             //   generating an infinite loop
+            // console.log('harmonizing branchnodes ', this.harmonizecount )
             if (this.harmonizecount <= 0) {
                 console.log('harmonize error', nodeList, branchNodes)
-                throw Error('error harmonizing branch nodes')
+                // throw Error('error harmonizing branch nodes')
             }
             this.harmonizecount--
             let nodeIndex = branchNodes.length
             let budgetNodeId = nodeList[nodeIndex]
+            // this.props.restoreNodes()
             budgetBranch.addNode( // sets state to trigger a render, and re-visitation of this code
                 budgetNodeId,
                 nodeIndex,
@@ -212,10 +214,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         } else { // otherwise see if there are other cascading actions that have to be taken
             this.harmonizecount = null // reset
             this._controlGlobalStateChange()
-            //     setTimeout(()=>{
-            //         this.props.displayCallbacks.updateChartSelections()
-            //     })
-            // }
         }
     }
 

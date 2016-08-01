@@ -17,6 +17,7 @@ var types;
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
     types.CHANGE_TAB = 'CHANGE_TAB';
     types.UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME';
+    types.RESET_LAST_ACTION = 'RESET_LAST_ACTION';
 })(types = exports.types || (exports.types = {}));
 var branchTypes;
 (function (branchTypes) {
@@ -96,3 +97,4 @@ exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHA
 exports.updateCellsDataseriesName = redux_actions_1.createAction(types.UPDATE_CELLS_DATASERIESNAME, (cellItemList) => ({
     cellItemList: cellItemList,
 }));
+exports.resetLastAction = redux_actions_1.createAction(types.RESET_LAST_ACTION, () => ({}));
