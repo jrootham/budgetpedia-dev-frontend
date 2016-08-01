@@ -1,6 +1,11 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // explorerbranch.tsx
-
+/*
+    TODO: 
+    - add input fields to title, explorer header, and branch rightmost box
+      to allow textual explanations of pages
+    - add control to explorer header to toggle show/hide controls of charts
+*/
 'use strict'
 
 // -------------------[ libraries ]---------------------

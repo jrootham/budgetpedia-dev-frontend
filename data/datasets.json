@@ -5,7 +5,7 @@
             "Name": "Expenditures",
             "Titles": {
                 "Baseline": "Programs",
-                "Categories": "Expenditure Categories"
+                "Categories": "Expenditures"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
@@ -29632,7 +29632,7 @@
             "Name": "Revenues",
             "Titles": {
                 "Baseline": "Programs",
-                "Categories": "Revenue Categories"
+                "Categories": "Revenues"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
@@ -46844,7 +46844,7 @@
             "Name": "Staffing",
             "Titles": {
                 "Baseline": "Programs",
-                "Categories": "Staff Designations"
+                "Categories": "Designations"
             },
             "Units": "FTE",
             "UnitsAlias": "Staffing Level (FTE)",
