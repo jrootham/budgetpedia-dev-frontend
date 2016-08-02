@@ -6,14 +6,14 @@ const Card_1 = require('material-ui/Card');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Dialog_1 = require('material-ui/Dialog');
+const FloatingActionButton_1 = require('material-ui/FloatingActionButton');
+const add_1 = require('material-ui/svg-icons/content/add');
+const remove_1 = require('material-ui/svg-icons/content/remove');
 const explorerbranch_1 = require('./components/explorerbranch');
 const Actions = require('../../core/actions/actions');
 const ExplorerActions = require('./actions');
 const branch_class_1 = require('./classes/branch.class');
 const reducers_1 = require('./reducers');
-const FloatingActionButton_1 = require('material-ui/FloatingActionButton');
-const add_1 = require('material-ui/svg-icons/content/add');
-const remove_1 = require('material-ui/svg-icons/content/remove');
 let Explorer = class extends Component {
     constructor(...args) {
         super(...args);
@@ -149,7 +149,12 @@ let Explorer = class extends Component {
                 };
                 return React.createElement(Card_1.Card, {initiallyExpanded: true, key: budgetBranch.uid, onExpandChange: () => {
                     this.onExpandChange();
-                }}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch " + (branchIndex + 1)), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
+                }}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch " + (branchIndex + 1) + " ", React.createElement("input", {type: "text", onTouchTap: (ev) => { ev.stopPropagation(); }}), React.createElement(IconButton_1.default, {style: {
+                    float: "right",
+                    marginRight: "30px"
+                }, disabled: (branchIndex == (budgetBranches.length - 1)), onTouchTap: (ev) => { ev.stopPropagation(); }, tooltip: "Move down"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_downward")), React.createElement(IconButton_1.default, {style: {
+                    float: "right"
+                }, disabled: (branchIndex == 0), onTouchTap: (ev) => { ev.stopPropagation(); }, tooltip: "Move up"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_upward"))), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
                     this.addBranch(uid);
                 })(budgetBranch.uid)}, React.createElement(add_1.default, null)), (budgetBranches.length > 1) ? React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
                     this.removeBranch(uid);

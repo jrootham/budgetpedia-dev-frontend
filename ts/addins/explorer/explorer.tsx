@@ -37,6 +37,9 @@ import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import ContentRemove from 'material-ui/svg-icons/content/remove'
 
 import ExplorerBranch from './components/explorerbranch'
 
@@ -45,9 +48,6 @@ import * as Actions from '../../core/actions/actions'
 import * as ExplorerActions from './actions'
 import BudgetBranch from './classes/branch.class'
 import { getExplorerDeclarationData } from './reducers'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentAdd from 'material-ui/svg-icons/content/add'
-import ContentRemove from 'material-ui/svg-icons/content/remove'
 
 import {
     ChartParmsObj,
@@ -259,7 +259,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     private updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode)
 
-    onExpandChange = () => {
+    onExpandChange = (expanded) => {
+        // TODO: change background color of title if it is collapsed
         // console.log('sending resetLastAction')
         this.props.resetLastAction()
     }
@@ -361,7 +362,49 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         actAsExpander={true}
                         showExpandableButton={true} >
 
-                        {"Explorer Branch " + (branchIndex +1) } 
+                        {"Explorer Branch " + (branchIndex +1) + " "} 
+                        <input 
+                            type="text" 
+                            onTouchTap = {(ev) => {ev.stopPropagation()}}
+                        />
+
+                        <IconButton
+                            style={{
+                                float:"right",
+                                marginRight:"30px"
+                            }}
+                            disabled = {(branchIndex == (budgetBranches.length - 1))}
+                            onTouchTap = {(ev) => {ev.stopPropagation()}}
+                            tooltip= "Move down"
+                            >
+
+                            <FontIcon
+                                className="material-icons"
+                                style = {{ cursor: "pointer" }} >
+
+                                arrow_downward
+
+                            </FontIcon>
+
+                        </IconButton>
+                        <IconButton
+                            style={{
+                                float:"right"
+                            }}
+                            disabled = {(branchIndex == 0)}
+                            onTouchTap = {(ev) => {ev.stopPropagation()}}
+                            tooltip= "Move up"
+                            >
+
+                            <FontIcon
+                                className="material-icons"
+                                style = {{ cursor: "pointer" }} >
+
+                                arrow_upward
+
+                            </FontIcon>
+
+                        </IconButton>
 
                     </CardTitle>
 
