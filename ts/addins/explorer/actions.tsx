@@ -10,15 +10,19 @@ export namespace types {
     export const TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED'
     export const ADD_NODE = 'ADD_NODE'
     export const REMOVE_NODES = 'REMOVE_NODES'
+    export const RESET_LAST_ACTION = 'RESET_LAST_ACTION'
+    export const BRANCH_MOVE_UP = 'BRANCH_MOVE_UP'
+    export const BRANCH_MOVE_DOWN = 'BRANCH_MOVE_DOWN'
+
     export const ADD_CELLS = 'ADD_CELLS'
+    export const CHANGE_TAB = 'CHANGE_TAB'
+    export const UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME'
+    
     export const UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION'
     export const UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE'
     // export const REMOVE_CELLS = 'REMOVE_CELLS'
     export const CHANGE_CHART_CODE = 'CHANGE_CHART_CODE'
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
-    export const CHANGE_TAB = 'CHANGE_TAB'
-    export const UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME'
-    export const RESET_LAST_ACTION = 'RESET_LAST_ACTION'
 }
 
 export namespace branchTypes {
@@ -179,6 +183,22 @@ export const resetLastAction = createAction(
     })
 )
     
+export const branchMoveUp = createAction(
+    types.BRANCH_MOVE_UP, (branchuid) => ({
+        branchuid,
+    }), () => ({
+        explorer:false
+    })
+)
+
+export const branchMoveDown = createAction(
+    types.BRANCH_MOVE_DOWN, (branchuid) => ({
+        branchuid,
+    }), () => ({
+        explorer:false
+    })
+)
+
 // export const removeCellDeclarations = createAction(
 //     types.REMOVE_CELLS,(nodeuid,uidlist) => ({
 //         uidlist,

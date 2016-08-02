@@ -84,8 +84,14 @@ let Explorer = class extends Component {
         this.addCellDeclarations = branchuid => (nodeuid, settingslist) => this.props.addCellDeclarations(branchuid, nodeuid, settingslist);
         this.updateCellChartSelection = branchuid => nodeuid => (celluid, selection) => (this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection));
         this.updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode);
-        this.onExpandChange = () => {
+        this.onExpandChange = (expanded) => {
             this.props.resetLastAction();
+        };
+        this.branchMoveUp = branchuid => {
+            this.props.branchMoveUp(branchuid);
+        };
+        this.branchMoveDown = branchuid => {
+            this.props.branchMoveDown(branchuid);
         };
     }
     componentWillMount() {
@@ -147,14 +153,20 @@ let Explorer = class extends Component {
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,
                 };
-                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: budgetBranch.uid, onExpandChange: () => {
-                    this.onExpandChange();
-                }}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Explorer Branch " + (branchIndex + 1) + " ", React.createElement("input", {type: "text", onTouchTap: (ev) => { ev.stopPropagation(); }}), React.createElement(IconButton_1.default, {style: {
+                return React.createElement(Card_1.Card, {initiallyExpanded: true, key: budgetBranch.uid, onExpandChange: (expanded) => {
+                    this.onExpandChange(expanded);
+                }}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Exhibit " + (branchIndex + 1) + " ", React.createElement("input", {type: "text", onTouchTap: (ev) => { ev.stopPropagation(); }}), React.createElement(IconButton_1.default, {style: {
                     float: "right",
                     marginRight: "30px"
-                }, disabled: (branchIndex == (budgetBranches.length - 1)), onTouchTap: (ev) => { ev.stopPropagation(); }, tooltip: "Move down"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_downward")), React.createElement(IconButton_1.default, {style: {
+                }, disabled: (branchIndex == (budgetBranches.length - 1)), onTouchTap: (uid => ev => {
+                    ev.stopPropagation();
+                    this.branchMoveDown(uid);
+                })(budgetBranch.uid), tooltip: "Move down"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_downward")), React.createElement(IconButton_1.default, {style: {
                     float: "right"
-                }, disabled: (branchIndex == 0), onTouchTap: (ev) => { ev.stopPropagation(); }, tooltip: "Move up"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_upward"))), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
+                }, disabled: (branchIndex == 0), onTouchTap: (uid => ev => {
+                    ev.stopPropagation();
+                    this.branchMoveUp(uid);
+                })(budgetBranch.uid), tooltip: "Move up"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_upward"))), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
                     this.addBranch(uid);
                 })(budgetBranch.uid)}, React.createElement(add_1.default, null)), (budgetBranches.length > 1) ? React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
                     this.removeBranch(uid);
@@ -180,11 +192,13 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     addCellDeclarations: ExplorerActions.addCellDeclarations,
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeFacet: ExplorerActions.changeFacet,
-    updateCellChartSelection: ExplorerActions.updateCellChartSelection,
+    resetLastAction: ExplorerActions.resetLastAction,
+    branchMoveUp: ExplorerActions.branchMoveUp,
+    branchMoveDown: ExplorerActions.branchMoveDown,
     changeTab: ExplorerActions.changeTab,
+    updateCellChartSelection: ExplorerActions.updateCellChartSelection,
     updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
     updateCellChartCode: ExplorerActions.updateCellChartCode,
-    resetLastAction: ExplorerActions.resetLastAction,
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;

@@ -10,14 +10,16 @@ var types;
     types.TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED';
     types.ADD_NODE = 'ADD_NODE';
     types.REMOVE_NODES = 'REMOVE_NODES';
+    types.RESET_LAST_ACTION = 'RESET_LAST_ACTION';
+    types.BRANCH_MOVE_UP = 'BRANCH_MOVE_UP';
+    types.BRANCH_MOVE_DOWN = 'BRANCH_MOVE_DOWN';
     types.ADD_CELLS = 'ADD_CELLS';
+    types.CHANGE_TAB = 'CHANGE_TAB';
+    types.UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME';
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
     types.UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE';
     types.CHANGE_CHART_CODE = 'CHANGE_CHART_CODE';
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
-    types.CHANGE_TAB = 'CHANGE_TAB';
-    types.UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME';
-    types.RESET_LAST_ACTION = 'RESET_LAST_ACTION';
 })(types = exports.types || (exports.types = {}));
 var branchTypes;
 (function (branchTypes) {
@@ -122,4 +124,14 @@ exports.updateCellsDataseriesName = redux_actions_1.createAction(types.UPDATE_CE
 }));
 exports.resetLastAction = redux_actions_1.createAction(types.RESET_LAST_ACTION, () => ({}), () => ({
     explorer: true
+}));
+exports.branchMoveUp = redux_actions_1.createAction(types.BRANCH_MOVE_UP, (branchuid) => ({
+    branchuid: branchuid,
+}), () => ({
+    explorer: false
+}));
+exports.branchMoveDown = redux_actions_1.createAction(types.BRANCH_MOVE_DOWN, (branchuid) => ({
+    branchuid: branchuid,
+}), () => ({
+    explorer: false
 }));

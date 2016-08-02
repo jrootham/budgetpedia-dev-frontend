@@ -10,7 +10,7 @@ let branchList = (state = [], action) => {
     let { type } = action;
     let newstate;
     switch (type) {
-        case actions_1.types.ADD_BRANCH:
+        case actions_1.types.ADD_BRANCH: {
             let { refbranchuid, branchuid } = action.payload;
             if (!refbranchuid) {
                 newstate = [...state, action.payload.branchuid];
@@ -27,9 +27,45 @@ let branchList = (state = [], action) => {
                 }
             }
             return newstate;
-        case actions_1.types.REMOVE_BRANCH:
+        }
+        case actions_1.types.REMOVE_BRANCH: {
             newstate = state.filter(item => item != action.payload.branchuid);
             return newstate;
+        }
+        case actions_1.types.BRANCH_MOVE_UP: {
+            newstate = [...state];
+            let { branchuid } = action.payload;
+            let pos = newstate.indexOf(branchuid);
+            if (pos == -1) {
+                console.error('System Error: branchuid not found in list', branchuid, newstate);
+                return newstate;
+            }
+            if (pos == 0) {
+                console.log('System Error: branchuid for move up at beginning of list already', branchuid, newstate);
+                return newstate;
+            }
+            let oldbranchuid = newstate[pos - 1];
+            newstate[pos - 1] = branchuid;
+            newstate[pos] = oldbranchuid;
+            return newstate;
+        }
+        case actions_1.types.BRANCH_MOVE_DOWN: {
+            newstate = [...state];
+            let { branchuid } = action.payload;
+            let pos = newstate.indexOf(branchuid);
+            if (pos == -1) {
+                console.error('System Error: branchuid not found in list', branchuid, newstate);
+                return newstate;
+            }
+            if (pos == newstate.length - 1) {
+                console.log('System Error: branchuid for move down at end of list already', branchuid, newstate);
+                return newstate;
+            }
+            let oldbranchuid = newstate[pos + 1];
+            newstate[pos + 1] = branchuid;
+            newstate[pos] = oldbranchuid;
+            return newstate;
+        }
         default:
             return state;
     }

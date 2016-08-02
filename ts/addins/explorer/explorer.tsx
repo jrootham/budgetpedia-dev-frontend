@@ -81,6 +81,8 @@ interface MappedExplorerActions extends MappedBranchActions {
     addBranchDeclaration:Function, // dispatcher from ExplorerActions through connect
     removeBranchDeclaration:Function,
     resetLastAction:Function,
+    branchMoveUp: Function,
+    branchMoveDown: Function,
 }
 
 interface MappedActions extends MappedExplorerActions{
@@ -172,6 +174,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 newBranches.push(budgetBranch)
             }
         }
+        // sort branches into correct order
         let sortedBranches = []
         for ( let i = 0; i < branchList.length ; i++ ) {
             let uid = branchList[i]
@@ -186,7 +189,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             }
             sortedBranches.push(foundbranch[0])
         }        
-        // sort branches into correct order
         return sortedBranches
     }
 
@@ -265,6 +267,13 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         this.props.resetLastAction()
     }
 
+    branchMoveUp = branchuid => {
+        this.props.branchMoveUp(branchuid)
+    }
+
+    branchMoveDown = branchuid => {
+        this.props.branchMoveDown(branchuid)
+    }
     // ===================================================================
     // ---------------------------[ RENDER ]------------------------------ 
 
@@ -331,6 +340,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             let budgetBranches = explorer.state.budgetBranches
 
             let segments = budgetBranches.map((budgetBranch:BudgetBranch, branchIndex) => {
+
                 let actionFunctions:MappedBranchActions = {
                     addCellDeclarations: this.addCellDeclarations(budgetBranch.uid),
                     updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
@@ -353,8 +363,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                 return <Card initiallyExpanded 
                     key = {budgetBranch.uid}
-                    onExpandChange = {() => {
-                        this.onExpandChange()
+                    onExpandChange = {(expanded) => {
+                        this.onExpandChange(expanded)
                     }}
                     >
 
@@ -362,7 +372,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         actAsExpander={true}
                         showExpandableButton={true} >
 
-                        {"Explorer Branch " + (branchIndex +1) + " "} 
+                        {"Exhibit " + (branchIndex + 1 ) + " "} 
                         <input 
                             type="text" 
                             onTouchTap = {(ev) => {ev.stopPropagation()}}
@@ -374,7 +384,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                                 marginRight:"30px"
                             }}
                             disabled = {(branchIndex == (budgetBranches.length - 1))}
-                            onTouchTap = {(ev) => {ev.stopPropagation()}}
+                            onTouchTap = { 
+                                (uid => 
+                                    ev => {
+                                        ev.stopPropagation()
+                                        this.branchMoveDown(uid)
+                                    }
+                                )(budgetBranch.uid)
+                            }
                             tooltip= "Move down"
                             >
 
@@ -392,7 +409,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                                 float:"right"
                             }}
                             disabled = {(branchIndex == 0)}
-                            onTouchTap = {(ev) => {ev.stopPropagation()}}
+                            onTouchTap = { 
+                                (uid => 
+                                    ev => {
+                                        ev.stopPropagation()
+                                        this.branchMoveUp(uid)
+                                    }
+                                )(budgetBranch.uid)
+                            }
                             tooltip= "Move up"
                             >
 
@@ -492,6 +516,7 @@ Explorer = connect(mapStateToProps, {
     // presentation
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
+    // toggleShowControls
 
     // branch actions - components
     addBranchDeclaration:ExplorerActions.addBranchDeclaration,
@@ -504,15 +529,21 @@ Explorer = connect(mapStateToProps, {
     // branch actions - variations
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeFacet: ExplorerActions.changeFacet,
-    updateCellChartSelection: ExplorerActions.updateCellChartSelection,
+    resetLastAction: ExplorerActions.resetLastAction,
+    // toggleInflationAdjustment
+    branchMoveUp: ExplorerActions.branchMoveUp,
+    branchMoveDown: ExplorerActions.branchMoveDown,
+
+    // node actions
     changeTab: ExplorerActions.changeTab,
+
+    // cell actions
+    updateCellChartSelection: ExplorerActions.updateCellChartSelection,
     updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
     updateCellChartCode: ExplorerActions.updateCellChartCode,
-    resetLastAction: ExplorerActions.resetLastAction,
-    // changeChart
-    // changeSelection
-    // toggleInflationAdjustment
     // toggleDelta
+    // toggleVariance
+    
 })(Explorer)
 
 export default Explorer
