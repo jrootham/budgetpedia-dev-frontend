@@ -40,9 +40,10 @@ var cellTypes;
     cellTypes.UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE;
     cellTypes.CHANGE_FACET = types.CHANGE_FACET;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
-exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, settings => ({
+exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, (refbranchuid, settings) => ({
     settings: settings,
     branchuid: uuid.v4(),
+    refbranchuid: refbranchuid,
 }), () => ({
     explorer: true
 }));

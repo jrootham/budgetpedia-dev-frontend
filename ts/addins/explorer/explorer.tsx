@@ -125,7 +125,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         let { branchList, branchesById } = this.props.declarationData
         if (branchList.length == 0) { // initialize explorer with first branch
             let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
-            this.props.addBranchDeclaration(defaultSettings)
+            this.props.addBranchDeclaration(null,defaultSettings)
         } else {
             // this.props.restoreBranches()
             let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
@@ -137,10 +137,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         }
     }
 
-    addBranch = branchuid => {
+    addBranch = refbranchuid => {
         // console.log('adding branch from', branchuid)
         let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
-        this.props.addBranchDeclaration(defaultSettings)        
+        this.props.addBranchDeclaration( refbranchuid, defaultSettings )        
     }
 
     removeBranch = branchuid => {
@@ -158,18 +158,36 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         let newBranches = budgetBranches.filter((branch) => {
             return !!branchesById[branch.uid]
         })
+        // add branches not yet created
         let length = newBranches.length
         for ( let i = 0; i < branchList.length ; i++ ) {
             let uid = branchList[i]
-            let matchingNode = newBranches[i]
-            if (matchingNode && matchingNode.uid == uid) {
-                continue
+            let foundbranch = newBranches.filter(branch => {
+                if (branch.uid == uid) 
+                    return branch
+            })
+            if (foundbranch.length == 0) {
+                let settings = branchesById[uid]
+                let budgetBranch = new BudgetBranch({settings,uid})
+                newBranches.push(budgetBranch)
             }
-            let settings = branchesById[uid]
-            let budgetBranch = new BudgetBranch({settings,uid})
-            newBranches.splice(i,0,budgetBranch)
         }
-        return newBranches
+        let sortedBranches = []
+        for ( let i = 0; i < branchList.length ; i++ ) {
+            let uid = branchList[i]
+            let foundbranch = newBranches.filter(branch => {
+                if (branch.uid == uid)
+                    return branch
+            })
+            if (!(foundbranch.length == 1)) {
+                console.error('System error -- unexpected mismatch between state branch list and explorer branch list',
+                    branchList, newBranches)
+                throw Error('System error -- unexpected mismatch between state branch list and explorer branch list')
+            }
+            sortedBranches.push(foundbranch[0])
+        }        
+        // sort branches into correct order
+        return sortedBranches
     }
 
     /*    
@@ -245,15 +263,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         // console.log('sending resetLastAction')
         this.props.resetLastAction()
     }
-
-    // updateIndexChartSelections = branchIndex => {
-    //     let budgetBranch = this.state.budgetBranches[branchIndex]
-    //     updateBranchChartSelections(budgetBranch.nodes)
-    // }
-
-    // updateChartSelections = branchIndex => () => {
-    //     return this.updateIndexChartSelections(branchIndex)
-    // }
 
     // ===================================================================
     // ---------------------------[ RENDER ]------------------------------ 

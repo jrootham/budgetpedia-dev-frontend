@@ -21,9 +21,9 @@ let Explorer = class extends Component {
             budgetBranches: [],
             dialogOpen: false,
         };
-        this.addBranch = branchuid => {
+        this.addBranch = refbranchuid => {
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
-            this.props.addBranchDeclaration(defaultSettings);
+            this.props.addBranchDeclaration(refbranchuid, defaultSettings);
         };
         this.removeBranch = branchuid => {
             this.props.removeBranchDeclaration(branchuid);
@@ -35,15 +35,30 @@ let Explorer = class extends Component {
             let length = newBranches.length;
             for (let i = 0; i < branchList.length; i++) {
                 let uid = branchList[i];
-                let matchingNode = newBranches[i];
-                if (matchingNode && matchingNode.uid == uid) {
-                    continue;
+                let foundbranch = newBranches.filter(branch => {
+                    if (branch.uid == uid)
+                        return branch;
+                });
+                if (foundbranch.length == 0) {
+                    let settings = branchesById[uid];
+                    let budgetBranch = new branch_class_1.default({ settings: settings, uid: uid });
+                    newBranches.push(budgetBranch);
                 }
-                let settings = branchesById[uid];
-                let budgetBranch = new branch_class_1.default({ settings: settings, uid: uid });
-                newBranches.splice(i, 0, budgetBranch);
             }
-            return newBranches;
+            let sortedBranches = [];
+            for (let i = 0; i < branchList.length; i++) {
+                let uid = branchList[i];
+                let foundbranch = newBranches.filter(branch => {
+                    if (branch.uid == uid)
+                        return branch;
+                });
+                if (!(foundbranch.length == 1)) {
+                    console.error('System error -- unexpected mismatch between state branch list and explorer branch list', branchList, newBranches);
+                    throw Error('System error -- unexpected mismatch between state branch list and explorer branch list');
+                }
+                sortedBranches.push(foundbranch[0]);
+            }
+            return sortedBranches;
         };
         this.handleDialogOpen = () => {
             this.setState({
@@ -77,7 +92,7 @@ let Explorer = class extends Component {
         let { branchList, branchesById } = this.props.declarationData;
         if (branchList.length == 0) {
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
-            this.props.addBranchDeclaration(defaultSettings);
+            this.props.addBranchDeclaration(null, defaultSettings);
         }
         else {
             let budgetBranches = [...this.state.budgetBranches];

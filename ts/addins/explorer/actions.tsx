@@ -47,9 +47,10 @@ export namespace cellTypes {
 // --------------------[ Branch ]---------------------
 
 export const addBranchDeclaration = createAction(
-    types.ADD_BRANCH,settings => ({
+    types.ADD_BRANCH,(refbranchuid, settings) => ({
         settings,
         branchuid: uuid.v4(),
+        refbranchuid,
     }), () => ({
         explorer:true
     })

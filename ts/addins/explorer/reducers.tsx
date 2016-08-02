@@ -14,7 +14,19 @@ let branchList = (state = [], action) => {
     let newstate
     switch (type) {
         case actiontypes.ADD_BRANCH:
-            newstate = [...state,action.payload.branchuid]
+            let {refbranchuid, branchuid} = action.payload
+            if (!refbranchuid) {
+                newstate = [...state,action.payload.branchuid]
+            } else {
+                newstate = [...state] 
+                let index = newstate.indexOf(refbranchuid)
+                if (index == -1) {
+                    console.error('System error; could not find rebranchid', refbranchuid, state)
+                    newstate.push(branchuid)
+                } else {
+                    newstate.splice(index + 1, 0, branchuid)
+                }
+            }
             return newstate
             
         case actiontypes.REMOVE_BRANCH:
