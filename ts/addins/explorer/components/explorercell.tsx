@@ -35,6 +35,10 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         this.props.globalStateActions.updateCellChartCode(budgetCell.uid,explorerChartCode)
     }
 
+    onChangeTimeCode = explorerTimeCode => {
+
+    }
+
     shouldComponentUpdate(nextProps: ExplorerCellProps, nextState) {
         let { lastAction } = nextProps.declarationData
         // console.log('lastAction in cell',lastAction)
@@ -88,8 +92,103 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 graph_id = { graph_id }
                 />
 
+        let explorerTimeCode = 'OneYear'
+
         return <div>
             <div style={{ padding: "3px" }}>
+                <div style = {
+                    {
+                        paddingTop:"10px",
+                        borderRight:"1px solid silver", 
+                        marginRight:"3px", 
+                        position:"relative", 
+                        display:"inline-block"
+                    }
+                }>
+                <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>years</div>
+                <IconButton
+                    tooltip="One year"
+                    tooltipPosition="top-center"
+                    style={
+                        {
+                            border: "inset 1px silver",
+                            backgroundColor: (explorerTimeCode == "OneYear")
+                                ? "rgba(144,238,144,0.5)"
+                                : "rgba(255,255,255,0.5)",
+                            borderRadius:"15%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
+                        }
+                    }
+                    onTouchTap={ e => {
+                        this.onChangeTimeCode('OneYear')
+                    } }>
+                    <SvgIcon style={{height:"36px",width:"36px"}} viewBox = "0 0 36 36" >
+                        <rect x="13" y="13" width="10" height="10" />
+                    </SvgIcon>
+                </IconButton>
+                <IconButton
+                    tooltip="Two years"
+                    tooltipPosition="top-center"
+                    style={
+                        {
+                            border: "outset 1px silver",
+                            backgroundColor: (explorerTimeCode == "Two years")
+                                ? "rgba(144,238,144,0.5)"
+                                : "rgba(255,255,255,0.5)",
+                            borderRadius:"15%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
+                        }
+                    }
+                    onTouchTap={ e => {
+                        this.onChangeTimeCode('TwoYears')
+                    } }>
+                    <SvgIcon style={{height:"36px",width:"36px"}}  viewBox = "0 0 36 36" >
+                      <rect x="4" y="13" width="10" height="10" />
+                      <rect x="22" y="13" width="10" height="10" />
+                    </SvgIcon>
+                </IconButton>
+                <IconButton
+                    tooltip="All years"
+                    tooltipPosition="top-center"
+                    style={
+                        {
+                            border: "outset 1px silver",
+                            backgroundColor: (explorerTimeCode == "AllYears")
+                                ? "rgba(144,238,144,0.5)"
+                                : "rgba(255,255,255,0.5)",
+                            borderRadius:"15%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
+                        }
+                    }
+                    onTouchTap={ e => {
+                        this.onChangeTimeCode('AllYears')
+                    } }>
+                    <SvgIcon style={{height:"36px",width:"36px"}}  viewBox = "0 0 36 36" >
+                        <ellipse cx="6" cy="18" rx="4" ry="4"/>
+                        <ellipse cx="18" cy="18" rx="4" ry="4"/>
+                        <ellipse cx="30" cy="18" rx="4" ry="4"/>
+                    </SvgIcon>
+                </IconButton>
+                </div>
+                <div style = {
+                    {
+                        paddingTop:"10px",
+                        borderRight:"1px solid silver", 
+                        marginRight:"3px", 
+                        position:"relative", 
+                        display:"inline-block"
+                    }
+                }>
+                <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>charts</div>
                 <IconButton
                     tooltip="Column Chart"
                     tooltipPosition="top-center"
@@ -98,7 +197,11 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                             backgroundColor: (explorerChartCode == "ColumnChart")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
-                            borderRadius: "50%"
+                            borderRadius: "50%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
                         }
                     }
                     onTouchTap={ e => {
@@ -114,7 +217,11 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                             backgroundColor: (explorerChartCode == "DonutChart")
                                 ? "rgba(144,238,144,0.5)"
                                 : "transparent",
-                            borderRadius: "50%"
+                            borderRadius: "50%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
                         }
                     }
                     onTouchTap={ e => {
@@ -122,43 +229,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     } }>
                     <FontIcon className="material-icons">donut_small</FontIcon>
                 </IconButton>
-                <IconButton
-                    tooltip="Timeline"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerChartCode == "TimeLine")
-                                ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%"
-                        }
-                    }
-                    disabled
-                    onTouchTap={ e => {
-                        this.onChangeChartCode('Timeline')
-                    } }>
-                    <FontIcon className="material-icons">timeline</FontIcon>
-                </IconButton>
-                <IconButton
-                    tooltip="Stacked chart"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerChartCode == "StackedArea")
-                                ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%"
-                        }
-                    }
-                    disabled
-                    onTouchTap={ e => {
-                        this.onChangeChartCode('StackedArea')
-                    } }>
-                    <SvgIcon style={{height:"24px",width:"24px"}} >
-                        <path d="M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"/>
-                        <path d="M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"/>
-                    </SvgIcon>
-                </IconButton>
+                </div>
             </div>
             <div style={{ position: "absolute", top: 0, right: "72px", zIndex: 1000, padding: "3px" }}>
                 <IconButton tooltip="Information"
@@ -196,5 +267,44 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         </div>
     }
 }
+
+                // <IconButton
+                //     tooltip="Timeline"
+                //     tooltipPosition="top-center"
+                //     style={
+                //         {
+                //             backgroundColor: (explorerChartCode == "TimeLine")
+                //                 ? "rgba(144,238,144,0.5)"
+                //                 : "transparent",
+                //             borderRadius: "50%"
+                //         }
+                //     }
+                //     disabled
+                //     onTouchTap={ e => {
+                //         this.onChangeChartCode('Timeline')
+                //     } }>
+                //     <FontIcon className="material-icons">timeline</FontIcon>
+                // </IconButton>
+                // <IconButton
+                //     tooltip="Stacked chart"
+                //     tooltipPosition="top-center"
+                //     style={
+                //         {
+                //             backgroundColor: (explorerChartCode == "StackedArea")
+                //                 ? "rgba(144,238,144,0.5)"
+                //                 : "transparent",
+                //             borderRadius: "50%"
+                //         }
+                //     }
+                //     disabled
+                //     onTouchTap={ e => {
+                //         this.onChangeChartCode('StackedArea')
+                //     } }>
+                //     <SvgIcon style={{height:"24px",width:"24px"}} >
+                //         <path d="M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"/>
+                //         <path d="M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"/>
+                //     </SvgIcon>
+                // </IconButton>
+
 
 export default ExplorerCell
