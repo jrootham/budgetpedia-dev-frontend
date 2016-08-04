@@ -401,6 +401,38 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 </IconButton>
             </div>
 
+        let harmonizeoptions = 
+            <div style = {
+                {
+                    paddingTop:"10px",
+                    borderLeft:"1px solid silver", 
+                    marginRight:"3px", 
+                    position:"relative", 
+                    display:"inline-block",
+                    float:"right",
+                }
+            }>
+                <div style={{paddingLeft: '3px', position:"absolute",top:"0", left:"0",fontSize:"8px"}}>harmonize</div>
+                <IconButton 
+                    disabled
+                    tooltip="Harmonize years for row"
+                    tooltipPosition="top-center"
+                    style={
+                        {
+                            borderRadius: "50%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
+                        }
+                    }
+                    onTouchTap={ e => {
+                        // this.onChangeChartCode('DataTable')
+                    } }>
+                    <FontIcon className="material-icons">swap_horiz</FontIcon>
+                </IconButton>
+            </div>
+
         let socialoptions = 
             <div style=
                 {
@@ -504,6 +536,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 { deltatoggle }
 
                 { datatable }
+
+                { harmonizeoptions }
 
             </div>
 

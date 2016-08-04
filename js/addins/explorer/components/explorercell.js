@@ -216,6 +216,21 @@ class ExplorerCell extends Component {
         }, onTouchTap: e => {
             this.onChangeChartCode('DataTable');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list")));
+        let harmonizeoptions = React.createElement("div", {style: {
+            paddingTop: "10px",
+            borderLeft: "1px solid silver",
+            marginRight: "3px",
+            position: "relative",
+            display: "inline-block",
+            float: "right",
+        }}, React.createElement("div", {style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "harmonize"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Harmonize years for row", tooltipPosition: "top-center", style: {
+            borderRadius: "50%",
+            padding: "0",
+            height: "36px",
+            width: "36px",
+            marginRight: "3px",
+        }, onTouchTap: e => {
+        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "swap_horiz")));
         let socialoptions = React.createElement("div", {style: {
             paddingTop: "10px",
             float: "right",
@@ -251,7 +266,7 @@ class ExplorerCell extends Component {
             marginLeft: "3px",
         }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")));
         let chart = React.createElement(Chart, {ref: node => { this.props.budgetCell.chartComponent = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id});
-        return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions(), deltatoggle, datatable), chart, React.createElement("div", {style: {
+        return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions(), deltatoggle, datatable, harmonizeoptions), chart, React.createElement("div", {style: {
             position: "absolute",
             bottom: "10px",
             left: "40px",
