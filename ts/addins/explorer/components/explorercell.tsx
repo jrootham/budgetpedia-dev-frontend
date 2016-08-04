@@ -32,7 +32,8 @@ interface ExplorerCellProps {
 class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     state = {
-        timescope: TimeScope[TimeScope.OneYear]
+        timescope: TimeScope[TimeScope.OneYear],
+        deltastate: false,
     }
 
     onChangeChartCode = (explorerChartCode) => {
@@ -47,6 +48,12 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     onChangeTimeCode = explorerTimeCode => {
         this.setState({
             timescope:explorerTimeCode,
+        })
+    }
+
+    onToggleDelta = () => {
+        this.setState({
+            deltastate: !this.state.deltastate
         })
     }
 
@@ -176,17 +183,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 </IconButton>
             </div>
 
-        let chartoptions = 
-            <div style = {
-                {
-                    paddingTop:"10px",
-                    borderRight:"1px solid silver", 
-                    marginRight:"3px", 
-                    position:"relative", 
-                    display:"inline-block"
-                }
-            }>
-                <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>charts</div>
+        let chartoptions = () => {
+
+            let columnchart = 
                 <IconButton
                     tooltip="Column Chart"
                     tooltipPosition="top-center"
@@ -207,6 +206,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     } }>
                     <FontIcon className="material-icons">insert_chart</FontIcon>
                 </IconButton>
+
+            let donutchart = 
                 <IconButton
                     tooltip="Donut Pie Chart"
                     tooltipPosition="top-center"
@@ -227,7 +228,108 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     } }>
                     <FontIcon className="material-icons">donut_small</FontIcon>
                 </IconButton>
+
+            let timeline =
+                <IconButton
+                    tooltip="Timeline"
+                    tooltipPosition="top-center"
+                    style={
+                        {
+                            backgroundColor: (explorerChartCode == "TimeLine")
+                                ? "rgba(144,238,144,0.5)"
+                                : "transparent",
+                            borderRadius: "50%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
+                        }
+                    }
+                    disabled
+                    onTouchTap={ e => {
+                        this.onChangeChartCode('Timeline')
+                    } }>
+                    <FontIcon className="material-icons">timeline</FontIcon>
+                </IconButton>
+
+            let stackedchart = 
+                <IconButton
+                    tooltip="Stacked chart"
+                    tooltipPosition="top-center"
+                    style={
+                        {
+                            backgroundColor: (explorerChartCode == "StackedArea")
+                                ? "rgba(144,238,144,0.5)"
+                                : "transparent",
+                            borderRadius: "50%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
+                        }
+                    }
+                    disabled
+                    onTouchTap={ e => {
+                        this.onChangeChartCode('StackedArea')
+                    } }>
+                    <SvgIcon style={{height:"24px",width:"24px"}} >
+                        <path d="M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"/>
+                        <path d="M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"/>
+                    </SvgIcon>
+                </IconButton>
+
+            let proportionalchart =
+                <IconButton
+                    tooltip="Proportional chart"
+                    tooltipPosition="top-center"
+                    style={
+                        {
+                            backgroundColor: (explorerChartCode == "Proportional")
+                                ? "rgba(144,238,144,0.5)"
+                                : "transparent",
+                            borderRadius: "50%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
+                        }
+                    }
+                    disabled
+                    onTouchTap={ e => {
+                        this.onChangeChartCode('Proportional')
+                    } }>
+                    <FontIcon className="material-icons">view_stream</FontIcon>
+                </IconButton>
+
+
+            let chartoptions
+
+            switch (this.state.timescope) {
+                case TimeScope[TimeScope.OneYear]:
+                    chartoptions = [ columnchart, donutchart ]
+                    break;
+                case TimeScope[TimeScope.TwoYears]:
+                    chartoptions = [ columnchart ]
+                    break;
+                case TimeScope[TimeScope.AllYears]:
+                    chartoptions = [ timeline, stackedchart, proportionalchart ]
+                    break;
+            }
+            
+
+            return <div style = {
+                {
+                    paddingTop:"10px",
+                    borderRight:"1px solid silver", 
+                    marginRight:"3px", 
+                    position:"relative", 
+                    display:"inline-block"
+                }
+            }>
+                <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>charts</div>
+                { chartoptions }
             </div>
+        }
 
 
         let deltatoggle = (this.state.timescope != TimeScope[TimeScope.OneYear])?
@@ -242,15 +344,15 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             }>
                 <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>delta</div>
                 <IconButton 
-                    disabled
+                    disabled = {false}
                     tooltip="Year-over-year change"
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (explorerChartCode == "Delta")
+                            backgroundColor: (this.state.deltastate)
                                 ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%",
+                                : "rgba(255,255,255,0.5)",
+                            borderRadius:"15%",
                             padding:"0",
                             height:"36px",
                             width:"36px",
@@ -258,7 +360,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         }
                     }
                     onTouchTap={ e => {
-                        this.onChangeChartCode('Delta')
+                        this.onToggleDelta()
                     } }>
                     <FontIcon className="material-icons">change_history</FontIcon>
                 </IconButton>
@@ -397,7 +499,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
                 { timescopes }
 
-                { chartoptions }
+                { chartoptions() }
 
                 { deltatoggle }
 
@@ -426,44 +528,5 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         </div>
     }
 }
-
-                // <IconButton
-                //     tooltip="Timeline"
-                //     tooltipPosition="top-center"
-                //     style={
-                //         {
-                //             backgroundColor: (explorerChartCode == "TimeLine")
-                //                 ? "rgba(144,238,144,0.5)"
-                //                 : "transparent",
-                //             borderRadius: "50%"
-                //         }
-                //     }
-                //     disabled
-                //     onTouchTap={ e => {
-                //         this.onChangeChartCode('Timeline')
-                //     } }>
-                //     <FontIcon className="material-icons">timeline</FontIcon>
-                // </IconButton>
-                // <IconButton
-                //     tooltip="Stacked chart"
-                //     tooltipPosition="top-center"
-                //     style={
-                //         {
-                //             backgroundColor: (explorerChartCode == "StackedArea")
-                //                 ? "rgba(144,238,144,0.5)"
-                //                 : "transparent",
-                //             borderRadius: "50%"
-                //         }
-                //     }
-                //     disabled
-                //     onTouchTap={ e => {
-                //         this.onChangeChartCode('StackedArea')
-                //     } }>
-                //     <SvgIcon style={{height:"24px",width:"24px"}} >
-                //         <path d="M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"/>
-                //         <path d="M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"/>
-                //     </SvgIcon>
-                // </IconButton>
-
 
 export default ExplorerCell
