@@ -238,6 +238,38 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         display:"inline-block"
                     }
                 }>
+                    <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>delta</div>
+                    <IconButton 
+                        disabled
+                        tooltip="Delta"
+                        tooltipPosition="top-center"
+                        style={
+                            {
+                                backgroundColor: (explorerChartCode == "Delta")
+                                    ? "rgba(144,238,144,0.5)"
+                                    : "transparent",
+                                borderRadius: "50%",
+                                padding:"0",
+                                height:"36px",
+                                width:"36px",
+                                marginRight:"3px",
+                            }
+                        }
+                        onTouchTap={ e => {
+                            this.onChangeChartCode('Delta')
+                        } }>
+                        <FontIcon className="material-icons">change_history</FontIcon>
+                    </IconButton>
+                </div>
+                <div style = {
+                    {
+                        paddingTop:"10px",
+                        borderRight:"1px solid silver", 
+                        marginRight:"3px", 
+                        position:"relative", 
+                        display:"inline-block"
+                    }
+                }>
                     <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>data</div>
                     <IconButton 
                         disabled

@@ -119,6 +119,23 @@ class ExplorerCell extends Component {
             marginRight: "3px",
             position: "relative",
             display: "inline-block"
+        }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "delta"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Delta", tooltipPosition: "top-center", style: {
+            backgroundColor: (explorerChartCode == "Delta")
+                ? "rgba(144,238,144,0.5)"
+                : "transparent",
+            borderRadius: "50%",
+            padding: "0",
+            height: "36px",
+            width: "36px",
+            marginRight: "3px",
+        }, onTouchTap: e => {
+            this.onChangeChartCode('Delta');
+        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "change_history"))), React.createElement("div", {style: {
+            paddingTop: "10px",
+            borderRight: "1px solid silver",
+            marginRight: "3px",
+            position: "relative",
+            display: "inline-block"
         }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "data"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Data Table", tooltipPosition: "top-center", style: {
             backgroundColor: (explorerChartCode == "DataTable")
                 ? "rgba(144,238,144,0.5)"
