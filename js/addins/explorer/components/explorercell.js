@@ -5,15 +5,22 @@ var { Chart } = require('../../../../forked/react-google-charts/Chart.js');
 const IconButton_1 = require('material-ui/IconButton');
 const FontIcon_1 = require('material-ui/FontIcon');
 const SvgIcon_1 = require('material-ui/SvgIcon');
+const constants_1 = require('../constants');
 class ExplorerCell extends Component {
     constructor(...args) {
         super(...args);
+        this.state = {
+            timescope: constants_1.TimeScope[constants_1.TimeScope.OneYear]
+        };
         this.onChangeChartCode = (explorerChartCode) => {
             let { budgetCell } = this.props;
             budgetCell.switchChartCode(explorerChartCode);
             this.props.globalStateActions.updateCellChartCode(budgetCell.uid, explorerChartCode);
         };
         this.onChangeTimeCode = explorerTimeCode => {
+            this.setState({
+                timescope: explorerTimeCode,
+            });
         };
     }
     shouldComponentUpdate(nextProps, nextState) {
@@ -44,16 +51,14 @@ class ExplorerCell extends Component {
         if (!expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4';
         }
-        let chart = React.createElement(Chart, {ref: node => { this.props.budgetCell.chartComponent = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id});
-        let explorerTimeCode = 'OneYear';
-        return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, React.createElement("div", {style: {
+        let timescopes = React.createElement("div", {style: {
             paddingTop: "10px",
             borderRight: "1px solid silver",
             marginRight: "3px",
             position: "relative",
             display: "inline-block"
         }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "years"), React.createElement(IconButton_1.default, {tooltip: "One year", tooltipPosition: "top-center", style: {
-            backgroundColor: (explorerTimeCode == "OneYear")
+            backgroundColor: (this.state.timescope == constants_1.TimeScope[constants_1.TimeScope.OneYear])
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
             borderRadius: "15%",
@@ -62,9 +67,9 @@ class ExplorerCell extends Component {
             width: "36px",
             marginRight: "3px",
         }, onTouchTap: e => {
-            this.onChangeTimeCode('OneYear');
+            this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.OneYear]);
         }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "13", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "Two years", tooltipPosition: "top-center", style: {
-            backgroundColor: (explorerTimeCode == "Two years")
+            backgroundColor: (this.state.timescope == constants_1.TimeScope[constants_1.TimeScope.TwoYears])
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
             borderRadius: "15%",
@@ -73,9 +78,9 @@ class ExplorerCell extends Component {
             width: "36px",
             marginRight: "3px",
         }, onTouchTap: e => {
-            this.onChangeTimeCode('TwoYears');
-        }, disabled: true}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", style: {
-            backgroundColor: (explorerTimeCode == "AllYears")
+            this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.TwoYears]);
+        }, disabled: false}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", style: {
+            backgroundColor: (this.state.timescope == constants_1.TimeScope[constants_1.TimeScope.AllYears])
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
             borderRadius: "15%",
@@ -84,8 +89,9 @@ class ExplorerCell extends Component {
             width: "36px",
             marginRight: "3px",
         }, onTouchTap: e => {
-            this.onChangeTimeCode('AllYears');
-        }, disabled: true}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("ellipse", {cx: "6", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "18", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "30", cy: "18", rx: "4", ry: "4"})))), React.createElement("div", {style: {
+            this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.AllYears]);
+        }, disabled: false}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("ellipse", {cx: "6", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "18", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "30", cy: "18", rx: "4", ry: "4"}))));
+        let chartoptions = React.createElement("div", {style: {
             paddingTop: "10px",
             borderRight: "1px solid silver",
             marginRight: "3px",
@@ -113,30 +119,34 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeChartCode('DonutChart');
-        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "donut_small"))), React.createElement("div", {style: {
+        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "donut_small")));
+        let deltatoggle = (this.state.timescope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ?
+            React.createElement("div", {style: {
+                paddingTop: "10px",
+                borderRight: "1px solid silver",
+                marginRight: "3px",
+                position: "relative",
+                display: "inline-block"
+            }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "delta"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Year-over-year change", tooltipPosition: "top-center", style: {
+                backgroundColor: (explorerChartCode == "Delta")
+                    ? "rgba(144,238,144,0.5)"
+                    : "transparent",
+                borderRadius: "50%",
+                padding: "0",
+                height: "36px",
+                width: "36px",
+                marginRight: "3px",
+            }, onTouchTap: e => {
+                this.onChangeChartCode('Delta');
+            }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "change_history"))) : null;
+        let datatable = React.createElement("div", {style: {
             paddingTop: "10px",
-            borderRight: "1px solid silver",
+            borderLeft: "1px solid silver",
             marginRight: "3px",
             position: "relative",
-            display: "inline-block"
-        }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "delta"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Delta", tooltipPosition: "top-center", style: {
-            backgroundColor: (explorerChartCode == "Delta")
-                ? "rgba(144,238,144,0.5)"
-                : "transparent",
-            borderRadius: "50%",
-            padding: "0",
-            height: "36px",
-            width: "36px",
-            marginRight: "3px",
-        }, onTouchTap: e => {
-            this.onChangeChartCode('Delta');
-        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "change_history"))), React.createElement("div", {style: {
-            paddingTop: "10px",
-            borderRight: "1px solid silver",
-            marginRight: "3px",
-            position: "relative",
-            display: "inline-block"
-        }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "data"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Data Table", tooltipPosition: "top-center", style: {
+            display: "inline-block",
+            float: "right",
+        }}, React.createElement("div", {style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "data"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Data Table", tooltipPosition: "top-center", style: {
             backgroundColor: (explorerChartCode == "DataTable")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
@@ -147,13 +157,8 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeChartCode('DataTable');
-        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list")))), chart, React.createElement("div", {style: {
-            position: "absolute",
-            bottom: "10px",
-            left: "40px",
-            fontSize: "9px",
-            fontStyle: "italic",
-        }}, expandable ? 'drill down' : 'no drill down'), React.createElement("div", {style: { padding: "3px" }}, React.createElement("div", {style: {
+        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list")));
+        let socialoptions = React.createElement("div", {style: {
             paddingTop: "10px",
             float: "right",
             position: "relative",
@@ -168,7 +173,8 @@ class ExplorerCell extends Component {
             width: "36px",
             marginRight: "3px",
             marginLeft: "3px",
-        }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "announcement"))), React.createElement("div", {style: {
+        }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "announcement")));
+        let informationoptions = React.createElement("div", {style: {
             float: "right",
             paddingTop: "10px",
             borderLeft: "1px solid silver",
@@ -185,7 +191,15 @@ class ExplorerCell extends Component {
             width: "36px",
             marginRight: "3px",
             marginLeft: "3px",
-        }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")))));
+        }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")));
+        let chart = React.createElement(Chart, {ref: node => { this.props.budgetCell.chartComponent = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id});
+        return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions, deltatoggle, datatable), chart, React.createElement("div", {style: {
+            position: "absolute",
+            bottom: "10px",
+            left: "40px",
+            fontSize: "9px",
+            fontStyle: "italic",
+        }}, expandable ? 'drill down' : 'no drill down'), React.createElement("div", {style: { padding: "3px" }}, socialoptions, informationoptions));
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
