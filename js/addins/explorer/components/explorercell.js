@@ -74,7 +74,7 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeTimeCode('TwoYears');
-        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", style: {
+        }, disabled: true}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", style: {
             backgroundColor: (explorerTimeCode == "AllYears")
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
@@ -85,7 +85,7 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeTimeCode('AllYears');
-        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("ellipse", {cx: "6", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "18", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "30", cy: "18", rx: "4", ry: "4"})))), React.createElement("div", {style: {
+        }, disabled: true}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("ellipse", {cx: "6", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "18", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "30", cy: "18", rx: "4", ry: "4"})))), React.createElement("div", {style: {
             paddingTop: "10px",
             borderRight: "1px solid silver",
             marginRight: "3px",
@@ -124,13 +124,45 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeChartCode('DataTable');
-        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list")))), React.createElement("div", {style: { position: "absolute", top: 0, right: "72px", zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Information", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "info_outline"))), React.createElement("div", {style: { position: "absolute", top: 0, right: "36px", zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Shared stories", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "share"))), React.createElement("div", {style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Calls to action", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "announcement"))), chart, React.createElement("div", {style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list"))), React.createElement("div", {style: { position: "absolute", bottom: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note"))), React.createElement("div", {style: {
+        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list")))), chart, React.createElement("div", {style: {
             position: "absolute",
-            bottom: 0,
+            bottom: "10px",
             left: "40px",
             fontSize: "9px",
             fontStyle: "italic",
-        }}, expandable ? 'drill down' : 'no drill down'));
+        }}, expandable ? 'drill down' : 'no drill down'), React.createElement("div", {style: { padding: "3px" }}, React.createElement("div", {style: {
+            float: "right",
+            padding: "3px",
+            position: "relative",
+        }}, React.createElement("div", {style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "social"), React.createElement(IconButton_1.default, {tooltip: "Shared stories", tooltipPosition: "top-center", style: {
+            padding: "0",
+            height: "36px",
+            width: "36px",
+            marginRight: "3px",
+        }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "share")), React.createElement(IconButton_1.default, {tooltip: "Calls to action", tooltipPosition: "top-center", style: {
+            padding: "0",
+            height: "36px",
+            width: "36px",
+            marginRight: "3px",
+            marginLeft: "3px",
+        }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "announcement"))), React.createElement("div", {style: {
+            float: "right",
+            padding: "3px",
+            borderLeft: "1px solid silver",
+            borderRight: "1px solid silver",
+            position: "relative",
+        }}, React.createElement("div", {style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "information"), React.createElement(IconButton_1.default, {tooltip: "Information", tooltipPosition: "top-center", style: {
+            padding: "0",
+            height: "36px",
+            width: "36px",
+            marginRight: "3px",
+        }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "info_outline")), React.createElement(IconButton_1.default, {tooltip: "Technical notes", tooltipPosition: "top-center", style: {
+            padding: "0",
+            height: "36px",
+            width: "36px",
+            marginRight: "3px",
+            marginLeft: "3px",
+        }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")))));
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

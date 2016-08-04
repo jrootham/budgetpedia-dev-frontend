@@ -178,6 +178,7 @@ class ExporerNode extends Component {
             backgroundColor: "Beige",
             verticalAlign: "top",
             width: "400px",
+            borderRight: "1px solid silver",
         }}, React.createElement("div", {style: {
             position: "absolute",
             top: 0,

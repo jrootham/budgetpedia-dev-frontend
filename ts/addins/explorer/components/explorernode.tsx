@@ -305,6 +305,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                     backgroundColor: "Beige",
                     verticalAlign:"top",
                     width:"400px",
+                    borderRight:"1px solid silver",
                 }
             }>
             <div style={

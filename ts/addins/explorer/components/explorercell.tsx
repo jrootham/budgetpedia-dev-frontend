@@ -105,76 +105,78 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         display:"inline-block"
                     }
                 }>
-                <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>years</div>
-                <IconButton
-                    tooltip="One year"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerTimeCode == "OneYear")
-                                ? "rgba(144,238,144,0.5)"
-                                : "rgba(255,255,255,0.5)",
-                            borderRadius:"15%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
+                    <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>years</div>
+                    <IconButton
+                        tooltip="One year"
+                        tooltipPosition="top-center"
+                        style={
+                            {
+                                backgroundColor: (explorerTimeCode == "OneYear")
+                                    ? "rgba(144,238,144,0.5)"
+                                    : "rgba(255,255,255,0.5)",
+                                borderRadius:"15%",
+                                padding:"0",
+                                height:"36px",
+                                width:"36px",
+                                marginRight:"3px",
+                            }
                         }
-                    }
-                    onTouchTap={ e => {
-                        this.onChangeTimeCode('OneYear')
-                    } }>
-                    <SvgIcon style={{height:"36px",width:"36px"}} viewBox = "0 0 36 36" >
-                        <rect x="13" y="13" width="10" height="10" />
-                    </SvgIcon>
-                </IconButton>
-                <IconButton
-                    tooltip="Two years"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerTimeCode == "Two years")
-                                ? "rgba(144,238,144,0.5)"
-                                : "rgba(255,255,255,0.5)",
-                            borderRadius:"15%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
+                        onTouchTap={ e => {
+                            this.onChangeTimeCode('OneYear')
+                        } }>
+                        <SvgIcon style={{height:"36px",width:"36px"}} viewBox = "0 0 36 36" >
+                            <rect x="13" y="13" width="10" height="10" />
+                        </SvgIcon>
+                    </IconButton>
+                    <IconButton
+                        tooltip="Two years"
+                        tooltipPosition="top-center"
+                        style={
+                            {
+                                backgroundColor: (explorerTimeCode == "Two years")
+                                    ? "rgba(144,238,144,0.5)"
+                                    : "rgba(255,255,255,0.5)",
+                                borderRadius:"15%",
+                                padding:"0",
+                                height:"36px",
+                                width:"36px",
+                                marginRight:"3px",
+                            }
                         }
-                    }
-                    onTouchTap={ e => {
-                        this.onChangeTimeCode('TwoYears')
-                    } }>
-                    <SvgIcon style={{height:"36px",width:"36px"}}  viewBox = "0 0 36 36" >
-                      <rect x="4" y="13" width="10" height="10" />
-                      <rect x="22" y="13" width="10" height="10" />
-                    </SvgIcon>
-                </IconButton>
-                <IconButton
-                    tooltip="All years"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerTimeCode == "AllYears")
-                                ? "rgba(144,238,144,0.5)"
-                                : "rgba(255,255,255,0.5)",
-                            borderRadius:"15%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
+                        onTouchTap={ e => {
+                            this.onChangeTimeCode('TwoYears')
+                        } }
+                        disabled>
+                        <SvgIcon style={{height:"36px",width:"36px"}}  viewBox = "0 0 36 36" >
+                          <rect x="4" y="13" width="10" height="10" />
+                          <rect x="22" y="13" width="10" height="10" />
+                        </SvgIcon>
+                    </IconButton>
+                    <IconButton
+                        tooltip="All years"
+                        tooltipPosition="top-center"
+                        style={
+                            {
+                                backgroundColor: (explorerTimeCode == "AllYears")
+                                    ? "rgba(144,238,144,0.5)"
+                                    : "rgba(255,255,255,0.5)",
+                                borderRadius:"15%",
+                                padding:"0",
+                                height:"36px",
+                                width:"36px",
+                                marginRight:"3px",
+                            }
                         }
-                    }
-                    onTouchTap={ e => {
-                        this.onChangeTimeCode('AllYears')
-                    } }>
-                    <SvgIcon style={{height:"36px",width:"36px"}}  viewBox = "0 0 36 36" >
-                        <ellipse cx="6" cy="18" rx="4" ry="4"/>
-                        <ellipse cx="18" cy="18" rx="4" ry="4"/>
-                        <ellipse cx="30" cy="18" rx="4" ry="4"/>
-                    </SvgIcon>
-                </IconButton>
+                        onTouchTap={ e => {
+                            this.onChangeTimeCode('AllYears')
+                        } }
+                        disabled>
+                        <SvgIcon style={{height:"36px",width:"36px"}}  viewBox = "0 0 36 36" >
+                            <ellipse cx="6" cy="18" rx="4" ry="4"/>
+                            <ellipse cx="18" cy="18" rx="4" ry="4"/>
+                            <ellipse cx="30" cy="18" rx="4" ry="4"/>
+                        </SvgIcon>
+                    </IconButton>
                 </div>
                 <div style = {
                     {
@@ -185,102 +187,159 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         display:"inline-block"
                     }
                 }>
-                <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>charts</div>
-                <IconButton
-                    tooltip="Column Chart"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerChartCode == "ColumnChart")
-                                ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
+                    <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>charts</div>
+                    <IconButton
+                        tooltip="Column Chart"
+                        tooltipPosition="top-center"
+                        style={
+                            {
+                                backgroundColor: (explorerChartCode == "ColumnChart")
+                                    ? "rgba(144,238,144,0.5)"
+                                    : "transparent",
+                                borderRadius: "50%",
+                                padding:"0",
+                                height:"36px",
+                                width:"36px",
+                                marginRight:"3px",
+                            }
                         }
-                    }
-                    onTouchTap={ e => {
-                        this.onChangeChartCode('ColumnChart')
-                    } }>
-                    <FontIcon className="material-icons">insert_chart</FontIcon>
-                </IconButton>
-                <IconButton
-                    tooltip="Donut Pie Chart"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerChartCode == "DonutChart")
-                                ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
+                        onTouchTap={ e => {
+                            this.onChangeChartCode('ColumnChart')
+                        } }>
+                        <FontIcon className="material-icons">insert_chart</FontIcon>
+                    </IconButton>
+                    <IconButton
+                        tooltip="Donut Pie Chart"
+                        tooltipPosition="top-center"
+                        style={
+                            {
+                                backgroundColor: (explorerChartCode == "DonutChart")
+                                    ? "rgba(144,238,144,0.5)"
+                                    : "transparent",
+                                borderRadius: "50%",
+                                padding:"0",
+                                height:"36px",
+                                width:"36px",
+                                marginRight:"3px",
+                            }
                         }
-                    }
-                    onTouchTap={ e => {
-                        this.onChangeChartCode('DonutChart')
-                    } }>
-                    <FontIcon className="material-icons">donut_small</FontIcon>
-                </IconButton>
-                <IconButton 
-                    disabled
-                    tooltip="Data Table"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerChartCode == "DataTable")
-                                ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
+                        onTouchTap={ e => {
+                            this.onChangeChartCode('DonutChart')
+                        } }>
+                        <FontIcon className="material-icons">donut_small</FontIcon>
+                    </IconButton>
+                    <IconButton 
+                        disabled
+                        tooltip="Data Table"
+                        tooltipPosition="top-center"
+                        style={
+                            {
+                                backgroundColor: (explorerChartCode == "DataTable")
+                                    ? "rgba(144,238,144,0.5)"
+                                    : "transparent",
+                                borderRadius: "50%",
+                                padding:"0",
+                                height:"36px",
+                                width:"36px",
+                                marginRight:"3px",
+                            }
                         }
-                    }
-                    onTouchTap={ e => {
-                        this.onChangeChartCode('DataTable')
-                    } }>
-                    <FontIcon className="material-icons">view_list</FontIcon>
-                </IconButton>
+                        onTouchTap={ e => {
+                            this.onChangeChartCode('DataTable')
+                        } }>
+                        <FontIcon className="material-icons">view_list</FontIcon>
+                    </IconButton>
                 </div>
-            </div>
-            <div style={{ position: "absolute", top: 0, right: "72px", zIndex: 1000, padding: "3px" }}>
-                <IconButton tooltip="Information"
-                    tooltipPosition="top-center"
-                    disabled><FontIcon className="material-icons">info_outline</FontIcon></IconButton>
-            </div>
-            <div style={{ position: "absolute", top: 0, right: "36px", zIndex: 1000, padding: "3px" }}>
-                <IconButton tooltip="Shared stories"
-                    tooltipPosition="top-center"
-                    disabled><FontIcon className="material-icons">share</FontIcon></IconButton>
-            </div>
-            <div style={{ position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" }}>
-                <IconButton tooltip="Calls to action"
-                    tooltipPosition="top-center"
-                    disabled><FontIcon className="material-icons">announcement</FontIcon></IconButton>
             </div>
 
             { chart }
 
-            <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}>
-                <IconButton disabled><FontIcon className="material-icons">view_list</FontIcon></IconButton>
-            </div>
-            <div style={{ position: "absolute", bottom: 0, right: 0, zIndex: 1000, padding: "3px" }}>
-                <IconButton disabled><FontIcon className="material-icons">note</FontIcon></IconButton>
-            </div>
             <div style={{
                 position:"absolute",
-                bottom:0,
+                bottom:"10px",
                 left:"40px",
                 fontSize:"9px",
                 fontStyle:"italic",
             }}>
                {expandable?'drill down':'no drill down'}
+            </div>
+            <div style={{ padding: "3px" }}>
+                <div style=
+                    {
+                        { 
+                            float:"right", 
+                            padding: "3px",
+                            position:"relative",
+                        }
+                    }>
+                    <div style={{paddingLeft:"3px",position:"absolute",top:"0", left:"0",fontSize:"8px"}}>social</div>
+                    <IconButton tooltip="Shared stories"
+                        tooltipPosition="top-center"
+                        style = {
+                            {
+                                padding:"0",
+                                height:"36px",
+                                width:"36px",
+                                marginRight:"3px",                                
+                            }
+                        }
+                        disabled>
+                        <FontIcon className="material-icons">share</FontIcon>
+                    </IconButton>
+                    <IconButton tooltip="Calls to action"
+                        tooltipPosition="top-center"
+                        style = {
+                            {
+                                padding:"0",
+                                height:"36px",
+                                width:"36px",
+                                marginRight:"3px",
+                                marginLeft:"3px",                             
+                            }
+                        }
+                        disabled>
+                        <FontIcon className="material-icons">announcement</FontIcon>
+                    </IconButton>
+                </div>
+                <div style=
+                    {
+                        { 
+                            float:"right", 
+                            padding: "3px",
+                            borderLeft:"1px solid silver",
+                            borderRight:"1px solid silver",
+                            position:"relative",
+                        }
+                    }>
+                    <div style={{paddingLeft:"3px",position:"absolute",top:"0", left:"0",fontSize:"8px"}}>information</div>
+                    <IconButton tooltip="Information"
+                        tooltipPosition="top-center"
+                        style = {
+                            {
+                                padding:"0",
+                                height:"36px",
+                                width:"36px",
+                                marginRight:"3px",                                
+                            }
+                        }
+                        disabled>
+                        <FontIcon className="material-icons">info_outline</FontIcon>
+                    </IconButton>
+                    <IconButton tooltip="Technical notes"
+                        tooltipPosition="top-center"
+                        style = {
+                            {
+                                padding:"0",
+                                height:"36px",
+                                width:"36px",
+                                marginRight:"3px",
+                                marginLeft:"3px",                             
+                            }
+                        }
+                        disabled>
+                        <FontIcon className="material-icons">note</FontIcon>
+                    </IconButton>
+                </div>
             </div>
         </div>
     }
