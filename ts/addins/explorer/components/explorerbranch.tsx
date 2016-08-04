@@ -6,6 +6,8 @@
       to allow textual explanations of pages
     - add control to explorer header to toggle show/hide controls of charts
     - have per unit and performance views
+    - include document source version (eg. summary vs fpars)
+    - prevent resetting branch when viewpoint selected is same as previous
 */
 'use strict'
 
@@ -501,9 +503,18 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             >
             <MenuItem value={'FUNCTIONAL'} primaryText="Budget (by function)"/>
             <MenuItem value={'STRUCTURAL'} primaryText="Budget (by structure)"/>
+            <MenuItem disabled value={'STATEMENTS'} primaryText="Financial Statements"/>
         </DropDownMenu>
 
-        <span style={{ margin: "0 10px 0 10px", fontStyle: "italic" }}>Facets: </span>
+        <span style={{ fontStyle: "italic" }}>Version: </span>
+        <DropDownMenu
+            >
+            <MenuItem value={'SUMMARY'} primaryText="Summary"/>
+            <MenuItem value={'DETAIL'} primaryText="Detail (FPARS)"/>
+            <MenuItem disabled value={'VARIANCE'} primaryText="Variance Reports"/>
+        </DropDownMenu>
+
+        <span style={{ margin: "0 10px 0 10px", fontStyle: "italic" }}>Aspect: </span>
 
         <IconButton
             tooltip="Expenditures"

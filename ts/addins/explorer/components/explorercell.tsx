@@ -228,6 +228,17 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         } }>
                         <FontIcon className="material-icons">donut_small</FontIcon>
                     </IconButton>
+                </div>
+                <div style = {
+                    {
+                        paddingTop:"10px",
+                        borderRight:"1px solid silver", 
+                        marginRight:"3px", 
+                        position:"relative", 
+                        display:"inline-block"
+                    }
+                }>
+                    <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>data</div>
                     <IconButton 
                         disabled
                         tooltip="Data Table"

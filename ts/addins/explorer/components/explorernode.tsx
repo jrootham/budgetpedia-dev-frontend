@@ -1,6 +1,10 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // explorerportal.tsx
 
+/*
+    TODO: include output checkbox per node for printing prep
+*/
+
 'use strict'
 import * as React from 'react'
 var { Component } = React
