@@ -131,8 +131,8 @@ class ExplorerCell extends Component {
             fontSize: "9px",
             fontStyle: "italic",
         }}, expandable ? 'drill down' : 'no drill down'), React.createElement("div", {style: { padding: "3px" }}, React.createElement("div", {style: {
+            paddingTop: "10px",
             float: "right",
-            padding: "3px",
             position: "relative",
         }}, React.createElement("div", {style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "social"), React.createElement(IconButton_1.default, {tooltip: "Shared stories", tooltipPosition: "top-center", style: {
             padding: "0",
@@ -147,7 +147,7 @@ class ExplorerCell extends Component {
             marginLeft: "3px",
         }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "announcement"))), React.createElement("div", {style: {
             float: "right",
-            padding: "3px",
+            paddingTop: "10px",
             borderLeft: "1px solid silver",
             borderRight: "1px solid silver",
             position: "relative",

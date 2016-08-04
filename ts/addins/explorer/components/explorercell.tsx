@@ -267,8 +267,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <div style=
                     {
                         { 
+                            paddingTop:"10px",
                             float:"right", 
-                            padding: "3px",
                             position:"relative",
                         }
                     }>
@@ -305,7 +305,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     {
                         { 
                             float:"right", 
-                            padding: "3px",
+                            paddingTop:"10px",
                             borderLeft:"1px solid silver",
                             borderRight:"1px solid silver",
                             position:"relative",
