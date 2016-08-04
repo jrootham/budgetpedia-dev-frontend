@@ -172,6 +172,11 @@ class BudgetCell {
                 { type: 'string', label: categorylabel },
                 { type: 'number', label: year.toString() },
             ];
+            let setStyle = false;
+            if (chartType == 'ColumnChart') {
+                columns.push({ type: 'string', role: 'style' });
+                setStyle = true;
+            }
             if (!dataNode[sortedlist]) {
                 return {
                     isError: true,
@@ -189,7 +194,14 @@ class BudgetCell {
                     amount = components[item.Code].years[year];
                 else
                     amount = null;
-                return [item.Name, amount];
+                let retval = [item.Name, amount];
+                let style = '';
+                if (component.Contents == 'BASELINE') {
+                    style = 'stroke-color: Gold; stroke-width: 3';
+                }
+                if (setStyle)
+                    retval.push(style);
+                return retval;
             });
             let chartParms = {
                 columns: columns,

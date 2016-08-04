@@ -187,6 +187,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
             let columnchart = 
                 <IconButton
+                    key = 'columnchart'
                     tooltip="Column Chart"
                     tooltipPosition="top-center"
                     style={
@@ -209,6 +210,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
             let donutchart = 
                 <IconButton
+                    key = 'donutchart'
                     tooltip="Donut Pie Chart"
                     tooltipPosition="top-center"
                     style={
@@ -231,6 +233,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
             let timeline =
                 <IconButton
+                    key = 'timeline'
                     tooltip="Timeline"
                     tooltipPosition="top-center"
                     style={
@@ -254,6 +257,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
             let stackedchart = 
                 <IconButton
+                    key = 'stackedchart'
                     tooltip="Stacked chart"
                     tooltipPosition="top-center"
                     style={
@@ -280,6 +284,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
             let proportionalchart =
                 <IconButton
+                    key = 'propchart'
                     tooltip="Proportional chart"
                     tooltipPosition="top-center"
                     style={

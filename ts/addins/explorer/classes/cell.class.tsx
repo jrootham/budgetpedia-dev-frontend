@@ -255,8 +255,6 @@ class BudgetCell {
                 break
         }
 
-        // TODO: animation breaks drawing; probably conflict with react render
-        //    needs to be investigated
         let options = {
             animation:{
                 startup: true,
@@ -330,12 +328,20 @@ class BudgetCell {
         // 4. chart columns:
         let categorylabel = 'Component' // TODO: rationalize this!
 
-        let columns = [
+        let columns:any[] = [
             // type is required, else throws silent error
             { type: 'string', label: categorylabel },
             { type: 'number', label: year.toString() },
-            // { type: 'string', role: 'annotation' }
+            // { type: 'string', role: 'style' }
         ]
+
+        let setStyle = false
+        if (chartType == 'ColumnChart') {
+            columns.push(
+                {type:'string', role:'style'}
+            )
+            setStyle = true
+        }
 
         // 5. chart rows:
         if (!dataNode[sortedlist]) {
@@ -345,6 +351,7 @@ class BudgetCell {
                 chartParms: {} 
             }
         }
+        // console.log('datanode in getchartparms', dataNode)
         let rows = dataNode[sortedlist].map((item:SortedComponentItem) => {
             // TODO: get determination of amount processing from Unit value
             let component = components[item.Code]
@@ -373,7 +380,13 @@ class BudgetCell {
             // }
             // TODO: add % of total to the annotation
             // return [item.Name, amount, annotation]
-            return [item.Name, amount]
+            let retval = [item.Name, amount]
+            let style = ''
+            if (component.Contents == 'BASELINE') {
+                style = 'stroke-color: Gold; stroke-width: 3'
+            }
+            if (setStyle) retval.push(style)
+            return retval
         })
 
         // --------------------[ ASSEMBLE PARMS PACK ]----------------

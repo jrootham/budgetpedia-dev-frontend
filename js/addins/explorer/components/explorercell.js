@@ -98,7 +98,7 @@ class ExplorerCell extends Component {
             this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.AllYears]);
         }, disabled: false}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("ellipse", {cx: "6", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "18", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "30", cy: "18", rx: "4", ry: "4"}))));
         let chartoptions = () => {
-            let columnchart = React.createElement(IconButton_1.default, {tooltip: "Column Chart", tooltipPosition: "top-center", style: {
+            let columnchart = React.createElement(IconButton_1.default, {key: 'columnchart', tooltip: "Column Chart", tooltipPosition: "top-center", style: {
                 backgroundColor: (explorerChartCode == "ColumnChart")
                     ? "rgba(144,238,144,0.5)"
                     : "transparent",
@@ -110,7 +110,7 @@ class ExplorerCell extends Component {
             }, onTouchTap: e => {
                 this.onChangeChartCode('ColumnChart');
             }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "insert_chart"));
-            let donutchart = React.createElement(IconButton_1.default, {tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
+            let donutchart = React.createElement(IconButton_1.default, {key: 'donutchart', tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
                 backgroundColor: (explorerChartCode == "DonutChart")
                     ? "rgba(144,238,144,0.5)"
                     : "transparent",
@@ -122,7 +122,7 @@ class ExplorerCell extends Component {
             }, onTouchTap: e => {
                 this.onChangeChartCode('DonutChart');
             }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "donut_small"));
-            let timeline = React.createElement(IconButton_1.default, {tooltip: "Timeline", tooltipPosition: "top-center", style: {
+            let timeline = React.createElement(IconButton_1.default, {key: 'timeline', tooltip: "Timeline", tooltipPosition: "top-center", style: {
                 backgroundColor: (explorerChartCode == "TimeLine")
                     ? "rgba(144,238,144,0.5)"
                     : "transparent",
@@ -134,7 +134,7 @@ class ExplorerCell extends Component {
             }, disabled: true, onTouchTap: e => {
                 this.onChangeChartCode('Timeline');
             }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "timeline"));
-            let stackedchart = React.createElement(IconButton_1.default, {tooltip: "Stacked chart", tooltipPosition: "top-center", style: {
+            let stackedchart = React.createElement(IconButton_1.default, {key: 'stackedchart', tooltip: "Stacked chart", tooltipPosition: "top-center", style: {
                 backgroundColor: (explorerChartCode == "StackedArea")
                     ? "rgba(144,238,144,0.5)"
                     : "transparent",
@@ -146,7 +146,7 @@ class ExplorerCell extends Component {
             }, disabled: true, onTouchTap: e => {
                 this.onChangeChartCode('StackedArea');
             }}, React.createElement(SvgIcon_1.default, {style: { height: "24px", width: "24px" }}, React.createElement("path", {d: "M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"}), React.createElement("path", {d: "M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"})));
-            let proportionalchart = React.createElement(IconButton_1.default, {tooltip: "Proportional chart", tooltipPosition: "top-center", style: {
+            let proportionalchart = React.createElement(IconButton_1.default, {key: 'propchart', tooltip: "Proportional chart", tooltipPosition: "top-center", style: {
                 backgroundColor: (explorerChartCode == "Proportional")
                     ? "rgba(144,238,144,0.5)"
                     : "transparent",
