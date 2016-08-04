@@ -111,7 +111,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            border: "inset 1px silver",
                             backgroundColor: (explorerTimeCode == "OneYear")
                                 ? "rgba(144,238,144,0.5)"
                                 : "rgba(255,255,255,0.5)",
@@ -134,7 +133,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            border: "outset 1px silver",
                             backgroundColor: (explorerTimeCode == "Two years")
                                 ? "rgba(144,238,144,0.5)"
                                 : "rgba(255,255,255,0.5)",
@@ -158,7 +156,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            border: "outset 1px silver",
                             backgroundColor: (explorerTimeCode == "AllYears")
                                 ? "rgba(144,238,144,0.5)"
                                 : "rgba(255,255,255,0.5)",
@@ -228,6 +225,27 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         this.onChangeChartCode('DonutChart')
                     } }>
                     <FontIcon className="material-icons">donut_small</FontIcon>
+                </IconButton>
+                <IconButton 
+                    disabled
+                    tooltip="Data Table"
+                    tooltipPosition="top-center"
+                    style={
+                        {
+                            backgroundColor: (explorerChartCode == "DataTable")
+                                ? "rgba(144,238,144,0.5)"
+                                : "transparent",
+                            borderRadius: "50%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
+                        }
+                    }
+                    onTouchTap={ e => {
+                        this.onChangeChartCode('DataTable')
+                    } }>
+                    <FontIcon className="material-icons">view_list</FontIcon>
                 </IconButton>
                 </div>
             </div>

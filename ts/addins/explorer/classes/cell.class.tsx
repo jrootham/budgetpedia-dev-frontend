@@ -271,7 +271,7 @@ class BudgetCell {
             height: "400px",
             width: "400px",
             legend: legendvalue,
-            annotations: { alwaysOutside: true },
+            // annotations: { alwaysOutside: true },
             pieHole: 0.4,
             chartArea:{
                 height:chartheight,
@@ -334,7 +334,7 @@ class BudgetCell {
             // type is required, else throws silent error
             { type: 'string', label: categorylabel },
             { type: 'number', label: year.toString() },
-            { type: 'string', role: 'annotation' }
+            // { type: 'string', role: 'annotation' }
         ]
 
         // 5. chart rows:
@@ -357,22 +357,23 @@ class BudgetCell {
                 amount = components[item.Code].years[year]
             else
                 amount = null
-            let annotation
-            if (units == 'DOLLAR') {
-                amount = parseInt(rounded(amount / 1000))
-                annotation = thousandsformat(amount)
-            } else if (units == 'FTE') {
-                annotation = staffrounded(amount)
-                amount = parseInt(singlerounded(amount))
-            } else {
-                if (components[item.Code] && components[item.Code].years)
-                    amount = components[item.Code].years[year]
-                else 
-                    amount = null
-                annotation = amount
-            }
+            // let annotation
+            // if (units == 'DOLLAR') {
+            //     amount = parseInt(rounded(amount / 1000))
+            //     annotation = thousandsformat(amount)
+            // } else if (units == 'FTE') {
+            //     annotation = staffrounded(amount)
+            //     amount = parseInt(singlerounded(amount))
+            // } else {
+            //     if (components[item.Code] && components[item.Code].years)
+            //         amount = components[item.Code].years[year]
+            //     else 
+            //         amount = null
+            //     annotation = amount
+            // }
             // TODO: add % of total to the annotation
-            return [item.Name, amount, annotation]
+            // return [item.Name, amount, annotation]
+            return [item.Name, amount]
         })
 
         // --------------------[ ASSEMBLE PARMS PACK ]----------------

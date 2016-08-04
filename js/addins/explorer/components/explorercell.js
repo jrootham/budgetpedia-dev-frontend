@@ -53,7 +53,6 @@ class ExplorerCell extends Component {
             position: "relative",
             display: "inline-block"
         }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "years"), React.createElement(IconButton_1.default, {tooltip: "One year", tooltipPosition: "top-center", style: {
-            border: "inset 1px silver",
             backgroundColor: (explorerTimeCode == "OneYear")
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
@@ -65,7 +64,6 @@ class ExplorerCell extends Component {
         }, onTouchTap: e => {
             this.onChangeTimeCode('OneYear');
         }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "13", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "Two years", tooltipPosition: "top-center", style: {
-            border: "outset 1px silver",
             backgroundColor: (explorerTimeCode == "Two years")
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
@@ -77,7 +75,6 @@ class ExplorerCell extends Component {
         }, onTouchTap: e => {
             this.onChangeTimeCode('TwoYears');
         }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", style: {
-            border: "outset 1px silver",
             backgroundColor: (explorerTimeCode == "AllYears")
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
@@ -116,7 +113,18 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeChartCode('DonutChart');
-        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "donut_small")))), React.createElement("div", {style: { position: "absolute", top: 0, right: "72px", zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Information", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "info_outline"))), React.createElement("div", {style: { position: "absolute", top: 0, right: "36px", zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Shared stories", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "share"))), React.createElement("div", {style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Calls to action", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "announcement"))), chart, React.createElement("div", {style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list"))), React.createElement("div", {style: { position: "absolute", bottom: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note"))), React.createElement("div", {style: {
+        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "donut_small")), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Data Table", tooltipPosition: "top-center", style: {
+            backgroundColor: (explorerChartCode == "DataTable")
+                ? "rgba(144,238,144,0.5)"
+                : "transparent",
+            borderRadius: "50%",
+            padding: "0",
+            height: "36px",
+            width: "36px",
+            marginRight: "3px",
+        }, onTouchTap: e => {
+            this.onChangeChartCode('DataTable');
+        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list")))), React.createElement("div", {style: { position: "absolute", top: 0, right: "72px", zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Information", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "info_outline"))), React.createElement("div", {style: { position: "absolute", top: 0, right: "36px", zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Shared stories", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "share"))), React.createElement("div", {style: { position: "absolute", top: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {tooltip: "Calls to action", tooltipPosition: "top-center", disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "announcement"))), chart, React.createElement("div", {style: { position: "absolute", bottom: 0, left: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list"))), React.createElement("div", {style: { position: "absolute", bottom: 0, right: 0, zIndex: 1000, padding: "3px" }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note"))), React.createElement("div", {style: {
             position: "absolute",
             bottom: 0,
             left: "40px",
