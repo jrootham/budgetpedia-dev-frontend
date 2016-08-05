@@ -599,6 +599,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             labelStyle = {{fontStyle:'italic'}} 
             defaultToggled={true}
             onToggle = { (e,value) => {
+                this.props.globalStateActions.resetLastAction() // TODO: this is a hack!!
                 this.setState({
                     showcontrols:value
                 })
