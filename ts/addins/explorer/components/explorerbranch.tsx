@@ -544,7 +544,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     let aspectselection = <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
 
-        <span style={{ margin: "0 10px 0 10px", fontStyle: "italic" }}>Aspect: </span>
+        <span style={{ fontStyle: "italic" }}>Aspect: </span>
 
         <DropDownMenu
             value={this.state.facet}
