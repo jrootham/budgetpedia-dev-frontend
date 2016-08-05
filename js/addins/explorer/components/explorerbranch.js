@@ -3,8 +3,6 @@ const React = require('react');
 var { Component } = React;
 const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
-const FontIcon_1 = require('material-ui/FontIcon');
-const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 const explorernode_1 = require('./explorernode');
@@ -15,7 +13,8 @@ class ExplorerBranch extends Component {
         this.state = {
             branchNodes: [],
             viewpointData: null,
-            snackbar: { open: false, message: 'empty' }
+            snackbar: { open: false, message: 'empty' },
+            facet: this.props.budgetBranch.settings.viewpoint,
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
@@ -145,8 +144,19 @@ class ExplorerBranch extends Component {
             });
         };
         this.switchFacet = (facet) => {
+            switch (facet) {
+                case "Expenses":
+                case "Revenues":
+                case "Staffing":
+                    break;
+                default:
+                    return;
+            }
             let { budgetBranch } = this.props;
             this.props.globalStateActions.changeFacet(budgetBranch.uid, facet);
+            this.setState({
+                facet: facet,
+            });
         };
         this.getPortals = (budgetNodes) => {
             let { viewpointData } = this.state;
@@ -267,30 +277,14 @@ class ExplorerBranch extends Component {
         let branch = this;
         let drilldownrow = branch.props.budgetBranch.nodes;
         let drilldownportals = branch.getPortals(drilldownrow);
-        return React.createElement("div", null, React.createElement("div", null, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.props.budgetBranch.settings.viewpoint, style: {}, onChange: (e, index, value) => {
+        let viewpointselection = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.props.budgetBranch.settings.viewpoint, style: {}, onChange: (e, index, value) => {
             branch.switchViewpoint(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Budget (by function)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Budget (by structure)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'STATEMENTS', primaryText: "Financial Statements"})), React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, null, React.createElement(MenuItem_1.default, {value: 'SUMMARY', primaryText: "Summary"}), React.createElement(MenuItem_1.default, {value: 'DETAIL', primaryText: "Detail (FPARS)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"})), React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Aspect: "), React.createElement(IconButton_1.default, {tooltip: "Expenditures", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchFacet('Expenses');
-        }, style: {
-            backgroundColor: (this.props.budgetBranch.settings.facet == 'Expenses')
-                ? "rgba(144,238,144,0.5)"
-                : 'transparent',
-            borderRadius: "50%"
-        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "attach_money")), React.createElement(IconButton_1.default, {tooltip: "Revenues", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchFacet('Revenues');
-        }, style: {
-            backgroundColor: (this.props.budgetBranch.settings.facet == 'Revenues')
-                ? "rgba(144,238,144,0.5)"
-                : 'transparent',
-            borderRadius: "50%"
-        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "receipt")), React.createElement(IconButton_1.default, {tooltip: "Staffing", tooltipPosition: "top-center", onTouchTap: e => {
-            branch.switchFacet('Staffing');
-        }, style: {
-            backgroundColor: (this.props.budgetBranch.settings.facet == 'Staffing')
-                ? "rgba(144,238,144,0.5)"
-                : 'transparent',
-            borderRadius: "50%"
-        }}, ">", React.createElement(FontIcon_1.default, {className: "material-icons"}, "people"))), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
+        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Budget (by function)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Budget (by structure)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'STATEMENTS', primaryText: "Financial Statements"})));
+        let versionselection = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, {value: 'DETAIL'}, React.createElement(MenuItem_1.default, {value: 'SUMMARY', primaryText: "Summary"}), React.createElement(MenuItem_1.default, {value: 'DETAIL', primaryText: "Detail (FPARS)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"})));
+        let aspectselection = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { margin: "0 10px 0 10px", fontStyle: "italic" }}, "Aspect: "), React.createElement(DropDownMenu_1.default, {value: this.state.facet, style: {}, onChange: (e, index, value) => {
+            branch.switchFacet(value);
+        }}, React.createElement(MenuItem_1.default, {value: 'Expenses', primaryText: "Expenses"}), React.createElement(MenuItem_1.default, {value: 'Revenues', primaryText: "Revenues"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Both', primaryText: "Both"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Net', primaryText: "Net"}), React.createElement(MenuItem_1.default, {value: 'Staffing', primaryText: "Staffing"})));
+        return React.createElement("div", null, React.createElement("div", null, viewpointselection, versionselection, aspectselection), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;
         }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));
     }

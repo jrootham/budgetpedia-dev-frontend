@@ -223,7 +223,7 @@ class ExplorerCell extends Component {
             position: "relative",
             display: "inline-block",
             float: "right",
-        }}, React.createElement("div", {style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "harmonize"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Harmonize years for row", tooltipPosition: "top-center", style: {
+        }}, React.createElement("div", {style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "harmonize"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Harmonize settings for row", tooltipPosition: "top-center", style: {
             borderRadius: "50%",
             padding: "0",
             height: "36px",

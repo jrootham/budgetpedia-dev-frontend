@@ -332,7 +332,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 }
             }>
                 <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>charts</div>
+
                 { chartoptions }
+
             </div>
         }
 
@@ -420,7 +422,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <div style={{paddingLeft: '3px', position:"absolute",top:"0", left:"0",fontSize:"8px"}}>harmonize</div>
                 <IconButton 
                     disabled
-                    tooltip="Harmonize years for row"
+                    tooltip="Harmonize settings for row"
                     tooltipPosition="top-center"
                     style={
                         {

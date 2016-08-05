@@ -78,6 +78,7 @@ interface ExplorerBranchState {
     branchNodes?:BudgetNode[], 
     snackbar?:SnackbarProps, 
     viewpointData?:ViewpointData,
+    facet?: string,
 }
 
 class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState> {
@@ -85,7 +86,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     state = {
         branchNodes:[],
         viewpointData:null,
-        snackbar:{open:false,message:'empty'}
+        snackbar:{open:false,message:'empty'},
+        facet: this.props.budgetBranch.settings.viewpoint,
     }
 
 /*    
@@ -391,18 +393,23 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     switchFacet = (facet:string) => {
 
-        let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
-        // let { nodes } = budgetBranch
-        // let cellidlist = []
-        // let nodeidlist = nodes.map((node:BudgetNode) => {
-        //     let cells:BudgetCell[] = node.allCells
-        //     for (let cell of cells) {
-        //         cellidlist.push(cell.uid)
-        //     }
-        //     return node.uid
-        // })
+        switch (facet) {
+            case "Expenses":
+            case "Revenues":
+            case "Staffing":
+            break            
+            default:
 
-        this.props.globalStateActions.changeFacet(budgetBranch.uid, facet) // , nodeidlist, cellidlist)
+            return
+        }
+
+        let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
+
+        this.props.globalStateActions.changeFacet(budgetBranch.uid, facet)
+
+        this.setState({
+            facet,
+        })
 
     }
 
@@ -488,8 +495,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     let drilldownrow = branch.props.budgetBranch.nodes
 
     let drilldownportals = branch.getPortals(drilldownrow)
-    return <div >
-    <div>
+
+    let viewpointselection = <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>Viewpoint: </span>
         <DropDownMenu
             value={this.props.budgetBranch.settings.viewpoint}
@@ -501,78 +508,61 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 }
             }
             >
+
             <MenuItem value={'FUNCTIONAL'} primaryText="Budget (by function)"/>
             <MenuItem value={'STRUCTURAL'} primaryText="Budget (by structure)"/>
             <MenuItem disabled value={'STATEMENTS'} primaryText="Financial Statements"/>
+
         </DropDownMenu>
 
+    </div>
+
+    let versionselection = <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>Version: </span>
         <DropDownMenu
+            value = {'DETAIL'}
             >
+
             <MenuItem value={'SUMMARY'} primaryText="Summary"/>
             <MenuItem value={'DETAIL'} primaryText="Detail (FPARS)"/>
             <MenuItem disabled value={'VARIANCE'} primaryText="Variance Reports"/>
+
         </DropDownMenu>
+    </div>
+
+    let aspectselection = <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
 
         <span style={{ margin: "0 10px 0 10px", fontStyle: "italic" }}>Aspect: </span>
 
-        <IconButton
-            tooltip="Expenditures"
-            tooltipPosition="top-center"
-            onTouchTap= {
-                e => {
-                    branch.switchFacet('Expenses')
+        <DropDownMenu
+            value={this.state.facet}
+            style={{
+            }}
+            onChange={
+                (e, index, value) => {
+                    branch.switchFacet(value)
                 }
             }
-            style={
-                {
-                    backgroundColor: (this.props.budgetBranch.settings.facet == 'Expenses')
-                        ? "rgba(144,238,144,0.5)"
-                        : 'transparent',
-                    borderRadius: "50%"
-                }
-            }>
-            <FontIcon className="material-icons">attach_money</FontIcon>
-        </IconButton>
-
-        <IconButton
-            tooltip="Revenues"
-            tooltipPosition="top-center"
-            onTouchTap= {
-                e => {
-                    branch.switchFacet('Revenues')
-                }
-            }
-            style={
-                {
-                    backgroundColor: (this.props.budgetBranch.settings.facet == 'Revenues')
-                        ? "rgba(144,238,144,0.5)"
-                        : 'transparent',
-                    borderRadius: "50%"
-                }
-            }>
-            <FontIcon className="material-icons">receipt</FontIcon>
-        </IconButton>
-
-        <IconButton
-            tooltip="Staffing"
-            tooltipPosition="top-center"
-            onTouchTap= {
-                e => {
-                    branch.switchFacet('Staffing')
-                }
-            }
-            style={
-                {
-                    backgroundColor: (this.props.budgetBranch.settings.facet == 'Staffing')
-                        ? "rgba(144,238,144,0.5)"
-                        : 'transparent',
-                    borderRadius: "50%"
-                }
-            }>
             >
-            <FontIcon className="material-icons">people</FontIcon>
-        </IconButton >
+
+            <MenuItem value={'Expenses'} primaryText="Expenses"/>
+            <MenuItem value={'Revenues'} primaryText="Revenues"/>
+            <MenuItem disabled value={'Both'} primaryText="Both"/>
+            <MenuItem disabled value={'Net'} primaryText="Net"/>
+            <MenuItem value={'Staffing'} primaryText="Staffing" />
+
+        </DropDownMenu>
+
+    </div>
+
+    return <div >
+    <div>
+
+        { viewpointselection }
+
+        { versionselection }
+
+        { aspectselection }
 
     </div>
 
