@@ -19,12 +19,12 @@ var { Component } = React
 
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
-
 import {Card, CardTitle, CardText} from 'material-ui/Card'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from 'material-ui/Snackbar'
+import Toggle from 'material-ui/Toggle'
 
 // ------------------------[ modules ]-----------------------------
 import { 
@@ -585,6 +585,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         </DropDownMenu>
     </div>
 
+    let inflationadjustment = <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
+        <div style={{display:'inline-block', paddingTop:'20px'}}>
+        <Toggle label={'Inflation adjusted:'} labelStyle = {{fontStyle:'italic'}} defaultToggled={true} /></div>
+    </div>
+
 
     return <div >
     <div>
@@ -596,6 +601,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         { aspectselection }
 
         { byunitselection }
+
+        { inflationadjustment }
 
     </div>
 

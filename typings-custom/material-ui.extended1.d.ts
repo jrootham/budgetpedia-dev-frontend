@@ -6906,7 +6906,7 @@ declare module 'material-ui/lib/theme-wrapper' {
     export default ThemeWrapper;
 }
 
-declare module 'material-ui/lib/toggle' {
+declare module 'material-ui/Toggle' {
     export import Toggle = __MaterialUI.Toggle;
     export default Toggle;
 }

@@ -561,6 +561,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             </div>
             <div style={{ padding: "3px" }}>
 
+                <p style={{fontStyle:'italic', fontSize:"9px", float:"left"}}>[ year-selection slider goes here]</p>
+
                 { socialoptions }
 
                 { informationoptions }

@@ -272,7 +272,7 @@ class ExplorerCell extends Component {
             left: "40px",
             fontSize: "9px",
             fontStyle: "italic",
-        }}, expandable ? 'drill down' : 'no drill down'), React.createElement("div", {style: { padding: "3px" }}, socialoptions, informationoptions));
+        }}, expandable ? 'drill down' : 'no drill down'), React.createElement("div", {style: { padding: "3px" }}, React.createElement("p", {style: { fontStyle: 'italic', fontSize: "9px", float: "left" }}, "[ year-selection slider goes here]"), socialoptions, informationoptions));
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

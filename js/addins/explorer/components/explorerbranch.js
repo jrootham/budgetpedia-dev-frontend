@@ -4,6 +4,7 @@ var { Component } = React;
 const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
 const Snackbar_1 = require('material-ui/Snackbar');
+const Toggle_1 = require('material-ui/Toggle');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 const explorernode_1 = require('./explorernode');
 const actions_1 = require('../actions');
@@ -294,7 +295,8 @@ class ExplorerBranch extends Component {
         let byunitselection = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "By Unit: "), React.createElement(DropDownMenu_1.default, {value: this.state.byunitselection, onChange: (e, index, value) => {
             this.switchUnit(value);
         }}, React.createElement(MenuItem_1.default, {value: 'Off', primaryText: "Off"}), React.createElement(MenuItem_1.default, {value: 'Staff', primaryText: "Per staffing position"}), React.createElement(MenuItem_1.default, {value: 'Population', primaryText: "Population: per person"}), React.createElement(MenuItem_1.default, {value: 'Population100000', primaryText: "Population: per 100,000 people"}), React.createElement(MenuItem_1.default, {value: 'Household', primaryText: "Per household"})));
-        return React.createElement("div", null, React.createElement("div", null, viewpointselection, versionselection, aspectselection, byunitselection), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
+        let inflationadjustment = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("div", {style: { display: 'inline-block', paddingTop: '20px' }}, React.createElement(Toggle_1.default, {label: 'Inflation adjusted:', labelStyle: { fontStyle: 'italic' }, defaultToggled: true})));
+        return React.createElement("div", null, React.createElement("div", null, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;
         }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));
     }
