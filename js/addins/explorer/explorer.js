@@ -149,6 +149,7 @@ let Explorer = class extends Component {
                     changeViewpoint: this.props.changeViewpoint,
                     changeFacet: this.props.changeFacet,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
+                    resetLastAction: this.props.resetLastAction,
                 };
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,

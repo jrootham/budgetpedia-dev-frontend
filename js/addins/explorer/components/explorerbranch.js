@@ -160,6 +160,7 @@ class ExplorerBranch extends Component {
             });
         };
         this.switchUnit = unitindex => {
+            this.props.globalStateActions.resetLastAction();
             this.setState({
                 byunitselection: unitindex
             });

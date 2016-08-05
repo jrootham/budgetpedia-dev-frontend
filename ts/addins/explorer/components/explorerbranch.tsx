@@ -8,6 +8,8 @@
     - have per unit and performance views
     - include document source version (eg. summary vs fpars)
     - prevent resetting branch when viewpoint selected is same as previous
+    BUG: after budgetdrilldown a sentinal is left in place which blocks repaint of byUnit menu
+    -- this needs serious rationalization.
 */
 'use strict'
 
@@ -50,6 +52,7 @@ export interface ExplorerBranchActions {
     updateCellChartSelection: Function,  
     updateCellChartCode: Function,
     updateCellsDataseriesName: Function,
+    resetLastAction: Function,
 }
 
 interface DeclarationData {
@@ -416,6 +419,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     switchUnit = unitindex => {
+        this.props.globalStateActions.resetLastAction() // TODO: this is a hack!!
         this.setState({
             byunitselection:unitindex
         })
