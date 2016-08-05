@@ -32,6 +32,7 @@ interface ExplorerNodeProps {
     }
     globalStateActions: any,
     declarationData: any,
+    showControls: boolean,
 }
 
 export interface ExporerNodeActions {
@@ -255,6 +256,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                     callbackid = { cellIndex }
                     budgetCell = { budgetCell }
                     globalStateActions = { {updateCellChartCode: this.props.globalStateActions.updateCellChartCode } }
+                    showControls = {this.props.showControls}
                 />
             </Tab>
         })

@@ -17,6 +17,7 @@ class ExplorerBranch extends Component {
             snackbar: { open: false, message: 'empty' },
             facet: this.props.budgetBranch.settings.viewpoint,
             byunitselection: 'off',
+            showcontrols: true,
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
@@ -200,7 +201,7 @@ class ExplorerBranch extends Component {
                 let actions = Object.assign({}, this._stateActions);
                 actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = this._stateActions.updateCellChartCode(budgetNode.uid);
-                return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: actions, displayCallbacks: {}});
+                return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: actions, displayCallbacks: {}, showControls: this.state.showcontrols});
             });
             return portals;
         };
@@ -285,18 +286,22 @@ class ExplorerBranch extends Component {
         let branch = this;
         let drilldownrow = branch.props.budgetBranch.nodes;
         let drilldownportals = branch.getPortals(drilldownrow);
-        let viewpointselection = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.props.budgetBranch.settings.viewpoint, style: {}, onChange: (e, index, value) => {
+        let viewpointselection = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: this.props.budgetBranch.settings.viewpoint, style: {}, onChange: (e, index, value) => {
             branch.switchViewpoint(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Budget (by function)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Budget (by structure)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'STATEMENTS', primaryText: "Financial Statements"})));
-        let versionselection = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, {value: 'DETAIL'}, React.createElement(MenuItem_1.default, {disabled: true, value: 'SUMMARY', primaryText: "Summary"}), React.createElement(MenuItem_1.default, {value: 'DETAIL', primaryText: "Detail (FPARS)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"})));
-        let aspectselection = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Aspect: "), React.createElement(DropDownMenu_1.default, {value: this.state.facet, onChange: (e, index, value) => {
+        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Budget (by function)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Budget (by structure)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'STATEMENTS', primaryText: "Financial Statements"}))) : null;
+        let versionselection = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, {value: 'DETAIL'}, React.createElement(MenuItem_1.default, {disabled: true, value: 'SUMMARY', primaryText: "Summary"}), React.createElement(MenuItem_1.default, {value: 'DETAIL', primaryText: "Detail (FPARS)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"}))) : null;
+        let aspectselection = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Aspect: "), React.createElement(DropDownMenu_1.default, {value: this.state.facet, onChange: (e, index, value) => {
             branch.switchFacet(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'Expenses', primaryText: "Expenses"}), React.createElement(MenuItem_1.default, {value: 'Revenues', primaryText: "Revenues"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Both', primaryText: "Both"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Net', primaryText: "Net"}), React.createElement(MenuItem_1.default, {value: 'Staffing', primaryText: "Staffing"})));
-        let byunitselection = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "By Unit: "), React.createElement(DropDownMenu_1.default, {value: this.state.byunitselection, onChange: (e, index, value) => {
+        }}, React.createElement(MenuItem_1.default, {value: 'Expenses', primaryText: "Expenses"}), React.createElement(MenuItem_1.default, {value: 'Revenues', primaryText: "Revenues"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Both', primaryText: "Both"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Net', primaryText: "Net"}), React.createElement(MenuItem_1.default, {value: 'Staffing', primaryText: "Staffing"}))) : null;
+        let byunitselection = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "By Unit: "), React.createElement(DropDownMenu_1.default, {value: this.state.byunitselection, onChange: (e, index, value) => {
             this.switchUnit(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'Off', primaryText: "Off"}), React.createElement(MenuItem_1.default, {value: 'Staff', primaryText: "Per staffing position"}), React.createElement(MenuItem_1.default, {value: 'Population', primaryText: "Population: per person"}), React.createElement(MenuItem_1.default, {value: 'Population100000', primaryText: "Population: per 100,000 people"}), React.createElement(MenuItem_1.default, {value: 'Household', primaryText: "Per household"})));
-        let inflationadjustment = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap", verticalAlign: "bottom", marginRight: '16px' }}, React.createElement(Toggle_1.default, {label: 'Inflation adjusted:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: true}));
-        let showcontrols = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap", verticalAlign: "bottom" }}, React.createElement(Toggle_1.default, {label: 'Show controls:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: true}));
+        }}, React.createElement(MenuItem_1.default, {value: 'Off', primaryText: "Off"}), React.createElement(MenuItem_1.default, {value: 'Staff', primaryText: "Per staffing position"}), React.createElement(MenuItem_1.default, {value: 'Population', primaryText: "Population: per person"}), React.createElement(MenuItem_1.default, {value: 'Population100000', primaryText: "Population: per 100,000 people"}), React.createElement(MenuItem_1.default, {value: 'Household', primaryText: "Per household"}))) : null;
+        let inflationadjustment = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap", verticalAlign: "bottom", marginRight: '16px' }}, React.createElement(Toggle_1.default, {label: 'Inflation adjusted:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: true})) : null;
+        let showcontrols = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap", verticalAlign: "bottom" }}, React.createElement(Toggle_1.default, {label: 'Show controls:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: true, onToggle: (e, value) => {
+            this.setState({
+                showcontrols: value
+            });
+        }}));
         return React.createElement("div", null, React.createElement("div", null, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;
         }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));

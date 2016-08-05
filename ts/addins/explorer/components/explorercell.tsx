@@ -26,7 +26,8 @@ interface ExplorerCellProps {
     declarationData: any,
     globalStateActions: {
         updateCellChartCode:Function,
-    }
+    },
+    showControls: boolean,
 }
 
 class ExplorerCell extends Component<ExplorerCellProps, any> {
@@ -183,7 +184,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 </IconButton>
             </div>
 
-        let chartoptions = () => {
+        let getchartoptions = () => {
 
             let columnchart = 
                 <IconButton
@@ -338,6 +339,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             </div>
         }
 
+        let chartoptions = getchartoptions()
 
         let deltatoggle = (this.state.timescope != TimeScope[TimeScope.OneYear])?
             <div style = {
@@ -533,21 +535,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 graph_id = { graph_id }
                 />
 
-        return <div>
-            <div style={{ padding: "3px" }}>
-
-                { timescopes }
-
-                { chartoptions() }
-
-                { deltatoggle }
-
-                { harmonizeoptions }
-
-            </div>
-
-            { chart }
-
+        let drilldownprompt = 
             <div style={{
                 position:"absolute",
                 bottom:"10px",
@@ -557,9 +545,32 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             }}>
                {expandable?'drill down':'no drill down'}
             </div>
+
+        return <div>
+            {(this.props.showControls)?<div style={{ padding: "3px" }}>
+
+                { timescopes }
+
+                { chartoptions }
+
+                { deltatoggle }
+
+                { harmonizeoptions }
+
+            </div>:null}
+
+            { chart }
+
+            { drilldownprompt }
+
             <div style={{ padding: "3px" }}>
 
-                <p style={{fontStyle:'italic', fontSize:"9px", float:"left"}}>[ year-selection slider goes here]</p>
+                {(this.props.showControls)?
+                    <p 
+                        style={{fontStyle:'italic', fontSize:"9px", float:"left"}}
+                    >
+                        [ year-selection slider goes here]
+                   </p>:null}
 
                 { datatable }
 
@@ -568,6 +579,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 { informationoptions }
 
             </div>
+            
         </div>
     }
 }

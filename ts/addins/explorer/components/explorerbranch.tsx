@@ -83,6 +83,7 @@ interface ExplorerBranchState {
     viewpointData?:ViewpointData,
     facet?: string,
     byunitselection?: string,
+    showcontrols?:boolean,
 }
 
 class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState> {
@@ -93,6 +94,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         snackbar:{open:false,message:'empty'},
         facet: this.props.budgetBranch.settings.viewpoint,
         byunitselection:'off',
+        showcontrols:true,
     }
 
 /*    
@@ -486,6 +488,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                         // updateChartSelections: this.props.displayCallbacks.updateChartSelections,
                     } 
                 }
+                showControls = {this.state.showcontrols}
             />
         })
 
@@ -508,7 +511,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     let drilldownportals = branch.getPortals(drilldownrow)
 
-    let viewpointselection = <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
+    let viewpointselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>Viewpoint: </span>
         <DropDownMenu
             value={this.props.budgetBranch.settings.viewpoint}
@@ -527,9 +530,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         </DropDownMenu>
 
-    </div>
+    </div>:null
 
-    let versionselection = <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
+    let versionselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>Version: </span>
         <DropDownMenu
             value = {'DETAIL'}
@@ -540,9 +543,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             <MenuItem disabled value={'VARIANCE'} primaryText="Variance Reports"/>
 
         </DropDownMenu>
-    </div>
+    </div>:null
 
-    let aspectselection = <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
+    let aspectselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
 
         <span style={{ fontStyle: "italic" }}>Aspect: </span>
 
@@ -563,9 +566,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         </DropDownMenu>
 
-    </div>
+    </div>:null
 
-    let byunitselection = <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
+    let byunitselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>By Unit: </span>
         <DropDownMenu
             value={this.state.byunitselection}
@@ -583,14 +586,23 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             <MenuItem value={'Household'} primaryText="Per household"/>
 
         </DropDownMenu>
-    </div>
+    </div>:null
 
-    let inflationadjustment = <div style={{display:'inline-block', whiteSpace:"nowrap", verticalAlign:"bottom", marginRight:'16px'}}>
+    let inflationadjustment = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap", verticalAlign:"bottom", marginRight:'16px'}}>
         <Toggle label={'Inflation adjusted:'} style={{height:'32px', marginTop:'16px'}} labelStyle = {{fontStyle:'italic'}} defaultToggled={true} />
-    </div>
+    </div>:null
 
     let showcontrols = <div style={{display:'inline-block', whiteSpace:"nowrap", verticalAlign:"bottom"}}>
-        <Toggle label={'Show controls:'} style={{height:'32px', marginTop:'16px'}} labelStyle = {{fontStyle:'italic'}} defaultToggled={true} />
+        <Toggle 
+            label={'Show controls:'} 
+            style={{height:'32px', marginTop:'16px'}} 
+            labelStyle = {{fontStyle:'italic'}} 
+            defaultToggled={true}
+            onToggle = { (e,value) => {
+                this.setState({
+                    showcontrols:value
+                })
+            }}/>
     </div>
 
     return <div >

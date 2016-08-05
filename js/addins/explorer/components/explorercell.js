@@ -97,7 +97,7 @@ class ExplorerCell extends Component {
         }, onTouchTap: e => {
             this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.AllYears]);
         }, disabled: false}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("ellipse", {cx: "6", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "18", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "30", cy: "18", rx: "4", ry: "4"}))));
-        let chartoptions = () => {
+        let getchartoptions = () => {
             let columnchart = React.createElement(IconButton_1.default, {key: 'columnchart', tooltip: "Column Chart", tooltipPosition: "top-center", style: {
                 backgroundColor: (explorerChartCode == "ColumnChart")
                     ? "rgba(144,238,144,0.5)"
@@ -178,6 +178,7 @@ class ExplorerCell extends Component {
                 display: "inline-block"
             }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "charts"), chartoptions);
         };
+        let chartoptions = getchartoptions();
         let deltatoggle = (this.state.timescope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ?
             React.createElement("div", {style: {
                 paddingTop: "10px",
@@ -266,13 +267,15 @@ class ExplorerCell extends Component {
             marginLeft: "3px",
         }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")));
         let chart = React.createElement(Chart, {ref: node => { this.props.budgetCell.chartComponent = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id});
-        return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions(), deltatoggle, harmonizeoptions), chart, React.createElement("div", {style: {
+        let drilldownprompt = React.createElement("div", {style: {
             position: "absolute",
             bottom: "10px",
             left: "40px",
             fontSize: "9px",
             fontStyle: "italic",
-        }}, expandable ? 'drill down' : 'no drill down'), React.createElement("div", {style: { padding: "3px" }}, React.createElement("p", {style: { fontStyle: 'italic', fontSize: "9px", float: "left" }}, "[ year-selection slider goes here]"), datatable, socialoptions, informationoptions));
+        }}, expandable ? 'drill down' : 'no drill down');
+        return React.createElement("div", null, (this.props.showControls) ? React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions, deltatoggle, harmonizeoptions) : null, chart, drilldownprompt, React.createElement("div", {style: { padding: "3px" }}, (this.props.showControls) ?
+            React.createElement("p", {style: { fontStyle: 'italic', fontSize: "9px", float: "left" }}, "[ year-selection slider goes here]") : null, datatable, socialoptions, informationoptions));
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
