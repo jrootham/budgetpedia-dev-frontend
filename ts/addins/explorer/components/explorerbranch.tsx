@@ -79,6 +79,7 @@ interface ExplorerBranchState {
     snackbar?:SnackbarProps, 
     viewpointData?:ViewpointData,
     facet?: string,
+    byunitselection?: string,
 }
 
 class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState> {
@@ -88,6 +89,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         viewpointData:null,
         snackbar:{open:false,message:'empty'},
         facet: this.props.budgetBranch.settings.viewpoint,
+        byunitselection:'off',
     }
 
 /*    
@@ -413,6 +415,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     }
 
+    switchUnit = unitindex => {
+        this.setState({
+            byunitselection:unitindex
+        })
+    }
+
     // -----------------------------[ prepare for render ]---------------------------------
 
     // get React components to render
@@ -523,7 +531,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             value = {'DETAIL'}
             >
 
-            <MenuItem value={'SUMMARY'} primaryText="Summary"/>
+            <MenuItem disabled value={'SUMMARY'} primaryText="Summary"/>
             <MenuItem value={'DETAIL'} primaryText="Detail (FPARS)"/>
             <MenuItem disabled value={'VARIANCE'} primaryText="Variance Reports"/>
 
@@ -536,8 +544,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         <DropDownMenu
             value={this.state.facet}
-            style={{
-            }}
             onChange={
                 (e, index, value) => {
                     branch.switchFacet(value)
@@ -555,6 +561,27 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     </div>
 
+    let byunitselection = <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
+        <span style={{ fontStyle: "italic" }}>By Unit: </span>
+        <DropDownMenu
+            value={this.state.byunitselection}
+            onChange={
+                (e, index, value) => {
+                    this.switchUnit(value)
+                }
+            }
+            >
+
+            <MenuItem value={'Off'} primaryText="Off"/>
+            <MenuItem value={'Staff'} primaryText="Per staffing position"/>
+            <MenuItem value={'Population'} primaryText="Population: per person"/>
+            <MenuItem value={'Population100000'} primaryText="Population: per 100,000 people"/>
+            <MenuItem value={'Household'} primaryText="Per household"/>
+
+        </DropDownMenu>
+    </div>
+
+
     return <div >
     <div>
 
@@ -563,6 +590,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         { versionselection }
 
         { aspectselection }
+
+        { byunitselection }
 
     </div>
 
