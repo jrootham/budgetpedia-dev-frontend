@@ -153,15 +153,18 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     componentDidMount() {
         let { budgetBranch, declarationData } = this.props
         this._previousControlData = declarationData // initialize
-        budgetBranch.getViewpointData() // .then(...)
-        if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
-            setTimeout(()=> {
-                // this will trigger harmonization between declarations 
-                // and local node instances in componentDidUpdate
-                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
-                this._stateActions.addNodeDeclaration(budgetNodeParms)
-            })
-        }
+        budgetBranch.getViewpointData().then(() => {
+
+            if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
+                setTimeout(()=> {
+                    // this will trigger harmonization between declarations 
+                    // and local node instances in componentDidUpdate
+                    let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
+                    this._stateActions.addNodeDeclaration(budgetNodeParms)
+                })
+            }
+
+        })
     }
 
     // remove obsolete node objects
@@ -273,41 +276,45 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     private _processChangeViewpointStateChange = (budgetBranch:BudgetBranch) => {
-        budgetBranch.getViewpointData()
-        setTimeout(()=>{
-            let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
-            this._stateActions.addNodeDeclaration(budgetNodeParms)
+        budgetBranch.getViewpointData().then(()=>{
+
+            setTimeout(()=>{
+                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
+                this._stateActions.addNodeDeclaration(budgetNodeParms)
+            })
+
         })
     }
 
     private _processChangeFacetStateChange = (budgetBranch:BudgetBranch) => {
         // console.log('processing change facet state change')
-        budgetBranch.getViewpointData()
+        budgetBranch.getViewpointData().then(() => {
 
-        setTimeout(() => {
+            setTimeout(() => {
 
-            let switchResults = budgetBranch.switchFacet()
+                let switchResults = budgetBranch.switchFacet()
 
-            let { deeperdata, shallowerdata } = switchResults
+                let { deeperdata, shallowerdata } = switchResults
 
-            if (deeperdata || shallowerdata) {
+                if (deeperdata || shallowerdata) {
 
-                let message = null
-                if (deeperdata) {
-                    message = "More drilldown is available for current facet selection"
-                } else {
-                    message = "Less drilldown is available for current facet selection"
+                    let message = null
+                    if (deeperdata) {
+                        message = "More drilldown is available for current facet selection"
+                    } else {
+                        message = "Less drilldown is available for current facet selection"
+                    }
+                    let { snackbar } = this.state
+                    snackbar = Object.assign ({},snackbar)
+                    snackbar.message = message
+                    snackbar.open = true
+                    this.setState({
+                        snackbar,
+                    })
+
                 }
-                let { snackbar } = this.state
-                snackbar = Object.assign ({},snackbar)
-                snackbar.message = message
-                snackbar.open = true
-                this.setState({
-                    snackbar,
-                })
 
-            }
-
+            })
         })
     }
 

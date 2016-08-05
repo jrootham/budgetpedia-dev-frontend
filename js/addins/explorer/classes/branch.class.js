@@ -46,7 +46,7 @@ class BudgetBranch {
             let branchSettings = this.settings;
             let { viewpoint: viewpointName, facet: facetName, inflationAdjusted, } = branchSettings;
             let datasetName = constants_1.FacetNameToDatasetName[facetName];
-            let viewpointdata = databaseapi_1.default.getViewpointData({
+            let _promise = databaseapi_1.default.getViewpointData({
                 viewpointName: viewpointName,
                 datasetName: datasetName,
                 inflationAdjusted: inflationAdjusted,
@@ -58,9 +58,15 @@ class BudgetBranch {
                     lastYear: null,
                 }
             });
-            this.setState({
-                viewpointData: viewpointdata
+            let promise = new Promise(resolve => {
+                _promise.then((viewpointdata) => {
+                    this.setState({
+                        viewpointData: viewpointdata
+                    });
+                    resolve(true);
+                });
             });
+            return promise;
         };
         this.createChildNode = (props) => {
             let budgetBranch = this;

@@ -216,7 +216,7 @@ class BudgetBranch {
 
         let datasetName = FacetNameToDatasetName[facetName]
 
-        let viewpointdata:ViewpointData = databaseapi.getViewpointData({
+        let _promise = databaseapi.getViewpointData({
             viewpointName, 
             datasetName,
             inflationAdjusted,
@@ -229,10 +229,20 @@ class BudgetBranch {
             }
         })
 
-        this.setState({
-            viewpointData:viewpointdata
+        let promise = new Promise(resolve => {
+
+            _promise.then( (viewpointdata:ViewpointData) => {
+                this.setState({
+                    viewpointData:viewpointdata
+                })
+
+                resolve(true)
+                
+            })
+
         })
 
+        return promise
     }
 
     createChildNode = ( props: CreateChildNodeProps ) => {

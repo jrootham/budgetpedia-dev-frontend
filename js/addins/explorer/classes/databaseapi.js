@@ -9,49 +9,72 @@ class Database {
     }
     getViewpointData(parms) {
         let { viewpointName, datasetName, inflationAdjusted, timeSpecs } = parms;
-        let viewpointData = this.getViewpoint(viewpointName), datasetData = this.getDataset(datasetName), lookups = this.getLookup();
-        viewpointData = JSON.parse(JSON.stringify(viewpointData));
-        let setparms = {
-            datasetName: datasetName,
-            inflationAdjusted: inflationAdjusted,
-            timeSpecs: timeSpecs,
-            viewpointData: viewpointData,
-            datasetData: datasetData,
-            lookups: lookups,
-        };
-        this.setViewpointData(setparms);
-        viewpointData = setparms.viewpointData;
-        viewpointData.datasetConfig = this.getDatasetConfig(parms.datasetName);
-        return setparms.viewpointData;
+        let viewpointDataPromise = this.getViewpointPromise(viewpointName), datasetDataPromise = this.getDatasetPromise(datasetName), lookupsPromise = this.getLookupPromise(), datasetConfigPromise = this.getDatasetConfigPromise(datasetName);
+        let promise = new Promise(resolve => {
+            Promise.all([viewpointDataPromise, datasetDataPromise, lookupsPromise, datasetConfigPromise]).then(values => {
+                let viewpointData;
+                let datasetData;
+                let lookups;
+                let datasetConfig;
+                [viewpointData, datasetData, lookups, datasetConfig] = values;
+                viewpointData.datasetConfig = datasetConfig;
+                let setparms = {
+                    datasetName: datasetName,
+                    inflationAdjusted: inflationAdjusted,
+                    timeSpecs: timeSpecs,
+                    viewpointData: viewpointData,
+                    datasetData: datasetData,
+                    lookups: lookups,
+                };
+                this.setViewpointData(setparms);
+                viewpointData = setparms.viewpointData;
+                resolve(viewpointData);
+            });
+        });
+        return promise;
     }
-    getDatasetConfig(dataset) {
-        let datasetdata = this.getDataset(dataset);
-        let { Baseline, Name, Titles, Units, UnitsAlias, Categories, Title } = datasetdata;
-        let config = {
-            Baseline: Baseline,
-            Name: Name,
-            Titles: Titles,
-            Units: Units,
-            UnitsAlias: UnitsAlias,
-            Categories: Categories,
-            Title: Title,
-        };
-        return config;
+    getDatasetConfigPromise(dataset) {
+        let datasetpromise = this.getDatasetPromise(dataset);
+        let promise = new Promise(resolve => {
+            datasetpromise.then((datasetdata) => {
+                let { Baseline, Name, Titles, Units, UnitsAlias, Categories, Title } = datasetdata;
+                let config = {
+                    Baseline: Baseline,
+                    Name: Name,
+                    Titles: Titles,
+                    Units: Units,
+                    UnitsAlias: UnitsAlias,
+                    Categories: Categories,
+                    Title: Title,
+                };
+                resolve(config);
+            });
+        });
+        return promise;
     }
     setViewpointData(parms) {
         setviewpointdata_1.default(parms);
     }
-    getViewpoint(viewpoint) {
-        let viewpointdata = db_viewpoints[viewpoint];
-        return viewpointdata;
+    getViewpointPromise(viewpoint) {
+        let promise = new Promise(resolve => {
+            let viewpointdata = db_viewpoints[viewpoint];
+            resolve(viewpointdata);
+        });
+        return promise;
     }
-    getDataset(dataset) {
-        let datasetdata = db_datasets[dataset];
-        return datasetdata;
+    getDatasetPromise(dataset) {
+        let promise = new Promise(resolve => {
+            let datasetdata = db_datasets[dataset];
+            resolve(datasetdata);
+        });
+        return promise;
     }
-    getLookup(lookup = undefined) {
-        let lookupdata = db_lookups;
-        return lookupdata;
+    getLookupPromise(lookup = undefined) {
+        let promise = new Promise(resolve => {
+            let lookupdata = db_lookups;
+            resolve(lookupdata);
+        });
+        return promise;
     }
 }
 const database = new Database();

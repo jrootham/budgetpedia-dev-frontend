@@ -137,65 +137,91 @@ class Database {
 
         let { viewpointName, datasetName, inflationAdjusted, timeSpecs } = parms
 
-        let viewpointData = this.getViewpoint(viewpointName),
-            datasetData = this.getDataset(datasetName),
-            lookups = this.getLookup()
+        let viewpointDataPromise = this.getViewpointPromise(viewpointName),
+            datasetDataPromise = this.getDatasetPromise(datasetName),
+            lookupsPromise = this.getLookupPromise(),
+            datasetConfigPromise = this.getDatasetConfigPromise(datasetName)
 
-        viewpointData = JSON.parse(JSON.stringify(viewpointData)) // deep clone
+        let promise = new Promise(resolve => {
 
-        let setparms:SetViewpointDataParms = {
-            datasetName,
-            inflationAdjusted,
-            timeSpecs,
-            viewpointData,
-            datasetData,
-            lookups,
-        }
+            Promise.all([viewpointDataPromise, datasetDataPromise, lookupsPromise, datasetConfigPromise]).then(
+                values => {
+                    let viewpointData
+                    let datasetData
+                    let lookups
+                    let datasetConfig
 
-        this.setViewpointData(setparms)
+                    [viewpointData, datasetData, lookups, datasetConfig] = values
 
-        viewpointData = setparms.viewpointData
 
-        viewpointData.datasetConfig = this.getDatasetConfig(parms.datasetName)
+                    viewpointData.datasetConfig = datasetConfig
+                    let setparms:SetViewpointDataParms = {
+                        datasetName,
+                        inflationAdjusted,
+                        timeSpecs,
+                        viewpointData,
+                        datasetData,
+                        lookups,
+                    }
+                    this.setViewpointData(setparms)
 
-        return setparms.viewpointData
+                    viewpointData = setparms.viewpointData
+
+                    resolve(viewpointData)
+                }
+            )
+        })
+
+        return promise
 
     }
+    private getDatasetConfigPromise(dataset:string) {
 
-    private getDatasetConfig(dataset:string):DatasetConfig {
-        let datasetdata = this.getDataset(dataset)
-        let { Baseline,
-            Name,
-            Titles,
-            Units,
-            UnitsAlias,
-            Categories,
-            Title } = datasetdata
+        let datasetpromise = this.getDatasetPromise(dataset)
+        let promise = new Promise(resolve => {
+            datasetpromise.then((datasetdata: DatasetConfig) => {
+                let { Baseline,
+                    Name,
+                    Titles,
+                    Units,
+                    UnitsAlias,
+                    Categories,
+                    Title } = datasetdata
 
-        let config = {
-            Baseline, 
-            Name, 
-            Titles, 
-            Units, 
-            UnitsAlias,
-            Categories,
-            Title,
-        }
-        return config
+                let config = {
+                    Baseline, 
+                    Name, 
+                    Titles, 
+                    Units, 
+                    UnitsAlias,
+                    Categories,
+                    Title,
+                }
+                 resolve(config)
+
+            })
+        })
+        return promise
     }
 
     private setViewpointData(parms: SetViewpointDataParms) {
         updateViewpointData(parms)
     }
 
-    private getViewpoint(viewpoint: string): ViewpointData {
-        let viewpointdata: ViewpointData = db_viewpoints[viewpoint]
-        return viewpointdata
+    private getViewpointPromise(viewpoint: string) {
+        let promise = new Promise(resolve => {
+            let viewpointdata: ViewpointData = db_viewpoints[viewpoint]
+            resolve(viewpointdata)
+        })
+        return promise
     }
 
-    private getDataset(dataset: string) {
-        let datasetdata: CurrencyDataset | ItemDataset = db_datasets[dataset]
-        return datasetdata
+    private getDatasetPromise(dataset: string) {
+        let promise = new Promise(resolve => {
+            let datasetdata: CurrencyDataset | ItemDataset = db_datasets[dataset]
+            resolve(datasetdata)
+        })
+        return promise
         // delay(500).then(() => {
         //     let dst: CurrencyDataset | ItemDataset
         //     dst = db_dataseries[dataset]
@@ -204,9 +230,12 @@ class Database {
         // })
     }
 
-    private getLookup(lookup:string = undefined):Lookup {
-        let lookupdata: Lookup = db_lookups
-        return lookupdata
+    private getLookupPromise(lookup:string = undefined) {
+        let promise = new Promise(resolve => {
+            let lookupdata: Lookup = db_lookups
+            resolve(lookupdata)
+        })
+        return promise
     }
 }
 
