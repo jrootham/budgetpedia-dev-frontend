@@ -585,9 +585,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         </DropDownMenu>
     </div>
 
-    let inflationadjustment = <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
-        <div style={{display:'inline-block', paddingTop:'20px'}}>
-        <Toggle label={'Inflation adjusted:'} labelStyle = {{fontStyle:'italic'}} defaultToggled={true} /></div>
+    let inflationadjustment = <div style={{display:'inline-block', whiteSpace:"nowrap", verticalAlign:"bottom"}}>
+        <Toggle label={'Inflation adjusted:'} style={{height:'32px'}} labelStyle = {{fontStyle:'italic'}} defaultToggled={true} />
     </div>
 
 
