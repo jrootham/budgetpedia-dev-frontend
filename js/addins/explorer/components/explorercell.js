@@ -266,13 +266,13 @@ class ExplorerCell extends Component {
             marginLeft: "3px",
         }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")));
         let chart = React.createElement(Chart, {ref: node => { this.props.budgetCell.chartComponent = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id});
-        return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions(), deltatoggle, datatable, harmonizeoptions), chart, React.createElement("div", {style: {
+        return React.createElement("div", null, React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions(), deltatoggle, harmonizeoptions), chart, React.createElement("div", {style: {
             position: "absolute",
             bottom: "10px",
             left: "40px",
             fontSize: "9px",
             fontStyle: "italic",
-        }}, expandable ? 'drill down' : 'no drill down'), React.createElement("div", {style: { padding: "3px" }}, React.createElement("p", {style: { fontStyle: 'italic', fontSize: "9px", float: "left" }}, "[ year-selection slider goes here]"), socialoptions, informationoptions));
+        }}, expandable ? 'drill down' : 'no drill down'), React.createElement("div", {style: { padding: "3px" }}, React.createElement("p", {style: { fontStyle: 'italic', fontSize: "9px", float: "left" }}, "[ year-selection slider goes here]"), datatable, socialoptions, informationoptions));
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

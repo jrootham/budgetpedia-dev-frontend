@@ -542,8 +542,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
                 { deltatoggle }
 
-                { datatable }
-
                 { harmonizeoptions }
 
             </div>
@@ -562,6 +560,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             <div style={{ padding: "3px" }}>
 
                 <p style={{fontStyle:'italic', fontSize:"9px", float:"left"}}>[ year-selection slider goes here]</p>
+
+                { datatable }
 
                 { socialoptions }
 
