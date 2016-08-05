@@ -122,6 +122,18 @@ class ExplorerCell extends Component {
             }, onTouchTap: e => {
                 this.onChangeChartCode('DonutChart');
             }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "donut_small"));
+            let contextchart = React.createElement(IconButton_1.default, {disabled: true, key: 'contextchart', tooltip: "Context Chart", tooltipPosition: "top-center", style: {
+                backgroundColor: (explorerChartCode == "ContextChart")
+                    ? "rgba(144,238,144,0.5)"
+                    : "transparent",
+                borderRadius: "50%",
+                padding: "0",
+                height: "36px",
+                width: "36px",
+                marginRight: "3px",
+            }, onTouchTap: e => {
+                this.onChangeChartCode('ContextChart');
+            }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_quilt"));
             let timeline = React.createElement(IconButton_1.default, {key: 'timeline', tooltip: "Timeline", tooltipPosition: "top-center", style: {
                 backgroundColor: (explorerChartCode == "TimeLine")
                     ? "rgba(144,238,144,0.5)"
@@ -161,7 +173,7 @@ class ExplorerCell extends Component {
             let chartoptions;
             switch (this.state.timescope) {
                 case constants_1.TimeScope[constants_1.TimeScope.OneYear]:
-                    chartoptions = [columnchart, donutchart];
+                    chartoptions = [columnchart, donutchart, contextchart];
                     break;
                 case constants_1.TimeScope[constants_1.TimeScope.TwoYears]:
                     chartoptions = [columnchart];

@@ -232,6 +232,30 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     <FontIcon className="material-icons">donut_small</FontIcon>
                 </IconButton>
 
+            let contextchart = 
+                <IconButton
+                    disabled
+                    key = 'contextchart'
+                    tooltip="Context Chart"
+                    tooltipPosition="top-center"
+                    style={
+                        {
+                            backgroundColor: (explorerChartCode == "ContextChart")
+                                ? "rgba(144,238,144,0.5)"
+                                : "transparent",
+                            borderRadius: "50%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
+                        }
+                    }
+                    onTouchTap={ e => {
+                        this.onChangeChartCode('ContextChart')
+                    } }>
+                    <FontIcon className="material-icons">view_quilt</FontIcon>
+                </IconButton>
+
             let timeline =
                 <IconButton
                     key = 'timeline'
@@ -312,7 +336,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
             switch (this.state.timescope) {
                 case TimeScope[TimeScope.OneYear]:
-                    chartoptions = [ columnchart, donutchart ]
+                    chartoptions = [ columnchart, donutchart, contextchart ]
                     break;
                 case TimeScope[TimeScope.TwoYears]:
                     chartoptions = [ columnchart ]
