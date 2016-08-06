@@ -30,13 +30,7 @@ class BudgetCell {
                 });
                 throw Error('node not found');
             }
-            let components;
-            if (nodeDataseriesName == 'Categories') {
-                components = dataNode.Categories;
-            }
-            else {
-                components = dataNode.Components;
-            }
+            let components = dataNode[nodeDataseriesName];
             let chartType = budgetCell.googleChartType;
             let axistitle = null;
             if ((dataNode.Contents) && (nodeDataseriesName == 'Components')) {

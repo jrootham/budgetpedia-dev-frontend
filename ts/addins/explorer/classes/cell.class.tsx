@@ -169,13 +169,13 @@ class BudgetCell {
             throw Error('node not found')
         }
 
-        let components
+        let components = dataNode[nodeDataseriesName]
 
-        if (nodeDataseriesName == 'Categories') {
-            components = dataNode.Categories
-        } else {
-            components = dataNode.Components
-        }
+        // if (nodeDataseriesName == 'Categories') {
+        //     components = dataNode.Categories
+        // } else {
+        //     components = dataNode.Components
+        // }
 
         // ====================[ COLLECT CHART PARMS ]======================
         // 1. chart type:
