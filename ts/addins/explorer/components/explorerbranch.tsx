@@ -94,7 +94,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         snackbar:{open:false,message:'empty'},
         facet: this.props.budgetBranch.settings.viewpoint,
         byunitselection:'off',
-        showcontrols:true,
+        showcontrols:false,
     }
 
 /*    
@@ -601,10 +601,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     let showcontrols = <div style={{display:'inline-block', whiteSpace:"nowrap", verticalAlign:"bottom"}}>
         <Toggle 
-            label={'Show controls:'} 
+            label={'Show options:'} 
             style={{height:'32px', marginTop:'16px'}} 
             labelStyle = {{fontStyle:'italic'}} 
-            defaultToggled={true}
+            defaultToggled={false}
             onToggle = { (e,value) => {
                 this.props.globalStateActions.resetLastAction() // TODO: this is a hack!!
                 this.setState({

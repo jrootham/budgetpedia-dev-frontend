@@ -17,7 +17,7 @@ class ExplorerBranch extends Component {
             snackbar: { open: false, message: 'empty' },
             facet: this.props.budgetBranch.settings.viewpoint,
             byunitselection: 'off',
-            showcontrols: true,
+            showcontrols: false,
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
@@ -300,7 +300,7 @@ class ExplorerBranch extends Component {
             this.switchUnit(value);
         }}, React.createElement(MenuItem_1.default, {value: 'Off', primaryText: "Off"}), React.createElement(MenuItem_1.default, {value: 'Staff', primaryText: "Per staffing position"}), React.createElement(MenuItem_1.default, {value: 'Population', primaryText: "Population: per person"}), React.createElement(MenuItem_1.default, {value: 'Population100000', primaryText: "Population: per 100,000 people"}), React.createElement(MenuItem_1.default, {value: 'Household', primaryText: "Per household"}))) : null;
         let inflationadjustment = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap", verticalAlign: "bottom", marginRight: '16px' }}, React.createElement(Toggle_1.default, {label: 'Inflation adjusted:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: true})) : null;
-        let showcontrols = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap", verticalAlign: "bottom" }}, React.createElement(Toggle_1.default, {label: 'Show controls:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: true, onToggle: (e, value) => {
+        let showcontrols = React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap", verticalAlign: "bottom" }}, React.createElement(Toggle_1.default, {label: 'Show options:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: false, onToggle: (e, value) => {
             this.props.globalStateActions.resetLastAction();
             this.setState({
                 showcontrols: value

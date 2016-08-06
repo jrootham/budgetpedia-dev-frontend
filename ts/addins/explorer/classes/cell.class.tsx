@@ -152,9 +152,6 @@ class BudgetCell {
                 vertlabel = 'Revenues' + ' (' + vertlabel + ')'
         }
 
-        // provide basis for error handling
-        // let isError = false
-
         // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
         // collect chart node and its components as data sources for the graph
@@ -170,12 +167,6 @@ class BudgetCell {
         }
 
         let components = dataNode[nodeDataseriesName]
-
-        // if (nodeDataseriesName == 'Categories') {
-        //     components = dataNode.Categories
-        // } else {
-        //     components = dataNode.Components
-        // }
 
         // ====================[ COLLECT CHART PARMS ]======================
         // 1. chart type:
