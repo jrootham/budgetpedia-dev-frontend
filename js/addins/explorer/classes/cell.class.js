@@ -24,8 +24,8 @@ class BudgetCell {
         this.setChartParms = () => {
             let budgetCell = this;
             let { viewpointConfig, datasetConfig } = budgetCell.viewpointConfigPack;
-            let { dataNode, timeSpecs: yearSpecs, parentData, } = budgetCell.nodeDataPack;
-            if (!dataNode) {
+            let { nodeData, timeSpecs: yearSpecs, parentData, } = budgetCell.nodeDataPack;
+            if (!nodeData) {
                 console.error('node not found', {
                     isError: true,
                     errorMessage: 'node not found',
@@ -34,10 +34,10 @@ class BudgetCell {
                 throw Error('node not found');
             }
             let chartType = budgetCell.googleChartType;
-            let options = budgetCell._chartParmsOptions(dataNode, parentData, viewpointConfig, datasetConfig, yearSpecs);
+            let options = budgetCell._chartParmsOptions(nodeData, parentData, viewpointConfig, datasetConfig, yearSpecs);
             let events = budgetCell._chartParmsEvents();
             let columns = budgetCell._chartParmsColumns(yearSpecs);
-            let rows = budgetCell._chartParmsRows(dataNode, yearSpecs);
+            let rows = budgetCell._chartParmsRows(nodeData, yearSpecs);
             let chartParms = {
                 chartType: chartType,
                 options: options,
@@ -47,7 +47,7 @@ class BudgetCell {
             };
             budgetCell._chartParms = chartParms;
         };
-        this._chartParmsOptions = (dataNode, parentData, viewpointConfig, datasetConfig, yearSpecs) => {
+        this._chartParmsOptions = (nodeData, parentData, viewpointConfig, datasetConfig, yearSpecs) => {
             let budgetCell = this;
             let { facetName, nodeDataseriesName } = budgetCell;
             let datasetName = constants_1.FacetNameToDatasetName[facetName];
@@ -61,8 +61,8 @@ class BudgetCell {
                     vertlabel = 'Revenues' + ' (' + vertlabel + ')';
             }
             let axistitle = null;
-            if ((dataNode.Contents) && (nodeDataseriesName == 'Components')) {
-                let titleref = viewpointConfig[dataNode.Contents];
+            if ((nodeData.Contents) && (nodeDataseriesName == 'Components')) {
+                let titleref = viewpointConfig[nodeData.Contents];
                 axistitle = titleref.Alias || titleref.Name;
             }
             else {
@@ -71,8 +71,8 @@ class BudgetCell {
             }
             let title;
             if (parentData) {
-                let parentdataNode = parentData.dataNode;
-                let configindex = dataNode.Config || parentdataNode.Contents;
+                let parentdataNode = parentData.nodeData;
+                let configindex = nodeData.Config || parentdataNode.Contents;
                 let catname = null;
                 if (configindex) {
                     let category = viewpointConfig[configindex].Instance;
@@ -91,8 +91,8 @@ class BudgetCell {
             let thousandsformat = format({ prefix: "$" });
             let rounded = format({ round: 0, integerSeparator: '' });
             let staffrounded = format({ round: 1, integerSeparator: ',' });
-            if (dataNode.years) {
-                titleamount = dataNode.years[year];
+            if (nodeData.years) {
+                titleamount = nodeData.years[year];
             }
             if (units == 'DOLLAR') {
                 titleamount = parseInt(rounded(titleamount / 1000));
@@ -194,12 +194,12 @@ class BudgetCell {
             }
             return columns;
         };
-        this._chartParmsRows = (dataNode, yearSpecs) => {
+        this._chartParmsRows = (nodeData, yearSpecs) => {
             let budgetCell = this;
             let { nodeDataseriesName } = budgetCell;
-            let components = dataNode[nodeDataseriesName];
+            let components = nodeData[nodeDataseriesName];
             let sortedlist = 'Sorted' + nodeDataseriesName;
-            if (!dataNode[sortedlist]) {
+            if (!nodeData[sortedlist]) {
                 console.error({
                     isError: true,
                     errorMessage: 'sorted list "' + sortedlist + '" not available',
@@ -207,10 +207,10 @@ class BudgetCell {
                 });
                 throw Error('sorted list "' + sortedlist + '" not available');
             }
-            let rows = dataNode[sortedlist].map((item) => {
+            let rows = nodeData[sortedlist].map((item) => {
                 let component = components[item.Code];
                 if (!component) {
-                    console.error('component not found for (node, sortedlist components, item, item.Code) ', dataNode, sortedlist, components, item.Code, item);
+                    console.error('component not found for (node, sortedlist components, item, item.Code) ', nodeData, sortedlist, components, item.Code, item);
                 }
                 let amount;
                 if (component.years) {

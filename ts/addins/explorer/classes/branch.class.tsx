@@ -110,10 +110,10 @@ class BudgetBranch {
         let branchSettings = this.settings
 
         let viewpointData = this.state.viewpointData
-        let dataNode = getBudgetNode(viewpointData, dataPath)
+        let nodeData = getBudgetNode(viewpointData, dataPath)
         let branchNodes = this.nodes
-        let parentNode = (nodeIndex == 0)? undefined: branchNodes[branchNodes.length - 1].dataNode
-        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, dataNode, parentNode)
+        let parentNode = (nodeIndex == 0)? undefined: branchNodes[branchNodes.length - 1].nodeData
+        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, nodeData, parentNode)
         branchNodes[nodeIndex] = budgetNode
         this.setState({
             branchNodes,
@@ -156,7 +156,7 @@ class BudgetBranch {
                 // now set budgetNode with new data node
                 let parentDataNode = null
                 if (nodeIndex > 0) {
-                    parentDataNode = branchNodes[nodeIndex-1].dataNode
+                    parentDataNode = branchNodes[nodeIndex-1].nodeData
                 }
                 if ( deeperdata || shallowerdata) {
                     switchResults.deeperdata = deeperdata
@@ -282,21 +282,21 @@ class BudgetBranch {
         // copy path
         let childdatapath = budgetNode.dataPath.slice()
 
-        let dataNode = budgetNode.dataNode
+        let nodeData = budgetNode.nodeData
 
-        if (!dataNode.Components) {
+        if (!nodeData.Components) {
             // updateChartSelections()
             return
         }
 
-        let components = dataNode.Components
+        let components = nodeData.Components
 
         let code = null
         let parentData: SortedComponentItem = null
         let parentNode: any = null
-        if (dataNode && dataNode.SortedComponents && dataNode.SortedComponents[selectionrow]) {
-            parentData = dataNode.SortedComponents[selectionrow]
-            parentNode = dataNode
+        if (nodeData && nodeData.SortedComponents && nodeData.SortedComponents[selectionrow]) {
+            parentData = nodeData.SortedComponents[selectionrow]
+            parentNode = nodeData
             code = parentData.Code
         }
         if (code)
@@ -306,7 +306,7 @@ class BudgetBranch {
             return
         }
 
-        let newnode = dataNode.Components[code]
+        let newnode = nodeData.Components[code]
         if (!newnode.Components && !newnode.Categories) {
             // updateChartSelections()
             return

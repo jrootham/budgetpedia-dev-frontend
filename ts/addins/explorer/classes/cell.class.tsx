@@ -60,7 +60,7 @@ export interface CellConstructorArgs {
 }
 
 export interface NodeData {
-    dataNode: any,
+    nodeData: any,
     timeSpecs: TimeSpecs,
     parentData: any,
 }
@@ -172,7 +172,7 @@ class BudgetCell {
         } = budgetCell.viewpointConfigPack
 
         let { 
-            dataNode, 
+            nodeData, 
             timeSpecs:yearSpecs, 
             parentData, 
         } = budgetCell.nodeDataPack
@@ -180,7 +180,7 @@ class BudgetCell {
         // ---------------------[ get data node components ]------------------
         // collect chart node and its components as data sources for the graph
 
-        if (!dataNode) {
+        if (!nodeData) {
             console.error('node not found',
             {
                 isError: true,
@@ -203,7 +203,7 @@ class BudgetCell {
         // ------------------
 
         let options = budgetCell._chartParmsOptions(
-            dataNode, 
+            nodeData, 
             parentData, 
             viewpointConfig, 
             datasetConfig, 
@@ -226,7 +226,7 @@ class BudgetCell {
         // 5. chart rows:
         // ------------------
 
-        let rows = budgetCell._chartParmsRows(dataNode, yearSpecs)
+        let rows = budgetCell._chartParmsRows(nodeData, yearSpecs)
 
         // --------------------[ ASSEMBLE PARMS PACK ]----------------
 
@@ -248,7 +248,7 @@ class BudgetCell {
     // ------------------
     // 2. chart options:
     // ------------------
-    private _chartParmsOptions = (dataNode, parentData, viewpointConfig, datasetConfig, yearSpecs) => {
+    private _chartParmsOptions = (nodeData, parentData, viewpointConfig, datasetConfig, yearSpecs) => {
         // set vertical label value
 
         let budgetCell = this
@@ -269,8 +269,8 @@ class BudgetCell {
 
         // get axis title
         let axistitle = null
-        if ((dataNode.Contents) && (nodeDataseriesName == 'Components')) {
-            let titleref = viewpointConfig[dataNode.Contents]
+        if ((nodeData.Contents) && (nodeDataseriesName == 'Components')) {
+            let titleref = viewpointConfig[nodeData.Contents]
             axistitle = titleref.Alias || titleref.Name
         } else {
             let portaltitles = datasetConfig.Titles
@@ -280,8 +280,8 @@ class BudgetCell {
         // assemble chart title
         let title
         if (parentData) {
-            let parentdataNode = parentData.dataNode
-            let configindex = dataNode.Config || parentdataNode.Contents
+            let parentdataNode = parentData.nodeData
+            let configindex = nodeData.Config || parentdataNode.Contents
             let catname = null
             if (configindex) {
                 let category = viewpointConfig[configindex].Instance
@@ -306,8 +306,8 @@ class BudgetCell {
         let staffrounded = format({ round: 1, integerSeparator: ',' })
 
 
-        if (dataNode.years) {
-            titleamount = dataNode.years[year]
+        if (nodeData.years) {
+            titleamount = nodeData.years[year]
         }
         if (units == 'DOLLAR') {
             titleamount = parseInt(rounded(titleamount / 1000))
@@ -434,17 +434,17 @@ class BudgetCell {
     // ------------------
     // 5. chart rows:
     // ------------------
-    private _chartParmsRows = (dataNode, yearSpecs:TimeSpecs) => {
+    private _chartParmsRows = (nodeData, yearSpecs:TimeSpecs) => {
 
         let budgetCell = this
 
         let { nodeDataseriesName } = budgetCell
 
-        let components = dataNode[nodeDataseriesName]
+        let components = nodeData[nodeDataseriesName]
 
         let sortedlist = 'Sorted' + nodeDataseriesName
 
-        if (!dataNode[sortedlist]) {
+        if (!nodeData[sortedlist]) {
             console.error( { 
                 isError: true, 
                 errorMessage:'sorted list "' + sortedlist + '" not available',
@@ -452,12 +452,12 @@ class BudgetCell {
             })
             throw Error('sorted list "' + sortedlist + '" not available')
         }
-        let rows = dataNode[sortedlist].map((item:SortedComponentItem) => {
+        let rows = nodeData[sortedlist].map((item:SortedComponentItem) => {
             // TODO: get determination of amount processing from Unit value
             let component = components[item.Code]
             if (!component) {
                 console.error('component not found for (node, sortedlist components, item, item.Code) ',
-                    dataNode, sortedlist, components, item.Code, item)
+                    nodeData, sortedlist, components, item.Code, item)
             }
             let amount
             if (component.years) {

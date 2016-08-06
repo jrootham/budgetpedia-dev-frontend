@@ -7,11 +7,11 @@ class BudgetNode {
         this.updated = false;
         this.newCells = null;
         this.parentData = null;
-        this.update = (facet, dataNode, parentDataNode = null) => {
-            this._dataNode = dataNode;
+        this.update = (facet, nodeData, parentDataNode = null) => {
+            this._nodeData = nodeData;
             this.facetName = facet;
             if (this.parentData && parentDataNode) {
-                this.parentData.dataNode = parentDataNode;
+                this.parentData.nodeData = parentDataNode;
             }
             this.updated = true;
         };
@@ -28,9 +28,9 @@ class BudgetNode {
         };
         this._updateCell = (cell, cellIndex) => {
             let budgetNode = this;
-            let { viewpointConfigPack, dataNode, timeSpecs, parentData, nodeIndex } = budgetNode;
+            let { viewpointConfigPack, nodeData, timeSpecs, parentData, nodeIndex } = budgetNode;
             let nodeDataPack = {
-                dataNode: dataNode,
+                nodeData: nodeData,
                 timeSpecs: timeSpecs,
                 parentData: parentData,
             };
@@ -64,16 +64,16 @@ class BudgetNode {
         this.dataPath = parms.dataPath;
         this.nodeIndex = parms.nodeIndex;
         this.timeSpecs = parms.timeSpecs;
-        this._dataNode = node;
+        this._nodeData = node;
         this.uid = uid;
         this.datasetSpecs = parms.datasetSpecs;
         if (parms.parentData)
             this.parentData = parms.parentData;
         if (parentNode)
-            this.parentData.dataNode = parentNode;
+            this.parentData.nodeData = parentNode;
     }
-    get dataNode() {
-        return this._dataNode;
+    get nodeData() {
+        return this._nodeData;
     }
     get state() {
         return this.getState();
@@ -121,11 +121,11 @@ class BudgetNode {
     getAvailableCells() {
         let cells = [...this.state.nodeCells];
         let availablCells = [];
-        if (!this.dataNode)
+        if (!this.nodeData)
             return availablCells;
         for (let cell of cells) {
             let budgetNode = this;
-            if (!this.dataNode[cell.nodeDataseriesName]) {
+            if (!this.nodeData[cell.nodeDataseriesName]) {
                 continue;
             }
             availablCells.push(cell);

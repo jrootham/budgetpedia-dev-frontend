@@ -33,10 +33,10 @@ class BudgetBranch {
             let { dataPath } = budgetNodeParms;
             let branchSettings = this.settings;
             let viewpointData = this.state.viewpointData;
-            let dataNode = getbudgetnode_1.default(viewpointData, dataPath);
+            let nodeData = getbudgetnode_1.default(viewpointData, dataPath);
             let branchNodes = this.nodes;
-            let parentNode = (nodeIndex == 0) ? undefined : branchNodes[branchNodes.length - 1].dataNode;
-            let budgetNode = new node_class_1.default(budgetNodeParms, budgetNodeUid, dataNode, parentNode);
+            let parentNode = (nodeIndex == 0) ? undefined : branchNodes[branchNodes.length - 1].nodeData;
+            let budgetNode = new node_class_1.default(budgetNodeParms, budgetNodeUid, nodeData, parentNode);
             branchNodes[nodeIndex] = budgetNode;
             this.setState({
                 branchNodes: branchNodes,
@@ -77,17 +77,17 @@ class BudgetBranch {
             let { facetName, viewpointName } = budgetNode;
             let { workingStatus, onPortalCreation, } = callbacks;
             let childdatapath = budgetNode.dataPath.slice();
-            let dataNode = budgetNode.dataNode;
-            if (!dataNode.Components) {
+            let nodeData = budgetNode.nodeData;
+            if (!nodeData.Components) {
                 return;
             }
-            let components = dataNode.Components;
+            let components = nodeData.Components;
             let code = null;
             let parentData = null;
             let parentNode = null;
-            if (dataNode && dataNode.SortedComponents && dataNode.SortedComponents[selectionrow]) {
-                parentData = dataNode.SortedComponents[selectionrow];
-                parentNode = dataNode;
+            if (nodeData && nodeData.SortedComponents && nodeData.SortedComponents[selectionrow]) {
+                parentData = nodeData.SortedComponents[selectionrow];
+                parentNode = nodeData;
                 code = parentData.Code;
             }
             if (code)
@@ -95,7 +95,7 @@ class BudgetBranch {
             else {
                 return;
             }
-            let newnode = dataNode.Components[code];
+            let newnode = nodeData.Components[code];
             if (!newnode.Components && !newnode.Categories) {
                 return;
             }
@@ -157,7 +157,7 @@ class BudgetBranch {
                 let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2));
                 let parentDataNode = null;
                 if (nodeIndex > 0) {
-                    parentDataNode = branchNodes[nodeIndex - 1].dataNode;
+                    parentDataNode = branchNodes[nodeIndex - 1].nodeData;
                 }
                 if (deeperdata || shallowerdata) {
                     switchResults.deeperdata = deeperdata;

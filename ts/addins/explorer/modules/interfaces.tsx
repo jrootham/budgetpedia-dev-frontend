@@ -30,7 +30,7 @@ interface ChartParmsObj {
     isError: Boolean,
     errorMessage?: string,
     chartParms: ChartParms,
-    // dataNode?: any,
+    // nodeData?: any,
 }
 
 // parameters to be passed to google chart
@@ -79,7 +79,7 @@ interface SortedComponentItem {
     Code: string,
     Index?: number,
     Name: string,
-    // dataNode?: any,
+    // nodeData?: any,
 }
 
 // internal component of chart config

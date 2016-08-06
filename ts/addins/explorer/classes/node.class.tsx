@@ -39,12 +39,12 @@ class BudgetNode {
         this.dataPath = parms.dataPath
         this.nodeIndex = parms.nodeIndex
         this.timeSpecs = parms.timeSpecs
-        this._dataNode = node
+        this._nodeData = node
         this.uid = uid
         this.datasetSpecs = parms.datasetSpecs
         // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
         if (parms.parentData) this.parentData = parms.parentData
-        if (parentNode) this.parentData.dataNode = parentNode
+        if (parentNode) this.parentData.nodeData = parentNode
 
         // this.setCells(portalcharts[parms.facetName],parms.defaultChartType)
 
@@ -68,8 +68,8 @@ class BudgetNode {
     new:boolean = true
     updated:boolean = false
     newCells:BudgetCell[] = null
-    get dataNode() {
-        return this._dataNode
+    get nodeData() {
+        return this._nodeData
     }
     get state() {
         return this.getState()
@@ -98,12 +98,12 @@ class BudgetNode {
         return [...this.state.nodeCells]
     }
 
-    // reset = (dataNode, datasetSpecs, defaultChartType, facet) => {
-    update = (facet, dataNode, parentDataNode = null) => {
-        this._dataNode = dataNode
+    // reset = (nodeData, datasetSpecs, defaultChartType, facet) => {
+    update = (facet, nodeData, parentDataNode = null) => {
+        this._nodeData = nodeData
         this.facetName = facet
         if (this.parentData && parentDataNode) {
-            this.parentData.dataNode = parentDataNode
+            this.parentData.nodeData = parentDataNode
         }
         this.updated = true
     }
@@ -164,9 +164,9 @@ class BudgetNode {
     private _updateCell = (cell:BudgetCell, cellIndex) => {
         let budgetNode = this
 
-        let { viewpointConfigPack, dataNode, timeSpecs, parentData, nodeIndex } = budgetNode
+        let { viewpointConfigPack, nodeData, timeSpecs, parentData, nodeIndex } = budgetNode
         let nodeDataPack: NodeData = {
-            dataNode,
+            nodeData,
             timeSpecs,
             parentData,
         }
@@ -209,10 +209,10 @@ class BudgetNode {
     private getAvailableCells() {
         let cells = [...this.state.nodeCells]
         let availablCells = []
-        if (!this.dataNode) return availablCells
+        if (!this.nodeData) return availablCells
         for (let cell of cells) {
             let budgetNode = this
-            if (!this.dataNode[cell.nodeDataseriesName]) {
+            if (!this.nodeData[cell.nodeDataseriesName]) {
                 continue
             }
             availablCells.push(cell)
@@ -220,7 +220,7 @@ class BudgetNode {
         return availablCells
     }
 
-    private _dataNode: any
+    private _nodeData: any
 
 }
 
