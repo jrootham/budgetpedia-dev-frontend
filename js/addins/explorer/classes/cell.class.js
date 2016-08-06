@@ -24,7 +24,7 @@ class BudgetCell {
         this.setChartParms = () => {
             let budgetCell = this;
             let { viewpointConfig, datasetConfig } = budgetCell.viewpointConfigPack;
-            let { nodeData, timeSpecs: yearSpecs, parentData, } = budgetCell.nodeDataPack;
+            let { nodeData, yearSpecs: yearSpecs, parentData, } = budgetCell.nodeDataPack;
             if (!nodeData) {
                 console.error('node not found', {
                     isError: true,

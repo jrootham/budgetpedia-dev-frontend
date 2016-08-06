@@ -28,10 +28,10 @@ class BudgetNode {
         };
         this._updateCell = (cell, cellIndex) => {
             let budgetNode = this;
-            let { viewpointConfigPack, nodeData, timeSpecs, parentData, nodeIndex } = budgetNode;
+            let { viewpointConfigPack, nodeData, yearSpecs, parentData, nodeIndex } = budgetNode;
             let nodeDataPack = {
                 nodeData: nodeData,
-                timeSpecs: timeSpecs,
+                yearSpecs: yearSpecs,
                 parentData: parentData,
             };
             cell.viewpointConfigPack = viewpointConfigPack;
@@ -63,7 +63,7 @@ class BudgetNode {
         this.facetName = parms.facetName;
         this.dataPath = parms.dataPath;
         this.nodeIndex = parms.nodeIndex;
-        this.timeSpecs = parms.timeSpecs;
+        this.yearSpecs = parms.yearSpecs;
         this._nodeData = node;
         this.uid = uid;
         this.datasetSpecs = parms.datasetSpecs;

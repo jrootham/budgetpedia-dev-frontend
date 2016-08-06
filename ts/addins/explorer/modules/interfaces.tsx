@@ -83,11 +83,11 @@ interface SortedComponentItem {
 }
 
 // internal component of chart config
-interface YearScope {
-    rightYear: number,
-    leftYear: number,
-    spanYears: boolean,
-}
+// interface YearScope {
+//     rightYear: number,
+//     leftYear: number,
+//     yearScope: boolean,
+// }
 
 // =======================================================
 // ---------------[ CHART SELECTION OUTPUT ]--------------

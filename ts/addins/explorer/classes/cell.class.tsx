@@ -21,7 +21,7 @@ import {
 } from '../../constants'
 
 import BudgetNode from './node.class'
-import {TimeSpecs} from './databaseapi'
+import {YearSpecs} from './databaseapi'
 
 var format = require('format-number')
 
@@ -61,7 +61,7 @@ export interface CellConstructorArgs {
 
 export interface NodeData {
     nodeData: any,
-    timeSpecs: TimeSpecs,
+    yearSpecs: YearSpecs,
     parentData: any,
 }
 
@@ -173,7 +173,7 @@ class BudgetCell {
 
         let { 
             nodeData, 
-            timeSpecs:yearSpecs, 
+            yearSpecs:yearSpecs, 
             parentData, 
         } = budgetCell.nodeDataPack
 
@@ -413,7 +413,7 @@ class BudgetCell {
     // ------------------
     // 4. chart columns:
     // ------------------
-    private _chartParmsColumns = (yearSpecs:TimeSpecs) => {
+    private _chartParmsColumns = (yearSpecs:YearSpecs) => {
         let budgetCell = this
         let categorylabel = 'Component' // TODO: rationalize this!
 
@@ -434,7 +434,7 @@ class BudgetCell {
     // ------------------
     // 5. chart rows:
     // ------------------
-    private _chartParmsRows = (nodeData, yearSpecs:TimeSpecs) => {
+    private _chartParmsRows = (nodeData, yearSpecs:YearSpecs) => {
 
         let budgetCell = this
 

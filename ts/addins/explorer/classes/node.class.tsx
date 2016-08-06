@@ -1,7 +1,7 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetnode.tsx
 
-import { DataseriesMeta, TimeSpecs } from './databaseapi'
+import { DataseriesMeta, YearSpecs } from './databaseapi'
 import { 
     FacetNameToDatasetName, 
     GoogleChartTypeToChartCode, 
@@ -23,7 +23,7 @@ export interface BudgetNodeParms {
     viewpointName: string,
     facetName: string, // used to select chartset to display
     datasetSpecs:DataseriesMeta[],
-    timeSpecs: TimeSpecs,
+    yearSpecs: YearSpecs,
     dataPath: string[],
     nodeIndex: number,
     parentData?:any,
@@ -38,7 +38,7 @@ class BudgetNode {
         this.facetName = parms.facetName
         this.dataPath = parms.dataPath
         this.nodeIndex = parms.nodeIndex
-        this.timeSpecs = parms.timeSpecs
+        this.yearSpecs = parms.yearSpecs
         this._nodeData = node
         this.uid = uid
         this.datasetSpecs = parms.datasetSpecs
@@ -58,7 +58,7 @@ class BudgetNode {
     facetName: string
     dataPath: string[]
     nodeIndex: number
-    timeSpecs: TimeSpecs
+    yearSpecs: YearSpecs
     datasetSpecs:DataseriesMeta[]
     actions: any
     nodeCallbacks: any
@@ -164,10 +164,10 @@ class BudgetNode {
     private _updateCell = (cell:BudgetCell, cellIndex) => {
         let budgetNode = this
 
-        let { viewpointConfigPack, nodeData, timeSpecs, parentData, nodeIndex } = budgetNode
+        let { viewpointConfigPack, nodeData, yearSpecs, parentData, nodeIndex } = budgetNode
         let nodeDataPack: NodeData = {
             nodeData,
-            timeSpecs,
+            yearSpecs,
             parentData,
         }
 

@@ -25,10 +25,10 @@ export interface SetViewpointDataParms {
     datasetData:any,
     lookups:any,
     inflationAdjusted: boolean,
-    timeSpecs: {
+    yearSpecs: {
         leftYear:number,
         rightYear:number,
-        spanYears: boolean,
+        yearScope: boolean,
     }
 }
 

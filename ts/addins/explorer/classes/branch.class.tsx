@@ -1,7 +1,7 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetbranch.tsx
 
-import databaseapi , { DatasetConfig, TimeSpecs, ViewpointData } from './databaseapi'
+import databaseapi , { DatasetConfig, YearSpecs, ViewpointData } from './databaseapi'
 import {
     ChartParmsObj,
     SortedComponentItem,
@@ -83,10 +83,10 @@ class BudgetBranch {
         let budgetNodeParms:BudgetNodeParms = {
             viewpointName,
             facetName,
-            timeSpecs: {
+            yearSpecs: {
                 leftYear:null,
                 rightYear,
-                spanYears:false,
+                yearScope:false,
                 firstYear: null,
                 lastYear: null,
             },
@@ -220,10 +220,10 @@ class BudgetBranch {
             viewpointName, 
             datasetName,
             inflationAdjusted,
-            timeSpecs: {
+            yearSpecs: {
                 leftYear: null,
                 rightYear: null,
-                spanYears: false,
+                yearScope: false,
                 firstYear: null,
                 lastYear: null,
             }
@@ -312,7 +312,7 @@ class BudgetBranch {
             return
         }
         workingStatus(true)
-        let newrange = Object.assign({}, budgetNode.timeSpecs)
+        let newrange = Object.assign({}, budgetNode.yearSpecs)
         let datasetSpecs = viewpointData.DatasetSeries
 
         let newdatanode = getBudgetNode(viewpointData, childdatapath)
@@ -323,7 +323,7 @@ class BudgetBranch {
             dataPath: childdatapath,
             nodeIndex: nodeIndex + 1,
             parentData,
-            timeSpecs: newrange,
+            yearSpecs: newrange,
         }
 
         actions.addNodeDeclaration(newnodeconfigparms)

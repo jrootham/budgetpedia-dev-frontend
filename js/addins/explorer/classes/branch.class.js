@@ -14,10 +14,10 @@ class BudgetBranch {
             let budgetNodeParms = {
                 viewpointName: viewpointName,
                 facetName: facetName,
-                timeSpecs: {
+                yearSpecs: {
                     leftYear: null,
                     rightYear: rightYear,
-                    spanYears: false,
+                    yearScope: false,
                     firstYear: null,
                     lastYear: null,
                 },
@@ -50,10 +50,10 @@ class BudgetBranch {
                 viewpointName: viewpointName,
                 datasetName: datasetName,
                 inflationAdjusted: inflationAdjusted,
-                timeSpecs: {
+                yearSpecs: {
                     leftYear: null,
                     rightYear: null,
-                    spanYears: false,
+                    yearScope: false,
                     firstYear: null,
                     lastYear: null,
                 }
@@ -100,7 +100,7 @@ class BudgetBranch {
                 return;
             }
             workingStatus(true);
-            let newrange = Object.assign({}, budgetNode.timeSpecs);
+            let newrange = Object.assign({}, budgetNode.yearSpecs);
             let datasetSpecs = viewpointData.DatasetSeries;
             let newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
             let newnodeconfigparms = {
@@ -110,7 +110,7 @@ class BudgetBranch {
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
                 parentData: parentData,
-                timeSpecs: newrange,
+                yearSpecs: newrange,
             };
             actions.addNodeDeclaration(newnodeconfigparms);
             setTimeout(() => {
