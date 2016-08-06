@@ -74,6 +74,8 @@ class BudgetCell {
         this.uid = uid
     }
 
+    // =======================[ PROPERTIES ]============================
+
     // -------------[ primary control properties, set on creation ]---------------
 
     private explorerChartCode: string
@@ -81,7 +83,7 @@ class BudgetCell {
     chartSelection: ChartSelectionCell[] // returned by google chart; points to row selected by user
     uid: string // universal id; set by addCellDeclarations action
 
-    // ------------[ derivative properties ]-------------------
+    // ------------[ derivative control properties ]-------------------
 
     // map from internal code to googleChartType
     get googleChartType() {
@@ -106,15 +108,24 @@ class BudgetCell {
         return this._chartParms
     }
 
-    facetName: string
-    cellTitle: string
-    expandable: boolean
-    graph_id: string // prop for Chart component; required by google charts
+    // ----------------[ mutable control properties ]-----------------
 
+    facetName: string
     viewpointConfigPack: viewpointConfigPack
     nodeDataPack: NodeData
+    expandable: boolean
 
+    // ------------------[ display chart properties ]-------------------
+
+    cellTitle: string
+    graph_id: string // prop for Chart component; required by google charts
+
+    // ------------------[ callback functions ]------------------------
+
+    // curried; inherited
     selectionCallback: Function
+
+    // ========================[ METHODS ]==========================
 
     refreshSelection = () => {
             // console.log('will update with setSelection', budgetCell, budgetCell.chart.getSelection())
@@ -143,6 +154,9 @@ class BudgetCell {
 
     }
 
+    // ----------------------[ setChartParms ]-------------------------
+
+    // creates formal input parameters for google charts, through Chart Component
     // dataset is a data tree fetched from database
     // dataseries is a list of data rows attached to a node
     setChartParms = () => {
@@ -164,7 +178,7 @@ class BudgetCell {
 
         let { 
             dataNode, 
-            timeSpecs:yearscope, 
+            timeSpecs:yearSpecs, 
             parentData, 
         } = budgetCell.nodeDataPack
 
@@ -184,11 +198,15 @@ class BudgetCell {
         let components = dataNode[nodeDataseriesName]
 
         // ====================[ COLLECT CHART PARMS ]======================
+
+        // ------------------
         // 1. chart type:
+        // ------------------
         let chartType = budgetCell.googleChartType
 
+        // ------------------
         // 2. chart options:
-
+        // ------------------
 
         // set vertical label value
 
@@ -232,9 +250,9 @@ class BudgetCell {
             title = datasetConfig.Title
         }
 
-        // ----------------- set title amount -------------
+        // set title amount
 
-        let { rightYear:year } = yearscope
+        let { rightYear:year } = yearSpecs
         let titleamount = null
         // utility functions for number formatting
         let thousandsformat = format({ prefix: "$" })
@@ -254,6 +272,7 @@ class BudgetCell {
         }
         title += ' (Total: ' + titleamount + ')'
 
+        // assemble chart properties
         let legendvalue
         let chartheight
         let charttop
@@ -311,7 +330,9 @@ class BudgetCell {
         }
 
         // TODO: watch for memory leaks when the chart is destroyed
+        // ------------------
         // 3. chart events:
+        // ------------------
         let events = [
             {
                 eventName: 'select',
@@ -319,9 +340,7 @@ class BudgetCell {
                     (Chart, err) => {
                         let chart = Chart.chart
                         let selection = chart.getSelection()
-                        // console.log('selection', selection)
                         let chartSelectionData: ChartSelectionContext = { 
-                            // Chart,
                             selection, 
                             err 
                         }
@@ -342,7 +361,9 @@ class BudgetCell {
             }
         ]
 
+        // ------------------
         // 4. chart columns:
+        // ------------------
         let categorylabel = 'Component' // TODO: rationalize this!
 
         let columns:any[] = [
@@ -359,7 +380,9 @@ class BudgetCell {
             setStyle = true
         }
 
+        // ------------------
         // 5. chart rows:
+        // ------------------
         let sortedlist = 'Sorted' + nodeDataseriesName
 
         if (!dataNode[sortedlist]) {

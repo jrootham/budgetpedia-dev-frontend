@@ -25,7 +25,7 @@ class BudgetCell {
             let budgetCell = this;
             let { facetName: facet, nodeDataseriesName, selectionCallback, } = budgetCell;
             let { viewpointConfig, datasetConfig } = budgetCell.viewpointConfigPack;
-            let { dataNode, timeSpecs: yearscope, parentData, } = budgetCell.nodeDataPack;
+            let { dataNode, timeSpecs: yearSpecs, parentData, } = budgetCell.nodeDataPack;
             if (!dataNode) {
                 console.error('node not found', {
                     isError: true,
@@ -72,7 +72,7 @@ class BudgetCell {
             else {
                 title = datasetConfig.Title;
             }
-            let { rightYear: year } = yearscope;
+            let { rightYear: year } = yearSpecs;
             let titleamount = null;
             let thousandsformat = format({ prefix: "$" });
             let rounded = format({ round: 0, integerSeparator: '' });
