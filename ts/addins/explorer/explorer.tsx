@@ -6,6 +6,8 @@
         such as when staff facet is selected and max depth is reached
     BUG: navigating to dialog help box loses bar selection
     TODO: 
+    - add popover from componentDidMount to explain that the charts are drill-down
+      (maybe for first branch)
     - scroll down to new branch after hitting + sign
     - do systematic check for error handling requirements; protect against 
         unexpected data (extrenal)

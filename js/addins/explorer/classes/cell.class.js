@@ -23,7 +23,6 @@ class BudgetCell {
         };
         this.setChartParms = () => {
             let budgetCell = this;
-            let { facetName: facet, nodeDataseriesName, selectionCallback, } = budgetCell;
             let { viewpointConfig, datasetConfig } = budgetCell.viewpointConfigPack;
             let { dataNode, timeSpecs: yearSpecs, parentData, } = budgetCell.nodeDataPack;
             if (!dataNode) {
@@ -34,9 +33,24 @@ class BudgetCell {
                 });
                 throw Error('node not found');
             }
-            let components = dataNode[nodeDataseriesName];
             let chartType = budgetCell.googleChartType;
-            let datasetName = constants_1.FacetNameToDatasetName[facet];
+            let options = budgetCell._chartParmsOptions(dataNode, parentData, viewpointConfig, datasetConfig, yearSpecs);
+            let events = budgetCell._chartParmsEvents();
+            let columns = budgetCell._chartParmsColumns(yearSpecs);
+            let rows = budgetCell._chartParmsRows(dataNode, yearSpecs);
+            let chartParms = {
+                chartType: chartType,
+                options: options,
+                events: events,
+                columns: columns,
+                rows: rows,
+            };
+            budgetCell._chartParms = chartParms;
+        };
+        this._chartParmsOptions = (dataNode, parentData, viewpointConfig, datasetConfig, yearSpecs) => {
+            let budgetCell = this;
+            let { facetName, nodeDataseriesName } = budgetCell;
+            let datasetName = constants_1.FacetNameToDatasetName[facetName];
             let units = datasetConfig.Units;
             let vertlabel;
             vertlabel = datasetConfig.UnitsAlias;
@@ -93,7 +107,7 @@ class BudgetCell {
             let charttop;
             let chartleft;
             let chartwidth;
-            switch (chartType) {
+            switch (budgetCell.googleChartType) {
                 case "ColumnChart":
                     legendvalue = 'none';
                     chartheight = '50%';
@@ -138,7 +152,11 @@ class BudgetCell {
                     width: chartwidth,
                 }
             };
-            let events = [
+            return options;
+        };
+        this._chartParmsEvents = () => {
+            let budgetCell = this;
+            return [
                 {
                     eventName: 'select',
                     callback: (Chart, err) => {
@@ -148,7 +166,7 @@ class BudgetCell {
                             selection: selection,
                             err: err
                         };
-                        selectionCallback(chartSelectionData);
+                        this.selectionCallback(chartSelectionData);
                     }
                 },
                 {
@@ -163,16 +181,23 @@ class BudgetCell {
                     })(budgetCell)
                 }
             ];
+        };
+        this._chartParmsColumns = (yearSpecs) => {
+            let budgetCell = this;
             let categorylabel = 'Component';
             let columns = [
                 { type: 'string', label: categorylabel },
-                { type: 'number', label: year.toString() },
+                { type: 'number', label: yearSpecs.rightYear.toString() },
             ];
-            let setStyle = false;
-            if (chartType == 'ColumnChart') {
+            if (budgetCell.googleChartType == 'ColumnChart') {
                 columns.push({ type: 'string', role: 'style' });
-                setStyle = true;
             }
+            return columns;
+        };
+        this._chartParmsRows = (dataNode, yearSpecs) => {
+            let budgetCell = this;
+            let { nodeDataseriesName } = budgetCell;
+            let components = dataNode[nodeDataseriesName];
             let sortedlist = 'Sorted' + nodeDataseriesName;
             if (!dataNode[sortedlist]) {
                 console.error({
@@ -189,7 +214,7 @@ class BudgetCell {
                 }
                 let amount;
                 if (component.years) {
-                    amount = components[item.Code].years[year];
+                    amount = components[item.Code].years[yearSpecs.rightYear];
                 }
                 else {
                     amount = null;
@@ -199,18 +224,12 @@ class BudgetCell {
                 if (component.Contents == 'BASELINE') {
                     style = 'stroke-color: Gold; stroke-width: 3';
                 }
-                if (setStyle)
+                if (budgetCell.googleChartType == 'ColumnChart') {
                     retval.push(style);
+                }
                 return retval;
             });
-            let chartParms = {
-                chartType: chartType,
-                options: options,
-                events: events,
-                columns: columns,
-                rows: rows,
-            };
-            this._chartParms = chartParms;
+            return rows;
         };
         let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs;
         this.explorerChartCode = explorerChartCode;

@@ -21,6 +21,7 @@ import {
 } from '../../constants'
 
 import BudgetNode from './node.class'
+import {TimeSpecs} from './databaseapi'
 
 var format = require('format-number')
 
@@ -60,7 +61,7 @@ export interface CellConstructorArgs {
 
 export interface NodeData {
     dataNode: any,
-    timeSpecs: any,
+    timeSpecs: TimeSpecs,
     parentData: any,
 }
 
@@ -166,12 +167,6 @@ class BudgetCell {
         // --------------[ Unpack data bundles ]-------------
 
         let { 
-            facetName:facet, 
-            nodeDataseriesName,
-            selectionCallback,
-        } = budgetCell
-
-        let { 
             viewpointConfig, 
             datasetConfig 
         } = budgetCell.viewpointConfigPack
@@ -195,22 +190,72 @@ class BudgetCell {
             throw Error('node not found')
         }
 
-        let components = dataNode[nodeDataseriesName]
-
         // ====================[ COLLECT CHART PARMS ]======================
 
         // ------------------
         // 1. chart type:
         // ------------------
+
         let chartType = budgetCell.googleChartType
 
         // ------------------
         // 2. chart options:
         // ------------------
 
+        let options = budgetCell._chartParmsOptions(
+            dataNode, 
+            parentData, 
+            viewpointConfig, 
+            datasetConfig, 
+            yearSpecs
+        )
+
+        // ------------------
+        // 3. chart events:
+        // ------------------
+
+        let events = budgetCell._chartParmsEvents()
+
+        // ------------------
+        // 4. chart columns:
+        // ------------------
+
+        let columns = budgetCell._chartParmsColumns(yearSpecs)
+
+        // ------------------
+        // 5. chart rows:
+        // ------------------
+
+        let rows = budgetCell._chartParmsRows(dataNode, yearSpecs)
+
+        // --------------------[ ASSEMBLE PARMS PACK ]----------------
+
+        let chartParms: ChartParms = {
+
+            chartType,
+            options,
+            events,
+            columns,
+            rows,
+
+        }
+
+        // save it
+        budgetCell._chartParms = chartParms
+
+    }
+
+    // ------------------
+    // 2. chart options:
+    // ------------------
+    private _chartParmsOptions = (dataNode, parentData, viewpointConfig, datasetConfig, yearSpecs) => {
         // set vertical label value
 
-        let datasetName = FacetNameToDatasetName[facet]
+        let budgetCell = this
+
+        let { facetName, nodeDataseriesName } = budgetCell
+
+        let datasetName = FacetNameToDatasetName[facetName]
         let units = datasetConfig.Units
 
         let vertlabel
@@ -278,7 +323,7 @@ class BudgetCell {
         let charttop
         let chartleft
         let chartwidth
-        switch (chartType) {
+        switch (budgetCell.googleChartType) {
             case "ColumnChart":
                 legendvalue = 'none'
                 chartheight ='50%'
@@ -328,12 +373,15 @@ class BudgetCell {
                 width:chartwidth,
             }
         }
+        return options
+    }
 
-        // TODO: watch for memory leaks when the chart is destroyed
-        // ------------------
-        // 3. chart events:
-        // ------------------
-        let events = [
+    // ------------------
+    // 3. chart events:
+    // ------------------
+    private _chartParmsEvents = () => {
+        let budgetCell:BudgetCell = this
+        return [
             {
                 eventName: 'select',
                 callback: 
@@ -345,7 +393,7 @@ class BudgetCell {
                             err 
                         }
 
-                        selectionCallback(chartSelectionData)
+                        this.selectionCallback(chartSelectionData)
                     }
             },
             {
@@ -360,29 +408,40 @@ class BudgetCell {
                 })(budgetCell)
             }
         ]
+    }
 
-        // ------------------
-        // 4. chart columns:
-        // ------------------
+    // ------------------
+    // 4. chart columns:
+    // ------------------
+    private _chartParmsColumns = (yearSpecs:TimeSpecs) => {
+        let budgetCell = this
         let categorylabel = 'Component' // TODO: rationalize this!
 
         let columns:any[] = [
             // type is required, else throws silent error
             { type: 'string', label: categorylabel },
-            { type: 'number', label: year.toString() },
+            { type: 'number', label: yearSpecs.rightYear.toString() },
         ]
 
-        let setStyle = false
-        if (chartType == 'ColumnChart') {
+        if (budgetCell.googleChartType == 'ColumnChart') {
             columns.push(
                 {type:'string', role:'style'}
             )
-            setStyle = true
         }
+        return columns
+    }
 
-        // ------------------
-        // 5. chart rows:
-        // ------------------
+    // ------------------
+    // 5. chart rows:
+    // ------------------
+    private _chartParmsRows = (dataNode, yearSpecs:TimeSpecs) => {
+
+        let budgetCell = this
+
+        let { nodeDataseriesName } = budgetCell
+
+        let components = dataNode[nodeDataseriesName]
+
         let sortedlist = 'Sorted' + nodeDataseriesName
 
         if (!dataNode[sortedlist]) {
@@ -402,7 +461,7 @@ class BudgetCell {
             }
             let amount
             if (component.years) {
-                amount = components[item.Code].years[year]
+                amount = components[item.Code].years[yearSpecs.rightYear]
             } else {
                 amount = null
             }
@@ -412,27 +471,15 @@ class BudgetCell {
             if (component.Contents == 'BASELINE') {
                 style = 'stroke-color: Gold; stroke-width: 3'
             }
-            if (setStyle) retval.push(style)
+            if (budgetCell.googleChartType == 'ColumnChart') {
+                retval.push(style)
+            }
             return retval
         })
 
-        // --------------------[ ASSEMBLE PARMS PACK ]----------------
-
-        let chartParms: ChartParms = {
-
-            chartType,
-            options,
-            events,
-            columns,
-            rows,
-
-        }
-
-        // save it
-        this._chartParms = chartParms
+        return rows
 
     }
-
 
 }
 
