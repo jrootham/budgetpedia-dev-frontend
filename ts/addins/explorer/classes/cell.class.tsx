@@ -39,7 +39,7 @@ export interface ChartCallbacks {
     // next: Function,
 }
 
-interface viewpointConfigData {
+interface viewpointConfigPack {
     viewpointConfig: any,
     datasetConfig: any,
 }
@@ -99,7 +99,7 @@ class BudgetCell {
     expandable: boolean
     graph_id: string
     cellTitle: string
-    viewpointConfigData: viewpointConfigData
+    viewpointConfigPack: viewpointConfigPack
     nodeData: NodeData
     facetName
     selectionCallback: Function
@@ -114,9 +114,11 @@ class BudgetCell {
 
     // dataset is a data tree fetched from database
     // dataseries is a list of data rows attached to a node
-    setChartParms = ():ChartParmsObj => {
+    setChartParms = () => {
 
         let budgetCell: BudgetCell = this
+
+        // --------------[ Unpack data bundles ]-------------
 
         let { 
             facetName:facet, 
@@ -124,28 +126,22 @@ class BudgetCell {
             selectionCallback,
         } = budgetCell
 
-        let sortedlist = 'Sorted' + nodeDataseriesName
-
         let { 
             viewpointConfig, 
             datasetConfig 
-        } = budgetCell.viewpointConfigData
-
-        // -------------------[ INIT VARS ]---------------------
+        } = budgetCell.viewpointConfigPack
 
         let { 
             dataNode, 
             timeSpecs:yearscope, 
             parentData, 
-            // nodeIndex 
         } = budgetCell.nodeData
-
-        let { rightYear:year } = yearscope
-
-        let datasetName = FacetNameToDatasetName[facet]
 
         let units = datasetConfig.Units
 
+        // -----------------[ set vertical label value ]--------------------
+
+        let datasetName = FacetNameToDatasetName[facet]
 
         let vertlabel
         vertlabel = datasetConfig.UnitsAlias
@@ -157,24 +153,20 @@ class BudgetCell {
         }
 
         // provide basis for error handling
-        let isError = false
-
-        // utility functions for number formatting
-        let thousandsformat = format({ prefix: "$" })
-        let rounded = format({ round: 0, integerSeparator: '' })
-        let singlerounded = format({ round: 1, integerSeparator: '' })
-        let staffrounded = format({ round: 1, integerSeparator: ',' })
+        // let isError = false
 
         // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
 
         // collect chart node and its components as data sources for the graph
 
         if (!dataNode) {
-            return {
+            console.error('node not found',
+            {
                 isError: true,
                 errorMessage: 'node not found',
                 chartParms: {}
-            }
+            })
+            throw Error('node not found')
         }
 
         let components
@@ -217,7 +209,18 @@ class BudgetCell {
         else {
             title = datasetConfig.Title
         }
+
+        // ----------------- set title amount -------------
+
+        let { rightYear:year } = yearscope
         let titleamount = null
+        // utility functions for number formatting
+        let thousandsformat = format({ prefix: "$" })
+        let rounded = format({ round: 0, integerSeparator: '' })
+        // let singlerounded = format({ round: 1, integerSeparator: '' })
+        let staffrounded = format({ round: 1, integerSeparator: ',' })
+
+
         if (dataNode.years) {
             titleamount = dataNode.years[year]
         }
@@ -257,7 +260,7 @@ class BudgetCell {
                 chartwidth = 'auto'
                 break;
             default:
-                // code...
+                // TODO: error condition
                 break
         }
 
@@ -287,11 +290,6 @@ class BudgetCell {
 
         // TODO: watch for memory leaks when the chart is destroyed
         // 3. chart events:
-        // let configlocation: PortalChartLocation = {
-        //     nodeIndex,
-        //     cellIndex: chartIndex
-        // }
-
         let events = [
             {
                 eventName: 'select',
@@ -313,11 +311,9 @@ class BudgetCell {
                 eventName:'animationfinish',
                 callback: ((cell:BudgetCell) => Chart => {
                     let selection = Chart.chart.getSelection()
-                    // console.log('finished animation', selection , cell)
                     if (selection.length == 0 && cell.chartSelection && cell.chartSelection.length > 0) {
                         if (cell.chart) {
                             cell.chart.setSelection(cell.chartSelection)
-                            // console.log('have invoked setSelection from animationfinish', budgetCell)
                         }
                     }
                 })(budgetCell)
@@ -331,7 +327,6 @@ class BudgetCell {
             // type is required, else throws silent error
             { type: 'string', label: categorylabel },
             { type: 'number', label: year.toString() },
-            // { type: 'string', role: 'style' }
         ]
 
         let setStyle = false
@@ -343,14 +338,16 @@ class BudgetCell {
         }
 
         // 5. chart rows:
+        let sortedlist = 'Sorted' + nodeDataseriesName
+
         if (!dataNode[sortedlist]) {
-            return { 
+            console.error( { 
                 isError: true, 
                 errorMessage:'sorted list "' + sortedlist + '" not available',
                 chartParms: {} 
-            }
+            })
+            throw Error('sorted list "' + sortedlist + '" not available')
         }
-        // console.log('datanode in getchartparms', dataNode)
         let rows = dataNode[sortedlist].map((item:SortedComponentItem) => {
             // TODO: get determination of amount processing from Unit value
             let component = components[item.Code]
@@ -378,29 +375,16 @@ class BudgetCell {
 
         let chartParms: ChartParms = {
 
-            columns,
-            rows,
+            chartType,
             options,
             events,
-            chartType,
-        }
-        // ------------------[ ASSEMBLE RETURN PACK ]-------------------
-        /* 
-            provides for error flag 
-        */
-
-        let chartParmsObj:ChartParmsObj = {
-            isError,
-            chartParms,
-        }
-
-        if (!chartParmsObj.isError) {
-
-            this._chartParms = chartParmsObj.chartParms
+            columns,
+            rows,
 
         }
 
-        // return chartParmsObj
+        // save it
+        this._chartParms = chartParms
 
     }
 

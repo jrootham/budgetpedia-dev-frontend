@@ -193,11 +193,11 @@ class ExplorerBranch extends Component {
                 budgetNode.portalConfig = portalConfig;
                 let viewpointdata = this.state.viewpointData;
                 let { Configuration: viewpointConfig, datasetConfig: datasetConfig, } = viewpointdata;
-                let viewpointConfigData = {
+                let viewpointConfigPack = {
                     viewpointConfig: viewpointConfig,
                     datasetConfig: datasetConfig,
                 };
-                budgetNode.viewpointConfigData = viewpointConfigData;
+                budgetNode.viewpointConfigPack = viewpointConfigPack;
                 budgetNode.branchSettings = this.props.budgetBranch.settings;
                 budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(this.props.budgetBranch);
                 let actions = Object.assign({}, this._stateActions);

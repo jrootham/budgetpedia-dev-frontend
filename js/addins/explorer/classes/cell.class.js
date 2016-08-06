@@ -10,12 +10,10 @@ class BudgetCell {
         this.setChartParms = () => {
             let budgetCell = this;
             let { facetName: facet, nodeDataseriesName, selectionCallback, } = budgetCell;
-            let sortedlist = 'Sorted' + nodeDataseriesName;
-            let { viewpointConfig, datasetConfig } = budgetCell.viewpointConfigData;
+            let { viewpointConfig, datasetConfig } = budgetCell.viewpointConfigPack;
             let { dataNode, timeSpecs: yearscope, parentData, } = budgetCell.nodeData;
-            let { rightYear: year } = yearscope;
-            let datasetName = constants_1.FacetNameToDatasetName[facet];
             let units = datasetConfig.Units;
+            let datasetName = constants_1.FacetNameToDatasetName[facet];
             let vertlabel;
             vertlabel = datasetConfig.UnitsAlias;
             if (units != 'FTE') {
@@ -24,17 +22,13 @@ class BudgetCell {
                 else
                     vertlabel = 'Revenues' + ' (' + vertlabel + ')';
             }
-            let isError = false;
-            let thousandsformat = format({ prefix: "$" });
-            let rounded = format({ round: 0, integerSeparator: '' });
-            let singlerounded = format({ round: 1, integerSeparator: '' });
-            let staffrounded = format({ round: 1, integerSeparator: ',' });
             if (!dataNode) {
-                return {
+                console.error('node not found', {
                     isError: true,
                     errorMessage: 'node not found',
                     chartParms: {}
-                };
+                });
+                throw Error('node not found');
             }
             let components;
             if (nodeDataseriesName == 'Categories') {
@@ -70,7 +64,11 @@ class BudgetCell {
             else {
                 title = datasetConfig.Title;
             }
+            let { rightYear: year } = yearscope;
             let titleamount = null;
+            let thousandsformat = format({ prefix: "$" });
+            let rounded = format({ round: 0, integerSeparator: '' });
+            let staffrounded = format({ round: 1, integerSeparator: ',' });
             if (dataNode.years) {
                 titleamount = dataNode.years[year];
             }
@@ -167,12 +165,14 @@ class BudgetCell {
                 columns.push({ type: 'string', role: 'style' });
                 setStyle = true;
             }
+            let sortedlist = 'Sorted' + nodeDataseriesName;
             if (!dataNode[sortedlist]) {
-                return {
+                console.error({
                     isError: true,
                     errorMessage: 'sorted list "' + sortedlist + '" not available',
                     chartParms: {}
-                };
+                });
+                throw Error('sorted list "' + sortedlist + '" not available');
             }
             let rows = dataNode[sortedlist].map((item) => {
                 let component = components[item.Code];
@@ -196,19 +196,13 @@ class BudgetCell {
                 return retval;
             });
             let chartParms = {
-                columns: columns,
-                rows: rows,
+                chartType: chartType,
                 options: options,
                 events: events,
-                chartType: chartType,
+                columns: columns,
+                rows: rows,
             };
-            let chartParmsObj = {
-                isError: isError,
-                chartParms: chartParms,
-            };
-            if (!chartParmsObj.isError) {
-                this._chartParms = chartParmsObj.chartParms;
-            }
+            this._chartParms = chartParms;
         };
         let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs;
         this.explorerChartCode = explorerChartCode;

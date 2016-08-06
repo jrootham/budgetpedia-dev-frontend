@@ -62,7 +62,7 @@ class BudgetNode {
     datasetSpecs:DataseriesMeta[]
     actions: any
     nodeCallbacks: any
-    viewpointConfigData: any
+    viewpointConfigPack: any
     branchSettings:any
     onChartComponentSelection: Function
     new:boolean = true
@@ -160,7 +160,7 @@ class BudgetNode {
     }
 
     private _updateCell = (cell:BudgetCell, cellIndex) => {
-        let viewpointConfigData = this.viewpointConfigData
+        let viewpointConfigPack = this.viewpointConfigPack
 
         let { dataNode, timeSpecs, parentData, nodeIndex } = this
         let nodeData = {
@@ -170,7 +170,7 @@ class BudgetNode {
             nodeIndex,
         }
 
-        cell.viewpointConfigData = viewpointConfigData
+        cell.viewpointConfigPack = viewpointConfigPack
         cell.nodeData = nodeData
         cell.facetName = this.branchSettings.facet,
 
@@ -179,7 +179,7 @@ class BudgetNode {
     }
 
     private _setCellTitle = (budgetCell:BudgetCell) => {
-        let portaltitles = budgetCell.viewpointConfigData.datasetConfig.Titles
+        let portaltitles = budgetCell.viewpointConfigPack.datasetConfig.Titles
         let chartblocktitle = null
         if ((budgetCell.nodeDataseriesName == 'Categories')) {
             chartblocktitle = portaltitles.Categories

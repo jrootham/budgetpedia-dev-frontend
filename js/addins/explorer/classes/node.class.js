@@ -27,7 +27,7 @@ class BudgetNode {
             return parmsList;
         };
         this._updateCell = (cell, cellIndex) => {
-            let viewpointConfigData = this.viewpointConfigData;
+            let viewpointConfigPack = this.viewpointConfigPack;
             let { dataNode, timeSpecs, parentData, nodeIndex } = this;
             let nodeData = {
                 dataNode: dataNode,
@@ -35,14 +35,14 @@ class BudgetNode {
                 parentData: parentData,
                 nodeIndex: nodeIndex,
             };
-            cell.viewpointConfigData = viewpointConfigData;
+            cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeData = nodeData;
             cell.facetName = this.branchSettings.facet,
                 this._setCellChartParms(cell, cellIndex);
             this._setCellTitle(cell);
         };
         this._setCellTitle = (budgetCell) => {
-            let portaltitles = budgetCell.viewpointConfigData.datasetConfig.Titles;
+            let portaltitles = budgetCell.viewpointConfigPack.datasetConfig.Titles;
             let chartblocktitle = null;
             if ((budgetCell.nodeDataseriesName == 'Categories')) {
                 chartblocktitle = portaltitles.Categories;

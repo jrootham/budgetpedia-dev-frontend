@@ -471,11 +471,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 Configuration: viewpointConfig,
                 datasetConfig: datasetConfig,
             } = viewpointdata
-            let viewpointConfigData = {
+            let viewpointConfigPack = {
                 viewpointConfig,
                 datasetConfig,
             }
-            budgetNode.viewpointConfigData = viewpointConfigData
+            budgetNode.viewpointConfigPack = viewpointConfigPack
             budgetNode.branchSettings = this.props.budgetBranch.settings
             budgetNode.onChartComponentSelection = onChartComponentSelection(this.props.budgetBranch)
             let actions = Object.assign({}, this._stateActions)
