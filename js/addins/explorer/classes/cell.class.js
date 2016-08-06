@@ -5,12 +5,9 @@ class BudgetCell {
     constructor(specs) {
         this.switchChartCode = chartCode => {
             this.explorerChartCode = chartCode;
-            let chartParmsObj = this.getChartParms();
-            if (!chartParmsObj.isError) {
-                this.chartParms = chartParmsObj.chartParms;
-            }
+            this.setChartParms();
         };
-        this.getChartParms = () => {
+        this.setChartParms = () => {
             let budgetCell = this;
             let { facetName: facet, nodeDataseriesName, selectionCallback, } = budgetCell;
             let sortedlist = 'Sorted' + nodeDataseriesName;
@@ -209,16 +206,21 @@ class BudgetCell {
                 isError: isError,
                 chartParms: chartParms,
             };
-            return chartParmsObj;
+            if (!chartParmsObj.isError) {
+                this._chartParms = chartParmsObj.chartParms;
+            }
         };
         let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs;
-        this.nodeDataseriesName = nodeDataseriesName;
         this.explorerChartCode = explorerChartCode;
+        this.nodeDataseriesName = nodeDataseriesName;
         this.chartSelection = chartSelection;
         this.uid = uid;
     }
     get googleChartType() {
         return constants_1.ChartCodeToGoogleChartType[this.explorerChartCode];
+    }
+    get chartParms() {
+        return this._chartParms;
     }
     get chart() {
         if (this.chartComponent)

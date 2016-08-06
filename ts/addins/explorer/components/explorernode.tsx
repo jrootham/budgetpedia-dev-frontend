@@ -244,9 +244,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                 //!Hack! if more than one chart the first must be expandable
             let expandable = ((budgetCells.length > 1) && (cellIndex == 0))
             budgetCell.expandable = expandable
-            let {cellCallbacks, cellTitle } = budgetCell
-            // curry callback, prepare for passing to exportchart
-            // cellCallbacks.onSwitchChartCode = cellCallbacks.onSwitchChartCode(callbackid)
+            let { cellTitle } = budgetCell
             return <Tab style={{fontSize:"12px"}} 
                 label={ cellTitle } 
                 value={ cellIndex }

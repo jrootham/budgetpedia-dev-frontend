@@ -62,23 +62,23 @@ interface NodeData {
     dataNode:any,
     timeSpecs: any,
     parentData: any,
-    // nodeIndex: number,
 }
 
 class BudgetCell {
 
     constructor(specs:CellConstructorArgs) {
         let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs
-        this.nodeDataseriesName = nodeDataseriesName
         this.explorerChartCode = explorerChartCode
+        this.nodeDataseriesName = nodeDataseriesName
         this.chartSelection = chartSelection
         this.uid = uid
     }
 
     // primary properties
+    private explorerChartCode: string
+
     nodeDataseriesName:string
     chartSelection: ChartSelectionCell[]
-    explorerChartCode: string
     uid: string
 
     // derivative properties
@@ -86,21 +86,21 @@ class BudgetCell {
     get googleChartType() {
         return ChartCodeToGoogleChartType[this.explorerChartCode]
     }
-    chartParms: ChartParms
+    private _chartParms: ChartParms
+    get chartParms() : ChartParms {
+        return this._chartParms
+    }
     get chart() {
         if (this.chartComponent)
-            return this.chartComponent.chart
+            return this.chartComponent.chart // up to date version
         else 
             return null
     }
-    cellCallbacks: CellCallbacks
     expandable: boolean
     graph_id: string
     cellTitle: string
-    // cellIndex: number
     viewpointConfigData: viewpointConfigData
     nodeData: NodeData
-    // branchSettings: BranchSettings
     facetName
     selectionCallback: Function
 
@@ -108,18 +108,13 @@ class BudgetCell {
 
         this.explorerChartCode = chartCode
 
-        let chartParmsObj:ChartParmsObj = this.getChartParms()
+        this.setChartParms()
 
-        if (!chartParmsObj.isError) {
-
-            this.chartParms = chartParmsObj.chartParms
-
-        }
     }
 
     // dataset is a data tree fetched from database
     // dataseries is a list of data rows attached to a node
-    getChartParms = ():ChartParmsObj => {
+    setChartParms = ():ChartParmsObj => {
 
         let budgetCell: BudgetCell = this
 
@@ -399,7 +394,13 @@ class BudgetCell {
             chartParms,
         }
 
-        return chartParmsObj
+        if (!chartParmsObj.isError) {
+
+            this._chartParms = chartParmsObj.chartParms
+
+        }
+
+        // return chartParmsObj
 
     }
 

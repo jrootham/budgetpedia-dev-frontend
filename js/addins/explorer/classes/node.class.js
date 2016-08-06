@@ -38,7 +38,7 @@ class BudgetNode {
             cell.viewpointConfigData = viewpointConfigData;
             cell.nodeData = nodeData;
             cell.facetName = this.branchSettings.facet,
-                this._assignCellChartParms(cell, cellIndex);
+                this._setCellChartParms(cell, cellIndex);
             this._setCellTitle(cell);
         };
         this._setCellTitle = (budgetCell) => {
@@ -52,15 +52,12 @@ class BudgetNode {
             }
             budgetCell.cellTitle = "By " + chartblocktitle;
         };
-        this._assignCellChartParms = (cell, cellIndex) => {
+        this._setCellChartParms = (cell, cellIndex) => {
             let budgetNode = this;
             let selectfn = this.onChartComponentSelection;
             let fcurrent = selectfn(budgetNode.nodeIndex)(cellIndex);
             cell.selectionCallback = fcurrent;
-            let chartParmsObj = cell.getChartParms();
-            if (!chartParmsObj.isError) {
-                cell.chartParms = chartParmsObj.chartParms;
-            }
+            cell.setChartParms();
         };
         let portalcharts = parms.datasetSpecs;
         this.viewpointName = parms.viewpointName;

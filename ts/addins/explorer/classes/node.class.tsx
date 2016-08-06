@@ -174,7 +174,7 @@ class BudgetNode {
         cell.nodeData = nodeData
         cell.facetName = this.branchSettings.facet,
 
-        this._assignCellChartParms(cell, cellIndex)
+        this._setCellChartParms(cell, cellIndex)
         this._setCellTitle(cell)
     }
 
@@ -189,7 +189,7 @@ class BudgetNode {
         budgetCell.cellTitle = "By " + chartblocktitle
     }
 
-    private _assignCellChartParms = (cell:BudgetCell, cellIndex) => {
+    private _setCellChartParms = (cell:BudgetCell, cellIndex) => {
         let budgetNode = this
 
         let selectfn = this.onChartComponentSelection
@@ -197,13 +197,8 @@ class BudgetNode {
 
         cell.selectionCallback = fcurrent
 
-        let chartParmsObj:ChartParmsObj = cell.getChartParms()
+        cell.setChartParms()
 
-        if (!chartParmsObj.isError) {
-
-            cell.chartParms = chartParmsObj.chartParms
-
-        }
     }
 
     get cellList() {
