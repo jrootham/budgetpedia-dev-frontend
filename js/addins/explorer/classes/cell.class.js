@@ -3,6 +3,20 @@ const constants_1 = require('../../constants');
 var format = require('format-number');
 class BudgetCell {
     constructor(specs) {
+        this.refreshSelection = () => {
+            let budgetCell = this;
+            if (budgetCell.chartSelection) {
+                if (budgetCell.chartSelection[0] && budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
+                    if (budgetCell.googleChartType == "PieChart") {
+                        budgetCell.chartSelection[0].column = null;
+                    }
+                    else {
+                        budgetCell.chartSelection[0].column = 1;
+                    }
+                    budgetCell.chart.setSelection(budgetCell.chartSelection);
+                }
+            }
+        };
         this.switchChartCode = chartCode => {
             this.explorerChartCode = chartCode;
             this.setChartParms();

@@ -39,18 +39,7 @@ class ExplorerCell extends Component {
         return true;
     }
     componentDidUpdate() {
-        let { budgetCell } = this.props;
-        if (budgetCell.chartSelection) {
-            if (budgetCell.chartSelection[0] && budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
-                if (budgetCell.googleChartType == "PieChart") {
-                    budgetCell.chartSelection[0].column = null;
-                }
-                else {
-                    budgetCell.chartSelection[0].column = 1;
-                }
-                budgetCell.chart.setSelection(budgetCell.chartSelection);
-            }
-        }
+        this.props.budgetCell.refreshSelection();
     }
     render() {
         let { chartParms, explorerChartCode, expandable, graph_id } = this.props.budgetCell;

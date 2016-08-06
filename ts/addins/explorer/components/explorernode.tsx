@@ -3,6 +3,8 @@
 
 /*
     TODO: include output checkbox per node for printing prep
+    - with clean start, switching to second tab causes 'jump' to top of page
+       ... but not clicking first tab after selecting second
 */
 
 'use strict'

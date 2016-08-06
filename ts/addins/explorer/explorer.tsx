@@ -6,8 +6,7 @@
         such as when staff facet is selected and max depth is reached
     BUG: navigating to dialog help box loses bar selection
     TODO: 
-    - add button to toggle visibility of chart controls, including all icons
-    - change 'Facets' to 'Perspectives'?
+    - scroll down to new branch after hitting + sign
     - do systematic check for error handling requirements; protect against 
         unexpected data (extrenal)
     - move state to central store

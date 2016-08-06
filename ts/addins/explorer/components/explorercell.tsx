@@ -71,24 +71,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     }
 
     componentDidUpdate() {
-        // setTimeout(()=>{
-            let { budgetCell }:{budgetCell:BudgetCell} = this.props
-            // console.log('will update with setSelection', budgetCell, budgetCell.chart.getSelection())
-            if (budgetCell.chartSelection) {
-                // it turns out that "PieChart" needs column set to null
-                // for setSelection to work
-                if (budgetCell.chartSelection[0] && budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
-                    if (budgetCell.googleChartType == "PieChart" ) {
-                        budgetCell.chartSelection[0].column = null
-                    } else {
-                        // we set it back to original (presumed) for consistency
-                        budgetCell.chartSelection[0].column = 1
-                    }
-                    budgetCell.chart.setSelection(budgetCell.chartSelection)
-                    // console.log('have invoked setSelection from componentDidUpdate', budgetCell)
-                }
-            }        
-        // })
+
+        this.props.budgetCell.refreshSelection()
+
     }
 
     render() {
