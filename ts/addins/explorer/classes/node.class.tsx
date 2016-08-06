@@ -14,7 +14,7 @@ import {
     ChartParmsObj,
 } from '../modules/interfaces'
 
-import BudgetCell, { CellDeclaration } from './cell.class'
+import BudgetCell, { CellDeclaration, NodeData } from './cell.class'
 // import {
 //     ChartSelectionCell, onChartComponentSelection,
 // } from '../modules/onchartcomponentselection'
@@ -148,34 +148,35 @@ class BudgetNode {
     }
 
     public resetCells() {
-        let datasetName:string = FacetNameToDatasetName[this.facetName]
-        let chartSpecs = this.datasetSpecs[datasetName]
-        let cells = this.allCells
+        let budgetNode = this
+
+        let datasetName:string = FacetNameToDatasetName[budgetNode.facetName]
+        let chartSpecs = budgetNode.datasetSpecs[datasetName]
+        let cells = budgetNode.allCells
         for (let cellIndex in cells) {
             let cell:BudgetCell = cells[cellIndex]
             cell.nodeDataseriesName = chartSpecs[cellIndex].Type
-            this._updateCell(cell, cellIndex)
+            budgetNode._updateCell(cell, cellIndex)
         }
         return cells
     }
 
     private _updateCell = (cell:BudgetCell, cellIndex) => {
-        let viewpointConfigPack = this.viewpointConfigPack
+        let budgetNode = this
 
-        let { dataNode, timeSpecs, parentData, nodeIndex } = this
-        let nodeData = {
+        let { viewpointConfigPack, dataNode, timeSpecs, parentData, nodeIndex } = budgetNode
+        let nodeDataPack: NodeData = {
             dataNode,
             timeSpecs,
             parentData,
-            nodeIndex,
         }
 
         cell.viewpointConfigPack = viewpointConfigPack
-        cell.nodeData = nodeData
-        cell.facetName = this.branchSettings.facet,
+        cell.nodeDataPack = nodeDataPack
+        cell.facetName = budgetNode.branchSettings.facet,
 
-        this._setCellChartParms(cell, cellIndex)
-        this._setCellTitle(cell)
+        budgetNode._setCellChartParms(cell, cellIndex)
+        budgetNode._setCellTitle(cell)
     }
 
     private _setCellTitle = (budgetCell:BudgetCell) => {

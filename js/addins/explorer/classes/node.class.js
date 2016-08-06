@@ -27,19 +27,18 @@ class BudgetNode {
             return parmsList;
         };
         this._updateCell = (cell, cellIndex) => {
-            let viewpointConfigPack = this.viewpointConfigPack;
-            let { dataNode, timeSpecs, parentData, nodeIndex } = this;
-            let nodeData = {
+            let budgetNode = this;
+            let { viewpointConfigPack, dataNode, timeSpecs, parentData, nodeIndex } = budgetNode;
+            let nodeDataPack = {
                 dataNode: dataNode,
                 timeSpecs: timeSpecs,
                 parentData: parentData,
-                nodeIndex: nodeIndex,
             };
             cell.viewpointConfigPack = viewpointConfigPack;
-            cell.nodeData = nodeData;
-            cell.facetName = this.branchSettings.facet,
-                this._setCellChartParms(cell, cellIndex);
-            this._setCellTitle(cell);
+            cell.nodeDataPack = nodeDataPack;
+            cell.facetName = budgetNode.branchSettings.facet,
+                budgetNode._setCellChartParms(cell, cellIndex);
+            budgetNode._setCellTitle(cell);
         };
         this._setCellTitle = (budgetCell) => {
             let portaltitles = budgetCell.viewpointConfigPack.datasetConfig.Titles;
@@ -105,13 +104,14 @@ class BudgetNode {
         return cells;
     }
     resetCells() {
-        let datasetName = constants_1.FacetNameToDatasetName[this.facetName];
-        let chartSpecs = this.datasetSpecs[datasetName];
-        let cells = this.allCells;
+        let budgetNode = this;
+        let datasetName = constants_1.FacetNameToDatasetName[budgetNode.facetName];
+        let chartSpecs = budgetNode.datasetSpecs[datasetName];
+        let cells = budgetNode.allCells;
         for (let cellIndex in cells) {
             let cell = cells[cellIndex];
             cell.nodeDataseriesName = chartSpecs[cellIndex].Type;
-            this._updateCell(cell, cellIndex);
+            budgetNode._updateCell(cell, cellIndex);
         }
         return cells;
     }

@@ -58,8 +58,8 @@ export interface CellConstructorArgs {
     uid?: string,
 }
 
-interface NodeData {
-    dataNode:any,
+export interface NodeData {
+    dataNode: any,
     timeSpecs: any,
     parentData: any,
 }
@@ -74,34 +74,46 @@ class BudgetCell {
         this.uid = uid
     }
 
-    // primary properties
+    // -------------[ primary control properties, set on creation ]---------------
+
     private explorerChartCode: string
+    nodeDataseriesName:string // the ref to the data to be presented
+    chartSelection: ChartSelectionCell[] // returned by google chart; points to row selected by user
+    uid: string // universal id; set by addCellDeclarations action
 
-    nodeDataseriesName:string
-    chartSelection: ChartSelectionCell[]
-    uid: string
+    // ------------[ derivative properties ]-------------------
 
-    // derivative properties
-    chartComponent // the react Chart component, allows access to google chart objects
+    // map from internal code to googleChartType
     get googleChartType() {
         return ChartCodeToGoogleChartType[this.explorerChartCode]
     }
-    private _chartParms: ChartParms
-    get chartParms() : ChartParms {
-        return this._chartParms
-    }
+
+    // the react Chart component, allows access to current google chart object
+    // set by explorercell
+    chartComponent
+    // current chart (can change) taken from chartComponent...
     get chart() {
         if (this.chartComponent)
             return this.chartComponent.chart // up to date version
         else 
             return null
     }
-    expandable: boolean
-    graph_id: string
+
+    // readonly; set by setChartParms()
+    // the formal parameters required by Chart Component for google chart creation
+    private _chartParms: ChartParms
+    get chartParms() : ChartParms {
+        return this._chartParms
+    }
+
+    facetName: string
     cellTitle: string
+    expandable: boolean
+    graph_id: string // prop for Chart component; required by google charts
+
     viewpointConfigPack: viewpointConfigPack
-    nodeData: NodeData
-    facetName
+    nodeDataPack: NodeData
+
     selectionCallback: Function
 
     refreshSelection = () => {
@@ -154,25 +166,9 @@ class BudgetCell {
             dataNode, 
             timeSpecs:yearscope, 
             parentData, 
-        } = budgetCell.nodeData
+        } = budgetCell.nodeDataPack
 
-        let units = datasetConfig.Units
-
-        // -----------------[ set vertical label value ]--------------------
-
-        let datasetName = FacetNameToDatasetName[facet]
-
-        let vertlabel
-        vertlabel = datasetConfig.UnitsAlias
-        if (units != 'FTE') {
-            if (datasetName == 'BudgetExpenses')
-                vertlabel = 'Expenditures' + ' (' + vertlabel + ')'
-            else
-                vertlabel = 'Revenues' + ' (' + vertlabel + ')'
-        }
-
-        // -----------------------[ GET CHART NODE AND COMPONENTS ]-----------------------
-
+        // ---------------------[ get data node components ]------------------
         // collect chart node and its components as data sources for the graph
 
         if (!dataNode) {
@@ -192,6 +188,22 @@ class BudgetCell {
         let chartType = budgetCell.googleChartType
 
         // 2. chart options:
+
+
+        // set vertical label value
+
+        let datasetName = FacetNameToDatasetName[facet]
+        let units = datasetConfig.Units
+
+        let vertlabel
+        vertlabel = datasetConfig.UnitsAlias
+        if (units != 'FTE') {
+            if (datasetName == 'BudgetExpenses')
+                vertlabel = 'Expenditures' + ' (' + vertlabel + ')'
+            else
+                vertlabel = 'Revenues' + ' (' + vertlabel + ')'
+        }
+
         // get axis title
         let axistitle = null
         if ((dataNode.Contents) && (nodeDataseriesName == 'Components')) {

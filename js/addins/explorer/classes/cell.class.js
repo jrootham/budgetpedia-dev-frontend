@@ -25,17 +25,7 @@ class BudgetCell {
             let budgetCell = this;
             let { facetName: facet, nodeDataseriesName, selectionCallback, } = budgetCell;
             let { viewpointConfig, datasetConfig } = budgetCell.viewpointConfigPack;
-            let { dataNode, timeSpecs: yearscope, parentData, } = budgetCell.nodeData;
-            let units = datasetConfig.Units;
-            let datasetName = constants_1.FacetNameToDatasetName[facet];
-            let vertlabel;
-            vertlabel = datasetConfig.UnitsAlias;
-            if (units != 'FTE') {
-                if (datasetName == 'BudgetExpenses')
-                    vertlabel = 'Expenditures' + ' (' + vertlabel + ')';
-                else
-                    vertlabel = 'Revenues' + ' (' + vertlabel + ')';
-            }
+            let { dataNode, timeSpecs: yearscope, parentData, } = budgetCell.nodeDataPack;
             if (!dataNode) {
                 console.error('node not found', {
                     isError: true,
@@ -46,6 +36,16 @@ class BudgetCell {
             }
             let components = dataNode[nodeDataseriesName];
             let chartType = budgetCell.googleChartType;
+            let datasetName = constants_1.FacetNameToDatasetName[facet];
+            let units = datasetConfig.Units;
+            let vertlabel;
+            vertlabel = datasetConfig.UnitsAlias;
+            if (units != 'FTE') {
+                if (datasetName == 'BudgetExpenses')
+                    vertlabel = 'Expenditures' + ' (' + vertlabel + ')';
+                else
+                    vertlabel = 'Revenues' + ' (' + vertlabel + ')';
+            }
             let axistitle = null;
             if ((dataNode.Contents) && (nodeDataseriesName == 'Components')) {
                 let titleref = viewpointConfig[dataNode.Contents];
@@ -221,14 +221,14 @@ class BudgetCell {
     get googleChartType() {
         return constants_1.ChartCodeToGoogleChartType[this.explorerChartCode];
     }
-    get chartParms() {
-        return this._chartParms;
-    }
     get chart() {
         if (this.chartComponent)
             return this.chartComponent.chart;
         else
             return null;
+    }
+    get chartParms() {
+        return this._chartParms;
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
