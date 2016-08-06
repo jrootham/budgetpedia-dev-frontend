@@ -62,7 +62,7 @@ interface NodeData {
     dataNode:any,
     timeSpecs: any,
     parentData: any,
-    nodeIndex: number,
+    // nodeIndex: number,
 }
 
 class BudgetCell {
@@ -82,7 +82,7 @@ class BudgetCell {
     uid: string
 
     // derivative properties
-    chartComponent: any // the react Chart component, allows access to google chart objects
+    chartComponent // the react Chart component, allows access to google chart objects
     get googleChartType() {
         return ChartCodeToGoogleChartType[this.explorerChartCode]
     }
@@ -97,11 +97,12 @@ class BudgetCell {
     expandable: boolean
     graph_id: string
     cellTitle: string
-    cellIndex: number
+    // cellIndex: number
     viewpointConfigData: viewpointConfigData
     nodeData: NodeData
-    branchSettings: BranchSettings
-    chartCallbacks: ChartCallbacks
+    // branchSettings: BranchSettings
+    facetName
+    selectionCallback: Function
 
     switchChartCode = chartCode => {
 
@@ -116,32 +117,42 @@ class BudgetCell {
         }
     }
 
+    // dataset is a data tree fetched from database
+    // dataseries is a list of data rows attached to a node
     getChartParms = ():ChartParmsObj => {
-
-        let selectionCallbacks = this.chartCallbacks
 
         let budgetCell: BudgetCell = this
 
-        let { cellIndex:chartIndex, nodeDataseriesName } = budgetCell
+        let { 
+            facetName:facet, 
+            nodeDataseriesName,
+            selectionCallback,
+        } = budgetCell
 
         let sortedlist = 'Sorted' + nodeDataseriesName
 
-        let { branchSettings } = this 
-
-        let { viewpointConfig, datasetConfig }  = this.viewpointConfigData
+        let { 
+            viewpointConfig, 
+            datasetConfig 
+        } = budgetCell.viewpointConfigData
 
         // -------------------[ INIT VARS ]---------------------
 
-        let { dataNode, timeSpecs:yearscope, parentData, nodeIndex } = this.nodeData
+        let { 
+            dataNode, 
+            timeSpecs:yearscope, 
+            parentData, 
+            // nodeIndex 
+        } = budgetCell.nodeData
 
         let { rightYear:year } = yearscope
-        // unpack branchsettings
-        let { facet } = branchSettings
 
         let datasetName = FacetNameToDatasetName[facet]
 
-        let units = datasetConfig.Units,
-            vertlabel
+        let units = datasetConfig.Units
+
+
+        let vertlabel
         vertlabel = datasetConfig.UnitsAlias
         if (units != 'FTE') {
             if (datasetName == 'BudgetExpenses')
@@ -179,7 +190,7 @@ class BudgetCell {
             components = dataNode.Components
         }
 
-        // ---------------------[ COLLECT CHART PARMS ]---------------------
+        // ====================[ COLLECT CHART PARMS ]======================
         // 1. chart type:
         let chartType = budgetCell.googleChartType
 
@@ -281,19 +292,12 @@ class BudgetCell {
 
         // TODO: watch for memory leaks when the chart is destroyed
         // 3. chart events:
-        let configlocation: PortalChartLocation = {
-            nodeIndex,
-            cellIndex: chartIndex
-        }
+        // let configlocation: PortalChartLocation = {
+        //     nodeIndex,
+        //     cellIndex: chartIndex
+        // }
 
         let events = [
-            // {
-            //     eventName:'ready',
-            //     callback: (Chart) => {
-            //         let selection = Chart.chart.getSelection()
-            //         console.log('ready', selection)
-            //     }
-            // },
             {
                 eventName: 'select',
                 callback: 
@@ -302,12 +306,12 @@ class BudgetCell {
                         let selection = chart.getSelection()
                         // console.log('selection', selection)
                         let chartSelectionData: ChartSelectionContext = { 
-                            Chart,
+                            // Chart,
                             selection, 
                             err 
                         }
 
-                        selectionCallbacks.selectionCallback(chartSelectionData)
+                        selectionCallback(chartSelectionData)
                     }
             },
             {
@@ -360,26 +364,12 @@ class BudgetCell {
                     dataNode, sortedlist, components, item.Code, item)
             }
             let amount
-            if (component.years)
+            if (component.years) {
                 amount = components[item.Code].years[year]
-            else
+            } else {
                 amount = null
-            // let annotation
-            // if (units == 'DOLLAR') {
-            //     amount = parseInt(rounded(amount / 1000))
-            //     annotation = thousandsformat(amount)
-            // } else if (units == 'FTE') {
-            //     annotation = staffrounded(amount)
-            //     amount = parseInt(singlerounded(amount))
-            // } else {
-            //     if (components[item.Code] && components[item.Code].years)
-            //         amount = components[item.Code].years[year]
-            //     else 
-            //         amount = null
-            //     annotation = amount
-            // }
-            // TODO: add % of total to the annotation
-            // return [item.Name, amount, annotation]
+            }
+
             let retval = [item.Name, amount]
             let style = ''
             if (component.Contents == 'BASELINE') {

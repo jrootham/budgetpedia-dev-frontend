@@ -15,7 +15,7 @@ export interface ChartSelectionCell {
 // returned when user clicks on a chart component 
 // for drill-down or other action
 export interface ChartSelectionContext {
-    Chart: any,
+    // Chart: any,
     selection: ChartSelectionCell[],
     err: any,
 }

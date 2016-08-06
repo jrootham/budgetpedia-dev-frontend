@@ -140,8 +140,8 @@ class BudgetNode {
                 }
             )
 
-            cell.cellIndex = parseInt(cellIndex) // parseInt is a compiler requirement
-            this._updateCell(cell)
+            // cell.cellIndex = parseInt(cellIndex) // parseInt is a compiler requirement
+            this._updateCell(cell, cellIndex)
             cells.push(cell)
         }
         return cells
@@ -154,12 +154,12 @@ class BudgetNode {
         for (let cellIndex in cells) {
             let cell:BudgetCell = cells[cellIndex]
             cell.nodeDataseriesName = chartSpecs[cellIndex].Type
-            this._updateCell(cell)
+            this._updateCell(cell, cellIndex)
         }
         return cells
     }
 
-    private _updateCell = (cell:BudgetCell) => {
+    private _updateCell = (cell:BudgetCell, cellIndex) => {
         let viewpointConfigData = this.viewpointConfigData
 
         let { dataNode, timeSpecs, parentData, nodeIndex } = this
@@ -172,9 +172,9 @@ class BudgetNode {
 
         cell.viewpointConfigData = viewpointConfigData
         cell.nodeData = nodeData
-        cell.branchSettings = this.branchSettings,
+        cell.facetName = this.branchSettings.facet,
 
-        this._assignCellChartParms(cell)
+        this._assignCellChartParms(cell, cellIndex)
         this._setCellTitle(cell)
     }
 
@@ -189,13 +189,13 @@ class BudgetNode {
         budgetCell.cellTitle = "By " + chartblocktitle
     }
 
-    private _assignCellChartParms = (cell:BudgetCell) => {
+    private _assignCellChartParms = (cell:BudgetCell, cellIndex) => {
         let budgetNode = this
 
         let selectfn = this.onChartComponentSelection
-        let fcurrent = selectfn(budgetNode.nodeIndex)(cell.cellIndex)
+        let fcurrent = selectfn(budgetNode.nodeIndex)(cellIndex)
 
-        cell.chartCallbacks = {selectionCallback:fcurrent}
+        cell.selectionCallback = fcurrent
 
         let chartParmsObj:ChartParmsObj = cell.getChartParms()
 

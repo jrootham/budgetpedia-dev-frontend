@@ -11,17 +11,15 @@ class BudgetCell {
             }
         };
         this.getChartParms = () => {
-            let selectionCallbacks = this.chartCallbacks;
             let budgetCell = this;
-            let { cellIndex: chartIndex, nodeDataseriesName } = budgetCell;
+            let { facetName: facet, nodeDataseriesName, selectionCallback, } = budgetCell;
             let sortedlist = 'Sorted' + nodeDataseriesName;
-            let { branchSettings } = this;
-            let { viewpointConfig, datasetConfig } = this.viewpointConfigData;
-            let { dataNode, timeSpecs: yearscope, parentData, nodeIndex } = this.nodeData;
+            let { viewpointConfig, datasetConfig } = budgetCell.viewpointConfigData;
+            let { dataNode, timeSpecs: yearscope, parentData, } = budgetCell.nodeData;
             let { rightYear: year } = yearscope;
-            let { facet } = branchSettings;
             let datasetName = constants_1.FacetNameToDatasetName[facet];
-            let units = datasetConfig.Units, vertlabel;
+            let units = datasetConfig.Units;
+            let vertlabel;
             vertlabel = datasetConfig.UnitsAlias;
             if (units != 'FTE') {
                 if (datasetName == 'BudgetExpenses')
@@ -137,10 +135,6 @@ class BudgetCell {
                     width: chartwidth,
                 }
             };
-            let configlocation = {
-                nodeIndex: nodeIndex,
-                cellIndex: chartIndex
-            };
             let events = [
                 {
                     eventName: 'select',
@@ -148,11 +142,10 @@ class BudgetCell {
                         let chart = Chart.chart;
                         let selection = chart.getSelection();
                         let chartSelectionData = {
-                            Chart: Chart,
                             selection: selection,
                             err: err
                         };
-                        selectionCallbacks.selectionCallback(chartSelectionData);
+                        selectionCallback(chartSelectionData);
                     }
                 },
                 {
@@ -190,10 +183,12 @@ class BudgetCell {
                     console.error('component not found for (node, sortedlist components, item, item.Code) ', dataNode, sortedlist, components, item.Code, item);
                 }
                 let amount;
-                if (component.years)
+                if (component.years) {
                     amount = components[item.Code].years[year];
-                else
+                }
+                else {
                     amount = null;
+                }
                 let retval = [item.Name, amount];
                 let style = '';
                 if (component.Contents == 'BASELINE') {

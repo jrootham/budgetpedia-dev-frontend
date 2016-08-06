@@ -26,7 +26,7 @@ class BudgetNode {
             }
             return parmsList;
         };
-        this._updateCell = (cell) => {
+        this._updateCell = (cell, cellIndex) => {
             let viewpointConfigData = this.viewpointConfigData;
             let { dataNode, timeSpecs, parentData, nodeIndex } = this;
             let nodeData = {
@@ -37,8 +37,8 @@ class BudgetNode {
             };
             cell.viewpointConfigData = viewpointConfigData;
             cell.nodeData = nodeData;
-            cell.branchSettings = this.branchSettings,
-                this._assignCellChartParms(cell);
+            cell.facetName = this.branchSettings.facet,
+                this._assignCellChartParms(cell, cellIndex);
             this._setCellTitle(cell);
         };
         this._setCellTitle = (budgetCell) => {
@@ -52,11 +52,11 @@ class BudgetNode {
             }
             budgetCell.cellTitle = "By " + chartblocktitle;
         };
-        this._assignCellChartParms = (cell) => {
+        this._assignCellChartParms = (cell, cellIndex) => {
             let budgetNode = this;
             let selectfn = this.onChartComponentSelection;
-            let fcurrent = selectfn(budgetNode.nodeIndex)(cell.cellIndex);
-            cell.chartCallbacks = { selectionCallback: fcurrent };
+            let fcurrent = selectfn(budgetNode.nodeIndex)(cellIndex);
+            cell.selectionCallback = fcurrent;
             let chartParmsObj = cell.getChartParms();
             if (!chartParmsObj.isError) {
                 cell.chartParms = chartParmsObj.chartParms;
@@ -102,8 +102,7 @@ class BudgetNode {
                 chartSelection: chartSelection,
                 uid: celluid,
             });
-            cell.cellIndex = parseInt(cellIndex);
-            this._updateCell(cell);
+            this._updateCell(cell, cellIndex);
             cells.push(cell);
         }
         return cells;
@@ -115,7 +114,7 @@ class BudgetNode {
         for (let cellIndex in cells) {
             let cell = cells[cellIndex];
             cell.nodeDataseriesName = chartSpecs[cellIndex].Type;
-            this._updateCell(cell);
+            this._updateCell(cell, cellIndex);
         }
         return cells;
     }
