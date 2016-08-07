@@ -127,7 +127,8 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             let { branchuid } = action.payload
             newstate = Object.assign({},state)
             newstate[branchuid] = Object.assign({},newstate[branchuid])
-            newstate[branchuid].facet = action.payload.facetname            
+            newstate[branchuid].facet = action.payload.facetname
+            // console.log('changed facet', branchuid, newstate[branchuid].facet)
             return newstate
         }
 

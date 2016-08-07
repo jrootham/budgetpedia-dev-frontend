@@ -15,6 +15,7 @@ class ExplorerBranch extends Component {
             branchNodes: [],
             viewpointData: null,
             snackbar: { open: false, message: 'empty' },
+            facet: this.props.budgetBranch.settings.viewpoint,
             byunitselection: 'off',
             showcontrols: false,
         };
@@ -63,6 +64,22 @@ class ExplorerBranch extends Component {
                 setTimeout(() => {
                     let switchResults = budgetBranch.switchFacet();
                     let { deeperdata, shallowerdata } = switchResults;
+                    if (deeperdata || shallowerdata) {
+                        let message = null;
+                        if (deeperdata) {
+                            message = "More drilldown is available for current facet selection";
+                        }
+                        else {
+                            message = "Less drilldown is available for current facet selection";
+                        }
+                        let { snackbar } = this.state;
+                        snackbar = Object.assign({}, snackbar);
+                        snackbar.message = message;
+                        snackbar.open = true;
+                        this.setState({
+                            snackbar: snackbar,
+                        });
+                    }
                 });
             });
         };
@@ -142,6 +159,9 @@ class ExplorerBranch extends Component {
             }
             let { budgetBranch } = this.props;
             this.props.globalStateActions.changeFacet(budgetBranch.uid, facet);
+            this.setState({
+                facet: facet,
+            });
         };
         this.switchUnit = unitindex => {
             this.props.globalStateActions.resetLastAction();
@@ -232,7 +252,7 @@ class ExplorerBranch extends Component {
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
-        let { lastAction } = nextProps.declarationData;
+        let { lastAction, generation } = nextProps.declarationData;
         if (!lastAction.explorer)
             return false;
         let { branchuid } = lastAction;

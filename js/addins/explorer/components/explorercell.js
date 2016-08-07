@@ -30,7 +30,7 @@ class ExplorerCell extends Component {
         };
     }
     shouldComponentUpdate(nextProps, nextState) {
-        let { lastAction } = nextProps.declarationData;
+        let { lastAction, generation } = nextProps.declarationData;
         let { celluid } = lastAction;
         if (celluid) {
             let retval = (nextProps.budgetCell.uid == celluid) ? true : false;

@@ -126,8 +126,13 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     this reduces updates by about half, therefore 
     reducing update delay caused by cascading events
 */    
+    private lastgenerationcounter: number = 0
+
     shouldComponentUpdate(nextProps: ExplorerNodeProps, nextState) {
-        let { lastAction } = nextProps.declarationData
+        let { lastAction, generation } = nextProps.declarationData
+        
+        // if (generation <= this.lastgenerationcounter) return true
+        // this.lastgenerationcounter = generation
         // console.log('lastAction',lastAction)
         let { nodeuid } = lastAction
         if (nodeuid) {
@@ -167,7 +172,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
 
         switch (lastAction.type) {
             case cellTypes.UPDATE_CELL_SELECTION: {
-                this._processUpdateCellSelection()
+                // this._processUpdateCellSelection()
                 break
             }
             case cellTypes.CHANGE_FACET: {
@@ -181,7 +186,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         return returnvalue
     }
 
-    private _processUpdateCellSelection = () => {
+    // private _processUpdateCellSelection = () => {
         // let nodeCells = [ ...this.state.nodeCells ]
         // nodeCells.map((budgetCell)=>{
         //     budgetCell.chartSelection = this.props.declarationData.cellsById[budgetCell.uid].chartSelection
@@ -189,11 +194,11 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         // this.setState({
         //     nodeCells,
         // })
-    }
+    // }
 
     private _processChangeFacet = () => {
         let { budgetNode } = this.props
-        console.log('processing node change facet')
+        // console.log('processing node change facet')
         // let cellDeclarationParms = budgetNode.getCellDeclarationParms()
         // this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
     }

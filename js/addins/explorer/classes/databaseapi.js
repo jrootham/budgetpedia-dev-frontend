@@ -58,6 +58,7 @@ class Database {
     getViewpointPromise(viewpoint) {
         let promise = new Promise(resolve => {
             let viewpointdata = db_viewpoints[viewpoint];
+            viewpointdata = JSON.parse(JSON.stringify(viewpointdata));
             resolve(viewpointdata);
         });
         return promise;

@@ -58,9 +58,15 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         })
     }
 
+
+    // private lastgenerationcounter: number = 0
+
     shouldComponentUpdate(nextProps: ExplorerCellProps, nextState) {
-        let { lastAction } = nextProps.declarationData
+        let { lastAction, generation } = nextProps.declarationData
         // console.log('lastAction in cell',lastAction)
+        // if (generation <= this.lastgenerationcounter) return true
+        // this.lastgenerationcounter = generation
+
         let { celluid } = lastAction
         if (celluid) {
             let retval = (nextProps.budgetCell.uid == celluid)? true: false

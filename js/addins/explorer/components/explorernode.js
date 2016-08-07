@@ -12,6 +12,7 @@ class ExporerNode extends Component {
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
+        this.lastgenerationcounter = 0;
         this._controlGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
             let currentControlData = this.props.declarationData;
@@ -25,7 +26,6 @@ class ExporerNode extends Component {
             }
             switch (lastAction.type) {
                 case actions_1.cellTypes.UPDATE_CELL_SELECTION: {
-                    this._processUpdateCellSelection();
                     break;
                 }
                 case actions_1.cellTypes.CHANGE_FACET: {
@@ -37,11 +37,8 @@ class ExporerNode extends Component {
             this._previousControlData = currentControlData;
             return returnvalue;
         };
-        this._processUpdateCellSelection = () => {
-        };
         this._processChangeFacet = () => {
             let { budgetNode } = this.props;
-            console.log('processing node change facet');
         };
         this.harmonizecount = null;
         this._harmonizeCells = () => {
@@ -151,7 +148,7 @@ class ExporerNode extends Component {
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
-        let { lastAction } = nextProps.declarationData;
+        let { lastAction, generation } = nextProps.declarationData;
         let { nodeuid } = lastAction;
         if (nodeuid) {
             let retval = (nextProps.budgetNode.uid == nodeuid) ? true : false;

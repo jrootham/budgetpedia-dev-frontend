@@ -216,7 +216,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             }
 
             budgetBranches[i].settings = branchesById[branchList[i]]
-
+            // console.log('branch settings for ', budgetBranches[i])
         }
 
         this.setState({

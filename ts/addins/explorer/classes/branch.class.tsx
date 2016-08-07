@@ -236,6 +236,7 @@ class BudgetBranch {
         let promise = new Promise(resolve => {
 
             _promise.then( (viewpointdata:ViewpointData) => {
+                // console.log('setting viewpoint data', viewpointdata, this.uid)
                 this.setState({
                     viewpointData:viewpointdata
                 })

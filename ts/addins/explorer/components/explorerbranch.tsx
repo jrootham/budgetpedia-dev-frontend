@@ -92,7 +92,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         branchNodes:[],
         viewpointData:null,
         snackbar:{open:false,message:'empty'},
-        // facet: this.props.budgetBranch.settings.viewpoint,
+        facet: this.props.budgetBranch.settings.viewpoint,
         byunitselection:'off',
         showcontrols:false,
     }
@@ -181,14 +181,21 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         }
     }
 
+    // private lastgenerationcounter: number = 0
+
     shouldComponentUpdate(nextProps: ExplorerBranchProps, nextState) {
-        let { lastAction } = nextProps.declarationData
-        // console.log('lastAction',lastAction)
+        let { lastAction, generation } = nextProps.declarationData
+
+        // console.log('branch lastAction, generation',lastAction, generation, this.lastgenerationcounter)
+
+        // if (generation <= this.lastgenerationcounter) return true
+        // this.lastgenerationcounter = generation
+        // console.log('evaluating lastAction')
         if (!lastAction.explorer) return false
         let { branchuid } = lastAction
         if (branchuid) {
             let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
-            // console.log('branch',retval, branchuid, lastAction.type)
+            // console.log('branchuid action',retval, branchuid, lastAction.type)
             return retval
         }
         return true
@@ -297,23 +304,23 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 let { deeperdata, shallowerdata } = switchResults
 
                 // TODO this is commented out owing to event conflicts -- fix them!
-                // if (deeperdata || shallowerdata) {
+                if (deeperdata || shallowerdata) {
 
-                //     let message = null
-                //     if (deeperdata) {
-                //         message = "More drilldown is available for current facet selection"
-                //     } else {
-                //         message = "Less drilldown is available for current facet selection"
-                //     }
-                //     let { snackbar } = this.state
-                //     snackbar = Object.assign ({},snackbar)
-                //     snackbar.message = message
-                //     snackbar.open = true
-                //     this.setState({
-                //         snackbar,
-                //     })
+                    let message = null
+                    if (deeperdata) {
+                        message = "More drilldown is available for current facet selection"
+                    } else {
+                        message = "Less drilldown is available for current facet selection"
+                    }
+                    let { snackbar } = this.state
+                    snackbar = Object.assign ({},snackbar)
+                    snackbar.message = message
+                    snackbar.open = true
+                    this.setState({
+                        snackbar,
+                    })
 
-                // }
+                }
 
             })
         })
@@ -425,9 +432,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         this.props.globalStateActions.changeFacet(budgetBranch.uid, facet)
 
-        // this.setState({
-        //     facet,
-        // })
+        this.setState({
+            facet,
+        })
 
     }
 
