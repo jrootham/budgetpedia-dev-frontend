@@ -255,7 +255,8 @@ class BudgetCell {
         datasetConfig, 
         yearSpecs
     ) => {
-        // set vertical label value
+
+        // ----------------------[ assemble support variables ]-------------------
 
         let budgetCell = this
 
@@ -264,26 +265,30 @@ class BudgetCell {
         let datasetName = FacetNameToDatasetName[facetName]
         let units = datasetConfig.Units
 
-        let vertlabel
-        vertlabel = datasetConfig.UnitsAlias
+        // --------------------[ set vertical label value ]--------------------
+
+        let verticalLabel
+        verticalLabel = datasetConfig.UnitsAlias
         if (units != 'FTE') {
             if (datasetName == 'BudgetExpenses')
-                vertlabel = 'Expenditures' + ' (' + vertlabel + ')'
+                verticalLabel = 'Expenditures' + ' (' + verticalLabel + ')'
             else
-                vertlabel = 'Revenues' + ' (' + vertlabel + ')'
+                verticalLabel = 'Revenues' + ' (' + verticalLabel + ')'
         }
 
-        // get axis title
-        let axistitle = null
+        // -------------------[ set horizontal label value ]--------------------
+
+        let horizontalLabel = null
         if ((nodeData.Contents) && (nodeDataseriesName == 'Components')) {
             let titleref = viewpointConfig[nodeData.Contents]
-            axistitle = titleref.Alias || titleref.Name
+            horizontalLabel = titleref.Alias || titleref.Name
         } else {
             let portaltitles = datasetConfig.Titles
-            axistitle = portaltitles.Categories
+            horizontalLabel = portaltitles.Categories
         }
 
-        // assemble chart title
+        // ----------------------[ assemble chart title ]----------------------
+
         let title
         if (parentData) {
             let parentdataNode = parentData.nodeData
@@ -302,7 +307,6 @@ class BudgetCell {
         }
 
         // set title amount
-
         let { rightYear:year } = yearSpecs
         let titleamount = null
         // utility functions for number formatting
@@ -323,38 +327,10 @@ class BudgetCell {
         }
         title += ' (Total: ' + titleamount + ')'
 
-        // assemble chart properties
-        let legendvalue
-        let chartheight
-        let charttop
-        let chartleft
-        let chartwidth
-        switch (budgetCell.googleChartType) {
-            case "ColumnChart":
-                legendvalue = 'none'
-                chartheight ='50%'
-                charttop = '15%'
-                chartleft = '25%'
-                chartwidth = '70%'
-                break
-            
-            case "PieChart":
-                legendvalue = {
-                    position:"top",
-                    textStyle: {
-                        fontSize:9
-                    },
-                    maxLines:4
-                }
-                chartheight = '55%'
-                charttop = '30%'
-                chartleft = 'auto'
-                chartwidth = 'auto'
-                break;
-            default:
-                // TODO: error condition
-                break
-        }
+        // ------------------------------[ assemble options ]--------------------------------
+
+        let options_extension = 
+            budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType)
 
         let options = {
             animation:{
@@ -362,25 +338,75 @@ class BudgetCell {
                 duration: 500,
                 easing: 'out',
             },
-            title: title,
-            vAxis: { title: vertlabel, minValue: 0, textStyle: { fontSize: 8 } },
-            hAxis: { title: axistitle, textStyle: { fontSize: 10 } },
-            bar: { groupWidth: "95%" },
+            title,
+            vAxis: { 
+                title: verticalLabel, 
+                minValue: 0, 
+                textStyle: { 
+                    fontSize: 8 
+                } 
+            },
+            hAxis: { 
+                title: horizontalLabel, 
+                textStyle: { 
+                    fontSize: 10 
+                } 
+            },
+            bar: { 
+                groupWidth: "95%" 
+            },
             // width: children.length * 120,// 120 per column
             height: "400px",
             width: "400px",
-            legend: legendvalue,
-            // annotations: { alwaysOutside: true },
-            pieHole: 0.4,
-            chartArea:{
-                height:chartheight,
-                top:charttop,
-                left:chartleft,
-                width:chartwidth,
-            }
         }
+
+        options = Object.assign(options, options_extension)
+
         return options
+        
     }
+
+    _chartParmsOptions_chartTypeOptions = (googleChartType) => {
+
+        let options = {}
+
+        switch (googleChartType) {
+
+            case "ColumnChart":
+                options = {
+                    legend: 'none',
+                    chartArea: {
+                        height: '50%',
+                        top: '15%',
+                        left: '25%',
+                        width: '70%',
+                    }
+                }
+                break
+            
+            case "PieChart":
+                options = {
+                    legend: {
+                        position:"top",
+                        textStyle: {
+                            fontSize: 9,
+                        },
+                        maxLines: 4,
+                    },
+                    chartArea: {
+                        height: '55%',
+                        top: '30%',
+                        left: 'auto',
+                        width: 'auto',
+                    }
+                }
+                break
+        }
+
+        return options
+
+    }
+
 
     // ------------------
     // 3. chart events:
@@ -508,7 +534,7 @@ class BudgetCell {
             let row = [sortedItem.Name, amount]
 
             let { googleChartType } = budgetCell
-
+            // enhance row
             switch (googleChartType) {
                 case "ColumnChart":
                     row = budgetCell._rows_ColumnCharts_row(row, componentItem)
@@ -533,7 +559,7 @@ class BudgetCell {
         if (componentItem.Contents == 'BASELINE') {
             style = 'stroke-color: Gold; stroke-width: 3'
         }
-        
+
         row.push(style)
 
         return row
