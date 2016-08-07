@@ -466,7 +466,7 @@ class BudgetCell {
         return columns
 
     }
-    
+
     // ------------------
     // 5. chart rows:
     // ------------------
@@ -476,44 +476,67 @@ class BudgetCell {
 
         let { nodeDataseriesName } = budgetCell
 
-        let components = nodeData[nodeDataseriesName]
+        let nodeDataseries = nodeData[nodeDataseriesName]
 
-        let sortedlist = 'Sorted' + nodeDataseriesName
+        let sortedlistName = 'Sorted' + nodeDataseriesName
 
-        if (!nodeData[sortedlist]) {
+        let sortedDataseries = nodeData[sortedlistName]
+
+        if (!sortedDataseries) {
             console.error( { 
-                isError: true, 
-                errorMessage:'sorted list "' + sortedlist + '" not available',
+                errorMessage:'sorted list "' + sortedlistName + '" not available',
                 chartParms: {} 
             })
-            throw Error('sorted list "' + sortedlist + '" not available')
+            throw Error('sorted list "' + sortedlistName + '" not available')
         }
-        let rows = nodeData[sortedlist].map((item:SortedComponentItem) => {
+
+        let rows = sortedDataseries.map((sortedItem:SortedComponentItem) => {
             // TODO: get determination of amount processing from Unit value
-            let component = components[item.Code]
-            if (!component) {
-                console.error('component not found for (node, sortedlist components, item, item.Code) ',
-                    nodeData, sortedlist, components, item.Code, item)
+            let componentItem = nodeDataseries[sortedItem.Code]
+            if (!componentItem) {
+                console.error('component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ',
+                    nodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem)
+                throw Error('componentItem not found')
             }
             let amount
-            if (component.years) {
-                amount = components[item.Code].years[yearSpecs.rightYear]
+            if (componentItem.years) {
+                amount = componentItem.years[yearSpecs.rightYear]
             } else {
                 amount = null
             }
 
-            let retval = [item.Name, amount]
-            let style = ''
-            if (component.Contents == 'BASELINE') {
-                style = 'stroke-color: Gold; stroke-width: 3'
+            let row = [sortedItem.Name, amount]
+
+            let { googleChartType } = budgetCell
+
+            switch (googleChartType) {
+                case "ColumnChart":
+                    row = budgetCell._rows_ColumnCharts_row(row, componentItem)
+                    break;
+                
+                default:
+                    // do nothing
+                    break;
             }
-            if (budgetCell.googleChartType == 'ColumnChart') {
-                retval.push(style)
-            }
-            return retval
+
+            return row
         })
 
         return rows
+
+    }
+
+    _rows_ColumnCharts_row = (row, componentItem) => {
+
+        let style = ''
+
+        if (componentItem.Contents == 'BASELINE') {
+            style = 'stroke-color: Gold; stroke-width: 3'
+        }
+        
+        row.push(style)
+
+        return row
 
     }
 
