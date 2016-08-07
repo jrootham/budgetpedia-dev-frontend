@@ -225,8 +225,20 @@ class BudgetCell {
         // ------------------
         // 5. chart rows:
         // ------------------
+        let { nodeDataseriesName } = budgetCell
 
-        let rows = budgetCell._chartParmsRows(nodeData, yearSpecs)
+        let nodeDataseries = nodeData[nodeDataseriesName]
+
+        let sortedlistName = 'Sorted' + nodeDataseriesName
+
+        let sortedDataseries = nodeData[sortedlistName]
+
+        let rows
+        if (sortedDataseries) {
+            rows = budgetCell._chartParmsRows(nodeData, yearSpecs)
+        } else {
+            return
+        }
 
         // --------------------[ ASSEMBLE PARMS PACK ]----------------
 

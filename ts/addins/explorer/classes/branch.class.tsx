@@ -141,18 +141,22 @@ class BudgetBranch {
         let chartParmsObj: ChartParmsObj = null
         let branchuid = this.uid
 
+        // TODO: this needs to be rewritten for deeperdata and shallowerdata
+        //  by keeping previousfacet data to compart with, rather than
+        //  current method which relies on side effects of timing
         for (nodeIndex in branchNodes) {
-            // console.log('switch facet nodeIndex', nodeIndex)
+            // console.log('switch facet nodeIndex', nodeIndex, branchNodes.length)
             parentBudgetNode = budgetNode
             budgetNode = branchNodes[nodeIndex]
-            let nextdataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
-            if (nextdataNode) {
+            let dataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
+            if (dataNode) {
                 // check previous cell configuration against previous node
                 // TODO: THIS IS A PROXY THAT NEEDS TO BE REPLACED
                 // there is only one chart where there should be 2
-                let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1))
+                let deeperdata = (!!dataNode.Components && (budgetNode.allCells.length == 1))
                 // there are two charts where there should be 1
-                let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2))
+                let shallowerdata = (!dataNode.Components && (budgetNode.allCells.length == 2))
+                // console.log('changefacet', dataNode, deeperdata, shallowerdata, budgetNode.cells)
                 // now set budgetNode with new data node
                 let parentDataNode = null
                 if (nodeIndex > 0) {
@@ -187,7 +191,7 @@ class BudgetBranch {
                 } else {
                     budgetNode.update(
                         branchSettings.facet,
-                        nextdataNode,
+                        dataNode,
                         parentDataNode
                     )
                     let newCells = budgetNode.resetCells()

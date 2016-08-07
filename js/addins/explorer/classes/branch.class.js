@@ -151,10 +151,10 @@ class BudgetBranch {
         for (nodeIndex in branchNodes) {
             parentBudgetNode = budgetNode;
             budgetNode = branchNodes[nodeIndex];
-            let nextdataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
-            if (nextdataNode) {
-                let deeperdata = (!!nextdataNode.Components && (budgetNode.cells.length == 1));
-                let shallowerdata = (!nextdataNode.Components && (budgetNode.cells.length == 2));
+            let dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
+            if (dataNode) {
+                let deeperdata = (!!dataNode.Components && (budgetNode.allCells.length == 1));
+                let shallowerdata = (!dataNode.Components && (budgetNode.allCells.length == 2));
                 let parentDataNode = null;
                 if (nodeIndex > 0) {
                     parentDataNode = branchNodes[nodeIndex - 1].nodeData;
@@ -182,7 +182,7 @@ class BudgetBranch {
                     budgetNode = null;
                 }
                 else {
-                    budgetNode.update(branchSettings.facet, nextdataNode, parentDataNode);
+                    budgetNode.update(branchSettings.facet, dataNode, parentDataNode);
                     let newCells = budgetNode.resetCells();
                     budgetNode.newCells = newCells;
                 }

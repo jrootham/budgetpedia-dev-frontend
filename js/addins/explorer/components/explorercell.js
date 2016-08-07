@@ -267,7 +267,9 @@ class ExplorerCell extends Component {
             marginRight: "3px",
             marginLeft: "3px",
         }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")));
-        let chart = React.createElement(Chart, {ref: node => { this.props.budgetCell.chartComponent = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id});
+        let chart = (chartParms) ?
+            React.createElement(Chart, {ref: node => { this.props.budgetCell.chartComponent = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id})
+            : React.createElement("div", null, " no data... ");
         let drilldownprompt = React.createElement("div", {style: {
             position: "absolute",
             bottom: "10px",

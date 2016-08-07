@@ -92,7 +92,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         branchNodes:[],
         viewpointData:null,
         snackbar:{open:false,message:'empty'},
-        facet: this.props.budgetBranch.settings.viewpoint,
+        // facet: this.props.budgetBranch.settings.viewpoint,
         byunitselection:'off',
         showcontrols:false,
     }
@@ -329,6 +329,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     handleSnackbarRequestClose = () => {
+        // this.props.globalStateActions.resetLastAction()
         this.setState({
             snackbar: {
                 open: false,
@@ -407,6 +408,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     switchFacet = (facet:string) => {
 
+        // console.log('switching facet to ', facet)
+
         switch (facet) {
             case "Expenses":
             case "Revenues":
@@ -421,9 +424,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         this.props.globalStateActions.changeFacet(budgetBranch.uid, facet)
 
-        this.setState({
-            facet,
-        })
+        // this.setState({
+        //     facet,
+        // })
 
     }
 
@@ -557,7 +560,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         <span style={{ fontStyle: "italic" }}>Aspect: </span>
 
         <DropDownMenu
-            value={this.state.facet}
+            value={this.props.declarationData.branchesById[this.props.budgetBranch.uid].facet}
             onChange={
                 (e, index, value) => {
                     branch.switchFacet(value)

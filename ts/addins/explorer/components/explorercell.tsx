@@ -531,8 +531,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 </IconButton>
             </div>
 
-
-        let chart =  
+        let chart =  (chartParms)?
             <Chart
                 ref = {node => {this.props.budgetCell.chartComponent = node}} 
                 chartType = { chartParms.chartType }
@@ -543,6 +542,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 // used to create and cache html element id attribute
                 graph_id = { graph_id }
                 />
+            :<div> no data... </div>
 
         let drilldownprompt = 
             <div style={{

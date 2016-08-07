@@ -37,7 +37,17 @@ class BudgetCell {
             let options = budgetCell._chartParmsOptions(nodeData, parentData, viewpointConfig, datasetConfig, yearSpecs);
             let events = budgetCell._chartParmsEvents();
             let columns = budgetCell._chartParmsColumns(yearSpecs);
-            let rows = budgetCell._chartParmsRows(nodeData, yearSpecs);
+            let { nodeDataseriesName } = budgetCell;
+            let nodeDataseries = nodeData[nodeDataseriesName];
+            let sortedlistName = 'Sorted' + nodeDataseriesName;
+            let sortedDataseries = nodeData[sortedlistName];
+            let rows;
+            if (sortedDataseries) {
+                rows = budgetCell._chartParmsRows(nodeData, yearSpecs);
+            }
+            else {
+                return;
+            }
             let chartParms = {
                 chartType: chartType,
                 options: options,
