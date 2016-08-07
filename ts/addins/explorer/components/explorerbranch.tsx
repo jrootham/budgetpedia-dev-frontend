@@ -296,23 +296,24 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
                 let { deeperdata, shallowerdata } = switchResults
 
-                if (deeperdata || shallowerdata) {
+                // TODO this is commented out owing to event conflicts -- fix them!
+                // if (deeperdata || shallowerdata) {
 
-                    let message = null
-                    if (deeperdata) {
-                        message = "More drilldown is available for current facet selection"
-                    } else {
-                        message = "Less drilldown is available for current facet selection"
-                    }
-                    let { snackbar } = this.state
-                    snackbar = Object.assign ({},snackbar)
-                    snackbar.message = message
-                    snackbar.open = true
-                    this.setState({
-                        snackbar,
-                    })
+                //     let message = null
+                //     if (deeperdata) {
+                //         message = "More drilldown is available for current facet selection"
+                //     } else {
+                //         message = "Less drilldown is available for current facet selection"
+                //     }
+                //     let { snackbar } = this.state
+                //     snackbar = Object.assign ({},snackbar)
+                //     snackbar.message = message
+                //     snackbar.open = true
+                //     this.setState({
+                //         snackbar,
+                //     })
 
-                }
+                // }
 
             })
         })
