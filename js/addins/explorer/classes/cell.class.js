@@ -102,7 +102,6 @@ class BudgetCell {
                 titleamount = staffrounded(titleamount);
             }
             title += ' (Total: ' + titleamount + ')';
-            let options_extension = budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType);
             let options = {
                 animation: {
                     startup: true,
@@ -129,6 +128,7 @@ class BudgetCell {
                 height: "400px",
                 width: "400px",
             };
+            let options_extension = budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType);
             options = Object.assign(options, options_extension);
             return options;
         };
@@ -178,7 +178,7 @@ class BudgetCell {
                             selection: selection,
                             err: err
                         };
-                        this.selectionCallback(chartSelectionData);
+                        budgetCell.selectionCallback(chartSelectionData);
                     }
                 },
                 {
@@ -256,8 +256,6 @@ class BudgetCell {
                 switch (googleChartType) {
                     case "ColumnChart":
                         row = budgetCell._rows_ColumnCharts_row(row, componentItem);
-                        break;
-                    default:
                         break;
                 }
                 return row;

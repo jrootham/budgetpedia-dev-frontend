@@ -329,9 +329,6 @@ class BudgetCell {
 
         // ------------------------------[ assemble options ]--------------------------------
 
-        let options_extension = 
-            budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType)
-
         let options = {
             animation:{
                 startup: true,
@@ -359,6 +356,9 @@ class BudgetCell {
             height: "400px",
             width: "400px",
         }
+
+        let options_extension = 
+            budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType)
 
         options = Object.assign(options, options_extension)
 
@@ -416,17 +416,16 @@ class BudgetCell {
         return [
             {
                 eventName: 'select',
-                callback: 
-                    (Chart, err) => {
-                        let chart = Chart.chart
-                        let selection = chart.getSelection()
-                        let chartSelectionData: ChartSelectionContext = { 
-                            selection, 
-                            err 
-                        }
-
-                        this.selectionCallback(chartSelectionData)
+                callback: (Chart, err) => {
+                    let chart = Chart.chart
+                    let selection = chart.getSelection()
+                    let chartSelectionData: ChartSelectionContext = { 
+                        selection, 
+                        err 
                     }
+
+                    budgetCell.selectionCallback(chartSelectionData)
+                }
             },
             {
                 eventName:'animationfinish',
@@ -536,13 +535,11 @@ class BudgetCell {
             let { googleChartType } = budgetCell
             // enhance row
             switch (googleChartType) {
+
                 case "ColumnChart":
                     row = budgetCell._rows_ColumnCharts_row(row, componentItem)
                     break;
                 
-                default:
-                    // do nothing
-                    break;
             }
 
             return row
