@@ -248,7 +248,13 @@ class BudgetCell {
     // ------------------
     // 2. chart options:
     // ------------------
-    private _chartParmsOptions = (nodeData, parentData, viewpointConfig, datasetConfig, yearSpecs) => {
+    private _chartParmsOptions = (
+        nodeData, 
+        parentData, 
+        viewpointConfig, 
+        datasetConfig, 
+        yearSpecs
+    ) => {
         // set vertical label value
 
         let budgetCell = this
@@ -415,7 +421,41 @@ class BudgetCell {
     // ------------------
     private _chartParmsColumns = (yearSpecs:YearSpecs) => {
         let budgetCell = this
-        let categorylabel = 'Component' // TODO: rationalize this!
+
+        let { googleChartType } = budgetCell
+
+        switch (googleChartType) {
+            case "ColumnChart":
+                return this._columns_ColumnChart(yearSpecs)
+            
+            case "PieChart":
+                return this._columns_PieChart(yearSpecs)
+
+            default:
+                return null
+        }
+    }
+
+    private _columns_ColumnChart = (yearSpecs:YearSpecs) => {
+
+        let budgetCell = this
+        let categorylabel = 'Component' // placeholder
+
+        let columns:any[] = [
+            // type is required, else throws silent error
+            { type: 'string', label: categorylabel },
+            { type: 'number', label: yearSpecs.rightYear.toString() },
+            {type:'string', role:'style'}
+        ]
+
+        return columns
+
+    }
+
+    private _columns_PieChart = (yearSpecs:YearSpecs) => {
+
+        let budgetCell = this
+        let categorylabel = 'Component' // placeholder
 
         let columns:any[] = [
             // type is required, else throws silent error
@@ -423,14 +463,10 @@ class BudgetCell {
             { type: 'number', label: yearSpecs.rightYear.toString() },
         ]
 
-        if (budgetCell.googleChartType == 'ColumnChart') {
-            columns.push(
-                {type:'string', role:'style'}
-            )
-        }
         return columns
-    }
 
+    }
+    
     // ------------------
     // 5. chart rows:
     // ------------------

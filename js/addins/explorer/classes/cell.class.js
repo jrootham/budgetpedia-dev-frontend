@@ -184,14 +184,33 @@ class BudgetCell {
         };
         this._chartParmsColumns = (yearSpecs) => {
             let budgetCell = this;
+            let { googleChartType } = budgetCell;
+            switch (googleChartType) {
+                case "ColumnChart":
+                    return this._columns_ColumnChart(yearSpecs);
+                case "PieChart":
+                    return this._columns_PieChart(yearSpecs);
+                default:
+                    return null;
+            }
+        };
+        this._columns_ColumnChart = (yearSpecs) => {
+            let budgetCell = this;
+            let categorylabel = 'Component';
+            let columns = [
+                { type: 'string', label: categorylabel },
+                { type: 'number', label: yearSpecs.rightYear.toString() },
+                { type: 'string', role: 'style' }
+            ];
+            return columns;
+        };
+        this._columns_PieChart = (yearSpecs) => {
+            let budgetCell = this;
             let categorylabel = 'Component';
             let columns = [
                 { type: 'string', label: categorylabel },
                 { type: 'number', label: yearSpecs.rightYear.toString() },
             ];
-            if (budgetCell.googleChartType == 'ColumnChart') {
-                columns.push({ type: 'string', role: 'style' });
-            }
             return columns;
         };
         this._chartParmsRows = (nodeData, yearSpecs) => {
