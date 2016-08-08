@@ -54,6 +54,7 @@ import * as Actions from '../../core/actions/actions'
 import * as ExplorerActions from './actions'
 import BudgetBranch from './classes/branch.class'
 import { getExplorerDeclarationData } from './reducers'
+import dialogcontent from './content/helpcontent'
 
 import {
     ChartParmsObj,
@@ -329,6 +330,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 modal = { false}
                 open = { explorer.state.dialogOpen }
                 onRequestClose = { explorer.handleDialogClose }
+                bodyStyle={{padding:'12px'}}
                 autoScrollBodyContent
             >
                 <IconButton
@@ -353,22 +355,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                 </IconButton>
 
-                <p>In the explorer charts, Viewpoints include: </p>
-                <dl>
-                    <dt><strong>Functional</strong></dt>
-                    <dd>combines City of Toronto Agencies and Divisions into groups according to the nature of the services delivered (this is the default ) </dd>
-                    <dt><strong>Structural</strong></dt>
-                    <dd>more traditional: separates Agencies from Divisions; groupings are closer to those found
-                        in City annual Budget Summaries</dd>
-                </dl>
-                <p>Facets are the main datasets available: Expenditures, Revenues, and Staffing Positions (Full Time Equivalents) </p>
-                <p>This prototype uses data from the City Council Approved Operating Budget Summary 2015 from the City of Toronto's open data portal
-                </p>
-
-                <p>
-                    Click or tap on any column in the "By Programs" charts to drill-down. Other charts do not 
-                    currently support drill-down.
-                </p>
+                { dialogcontent }
 
             </Dialog >
 
