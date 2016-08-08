@@ -553,7 +553,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         <Card expanded = {this.state.showdashboard}>
 
             <CardTitle
-                actAsExpander={true}
                 ref = {node => {this.popover_ref = findDOMNode(node)}} >
 
                 <Toggle 

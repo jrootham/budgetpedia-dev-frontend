@@ -208,7 +208,7 @@ let Explorer = class extends Component {
             return segments;
         };
         let branches = drilldownSegments();
-        return React.createElement("div", null, React.createElement(Card_1.Card, {expanded: this.state.showdashboard}, React.createElement(Card_1.CardTitle, {actAsExpander: true, ref: node => { this.popover_ref = react_dom_1.findDOMNode(node); }}, React.createElement(Toggle_1.default, {label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
+        return React.createElement("div", null, React.createElement(Card_1.Card, {expanded: this.state.showdashboard}, React.createElement(Card_1.CardTitle, {ref: node => { this.popover_ref = react_dom_1.findDOMNode(node); }}, React.createElement(Toggle_1.default, {label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
             height: '32px', position: "absolute",
             top: 0,
             right: 0,
