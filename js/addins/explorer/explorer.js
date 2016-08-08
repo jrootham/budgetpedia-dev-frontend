@@ -11,6 +11,7 @@ const FloatingActionButton_1 = require('material-ui/FloatingActionButton');
 const add_1 = require('material-ui/svg-icons/content/add');
 const remove_1 = require('material-ui/svg-icons/content/remove');
 const Popover_1 = require('material-ui/Popover');
+const Toggle_1 = require('material-ui/Toggle');
 const explorerbranch_1 = require('./components/explorerbranch');
 const Actions = require('../../core/actions/actions');
 const ExplorerActions = require('./actions');
@@ -24,7 +25,8 @@ let Explorer = class extends Component {
             dialogOpen: false,
             popover: {
                 open: false
-            }
+            },
+            showdashboard: false
         };
         this.freshstart = false;
         this.popoverClose = () => {
@@ -196,7 +198,7 @@ let Explorer = class extends Component {
                 }, disabled: (branchIndex == 0), onTouchTap: (uid => ev => {
                     ev.stopPropagation();
                     this.branchMoveUp(uid);
-                })(budgetBranch.uid), tooltip: "Move up"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_upward"))), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
+                })(budgetBranch.uid), tooltip: "Move up"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_upward"))), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: this.handleDialogOpen})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
                     this.addBranch(uid);
                 })(budgetBranch.uid)}, React.createElement(add_1.default, null)), (budgetBranches.length > 1) ? React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
                     this.removeBranch(uid);
@@ -205,7 +207,15 @@ let Explorer = class extends Component {
             return segments;
         };
         let branches = drilldownSegments();
-        return React.createElement("div", null, React.createElement(Card_1.Card, {initiallyExpanded: false}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true, ref: node => { this.popover_ref = react_dom_1.findDOMNode(node); }}, "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, "If you're new here, ", React.createElement("a", {href: "javascript:void(0)", onTouchTap: explorer.handleDialogOpen}, "read the help text"), " first.", React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: explorer.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")))), dialogbox, popover, branches);
+        return React.createElement("div", null, React.createElement(Card_1.Card, {expanded: this.state.showdashboard}, React.createElement(Card_1.CardTitle, {actAsExpander: true, ref: node => { this.popover_ref = react_dom_1.findDOMNode(node); }}, React.createElement(Toggle_1.default, {label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
+            height: '32px', float: "right",
+            display: "inline-block",
+            width: 'auto',
+        }, labelStyle: { fontStyle: 'italic' }, onToggle: (e, value) => {
+            this.setState({
+                showdashboard: value
+            });
+        }}), "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement("span", {style: { fontStyle: 'italic' }}, "[content to be determined]"))), dialogbox, popover, branches);
     }
 }
 ;

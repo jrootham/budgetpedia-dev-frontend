@@ -46,10 +46,10 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import ContentRemove from 'material-ui/svg-icons/content/remove'
 import Popover from 'material-ui/Popover'
+import Toggle from 'material-ui/Toggle'
 
 import ExplorerBranch from './components/explorerbranch'
 
-// import { updateBranchChartSelections } from './modules/updatebranchchartselections'
 import * as Actions from '../../core/actions/actions'
 import * as ExplorerActions from './actions'
 import BudgetBranch from './classes/branch.class'
@@ -106,7 +106,8 @@ interface ExplorerState {
     dialogOpen?: boolean,
     popover?: {
         open:boolean
-    }
+    },
+    showdashboard?: boolean
 }
 
 let Explorer = class extends Component< ExplorerProps, ExplorerState > 
@@ -120,7 +121,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         dialogOpen: false,
         popover:{
             open:false
-        }
+        },
+        showdashboard:false
     }
 
     freshstart:boolean = false
@@ -510,6 +512,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         declarationData = { explorer.props.declarationData }
                         globalStateActions = { actionFunctions }
                         displayCallbacks = { displayCallbackFunctions }
+                        handleDialogOpen = {this.handleDialogOpen}
                     />
                     </CardText>
                     <CardActions expandable>
@@ -546,27 +549,33 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         return <div>
 
-        <Card initiallyExpanded = {false}>
+        <Card expanded = {this.state.showdashboard}>
 
             <CardTitle
                 actAsExpander={true}
-                showExpandableButton={true} 
                 ref = {node => {this.popover_ref = findDOMNode(node)}} >
+
+                <Toggle 
+                    label={'Show dashboard:'} 
+                    toggled = {this.state.showdashboard}
+                    style={{
+                        height:'32px', float:"right", 
+                        display:"inline-block",
+                        width:'auto',
+                    }} 
+                    labelStyle = {{fontStyle:'italic'}} 
+                    onToggle = { (e,value) => {
+                        this.setState({
+                            showdashboard:value
+                        })
+                    }}/>
 
                 Budget Explorer
 
             </CardTitle>
             <CardText expandable >
 
-                If you're new here, <a href="javascript:void(0)" 
-                    onTouchTap={explorer.handleDialogOpen}>
-                    read the help text</a> first.
-                <IconButton tooltip="help"tooltipPosition="top-center"
-                    onTouchTap = {
-                        explorer.handleDialogOpen
-                    }>
-                    <FontIcon className="material-icons">help_outline</FontIcon>
-                </IconButton>
+                <span style= {{fontStyle:'italic'}}>[content to be determined]</span>
             </CardText>
         </Card>
         

@@ -3,6 +3,8 @@ const React = require('react');
 var { Component } = React;
 const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
+const FontIcon_1 = require('material-ui/FontIcon');
+const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
 const Toggle_1 = require('material-ui/Toggle');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
@@ -306,7 +308,8 @@ class ExplorerBranch extends Component {
                 showcontrols: value
             });
         }}));
-        return React.createElement("div", null, React.createElement("div", null, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
+        let showhelp = (this.state.showcontrols) ? React.createElement(IconButton_1.default, {tooltip: "help", tooltipPosition: "top-center", onTouchTap: this.props.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")) : null;
+        return React.createElement("div", null, React.createElement("div", null, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, showhelp), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;
         }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));
     }

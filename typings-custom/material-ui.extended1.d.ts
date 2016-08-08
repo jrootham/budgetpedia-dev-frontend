@@ -673,6 +673,7 @@ declare namespace __MaterialUI {
             actAsExpander?: boolean;
             expandable?: boolean;
             initiallyExpanded?: boolean;
+            expanded?:any,
             onExpandChange?: (isExpanded: boolean) => void;
             showExpandableButton?: boolean;
             style?: React.CSSProperties;
