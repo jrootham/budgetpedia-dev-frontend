@@ -121,9 +121,17 @@ class BudgetBranch {
 
     }
 
-    // this resets the branch in response to the change facet user request
-    switchFacet() {
+    saveFacetState = () => {
+        let budgetBranch = this
+        let nodes = budgetBranch.nodes
+        for (let node of nodes) {
+            node.oldFacetState = node.cells.length
+        }
+    }
 
+    // this resets the branch in response to the change facet user request
+    switchFacet = () => {
+        // console.log('running switchFacet')
         let { actions, nodeCallbacks:callbacks } = this
         let switchResults = {
             deeperdata: false,
@@ -153,9 +161,9 @@ class BudgetBranch {
                 // check previous cell configuration against previous node
                 // TODO: THIS IS A PROXY THAT NEEDS TO BE REPLACED
                 // there is only one chart where there should be 2
-                let deeperdata = (!!dataNode.Components && (budgetNode.allCells.length == 1))
+                let deeperdata = (!!dataNode.Components && (budgetNode.oldFacetState == 1))
                 // there are two charts where there should be 1
-                let shallowerdata = (!dataNode.Components && (budgetNode.allCells.length == 2))
+                let shallowerdata = (!dataNode.Components && (budgetNode.oldFacetState == 2))
                 // console.log('changefacet', dataNode, deeperdata, shallowerdata, budgetNode.cells)
                 // now set budgetNode with new data node
                 let parentDataNode = null

@@ -196,12 +196,12 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         // })
     // }
 
-    private _processChangeFacet = () => {
-        let { budgetNode } = this.props
-        // console.log('processing node change facet')
-        // let cellDeclarationParms = budgetNode.getCellDeclarationParms()
-        // this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
-    }
+    // private _processChangeFacet = () => {
+    //     let { budgetNode } = this.props
+    //     // console.log('processing node change facet')
+    //     // let cellDeclarationParms = budgetNode.getCellDeclarationParms()
+    //     // this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
+    // }
 
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes

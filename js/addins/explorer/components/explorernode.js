@@ -37,9 +37,6 @@ class ExporerNode extends Component {
             this._previousControlData = currentControlData;
             return returnvalue;
         };
-        this._processChangeFacet = () => {
-            let { budgetNode } = this.props;
-        };
         this.harmonizecount = null;
         this._harmonizeCells = () => {
             let returnvalue = false;

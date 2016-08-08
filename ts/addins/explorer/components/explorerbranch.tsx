@@ -186,6 +186,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     shouldComponentUpdate(nextProps: ExplorerBranchProps, nextState) {
         let { lastAction, generation } = nextProps.declarationData
 
+        if (nextState.snackbar.open != this.state.snackbar.open) return true
+
         // console.log('branch lastAction, generation',lastAction, generation, this.lastgenerationcounter)
 
         // if (generation <= this.lastgenerationcounter) return true
@@ -294,7 +296,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     private _processChangeFacetStateChange = (budgetBranch:BudgetBranch) => {
-        // console.log('processing change facet state change')
+        // console.log('processing change facet state change, getting viewpointdata')
         budgetBranch.getViewpointData().then(() => {
 
             setTimeout(() => {
@@ -422,7 +424,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             case "Expenses":
             case "Revenues":
             case "Staffing":
-            break            
+            break
+
             default:
 
             return
@@ -430,11 +433,13 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
 
+        budgetBranch.saveFacetState()
+
         this.props.globalStateActions.changeFacet(budgetBranch.uid, facet)
 
-        this.setState({
-            facet,
-        })
+        // this.setState({
+        //     facet,
+        // })
 
     }
 
@@ -449,7 +454,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     // get React components to render
     getPortals = (budgetNodes:BudgetNode[]) => {
-
+        // console.log('running getPortals')
         let { viewpointData } = this.state
 
         if (!viewpointData) return []

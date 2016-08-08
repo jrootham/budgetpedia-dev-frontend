@@ -158,10 +158,8 @@ class ExplorerBranch extends Component {
                     return;
             }
             let { budgetBranch } = this.props;
+            budgetBranch.saveFacetState();
             this.props.globalStateActions.changeFacet(budgetBranch.uid, facet);
-            this.setState({
-                facet: facet,
-            });
         };
         this.switchUnit = unitindex => {
             this.props.globalStateActions.resetLastAction();
@@ -253,6 +251,8 @@ class ExplorerBranch extends Component {
     }
     shouldComponentUpdate(nextProps, nextState) {
         let { lastAction, generation } = nextProps.declarationData;
+        if (nextState.snackbar.open != this.state.snackbar.open)
+            return true;
         if (!lastAction.explorer)
             return false;
         let { branchuid } = lastAction;

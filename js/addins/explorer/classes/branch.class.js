@@ -42,6 +42,76 @@ class BudgetBranch {
                 branchNodes: branchNodes,
             });
         };
+        this.saveFacetState = () => {
+            let budgetBranch = this;
+            let nodes = budgetBranch.nodes;
+            for (let node of nodes) {
+                node.oldFacetState = node.cells.length;
+            }
+        };
+        this.switchFacet = () => {
+            let { actions, nodeCallbacks: callbacks } = this;
+            let switchResults = {
+                deeperdata: false,
+                shallowerdata: false,
+            };
+            let branchSettings = this.settings;
+            let viewpointData = this.state.viewpointData;
+            let branchNodes = this.nodes;
+            let budgetNode = null;
+            let parentBudgetNode;
+            let nodeIndex;
+            let isError = false;
+            let chartParmsObj = null;
+            let branchuid = this.uid;
+            for (nodeIndex in branchNodes) {
+                parentBudgetNode = budgetNode;
+                budgetNode = branchNodes[nodeIndex];
+                let dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
+                if (dataNode) {
+                    let deeperdata = (!!dataNode.Components && (budgetNode.oldFacetState == 1));
+                    let shallowerdata = (!dataNode.Components && (budgetNode.oldFacetState == 2));
+                    let parentDataNode = null;
+                    if (nodeIndex > 0) {
+                        parentDataNode = branchNodes[nodeIndex - 1].nodeData;
+                    }
+                    if (deeperdata || shallowerdata) {
+                        switchResults.deeperdata = deeperdata;
+                        switchResults.shallowerdata = shallowerdata;
+                        isError = true;
+                        let prevBudgetNode = branchNodes[nodeIndex - 1];
+                        let removed = branchNodes.splice(nodeIndex);
+                        let removedids = removed.map((item) => {
+                            return { nodeuid: item.uid, cellList: item.cellList };
+                        });
+                        actions.removeNodeDeclarations(removedids);
+                        setTimeout(() => {
+                            let prevBudgetCell = prevBudgetNode.cells[0];
+                            let childprops = {
+                                selectionrow: prevBudgetCell.chartSelection[0].row,
+                                nodeIndex: prevBudgetNode.nodeIndex,
+                                cellIndex: 0,
+                            };
+                            let budgetBranch = this;
+                            budgetBranch.createChildNode(childprops);
+                        });
+                        budgetNode = null;
+                    }
+                    else {
+                        budgetNode.update(branchSettings.facet, dataNode, parentDataNode);
+                        let newCells = budgetNode.resetCells();
+                        budgetNode.newCells = newCells;
+                    }
+                }
+                else {
+                    console.error('no data node');
+                }
+            }
+            this.setState({
+                branchNodes: branchNodes,
+            });
+            return switchResults;
+        };
         this.getViewpointData = () => {
             let branchSettings = this.settings;
             let { viewpoint: viewpointName, facet: facetName, inflationAdjusted, } = branchSettings;
@@ -132,69 +202,6 @@ class BudgetBranch {
     }
     get props() {
         return this.getProps();
-    }
-    switchFacet() {
-        let { actions, nodeCallbacks: callbacks } = this;
-        let switchResults = {
-            deeperdata: false,
-            shallowerdata: false,
-        };
-        let branchSettings = this.settings;
-        let viewpointData = this.state.viewpointData;
-        let branchNodes = this.nodes;
-        let budgetNode = null;
-        let parentBudgetNode;
-        let nodeIndex;
-        let isError = false;
-        let chartParmsObj = null;
-        let branchuid = this.uid;
-        for (nodeIndex in branchNodes) {
-            parentBudgetNode = budgetNode;
-            budgetNode = branchNodes[nodeIndex];
-            let dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
-            if (dataNode) {
-                let deeperdata = (!!dataNode.Components && (budgetNode.allCells.length == 1));
-                let shallowerdata = (!dataNode.Components && (budgetNode.allCells.length == 2));
-                let parentDataNode = null;
-                if (nodeIndex > 0) {
-                    parentDataNode = branchNodes[nodeIndex - 1].nodeData;
-                }
-                if (deeperdata || shallowerdata) {
-                    switchResults.deeperdata = deeperdata;
-                    switchResults.shallowerdata = shallowerdata;
-                    isError = true;
-                    let prevBudgetNode = branchNodes[nodeIndex - 1];
-                    let removed = branchNodes.splice(nodeIndex);
-                    let removedids = removed.map((item) => {
-                        return { nodeuid: item.uid, cellList: item.cellList };
-                    });
-                    actions.removeNodeDeclarations(removedids);
-                    setTimeout(() => {
-                        let prevBudgetCell = prevBudgetNode.cells[0];
-                        let childprops = {
-                            selectionrow: prevBudgetCell.chartSelection[0].row,
-                            nodeIndex: prevBudgetNode.nodeIndex,
-                            cellIndex: 0,
-                        };
-                        let budgetBranch = this;
-                        budgetBranch.createChildNode(childprops);
-                    });
-                    budgetNode = null;
-                }
-                else {
-                    budgetNode.update(branchSettings.facet, dataNode, parentDataNode);
-                    let newCells = budgetNode.resetCells();
-                    budgetNode.newCells = newCells;
-                }
-            }
-            else {
-                console.error('no data node');
-            }
-        }
-        this.setState({
-            branchNodes: branchNodes,
-        });
-        return switchResults;
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
