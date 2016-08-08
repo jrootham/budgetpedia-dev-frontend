@@ -26,6 +26,7 @@ let Explorer = class extends Component {
                 open: false
             }
         };
+        this.freshstart = false;
         this.popoverClose = () => {
             this.setState({
                 popover: {
@@ -109,6 +110,7 @@ let Explorer = class extends Component {
     componentWillMount() {
         let { branchList, branchesById } = this.props.declarationData;
         if (branchList.length == 0) {
+            this.freshstart = true;
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
             this.props.addBranchDeclaration(null, defaultSettings);
         }
@@ -135,11 +137,13 @@ let Explorer = class extends Component {
         });
     }
     componentDidMount() {
-        this.setState({
-            popover: {
-                open: true
-            }
-        });
+        if (this.freshstart) {
+            this.setState({
+                popover: {
+                    open: true
+                }
+            });
+        }
     }
     componentWillUnmount() {
         this.props.resetLastAction();

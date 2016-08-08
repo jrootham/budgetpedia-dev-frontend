@@ -6,6 +6,8 @@
         such as when staff facet is selected and max depth is reached
     BUG: navigating to dialog help box loses bar selection
     TODO: 
+    - use general state to track fact that popover has been seen in session in explorer
+      to avoid having it appear whenever user returns to explorer
     - add popover from componentDidMount to explain that the charts are drill-down
       (maybe for first branch)
     - scroll down to new branch after hitting + sign
@@ -121,6 +123,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         }
     }
 
+    freshstart:boolean = false
+
     popover_ref:any
 
     popoverClose = () => {
@@ -147,6 +151,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         // }
         let { branchList, branchesById } = this.props.declarationData
         if (branchList.length == 0) { // initialize explorer with first branch
+            this.freshstart = true
             let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
             this.props.addBranchDeclaration(null,defaultSettings)
         } else {
@@ -243,11 +248,13 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
 
     componentDidMount() {
-        this.setState({
-            popover:{
-                open:true
-            }
-        })
+        if (this.freshstart) {
+            this.setState({
+                popover:{
+                    open:true
+                }
+            })
+        }
     }
 
     componentWillUnmount() {
