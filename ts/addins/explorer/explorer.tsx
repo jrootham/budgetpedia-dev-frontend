@@ -263,7 +263,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         this.props.resetLastAction()
     }
 
-    handleDialogOpen = () => {
+    handleDialogOpen = (e) => {
+        e.stopPropagation()
         this.setState({
             dialogOpen: true
         })
@@ -324,7 +325,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         
         let dialogbox =  
             <Dialog
-                title = "Budget Explorer Help"
+                title = "Budget Explorer Options"
                 modal = { false}
                 open = { explorer.state.dialogOpen }
                 onRequestClose = { explorer.handleDialogClose }
@@ -565,6 +566,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     }} 
                     labelStyle = {{fontStyle:'italic'}} 
                     onToggle = { (e,value) => {
+                        e.stopPropagation()
                         this.setState({
                             showdashboard:value
                         })

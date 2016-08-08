@@ -75,7 +75,8 @@ let Explorer = class extends Component {
             }
             return sortedBranches;
         };
-        this.handleDialogOpen = () => {
+        this.handleDialogOpen = (e) => {
+            e.stopPropagation();
             this.setState({
                 dialogOpen: true
             });
@@ -152,7 +153,7 @@ let Explorer = class extends Component {
     }
     render() {
         let explorer = this;
-        let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Help", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
+        let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Options", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, autoScrollBodyContent: true}, React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,
             padding: 0,
@@ -212,6 +213,7 @@ let Explorer = class extends Component {
             display: "inline-block",
             width: 'auto',
         }, labelStyle: { fontStyle: 'italic' }, onToggle: (e, value) => {
+            e.stopPropagation();
             this.setState({
                 showdashboard: value
             });

@@ -630,12 +630,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             }}/>
     </div>
 
-    let showhelp = (this.state.showcontrols)?<IconButton tooltip="help"tooltipPosition="top-center"
-                    onTouchTap = {
-                        this.props.handleDialogOpen
-                    }>
-                    <FontIcon className="material-icons">help_outline</FontIcon>
-                </IconButton>:null
+    let showhelp = (this.state.showcontrols)
+        ?<IconButton tooltip="Help" tooltipPosition="top-center"
+            onTouchTap = { this.props.handleDialogOpen }>
+            <FontIcon className="material-icons">help_outline</FontIcon>
+        </IconButton>
+        :null
 
 
     return <div >
