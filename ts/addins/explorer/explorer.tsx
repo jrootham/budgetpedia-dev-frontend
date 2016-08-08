@@ -332,6 +332,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 onRequestClose = { explorer.handleDialogClose }
                 bodyStyle={{padding:'12px'}}
                 autoScrollBodyContent
+                contentStyle = {{width:'95%',maxWidth:'600px'}}
             >
                 <IconButton
                     style={{
