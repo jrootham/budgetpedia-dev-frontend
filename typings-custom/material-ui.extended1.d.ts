@@ -2110,7 +2110,7 @@ declare module 'material-ui/lib/paper' {
     export default Paper;
 }
 
-declare module 'material-ui/lib/popover/popover' {
+declare module 'material-ui/Popover' {
     export import Popover = __MaterialUI.Popover.Popover;
     export default Popover;
 }

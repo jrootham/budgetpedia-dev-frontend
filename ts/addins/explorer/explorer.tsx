@@ -31,6 +31,7 @@
 
 'use strict'
 import * as React from 'react'
+import { findDOMNode } from 'react-dom'
 var { Component } = React
 // doesn't require .d.ts...! (reference available in index.tsx)
 import { connect } from 'react-redux'
@@ -42,6 +43,7 @@ import Dialog from 'material-ui/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import ContentRemove from 'material-ui/svg-icons/content/remove'
+import Popover from 'material-ui/Popover'
 
 import ExplorerBranch from './components/explorerbranch'
 
@@ -100,6 +102,9 @@ interface ExplorerProps extends MappedActions {
 interface ExplorerState {
     budgetBranches?:BudgetBranch[],
     dialogOpen?: boolean,
+    popover?: {
+        open:boolean
+    }
 }
 
 let Explorer = class extends Component< ExplorerProps, ExplorerState > 
@@ -111,6 +116,19 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     state = {
         budgetBranches:[],
         dialogOpen: false,
+        popover:{
+            open:false
+        }
+    }
+
+    popover_ref:any
+
+    popoverClose = () => {
+        this.setState({
+            popover: {
+                open:false
+            }
+        })
     }
 
     // see if any initialization is required
@@ -221,6 +239,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         this.setState({
             budgetBranches,
+        })
+    }
+
+    componentDidMount() {
+        this.setState({
+            popover:{
+                open:true
+            }
         })
     }
 
@@ -335,6 +361,41 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 </p>
 
             </Dialog >
+
+        let popover = <Popover
+            style={{borderRadius:"15px"}}
+            open = {this.state.popover.open}
+            onRequestClose = {this.popoverClose}
+            anchorEl = {this.popover_ref}
+        >
+            <Card 
+                style={{border:"4px solid orange", borderRadius:"15px"}}
+            >
+                <CardText>
+                <div>
+                    <IconButton
+                        style={{
+                            padding: 0,
+                            float:"right",
+                            height: "36px",
+                            width: "36px",
+                        }}
+                        onTouchTap={ explorer.popoverClose } >
+
+                        <FontIcon
+                            className="material-icons"
+                            style = {{ cursor: "pointer" }} >
+
+                            close
+
+                        </FontIcon>
+
+                    </IconButton>
+                    </div>
+                    <p>Click or tap on any chart column to drill down.</p>
+                </CardText>
+            </Card>
+        </Popover>
 
         // -----------[ DRILLDOWN SEGMENT]-------------
 
@@ -482,7 +543,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             <CardTitle
                 actAsExpander={true}
-                showExpandableButton={true} >
+                showExpandableButton={true} 
+                ref = {node => {this.popover_ref = findDOMNode(node)}} >
 
                 Budget Explorer
 
@@ -502,6 +564,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         </Card>
         
             { dialogbox }
+
+            { popover }
 
             { branches }
 
