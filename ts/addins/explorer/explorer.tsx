@@ -560,8 +560,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     label={'Show dashboard:'} 
                     toggled = {this.state.showdashboard}
                     style={{
-                        height:'32px', float:"right", 
-                        display:"inline-block",
+                        height:'32px', position:"absolute",
+                        top:0,
+                        right:0, 
+                        margin:'16px 16px 0 0',
+                        display:"block",
                         width:'auto',
                     }} 
                     labelStyle = {{fontStyle:'italic'}} 
