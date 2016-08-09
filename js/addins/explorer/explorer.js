@@ -78,6 +78,7 @@ let Explorer = class extends Component {
         };
         this.handleDialogOpen = (e) => {
             e.stopPropagation();
+            e.preventDefault();
             this.setState({
                 dialogOpen: true
             });

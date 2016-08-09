@@ -266,6 +266,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     handleDialogOpen = (e) => {
         e.stopPropagation()
+        e.preventDefault()
         this.setState({
             dialogOpen: true
         })
