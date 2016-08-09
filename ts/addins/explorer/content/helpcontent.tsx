@@ -24,7 +24,7 @@ let content =
     <ul>
     <li><strong>Viewpoint:</strong> broad approaches to budget (or actual) data, based on similar 
         classification schemes (taxonomies), and data sources.</li>
-    <li><strong>Version:</strong> alternate detailed datasets available for the selected viewpoint</li>
+    <li><strong>Version:</strong> alternate detailed datasets available for the selected Viewpoint</li>
     <li><strong>Aspect:</strong> particular aspects of the budget, such as Revenue, Expenses or Staffing</li>
     <li><strong>By Unit:</strong> the beginnings of diagnostic analytics, using simple math to view the 
         data compared with relevant related metrics, such as per person or per household</li>
@@ -62,7 +62,7 @@ let content =
     <p>
         <strong><em>Version</em></strong> choices depend on the Viewpoint that is chosen.
     </p>
-    <p><em>Budget viewpoint  Versions</em> (for both functional and structural viewpoints) include:</p>
+    <p><em>Budget viewpoint  Versions</em> (for both functional and structural Viewpoints) include:</p>
     <ul>
     <li><strong>Summary</strong></li>
     <li><strong>Detail (FPARS)</strong></li>
@@ -77,7 +77,7 @@ let content =
     <p>
         <strong><em>Aspect</em></strong> choices depend on the Viewpoint that is chosen.
     </p>
-    <p><em>Budget viewpoint  Aspects</em> (for both functional and structural viewpoints) include:</p>
+    <p><em>Budget Viewpoint  Aspects</em> (for both functional and structural Viewpoints) include:</p>
     <ul>
     <li>Revenue</li>
     <li>Expenses</li>
@@ -89,7 +89,7 @@ let content =
         makes the figures from all sources comparable.
     </p>
 
-    <p><em>Financial statement viewpoint Aspects</em> include:</p>
+    <p><em>Financial statement Viewpoint Aspects</em> include:</p>
     <ul>
     <li>Revenue</li>
     <li>Expenses</li>
@@ -97,12 +97,57 @@ let content =
     <p>The classification schemes for these are different for each, and therefore they cannot be 
         combined.
     </p>
-    <p><em>Expenses by Object viewpoint Aspects</em> include:</p>
+    <p><em>Expenses by Object Viewpoint Aspects</em> include:</p>
     <ul>
     <li>Expenses</li>
     </ul>
     <p>These come from notes to the audited financial statements.
     </p>
+
+    <p><em>Variance report Version of budget Viewpoint Aspects</em> include:</p>
+    <ul>
+    <li>Revenue
+        <ul>
+        <li>Budget Revenue</li>
+        <li>Actual Revenue</li>
+        <li>Both Revenues</li>
+        <li>Revenue Variance</li>
+        </ul>
+    </li>
+    <li>Expenses
+        <ul>
+        <li>Budget Expenses</li>
+        <li>Actual Expenses</li>
+        <li>Both Expenses</li>
+        <li>Expenses Variance</li>
+        </ul>
+    </li>
+    <li>Both
+        <ul>
+        <li>Budget</li>
+        <li>Actual</li>
+        <li>Both Budget & Actual</li>
+        <li>Variances</li>
+        </ul>
+    </li>
+    <li>Net
+        <ul>
+        <li>Budget</li>
+        <li>Actual</li>
+        <li>Both Budget & Actual</li>
+        <li>Variances</li>
+        </ul>
+    </li>
+    <li>Staffing
+        <ul>
+        <li>Budget Staffing</li>
+        <li>Actual Staffing</li>
+        <li>Both Staffing</li>
+        <li>Staffing Variance</li>
+        </ul>
+    </li>
+    </ul>
+
     <hr />
     <p>
         <strong><em>By Unit</em></strong> choices are common for all other choices, and include:
@@ -134,6 +179,46 @@ let content =
     </CardTitle>
     <CardText expandable style={{paddingTop:"0px"}}>
     context options content
+    </CardText>
+</Card>
+<Card>
+    <CardTitle
+        actAsExpander={true}
+        showExpandableButton={true} >
+        Cloning Features
+    </CardTitle>
+    <CardText expandable style={{paddingTop:"0px"}}>
+    cloning features content
+    </CardText>
+</Card>
+<Card>
+    <CardTitle
+        actAsExpander={true}
+        showExpandableButton={true} >
+        Actionable Features
+    </CardTitle>
+    <CardText expandable style={{paddingTop:"0px"}}>
+    actionable features content
+    </CardText>
+</Card>
+<Card>
+    <CardTitle
+        actAsExpander={true}
+        showExpandableButton={true} >
+        Assembling and printing reports
+    </CardTitle>
+    <CardText expandable style={{paddingTop:"0px"}}>
+    assembling and printing reports content
+    </CardText>
+</Card>
+<Card>
+    <CardTitle
+        actAsExpander={true}
+        showExpandableButton={true} >
+        Saving and sharing workspaces
+    </CardTitle>
+    <CardText expandable style={{paddingTop:"0px"}}>
+    saving and sharing workspaces content
     </CardText>
 </Card>
 </div>
