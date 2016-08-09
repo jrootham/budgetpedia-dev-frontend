@@ -126,7 +126,7 @@ let content =
         <li>Expenses Variance</li>
         </ul>
     </li>
-    <li>Both
+    <li>Both (Revenue & Expenses)
         <ul>
         <li>Budget</li>
         <li>Actual</li>
@@ -134,7 +134,7 @@ let content =
         <li>Variances</li>
         </ul>
     </li>
-    <li>Net
+    <li>Net (Revenue & Expenses)
         <ul>
         <li>Budget</li>
         <li>Actual</li>
