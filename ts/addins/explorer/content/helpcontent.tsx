@@ -71,7 +71,7 @@ let content =
     <p>
         <strong><em>Version</em></strong> choices depend on the Viewpoint that is chosen.
     </p>
-    <p><em>Budget viewpoint  Versions</em> (for both functional and structural Viewpoints) include:</p>
+    <p><em>For Viewpoint = Budget, Versions</em> (for both functional and structural Viewpoints) include:</p>
     <blockquote>
         <ul>
         <li>Summary</li>
@@ -79,7 +79,7 @@ let content =
         <li>Variance Reports</li>
         </ul>
     </blockquote>
-    <p><em>Financial statement viewpoint Versions</em> include:</p>
+    <p><em>For Viewpoint = Financial statement, Versions</em> include:</p>
     <blockquote>
         <ul>
         <li>Audited Financial Statements</li>
@@ -90,9 +90,9 @@ let content =
     <hr />
 
     <p>
-        <strong><em>Aspect</em></strong> choices depend on the Viewpoint that is chosen.
+        <strong><em>Aspect</em></strong> choices depend on the Viewpoint and Version that is chosen.
     </p>
-        <p><em>Budget Viewpoint  Aspects</em> (for both functional and structural Viewpoints) include:</p>
+        <p><em>For Viewpoint = Budget, Version = Summary or Detailed, Aspects</em> (for both functional and structural Viewpoints) include:</p>
     <blockquote>
         <ul>
         <li>Revenue</li>
@@ -106,7 +106,7 @@ let content =
     </p>
     </blockquote>
 
-        <p><em>Financial statement Viewpoint Aspects</em> include:</p>
+        <p><em>For Viewpoint = Financial statement, any Version, Aspects</em> include:</p>
     <blockquote>
         <ul>
         <li>Revenue</li>
@@ -117,7 +117,7 @@ let content =
         combined.
     </p>
     </blockquote>
-        <p><em>Expenses by Object Viewpoint Aspects</em> include:</p>
+        <p><em>For Viewpoint = Expenses by Object, Version = Statements, Aspects</em> include:</p>
     <blockquote>
         <ul>
         <li>Expenses</li>
@@ -126,7 +126,7 @@ let content =
     </p>
     </blockquote>
 
-    <p><em>Budget Viewpoint, Variance report Version, Aspects</em> include:</p>
+    <p><em>For Viewpoint = Budget, Version = Variance report, Aspects</em> include:</p>
     <blockquote>
         <ul>
         <li>Revenue
