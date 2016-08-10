@@ -201,7 +201,13 @@ class ExplorerCell extends Component {
                 marginRight: "3px",
                 position: "relative",
                 display: "inline-block"
-            }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "delta"), React.createElement(IconButton_1.default, {disabled: false, tooltip: "Year-over-year change", tooltipPosition: "top-center", style: {
+            }}, React.createElement("div", {style: {
+                position: "absolute",
+                top: "0",
+                left: "0",
+                fontSize: "8px",
+                zIndex: "10"
+            }}, "year-over-", React.createElement("br", null), " year"), React.createElement(IconButton_1.default, {disabled: false, tooltip: "Year-over-year change", tooltipPosition: "top-center", style: {
                 backgroundColor: (this.state.deltastate)
                     ? "rgba(144,238,144,0.5)"
                     : "rgba(255,255,255,0.5)",

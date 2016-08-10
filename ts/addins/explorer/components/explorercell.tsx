@@ -382,7 +382,15 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     display:"inline-block"
                 }
             }>
-                <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>delta</div>
+                <div style={
+                    {
+                        position:"absolute",
+                        top:"0", 
+                        left:"0",
+                        fontSize:"8px",
+                        zIndex:"10"
+                    }
+                }>year-over-<br /> year</div>
                 <IconButton 
                     disabled = {false}
                     tooltip="Year-over-year change"

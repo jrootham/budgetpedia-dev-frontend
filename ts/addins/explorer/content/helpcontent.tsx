@@ -164,11 +164,11 @@ let content =
             <ul>
             <li>Budget Staffing</li>
             <li>Actual Staffing</li>
-            <li>Both Budet & Actual Staffing, paired</li>
+            <li>Both Budget & Actual Staffing, paired</li>
             </ul>
         </li>
         </ul>
-        <p>When items are paired, net and variance amounts can be selected on each chart.</p>
+        <p>When items are paired, net (revenue - expenses) and variance (actual - budget) amounts can be selected for each chart.</p>
     </blockquote>
 
     <hr />
