@@ -25,7 +25,7 @@ let content =
         <li><strong>Viewpoint:</strong> broad approaches to budget (or actual) data, based on similar 
             classification schemes (taxonomies), and data sources.</li>
         <li><strong>Version:</strong> alternate detailed datasets available for the selected Viewpoint</li>
-        <li><strong>Aspect:</strong> particular aspects of the budget, such as Revenue, Expenses or Staffing</li>
+        <li><strong>Aspect:</strong> particular aspects of the dataset, such as Revenue, Expenses or Staffing</li>
         <li><strong>By Unit:</strong> the beginnings of diagnostic analytics, using simple math to view the 
             data compared with relevant related metrics, such as per person or per household</li>
         <li><strong>Inflation adjusted:</strong> the datasets are updated annually to reflect the Bank of 
@@ -35,7 +35,7 @@ let content =
     </ul>
     <p>Choices for the selections are interdependent. Toronto budgets have similar classifications for 
         Revenue and Expenses for example, and therefore these can be viewed together (as offered by the 
-        <em>both</em> and <em>net</em> Aspects). Financial statements 
+         <em>paired</em> and <em>net</em> Aspects). Financial statements 
         on the other hand do not have similar classifications for Revenue and Expenses.
     </p>
 
@@ -142,7 +142,7 @@ let content =
             <ul>
             <li>Budget Revenue</li>
             <li>Actual Revenue</li>
-            <li>Both Revenues, paired</li>
+            <li>Both Budget & Actual Revenues, paired</li>
             <li>Revenue Variance</li>
             </ul>
         </li>
@@ -150,23 +150,23 @@ let content =
             <ul>
             <li>Budget Expenses</li>
             <li>Actual Expenses</li>
-            <li>Both Expenses, paired</li>
+            <li>Both Budget & Actual Expenses, paired</li>
             <li>Expenses Variance</li>
             </ul>
         </li>
         <li>Both (Revenue & Expenses)
             <ul>
-            <li>Budget, paired</li>
-            <li>Actual, paired</li>
-            <li>Both Budget, paired & Actual, paired</li>
+            <li>Budget Revenue & Expenses, paired</li>
+            <li>Actual Revenue & Expenses, paired</li>
+            <li>Both Budget Revenue & Expenses, paired, and Actual Revenue & Expenses, paired</li>
             <li>Variances, paired</li>
             </ul>
         </li>
         <li>Net (Revenue & Expenses)
             <ul>
-            <li>Budget</li>
-            <li>Actual</li>
-            <li>Both Budget & Actual, paired</li>
+            <li>Budget net</li>
+            <li>Actual net</li>
+            <li>Both Budget net & Actual net, paired</li>
             <li>Variances</li>
             </ul>
         </li>
@@ -174,7 +174,7 @@ let content =
             <ul>
             <li>Budget Staffing</li>
             <li>Actual Staffing</li>
-            <li>Both Staffing, paired</li>
+            <li>Both Budet & Actual Staffing, paired</li>
             <li>Staffing Variance</li>
             </ul>
         </li>
