@@ -226,7 +226,7 @@ class ExplorerCell extends Component {
                 marginRight: "3px",
                 position: "relative",
                 display: "inline-block"
-            }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "net"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Net", tooltipPosition: "top-center", style: {
+            }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "net"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Net (revenue - expenses)", tooltipPosition: "top-center", style: {
                 backgroundColor: (this.state.netstate)
                     ? "rgba(144,238,144,0.5)"
                     : "rgba(255,255,255,0.5)",
@@ -245,7 +245,7 @@ class ExplorerCell extends Component {
                 marginRight: "3px",
                 position: "relative",
                 display: "inline-block"
-            }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "variance"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Variance", tooltipPosition: "top-center", style: {
+            }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "variance"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Variance (budget - actual)", tooltipPosition: "top-center", style: {
                 backgroundColor: (this.state.variancestate)
                     ? "rgba(144,238,144,0.5)"
                     : "rgba(255,255,255,0.5)",

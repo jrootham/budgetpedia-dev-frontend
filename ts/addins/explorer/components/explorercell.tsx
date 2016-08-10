@@ -427,7 +427,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>net</div>
                 <IconButton 
                     disabled
-                    tooltip="Net"
+                    tooltip="Net (revenue - expenses)"
                     tooltipPosition="top-center"
                     style={
                         {
@@ -461,7 +461,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>variance</div>
                 <IconButton 
                     disabled
-                    tooltip="Variance"
+                    tooltip="Variance (actual - budget)"
                     tooltipPosition="top-center"
                     style={
                         {
