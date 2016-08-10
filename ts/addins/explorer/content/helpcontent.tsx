@@ -3,7 +3,8 @@
 // explorerbranch.tsx
 
 import * as React from 'react'
-import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card'
+import {Card, CardTitle, CardText} from 'material-ui/Card'
+import SvgIcon from 'material-ui/SvgIcon'
 
 let content = 
 <div>
@@ -143,7 +144,6 @@ let content =
             <li>Budget Revenue</li>
             <li>Actual Revenue</li>
             <li>Both Budget & Actual Revenues, paired</li>
-            <li>Revenue Variance</li>
             </ul>
         </li>
         <li>Expenses
@@ -151,7 +151,6 @@ let content =
             <li>Budget Expenses</li>
             <li>Actual Expenses</li>
             <li>Both Budget & Actual Expenses, paired</li>
-            <li>Expenses Variance</li>
             </ul>
         </li>
         <li>Both (Revenue & Expenses)
@@ -159,15 +158,6 @@ let content =
             <li>Budget Revenue & Expenses, paired</li>
             <li>Actual Revenue & Expenses, paired</li>
             <li>Both Budget Revenue & Expenses, paired, and Actual Revenue & Expenses, paired</li>
-            <li>Variances, paired</li>
-            </ul>
-        </li>
-        <li>Net (Revenue & Expenses)
-            <ul>
-            <li>Budget net</li>
-            <li>Actual net</li>
-            <li>Both Budget net & Actual net, paired</li>
-            <li>Variances</li>
             </ul>
         </li>
         <li>Staffing
@@ -175,10 +165,10 @@ let content =
             <li>Budget Staffing</li>
             <li>Actual Staffing</li>
             <li>Both Budet & Actual Staffing, paired</li>
-            <li>Staffing Variance</li>
             </ul>
         </li>
         </ul>
+        <p>When items are paired, net and variance amounts can be selected on each chart.</p>
     </blockquote>
 
     <hr />
@@ -212,7 +202,52 @@ let content =
         Chart Options
     </CardTitle>
     <CardText expandable style={{paddingTop:"0px"}}>
-    chart options content
+    <p> Chart options vary according to the time options selected. The time options available are:</p>
+    <ul>
+    <li><SvgIcon style={
+        {
+            height:"18px",
+            width:"18px", 
+            padding:"0 3px",
+            border:"1px solid silver", 
+            borderRadius:"5px",
+            verticalAlign:"middle"
+        }
+    } viewBox = "0 0 36 36" >
+            <rect x="13" y="13" width="10" height="10" />
+        </SvgIcon> One year (default). Select a specific year to investigate.
+    </li>
+    <li><SvgIcon style={
+        {
+            height:"18px",
+            width:"18px", 
+            padding:"0 3px",
+            border:"1px solid silver", 
+            borderRadius:"5px",
+            verticalAlign:"middle"
+        }
+    }  viewBox = "0 0 36 36" >
+          <rect x="4" y="13" width="10" height="10" />
+          <rect x="22" y="13" width="10" height="10" />
+        </SvgIcon> Two years. Allows data for two years to be presented side by side for comparison.
+    </li>
+    <li><SvgIcon style={
+        {
+            height:"18px",
+            width:"18px", 
+            padding:"0 3px",
+            border:"1px solid silver", 
+            borderRadius:"5px",
+            verticalAlign:"middle"
+        }
+    }  viewBox = "0 0 36 36" >
+            <ellipse cx="6" cy="18" rx="4" ry="4"/>
+            <ellipse cx="18" cy="18" rx="4" ry="4"/>
+            <ellipse cx="30" cy="18" rx="4" ry="4"/>
+        </SvgIcon> All years (all available years). Shows all available years to investigate trends.
+    </li>
+    </ul>
+    <p>Specific years can be selected in the selection boxes under the charts.</p>
     </CardText>
 </Card>
 <Card>

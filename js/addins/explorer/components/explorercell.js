@@ -5,6 +5,8 @@ var { Chart } = require('../../../../forked/react-google-charts/Chart.js');
 const IconButton_1 = require('material-ui/IconButton');
 const FontIcon_1 = require('material-ui/FontIcon');
 const SvgIcon_1 = require('material-ui/SvgIcon');
+const DropDownMenu_1 = require('material-ui/DropDownMenu');
+const MenuItem_1 = require('material-ui/MenuItem');
 const constants_1 = require('../constants');
 class ExplorerCell extends Component {
     constructor(...args) {
@@ -12,6 +14,8 @@ class ExplorerCell extends Component {
         this.state = {
             timescope: constants_1.TimeScope[constants_1.TimeScope.OneYear],
             deltastate: false,
+            netstate: false,
+            variancestate: false
         };
         this.onChangeChartCode = (explorerChartCode) => {
             let { budgetCell } = this.props;
@@ -26,6 +30,16 @@ class ExplorerCell extends Component {
         this.onToggleDelta = () => {
             this.setState({
                 deltastate: !this.state.deltastate
+            });
+        };
+        this.onToggleNet = () => {
+            this.setState({
+                deltastate: !this.state.netstate
+            });
+        };
+        this.onToggleVariance = () => {
+            this.setState({
+                deltastate: !this.state.variancestate
             });
         };
     }
@@ -199,13 +213,50 @@ class ExplorerCell extends Component {
             }, onTouchTap: e => {
                 this.onToggleDelta();
             }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "change_history"))) : null;
+        let nettoggle = (this.state.timescope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ?
+            React.createElement("div", {style: {
+                paddingTop: "10px",
+                borderRight: "1px solid silver",
+                marginRight: "3px",
+                position: "relative",
+                display: "inline-block"
+            }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "net"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Net", tooltipPosition: "top-center", style: {
+                backgroundColor: (this.state.netstate)
+                    ? "rgba(144,238,144,0.5)"
+                    : "rgba(255,255,255,0.5)",
+                borderRadius: "15%",
+                padding: "0",
+                height: "36px",
+                width: "36px",
+                marginRight: "3px",
+            }, onTouchTap: e => {
+                this.onToggleNet();
+            }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "exposure"))) : null;
+        let variancetoggle = (this.state.timescope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ?
+            React.createElement("div", {style: {
+                paddingTop: "10px",
+                borderRight: "1px solid silver",
+                marginRight: "3px",
+                position: "relative",
+                display: "inline-block"
+            }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "variance"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Variance", tooltipPosition: "top-center", style: {
+                backgroundColor: (this.state.variancestate)
+                    ? "rgba(144,238,144,0.5)"
+                    : "rgba(255,255,255,0.5)",
+                borderRadius: "15%",
+                padding: "0",
+                height: "36px",
+                width: "36px",
+                marginRight: "3px",
+            }, onTouchTap: e => {
+                this.onToggleVariance();
+            }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "exposure"))) : null;
         let datatable = React.createElement("div", {style: {
             paddingTop: "10px",
             borderLeft: "1px solid silver",
             marginRight: "3px",
             position: "relative",
             display: "inline-block",
-            float: "right",
         }}, React.createElement("div", {style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "data"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Data Table", tooltipPosition: "top-center", style: {
             backgroundColor: (explorerChartCode == "DataTable")
                 ? "rgba(144,238,144,0.5)"
@@ -224,7 +275,6 @@ class ExplorerCell extends Component {
             marginRight: "3px",
             position: "relative",
             display: "inline-block",
-            float: "right",
         }}, React.createElement("div", {style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "harmonize"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Harmonize settings for row", tooltipPosition: "top-center", style: {
             borderRadius: "50%",
             padding: "0",
@@ -235,7 +285,7 @@ class ExplorerCell extends Component {
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "swap_horiz")));
         let socialoptions = React.createElement("div", {style: {
             paddingTop: "10px",
-            float: "right",
+            display: "inline-block",
             position: "relative",
         }}, React.createElement("div", {style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "social"), React.createElement(IconButton_1.default, {tooltip: "Shared stories", tooltipPosition: "top-center", style: {
             padding: "0",
@@ -250,7 +300,7 @@ class ExplorerCell extends Component {
             marginLeft: "3px",
         }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "announcement")));
         let informationoptions = React.createElement("div", {style: {
-            float: "right",
+            display: "inline-block",
             paddingTop: "10px",
             borderLeft: "1px solid silver",
             borderRight: "1px solid silver",
@@ -277,8 +327,19 @@ class ExplorerCell extends Component {
             fontSize: "9px",
             fontStyle: "italic",
         }}, expandable ? 'drill down' : 'no drill down');
-        return React.createElement("div", null, (this.props.showControls) ? React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions, deltatoggle, harmonizeoptions) : null, chart, drilldownprompt, React.createElement("div", {style: { padding: "3px" }}, (this.props.showControls) ?
-            React.createElement("p", {style: { fontStyle: 'italic', fontSize: "9px", float: "left" }}, "[ year-selection slider goes here]") : null, datatable, socialoptions, informationoptions));
+        let yearsoptions = () => {
+            let startyear = 2003;
+            let endyear = 2016;
+            let years = [];
+            for (let year = startyear; year <= endyear; year++) {
+                let yearitem = React.createElement(MenuItem_1.default, {key: year, value: year, primaryText: year.toString()});
+                years.push(yearitem);
+            }
+            return years;
+        };
+        let yearselection = React.createElement("div", {style: { paddingBottom: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Select years: "), React.createElement(DropDownMenu_1.default, {value: 2003, style: {}, onChange: e => { }}, yearsoptions()), " - ", React.createElement(DropDownMenu_1.default, {value: 2016, style: {}, onChange: e => { }}, yearsoptions()));
+        return React.createElement("div", null, (this.props.showControls) ? React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions, deltatoggle, nettoggle, variancetoggle) : null, React.createElement("div", {style: { position: "relative" }}, chart, drilldownprompt), React.createElement("div", {style: { padding: "3px", textAlign: "center" }}, (this.props.showControls) ?
+            yearselection : null, informationoptions, socialoptions, datatable, harmonizeoptions));
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

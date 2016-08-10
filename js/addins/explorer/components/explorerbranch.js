@@ -69,10 +69,10 @@ class ExplorerBranch extends Component {
                     if (deeperdata || shallowerdata) {
                         let message = null;
                         if (deeperdata) {
-                            message = "More drilldown is available for current facet selection";
+                            message = "More drilldown is available for current aspect selection";
                         }
                         else {
-                            message = "Less drilldown is available for current facet selection";
+                            message = "Less drilldown is available for current aspect selection";
                         }
                         let { snackbar } = this.state;
                         snackbar = Object.assign({}, snackbar);

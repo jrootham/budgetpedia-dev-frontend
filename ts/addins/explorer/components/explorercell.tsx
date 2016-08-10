@@ -14,6 +14,8 @@ var { Chart } = require('../../../../forked/react-google-charts/Chart.js')
 import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
 import SvgIcon from 'material-ui/SvgIcon'
+import DropDownMenu from 'material-ui/DropDownMenu'
+import MenuItem from 'material-ui/MenuItem'
 import {
     ChartParms,
 } from '../modules/interfaces'
@@ -35,6 +37,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     state = {
         timescope: TimeScope[TimeScope.OneYear],
         deltastate: false,
+        netstate:false,
+        variancestate:false
     }
 
     onChangeChartCode = (explorerChartCode) => {
@@ -58,6 +62,18 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         })
     }
 
+
+    onToggleNet = () => {
+        this.setState({
+            deltastate: !this.state.netstate
+        })
+    }
+
+    onToggleVariance = () => {
+        this.setState({
+            deltastate: !this.state.variancestate
+        })
+    }
 
     // private lastgenerationcounter: number = 0
 
@@ -390,6 +406,74 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 </IconButton>
             </div> : null
 
+        let nettoggle = (this.state.timescope != TimeScope[TimeScope.OneYear])?
+            <div style = {
+                {
+                    paddingTop:"10px",
+                    borderRight:"1px solid silver", 
+                    marginRight:"3px", 
+                    position:"relative", 
+                    display:"inline-block"
+                }
+            }>
+                <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>net</div>
+                <IconButton 
+                    disabled
+                    tooltip="Net"
+                    tooltipPosition="top-center"
+                    style={
+                        {
+                            backgroundColor: (this.state.netstate)
+                                ? "rgba(144,238,144,0.5)"
+                                : "rgba(255,255,255,0.5)",
+                            borderRadius:"15%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
+                        }
+                    }
+                    onTouchTap={ e => {
+                        this.onToggleNet()
+                    } }>
+                    <FontIcon className="material-icons">exposure</FontIcon>
+                </IconButton>
+            </div> : null
+
+        let variancetoggle = (this.state.timescope != TimeScope[TimeScope.OneYear])?
+            <div style = {
+                {
+                    paddingTop:"10px",
+                    borderRight:"1px solid silver", 
+                    marginRight:"3px", 
+                    position:"relative", 
+                    display:"inline-block"
+                }
+            }>
+                <div style={{position:"absolute",top:"0", left:"0",fontSize:"8px"}}>variance</div>
+                <IconButton 
+                    disabled
+                    tooltip="Variance"
+                    tooltipPosition="top-center"
+                    style={
+                        {
+                            backgroundColor: (this.state.variancestate)
+                                ? "rgba(144,238,144,0.5)"
+                                : "rgba(255,255,255,0.5)",
+                            borderRadius:"15%",
+                            padding:"0",
+                            height:"36px",
+                            width:"36px",
+                            marginRight:"3px",
+                        }
+                    }
+                    onTouchTap={ e => {
+                        this.onToggleVariance()
+                    } }>
+                    <FontIcon className="material-icons">exposure</FontIcon>
+                </IconButton>
+            </div> : null
+
         let datatable = 
             <div style = {
                 {
@@ -398,7 +482,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     marginRight:"3px", 
                     position:"relative", 
                     display:"inline-block",
-                    float:"right",
                 }
             }>
                 <div style={{paddingLeft: '3px', position:"absolute",top:"0", left:"0",fontSize:"8px"}}>data</div>
@@ -433,7 +516,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     marginRight:"3px", 
                     position:"relative", 
                     display:"inline-block",
-                    float:"right",
                 }
             }>
                 <div style={{paddingLeft: '3px', position:"absolute",top:"0", left:"0",fontSize:"8px"}}>harmonize</div>
@@ -462,7 +544,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 {
                     { 
                         paddingTop:"10px",
-                        float:"right", 
+                        display:"inline-block",
                         position:"relative",
                     }
                 }>
@@ -500,7 +582,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             <div style=
                 {
                     { 
-                        float:"right", 
+                        display:"inline-block",
                         paddingTop:"10px",
                         borderLeft:"1px solid silver",
                         borderRight:"1px solid silver",
@@ -561,6 +643,41 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                {expandable?'drill down':'no drill down'}
             </div>
 
+        let yearsoptions = () => {
+            let startyear = 2003
+            let endyear = 2016
+            let years = []
+            for (let year = startyear; year <= endyear; year++ ) {
+                let yearitem = 
+                <MenuItem key = {year } value={year} primaryText={year.toString()}/>
+                years.push(yearitem)
+            }
+            return years
+        } 
+
+        let yearselection = <div style={{paddingBottom:"3px"}}>
+        <span style={{ fontStyle: "italic" }}>Select years: </span>
+        <DropDownMenu
+            value={2003}
+            style={{
+            }}
+            onChange={ e => {} }
+            >
+
+            { yearsoptions() }
+
+        </DropDownMenu> - <DropDownMenu
+            value={2016}
+            style={{
+            }}
+            onChange={ e => {} }
+            >
+
+            { yearsoptions() }
+
+        </DropDownMenu>
+        </div>
+
         return <div>
             {(this.props.showControls)?<div style={{ padding: "3px" }}>
 
@@ -570,28 +687,29 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
                 { deltatoggle }
 
-                { harmonizeoptions }
+                { nettoggle }
+
+                { variancetoggle }
 
             </div>:null}
-
+            <div style={{position:"relative"}}>
             { chart }
 
             { drilldownprompt }
+            </div>
 
-            <div style={{ padding: "3px" }}>
+            <div style={{ padding: "3px", textAlign:"center" }}>
 
                 {(this.props.showControls)?
-                    <p 
-                        style={{fontStyle:'italic', fontSize:"9px", float:"left"}}
-                    >
-                        [ year-selection slider goes here]
-                   </p>:null}
+                    yearselection:null}
 
-                { datatable }
+                { informationoptions }
 
                 { socialoptions }
 
-                { informationoptions }
+                { datatable }
+
+                { harmonizeoptions }
 
             </div>
             
