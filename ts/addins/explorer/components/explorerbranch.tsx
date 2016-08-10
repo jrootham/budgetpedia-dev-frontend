@@ -550,7 +550,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             <MenuItem value={'FUNCTIONAL'} primaryText="Budget (by function)"/>
             <MenuItem value={'STRUCTURAL'} primaryText="Budget (by structure)"/>
-            <MenuItem disabled value={'STATEMENTS'} primaryText="Financial Statements"/>
+            <MenuItem disabled value={'STATEMENTS'} primaryText="Consolidated Statements"/>
             <MenuItem disabled value={'EXPENSESBYOBJECT'} primaryText="Expenses by Object"/>
 
         </DropDownMenu>
@@ -564,7 +564,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             >
 
             <MenuItem disabled value={'SUMMARY'} primaryText="Summary"/>
-            <MenuItem value={'DETAIL'} primaryText="Detail (FPARS)"/>
+            <MenuItem value={'DETAIL'} primaryText="Detail (PBF)"/>
             <MenuItem disabled value={'VARIANCE'} primaryText="Variance Reports"/>
 
         </DropDownMenu>

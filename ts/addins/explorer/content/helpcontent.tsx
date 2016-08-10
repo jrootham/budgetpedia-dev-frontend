@@ -51,7 +51,7 @@ let content =
         <dt><strong>Budget (by structure)</strong></dt>
         <dd>more traditional: separates Agencies from Divisions, and generally by organizational
             structures. Groupings are closer to those found in City annual Budget Summaries.</dd>
-        <dt><strong>Financial Statements</strong></dt>
+        <dt><strong>Consolidated Statements</strong></dt>
         <dd>
             This reporting structure is manadated by the province (and GAAP -- Generally Accepted
             Accounting Principles), is functional, and is comparable to other municipalities in the 
@@ -71,20 +71,24 @@ let content =
     <p>
         <strong><em>Version</em></strong> choices depend on the Viewpoint that is chosen.
     </p>
-    <p><em>For Viewpoint = Budget, Versions</em> (for both functional and structural Viewpoints) include:</p>
+    <p><em>For Viewpoint = Budget (both functional and structural), Versions</em> include:</p>
     <blockquote>
         <ul>
         <li>Summary</li>
-        <li>Detail (FPARS)</li>
+        <li>Detail (PBF)</li>
         <li>Variance Reports</li>
         </ul>
+        <p><em>PBF</em> stands for <em>Public Budget Formulation Tool</em> which is part of the City's new
+        FPARS (Financial Planning Analysis and Reporting System) system</p>
     </blockquote>
-    <p><em>For Viewpoint = Financial statement, Versions</em> include:</p>
+    <p><em>For Viewpoint = Consolidated Statements, Versions</em> include:</p>
     <blockquote>
         <ul>
-        <li>Audited Financial Statements</li>
-        <li>Financial Information Returns (FIRs for MMAH)</li>
+        <li>Consolidated Statements</li>
+        <li>Financial Information Returns</li>
         </ul>
+        <p>FIR for MMAH = Financial Information Returns for the Ontario Ministry of Municipal Affairs 
+        and Housing.</p>
     </blockquote>
 
     <hr />
@@ -92,7 +96,10 @@ let content =
     <p>
         <strong><em>Aspect</em></strong> choices depend on the Viewpoint and Version that is chosen.
     </p>
-        <p><em>For Viewpoint = Budget, Version = Summary or Detailed, Aspects</em> (for both functional and structural Viewpoints) include:</p>
+    <p><em>For Viewpoint = Budget (both functional and structural), Version = Summary or Detailed, 
+        Aspects</em> include:
+    </p>
+
     <blockquote>
         <ul>
         <li>Revenue</li>
@@ -106,7 +113,7 @@ let content =
     </p>
     </blockquote>
 
-        <p><em>For Viewpoint = Financial statement, any Version, Aspects</em> include:</p>
+        <p><em>For Viewpoint = Consolidated Statements, any Version, Aspects</em> include:</p>
     <blockquote>
         <ul>
         <li>Revenue</li>
@@ -117,7 +124,7 @@ let content =
         combined.
     </p>
     </blockquote>
-        <p><em>For Viewpoint = Expenses by Object, Version = Statements, Aspects</em> include:</p>
+        <p><em>For Viewpoint = Expenses by Object, Version = Consolidated Statements, Aspects</em> include:</p>
     <blockquote>
         <ul>
         <li>Expenses</li>
@@ -126,7 +133,9 @@ let content =
     </p>
     </blockquote>
 
-    <p><em>For Viewpoint = Budget, Version = Variance report, Aspects</em> include:</p>
+    <p><em>For Viewpoint = Budget (both functional and structural), Version = Variance reports, 
+        Aspects</em> include:
+    </p>
     <blockquote>
         <ul>
         <li>Revenue
