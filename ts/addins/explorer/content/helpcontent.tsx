@@ -97,7 +97,7 @@ let content =
         <ul>
         <li>Revenue</li>
         <li>Expenses</li>
-        <li>Both</li>
+        <li>Both, paired</li>
         <li>Net</li>
         <li>Staffing</li>
         </ul>
@@ -126,14 +126,14 @@ let content =
     </p>
     </blockquote>
 
-    <p><em>Variance report Version of budget Viewpoint Aspects</em> include:</p>
+    <p><em>Budget Viewpoint, Variance report Version, Aspects</em> include:</p>
     <blockquote>
         <ul>
         <li>Revenue
             <ul>
             <li>Budget Revenue</li>
             <li>Actual Revenue</li>
-            <li>Both Revenues</li>
+            <li>Both Revenues, paired</li>
             <li>Revenue Variance</li>
             </ul>
         </li>
@@ -141,23 +141,23 @@ let content =
             <ul>
             <li>Budget Expenses</li>
             <li>Actual Expenses</li>
-            <li>Both Expenses</li>
+            <li>Both Expenses, paired</li>
             <li>Expenses Variance</li>
             </ul>
         </li>
         <li>Both (Revenue & Expenses)
             <ul>
-            <li>Budget</li>
-            <li>Actual</li>
-            <li>Both Budget & Actual</li>
-            <li>Variances</li>
+            <li>Budget, paired</li>
+            <li>Actual, paired</li>
+            <li>Both Budget, paired & Actual, paired</li>
+            <li>Variances, paired</li>
             </ul>
         </li>
         <li>Net (Revenue & Expenses)
             <ul>
             <li>Budget</li>
             <li>Actual</li>
-            <li>Both Budget & Actual</li>
+            <li>Both Budget & Actual, paired</li>
             <li>Variances</li>
             </ul>
         </li>
@@ -165,7 +165,7 @@ let content =
             <ul>
             <li>Budget Staffing</li>
             <li>Actual Staffing</li>
-            <li>Both Staffing</li>
+            <li>Both Staffing, paired</li>
             <li>Staffing Variance</li>
             </ul>
         </li>
