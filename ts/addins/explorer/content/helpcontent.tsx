@@ -110,105 +110,119 @@ let content =
     <p>
         <strong><em>Aspect</em></strong> choices depend on the Viewpoint and Version that is chosen.
     </p>
-    <p><em>For Viewpoint = Budget (both functional and structural), Version = Summary or Detailed, 
-        Aspects</em> include:
-    </p>
+    <dl>
 
-    <blockquote>
-        <ul>
-        <li>Revenue</li>
-        <li>Expenses</li>
-        <li>Both, paired</li>
-        <li>Net</li>
-        <li>Staffing</li>
-        </ul>
-    <p> All of these are based on City documents which have similar line items across all aspects. This 
-        makes the figures from all sources comparable.
-    </p>
-    </blockquote>
+        <dt><em>For Viewpoint = Budget (both functional and structural), Version = Summary or Detailed, 
+            Aspects</em> include:
+        </dt>
 
-        <p><em>For Viewpoint = Consolidated Statements, any Version, Aspects</em> include:</p>
-    <blockquote>
-        <ul>
-        <li>Revenue (actual)</li>
-        <li>Revenue (budget)</li>
-        <li>Revenue (both actual & budget)</li>
-        <li>Expenses (actual)</li>
-        <li>Expenses (budget)</li>
-        <li>Expenses (both actual & budget)</li>
-        </ul>
+        <dd>
+            <dl>
+            <dt><strong>Revenue</strong></dt>
+            <dt><strong>Expenses</strong></dt>
+            <dt><strong>Both, paired</strong></dt>
+            <dt><strong>Staffing</strong></dt>
+            </dl>
 
-    <p>The classification schemes for these are different for each, and therefore they cannot be 
-        combined.
-    </p>
-    </blockquote>
-        <p><em>For Viewpoint = Expenses by Object, Version = Consolidated Statements, Aspects</em> include:</p>
-    <blockquote>
-        <ul>
-        <li>Expenses</li>
-        </ul>
-    <p>These come from notes to the audited financial statements.
-    </p>
-    </blockquote>
+        </dd>
+        <dd> All of these are based on City documents which have similar line items across all aspects. This 
+            makes the figures from all sources comparable.
+        </dd>
+        <dt style={{marginTop:"20px"}}><em>For Viewpoint = Consolidated Statements, any Version, Aspects</em> include:</dt>
+        <dd>
+            <dl>
+                <dt><strong>Revenue (actual)</strong></dt>
+                <dt><strong>Revenue (budget)</strong></dt>
+                <dt><strong>Revenue (both actual & budget)</strong></dt>
+                <dt><strong>Expenses (actual)</strong></dt>
+                <dt><strong>Expenses (budget)</strong></dt>
+                <dt><strong>Expenses (both actual & budget)</strong></dt>
+            </dl>
 
-    <p><em>For Viewpoint = Budget (both functional and structural), Version = Variance reports, 
-        Aspects</em> include:
-    </p>
-    <blockquote>
-        <ul>
-        <li>Revenue
-            <ul>
-            <li>Budget Revenue</li>
-            <li>Actual Revenue</li>
-            <li>Both Budget & Actual Revenues, paired</li>
-            </ul>
-        </li>
-        <li>Expenses
-            <ul>
-            <li>Budget Expenses</li>
-            <li>Actual Expenses</li>
-            <li>Both Budget & Actual Expenses, paired</li>
-            </ul>
-        </li>
-        <li>Both (Revenue & Expenses)
-            <ul>
-            <li>Budget Revenue & Expenses, paired</li>
-            <li>Actual Revenue & Expenses, paired</li>
-            <li>Both Budget Revenue & Expenses, paired, and Actual Revenue & Expenses, paired</li>
-            </ul>
-        </li>
-        <li>Staffing
-            <ul>
-            <li>Budget Staffing</li>
-            <li>Actual Staffing</li>
-            <li>Both Budget & Actual Staffing, paired</li>
-            </ul>
-        </li>
-        </ul>
-        <p>When items are paired, net (revenue - expenses) and variance (actual - budget) amounts can be selected for each chart.</p>
-    </blockquote>
+        </dd>
+        <dd>The classification schemes for these are different for each, and therefore they cannot be 
+            combined.
+        </dd>
+        <dt style={{marginTop:"20px"}}><em>For Viewpoint = Expenses by Object, Version = 
+            Consolidated Statements, Aspects</em> include:
+        </dt>
+        <dd>
+            <dl>
+                <dt><strong>Expenses</strong></dt>
+            </dl>
+        </dd>
+        <dd>These come from notes to the audited financial statements.
+        </dd>
 
+        <dt style={{marginTop:"20px"}}><em>For Viewpoint = Budget (both functional and structural), Version = Variance reports, 
+            Aspects</em> include:
+        </dt>
+        <dd>
+            <dl>
+                <dt><strong>Revenue</strong></dt>
+                <dd>
+                    <dl>
+                    <dt><strong>Budget Revenue</strong></dt>
+                    <dt><strong>Actual Revenue</strong></dt>
+                    <dt><strong>Both Budget & Actual Revenues, paired</strong></dt>
+                    </dl>
+                </dd>
+                <dt><strong>Expenses</strong></dt>
+                <dd>
+                    <dl>
+                    <dt><strong>Budget Expenses</strong></dt>
+                    <dt><strong>Actual Expenses</strong></dt>
+                    <dt><strong>Both Budget & Actual Expenses, paired</strong></dt>
+                    </dl>
+                </dd>
+                <dt><strong>Both (Revenue & Expenses)</strong></dt>
+                <dd>
+                    <dl>
+                    <dt><strong>Budget Revenue & Expenses, paired</strong></dt>
+                    <dt><strong>Actual Revenue & Expenses, paired</strong></dt>
+                    <dt><strong>Both Budget Revenue & Expenses, paired, and Actual Revenue & Expenses, paired</strong></dt>
+                    </dl>
+                </dd>
+                <dt><strong>Staffing</strong></dt>
+                <dd>
+                    <dl>
+                    <dt><strong>Budget Staffing</strong></dt>
+                    <dt><strong>Actual Staffing</strong></dt>
+                    <dt><strong>Both Budget & Actual Staffing, paired</strong></dt>
+                    </dl>
+                </dd>
+            </dl>
+        </dd>
+        <dd>When items are paired, net (revenue - expenses) and variance (actual - budget) 
+            amounts can be selected through <em>Chart Options</em> on each chart.
+        </dd>
+    </dl>
     <hr />
 
     <p>
         <strong><em>By Unit</em></strong> choices are common for all other choices, and include:
     </p>
-    <blockquote>
-    <ul>
-        <li>Per staffing position</li>
-        <li>Population: per person</li>
-        <li>Population: per 100,000 people</li>
-        <li>Per household</li>
-    </ul>
-    </blockquote>
+    <dl>
+        <dd>
+            <dl>
+                <dt><strong>Per staffing position</strong></dt>
+                <dt><strong>Population: per person</strong></dt>
+                <dt><strong>Population: per 100,000 people</strong></dt>
+                <dt><strong>Per household</strong></dt>
+            </dl>
+        </dd>
+    </dl>
 
     <hr />
 
     <p>
-        <strong><em>Inflation adjusted</em></strong> is on by default, but can be turned off. This uses
+        <strong><em>Inflation adjusted</em></strong> is on by default, but can be turned off.</p>
+   <dl>
+   <dd>This uses
         the Bank of Canada's Inflation Calculator to adjust historical figures in terms of recent 
         currency valuations, for more meaningful trend analysis.
-    </p>
+    </dd>
+    </dl>
     </CardText>
 
 </Card>
