@@ -5,6 +5,7 @@
 import * as React from 'react'
 import {Card, CardTitle, CardText} from 'material-ui/Card'
 import SvgIcon from 'material-ui/SvgIcon'
+import FontIcon from 'material-ui/FontIcon'
 
 let content = 
 <div>
@@ -117,8 +118,12 @@ let content =
         <p><em>For Viewpoint = Consolidated Statements, any Version, Aspects</em> include:</p>
     <blockquote>
         <ul>
-        <li>Revenue</li>
-        <li>Expenses</li>
+        <li>Revenue (actual)</li>
+        <li>Revenue (budget)</li>
+        <li>Revenue (both actual & budget)</li>
+        <li>Expenses (actual)</li>
+        <li>Expenses (budget)</li>
+        <li>Expenses (both actual & budget)</li>
         </ul>
 
     <p>The classification schemes for these are different for each, and therefore they cannot be 
@@ -248,6 +253,132 @@ let content =
     </li>
     </ul>
     <p>Specific years can be selected in the selection boxes under the charts.</p>
+
+    <hr />
+
+    <p><SvgIcon style={
+        {
+            height:"18px",
+            width:"18px", 
+            padding:"0 3px",
+            border:"1px solid silver", 
+            borderRadius:"5px",
+            verticalAlign:"middle"
+        }
+    } viewBox = "0 0 36 36" >
+            <rect x="13" y="13" width="10" height="10" />
+        </SvgIcon> Chart options when one year is chose include:</p>
+        <ul>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        } className="material-icons">insert_chart</FontIcon> Column Chart. This shows the basics
+            of the components of the chart. Float the mouse over the column to see the number,
+            or click on a column to drill down.</li>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        }
+        className="material-icons">donut_small</FontIcon> Donut Chart. This shows the percentages of each
+        number in relation to the whole.</li>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        }
+        className="material-icons">view_quilt</FontIcon> Context Chart. This is a Tablemap chart, 
+            which shows the current chart as a proportion of the overall top-level budget.</li>
+        </ul>
+
+        <hr />
+
+    <p><SvgIcon style={
+        {
+            height:"18px",
+            width:"18px", 
+            padding:"0 3px",
+            border:"1px solid silver", 
+            borderRadius:"5px",
+            verticalAlign:"middle"
+        }
+    } viewBox = "0 0 36 36" >
+          <rect x="4" y="13" width="10" height="10" />
+          <rect x="22" y="13" width="10" height="10" />
+        </SvgIcon> Chart options when two years is chose include:</p>
+        <ul>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        } className="material-icons">insert_chart</FontIcon> Column Chart. This is the only
+        style of chart offered with the two year selection.</li>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        }
+        className="material-icons">change_history</FontIcon> Year-over-year toggle. This shows the differences
+        between the two years chosen.</li>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        }
+        className="material-icons">exposure</FontIcon> Net toggle. When paired revenue and expenses is the
+        Aspect chosen, this toggle combines the two into net figures.</li>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        }
+        className="material-icons">exposure</FontIcon> Variance toggle. When paired budget and actual is the
+        Aspect chosen, this toggle combines the two into variance figures.</li>
+        </ul>
+
     </CardText>
 </Card>
 <Card>
