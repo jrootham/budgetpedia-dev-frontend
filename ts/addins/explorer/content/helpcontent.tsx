@@ -431,8 +431,9 @@ let content =
             verticalAlign:"middle"
         }
     } viewBox = "0 0 36 36" >
-          <rect x="4" y="13" width="10" height="10" />
-          <rect x="22" y="13" width="10" height="10" />
+            <ellipse cx="6" cy="18" rx="4" ry="4"/>
+            <ellipse cx="18" cy="18" rx="4" ry="4"/>
+            <ellipse cx="30" cy="18" rx="4" ry="4"/>
         </SvgIcon> Chart options when all years is chosen include:</dt>
     <dd>
         <dl>
@@ -730,9 +731,26 @@ let content =
         Actionable Features
     </CardTitle>    
     <CardText expandable style={{paddingTop:"0px"}}>
-        actionable features content
-        assembling and printing reports content
-        Saving and sharing workspaces
+        <p>We are planning actionable features for the explorer, though these are currently just at 
+        the planning stages. The purpose it to provide a path for users to take what they learn, 
+        and travel "the last mile" to actually do something with it. This could range from 
+        forwarding information to a colleague, to organizing a campaign to make a change.</p>
+
+        <dl>
+        <dt>Assembling and printing reports</dt>
+        <dd>For the simplest version of this, we want to provide a place for a title for the current
+        explorer page, a place to name each exhibit, and a place to add commentary to each row (in the 
+        form of a notebox at the right of each row). Finally, we want to add the ability to select a 
+        single chart from each row to show (hiding the rest of charts in those rows). This single chart, 
+        together with the accompanying notebox, provides a single printable row. Then all rows and the 
+        title section together provide the content to generate a coherent pdf (landscape mode in Chrome)</dd>
+        <dt>Saving and sharing workspaces</dt>
+        <dd>Each explorer page already preseves its settings during a session (try it -- navigate away from
+            the explorer page, and then return to it through the menu). We want to extend this to allow 
+        registered users to name and save their explorer pages as "workspaces". This will allow users to
+        restore those pages for further work, or to share those pages with colleagues for further work
+        and discussion. Collaboration!</dd>
+        </dl>
     </CardText>
 </Card>
 </div>
