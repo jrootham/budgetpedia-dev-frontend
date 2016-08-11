@@ -23,18 +23,23 @@ let content =
     </CardTitle>
     <CardText expandable style={{paddingTop:"0px"}}>
     <p>There are several dataset options available for charts:</p>
-    <ul>
-        <li><strong>Viewpoint:</strong> broad approaches to budget (or actual) data, based on similar 
-            classification schemes (taxonomies), and data sources.</li>
-        <li><strong>Version:</strong> alternate detailed datasets available for the selected Viewpoint</li>
-        <li><strong>Aspect:</strong> particular aspects of the dataset, such as Revenue, Expenses or Staffing</li>
-        <li><strong>By Unit:</strong> the beginnings of diagnostic analytics, using simple math to view the 
-            data compared with relevant related metrics, such as per person or per household</li>
-        <li><strong>Inflation adjusted:</strong> the datasets are updated annually to reflect the Bank of 
+    <dl>
+        <dt><strong>Viewpoint</strong></dt>
+        <dd> broad approaches to budget (or actual) data, based on similar 
+            classification schemes (taxonomies), and data sources.</dd>
+        <dt><strong>Version</strong></dt>
+        <dd> alternate detailed datasets available for the selected Viewpoint</dd>
+        <dt><strong>Aspect</strong></dt>
+        <dd> particular aspects of the dataset, such as Revenue, Expenses or Staffing</dd>
+        <dt><strong>By Unit</strong></dt>
+        <dd> the beginnings of diagnostic analytics, using simple math to view the 
+            data compared with relevant related metrics, such as per person or per household</dd>
+        <dt><strong>Inflation adjusted</strong></dt>
+        <dd> the datasets are updated annually to reflect the Bank of 
             Canada's Inflation Calculator. This makes it possible to get historical perspectives that are
             meaningful in today's dollar terms.
-        </li>
-    </ul>
+        </dd>
+    </dl>
     <p>Choices for the selections are interdependent. Toronto budgets have similar classifications for 
         Revenue and Expenses for example, and therefore these can be viewed together (as offered by the 
          <em>paired</em> and <em>net</em> Aspects). Financial statements 
@@ -73,26 +78,33 @@ let content =
     <p>
         <strong><em>Version</em></strong> choices depend on the Viewpoint that is chosen.
     </p>
-    <p><em>For Viewpoint = Budget (both functional and structural), Versions</em> include:</p>
-    <blockquote>
-        <ul>
-        <li>Summary</li>
-        <li>Detail (PBF)</li>
-        <li>Variance Reports</li>
-        </ul>
-        <p><em>PBF</em> stands for <em>Public Budget Formulation Tool</em> which is part of the City's new
-        FPARS (Financial Planning Analysis and Reporting System) system</p>
-    </blockquote>
-    <p><em>For Viewpoint = Consolidated Statements, Versions</em> include:</p>
-    <blockquote>
-        <ul>
-        <li>Consolidated Statements</li>
-        <li>Financial Information Returns</li>
-        </ul>
-        <p>FIR for MMAH = Financial Information Returns for the Ontario Ministry of Municipal Affairs 
-        and Housing.</p>
-    </blockquote>
 
+    <dl>
+
+    <dt><em>For Viewpoint = Budget (both functional and structural), Versions</em> include:</dt>
+    <dd>
+        <dl>
+        <dt><strong>Summary</strong></dt>
+        <dt><strong>Detail (PBF)</strong></dt>
+        <dt><strong>Variance Reports</strong></dt>
+        </dl>
+    </dd>
+    <dd><em>PBF</em> stands for <em>Public Budget Formulation Tool</em> which is part of the City's new
+        FPARS (Financial Planning Analysis and Reporting System) system
+    </dd>
+
+    <dt style={{marginTop:"20px"}}><em>For Viewpoint = Consolidated Statements, Versions</em> include:</dt>
+    <dd>
+        <dl>
+        <dt><strong>Consolidated Statements</strong></dt>
+        <dt><strong>Financial Information Returns</strong></dt>
+        </dl>
+    </dd>
+    <dd>
+        FIR for MMAH = Financial Information Returns for the Ontario Ministry of Municipal Affairs 
+        and Housing.
+    </dd>
+    </dl>
     <hr />
 
     <p>
