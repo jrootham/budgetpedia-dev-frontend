@@ -279,7 +279,7 @@ class ExplorerCell extends Component {
             paddingTop: "10px",
             borderLeft: "1px solid silver",
             borderRight: "1px solid silver",
-            marginRight: "3px",
+            paddingRight: "3px",
             position: "relative",
             display: "inline-block",
         }}, React.createElement("div", {style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "harmonize"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Harmonize settings for row", tooltipPosition: "top-center", style: {

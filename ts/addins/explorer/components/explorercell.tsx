@@ -522,7 +522,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     paddingTop:"10px",
                     borderLeft:"1px solid silver", 
                     borderRight:"1px solid silver", 
-                    marginRight:"3px", 
+                    paddingRight:"3px", 
                     position:"relative", 
                     display:"inline-block",
                 }

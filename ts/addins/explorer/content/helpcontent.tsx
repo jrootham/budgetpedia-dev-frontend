@@ -208,8 +208,8 @@ let content =
     </CardTitle>
     <CardText expandable style={{paddingTop:"0px"}}>
     <p> Chart options vary according to the time options selected. The time options available are:</p>
-    <ul>
-    <li><SvgIcon style={
+    <dl>
+    <dt><SvgIcon style={
         {
             height:"18px",
             width:"18px", 
@@ -220,9 +220,10 @@ let content =
         }
     } viewBox = "0 0 36 36" >
             <rect x="13" y="13" width="10" height="10" />
-        </SvgIcon> One year (default). Select a specific year to investigate.
-    </li>
-    <li><SvgIcon style={
+        </SvgIcon> One year (default)</dt>
+    <dd> Select a specific year to investigate.
+    </dd>
+    <dt><SvgIcon style={
         {
             height:"18px",
             width:"18px", 
@@ -234,9 +235,9 @@ let content =
     }  viewBox = "0 0 36 36" >
           <rect x="4" y="13" width="10" height="10" />
           <rect x="22" y="13" width="10" height="10" />
-        </SvgIcon> Two years. Allows data for two years to be presented side by side for comparison.
-    </li>
-    <li><SvgIcon style={
+        </SvgIcon> Two years</dt><dd> Allows data for two years to be presented side by side for comparison.
+    </dd>
+    <dt><SvgIcon style={
         {
             height:"18px",
             width:"18px", 
@@ -249,14 +250,15 @@ let content =
             <ellipse cx="6" cy="18" rx="4" ry="4"/>
             <ellipse cx="18" cy="18" rx="4" ry="4"/>
             <ellipse cx="30" cy="18" rx="4" ry="4"/>
-        </SvgIcon> All years (all available years). Shows all available years to investigate trends.
-    </li>
-    </ul>
-    <p>Specific years can be selected in the selection boxes under the charts.</p>
+        </SvgIcon> All years (all available years)</dt><dd> Shows all available years to investigate trends.
+    </dd>
+    </dl>
+    <p>Specific years can be selected in the selection dropdowns under the charts.</p>
 
     <hr />
 
-    <p><SvgIcon style={
+    <dl>
+    <dt><SvgIcon style={
         {
             height:"18px",
             width:"18px", 
@@ -267,9 +269,10 @@ let content =
         }
     } viewBox = "0 0 36 36" >
             <rect x="13" y="13" width="10" height="10" />
-        </SvgIcon> Chart options when one year is chose include:</p>
-        <ul>
-        <li><FontIcon style={
+        </SvgIcon> Chart options when one year is chosen include:</dt>
+        <dd>
+        <dl>
+        <dt><FontIcon style={
             {
                 height:"18px", 
                 width:"18px",
@@ -279,10 +282,11 @@ let content =
                 verticalAlign:"middle",
                 fontSize:"18px",
             }
-        } className="material-icons">insert_chart</FontIcon> Column Chart. This shows the basics
+        } className="material-icons">insert_chart</FontIcon> Column Chart</dt>
+        <dd> This shows the basics
             of the components of the chart. Float the mouse over the column to see the number,
-            or click on a column to drill down.</li>
-        <li><FontIcon style={
+            or click on a column to drill down.</dd>
+        <dt><FontIcon style={
             {
                 height:"18px", 
                 width:"18px",
@@ -293,9 +297,10 @@ let content =
                 fontSize:"18px",
             }
         }
-        className="material-icons">donut_small</FontIcon> Donut Chart. This shows the percentages of each
-        number in relation to the whole.</li>
-        <li><FontIcon style={
+        className="material-icons">donut_small</FontIcon> Donut Chart</dt>
+        <dd> This shows the percentages of each
+        number in relation to the whole.</dd>
+        <dt><FontIcon style={
             {
                 height:"18px", 
                 width:"18px",
@@ -306,13 +311,17 @@ let content =
                 fontSize:"18px",
             }
         }
-        className="material-icons">view_quilt</FontIcon> Context Chart. This is a Tablemap chart, 
-            which shows the current chart as a proportion of the overall top-level budget.</li>
-        </ul>
+        className="material-icons">view_quilt</FontIcon> Context Chart </dt>
+        <dd> This is a Tablemap chart, 
+            which shows the current chart as a proportion of the overall top-level budget.</dd>
+        </dl>
+        </dd>
+    </dl>
 
         <hr />
 
-    <p><SvgIcon style={
+    <dl>
+    <dt><SvgIcon style={
         {
             height:"18px",
             width:"18px", 
@@ -324,9 +333,10 @@ let content =
     } viewBox = "0 0 36 36" >
           <rect x="4" y="13" width="10" height="10" />
           <rect x="22" y="13" width="10" height="10" />
-        </SvgIcon> Chart options when two years is chose include:</p>
-        <ul>
-        <li><FontIcon style={
+        </SvgIcon> Chart options when two years is chosen include:</dt>
+    <dd>
+        <dl>
+        <dt><FontIcon style={
             {
                 height:"18px", 
                 width:"18px",
@@ -336,22 +346,9 @@ let content =
                 verticalAlign:"middle",
                 fontSize:"18px",
             }
-        } className="material-icons">insert_chart</FontIcon> Column Chart. This is the only
-        style of chart offered with the two year selection.</li>
-        <li><FontIcon style={
-            {
-                height:"18px", 
-                width:"18px",
-                padding:"0 3px",
-                border:"1px solid silver", 
-                borderRadius:"5px",
-                verticalAlign:"middle",
-                fontSize:"18px",
-            }
-        }
-        className="material-icons">change_history</FontIcon> Year-over-year toggle. This shows the differences
-        between the two years chosen.</li>
-        <li><FontIcon style={
+        } className="material-icons">insert_chart</FontIcon> Column Chart</dt><dd> This is the only
+        style of chart offered with the two year selection.</dd>
+        <dt><FontIcon style={
             {
                 height:"18px", 
                 width:"18px",
@@ -362,9 +359,10 @@ let content =
                 fontSize:"18px",
             }
         }
-        className="material-icons">exposure</FontIcon> Net toggle. When paired revenue and expenses is the
-        Aspect chosen, this toggle combines the two into net figures.</li>
-        <li><FontIcon style={
+        className="material-icons">change_history</FontIcon> Year-over-year toggle</dt>
+        <dd> This shows the differences
+        between the two years chosen.</dd>
+        <dt><FontIcon style={
             {
                 height:"18px", 
                 width:"18px",
@@ -375,13 +373,29 @@ let content =
                 fontSize:"18px",
             }
         }
-        className="material-icons">exposure</FontIcon> Variance toggle. When paired budget and actual is the
-        Aspect chosen, this toggle combines the two into variance figures.</li>
-        </ul>
-
+        className="material-icons">exposure</FontIcon> Net toggle</dt> 
+        <dd>When paired revenue and expenses is the
+        Aspect chosen, this toggle combines the two into net figures.</dd>
+        <dt><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        }
+        className="material-icons">exposure</FontIcon> Variance toggle</dt><dd> When paired budget and actual is the
+        Aspect chosen, this toggle combines the two into variance figures.</dd>
+        </dl>
+    </dd>
+    </dl>
     <hr />
 
-    <p><SvgIcon style={
+    <dl>
+    <dt><SvgIcon style={
         {
             height:"18px",
             width:"18px", 
@@ -393,9 +407,10 @@ let content =
     } viewBox = "0 0 36 36" >
           <rect x="4" y="13" width="10" height="10" />
           <rect x="22" y="13" width="10" height="10" />
-        </SvgIcon> Chart options when all years is chose include:</p>
-        <ul>
-        <li><FontIcon style={
+        </SvgIcon> Chart options when all years is chosen include:</dt>
+    <dd>
+        <dl>
+        <dt><FontIcon style={
             {
                 height:"18px", 
                 width:"18px",
@@ -406,8 +421,9 @@ let content =
                 fontSize:"18px",
             }
         }
-        className="material-icons">timeline</FontIcon> Line Chart. Basic time lines</li>
-        <li><SvgIcon style={
+        className="material-icons">timeline</FontIcon> Line Chart</dt>
+        <dd> Basic time lines</dd>
+        <dt><SvgIcon style={
         {
             height:"18px",
             width:"18px", 
@@ -418,8 +434,9 @@ let content =
         }}>
             <path d="M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"/>
             <path d="M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"/>
-        </SvgIcon> Area Chart. Same data as timelines, but stacked.</li>
-        <li><FontIcon style={
+        </SvgIcon> Area Chart</dt>
+        <dd> Same data as timelines, but stacked.</dd>
+        <dt><FontIcon style={
             {
                 height:"18px", 
                 width:"18px",
@@ -429,22 +446,10 @@ let content =
                 verticalAlign:"middle",
                 fontSize:"18px",
             }
-        } className="material-icons">view_stream</FontIcon> Proportional Chart. All lines add to 100%; 
-            individual amounts are shown in proportion to the whole.</li>
-        <li><FontIcon style={
-            {
-                height:"18px", 
-                width:"18px",
-                padding:"0 3px",
-                border:"1px solid silver", 
-                borderRadius:"5px",
-                verticalAlign:"middle",
-                fontSize:"18px",
-            }
-        }
-        className="material-icons">change_history</FontIcon> Year-over-year toggle. This shows the differences
-        between adjacent years on a rolling basis.</li>
-        <li><FontIcon style={
+        } className="material-icons">view_stream</FontIcon> Proportional Chart </dt>
+        <dd> All lines add to 100%; 
+            individual amounts are shown in proportion to the whole.</dd>
+        <dt><FontIcon style={
             {
                 height:"18px", 
                 width:"18px",
@@ -455,9 +460,9 @@ let content =
                 fontSize:"18px",
             }
         }
-        className="material-icons">exposure</FontIcon> Net toggle. When paired revenue and expenses is the
-        Aspect chosen, this toggle is set and net figures (revenue - expenses) are shown.</li>
-        <li><FontIcon style={
+        className="material-icons">change_history</FontIcon> Year-over-year toggle </dt>
+        <dd> This shows the differences between adjacent years on a rolling basis.</dd>
+        <dt><FontIcon style={
             {
                 height:"18px", 
                 width:"18px",
@@ -468,9 +473,26 @@ let content =
                 fontSize:"18px",
             }
         }
-        className="material-icons">exposure</FontIcon> Variance toggle. When paired budget and actual is the
-        Aspect chosen, this toggle is set and variance figures (budget - actual) are shown.</li>
-        </ul>
+        className="material-icons">exposure</FontIcon> Net toggle </dt>
+        <dd> When paired revenue and expenses is the
+        Aspect chosen, this toggle is set and net figures (revenue - expenses) are shown.</dd>
+        <dt><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        }
+        className="material-icons">exposure</FontIcon> Variance toggle </dt>
+        <dd> When paired budget and actual is the
+        Aspect chosen, this toggle is set and variance figures (budget - actual) are shown.</dd>
+        </dl>
+        </dd>
+        </dl>
     </CardText>
 </Card>
 <Card>
@@ -480,7 +502,117 @@ let content =
         Context Options
     </CardTitle>
     <CardText expandable style={{paddingTop:"0px"}}>
-    context options content
+    <p> Context options are offered to provide contextual information for the data being viewed, and
+    to afford the reader the opportunity to contribute to the process surrounding the budget. These
+    are the options offered, found under each chart:</p>
+    <dl>
+        <dt><FontIcon 
+            style={
+                {
+                    height:"18px", 
+                    width:"18px",
+                    padding:"0 3px",
+                    border:"1px solid silver", 
+                    borderRadius:"5px",
+                    verticalAlign:"middle",
+                    fontSize:"18px",
+                }
+            }
+            className="material-icons">info_outline
+            </FontIcon> The <em>information</em> icon 
+        </dt>
+        <dd>invokes a dialog containing information related to the current
+            data. This could be brief explanations, links to related information, or links to websites
+            which specialize in the subject matter. The idea is to allow the reader to discover more context 
+            and detail about the subject matter at hand.
+        </dd>
+        <dt><FontIcon 
+            style={
+                {
+                    height:"18px", 
+                    width:"18px",
+                    padding:"0 3px",
+                    border:"1px solid silver", 
+                    borderRadius:"5px",
+                    verticalAlign:"middle",
+                    fontSize:"18px",
+                }
+            }
+            className="material-icons">note</FontIcon> The <em>notes</em> icon
+        </dt>
+        <dd>invokes detailed technical information about the 
+            data presented, including source documents, exceptions, errors, and any relevant notes about the
+            way the data was processed. If there are errors or exceptions in place, the note icon changes
+            colour to red or orange, depending on severity.
+        </dd>
+        <dt><FontIcon 
+            style={
+                {
+                    height:"18px", 
+                    width:"18px",
+                    padding:"0 3px",
+                    border:"1px solid silver", 
+                    borderRadius:"5px",
+                    verticalAlign:"middle",
+                    fontSize:"18px",
+                }
+            }
+            className="material-icons">share</FontIcon> The <em>share</em> icon </dt> 
+            <dd>provides access to relevant social media
+            sites, to allow readers to read or contribute to discussion about the subject at hand.
+        </dd>
+        <dt><FontIcon 
+            style={
+                {
+                    height:"18px", 
+                    width:"18px",
+                    padding:"0 3px",
+                    border:"1px solid silver", 
+                    borderRadius:"5px",
+                    verticalAlign:"middle",
+                    fontSize:"18px",
+                }
+            }
+            className="material-icons">announcement</FontIcon> The <em>announcement</em> icon 
+        </dt>
+        <dd>provides the user with 
+            lists of calls to actions or meetings related to the subject matter, or to contribute their own
+            call to action or meetings.
+        </dd>
+        <dt><FontIcon 
+            style={
+                {
+                    height:"18px", 
+                    width:"18px",
+                    padding:"0 3px",
+                    border:"1px solid silver", 
+                    borderRadius:"5px",
+                    verticalAlign:"middle",
+                    fontSize:"18px",
+                }
+            }
+            className="material-icons">view_list</FontIcon> The <em>data</em> icon 
+        </dt>
+        <dd>brings up the data underlying the currently viewed chart, with an option to download same.
+        </dd>
+        <dt><FontIcon 
+            style={
+                {
+                    height:"18px", 
+                    width:"18px",
+                    padding:"0 3px",
+                    border:"1px solid silver", 
+                    borderRadius:"5px",
+                    verticalAlign:"middle",
+                    fontSize:"18px",
+                }
+            }
+            className="material-icons">swap_horiz</FontIcon> The <em>harmonize</em> icon 
+        </dt>
+        <dd> allows the user to impose the 
+            settings made in the current chart to the other charts in the row or exhibit.
+        </dd>
+    </dl>
     </CardText>
 </Card>
 <Card>
