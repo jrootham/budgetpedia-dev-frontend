@@ -379,6 +379,98 @@ let content =
         Aspect chosen, this toggle combines the two into variance figures.</li>
         </ul>
 
+    <hr />
+
+    <p><SvgIcon style={
+        {
+            height:"18px",
+            width:"18px", 
+            padding:"0 3px",
+            border:"1px solid silver", 
+            borderRadius:"5px",
+            verticalAlign:"middle"
+        }
+    } viewBox = "0 0 36 36" >
+          <rect x="4" y="13" width="10" height="10" />
+          <rect x="22" y="13" width="10" height="10" />
+        </SvgIcon> Chart options when all years is chose include:</p>
+        <ul>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        }
+        className="material-icons">timeline</FontIcon> Line Chart. Basic time lines</li>
+        <li><SvgIcon style={
+        {
+            height:"18px",
+            width:"18px", 
+            padding:"0 3px",
+            border:"1px solid silver", 
+            borderRadius:"5px",
+            verticalAlign:"middle"
+        }}>
+            <path d="M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"/>
+            <path d="M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"/>
+        </SvgIcon> Area Chart. Same data as timelines, but stacked.</li>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        } className="material-icons">view_stream</FontIcon> Proportional Chart. All lines add to 100%; 
+            individual amounts are shown in proportion to the whole.</li>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        }
+        className="material-icons">change_history</FontIcon> Year-over-year toggle. This shows the differences
+        between adjacent years on a rolling basis.</li>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        }
+        className="material-icons">exposure</FontIcon> Net toggle. When paired revenue and expenses is the
+        Aspect chosen, this toggle is set and net figures (revenue - expenses) are shown.</li>
+        <li><FontIcon style={
+            {
+                height:"18px", 
+                width:"18px",
+                padding:"0 3px",
+                border:"1px solid silver", 
+                borderRadius:"5px",
+                verticalAlign:"middle",
+                fontSize:"18px",
+            }
+        }
+        className="material-icons">exposure</FontIcon> Variance toggle. When paired budget and actual is the
+        Aspect chosen, this toggle is set and variance figures (budget - actual) are shown.</li>
+        </ul>
     </CardText>
 </Card>
 <Card>

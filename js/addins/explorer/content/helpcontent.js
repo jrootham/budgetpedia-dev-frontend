@@ -94,6 +94,60 @@ let content = React.createElement("div", null, React.createElement(Card_1.Card, 
     borderRadius: "5px",
     verticalAlign: "middle",
     fontSize: "18px",
-}, className: "material-icons"}, "exposure"), " Variance toggle. When paired budget and actual is the" + ' ' + "Aspect chosen, this toggle combines the two into variance figures.")))), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Context Options"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "context options content")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Cloning Features"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "cloning features content")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Actionable Features"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "actionable features content")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Assembling and printing reports"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "assembling and printing reports content")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Saving and sharing workspaces"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "saving and sharing workspaces content")));
+}, className: "material-icons"}, "exposure"), " Variance toggle. When paired budget and actual is the" + ' ' + "Aspect chosen, this toggle combines the two into variance figures.")), React.createElement("hr", null), React.createElement("p", null, React.createElement(SvgIcon_1.default, {style: {
+    height: "18px",
+    width: "18px",
+    padding: "0 3px",
+    border: "1px solid silver",
+    borderRadius: "5px",
+    verticalAlign: "middle"
+}, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"})), " Chart options when all years is chose include:"), React.createElement("ul", null, React.createElement("li", null, React.createElement(FontIcon_1.default, {style: {
+    height: "18px",
+    width: "18px",
+    padding: "0 3px",
+    border: "1px solid silver",
+    borderRadius: "5px",
+    verticalAlign: "middle",
+    fontSize: "18px",
+}, className: "material-icons"}, "timeline"), " Line Chart. Basic time lines"), React.createElement("li", null, React.createElement(SvgIcon_1.default, {style: {
+    height: "18px",
+    width: "18px",
+    padding: "0 3px",
+    border: "1px solid silver",
+    borderRadius: "5px",
+    verticalAlign: "middle"
+}}, React.createElement("path", {d: "M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"}), React.createElement("path", {d: "M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"})), " Area Chart. Same data as timelines, but stacked."), React.createElement("li", null, React.createElement(FontIcon_1.default, {style: {
+    height: "18px",
+    width: "18px",
+    padding: "0 3px",
+    border: "1px solid silver",
+    borderRadius: "5px",
+    verticalAlign: "middle",
+    fontSize: "18px",
+}, className: "material-icons"}, "view_stream"), " Proportional Chart. All lines add to 100%;" + ' ' + "individual amounts are shown in proportion to the whole."), React.createElement("li", null, React.createElement(FontIcon_1.default, {style: {
+    height: "18px",
+    width: "18px",
+    padding: "0 3px",
+    border: "1px solid silver",
+    borderRadius: "5px",
+    verticalAlign: "middle",
+    fontSize: "18px",
+}, className: "material-icons"}, "change_history"), " Year-over-year toggle. This shows the differences" + ' ' + "between adjacent years on a rolling basis."), React.createElement("li", null, React.createElement(FontIcon_1.default, {style: {
+    height: "18px",
+    width: "18px",
+    padding: "0 3px",
+    border: "1px solid silver",
+    borderRadius: "5px",
+    verticalAlign: "middle",
+    fontSize: "18px",
+}, className: "material-icons"}, "exposure"), " Net toggle. When paired revenue and expenses is the" + ' ' + "Aspect chosen, this toggle is set and net figures (revenue - expenses) are shown."), React.createElement("li", null, React.createElement(FontIcon_1.default, {style: {
+    height: "18px",
+    width: "18px",
+    padding: "0 3px",
+    border: "1px solid silver",
+    borderRadius: "5px",
+    verticalAlign: "middle",
+    fontSize: "18px",
+}, className: "material-icons"}, "exposure"), " Variance toggle. When paired budget and actual is the" + ' ' + "Aspect chosen, this toggle is set and variance figures (budget - actual) are shown.")))), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Context Options"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "context options content")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Cloning Features"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "cloning features content")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Actionable Features"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "actionable features content")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Assembling and printing reports"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "assembling and printing reports content")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Saving and sharing workspaces"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "saving and sharing workspaces content")));
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = content;
