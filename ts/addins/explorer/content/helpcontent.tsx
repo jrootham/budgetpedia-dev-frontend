@@ -636,7 +636,7 @@ let content =
             className="material-icons">swap_horiz</FontIcon> The <em>harmonize</em> icon 
         </dt>
         <dd> allows the user to impose the 
-            settings made in the current chart to the other charts in the row or exhibit.
+            settings made in the current chart onto the other charts in the row (<em>Exhibit</em>).
         </dd>
     </dl>
     </CardText>
@@ -648,7 +648,79 @@ let content =
         Cloning Features
     </CardTitle>
     <CardText expandable style={{paddingTop:"0px"}}>
-    cloning features content
+    <p>The Budget Explorer organizes charts into horizontal drill-down sequences which we 
+    call <em>Exhibits</em>. We allow for cloning and re-ordering these exhibits to allow for comparison,
+    exploration, and publication. This clone contains all the option controls of the original. The
+    clone is independent of the original.</p>
+    <dl>
+        <dt><FontIcon 
+            style={
+                {
+                    height:"18px", 
+                    width:"18px",
+                    padding:"0 3px",
+                    border:"1px solid silver", 
+                    borderRadius:"5px",
+                    verticalAlign:"middle",
+                    fontSize:"18px",
+                }
+            }
+            className="material-icons">add_circle_outline</FontIcon> Add a clone of the current Exhibit
+        </dt>
+        <dd>This icon when invoked adds a clone of the current row of charts below the current row. <em>
+            The plan is for the clone to reproduce all of the components and selections of the current
+            row. However currently the cloning simply creates an initialized clone, containing only the 
+            highest level (left-most) chart, with default settings. Of course the original row's settings
+            can be easily reproduced.
+        </em></dd>
+        <dt><FontIcon 
+            style={
+                {
+                    height:"18px", 
+                    width:"18px",
+                    padding:"0 3px",
+                    border:"1px solid silver", 
+                    borderRadius:"5px",
+                    verticalAlign:"middle",
+                    fontSize:"18px",
+                }
+            }
+            className="material-icons">remove_circle_outline</FontIcon> Remove the current Exhibit
+        </dt>
+        <dd>This icon when invoked removes the current row of charts (cannot currently be undone).</dd>
+        <dt><FontIcon 
+            style={
+                {
+                    height:"18px", 
+                    width:"18px",
+                    padding:"0 3px",
+                    border:"1px solid silver", 
+                    borderRadius:"5px",
+                    verticalAlign:"middle",
+                    fontSize:"18px",
+                }
+            }
+            className="material-icons">arrow_upward</FontIcon> Move the current Exhibit up one position
+        </dt>
+        <dd>When mulitple rows (<em>Exhibits</em>) exist, they can be re-ordered. The up arrow icon
+        (to the upper right of the row title) moves the row up one position.</dd>
+        <dt><FontIcon 
+            style={
+                {
+                    height:"18px", 
+                    width:"18px",
+                    padding:"0 3px",
+                    border:"1px solid silver", 
+                    borderRadius:"5px",
+                    verticalAlign:"middle",
+                    fontSize:"18px",
+                }
+            }
+            className="material-icons">arrow_downward</FontIcon> Move the current Exhibit down one position
+        </dt>
+        <dd>When mulitple rows (<em>Exhibits</em>) exist, they can be re-ordered. The down arrow icon
+        (to the upper right of the row title) moves the row down one position.</dd>
+    </dl>
     </CardText>
 </Card>
 <Card>
@@ -656,29 +728,11 @@ let content =
         actAsExpander={true}
         showExpandableButton={true} >
         Actionable Features
-    </CardTitle>
+    </CardTitle>    
     <CardText expandable style={{paddingTop:"0px"}}>
-    actionable features content
-    </CardText>
-</Card>
-<Card>
-    <CardTitle
-        actAsExpander={true}
-        showExpandableButton={true} >
-        Assembling and printing reports
-    </CardTitle>
-    <CardText expandable style={{paddingTop:"0px"}}>
-    assembling and printing reports content
-    </CardText>
-</Card>
-<Card>
-    <CardTitle
-        actAsExpander={true}
-        showExpandableButton={true} >
+        actionable features content
+        assembling and printing reports content
         Saving and sharing workspaces
-    </CardTitle>
-    <CardText expandable style={{paddingTop:"0px"}}>
-    saving and sharing workspaces content
     </CardText>
 </Card>
 </div>

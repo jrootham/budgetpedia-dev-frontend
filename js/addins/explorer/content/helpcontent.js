@@ -196,6 +196,38 @@ let content = React.createElement("div", null, React.createElement(Card_1.Card, 
     borderRadius: "5px",
     verticalAlign: "middle",
     fontSize: "18px",
-}, className: "material-icons"}, "swap_horiz"), " The ", React.createElement("em", null, "harmonize"), " icon"), React.createElement("dd", null, " allows the user to impose the" + ' ' + "settings made in the current chart to the other charts in the row or exhibit.")))), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Cloning Features"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "cloning features content")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Actionable Features"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "actionable features content")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Assembling and printing reports"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "assembling and printing reports content")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Saving and sharing workspaces"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "saving and sharing workspaces content")));
+}, className: "material-icons"}, "swap_horiz"), " The ", React.createElement("em", null, "harmonize"), " icon"), React.createElement("dd", null, " allows the user to impose the" + ' ' + "settings made in the current chart onto the other charts in the row (", React.createElement("em", null, "Exhibit"), ").")))), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Cloning Features"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, React.createElement("p", null, "The Budget Explorer organizes charts into horizontal drill-down sequences which we" + ' ' + "call ", React.createElement("em", null, "Exhibits"), ". We allow for cloning and re-ordering these exhibits to allow for comparison," + ' ' + "exploration, and publication. This clone contains all the option controls of the original. The" + ' ' + "clone is independent of the original."), React.createElement("dl", null, React.createElement("dt", null, React.createElement(FontIcon_1.default, {style: {
+    height: "18px",
+    width: "18px",
+    padding: "0 3px",
+    border: "1px solid silver",
+    borderRadius: "5px",
+    verticalAlign: "middle",
+    fontSize: "18px",
+}, className: "material-icons"}, "add_circle_outline"), " Add a clone of the current Exhibit"), React.createElement("dd", null, "This icon when invoked adds a clone of the current row of charts below the current row. ", React.createElement("em", null, "The plan is for the clone to reproduce all of the components and selections of the current" + ' ' + "row. However currently the cloning simply creates an initialized clone, containing only the" + ' ' + "highest level (left-most) chart, with default settings. Of course the original row's settings" + ' ' + "can be easily reproduced.")), React.createElement("dt", null, React.createElement(FontIcon_1.default, {style: {
+    height: "18px",
+    width: "18px",
+    padding: "0 3px",
+    border: "1px solid silver",
+    borderRadius: "5px",
+    verticalAlign: "middle",
+    fontSize: "18px",
+}, className: "material-icons"}, "remove_circle_outline"), " Remove the current Exhibit"), React.createElement("dd", null, "This icon when invoked removes the current row of charts (cannot currently be undone)."), React.createElement("dt", null, React.createElement(FontIcon_1.default, {style: {
+    height: "18px",
+    width: "18px",
+    padding: "0 3px",
+    border: "1px solid silver",
+    borderRadius: "5px",
+    verticalAlign: "middle",
+    fontSize: "18px",
+}, className: "material-icons"}, "arrow_upward"), " Move the current Exhibit up one position"), React.createElement("dd", null, "When mulitple rows (", React.createElement("em", null, "Exhibits"), ") exist, they can be re-ordered. The up arrow icon" + ' ' + "(to the upper right of the row title) moves the row up one position."), React.createElement("dt", null, React.createElement(FontIcon_1.default, {style: {
+    height: "18px",
+    width: "18px",
+    padding: "0 3px",
+    border: "1px solid silver",
+    borderRadius: "5px",
+    verticalAlign: "middle",
+    fontSize: "18px",
+}, className: "material-icons"}, "arrow_downward"), " Move the current Exhibit down one position"), React.createElement("dd", null, "When mulitple rows (", React.createElement("em", null, "Exhibits"), ") exist, they can be re-ordered. The down arrow icon" + ' ' + "(to the upper right of the row title) moves the row down one position.")))), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Actionable Features"), React.createElement(Card_1.CardText, {expandable: true, style: { paddingTop: "0px" }}, "actionable features content" + ' ' + "assembling and printing reports content" + ' ' + "Saving and sharing workspaces")));
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = content;
