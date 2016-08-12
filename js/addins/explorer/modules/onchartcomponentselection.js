@@ -11,7 +11,7 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     }
     let budgetNode = branchNodes[nodeIndex];
     let budgetCell = budgetNode.cells[cellIndex];
-    if (budgetCell.nodeDataseriesName == 'Categories') {
+    if (budgetCell.nodeDataseriesName == 'CommonObjects') {
         return;
     }
     budgetCell.chartSelection = selection ? chartSelectionData.selection : null;

@@ -166,7 +166,7 @@ class BudgetBranch {
                 return;
             }
             let newnode = nodeData.Components[code];
-            if (!newnode.Components && !newnode.Categories) {
+            if (!newnode.Components && !newnode.CommonObjects) {
                 return;
             }
             workingStatus(true);

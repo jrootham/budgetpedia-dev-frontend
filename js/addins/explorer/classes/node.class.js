@@ -43,8 +43,8 @@ class BudgetNode {
         this._setCellTitle = (budgetCell) => {
             let portaltitles = budgetCell.viewpointConfigPack.datasetConfig.Titles;
             let chartblocktitle = null;
-            if ((budgetCell.nodeDataseriesName == 'Categories')) {
-                chartblocktitle = portaltitles.Categories;
+            if ((budgetCell.nodeDataseriesName == 'CommonObjects')) {
+                chartblocktitle = portaltitles.CommonObjects;
             }
             else {
                 chartblocktitle = portaltitles.Baseline;

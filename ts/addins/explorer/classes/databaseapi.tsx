@@ -57,7 +57,7 @@ interface YearsContent {
 
 interface ItemType {
     years: YearsContent,
-    Categories: {
+    CommonObjects: {
         [categorycode:string]: {
             years: YearsContent
         }
@@ -75,11 +75,11 @@ export interface DatasetConfig {
     Name: string,
     Titles: {
         Baseline: string,
-        Categories: string,
+        CommonObjects: string,
     },
     Units: string,
     UnitsAlias: string,
-    Categories: string,
+    CommonObjects: string,
     Title: string,
 }
 
@@ -185,7 +185,7 @@ class Database {
                     Titles,
                     Units,
                     UnitsAlias,
-                    Categories,
+                    CommonObjects,
                     Title } = datasetdata
 
                 let config = {
@@ -194,7 +194,7 @@ class Database {
                     Titles, 
                     Units, 
                     UnitsAlias,
-                    Categories,
+                    CommonObjects,
                     Title,
                 }
                  resolve(config)

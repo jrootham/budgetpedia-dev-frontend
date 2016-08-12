@@ -37,14 +37,14 @@ class Database {
         let datasetpromise = this.getDatasetPromise(dataset);
         let promise = new Promise(resolve => {
             datasetpromise.then((datasetdata) => {
-                let { Baseline, Name, Titles, Units, UnitsAlias, Categories, Title } = datasetdata;
+                let { Baseline, Name, Titles, Units, UnitsAlias, CommonObjects, Title } = datasetdata;
                 let config = {
                     Baseline: Baseline,
                     Name: Name,
                     Titles: Titles,
                     Units: Units,
                     UnitsAlias: UnitsAlias,
-                    Categories: Categories,
+                    CommonObjects: CommonObjects,
                     Title: Title,
                 };
                 resolve(config);

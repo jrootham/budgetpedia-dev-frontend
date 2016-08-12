@@ -237,6 +237,7 @@ class BudgetCell {
         if (sortedDataseries) {
             rows = budgetCell._chartParmsRows(nodeData, yearSpecs)
         } else {
+            console.log('no sortedDataSeries', sortedDataseries, nodeData, sortedlistName)
             return
         }
 
@@ -296,7 +297,7 @@ class BudgetCell {
             horizontalLabel = titleref.Alias || titleref.Name
         } else {
             let portaltitles = datasetConfig.Titles
-            horizontalLabel = portaltitles.Categories
+            horizontalLabel = portaltitles.CommonObjects
         }
 
         // ----------------------[ assemble chart title ]----------------------

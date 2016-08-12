@@ -4,7 +4,7 @@ let setViewpointData = (parms) => {
     if (viewpointData.currentDataset == datasetName)
         return;
     let baselineLookupIndex = datasetData.Baseline;
-    let categoryLookupIndex = datasetData.Categories;
+    let categoryLookupIndex = datasetData.CommonObjects;
     let baselinelookups = lookups[baselineLookupIndex];
     let categorylookups = lookups[categoryLookupIndex];
     let taxonomylookups = viewpointData.Lookups.Taxonomy;
@@ -22,16 +22,16 @@ let setViewpointData = (parms) => {
 let setComponentAggregates = (components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) => {
     let cumulatingSummaries = {
         years: {},
-        Categories: {},
+        CommonObjects: {},
     };
     for (let componentname in components) {
         let component = components[componentname];
         let componentAggregates = null;
         if (component.years)
             delete component.years;
-        if (component.Categories) {
-            delete component.Categories;
-            delete component.SortedCategories;
+        if (component.CommonObjects) {
+            delete component.CommonObjects;
+            delete component.SortedCommonObjects;
         }
         if (component.Contents != "BASELINE") {
             if (component.Components) {
@@ -40,11 +40,11 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
                 componentAggregates = setComponentAggregates(component.Components, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
                 if (componentAggregates.years)
                     component.years = componentAggregates.years;
-                if (componentAggregates.Categories) {
-                    component.Categories = componentAggregates.Categories;
-                    if (component.Categories) {
-                        let sorted = getNameSortedComponents(component.Categories, lookups);
-                        component.SortedCategories = sorted;
+                if (componentAggregates.CommonObjects) {
+                    component.CommonObjects = componentAggregates.CommonObjects;
+                    if (component.CommonObjects) {
+                        let sorted = getNameSortedComponents(component.CommonObjects, lookups);
+                        component.SortedCommonObjects = sorted;
                     }
                 }
             }
@@ -60,7 +60,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
                     if (importitem) {
                         componentAggregates = {
                             years: item.Adjusted.years,
-                            Categories: item.Adjusted.Categories,
+                            CommonObjects: item.Adjusted.CommonObjects,
                         };
                     }
                 }
@@ -69,7 +69,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
                     if (item.Nominal) {
                         componentAggregates = {
                             years: item.Nominal.years,
-                            Categories: item.Nominal.Categories,
+                            CommonObjects: item.Nominal.CommonObjects,
                         };
                     }
                 }
@@ -78,16 +78,16 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
                 importitem = item;
                 componentAggregates = {
                     years: item.years,
-                    Categories: item.Categories,
+                    CommonObjects: item.CommonObjects,
                 };
             }
             if (component.Components) {
                 delete component.SortedComponents;
                 delete component.Components;
             }
-            if (component.Categories) {
-                delete component.SortedCategories;
-                delete component.Categories;
+            if (component.CommonObjects) {
+                delete component.SortedCommonObjects;
+                delete component.CommonObjects;
             }
             if (component.years) {
                 delete component.years;
@@ -96,11 +96,11 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
                 if (importitem.years) {
                     component.years = importitem.years;
                 }
-                if (importitem.Categories) {
-                    component.Categories = importitem.Categories;
+                if (importitem.CommonObjects) {
+                    component.CommonObjects = importitem.CommonObjects;
                 }
-                if (importitem.SortedCategories) {
-                    component.SortedCategories = importitem.SortedCategories;
+                if (importitem.SortedCommonObjects) {
+                    component.SortedCommonObjects = importitem.SortedCommonObjects;
                 }
                 if (importitem.Components) {
                     component.Components = importitem.Components;
@@ -113,9 +113,9 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
                 let sorted = getNameSortedComponents(component.Components, lookups);
                 component.SortedComponents = sorted;
             }
-            if (component.Categories && !component.SortedCategories) {
-                let sorted = getNameSortedComponents(component.Categories, lookups);
-                component.SortedCategories = sorted;
+            if (component.CommonObjects && !component.SortedCommonObjects) {
+                let sorted = getNameSortedComponents(component.CommonObjects, lookups);
+                component.SortedCommonObjects = sorted;
             }
         }
         if (componentAggregates) {
@@ -188,20 +188,20 @@ let aggregateComponentAggregates = (cumulatingSummaries, componentAggregates) =>
                 cumulatingSummaries.years[yearname] = yearvalue;
         }
     }
-    if (componentAggregates.Categories) {
-        let Categories = componentAggregates.Categories;
-        for (let categoryname in Categories) {
-            let Category = Categories[categoryname];
+    if (componentAggregates.CommonObjects) {
+        let CommonObjects = componentAggregates.CommonObjects;
+        for (let categoryname in CommonObjects) {
+            let Category = CommonObjects[categoryname];
             if (Category.years) {
                 let years = Category.years;
                 for (let yearname in years) {
                     let yearvalue = years[yearname];
-                    let cumulatingCategory = cumulatingSummaries.Categories[categoryname] || { years: {} };
+                    let cumulatingCategory = cumulatingSummaries.CommonObjects[categoryname] || { years: {} };
                     if (cumulatingCategory.years[yearname])
                         cumulatingCategory.years[yearname] += yearvalue;
                     else
                         cumulatingCategory.years[yearname] = yearvalue;
-                    cumulatingSummaries.Categories[categoryname] = cumulatingCategory;
+                    cumulatingSummaries.CommonObjects[categoryname] = cumulatingCategory;
                 }
             }
         }

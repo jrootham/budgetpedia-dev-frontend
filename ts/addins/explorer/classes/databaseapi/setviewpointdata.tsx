@@ -9,7 +9,7 @@
 // summarization structure for setviewpointamounts
 interface ComponentAggregates {
     years?: any,
-    Categories?: any,
+    CommonObjects?: any,
 }
 
 import {
@@ -34,7 +34,7 @@ export interface SetViewpointDataParms {
 
 // starts with hash of components, 
 // recursively descends to BASELINE items, then leaves 
-// summaries by year, and Categories by year on ascent
+// summaries by year, and CommonObjects by year on ascent
 let setViewpointData = (parms: SetViewpointDataParms) => {
     // let viewpointname = parms.viewpointname,
     let { 
@@ -50,7 +50,7 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
         return
 
     let baselineLookupIndex = datasetData.Baseline // use for system lookups
-    let categoryLookupIndex = datasetData.Categories
+    let categoryLookupIndex = datasetData.CommonObjects
 
     let baselinelookups = lookups[baselineLookupIndex]
     let categorylookups = lookups[categoryLookupIndex]
@@ -68,7 +68,7 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
 
     let rootcomponent = { "ROOT": viewpointData }
 
-    // set years, and Categories by years
+    // set years, and CommonObjects by years
     // initiates recursion
     setComponentAggregates(rootcomponent, items, isInflationAdjusted,
         lookupset, inflationAdjusted)
@@ -82,13 +82,13 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
 
 // this is recursive, with absence of Components property at leaf
 // special treatment for 'BASELINE' items -- fetches data from data series items
-// sets years and Categories for the node
+// sets years and CommonObjects for the node
 let setComponentAggregates = (components, items, isInflationAdjusted,
     lookups, wantsInflationAdjusted): ComponentAggregates => {
     // cumulate summaries for this level
     let cumulatingSummaries: ComponentAggregates = {
         years: {},
-        Categories: {},
+        CommonObjects: {},
     }
 
     // for every component at this level
@@ -101,9 +101,9 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
 
         // remove any previous aggregations...
         if (component.years) delete component.years
-        if (component.Categories) {
-            delete component.Categories
-            delete component.SortedCategories
+        if (component.CommonObjects) {
+            delete component.CommonObjects
+            delete component.SortedCommonObjects
         }
 
         // for non-baseline items, recurse to collect aggregations
@@ -127,13 +127,13 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
                 // capture data for chart-making
                 if (componentAggregates.years)
                     component.years = componentAggregates.years
-                if (componentAggregates.Categories) {
-                    component.Categories = componentAggregates.Categories
-                    if (component.Categories) {// && !component.SortedCategories) {
+                if (componentAggregates.CommonObjects) {
+                    component.CommonObjects = componentAggregates.CommonObjects
+                    if (component.CommonObjects) {// && !component.SortedCommonObjects) {
                         let sorted = getNameSortedComponents(
-                            component.Categories, lookups)
+                            component.CommonObjects, lookups)
 
-                        component.SortedCategories = sorted
+                        component.SortedCommonObjects = sorted
                     }
 
                 }
@@ -154,7 +154,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
                     if (importitem) {
                         componentAggregates = {
                             years: item.Adjusted.years,
-                            Categories: item.Adjusted.Categories,
+                            CommonObjects: item.Adjusted.CommonObjects,
                         }
                     }
                 } else {
@@ -162,7 +162,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
                     if (item.Nominal) {
                         componentAggregates = {
                             years: item.Nominal.years,
-                            Categories: item.Nominal.Categories,
+                            CommonObjects: item.Nominal.CommonObjects,
                         }
                     }
                 }
@@ -170,7 +170,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
                 importitem = item
                 componentAggregates = {
                     years: item.years,
-                    Categories: item.Categories,
+                    CommonObjects: item.CommonObjects,
                 }
             }
             // capture data for chart-making
@@ -178,9 +178,9 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
                 delete component.SortedComponents
                 delete component.Components
             }
-            if (component.Categories) {
-                delete component.SortedCategories
-                delete component.Categories
+            if (component.CommonObjects) {
+                delete component.SortedCommonObjects
+                delete component.CommonObjects
             }
             if (component.years) {
                 delete component.years
@@ -189,11 +189,11 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
                 if (importitem.years) {
                     component.years = importitem.years
                 } 
-                if (importitem.Categories) {
-                    component.Categories = importitem.Categories
+                if (importitem.CommonObjects) {
+                    component.CommonObjects = importitem.CommonObjects
                 } 
-                if (importitem.SortedCategories) {
-                    component.SortedCategories = importitem.SortedCategories
+                if (importitem.SortedCommonObjects) {
+                    component.SortedCommonObjects = importitem.SortedCommonObjects
                 }
                 if (importitem.Components) {
                     component.Components = importitem.Components
@@ -208,11 +208,11 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
 
                 component.SortedComponents = sorted
             }
-            if (component.Categories && !component.SortedCategories) { // && !component.SortedComponents) {
+            if (component.CommonObjects && !component.SortedCommonObjects) { // && !component.SortedComponents) {
                 let sorted = getNameSortedComponents(
-                    component.Categories, lookups)
+                    component.CommonObjects, lookups)
 
-                component.SortedCategories = sorted
+                component.SortedCommonObjects = sorted
             }
 
         }
@@ -313,18 +313,18 @@ let aggregateComponentAggregates = (
         }
     }
 
-    // if Categories have been collected, add them to the totals
-    if (componentAggregates.Categories) {
+    // if CommonObjects have been collected, add them to the totals
+    if (componentAggregates.CommonObjects) {
 
-        let Categories = componentAggregates.Categories
+        let CommonObjects = componentAggregates.CommonObjects
 
         // for each aggreate...
-        for (let categoryname in Categories) {
+        for (let categoryname in CommonObjects) {
 
-            let Category = Categories[categoryname]
+            let Category = CommonObjects[categoryname]
 
             // for each category year...
-            // collect year values for the Categories if they exist
+            // collect year values for the CommonObjects if they exist
             if (Category.years) {
 
                 let years = Category.years
@@ -334,7 +334,7 @@ let aggregateComponentAggregates = (
                     // accumulate the year value...
                     let yearvalue = years[yearname]
                     let cumulatingCategory =
-                        cumulatingSummaries.Categories[categoryname] || { years: {} }
+                        cumulatingSummaries.CommonObjects[categoryname] || { years: {} }
 
                     if (cumulatingCategory.years[yearname])
                         cumulatingCategory.years[yearname] += yearvalue
@@ -342,7 +342,7 @@ let aggregateComponentAggregates = (
                         cumulatingCategory.years[yearname] = yearvalue
 
                     // re-assemble
-                    cumulatingSummaries.Categories[categoryname] = cumulatingCategory
+                    cumulatingSummaries.CommonObjects[categoryname] = cumulatingCategory
 
                 }
             }

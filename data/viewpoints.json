@@ -90,7 +90,7 @@
                         "Type": "Components"
                     },
                     {
-                        "Type": "Categories"
+                        "Type": "CommonObjects"
                     }
                 ],
                 "BudgetRevenues": [
@@ -98,7 +98,7 @@
                         "Type": "Components"
                     },
                     {
-                        "Type": "Categories"
+                        "Type": "CommonObjects"
                     }
                 ],
                 "BudgetStaffing": [
@@ -106,7 +106,7 @@
                         "Type": "Components"
                     },
                     {
-                        "Type": "Categories"
+                        "Type": "CommonObjects"
                     }
                 ]
             },
@@ -553,7 +553,7 @@
                         "Type": "Components"
                     },
                     {
-                        "Type": "Categories"
+                        "Type": "CommonObjects"
                     }
                 ],
                 "BudgetRevenues": [
@@ -561,7 +561,7 @@
                         "Type": "Components"
                     },
                     {
-                        "Type": "Categories"
+                        "Type": "CommonObjects"
                     }
                 ],
                 "BudgetStaffing": [
@@ -569,7 +569,7 @@
                         "Type": "Components"
                     },
                     {
-                        "Type": "Categories"
+                        "Type": "CommonObjects"
                     }
                 ]
             },

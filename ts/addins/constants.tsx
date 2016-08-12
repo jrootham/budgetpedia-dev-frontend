@@ -3,7 +3,7 @@
 //     'Types': 'Program Activity Types',
 //     'Groups': 'Program Activity Clusters',
 //     'Divisions':'Programs',
-//     'Expenditures':'Expenditure Categories'
+//     'Expenditures':'Expenditure CommonObjects'
 // }
 let ChartCodeToGoogleChartType = {
     'DonutChart':'PieChart',

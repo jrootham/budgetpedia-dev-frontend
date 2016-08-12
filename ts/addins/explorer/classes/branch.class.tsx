@@ -320,7 +320,7 @@ class BudgetBranch {
         }
 
         let newnode = nodeData.Components[code]
-        if (!newnode.Components && !newnode.Categories) {
+        if (!newnode.Components && !newnode.CommonObjects) {
             // updateChartSelections()
             return
         }

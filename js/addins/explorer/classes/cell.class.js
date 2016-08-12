@@ -46,6 +46,7 @@ class BudgetCell {
                 rows = budgetCell._chartParmsRows(nodeData, yearSpecs);
             }
             else {
+                console.log('no sortedDataSeries', sortedDataseries, nodeData, sortedlistName);
                 return;
             }
             let chartParms = {
@@ -77,7 +78,7 @@ class BudgetCell {
             }
             else {
                 let portaltitles = datasetConfig.Titles;
-                horizontalLabel = portaltitles.Categories;
+                horizontalLabel = portaltitles.CommonObjects;
             }
             let title;
             if (parentData) {
