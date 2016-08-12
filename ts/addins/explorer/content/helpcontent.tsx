@@ -29,7 +29,7 @@ let content =
             classification schemes (taxonomies), and data sources.</dd>
         <dt><strong>Version</strong></dt>
         <dd>alternate detailed datasets available for the selected Viewpoint (see the Budgetpedia
-            project's <a target = "_blank" href="https://drive.google.com/drive/u/0/folders/0B208oCU9D8OuM2NmUk9XR1VCbEU">research database)</a></dd>
+            project's <a target = "_blank" href="https://drive.google.com/drive/u/0/folders/0B208oCU9D8OuM2NmUk9XR1VCbEU">research repository)</a></dd>
         <dt><strong>Aspect</strong></dt>
         <dd> particular aspects of the dataset, such as Revenue, Expenses or Staffing</dd>
         <dt><strong>By Unit</strong></dt>
