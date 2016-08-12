@@ -4,13 +4,13 @@ let setViewpointData = (parms) => {
     if (viewpointData.currentDataset == datasetName)
         return;
     let baselineLookupIndex = datasetData.Baseline;
-    let categoryLookupIndex = datasetData.CommonObjects;
+    let commonObjectLookupIndex = datasetData.CommonObjects;
     let baselinelookups = lookups[baselineLookupIndex];
-    let categorylookups = lookups[categoryLookupIndex];
+    let commonObjectLookups = lookups[commonObjectLookupIndex];
     let taxonomylookups = viewpointData.Lookups.Taxonomy;
     let lookupset = {
         baselinelookups: baselinelookups,
-        categorylookups: categorylookups,
+        commonObjectLookups: commonObjectLookups,
         taxonomylookups: taxonomylookups,
     };
     let items = datasetData.Items;
@@ -154,7 +154,7 @@ let getIndexSortedComponents = (components, lookups) => {
 };
 let getNameSortedComponents = (components, lookups) => {
     let sorted = [];
-    let complookups = lookups.categorylookups;
+    let complookups = lookups.commonObjectLookups;
     for (let componentname in components) {
         let component = components[componentname];
         let config = component.Contents;
@@ -190,18 +190,18 @@ let aggregateComponentAggregates = (cumulatingSummaries, componentAggregates) =>
     }
     if (componentAggregates.CommonObjects) {
         let CommonObjects = componentAggregates.CommonObjects;
-        for (let categoryname in CommonObjects) {
-            let Category = CommonObjects[categoryname];
-            if (Category.years) {
-                let years = Category.years;
+        for (let commonObjectName in CommonObjects) {
+            let commonObject = CommonObjects[commonObjectName];
+            if (commonObject.years) {
+                let years = commonObject.years;
                 for (let yearname in years) {
                     let yearvalue = years[yearname];
-                    let cumulatingCategory = cumulatingSummaries.CommonObjects[categoryname] || { years: {} };
-                    if (cumulatingCategory.years[yearname])
-                        cumulatingCategory.years[yearname] += yearvalue;
+                    let cumulatingCommonObject = cumulatingSummaries.CommonObjects[commonObjectName] || { years: {} };
+                    if (cumulatingCommonObject.years[yearname])
+                        cumulatingCommonObject.years[yearname] += yearvalue;
                     else
-                        cumulatingCategory.years[yearname] = yearvalue;
-                    cumulatingSummaries.CommonObjects[categoryname] = cumulatingCategory;
+                        cumulatingCommonObject.years[yearname] = yearvalue;
+                    cumulatingSummaries.CommonObjects[commonObjectName] = cumulatingCommonObject;
                 }
             }
         }
