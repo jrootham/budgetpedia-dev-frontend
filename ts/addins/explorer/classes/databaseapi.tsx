@@ -105,7 +105,7 @@ export interface YearSpecs {
 
 export interface GetViewpointDataParms {
     viewpointName:string,
-    version: string,
+    versionName: string,
     datasetName: string,
     inflationAdjusted: boolean,
     yearSpecs: YearSpecs,
@@ -137,12 +137,12 @@ class Database {
 
     public getViewpointData(parms: GetViewpointDataParms) {
 
-        let { viewpointName, version, datasetName, inflationAdjusted, yearSpecs } = parms
+        let { viewpointName, versionName, datasetName, inflationAdjusted, yearSpecs } = parms
 
         let viewpointDataPromise = this.getViewpointPromise(viewpointName),
-            datasetDataPromise = this.getDatasetPromise(version,datasetName),
+            datasetDataPromise = this.getDatasetPromise(versionName,datasetName),
             lookupsPromise = this.getLookupPromise(),
-            datasetConfigPromise = this.getDatasetConfigPromise(version,datasetName)
+            datasetConfigPromise = this.getDatasetConfigPromise(versionName, datasetName)
 
         let promise = new Promise(resolve => {
 
@@ -177,9 +177,9 @@ class Database {
         return promise
 
     }
-    private getDatasetConfigPromise(version, dataset:string) {
+    private getDatasetConfigPromise(versionName, datasetName:string) {
 
-        let datasetpromise = this.getDatasetPromise(version, dataset)
+        let datasetpromise = this.getDatasetPromise(versionName, datasetName)
         let promise = new Promise(resolve => {
             datasetpromise.then((datasetdata: DatasetConfig) => {
                 let { 
@@ -217,9 +217,9 @@ class Database {
         return promise
     }
 
-    private getDatasetPromise(version, dataset: string) {
+    private getDatasetPromise(versionName, datasetName: string) {
         let promise = new Promise(resolve => {
-            let datasetdata: CurrencyDataset | ItemDataset = db_datasets[version][dataset]
+            let datasetdata: CurrencyDataset | ItemDataset = db_datasets[versionName][datasetName]
             resolve(datasetdata)
         })
         return promise

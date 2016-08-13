@@ -8,8 +8,8 @@ class Database {
     getBranch(viewpointname, path = []) {
     }
     getViewpointData(parms) {
-        let { viewpointName, version, datasetName, inflationAdjusted, yearSpecs } = parms;
-        let viewpointDataPromise = this.getViewpointPromise(viewpointName), datasetDataPromise = this.getDatasetPromise(version, datasetName), lookupsPromise = this.getLookupPromise(), datasetConfigPromise = this.getDatasetConfigPromise(version, datasetName);
+        let { viewpointName, versionName, datasetName, inflationAdjusted, yearSpecs } = parms;
+        let viewpointDataPromise = this.getViewpointPromise(viewpointName), datasetDataPromise = this.getDatasetPromise(versionName, datasetName), lookupsPromise = this.getLookupPromise(), datasetConfigPromise = this.getDatasetConfigPromise(versionName, datasetName);
         let promise = new Promise(resolve => {
             Promise.all([viewpointDataPromise, datasetDataPromise, lookupsPromise, datasetConfigPromise]).then(values => {
                 let viewpointData;
@@ -33,8 +33,8 @@ class Database {
         });
         return promise;
     }
-    getDatasetConfigPromise(version, dataset) {
-        let datasetpromise = this.getDatasetPromise(version, dataset);
+    getDatasetConfigPromise(versionName, datasetName) {
+        let datasetpromise = this.getDatasetPromise(versionName, datasetName);
         let promise = new Promise(resolve => {
             datasetpromise.then((datasetdata) => {
                 let { DatasetTitle, Dataseries, DataseriesTitles, Units, UnitsAlias, } = datasetdata;
@@ -61,9 +61,9 @@ class Database {
         });
         return promise;
     }
-    getDatasetPromise(version, dataset) {
+    getDatasetPromise(versionName, datasetName) {
         let promise = new Promise(resolve => {
-            let datasetdata = db_datasets[version][dataset];
+            let datasetdata = db_datasets[versionName][datasetName];
             resolve(datasetdata);
         });
         return promise;

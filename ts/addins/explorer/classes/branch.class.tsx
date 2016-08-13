@@ -230,7 +230,7 @@ class BudgetBranch {
 
         let _promise = databaseapi.getViewpointData({
             viewpointName, 
-            version:'PBF',
+            versionName:'PBF',
             datasetName,
             inflationAdjusted,
             yearSpecs: {
