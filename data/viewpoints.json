@@ -84,7 +84,7 @@
                 }
             },
             "Contents": "TYPES",
-            "DatasetSeries": {
+            "Datasets": {
                 "BudgetExpenses": [
                     {
                         "Type": "Components"
@@ -547,7 +547,7 @@
                 }
             },
             "Contents": "STRUCTURES",
-            "DatasetSeries": {
+            "Datasets": {
                 "BudgetExpenses": [
                     {
                         "Type": "Components"

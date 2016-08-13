@@ -49,15 +49,15 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
     if (viewpointData.currentDataset == datasetName)
         return
 
-    let baselineLookupIndex = datasetData.Components // use for system lookups
-    let commonObjectLookupIndex = datasetData.CommonObjects
+    let componentLookupIndex = datasetData.ComponentsLookupIndex // use for system lookups
+    let commonObjectLookupIndex = datasetData.CommonObjectsLookupIndex
 
-    let baselinelookups = lookups[baselineLookupIndex]
+    let componentlookups = lookups[componentLookupIndex]
     let commonObjectLookups = lookups[commonObjectLookupIndex]
     let taxonomylookups = viewpointData.Lookups.Taxonomy
 
     let lookupset = {
-        baselinelookups,
+        componentlookups,
         commonObjectLookups,
         taxonomylookups,
     }
@@ -235,7 +235,7 @@ let getIndexSortedComponents = (components, lookups):SortedComponentItem[] => {
         let component = components[componentcode]
         let config = component.Contents
         let name = (config == 'BASELINE')
-            ? lookups.baselinelookups[componentcode]
+            ? lookups.componentlookups[componentcode]
             : catlookups[componentcode]
         let item = {
             Code: componentcode,

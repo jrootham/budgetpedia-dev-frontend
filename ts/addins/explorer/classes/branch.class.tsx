@@ -72,8 +72,6 @@ class BudgetBranch {
         let branchSettings = this.settings
         let viewpointData = this.state.viewpointData
 
-        // console.log('viewpointData', viewpointData)
-
         let datapath = []
 
         let {
@@ -92,7 +90,7 @@ class BudgetBranch {
                 firstYear: null,
                 lastYear: null,
             },
-            datasetSpecs:viewpointData.DatasetSeries,
+            datasetSpecs:viewpointData.Datasets,
             dataPath: [],
             nodeIndex:0,
         }
@@ -328,7 +326,7 @@ class BudgetBranch {
         }
         workingStatus(true)
         let newrange = Object.assign({}, budgetNode.yearSpecs)
-        let datasetSpecs = viewpointData.DatasetSeries
+        let datasetSpecs = viewpointData.Datasets
 
         let newdatanode = getBudgetNode(viewpointData, childdatapath)
         let newnodeconfigparms: BudgetNodeParms = {

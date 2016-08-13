@@ -44,7 +44,7 @@ export interface ViewpointData extends Component {
     Configuration: {
         [configurationcode:string]:Configuration,
     },
-   DatasetSeries: DataseriesMeta[],
+   Datasets: DataseriesMeta[],
 }
 
 interface Viewpoints {

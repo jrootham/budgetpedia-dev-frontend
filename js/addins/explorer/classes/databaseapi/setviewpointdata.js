@@ -3,13 +3,13 @@ let setViewpointData = (parms) => {
     let { datasetName, viewpointData, datasetData, lookups, inflationAdjusted } = parms;
     if (viewpointData.currentDataset == datasetName)
         return;
-    let baselineLookupIndex = datasetData.Components;
-    let commonObjectLookupIndex = datasetData.CommonObjects;
-    let baselinelookups = lookups[baselineLookupIndex];
+    let componentLookupIndex = datasetData.ComponentsLookupIndex;
+    let commonObjectLookupIndex = datasetData.CommonObjectsLookupIndex;
+    let componentlookups = lookups[componentLookupIndex];
     let commonObjectLookups = lookups[commonObjectLookupIndex];
     let taxonomylookups = viewpointData.Lookups.Taxonomy;
     let lookupset = {
-        baselinelookups: baselinelookups,
+        componentlookups: componentlookups,
         commonObjectLookups: commonObjectLookups,
         taxonomylookups: taxonomylookups,
     };
@@ -131,7 +131,7 @@ let getIndexSortedComponents = (components, lookups) => {
         let component = components[componentcode];
         let config = component.Contents;
         let name = (config == 'BASELINE')
-            ? lookups.baselinelookups[componentcode]
+            ? lookups.componentlookups[componentcode]
             : catlookups[componentcode];
         let item = {
             Code: componentcode,

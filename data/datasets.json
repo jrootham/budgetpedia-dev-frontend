@@ -1,14 +1,13 @@
     {
         "BudgetExpenses": {
-            "Components": "Programs",
-            "DatasetName": "Expenditures",
+            "ComponentsLookupIndex": "Programs",
             "DataseriesTitles": {
                 "Components": "Programs",
                 "CommonObjects": "Expenditures"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
-            "CommonObjects": "Expenditures",
+            "CommonObjectsLookupIndex": "Expenditures",
             "Title": "2015 Council Approved Gross Operating Expenditures",
             "InflationAdjusted": true,
             "Items": {
@@ -29626,15 +29625,14 @@
             }
         },
         "BudgetRevenues": {
-            "Components": "Programs",
-            "DatasetName": "Revenues",
+            "ComponentsLookupIndex": "Programs",
             "DataseriesTitles": {
                 "Components": "Programs",
                 "CommonObjects": "Revenues"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
-            "CommonObjects": "Revenues",
+            "CommonObjectsLookupIndex": "Revenues",
             "Title": "2015 Council Approved Gross Operating Revenue",
             "InflationAdjusted": true,
             "Items": {
@@ -46837,14 +46835,14 @@
             }
         },
         "BudgetStaffing": {
-            "DatasetName": "Staffing",
+            "ComponentsLookupIndex":"Programs",
             "DataseriesTitles": {
                 "Components": "Programs",
                 "CommonObjects": "Designations"
             },
             "Units": "FTE",
             "UnitsAlias": "Staffing Level (FTE)",
-            "CommonObjects": "TimeAllocations",
+            "CommonObjectsLookupIndex": "TimeAllocations",
             "Title": "2015 Council Approved Staff Positions",
             "InflationAdjusted": false,
             "Items": {
