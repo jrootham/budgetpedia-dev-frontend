@@ -1,10 +1,9 @@
     {
         "BudgetExpenses": {
-            "Action": "Expenses",
-            "Baseline": "Programs",
-            "Name": "Expenditures",
-            "Titles": {
-                "Baseline": "Programs",
+            "Components": "Programs",
+            "DatasetName": "Expenditures",
+            "DataseriesTitles": {
+                "Components": "Programs",
                 "CommonObjects": "Expenditures"
             },
             "Units": "DOLLAR",
@@ -29627,11 +29626,10 @@
             }
         },
         "BudgetRevenues": {
-            "Action": "Revenues",
-            "Baseline": "Programs",
-            "Name": "Revenues",
-            "Titles": {
-                "Baseline": "Programs",
+            "Components": "Programs",
+            "DatasetName": "Revenues",
+            "DataseriesTitles": {
+                "Components": "Programs",
                 "CommonObjects": "Revenues"
             },
             "Units": "DOLLAR",
@@ -46839,17 +46837,16 @@
             }
         },
         "BudgetStaffing": {
-            "Action": "Staffing",
-            "Baseline": "Programs",
-            "Name": "Staffing",
-            "Titles": {
-                "Baseline": "Programs",
+            "DatasetName": "Staffing",
+            "DataseriesTitles": {
+                "Components": "Programs",
                 "CommonObjects": "Designations"
             },
             "Units": "FTE",
             "UnitsAlias": "Staffing Level (FTE)",
             "CommonObjects": "TimeAllocations",
             "Title": "2015 Council Approved Staff Positions",
+            "InflationAdjusted": false,
             "Items": {
                 "311SERVICE": {
                     "years": {

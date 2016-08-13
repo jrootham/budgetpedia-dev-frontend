@@ -44,7 +44,7 @@ export interface ViewpointData extends Component {
     Configuration: {
         [configurationcode:string]:Configuration,
     },
-    DatasetSeries: DataseriesMeta[],
+   DatasetSeries: DataseriesMeta[],
 }
 
 interface Viewpoints {
@@ -71,10 +71,10 @@ interface CurrencyItemType {
 
 export interface DatasetConfig {
     // Action: string,
-    Baseline: string,
+    Components: string,
     Name: string,
-    Titles: {
-        Baseline: string,
+    DataseriesTitles: {
+        Components: string,
         CommonObjects: string,
     },
     Units: string,
@@ -180,18 +180,18 @@ class Database {
         let datasetpromise = this.getDatasetPromise(dataset)
         let promise = new Promise(resolve => {
             datasetpromise.then((datasetdata: DatasetConfig) => {
-                let { Baseline,
+                let { Components,
                     Name,
-                    Titles,
+                    DataseriesTitles,
                     Units,
                     UnitsAlias,
                     CommonObjects,
                     Title } = datasetdata
 
                 let config = {
-                    Baseline, 
+                    Components, 
                     Name, 
-                    Titles, 
+                    DataseriesTitles, 
                     Units, 
                     UnitsAlias,
                     CommonObjects,

@@ -49,7 +49,7 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
     if (viewpointData.currentDataset == datasetName)
         return
 
-    let baselineLookupIndex = datasetData.Baseline // use for system lookups
+    let baselineLookupIndex = datasetData.Components // use for system lookups
     let commonObjectLookupIndex = datasetData.CommonObjects
 
     let baselinelookups = lookups[baselineLookupIndex]

@@ -77,7 +77,7 @@ class BudgetCell {
                 horizontalLabel = titleref.Alias || titleref.Name;
             }
             else {
-                let portaltitles = datasetConfig.Titles;
+                let portaltitles = datasetConfig.DataseriesTitles;
                 horizontalLabel = portaltitles.CommonObjects;
             }
             let title;

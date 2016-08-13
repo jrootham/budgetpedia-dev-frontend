@@ -3,7 +3,7 @@ let setViewpointData = (parms) => {
     let { datasetName, viewpointData, datasetData, lookups, inflationAdjusted } = parms;
     if (viewpointData.currentDataset == datasetName)
         return;
-    let baselineLookupIndex = datasetData.Baseline;
+    let baselineLookupIndex = datasetData.Components;
     let commonObjectLookupIndex = datasetData.CommonObjects;
     let baselinelookups = lookups[baselineLookupIndex];
     let commonObjectLookups = lookups[commonObjectLookupIndex];

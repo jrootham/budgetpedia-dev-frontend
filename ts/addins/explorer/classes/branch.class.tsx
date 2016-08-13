@@ -72,6 +72,8 @@ class BudgetBranch {
         let branchSettings = this.settings
         let viewpointData = this.state.viewpointData
 
+        // console.log('viewpointData', viewpointData)
+
         let datapath = []
 
         let {
