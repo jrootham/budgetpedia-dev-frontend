@@ -4,6 +4,14 @@
             "CommonObjectsLookupIndex": "Expenditures",
             "InflationAdjusted": true,
             "DatasetTitle": "2015 Council Approved Gross Operating Expenditures",
+            "Dataseries": [
+                {
+                    "Type": "Components"
+                },
+                {
+                    "Type": "CommonObjects"
+                }
+            ],
             "DataseriesTitles": {
                 "Components": "Programs",
                 "CommonObjects": "Expenditures"
@@ -29629,6 +29637,14 @@
             "CommonObjectsLookupIndex": "Revenues",
             "InflationAdjusted": true,
             "DatasetTitle": "2015 Council Approved Gross Operating Revenue",
+            "Dataseries": [
+                {
+                    "Type": "Components"
+                },
+                {
+                    "Type": "CommonObjects"
+                }
+            ],
             "DataseriesTitles": {
                 "Components": "Programs",
                 "CommonObjects": "Revenues"
@@ -46839,6 +46855,14 @@
             "CommonObjectsLookupIndex": "TimeAllocations",
             "InflationAdjusted": false,
             "DatasetTitle": "2015 Council Approved Staff Positions",
+            "Dataseries": [
+                {
+                    "Type": "Components"
+                },
+                {
+                    "Type": "CommonObjects"
+                }
+            ],
             "DataseriesTitles": {
                 "Components": "Programs",
                 "CommonObjects": "Designations"

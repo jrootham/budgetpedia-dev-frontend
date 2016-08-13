@@ -75,32 +75,6 @@
                 }
             },
             "ConfigRef": "TYPES",
-            "DatasetSeries": {
-                "BudgetExpenses": [
-                    {
-                        "Type": "Components"
-                    },
-                    {
-                        "Type": "CommonObjects"
-                    }
-                ],
-                "BudgetRevenues": [
-                    {
-                        "Type": "Components"
-                    },
-                    {
-                        "Type": "CommonObjects"
-                    }
-                ],
-                "BudgetStaffing": [
-                    {
-                        "Type": "Components"
-                    },
-                    {
-                        "Type": "CommonObjects"
-                    }
-                ]
-            },
             "Components": {
                 "SHARED": {
                     "Index": 0,
@@ -529,32 +503,6 @@
                 }
             },
             "ConfigRef": "STRUCTURES",
-            "Datasets": {
-                "BudgetExpenses": [
-                    {
-                        "Type": "Components"
-                    },
-                    {
-                        "Type": "CommonObjects"
-                    }
-                ],
-                "BudgetRevenues": [
-                    {
-                        "Type": "Components"
-                    },
-                    {
-                        "Type": "CommonObjects"
-                    }
-                ],
-                "BudgetStaffing": [
-                    {
-                        "Type": "Components"
-                    },
-                    {
-                        "Type": "CommonObjects"
-                    }
-                ]
-            },
             "Components": {
                 "ADMINOPS": {
                     "Index": 0,

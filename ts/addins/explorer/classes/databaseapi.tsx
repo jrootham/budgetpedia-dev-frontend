@@ -77,6 +77,7 @@ export interface DatasetConfig {
         Components: string,
         CommonObjects: string,
     },
+    Dataseries: DataseriesMeta[],
     Units: string,
     UnitsAlias: string,
     CommonObjects: string,
@@ -182,6 +183,7 @@ class Database {
             datasetpromise.then((datasetdata: DatasetConfig) => {
                 let { 
                     DatasetTitle,
+                    Dataseries,
                     DataseriesTitles,
                     Units,
                     UnitsAlias,
@@ -189,6 +191,7 @@ class Database {
 
                 let config = {
                     DatasetTitle,
+                    Dataseries,
                     DataseriesTitles, 
                     Units, 
                     UnitsAlias,

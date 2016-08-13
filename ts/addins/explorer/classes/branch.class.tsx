@@ -90,7 +90,7 @@ class BudgetBranch {
                 firstYear: null,
                 lastYear: null,
             },
-            datasetSpecs:viewpointData.DatasetSeries,
+            // datasetSpecs:viewpointData.DatasetSeries,
             dataPath: [],
             nodeIndex:0,
         }
@@ -326,11 +326,11 @@ class BudgetBranch {
         }
         workingStatus(true)
         let newrange = Object.assign({}, budgetNode.yearSpecs)
-        let datasetSpecs = viewpointData.DatasetSeries
+        // let datasetSpecs = viewpointData.DatasetSeries
 
         let newdatanode = getBudgetNode(viewpointData, childdatapath)
         let newnodeconfigparms: BudgetNodeParms = {
-            datasetSpecs,
+            // datasetSpecs,
             viewpointName,
             facetName,
             dataPath: childdatapath,

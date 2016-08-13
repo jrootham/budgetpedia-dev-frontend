@@ -21,7 +21,7 @@ import {
 } from '../../constants'
 
 import BudgetNode from './node.class'
-import {YearSpecs} from './databaseapi'
+import {YearSpecs, DatasetConfig} from './databaseapi'
 
 var format = require('format-number')
 
@@ -42,7 +42,7 @@ export interface ChartCallbacks {
 
 interface viewpointConfigPack {
     viewpointConfigs: any,
-    datasetConfig: any,
+    datasetConfig: DatasetConfig,
 }
 
 export interface CellDeclaration {

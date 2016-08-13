@@ -18,7 +18,7 @@ class BudgetNode {
         this.getCellDeclarationParms = () => {
             let parmsList = [];
             let datasetName = constants_1.FacetNameToDatasetName[this.facetName];
-            let chartSpecs = this.datasetSpecs[datasetName];
+            let chartSpecs = this.viewpointConfigPack.datasetConfig.Dataseries;
             for (let chartSpec of chartSpecs) {
                 let cellDeclaration = Object.assign({}, this.props.declarationData.defaults.cell);
                 cellDeclaration.nodeDataseriesName = chartSpec.Type;
@@ -58,7 +58,6 @@ class BudgetNode {
             cell.selectionCallback = fcurrent;
             cell.setChartParms();
         };
-        let portalcharts = parms.datasetSpecs;
         this.viewpointName = parms.viewpointName;
         this.facetName = parms.facetName;
         this.dataPath = parms.dataPath;
@@ -66,7 +65,6 @@ class BudgetNode {
         this.yearSpecs = parms.yearSpecs;
         this._nodeData = node;
         this.uid = uid;
-        this.datasetSpecs = parms.datasetSpecs;
         if (parms.parentData)
             this.parentData = parms.parentData;
         if (parentNode)
@@ -106,7 +104,7 @@ class BudgetNode {
     resetCells() {
         let budgetNode = this;
         let datasetName = constants_1.FacetNameToDatasetName[budgetNode.facetName];
-        let chartSpecs = budgetNode.datasetSpecs[datasetName];
+        let chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries;
         let cells = budgetNode.allCells;
         for (let cellIndex in cells) {
             let cell = cells[cellIndex];

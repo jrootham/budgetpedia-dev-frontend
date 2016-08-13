@@ -22,7 +22,7 @@ import BudgetCell, { CellDeclaration, NodeData } from './cell.class'
 export interface BudgetNodeParms {
     viewpointName: string,
     facetName: string, // used to select chartset to display
-    datasetSpecs:DataseriesMeta[],
+    // datasetSpecs:DataseriesMeta[],
     yearSpecs: YearSpecs,
     dataPath: string[],
     nodeIndex: number,
@@ -32,7 +32,7 @@ export interface BudgetNodeParms {
 class BudgetNode {
     constructor(parms: BudgetNodeParms, uid:string, node:any, parentNode:any = null) {
 
-        let portalcharts = parms.datasetSpecs
+        // let portalcharts = parms.datasetSpecs
 
         this.viewpointName = parms.viewpointName
         this.facetName = parms.facetName
@@ -41,7 +41,7 @@ class BudgetNode {
         this.yearSpecs = parms.yearSpecs
         this._nodeData = node
         this.uid = uid
-        this.datasetSpecs = parms.datasetSpecs
+        // this.datasetSpecs = parms.datasetSpecs
         // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
         if (parms.parentData) this.parentData = parms.parentData
         if (parentNode) this.parentData.nodeData = parentNode
@@ -59,10 +59,10 @@ class BudgetNode {
     dataPath: string[]
     nodeIndex: number
     yearSpecs: YearSpecs
-    datasetSpecs:DataseriesMeta[]
     actions: any
     nodeCallbacks: any
     viewpointConfigPack: any
+    // datasetSpecs:DataseriesMeta[]
     branchSettings:any
     onChartComponentSelection: Function
     new:boolean = true
@@ -116,7 +116,7 @@ class BudgetNode {
     getCellDeclarationParms = () => {
         let parmsList:CellDeclaration[] = []
         let datasetName:string = FacetNameToDatasetName[this.facetName]
-        let chartSpecs = this.datasetSpecs[datasetName]
+        let chartSpecs = this.viewpointConfigPack.datasetConfig.Dataseries // datasetSpecs[datasetName]
         for (let chartSpec of chartSpecs) {
             let cellDeclaration:CellDeclaration = Object.assign({},this.props.declarationData.defaults.cell)
             cellDeclaration.nodeDataseriesName = chartSpec.Type // s/b dataseriesName
@@ -153,7 +153,7 @@ class BudgetNode {
         let budgetNode = this
 
         let datasetName:string = FacetNameToDatasetName[budgetNode.facetName]
-        let chartSpecs = budgetNode.datasetSpecs[datasetName]
+        let chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries // datasetSpecs[datasetName]
         let cells = budgetNode.allCells
         for (let cellIndex in cells) {
             let cell:BudgetCell = cells[cellIndex]
