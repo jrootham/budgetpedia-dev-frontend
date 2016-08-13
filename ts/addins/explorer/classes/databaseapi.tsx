@@ -17,7 +17,7 @@ const delay = ms =>
 
 interface Component {
     Index: number,
-    Contents: string,
+    ConfigRef: string,
     Components?: Components,
 }
 
@@ -44,7 +44,7 @@ export interface ViewpointData extends Component {
     Configuration: {
         [configurationcode:string]:Configuration,
     },
-   Datasets: DataseriesMeta[],
+   // Datasets: DataseriesMeta[],
 }
 
 interface Viewpoints {

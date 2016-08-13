@@ -41,7 +41,7 @@ export interface ChartCallbacks {
 }
 
 interface viewpointConfigPack {
-    viewpointConfig: any,
+    viewpointConfigs: any,
     datasetConfig: any,
 }
 
@@ -167,7 +167,7 @@ class BudgetCell {
         // --------------[ Unpack data bundles ]-------------
 
         let { 
-            viewpointConfig, 
+            viewpointConfigs, 
             datasetConfig 
         } = budgetCell.viewpointConfigPack
 
@@ -205,7 +205,7 @@ class BudgetCell {
         let options = budgetCell._chartParmsOptions(
             nodeData, 
             parentData, 
-            viewpointConfig, 
+            viewpointConfigs, 
             datasetConfig, 
             yearSpecs
         )
@@ -264,7 +264,7 @@ class BudgetCell {
     private _chartParmsOptions = (
         nodeData, 
         parentData, 
-        viewpointConfig, 
+        viewpointConfigs, 
         datasetConfig, 
         yearSpecs
     ) => {
@@ -292,8 +292,8 @@ class BudgetCell {
         // -------------------[ set horizontal label value ]--------------------
 
         let horizontalLabel = null
-        if ((nodeData.Contents) && (nodeDataseriesName == 'Components')) {
-            let titleref = viewpointConfig[nodeData.Contents]
+        if ((nodeData.ConfigRef) && (nodeDataseriesName == 'Components')) {
+            let titleref = viewpointConfigs[nodeData.ConfigRef]
             horizontalLabel = titleref.Alias || titleref.Name
         } else {
             let portaltitles = datasetConfig.DataseriesTitles
@@ -305,10 +305,10 @@ class BudgetCell {
         let title
         if (parentData) {
             let parentdataNode = parentData.nodeData
-            let configindex = nodeData.Config || parentdataNode.Contents
+            let configindex = nodeData.Config || parentdataNode.ConfigRef
             let catname = null
             if (configindex) {
-                let category = viewpointConfig[configindex].Instance
+                let category = viewpointConfigs[configindex].Instance
                 catname = category.Alias || category.Name
             } else {
                 catname = 'Service/Activity'
@@ -566,7 +566,7 @@ class BudgetCell {
 
         let style = ''
 
-        if (componentItem.Contents == 'BASELINE') {
+        if (componentItem.ConfigRef == 'BASELINE') {
             style = 'stroke-color: Gold; stroke-width: 3'
         }
 

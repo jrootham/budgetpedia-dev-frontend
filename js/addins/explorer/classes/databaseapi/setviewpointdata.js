@@ -33,7 +33,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
             delete component.CommonObjects;
             delete component.SortedCommonObjects;
         }
-        if (component.Contents != "BASELINE") {
+        if (component.ConfigRef != "BASELINE") {
             if (component.Components) {
                 let sorted = getIndexSortedComponents(component.Components, lookups);
                 component.SortedComponents = sorted;
@@ -129,7 +129,7 @@ let getIndexSortedComponents = (components, lookups) => {
     let catlookups = lookups.taxonomylookups;
     for (let componentcode in components) {
         let component = components[componentcode];
-        let config = component.Contents;
+        let config = component.ConfigRef;
         let name = (config == 'BASELINE')
             ? lookups.componentlookups[componentcode]
             : catlookups[componentcode];
@@ -157,7 +157,7 @@ let getNameSortedComponents = (components, lookups) => {
     let complookups = lookups.commonObjectLookups;
     for (let componentname in components) {
         let component = components[componentname];
-        let config = component.Contents;
+        let config = component.ConfigRef;
         let name = complookups[componentname];
         let item = {
             Code: componentname,

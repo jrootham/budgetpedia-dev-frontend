@@ -23,7 +23,7 @@ class BudgetCell {
         };
         this.setChartParms = () => {
             let budgetCell = this;
-            let { viewpointConfig, datasetConfig } = budgetCell.viewpointConfigPack;
+            let { viewpointConfigs, datasetConfig } = budgetCell.viewpointConfigPack;
             let { nodeData, yearSpecs: yearSpecs, parentData, } = budgetCell.nodeDataPack;
             if (!nodeData) {
                 console.error('node not found', {
@@ -34,7 +34,7 @@ class BudgetCell {
                 throw Error('node not found');
             }
             let chartType = budgetCell.googleChartType;
-            let options = budgetCell._chartParmsOptions(nodeData, parentData, viewpointConfig, datasetConfig, yearSpecs);
+            let options = budgetCell._chartParmsOptions(nodeData, parentData, viewpointConfigs, datasetConfig, yearSpecs);
             let events = budgetCell._chartParmsEvents();
             let columns = budgetCell._chartParmsColumns(yearSpecs);
             let { nodeDataseriesName } = budgetCell;
@@ -58,7 +58,7 @@ class BudgetCell {
             };
             budgetCell._chartParms = chartParms;
         };
-        this._chartParmsOptions = (nodeData, parentData, viewpointConfig, datasetConfig, yearSpecs) => {
+        this._chartParmsOptions = (nodeData, parentData, viewpointConfigs, datasetConfig, yearSpecs) => {
             let budgetCell = this;
             let { facetName, nodeDataseriesName } = budgetCell;
             let datasetName = constants_1.FacetNameToDatasetName[facetName];
@@ -72,8 +72,8 @@ class BudgetCell {
                     verticalLabel = 'Revenues' + ' (' + verticalLabel + ')';
             }
             let horizontalLabel = null;
-            if ((nodeData.Contents) && (nodeDataseriesName == 'Components')) {
-                let titleref = viewpointConfig[nodeData.Contents];
+            if ((nodeData.ConfigRef) && (nodeDataseriesName == 'Components')) {
+                let titleref = viewpointConfigs[nodeData.ConfigRef];
                 horizontalLabel = titleref.Alias || titleref.Name;
             }
             else {
@@ -83,10 +83,10 @@ class BudgetCell {
             let title;
             if (parentData) {
                 let parentdataNode = parentData.nodeData;
-                let configindex = nodeData.Config || parentdataNode.Contents;
+                let configindex = nodeData.Config || parentdataNode.ConfigRef;
                 let catname = null;
                 if (configindex) {
-                    let category = viewpointConfig[configindex].Instance;
+                    let category = viewpointConfigs[configindex].Instance;
                     catname = category.Alias || category.Name;
                 }
                 else {
@@ -275,7 +275,7 @@ class BudgetCell {
         };
         this._rows_ColumnCharts_row = (row, componentItem) => {
             let style = '';
-            if (componentItem.Contents == 'BASELINE') {
+            if (componentItem.ConfigRef == 'BASELINE') {
                 style = 'stroke-color: Gold; stroke-width: 3';
             }
             row.push(style);
