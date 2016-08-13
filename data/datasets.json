@@ -2,14 +2,14 @@
         "BudgetExpenses": {
             "ComponentsLookupIndex": "Programs",
             "CommonObjectsLookupIndex": "Expenditures",
+            "InflationAdjusted": true,
+            "DatasetTitle": "2015 Council Approved Gross Operating Expenditures",
             "DataseriesTitles": {
                 "Components": "Programs",
                 "CommonObjects": "Expenditures"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
-            "DatasetTitle": "2015 Council Approved Gross Operating Expenditures",
-            "InflationAdjusted": true,
             "Items": {
                 "311SERVICE": {
                     "Adjusted": {
@@ -29626,15 +29626,15 @@
         },
         "BudgetRevenues": {
             "ComponentsLookupIndex": "Programs",
+            "CommonObjectsLookupIndex": "Revenues",
+            "InflationAdjusted": true,
+            "DatasetTitle": "2015 Council Approved Gross Operating Revenue",
             "DataseriesTitles": {
                 "Components": "Programs",
                 "CommonObjects": "Revenues"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
-            "CommonObjectsLookupIndex": "Revenues",
-            "DatasetTitle": "2015 Council Approved Gross Operating Revenue",
-            "InflationAdjusted": true,
             "Items": {
                 "311SERVICE": {
                     "Adjusted": {
@@ -46836,15 +46836,15 @@
         },
         "BudgetStaffing": {
             "ComponentsLookupIndex":"Programs",
+            "CommonObjectsLookupIndex": "TimeAllocations",
+            "InflationAdjusted": false,
+            "DatasetTitle": "2015 Council Approved Staff Positions",
             "DataseriesTitles": {
                 "Components": "Programs",
                 "CommonObjects": "Designations"
             },
             "Units": "FTE",
             "UnitsAlias": "Staffing Level (FTE)",
-            "CommonObjectsLookupIndex": "TimeAllocations",
-            "DatasetTitle": "2015 Council Approved Staff Positions",
-            "InflationAdjusted": false,
             "Items": {
                 "311SERVICE": {
                     "years": {

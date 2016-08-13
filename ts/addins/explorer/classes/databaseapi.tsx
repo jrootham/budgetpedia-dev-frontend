@@ -180,22 +180,18 @@ class Database {
         let datasetpromise = this.getDatasetPromise(dataset)
         let promise = new Promise(resolve => {
             datasetpromise.then((datasetdata: DatasetConfig) => {
-                let { Components,
-                    Name,
+                let { 
+                    DatasetTitle,
                     DataseriesTitles,
                     Units,
                     UnitsAlias,
-                    CommonObjects,
-                    DatasetTitle } = datasetdata
+                } = datasetdata
 
                 let config = {
-                    Components, 
-                    Name, 
+                    DatasetTitle,
                     DataseriesTitles, 
                     Units, 
                     UnitsAlias,
-                    CommonObjects,
-                    DatasetTitle,
                 }
                  resolve(config)
 

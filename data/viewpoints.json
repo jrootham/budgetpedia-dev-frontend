@@ -75,7 +75,7 @@
                 }
             },
             "ConfigRef": "TYPES",
-            "Datasets": {
+            "DatasetSeries": {
                 "BudgetExpenses": [
                     {
                         "Type": "Components"
