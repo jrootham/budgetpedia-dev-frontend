@@ -80,7 +80,7 @@ export interface DatasetConfig {
     Units: string,
     UnitsAlias: string,
     CommonObjects: string,
-    Title: string,
+    DatasetTitle: string,
 }
 
 interface Dataset<ItemType> extends DatasetConfig {
@@ -186,7 +186,7 @@ class Database {
                     Units,
                     UnitsAlias,
                     CommonObjects,
-                    Title } = datasetdata
+                    DatasetTitle } = datasetdata
 
                 let config = {
                     Components, 
@@ -195,7 +195,7 @@ class Database {
                     Units, 
                     UnitsAlias,
                     CommonObjects,
-                    Title,
+                    DatasetTitle,
                 }
                  resolve(config)
 

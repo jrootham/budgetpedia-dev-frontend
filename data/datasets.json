@@ -1,14 +1,14 @@
     {
         "BudgetExpenses": {
             "ComponentsLookupIndex": "Programs",
+            "CommonObjectsLookupIndex": "Expenditures",
             "DataseriesTitles": {
                 "Components": "Programs",
                 "CommonObjects": "Expenditures"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
-            "CommonObjectsLookupIndex": "Expenditures",
-            "Title": "2015 Council Approved Gross Operating Expenditures",
+            "DatasetTitle": "2015 Council Approved Gross Operating Expenditures",
             "InflationAdjusted": true,
             "Items": {
                 "311SERVICE": {
@@ -29633,7 +29633,7 @@
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
             "CommonObjectsLookupIndex": "Revenues",
-            "Title": "2015 Council Approved Gross Operating Revenue",
+            "DatasetTitle": "2015 Council Approved Gross Operating Revenue",
             "InflationAdjusted": true,
             "Items": {
                 "311SERVICE": {
@@ -46843,7 +46843,7 @@
             "Units": "FTE",
             "UnitsAlias": "Staffing Level (FTE)",
             "CommonObjectsLookupIndex": "TimeAllocations",
-            "Title": "2015 Council Approved Staff Positions",
+            "DatasetTitle": "2015 Council Approved Staff Positions",
             "InflationAdjusted": false,
             "Items": {
                 "311SERVICE": {

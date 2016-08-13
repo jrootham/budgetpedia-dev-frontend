@@ -95,7 +95,7 @@ class BudgetCell {
                 title = catname + ': ' + parentData.Name;
             }
             else {
-                title = datasetConfig.Title;
+                title = datasetConfig.DatasetTitle;
             }
             let { rightYear: year } = yearSpecs;
             let titleamount = null;
