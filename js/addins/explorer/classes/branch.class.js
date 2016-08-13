@@ -117,6 +117,7 @@ class BudgetBranch {
             let datasetName = constants_1.FacetNameToDatasetName[facetName];
             let _promise = databaseapi_1.default.getViewpointData({
                 viewpointName: viewpointName,
+                version: 'PBF',
                 datasetName: datasetName,
                 inflationAdjusted: inflationAdjusted,
                 yearSpecs: {

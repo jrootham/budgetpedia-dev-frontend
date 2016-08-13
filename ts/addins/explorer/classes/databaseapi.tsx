@@ -105,6 +105,7 @@ export interface YearSpecs {
 
 export interface GetViewpointDataParms {
     viewpointName:string,
+    version: string,
     datasetName: string,
     inflationAdjusted: boolean,
     yearSpecs: YearSpecs,
@@ -136,12 +137,12 @@ class Database {
 
     public getViewpointData(parms: GetViewpointDataParms) {
 
-        let { viewpointName, datasetName, inflationAdjusted, yearSpecs } = parms
+        let { viewpointName, version, datasetName, inflationAdjusted, yearSpecs } = parms
 
         let viewpointDataPromise = this.getViewpointPromise(viewpointName),
-            datasetDataPromise = this.getDatasetPromise(datasetName),
+            datasetDataPromise = this.getDatasetPromise(version,datasetName),
             lookupsPromise = this.getLookupPromise(),
-            datasetConfigPromise = this.getDatasetConfigPromise(datasetName)
+            datasetConfigPromise = this.getDatasetConfigPromise(version,datasetName)
 
         let promise = new Promise(resolve => {
 
@@ -176,9 +177,9 @@ class Database {
         return promise
 
     }
-    private getDatasetConfigPromise(dataset:string) {
+    private getDatasetConfigPromise(version, dataset:string) {
 
-        let datasetpromise = this.getDatasetPromise(dataset)
+        let datasetpromise = this.getDatasetPromise(version, dataset)
         let promise = new Promise(resolve => {
             datasetpromise.then((datasetdata: DatasetConfig) => {
                 let { 
@@ -216,9 +217,9 @@ class Database {
         return promise
     }
 
-    private getDatasetPromise(dataset: string) {
+    private getDatasetPromise(version, dataset: string) {
         let promise = new Promise(resolve => {
-            let datasetdata: CurrencyDataset | ItemDataset = db_datasets[dataset]
+            let datasetdata: CurrencyDataset | ItemDataset = db_datasets[version][dataset]
             resolve(datasetdata)
         })
         return promise
