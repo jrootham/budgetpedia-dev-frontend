@@ -59,10 +59,11 @@ class BudgetCell {
             let { aspectName, nodeDataseriesName } = budgetCell;
             let datasetName = constants_1.AspectNameToDatasetName[aspectName];
             let units = datasetConfig.Units;
+            let unitRatio = datasetConfig.UnitRatio;
             let verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units;
             verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')';
             let horizontalLabel = null;
-            if ((nodeData.ConfigRef) && (nodeDataseriesName == 'Components')) {
+            if ((nodeData.ConfigRef) && (nodeDataseriesName != 'CommmonObjects')) {
                 let titleref = viewpointConfigs[nodeData.ConfigRef];
                 horizontalLabel = titleref.Alias || titleref.Name;
             }
@@ -80,7 +81,7 @@ class BudgetCell {
                     catname = category.Alias || category.Name;
                 }
                 else {
-                    catname = 'Service/Activity';
+                    catname = '(** Unknown Category **)';
                 }
                 title = catname + ': ' + parentData.Name;
             }
@@ -89,18 +90,23 @@ class BudgetCell {
             }
             let { rightYear: year } = yearSpecs;
             let titleamount = null;
-            let thousandsformat = format({ prefix: "$" });
+            let dollarformat = format({ prefix: "$" });
             let rounded = format({ round: 0, integerSeparator: '' });
-            let staffrounded = format({ round: 1, integerSeparator: ',' });
+            let simpleroundedone = format({ round: 1, integerSeparator: ',' });
             if (nodeData.years) {
                 titleamount = nodeData.years[year];
             }
-            if (units == 'DOLLAR') {
-                titleamount = parseInt(rounded(titleamount / 1000));
-                titleamount = thousandsformat(titleamount);
+            if (unitRatio == 1) {
+                titleamount = simpleroundedone(titleamount);
             }
             else {
-                titleamount = staffrounded(titleamount);
+                titleamount = parseInt(rounded(titleamount / unitRatio));
+                if (units == 'DOLLAR') {
+                    titleamount = dollarformat(titleamount);
+                }
+                else {
+                    titleamount = simpleroundedone(titleamount);
+                }
             }
             title += ' (Total: ' + titleamount + ')';
             let options = {

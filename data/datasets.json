@@ -24,6 +24,7 @@
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
+            "UnitRatio": 1000,
             "Items": {
                 "311SERVICE": {
                     "Adjusted": {
@@ -29662,7 +29663,8 @@
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
-            "Items": {
+            "UnitRatio": 1000,
+                        "Items": {
                 "311SERVICE": {
                     "Adjusted": {
                         "years": {
@@ -46884,6 +46886,7 @@
                 "CommonObjects": "Designations"
             },
             "Units": "FTE",
+            "UnitRatio":1,            
             "Items": {
                 "311SERVICE": {
                     "years": {

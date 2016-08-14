@@ -83,6 +83,7 @@ export interface DatasetConfig {
     },
     Units: string,
     UnitsAlias: string,
+    UnitRatio: number,
 }
 
 interface Dataset<ItemType> extends DatasetConfig {
@@ -191,6 +192,7 @@ class Database {
                     DataseriesTitles,
                     Units,
                     UnitsAlias,
+                    UnitRatio,
                 } = datasetdata
 
                 let config = {
@@ -201,6 +203,7 @@ class Database {
                     DataseriesTitles, 
                     Units, 
                     UnitsAlias,
+                    UnitRatio,
                 }
                  resolve(config)
 
