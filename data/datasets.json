@@ -46884,7 +46884,6 @@
                 "CommonObjects": "Designations"
             },
             "Units": "FTE",
-            "UnitsAlias": "Staffing Level (FTE)",
             "Items": {
                 "311SERVICE": {
                     "years": {

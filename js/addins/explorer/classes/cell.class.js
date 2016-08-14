@@ -26,11 +26,7 @@ class BudgetCell {
             let { viewpointConfigs, datasetConfig } = budgetCell.viewpointConfigPack;
             let { nodeData, yearSpecs: yearSpecs, parentData, } = budgetCell.nodeDataPack;
             if (!nodeData) {
-                console.error('node not found', {
-                    isError: true,
-                    errorMessage: 'node not found',
-                    chartParms: {}
-                });
+                console.error('node not found', budgetCell);
                 throw Error('node not found');
             }
             let chartType = budgetCell.googleChartType;
@@ -46,7 +42,7 @@ class BudgetCell {
                 rows = budgetCell._chartParmsRows(nodeData, yearSpecs);
             }
             else {
-                console.log('no sortedDataSeries', sortedDataseries, nodeData, sortedlistName);
+                console.error('no sortedDataSeries', sortedDataseries, nodeData, sortedlistName);
                 return;
             }
             let chartParms = {
@@ -63,14 +59,8 @@ class BudgetCell {
             let { aspectName, nodeDataseriesName } = budgetCell;
             let datasetName = constants_1.AspectNameToDatasetName[aspectName];
             let units = datasetConfig.Units;
-            let verticalLabel;
-            verticalLabel = datasetConfig.UnitsAlias;
-            if (units != 'FTE') {
-                if (datasetName == 'BudgetExpenses')
-                    verticalLabel = 'Expenditures' + ' (' + verticalLabel + ')';
-                else
-                    verticalLabel = 'Revenues' + ' (' + verticalLabel + ')';
-            }
+            let verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units;
+            verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')';
             let horizontalLabel = null;
             if ((nodeData.ConfigRef) && (nodeDataseriesName == 'Components')) {
                 let titleref = viewpointConfigs[nodeData.ConfigRef];

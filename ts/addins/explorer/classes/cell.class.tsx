@@ -181,12 +181,7 @@ class BudgetCell {
         // collect chart node and its components as data sources for the graph
 
         if (!nodeData) {
-            console.error('node not found',
-            {
-                isError: true,
-                errorMessage: 'node not found',
-                chartParms: {}
-            })
+            console.error('node not found', budgetCell)
             throw Error('node not found')
         }
 
@@ -237,7 +232,7 @@ class BudgetCell {
         if (sortedDataseries) {
             rows = budgetCell._chartParmsRows(nodeData, yearSpecs)
         } else {
-            console.log('no sortedDataSeries', sortedDataseries, nodeData, sortedlistName)
+            console.error('no sortedDataSeries', sortedDataseries, nodeData, sortedlistName)
             return
         }
 
@@ -280,14 +275,8 @@ class BudgetCell {
 
         // --------------------[ set vertical label value ]--------------------
 
-        let verticalLabel
-        verticalLabel = datasetConfig.UnitsAlias
-        if (units != 'FTE') {
-            if (datasetName == 'BudgetExpenses')
-                verticalLabel = 'Expenditures' + ' (' + verticalLabel + ')'
-            else
-                verticalLabel = 'Revenues' + ' (' + verticalLabel + ')'
-        }
+        let verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units
+        verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')'
 
         // -------------------[ set horizontal label value ]--------------------
 
@@ -379,7 +368,7 @@ class BudgetCell {
         
     }
 
-    _chartParmsOptions_chartTypeOptions = (googleChartType) => {
+    private _chartParmsOptions_chartTypeOptions = (googleChartType) => {
 
         let options = {}
 
