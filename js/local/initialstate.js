@@ -106,7 +106,7 @@ let explorer = {
             chartType: "ColumnChart",
             inflationAdjusted: true,
             yearSlider: { singlevalue: [2015], doublevalue: [2005, 2015] },
-            yearScope: "one",
+            yearScope: "OneYear",
             nodeList: [],
         },
         node: {

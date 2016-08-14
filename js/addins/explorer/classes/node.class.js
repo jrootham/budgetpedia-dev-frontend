@@ -87,6 +87,7 @@ class BudgetNode {
     }
     setCells(cellDeclarations) {
         let cells = [];
+        console.log('cellDeclarations in setCells', cellDeclarations);
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration = cellDeclarations[cellIndex];
             let { chartSelection, explorerChartCode, nodeDataseriesName, celluid } = cellDeclaration;

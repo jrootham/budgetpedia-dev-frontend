@@ -86,7 +86,7 @@ class BudgetBranch {
             yearSpecs: {
                 leftYear:null,
                 rightYear,
-                yearScope:false,
+                yearScope:branchSettings.yearScope,
                 firstYear: null,
                 lastYear: null,
             },
@@ -236,7 +236,7 @@ class BudgetBranch {
             yearSpecs: {
                 leftYear: null,
                 rightYear: null,
-                yearScope: false,
+                yearScope: null,
                 firstYear: null,
                 lastYear: null,
             }

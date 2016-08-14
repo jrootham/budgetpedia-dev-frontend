@@ -51,9 +51,11 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     }
 
     let budgetNode: BudgetNode = branchNodes[nodeIndex]
-    // console.log('budgetNode, cellIndex in applyChartComponentSelection',budgetNode, cellIndex)
+    // budgetnode is undefined on final expendigure chart
     let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
 
+    if (!budgetCell)
+        console.log('budgetNode, cellIndex in applyChartComponentSelection',budgetNode, cellIndex)
     // console.log('on selection',budgetCell)
 
     // let { chart } = budgetCell.chartComponent

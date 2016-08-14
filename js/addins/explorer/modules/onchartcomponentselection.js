@@ -11,6 +11,8 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     }
     let budgetNode = branchNodes[nodeIndex];
     let budgetCell = budgetNode.cells[cellIndex];
+    if (!budgetCell)
+        console.log('budgetNode, cellIndex in applyChartComponentSelection', budgetNode, cellIndex);
     if (budgetCell.nodeDataseriesName == 'CommonObjects') {
         return;
     }

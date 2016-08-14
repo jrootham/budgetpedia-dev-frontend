@@ -28,7 +28,9 @@ export interface SetViewpointDataParms {
     yearSpecs: {
         leftYear:number,
         rightYear:number,
-        yearScope: boolean,
+        yearScope: string,
+        firstYear: number,
+        lastYear: number,
     }
 }
 

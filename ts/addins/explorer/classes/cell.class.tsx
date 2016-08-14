@@ -22,6 +22,7 @@ import {
 
 import BudgetNode from './node.class'
 import {YearSpecs, DatasetConfig} from './databaseapi'
+import { TimeScope } from '../constants'
 
 var format = require('format-number')
 
@@ -173,7 +174,7 @@ class BudgetCell {
 
         let { 
             nodeData, 
-            yearSpecs:yearSpecs, 
+            yearSpecs, 
             parentData, 
         } = budgetCell.nodeDataPack
 
@@ -232,7 +233,8 @@ class BudgetCell {
         if (sortedDataseries) {
             rows = budgetCell._chartParmsRows(nodeData, yearSpecs)
         } else {
-            console.error('no sortedDataSeries', sortedDataseries, nodeData, sortedlistName)
+            // fires on last chart
+            console.error('no sortedDataSeries', sortedlistName, sortedDataseries, nodeData )
             return
         }
 
@@ -261,7 +263,7 @@ class BudgetCell {
         parentData, 
         viewpointConfigs, 
         datasetConfig:DatasetConfig, 
-        yearSpecs
+        yearSpecs:YearSpecs
     ) => {
 
         // ----------------------[ assemble support variables ]-------------------
@@ -274,12 +276,12 @@ class BudgetCell {
         let units = datasetConfig.Units
         let unitRatio = datasetConfig.UnitRatio
 
-        // --------------------[ set vertical label value ]--------------------
+        // --------------------[ assemble vertical label value ]--------------------
 
         let verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units
         verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')'
 
-        // -------------------[ set horizontal label value ]--------------------
+        // -------------------[ assemble horizontal label value ]--------------------
 
         let horizontalLabel = null
         if ((nodeData.ConfigRef) && (nodeDataseriesName != 'CommmonObjects')) {
@@ -292,8 +294,9 @@ class BudgetCell {
 
         // ----------------------[ assemble chart title ]----------------------
 
+        // set basic title
         let title
-        if (parentData) {
+        if (parentData) { // get context info from parent, if available
             let parentdataNode = parentData.nodeData
             let configindex = nodeData.ParentConfigOverride || parentdataNode.ConfigRef
             let catname = null
@@ -305,22 +308,31 @@ class BudgetCell {
             }
             title = catname + ': ' + parentData.Name
         }
-        else {
+        else { // ... it must be the root node, so use the dataset title
             title = datasetConfig.DatasetTitle
         }
 
-        // set title amount
-        let { rightYear:year } = yearSpecs
+        // add yearspan to title
+        let { rightYear, leftYear, yearScope } = yearSpecs
+        let timeSuffix: string = null
+        if ( yearScope == TimeScope[TimeScope.OneYear] ) {
+            timeSuffix = rightYear.toString()
+        } else {
+            timeSuffix = leftYear + ' - ' + rightYear
+        }
+        timeSuffix = ', ' + timeSuffix
+        title += timeSuffix
+
+        // add title amount
         let titleamount = null
+
         // utility functions for number formatting
         let dollarformat = format({ prefix: "$" })
         let rounded = format({ round: 0, integerSeparator: '' })
-        // let singlerounded = format({ round: 1, integerSeparator: '' })
         let simpleroundedone = format({ round: 1, integerSeparator: ',' })
 
-
         if (nodeData.years) {
-            titleamount = nodeData.years[year]
+            titleamount = nodeData.years[rightYear]
         }
         if (unitRatio == 1) {
             titleamount = simpleroundedone(titleamount)

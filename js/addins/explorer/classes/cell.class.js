@@ -1,5 +1,6 @@
 "use strict";
 const constants_1 = require('../../constants');
+const constants_2 = require('../constants');
 var format = require('format-number');
 class BudgetCell {
     constructor(specs) {
@@ -24,7 +25,7 @@ class BudgetCell {
         this.setChartParms = () => {
             let budgetCell = this;
             let { viewpointConfigs, datasetConfig } = budgetCell.viewpointConfigPack;
-            let { nodeData, yearSpecs: yearSpecs, parentData, } = budgetCell.nodeDataPack;
+            let { nodeData, yearSpecs, parentData, } = budgetCell.nodeDataPack;
             if (!nodeData) {
                 console.error('node not found', budgetCell);
                 throw Error('node not found');
@@ -42,7 +43,7 @@ class BudgetCell {
                 rows = budgetCell._chartParmsRows(nodeData, yearSpecs);
             }
             else {
-                console.error('no sortedDataSeries', sortedDataseries, nodeData, sortedlistName);
+                console.error('no sortedDataSeries', sortedlistName, sortedDataseries, nodeData);
                 return;
             }
             let chartParms = {
@@ -88,13 +89,22 @@ class BudgetCell {
             else {
                 title = datasetConfig.DatasetTitle;
             }
-            let { rightYear: year } = yearSpecs;
+            let { rightYear, leftYear, yearScope } = yearSpecs;
+            let timeSuffix = null;
+            if (yearScope == constants_2.TimeScope[constants_2.TimeScope.OneYear]) {
+                timeSuffix = rightYear.toString();
+            }
+            else {
+                timeSuffix = leftYear + ' - ' + rightYear;
+            }
+            timeSuffix = ', ' + timeSuffix;
+            title += timeSuffix;
             let titleamount = null;
             let dollarformat = format({ prefix: "$" });
             let rounded = format({ round: 0, integerSeparator: '' });
             let simpleroundedone = format({ round: 1, integerSeparator: ',' });
             if (nodeData.years) {
-                titleamount = nodeData.years[year];
+                titleamount = nodeData.years[rightYear];
             }
             if (unitRatio == 1) {
                 titleamount = simpleroundedone(titleamount);

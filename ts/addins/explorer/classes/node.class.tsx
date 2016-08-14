@@ -127,7 +127,7 @@ class BudgetNode {
 
     public setCells(cellDeclarations:CellDeclaration[]) {
         let cells = []
-        // console.log('cellDeclarations in setCells', cellDeclarations)
+        console.log('cellDeclarations in setCells', cellDeclarations)
         // // TODO: should be default for each chart...
         // build cells array
         for (let cellIndex in cellDeclarations) {

@@ -9,7 +9,7 @@
                 "end":2015
             },
             "DatasetName":"Expenses",
-            "DatasetTitle": "2015 Council Approved Gross Operating Expenditures",
+            "DatasetTitle": "Council Approved Gross Operating Expenditures",
             "Dataseries": [
                 {
                     "Type": "Components"
@@ -29648,7 +29648,7 @@
                 "end":2015
             },
             "DatasetName":"Revenues",
-            "DatasetTitle": "2015 Council Approved Gross Operating Revenue",
+            "DatasetTitle": "Council Approved Gross Operating Revenue",
             "Dataseries": [
                 {
                     "Type": "Components"
@@ -46872,7 +46872,7 @@
                 "end":2015
             },
             "DatasetName":"Staffing",
-            "DatasetTitle": "2015 Council Approved Staff Positions",
+            "DatasetTitle": "Council Approved Staff Positions",
             "Dataseries": [
                 {
                     "Type": "Components"
