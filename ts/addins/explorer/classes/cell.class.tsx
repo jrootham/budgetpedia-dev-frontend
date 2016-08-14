@@ -17,7 +17,7 @@ import {
 import { 
     GoogleChartTypeToChartCode, 
     ChartCodeToGoogleChartType,
-    FacetNameToDatasetName,
+    AspectNameToDatasetName,
 } from '../../constants'
 
 import BudgetNode from './node.class'
@@ -79,8 +79,8 @@ class BudgetCell {
 
     // -------------[ primary control properties, set on creation ]---------------
 
-    private explorerChartCode: string
-    nodeDataseriesName:string // the ref to the data to be presented
+    private explorerChartCode: string // application code for chart type selected; converted to google type
+    nodeDataseriesName:string // the ref to the data to be presented, typically Components or CommonObjects
     chartSelection: ChartSelectionCell[] // returned by google chart; points to row selected by user
     uid: string // universal id; set by addCellDeclarations action
 
@@ -92,7 +92,7 @@ class BudgetCell {
     }
 
     // the react Chart component, allows access to current google chart object
-    // set by explorercell
+    // set by explorercell.tsx using ref callback
     chartComponent
     // current chart (can change) taken from chartComponent...
     get chart() {
@@ -111,7 +111,7 @@ class BudgetCell {
 
     // ----------------[ mutable control properties ]-----------------
 
-    facetName: string
+    aspectName: string
     viewpointConfigPack: viewpointConfigPack
     nodeDataPack: NodeData
     expandable: boolean
@@ -273,9 +273,9 @@ class BudgetCell {
 
         let budgetCell = this
 
-        let { facetName, nodeDataseriesName } = budgetCell
+        let { aspectName, nodeDataseriesName } = budgetCell
 
-        let datasetName = FacetNameToDatasetName[facetName]
+        let datasetName = AspectNameToDatasetName[aspectName]
         let units = datasetConfig.Units
 
         // --------------------[ set vertical label value ]--------------------

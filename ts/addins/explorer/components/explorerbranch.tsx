@@ -48,7 +48,7 @@ export interface ExplorerBranchActions {
     addNodeDeclaration:Function,
     removeNodeDeclarations:Function,
     changeViewpoint:Function,
-    changeFacet: Function,
+    changeAspect: Function,
     updateCellChartSelection: Function,  
     updateCellChartCode: Function,
     updateCellsDataseriesName: Function,
@@ -82,7 +82,7 @@ interface ExplorerBranchState {
     branchNodes?:BudgetNode[], 
     snackbar?:SnackbarProps, 
     viewpointData?:ViewpointData,
-    facet?: string,
+    aspect?: string,
     byunitselection?: string,
     showcontrols?:boolean,
 }
@@ -93,7 +93,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         branchNodes:[],
         viewpointData:null,
         snackbar:{open:false,message:'empty'},
-        facet: this.props.budgetBranch.settings.viewpoint,
+        aspect: this.props.budgetBranch.settings.viewpoint,
         byunitselection:'off',
         showcontrols:false,
     }
@@ -273,9 +273,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 this._processChangeViewpointStateChange(budgetBranch)
                 break
             }
-            case branchActionTypes.CHANGE_FACET: {
-                // console.log('processing change facet')
-                this._processChangeFacetStateChange(budgetBranch)
+            case branchActionTypes.CHANGE_ASPECT: {
+                // console.log('processing change aspect')
+                this._processChangeAspectStateChange(budgetBranch)
                 break
             }
             default:
@@ -296,13 +296,13 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         })
     }
 
-    private _processChangeFacetStateChange = (budgetBranch:BudgetBranch) => {
-        // console.log('processing change facet state change, getting viewpointdata')
+    private _processChangeAspectStateChange = (budgetBranch:BudgetBranch) => {
+        // console.log('processing change aspect state change, getting viewpointdata')
         budgetBranch.getViewpointData().then(() => {
 
             setTimeout(() => {
 
-                let switchResults = budgetBranch.switchFacet()
+                let switchResults = budgetBranch.switchAspect()
 
                 let { deeperdata, shallowerdata } = switchResults
 
@@ -417,11 +417,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         })
     }
 
-    switchFacet = (facet:string) => {
+    switchAspect = (aspect:string) => {
 
-        // console.log('switching facet to ', facet)
+        // console.log('switching aspect to ', aspect)
 
-        switch (facet) {
+        switch (aspect) {
             case "Expenses":
             case "Revenues":
             case "Staffing":
@@ -434,12 +434,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
 
-        budgetBranch.saveFacetState()
+        budgetBranch.saveAspectState()
 
-        this.props.globalStateActions.changeFacet(budgetBranch.uid, facet)
+        this.props.globalStateActions.changeAspect(budgetBranch.uid, aspect)
 
         // this.setState({
-        //     facet,
+        //     aspect,
         // })
 
     }
@@ -575,10 +575,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         <span style={{ fontStyle: "italic" }}>Aspect: </span>
 
         <DropDownMenu
-            value={this.props.declarationData.branchesById[this.props.budgetBranch.uid].facet}
+            value={this.props.declarationData.branchesById[this.props.budgetBranch.uid].aspect}
             onChange={
                 (e, index, value) => {
-                    branch.switchFacet(value)
+                    branch.switchAspect(value)
                 }
             }
             >

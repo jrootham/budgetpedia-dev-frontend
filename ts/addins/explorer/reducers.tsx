@@ -123,12 +123,12 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             return newstate
         }
 
-        case actiontypes.CHANGE_FACET: {
+        case actiontypes.CHANGE_ASPECT: {
             let { branchuid } = action.payload
             newstate = Object.assign({},state)
             newstate[branchuid] = Object.assign({},newstate[branchuid])
-            newstate[branchuid].facet = action.payload.facetname
-            // console.log('changed facet', branchuid, newstate[branchuid].facet)
+            newstate[branchuid].aspect = action.payload.aspectname
+            // console.log('changed aspect', branchuid, newstate[branchuid].aspect)
             return newstate
         }
 

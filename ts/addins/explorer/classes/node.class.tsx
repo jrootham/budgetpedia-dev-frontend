@@ -3,7 +3,7 @@
 
 import { DataseriesMeta, YearSpecs } from './databaseapi'
 import { 
-    FacetNameToDatasetName, 
+    AspectNameToDatasetName, 
     GoogleChartTypeToChartCode, 
     ChartCodeToGoogleChartType 
 } from '../../constants'
@@ -21,7 +21,7 @@ import BudgetCell, { CellDeclaration, NodeData } from './cell.class'
 
 export interface BudgetNodeParms {
     viewpointName: string,
-    facetName: string, // used to select chartset to display
+    aspectName: string, // used to select chartset to display
     // datasetSpecs:DataseriesMeta[],
     yearSpecs: YearSpecs,
     dataPath: string[],
@@ -35,7 +35,7 @@ class BudgetNode {
         // let portalcharts = parms.datasetSpecs
 
         this.viewpointName = parms.viewpointName
-        this.facetName = parms.facetName
+        this.aspectName = parms.aspectName
         this.dataPath = parms.dataPath
         this.nodeIndex = parms.nodeIndex
         this.yearSpecs = parms.yearSpecs
@@ -46,7 +46,7 @@ class BudgetNode {
         if (parms.parentData) this.parentData = parms.parentData
         if (parentNode) this.parentData.nodeData = parentNode
 
-        // this.setCells(portalcharts[parms.facetName],parms.defaultChartType)
+        // this.setCells(portalcharts[parms.aspectName],parms.defaultChartType)
 
     }
 
@@ -55,7 +55,7 @@ class BudgetNode {
 
     uid:string
     viewpointName: string
-    facetName: string
+    aspectName: string
     dataPath: string[]
     nodeIndex: number
     yearSpecs: YearSpecs
@@ -98,24 +98,24 @@ class BudgetNode {
         return [...this.state.nodeCells]
     }
 
-    // reset = (nodeData, datasetSpecs, defaultChartType, facet) => {
-    update = (facet, nodeData, parentDataNode = null) => {
+    // reset = (nodeData, datasetSpecs, defaultChartType, aspect) => {
+    update = (aspect, nodeData, parentDataNode = null) => {
         this._nodeData = nodeData
-        this.facetName = facet
+        this.aspectName = aspect
         if (this.parentData && parentDataNode) {
             this.parentData.nodeData = parentDataNode
         }
         this.updated = true
     }
 
-    oldFacetState: number
+    oldAspectState: number
 
     // ====================================================================
     // ---------------------[ PRIVATE ]------------------------------------
 
     getCellDeclarationParms = () => {
         let parmsList:CellDeclaration[] = []
-        let datasetName:string = FacetNameToDatasetName[this.facetName]
+        let datasetName:string = AspectNameToDatasetName[this.aspectName]
         let chartSpecs = this.viewpointConfigPack.datasetConfig.Dataseries // datasetSpecs[datasetName]
         for (let chartSpec of chartSpecs) {
             let cellDeclaration:CellDeclaration = Object.assign({},this.props.declarationData.defaults.cell)
@@ -152,7 +152,7 @@ class BudgetNode {
     public resetCells() {
         let budgetNode = this
 
-        let datasetName:string = FacetNameToDatasetName[budgetNode.facetName]
+        let datasetName:string = AspectNameToDatasetName[budgetNode.aspectName]
         let chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries // datasetSpecs[datasetName]
         let cells = budgetNode.allCells
         for (let cellIndex in cells) {
@@ -175,7 +175,7 @@ class BudgetNode {
 
         cell.viewpointConfigPack = viewpointConfigPack
         cell.nodeDataPack = nodeDataPack
-        cell.facetName = budgetNode.branchSettings.facet,
+        cell.aspectName = budgetNode.branchSettings.aspect,
 
         budgetNode._setCellChartParms(cell, cellIndex)
         budgetNode._setCellTitle(cell)

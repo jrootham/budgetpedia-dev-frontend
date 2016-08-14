@@ -6,7 +6,7 @@ var types;
     types.ADD_BRANCH = 'ADD_BRANCH';
     types.REMOVE_BRANCH = 'REMOVE_BRANCH';
     types.CHANGE_VIEWPOINT = 'CHANGE_VIEWPOINT';
-    types.CHANGE_FACET = 'CHANGE_FACET';
+    types.CHANGE_ASPECT = 'CHANGE_ASPECT';
     types.TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED';
     types.ADD_NODE = 'ADD_NODE';
     types.REMOVE_NODES = 'REMOVE_NODES';
@@ -26,7 +26,7 @@ var branchTypes;
     branchTypes.ADD_NODE = types.ADD_NODE;
     branchTypes.REMOVE_NODES = types.REMOVE_NODES;
     branchTypes.CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT;
-    branchTypes.CHANGE_FACET = types.CHANGE_FACET;
+    branchTypes.CHANGE_ASPECT = types.CHANGE_ASPECT;
 })(branchTypes = exports.branchTypes || (exports.branchTypes = {}));
 var nodeTypes;
 (function (nodeTypes) {
@@ -40,7 +40,7 @@ var cellTypes;
 (function (cellTypes) {
     cellTypes.UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION;
     cellTypes.UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE;
-    cellTypes.CHANGE_FACET = types.CHANGE_FACET;
+    cellTypes.CHANGE_ASPECT = types.CHANGE_ASPECT;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, (refbranchuid, settings) => ({
     settings: settings,
@@ -60,9 +60,9 @@ exports.changeViewpoint = redux_actions_1.createAction(types.CHANGE_VIEWPOINT, (
 }), () => ({
     explorer: true
 }));
-exports.changeFacet = redux_actions_1.createAction(types.CHANGE_FACET, (branchuid, facetname) => ({
+exports.changeAspect = redux_actions_1.createAction(types.CHANGE_ASPECT, (branchuid, aspectname) => ({
     branchuid: branchuid,
-    facetname: facetname
+    aspectname: aspectname,
 }), () => ({
     explorer: true
 }));

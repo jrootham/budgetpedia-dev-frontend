@@ -3,7 +3,7 @@
 
 /*
     BUG: 'Working' sign persists when click fails to drill down,
-        such as when staff facet is selected and max depth is reached
+        such as when staff aspect is selected and max depth is reached
     BUG: navigating to dialog help box loses bar selection
     TODO: 
     - use general state to track fact that popover has been seen in session in explorer
@@ -17,7 +17,7 @@
     ? Classes:
         Explorer
         ExporerNode
-        BudgetData = budgetdata -- package of facets, lookup, and viewpoint data
+        BudgetData = budgetdata -- package of aspects, lookup, and viewpoint data
         BudgetExplorer (set of BudgetNodes)
         BudgetNode (derive from chartconfig) Node within Hierarchy
         BedgetChart (derive from chartcomfig) - presentation of BudgetNode
@@ -77,7 +77,7 @@ interface MappedBranchActions extends MappedNodeActions {
     addNodeDeclaration:Function,
     removeNodeDeclarations: Function,
     changeViewpoint: Function,
-    changeFacet: Function,
+    changeAspect: Function,
     updateCellChartSelection:Function,
     updateCellsDataseriesName: Function,
     resetLastAction: Function,
@@ -413,7 +413,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     addNodeDeclaration: this.props.addNodeDeclaration,
                     removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
-                    changeFacet: this.props.changeFacet,
+                    changeAspect: this.props.changeAspect,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
                 }
@@ -602,7 +602,7 @@ Explorer = connect(mapStateToProps, {
 
     // branch actions - variations
     changeViewpoint: ExplorerActions.changeViewpoint,
-    changeFacet: ExplorerActions.changeFacet,
+    changeAspect: ExplorerActions.changeAspect,
     resetLastAction: ExplorerActions.resetLastAction,
     // toggleInflationAdjustment
     branchMoveUp: ExplorerActions.branchMoveUp,

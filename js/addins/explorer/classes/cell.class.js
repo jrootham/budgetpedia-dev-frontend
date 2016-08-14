@@ -60,8 +60,8 @@ class BudgetCell {
         };
         this._chartParmsOptions = (nodeData, parentData, viewpointConfigs, datasetConfig, yearSpecs) => {
             let budgetCell = this;
-            let { facetName, nodeDataseriesName } = budgetCell;
-            let datasetName = constants_1.FacetNameToDatasetName[facetName];
+            let { aspectName, nodeDataseriesName } = budgetCell;
+            let datasetName = constants_1.AspectNameToDatasetName[aspectName];
             let units = datasetConfig.Units;
             let verticalLabel;
             verticalLabel = datasetConfig.UnitsAlias;

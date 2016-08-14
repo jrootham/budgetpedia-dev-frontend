@@ -10,10 +10,10 @@ class BudgetBranch {
             let branchSettings = this.settings;
             let viewpointData = this.state.viewpointData;
             let datapath = [];
-            let { viewpoint: viewpointName, facet: facetName, latestYear: rightYear, } = branchSettings;
+            let { viewpoint: viewpointName, aspect: aspectName, latestYear: rightYear, } = branchSettings;
             let budgetNodeParms = {
                 viewpointName: viewpointName,
-                facetName: facetName,
+                aspectName: aspectName,
                 yearSpecs: {
                     leftYear: null,
                     rightYear: rightYear,
@@ -41,14 +41,14 @@ class BudgetBranch {
                 branchNodes: branchNodes,
             });
         };
-        this.saveFacetState = () => {
+        this.saveAspectState = () => {
             let budgetBranch = this;
             let nodes = budgetBranch.nodes;
             for (let node of nodes) {
-                node.oldFacetState = node.cells.length;
+                node.oldAspectState = node.cells.length;
             }
         };
-        this.switchFacet = () => {
+        this.switchAspect = () => {
             let { actions, nodeCallbacks: callbacks } = this;
             let switchResults = {
                 deeperdata: false,
@@ -68,8 +68,8 @@ class BudgetBranch {
                 budgetNode = branchNodes[nodeIndex];
                 let dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
                 if (dataNode) {
-                    let deeperdata = (!!dataNode.Components && (budgetNode.oldFacetState == 1));
-                    let shallowerdata = (!dataNode.Components && (budgetNode.oldFacetState == 2));
+                    let deeperdata = (!!dataNode.Components && (budgetNode.oldAspectState == 1));
+                    let shallowerdata = (!dataNode.Components && (budgetNode.oldAspectState == 2));
                     let parentDataNode = null;
                     if (nodeIndex > 0) {
                         parentDataNode = branchNodes[nodeIndex - 1].nodeData;
@@ -97,7 +97,7 @@ class BudgetBranch {
                         budgetNode = null;
                     }
                     else {
-                        budgetNode.update(branchSettings.facet, dataNode, parentDataNode);
+                        budgetNode.update(branchSettings.aspect, dataNode, parentDataNode);
                         let newCells = budgetNode.resetCells();
                         budgetNode.newCells = newCells;
                     }
@@ -113,8 +113,8 @@ class BudgetBranch {
         };
         this.getViewpointData = () => {
             let branchSettings = this.settings;
-            let { viewpoint: viewpointName, facet: facetName, inflationAdjusted, } = branchSettings;
-            let datasetName = constants_1.FacetNameToDatasetName[facetName];
+            let { viewpoint: viewpointName, aspect: aspectName, inflationAdjusted, } = branchSettings;
+            let datasetName = constants_1.AspectNameToDatasetName[aspectName];
             let _promise = databaseapi_1.default.getViewpointData({
                 viewpointName: viewpointName,
                 versionName: 'PBF',
@@ -144,7 +144,7 @@ class BudgetBranch {
             let viewpointData = budgetBranch.state.viewpointData;
             let { selectionrow, nodeIndex, cellIndex, } = props;
             let budgetNode = branchNodes[nodeIndex];
-            let { facetName, viewpointName } = budgetNode;
+            let { aspectName, viewpointName } = budgetNode;
             let { workingStatus, onPortalCreation, } = callbacks;
             let childdatapath = budgetNode.dataPath.slice();
             let nodeData = budgetNode.nodeData;
@@ -174,7 +174,7 @@ class BudgetBranch {
             let newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
             let newnodeconfigparms = {
                 viewpointName: viewpointName,
-                facetName: facetName,
+                aspectName: aspectName,
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
                 parentData: parentData,

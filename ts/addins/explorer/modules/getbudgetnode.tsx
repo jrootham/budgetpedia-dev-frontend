@@ -12,7 +12,7 @@ let getBudgetNode = (node, path) => {
         }
         node = components[index]
 
-        if (!node) { // can happen legitimately switching from one facet to another
+        if (!node) { // can happen legitimately switching from one aspect to another
 
             return null
 

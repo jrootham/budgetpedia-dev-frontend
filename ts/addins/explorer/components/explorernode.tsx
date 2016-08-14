@@ -175,8 +175,8 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                 // this._processUpdateCellSelection()
                 break
             }
-            case cellTypes.CHANGE_FACET: {
-                // this._processChangeFacet()
+            case cellTypes.CHANGE_ASPECT: {
+                // this._processChangeAspect()
                 break
             }
             default:
@@ -196,9 +196,9 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         // })
     // }
 
-    // private _processChangeFacet = () => {
+    // private _processChangeAspect = () => {
     //     let { budgetNode } = this.props
-    //     // console.log('processing node change facet')
+    //     // console.log('processing node change aspect')
     //     // let cellDeclarationParms = budgetNode.getCellDeclarationParms()
     //     // this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
     // }
@@ -271,7 +271,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     }
 
     getTabObject = (chartTabs) => {
-        // this deals with the edge case where switching facets causes current tail
+        // this deals with the edge case where switching aspects causes current tail
         // chart to change from 2 charts to one by adding a value attr to tabs component
         let tabSelection = this.props.declarationData.nodesById[this.props.budgetNode.uid].cellIndex
         if (chartTabs.length == 0) {

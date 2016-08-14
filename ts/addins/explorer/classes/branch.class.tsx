@@ -15,7 +15,7 @@ import * as ExplorerActions from '../actions'
 import BudgetCell from './cell.class'
 import { ExplorerBranchActions } from '../components/explorerbranch'
 import { 
-    FacetNameToDatasetName, 
+    AspectNameToDatasetName, 
 } from '../../constants'
 
 // import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../../constants'
@@ -76,13 +76,13 @@ class BudgetBranch {
 
         let {
             viewpoint:viewpointName,
-            facet:facetName,
+            aspect:aspectName,
             latestYear:rightYear,
         } = branchSettings
 
         let budgetNodeParms:BudgetNodeParms = {
             viewpointName,
-            facetName,
+            aspectName,
             yearSpecs: {
                 leftYear:null,
                 rightYear,
@@ -121,17 +121,17 @@ class BudgetBranch {
 
     }
 
-    saveFacetState = () => {
+    saveAspectState = () => {
         let budgetBranch = this
         let nodes = budgetBranch.nodes
         for (let node of nodes) {
-            node.oldFacetState = node.cells.length
+            node.oldAspectState = node.cells.length
         }
     }
 
-    // this resets the branch in response to the change facet user request
-    switchFacet = () => {
-        // console.log('running switchFacet')
+    // this resets the branch in response to the change aspect user request
+    switchAspect = () => {
+        // console.log('running switchAspect')
         let { actions, nodeCallbacks:callbacks } = this
         let switchResults = {
             deeperdata: false,
@@ -150,10 +150,10 @@ class BudgetBranch {
         let branchuid = this.uid
 
         // TODO: this needs to be rewritten for deeperdata and shallowerdata
-        //  by keeping previousfacet data to compart with, rather than
+        //  by keeping previousaspect data to compart with, rather than
         //  current method which relies on side effects of timing
         for (nodeIndex in branchNodes) {
-            // console.log('switch facet nodeIndex', nodeIndex, branchNodes.length)
+            // console.log('switch aspect nodeIndex', nodeIndex, branchNodes.length)
             parentBudgetNode = budgetNode
             budgetNode = branchNodes[nodeIndex]
             let dataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
@@ -161,10 +161,10 @@ class BudgetBranch {
                 // check previous cell configuration against previous node
                 // TODO: THIS IS A PROXY THAT NEEDS TO BE REPLACED
                 // there is only one chart where there should be 2
-                let deeperdata = (!!dataNode.Components && (budgetNode.oldFacetState == 1))
+                let deeperdata = (!!dataNode.Components && (budgetNode.oldAspectState == 1))
                 // there are two charts where there should be 1
-                let shallowerdata = (!dataNode.Components && (budgetNode.oldFacetState == 2))
-                // console.log('changefacet', dataNode, deeperdata, shallowerdata, budgetNode.cells)
+                let shallowerdata = (!dataNode.Components && (budgetNode.oldAspectState == 2))
+                // console.log('changeaspect', dataNode, deeperdata, shallowerdata, budgetNode.cells)
                 // now set budgetNode with new data node
                 let parentDataNode = null
                 if (nodeIndex > 0) {
@@ -198,7 +198,7 @@ class BudgetBranch {
                     budgetNode = null // branchNodes[nodeIndex] // created by createChildNode as side effect
                 } else {
                     budgetNode.update(
-                        branchSettings.facet,
+                        branchSettings.aspect,
                         dataNode,
                         parentDataNode
                     )
@@ -222,11 +222,11 @@ class BudgetBranch {
 
         let { 
             viewpoint: viewpointName, 
-            facet: facetName, 
+            aspect: aspectName, 
             inflationAdjusted,
         } = branchSettings
 
-        let datasetName = FacetNameToDatasetName[facetName]
+        let datasetName = AspectNameToDatasetName[aspectName]
 
         let _promise = databaseapi.getViewpointData({
             viewpointName, 
@@ -281,7 +281,7 @@ class BudgetBranch {
 
         let budgetNode = branchNodes[nodeIndex]
 
-        let { facetName, viewpointName } = budgetNode
+        let { aspectName, viewpointName } = budgetNode
 
         let {
             workingStatus,
@@ -333,7 +333,7 @@ class BudgetBranch {
         let newnodeconfigparms: BudgetNodeParms = {
             // datasetSpecs,
             viewpointName,
-            facetName,
+            aspectName,
             dataPath: childdatapath,
             nodeIndex: nodeIndex + 1,
             parentData,

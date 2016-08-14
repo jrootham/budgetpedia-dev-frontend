@@ -6,7 +6,7 @@ import { ChartSelectionCell } from './onchartcomponentselection'
 interface BranchSettings {
     latestYear: number,
     viewpoint: string,
-    facet: string,
+    aspect: string,
     chartType: string,
     inflationAdjusted: boolean,
     yearSlider: { 

@@ -9,13 +9,13 @@ exports.GoogleChartTypeToChartCode = {};
 for (let explorerChartCode in ChartCodeToGoogleChartType) {
     exports.GoogleChartTypeToChartCode[ChartCodeToGoogleChartType[explorerChartCode]] = explorerChartCode;
 }
-let FacetNameToDatasetName = {
+let AspectNameToDatasetName = {
     'Expenses': 'BudgetExpenses',
     'Revenues': 'BudgetRevenues',
     'Staffing': 'BudgetStaffing'
 };
-exports.FacetNameToDatasetName = FacetNameToDatasetName;
-exports.DatasetNameToFacetName = {};
-for (let FacetName in FacetNameToDatasetName) {
-    exports.DatasetNameToFacetName[FacetNameToDatasetName[FacetName]] = FacetName;
+exports.AspectNameToDatasetName = AspectNameToDatasetName;
+exports.DatasetNameToAspectName = {};
+for (let AspectName in AspectNameToDatasetName) {
+    exports.DatasetNameToAspectName[AspectNameToDatasetName[AspectName]] = AspectName;
 }

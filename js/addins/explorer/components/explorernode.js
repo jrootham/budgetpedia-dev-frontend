@@ -28,7 +28,7 @@ class ExporerNode extends Component {
                 case actions_1.cellTypes.UPDATE_CELL_SELECTION: {
                     break;
                 }
-                case actions_1.cellTypes.CHANGE_FACET: {
+                case actions_1.cellTypes.CHANGE_ASPECT: {
                     break;
                 }
                 default:

@@ -7,9 +7,9 @@ class BudgetNode {
         this.updated = false;
         this.newCells = null;
         this.parentData = null;
-        this.update = (facet, nodeData, parentDataNode = null) => {
+        this.update = (aspect, nodeData, parentDataNode = null) => {
             this._nodeData = nodeData;
-            this.facetName = facet;
+            this.aspectName = aspect;
             if (this.parentData && parentDataNode) {
                 this.parentData.nodeData = parentDataNode;
             }
@@ -17,7 +17,7 @@ class BudgetNode {
         };
         this.getCellDeclarationParms = () => {
             let parmsList = [];
-            let datasetName = constants_1.FacetNameToDatasetName[this.facetName];
+            let datasetName = constants_1.AspectNameToDatasetName[this.aspectName];
             let chartSpecs = this.viewpointConfigPack.datasetConfig.Dataseries;
             for (let chartSpec of chartSpecs) {
                 let cellDeclaration = Object.assign({}, this.props.declarationData.defaults.cell);
@@ -36,7 +36,7 @@ class BudgetNode {
             };
             cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeDataPack = nodeDataPack;
-            cell.facetName = budgetNode.branchSettings.facet,
+            cell.aspectName = budgetNode.branchSettings.aspect,
                 budgetNode._setCellChartParms(cell, cellIndex);
             budgetNode._setCellTitle(cell);
         };
@@ -59,7 +59,7 @@ class BudgetNode {
             cell.setChartParms();
         };
         this.viewpointName = parms.viewpointName;
-        this.facetName = parms.facetName;
+        this.aspectName = parms.aspectName;
         this.dataPath = parms.dataPath;
         this.nodeIndex = parms.nodeIndex;
         this.yearSpecs = parms.yearSpecs;
@@ -103,7 +103,7 @@ class BudgetNode {
     }
     resetCells() {
         let budgetNode = this;
-        let datasetName = constants_1.FacetNameToDatasetName[budgetNode.facetName];
+        let datasetName = constants_1.AspectNameToDatasetName[budgetNode.aspectName];
         let chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries;
         let cells = budgetNode.allCells;
         for (let cellIndex in cells) {

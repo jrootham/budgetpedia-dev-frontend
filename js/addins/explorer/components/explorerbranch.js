@@ -17,7 +17,7 @@ class ExplorerBranch extends Component {
             branchNodes: [],
             viewpointData: null,
             snackbar: { open: false, message: 'empty' },
-            facet: this.props.budgetBranch.settings.viewpoint,
+            aspect: this.props.budgetBranch.settings.viewpoint,
             byunitselection: 'off',
             showcontrols: false,
         };
@@ -43,8 +43,8 @@ class ExplorerBranch extends Component {
                     this._processChangeViewpointStateChange(budgetBranch);
                     break;
                 }
-                case actions_1.branchTypes.CHANGE_FACET: {
-                    this._processChangeFacetStateChange(budgetBranch);
+                case actions_1.branchTypes.CHANGE_ASPECT: {
+                    this._processChangeAspectStateChange(budgetBranch);
                     break;
                 }
                 default:
@@ -61,10 +61,10 @@ class ExplorerBranch extends Component {
                 });
             });
         };
-        this._processChangeFacetStateChange = (budgetBranch) => {
+        this._processChangeAspectStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
                 setTimeout(() => {
-                    let switchResults = budgetBranch.switchFacet();
+                    let switchResults = budgetBranch.switchAspect();
                     let { deeperdata, shallowerdata } = switchResults;
                     if (deeperdata || shallowerdata) {
                         let message = null;
@@ -150,8 +150,8 @@ class ExplorerBranch extends Component {
                 globalStateActions.changeViewpoint(budgetBranch.uid, viewpointname);
             });
         };
-        this.switchFacet = (facet) => {
-            switch (facet) {
+        this.switchAspect = (aspect) => {
+            switch (aspect) {
                 case "Expenses":
                 case "Revenues":
                 case "Staffing":
@@ -160,8 +160,8 @@ class ExplorerBranch extends Component {
                     return;
             }
             let { budgetBranch } = this.props;
-            budgetBranch.saveFacetState();
-            this.props.globalStateActions.changeFacet(budgetBranch.uid, facet);
+            budgetBranch.saveAspectState();
+            this.props.globalStateActions.changeAspect(budgetBranch.uid, aspect);
         };
         this.switchUnit = unitindex => {
             this.props.globalStateActions.resetLastAction();
@@ -295,8 +295,8 @@ class ExplorerBranch extends Component {
             branch.switchViewpoint(value);
         }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Budget (by function)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Budget (by structure)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'STATEMENTS', primaryText: "Consolidated Statements"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'EXPENSESBYOBJECT', primaryText: "Expenses by Object"}))) : null;
         let versionselection = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, {value: 'DETAIL'}, React.createElement(MenuItem_1.default, {disabled: true, value: 'SUMMARY', primaryText: "Summary"}), React.createElement(MenuItem_1.default, {value: 'DETAIL', primaryText: "Detail (PBF)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"}))) : null;
-        let aspectselection = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Aspect: "), React.createElement(DropDownMenu_1.default, {value: this.props.declarationData.branchesById[this.props.budgetBranch.uid].facet, onChange: (e, index, value) => {
-            branch.switchFacet(value);
+        let aspectselection = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Aspect: "), React.createElement(DropDownMenu_1.default, {value: this.props.declarationData.branchesById[this.props.budgetBranch.uid].aspect, onChange: (e, index, value) => {
+            branch.switchAspect(value);
         }}, React.createElement(MenuItem_1.default, {value: 'Expenses', primaryText: "Expenses"}), React.createElement(MenuItem_1.default, {value: 'Revenues', primaryText: "Revenues"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Both', primaryText: "Both"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Net', primaryText: "Net"}), React.createElement(MenuItem_1.default, {value: 'Staffing', primaryText: "Staffing"}))) : null;
         let byunitselection = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "By Unit: "), React.createElement(DropDownMenu_1.default, {value: this.state.byunitselection, onChange: (e, index, value) => {
             this.switchUnit(value);

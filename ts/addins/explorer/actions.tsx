@@ -6,7 +6,7 @@ export namespace types {
     export const ADD_BRANCH = 'ADD_BRANCH'
     export const REMOVE_BRANCH = 'REMOVE_BRANCH'
     export const CHANGE_VIEWPOINT = 'CHANGE_VIEWPOINT'
-    export const CHANGE_FACET = 'CHANGE_FACET'
+    export const CHANGE_ASPECT = 'CHANGE_ASPECT'
     export const TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED'
     export const ADD_NODE = 'ADD_NODE'
     export const REMOVE_NODES = 'REMOVE_NODES'
@@ -29,7 +29,7 @@ export namespace branchTypes {
     export import ADD_NODE = types.ADD_NODE
     export import REMOVE_NODES = types.REMOVE_NODES
     export import CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT
-    export import CHANGE_FACET = types.CHANGE_FACET
+    export import CHANGE_ASPECT = types.CHANGE_ASPECT
 }
 
 export namespace nodeTypes {
@@ -45,7 +45,7 @@ export namespace nodeTypes {
 export namespace cellTypes {
     export import UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION
     export import UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE
-    export import CHANGE_FACET = types.CHANGE_FACET
+    export import CHANGE_ASPECT = types.CHANGE_ASPECT
 }
 
 // --------------------[ Branch ]---------------------
@@ -77,10 +77,10 @@ export const changeViewpoint = createAction(
     })
 )
 
-export const changeFacet = createAction(
-    types.CHANGE_FACET, (branchuid, facetname) => ({ //, nodeidlist, cellidlist) => ({
+export const changeAspect = createAction(
+    types.CHANGE_ASPECT, (branchuid, aspectname) => ({ //, nodeidlist, cellidlist) => ({
         branchuid,
-        facetname
+        aspectname,
         // nodeidlist,
         // cellidlist,        
     }), () => ({

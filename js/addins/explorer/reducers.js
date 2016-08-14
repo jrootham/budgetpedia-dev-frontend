@@ -111,11 +111,11 @@ let branchesById = (state = {}, action) => {
             newstate[branchuid].viewpoint = action.payload.viewpointname;
             return newstate;
         }
-        case actions_1.types.CHANGE_FACET: {
+        case actions_1.types.CHANGE_ASPECT: {
             let { branchuid } = action.payload;
             newstate = Object.assign({}, state);
             newstate[branchuid] = Object.assign({}, newstate[branchuid]);
-            newstate[branchuid].facet = action.payload.facetname;
+            newstate[branchuid].aspect = action.payload.aspectname;
             return newstate;
         }
         default:
