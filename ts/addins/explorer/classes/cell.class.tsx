@@ -305,7 +305,7 @@ class BudgetCell {
         let title
         if (parentData) {
             let parentdataNode = parentData.nodeData
-            let configindex = nodeData.ConfigOverrideRef || parentdataNode.ConfigRef
+            let configindex = nodeData.ParentConfigOverride || parentdataNode.ConfigRef
             let catname = null
             if (configindex) {
                 let category = viewpointConfigs[configindex].Instance

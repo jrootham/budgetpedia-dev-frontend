@@ -4,6 +4,11 @@
             "ComponentsLookupIndex": "Programs",
             "CommonObjectsLookupIndex": "Expenditures",
             "InflationAdjusted": true,
+            "YearsRange":{
+                "start":2015,
+                "end":2015
+            },
+            "DatasetName":"Expenses",
             "DatasetTitle": "2015 Council Approved Gross Operating Expenditures",
             "Dataseries": [
                 {
@@ -29637,6 +29642,11 @@
             "ComponentsLookupIndex": "Programs",
             "CommonObjectsLookupIndex": "Revenues",
             "InflationAdjusted": true,
+            "YearsRange":{
+                "start":2015,
+                "end":2015
+            },
+            "DatasetName":"Revenues",
             "DatasetTitle": "2015 Council Approved Gross Operating Revenue",
             "Dataseries": [
                 {
@@ -46855,6 +46865,11 @@
             "ComponentsLookupIndex":"Programs",
             "CommonObjectsLookupIndex": "TimeAllocations",
             "InflationAdjusted": false,
+            "YearsRange":{
+                "start":2015,
+                "end":2015
+            },
+            "DatasetName":"Staffing",
             "DatasetTitle": "2015 Council Approved Staff Positions",
             "Dataseries": [
                 {

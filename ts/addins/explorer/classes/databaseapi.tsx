@@ -70,18 +70,19 @@ interface CurrencyItemType {
 }
 
 export interface DatasetConfig {
-    // Action: string,
-    Components: string,
-    Name: string,
+    YearsRange:{
+        start: number,
+        end: number,
+    },
+    DatasetName: string,
+    DatasetTitle: string,
+    Dataseries: DataseriesMeta[],
     DataseriesTitles: {
         Components: string,
         CommonObjects: string,
     },
-    Dataseries: DataseriesMeta[],
     Units: string,
     UnitsAlias: string,
-    CommonObjects: string,
-    DatasetTitle: string,
 }
 
 interface Dataset<ItemType> extends DatasetConfig {
@@ -183,6 +184,8 @@ class Database {
         let promise = new Promise(resolve => {
             datasetpromise.then((datasetdata: DatasetConfig) => {
                 let { 
+                    DatasetName,
+                    YearsRange,
                     DatasetTitle,
                     Dataseries,
                     DataseriesTitles,
@@ -191,6 +194,8 @@ class Database {
                 } = datasetdata
 
                 let config = {
+                    DatasetName,
+                    YearsRange,
                     DatasetTitle,
                     Dataseries,
                     DataseriesTitles, 

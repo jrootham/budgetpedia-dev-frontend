@@ -122,7 +122,7 @@
                             "Components": {
                                 "PARKSACTIVITIES": {
                                     "Index": 0,
-                                    "ConfigOverrideRef": "SUBCLUSTER",
+                                    "ParentConfigOverride": "SUBCLUSTER",
                                     "ConfigRef": "PROGRAMS",
                                     "Components": {
                                         "PARKS": {
@@ -145,7 +145,7 @@
                                 },
                                 "DESTINATIONS": {
                                     "Index": 2,
-                                    "ConfigOverrideRef": "SUBCLUSTER",
+                                    "ParentConfigOverride": "SUBCLUSTER",
                                     "ConfigRef": "PROGRAMS",
                                     "Components": {
                                         "EXHIBPLACE": {
@@ -168,7 +168,7 @@
                                 },
                                 "CONSERVATION": {
                                     "Index": 3,
-                                    "ConfigOverrideRef": "SUBCLUSTER",
+                                    "ParentConfigOverride": "SUBCLUSTER",
                                     "ConfigRef": "PROGRAMS",
                                     "Components": {
                                         "REGIONCONSERV": {
@@ -207,7 +207,7 @@
                                 },
                                 "POLICECOURT": {
                                     "Index": 2,
-                                    "ConfigOverrideRef": "SUBCLUSTER",
+                                    "ParentConfigOverride": "SUBCLUSTER",
                                     "ConfigRef": "PROGRAMS",
                                     "Components": {
                                         "POLICE": {
@@ -270,7 +270,7 @@
                     "Components": {
                         "CITYMANAGEMENT": {
                             "Index": 0,
-                            "ConfigOverrideRef": "CLUSTER",
+                            "ParentConfigOverride": "CLUSTER",
                             "ConfigRef": "SUBCLUSTER",
                             "Components": {
                                 "CORPMANAGEMENT": {
@@ -299,7 +299,7 @@
                                         },
                                         "ACCOUNTABILITY": {
                                             "Index": 5,
-                                            "ConfigOverrideRef": "SUBCLUSTER",
+                                            "ParentConfigOverride": "SUBCLUSTER",
                                             "ConfigRef": "PROGRAMS",
                                             "Components": {
                                                 "AUDITGEN": {
@@ -530,7 +530,7 @@
                                 },
                                 "ACCOUNTABILITYAPPEAL2": {
                                     "Index": 4,
-                                    "ConfigOverrideRef": "SUBCLUSTER",
+                                    "ParentConfigOverride": "SUBCLUSTER",
                                     "ConfigRef": "PROGRAMS",
                                     "Components": {
                                         "AUDITGEN": {
@@ -559,7 +559,7 @@
                             "Components": {
                                 "MANAGEMENTOFFICES": {
                                     "Index": 0,
-                                    "ConfigOverrideRef": "SUBCLUSTER",
+                                    "ParentConfigOverride": "SUBCLUSTER",
                                     "ConfigRef": "PROGRAMS",
                                     "Components": {
                                         "CITYMANAGER": {
@@ -578,7 +578,7 @@
                                 },
                                 "CORPORATESERVICES": {
                                     "Index": 0,
-                                    "ConfigOverrideRef": "SUBCLUSTER",
+                                    "ParentConfigOverride": "SUBCLUSTER",
                                     "ConfigRef": "PROGRAMS",
                                     "Components": {
                                         "FACILITIES": {
@@ -727,7 +727,7 @@
                     "Components": {
                         "POLICESERV": {
                             "Index": 0,
-                            "ConfigOverrideRef": "SUBCLUSTER",
+                            "ParentConfigOverride": "SUBCLUSTER",
                             "ConfigRef": "PROGRAMS",
                             "Components": {
                                 "POLICE": {
@@ -742,7 +742,7 @@
                         },
                         "TRANSITSERV": {
                             "Index": 1,
-                            "ConfigOverrideRef": "SUBCLUSTER",
+                            "ParentConfigOverride": "SUBCLUSTER",
                             "ConfigRef": "PROGRAMS",
                             "Components": {
                                 "TTCCONV": {
@@ -769,7 +769,7 @@
                         },
                         "SPECIALIZED": {
                             "Index": 4,
-                            "ConfigOverrideRef": "SUBCLUSTER",
+                            "ParentConfigOverride": "SUBCLUSTER",
                             "ConfigRef": "PROGRAMS",
                             "Components": {
                                 "COMMCENTRES": {
@@ -794,7 +794,7 @@
                                 },
                                 "DESTINATIONS2": {
                                     "Index": 5,
-                                    "ConfigOverrideRef": "SUBCLUSTER",
+                                    "ParentConfigOverride": "SUBCLUSTER",
                                     "ConfigRef": "PROGRAMS",
                                     "Components": {
                                         "EXHIBPLACE": {

@@ -174,7 +174,7 @@ class ExplorerBranch extends Component {
             if (!viewpointData)
                 return [];
             let datasetConfig = viewpointData.datasetConfig;
-            let portalSeriesName = datasetConfig.Name;
+            let portalSeriesName = datasetConfig.DatasetName;
             if (datasetConfig.Units == 'DOLLAR') {
                 portalSeriesName += ' (' + datasetConfig.UnitsAlias + ')';
             }

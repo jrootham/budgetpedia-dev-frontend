@@ -37,8 +37,10 @@ class Database {
         let datasetpromise = this.getDatasetPromise(versionName, datasetName);
         let promise = new Promise(resolve => {
             datasetpromise.then((datasetdata) => {
-                let { DatasetTitle, Dataseries, DataseriesTitles, Units, UnitsAlias, } = datasetdata;
+                let { DatasetName, YearsRange, DatasetTitle, Dataseries, DataseriesTitles, Units, UnitsAlias, } = datasetdata;
                 let config = {
+                    DatasetName: DatasetName,
+                    YearsRange: YearsRange,
                     DatasetTitle: DatasetTitle,
                     Dataseries: Dataseries,
                     DataseriesTitles: DataseriesTitles,
