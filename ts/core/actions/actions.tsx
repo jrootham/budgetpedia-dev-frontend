@@ -471,7 +471,6 @@ export const confirmUser = () => {
             })
             .catch(err => {
 
-                // console.log('err.message',err.message)
                 dispatch(registerConfirmError(err.message))
 
             })

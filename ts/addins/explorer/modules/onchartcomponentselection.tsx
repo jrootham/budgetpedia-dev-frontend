@@ -55,7 +55,8 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
 
     if (!budgetCell) {
-        console.log('budgetNode, cellIndex in applyChartComponentSelection',budgetNode, cellIndex)
+        console.error('System Error: budgetNode, faulty cellIndex in applyChartComponentSelection',budgetNode, cellIndex)
+        throw Error('faulty cellIndex in applyChartComponentSelection')
     }
 
     // 1. stop if chart is not not drillable

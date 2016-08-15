@@ -19,10 +19,13 @@ class BudgetNode {
             let parmsList = [];
             let datasetName = constants_1.AspectNameToDatasetName[this.aspectName];
             let chartSpecs = this.viewpointConfigPack.datasetConfig.Dataseries;
+            let node = this.nodeData;
             for (let chartSpec of chartSpecs) {
                 let cellDeclaration = Object.assign({}, this.props.declarationData.defaults.cell);
-                cellDeclaration.nodeDataseriesName = chartSpec.Type;
-                parmsList.push(cellDeclaration);
+                if (node[chartSpec.Type]) {
+                    cellDeclaration.nodeDataseriesName = chartSpec.Type;
+                    parmsList.push(cellDeclaration);
+                }
             }
             return parmsList;
         };
@@ -87,7 +90,6 @@ class BudgetNode {
     }
     setCells(cellDeclarations) {
         let cells = [];
-        console.log('cellDeclarations in setCells', cellDeclarations);
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration = cellDeclarations[cellIndex];
             let { chartSelection, explorerChartCode, nodeDataseriesName, celluid } = cellDeclaration;

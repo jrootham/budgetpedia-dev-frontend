@@ -53,7 +53,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
             let item = items[componentname];
             let importitem = null;
             if (!item)
-                console.error('failed to find item for ', componentname);
+                console.error('System Error: failed to find item for ', componentname);
             if (isInflationAdjusted) {
                 if (wantsInflationAdjusted) {
                     importitem = item.Adjusted;

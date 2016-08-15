@@ -148,7 +148,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
             // fetch the data from the dataseries itemlist
             let item = items[componentname]
             let importitem = null
-            if (!item) console.error('failed to find item for ', componentname)
+            if (!item) console.error('System Error: failed to find item for ', componentname)
             // first set componentAggregates as usual
             if (isInflationAdjusted) {
                 if (wantsInflationAdjusted) {

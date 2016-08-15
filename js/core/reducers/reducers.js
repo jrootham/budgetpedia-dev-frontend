@@ -220,7 +220,7 @@ let mainReducerCore = redux_1.combineReducers({
 });
 let mainReducer = (state, action) => {
     if (!flux_standard_action_1.isFSA(action)) {
-        console.error('non-FSA action', action);
+        console.error('System Error: non-FSA action', action);
         throw 'non-FSA action, see console for details';
     }
     else {

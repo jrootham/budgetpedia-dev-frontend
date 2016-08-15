@@ -12,7 +12,8 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     let budgetNode = branchNodes[nodeIndex];
     let budgetCell = budgetNode.cells[cellIndex];
     if (!budgetCell) {
-        console.log('budgetNode, cellIndex in applyChartComponentSelection', budgetNode, cellIndex);
+        console.error('System Error: budgetNode, faulty cellIndex in applyChartComponentSelection', budgetNode, cellIndex);
+        throw Error('faulty cellIndex in applyChartComponentSelection');
     }
     if (budgetCell.nodeDataseriesName == 'CommonObjects') {
         return;

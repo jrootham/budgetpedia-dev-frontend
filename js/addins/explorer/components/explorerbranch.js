@@ -105,7 +105,7 @@ class ExplorerBranch extends Component {
         this.onPortalCreation = () => {
             let element = this.branchScrollBlock;
             if (!element) {
-                console.error('expected branch element not found in onPortalCreation');
+                console.error('System Error: expected branch element not found in onPortalCreation');
                 return;
             }
             setTimeout(() => {

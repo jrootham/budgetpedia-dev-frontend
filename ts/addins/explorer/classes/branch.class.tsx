@@ -205,7 +205,7 @@ class BudgetBranch {
                     budgetNode.newCells = newCells
                 }
             } else {
-                console.error('no data node')
+                console.error('Sytem Error: no data node')
             }
         }
 

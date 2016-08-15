@@ -181,7 +181,7 @@ class BudgetCell {
         // collect chart node and its components as data sources for the graph
 
         if (!nodeData) {
-            console.error('node not found', budgetCell)
+            console.error('System Error: node not found in setChartParms', budgetCell)
             throw Error('node not found')
         }
 
@@ -233,7 +233,7 @@ class BudgetCell {
             rows = budgetCell._chartParmsRows(nodeData, yearSpecs)
         } else {
             // fires on last chart
-            console.error('no sortedDataSeries', sortedlistName, sortedDataseries, nodeData )
+            console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, nodeData )
             return
         }
 
@@ -528,8 +528,7 @@ class BudgetCell {
 
         if (!sortedDataseries) {
             console.error( { 
-                errorMessage:'sorted list "' + sortedlistName + '" not available',
-                chartParms: {} 
+                errorMessage:'sorted list "' + sortedlistName + '" not available'
             })
             throw Error('sorted list "' + sortedlistName + '" not available')
         }
@@ -538,7 +537,7 @@ class BudgetCell {
             // TODO: get determination of amount processing from Unit value
             let componentItem = nodeDataseries[sortedItem.Code]
             if (!componentItem) {
-                console.error('component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ',
+                console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ',
                     nodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem)
                 throw Error('componentItem not found')
             }

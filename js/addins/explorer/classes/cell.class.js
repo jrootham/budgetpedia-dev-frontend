@@ -27,7 +27,7 @@ class BudgetCell {
             let { viewpointConfigs, datasetConfig } = budgetCell.viewpointConfigPack;
             let { nodeData, yearSpecs, parentData, } = budgetCell.nodeDataPack;
             if (!nodeData) {
-                console.error('node not found', budgetCell);
+                console.error('System Error: node not found in setChartParms', budgetCell);
                 throw Error('node not found');
             }
             let chartType = budgetCell.googleChartType;
@@ -43,7 +43,7 @@ class BudgetCell {
                 rows = budgetCell._chartParmsRows(nodeData, yearSpecs);
             }
             else {
-                console.error('no sortedDataSeries', sortedlistName, sortedDataseries, nodeData);
+                console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, nodeData);
                 return;
             }
             let chartParms = {
@@ -250,15 +250,14 @@ class BudgetCell {
             let sortedDataseries = nodeData[sortedlistName];
             if (!sortedDataseries) {
                 console.error({
-                    errorMessage: 'sorted list "' + sortedlistName + '" not available',
-                    chartParms: {}
+                    errorMessage: 'sorted list "' + sortedlistName + '" not available'
                 });
                 throw Error('sorted list "' + sortedlistName + '" not available');
             }
             let rows = sortedDataseries.map((sortedItem) => {
                 let componentItem = nodeDataseries[sortedItem.Code];
                 if (!componentItem) {
-                    console.error('component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', nodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
+                    console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', nodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
                     throw Error('componentItem not found');
                 }
                 let amount;

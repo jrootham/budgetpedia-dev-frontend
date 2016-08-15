@@ -46,8 +46,6 @@ class BudgetNode {
         if (parms.parentData) this.parentData = parms.parentData
         if (parentNode) this.parentData.nodeData = parentNode
 
-        // this.setCells(portalcharts[parms.aspectName],parms.defaultChartType)
-
     }
 
     // ====================================================================
@@ -116,18 +114,21 @@ class BudgetNode {
     getCellDeclarationParms = () => {
         let parmsList:CellDeclaration[] = []
         let datasetName:string = AspectNameToDatasetName[this.aspectName]
-        let chartSpecs = this.viewpointConfigPack.datasetConfig.Dataseries // datasetSpecs[datasetName]
+        let chartSpecs = this.viewpointConfigPack.datasetConfig.Dataseries
+        let node = this.nodeData
         for (let chartSpec of chartSpecs) {
             let cellDeclaration:CellDeclaration = Object.assign({},this.props.declarationData.defaults.cell)
-            cellDeclaration.nodeDataseriesName = chartSpec.Type // s/b dataseriesName
-            parmsList.push(cellDeclaration)
+            // not only must the dataseries be mandated, but also present...
+            if (node[chartSpec.Type]) {
+                cellDeclaration.nodeDataseriesName = chartSpec.Type
+                parmsList.push(cellDeclaration)
+            }
         }
         return parmsList
     }
 
     public setCells(cellDeclarations:CellDeclaration[]) {
         let cells = []
-        console.log('cellDeclarations in setCells', cellDeclarations)
         // // TODO: should be default for each chart...
         // build cells array
         for (let cellIndex in cellDeclarations) {
