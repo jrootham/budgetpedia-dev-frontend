@@ -180,8 +180,8 @@ class ExplorerBranch extends Component {
             }
             let portals = budgetNodes.map((budgetNode, nodeindex) => {
                 let portalName = null;
-                if (budgetNode.parentData) {
-                    portalName = budgetNode.parentData.Name;
+                if (budgetNode.metaData) {
+                    portalName = budgetNode.metaData.Name;
                 }
                 else {
                     portalName = 'City Budget';

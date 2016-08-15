@@ -462,8 +462,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let portals = budgetNodes.map((budgetNode: BudgetNode, nodeindex) => {
 
             let portalName = null
-            if (budgetNode.parentData) {
-                portalName = budgetNode.parentData.Name
+            if (budgetNode.metaData) {
+                portalName = budgetNode.metaData.Name
             } else {
                 portalName = 'City Budget'
             }

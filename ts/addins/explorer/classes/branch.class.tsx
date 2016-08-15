@@ -112,8 +112,8 @@ class BudgetBranch {
         let viewpointData = this.state.viewpointData
         let nodeData = getBudgetNode(viewpointData, dataPath)
         let branchNodes = this.nodes
-        let parentNode = (nodeIndex == 0)? undefined: branchNodes[branchNodes.length - 1].nodeData
-        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, nodeData, parentNode)
+        // let parentNode = (nodeIndex == 0)? undefined: branchNodes[branchNodes.length - 1].nodeData
+        let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, nodeData)
         branchNodes[nodeIndex] = budgetNode
         this.setState({
             branchNodes,
@@ -305,12 +305,12 @@ class BudgetBranch {
         let components = nodeData.Components
 
         let code = null
-        let parentData: SortedComponentItem = null
+        let metaData: SortedComponentItem = null
         let parentNode: any = null
         if (nodeData && nodeData.SortedComponents && nodeData.SortedComponents[selectionrow]) {
-            parentData = nodeData.SortedComponents[selectionrow]
+            metaData = nodeData.SortedComponents[selectionrow]
             parentNode = nodeData
-            code = parentData.Code
+            code = metaData.Code
         }
         if (code)
             childdatapath.push(code)
@@ -335,7 +335,7 @@ class BudgetBranch {
             aspectName,
             dataPath: childdatapath,
             nodeIndex: nodeIndex + 1,
-            parentData,
+            metaData,
             yearSpecs: newrange,
         }
 

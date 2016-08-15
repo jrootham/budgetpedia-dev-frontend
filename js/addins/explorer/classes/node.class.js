@@ -2,16 +2,16 @@
 const constants_1 = require('../../constants');
 const cell_class_1 = require('./cell.class');
 class BudgetNode {
-    constructor(parms, uid, node, parentNode = null) {
+    constructor(parms, uid, node) {
         this.new = true;
         this.updated = false;
         this.newCells = null;
-        this.parentData = null;
+        this.metaData = null;
         this.update = (aspect, nodeData, parentDataNode = null) => {
             this._nodeData = nodeData;
             this.aspectName = aspect;
-            if (this.parentData && parentDataNode) {
-                this.parentData.nodeData = parentDataNode;
+            if (this.metaData && parentDataNode) {
+                this.metaData.nodeData = parentDataNode;
             }
             this.updated = true;
         };
@@ -31,11 +31,11 @@ class BudgetNode {
         };
         this._updateCell = (cell, cellIndex) => {
             let budgetNode = this;
-            let { viewpointConfigPack, nodeData, yearSpecs, parentData, nodeIndex } = budgetNode;
+            let { viewpointConfigPack, nodeData, yearSpecs, metaData, nodeIndex } = budgetNode;
             let nodeDataPack = {
                 nodeData: nodeData,
                 yearSpecs: yearSpecs,
-                parentData: parentData,
+                metaData: metaData,
             };
             cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeDataPack = nodeDataPack;
@@ -50,9 +50,9 @@ class BudgetNode {
                 chartblocktitle = portaltitles.CommonObjects;
             }
             else {
-                chartblocktitle = portaltitles.Components;
+                chartblocktitle = "By " + portaltitles.Components;
             }
-            budgetCell.cellTitle = "By " + chartblocktitle;
+            budgetCell.cellTitle = chartblocktitle;
         };
         this._setCellChartParms = (cell, cellIndex) => {
             let budgetNode = this;
@@ -68,10 +68,8 @@ class BudgetNode {
         this.yearSpecs = parms.yearSpecs;
         this._nodeData = node;
         this.uid = uid;
-        if (parms.parentData)
-            this.parentData = parms.parentData;
-        if (parentNode)
-            this.parentData.nodeData = parentNode;
+        if (parms.metaData)
+            this.metaData = parms.metaData;
     }
     get nodeData() {
         return this._nodeData;

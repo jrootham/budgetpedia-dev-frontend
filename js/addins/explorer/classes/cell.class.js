@@ -25,13 +25,13 @@ class BudgetCell {
         this.setChartParms = () => {
             let budgetCell = this;
             let { viewpointConfigs, datasetConfig } = budgetCell.viewpointConfigPack;
-            let { nodeData, yearSpecs, parentData, } = budgetCell.nodeDataPack;
+            let { nodeData, yearSpecs, metaData, } = budgetCell.nodeDataPack;
             if (!nodeData) {
                 console.error('System Error: node not found in setChartParms', budgetCell);
                 throw Error('node not found');
             }
             let chartType = budgetCell.googleChartType;
-            let options = budgetCell._chartParmsOptions(nodeData, parentData, viewpointConfigs, datasetConfig, yearSpecs);
+            let options = budgetCell._chartParmsOptions(nodeData, metaData, viewpointConfigs, datasetConfig, yearSpecs);
             let events = budgetCell._chartParmsEvents();
             let columns = budgetCell._chartParmsColumns(yearSpecs);
             let { nodeDataseriesName } = budgetCell;
@@ -55,7 +55,7 @@ class BudgetCell {
             };
             budgetCell._chartParms = chartParms;
         };
-        this._chartParmsOptions = (nodeData, parentData, viewpointConfigs, datasetConfig, yearSpecs) => {
+        this._chartParmsOptions = (nodeData, metaData, viewpointConfigs, datasetConfig, yearSpecs) => {
             let budgetCell = this;
             let { aspectName, nodeDataseriesName } = budgetCell;
             let datasetName = constants_1.AspectNameToDatasetName[aspectName];
@@ -64,7 +64,7 @@ class BudgetCell {
             let verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units;
             verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')';
             let horizontalLabel = null;
-            if ((nodeData.ConfigRef) && (nodeDataseriesName != 'CommmonObjects')) {
+            if ((nodeData.ConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
                 let titleref = viewpointConfigs[nodeData.ConfigRef];
                 horizontalLabel = titleref.Alias || titleref.Name;
             }
@@ -72,23 +72,24 @@ class BudgetCell {
                 let portaltitles = datasetConfig.DataseriesTitles;
                 horizontalLabel = portaltitles.CommonObjects;
             }
-            let title;
-            if (parentData) {
-                let parentdataNode = parentData.nodeData;
-                let configindex = nodeData.ParentConfigOverride || parentdataNode.ConfigRef;
-                let catname = null;
-                if (configindex) {
-                    let category = viewpointConfigs[configindex].Instance;
-                    catname = category.Alias || category.Name;
-                }
-                else {
-                    catname = '(** Unknown Category **)';
-                }
-                title = catname + ': ' + parentData.Name;
+            let nodename = null;
+            if (metaData) {
+                nodename = metaData.Name;
             }
             else {
-                title = datasetConfig.DatasetTitle;
+                nodename = datasetConfig.DatasetTitle;
             }
+            let configindex = nodeData.ConfigRef;
+            let catname = null;
+            if (configindex) {
+                let names = viewpointConfigs[configindex];
+                let instancenames = names.Instance;
+                catname = instancenames.Alias || instancenames.Name;
+            }
+            else {
+                catname = '(** Unknown Category **)';
+            }
+            let title = catname + ': ' + nodename;
             let { rightYear, leftYear, yearScope } = yearSpecs;
             let timeSuffix = null;
             if (yearScope == constants_2.TimeScope[constants_2.TimeScope.OneYear]) {

@@ -20,7 +20,7 @@
             ],
             "DataseriesTitles": {
                 "Components": "Programs",
-                "CommonObjects": "Expenditures"
+                "CommonObjects": "Expenditures by Object"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
@@ -29659,7 +29659,7 @@
             ],
             "DataseriesTitles": {
                 "Components": "Programs",
-                "CommonObjects": "Revenues"
+                "CommonObjects": "Revenues by Object"
             },
             "Units": "DOLLAR",
             "UnitsAlias": "$000's",
@@ -46883,7 +46883,7 @@
             ],
             "DataseriesTitles": {
                 "Components": "Programs",
-                "CommonObjects": "Designations"
+                "CommonObjects": "Permanence Classifications"
             },
             "Units": "FTE",
             "UnitRatio":1,            

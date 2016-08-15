@@ -28,50 +28,50 @@
             },
             "Configurations": {
                 "TYPES": {
-                    "Name": "Functional",
-                    "Alias": "Program Activity Types",
                     "Instance": {
                         "Name": "Type",
-                        "Alias": "Activity Type"
-                    }
+                        "Alias": "Budget"
+                    },
+                    "Name": "Functional",
+                    "Alias": "Program Activity Types"
                 },
                 "CLUSTER": {
-                    "Name": "Clusters",
-                    "Alias": "Program Clusters",
                     "Instance": {
-                        "Name": "Cluster"
-                    }
+                        "Name": "Activity Type"
+                    },
+                    "Name": "Clusters",
+                    "Alias": "Program Clusters"
                 },
                 "SUBCLUSTER": {
-                    "Name": "Sub-clusters",
-                    "Alias": "Program Sub-clusters",
                     "Instance": {
-                        "Name": "Sub-cluster"
-                    }
+                        "Name": "Program Sub-Cluster"
+                    },
+                    "Name": "Sub-clusters",
+                    "Alias": "Program Sub-clusters"
                 },
                 "PROGRAMS": {
-                    "Name": "Programs",
                     "Instance": {
-                        "Name": "Program"
-                    }
+                        "Name": "Program Cluster"
+                    },
+                    "Name": "Programs"
                 },
                 "BASELINE": {
-                    "Name": "Services",
                     "Instance": {
-                        "Name": "Service"
-                    }
+                        "Name": "Program"
+                    },
+                    "Name": "Services"
                 },
                 "SERVICES": {
-                    "Name": "Services",
                     "Instance": {
-                        "Name": "Service"
-                    }
+                        "Name": "Program"
+                    },
+                    "Name": "Services"
                 },
                 "ACTIVITIES": {
-                    "Name": "Activities",
                     "Instance": {
-                        "Name": "Activity"
-                    }
+                        "Name": "Service"
+                    },
+                    "Name": "Activities"
                 }
             },
             "ConfigRef": "TYPES",

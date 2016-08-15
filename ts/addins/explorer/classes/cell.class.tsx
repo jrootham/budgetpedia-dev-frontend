@@ -1,5 +1,8 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetcell.tsx
+/*
+TODO: BUG noSortedDataSeries when switching aspect with leaf expenditure cell showing
+*/ 
 
 import {
     ChartParms,
@@ -63,7 +66,7 @@ export interface CellConstructorArgs {
 export interface NodeData {
     nodeData: any,
     yearSpecs: YearSpecs,
-    parentData: any,
+    metaData: any,
 }
 
 class BudgetCell {
@@ -174,7 +177,7 @@ class BudgetCell {
         let { 
             nodeData, 
             yearSpecs, 
-            parentData, 
+            metaData, 
         } = budgetCell.nodeDataPack
 
         // ---------------------[ get data node components ]------------------
@@ -199,7 +202,7 @@ class BudgetCell {
 
         let options = budgetCell._chartParmsOptions(
             nodeData, 
-            parentData, 
+            metaData, 
             viewpointConfigs, 
             datasetConfig, 
             yearSpecs
@@ -259,7 +262,7 @@ class BudgetCell {
     // ------------------
     private _chartParmsOptions = (
         nodeData, 
-        parentData, 
+        metaData, 
         viewpointConfigs, 
         datasetConfig:DatasetConfig, 
         yearSpecs:YearSpecs
@@ -283,7 +286,7 @@ class BudgetCell {
         // -------------------[ assemble horizontal label value ]--------------------
 
         let horizontalLabel = null
-        if ((nodeData.ConfigRef) && (nodeDataseriesName != 'CommmonObjects')) {
+        if ((nodeData.ConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
             let titleref = viewpointConfigs[nodeData.ConfigRef]
             horizontalLabel = titleref.Alias || titleref.Name
         } else {
@@ -294,22 +297,22 @@ class BudgetCell {
         // ----------------------[ assemble chart title ]----------------------
 
         // set basic title
-        let title
-        if (parentData) { // get context info from parent, if available
-            let parentdataNode = parentData.nodeData
-            let configindex = nodeData.ParentConfigOverride || parentdataNode.ConfigRef
-            let catname = null
-            if (configindex) {
-                let category = viewpointConfigs[configindex].Instance
-                catname = category.Alias || category.Name
-            } else {
-                catname = '(** Unknown Category **)'
-            }
-            title = catname + ': ' + parentData.Name
+        let nodename = null
+        if (metaData) {
+            nodename = metaData.Name
+        } else {
+            nodename = datasetConfig.DatasetTitle
         }
-        else { // ... it must be the root node, so use the dataset title
-            title = datasetConfig.DatasetTitle
+        let configindex = nodeData.ConfigRef
+        let catname = null
+        if (configindex) {
+            let names = viewpointConfigs[configindex]
+            let instancenames = names.Instance
+            catname = instancenames.Alias || instancenames.Name
+        } else {
+            catname = '(** Unknown Category **)'
         }
+        let title = catname + ': ' + nodename
 
         // add yearspan to title
         let { rightYear, leftYear, yearScope } = yearSpecs

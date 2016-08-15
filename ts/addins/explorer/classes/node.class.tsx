@@ -26,11 +26,11 @@ export interface BudgetNodeParms {
     yearSpecs: YearSpecs,
     dataPath: string[],
     nodeIndex: number,
-    parentData?:any,
+    metaData?:any,
 }
 
 class BudgetNode {
-    constructor(parms: BudgetNodeParms, uid:string, node:any, parentNode:any = null) {
+    constructor(parms: BudgetNodeParms, uid:string, node:any) {
 
         // let portalcharts = parms.datasetSpecs
 
@@ -43,8 +43,8 @@ class BudgetNode {
         this.uid = uid
         // this.datasetSpecs = parms.datasetSpecs
         // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
-        if (parms.parentData) this.parentData = parms.parentData
-        if (parentNode) this.parentData.nodeData = parentNode
+        if (parms.metaData) this.metaData = parms.metaData
+        // if (parentNode) this.metaData.nodeData = parentNode
 
     }
 
@@ -83,7 +83,7 @@ class BudgetNode {
 
     public getProps: Function
 
-    parentData: any = null // includes parentNode for now
+    metaData: any = null // includes parentNode for now
     // parentNode: any = null
 
     portalConfig: PortalConfig
@@ -96,8 +96,8 @@ class BudgetNode {
     update = (aspect, nodeData, parentDataNode = null) => {
         this._nodeData = nodeData
         this.aspectName = aspect
-        if (this.parentData && parentDataNode) {
-            this.parentData.nodeData = parentDataNode
+        if (this.metaData && parentDataNode) {
+            this.metaData.nodeData = parentDataNode
         }
         this.updated = true
     }
@@ -163,11 +163,11 @@ class BudgetNode {
     private _updateCell = (cell:BudgetCell, cellIndex) => {
         let budgetNode = this
 
-        let { viewpointConfigPack, nodeData, yearSpecs, parentData, nodeIndex } = budgetNode
+        let { viewpointConfigPack, nodeData, yearSpecs, metaData, nodeIndex } = budgetNode
         let nodeDataPack: NodeData = {
             nodeData,
             yearSpecs,
-            parentData,
+            metaData,
         }
 
         cell.viewpointConfigPack = viewpointConfigPack
@@ -184,9 +184,9 @@ class BudgetNode {
         if ((budgetCell.nodeDataseriesName == 'CommonObjects')) {
             chartblocktitle = portaltitles.CommonObjects
         } else {
-            chartblocktitle = portaltitles.Components
+            chartblocktitle = "By " + portaltitles.Components
         }
-        budgetCell.cellTitle = "By " + chartblocktitle
+        budgetCell.cellTitle = chartblocktitle
     }
 
     private _setCellChartParms = (cell:BudgetCell, cellIndex) => {
