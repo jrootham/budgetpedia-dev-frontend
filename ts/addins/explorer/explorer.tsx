@@ -161,7 +161,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             // this.props.restoreBranches()
             let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
             budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById)
-            // console.log('setState for branches')
             this.setState({
                 budgetBranches,
             })
@@ -169,13 +168,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
 
     addBranch = refbranchuid => {
-        // console.log('adding branch from', branchuid)
         let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
         this.props.addBranchDeclaration( refbranchuid, defaultSettings )        
     }
 
     removeBranch = branchuid => {
-        // console.log('removing branch', branchuid)
         this.props.removeBranchDeclaration(branchuid)
     }
 
@@ -242,7 +239,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             }
 
             budgetBranches[i].settings = branchesById[branchList[i]]
-            // console.log('branch settings for ', budgetBranches[i])
         }
 
         this.setState({
@@ -304,7 +300,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     onExpandChange = (expanded) => {
         // TODO: change background color of title if it is collapsed
-        // console.log('sending resetLastAction')
         this.props.resetLastAction()
     }
 
@@ -322,9 +317,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         let explorer = this
 
-        // console.log('declarationData',explorer.props.declarationData)
-        // console.log('rendering Explorer')
-        
         let dialogbox =  
             <Dialog
                 title = "Budget Explorer Options"
@@ -534,8 +526,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         // -----------[ COMBINE SEGMENTS ]---------------
 
         let branches = drilldownSegments()
-
-        // console.log('branches', branches)
 
         return <div>
 

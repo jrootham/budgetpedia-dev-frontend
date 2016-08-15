@@ -23,7 +23,6 @@ let Register = class extends Component<any, any> {
         for (var index in elements) {
             profile[index] = elements[index].getValue()
         }
-        // console.log('profile', profile)
 
         this.props.registerUser(profile)
     }
@@ -31,7 +30,7 @@ let Register = class extends Component<any, any> {
 
         let registerpage = this
         let fieldMessages = registerpage.props.register.fieldMessages || {}
-        // console.log('fieldMessages = ',fieldMessages)
+
         let disabled = registerpage.props.auth.isAuthenticated
 
         let elements: Array<elementProps> = [

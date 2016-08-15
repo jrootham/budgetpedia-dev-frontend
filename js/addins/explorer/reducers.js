@@ -41,7 +41,7 @@ let branchList = (state = [], action) => {
                 return newstate;
             }
             if (pos == 0) {
-                console.log('System Error: branchuid for move up at beginning of list already', branchuid, newstate);
+                console.error('System Error: branchuid for move up at beginning of list already', branchuid, newstate);
                 return newstate;
             }
             let oldbranchuid = newstate[pos - 1];

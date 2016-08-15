@@ -44,7 +44,7 @@ let branchList = (state = [], action) => {
                 return newstate
             }
             if (pos == 0) {
-                console.log('System Error: branchuid for move up at beginning of list already', branchuid, newstate)
+                console.error('System Error: branchuid for move up at beginning of list already', branchuid, newstate)
                 return newstate
             }
             let oldbranchuid = newstate[pos - 1]
@@ -93,7 +93,6 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
         
         case actiontypes.ADD_NODE: {
             let { branchuid } = action.payload
-            // console.log('branchuid in ADD_NODE', branchuid, action, state)
             newstate = Object.assign({},state)
             newstate[branchuid] = Object.assign({},newstate[branchuid])
             newstate[branchuid].nodeList = 
@@ -128,7 +127,6 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             newstate = Object.assign({},state)
             newstate[branchuid] = Object.assign({},newstate[branchuid])
             newstate[branchuid].aspect = action.payload.aspectname
-            // console.log('changed aspect', branchuid, newstate[branchuid].aspect)
             return newstate
         }
 
@@ -213,8 +211,6 @@ let cellsById = (state = { }, action) => {
 
         case actiontypes.UPDATE_CELLS_DATASERIESNAME: {
 
-            // console.log('reducer update_cells_dataseriesname')
-
             let cellItems = action.payload.cellItemList
             for ( let cellItem of cellItems) {
                 let { celluid } = cellItem
@@ -243,7 +239,7 @@ let defaultState = {
 }
 
 let lastAction = (state = defaultState , action) => {
-    // console.log('action',action)
+
     if (!action.payload && !(action.type == actiontypes.RESET_LAST_ACTION)) {
         let newstate = Object.assign({}, defaultState)
         newstate.type = action.type

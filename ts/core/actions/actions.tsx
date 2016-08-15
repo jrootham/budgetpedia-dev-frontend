@@ -85,7 +85,7 @@ export const loginUser = (creds, callback) => {
         dispatch(requestLogin(creds))
         fetch('/api/login/credentials', config)
             .then(response => {
-                // console.log('request response = ', response)
+
                 if (response.status >= 500) {
                     throw new Error("Response from server: " +
                         response.statusText + ' (' +
@@ -94,6 +94,7 @@ export const loginUser = (creds, callback) => {
                 return response.text().then(text => {
                     return { text, response }
                 })
+
             })
             .then(({text, response}) => {
                 let json, isJson
@@ -180,7 +181,7 @@ export const autoLoginUser = (token, callback?) => {
         dispatch(requestAutoLogin(token))
         fetch('/api/login/token', config)
             .then(response => {
-                // console.log('request response = ', response)
+
                 if (response.status >= 500) {
                     throw new Error("Response from server: " +
                         response.statusText + ' (' +
@@ -312,7 +313,7 @@ export const registerUser = profile => {
         dispatch(requestRegister(data))
         fetch('/api/register/new', config)
             .then(response => {
-                // console.log('request response = ', response)
+
                 if (response.status >= 500) {
                     throw new Error("Response from server: " +
                         response.statusText + ' (' +
@@ -414,7 +415,7 @@ export const confirmUser = () => {
     let data = {
         token: query['token']
     }
-    // console.log('token = ', data.token)
+
     return (dispatch,getState) => {
         if (!data.token) {
             dispatch(registerConfirmError('No registration token is available'))
@@ -444,7 +445,6 @@ export const confirmUser = () => {
                 try {
                     json = JSON.parse(text)
                     isJson = true
-                    console.log('reply json', json)
                 } catch (e) {
                     isJson = false
                 }
@@ -471,7 +471,7 @@ export const confirmUser = () => {
             })
             .catch(err => {
 
-                console.log('err.message',err.message)
+                // console.log('err.message',err.message)
                 dispatch(registerConfirmError(err.message))
 
             })

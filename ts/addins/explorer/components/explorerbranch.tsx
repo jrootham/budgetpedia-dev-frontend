@@ -189,16 +189,13 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         if (nextState.snackbar.open != this.state.snackbar.open) return true
 
-        // console.log('branch lastAction, generation',lastAction, generation, this.lastgenerationcounter)
-
         // if (generation <= this.lastgenerationcounter) return true
         // this.lastgenerationcounter = generation
-        // console.log('evaluating lastAction')
         if (!lastAction.explorer) return false
         let { branchuid } = lastAction
         if (branchuid) {
             let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
-            // console.log('branchuid action',retval, branchuid, lastAction.type)
+
             return retval
         }
         return true
@@ -225,11 +222,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         // first task is to harmonize declarationData nodeList list with local branchNode list
         // this condition will keep adding nodes on each render cycle triggered by 
         // addBranchNode, until all nodes are drawn
-        // console.log('nodeList, branchNodes lengths', nodeList.length, branchNodes.length, nodeList, branchNodes)
         if (nodeList.length > branchNodes.length) {
             // places sentinal in place in case addNode below fails
             //   generating an infinite loop
-            // console.log('harmonizing branchnodes ', this.harmonizecount )
             if (this.harmonizecount <= 0) {
                 console.log('harmonize error', nodeList, branchNodes)
                 // throw Error('error harmonizing branch nodes')
@@ -274,7 +269,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 break
             }
             case branchActionTypes.CHANGE_ASPECT: {
-                // console.log('processing change aspect')
+
                 this._processChangeAspectStateChange(budgetBranch)
                 break
             }
@@ -297,7 +292,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     private _processChangeAspectStateChange = (budgetBranch:BudgetBranch) => {
-        // console.log('processing change aspect state change, getting viewpointdata')
+
         budgetBranch.getViewpointData().then(() => {
 
             setTimeout(() => {
@@ -419,8 +414,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     switchAspect = (aspect:string) => {
 
-        // console.log('switching aspect to ', aspect)
-
         switch (aspect) {
             case "Expenses":
             case "Revenues":
@@ -455,7 +448,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     // get React components to render
     getPortals = (budgetNodes:BudgetNode[]) => {
-        // console.log('running getPortals')
+
         let { viewpointData } = this.state
 
         if (!viewpointData) return []
@@ -528,7 +521,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     // }
 
     render() {
-        // console.log('rendering ExplorerBranch', this.props.budgetBranch)
 
     let branch = this
     let drilldownrow = branch.props.budgetBranch.nodes

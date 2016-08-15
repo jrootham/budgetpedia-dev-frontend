@@ -131,7 +131,7 @@ class BudgetBranch {
 
     // this resets the branch in response to the change aspect user request
     switchAspect = () => {
-        // console.log('running switchAspect')
+
         let { actions, nodeCallbacks:callbacks } = this
         let switchResults = {
             deeperdata: false,
@@ -153,7 +153,7 @@ class BudgetBranch {
         //  by keeping previousaspect data to compart with, rather than
         //  current method which relies on side effects of timing
         for (nodeIndex in branchNodes) {
-            // console.log('switch aspect nodeIndex', nodeIndex, branchNodes.length)
+
             parentBudgetNode = budgetNode
             budgetNode = branchNodes[nodeIndex]
             let dataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
@@ -164,7 +164,6 @@ class BudgetBranch {
                 let deeperdata = (!!dataNode.Components && (budgetNode.oldAspectState == 1))
                 // there are two charts where there should be 1
                 let shallowerdata = (!dataNode.Components && (budgetNode.oldAspectState == 2))
-                // console.log('changeaspect', dataNode, deeperdata, shallowerdata, budgetNode.cells)
                 // now set budgetNode with new data node
                 let parentDataNode = null
                 if (nodeIndex > 0) {
@@ -245,7 +244,7 @@ class BudgetBranch {
         let promise = new Promise(resolve => {
 
             _promise.then( (viewpointdata:ViewpointData) => {
-                // console.log('setting viewpoint data', viewpointdata, this.uid)
+
                 this.setState({
                     viewpointData:viewpointdata
                 })

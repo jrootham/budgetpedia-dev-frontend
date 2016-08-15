@@ -240,7 +240,6 @@ function register(state = {
 
         case REGISTER_FAILURE:
 
-            // console.log('register failure action = ', action)
             let fieldMessages = {}
             let data = action.payload.data || []
             let i, message = null
@@ -251,7 +250,7 @@ function register(state = {
             if (action.payload.data) {
                 action.payload.message = null
             }
-            // console.log('register failure fieldMessages = ', fieldMessages)
+
             return Object.assign({}, state, {
                 isFetching: false,
                 fieldMessages,
@@ -292,7 +291,6 @@ function registerconfirm(state = {
 
         case REGISTER_CONFIRM_SUCCESS:
 
-            // console.log('register confirm success',action)
             return Object.assign({}, state, {
                 isFetching: false,
                 isConfirmed: true,

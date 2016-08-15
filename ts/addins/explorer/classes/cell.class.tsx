@@ -130,7 +130,7 @@ class BudgetCell {
     // ========================[ METHODS ]==========================
 
     refreshSelection = () => {
-            // console.log('will update with setSelection', budgetCell, budgetCell.chart.getSelection())
+
         let budgetCell = this
         if (budgetCell.chartSelection) {
             // it turns out that "PieChart" needs column set to null
@@ -143,7 +143,6 @@ class BudgetCell {
                     budgetCell.chartSelection[0].column = 1
                 }
                 budgetCell.chart.setSelection(budgetCell.chartSelection)
-                // console.log('have invoked setSelection from componentDidUpdate', budgetCell)
             }
         }        
     }

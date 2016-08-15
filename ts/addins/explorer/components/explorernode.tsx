@@ -75,13 +75,14 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
 
         if (nodeDeclaration.cellList == null) {
-            // console.log('creating new cell declarations', budgetNode)
+
             // get controlData for cellList
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
         } else {
-            // console.log('harmonizing cells', budgetNode)
+
             this._harmonizeCells()
+
         }
     }
 
@@ -103,7 +104,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                     }
                 )
             }
-            // console.log('sending updateCellsDataseriesName', budgetNode)
+
             this._stateActions.updateCellsDataseriesName(cellslist)
             budgetNode.newCells = null
             budgetNode.updated = false
@@ -133,11 +134,10 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         
         // if (generation <= this.lastgenerationcounter) return true
         // this.lastgenerationcounter = generation
-        // console.log('lastAction',lastAction)
         let { nodeuid } = lastAction
         if (nodeuid) {
             let retval = (nextProps.budgetNode.uid == nodeuid)? true: false
-            // console.log('node',retval, nodeuid, nextProps.budgetNode.uid, lastAction.type)
+
             return retval
         }
         return true
@@ -198,7 +198,6 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
 
     // private _processChangeAspect = () => {
     //     let { budgetNode } = this.props
-    //     // console.log('processing node change aspect')
     //     // let cellDeclarationParms = budgetNode.getCellDeclarationParms()
     //     // this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
     // }
@@ -299,8 +298,6 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     }
 
     render() {
-
-        // console.log('rendering ExplorerNode', this.props.budgetNode)
 
         let chartTabs = this.getChartTabs()
 

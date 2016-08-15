@@ -43,10 +43,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     onChangeChartCode = (explorerChartCode) => {
 
-        // console.log('onChangeChartCode',explorerChartCode, this.props)
         let { budgetCell } = this.props
         budgetCell.switchChartCode(explorerChartCode)
-         // console.log('budgetCell in explorercell on ChangeChartCode', budgetCell)
+
         this.props.globalStateActions.updateCellChartCode(budgetCell.uid,explorerChartCode)
     }
 
@@ -79,14 +78,14 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     shouldComponentUpdate(nextProps: ExplorerCellProps, nextState) {
         let { lastAction, generation } = nextProps.declarationData
-        // console.log('lastAction in cell',lastAction)
+
         // if (generation <= this.lastgenerationcounter) return true
         // this.lastgenerationcounter = generation
 
         let { celluid } = lastAction
         if (celluid) {
             let retval = (nextProps.budgetCell.uid == celluid)? true: false
-            // console.log('cell should update',retval, celluid, nextProps.budgetCell.uid, lastAction.type)
+
             return retval
         }
         return true
@@ -99,8 +98,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     }
 
     render() {
-
-        // console.log('rendering ExplorerCell', this.props.budgetCell.uid)
 
         let { chartParms, explorerChartCode, expandable, graph_id } = this.props.budgetCell
         if (!expandable) {

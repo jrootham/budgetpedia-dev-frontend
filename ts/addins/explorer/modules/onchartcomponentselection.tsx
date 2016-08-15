@@ -54,13 +54,9 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     // budgetnode is undefined on final expendigure chart
     let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
 
-    if (!budgetCell)
+    if (!budgetCell) {
         console.log('budgetNode, cellIndex in applyChartComponentSelection',budgetNode, cellIndex)
-    // console.log('on selection',budgetCell)
-
-    // let { chart } = budgetCell.chartComponent
-    // console.log('CHART ts, wz, Im, Ok',selection, chart.ts, chart.wz, chart.Im, chart.Ok )
-    // budgetCell.chartSelection = selection? [selection]: null
+    }
 
     // 1. stop if chart is not not drillable
     // TODO: replace with reference to budgetCell.expandable
@@ -68,7 +64,6 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         return
     }
     budgetCell.chartSelection = selection? chartSelectionData.selection: null
-    // console.log('setting chart selection', selection, budgetCell)
 
     // 2. remove any nodes to be replaced or abandoned
 

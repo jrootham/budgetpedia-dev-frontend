@@ -304,7 +304,6 @@ exports.confirmUser = () => {
                 try {
                     json = JSON.parse(text);
                     isJson = true;
-                    console.log('reply json', json);
                 }
                 catch (e) {
                     isJson = false;
@@ -327,7 +326,6 @@ exports.confirmUser = () => {
                 }
             })
                 .catch(err => {
-                console.log('err.message', err.message);
                 dispatch(registerConfirmError(err.message));
             });
         }
