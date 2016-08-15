@@ -95,7 +95,14 @@ class BudgetCell {
                 timeSuffix = rightYear.toString();
             }
             else {
-                timeSuffix = leftYear + ' - ' + rightYear;
+                let separator;
+                if (yearScope == constants_2.TimeScope[constants_2.TimeScope.TwoYears]) {
+                    separator = ':';
+                }
+                else {
+                    separator = ' - ';
+                }
+                timeSuffix = leftYear + separator + rightYear;
             }
             timeSuffix = ', ' + timeSuffix;
             title += timeSuffix;

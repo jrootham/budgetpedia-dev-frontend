@@ -317,7 +317,13 @@ class BudgetCell {
         if ( yearScope == TimeScope[TimeScope.OneYear] ) {
             timeSuffix = rightYear.toString()
         } else {
-            timeSuffix = leftYear + ' - ' + rightYear
+            let separator
+            if (yearScope == TimeScope[TimeScope.TwoYears]) {
+                separator = ':'
+            } else { // must be AllYears
+                separator = ' - '
+            }
+            timeSuffix = leftYear + separator + rightYear
         }
         timeSuffix = ', ' + timeSuffix
         title += timeSuffix
