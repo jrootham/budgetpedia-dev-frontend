@@ -41,7 +41,7 @@ class ExporerNode extends Component {
         this._harmonizeCells = () => {
             let returnvalue = false;
             let { budgetNode, declarationData } = this.props;
-            let cells = budgetNode.allCells;
+            let cells = budgetNode.cells;
             let { cellList } = declarationData.nodesById[budgetNode.uid];
             if ((cells.length != cellList.length) && (this.harmonizecount == null)) {
                 this.harmonizecount = cellList.length - cells.length;
@@ -121,7 +121,7 @@ class ExporerNode extends Component {
             });
             let updatedCells = budgetNode.newCells;
             let cellslist = [];
-            for (let cell of cellslist) {
+            for (let cell of updatedCells) {
                 cellslist.push({
                     celluid: cell.uid,
                     nodeDataseriesName: cell.nodeDataseriesName
@@ -132,7 +132,7 @@ class ExporerNode extends Component {
             budgetNode.updated = false;
         }
         else {
-            let cells = budgetNode.allCells;
+            let cells = budgetNode.cells;
             let { cellsById } = declarationData;
             let newCells = cells.filter(cell => {
                 return !!cellsById[cell.uid];

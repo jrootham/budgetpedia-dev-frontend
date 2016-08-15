@@ -89,14 +89,14 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     // TODO: generate action to update cell nodeDataseriesName
     // remove obsolete cell objects; update cell list if needed
     componentWillReceiveProps(nextProps) {
-        let { budgetNode, declarationData } = nextProps // this.props
+        let { budgetNode, declarationData }:{budgetNode:BudgetNode, declarationData:any} = nextProps // this.props
         if (budgetNode.updated) {
             this.setState({
                 nodeCells:budgetNode.newCells
             })
             let updatedCells = budgetNode.newCells
             let cellslist = []
-            for (let cell of cellslist) {
+            for (let cell of updatedCells) {
                 cellslist.push(
                     {
                         celluid: cell.uid, 
@@ -109,7 +109,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
             budgetNode.newCells = null
             budgetNode.updated = false
         } else {
-            let cells = budgetNode.allCells
+            let cells = budgetNode.cells
             let { cellsById } = declarationData
             let newCells = cells.filter(cell =>{
                 return !!cellsById[cell.uid]
@@ -207,7 +207,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     private _harmonizeCells = () => {
         let returnvalue = false
         let { budgetNode, declarationData } = this.props
-        let cells = budgetNode.allCells
+        let cells = budgetNode.cells
         let { cellList } = declarationData.nodesById[budgetNode.uid]
         // harmonization required if there is a mismatch between cells and cellList
         if ((cells.length != cellList.length) && (this.harmonizecount == null)) {

@@ -140,7 +140,7 @@ class BudgetBranch {
         let branchSettings: BranchSettings = this.settings
         let viewpointData = this.state.viewpointData
 
-        let branchNodes = this.nodes
+        let branchNodes:BudgetNode[] = this.nodes
 
         let budgetNode: BudgetNode = null
         let parentBudgetNode: BudgetNode
@@ -176,8 +176,8 @@ class BudgetBranch {
                     isError = true
                     let prevBudgetNode: BudgetNode = branchNodes[nodeIndex - 1]
                     let removed = branchNodes.splice(nodeIndex)
-                    let removedids = removed.map((item) => {
-                        return {nodeuid:item.uid, cellList:item.cellList}
+                    let removedids = removed.map((item:BudgetNode) => {
+                        return {nodeuid:item.uid, cellList:item.cellDeclarationList}
                     })
                     actions.removeNodeDeclarations(removedids)
                     setTimeout(()=> {

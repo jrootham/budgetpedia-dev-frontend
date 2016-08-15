@@ -81,7 +81,7 @@ class BudgetBranch {
                         let prevBudgetNode = branchNodes[nodeIndex - 1];
                         let removed = branchNodes.splice(nodeIndex);
                         let removedids = removed.map((item) => {
-                            return { nodeuid: item.uid, cellList: item.cellList };
+                            return { nodeuid: item.uid, cellList: item.cellDeclarationList };
                         });
                         actions.removeNodeDeclarations(removedids);
                         setTimeout(() => {

@@ -83,9 +83,6 @@ class BudgetNode {
         return this.getProps();
     }
     get cells() {
-        return this.getAvailableCells();
-    }
-    get allCells() {
         return [...this.state.nodeCells];
     }
     setCells(cellDeclarations) {
@@ -108,7 +105,7 @@ class BudgetNode {
         let budgetNode = this;
         let datasetName = constants_1.AspectNameToDatasetName[budgetNode.aspectName];
         let chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries;
-        let cells = budgetNode.allCells;
+        let cells = budgetNode.cells;
         for (let cellIndex in cells) {
             let cell = cells[cellIndex];
             cell.nodeDataseriesName = chartSpecs[cellIndex].Type;
@@ -116,22 +113,8 @@ class BudgetNode {
         }
         return cells;
     }
-    get cellList() {
+    get cellDeclarationList() {
         return [...this.getProps().declarationData.nodesById[this.uid].cellList];
-    }
-    getAvailableCells() {
-        let cells = [...this.state.nodeCells];
-        let availablCells = [];
-        if (!this.nodeData)
-            return availablCells;
-        for (let cell of cells) {
-            let budgetNode = this;
-            if (!this.nodeData[cell.nodeDataseriesName]) {
-                continue;
-            }
-            availablCells.push(cell);
-        }
-        return availablCells;
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

@@ -89,10 +89,6 @@ class BudgetNode {
     portalConfig: PortalConfig
 
     get cells() { // only return cells that have appropriate node datasets available
-        return this.getAvailableCells()
-    }
-
-    get allCells() {
         return [...this.state.nodeCells]
     }
 
@@ -155,7 +151,7 @@ class BudgetNode {
 
         let datasetName:string = AspectNameToDatasetName[budgetNode.aspectName]
         let chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries // datasetSpecs[datasetName]
-        let cells = budgetNode.allCells
+        let cells = budgetNode.cells
         for (let cellIndex in cells) {
             let cell:BudgetCell = cells[cellIndex]
             cell.nodeDataseriesName = chartSpecs[cellIndex].Type
@@ -205,22 +201,8 @@ class BudgetNode {
 
     }
 
-    get cellList() {
+    get cellDeclarationList() {
         return [...this.getProps().declarationData.nodesById[this.uid].cellList]
-    }
-
-    private getAvailableCells() {
-        let cells = [...this.state.nodeCells]
-        let availablCells = []
-        if (!this.nodeData) return availablCells
-        for (let cell of cells) {
-            let budgetNode = this
-            if (!this.nodeData[cell.nodeDataseriesName]) {
-                continue
-            }
-            availablCells.push(cell)
-        }
-        return availablCells
     }
 
     private _nodeData: any

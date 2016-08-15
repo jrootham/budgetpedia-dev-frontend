@@ -142,7 +142,7 @@ class ExplorerBranch extends Component {
             let { nodes: branchNodes } = budgetBranch;
             let removed = branchNodes.splice(0);
             let removeditems = removed.map((item) => {
-                return { nodeuid: item.uid, cellList: item.cellList };
+                return { nodeuid: item.uid, cellList: item.cellDeclarationList };
             });
             let globalStateActions = this._stateActions;
             globalStateActions.removeNodeDeclarations(removeditems);

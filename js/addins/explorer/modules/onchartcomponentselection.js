@@ -21,7 +21,7 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     budgetCell.chartSelection = selection ? chartSelectionData.selection : null;
     let removed = branchNodes.splice(nodeIndex + 1);
     let removeditems = removed.map((item) => {
-        return { nodeuid: item.uid, cellList: item.cellList };
+        return { nodeuid: item.uid, cellList: item.cellDeclarationList };
     });
     if (removeditems.length > 0) {
         let { removeNodeDeclarations } = budgetBranch.actions;

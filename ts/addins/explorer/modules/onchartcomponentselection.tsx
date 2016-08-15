@@ -69,8 +69,8 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     // 2. remove any nodes to be replaced or abandoned
 
     let removed = branchNodes.splice(nodeIndex + 1) // remove subsequent charts
-    let removeditems = removed.map((item) => {
-        return {nodeuid:item.uid, cellList:item.cellList}
+    let removeditems = removed.map((item:BudgetNode) => {
+        return {nodeuid:item.uid, cellList:item.cellDeclarationList}
     })
 
     if (removeditems.length > 0) {

@@ -400,8 +400,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         // branchNodes is just a copy of the component state's BranchNodes
         let removed = branchNodes.splice(0) // identify nodes to remove
-        let removeditems = removed.map((item) => {
-            return {nodeuid:item.uid, cellList:item.cellList}
+        let removeditems = removed.map((item:BudgetNode) => {
+            return {nodeuid:item.uid, cellList:item.cellDeclarationList}
         })
         // this will trigger render cycle that will delete the component state's stored nodes
         let globalStateActions = this._stateActions
