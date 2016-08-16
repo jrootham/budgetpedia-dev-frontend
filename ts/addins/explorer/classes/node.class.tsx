@@ -30,7 +30,7 @@ export interface BudgetNodeParms {
 }
 
 class BudgetNode {
-    constructor(parms: BudgetNodeParms, uid:string, node:any) {
+    constructor(parms: BudgetNodeParms, uid:string, node:any, parentBudgetNode:any = null) {
 
         // let portalcharts = parms.datasetSpecs
 
@@ -44,7 +44,7 @@ class BudgetNode {
         // this.datasetSpecs = parms.datasetSpecs
         // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
         if (parms.metaData) this.metaData = parms.metaData
-        // if (parentNode) this.metaData.nodeData = parentNode
+        if (parentBudgetNode) this.metaData.parentBudgetNode = parentBudgetNode
 
     }
 

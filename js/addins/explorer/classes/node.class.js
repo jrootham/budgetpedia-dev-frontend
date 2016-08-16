@@ -2,7 +2,7 @@
 const constants_1 = require('../../constants');
 const cell_class_1 = require('./cell.class');
 class BudgetNode {
-    constructor(parms, uid, node) {
+    constructor(parms, uid, node, parentBudgetNode = null) {
         this.new = true;
         this.updated = false;
         this.newCells = null;
@@ -70,6 +70,8 @@ class BudgetNode {
         this.uid = uid;
         if (parms.metaData)
             this.metaData = parms.metaData;
+        if (parentBudgetNode)
+            this.metaData.parentBudgetNode = parentBudgetNode;
     }
     get nodeData() {
         return this._nodeData;

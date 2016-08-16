@@ -87,7 +87,18 @@ class BudgetCell {
                 catname = instancenames.Alias || instancenames.Name;
             }
             else {
-                catname = '(** Unknown Category **)';
+                if (metaData && metaData.parentBudgetNode) {
+                    let parentconfigindex = metaData.parentBudgetNode.nodeData.NamingConfigRef;
+                    if (parentconfigindex) {
+                        let names = viewpointConfigs[parentconfigindex];
+                        if (names && names.Contents && names.Contents.DefaultInstance) {
+                            catname = names.Contents.DefaultInstance.Name;
+                        }
+                    }
+                }
+                if (!catname) {
+                    catname = '(** Unknown Category **)';
+                }
             }
             let title = catname + ': ' + nodename;
             let { rightYear, leftYear, yearScope } = yearSpecs;

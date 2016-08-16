@@ -67,7 +67,10 @@
                         "Name": "Program"
                     },
                     "Contents": {
-                        "Name": "Services"
+                        "Name": "Services",
+                        "DefaultInstance":{
+                            "Name":"Service"
+                        }
                     }
                 },
                 "SERVICE": {
@@ -75,7 +78,10 @@
                         "Name": "Service"
                     },
                     "Contents": {
-                        "Name": "Activities"
+                        "Name": "Activities",
+                        "DefaultInstance":{
+                            "Name":"Activity"
+                        }
                     }
                 }
             },
