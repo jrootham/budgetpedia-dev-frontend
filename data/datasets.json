@@ -251,7 +251,7 @@
                                         "Name": "311 PMO"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "TO-311 Information & Business Processing": {
                                 "years": {
@@ -354,7 +354,7 @@
                                         "Name": "311 Information/ Content Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -1270,7 +1270,7 @@
                                         "Name": "Sign Tax Billing & Collection"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "BL-Building Permission & Information": {
                                 "years": {
@@ -1575,7 +1575,7 @@
                                         "Name": "Preliminary Review"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -1895,7 +1895,7 @@
                                         "Name": "CPF-Financial Policy Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CPF-Investment & Debt Management": {
                                 "years": {
@@ -2097,7 +2097,7 @@
                                         "Name": "CPF-Investment Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CPF-Risk Management & Insurance": {
                                 "years": {
@@ -2326,7 +2326,7 @@
                                         "Name": "CPF-Insurance & Risk Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "F&A-Executive Leadership": {
                                 "years": {
@@ -2649,7 +2649,7 @@
                                         "Name": "FPD-Financial Planning & Policy"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "FPD-Financial Reporting & Control": {
                                 "years": {
@@ -3246,7 +3246,7 @@
                                         "Name": "Human Rights Education & Complaints Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CM-Executive Management": {
                                 "years": {
@@ -3541,7 +3541,7 @@
                                         "Name": "Performance Management & Benchmarking"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CM-Internal Auditing": {
                                 "years": {
@@ -3680,7 +3680,7 @@
                                         "Name": "Business Risk & Consulting"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CM-Strategic & Corporate Policy": {
                                 "years": {
@@ -3859,7 +3859,7 @@
                                         "Name": "Strategic Planning & Policy Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CM-Strategic Communications": {
                                 "years": {
@@ -4123,7 +4123,7 @@
                                         "Name": "Public Communications"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "HR Employee & Labour Relations": {
                                 "years": {
@@ -4603,7 +4603,7 @@
                                         "Name": "Elections"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "GV-Make Government Work": {
                                 "years": {
@@ -4872,7 +4872,7 @@
                                         "Name": "Government Decision Making Processes"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "GV-Open Government": {
                                 "years": {
@@ -5092,7 +5092,7 @@
                                         "Name": "Lifecycle Management of City Information"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -6047,7 +6047,7 @@
                                         "Name": "Interventions"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "Default Fine Collection Management": {
                                 "years": {
@@ -6497,7 +6497,7 @@
                                         "Name": "Filming Activity"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "EC-Cultural Services": {
                                 "years": {
@@ -6891,7 +6891,7 @@
                                         "Name": "Heritage Programming"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "EC-Economic Competitiveness Services": {
                                 "years": {
@@ -7249,7 +7249,7 @@
                                         "Name": "Visitor Information Services"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -7537,7 +7537,7 @@
                                         "Name": "Land Information"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "WT-Engineering Review & Acceptance": {
                                 "years": {
@@ -7739,7 +7739,7 @@
                                         "Name": "Development Application Review & Acceptance"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "WT-Municipal Infrastructure Construction": {
                                 "years": {
@@ -7941,7 +7941,7 @@
                                         "Name": "Design"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -8657,7 +8657,7 @@
                                         "Name": "Research & Policy Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CA-Facilities Management": {
                                 "years": {
@@ -8926,7 +8926,7 @@
                                         "Name": "Security & Safety"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CA-Real Estate": {
                                 "years": {
@@ -9293,7 +9293,7 @@
                                         "Name": "Property Disposal"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -9657,7 +9657,7 @@
                                         "Name": "Heavy Urban Search & Rescue"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "FR-Fire Prevention, Inspection, & Enforcement": {
                                 "years": {
@@ -9850,7 +9850,7 @@
                                         "Name": "Fire Code Enforcement"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "FR-Fire Safety Education": {
                                 "years": {
@@ -10043,7 +10043,7 @@
                                         "Name": "School Based Fire Education"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -10411,7 +10411,7 @@
                                         "Name": "Vehicle Safety"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "FL-Fuel Management": {
                                 "years": {
@@ -10595,7 +10595,7 @@
                                         "Name": "Fuel Distribution"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -11238,7 +11238,7 @@
                                         "Name": "Solution Sustainment"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "IT-Computer & Communications Technology Infrastructure": {
                                 "years": {
@@ -11467,7 +11467,7 @@
                                         "Name": "Network & Telecommunications"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "IT-Enterprise IT Planning & Client Services": {
                                 "years": {
@@ -11727,7 +11727,7 @@
                                         "Name": "IT Project Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -12732,7 +12732,7 @@
                                         "Name": "Veterinary Care"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "MS-Business Licensing, Enforcement, & Permitting": {
                                 "years": {
@@ -13104,7 +13104,7 @@
                                         "Name": "Taxi & Livery Licensing"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "MS-By-Law Enforcement": {
                                 "years": {
@@ -13440,7 +13440,7 @@
                                         "Name": "Waste By-Law Enforcement"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "MS-Property Standards, Inspection & Compliance": {
                                 "years": {
@@ -13776,7 +13776,7 @@
                                         "Name": "Zoning Investigation & Enforcement"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -14188,7 +14188,7 @@
                                         "Name": "Supportive Housing Services"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "Long Term Care Homes": {
                                 "years": {
@@ -14693,7 +14693,7 @@
                                         "Name": "Community Healthcare Outreach & Referral"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "AM-Emergency Medical Care": {
                                 "years": {
@@ -14949,7 +14949,7 @@
                                         "Name": "Pre-Hospital Emergency Care"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "Blocked AM-City Emergency & Major Event Mass Casualty Care": {
                                 "years": {
@@ -15848,7 +15848,7 @@
                                         "Name": "Recreation & Facilities Planning & Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PR-Parks": {
                                 "years": {
@@ -16430,7 +16430,7 @@
                                         "Name": "Zoo & Farm Attractions"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PR-Urban Forestry": {
                                 "years": {
@@ -16793,7 +16793,7 @@
                                         "Name": "Urban Forestry Planning & Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -17528,7 +17528,7 @@
                                         "Name": "Emergency Management Program Development & Response"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PA-Financial Management": {
                                 "years": {
@@ -17676,7 +17676,7 @@
                                         "Name": "Financial Transaction & Payment Processing"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PA-Program Support": {
                                 "years": {
@@ -17958,7 +17958,7 @@
                                         "Name": "Time & Attendance Data Entry & Reporting"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -18893,7 +18893,7 @@
                                         "Name": "Provide Emergency Shelter & Related Support"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "HS-Social Housing System Management": {
                                 "years": {
@@ -19265,7 +19265,7 @@
                                         "Name": "Manage Social Housing Provider Subsidies"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -19674,7 +19674,7 @@
                                         "Name": "Youth Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CD-Community Partnership Investment Program": {
                                 "years": {
@@ -19759,7 +19759,7 @@
                                         "Name": "Partnership Funding"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CD-Financial Management & Program Support": {
                                 "years": {
@@ -20068,7 +20068,7 @@
                                         "Name": "Revenue & Cash Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CD-Social Policy & Planning": {
                                 "years": {
@@ -20283,7 +20283,7 @@
                                         "Name": "Social Research & Evaluation"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CD-Toronto Office of Partnerships": {
                                 "years": {
@@ -20444,7 +20444,7 @@
                                         "Name": "Revenue Generation and Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "Corporate Leadership (DCM)": {
                                 "years": {
@@ -20821,7 +20821,7 @@
                                         "Name": "Plan and manage employment and career services"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "SS-Financial Supports": {
                                 "years": {
@@ -20974,7 +20974,7 @@
                                         "Name": "Financial and employment benefits administration"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "SS-Integrated Case Management and Service Planning": {
                                 "years": {
@@ -21176,7 +21176,7 @@
                                         "Name": "Provide Individualized Employment Service Planning"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -21648,7 +21648,7 @@
                                         "Name": "Street Litter Bins"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "SW-Residual Management": {
                                 "years": {
@@ -21953,7 +21953,7 @@
                                         "Name": "Perpetual Care"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "SW-Solid Waste Collection & Transfer": {
                                 "years": {
@@ -22486,7 +22486,7 @@
                                         "Name": "Recyclables (C&T)"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "SW-Solid Waste Education & Enforcement": {
                                 "years": {
@@ -22782,7 +22782,7 @@
                                         "Name": "Promotion & Education"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "SW-Solid Waste Processing & Transport": {
                                 "years": {
@@ -23315,7 +23315,7 @@
                                         "Name": "Resales of Recyclables (P&T)"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -23950,7 +23950,7 @@
                                         "Name": "Street Events"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "TP-Road & Sidewalk Management": {
                                 "years": {
@@ -24474,7 +24474,7 @@
                                         "Name": "Winter Operations"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "TP-Transportation Safety & Operations": {
                                 "years": {
@@ -24855,7 +24855,7 @@
                                         "Name": "Transportation Studies & Investigations"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -25255,7 +25255,7 @@
                                         "Name": "ASD-Provincial & Federal Reports Submission"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "ASD-Payment Processing": {
                                 "years": {
@@ -25537,7 +25537,7 @@
                                         "Name": "ASD-PCard Processing"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "ASD-SAP Governance": {
                                 "years": {
@@ -25582,7 +25582,7 @@
                                         "Name": "ASD-SAP Solution Delivery"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "ASD-Tax & Financial System Support": {
                                 "years": {
@@ -25779,7 +25779,7 @@
                                         "Name": "ASD-Tax Advisory & Policy"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PMM-Materials Management Stores & Distribution": {
                                 "years": {
@@ -26219,7 +26219,7 @@
                                         "Name": "PPEB-Employee Benefits & Pension Administration"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PPEB-Non – OMERS Pension Plans": {
                                 "years": {
@@ -26524,7 +26524,7 @@
                                         "Name": "PPEB-Pension Reporting"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PPEB-Payroll": {
                                 "years": {
@@ -26829,7 +26829,7 @@
                                         "Name": "PPEB-Payroll Management Reporting"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "RS-Parking Ticket": {
                                 "years": {
@@ -26964,7 +26964,7 @@
                                         "Name": "RS-Parking Ticket Processing"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "RS-Property Tax Billing": {
                                 "years": {
@@ -27313,7 +27313,7 @@
                                         "Name": "RS-Rebate & Deferral Programs"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "RS-Revenue Accounting & Collection": {
                                 "years": {
@@ -27689,7 +27689,7 @@
                                         "Name": "RS-Revenue Accounting"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "RS-Tax, Utility & Parking Ticket Client Services": {
                                 "years": {
@@ -27922,7 +27922,7 @@
                                         "Name": "RS-Tax / Utility Account Administration"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "RS-Utility Billing": {
                                 "years": {
@@ -28155,7 +28155,7 @@
                                         "Name": "RS-Water Billings"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -28775,7 +28775,7 @@
                                         "Name": "TW-Stormwater Treatment"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "TW-Wastewater Collection & Treatment": {
                                 "years": {
@@ -29004,7 +29004,7 @@
                                         "Name": "TW-Wastewater Treatment"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "TW-Water Treatment & Supply": {
                                 "years": {
@@ -29233,7 +29233,7 @@
                                         "Name": "Water Treatment"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -29744,7 +29744,7 @@
                                         "Name": "311 PMO"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -30274,7 +30274,7 @@
                                         "Name": "Sign Tax Billing & Collection"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "BL-Building Permission & Information": {
                                 "years": {
@@ -30507,7 +30507,7 @@
                                         "Name": "Preliminary Review"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -30732,7 +30732,7 @@
                                         "Name": "CPF-Financial Policy Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CPF-Investment & Debt Management": {
                                 "years": {
@@ -30826,7 +30826,7 @@
                                         "Name": "CPF-Investment Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CPF-Risk Management & Insurance": {
                                 "years": {
@@ -30920,7 +30920,7 @@
                                         "Name": "CPF-Insurance & Risk Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "F&A-Executive Leadership": {
                                 "years": {
@@ -31072,7 +31072,7 @@
                                         "Name": "FPD-Financial Planning & Policy"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "FPD-Financial Reporting & Control": {
                                 "years": {
@@ -31388,7 +31388,7 @@
                                         "Name": "Equity & Accessibility"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CM-Internal Auditing": {
                                 "years": {
@@ -31473,7 +31473,7 @@
                                         "Name": "Business Risk & Consulting"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CM-Strategic & Corporate Policy": {
                                 "years": {
@@ -31549,7 +31549,7 @@
                                         "Name": "Strategic Planning & Policy Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CM-Strategic Communications": {
                                 "years": {
@@ -31678,7 +31678,7 @@
                                         "Name": "Public Communications"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "HR Employee & Labour Relations": {
                                 "years": {
@@ -31956,7 +31956,7 @@
                                         "Name": "Elections"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "GV-Make Government Work": {
                                 "years": {
@@ -32104,7 +32104,7 @@
                                         "Name": "Government Decision Making Processes"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "GV-Open Government": {
                                 "years": {
@@ -32243,7 +32243,7 @@
                                         "Name": "Lifecycle Management of City Information"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -32909,7 +32909,7 @@
                                         "Name": "Interventions"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "Default Fine Collection Management": {
                                 "years": {
@@ -33155,7 +33155,7 @@
                                         "Name": "Filming Activity"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "EC-Cultural Services": {
                                 "years": {
@@ -33477,7 +33477,7 @@
                                         "Name": "Heritage Programming"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "EC-Economic Competitiveness Services": {
                                 "years": {
@@ -33727,7 +33727,7 @@
                                         "Name": "Visitor Information Services"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -33942,7 +33942,7 @@
                                         "Name": "Land Information"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "WT-Engineering Review & Acceptance": {
                                 "years": {
@@ -34090,7 +34090,7 @@
                                         "Name": "Development Application Review & Acceptance"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "WT-Municipal Infrastructure Construction": {
                                 "years": {
@@ -34229,7 +34229,7 @@
                                         "Name": "Design"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -34671,7 +34671,7 @@
                                         "Name": "Research & Policy Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CA-Facilities Management": {
                                 "years": {
@@ -34877,7 +34877,7 @@
                                         "Name": "Security & Safety"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CA-Real Estate": {
                                 "years": {
@@ -35082,7 +35082,7 @@
                                         "Name": "Property Disposal"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -35329,7 +35329,7 @@
                                         "Name": "Heavy Urban Search & Rescue"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "FR-Fire Prevention, Inspection, & Enforcement": {
                                 "years": {
@@ -35414,7 +35414,7 @@
                                         "Name": "Fire Code Enforcement"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "FR-Fire Safety Education": {
                                 "years": {
@@ -35526,7 +35526,7 @@
                                         "Name": "School Based Fire Education"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -35785,7 +35785,7 @@
                                         "Name": "Vehicle Safety"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "FL-Fuel Management": {
                                 "years": {
@@ -35915,7 +35915,7 @@
                                         "Name": "Fuel Distribution"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -36332,7 +36332,7 @@
                                         "Name": "Solution Sustainment"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "IT-Computer & Communications Technology Infrastructure": {
                                 "years": {
@@ -36480,7 +36480,7 @@
                                         "Name": "Network & Telecommunications"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "IT-Enterprise IT Planning & Client Services": {
                                 "years": {
@@ -36668,7 +36668,7 @@
                                         "Name": "IT Project Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -37412,7 +37412,7 @@
                                         "Name": "Veterinary Care"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "MS-Business Licensing, Enforcement, & Permitting": {
                                 "years": {
@@ -37573,7 +37573,7 @@
                                         "Name": "Taxi & Livery Licensing"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "MS-By-Law Enforcement": {
                                 "years": {
@@ -37698,7 +37698,7 @@
                                         "Name": "Waste By-Law Enforcement"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "MS-Property Standards, Inspection & Compliance": {
                                 "years": {
@@ -37899,7 +37899,7 @@
                                         "Name": "Zoning Investigation & Enforcement"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -38085,7 +38085,7 @@
                                         "Name": "Supportive Housing Services"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "Long Term Care Homes": {
                                 "years": {
@@ -38390,7 +38390,7 @@
                                         "Name": "Community Healthcare Outreach & Referral"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "AM-Emergency Medical Care": {
                                 "years": {
@@ -38565,7 +38565,7 @@
                                         "Name": "Pre-Hospital Emergency Care"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "Blocked AM-City Emergency & Major Event Mass Casualty Care": {
                                 "years": {
@@ -39263,7 +39263,7 @@
                                         "Name": "Recreation & Facilities Planning & Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PR-Parks": {
                                 "years": {
@@ -39647,7 +39647,7 @@
                                         "Name": "Zoo & Farm Attractions"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PR-Urban Forestry": {
                                 "years": {
@@ -39875,7 +39875,7 @@
                                         "Name": "Urban Forestry Planning & Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -40285,7 +40285,7 @@
                                         "Name": "Emergency Management Program Development & Response"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PA-Financial Management": {
                                 "years": {
@@ -40352,7 +40352,7 @@
                                         "Name": "Financial Transaction & Payment Processing"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PA-Program Support": {
                                 "years": {
@@ -40508,7 +40508,7 @@
                                         "Name": "Time & Attendance Data Entry & Reporting"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -41359,7 +41359,7 @@
                                         "Name": "Provide Emergency Shelter & Related Support"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "HS-Social Housing System Management": {
                                 "years": {
@@ -41646,7 +41646,7 @@
                                         "Name": "Manage Social Housing Provider Subsidies"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -41959,7 +41959,7 @@
                                         "Name": "Youth Development"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CD-Community Partnership Investment Program": {
                                 "years": {
@@ -42004,7 +42004,7 @@
                                         "Name": "Investment Funding"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CD-Financial Management & Program Support": {
                                 "years": {
@@ -42115,7 +42115,7 @@
                                         "Name": "Revenue & Cash Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CD-Social Policy & Planning": {
                                 "years": {
@@ -42240,7 +42240,7 @@
                                         "Name": "Social Research & Evaluation"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "CD-Toronto Office of Partnerships": {
                                 "years": {
@@ -42347,7 +42347,7 @@
                                         "Name": "Revenue Generation and Management"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "Corporate Leadership (DCM)": {
                                 "years": {
@@ -42562,7 +42562,7 @@
                                         "Name": "Plan and manage employment and career services"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "SS-Financial Supports": {
                                 "years": {
@@ -42679,7 +42679,7 @@
                                         "Name": "Financial and employment benefits administration"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "SS-Integrated Case Management and Service Planning": {
                                 "years": {
@@ -42800,7 +42800,7 @@
                                         "Name": "Provide Individualized Employment Service Planning"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -42918,7 +42918,7 @@
                                         "Name": "Street Litter Bins"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "SW-Residual Management": {
                                 "years": {
@@ -43061,7 +43061,7 @@
                                         "Name": "Perpetual Care"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "SW-Solid Waste Collection & Transfer": {
                                 "years": {
@@ -43213,7 +43213,7 @@
                                         "Name": "Recyclables (C&T)"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "SW-Solid Waste Processing & Transport": {
                                 "years": {
@@ -43512,7 +43512,7 @@
                                         "Name": "Resales of Recyclables (P&T)"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -43959,7 +43959,7 @@
                                         "Name": "Street Events"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "TP-Road & Sidewalk Management": {
                                 "years": {
@@ -44303,7 +44303,7 @@
                                         "Name": "Winter Operations"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "TP-Transportation Safety & Operations": {
                                 "years": {
@@ -44531,7 +44531,7 @@
                                         "Name": "Transportation Studies & Investigations"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -44764,7 +44764,7 @@
                                         "Name": "ASD-Provincial & Federal Reports Submission"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "ASD-Payment Processing": {
                                 "years": {
@@ -44947,7 +44947,7 @@
                                         "Name": "ASD-PCard Processing"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "ASD-Tax & Financial System Support": {
                                 "years": {
@@ -45041,7 +45041,7 @@
                                         "Name": "ASD-Tax Advisory & Policy"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PMM-Materials Management Stores & Distribution": {
                                 "years": {
@@ -45194,7 +45194,7 @@
                                         "Name": "PPEB-Employee Benefits & Pension Administration"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "PPEB-Payroll": {
                                 "years": {
@@ -45337,7 +45337,7 @@
                                         "Name": "PPEB-Payroll Management Reporting"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "RS-Parking Ticket": {
                                 "years": {
@@ -45382,7 +45382,7 @@
                                         "Name": "RS-Parking Ticket Processing"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "RS-Property Tax Billing": {
                                 "years": {
@@ -45480,7 +45480,7 @@
                                         "Name": "RS-Property Tax & Payment in Lieu of Tax Billing"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "RS-Revenue Accounting & Collection": {
                                 "years": {
@@ -45649,7 +45649,7 @@
                                         "Name": "RS-Revenue Accounting"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "RS-Tax, Utility & Parking Ticket Client Services": {
                                 "years": {
@@ -45792,7 +45792,7 @@
                                         "Name": "RS-Tax / Utility Account Administration"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "RS-Utility Billing": {
                                 "years": {
@@ -45899,7 +45899,7 @@
                                         "Name": "RS-Water Billings"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
@@ -46295,7 +46295,7 @@
                                         "Name": "TW-Stormwater Treatment"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "TW-Wastewater Collection & Treatment": {
                                 "years": {
@@ -46434,7 +46434,7 @@
                                         "Name": "TW-Wastewater Treatment"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             },
                             "TW-Water Treatment & Supply": {
                                 "years": {
@@ -46555,7 +46555,7 @@
                                         "Name": "Water Treatment"
                                     }
                                 ],
-                                "NamingConfigRef": "ACTIVITIES"
+                                "NamingConfigRef": "SERVICE"
                             }
                         },
                         "SortedCommonObjects": [
