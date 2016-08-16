@@ -65,7 +65,17 @@ class ExplorerBranch extends Component {
             budgetBranch.getViewpointData().then(() => {
                 setTimeout(() => {
                     let switchResults = budgetBranch.switchAspect();
-                    let { deeperdata, shallowerdata } = switchResults;
+                    let { deeperdata, shallowerdata, mismatch } = switchResults;
+                    if (mismatch) {
+                        let message = switchResults.message;
+                        let { snackbar } = this.state;
+                        snackbar = Object.assign({}, snackbar);
+                        snackbar.message = message;
+                        snackbar.open = true;
+                        this.setState({
+                            snackbar: snackbar,
+                        });
+                    }
                     if (deeperdata || shallowerdata) {
                         let message = null;
                         if (deeperdata) {
@@ -275,7 +285,7 @@ class ExplorerBranch extends Component {
         }
         if (nodeList.length > branchNodes.length) {
             if (this.harmonizecount <= 0) {
-                console.log('harmonize error', nodeList, branchNodes);
+                console.error('System Error: harmonize error', nodeList, branchNodes);
             }
             this.harmonizecount--;
             let nodeIndex = branchNodes.length;

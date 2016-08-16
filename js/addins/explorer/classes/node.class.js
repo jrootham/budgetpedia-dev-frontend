@@ -112,7 +112,11 @@ class BudgetNode {
         return cells;
     }
     get cellDeclarationList() {
-        return [...this.getProps().declarationData.nodesById[this.uid].cellList];
+        let list = this.getProps().declarationData.nodesById[this.uid].cellList;
+        if (list == null)
+            return list;
+        else
+            return [...list];
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

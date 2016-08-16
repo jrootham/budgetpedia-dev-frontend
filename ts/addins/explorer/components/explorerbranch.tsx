@@ -226,7 +226,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             // places sentinal in place in case addNode below fails
             //   generating an infinite loop
             if (this.harmonizecount <= 0) {
-                console.log('harmonize error', nodeList, branchNodes)
+                console.error('System Error: harmonize error', nodeList, branchNodes)
                 // throw Error('error harmonizing branch nodes')
             }
             this.harmonizecount--
@@ -299,9 +299,18 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
                 let switchResults = budgetBranch.switchAspect()
 
-                let { deeperdata, shallowerdata } = switchResults
+                let { deeperdata, shallowerdata, mismatch } = switchResults
 
-                // TODO this is commented out owing to event conflicts -- fix them!
+                if (mismatch) {
+                    let message = switchResults.message
+                    let { snackbar } = this.state
+                    snackbar = Object.assign ({},snackbar)
+                    snackbar.message = message
+                    snackbar.open = true
+                    this.setState({
+                        snackbar,
+                    })
+                }
                 if (deeperdata || shallowerdata) {
 
                     let message = null

@@ -120,6 +120,7 @@ class BudgetNode {
                 parmsList.push(cellDeclaration)
             }
         }
+        // console.log('parmsList',parmsList)
         return parmsList
     }
 
@@ -202,7 +203,12 @@ class BudgetNode {
     }
 
     get cellDeclarationList() {
-        return [...this.getProps().declarationData.nodesById[this.uid].cellList]
+        let list = this.getProps().declarationData.nodesById[this.uid].cellList
+        // console.log('cellDeclarationList',list)
+        if (list == null)
+            return list
+        else 
+            return [...list]
     }
 
     private _nodeData: any

@@ -136,6 +136,8 @@ class BudgetBranch {
         let switchResults = {
             deeperdata: false,
             shallowerdata: false,
+            mismatch:false,
+            message:null,
         }
         let branchSettings: BranchSettings = this.settings
         let viewpointData = this.state.viewpointData
@@ -205,7 +207,22 @@ class BudgetBranch {
                     budgetNode.newCells = newCells
                 }
             } else {
-                console.error('Sytem Error: no data node')
+                // console.error('Sytem Error: no data node', budgetNode, viewpointData)
+                let removed = branchNodes.splice(nodeIndex)
+                let removedids = removed.map((item:BudgetNode) => {
+                    return {nodeuid:item.uid, cellList:item.cellDeclarationList}
+                })
+                actions.removeNodeDeclarations(removedids)
+                switchResults.mismatch = true
+                switchResults.message = 'The new aspect does not have a matching chart for ' + 
+                    budgetNode.metaData.Name
+                let cells = parentBudgetNode.cells
+                for (let cell of cells) {
+                    let theCell:BudgetCell = cell
+                    if (theCell.chartSelection) {
+                        theCell.chartSelection = null
+                    }
+                }
             }
         }
 
