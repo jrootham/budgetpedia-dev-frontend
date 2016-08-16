@@ -66,7 +66,7 @@ class BudgetCell {
             let horizontalLabel = null;
             if ((nodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
                 let titleref = viewpointConfigs[nodeData.NamingConfigRef];
-                horizontalLabel = titleref.Alias || titleref.Name;
+                horizontalLabel = titleref.Contents.Alias || titleref.Contents.Name;
             }
             else {
                 let portaltitles = datasetConfig.DataseriesTitles;

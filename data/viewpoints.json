@@ -32,46 +32,60 @@
                         "Name": "Type",
                         "Alias": "Budget"
                     },
-                    "Name": "Functional",
-                    "Alias": "Program Activity Types"
+                    "Contents": {
+                        "Name": "Functional",
+                        "Alias": "Program Activity Types"
+                    }
                 },
                 "CLUSTER": {
                     "Instance": {
                         "Name": "Activity Type"
                     },
-                    "Name": "Clusters",
-                    "Alias": "Program Clusters"
+                    "Contents": {
+                        "Name": "Clusters",
+                        "Alias": "Program Clusters"
+                    }
                 },
                 "SUBCLUSTER": {
                     "Instance": {
                         "Name": "Program Sub-Cluster"
                     },
-                    "Name": "Sub-clusters",
-                    "Alias": "Program Sub-clusters"
+                    "Contents": {
+                        "Name": "Sub-clusters",
+                        "Alias": "Program Sub-clusters"
+                    }
                 },
                 "PROGRAMS": {
                     "Instance": {
                         "Name": "Program Cluster"
                     },
-                    "Name": "Programs"
+                    "Contents": {
+                        "Name": "Programs"
+                    }
                 },
                 "BASELINE": {
                     "Instance": {
                         "Name": "Program"
                     },
-                    "Name": "Services"
+                    "Contents": {
+                        "Name": "Services"
+                    }
                 },
                 "SERVICES": {
                     "Instance": {
                         "Name": "Program"
                     },
-                    "Name": "Services"
+                    "Contents": {
+                        "Name": "Services"
+                    }
                 },
                 "ACTIVITIES": {
                     "Instance": {
                         "Name": "Service"
                     },
-                    "Name": "Activities"
+                    "Contents": {
+                        "Name": "Activities"
+                    }
                 }
             },
             "NamingConfigRef": "TYPES",
@@ -512,48 +526,62 @@
                         "Name": "Type",
                         "Alias": "Program Structure Type"
                     },
-                    "Name": "Structural",
-                    "Alias": "Organizational Structure Types"
+                    "Contents": {
+                        "Name": "Structural",
+                        "Alias": "Organizational Structure Types"
+                    }
                 },
                 "CLUSTER": {
                     "Instance": {
                         "Name": "Cluster",
                         "Alias": "Program Cluster"
                     },
-                    "Name": "Clusters",
-                    "Alias": "Program Clusters"
+                    "Contents": {
+                        "Name": "Clusters",
+                        "Alias": "Program Clusters"
+                    }
                 },
                 "SUBCLUSTER": {
                     "Instance": {
                         "Name": "Sub-cluster",
                         "Alias": "Program sub-cluster"
                     },
-                    "Name": "Clusters",
-                    "Alias": "Program Sub-Clusters"
+                    "Contents": {
+                        "Name": "Clusters",
+                        "Alias": "Program Sub-Clusters"
+                    }
                 },
                 "PROGRAMS": {
                     "Instance": {
                         "Name": "Program"
                     },
-                    "Name": "Programs"
+                    "Contents": {
+                        "Name": "Programs"
+                    }
                 },
                 "BASELINE": {
                     "Instance": {
                         "Name": "Service"
                     },
-                    "Name": "Services"
+                    "Contents": {
+                        "Name": "Services"
+                    }
                 },
                 "SERVICES": {
                     "Instance": {
                         "Name": "Service"
                     },
-                    "Name": "Services"
+                    "Contents": {
+                        "Name": "Services"
+                    }
                 },
                 "ACTIVITIES": {
                     "Instance": {
                         "Name": "Activity"
                     },
-                    "Name": "Activities"
+                    "Contents": {
+                        "Name": "Activities"
+                    }
                 }
             },
             "NamingConfigRef": "STRUCTURES",
