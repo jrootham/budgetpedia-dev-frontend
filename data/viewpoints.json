@@ -86,11 +86,13 @@
                             "Components": {
                                 "SOLIDWASTE": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "WATER": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 }
                             }
                         },
@@ -100,19 +102,23 @@
                             "Components": {
                                 "TTCCONV": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "TTCWHEEL": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "TRANSPORTATION": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "PARKING": {
                                     "Index": 3,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 }
                             }
                         },
@@ -127,21 +133,25 @@
                                     "Components": {
                                         "PARKS": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "ARENAS": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "COMMCENTRES": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 },
                                 "LIBRARY": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "DESTINATIONS": {
                                     "Index": 2,
@@ -150,19 +160,23 @@
                                     "Components": {
                                         "EXHIBPLACE": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "THEATRES": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "ZOO": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "YONGEDUNDAS": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 },
@@ -173,15 +187,18 @@
                                     "Components": {
                                         "REGIONCONSERV": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "ATMOSPHERE": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "HERITAGE": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 }
@@ -199,11 +216,13 @@
                             "Components": {
                                 "FIRE": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "PARAMEDIC": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "POLICECOURT": {
                                     "Index": 2,
@@ -212,15 +231,18 @@
                                     "Components": {
                                         "POLICE": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "COURTSERV": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "POLICEBOARD": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 }
@@ -232,15 +254,18 @@
                             "Components": {
                                 "PUBLICHEALTH": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "LONGTERMHOME": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "CHILDSERV": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 }
                             }
                         },
@@ -250,15 +275,18 @@
                             "Components": {
                                 "SOCIALSERV": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "SHELTERADMIN": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "AFFHOUSING": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 }
                             }
                         }
@@ -279,23 +307,28 @@
                                     "Components": {
                                         "COUNCIL": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "MAYOR": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "CLERK": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "CITYMANAGER": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "CFO": {
                                             "Index": 4,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "ACCOUNTABILITY": {
                                             "Index": 5,
@@ -304,19 +337,23 @@
                                             "Components": {
                                                 "AUDITGEN": {
                                                     "Index": 0,
-                                                    "ConfigRef": "BASELINE"
+                                                    "ConfigRef": "BASELINE",
+                                                    "Baseline": true
                                                 },
                                                 "LOBBYREG": {
                                                     "Index": 1,
-                                                    "ConfigRef": "BASELINE"
+                                                    "ConfigRef": "BASELINE",
+                                                    "Baseline": true
                                                 },
                                                 "OMBUDSMAN": {
                                                     "Index": 2,
-                                                    "ConfigRef": "BASELINE"
+                                                    "ConfigRef": "BASELINE",
+                                                    "Baseline": true
                                                 },
                                                 "INTEGRITYCOMM": {
                                                     "Index": 3,
-                                                    "ConfigRef": "BASELINE"
+                                                    "ConfigRef": "BASELINE",
+                                                    "Baseline": true
                                                 }
                                             }
                                         }
@@ -328,15 +365,18 @@
                                     "Components": {
                                         "PLANNING": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "ECONDEV": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "SOCIALDEV": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 },
@@ -346,11 +386,13 @@
                                     "Components": {
                                         "BUILDINGS": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "LICENCING": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 },
@@ -360,11 +402,13 @@
                                     "Components": {
                                         "311SERVICE": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "POLICYADMIN": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 }
@@ -376,27 +420,33 @@
                             "Components": {
                                 "FACILITIES": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "ENGINEERING": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "FLEET": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "IT": {
                                     "Index": 3,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "TREASURER": {
                                     "Index": 4,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "LEGAL": {
                                     "Index": 5,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 }
                             }
                         },
@@ -406,19 +456,23 @@
                             "Components": {
                                 "CORPFINANCING": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "CORPEXPENDITURES": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "CORPREVENUES": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "PROPERTYTAX": {
                                     "Index": 3,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 }
                             }
                         }
@@ -454,52 +508,52 @@
             },
             "Configurations": {
                 "STRUCTURES": {
-                    "Name": "Structural",
-                    "Alias": "Organizational Structure Types",
                     "Instance": {
                         "Name": "Type",
                         "Alias": "Program Structure Type"
-                    }
+                    },
+                    "Name": "Structural",
+                    "Alias": "Organizational Structure Types"
                 },
                 "CLUSTER": {
-                    "Name": "Clusters",
-                    "Alias": "Program Clusters",
                     "Instance": {
                         "Name": "Cluster",
                         "Alias": "Program Cluster"
-                    }
+                    },
+                    "Name": "Clusters",
+                    "Alias": "Program Clusters"
                 },
                 "SUBCLUSTER": {
-                    "Name": "Clusters",
-                    "Alias": "Program Sub-Clusters",
                     "Instance": {
                         "Name": "Sub-cluster",
                         "Alias": "Program sub-cluster"
-                    }
+                    },
+                    "Name": "Clusters",
+                    "Alias": "Program Sub-Clusters"
                 },
                 "PROGRAMS": {
-                    "Name": "Programs",
                     "Instance": {
                         "Name": "Program"
-                    }
+                    },
+                    "Name": "Programs"
                 },
                 "BASELINE": {
-                    "Name": "Services",
                     "Instance": {
                         "Name": "Service"
-                    }
+                    },
+                    "Name": "Services"
                 },
                 "SERVICES": {
-                    "Name": "Services",
                     "Instance": {
                         "Name": "Service"
-                    }
+                    },
+                    "Name": "Services"
                 },
                 "ACTIVITIES": {
-                    "Name": "Activities",
                     "Instance": {
                         "Name": "Activity"
-                    }
+                    },
+                    "Name": "Activities"
                 }
             },
             "ConfigRef": "STRUCTURES",
@@ -514,19 +568,23 @@
                             "Components": {
                                 "COUNCIL": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "MAYOR": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "CLERK": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "LEGAL": {
                                     "Index": 3,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "ACCOUNTABILITYAPPEAL2": {
                                     "Index": 4,
@@ -535,19 +593,23 @@
                                     "Components": {
                                         "AUDITGEN": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "INTEGRITYCOMM": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "LOBBYREG": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "OMBUDSMAN": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 }
@@ -564,15 +626,18 @@
                                     "Components": {
                                         "CITYMANAGER": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "CFO": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "TREASURER": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 },
@@ -583,19 +648,23 @@
                                     "Components": {
                                         "FACILITIES": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "FLEET": {
                                             "Index": 4,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "IT": {
                                             "Index": 5,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "311SERVICE": {
                                             "Index": 6,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 }
@@ -617,23 +686,28 @@
                                     "Components": {
                                         "CHILDSERV": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "COURTSERV": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "PARAMEDIC": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "PARKS": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "LONGTERMHOME": {
                                             "Index": 4,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 },
@@ -643,23 +717,28 @@
                                     "Components": {
                                         "ECONDEV": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "SOCIALDEV": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "SOCIALSERV": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "SHELTERADMIN": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "AFFHOUSING": {
                                             "Index": 4,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 }
@@ -675,19 +754,23 @@
                                     "Components": {
                                         "SOLIDWASTE": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "WATER": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "FIRE": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "TRANSPORTATION": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 },
@@ -697,23 +780,28 @@
                                     "Components": {
                                         "ENGINEERING": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "PLANNING": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "POLICYADMIN": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "LICENCING": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "BUILDINGS": {
                                             "Index": 4,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 }
@@ -732,11 +820,13 @@
                             "Components": {
                                 "POLICE": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "POLICEBOARD": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 }
                             }
                         },
@@ -747,25 +837,30 @@
                             "Components": {
                                 "TTCCONV": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "TTCWHEEL": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 }
                             }
                         },
                         "PUBLICHEALTH": {
                             "Index": 2,
-                            "ConfigRef": "BASELINE"
+                            "ConfigRef": "BASELINE",
+                            "Baseline": true
                         },
                         "LIBRARY": {
                             "Index": 3,
-                            "ConfigRef": "BASELINE"
+                            "ConfigRef": "BASELINE",
+                            "Baseline": true
                         },
                         "PARKING": {
                             "Index": 2,
-                            "ConfigRef": "BASELINE"
+                            "ConfigRef": "BASELINE",
+                            "Baseline": true
                         },
                         "SPECIALIZED": {
                             "Index": 4,
@@ -774,23 +869,28 @@
                             "Components": {
                                 "COMMCENTRES": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "ARENAS": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "HERITAGE": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "REGIONCONSERV": {
                                     "Index": 3,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "ATMOSPHERE": {
                                     "Index": 4,
-                                    "ConfigRef": "BASELINE"
+                                    "ConfigRef": "BASELINE",
+                                    "Baseline": true
                                 },
                                 "DESTINATIONS2": {
                                     "Index": 5,
@@ -799,19 +899,23 @@
                                     "Components": {
                                         "EXHIBPLACE": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "THEATRES": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "ZOO": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         },
                                         "YONGEDUNDAS": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE"
+                                            "ConfigRef": "BASELINE",
+                                            "Baseline": true
                                         }
                                     }
                                 }
@@ -825,19 +929,23 @@
                     "Components": {
                         "CORPFINANCING": {
                             "Index": 0,
-                            "ConfigRef": "BASELINE"
+                            "ConfigRef": "BASELINE",
+                            "Baseline": true
                         },
                         "CORPEXPENDITURES": {
                             "Index": 1,
-                            "ConfigRef": "BASELINE"
+                            "ConfigRef": "BASELINE",
+                            "Baseline": true
                         },
                         "CORPREVENUES": {
                             "Index": 2,
-                            "ConfigRef": "BASELINE"
+                            "ConfigRef": "BASELINE",
+                            "Baseline": true
                         },
                         "PROPERTYTAX": {
                             "Index": 3,
-                            "ConfigRef": "BASELINE"
+                            "ConfigRef": "BASELINE",
+                            "Baseline": true
                         }
                     }
                 }

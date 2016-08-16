@@ -288,7 +288,7 @@ class BudgetCell {
         };
         this._rows_ColumnCharts_row = (row, componentItem) => {
             let style = '';
-            if (componentItem.ConfigRef == 'BASELINE') {
+            if (componentItem.Baseline) {
                 style = 'stroke-color: Gold; stroke-width: 3';
             }
             row.push(style);

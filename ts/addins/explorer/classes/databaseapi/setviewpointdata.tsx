@@ -109,7 +109,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
         }
 
         // for non-baseline items, recurse to collect aggregations
-        if (component.ConfigRef != "BASELINE") {
+        if (!component.Baseline) { // ConfigRef != "BASELINE") {
 
             // if no components found, loop
             if (component.Components) {
@@ -235,8 +235,8 @@ let getIndexSortedComponents = (components, lookups):SortedComponentItem[] => {
     let catlookups = lookups.taxonomylookups
     for (let componentcode in components) {
         let component = components[componentcode]
-        let config = component.ConfigRef
-        let name = (config == 'BASELINE')
+        let baseline = !!component.Baseline // config = component.ConfigRef
+        let name = baseline // (config == 'BASELINE')
             ? lookups.componentlookups[componentcode]
             : catlookups[componentcode]
         let item = {

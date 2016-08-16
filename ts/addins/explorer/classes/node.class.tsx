@@ -185,9 +185,9 @@ class BudgetNode {
         if ((budgetCell.nodeDataseriesName == 'CommonObjects')) {
             chartblocktitle = portaltitles.CommonObjects
         } else {
-            chartblocktitle = "By " + portaltitles.Components
+            chartblocktitle = portaltitles.Components
         }
-        budgetCell.cellTitle = chartblocktitle
+        budgetCell.cellTitle = "By " + chartblocktitle
     }
 
     private _setCellChartParms = (cell:BudgetCell, cellIndex) => {

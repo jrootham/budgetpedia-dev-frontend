@@ -50,9 +50,9 @@ class BudgetNode {
                 chartblocktitle = portaltitles.CommonObjects;
             }
             else {
-                chartblocktitle = "By " + portaltitles.Components;
+                chartblocktitle = portaltitles.Components;
             }
-            budgetCell.cellTitle = chartblocktitle;
+            budgetCell.cellTitle = "By " + chartblocktitle;
         };
         this._setCellChartParms = (cell, cellIndex) => {
             let budgetNode = this;

@@ -580,7 +580,7 @@ class BudgetCell {
 
         let style = ''
 
-        if (componentItem.ConfigRef == 'BASELINE') {
+        if (componentItem.Baseline) { //  == 'BASELINE') {
             style = 'stroke-color: Gold; stroke-width: 3'
         }
 
