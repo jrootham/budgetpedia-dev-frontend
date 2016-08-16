@@ -286,8 +286,8 @@ class BudgetCell {
         // -------------------[ assemble horizontal label value ]--------------------
 
         let horizontalLabel = null
-        if ((nodeData.ConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
-            let titleref = viewpointConfigs[nodeData.ConfigRef]
+        if ((nodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
+            let titleref = viewpointConfigs[nodeData.NamingConfigRef]
             horizontalLabel = titleref.Alias || titleref.Name
         } else {
             let portaltitles = datasetConfig.DataseriesTitles
@@ -303,7 +303,7 @@ class BudgetCell {
         } else {
             nodename = datasetConfig.DatasetTitle
         }
-        let configindex = nodeData.ConfigRef
+        let configindex = nodeData.NamingConfigRef
         let catname = null
         if (configindex) {
             let names = viewpointConfigs[configindex]

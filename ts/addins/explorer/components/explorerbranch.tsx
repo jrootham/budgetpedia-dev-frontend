@@ -487,7 +487,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             let viewpointdata = this.state.viewpointData
             let {
-                Configurations: viewpointConfigs,
+                NamingConfigurations: viewpointConfigs,
                 datasetConfig: datasetConfig,
             } = viewpointdata
             let viewpointConfigPack = {

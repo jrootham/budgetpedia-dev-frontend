@@ -64,8 +64,8 @@ class BudgetCell {
             let verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units;
             verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')';
             let horizontalLabel = null;
-            if ((nodeData.ConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
-                let titleref = viewpointConfigs[nodeData.ConfigRef];
+            if ((nodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
+                let titleref = viewpointConfigs[nodeData.NamingConfigRef];
                 horizontalLabel = titleref.Alias || titleref.Name;
             }
             else {
@@ -79,7 +79,7 @@ class BudgetCell {
             else {
                 nodename = datasetConfig.DatasetTitle;
             }
-            let configindex = nodeData.ConfigRef;
+            let configindex = nodeData.NamingConfigRef;
             let catname = null;
             if (configindex) {
                 let names = viewpointConfigs[configindex];

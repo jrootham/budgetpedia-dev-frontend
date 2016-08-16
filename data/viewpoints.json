@@ -26,7 +26,7 @@
                     "WELLBEING": "Health & Education Services"
                 }
             },
-            "Configurations": {
+            "NamingConfigurations": {
                 "TYPES": {
                     "Instance": {
                         "Name": "Type",
@@ -74,108 +74,108 @@
                     "Name": "Activities"
                 }
             },
-            "ConfigRef": "TYPES",
+            "NamingConfigRef": "TYPES",
             "Components": {
                 "SHARED": {
                     "Index": 0,
-                    "ConfigRef": "CLUSTER",
+                    "NamingConfigRef": "CLUSTER",
                     "Components": {
                         "WASTEWATER": {
                             "Index": 0,
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "SOLIDWASTE": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "WATER": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 }
                             }
                         },
                         "TRANSTRANSIT": {
                             "Index": 1,
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "TTCCONV": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "TTCWHEEL": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "TRANSPORTATION": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "PARKING": {
                                     "Index": 3,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 }
                             }
                         },
                         "COMMONS": {
                             "Index": 2,
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "PARKSACTIVITIES": {
                                     "Index": 0,
                                     "ParentConfigOverride": "SUBCLUSTER",
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "PARKS": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "ARENAS": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "COMMCENTRES": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
                                 },
                                 "LIBRARY": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "DESTINATIONS": {
                                     "Index": 2,
                                     "ParentConfigOverride": "SUBCLUSTER",
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "EXHIBPLACE": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "THEATRES": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "ZOO": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "YONGEDUNDAS": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
@@ -183,21 +183,21 @@
                                 "CONSERVATION": {
                                     "Index": 3,
                                     "ParentConfigOverride": "SUBCLUSTER",
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "REGIONCONSERV": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "ATMOSPHERE": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "HERITAGE": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
@@ -208,40 +208,40 @@
                 },
                 "SUPPORT": {
                     "Index": 1,
-                    "ConfigRef": "CLUSTER",
+                    "NamingConfigRef": "CLUSTER",
                     "Components": {
                         "EMERGSERV": {
                             "Index": 0,
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "FIRE": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "PARAMEDIC": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "POLICECOURT": {
                                     "Index": 2,
                                     "ParentConfigOverride": "SUBCLUSTER",
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "POLICE": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "COURTSERV": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "POLICEBOARD": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
@@ -250,42 +250,42 @@
                         },
                         "WELLBEING": {
                             "Index": 1,
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "PUBLICHEALTH": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "LONGTERMHOME": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "CHILDSERV": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 }
                             }
                         },
                         "WELFARE": {
                             "Index": 1,
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "SOCIALSERV": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "SHELTERADMIN": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "AFFHOUSING": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 }
                             }
@@ -294,65 +294,65 @@
                 },
                 "MUNICIPAL": {
                     "Index": 2,
-                    "ConfigRef": "CLUSTER",
+                    "NamingConfigRef": "CLUSTER",
                     "Components": {
                         "CITYMANAGEMENT": {
                             "Index": 0,
                             "ParentConfigOverride": "CLUSTER",
-                            "ConfigRef": "SUBCLUSTER",
+                            "NamingConfigRef": "SUBCLUSTER",
                             "Components": {
                                 "CORPMANAGEMENT": {
                                     "Index": 0,
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "COUNCIL": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "MAYOR": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "CLERK": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "CITYMANAGER": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "CFO": {
                                             "Index": 4,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "ACCOUNTABILITY": {
                                             "Index": 5,
                                             "ParentConfigOverride": "SUBCLUSTER",
-                                            "ConfigRef": "PROGRAMS",
+                                            "NamingConfigRef": "PROGRAMS",
                                             "Components": {
                                                 "AUDITGEN": {
                                                     "Index": 0,
-                                                    "ConfigRef": "BASELINE",
+                                                    "NamingConfigRef": "BASELINE",
                                                     "Baseline": true
                                                 },
                                                 "LOBBYREG": {
                                                     "Index": 1,
-                                                    "ConfigRef": "BASELINE",
+                                                    "NamingConfigRef": "BASELINE",
                                                     "Baseline": true
                                                 },
                                                 "OMBUDSMAN": {
                                                     "Index": 2,
-                                                    "ConfigRef": "BASELINE",
+                                                    "NamingConfigRef": "BASELINE",
                                                     "Baseline": true
                                                 },
                                                 "INTEGRITYCOMM": {
                                                     "Index": 3,
-                                                    "ConfigRef": "BASELINE",
+                                                    "NamingConfigRef": "BASELINE",
                                                     "Baseline": true
                                                 }
                                             }
@@ -361,53 +361,53 @@
                                 },
                                 "INITIATIVES": {
                                     "Index": 1,
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "PLANNING": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "ECONDEV": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "SOCIALDEV": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
                                 },
                                 "PLANNINGDEV": {
                                     "Index": 2,
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "BUILDINGS": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "LICENCING": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
                                 },
                                 "MAINTSTANDARDS": {
                                     "Index": 3,
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "311SERVICE": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "POLICYADMIN": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
@@ -416,62 +416,62 @@
                         },
                         "INTERNALSERV": {
                             "Index": 4,
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "FACILITIES": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "ENGINEERING": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "FLEET": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "IT": {
                                     "Index": 3,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "TREASURER": {
                                     "Index": 4,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "LEGAL": {
                                     "Index": 5,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 }
                             }
                         },
                         "CORPORATEACCOUNTS": {
                             "Index": 5,
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "CORPFINANCING": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "CORPEXPENDITURES": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "CORPREVENUES": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "PROPERTYTAX": {
                                     "Index": 3,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 }
                             }
@@ -506,7 +506,7 @@
                     "TRANSITSERV": "Transit Services"
                 }
             },
-            "Configurations": {
+            "NamingConfigurations": {
                 "STRUCTURES": {
                     "Instance": {
                         "Name": "Type",
@@ -556,59 +556,59 @@
                     "Name": "Activities"
                 }
             },
-            "ConfigRef": "STRUCTURES",
+            "NamingConfigRef": "STRUCTURES",
             "Components": {
                 "ADMINOPS": {
                     "Index": 0,
-                    "ConfigRef": "CLUSTER",
+                    "NamingConfigRef": "CLUSTER",
                     "Components": {
                         "COUNCILOPS": {
                             "Index": 0,
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "COUNCIL": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "MAYOR": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "CLERK": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "LEGAL": {
                                     "Index": 3,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "ACCOUNTABILITYAPPEAL2": {
                                     "Index": 4,
                                     "ParentConfigOverride": "SUBCLUSTER",
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "AUDITGEN": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "INTEGRITYCOMM": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "LOBBYREG": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "OMBUDSMAN": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
@@ -617,26 +617,26 @@
                         },
                         "MANAGEMENTOPS": {
                             "Index": 1,
-                            "ConfigRef": "CLUSTER",
+                            "NamingConfigRef": "CLUSTER",
                             "Components": {
                                 "MANAGEMENTOFFICES": {
                                     "Index": 0,
                                     "ParentConfigOverride": "SUBCLUSTER",
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "CITYMANAGER": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "CFO": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "TREASURER": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
@@ -644,26 +644,26 @@
                                 "CORPORATESERVICES": {
                                     "Index": 0,
                                     "ParentConfigOverride": "SUBCLUSTER",
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "FACILITIES": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "FLEET": {
                                             "Index": 4,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "IT": {
                                             "Index": 5,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "311SERVICE": {
                                             "Index": 6,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
@@ -674,70 +674,70 @@
                 },
                 "CITIZENOPS": {
                     "Index": 1,
-                    "ConfigRef": "CLUSTER",
+                    "NamingConfigRef": "CLUSTER",
                     "Components": {
                         "CITIZENSERVICESA": {
                             "Index": 0,
-                            "ConfigRef": "CLUSTER",
+                            "NamingConfigRef": "CLUSTER",
                             "Components": {
                                 "FIELDSERVICESA": {
                                     "Index": 0,
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "CHILDSERV": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "COURTSERV": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "PARAMEDIC": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "PARKS": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "LONGTERMHOME": {
                                             "Index": 4,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
                                 },
                                 "CORESERVICESA": {
                                     "Index": 1,
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "ECONDEV": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "SOCIALDEV": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "SOCIALSERV": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "SHELTERADMIN": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "AFFHOUSING": {
                                             "Index": 4,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
@@ -746,61 +746,61 @@
                         },
                         "CITIZENSERVICESB": {
                             "Index": 1,
-                            "ConfigRef": "CLUSTER",
+                            "NamingConfigRef": "CLUSTER",
                             "Components": {
                                 "FIELDSERVICESB": {
                                     "Index": 0,
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "SOLIDWASTE": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "WATER": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "FIRE": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "TRANSPORTATION": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
                                 },
                                 "CORESERVICESB": {
                                     "Index": 1,
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "ENGINEERING": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "PLANNING": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "POLICYADMIN": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "LICENCING": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "BUILDINGS": {
                                             "Index": 4,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
@@ -811,21 +811,21 @@
                 },
                 "AGENCIES": {
                     "Index": 2,
-                    "ConfigRef": "CLUSTER",
+                    "NamingConfigRef": "CLUSTER",
                     "Components": {
                         "POLICESERV": {
                             "Index": 0,
                             "ParentConfigOverride": "SUBCLUSTER",
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "POLICE": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "POLICEBOARD": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 }
                             }
@@ -833,88 +833,88 @@
                         "TRANSITSERV": {
                             "Index": 1,
                             "ParentConfigOverride": "SUBCLUSTER",
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "TTCCONV": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "TTCWHEEL": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 }
                             }
                         },
                         "PUBLICHEALTH": {
                             "Index": 2,
-                            "ConfigRef": "BASELINE",
+                            "NamingConfigRef": "BASELINE",
                             "Baseline": true
                         },
                         "LIBRARY": {
                             "Index": 3,
-                            "ConfigRef": "BASELINE",
+                            "NamingConfigRef": "BASELINE",
                             "Baseline": true
                         },
                         "PARKING": {
                             "Index": 2,
-                            "ConfigRef": "BASELINE",
+                            "NamingConfigRef": "BASELINE",
                             "Baseline": true
                         },
                         "SPECIALIZED": {
                             "Index": 4,
                             "ParentConfigOverride": "SUBCLUSTER",
-                            "ConfigRef": "PROGRAMS",
+                            "NamingConfigRef": "PROGRAMS",
                             "Components": {
                                 "COMMCENTRES": {
                                     "Index": 0,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "ARENAS": {
                                     "Index": 1,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "HERITAGE": {
                                     "Index": 2,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "REGIONCONSERV": {
                                     "Index": 3,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "ATMOSPHERE": {
                                     "Index": 4,
-                                    "ConfigRef": "BASELINE",
+                                    "NamingConfigRef": "BASELINE",
                                     "Baseline": true
                                 },
                                 "DESTINATIONS2": {
                                     "Index": 5,
                                     "ParentConfigOverride": "SUBCLUSTER",
-                                    "ConfigRef": "PROGRAMS",
+                                    "NamingConfigRef": "PROGRAMS",
                                     "Components": {
                                         "EXHIBPLACE": {
                                             "Index": 0,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "THEATRES": {
                                             "Index": 1,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "ZOO": {
                                             "Index": 2,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         },
                                         "YONGEDUNDAS": {
                                             "Index": 3,
-                                            "ConfigRef": "BASELINE",
+                                            "NamingConfigRef": "BASELINE",
                                             "Baseline": true
                                         }
                                     }
@@ -925,26 +925,26 @@
                 },
                 "CORPORATEACCOUNTS2": {
                     "Index": 3,
-                    "ConfigRef": "PROGRAMS",
+                    "NamingConfigRef": "PROGRAMS",
                     "Components": {
                         "CORPFINANCING": {
                             "Index": 0,
-                            "ConfigRef": "BASELINE",
+                            "NamingConfigRef": "BASELINE",
                             "Baseline": true
                         },
                         "CORPEXPENDITURES": {
                             "Index": 1,
-                            "ConfigRef": "BASELINE",
+                            "NamingConfigRef": "BASELINE",
                             "Baseline": true
                         },
                         "CORPREVENUES": {
                             "Index": 2,
-                            "ConfigRef": "BASELINE",
+                            "NamingConfigRef": "BASELINE",
                             "Baseline": true
                         },
                         "PROPERTYTAX": {
                             "Index": 3,
-                            "ConfigRef": "BASELINE",
+                            "NamingConfigRef": "BASELINE",
                             "Baseline": true
                         }
                     }

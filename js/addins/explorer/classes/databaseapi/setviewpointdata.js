@@ -157,7 +157,7 @@ let getNameSortedComponents = (components, lookups) => {
     let complookups = lookups.commonObjectLookups;
     for (let componentname in components) {
         let component = components[componentname];
-        let config = component.ConfigRef;
+        let config = component.NamingConfigRef;
         let name = complookups[componentname];
         let item = {
             Code: componentname,

@@ -17,7 +17,7 @@ const delay = ms =>
 
 interface Component {
     Index: number,
-    ConfigRef: string,
+    NamingConfigRef: string,
     Components?: Components,
 }
 
