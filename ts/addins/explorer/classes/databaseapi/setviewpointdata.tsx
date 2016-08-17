@@ -51,8 +51,9 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
     if (viewpointData.currentDataset == datasetName)
         return
 
-    let componentLookupIndex = datasetData.ComponentsLookupIndex // use for system lookups
-    let commonObjectLookupIndex = datasetData.CommonObjectsLookupIndex
+    let datasetMetaData = datasetData.MetaData
+    let componentLookupIndex = datasetMetaData.ComponentsLookupIndex // use for system lookups
+    let commonObjectLookupIndex = datasetMetaData.CommonObjectsLookupIndex
 
     let componentlookups = lookups[componentLookupIndex]
     let commonObjectLookups = lookups[commonObjectLookupIndex]
@@ -66,7 +67,7 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
 
     let items = datasetData.Items
 
-    let isInflationAdjustable = !!datasetData.InflationAdjustable
+    let isInflationAdjustable = !!datasetMetaData.InflationAdjustable
 
     let rootcomponent = { "ROOT": viewpointData }
 

@@ -565,7 +565,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             >
 
             <MenuItem disabled value={'SUMMARY'} primaryText="Summary"/>
-            <MenuItem value={'DETAIL'} primaryText="Detail (PBF)"/>
+            <MenuItem value={'PBFT'} primaryText="Detail (PBFT)"/>
             <MenuItem disabled value={'VARIANCE'} primaryText="Variance Reports"/>
 
         </DropDownMenu>

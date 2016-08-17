@@ -1,30 +1,32 @@
 {
-    "PBF": {
+    "PBFT": {
         "BudgetExpenses": {
-            "ComponentsLookupIndex": "Programs",
-            "CommonObjectsLookupIndex": "Expenditures",
-            "InflationAdjustable": true,
-            "YearsRange":{
-                "start":2015,
-                "end":2015
-            },
-            "DatasetName":"Expenses",
-            "DatasetTitle": "Council Approved Gross Operating Expenditures",
-            "Dataseries": [
-                {
-                    "Type": "Components"
+            "MetaData": {
+                "ComponentsLookupIndex": "Programs",
+                "CommonObjectsLookupIndex": "Expenditures",
+                "InflationAdjustable": true,
+                "YearsRange":{
+                    "start":2015,
+                    "end":2015
                 },
-                {
-                    "Type": "CommonObjects"
-                }
-            ],
-            "DataseriesTitles": {
-                "Components": "Programs",
-                "CommonObjects": "Expenses by Object"
+                "DatasetName":"Expenses",
+                "DatasetTitle": "Council Approved Gross Operating Expenditures",
+                "Dataseries": [
+                    {
+                        "Type": "Components"
+                    },
+                    {
+                        "Type": "CommonObjects"
+                    }
+                ],
+                "DataseriesTitles": {
+                    "Components": "Programs",
+                    "CommonObjects": "Expenses by Object"
+                },
+                "Units": "DOLLAR",
+                "UnitsAlias": "$000's",
+                "UnitRatio": 1000
             },
-            "Units": "DOLLAR",
-            "UnitsAlias": "$000's",
-            "UnitRatio": 1000,
             "Items": {
                 "311SERVICE": {
                     "Adjusted": {
@@ -29640,31 +29642,33 @@
             }
         },
         "BudgetRevenues": {
-            "ComponentsLookupIndex": "Programs",
-            "CommonObjectsLookupIndex": "Revenues",
-            "InflationAdjustable": true,
-            "YearsRange":{
-                "start":2015,
-                "end":2015
-            },
-            "DatasetName":"Revenues",
-            "DatasetTitle": "Council Approved Gross Operating Revenue",
-            "Dataseries": [
-                {
-                    "Type": "Components"
+            "MetaData": {
+                "ComponentsLookupIndex": "Programs",
+                "CommonObjectsLookupIndex": "Revenues",
+                "InflationAdjustable": true,
+                "YearsRange":{
+                    "start":2015,
+                    "end":2015
                 },
-                {
-                    "Type": "CommonObjects"
-                }
-            ],
-            "DataseriesTitles": {
-                "Components": "Programs",
-                "CommonObjects": "Revenues by Object"
+                "DatasetName":"Revenues",
+                "DatasetTitle": "Council Approved Gross Operating Revenue",
+                "Dataseries": [
+                    {
+                        "Type": "Components"
+                    },
+                    {
+                        "Type": "CommonObjects"
+                    }
+                ],
+                "DataseriesTitles": {
+                    "Components": "Programs",
+                    "CommonObjects": "Revenues by Object"
+                },
+                "Units": "DOLLAR",
+                "UnitsAlias": "$000's",
+                "UnitRatio": 1000
             },
-            "Units": "DOLLAR",
-            "UnitsAlias": "$000's",
-            "UnitRatio": 1000,
-                        "Items": {
+            "Items": {
                 "311SERVICE": {
                     "Adjusted": {
                         "years": {
@@ -46864,29 +46868,31 @@
             }
         },
         "BudgetStaffing": {
-            "ComponentsLookupIndex":"Programs",
-            "CommonObjectsLookupIndex": "TimeAllocations",
-            "InflationAdjustable": false,
-            "YearsRange":{
-                "start":2015,
-                "end":2015
-            },
-            "DatasetName":"Staffing",
-            "DatasetTitle": "Council Approved Staff Positions",
-            "Dataseries": [
-                {
-                    "Type": "Components"
+            "MetaData": {
+                "ComponentsLookupIndex":"Programs",
+                "CommonObjectsLookupIndex": "TimeAllocations",
+                "InflationAdjustable": false,
+                "YearsRange":{
+                    "start":2015,
+                    "end":2015
                 },
-                {
-                    "Type": "CommonObjects"
-                }
-            ],
-            "DataseriesTitles": {
-                "Components": "Programs",
-                "CommonObjects": "Permanence"
+                "DatasetName":"Staffing",
+                "DatasetTitle": "Council Approved Staff Positions",
+                "Dataseries": [
+                    {
+                        "Type": "Components"
+                    },
+                    {
+                        "Type": "CommonObjects"
+                    }
+                ],
+                "DataseriesTitles": {
+                    "Components": "Programs",
+                    "CommonObjects": "Permanence"
+                },
+                "Units": "FTE",
+                "UnitRatio":1
             },
-            "Units": "FTE",
-            "UnitRatio":1,            
             "Items": {
                 "311SERVICE": {
                     "years": {

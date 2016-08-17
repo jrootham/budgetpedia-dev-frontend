@@ -3,8 +3,9 @@ let setViewpointData = (parms) => {
     let { datasetName, viewpointData, datasetData, lookups, inflationAdjusted } = parms;
     if (viewpointData.currentDataset == datasetName)
         return;
-    let componentLookupIndex = datasetData.ComponentsLookupIndex;
-    let commonObjectLookupIndex = datasetData.CommonObjectsLookupIndex;
+    let datasetMetaData = datasetData.MetaData;
+    let componentLookupIndex = datasetMetaData.ComponentsLookupIndex;
+    let commonObjectLookupIndex = datasetMetaData.CommonObjectsLookupIndex;
     let componentlookups = lookups[componentLookupIndex];
     let commonObjectLookups = lookups[commonObjectLookupIndex];
     let taxonomylookups = viewpointData.Lookups.Taxonomy;
@@ -14,7 +15,7 @@ let setViewpointData = (parms) => {
         taxonomylookups: taxonomylookups,
     };
     let items = datasetData.Items;
-    let isInflationAdjustable = !!datasetData.InflationAdjustable;
+    let isInflationAdjustable = !!datasetMetaData.InflationAdjustable;
     let rootcomponent = { "ROOT": viewpointData };
     setComponentAggregates(rootcomponent, items, isInflationAdjustable, lookupset, inflationAdjusted);
     viewpointData.currentDataset = datasetName;

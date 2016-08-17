@@ -84,6 +84,10 @@ interface CurrencyItemType {
     nominal?: ItemType,
 }
 
+interface MetaData {
+    MetaData:any,
+}
+
 export interface DatasetConfig {
     YearsRange:{
         start: number,
@@ -198,7 +202,8 @@ class Database {
 
         let datasetpromise = this.getDatasetPromise(versionName, datasetName)
         let promise = new Promise(resolve => {
-            datasetpromise.then((datasetdata: DatasetConfig) => {
+            datasetpromise.then((datasetdata: MetaData) => {
+                let metaData:DatasetConfig = datasetdata.MetaData
                 let { 
                     DatasetName,
                     YearsRange,
@@ -208,7 +213,7 @@ class Database {
                     Units,
                     UnitsAlias,
                     UnitRatio,
-                } = datasetdata
+                } = metaData
 
                 let config = {
                     DatasetName,

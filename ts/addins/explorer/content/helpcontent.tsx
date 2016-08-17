@@ -86,11 +86,11 @@ let content =
     <dd>
         <dl>
         <dt><strong>Summary</strong></dt>
-        <dt><strong>Detail (PBF)</strong></dt>
+        <dt><strong>Detail (PBFT)</strong></dt>
         <dt><strong>Variance Reports</strong></dt>
         </dl>
     </dd>
-    <dd><em>PBF</em> stands for <em>Public Budget Formulation Tool</em> which is part of the City's new
+    <dd><em>PBFT</em> stands for <em>Public Budget Formulation Tool</em> which is part of the City's new
         FPARS (Financial Planning Analysis and Reporting System) system
     </dd>
 

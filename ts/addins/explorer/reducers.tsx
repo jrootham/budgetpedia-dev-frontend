@@ -62,7 +62,7 @@ let branchList = (state = [], action) => {
                 return newstate
             }
             if (pos == newstate.length - 1) {
-                console.log('System Error: branchuid for move down at end of list already', branchuid, newstate)
+                console.error('System Error: branchuid for move down at end of list already', branchuid, newstate)
                 return newstate
             }
             let oldbranchuid = newstate[pos + 1]

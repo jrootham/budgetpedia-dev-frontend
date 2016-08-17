@@ -74,7 +74,6 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         let { budgetNode, declarationData } = this.props
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
 
-        // console.log('componentDidMount',nodeDeclaration)
         if (nodeDeclaration.cellList == null) {
 
             // get controlData for cellList
