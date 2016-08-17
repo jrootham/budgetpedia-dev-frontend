@@ -45,7 +45,7 @@ export interface ChartCallbacks {
 }
 
 interface viewpointConfigPack {
-    viewpointConfigs: any,
+    viewpointNamingConfigs: any,
     datasetConfig: DatasetConfig,
 }
 
@@ -64,9 +64,9 @@ export interface CellConstructorArgs {
 }
 
 export interface NodeData {
-    nodeData: any,
+    treeNodeData: any,
     yearSpecs: YearSpecs,
-    metaData: any,
+    treeNodeMetaData: any,
 }
 
 class BudgetCell {
@@ -170,20 +170,20 @@ class BudgetCell {
         // --------------[ Unpack data bundles ]-------------
 
         let { 
-            viewpointConfigs, 
+            viewpointNamingConfigs, 
             datasetConfig 
         } = budgetCell.viewpointConfigPack
 
         let { 
-            nodeData, 
+            treeNodeData, 
             yearSpecs, 
-            metaData, 
+            treeNodeMetaData, 
         } = budgetCell.nodeDataPack
 
         // ---------------------[ get data node components ]------------------
         // collect chart node and its components as data sources for the graph
 
-        if (!nodeData) {
+        if (!treeNodeData) {
             console.error('System Error: node not found in setChartParms', budgetCell)
             throw Error('node not found')
         }
@@ -201,9 +201,9 @@ class BudgetCell {
         // ------------------
 
         let options = budgetCell._chartParmsOptions(
-            nodeData, 
-            metaData, 
-            viewpointConfigs, 
+            treeNodeData, 
+            treeNodeMetaData, 
+            viewpointNamingConfigs, 
             datasetConfig, 
             yearSpecs
         )
@@ -225,18 +225,18 @@ class BudgetCell {
         // ------------------
         let { nodeDataseriesName } = budgetCell
 
-        let nodeDataseries = nodeData[nodeDataseriesName]
+        let nodeDataseries = treeNodeData[nodeDataseriesName]
 
         let sortedlistName = 'Sorted' + nodeDataseriesName
 
-        let sortedDataseries = nodeData[sortedlistName]
+        let sortedDataseries = treeNodeData[sortedlistName]
 
         let rows
         if (sortedDataseries) {
-            rows = budgetCell._chartParmsRows(nodeData, yearSpecs)
+            rows = budgetCell._chartParmsRows(treeNodeData, yearSpecs)
         } else {
             // fires on last chart
-            console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, nodeData )
+            console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData )
             return
         }
 
@@ -261,9 +261,9 @@ class BudgetCell {
     // 2. chart options:
     // ------------------
     private _chartParmsOptions = (
-        nodeData, 
-        metaData, 
-        viewpointConfigs, 
+        treeNodeData, 
+        treeNodeMetaData, 
+        viewpointNamingConfigs, 
         datasetConfig:DatasetConfig, 
         yearSpecs:YearSpecs
     ) => {
@@ -286,8 +286,8 @@ class BudgetCell {
         // -------------------[ assemble horizontal label value ]--------------------
 
         let horizontalLabel = null
-        if ((nodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
-            let titleref = viewpointConfigs[nodeData.NamingConfigRef]
+        if ((treeNodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
+            let titleref = viewpointNamingConfigs[treeNodeData.NamingConfigRef]
             horizontalLabel = titleref.Contents.Alias || titleref.Contents.Name
         } else {
             let portaltitles = datasetConfig.DataseriesTitles
@@ -298,22 +298,22 @@ class BudgetCell {
 
         // set basic title
         let nodename = null
-        if (metaData) {
-            nodename = metaData.Name
+        if (treeNodeMetaData) {
+            nodename = treeNodeMetaData.Name
         } else {
             nodename = datasetConfig.DatasetTitle
         }
-        let configindex = nodeData.NamingConfigRef
+        let configindex = treeNodeData.NamingConfigRef
         let catname = null
         if (configindex) {
-            let names = viewpointConfigs[configindex]
+            let names = viewpointNamingConfigs[configindex]
             let instancenames = names.Instance
             catname = instancenames.Alias || instancenames.Name
         } else {
-            if (metaData && metaData.parentBudgetNode) {
-                let parentconfigindex = metaData.parentBudgetNode.nodeData.NamingConfigRef
+            if (treeNodeMetaData && treeNodeMetaData.parentBudgetNode && treeNodeMetaData.parentBudgetNode.treeNodeData) {
+                let parentconfigindex = treeNodeMetaData.parentBudgetNode.treeNodeData.NamingConfigRef
                 if (parentconfigindex) {
-                    let names = viewpointConfigs[parentconfigindex]
+                    let names = viewpointNamingConfigs[parentconfigindex]
                     if (names && names.Contents && names.Contents.DefaultInstance) {
                         catname = names.Contents.DefaultInstance.Name
                     }
@@ -350,21 +350,21 @@ class BudgetCell {
         let rounded = format({ round: 0, integerSeparator: '' })
         let simpleroundedone = format({ round: 1, integerSeparator: ',' })
 
-        if (nodeData.years) {
-            titleamount = nodeData.years[rightYear]
-        }
-        if (unitRatio == 1) {
-            titleamount = simpleroundedone(titleamount)
-        } else {
-            titleamount = parseInt(rounded(titleamount / unitRatio))
-            if (units == 'DOLLAR') {
-                titleamount = dollarformat(titleamount)
-            } else {
+        if (treeNodeData.years) {
+            titleamount = treeNodeData.years[rightYear]
+            if (unitRatio == 1) {
                 titleamount = simpleroundedone(titleamount)
+            } else {
+                titleamount = parseInt(rounded(titleamount / unitRatio))
+                if (units == 'DOLLAR') {
+                    titleamount = dollarformat(titleamount)
+                } else {
+                    titleamount = simpleroundedone(titleamount)
+                }
             }
+        
+            title += ' (Total: ' + titleamount + ')'
         }
-    
-        title += ' (Total: ' + titleamount + ')'
 
         // ------------------------------[ assemble options ]--------------------------------
 
@@ -534,17 +534,17 @@ class BudgetCell {
     // ------------------
     // 5. chart rows:
     // ------------------
-    private _chartParmsRows = (nodeData, yearSpecs:YearSpecs) => {
+    private _chartParmsRows = (treeNodeData, yearSpecs:YearSpecs) => {
 
         let budgetCell = this
 
         let { nodeDataseriesName } = budgetCell
 
-        let nodeDataseries = nodeData[nodeDataseriesName]
+        let nodeDataseries = treeNodeData[nodeDataseriesName]
 
         let sortedlistName = 'Sorted' + nodeDataseriesName
 
-        let sortedDataseries = nodeData[sortedlistName]
+        let sortedDataseries = treeNodeData[sortedlistName]
 
         if (!sortedDataseries) {
             console.error( { 
@@ -558,7 +558,7 @@ class BudgetCell {
             let componentItem = nodeDataseries[sortedItem.Code]
             if (!componentItem) {
                 console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ',
-                    nodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem)
+                    treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem)
                 throw Error('componentItem not found')
             }
             let amount

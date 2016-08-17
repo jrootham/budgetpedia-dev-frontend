@@ -32,10 +32,10 @@ class BudgetBranch {
             let { dataPath } = budgetNodeParms;
             let branchSettings = this.settings;
             let viewpointData = this.state.viewpointData;
-            let nodeData = getbudgetnode_1.default(viewpointData, dataPath);
+            let treeNodeData = getbudgetnode_1.default(viewpointData, dataPath);
             let branchNodes = this.nodes;
             let parentNode = (nodeIndex == 0) ? null : branchNodes[branchNodes.length - 1];
-            let budgetNode = new node_class_1.default(budgetNodeParms, budgetNodeUid, nodeData, parentNode);
+            let budgetNode = new node_class_1.default(budgetNodeParms, budgetNodeUid, treeNodeData, parentNode);
             branchNodes[nodeIndex] = budgetNode;
             this.setState({
                 branchNodes: branchNodes,
@@ -74,7 +74,7 @@ class BudgetBranch {
                     let shallowerdata = (!dataNode.Components && (budgetNode.oldAspectState == 2));
                     let parentDataNode = null;
                     if (nodeIndex > 0) {
-                        parentDataNode = branchNodes[nodeIndex - 1].nodeData;
+                        parentDataNode = branchNodes[nodeIndex - 1].treeNodeData;
                     }
                     if (deeperdata || shallowerdata) {
                         switchResults.deeperdata = deeperdata;
@@ -112,7 +112,7 @@ class BudgetBranch {
                     actions.removeNodeDeclarations(removedids);
                     switchResults.mismatch = true;
                     switchResults.message = 'The new aspect does not have a matching chart for ' +
-                        budgetNode.metaData.Name;
+                        budgetNode.treeNodeMetaData.Name;
                     let cells = parentBudgetNode.cells;
                     for (let cell of cells) {
                         let theCell = cell;
@@ -163,25 +163,25 @@ class BudgetBranch {
             let { aspectName, viewpointName } = budgetNode;
             let { workingStatus, onPortalCreation, } = callbacks;
             let childdatapath = budgetNode.dataPath.slice();
-            let nodeData = budgetNode.nodeData;
-            if (!nodeData.Components) {
+            let treeNodeData = budgetNode.treeNodeData;
+            if (!treeNodeData.Components) {
                 return;
             }
-            let components = nodeData.Components;
+            let components = treeNodeData.Components;
             let code = null;
-            let metaData = null;
+            let treeNodeMetaData = null;
             let parentNode = null;
-            if (nodeData && nodeData.SortedComponents && nodeData.SortedComponents[selectionrow]) {
-                metaData = nodeData.SortedComponents[selectionrow];
-                parentNode = nodeData;
-                code = metaData.Code;
+            if (treeNodeData && treeNodeData.SortedComponents && treeNodeData.SortedComponents[selectionrow]) {
+                treeNodeMetaData = treeNodeData.SortedComponents[selectionrow];
+                parentNode = treeNodeData;
+                code = treeNodeMetaData.Code;
             }
             if (code)
                 childdatapath.push(code);
             else {
                 return;
             }
-            let newnode = nodeData.Components[code];
+            let newnode = treeNodeData.Components[code];
             if (!newnode.Components && !newnode.CommonObjects) {
                 return;
             }
@@ -193,7 +193,7 @@ class BudgetBranch {
                 aspectName: aspectName,
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
-                metaData: metaData,
+                treeNodeMetaData: treeNodeMetaData,
                 yearSpecs: newrange,
             };
             actions.addNodeDeclaration(newnodeconfigparms);

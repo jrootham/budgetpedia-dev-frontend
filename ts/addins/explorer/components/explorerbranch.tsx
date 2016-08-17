@@ -471,8 +471,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let portals = budgetNodes.map((budgetNode: BudgetNode, nodeindex) => {
 
             let portalName = null
-            if (budgetNode.metaData) {
-                portalName = budgetNode.metaData.Name
+            if (budgetNode.treeNodeMetaData) {
+                portalName = budgetNode.treeNodeMetaData.Name
             } else {
                 portalName = 'City Budget'
             }
@@ -487,11 +487,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             let viewpointdata = this.state.viewpointData
             let {
-                NamingConfigurations: viewpointConfigs,
+                NamingConfigurations: viewpointNamingConfigs,
                 datasetConfig: datasetConfig,
             } = viewpointdata
             let viewpointConfigPack = {
-                viewpointConfigs,
+                viewpointNamingConfigs,
                 datasetConfig,
             }
             budgetNode.viewpointConfigPack = viewpointConfigPack

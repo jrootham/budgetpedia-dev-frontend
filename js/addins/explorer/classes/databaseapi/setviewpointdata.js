@@ -14,12 +14,12 @@ let setViewpointData = (parms) => {
         taxonomylookups: taxonomylookups,
     };
     let items = datasetData.Items;
-    let isInflationAdjusted = !!datasetData.InflationAdjusted;
+    let isInflationAdjustable = !!datasetData.InflationAdjustable;
     let rootcomponent = { "ROOT": viewpointData };
-    setComponentAggregates(rootcomponent, items, isInflationAdjusted, lookupset, inflationAdjusted);
+    setComponentAggregates(rootcomponent, items, isInflationAdjustable, lookupset, inflationAdjusted);
     viewpointData.currentDataset = datasetName;
 };
-let setComponentAggregates = (components, items, isInflationAdjusted, lookups, wantsInflationAdjusted) => {
+let setComponentAggregates = (components, items, isInflationAdjustable, lookups, wantsInflationAdjusted) => {
     let cumulatingSummaries = {
         years: {},
         CommonObjects: {},
@@ -37,7 +37,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
             if (component.Components) {
                 let sorted = getIndexSortedComponents(component.Components, lookups);
                 component.SortedComponents = sorted;
-                componentAggregates = setComponentAggregates(component.Components, items, isInflationAdjusted, lookups, wantsInflationAdjusted);
+                componentAggregates = setComponentAggregates(component.Components, items, isInflationAdjustable, lookups, wantsInflationAdjusted);
                 if (componentAggregates.years)
                     component.years = componentAggregates.years;
                 if (componentAggregates.CommonObjects) {
@@ -54,7 +54,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted, lookups, w
             let importitem = null;
             if (!item)
                 console.error('System Error: failed to find item for ', componentname);
-            if (isInflationAdjusted) {
+            if (isInflationAdjustable) {
                 if (wantsInflationAdjusted) {
                     importitem = item.Adjusted;
                     if (importitem) {

@@ -66,13 +66,13 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
 
     let items = datasetData.Items
 
-    let isInflationAdjusted = !!datasetData.InflationAdjusted
+    let isInflationAdjustable = !!datasetData.InflationAdjustable
 
     let rootcomponent = { "ROOT": viewpointData }
 
     // set years, and CommonObjects by years
     // initiates recursion
-    setComponentAggregates(rootcomponent, items, isInflationAdjusted,
+    setComponentAggregates(rootcomponent, items, isInflationAdjustable,
         lookupset, inflationAdjusted)
 
     // create sentinel to prevent unnucessary processing
@@ -85,7 +85,7 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
 // this is recursive, with absence of Components property at leaf
 // special treatment for 'BASELINE' items -- fetches data from data series items
 // sets years and CommonObjects for the node
-let setComponentAggregates = (components, items, isInflationAdjusted,
+let setComponentAggregates = (components, items, isInflationAdjustable,
     lookups, wantsInflationAdjusted): ComponentAggregates => {
     // cumulate summaries for this level
     let cumulatingSummaries: ComponentAggregates = {
@@ -123,7 +123,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
 
                 // get child component summaries recursively
                 componentAggregates = setComponentAggregates(
-                    component.Components, items, isInflationAdjusted,
+                    component.Components, items, isInflationAdjustable,
                     lookups, wantsInflationAdjusted)
 
                 // capture data for chart-making
@@ -150,7 +150,7 @@ let setComponentAggregates = (components, items, isInflationAdjusted,
             let importitem = null
             if (!item) console.error('System Error: failed to find item for ', componentname)
             // first set componentAggregates as usual
-            if (isInflationAdjusted) {
+            if (isInflationAdjustable) {
                 if (wantsInflationAdjusted) {
                     importitem = item.Adjusted
                     if (importitem) {

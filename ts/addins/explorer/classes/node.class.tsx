@@ -26,7 +26,7 @@ export interface BudgetNodeParms {
     yearSpecs: YearSpecs,
     dataPath: string[],
     nodeIndex: number,
-    metaData?:any,
+    treeNodeMetaData?:any,
 }
 
 class BudgetNode {
@@ -43,8 +43,8 @@ class BudgetNode {
         this.uid = uid
         // this.datasetSpecs = parms.datasetSpecs
         // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
-        if (parms.metaData) this.metaData = parms.metaData
-        if (parentBudgetNode) this.metaData.parentBudgetNode = parentBudgetNode
+        if (parms.treeNodeMetaData) this.treeNodeMetaData = parms.treeNodeMetaData
+        if (parentBudgetNode) this.treeNodeMetaData.parentBudgetNode = parentBudgetNode
 
     }
 
@@ -66,7 +66,7 @@ class BudgetNode {
     new:boolean = true
     updated:boolean = false
     newCells:BudgetCell[] = null
-    get nodeData() {
+    get treeNodeData() {
         return this._nodeData
     }
     get state() {
@@ -83,7 +83,7 @@ class BudgetNode {
 
     public getProps: Function
 
-    metaData: any = null // includes parentNode for now
+    treeNodeMetaData: any = null // includes parentNode for now
     // parentNode: any = null
 
     portalConfig: PortalConfig
@@ -92,12 +92,12 @@ class BudgetNode {
         return [...this.state.nodeCells]
     }
 
-    // reset = (nodeData, datasetSpecs, defaultChartType, aspect) => {
-    update = (aspect, nodeData, parentDataNode = null) => {
-        this._nodeData = nodeData
+    // reset = (treeNodeData, datasetSpecs, defaultChartType, aspect) => {
+    update = (aspect, treeNodeData, parentDataNode = null) => {
+        this._nodeData = treeNodeData
         this.aspectName = aspect
-        if (this.metaData && parentDataNode) {
-            this.metaData.nodeData = parentDataNode
+        if (this.treeNodeMetaData && parentDataNode) {
+            this.treeNodeMetaData.treeNodeData = parentDataNode
         }
         this.updated = true
     }
@@ -111,7 +111,7 @@ class BudgetNode {
         let parmsList:CellDeclaration[] = []
         let datasetName:string = AspectNameToDatasetName[this.aspectName]
         let chartSpecs = this.viewpointConfigPack.datasetConfig.Dataseries
-        let node = this.nodeData
+        let node = this.treeNodeData
         for (let chartSpec of chartSpecs) {
             let cellDeclaration:CellDeclaration = Object.assign({},this.props.declarationData.defaults.cell)
             // not only must the dataseries be mandated, but also present...
@@ -164,11 +164,11 @@ class BudgetNode {
     private _updateCell = (cell:BudgetCell, cellIndex) => {
         let budgetNode = this
 
-        let { viewpointConfigPack, nodeData, yearSpecs, metaData, nodeIndex } = budgetNode
+        let { viewpointConfigPack, treeNodeData, yearSpecs, treeNodeMetaData, nodeIndex } = budgetNode
         let nodeDataPack: NodeData = {
-            nodeData,
+            treeNodeData,
             yearSpecs,
-            metaData,
+            treeNodeMetaData,
         }
 
         cell.viewpointConfigPack = viewpointConfigPack

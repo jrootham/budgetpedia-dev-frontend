@@ -4,6 +4,10 @@
 
 // deepclone = JSON.parse(JSON.stringify(obj)) // but this destroys dates, undefined, and functions
 
+/*
+    TODO: the interface definitions are of data
+*/
+
 import updateViewpointData, { SetViewpointDataParms } from './databaseapi/setviewpointdata'
 
 let db_datasets = require('../../../../data/datasets.json')
@@ -12,8 +16,19 @@ let db_lookups = require('../../../../data/lookups.json')
 // top level taxonomies
 let db_viewpoints = require('../../../../data/viewpoints.json')
 
-const delay = ms => 
+const delay = ms => // for testing!
     new Promise(resolve => setTimeout(resolve,ms))
+
+// TODO complete this!
+interface NodeDataset {
+    Index?:number,
+    NamingConfigRef:string,
+    years: any,
+    Components:Components,
+    CommonObjects:any,
+    SortedComponents: any,
+    SortedCommonObjects?:any
+}
 
 interface Component {
     Index: number,
@@ -87,7 +102,7 @@ export interface DatasetConfig {
 }
 
 interface Dataset<ItemType> extends DatasetConfig {
-    InflationAdjusted?: boolean,
+    InflationAdjustable?: boolean,
     Items: {
         [itemcode:string]:ItemType
     }

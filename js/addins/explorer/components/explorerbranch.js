@@ -190,8 +190,8 @@ class ExplorerBranch extends Component {
             }
             let portals = budgetNodes.map((budgetNode, nodeindex) => {
                 let portalName = null;
-                if (budgetNode.metaData) {
-                    portalName = budgetNode.metaData.Name;
+                if (budgetNode.treeNodeMetaData) {
+                    portalName = budgetNode.treeNodeMetaData.Name;
                 }
                 else {
                     portalName = 'City Budget';
@@ -202,9 +202,9 @@ class ExplorerBranch extends Component {
                 };
                 budgetNode.portalConfig = portalConfig;
                 let viewpointdata = this.state.viewpointData;
-                let { NamingConfigurations: viewpointConfigs, datasetConfig: datasetConfig, } = viewpointdata;
+                let { NamingConfigurations: viewpointNamingConfigs, datasetConfig: datasetConfig, } = viewpointdata;
                 let viewpointConfigPack = {
-                    viewpointConfigs: viewpointConfigs,
+                    viewpointNamingConfigs: viewpointNamingConfigs,
                     datasetConfig: datasetConfig,
                 };
                 budgetNode.viewpointConfigPack = viewpointConfigPack;

@@ -1,6 +1,17 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // getnodedatasets.tsx
 
+/*
+    a node consists of 
+    - Index
+    - NamingConfigRef
+    - years
+    - Components
+    - CommonObjects
+    - SortedComponents
+    - SortedCommonObjects
+*/
+
 let getBudgetNode = (node, path) => {
 
     let components = node.Components

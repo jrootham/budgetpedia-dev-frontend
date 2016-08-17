@@ -6,12 +6,12 @@ class BudgetNode {
         this.new = true;
         this.updated = false;
         this.newCells = null;
-        this.metaData = null;
-        this.update = (aspect, nodeData, parentDataNode = null) => {
-            this._nodeData = nodeData;
+        this.treeNodeMetaData = null;
+        this.update = (aspect, treeNodeData, parentDataNode = null) => {
+            this._nodeData = treeNodeData;
             this.aspectName = aspect;
-            if (this.metaData && parentDataNode) {
-                this.metaData.nodeData = parentDataNode;
+            if (this.treeNodeMetaData && parentDataNode) {
+                this.treeNodeMetaData.treeNodeData = parentDataNode;
             }
             this.updated = true;
         };
@@ -19,7 +19,7 @@ class BudgetNode {
             let parmsList = [];
             let datasetName = constants_1.AspectNameToDatasetName[this.aspectName];
             let chartSpecs = this.viewpointConfigPack.datasetConfig.Dataseries;
-            let node = this.nodeData;
+            let node = this.treeNodeData;
             for (let chartSpec of chartSpecs) {
                 let cellDeclaration = Object.assign({}, this.props.declarationData.defaults.cell);
                 if (node[chartSpec.Type]) {
@@ -31,11 +31,11 @@ class BudgetNode {
         };
         this._updateCell = (cell, cellIndex) => {
             let budgetNode = this;
-            let { viewpointConfigPack, nodeData, yearSpecs, metaData, nodeIndex } = budgetNode;
+            let { viewpointConfigPack, treeNodeData, yearSpecs, treeNodeMetaData, nodeIndex } = budgetNode;
             let nodeDataPack = {
-                nodeData: nodeData,
+                treeNodeData: treeNodeData,
                 yearSpecs: yearSpecs,
-                metaData: metaData,
+                treeNodeMetaData: treeNodeMetaData,
             };
             cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeDataPack = nodeDataPack;
@@ -68,12 +68,12 @@ class BudgetNode {
         this.yearSpecs = parms.yearSpecs;
         this._nodeData = node;
         this.uid = uid;
-        if (parms.metaData)
-            this.metaData = parms.metaData;
+        if (parms.treeNodeMetaData)
+            this.treeNodeMetaData = parms.treeNodeMetaData;
         if (parentBudgetNode)
-            this.metaData.parentBudgetNode = parentBudgetNode;
+            this.treeNodeMetaData.parentBudgetNode = parentBudgetNode;
     }
-    get nodeData() {
+    get treeNodeData() {
         return this._nodeData;
     }
     get state() {

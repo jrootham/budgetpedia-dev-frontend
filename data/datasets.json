@@ -3,7 +3,7 @@
         "BudgetExpenses": {
             "ComponentsLookupIndex": "Programs",
             "CommonObjectsLookupIndex": "Expenditures",
-            "InflationAdjusted": true,
+            "InflationAdjustable": true,
             "YearsRange":{
                 "start":2015,
                 "end":2015
@@ -29642,7 +29642,7 @@
         "BudgetRevenues": {
             "ComponentsLookupIndex": "Programs",
             "CommonObjectsLookupIndex": "Revenues",
-            "InflationAdjusted": true,
+            "InflationAdjustable": true,
             "YearsRange":{
                 "start":2015,
                 "end":2015
@@ -46866,7 +46866,7 @@
         "BudgetStaffing": {
             "ComponentsLookupIndex":"Programs",
             "CommonObjectsLookupIndex": "TimeAllocations",
-            "InflationAdjusted": false,
+            "InflationAdjustable": false,
             "YearsRange":{
                 "start":2015,
                 "end":2015

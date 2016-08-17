@@ -24,26 +24,26 @@ class BudgetCell {
         };
         this.setChartParms = () => {
             let budgetCell = this;
-            let { viewpointConfigs, datasetConfig } = budgetCell.viewpointConfigPack;
-            let { nodeData, yearSpecs, metaData, } = budgetCell.nodeDataPack;
-            if (!nodeData) {
+            let { viewpointNamingConfigs, datasetConfig } = budgetCell.viewpointConfigPack;
+            let { treeNodeData, yearSpecs, treeNodeMetaData, } = budgetCell.nodeDataPack;
+            if (!treeNodeData) {
                 console.error('System Error: node not found in setChartParms', budgetCell);
                 throw Error('node not found');
             }
             let chartType = budgetCell.googleChartType;
-            let options = budgetCell._chartParmsOptions(nodeData, metaData, viewpointConfigs, datasetConfig, yearSpecs);
+            let options = budgetCell._chartParmsOptions(treeNodeData, treeNodeMetaData, viewpointNamingConfigs, datasetConfig, yearSpecs);
             let events = budgetCell._chartParmsEvents();
             let columns = budgetCell._chartParmsColumns(yearSpecs);
             let { nodeDataseriesName } = budgetCell;
-            let nodeDataseries = nodeData[nodeDataseriesName];
+            let nodeDataseries = treeNodeData[nodeDataseriesName];
             let sortedlistName = 'Sorted' + nodeDataseriesName;
-            let sortedDataseries = nodeData[sortedlistName];
+            let sortedDataseries = treeNodeData[sortedlistName];
             let rows;
             if (sortedDataseries) {
-                rows = budgetCell._chartParmsRows(nodeData, yearSpecs);
+                rows = budgetCell._chartParmsRows(treeNodeData, yearSpecs);
             }
             else {
-                console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, nodeData);
+                console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData);
                 return;
             }
             let chartParms = {
@@ -55,7 +55,7 @@ class BudgetCell {
             };
             budgetCell._chartParms = chartParms;
         };
-        this._chartParmsOptions = (nodeData, metaData, viewpointConfigs, datasetConfig, yearSpecs) => {
+        this._chartParmsOptions = (treeNodeData, treeNodeMetaData, viewpointNamingConfigs, datasetConfig, yearSpecs) => {
             let budgetCell = this;
             let { aspectName, nodeDataseriesName } = budgetCell;
             let datasetName = constants_1.AspectNameToDatasetName[aspectName];
@@ -64,8 +64,8 @@ class BudgetCell {
             let verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units;
             verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')';
             let horizontalLabel = null;
-            if ((nodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
-                let titleref = viewpointConfigs[nodeData.NamingConfigRef];
+            if ((treeNodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
+                let titleref = viewpointNamingConfigs[treeNodeData.NamingConfigRef];
                 horizontalLabel = titleref.Contents.Alias || titleref.Contents.Name;
             }
             else {
@@ -73,24 +73,24 @@ class BudgetCell {
                 horizontalLabel = portaltitles.CommonObjects;
             }
             let nodename = null;
-            if (metaData) {
-                nodename = metaData.Name;
+            if (treeNodeMetaData) {
+                nodename = treeNodeMetaData.Name;
             }
             else {
                 nodename = datasetConfig.DatasetTitle;
             }
-            let configindex = nodeData.NamingConfigRef;
+            let configindex = treeNodeData.NamingConfigRef;
             let catname = null;
             if (configindex) {
-                let names = viewpointConfigs[configindex];
+                let names = viewpointNamingConfigs[configindex];
                 let instancenames = names.Instance;
                 catname = instancenames.Alias || instancenames.Name;
             }
             else {
-                if (metaData && metaData.parentBudgetNode) {
-                    let parentconfigindex = metaData.parentBudgetNode.nodeData.NamingConfigRef;
+                if (treeNodeMetaData && treeNodeMetaData.parentBudgetNode && treeNodeMetaData.parentBudgetNode.treeNodeData) {
+                    let parentconfigindex = treeNodeMetaData.parentBudgetNode.treeNodeData.NamingConfigRef;
                     if (parentconfigindex) {
-                        let names = viewpointConfigs[parentconfigindex];
+                        let names = viewpointNamingConfigs[parentconfigindex];
                         if (names && names.Contents && names.Contents.DefaultInstance) {
                             catname = names.Contents.DefaultInstance.Name;
                         }
@@ -122,22 +122,22 @@ class BudgetCell {
             let dollarformat = format({ prefix: "$" });
             let rounded = format({ round: 0, integerSeparator: '' });
             let simpleroundedone = format({ round: 1, integerSeparator: ',' });
-            if (nodeData.years) {
-                titleamount = nodeData.years[rightYear];
-            }
-            if (unitRatio == 1) {
-                titleamount = simpleroundedone(titleamount);
-            }
-            else {
-                titleamount = parseInt(rounded(titleamount / unitRatio));
-                if (units == 'DOLLAR') {
-                    titleamount = dollarformat(titleamount);
-                }
-                else {
+            if (treeNodeData.years) {
+                titleamount = treeNodeData.years[rightYear];
+                if (unitRatio == 1) {
                     titleamount = simpleroundedone(titleamount);
                 }
+                else {
+                    titleamount = parseInt(rounded(titleamount / unitRatio));
+                    if (units == 'DOLLAR') {
+                        titleamount = dollarformat(titleamount);
+                    }
+                    else {
+                        titleamount = simpleroundedone(titleamount);
+                    }
+                }
+                title += ' (Total: ' + titleamount + ')';
             }
-            title += ' (Total: ' + titleamount + ')';
             let options = {
                 animation: {
                     startup: true,
@@ -261,12 +261,12 @@ class BudgetCell {
             ];
             return columns;
         };
-        this._chartParmsRows = (nodeData, yearSpecs) => {
+        this._chartParmsRows = (treeNodeData, yearSpecs) => {
             let budgetCell = this;
             let { nodeDataseriesName } = budgetCell;
-            let nodeDataseries = nodeData[nodeDataseriesName];
+            let nodeDataseries = treeNodeData[nodeDataseriesName];
             let sortedlistName = 'Sorted' + nodeDataseriesName;
-            let sortedDataseries = nodeData[sortedlistName];
+            let sortedDataseries = treeNodeData[sortedlistName];
             if (!sortedDataseries) {
                 console.error({
                     errorMessage: 'sorted list "' + sortedlistName + '" not available'
@@ -276,7 +276,7 @@ class BudgetCell {
             let rows = sortedDataseries.map((sortedItem) => {
                 let componentItem = nodeDataseries[sortedItem.Code];
                 if (!componentItem) {
-                    console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', nodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
+                    console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
                     throw Error('componentItem not found');
                 }
                 let amount;
