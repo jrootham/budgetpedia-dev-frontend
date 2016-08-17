@@ -77,8 +77,10 @@ class BudgetBranch {
         let {
             viewpoint:viewpointName,
             aspect:aspectName,
-            latestYear:rightYear,
+            yearSelector,
         } = branchSettings
+
+        let {rightYear} = yearSelector
 
         let budgetNodeParms:BudgetNodeParms = {
             viewpointName,

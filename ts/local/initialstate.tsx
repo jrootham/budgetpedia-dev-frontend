@@ -13,6 +13,8 @@
 
 import theme from 'material-ui/styles/baseThemes/lightBaseTheme'
 
+import {BranchSettings} from '../addins/explorer/modules/interfaces'
+
 // import database, {CurrencyDataset,ItemDataset} from '../addins/classes/databaseapi'
 
 // fontFamily: "Roboto, sans-serif"
@@ -209,18 +211,28 @@ let hometiles: [Object] = [
 
 let workingmessagestate = false
 
+let branchDefaults:BranchSettings = {
+    viewpoint: "FUNCTIONAL",
+    version: 'PBFT',
+    aspect: "Expenses",
+    defaultVersions:{
+        'FUNCTIONAL':'SUMMARY',
+        'STRUCTURAL':'SUMMARY',
+    },
+    defaultAspects:{
+        'SUMMARY':'Expenses',
+        'PBFT':'Expenses',
+    },
+    chartType: "ColumnChart",
+    inflationAdjusted: true,
+    yearSelector:{ leftYear: 2015, rightYear: 2015 },
+    yearScope:"OneYear",
+    nodeList:[],
+}
+
 let explorer = {
     defaults: {
-        branch: {
-            latestYear: 2015,
-            viewpoint: "FUNCTIONAL",
-            aspect: "Expenses",
-            chartType: "ColumnChart",
-            inflationAdjusted: true,
-            yearSlider:{ singlevalue: [2015], doublevalue: [2005, 2015] },
-            yearScope:"OneYear",
-            nodeList:[],
-        },
+        branch: branchDefaults,
         node: {
             cellIndex:0,
             cellList:null

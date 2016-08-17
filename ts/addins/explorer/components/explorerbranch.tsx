@@ -48,6 +48,7 @@ export interface ExplorerBranchActions {
     addNodeDeclaration:Function,
     removeNodeDeclarations:Function,
     changeViewpoint:Function,
+    changeVersion: Function,
     changeAspect: Function,
     updateCellChartSelection: Function,  
     updateCellChartCode: Function,
@@ -268,6 +269,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 this._processChangeViewpointStateChange(budgetBranch)
                 break
             }
+            case branchActionTypes.CHANGE_VERSION: {
+                this._processChangeVersionStateChange(budgetBranch)
+                break
+            }
             case branchActionTypes.CHANGE_ASPECT: {
 
                 this._processChangeAspectStateChange(budgetBranch)
@@ -281,6 +286,17 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     private _processChangeViewpointStateChange = (budgetBranch:BudgetBranch) => {
+        budgetBranch.getViewpointData().then(()=>{
+
+            setTimeout(()=>{
+                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
+                this._stateActions.addNodeDeclaration(budgetNodeParms)
+            })
+
+        })
+    }
+
+    private _processChangeVersionStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData().then(()=>{
 
             setTimeout(()=>{
@@ -421,6 +437,24 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         })
     }
 
+    switchVersion = (versionName: string) => {
+        let { budgetBranch } = this.props
+        let { nodes:branchNodes } = budgetBranch
+
+        // branchNodes is just a copy of the component state's BranchNodes
+        let removed = branchNodes.splice(0) // identify nodes to remove
+        let removeditems = removed.map((item:BudgetNode) => {
+            return {nodeuid:item.uid, cellList:item.cellDeclarationList}
+        })
+        // this will trigger render cycle that will delete the component state's stored nodes
+        let globalStateActions = this._stateActions
+        globalStateActions.removeNodeDeclarations(removeditems)
+        // now the viewpoint can be changed, triggering a change in viewpoint data
+        setTimeout(() => {
+            globalStateActions.changeVersion(budgetBranch.uid, versionName)
+        })
+    }
+
     switchAspect = (aspect:string) => {
 
         switch (aspect) {
@@ -540,8 +574,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         <span style={{ fontStyle: "italic" }}>Viewpoint: </span>
         <DropDownMenu
             value={this.props.budgetBranch.settings.viewpoint}
-            style={{
-            }}
             onChange={
                 (e, index, value) => {
                     branch.switchViewpoint(value)
@@ -561,38 +593,47 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     let versionselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>Version: </span>
         <DropDownMenu
-            value = {'DETAIL'}
+            value = {this.props.declarationData.branchesById[this.props.budgetBranch.uid].version}
+            onChange={
+                (e, index, value) => {
+                    branch.switchVersion(value)
+                }
+            }
             >
 
-            <MenuItem disabled value={'SUMMARY'} primaryText="Summary"/>
+            <MenuItem value={'SUMMARY'} primaryText="Summary"/>
             <MenuItem value={'PBFT'} primaryText="Detail (PBFT)"/>
             <MenuItem disabled value={'VARIANCE'} primaryText="Variance Reports"/>
 
         </DropDownMenu>
     </div>:null
 
-    let aspectselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
+    let aspectselection = (this.state.showcontrols)
+        ?
+        <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
 
-        <span style={{ fontStyle: "italic" }}>Aspect: </span>
+            <span style={{ fontStyle: "italic" }}>Aspect: </span>
 
-        <DropDownMenu
-            value={this.props.declarationData.branchesById[this.props.budgetBranch.uid].aspect}
-            onChange={
-                (e, index, value) => {
-                    branch.switchAspect(value)
+            <DropDownMenu
+                value={this.props.declarationData.branchesById[this.props.budgetBranch.uid].aspect}
+                onChange={
+                    (e, index, value) => {
+                        branch.switchAspect(value)
+                    }
                 }
-            }
-            >
+                >
 
-            <MenuItem value={'Expenses'} primaryText="Expenses"/>
-            <MenuItem value={'Revenues'} primaryText="Revenues"/>
-            <MenuItem disabled value={'Both'} primaryText="Both"/>
-            <MenuItem disabled value={'Net'} primaryText="Net"/>
-            <MenuItem value={'Staffing'} primaryText="Staffing" />
+                <MenuItem value={'Expenses'} primaryText="Expenses"/>
+                <MenuItem value={'Revenues'} primaryText="Revenues"/>
+                <MenuItem disabled value={'Both'} primaryText="Both"/>
+                <MenuItem disabled value={'Net'} primaryText="Net"/>
+                <MenuItem value={'Staffing'} primaryText="Staffing" />
 
-        </DropDownMenu>
+            </DropDownMenu>
 
-    </div>:null
+        </div>
+        :
+        null
 
     let byunitselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>By Unit: </span>
@@ -606,10 +647,14 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             >
 
             <MenuItem value={'Off'} primaryText="Off"/>
-            <MenuItem value={'Staff'} primaryText="Per staffing position"/>
-            <MenuItem value={'Population'} primaryText="Population: per person"/>
-            <MenuItem value={'Population100000'} primaryText="Population: per 100,000 people"/>
-            <MenuItem value={'Household'} primaryText="Per household"/>
+            <MenuItem disabled value={'Staff'} primaryText="Per staffing position"/>
+            <MenuItem disabled value={'Population'} primaryText="Population: per person"/>
+            <MenuItem disabled value={'Population100000'} primaryText="Population: per 100,000 people"/>
+            <MenuItem disabled value={'Adult'} primaryText="Population: per adult (15 and over)"/>
+            <MenuItem disabled value={'Adult100000'} primaryText="Population: per 100,000 adults"/>
+            <MenuItem disabled value={'Child'} primaryText="Population: per child (14 and under)"/>
+            <MenuItem disabled value={'Child100000'} primaryText="Population: per 100,000 children"/>
+            <MenuItem disabled value={'Household'} primaryText="Per household"/>
 
         </DropDownMenu>
     </div>:null

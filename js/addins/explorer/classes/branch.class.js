@@ -10,7 +10,8 @@ class BudgetBranch {
             let branchSettings = this.settings;
             let viewpointData = this.state.viewpointData;
             let datapath = [];
-            let { viewpoint: viewpointName, aspect: aspectName, latestYear: rightYear, } = branchSettings;
+            let { viewpoint: viewpointName, aspect: aspectName, yearSelector, } = branchSettings;
+            let { rightYear } = yearSelector;
             let budgetNodeParms = {
                 viewpointName: viewpointName,
                 aspectName: aspectName,

@@ -2,6 +2,7 @@
 import { combineReducers } from 'redux'
 import initialstate from "../../local/initialstate"
 import { types as actiontypes} from './actions'
+import { BranchSettings } from './modules/interfaces'
 
 let generationcounter = 0
 
@@ -117,8 +118,21 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
         case actiontypes.CHANGE_VIEWPOINT: {
             let { branchuid } = action.payload
             newstate = Object.assign({},state)
-            newstate[branchuid] = Object.assign({},newstate[branchuid])
-            newstate[branchuid].viewpoint = action.payload.viewpointname            
+            let newbranchstate:BranchSettings = Object.assign({},newstate[branchuid])
+            newbranchstate.viewpoint = action.payload.viewpointname
+            newbranchstate.version = newbranchstate.defaultVersions[newbranchstate.viewpoint]
+            newbranchstate.aspect = newbranchstate.defaultAspects[newbranchstate.version]          
+            newstate[branchuid] = newbranchstate
+            return newstate
+        }
+
+        case actiontypes.CHANGE_VERSION: {
+            let { branchuid } = action.payload
+            newstate = Object.assign({},state)
+            let newbranchstate:BranchSettings = Object.assign({},newstate[branchuid])
+            newbranchstate.version = action.payload.versionname
+            newbranchstate.aspect = newbranchstate.defaultAspects[newbranchstate.version]          
+            newstate[branchuid] = newbranchstate
             return newstate
         }
 

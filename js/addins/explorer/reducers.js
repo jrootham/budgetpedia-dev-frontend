@@ -107,8 +107,20 @@ let branchesById = (state = {}, action) => {
         case actions_1.types.CHANGE_VIEWPOINT: {
             let { branchuid } = action.payload;
             newstate = Object.assign({}, state);
-            newstate[branchuid] = Object.assign({}, newstate[branchuid]);
-            newstate[branchuid].viewpoint = action.payload.viewpointname;
+            let newbranchstate = Object.assign({}, newstate[branchuid]);
+            newbranchstate.viewpoint = action.payload.viewpointname;
+            newbranchstate.version = newbranchstate.defaultVersions[newbranchstate.viewpoint];
+            newbranchstate.aspect = newbranchstate.defaultAspects[newbranchstate.version];
+            newstate[branchuid] = newbranchstate;
+            return newstate;
+        }
+        case actions_1.types.CHANGE_VERSION: {
+            let { branchuid } = action.payload;
+            newstate = Object.assign({}, state);
+            let newbranchstate = Object.assign({}, newstate[branchuid]);
+            newbranchstate.version = action.payload.versionname;
+            newbranchstate.aspect = newbranchstate.defaultAspects[newbranchstate.version];
+            newstate[branchuid] = newbranchstate;
             return newstate;
         }
         case actions_1.types.CHANGE_ASPECT: {

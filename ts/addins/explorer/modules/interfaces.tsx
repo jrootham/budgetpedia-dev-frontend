@@ -4,21 +4,19 @@ import BudgetNode from '../classes/node.class'
 import { ChartSelectionCell } from './onchartcomponentselection'
 
 interface BranchSettings {
-    latestYear: number,
     viewpoint: string,
+    version: string,
     aspect: string,
+    defaultVersions:any,
+    defaultAspects:any,
     chartType: string,
     inflationAdjusted: boolean,
-    yearSlider: { 
-        singlevalue: {
-            rightYear: number, 
-        },
-        doublevalue: {
-            leftYear: number,
-            rightYear: number,
-        } 
+    yearSelector: { 
+        leftYear: number,
+        rightYear: number,
     },
-    yearScope:"one",
+    yearScope:string,
+    nodeList:any[],
 }
 
 interface BranchConfig {

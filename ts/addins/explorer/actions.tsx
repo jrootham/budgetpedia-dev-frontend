@@ -6,6 +6,7 @@ export namespace types {
     export const ADD_BRANCH = 'ADD_BRANCH'
     export const REMOVE_BRANCH = 'REMOVE_BRANCH'
     export const CHANGE_VIEWPOINT = 'CHANGE_VIEWPOINT'
+    export const CHANGE_VERSION = 'CHANGE_VERSION'
     export const CHANGE_ASPECT = 'CHANGE_ASPECT'
     export const TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED'
     export const ADD_NODE = 'ADD_NODE'
@@ -29,6 +30,7 @@ export namespace branchTypes {
     export import ADD_NODE = types.ADD_NODE
     export import REMOVE_NODES = types.REMOVE_NODES
     export import CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT
+    export import CHANGE_VERSION = types.CHANGE_VERSION
     export import CHANGE_ASPECT = types.CHANGE_ASPECT
 }
 
@@ -72,6 +74,15 @@ export const changeViewpoint = createAction(
     types.CHANGE_VIEWPOINT, (branchuid, viewpointname) => ({
         branchuid,
         viewpointname,        
+    }), () => ({
+        explorer:true
+    })
+)
+
+export const changeVersion = createAction(
+    types.CHANGE_VERSION, (branchuid, versionname) => ({
+        branchuid,
+        versionname,        
     }), () => ({
         explorer:true
     })
