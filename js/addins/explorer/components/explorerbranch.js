@@ -25,7 +25,7 @@ class ExplorerBranch extends Component {
         this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
         this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
         this.harmonizecount = null;
-        this._controlGlobalStateChange = () => {
+        this._respondToGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
             let currentControlData = this.props.declarationData;
             let { lastAction } = currentControlData;
@@ -281,7 +281,7 @@ class ExplorerBranch extends Component {
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
-        let { lastAction, generation } = nextProps.declarationData;
+        let { lastAction } = nextProps.declarationData;
         if (nextState.snackbar.open != this.state.snackbar.open)
             return true;
         if (!lastAction.explorer)
@@ -313,7 +313,7 @@ class ExplorerBranch extends Component {
         }
         else {
             this.harmonizecount = null;
-            this._controlGlobalStateChange();
+            this._respondToGlobalStateChange();
         }
     }
     render() {

@@ -42,9 +42,11 @@ class ExplorerCell extends Component {
                 deltastate: !this.state.variancestate
             });
         };
+        this._respondToGlobalStateChange = () => {
+        };
     }
     shouldComponentUpdate(nextProps, nextState) {
-        let { lastAction, generation } = nextProps.declarationData;
+        let { lastAction } = nextProps.declarationData;
         let { celluid } = lastAction;
         if (celluid) {
             let retval = (nextProps.budgetCell.uid == celluid) ? true : false;
@@ -53,7 +55,10 @@ class ExplorerCell extends Component {
         return true;
     }
     componentDidUpdate() {
-        this.props.budgetCell.refreshSelection();
+        this._respondToGlobalStateChange();
+        setTimeout(() => {
+            this.props.budgetCell.refreshSelection();
+        });
     }
     render() {
         let { chartParms, explorerChartCode, expandable, graph_id } = this.props.budgetCell;
@@ -112,7 +117,7 @@ class ExplorerCell extends Component {
         }, onTouchTap: e => {
             this.onChangeChartCode('ColumnChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "insert_chart"));
-        let doublecolumnchart = React.createElement(IconButton_1.default, {key: 'columnchart', tooltip: "Column Chart", tooltipPosition: "top-center", style: {
+        let doublecolumnchart = React.createElement(IconButton_1.default, {key: 'doublecolumnchart', tooltip: "Column Chart", tooltipPosition: "top-center", style: {
             backgroundColor: (explorerChartCode == "DoubleColumnChart")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",

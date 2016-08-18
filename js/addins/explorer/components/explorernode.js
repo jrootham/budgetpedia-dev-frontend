@@ -13,7 +13,7 @@ class ExporerNode extends Component {
         this.getState = () => this.state;
         this.getProps = () => this.props;
         this.lastgenerationcounter = 0;
-        this._controlGlobalStateChange = () => {
+        this._respondToGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
             let currentControlData = this.props.declarationData;
             let { lastAction } = currentControlData;
@@ -145,7 +145,7 @@ class ExporerNode extends Component {
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
-        let { lastAction, generation } = nextProps.declarationData;
+        let { lastAction } = nextProps.declarationData;
         let { nodeuid } = lastAction;
         if (nodeuid) {
             let retval = (nextProps.budgetNode.uid == nodeuid) ? true : false;
@@ -155,11 +155,13 @@ class ExporerNode extends Component {
     }
     componentDidUpdate() {
         if (!this._harmonizeCells()) {
-            this._controlGlobalStateChange();
+            this._respondToGlobalStateChange();
         }
-        setTimeout(() => {
-            this.props.budgetNode.new = false;
-        });
+        if (this.props.budgetNode.new) {
+            setTimeout(() => {
+                this.props.budgetNode.new = false;
+            });
+        }
     }
     render() {
         let chartTabs = this.getChartTabs();

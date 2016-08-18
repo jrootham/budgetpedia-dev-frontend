@@ -184,15 +184,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         }
     }
 
-    // private lastgenerationcounter: number = 0
-
     shouldComponentUpdate(nextProps: ExplorerBranchProps, nextState) {
-        let { lastAction, generation } = nextProps.declarationData
+        let { lastAction } = nextProps.declarationData
 
         if (nextState.snackbar.open != this.state.snackbar.open) return true
 
-        // if (generation <= this.lastgenerationcounter) return true
-        // this.lastgenerationcounter = generation
         if (!lastAction.explorer) return false
         let { branchuid } = lastAction
         if (branchuid) {
@@ -242,7 +238,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             )
         } else { // otherwise see if there are other cascading actions that have to be taken
             this.harmonizecount = null // reset
-            this._controlGlobalStateChange()
+            this._respondToGlobalStateChange()
         }
     }
 
@@ -250,7 +246,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _previousControlData: any
 
     // state change machine
-    private _controlGlobalStateChange = () => {
+    private _respondToGlobalStateChange = () => {
         let previousControlData = this._previousControlData
         let currentControlData = this.props.declarationData
         let { lastAction } = currentControlData

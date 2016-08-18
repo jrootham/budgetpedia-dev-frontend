@@ -129,10 +129,8 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     private lastgenerationcounter: number = 0
 
     shouldComponentUpdate(nextProps: ExplorerNodeProps, nextState) {
-        let { lastAction, generation } = nextProps.declarationData
+        let { lastAction } = nextProps.declarationData
         
-        // if (generation <= this.lastgenerationcounter) return true
-        // this.lastgenerationcounter = generation
         let { nodeuid } = lastAction
         if (nodeuid) {
             let retval = (nextProps.budgetNode.uid == nodeuid)? true: false
@@ -144,18 +142,20 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
 
     componentDidUpdate() {
         if (!this._harmonizeCells()) {
-            this._controlGlobalStateChange()
+            this._respondToGlobalStateChange()
         }
-        setTimeout(()=>{
-            this.props.budgetNode.new = false
-        })
+        if ( this.props.budgetNode.new ) {
+            setTimeout(()=>{
+                this.props.budgetNode.new = false
+            })
+        } 
     }
 
     // _previousControlData is not in a closure to allow for initializing in componentDidMount
     private _previousControlData: any
 
     // state change machine
-    private _controlGlobalStateChange = () => {
+    private _respondToGlobalStateChange = () => {
         let previousControlData = this._previousControlData
         let currentControlData = this.props.declarationData
         let { lastAction } = currentControlData
@@ -171,11 +171,9 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
 
         switch (lastAction.type) {
             case cellTypes.UPDATE_CELL_SELECTION: {
-                // this._processUpdateCellSelection()
                 break
             }
             case cellTypes.CHANGE_ASPECT: {
-                // this._processChangeAspect()
                 break
             }
             default:
@@ -184,22 +182,6 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         this._previousControlData = currentControlData
         return returnvalue
     }
-
-    // private _processUpdateCellSelection = () => {
-        // let nodeCells = [ ...this.state.nodeCells ]
-        // nodeCells.map((budgetCell)=>{
-        //     budgetCell.chartSelection = this.props.declarationData.cellsById[budgetCell.uid].chartSelection
-        // })
-        // this.setState({
-        //     nodeCells,
-        // })
-    // }
-
-    // private _processChangeAspect = () => {
-    //     let { budgetNode } = this.props
-    //     // let cellDeclarationParms = budgetNode.getCellDeclarationParms()
-    //     // this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
-    // }
 
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes

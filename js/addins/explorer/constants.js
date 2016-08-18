@@ -9,7 +9,10 @@ let ChartCodeToGoogleChartType = {
     'DonutChart': 'PieChart',
     'ColumnChart': 'ColumnChart',
     'DoubleColumnChart': 'ColumnChart',
-    'Timelines': 'LineChart',
+    'Timeline': 'LineChart',
+    'ContextChart': 'TreeMap',
+    'StackedArea': 'AreaChart',
+    'Proportional': 'AreaChart',
 };
 exports.ChartCodeToGoogleChartType = ChartCodeToGoogleChartType;
 let AspectNameToDatasetName = {

@@ -20,7 +20,6 @@ var types;
     types.UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME';
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
     types.UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE';
-    types.CHANGE_CHART_CODE = 'CHANGE_CHART_CODE';
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
 })(types = exports.types || (exports.types = {}));
 var branchTypes;
@@ -36,7 +35,6 @@ var branchTypes;
 var nodeTypes;
 (function (nodeTypes) {
     nodeTypes.ADD_CELLS = types.ADD_CELLS;
-    nodeTypes.CHANGE_CHART_CODE = types.CHANGE_CHART_CODE;
     nodeTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
     nodeTypes.CHANGE_TAB = types.CHANGE_TAB;
     nodeTypes.UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME;

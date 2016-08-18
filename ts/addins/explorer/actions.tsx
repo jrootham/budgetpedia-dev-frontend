@@ -22,8 +22,6 @@ export namespace types {
     
     export const UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION'
     export const UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE'
-    // export const REMOVE_CELLS = 'REMOVE_CELLS'
-    export const CHANGE_CHART_CODE = 'CHANGE_CHART_CODE'
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
 }
 
@@ -40,8 +38,6 @@ export namespace branchTypes {
 
 export namespace nodeTypes {
     export import ADD_CELLS = types.ADD_CELLS
-    // export import REMOVE_CELLS = types.REMOVE_CELLS
-    export import CHANGE_CHART_CODE = types.CHANGE_CHART_CODE
     export import TOGGLE_DELTA = types.TOGGLE_DELTA
     export import CHANGE_TAB = types.CHANGE_TAB
     export import UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME

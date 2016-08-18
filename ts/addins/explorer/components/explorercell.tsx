@@ -75,7 +75,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     }
 
     shouldComponentUpdate(nextProps: ExplorerCellProps, nextState) {
-        let { lastAction, generation } = nextProps.declarationData
+        let { lastAction } = nextProps.declarationData
 
         let { celluid } = lastAction
         if (celluid) {
@@ -88,7 +88,14 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     componentDidUpdate() {
 
-        this.props.budgetCell.refreshSelection()
+        this._respondToGlobalStateChange()
+        setTimeout(() =>{
+            this.props.budgetCell.refreshSelection()
+        })
+
+    }
+
+    private _respondToGlobalStateChange = () => {
 
     }
 
