@@ -9,6 +9,7 @@ var types;
     types.CHANGE_VERSION = 'CHANGE_VERSION';
     types.CHANGE_ASPECT = 'CHANGE_ASPECT';
     types.TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED';
+    types.TOGGLE_SHOW_OPTIONS = 'TOGGLE_SHOW_OPTIONS';
     types.ADD_NODE = 'ADD_NODE';
     types.REMOVE_NODES = 'REMOVE_NODES';
     types.RESET_LAST_ACTION = 'RESET_LAST_ACTION';
@@ -29,6 +30,8 @@ var branchTypes;
     branchTypes.CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT;
     branchTypes.CHANGE_VERSION = types.CHANGE_VERSION;
     branchTypes.CHANGE_ASPECT = types.CHANGE_ASPECT;
+    branchTypes.TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED;
+    branchTypes.TOGGLE_SHOW_OPTIONS = types.TOGGLE_SHOW_OPTIONS;
 })(branchTypes = exports.branchTypes || (exports.branchTypes = {}));
 var nodeTypes;
 (function (nodeTypes) {
@@ -71,6 +74,12 @@ exports.changeVersion = redux_actions_1.createAction(types.CHANGE_VERSION, (bran
 exports.changeAspect = redux_actions_1.createAction(types.CHANGE_ASPECT, (branchuid, aspectname) => ({
     branchuid: branchuid,
     aspectname: aspectname,
+}), () => ({
+    explorer: true
+}));
+exports.toggleShowOptions = redux_actions_1.createAction(types.TOGGLE_SHOW_OPTIONS, (branchuid, value) => ({
+    branchuid: branchuid,
+    value: value,
 }), () => ({
     explorer: true
 }));

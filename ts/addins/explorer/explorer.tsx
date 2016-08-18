@@ -79,6 +79,7 @@ interface MappedBranchActions extends MappedNodeActions {
     changeViewpoint: Function,
     changeVersion: Function,
     changeAspect: Function,
+    toggleShowOptions: Function,
     updateCellChartSelection:Function,
     updateCellsDataseriesName: Function,
     resetLastAction: Function,
@@ -408,6 +409,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     changeViewpoint: this.props.changeViewpoint,
                     changeVersion: this.props.changeVersion,
                     changeAspect: this.props.changeAspect,
+                    toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
                 }
@@ -596,6 +598,7 @@ Explorer = connect(mapStateToProps, {
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
+    toggleShowOptions: ExplorerActions.toggleShowOptions,
     resetLastAction: ExplorerActions.resetLastAction,
     // toggleInflationAdjustment
     branchMoveUp: ExplorerActions.branchMoveUp,

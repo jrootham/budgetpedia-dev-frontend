@@ -183,6 +183,7 @@ let Explorer = class extends Component {
                     changeViewpoint: this.props.changeViewpoint,
                     changeVersion: this.props.changeVersion,
                     changeAspect: this.props.changeAspect,
+                    toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
                 };
@@ -238,6 +239,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
+    toggleShowOptions: ExplorerActions.toggleShowOptions,
     resetLastAction: ExplorerActions.resetLastAction,
     branchMoveUp: ExplorerActions.branchMoveUp,
     branchMoveDown: ExplorerActions.branchMoveDown,

@@ -144,6 +144,14 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             return newstate
         }
 
+        case actiontypes.TOGGLE_SHOW_OPTIONS: {
+            let { branchuid } = action.payload
+            newstate = Object.assign({},state)
+            newstate[branchuid] = Object.assign({},newstate[branchuid])
+            newstate[branchuid].showOptions = action.payload.value
+            return newstate
+        }
+
         default:
             return state
     }

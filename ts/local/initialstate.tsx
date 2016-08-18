@@ -228,6 +228,7 @@ let branchDefaults:BranchSettings = {
     yearSelector:{ leftYear: 2015, rightYear: 2015 },
     yearScope:"OneYear",
     nodeList:[],
+    showOptions: false,
 }
 
 let explorer = {

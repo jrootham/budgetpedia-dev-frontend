@@ -19,7 +19,6 @@ class ExplorerBranch extends Component {
             snackbar: { open: false, message: 'empty' },
             aspect: this.props.budgetBranch.settings.viewpoint,
             byunitselection: 'off',
-            showcontrols: false,
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
@@ -105,14 +104,6 @@ class ExplorerBranch extends Component {
                         });
                     }
                 });
-            });
-        };
-        this.refreshPresentation = () => {
-            this.forceUpdate();
-        };
-        this.updateBranchNodesState = branchNodes => {
-            this.setState({
-                branchNodes: branchNodes,
             });
         };
         this.handleSnackbarRequestClose = () => {
@@ -204,6 +195,10 @@ class ExplorerBranch extends Component {
                 byunitselection: unitindex
             });
         };
+        this.toggleShowOptions = value => {
+            let { budgetBranch } = this.props;
+            this.props.globalStateActions.toggleShowOptions(budgetBranch.uid, value);
+        };
         this.getPortals = (budgetNodes) => {
             let { viewpointData } = this.state;
             if (!viewpointData)
@@ -214,6 +209,7 @@ class ExplorerBranch extends Component {
                 portalSeriesName += ' (' + datasetConfig.UnitsAlias + ')';
             }
             let portals = budgetNodes.map((budgetNode, nodeindex) => {
+                let branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
                 let portalName = null;
                 if (budgetNode.treeNodeMetaData) {
                     portalName = budgetNode.treeNodeMetaData.Name;
@@ -238,7 +234,7 @@ class ExplorerBranch extends Component {
                 let actions = Object.assign({}, this._stateActions);
                 actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = this._stateActions.updateCellChartCode(budgetNode.uid);
-                return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: actions, displayCallbacks: {}, showControls: this.state.showcontrols});
+                return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: actions, displayCallbacks: {}, showControls: branchDeclaration.showOptions});
             });
             return portals;
         };
@@ -248,13 +244,11 @@ class ExplorerBranch extends Component {
         this._stateActions = Object.assign({}, actions);
         this._stateActions.addNodeDeclaration = this.addNodeDeclaration(budgetBranch.uid);
         this._stateActions.removeNodeDeclarations = this.removeNodeDeclarations(budgetBranch.uid);
-        let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this;
+        let { onPortalCreation } = this;
         let { workingStatus } = displayCallbacks;
         this._nodeDisplayCallbacks = {
             workingStatus: workingStatus,
             onPortalCreation: onPortalCreation,
-            updateBranchNodesState: updateBranchNodesState,
-            refreshPresentation: refreshPresentation,
         };
         budgetBranch.getState = this.getState;
         budgetBranch.getProps = this.getProps;
@@ -327,23 +321,23 @@ class ExplorerBranch extends Component {
         let drilldownrow = branch.props.budgetBranch.nodes;
         let drilldownportals = branch.getPortals(drilldownrow);
         let branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
-        let viewpointselection = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.viewpoint, onChange: (e, index, value) => {
+        let viewpointselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.viewpoint, onChange: (e, index, value) => {
             branch.switchViewpoint(value);
         }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Budget (by function)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Budget (by structure)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'STATEMENTS', primaryText: "Consolidated Statements"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'EXPENSESBYOBJECT', primaryText: "Expenses by Object"}))) : null;
-        let versionselection = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.version, onChange: (e, index, value) => {
+        let versionselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.version, onChange: (e, index, value) => {
             branch.switchVersion(value);
         }}, React.createElement(MenuItem_1.default, {value: 'SUMMARY', primaryText: "Summary"}), React.createElement(MenuItem_1.default, {value: 'PBFT', primaryText: "Detail (PBFT)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"}))) : null;
-        let aspectselection = (this.state.showcontrols)
+        let aspectselection = (branchDeclaration.showOptions)
             ?
                 React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Aspect: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.aspect, onChange: (e, index, value) => {
                     branch.switchAspect(value);
                 }}, React.createElement(MenuItem_1.default, {value: 'Expenses', primaryText: "Expenses"}), React.createElement(MenuItem_1.default, {value: 'Revenues', primaryText: "Revenues"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Both', primaryText: "Both"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Net', primaryText: "Net"}), React.createElement(MenuItem_1.default, {value: 'Staffing', primaryText: "Staffing"})))
             :
                 null;
-        let byunitselection = (this.state.showcontrols) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" }}, "By Unit: "), React.createElement(DropDownMenu_1.default, {disabled: true, value: this.state.byunitselection, onChange: (e, index, value) => {
+        let byunitselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" }}, "By Unit: "), React.createElement(DropDownMenu_1.default, {disabled: true, value: this.state.byunitselection, onChange: (e, index, value) => {
             this.switchUnit(value);
         }}, React.createElement(MenuItem_1.default, {value: 'Off', primaryText: "Off"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Staff', primaryText: "Per staffing position"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Population', primaryText: "Population: per person"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Population100000', primaryText: "Population: per 100,000 people"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Adult', primaryText: "Population: per adult (15 and over)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Adult100000', primaryText: "Population: per 100,000 adults"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Child', primaryText: "Population: per child (14 and under)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Child100000', primaryText: "Population: per 100,000 children"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Household', primaryText: "Per household"}))) : null;
-        let inflationadjustment = (this.state.showcontrols)
+        let inflationadjustment = (branchDeclaration.showOptions)
             ?
                 React.createElement("div", {style: {
                     display: 'inline-block',
@@ -362,13 +356,10 @@ class ExplorerBranch extends Component {
             display: 'inline-block',
             whiteSpace: "nowrap",
             verticalAlign: "bottom"
-        }}, React.createElement(Toggle_1.default, {label: 'Show options:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: false, onToggle: (e, value) => {
-            this.props.globalStateActions.resetLastAction();
-            this.setState({
-                showcontrols: value
-            });
+        }}, React.createElement(Toggle_1.default, {label: 'Show options:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: branchDeclaration.showOptions, onToggle: (e, value) => {
+            this.toggleShowOptions(value);
         }}));
-        let showhelp = (this.state.showcontrols)
+        let showhelp = (branchDeclaration.showOptions)
             ? React.createElement(IconButton_1.default, {tooltip: "Help", tooltipPosition: "top-center", onTouchTap: this.props.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline"))
             : null;
         return React.createElement("div", null, React.createElement("div", null, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, showhelp), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {

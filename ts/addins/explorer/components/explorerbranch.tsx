@@ -33,6 +33,7 @@ import {
 
 import {
     PortalConfig,
+    BranchSettings,
 } from '../modules/interfaces'
 
 import { ExporerNode } from './explorernode'
@@ -49,6 +50,7 @@ export interface ExplorerBranchActions {
     removeNodeDeclarations:Function,
     changeViewpoint:Function,
     changeVersion: Function,
+    toggleShowOptions: Function,
     changeAspect: Function,
     updateCellChartSelection: Function,  
     updateCellChartCode: Function,
@@ -96,7 +98,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         snackbar:{open:false,message:'empty'},
         aspect: this.props.budgetBranch.settings.viewpoint,
         byunitselection:'off',
-        showcontrols:false,
     }
 
 /*    
@@ -128,7 +129,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         this._stateActions.addNodeDeclaration = this.addNodeDeclaration(budgetBranch.uid)
         this._stateActions.removeNodeDeclarations = this.removeNodeDeclarations(budgetBranch.uid)
 
-        let { refreshPresentation, onPortalCreation, updateBranchNodesState } = this
+        let { onPortalCreation } = this
         let { workingStatus } = displayCallbacks
 
         // create display callbacks bundle for children
@@ -137,8 +138,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             workingStatus,
             // local
             onPortalCreation,
-            updateBranchNodesState,
-            refreshPresentation,
+            // updateBranchNodesState,
+            // refreshPresentation,
         }
 
         // complete initialization of budgetBranch class instance
@@ -349,16 +350,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         })
     }
 
-    refreshPresentation = () => {
-        this.forceUpdate()
-    }
-
-    updateBranchNodesState = branchNodes => {
-        this.setState({
-            branchNodes,
-        })
-    }
-
     handleSnackbarRequestClose = () => {
         // this.props.globalStateActions.resetLastAction()
         this.setState({
@@ -375,7 +366,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     // onPortalCreation animates scroll-in of new portal
 
-    branchScrollBlock = null
+    private branchScrollBlock = null
 
     onPortalCreation = () => {
         let element: Element = this.branchScrollBlock
@@ -411,7 +402,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
-    easeOutCubic = t => {
+    private easeOutCubic = t => {
         const t1 = t - 1;
         return t1 * t1 * t1 + 1;
     }
@@ -474,10 +465,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         this.props.globalStateActions.changeAspect(budgetBranch.uid, aspect)
 
-        // this.setState({
-        //     aspect,
-        // })
-
     }
 
     switchUnit = unitindex => {
@@ -485,6 +472,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         this.setState({
             byunitselection:unitindex
         })
+    }
+
+    toggleShowOptions = value => {
+
+        let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
+        this.props.globalStateActions.toggleShowOptions( budgetBranch.uid, value )
     }
 
     // -----------------------------[ prepare for render ]---------------------------------
@@ -503,6 +496,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         }
 
         let portals = budgetNodes.map((budgetNode: BudgetNode, nodeindex) => {
+
+            let branchDeclaration:BranchSettings = this.props.declarationData.branchesById[this.props.budgetBranch.uid]
 
             let portalName = null
             if (budgetNode.treeNodeMetaData) {
@@ -548,7 +543,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                         // updateChartSelections: this.props.displayCallbacks.updateChartSelections,
                     } 
                 }
-                showControls = {this.state.showcontrols}
+                showControls = {branchDeclaration.showOptions}
             />
         })
 
@@ -570,9 +565,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     let drilldownportals = branch.getPortals(drilldownrow)
 
-    let branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid]
+    let branchDeclaration:BranchSettings = this.props.declarationData.branchesById[this.props.budgetBranch.uid]
 
-    let viewpointselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
+    let viewpointselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>Viewpoint: </span>
         <DropDownMenu
             value={branchDeclaration.viewpoint}
@@ -593,7 +588,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     </div>:null
 
     // TODO: add contitional logic depending on viewpoint selection
-    let versionselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
+    let versionselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>Version: </span>
         <DropDownMenu
             value = {branchDeclaration.version}
@@ -612,7 +607,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     </div>:null
 
     // TODO: add conditional logic depending on version selection
-    let aspectselection = (this.state.showcontrols)
+    let aspectselection = (branchDeclaration.showOptions)
         ?
         <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
 
@@ -639,7 +634,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         :
         null
 
-    let byunitselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
+    let byunitselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic",color: "rgba(0, 0, 0, 0.3)" }}>By Unit: </span>
         <DropDownMenu
             disabled
@@ -664,7 +659,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         </DropDownMenu>
     </div>:null
 
-    let inflationadjustment = (this.state.showcontrols)
+    let inflationadjustment = (branchDeclaration.showOptions)
         ?
         <div 
             style={
@@ -708,19 +703,16 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 label={'Show options:'} 
                 style={{height:'32px', marginTop:'16px'}} 
                 labelStyle = {{fontStyle:'italic'}} 
-                defaultToggled={false}
+                defaultToggled={branchDeclaration.showOptions}
                 onToggle = { 
                     (e,value) => {
-                        this.props.globalStateActions.resetLastAction() // TODO: this is a hack!!
-                        this.setState({
-                            showcontrols:value
-                        })
+                        this.toggleShowOptions(value)
                     }
                 }
             />
         </div>
 
-    let showhelp = (this.state.showcontrols)
+    let showhelp = (branchDeclaration.showOptions)
         ?<IconButton tooltip="Help" tooltipPosition="top-center"
             onTouchTap = { this.props.handleDialogOpen }>
             <FontIcon className="material-icons">help_outline</FontIcon>

@@ -17,6 +17,7 @@ interface BranchSettings {
     },
     yearScope:string,
     nodeList:any[],
+    showOptions: boolean,
 }
 
 interface BranchConfig {

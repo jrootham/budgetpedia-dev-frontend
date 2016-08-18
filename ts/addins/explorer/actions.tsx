@@ -9,6 +9,7 @@ export namespace types {
     export const CHANGE_VERSION = 'CHANGE_VERSION'
     export const CHANGE_ASPECT = 'CHANGE_ASPECT'
     export const TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED'
+    export const TOGGLE_SHOW_OPTIONS = 'TOGGLE_SHOW_OPTIONS'
     export const ADD_NODE = 'ADD_NODE'
     export const REMOVE_NODES = 'REMOVE_NODES'
     export const RESET_LAST_ACTION = 'RESET_LAST_ACTION'
@@ -32,6 +33,9 @@ export namespace branchTypes {
     export import CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT
     export import CHANGE_VERSION = types.CHANGE_VERSION
     export import CHANGE_ASPECT = types.CHANGE_ASPECT
+    export import TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED
+    export import TOGGLE_SHOW_OPTIONS = types.TOGGLE_SHOW_OPTIONS
+    
 }
 
 export namespace nodeTypes {
@@ -94,6 +98,15 @@ export const changeAspect = createAction(
         aspectname,
         // nodeidlist,
         // cellidlist,        
+    }), () => ({
+        explorer:true
+    })
+)
+
+export const toggleShowOptions = createAction(
+    types.TOGGLE_SHOW_OPTIONS, (branchuid, value) => ({
+        branchuid,
+        value,        
     }), () => ({
         explorer:true
     })
