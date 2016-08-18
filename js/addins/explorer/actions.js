@@ -35,15 +35,14 @@ var branchTypes;
 var nodeTypes;
 (function (nodeTypes) {
     nodeTypes.ADD_CELLS = types.ADD_CELLS;
-    nodeTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
     nodeTypes.CHANGE_TAB = types.CHANGE_TAB;
     nodeTypes.UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME;
 })(nodeTypes = exports.nodeTypes || (exports.nodeTypes = {}));
 var cellTypes;
 (function (cellTypes) {
+    cellTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
     cellTypes.UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION;
     cellTypes.UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE;
-    cellTypes.CHANGE_ASPECT = types.CHANGE_ASPECT;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, (refbranchuid, settings) => ({
     settings: settings,

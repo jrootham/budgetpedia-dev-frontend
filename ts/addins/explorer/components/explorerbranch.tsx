@@ -525,7 +525,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let actions = Object.assign({}, this._stateActions)
             actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid)
             actions.updateCellChartCode = this._stateActions.updateCellChartCode(budgetNode.uid)
-            // actions.updateCellsDataseriesName = this._stateActions.updateCellsDataseriesName(budgetNode.uid)
 
             return <ExporerNode
                 key = {nodeindex}
@@ -533,12 +532,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 budgetNode = { budgetNode }
                 declarationData = {this.props.declarationData}
                 globalStateActions = { actions }
-                displayCallbacks = { 
-                    { 
-                        // onChangePortalTab: this.onChangePortalTab,
-                        // updateChartSelections: this.props.displayCallbacks.updateChartSelections,
-                    } 
-                }
                 showControls = {branchDeclaration.showOptions}
             />
         })

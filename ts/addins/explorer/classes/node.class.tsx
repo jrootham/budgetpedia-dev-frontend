@@ -57,9 +57,7 @@ class BudgetNode {
     nodeIndex: number
     yearSpecs: YearSpecs
     actions: any
-    nodeCallbacks: any
     viewpointConfigPack: any
-    // datasetSpecs:DataseriesMeta[]
     branchSettings:any
     onChartComponentSelection: Function
     new:boolean = true

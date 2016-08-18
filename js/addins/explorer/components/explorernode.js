@@ -3,7 +3,6 @@ const React = require('react');
 var { Component } = React;
 const Tabs_1 = require('material-ui/Tabs');
 const explorercell_1 = require('./explorercell');
-const actions_1 = require('../actions');
 class ExporerNode extends Component {
     constructor(...args) {
         super(...args);
@@ -14,28 +13,6 @@ class ExporerNode extends Component {
         this.getProps = () => this.props;
         this.lastgenerationcounter = 0;
         this._respondToGlobalStateChange = () => {
-            let previousControlData = this._previousControlData;
-            let currentControlData = this.props.declarationData;
-            let { lastAction } = currentControlData;
-            let returnvalue = true;
-            if (!actions_1.cellTypes[lastAction.type]) {
-                return false;
-            }
-            if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
-                return false;
-            }
-            switch (lastAction.type) {
-                case actions_1.cellTypes.UPDATE_CELL_SELECTION: {
-                    break;
-                }
-                case actions_1.cellTypes.CHANGE_ASPECT: {
-                    break;
-                }
-                default:
-                    returnvalue = false;
-            }
-            this._previousControlData = currentControlData;
-            return returnvalue;
         };
         this.harmonizecount = null;
         this._harmonizeCells = () => {
@@ -77,7 +54,7 @@ class ExporerNode extends Component {
             });
             return cellTabs;
         };
-        this.getTabObject = (chartTabs) => {
+        this.getTabObject = chartTabs => {
             let tabSelection = this.props.declarationData.nodesById[this.props.budgetNode.uid].cellIndex;
             if (chartTabs.length == 0) {
                 return React.createElement("div", {style: {
@@ -95,12 +72,10 @@ class ExporerNode extends Component {
     componentWillMount() {
         let { budgetNode } = this.props;
         this._stateActions = Object.assign({}, this.props.globalStateActions);
-        this._nodeDisplayCallbacks = this.props.displayCallbacks;
         budgetNode.getState = this.getState;
         budgetNode.getProps = this.getProps;
         budgetNode.setState = this.setState.bind(this);
         budgetNode.actions = this._stateActions;
-        budgetNode.nodeCallbacks = this._nodeDisplayCallbacks;
     }
     componentDidMount() {
         let { budgetNode, declarationData } = this.props;

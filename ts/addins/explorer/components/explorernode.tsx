@@ -23,15 +23,11 @@ import {
 import ExplorerCell from './explorercell'
 import BudgetNode from '../classes/node.class'
 import BudgetCell from '../classes/cell.class'
-import { cellTypes } from '../actions'
+import { nodeTypes } from '../actions'
 
 interface ExplorerNodeProps {
     callbackid: string | number,
     budgetNode: BudgetNode,
-    displayCallbacks: { 
-        // onChangePortalTab:Function,
-        // updateChartSelections:Function, 
-    }
     globalStateActions: any,
     declarationData: any,
     showControls: boolean,
@@ -54,19 +50,16 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     getProps = () => this.props
 
     private _stateActions: ExporerNodeActions
-    private _nodeDisplayCallbacks
 
     componentWillMount() {
         let { budgetNode } = this.props
 
         this._stateActions = Object.assign({},this.props.globalStateActions)
-        this._nodeDisplayCallbacks = this.props.displayCallbacks
 
         budgetNode.getState = this.getState
         budgetNode.getProps = this.getProps
         budgetNode.setState = this.setState.bind(this)
         budgetNode.actions = this._stateActions
-        budgetNode.nodeCallbacks = this._nodeDisplayCallbacks
 
     }
 
@@ -151,36 +144,9 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         } 
     }
 
-    // _previousControlData is not in a closure to allow for initializing in componentDidMount
-    private _previousControlData: any
-
     // state change machine
     private _respondToGlobalStateChange = () => {
-        let previousControlData = this._previousControlData
-        let currentControlData = this.props.declarationData
-        let { lastAction } = currentControlData
-        let returnvalue = true
-        if (!cellTypes[lastAction.type]) {
-            return false
-        }
-        // the generation counter could be the same if render is being triggered
-        // solely by a local state change, which we want to ignore here
-        if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
-            return false
-        }
 
-        switch (lastAction.type) {
-            case cellTypes.UPDATE_CELL_SELECTION: {
-                break
-            }
-            case cellTypes.CHANGE_ASPECT: {
-                break
-            }
-            default:
-                returnvalue = false
-        }
-        this._previousControlData = currentControlData
-        return returnvalue
     }
 
     harmonizecount: any = null
@@ -250,7 +216,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
 
     }
 
-    getTabObject = (chartTabs) => {
+    getTabObject = chartTabs => {
         // this deals with the edge case where switching aspects causes current tail
         // chart to change from 2 charts to one by adding a value attr to tabs component
         let tabSelection = this.props.declarationData.nodesById[this.props.budgetNode.uid].cellIndex
@@ -312,7 +278,9 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                     backgroundColor: "#00bcd4",
                 }
             }>{ (this.props.budgetNode.nodeIndex + 1) + ". " + portalSettings.portalName }</div>
+
             { tabobject }
+
         </div>
     }
 }

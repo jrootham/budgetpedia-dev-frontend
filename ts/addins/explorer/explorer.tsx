@@ -292,8 +292,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     private addCellDeclarations = branchuid => (nodeuid, settingslist) => this.props.addCellDeclarations(branchuid, nodeuid, settingslist)
 
-    // private updateCellsDataseriesName = branchuid => cellItemList => this.props.updateCellsDataseriesName(branchuid, cellItemList)
-
     private updateCellChartSelection = branchuid => nodeuid => (celluid,selection) => (
         this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection )
     )

@@ -38,16 +38,15 @@ export namespace branchTypes {
 
 export namespace nodeTypes {
     export import ADD_CELLS = types.ADD_CELLS
-    export import TOGGLE_DELTA = types.TOGGLE_DELTA
     export import CHANGE_TAB = types.CHANGE_TAB
     export import UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME
 
 }
 
 export namespace cellTypes {
+    export import TOGGLE_DELTA = types.TOGGLE_DELTA
     export import UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION
     export import UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE
-    export import CHANGE_ASPECT = types.CHANGE_ASPECT
 }
 
 // --------------------[ Branch ]---------------------
