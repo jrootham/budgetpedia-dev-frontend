@@ -49,7 +49,6 @@ export class AppTile extends React.Component<any, any> {
 
                 style = {{textAlign: "center" }}
                 onTouchTap={ tile.transitionTo }
-                key = {this.props.key}
                 title = {this.props.content.title}
                 subtitle = {this.props.content.subtitle}
                 >
