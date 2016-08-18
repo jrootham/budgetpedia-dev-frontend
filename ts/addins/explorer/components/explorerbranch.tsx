@@ -570,10 +570,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     let drilldownportals = branch.getPortals(drilldownrow)
 
+    let branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid]
+
     let viewpointselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>Viewpoint: </span>
         <DropDownMenu
-            value={this.props.budgetBranch.settings.viewpoint}
+            value={branchDeclaration.viewpoint}
             onChange={
                 (e, index, value) => {
                     branch.switchViewpoint(value)
@@ -590,10 +592,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     </div>:null
 
+    // TODO: add contitional logic depending on viewpoint selection
     let versionselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>Version: </span>
         <DropDownMenu
-            value = {this.props.declarationData.branchesById[this.props.budgetBranch.uid].version}
+            value = {branchDeclaration.version}
             onChange={
                 (e, index, value) => {
                     branch.switchVersion(value)
@@ -608,6 +611,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         </DropDownMenu>
     </div>:null
 
+    // TODO: add conditional logic depending on version selection
     let aspectselection = (this.state.showcontrols)
         ?
         <div style={{display:'inline-block', whiteSpace:"nowrap"}}>
@@ -615,7 +619,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             <span style={{ fontStyle: "italic" }}>Aspect: </span>
 
             <DropDownMenu
-                value={this.props.declarationData.branchesById[this.props.budgetBranch.uid].aspect}
+                value={branchDeclaration.aspect}
                 onChange={
                     (e, index, value) => {
                         branch.switchAspect(value)
@@ -636,15 +640,16 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         null
 
     let byunitselection = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
-        <span style={{ fontStyle: "italic" }}>By Unit: </span>
+        <span style={{ fontStyle: "italic",color: "rgba(0, 0, 0, 0.3)" }}>By Unit: </span>
         <DropDownMenu
+            disabled
             value={this.state.byunitselection}
             onChange={
                 (e, index, value) => {
                     this.switchUnit(value)
                 }
             }
-            >
+        >
 
             <MenuItem value={'Off'} primaryText="Off"/>
             <MenuItem disabled value={'Staff'} primaryText="Per staffing position"/>
@@ -659,23 +664,61 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         </DropDownMenu>
     </div>:null
 
-    let inflationadjustment = (this.state.showcontrols)?<div style={{display:'inline-block', whiteSpace:"nowrap", verticalAlign:"bottom", marginRight:'16px'}}>
-        <Toggle label={'Inflation adjusted:'} style={{height:'32px', marginTop:'16px'}} labelStyle = {{fontStyle:'italic'}} defaultToggled={true} />
-    </div>:null
+    let inflationadjustment = (this.state.showcontrols)
+        ?
+        <div 
+            style={
+                {
+                    display:'inline-block', 
+                    whiteSpace:"nowrap", 
+                    verticalAlign:"bottom", 
+                    marginRight:'16px',
+                }
+            }>
+            <Toggle 
+                disabled
+                label={'Inflation adjusted:'} 
+                style={
+                    {
+                        height:'32px', 
+                        marginTop:'16px'
+                    }
+                } 
+                labelStyle = {
+                    {
+                        fontStyle:'italic'
+                    }
+                } 
+                defaultToggled={true} 
+            />
+        </div>
+        :
+        null
 
-    let showcontrols = <div style={{display:'inline-block', whiteSpace:"nowrap", verticalAlign:"bottom"}}>
-        <Toggle 
-            label={'Show options:'} 
-            style={{height:'32px', marginTop:'16px'}} 
-            labelStyle = {{fontStyle:'italic'}} 
-            defaultToggled={false}
-            onToggle = { (e,value) => {
-                this.props.globalStateActions.resetLastAction() // TODO: this is a hack!!
-                this.setState({
-                    showcontrols:value
-                })
-            }}/>
-    </div>
+    let showcontrols = 
+        <div 
+            style={
+                {
+                    display:'inline-block', 
+                    whiteSpace:"nowrap", 
+                    verticalAlign:"bottom"
+                }
+            }>
+            <Toggle 
+                label={'Show options:'} 
+                style={{height:'32px', marginTop:'16px'}} 
+                labelStyle = {{fontStyle:'italic'}} 
+                defaultToggled={false}
+                onToggle = { 
+                    (e,value) => {
+                        this.props.globalStateActions.resetLastAction() // TODO: this is a hack!!
+                        this.setState({
+                            showcontrols:value
+                        })
+                    }
+                }
+            />
+        </div>
 
     let showhelp = (this.state.showcontrols)
         ?<IconButton tooltip="Help" tooltipPosition="top-center"
