@@ -53,7 +53,7 @@ class BudgetCell {
                 columns: columns,
                 rows: rows,
             };
-            budgetCell._chartParms = chartParms;
+            this._chartParms = chartParms;
         };
         this._chartParmsOptions = (treeNodeData, treeNodeMetaData, viewpointNamingConfigs, datasetConfig, yearSpecs) => {
             let budgetCell = this;

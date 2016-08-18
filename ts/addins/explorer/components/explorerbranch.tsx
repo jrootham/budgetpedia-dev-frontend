@@ -83,11 +83,10 @@ interface ExplorerBranchProps {
 
 interface ExplorerBranchState {
     branchNodes?:BudgetNode[], 
-    snackbar?:SnackbarProps, 
     viewpointData?:ViewpointData,
+    snackbar?:SnackbarProps, 
     aspect?: string,
     byunitselection?: string,
-    showcontrols?:boolean,
 }
 
 class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState> {
@@ -97,7 +96,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         viewpointData:null,
         snackbar:{open:false,message:'empty'},
         aspect: this.props.budgetBranch.settings.viewpoint,
-        byunitselection:'off',
+        byunitselection:'Off',
     }
 
 /*    
@@ -539,13 +538,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         return portals
 
     }
-
-    // onChangePortalTab = () => {
-        // let branch = this
-        // setTimeout(() => {
-        //     branch._nodeDisplayCallbacks.updateChartSelections()
-        // })
-    // }
 
     render() {
 

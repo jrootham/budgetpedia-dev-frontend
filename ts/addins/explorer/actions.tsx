@@ -19,10 +19,13 @@ export namespace types {
     export const ADD_CELLS = 'ADD_CELLS'
     export const CHANGE_TAB = 'CHANGE_TAB'
     export const UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME'
-    
+
     export const UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION'
+    export const UPDATE_CELL_TIMECODE = 'UPDATE_CELL_TIMECODE'
     export const UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE'
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
+    export const TOGGLE_NET = 'TOGGLE_NET'
+    export const TOGGLE_VARIANCE = 'TOGGLE_VARIANCE'
 }
 
 export namespace branchTypes {
@@ -44,9 +47,12 @@ export namespace nodeTypes {
 }
 
 export namespace cellTypes {
-    export import TOGGLE_DELTA = types.TOGGLE_DELTA
     export import UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION
+    export import UPDATE_CELL_TIMECODE = types.UPDATE_CELL_TIMECODE
     export import UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE
+    export import TOGGLE_DELTA = types.TOGGLE_DELTA
+    export import TOGGLE_NET = types.TOGGLE_NET
+    export import TOGGLE_VARIANCE = types.TOGGLE_VARIANCE
 }
 
 // --------------------[ Branch ]---------------------

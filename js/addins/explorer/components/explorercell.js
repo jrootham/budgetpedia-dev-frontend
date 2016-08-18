@@ -8,6 +8,7 @@ const SvgIcon_1 = require('material-ui/SvgIcon');
 const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
 const constants_1 = require('../constants');
+const actions_1 = require('../actions');
 class ExplorerCell extends Component {
     constructor(...args) {
         super(...args);
@@ -15,11 +16,10 @@ class ExplorerCell extends Component {
             timescope: constants_1.TimeScope[constants_1.TimeScope.OneYear],
             deltastate: false,
             netstate: false,
-            variancestate: false
+            variancestate: false,
         };
         this.onChangeChartCode = (explorerChartCode) => {
             let { budgetCell } = this.props;
-            budgetCell.switchChartCode(explorerChartCode);
             this.props.globalStateActions.updateCellChartCode(budgetCell.uid, explorerChartCode);
         };
         this.onChangeTimeCode = explorerTimeCode => {
@@ -34,16 +34,45 @@ class ExplorerCell extends Component {
         };
         this.onToggleNet = () => {
             this.setState({
-                deltastate: !this.state.netstate
+                netstate: !this.state.netstate
             });
         };
         this.onToggleVariance = () => {
             this.setState({
-                deltastate: !this.state.variancestate
+                variancestate: !this.state.variancestate
             });
         };
-        this._respondToGlobalStateChange = () => {
+        this.onDataTable = () => {
         };
+        this.onHarmonize = () => {
+        };
+        this.getState = () => this.state;
+        this.getProps = () => this.props;
+        this._respondToGlobalStateChange = () => {
+            let previousControlData = this._previousControlData;
+            let currentControlData = this.props.declarationData;
+            let { lastAction } = currentControlData;
+            let returnvalue = true;
+            if (!actions_1.cellTypes[lastAction.type]) {
+                return false;
+            }
+            if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
+                return false;
+            }
+            let { budgetCell } = this.props;
+            let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid];
+            switch (lastAction.type) {
+                case actions_1.cellTypes.UPDATE_CELL_CHART_CODE: {
+                    budgetCell.switchChartCode(cellDeclaration.explorerChartCode);
+                    this.forceUpdate();
+                    break;
+                }
+            }
+            this._previousControlData = currentControlData;
+        };
+    }
+    componentDidMount() {
+        this._previousControlData = this.props.declarationData;
     }
     shouldComponentUpdate(nextProps, nextState) {
         let { lastAction } = nextProps.declarationData;
@@ -233,7 +262,7 @@ class ExplorerCell extends Component {
                 height: "36px",
                 width: "36px",
                 marginRight: "3px",
-            }, onTouchTap: e => {
+            }, onTouchTap: (e) => {
                 this.onToggleDelta();
             }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "change_history"))) : null;
         let nettoggle = (this.state.timescope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ?
@@ -290,7 +319,7 @@ class ExplorerCell extends Component {
             width: "36px",
             marginRight: "3px",
         }, onTouchTap: e => {
-            this.onChangeChartCode('DataTable');
+            this.onDataTable();
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_list")));
         let harmonizeoptions = React.createElement("div", {style: {
             paddingTop: "10px",
@@ -306,6 +335,7 @@ class ExplorerCell extends Component {
             width: "36px",
             marginRight: "3px",
         }, onTouchTap: e => {
+            this.onHarmonize();
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "swap_horiz")));
         let socialoptions = React.createElement("div", {style: {
             paddingTop: "10px",

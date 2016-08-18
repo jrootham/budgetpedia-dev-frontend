@@ -19,8 +19,11 @@ var types;
     types.CHANGE_TAB = 'CHANGE_TAB';
     types.UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME';
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
+    types.UPDATE_CELL_TIMECODE = 'UPDATE_CELL_TIMECODE';
     types.UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE';
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
+    types.TOGGLE_NET = 'TOGGLE_NET';
+    types.TOGGLE_VARIANCE = 'TOGGLE_VARIANCE';
 })(types = exports.types || (exports.types = {}));
 var branchTypes;
 (function (branchTypes) {
@@ -40,9 +43,12 @@ var nodeTypes;
 })(nodeTypes = exports.nodeTypes || (exports.nodeTypes = {}));
 var cellTypes;
 (function (cellTypes) {
-    cellTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
     cellTypes.UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION;
+    cellTypes.UPDATE_CELL_TIMECODE = types.UPDATE_CELL_TIMECODE;
     cellTypes.UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE;
+    cellTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
+    cellTypes.TOGGLE_NET = types.TOGGLE_NET;
+    cellTypes.TOGGLE_VARIANCE = types.TOGGLE_VARIANCE;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, (refbranchuid, settings) => ({
     settings: settings,

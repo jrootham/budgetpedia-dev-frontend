@@ -18,7 +18,7 @@ class ExplorerBranch extends Component {
             viewpointData: null,
             snackbar: { open: false, message: 'empty' },
             aspect: this.props.budgetBranch.settings.viewpoint,
-            byunitselection: 'off',
+            byunitselection: 'Off',
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;

@@ -77,6 +77,11 @@ class BudgetCell {
         this.chartSelection = chartSelection
         this.uid = uid
     }
+    // public getState: Function
+
+    // public getProps: Function
+
+    // public setState: Function
 
     // =======================[ PROPERTIES ]============================
 
@@ -252,8 +257,7 @@ class BudgetCell {
         }
 
         // save it
-        budgetCell._chartParms = chartParms
-
+        this._chartParms = chartParms
     }
 
     // ------------------

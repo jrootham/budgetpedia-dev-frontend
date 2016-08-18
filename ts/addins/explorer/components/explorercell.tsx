@@ -2,6 +2,8 @@
 // explorerchart.tsx
 
 /*
+    BUG: The rightmost piechart does not have its selected component reselected
+        after migrate away from, and return to explorer page.
     TODO: two way arrow icon to signify impose current chart settings on entire branch
 */
 
@@ -21,6 +23,7 @@ import {
 } from '../modules/interfaces'
 import BudgetCell from '../classes/cell.class'
 import { TimeScope } from '../constants'
+import { cellTypes as cellActionTypes } from '../actions'
 
 interface ExplorerCellProps {
     callbackid: string | number,
@@ -32,19 +35,23 @@ interface ExplorerCellProps {
     showControls: boolean,
 }
 
+// interface ExplorerCellState {
+//     timescope:
+// }
+
 class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     state = {
         timescope: TimeScope[TimeScope.OneYear],
         deltastate: false,
         netstate:false,
-        variancestate:false
+        variancestate:false,
     }
 
     onChangeChartCode = (explorerChartCode) => {
 
         let { budgetCell } = this.props
-        budgetCell.switchChartCode(explorerChartCode)
+        // budgetCell.switchChartCode(explorerChartCode)
 
         this.props.globalStateActions.updateCellChartCode(budgetCell.uid,explorerChartCode)
     }
@@ -64,14 +71,31 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     onToggleNet = () => {
         this.setState({
-            deltastate: !this.state.netstate
+            netstate: !this.state.netstate
         })
     }
 
     onToggleVariance = () => {
         this.setState({
-            deltastate: !this.state.variancestate
+            variancestate: !this.state.variancestate
         })
+    }
+
+    onDataTable = () => {
+
+    }
+
+    onHarmonize = () => {
+
+    }
+
+
+    getState = () => this.state
+    getProps = () => this.props
+
+    componentDidMount() {
+        this._previousControlData = this.props.declarationData // initialize
+
     }
 
     shouldComponentUpdate(nextProps: ExplorerCellProps, nextState) {
@@ -95,8 +119,32 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     }
 
-    private _respondToGlobalStateChange = () => {
+    private _previousControlData: any
 
+    // state change manager
+    private _respondToGlobalStateChange = () => {
+        let previousControlData = this._previousControlData
+        let currentControlData = this.props.declarationData
+        let { lastAction } = currentControlData
+        let returnvalue = true
+        if (!cellActionTypes[lastAction.type]) {
+            return false
+        }
+        if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
+            return false
+        }
+        let { budgetCell } = this.props
+        let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid]
+        // console.log('cell state manager',budgetCell,cellDeclaration,lastAction)
+        switch (lastAction.type) {
+            case cellActionTypes.UPDATE_CELL_CHART_CODE: {
+
+                budgetCell.switchChartCode(cellDeclaration.explorerChartCode)
+                this.forceUpdate()
+                break;
+            }
+        }
+        this._previousControlData = currentControlData
     }
 
     render() {
@@ -430,7 +478,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                             marginRight:"3px",
                         }
                     }
-                    onTouchTap={ e => {
+                    onTouchTap={ (e) => {
                         this.onToggleDelta()
                     } }>
                     <FontIcon className="material-icons">change_history</FontIcon>
@@ -533,7 +581,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         }
                     }
                     onTouchTap={ e => {
-                        this.onChangeChartCode('DataTable')
+                        this.onDataTable()
                     } }>
                     <FontIcon className="material-icons">view_list</FontIcon>
                 </IconButton>
@@ -565,7 +613,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         }
                     }
                     onTouchTap={ e => {
-                        // this.onChangeChartCode('DataTable')
+                        this.onHarmonize()
                     } }>
                     <FontIcon className="material-icons">swap_horiz</FontIcon>
                 </IconButton>
