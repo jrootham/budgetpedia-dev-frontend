@@ -18,10 +18,9 @@ import {
     ChartSelectionContext,
 } from '../modules/onchartcomponentselection'
 import { 
-    GoogleChartTypeToChartCode, 
     ChartCodeToGoogleChartType,
     AspectNameToDatasetName,
-} from '../../constants'
+} from '../constants'
 
 import BudgetNode from './node.class'
 import {YearSpecs, DatasetConfig} from './databaseapi'

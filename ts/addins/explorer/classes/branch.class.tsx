@@ -16,7 +16,7 @@ import BudgetCell from './cell.class'
 import { ExplorerBranchActions } from '../components/explorerbranch'
 import { 
     AspectNameToDatasetName, 
-} from '../../constants'
+} from '../constants'
 
 // import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../../constants'
 

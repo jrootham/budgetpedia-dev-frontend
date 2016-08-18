@@ -74,13 +74,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         })
     }
 
-    // private lastgenerationcounter: number = 0
-
     shouldComponentUpdate(nextProps: ExplorerCellProps, nextState) {
         let { lastAction, generation } = nextProps.declarationData
-
-        // if (generation <= this.lastgenerationcounter) return true
-        // this.lastgenerationcounter = generation
 
         let { celluid } = lastAction
         if (celluid) {
@@ -188,153 +183,177 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 </IconButton>
             </div>
 
+        // =====================[ options for getchartoptions() ]=======================
+
+        let columnchart = 
+            <IconButton
+                key = 'columnchart'
+                tooltip="Column Chart"
+                tooltipPosition="top-center"
+                style={
+                    {
+                        backgroundColor: (explorerChartCode == "ColumnChart")
+                            ? "rgba(144,238,144,0.5)"
+                            : "transparent",
+                        borderRadius: "50%",
+                        padding:"0",
+                        height:"36px",
+                        width:"36px",
+                        marginRight:"3px",
+                    }
+                }
+                onTouchTap={ e => {
+                    this.onChangeChartCode('ColumnChart')
+                } }>
+                <FontIcon className="material-icons">insert_chart</FontIcon>
+            </IconButton>
+
+        let doublecolumnchart = 
+            <IconButton
+                key = 'doublecolumnchart'
+                tooltip="Column Chart"
+                tooltipPosition="top-center"
+                style={
+                    {
+                        backgroundColor: (explorerChartCode == "DoubleColumnChart")
+                            ? "rgba(144,238,144,0.5)"
+                            : "transparent",
+                        borderRadius: "50%",
+                        padding:"0",
+                        height:"36px",
+                        width:"36px",
+                        marginRight:"3px",
+                    }
+                }
+                onTouchTap={ e => {
+                    this.onChangeChartCode('DoubleColumnChart')
+                } }>
+                <FontIcon className="material-icons">insert_chart</FontIcon>
+            </IconButton>
+
+        let donutchart = 
+            <IconButton
+                key = 'donutchart'
+                tooltip="Donut Pie Chart"
+                tooltipPosition="top-center"
+                style={
+                    {
+                        backgroundColor: (explorerChartCode == "DonutChart")
+                            ? "rgba(144,238,144,0.5)"
+                            : "transparent",
+                        borderRadius: "50%",
+                        padding:"0",
+                        height:"36px",
+                        width:"36px",
+                        marginRight:"3px",
+                    }
+                }
+                onTouchTap={ e => {
+                    this.onChangeChartCode('DonutChart')
+                } }>
+                <FontIcon className="material-icons">donut_small</FontIcon>
+            </IconButton>
+
+        let contextchart = 
+            <IconButton
+                disabled
+                key = 'contextchart'
+                tooltip="Context Chart"
+                tooltipPosition="top-center"
+                style={
+                    {
+                        backgroundColor: (explorerChartCode == "ContextChart")
+                            ? "rgba(144,238,144,0.5)"
+                            : "transparent",
+                        borderRadius: "50%",
+                        padding:"0",
+                        height:"36px",
+                        width:"36px",
+                        marginRight:"3px",
+                    }
+                }
+                onTouchTap={ e => {
+                    this.onChangeChartCode('ContextChart')
+                } }>
+                <FontIcon className="material-icons">view_quilt</FontIcon>
+            </IconButton>
+
+        let timeline =
+            <IconButton
+                key = 'timeline'
+                tooltip="Timeline"
+                tooltipPosition="top-center"
+                style={
+                    {
+                        backgroundColor: (explorerChartCode == "TimeLine")
+                            ? "rgba(144,238,144,0.5)"
+                            : "transparent",
+                        borderRadius: "50%",
+                        padding:"0",
+                        height:"36px",
+                        width:"36px",
+                        marginRight:"3px",
+                    }
+                }
+                disabled
+                onTouchTap={ e => {
+                    this.onChangeChartCode('Timeline')
+                } }>
+                <FontIcon className="material-icons">timeline</FontIcon>
+            </IconButton>
+
+        let stackedchart = 
+            <IconButton
+                key = 'stackedchart'
+                tooltip="Stacked chart"
+                tooltipPosition="top-center"
+                style={
+                    {
+                        backgroundColor: (explorerChartCode == "StackedArea")
+                            ? "rgba(144,238,144,0.5)"
+                            : "transparent",
+                        borderRadius: "50%",
+                        padding:"0",
+                        height:"36px",
+                        width:"36px",
+                        marginRight:"3px",
+                    }
+                }
+                disabled
+                onTouchTap={ e => {
+                    this.onChangeChartCode('StackedArea')
+                } }>
+                <SvgIcon style={{height:"24px",width:"24px"}} >
+                    <path d="M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"/>
+                    <path d="M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"/>
+                </SvgIcon>
+            </IconButton>
+
+        let proportionalchart =
+            <IconButton
+                key = 'propchart'
+                tooltip="Proportional chart"
+                tooltipPosition="top-center"
+                style={
+                    {
+                        backgroundColor: (explorerChartCode == "Proportional")
+                            ? "rgba(144,238,144,0.5)"
+                            : "transparent",
+                        borderRadius: "50%",
+                        padding:"0",
+                        height:"36px",
+                        width:"36px",
+                        marginRight:"3px",
+                    }
+                }
+                disabled
+                onTouchTap={ e => {
+                    this.onChangeChartCode('Proportional')
+                } }>
+                <FontIcon className="material-icons">view_stream</FontIcon>
+            </IconButton>
+
         let getchartoptions = () => {
-
-            let columnchart = 
-                <IconButton
-                    key = 'columnchart'
-                    tooltip="Column Chart"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerChartCode == "ColumnChart")
-                                ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
-                        }
-                    }
-                    onTouchTap={ e => {
-                        this.onChangeChartCode('ColumnChart')
-                    } }>
-                    <FontIcon className="material-icons">insert_chart</FontIcon>
-                </IconButton>
-
-            let donutchart = 
-                <IconButton
-                    key = 'donutchart'
-                    tooltip="Donut Pie Chart"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerChartCode == "DonutChart")
-                                ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
-                        }
-                    }
-                    onTouchTap={ e => {
-                        this.onChangeChartCode('DonutChart')
-                    } }>
-                    <FontIcon className="material-icons">donut_small</FontIcon>
-                </IconButton>
-
-            let contextchart = 
-                <IconButton
-                    disabled
-                    key = 'contextchart'
-                    tooltip="Context Chart"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerChartCode == "ContextChart")
-                                ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
-                        }
-                    }
-                    onTouchTap={ e => {
-                        this.onChangeChartCode('ContextChart')
-                    } }>
-                    <FontIcon className="material-icons">view_quilt</FontIcon>
-                </IconButton>
-
-            let timeline =
-                <IconButton
-                    key = 'timeline'
-                    tooltip="Timeline"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerChartCode == "TimeLine")
-                                ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
-                        }
-                    }
-                    disabled
-                    onTouchTap={ e => {
-                        this.onChangeChartCode('Timeline')
-                    } }>
-                    <FontIcon className="material-icons">timeline</FontIcon>
-                </IconButton>
-
-            let stackedchart = 
-                <IconButton
-                    key = 'stackedchart'
-                    tooltip="Stacked chart"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerChartCode == "StackedArea")
-                                ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
-                        }
-                    }
-                    disabled
-                    onTouchTap={ e => {
-                        this.onChangeChartCode('StackedArea')
-                    } }>
-                    <SvgIcon style={{height:"24px",width:"24px"}} >
-                        <path d="M20,6c0-0.587-0.257-1.167-0.75-1.562c-0.863-0.69-2.121-0.551-2.812,0.312l-2.789,3.486L11.2,6.4  c-0.864-0.648-2.087-0.493-2.762,0.351l-4,5C4.144,12.119,4,12.562,4,13v3h16V6z"/>
-                        <path d="M20,19H4c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1S20.552,19,20,19z"/>
-                    </SvgIcon>
-                </IconButton>
-
-            let proportionalchart =
-                <IconButton
-                    key = 'propchart'
-                    tooltip="Proportional chart"
-                    tooltipPosition="top-center"
-                    style={
-                        {
-                            backgroundColor: (explorerChartCode == "Proportional")
-                                ? "rgba(144,238,144,0.5)"
-                                : "transparent",
-                            borderRadius: "50%",
-                            padding:"0",
-                            height:"36px",
-                            width:"36px",
-                            marginRight:"3px",
-                        }
-                    }
-                    disabled
-                    onTouchTap={ e => {
-                        this.onChangeChartCode('Proportional')
-                    } }>
-                    <FontIcon className="material-icons">view_stream</FontIcon>
-                </IconButton>
-
 
             let chartoptions
 
@@ -343,7 +362,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     chartoptions = [ columnchart, donutchart, contextchart ]
                     break;
                 case TimeScope[TimeScope.TwoYears]:
-                    chartoptions = [ columnchart ]
+                    chartoptions = [ doublecolumnchart ]
                     break;
                 case TimeScope[TimeScope.AllYears]:
                     chartoptions = [ timeline, stackedchart, proportionalchart ]
@@ -661,28 +680,29 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             return years
         } 
 
-        let yearselection = <div style={{paddingBottom:"3px"}}>
-        <span style={{ fontStyle: "italic" }}>Select years: </span>
-        <DropDownMenu
-            value={2003}
-            style={{
-            }}
-            onChange={ e => {} }
-            >
+        let yearselection = 
+            <div style={{paddingBottom:"3px"}}>
+                <span style={{ fontStyle: "italic" }}>Select years: </span>
+                <DropDownMenu
+                    value={2003}
+                    style={{
+                    }}
+                    onChange={ e => {} }
+                    >
 
-            { yearsoptions() }
+                    { yearsoptions() }
 
-        </DropDownMenu> - <DropDownMenu
-            value={2016}
-            style={{
-            }}
-            onChange={ e => {} }
-            >
+                </DropDownMenu> - <DropDownMenu
+                    value={2016}
+                    style={{
+                    }}
+                    onChange={ e => {} }
+                    >
 
-            { yearsoptions() }
+                    { yearsoptions() }
 
-        </DropDownMenu>
-        </div>
+                </DropDownMenu>
+            </div>
 
         return <div>
             {(this.props.showControls)?<div style={{ padding: "3px" }}>

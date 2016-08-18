@@ -4,9 +4,8 @@
 import { DataseriesMeta, YearSpecs } from './databaseapi'
 import { 
     AspectNameToDatasetName, 
-    GoogleChartTypeToChartCode, 
     ChartCodeToGoogleChartType 
-} from '../../constants'
+} from '../constants'
 import {
     PortalConfig,
     GetCellChartProps,

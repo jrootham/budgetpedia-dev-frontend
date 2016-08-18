@@ -1,5 +1,5 @@
 "use strict";
-const constants_1 = require('../../constants');
+const constants_1 = require('../constants');
 const constants_2 = require('../constants');
 var format = require('format-number');
 class BudgetCell {

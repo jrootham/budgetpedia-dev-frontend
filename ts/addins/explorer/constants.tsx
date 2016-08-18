@@ -7,3 +7,30 @@ export enum TimeScope {
     TwoYears,
     AllYears,
 }
+
+let ChartCodeToGoogleChartType = {
+    'DonutChart':'PieChart',
+    'ColumnChart':'ColumnChart',
+    'DoubleColumnChart':'ColumnChart',
+    'Timeline':'LineChart',
+    'ContextChart':'TreeMap',
+    'StackedArea':'AreaChart', // isStacked:'absolute'
+    'Proportional':'AreaChart', // isStacked:'percent'
+}
+
+export { ChartCodeToGoogleChartType }
+
+let AspectNameToDatasetName = {
+    'Expenses':'BudgetExpenses',
+    'Revenues':'BudgetRevenues',
+    'Staffing':'BudgetStaffing'
+}
+
+export var DatasetNameToAspectName = {
+}
+
+for (let AspectName in AspectNameToDatasetName) {
+    DatasetNameToAspectName[AspectNameToDatasetName[AspectName]] = AspectName
+}
+
+export { AspectNameToDatasetName }
