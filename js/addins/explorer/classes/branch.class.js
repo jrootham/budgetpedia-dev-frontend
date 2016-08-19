@@ -132,14 +132,11 @@ class BudgetBranch {
                 viewpointName: viewpointName,
                 versionName: 'PBFT',
                 datasetName: datasetName,
-                inflationAdjusted: inflationAdjusted,
-                yearSpecs: {
-                    firstYear: null,
-                    lastYear: null,
-                }
+                inflationAdjusted: inflationAdjusted
             });
             let promise = new Promise(resolve => {
                 _promise.then((viewpointdata) => {
+                    console.log('set state with viewpointdata', viewpointdata);
                     this.setState({
                         viewpointData: viewpointdata
                     });
@@ -198,12 +195,14 @@ class BudgetBranch {
                 });
             });
         };
-        this.settings = parms.settings;
         this.uid = parms.uid;
     }
     get nodes() {
         let copy = [...this.state.branchNodes];
         return copy;
+    }
+    get settings() {
+        return this.props.declarationData.branchesById[this.uid];
     }
     get state() {
         return this.getState();

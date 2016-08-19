@@ -27,13 +27,13 @@ export interface CreateChildNodeProps {
 }
 
 interface BudgetBranchParms {
-    settings:BranchSettings,
+    // settings:BranchSettings,
     uid:string,
 }
 
 class BudgetBranch {
     constructor(parms:BudgetBranchParms) {
-        this.settings = parms.settings
+        // this.settings = parms.settings
         this.uid = parms.uid
     }
 
@@ -42,7 +42,11 @@ class BudgetBranch {
         return copy // new copy
     }
 
-    public settings:BranchSettings
+    // public settings:BranchSettings
+
+    get settings() {
+        return this.props.declarationData.branchesById[this.uid]
+    }
 
     public uid: string
 
@@ -241,17 +245,14 @@ class BudgetBranch {
             viewpointName, 
             versionName:'PBFT',
             datasetName,
-            inflationAdjusted,
-            yearSpecs: {
-                firstYear: null,
-                lastYear: null,
-            }
+            inflationAdjusted
         })
 
         let promise = new Promise(resolve => {
 
             _promise.then( (viewpointdata:ViewpointData) => {
 
+                // console.log('set state with viewpointdata', viewpointdata)
                 this.setState({
                     viewpointData:viewpointdata
                 })

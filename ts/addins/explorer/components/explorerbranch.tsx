@@ -95,7 +95,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         branchNodes:[],
         viewpointData:null,
         snackbar:{open:false,message:'empty'},
-        aspect: this.props.budgetBranch.settings.viewpoint,
+        aspect:null,
         byunitselection:'Off',
     }
 
@@ -149,6 +149,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         // assign callbacks to budgetBranch
         budgetBranch.actions = this._stateActions
         budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks
+        this.setState({
+            aspect: this.props.budgetBranch.settings.viewpoint,
+        })
     }
 
     // initialize once -- set declarationData; initialize viewpointData; initialize branch
@@ -705,7 +708,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         :null
 
     let search = (branchDeclaration.showOptions)
-        ?<IconButton disabled tooltip="Help" tooltipPosition="top-center"
+        ?<IconButton disabled tooltip="Search" tooltipPosition="top-center"
             onTouchTap = { this.handleSearch }>
             <FontIcon className="material-icons">search</FontIcon>
         </IconButton>

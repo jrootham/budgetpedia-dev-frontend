@@ -25,10 +25,6 @@ export interface SetViewpointDataParms {
     datasetData:any,
     lookups:any,
     inflationAdjusted: boolean,
-    yearSpecs: {
-        firstYear: number,
-        lastYear: number,
-    }
 }
 
 // starts with hash of components, 

@@ -56,8 +56,7 @@ let Explorer = class extends Component {
                         return branch;
                 });
                 if (foundbranch.length == 0) {
-                    let settings = branchesById[uid];
-                    let budgetBranch = new branch_class_1.default({ settings: settings, uid: uid });
+                    let budgetBranch = new branch_class_1.default({ uid: uid });
                     newBranches.push(budgetBranch);
                 }
             }
@@ -131,12 +130,6 @@ let Explorer = class extends Component {
         let { branchList, branchesById } = nextProps.declarationData;
         let budgetBranches = [...this.state.budgetBranches];
         budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById);
-        for (let i = 0; i < branchList.length; i++) {
-            if (branchList[i] != budgetBranches[i].uid) {
-                throw Error('mismatched order between declarationData list and branch list');
-            }
-            budgetBranches[i].settings = branchesById[branchList[i]];
-        }
         this.setState({
             budgetBranches: budgetBranches,
         });

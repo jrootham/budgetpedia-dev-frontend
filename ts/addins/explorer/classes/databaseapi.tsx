@@ -126,7 +126,6 @@ export interface GetViewpointDataParms {
     versionName: string,
     datasetName: string,
     inflationAdjusted: boolean,
-    yearSpecs: YearSpecs,
 }
 
 export interface CurrencyDataset extends Dataset<CurrencyItemType> {}
@@ -155,7 +154,7 @@ class Database {
 
     public getViewpointData(parms: GetViewpointDataParms) {
 
-        let { viewpointName, versionName, datasetName, inflationAdjusted, yearSpecs } = parms
+        let { viewpointName, versionName, datasetName, inflationAdjusted } = parms
 
         let viewpointDataPromise = this.getViewpointPromise(viewpointName),
             datasetDataPromise = this.getDatasetPromise(versionName,datasetName),
@@ -178,7 +177,6 @@ class Database {
                     let setparms:SetViewpointDataParms = {
                         datasetName,
                         inflationAdjusted,
-                        yearSpecs,
                         viewpointData,
                         datasetData,
                         lookups,

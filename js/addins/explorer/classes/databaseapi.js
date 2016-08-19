@@ -8,7 +8,7 @@ class Database {
     getBranch(viewpointname, path = []) {
     }
     getViewpointData(parms) {
-        let { viewpointName, versionName, datasetName, inflationAdjusted, yearSpecs } = parms;
+        let { viewpointName, versionName, datasetName, inflationAdjusted } = parms;
         let viewpointDataPromise = this.getViewpointPromise(viewpointName), datasetDataPromise = this.getDatasetPromise(versionName, datasetName), lookupsPromise = this.getLookupPromise(), datasetConfigPromise = this.getDatasetConfigPromise(versionName, datasetName);
         let promise = new Promise(resolve => {
             Promise.all([viewpointDataPromise, datasetDataPromise, lookupsPromise, datasetConfigPromise]).then(values => {
@@ -21,7 +21,6 @@ class Database {
                 let setparms = {
                     datasetName: datasetName,
                     inflationAdjusted: inflationAdjusted,
-                    yearSpecs: yearSpecs,
                     viewpointData: viewpointData,
                     datasetData: datasetData,
                     lookups: lookups,

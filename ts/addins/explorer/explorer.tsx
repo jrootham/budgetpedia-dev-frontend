@@ -197,8 +197,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     return branch
             })
             if (foundbranch.length == 0) {
-                let settings = branchesById[uid]
-                let budgetBranch = new BudgetBranch({settings,uid})
+                // let settings = branchesById[uid]
+                let budgetBranch = new BudgetBranch({uid})
                 newBranches.push(budgetBranch)
             }
         }
@@ -235,13 +235,13 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         
         // in any case update settings in case change made
         // TODO: only update when actual change made
-        for (let i = 0; i < branchList.length; i++) {
-            if (branchList[i] != budgetBranches[i].uid) {
-                throw Error('mismatched order between declarationData list and branch list')
-            }
+        // for (let i = 0; i < branchList.length; i++) {
+        //     if (branchList[i] != budgetBranches[i].uid) {
+        //         throw Error('mismatched order between declarationData list and branch list')
+        //     }
 
-            budgetBranches[i].settings = branchesById[branchList[i]]
-        }
+        //     budgetBranches[i].settings = branchesById[branchList[i]]
+        // }
 
         this.setState({
             budgetBranches,

@@ -17,7 +17,7 @@ class ExplorerBranch extends Component {
             branchNodes: [],
             viewpointData: null,
             snackbar: { open: false, message: 'empty' },
-            aspect: this.props.budgetBranch.settings.viewpoint,
+            aspect: null,
             byunitselection: 'Off',
         };
         this.getState = () => this.state;
@@ -257,6 +257,9 @@ class ExplorerBranch extends Component {
         budgetBranch.setState = this.setState.bind(this);
         budgetBranch.actions = this._stateActions;
         budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks;
+        this.setState({
+            aspect: this.props.budgetBranch.settings.viewpoint,
+        });
     }
     componentDidMount() {
         let { budgetBranch, declarationData } = this.props;
@@ -365,7 +368,7 @@ class ExplorerBranch extends Component {
             ? React.createElement(IconButton_1.default, {tooltip: "Help", tooltipPosition: "top-center", onTouchTap: this.props.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline"))
             : null;
         let search = (branchDeclaration.showOptions)
-            ? React.createElement(IconButton_1.default, {disabled: true, tooltip: "Help", tooltipPosition: "top-center", onTouchTap: this.handleSearch}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "search"))
+            ? React.createElement(IconButton_1.default, {disabled: true, tooltip: "Search", tooltipPosition: "top-center", onTouchTap: this.handleSearch}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "search"))
             : null;
         return React.createElement("div", null, React.createElement("div", null, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, showhelp, search), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;

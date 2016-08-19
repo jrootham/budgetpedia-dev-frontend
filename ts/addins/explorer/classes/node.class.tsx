@@ -145,14 +145,14 @@ class BudgetNode {
     public resetCells() {
         let budgetNode = this
 
-        // let datasetName:string = AspectNameToDatasetName[budgetNode.aspectName]
-        // let chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries // datasetSpecs[datasetName]
         let cells = budgetNode.cells
         for (let cellIndex in cells) {
+
             let cell:BudgetCell = cells[cellIndex]
-            // cell.nodeDataseriesName = chartSpecs[cellIndex].Type
+
             budgetNode._updateCell(cell, cellIndex)
             cell.setChartParms()
+
         }
         return cells
     }
