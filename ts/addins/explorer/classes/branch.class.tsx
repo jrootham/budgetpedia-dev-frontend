@@ -147,9 +147,6 @@ class BudgetBranch {
         let chartParmsObj: ChartParmsObj = null
         let branchuid = this.uid
 
-        // TODO: this needs to be rewritten for deeperdata and shallowerdata
-        //  by keeping previousaspect data to compart with, rather than
-        //  current method which relies on side effects of timing
         for (nodeIndex in branchNodes) {
 
             parentBudgetNode = budgetNode

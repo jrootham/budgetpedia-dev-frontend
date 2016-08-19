@@ -17,6 +17,7 @@ class ExplorerCell extends Component {
             deltastate: false,
             netstate: false,
             variancestate: false,
+            chartParms: null,
         };
         this.onChangeChartCode = (explorerChartCode) => {
             let { budgetCell } = this.props;
@@ -64,7 +65,6 @@ class ExplorerCell extends Component {
             switch (lastAction.type) {
                 case actions_1.cellTypes.UPDATE_CELL_CHART_CODE: {
                     budgetCell.switchChartCode(cellDeclaration.explorerChartCode);
-                    this.forceUpdate();
                     break;
                 }
             }
@@ -72,7 +72,11 @@ class ExplorerCell extends Component {
         };
     }
     componentWillMount() {
-        this.props.budgetCell.getProps = this.getProps;
+        let { budgetCell } = this.props;
+        budgetCell.getProps = this.getProps;
+        budgetCell.getState = this.getState;
+        budgetCell.setState = this.setState.bind(this);
+        budgetCell.setChartParms();
     }
     componentDidMount() {
         this._previousControlData = this.props.declarationData;

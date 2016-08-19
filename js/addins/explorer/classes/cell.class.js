@@ -53,7 +53,9 @@ class BudgetCell {
                 columns: columns,
                 rows: rows,
             };
-            this._chartParms = chartParms;
+            this.setState({
+                chartParms: chartParms,
+            });
         };
         this._chartParmsOptions = (treeNodeData, treeNodeMetaData, viewpointNamingConfigs, datasetConfig, yearSpecs) => {
             let budgetCell = this;
@@ -313,23 +315,17 @@ class BudgetCell {
             row.push(style);
             return row;
         };
-        let { nodeDataseriesName, explorerChartCode, chartSelection, uid, cellDeclaration } = specs;
+        let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs;
         this.explorerChartCode = explorerChartCode;
         this.nodeDataseriesName = nodeDataseriesName;
         this.chartSelection = chartSelection;
         this.uid = uid;
-        this._cellDeclaration = cellDeclaration;
     }
     get googleChartType() {
         return constants_1.ChartCodeToGoogleChartType[this.explorerChartCode];
     }
     get cellDeclaration() {
-        if (this.getProps) {
-            return this.getProps().declarationData.cellsById[this.uid];
-        }
-        else {
-            return this._cellDeclaration;
-        }
+        return this.getProps().declarationData.cellsById[this.uid];
     }
     get chart() {
         if (this.chartComponent)
@@ -338,7 +334,7 @@ class BudgetCell {
             return null;
     }
     get chartParms() {
-        return this._chartParms;
+        return this.getState().chartParms;
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

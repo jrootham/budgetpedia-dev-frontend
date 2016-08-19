@@ -133,11 +133,9 @@ class BudgetNode {
                     explorerChartCode,
                     chartSelection,
                     uid:celluid,
-                    cellDeclaration,
                 }
             )
 
-            // cell.cellIndex = parseInt(cellIndex) // parseInt is a compiler requirement
             this._updateCell(cell, cellIndex)
             cells.push(cell)
         }
@@ -147,13 +145,14 @@ class BudgetNode {
     public resetCells() {
         let budgetNode = this
 
-        let datasetName:string = AspectNameToDatasetName[budgetNode.aspectName]
-        let chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries // datasetSpecs[datasetName]
+        // let datasetName:string = AspectNameToDatasetName[budgetNode.aspectName]
+        // let chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries // datasetSpecs[datasetName]
         let cells = budgetNode.cells
         for (let cellIndex in cells) {
             let cell:BudgetCell = cells[cellIndex]
-            cell.nodeDataseriesName = chartSpecs[cellIndex].Type
+            // cell.nodeDataseriesName = chartSpecs[cellIndex].Type
             budgetNode._updateCell(cell, cellIndex)
+            cell.setChartParms()
         }
         return cells
     }
@@ -195,7 +194,7 @@ class BudgetNode {
 
         cell.selectionCallback = fcurrent
 
-        cell.setChartParms()
+        // cell.setChartParms()
 
     }
 

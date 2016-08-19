@@ -60,7 +60,6 @@ export interface CellConstructorArgs {
     explorerChartCode:string, 
     chartSelection:ChartSelectionCell[],
     uid: string,
-    cellDeclaration: any,
 }
 
 export interface NodeData {
@@ -72,20 +71,17 @@ export interface NodeData {
 class BudgetCell {
 
     constructor(specs:CellConstructorArgs) {
-        let { nodeDataseriesName, explorerChartCode, chartSelection, uid, cellDeclaration } = specs
+        let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs
         this.explorerChartCode = explorerChartCode
         this.nodeDataseriesName = nodeDataseriesName
         this.chartSelection = chartSelection
         this.uid = uid
-        this._cellDeclaration = cellDeclaration 
     }
-    // public getState: Function
-
-    private _cellDeclaration: any
+    public getState: Function
 
     public getProps: Function
 
-    // public setState: Function
+    public setState: Function
 
     // =======================[ PROPERTIES ]============================
 
@@ -105,13 +101,7 @@ class BudgetCell {
 
     // TODO: untangle this sequencing mess!!
     get cellDeclaration() {
-        if ( this.getProps ) { // only assigned after mounting, 
-            // but setChartParms is called before that
-            // ...perhaps delay setChartParms with dirty flag?? or new flag??
-            return this.getProps().declarationData.cellsById[this.uid]
-        } else {
-            return this._cellDeclaration
-        }
+        return this.getProps().declarationData.cellsById[this.uid]
     }
 
     // the react Chart component, allows access to current google chart object
@@ -127,9 +117,9 @@ class BudgetCell {
 
     // readonly; set by setChartParms()
     // the formal parameters required by Chart Component for google chart creation
-    private _chartParms: ChartParms
+    // private _chartParms: ChartParms
     get chartParms() : ChartParms {
-        return this._chartParms
+        return this.getState().chartParms
     }
 
     // ----------------[ mutable control properties ]-----------------
@@ -272,7 +262,9 @@ class BudgetCell {
         }
 
         // save it
-        this._chartParms = chartParms
+        this.setState({
+             chartParms,
+        })
     }
 
     // ------------------

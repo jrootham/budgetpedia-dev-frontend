@@ -46,6 +46,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         deltastate: false,
         netstate:false,
         variancestate:false,
+        chartParms: null,
     }
 
     onChangeChartCode = (explorerChartCode) => {
@@ -95,7 +96,11 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
 
     componentWillMount() {
-        this.props.budgetCell.getProps = this.getProps
+        let { budgetCell } = this.props
+        budgetCell.getProps = this.getProps
+        budgetCell.getState = this.getState
+        budgetCell.setState = this.setState.bind(this)
+        budgetCell.setChartParms()
     }
 
     componentDidMount() {
@@ -148,7 +153,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             case cellActionTypes.UPDATE_CELL_CHART_CODE: {
 
                 budgetCell.switchChartCode(cellDeclaration.explorerChartCode)
-                this.forceUpdate() // switchChartCode does not trigger redraw // TODO try to avoid this
+                // this.forceUpdate() // switchChartCode does not trigger redraw // TODO try to avoid this
                 break;
             }
         }

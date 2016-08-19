@@ -59,7 +59,6 @@ class BudgetNode {
             let selectfn = this.onChartComponentSelection;
             let fcurrent = selectfn(budgetNode.nodeIndex)(cellIndex);
             cell.selectionCallback = fcurrent;
-            cell.setChartParms();
         };
         this.viewpointName = parms.viewpointName;
         this.aspectName = parms.aspectName;
@@ -95,7 +94,6 @@ class BudgetNode {
                 explorerChartCode: explorerChartCode,
                 chartSelection: chartSelection,
                 uid: celluid,
-                cellDeclaration: cellDeclaration,
             });
             this._updateCell(cell, cellIndex);
             cells.push(cell);
@@ -104,13 +102,11 @@ class BudgetNode {
     }
     resetCells() {
         let budgetNode = this;
-        let datasetName = constants_1.AspectNameToDatasetName[budgetNode.aspectName];
-        let chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries;
         let cells = budgetNode.cells;
         for (let cellIndex in cells) {
             let cell = cells[cellIndex];
-            cell.nodeDataseriesName = chartSpecs[cellIndex].Type;
             budgetNode._updateCell(cell, cellIndex);
+            cell.setChartParms();
         }
         return cells;
     }
