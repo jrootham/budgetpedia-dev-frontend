@@ -95,7 +95,10 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     componentDidMount() {
         this._previousControlData = this.props.declarationData // initialize
-
+        let { budgetCell } = this.props
+        setTimeout(() =>{ // give time for chart to be assigned to budgetCell
+            budgetCell.refreshSelection() // for re-creation; last pie chart is missed
+        })
     }
 
     shouldComponentUpdate(nextProps: ExplorerCellProps, nextState) {
@@ -112,10 +115,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     componentDidUpdate() {
 
-        this._respondToGlobalStateChange()
-        setTimeout(() =>{
-            this.props.budgetCell.refreshSelection()
-        })
+        let budgetCell = this
+        budgetCell._respondToGlobalStateChange()
+        budgetCell.props.budgetCell.refreshSelection()
 
     }
 
@@ -135,7 +137,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         }
         let { budgetCell } = this.props
         let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid]
-        // console.log('cell state manager',budgetCell,cellDeclaration,lastAction)
+
         switch (lastAction.type) {
             case cellActionTypes.UPDATE_CELL_CHART_CODE: {
 
@@ -149,7 +151,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     render() {
 
-        let { chartParms, explorerChartCode, expandable, graph_id } = this.props.budgetCell
+        let { budgetCell } = this.props
+        let { chartParms, explorerChartCode, expandable, graph_id } = budgetCell
         if (!expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4'
         }
@@ -701,7 +704,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
         let chart =  (chartParms)?
             <Chart
-                ref = {node => {this.props.budgetCell.chartComponent = node}} 
+                ref = {node => {
+                    budgetCell.chartComponent = node
+                }} 
                 chartType = { chartParms.chartType }
                 options = { chartParms.options }
                 chartEvents = { chartParms.events }

@@ -73,6 +73,10 @@ class ExplorerCell extends Component {
     }
     componentDidMount() {
         this._previousControlData = this.props.declarationData;
+        let { budgetCell } = this.props;
+        setTimeout(() => {
+            budgetCell.refreshSelection();
+        });
     }
     shouldComponentUpdate(nextProps, nextState) {
         let { lastAction } = nextProps.declarationData;
@@ -84,13 +88,13 @@ class ExplorerCell extends Component {
         return true;
     }
     componentDidUpdate() {
-        this._respondToGlobalStateChange();
-        setTimeout(() => {
-            this.props.budgetCell.refreshSelection();
-        });
+        let budgetCell = this;
+        budgetCell._respondToGlobalStateChange();
+        budgetCell.props.budgetCell.refreshSelection();
     }
     render() {
-        let { chartParms, explorerChartCode, expandable, graph_id } = this.props.budgetCell;
+        let { budgetCell } = this.props;
+        let { chartParms, explorerChartCode, expandable, graph_id } = budgetCell;
         if (!expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4';
         }
@@ -372,7 +376,9 @@ class ExplorerCell extends Component {
             marginLeft: "3px",
         }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")));
         let chart = (chartParms) ?
-            React.createElement(Chart, {ref: node => { this.props.budgetCell.chartComponent = node; }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id})
+            React.createElement(Chart, {ref: node => {
+                budgetCell.chartComponent = node;
+            }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id})
             : React.createElement("div", null, " no data... ");
         let drilldownprompt = React.createElement("div", {style: {
             position: "absolute",
