@@ -5,6 +5,7 @@ import { ChartSelectionCell } from './onchartcomponentselection'
 
 interface BranchSettings {
     viewpoint: string,
+    branchDataGeneration:number,
     version: string,
     aspect: string,
     defaultVersions:any,

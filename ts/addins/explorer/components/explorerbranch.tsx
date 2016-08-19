@@ -335,7 +335,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                         message = "Less drilldown is available for current aspect selection"
                     }
                     let { snackbar } = this.state
-                    snackbar = Object.assign ({},snackbar)
+                    snackbar = Object.assign ( {},snackbar )
                     snackbar.message = message
                     snackbar.open = true
                     this.setState({

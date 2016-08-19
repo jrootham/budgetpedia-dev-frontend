@@ -15,10 +15,11 @@ export namespace types {
     export const RESET_LAST_ACTION = 'RESET_LAST_ACTION'
     export const BRANCH_MOVE_UP = 'BRANCH_MOVE_UP'
     export const BRANCH_MOVE_DOWN = 'BRANCH_MOVE_DOWN'
+    export const CHANGE_BRANCH_DATA = 'CHANGE_BRANCH_DATA'
 
     export const ADD_CELLS = 'ADD_CELLS'
     export const CHANGE_TAB = 'CHANGE_TAB'
-    export const UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME'
+    // export const UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME'
 
     export const UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION'
     export const UPDATE_CELL_TIMECODE = 'UPDATE_CELL_TIMECODE'
@@ -37,13 +38,13 @@ export namespace branchTypes {
     export import CHANGE_ASPECT = types.CHANGE_ASPECT
     export import TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED
     export import TOGGLE_SHOW_OPTIONS = types.TOGGLE_SHOW_OPTIONS
-    
+    export import CHANGE_BRANCH_DATA = types.CHANGE_BRANCH_DATA    
 }
 
 export namespace nodeTypes {
     export import ADD_CELLS = types.ADD_CELLS
     export import CHANGE_TAB = types.CHANGE_TAB
-    export import UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME
+    // export import UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME
 
 }
 
@@ -194,13 +195,13 @@ interface CellDataseriesNameItem {
     nodeDataseriesName: string,
 }
 
-export const updateCellsDataseriesName = createAction(
-    types.UPDATE_CELLS_DATASERIESNAME, (cellItemList:CellDataseriesNameItem[]) => ({
-        cellItemList,
-    }), () => ({
-        explorer:false // state change only!
-    })
-)
+// export const updateCellsDataseriesName = createAction(
+//     types.UPDATE_CELLS_DATASERIESNAME, (cellItemList:CellDataseriesNameItem[]) => ({
+//         cellItemList,
+//     }), () => ({
+//         explorer:false // state change only!
+//     })
+// )
 
 export const resetLastAction = createAction(
     types.RESET_LAST_ACTION, () => ({

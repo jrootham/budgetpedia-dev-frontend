@@ -102,7 +102,6 @@ class ExporerNode extends Component {
                     nodeDataseriesName: cell.nodeDataseriesName
                 });
             }
-            this._stateActions.updateCellsDataseriesName(cellslist);
             budgetNode.newCells = null;
             budgetNode.updated = false;
         }

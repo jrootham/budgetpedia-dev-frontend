@@ -238,7 +238,6 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     branchMoveDown: ExplorerActions.branchMoveDown,
     changeTab: ExplorerActions.changeTab,
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
-    updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
     updateCellChartCode: ExplorerActions.updateCellChartCode,
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });

@@ -97,7 +97,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                     }
                 )
             }
-            this._stateActions.updateCellsDataseriesName(cellslist)
+            // this._stateActions.updateCellsDataseriesName(cellslist)
             budgetNode.newCells = null
             budgetNode.updated = false
         } else {

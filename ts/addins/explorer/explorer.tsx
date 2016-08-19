@@ -607,7 +607,7 @@ Explorer = connect(mapStateToProps, {
 
     // cell actions
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
-    updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
+    // updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
     updateCellChartCode: ExplorerActions.updateCellChartCode,
     // toggleDelta
     // toggleVariance

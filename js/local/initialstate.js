@@ -99,6 +99,7 @@ let hometiles = [
 let workingmessagestate = false;
 let branchDefaults = {
     viewpoint: "FUNCTIONAL",
+    branchDataGeneration: 0,
     version: 'PBFT',
     aspect: "Expenses",
     defaultVersions: {
@@ -122,6 +123,20 @@ let explorer = {
             cellList: null
         },
         cell: {
+            yearScopeChartConfigs: {
+                'OneYear': {
+                    chartSelection: null,
+                    explorerChartCode: "ColumnChart",
+                },
+                'TwoYears': {
+                    chartSelection: null,
+                    explorerChartCode: "DoubleColumnChart",
+                },
+                'AllYears': {
+                    chartSelection: null,
+                    explorerChartCode: "Timelines",
+                },
+            },
             chartSelection: null,
             explorerChartCode: "ColumnChart",
             yearSelections: { leftYear: 2015, rightYear: 2015 },

@@ -15,9 +15,9 @@ var types;
     types.RESET_LAST_ACTION = 'RESET_LAST_ACTION';
     types.BRANCH_MOVE_UP = 'BRANCH_MOVE_UP';
     types.BRANCH_MOVE_DOWN = 'BRANCH_MOVE_DOWN';
+    types.CHANGE_BRANCH_DATA = 'CHANGE_BRANCH_DATA';
     types.ADD_CELLS = 'ADD_CELLS';
     types.CHANGE_TAB = 'CHANGE_TAB';
-    types.UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME';
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
     types.UPDATE_CELL_TIMECODE = 'UPDATE_CELL_TIMECODE';
     types.UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE';
@@ -35,12 +35,12 @@ var branchTypes;
     branchTypes.CHANGE_ASPECT = types.CHANGE_ASPECT;
     branchTypes.TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED;
     branchTypes.TOGGLE_SHOW_OPTIONS = types.TOGGLE_SHOW_OPTIONS;
+    branchTypes.CHANGE_BRANCH_DATA = types.CHANGE_BRANCH_DATA;
 })(branchTypes = exports.branchTypes || (exports.branchTypes = {}));
 var nodeTypes;
 (function (nodeTypes) {
     nodeTypes.ADD_CELLS = types.ADD_CELLS;
     nodeTypes.CHANGE_TAB = types.CHANGE_TAB;
-    nodeTypes.UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME;
 })(nodeTypes = exports.nodeTypes || (exports.nodeTypes = {}));
 var cellTypes;
 (function (cellTypes) {
@@ -138,11 +138,6 @@ exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHA
     explorerChartCode: explorerChartCode,
 }), () => ({
     explorer: true
-}));
-exports.updateCellsDataseriesName = redux_actions_1.createAction(types.UPDATE_CELLS_DATASERIESNAME, (cellItemList) => ({
-    cellItemList: cellItemList,
-}), () => ({
-    explorer: false
 }));
 exports.resetLastAction = redux_actions_1.createAction(types.RESET_LAST_ACTION, () => ({}), () => ({
     explorer: true

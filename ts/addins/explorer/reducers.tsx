@@ -231,17 +231,17 @@ let cellsById = (state = { }, action) => {
             return newstate
         }
 
-        case actiontypes.UPDATE_CELLS_DATASERIESNAME: {
+        // case actiontypes.UPDATE_CELLS_DATASERIESNAME: {
 
-            let cellItems = action.payload.cellItemList
-            for ( let cellItem of cellItems) {
-                let { celluid } = cellItem
-                let newcell = Object.assign({},newstate[celluid])
-                newcell.nodeDataseriesName = cellItem.nodeDataseriesName
-                newstate[celluid] = newcell
-            }
-            return newstate
-        }
+        //     let cellItems = action.payload.cellItemList
+        //     for ( let cellItem of cellItems) {
+        //         let { celluid } = cellItem
+        //         let newcell = Object.assign({},newstate[celluid])
+        //         newcell.nodeDataseriesName = cellItem.nodeDataseriesName
+        //         newstate[celluid] = newcell
+        //     }
+        //     return newstate
+        // }
 
         case actiontypes.UPDATE_CELL_CHART_CODE: {
             let { celluid, explorerChartCode } = action.payload
