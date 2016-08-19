@@ -132,6 +132,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         if (!cellActionTypes[lastAction.type]) {
             return false
         }
+        // only process once
         if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
             return false
         }
@@ -142,7 +143,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             case cellActionTypes.UPDATE_CELL_CHART_CODE: {
 
                 budgetCell.switchChartCode(cellDeclaration.explorerChartCode)
-                this.forceUpdate()
+                this.forceUpdate() // switchChartCode does not trigger redraw // TODO try to avoid this
                 break;
             }
         }
