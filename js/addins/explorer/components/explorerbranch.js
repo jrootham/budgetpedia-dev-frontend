@@ -199,6 +199,8 @@ class ExplorerBranch extends Component {
             let { budgetBranch } = this.props;
             this.props.globalStateActions.toggleShowOptions(budgetBranch.uid, value);
         };
+        this.handleSearch = () => {
+        };
         this.getPortals = (budgetNodes) => {
             let { viewpointData } = this.state;
             if (!viewpointData)
@@ -362,7 +364,10 @@ class ExplorerBranch extends Component {
         let showhelp = (branchDeclaration.showOptions)
             ? React.createElement(IconButton_1.default, {tooltip: "Help", tooltipPosition: "top-center", onTouchTap: this.props.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline"))
             : null;
-        return React.createElement("div", null, React.createElement("div", null, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, showhelp), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
+        let search = (branchDeclaration.showOptions)
+            ? React.createElement(IconButton_1.default, {disabled: true, tooltip: "Help", tooltipPosition: "top-center", onTouchTap: this.handleSearch}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "search"))
+            : null;
+        return React.createElement("div", null, React.createElement("div", null, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, showhelp, search), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;
         }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));
     }

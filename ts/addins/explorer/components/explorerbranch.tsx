@@ -475,6 +475,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         this.props.globalStateActions.toggleShowOptions( budgetBranch.uid, value )
     }
 
+    handleSearch = () => {
+
+    }
+
     // -----------------------------[ prepare for render ]---------------------------------
 
     // get React components to render
@@ -700,6 +704,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         </IconButton>
         :null
 
+    let search = (branchDeclaration.showOptions)
+        ?<IconButton disabled tooltip="Help" tooltipPosition="top-center"
+            onTouchTap = { this.handleSearch }>
+            <FontIcon className="material-icons">search</FontIcon>
+        </IconButton>
+        :null
 
     return <div >
     <div>
@@ -717,6 +727,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         { showcontrols }
 
         { showhelp }
+
+        { search }
 
     </div>
 
