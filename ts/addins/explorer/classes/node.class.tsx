@@ -133,6 +133,7 @@ class BudgetNode {
                     explorerChartCode,
                     chartSelection,
                     uid:celluid,
+                    cellDeclaration,
                 }
             )
 

@@ -11,11 +11,6 @@ interface BranchSettings {
     defaultAspects:any,
     chartType: string,
     inflationAdjusted: boolean,
-    yearSelector: { 
-        leftYear: number,
-        rightYear: number,
-    },
-    yearScope:string,
     nodeList:any[],
     showOptions: boolean,
 }

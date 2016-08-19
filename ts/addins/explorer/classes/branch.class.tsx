@@ -77,18 +77,12 @@ class BudgetBranch {
         let {
             viewpoint:viewpointName,
             aspect:aspectName,
-            yearSelector,
         } = branchSettings
-
-        let {rightYear} = yearSelector
 
         let budgetNodeParms:BudgetNodeParms = {
             viewpointName,
             aspectName,
             yearSpecs: {
-                leftYear:null,
-                rightYear,
-                yearScope:branchSettings.yearScope,
                 firstYear: null,
                 lastYear: null,
             },
@@ -252,9 +246,6 @@ class BudgetBranch {
             datasetName,
             inflationAdjusted,
             yearSpecs: {
-                leftYear: null,
-                rightYear: null,
-                yearScope: null,
                 firstYear: null,
                 lastYear: null,
             }

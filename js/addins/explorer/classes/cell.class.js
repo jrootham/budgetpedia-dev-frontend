@@ -101,7 +101,9 @@ class BudgetCell {
                 }
             }
             let title = catname + ': ' + nodename;
-            let { rightYear, leftYear, yearScope } = yearSpecs;
+            let cellDeclaration = this.cellDeclaration;
+            let { rightYear, leftYear } = cellDeclaration.yearSelections;
+            let { yearScope } = cellDeclaration;
             let timeSuffix = null;
             if (yearScope == constants_2.TimeScope[constants_2.TimeScope.OneYear]) {
                 timeSuffix = rightYear.toString();
@@ -243,26 +245,32 @@ class BudgetCell {
             }
         };
         this._columns_ColumnChart = (yearSpecs) => {
+            let cellDeclaration = this.cellDeclaration;
+            let { rightYear, leftYear } = cellDeclaration.yearSelections;
             let budgetCell = this;
             let categorylabel = 'Component';
             let columns = [
                 { type: 'string', label: categorylabel },
-                { type: 'number', label: yearSpecs.rightYear.toString() },
+                { type: 'number', label: rightYear.toString() },
                 { type: 'string', role: 'style' }
             ];
             return columns;
         };
         this._columns_PieChart = (yearSpecs) => {
+            let cellDeclaration = this.cellDeclaration;
+            let { rightYear, leftYear } = cellDeclaration.yearSelections;
             let budgetCell = this;
             let categorylabel = 'Component';
             let columns = [
                 { type: 'string', label: categorylabel },
-                { type: 'number', label: yearSpecs.rightYear.toString() },
+                { type: 'number', label: rightYear.toString() },
             ];
             return columns;
         };
         this._chartParmsRows = (treeNodeData, yearSpecs) => {
             let budgetCell = this;
+            let cellDeclaration = this.cellDeclaration;
+            let { rightYear, leftYear } = cellDeclaration.yearSelections;
             let { nodeDataseriesName } = budgetCell;
             let nodeDataseries = treeNodeData[nodeDataseriesName];
             let sortedlistName = 'Sorted' + nodeDataseriesName;
@@ -281,7 +289,7 @@ class BudgetCell {
                 }
                 let amount;
                 if (componentItem.years) {
-                    amount = componentItem.years[yearSpecs.rightYear];
+                    amount = componentItem.years[rightYear];
                 }
                 else {
                     amount = null;
@@ -305,14 +313,23 @@ class BudgetCell {
             row.push(style);
             return row;
         };
-        let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs;
+        let { nodeDataseriesName, explorerChartCode, chartSelection, uid, cellDeclaration } = specs;
         this.explorerChartCode = explorerChartCode;
         this.nodeDataseriesName = nodeDataseriesName;
         this.chartSelection = chartSelection;
         this.uid = uid;
+        this._cellDeclaration = cellDeclaration;
     }
     get googleChartType() {
         return constants_1.ChartCodeToGoogleChartType[this.explorerChartCode];
+    }
+    get cellDeclaration() {
+        if (this.getProps) {
+            return this.getProps().declarationData.cellsById[this.uid];
+        }
+        else {
+            return this._cellDeclaration;
+        }
     }
     get chart() {
         if (this.chartComponent)

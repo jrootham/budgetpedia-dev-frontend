@@ -10,15 +10,11 @@ class BudgetBranch {
             let branchSettings = this.settings;
             let viewpointData = this.state.viewpointData;
             let datapath = [];
-            let { viewpoint: viewpointName, aspect: aspectName, yearSelector, } = branchSettings;
-            let { rightYear } = yearSelector;
+            let { viewpoint: viewpointName, aspect: aspectName, } = branchSettings;
             let budgetNodeParms = {
                 viewpointName: viewpointName,
                 aspectName: aspectName,
                 yearSpecs: {
-                    leftYear: null,
-                    rightYear: rightYear,
-                    yearScope: branchSettings.yearScope,
                     firstYear: null,
                     lastYear: null,
                 },
@@ -138,9 +134,6 @@ class BudgetBranch {
                 datasetName: datasetName,
                 inflationAdjusted: inflationAdjusted,
                 yearSpecs: {
-                    leftYear: null,
-                    rightYear: null,
-                    yearScope: null,
                     firstYear: null,
                     lastYear: null,
                 }

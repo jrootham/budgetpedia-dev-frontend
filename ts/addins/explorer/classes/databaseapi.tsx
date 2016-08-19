@@ -117,9 +117,6 @@ interface Datasets {
 }
 
 export interface YearSpecs {
-    leftYear: number,
-    rightYear: number,
-    yearScope: string,
     firstYear: number,
     lastYear: number,
 }

@@ -26,6 +26,7 @@ export namespace types {
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
     export const TOGGLE_NET = 'TOGGLE_NET'
     export const TOGGLE_VARIANCE = 'TOGGLE_VARIANCE'
+    export const UPDATE_CELL_YEAR_SELECTIONS = 'UPDATE_CELL_YEAR_SELECTIONS'
 }
 
 export namespace branchTypes {
@@ -53,6 +54,7 @@ export namespace cellTypes {
     export import TOGGLE_DELTA = types.TOGGLE_DELTA
     export import TOGGLE_NET = types.TOGGLE_NET
     export import TOGGLE_VARIANCE = types.TOGGLE_VARIANCE
+    export import UPDATE_CELL_YEAR_SELECTIONS = types.UPDATE_CELL_YEAR_SELECTIONS
 }
 
 // --------------------[ Branch ]---------------------

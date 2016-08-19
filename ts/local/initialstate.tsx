@@ -225,8 +225,6 @@ let branchDefaults:BranchSettings = {
     },
     chartType: "ColumnChart",
     inflationAdjusted: true,
-    yearSelector:{ leftYear: 2015, rightYear: 2015 },
-    yearScope:"OneYear",
     nodeList:[],
     showOptions: false,
 }
@@ -241,6 +239,8 @@ let explorer = {
         cell: {
             chartSelection: null,
             explorerChartCode: "ColumnChart",
+            yearSelections:{ leftYear: 2015, rightYear: 2015 },
+            yearScope:"OneYear",
         }
     }
 }

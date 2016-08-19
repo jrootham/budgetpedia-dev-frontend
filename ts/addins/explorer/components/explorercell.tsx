@@ -93,6 +93,11 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     getState = () => this.state
     getProps = () => this.props
 
+
+    componentWillMount() {
+        this.props.budgetCell.getProps = this.getProps
+    }
+
     componentDidMount() {
         this._previousControlData = this.props.declarationData // initialize
         let { budgetCell } = this.props

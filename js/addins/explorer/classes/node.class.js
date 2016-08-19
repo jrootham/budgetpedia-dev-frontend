@@ -95,6 +95,7 @@ class BudgetNode {
                 explorerChartCode: explorerChartCode,
                 chartSelection: chartSelection,
                 uid: celluid,
+                cellDeclaration: cellDeclaration,
             });
             this._updateCell(cell, cellIndex);
             cells.push(cell);

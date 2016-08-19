@@ -59,7 +59,8 @@ export interface CellConstructorArgs {
     nodeDataseriesName:string, 
     explorerChartCode:string, 
     chartSelection:ChartSelectionCell[],
-    uid?: string,
+    uid: string,
+    cellDeclaration: any,
 }
 
 export interface NodeData {
@@ -71,15 +72,18 @@ export interface NodeData {
 class BudgetCell {
 
     constructor(specs:CellConstructorArgs) {
-        let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs
+        let { nodeDataseriesName, explorerChartCode, chartSelection, uid, cellDeclaration } = specs
         this.explorerChartCode = explorerChartCode
         this.nodeDataseriesName = nodeDataseriesName
         this.chartSelection = chartSelection
         this.uid = uid
+        this._cellDeclaration = cellDeclaration 
     }
     // public getState: Function
 
-    // public getProps: Function
+    private _cellDeclaration: any
+
+    public getProps: Function
 
     // public setState: Function
 
@@ -97,6 +101,17 @@ class BudgetCell {
     // map from internal code to googleChartType
     get googleChartType() {
         return ChartCodeToGoogleChartType[this.explorerChartCode]
+    }
+
+    // TODO: untangle this sequencing mess!!
+    get cellDeclaration() {
+        if ( this.getProps ) { // only assigned after mounting, 
+            // but setChartParms is called before that
+            // ...perhaps delay setChartParms with dirty flag?? or new flag??
+            return this.getProps().declarationData.cellsById[this.uid]
+        } else {
+            return this._cellDeclaration
+        }
     }
 
     // the react Chart component, allows access to current google chart object
@@ -329,7 +344,10 @@ class BudgetCell {
         let title = catname + ': ' + nodename
 
         // add yearspan to title
-        let { rightYear, leftYear, yearScope } = yearSpecs
+        let cellDeclaration = this.cellDeclaration
+        let { rightYear, leftYear} = cellDeclaration.yearSelections
+        let { yearScope } = cellDeclaration
+
         let timeSuffix: string = null
         if ( yearScope == TimeScope[TimeScope.OneYear] ) {
             timeSuffix = rightYear.toString()
@@ -505,13 +523,16 @@ class BudgetCell {
 
     private _columns_ColumnChart = (yearSpecs:YearSpecs) => {
 
+        let cellDeclaration = this.cellDeclaration
+        let { rightYear, leftYear} = cellDeclaration.yearSelections
+
         let budgetCell = this
         let categorylabel = 'Component' // placeholder
 
         let columns:any[] = [
             // type is required, else throws silent error
             { type: 'string', label: categorylabel },
-            { type: 'number', label: yearSpecs.rightYear.toString() },
+            { type: 'number', label: rightYear.toString() },
             {type:'string', role:'style'}
         ]
 
@@ -521,13 +542,16 @@ class BudgetCell {
 
     private _columns_PieChart = (yearSpecs:YearSpecs) => {
 
+        let cellDeclaration = this.cellDeclaration
+        let { rightYear, leftYear} = cellDeclaration.yearSelections
+
         let budgetCell = this
         let categorylabel = 'Component' // placeholder
 
         let columns:any[] = [
             // type is required, else throws silent error
             { type: 'string', label: categorylabel },
-            { type: 'number', label: yearSpecs.rightYear.toString() },
+            { type: 'number', label: rightYear.toString() },
         ]
 
         return columns
@@ -540,6 +564,9 @@ class BudgetCell {
     private _chartParmsRows = (treeNodeData, yearSpecs:YearSpecs) => {
 
         let budgetCell = this
+
+        let cellDeclaration = this.cellDeclaration
+        let { rightYear, leftYear} = cellDeclaration.yearSelections
 
         let { nodeDataseriesName } = budgetCell
 
@@ -566,7 +593,7 @@ class BudgetCell {
             }
             let amount
             if (componentItem.years) {
-                amount = componentItem.years[yearSpecs.rightYear]
+                amount = componentItem.years[rightYear]
             } else {
                 amount = null
             }

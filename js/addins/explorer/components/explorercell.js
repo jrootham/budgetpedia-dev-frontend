@@ -71,6 +71,9 @@ class ExplorerCell extends Component {
             this._previousControlData = currentControlData;
         };
     }
+    componentWillMount() {
+        this.props.budgetCell.getProps = this.getProps;
+    }
     componentDidMount() {
         this._previousControlData = this.props.declarationData;
         let { budgetCell } = this.props;
