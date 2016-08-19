@@ -252,6 +252,7 @@ class BudgetBranch {
 
             _promise.then( (viewpointdata:ViewpointData) => {
 
+                this.props.globalStateActions.changeBranchData(this.uid)
                 this.setState({
                     viewpointData:viewpointdata
                 })

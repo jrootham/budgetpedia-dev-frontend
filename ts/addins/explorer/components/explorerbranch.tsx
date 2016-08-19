@@ -51,6 +51,7 @@ export interface ExplorerBranchActions {
     changeViewpoint:Function,
     changeVersion: Function,
     toggleShowOptions: Function,
+    changeBranchData: Function,
     changeAspect: Function,
     updateCellChartSelection: Function,  
     updateCellChartCode: Function,

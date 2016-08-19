@@ -137,6 +137,14 @@ let branchesById = (state = {}, action) => {
             newstate[branchuid].showOptions = action.payload.value;
             return newstate;
         }
+        case actions_1.types.CHANGE_BRANCH_DATA: {
+            let { branchuid } = action.payload;
+            newstate = Object.assign({}, state);
+            newstate[branchuid] = Object.assign({}, newstate[branchuid]);
+            newstate[branchuid].branchDataGeneration++;
+            console.log('generation', newstate[branchuid].branchDataGeneration);
+            return newstate;
+        }
         default:
             return state;
     }

@@ -152,6 +152,15 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             return newstate
         }
 
+        case actiontypes.CHANGE_BRANCH_DATA: {
+            let { branchuid } = action.payload
+            newstate = Object.assign({},state)
+            newstate[branchuid] = Object.assign({},newstate[branchuid])
+            newstate[branchuid].branchDataGeneration++
+            console.log('generation',newstate[branchuid].branchDataGeneration)
+            return newstate
+        }
+
         default:
             return state
     }

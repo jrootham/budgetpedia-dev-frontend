@@ -116,6 +116,14 @@ export const toggleShowOptions = createAction(
     })
 )
 
+export const changeBranchData = createAction(
+    types.CHANGE_BRANCH_DATA, (branchuid) => ({
+        branchuid,
+    }), () => ({
+        explorer:false // state change only!
+    })
+)
+
 // ----------------------[ Node ]-----------------------------
 
 export const changeTab = createAction(
