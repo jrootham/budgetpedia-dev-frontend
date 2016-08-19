@@ -215,10 +215,6 @@ let branchDefaults:BranchSettings = {
     viewpoint: "FUNCTIONAL",
     version: 'PBFT',
     aspect: "Expenses",
-    yearsRange:{
-        startYear:null,
-        endYear: null,
-    },
     defaultVersions:{
         'FUNCTIONAL':'SUMMARY',
         'STRUCTURAL':'SUMMARY',

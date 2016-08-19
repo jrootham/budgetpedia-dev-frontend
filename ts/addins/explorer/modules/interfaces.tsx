@@ -7,10 +7,6 @@ interface BranchSettings {
     viewpoint: string,
     version: string,
     aspect: string,
-    yearsRange: {
-        startYear: number,
-        endYear: number,
-    }
     defaultVersions:any,
     defaultAspects:any,
     chartType: string,

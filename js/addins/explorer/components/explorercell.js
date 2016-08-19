@@ -101,7 +101,12 @@ class ExplorerCell extends Component {
     }
     render() {
         let { budgetCell } = this.props;
-        let { chartParms, explorerChartCode, expandable, graph_id } = budgetCell;
+        let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid];
+        let yearScope = cellDeclaration.yearScope;
+        let { chartParms, explorerChartCode, expandable, graph_id, viewpointConfigPack } = budgetCell;
+        let { datasetConfig } = viewpointConfigPack;
+        let { start: startYear, end: endYear } = datasetConfig.YearsRange;
+        let yearSpan = endYear - startYear;
         if (!expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4';
         }
@@ -122,7 +127,7 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.OneYear]);
-        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "13", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "Two years", tooltipPosition: "top-center", style: {
+        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "13", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {disabled: yearSpan == 0, tooltip: "Two years", tooltipPosition: "top-center", style: {
             backgroundColor: (this.state.timescope == constants_1.TimeScope[constants_1.TimeScope.TwoYears])
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
@@ -133,7 +138,7 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.TwoYears]);
-        }, disabled: false}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", style: {
+        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", disabled: yearSpan == 0, style: {
             backgroundColor: (this.state.timescope == constants_1.TimeScope[constants_1.TimeScope.AllYears])
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
@@ -144,7 +149,7 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.AllYears]);
-        }, disabled: false}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("ellipse", {cx: "6", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "18", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "30", cy: "18", rx: "4", ry: "4"}))));
+        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("ellipse", {cx: "6", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "18", cy: "18", rx: "4", ry: "4"}), React.createElement("ellipse", {cx: "30", cy: "18", rx: "4", ry: "4"}))));
         let columnchart = React.createElement(IconButton_1.default, {key: 'columnchart', tooltip: "Column Chart", tooltipPosition: "top-center", style: {
             backgroundColor: (explorerChartCode == "ColumnChart")
                 ? "rgba(144,238,144,0.5)"
@@ -395,16 +400,16 @@ class ExplorerCell extends Component {
             fontStyle: "italic",
         }}, expandable ? 'drill down' : 'no drill down');
         let yearsoptions = () => {
-            let startyear = 2003;
-            let endyear = 2016;
             let years = [];
-            for (let year = startyear; year <= endyear; year++) {
+            for (let year = startYear; year <= endYear; year++) {
                 let yearitem = React.createElement(MenuItem_1.default, {key: year, value: year, primaryText: year.toString()});
                 years.push(yearitem);
             }
             return years;
         };
-        let yearselection = React.createElement("div", {style: { paddingBottom: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Select years: "), React.createElement(DropDownMenu_1.default, {value: 2003, style: {}, onChange: e => { }}, yearsoptions()), " - ", React.createElement(DropDownMenu_1.default, {value: 2016, style: {}, onChange: e => { }}, yearsoptions()));
+        let yearselection = React.createElement("div", {style: { paddingBottom: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Select ", (yearScope == 'OneYear') ? 'year' : 'years', ": "), React.createElement(DropDownMenu_1.default, {value: startYear, style: {}, onChange: e => { }}, yearsoptions()), (yearScope == 'OneYear') ? null
+            : ((yearScope == 'TwoYears') ? ':'
+                : '-'), (yearScope != 'OneYear') ? (React.createElement(DropDownMenu_1.default, {value: endYear, style: {}, onChange: e => { }}, yearsoptions())) : null);
         return React.createElement("div", null, (this.props.showControls) ? React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions, deltatoggle, nettoggle, variancetoggle) : null, React.createElement("div", {style: { position: "relative" }}, chart, drilldownprompt), React.createElement("div", {style: { padding: "3px", textAlign: "center" }}, (this.props.showControls) ?
             yearselection : null, informationoptions, socialoptions, datatable, harmonizeoptions));
     }

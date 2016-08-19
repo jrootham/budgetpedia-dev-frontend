@@ -136,7 +136,6 @@ class BudgetBranch {
             });
             let promise = new Promise(resolve => {
                 _promise.then((viewpointdata) => {
-                    console.log('set state with viewpointdata', viewpointdata);
                     this.setState({
                         viewpointData: viewpointdata
                     });

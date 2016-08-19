@@ -163,7 +163,12 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     render() {
 
         let { budgetCell } = this.props
-        let { chartParms, explorerChartCode, expandable, graph_id } = budgetCell
+        let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid]
+        let yearScope = cellDeclaration.yearScope
+        let { chartParms, explorerChartCode, expandable, graph_id, viewpointConfigPack } = budgetCell
+        let { datasetConfig } = viewpointConfigPack
+        let {start: startYear, end: endYear } = datasetConfig.YearsRange
+        let yearSpan = endYear - startYear
         if (!expandable) {
             chartParms.options['backgroundColor'] = '#E4E4E4'
         }
@@ -202,6 +207,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     </SvgIcon>
                 </IconButton>
                 <IconButton
+                    disabled = {yearSpan == 0}
                     tooltip="Two years"
                     tooltipPosition="top-center"
                     style={
@@ -219,7 +225,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     onTouchTap={ e => {
                         this.onChangeTimeCode(TimeScope[TimeScope.TwoYears])
                     } }
-                    disabled = {false}>
+                    >
                     <SvgIcon style={{height:"36px",width:"36px"}}  viewBox = "0 0 36 36" >
                       <rect x="4" y="13" width="10" height="10" />
                       <rect x="22" y="13" width="10" height="10" />
@@ -228,6 +234,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <IconButton
                     tooltip="All years"
                     tooltipPosition="top-center"
+                    disabled = {yearSpan == 0}
                     style={
                         {
                             backgroundColor: (this.state.timescope == TimeScope[TimeScope.AllYears])
@@ -243,7 +250,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     onTouchTap={ e => {
                         this.onChangeTimeCode(TimeScope[TimeScope.AllYears])
                     } }
-                    disabled= {false}>
+                    >
                     <SvgIcon style={{height:"36px",width:"36px"}}  viewBox = "0 0 36 36" >
                         <ellipse cx="6" cy="18" rx="4" ry="4"/>
                         <ellipse cx="18" cy="18" rx="4" ry="4"/>
@@ -740,10 +747,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             </div>
 
         let yearsoptions = () => {
-            let startyear = 2003
-            let endyear = 2016
             let years = []
-            for (let year = startyear; year <= endyear; year++ ) {
+            for (let year = startYear; year <= endYear; year++ ) {
                 let yearitem = 
                 <MenuItem key = {year } value={year} primaryText={year.toString()}/>
                 years.push(yearitem)
@@ -753,18 +758,10 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
         let yearselection = 
             <div style={{paddingBottom:"3px"}}>
-                <span style={{ fontStyle: "italic" }}>Select years: </span>
+                <span style={{ fontStyle: "italic" }}>Select {
+                    (yearScope == 'OneYear')? 'year': 'years'}: </span>
                 <DropDownMenu
-                    value={2003}
-                    style={{
-                    }}
-                    onChange={ e => {} }
-                    >
-
-                    { yearsoptions() }
-
-                </DropDownMenu> - <DropDownMenu
-                    value={2016}
+                    value={startYear}
                     style={{
                     }}
                     onChange={ e => {} }
@@ -773,6 +770,25 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     { yearsoptions() }
 
                 </DropDownMenu>
+
+                {
+                    (yearScope == 'OneYear')?null
+                    : (
+                        (yearScope == 'TwoYears')? ':'
+                        :'-'
+                    )
+                }
+
+                {(yearScope != 'OneYear')?(<DropDownMenu
+                    value={endYear}
+                    style={{
+                    }}
+                    onChange={ e => {} }
+                    >
+
+                    { yearsoptions() }
+
+                </DropDownMenu>):null}
             </div>
 
         return <div>
