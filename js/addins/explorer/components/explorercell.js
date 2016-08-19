@@ -407,9 +407,9 @@ class ExplorerCell extends Component {
             }
             return years;
         };
-        let yearselection = React.createElement("div", {style: { paddingBottom: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Select ", (yearScope == 'OneYear') ? 'year' : 'years', ": "), React.createElement(DropDownMenu_1.default, {value: startYear, style: {}, onChange: e => { }}, yearsoptions()), (yearScope == 'OneYear') ? null
+        let yearselection = React.createElement("div", {style: { paddingBottom: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Select ", (yearScope == 'OneYear') ? 'year' : 'years', ": "), (yearScope != 'OneYear') ? (React.createElement(DropDownMenu_1.default, {value: startYear, style: {}, onChange: e => { }}, yearsoptions())) : null, (yearScope == 'OneYear') ? null
             : ((yearScope == 'TwoYears') ? ':'
-                : '-'), (yearScope != 'OneYear') ? (React.createElement(DropDownMenu_1.default, {value: endYear, style: {}, onChange: e => { }}, yearsoptions())) : null);
+                : '-'), React.createElement(DropDownMenu_1.default, {value: endYear, style: {}, onChange: e => { }}, yearsoptions()));
         return React.createElement("div", null, (this.props.showControls) ? React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions, deltatoggle, nettoggle, variancetoggle) : null, React.createElement("div", {style: { position: "relative" }}, chart, drilldownprompt), React.createElement("div", {style: { padding: "3px", textAlign: "center" }}, (this.props.showControls) ?
             yearselection : null, informationoptions, socialoptions, datatable, harmonizeoptions));
     }

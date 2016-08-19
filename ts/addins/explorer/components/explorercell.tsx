@@ -760,7 +760,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             <div style={{paddingBottom:"3px"}}>
                 <span style={{ fontStyle: "italic" }}>Select {
                     (yearScope == 'OneYear')? 'year': 'years'}: </span>
-                <DropDownMenu
+                    
+                {(yearScope != 'OneYear')?(<DropDownMenu
                     value={startYear}
                     style={{
                     }}
@@ -769,7 +770,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
                     { yearsoptions() }
 
-                </DropDownMenu>
+                </DropDownMenu>):null}
 
                 {
                     (yearScope == 'OneYear')?null
@@ -779,7 +780,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     )
                 }
 
-                {(yearScope != 'OneYear')?(<DropDownMenu
+                <DropDownMenu
                     value={endYear}
                     style={{
                     }}
@@ -788,7 +789,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
                     { yearsoptions() }
 
-                </DropDownMenu>):null}
+                </DropDownMenu>
             </div>
 
         return <div>
