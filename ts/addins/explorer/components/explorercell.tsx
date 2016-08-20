@@ -33,7 +33,6 @@ interface ExplorerCellProps {
         updateCellChartCode:Function,
     },
     showControls: boolean,
-    dataGenerationCounter: number,
 }
 
 // interface ExplorerCellState {
@@ -92,9 +91,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     }
 
 
+    // for use by BudgetCell instance...
     getState = () => this.state
     getProps = () => this.props
-
 
     componentWillMount() {
         let { budgetCell } = this.props
@@ -355,9 +354,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <FontIcon className="material-icons">view_quilt</FontIcon>
             </IconButton>
 
-        let timeline =
+        let timelines =
             <IconButton
-                key = 'timeline'
+                key = 'timelines'
                 tooltip="Timeline"
                 tooltipPosition="top-center"
                 style={
@@ -376,7 +375,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 onTouchTap={ e => {
                     this.onChangeChartCode('Timeline')
                 } }>
-                <FontIcon className="material-icons">timeline</FontIcon>
+                <FontIcon className="material-icons">timelines</FontIcon>
             </IconButton>
 
         let stackedchart = 
@@ -442,7 +441,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     chartoptions = [ doublecolumnchart ]
                     break;
                 case TimeScope[TimeScope.AllYears]:
-                    chartoptions = [ timeline, stackedchart, proportionalchart ]
+                    chartoptions = [ timelines, stackedchart, proportionalchart ]
                     break;
             }
             
@@ -574,6 +573,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     <FontIcon className="material-icons">exposure</FontIcon>
                 </IconButton>
             </div> : null
+
+        // ----------------------[ options for below the chart ]---------------------------
 
         let datatable = 
             <div style = {
@@ -721,6 +722,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 </IconButton>
             </div>
 
+        // ------------------------------[ the chart itself ]-----------------------------
+
         let chart =  (chartParms)?
             <Chart
                 ref = {node => {
@@ -747,6 +750,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                {expandable?'drill down':'no drill down'}
             </div>
 
+        // ----------------------[ year selections ]---------------------------------
+
         let yearsoptions = () => {
             let years = []
             for (let year = startYear; year <= endYear; year++ ) {
@@ -760,9 +765,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         let yearselection = 
             <div style={{paddingBottom:"3px"}}>
                 <span style={{ fontStyle: "italic" }}>Select {
-                    (yearScope == 'OneYear')? 'year': 'years'}: </span>
+                    (yearScope == TimeScope[TimeScope.OneYear])? 'year': 'years'}: </span>
                     
-                {(yearScope != 'OneYear')?(<DropDownMenu
+                {(yearScope != TimeScope[TimeScope.OneYear])?(<DropDownMenu
                     value={startYear}
                     style={{
                     }}
@@ -774,9 +779,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 </DropDownMenu>):null}
 
                 {
-                    (yearScope == 'OneYear')?null
+                    (yearScope == TimeScope[TimeScope.OneYear])?null
                     : (
-                        (yearScope == 'TwoYears')? ':'
+                        (yearScope == TimeScope[TimeScope.TwoYears])? ':'
                         :'-'
                     )
                 }
@@ -794,6 +799,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             </div>
 
         return <div>
+
             {(this.props.showControls)?<div style={{ padding: "3px" }}>
 
                 { timescopes }
@@ -807,10 +813,13 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 { variancetoggle }
 
             </div>:null}
-            <div style={{position:"relative"}}>
-            { chart }
 
-            { drilldownprompt }
+            <div style={{position:"relative"}}>
+
+                { chart }
+
+                { drilldownprompt }
+
             </div>
 
             <div style={{ padding: "3px", textAlign:"center" }}>

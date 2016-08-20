@@ -68,6 +68,7 @@ interface MappedNodeActions {
     addCellDeclarations:Function,
     changeTab:Function,
     updateCellChartCode:Function,
+    normalizeCellYearDependencies: Function,
     // removeCellDeclarations:Function,
     // changeChart:Function,
     // toggleDelta:Function,
@@ -291,11 +292,12 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     private changeTab = branchuid => (nodeuid, tabvalue) => this.props.changeTab(branchuid, nodeuid,tabvalue)
 
-    private addCellDeclarations = branchuid => (nodeuid, settingslist) => this.props.addCellDeclarations(branchuid, nodeuid, settingslist)
-
-    private updateCellChartSelection = branchuid => nodeuid => (celluid,selection) => (
+    private addCellDeclarations = branchuid => (nodeuid, settingslist) => 
+        this.props.addCellDeclarations(branchuid, nodeuid, settingslist)
+    private normalizeCellYearDependencies = branchuid => (nodeuid, cellList, yearsRange) => 
+        this.props.normalizeCellYearDependencies(branchuid, nodeuid, cellList, yearsRange)
+    private updateCellChartSelection = branchuid => nodeuid => (celluid,selection) =>
         this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection )
-    )
 
     private updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode)
 
@@ -399,6 +401,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                 let actionFunctions:MappedBranchActions = {
                     addCellDeclarations: this.addCellDeclarations(budgetBranch.uid),
+                    normalizeCellYearDependencies: this.normalizeCellYearDependencies(budgetBranch.uid),
                     updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
                     changeTab: this.changeTab(budgetBranch.uid),
                     updateCellChartCode: this.updateCellChartCode(budgetBranch.uid),
@@ -592,6 +595,7 @@ Explorer = connect(mapStateToProps, {
     addNodeDeclaration:ExplorerActions.addNodeDeclaration,
     removeNodeDeclarations:ExplorerActions.removeNodeDeclarations,
     addCellDeclarations:ExplorerActions.addCellDeclarations,
+    normalizeCellYearDependencies: ExplorerActions.normalizeCellYearDependencies,
     // removeCellDeclarations:ExplorerActions.removeCellDeclarations,
 
     // branch actions - variations

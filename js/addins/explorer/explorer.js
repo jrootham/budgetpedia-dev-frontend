@@ -99,7 +99,8 @@ let Explorer = class extends Component {
         };
         this.changeTab = branchuid => (nodeuid, tabvalue) => this.props.changeTab(branchuid, nodeuid, tabvalue);
         this.addCellDeclarations = branchuid => (nodeuid, settingslist) => this.props.addCellDeclarations(branchuid, nodeuid, settingslist);
-        this.updateCellChartSelection = branchuid => nodeuid => (celluid, selection) => (this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection));
+        this.normalizeCellYearDependencies = branchuid => (nodeuid, cellList, yearsRange) => this.props.normalizeCellYearDependencies(branchuid, nodeuid, cellList, yearsRange);
+        this.updateCellChartSelection = branchuid => nodeuid => (celluid, selection) => this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection);
         this.updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode);
         this.onExpandChange = (expanded) => {
             this.props.resetLastAction();
@@ -168,6 +169,7 @@ let Explorer = class extends Component {
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
                 let actionFunctions = {
                     addCellDeclarations: this.addCellDeclarations(budgetBranch.uid),
+                    normalizeCellYearDependencies: this.normalizeCellYearDependencies(budgetBranch.uid),
                     updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
                     changeTab: this.changeTab(budgetBranch.uid),
                     updateCellChartCode: this.updateCellChartCode(budgetBranch.uid),
@@ -230,6 +232,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     addNodeDeclaration: ExplorerActions.addNodeDeclaration,
     removeNodeDeclarations: ExplorerActions.removeNodeDeclarations,
     addCellDeclarations: ExplorerActions.addCellDeclarations,
+    normalizeCellYearDependencies: ExplorerActions.normalizeCellYearDependencies,
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,

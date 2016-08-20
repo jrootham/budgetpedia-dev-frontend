@@ -198,7 +198,7 @@ class ExplorerCell extends Component {
         }, onTouchTap: e => {
             this.onChangeChartCode('ContextChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_quilt"));
-        let timeline = React.createElement(IconButton_1.default, {key: 'timeline', tooltip: "Timeline", tooltipPosition: "top-center", style: {
+        let timelines = React.createElement(IconButton_1.default, {key: 'timelines', tooltip: "Timeline", tooltipPosition: "top-center", style: {
             backgroundColor: (explorerChartCode == "TimeLine")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
@@ -209,7 +209,7 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, disabled: true, onTouchTap: e => {
             this.onChangeChartCode('Timeline');
-        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "timeline"));
+        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "timelines"));
         let stackedchart = React.createElement(IconButton_1.default, {key: 'stackedchart', tooltip: "Stacked chart", tooltipPosition: "top-center", style: {
             backgroundColor: (explorerChartCode == "StackedArea")
                 ? "rgba(144,238,144,0.5)"
@@ -244,7 +244,7 @@ class ExplorerCell extends Component {
                     chartoptions = [doublecolumnchart];
                     break;
                 case constants_1.TimeScope[constants_1.TimeScope.AllYears]:
-                    chartoptions = [timeline, stackedchart, proportionalchart];
+                    chartoptions = [timelines, stackedchart, proportionalchart];
                     break;
             }
             return React.createElement("div", {style: {
@@ -407,8 +407,8 @@ class ExplorerCell extends Component {
             }
             return years;
         };
-        let yearselection = React.createElement("div", {style: { paddingBottom: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Select ", (yearScope == 'OneYear') ? 'year' : 'years', ": "), (yearScope != 'OneYear') ? (React.createElement(DropDownMenu_1.default, {value: startYear, style: {}, onChange: e => { }}, yearsoptions())) : null, (yearScope == 'OneYear') ? null
-            : ((yearScope == 'TwoYears') ? ':'
+        let yearselection = React.createElement("div", {style: { paddingBottom: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Select ", (yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? 'year' : 'years', ": "), (yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? (React.createElement(DropDownMenu_1.default, {value: startYear, style: {}, onChange: e => { }}, yearsoptions())) : null, (yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? null
+            : ((yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears]) ? ':'
                 : '-'), React.createElement(DropDownMenu_1.default, {value: endYear, style: {}, onChange: e => { }}, yearsoptions()));
         return React.createElement("div", null, (this.props.showControls) ? React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions, deltatoggle, nettoggle, variancetoggle) : null, React.createElement("div", {style: { position: "relative" }}, chart, drilldownprompt), React.createElement("div", {style: { padding: "3px", textAlign: "center" }}, (this.props.showControls) ?
             yearselection : null, informationoptions, socialoptions, datatable, harmonizeoptions));

@@ -16,6 +16,7 @@ var types;
     types.BRANCH_MOVE_UP = 'BRANCH_MOVE_UP';
     types.BRANCH_MOVE_DOWN = 'BRANCH_MOVE_DOWN';
     types.CHANGE_BRANCH_DATA = 'CHANGE_BRANCH_DATA';
+    types.NORMALIZE_CELL_YEAR_DEPENDENCIES = 'NORMALIZE_CELL_YEAR_DEPENDENCIES';
     types.ADD_CELLS = 'ADD_CELLS';
     types.CHANGE_TAB = 'CHANGE_TAB';
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
@@ -41,6 +42,7 @@ var nodeTypes;
 (function (nodeTypes) {
     nodeTypes.ADD_CELLS = types.ADD_CELLS;
     nodeTypes.CHANGE_TAB = types.CHANGE_TAB;
+    nodeTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES = types.NORMALIZE_CELL_YEAR_DEPENDENCIES;
 })(nodeTypes = exports.nodeTypes || (exports.nodeTypes = {}));
 var cellTypes;
 (function (cellTypes) {
@@ -110,6 +112,14 @@ exports.addNodeDeclaration = redux_actions_1.createAction(types.ADD_NODE, (branc
 exports.removeNodeDeclarations = redux_actions_1.createAction(types.REMOVE_NODES, (branchuid, items) => ({
     items: items,
     branchuid: branchuid,
+}), () => ({
+    explorer: true
+}));
+exports.normalizeCellYearDependencies = redux_actions_1.createAction(types.NORMALIZE_CELL_YEAR_DEPENDENCIES, (branchuid, nodeuid, cellList, yearsRange) => ({
+    branchuid: branchuid,
+    nodeuid: nodeuid,
+    cellList: cellList,
+    yearsRange: yearsRange,
 }), () => ({
     explorer: true
 }));

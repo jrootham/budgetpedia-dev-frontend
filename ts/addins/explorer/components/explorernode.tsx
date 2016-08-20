@@ -39,6 +39,7 @@ export interface ExporerNodeActions {
     updateCellsDataseriesName: Function,
     updateCellChartCode: Function,
     updateCellChartSelection: Function,
+    normalizeCellYearDependencies: Function,
 }
 
 class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
@@ -47,6 +48,9 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         nodeCells:[],
     }
 
+    private oldDataGenerationCounter: number = null
+
+    // for BudgetNode instance...
     getState = () => this.state
     getProps = () => this.props
 
@@ -143,6 +147,13 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                 this.props.budgetNode.new = false
             })
         } 
+        let { dataGenerationCounter } = this.props
+        let { oldDataGenerationCounter } = this
+        if ( oldDataGenerationCounter === null || (dataGenerationCounter > oldDataGenerationCounter)) {
+            this.oldDataGenerationCounter = dataGenerationCounter
+            // normalize cell settings to year dependency constraints
+            this._normalizeCells()
+        }
     }
 
     // state change machine
@@ -178,6 +189,22 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         return returnvalue
     }
 
+    private _normalizeCells = () => {
+
+        let { budgetNode } = this.props
+        let nodeDeclaration = this.props.declarationData.nodesById[budgetNode.uid] 
+
+        // console.log('budgetNode in normalizeCells', budgetNode)       
+
+        let cellList = nodeDeclaration.cellList
+        let yearsRange = budgetNode.viewpointConfigPack.datasetConfig.YearsRange
+
+        // console.log('normalizing cells',budgetNode, nodeDeclaration, budgetNode.uid,cellList,yearsRange)
+
+        this._stateActions.normalizeCellYearDependencies(budgetNode.uid, cellList, yearsRange)
+
+    }
+
     onChangeTab = (tabref) => {
         // window.nodeUpdateControl.nodeuid = this.props.budgetNode.uid
         this.props.globalStateActions.changeTab(this.props.budgetNode.uid,tabref)
@@ -209,7 +236,6 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
                     budgetCell = { budgetCell }
                     globalStateActions = { {updateCellChartCode: this.props.globalStateActions.updateCellChartCode } }
                     showControls = {this.props.showControls}
-                    dataGenerationCounter = {this.props.dataGenerationCounter}
                 />
             </Tab>
         })

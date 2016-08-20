@@ -16,6 +16,7 @@ export namespace types {
     export const BRANCH_MOVE_UP = 'BRANCH_MOVE_UP'
     export const BRANCH_MOVE_DOWN = 'BRANCH_MOVE_DOWN'
     export const CHANGE_BRANCH_DATA = 'CHANGE_BRANCH_DATA'
+    export const NORMALIZE_CELL_YEAR_DEPENDENCIES = 'NORMALIZE_CELL_YEAR_DEPENDENCIES'
 
     export const ADD_CELLS = 'ADD_CELLS'
     export const CHANGE_TAB = 'CHANGE_TAB'
@@ -44,6 +45,7 @@ export namespace branchTypes {
 export namespace nodeTypes {
     export import ADD_CELLS = types.ADD_CELLS
     export import CHANGE_TAB = types.CHANGE_TAB
+    export import NORMALIZE_CELL_YEAR_DEPENDENCIES = types.NORMALIZE_CELL_YEAR_DEPENDENCIES
     // export import UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME
 
 }
@@ -152,6 +154,17 @@ export const removeNodeDeclarations = createAction(
         branchuid,
     }), () => ({
         explorer:true
+    })
+)
+
+export const normalizeCellYearDependencies = createAction(
+    types.NORMALIZE_CELL_YEAR_DEPENDENCIES, (branchuid, nodeuid, cellList, yearsRange) => ({
+        branchuid,
+        nodeuid,
+        cellList,
+        yearsRange,
+    }), () => ({
+        explorer: true
     })
 )
 

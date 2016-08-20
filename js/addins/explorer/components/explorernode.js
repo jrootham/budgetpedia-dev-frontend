@@ -9,6 +9,7 @@ class ExporerNode extends Component {
         this.state = {
             nodeCells: [],
         };
+        this.oldDataGenerationCounter = null;
         this.getState = () => this.state;
         this.getProps = () => this.props;
         this.lastgenerationcounter = 0;
@@ -38,6 +39,13 @@ class ExporerNode extends Component {
             }
             return returnvalue;
         };
+        this._normalizeCells = () => {
+            let { budgetNode } = this.props;
+            let nodeDeclaration = this.props.declarationData.nodesById[budgetNode.uid];
+            let cellList = nodeDeclaration.cellList;
+            let yearsRange = budgetNode.viewpointConfigPack.datasetConfig.YearsRange;
+            this._stateActions.normalizeCellYearDependencies(budgetNode.uid, cellList, yearsRange);
+        };
         this.onChangeTab = (tabref) => {
             this.props.globalStateActions.changeTab(this.props.budgetNode.uid, tabref);
         };
@@ -50,7 +58,7 @@ class ExporerNode extends Component {
                 let expandable = ((budgetCells.length > 1) && (cellIndex == 0));
                 budgetCell.expandable = expandable;
                 let { cellTitle } = budgetCell;
-                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorercell_1.default, {declarationData: this.props.declarationData, callbackid: cellIndex, budgetCell: budgetCell, globalStateActions: { updateCellChartCode: this.props.globalStateActions.updateCellChartCode }, showControls: this.props.showControls, dataGenerationCounter: this.props.dataGenerationCounter}));
+                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorercell_1.default, {declarationData: this.props.declarationData, callbackid: cellIndex, budgetCell: budgetCell, globalStateActions: { updateCellChartCode: this.props.globalStateActions.updateCellChartCode }, showControls: this.props.showControls}));
             });
             return cellTabs;
         };
@@ -135,6 +143,12 @@ class ExporerNode extends Component {
             setTimeout(() => {
                 this.props.budgetNode.new = false;
             });
+        }
+        let { dataGenerationCounter } = this.props;
+        let { oldDataGenerationCounter } = this;
+        if (oldDataGenerationCounter === null || (dataGenerationCounter > oldDataGenerationCounter)) {
+            this.oldDataGenerationCounter = dataGenerationCounter;
+            this._normalizeCells();
         }
     }
     render() {
