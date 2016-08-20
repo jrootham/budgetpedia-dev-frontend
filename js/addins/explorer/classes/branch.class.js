@@ -9,6 +9,7 @@ class BudgetBranch {
             let defaults = this.getProps().declarationData.defaults.node;
             let branchSettings = this.settings;
             let viewpointData = this.state.viewpointData;
+            let budgetBranch = this;
             let datapath = [];
             let { viewpoint: viewpointName, aspect: aspectName, } = branchSettings;
             let budgetNodeParms = {
@@ -109,7 +110,7 @@ class BudgetBranch {
                     actions.removeNodeDeclarations(removedids);
                     switchResults.mismatch = true;
                     switchResults.message = 'The new aspect does not have a matching chart for ' +
-                        budgetNode.treeNodeMetaData.Name;
+                        budgetNode.treeNodeMetaDataFromParentSortedList.Name;
                     let cells = parentBudgetNode.cells;
                     for (let cell of cells) {
                         let theCell = cell;
@@ -160,12 +161,12 @@ class BudgetBranch {
             }
             let components = treeNodeData.Components;
             let code = null;
-            let treeNodeMetaData = null;
+            let treeNodeMetaDataFromParentSortedList = null;
             let parentNode = null;
             if (treeNodeData && treeNodeData.SortedComponents && treeNodeData.SortedComponents[selectionrow]) {
-                treeNodeMetaData = treeNodeData.SortedComponents[selectionrow];
+                treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow];
                 parentNode = treeNodeData;
-                code = treeNodeMetaData.Code;
+                code = treeNodeMetaDataFromParentSortedList.Code;
             }
             if (code)
                 childdatapath.push(code);
@@ -184,7 +185,7 @@ class BudgetBranch {
                 aspectName: aspectName,
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
-                treeNodeMetaData: treeNodeMetaData,
+                treeNodeMetaDataFromParentSortedList: treeNodeMetaDataFromParentSortedList,
                 yearSpecs: newrange,
             };
             actions.addNodeDeclaration(newnodeconfigparms);

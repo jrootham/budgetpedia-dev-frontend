@@ -33,6 +33,7 @@ interface ExplorerCellProps {
         updateCellChartCode:Function,
     },
     showControls: boolean,
+    dataGenerationCounter: number,
 }
 
 // interface ExplorerCellState {

@@ -216,8 +216,8 @@ class ExplorerBranch extends Component {
             let portals = budgetNodes.map((budgetNode, nodeindex) => {
                 let branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
                 let portalName = null;
-                if (budgetNode.treeNodeMetaData) {
-                    portalName = budgetNode.treeNodeMetaData.Name;
+                if (budgetNode.treeNodeMetaDataFromParentSortedList) {
+                    portalName = budgetNode.treeNodeMetaDataFromParentSortedList.Name;
                 }
                 else {
                     portalName = 'City Budget';
@@ -239,7 +239,7 @@ class ExplorerBranch extends Component {
                 let actions = Object.assign({}, this._stateActions);
                 actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = this._stateActions.updateCellChartCode(budgetNode.uid);
-                return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions});
+                return React.createElement(explorernode_1.ExporerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration});
             });
             return portals;
         };

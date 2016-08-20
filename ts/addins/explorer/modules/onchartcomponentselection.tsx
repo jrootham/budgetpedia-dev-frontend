@@ -107,14 +107,9 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
             selectionrow,
             nodeIndex,
             cellIndex, 
-            // chartSelectionData, 
         }
 
         budgetBranch.createChildNode( childprops )
-        // setTimeout(()=>{
-        //     window.nodeUpdateControl.nodeuid = null
-        //     window.nodeUpdateControl.new = null            
-        // })
 
     })
 

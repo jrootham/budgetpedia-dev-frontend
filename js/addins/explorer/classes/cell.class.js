@@ -25,13 +25,13 @@ class BudgetCell {
         this.setChartParms = () => {
             let budgetCell = this;
             let { viewpointNamingConfigs, datasetConfig } = budgetCell.viewpointConfigPack;
-            let { treeNodeData, yearSpecs, treeNodeMetaData, } = budgetCell.nodeDataPack;
+            let { treeNodeData, yearSpecs, treeNodeMetaDataFromParentSortedList, } = budgetCell.nodeDataPack;
             if (!treeNodeData) {
                 console.error('System Error: node not found in setChartParms', budgetCell);
                 throw Error('node not found');
             }
             let chartType = budgetCell.googleChartType;
-            let options = budgetCell._chartParmsOptions(treeNodeData, treeNodeMetaData, viewpointNamingConfigs, datasetConfig, yearSpecs);
+            let options = budgetCell._chartParmsOptions(treeNodeData, treeNodeMetaDataFromParentSortedList, viewpointNamingConfigs, datasetConfig, yearSpecs);
             let events = budgetCell._chartParmsEvents();
             let columns = budgetCell._chartParmsColumns(yearSpecs);
             let { nodeDataseriesName } = budgetCell;
@@ -57,7 +57,7 @@ class BudgetCell {
                 chartParms: chartParms,
             });
         };
-        this._chartParmsOptions = (treeNodeData, treeNodeMetaData, viewpointNamingConfigs, datasetConfig, yearSpecs) => {
+        this._chartParmsOptions = (treeNodeData, treeNodeMetaDataFromParentSortedList, viewpointNamingConfigs, datasetConfig, yearSpecs) => {
             let budgetCell = this;
             let { aspectName, nodeDataseriesName } = budgetCell;
             let datasetName = constants_1.AspectNameToDatasetName[aspectName];
@@ -75,8 +75,8 @@ class BudgetCell {
                 horizontalLabel = portaltitles.CommonObjects;
             }
             let nodename = null;
-            if (treeNodeMetaData) {
-                nodename = treeNodeMetaData.Name;
+            if (treeNodeMetaDataFromParentSortedList) {
+                nodename = treeNodeMetaDataFromParentSortedList.Name;
             }
             else {
                 nodename = datasetConfig.DatasetTitle;
@@ -89,8 +89,8 @@ class BudgetCell {
                 catname = instancenames.Alias || instancenames.Name;
             }
             else {
-                if (treeNodeMetaData && treeNodeMetaData.parentBudgetNode && treeNodeMetaData.parentBudgetNode.treeNodeData) {
-                    let parentconfigindex = treeNodeMetaData.parentBudgetNode.treeNodeData.NamingConfigRef;
+                if (treeNodeMetaDataFromParentSortedList && treeNodeMetaDataFromParentSortedList.parentBudgetNode && treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData) {
+                    let parentconfigindex = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData.NamingConfigRef;
                     if (parentconfigindex) {
                         let names = viewpointNamingConfigs[parentconfigindex];
                         if (names && names.Contents && names.Contents.DefaultInstance) {

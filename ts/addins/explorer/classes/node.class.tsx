@@ -25,7 +25,7 @@ export interface BudgetNodeParms {
     yearSpecs: YearSpecs,
     dataPath: string[],
     nodeIndex: number,
-    treeNodeMetaData?:any,
+    treeNodeMetaDataFromParentSortedList?:any,
 }
 
 class BudgetNode {
@@ -42,8 +42,8 @@ class BudgetNode {
         this.uid = uid
         // this.datasetSpecs = parms.datasetSpecs
         // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
-        if (parms.treeNodeMetaData) this.treeNodeMetaData = parms.treeNodeMetaData
-        if (parentBudgetNode) this.treeNodeMetaData.parentBudgetNode = parentBudgetNode
+        if (parms.treeNodeMetaDataFromParentSortedList) this.treeNodeMetaDataFromParentSortedList = parms.treeNodeMetaDataFromParentSortedList
+        if (parentBudgetNode) this.treeNodeMetaDataFromParentSortedList.parentBudgetNode = parentBudgetNode
 
     }
 
@@ -80,7 +80,7 @@ class BudgetNode {
 
     public getProps: Function
 
-    treeNodeMetaData: any = null // includes parentNode for now
+    treeNodeMetaDataFromParentSortedList: any = null // includes parentNode for now
     // parentNode: any = null
 
     portalConfig: PortalConfig
@@ -93,8 +93,8 @@ class BudgetNode {
     update = (aspect, treeNodeData, parentDataNode = null) => {
         this._nodeData = treeNodeData
         this.aspectName = aspect
-        if (this.treeNodeMetaData && parentDataNode) {
-            this.treeNodeMetaData.treeNodeData = parentDataNode
+        if (this.treeNodeMetaDataFromParentSortedList && parentDataNode) {
+            this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode
         }
         this.updated = true
     }
@@ -160,11 +160,11 @@ class BudgetNode {
     private _updateCell = (cell:BudgetCell, cellIndex) => {
         let budgetNode = this
 
-        let { viewpointConfigPack, treeNodeData, yearSpecs, treeNodeMetaData, nodeIndex } = budgetNode
+        let { viewpointConfigPack, treeNodeData, yearSpecs, treeNodeMetaDataFromParentSortedList, nodeIndex } = budgetNode
         let nodeDataPack: NodeData = {
             treeNodeData,
             yearSpecs,
-            treeNodeMetaData,
+            treeNodeMetaDataFromParentSortedList,
         }
 
         cell.viewpointConfigPack = viewpointConfigPack

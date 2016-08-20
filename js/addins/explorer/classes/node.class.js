@@ -6,12 +6,12 @@ class BudgetNode {
         this.new = true;
         this.updated = false;
         this.newCells = null;
-        this.treeNodeMetaData = null;
+        this.treeNodeMetaDataFromParentSortedList = null;
         this.update = (aspect, treeNodeData, parentDataNode = null) => {
             this._nodeData = treeNodeData;
             this.aspectName = aspect;
-            if (this.treeNodeMetaData && parentDataNode) {
-                this.treeNodeMetaData.treeNodeData = parentDataNode;
+            if (this.treeNodeMetaDataFromParentSortedList && parentDataNode) {
+                this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode;
             }
             this.updated = true;
         };
@@ -31,11 +31,11 @@ class BudgetNode {
         };
         this._updateCell = (cell, cellIndex) => {
             let budgetNode = this;
-            let { viewpointConfigPack, treeNodeData, yearSpecs, treeNodeMetaData, nodeIndex } = budgetNode;
+            let { viewpointConfigPack, treeNodeData, yearSpecs, treeNodeMetaDataFromParentSortedList, nodeIndex } = budgetNode;
             let nodeDataPack = {
                 treeNodeData: treeNodeData,
                 yearSpecs: yearSpecs,
-                treeNodeMetaData: treeNodeMetaData,
+                treeNodeMetaDataFromParentSortedList: treeNodeMetaDataFromParentSortedList,
             };
             cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeDataPack = nodeDataPack;
@@ -67,10 +67,10 @@ class BudgetNode {
         this.yearSpecs = parms.yearSpecs;
         this._nodeData = node;
         this.uid = uid;
-        if (parms.treeNodeMetaData)
-            this.treeNodeMetaData = parms.treeNodeMetaData;
+        if (parms.treeNodeMetaDataFromParentSortedList)
+            this.treeNodeMetaDataFromParentSortedList = parms.treeNodeMetaDataFromParentSortedList;
         if (parentBudgetNode)
-            this.treeNodeMetaData.parentBudgetNode = parentBudgetNode;
+            this.treeNodeMetaDataFromParentSortedList.parentBudgetNode = parentBudgetNode;
     }
     get treeNodeData() {
         return this._nodeData;

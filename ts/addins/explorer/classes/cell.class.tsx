@@ -65,7 +65,7 @@ export interface CellConstructorArgs {
 export interface NodeData {
     treeNodeData: any,
     yearSpecs: YearSpecs,
-    treeNodeMetaData: any,
+    treeNodeMetaDataFromParentSortedList: any,
 }
 
 class BudgetCell {
@@ -186,7 +186,7 @@ class BudgetCell {
         let { 
             treeNodeData, 
             yearSpecs, 
-            treeNodeMetaData, 
+            treeNodeMetaDataFromParentSortedList, 
         } = budgetCell.nodeDataPack
 
         // ---------------------[ get data node components ]------------------
@@ -211,7 +211,7 @@ class BudgetCell {
 
         let options = budgetCell._chartParmsOptions(
             treeNodeData, 
-            treeNodeMetaData, 
+            treeNodeMetaDataFromParentSortedList, 
             viewpointNamingConfigs, 
             datasetConfig, 
             yearSpecs
@@ -272,7 +272,7 @@ class BudgetCell {
     // ------------------
     private _chartParmsOptions = (
         treeNodeData, 
-        treeNodeMetaData, 
+        treeNodeMetaDataFromParentSortedList, 
         viewpointNamingConfigs, 
         datasetConfig:DatasetConfig, 
         yearSpecs:YearSpecs
@@ -308,8 +308,8 @@ class BudgetCell {
 
         // set basic title
         let nodename = null
-        if (treeNodeMetaData) {
-            nodename = treeNodeMetaData.Name
+        if (treeNodeMetaDataFromParentSortedList) {
+            nodename = treeNodeMetaDataFromParentSortedList.Name
         } else {
             nodename = datasetConfig.DatasetTitle
         }
@@ -320,8 +320,8 @@ class BudgetCell {
             let instancenames = names.Instance
             catname = instancenames.Alias || instancenames.Name
         } else {
-            if (treeNodeMetaData && treeNodeMetaData.parentBudgetNode && treeNodeMetaData.parentBudgetNode.treeNodeData) {
-                let parentconfigindex = treeNodeMetaData.parentBudgetNode.treeNodeData.NamingConfigRef
+            if (treeNodeMetaDataFromParentSortedList && treeNodeMetaDataFromParentSortedList.parentBudgetNode && treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData) {
+                let parentconfigindex = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData.NamingConfigRef
                 if (parentconfigindex) {
                     let names = viewpointNamingConfigs[parentconfigindex]
                     if (names && names.Contents && names.Contents.DefaultInstance) {

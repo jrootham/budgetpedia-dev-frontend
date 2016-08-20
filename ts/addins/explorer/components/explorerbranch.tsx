@@ -506,8 +506,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let branchDeclaration:BranchSettings = this.props.declarationData.branchesById[this.props.budgetBranch.uid]
 
             let portalName = null
-            if (budgetNode.treeNodeMetaData) {
-                portalName = budgetNode.treeNodeMetaData.Name
+            if (budgetNode.treeNodeMetaDataFromParentSortedList) {
+                portalName = budgetNode.treeNodeMetaDataFromParentSortedList.Name
             } else {
                 portalName = 'City Budget'
             }
@@ -543,6 +543,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 declarationData = {this.props.declarationData}
                 globalStateActions = { actions }
                 showControls = {branchDeclaration.showOptions}
+                dataGenerationCounter = { branchDeclaration.branchDataGeneration }
             />
         })
 
