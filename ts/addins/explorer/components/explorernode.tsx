@@ -149,6 +149,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         } 
         let { dataGenerationCounter } = this.props
         let { oldDataGenerationCounter } = this
+        // console.log('datagenerationcounter comparison', oldDataGenerationCounter, dataGenerationCounter)
         if ( oldDataGenerationCounter === null || (dataGenerationCounter > oldDataGenerationCounter)) {
             this.oldDataGenerationCounter = dataGenerationCounter
             // normalize cell settings to year dependency constraints

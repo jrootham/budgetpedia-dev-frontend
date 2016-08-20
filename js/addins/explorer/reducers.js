@@ -2,6 +2,7 @@
 const redux_1 = require('redux');
 const initialstate_1 = require("../../local/initialstate");
 const actions_1 = require('./actions');
+const constants_1 = require('./constants');
 let generationcounter = 0;
 let defaults = (state = initialstate_1.default.explorer.defaults, action) => {
     return state;
@@ -217,6 +218,27 @@ let cellsById = (state = {}, action) => {
             let newcell = Object.assign({}, newstate[celluid]);
             newcell.explorerChartCode = explorerChartCode;
             newstate[celluid] = newcell;
+            return newstate;
+        }
+        case actions_1.types.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
+            let { cellList, yearsRange } = action.payload;
+            let { start: startYear, end: endYear } = yearsRange;
+            let yearSpan = endYear - startYear;
+            for (let celluid of cellList) {
+                let newcell = Object.assign({}, newstate[celluid]);
+                if (yearSpan == 0) {
+                    newcell.yearScope = constants_1.TimeScope[constants_1.TimeScope.OneYear];
+                }
+                let range = Object.assign({}, newcell.yearSelections);
+                if (range.leftYear < startYear || range.leftYear > endYear) {
+                    range.leftYear = startYear;
+                }
+                if (range.rightYear > endYear || range.rightYear < startYear) {
+                    range.rightYear = endYear;
+                }
+                newcell.yearSelections = range;
+                newstate[celluid] = newcell;
+            }
             return newstate;
         }
         default:

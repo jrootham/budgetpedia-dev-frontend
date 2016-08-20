@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 import initialstate from "../../local/initialstate"
 import { types as actiontypes} from './actions'
 import { BranchSettings } from './modules/interfaces'
+import { TimeScope } from './constants'
 
 let generationcounter = 0
 
@@ -256,6 +257,32 @@ let cellsById = (state = { }, action) => {
             let newcell = Object.assign({},newstate[celluid])
             newcell.explorerChartCode = explorerChartCode
             newstate[celluid] = newcell
+            return newstate
+        }
+
+        case actiontypes.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
+            let { cellList, yearsRange } = action.payload
+            let { start: startYear, end: endYear } = yearsRange
+            let yearSpan = endYear - startYear
+            // console.log('NORMALIZE_CELL_YEAR_DEPENDENCIES', cellList, yearsRange, startYear, endYear, yearSpan)
+            for (let celluid of cellList) {
+                // console.log('BEFORE',newstate[celluid])
+                let newcell = Object.assign({},newstate[celluid])
+                if ( yearSpan == 0 ) {
+                    newcell.yearScope = TimeScope[TimeScope.OneYear]
+                }
+                let range = Object.assign({}, newcell.yearSelections)
+                if ( range.leftYear < startYear || range.leftYear > endYear ) {
+                    range.leftYear = startYear
+                }
+                if ( range.rightYear > endYear || range.rightYear < startYear ) {
+                    range.rightYear = endYear
+                }
+                newcell.yearSelections = range
+                newstate[celluid] = newcell
+                // console.log('AFTER',newstate[celluid])
+            }
+
             return newstate
         }
 

@@ -254,8 +254,8 @@ let explorer = {
             },
             chartSelection: null,
             explorerChartCode: "ColumnChart",
-            yearSelections:{ leftYear: 2015, rightYear: 2015 },
-            yearScope:"OneYear",
+            yearSelections:{ leftYear: 2020, rightYear: 2030 },
+            yearScope:"TwoYears",
         }
     }
 }
