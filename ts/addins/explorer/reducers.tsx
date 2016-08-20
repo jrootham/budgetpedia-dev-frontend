@@ -157,7 +157,7 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             newstate = Object.assign({},state)
             newstate[branchuid] = Object.assign({},newstate[branchuid])
             newstate[branchuid].branchDataGeneration++
-            console.log('generation',newstate[branchuid].branchDataGeneration)
+            // console.log('branchDataGeneration',newstate[branchuid].branchDataGeneration)
             return newstate
         }
 
@@ -295,6 +295,7 @@ let lastAction = (state = defaultState , action) => {
             newstate.branchuid = action.payload.branchuid
             newstate.nodeuid = action.payload.nodeuid
             newstate.celluid = action.payload.celluid
+            // console.log('lastAction', newstate)
             return newstate
         }
 

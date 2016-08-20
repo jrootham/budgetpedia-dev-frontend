@@ -207,7 +207,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     </SvgIcon>
                 </IconButton>
                 <IconButton
-                    disabled = {yearSpan == 0}
+                    disabled = {yearSpan === 0}
                     tooltip="Two years"
                     tooltipPosition="top-center"
                     style={
@@ -234,7 +234,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <IconButton
                     tooltip="All years"
                     tooltipPosition="top-center"
-                    disabled = {yearSpan == 0}
+                    disabled = {yearSpan === 0}
                     style={
                         {
                             backgroundColor: (this.state.timescope == TimeScope[TimeScope.AllYears])

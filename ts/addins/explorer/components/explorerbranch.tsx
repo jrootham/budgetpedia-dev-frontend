@@ -165,6 +165,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 setTimeout(()=> {
                     // this will trigger harmonization between declarations 
                     // and local node instances in componentDidUpdate
+                    this._stateActions.changeBranchData(budgetBranch.uid)
                     let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
                     this._stateActions.addNodeDeclaration(budgetNodeParms)
                 })
@@ -196,7 +197,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let { branchuid } = lastAction
         if (branchuid) {
             let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
-
             return retval
         }
         return true
@@ -289,6 +289,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         budgetBranch.getViewpointData().then(()=>{
 
             setTimeout(()=>{
+                this._stateActions.changeBranchData(budgetBranch.uid)
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
                 this._stateActions.addNodeDeclaration(budgetNodeParms)
             })
@@ -300,6 +301,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         budgetBranch.getViewpointData().then(()=>{
 
             setTimeout(()=>{
+                this._stateActions.changeBranchData(budgetBranch.uid)
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
                 this._stateActions.addNodeDeclaration(budgetNodeParms)
             })
@@ -313,6 +315,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             setTimeout(() => {
 
+                this._stateActions.changeBranchData(budgetBranch.uid)
                 let switchResults = budgetBranch.switchAspect()
 
                 let { deeperdata, shallowerdata, mismatch } = switchResults

@@ -142,7 +142,6 @@ let branchesById = (state = {}, action) => {
             newstate = Object.assign({}, state);
             newstate[branchuid] = Object.assign({}, newstate[branchuid]);
             newstate[branchuid].branchDataGeneration++;
-            console.log('generation', newstate[branchuid].branchDataGeneration);
             return newstate;
         }
         default:

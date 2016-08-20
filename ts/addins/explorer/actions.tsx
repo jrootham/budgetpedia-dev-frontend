@@ -120,7 +120,7 @@ export const changeBranchData = createAction(
     types.CHANGE_BRANCH_DATA, (branchuid) => ({
         branchuid,
     }), () => ({
-        explorer:false // state change only!
+        explorer:false
     })
 )
 

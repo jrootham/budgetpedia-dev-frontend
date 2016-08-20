@@ -59,6 +59,7 @@ class ExplorerBranch extends Component {
         this._processChangeViewpointStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
                 setTimeout(() => {
+                    this._stateActions.changeBranchData(budgetBranch.uid);
                     let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                     this._stateActions.addNodeDeclaration(budgetNodeParms);
                 });
@@ -67,6 +68,7 @@ class ExplorerBranch extends Component {
         this._processChangeVersionStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
                 setTimeout(() => {
+                    this._stateActions.changeBranchData(budgetBranch.uid);
                     let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                     this._stateActions.addNodeDeclaration(budgetNodeParms);
                 });
@@ -75,6 +77,7 @@ class ExplorerBranch extends Component {
         this._processChangeAspectStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
                 setTimeout(() => {
+                    this._stateActions.changeBranchData(budgetBranch.uid);
                     let switchResults = budgetBranch.switchAspect();
                     let { deeperdata, shallowerdata, mismatch } = switchResults;
                     if (mismatch) {
@@ -267,6 +270,7 @@ class ExplorerBranch extends Component {
         budgetBranch.getViewpointData().then(() => {
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
                 setTimeout(() => {
+                    this._stateActions.changeBranchData(budgetBranch.uid);
                     let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                     this._stateActions.addNodeDeclaration(budgetNodeParms);
                 });

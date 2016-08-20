@@ -112,7 +112,7 @@ class BudgetBranch {
         let viewpointData = this.state.viewpointData
         let treeNodeData = getBudgetNode(viewpointData, dataPath)
         let branchNodes = this.nodes
-        let parentNode = (nodeIndex == 0)? null: branchNodes[branchNodes.length - 1]
+        let parentNode = (nodeIndex === 0)? null: branchNodes[branchNodes.length - 1]
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, treeNodeData, parentNode)
         branchNodes[nodeIndex] = budgetNode
         this.setState({
@@ -252,11 +252,10 @@ class BudgetBranch {
 
             _promise.then( (viewpointdata:ViewpointData) => {
 
-                this.props.globalStateActions.changeBranchData(this.uid)
-                this.setState({
+                let budgetBranch = this
+                budgetBranch.setState({
                     viewpointData:viewpointdata
                 })
-
                 resolve(true)
                 
             })
