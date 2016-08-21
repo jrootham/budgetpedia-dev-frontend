@@ -26,7 +26,6 @@ class BudgetBranch {
             return budgetNodeParms;
         };
         this.addNode = (budgetNodeUid, nodeIndex, budgetNodeParms) => {
-            let { actions, nodeCallbacks: callbacks } = this;
             let { dataPath } = budgetNodeParms;
             let branchSettings = this.settings;
             let viewpointData = this.state.viewpointData;

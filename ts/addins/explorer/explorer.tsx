@@ -155,16 +155,40 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         if (branchList.length == 0) { // initialize explorer with first branch
             this.freshstart = true
             let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
-            this.waitforaction++
-            this.props.addBranchDeclaration(null,defaultSettings)
-        } else {
-            // this.props.restoreBranches()
-            let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
-            budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById)
+            this.waitforaction++ // let state change cycle
+            this.props.addBranchDeclaration(null,defaultSettings) // change state
+        }
+    }
+
+    componentDidMount() {
+        if (this.freshstart) {
             this.setState({
-                budgetBranches,
+                popover:{
+                    open:true
+                }
             })
         }
+    }
+
+    componentWillUnmount() {
+        this.props.resetLastAction() // clear sentinals for unmount //TODO verify this!
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        let { branchList, branchesById } = nextProps.declarationData
+        let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
+
+        this.harmonizeBranchesToState(budgetBranches, branchList, branchesById)
+        
+    }
+
+    shouldComponentUpdate() {
+        if (this.waitforaction) {
+            this.waitforaction--
+            return false
+        }
+        return true
     }
 
     addBranch = refbranchuid => {
@@ -181,13 +205,17 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         called from componentWillMount for initialization of imported workspaces
         and from componentWillReceiveProps to modify branch list
     */
-    harmonizeBranches = (budgetBranches, branchList, branchesById) => {
+    harmonizeBranchesToState = (budgetBranches, branchList, branchesById) => {
         // delete branches no longer required
+        let change = false
         let newBranches = budgetBranches.filter((branch) => {
             return !!branchesById[branch.uid]
         })
+        if (newBranches.length != budgetBranches.length) {
+            change = true
+        }
         // add branches not yet created
-        let length = newBranches.length
+        // let length = newBranches.length
         for ( let i = 0; i < branchList.length ; i++ ) {
             let uid = branchList[i]
             let foundbranch = newBranches.filter(branch => {
@@ -195,6 +223,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     return branch
             })
             if (foundbranch.length == 0) {
+                if (!change) change = true
                 // let settings = branchesById[uid]
                 let budgetBranch = new BudgetBranch({uid})
                 newBranches.push(budgetBranch)
@@ -214,48 +243,21 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 throw Error('System error -- unexpected mismatch between state branch list and explorer branch list')
             }
             sortedBranches.push(foundbranch[0])
-        }        
-        return sortedBranches
-    }
-
-    componentDidMount() {
-        if (this.freshstart) {
-            this.setState({
-                popover:{
-                    open:true
+        }
+        if (!change) {
+            for (let i = 0; i<budgetBranches.length; i++) {
+                if (budgetBranches[i].uid != sortedBranches[i].uid) {
+                    change = true
+                    break
                 }
+            }
+        }
+        if (change) {
+            this.setState({
+                budgetBranches:sortedBranches,
             })
         }
-    }
-
-    componentWillUnmount() {
-        this.props.resetLastAction()
-    }
-
-    /*    
-        harmonize budgetBranches objects  with control data
-        also update branch settings from declarations
-        then setState to trigger render
-    */    
-    componentWillReceiveProps(nextProps) {
-
-        let { branchList, branchesById } = nextProps.declarationData
-        let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
-
-
-        budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById)
-        
-        this.setState({
-            budgetBranches,
-        })
-    }
-
-    shouldComponentUpdate() {
-        if (this.waitforaction) {
-            this.waitforaction--
-            return false
-        }
-        return true
+        return sortedBranches
     }
 
     handleDialogOpen = (e) => {
@@ -283,16 +285,17 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     }
 
-    private changeTab = branchuid => (nodeuid, tabvalue) => this.props.changeTab(branchuid, nodeuid,tabvalue)
-
+    // create action calls versions for currying (branchid)
+    private changeTab = branchuid => (nodeuid, tabvalue) => 
+        this.props.changeTab(branchuid, nodeuid,tabvalue)
     private addCellDeclarations = branchuid => (nodeuid, settingslist) => 
         this.props.addCellDeclarations(branchuid, nodeuid, settingslist)
     private normalizeCellYearDependencies = branchuid => (nodeuid, cellList, yearsRange) => 
         this.props.normalizeCellYearDependencies(branchuid, nodeuid, cellList, yearsRange)
     private updateCellChartSelection = branchuid => nodeuid => (celluid,selection) =>
         this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection )
-
-    private updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode)
+    private updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => 
+        this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode)
 
     onExpandChange = (expanded) => {
         // TODO: change background color of title if it is collapsed
@@ -310,7 +313,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     // ---------------------------[ RENDER ]------------------------------ 
 
     render() {
-        // console.log('explorer rendering')
+        console.log('explorer rendering')
         let explorer = this
 
         let dialogbox =  

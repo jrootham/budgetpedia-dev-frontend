@@ -106,7 +106,7 @@ class BudgetBranch {
     // this is a response to the addNode action
     addNode = (budgetNodeUid, nodeIndex, budgetNodeParms:BudgetNodeParms) => {
 
-        let { actions, nodeCallbacks:callbacks } = this
+        // let { actions, nodeCallbacks:callbacks } = this
 
         let { dataPath } = budgetNodeParms
         let branchSettings = this.settings

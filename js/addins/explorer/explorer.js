@@ -45,11 +45,14 @@ let Explorer = class extends Component {
         this.removeBranch = branchuid => {
             this.props.removeBranchDeclaration(branchuid);
         };
-        this.harmonizeBranches = (budgetBranches, branchList, branchesById) => {
+        this.harmonizeBranchesToState = (budgetBranches, branchList, branchesById) => {
+            let change = false;
             let newBranches = budgetBranches.filter((branch) => {
                 return !!branchesById[branch.uid];
             });
-            let length = newBranches.length;
+            if (newBranches.length != budgetBranches.length) {
+                change = true;
+            }
             for (let i = 0; i < branchList.length; i++) {
                 let uid = branchList[i];
                 let foundbranch = newBranches.filter(branch => {
@@ -57,6 +60,8 @@ let Explorer = class extends Component {
                         return branch;
                 });
                 if (foundbranch.length == 0) {
+                    if (!change)
+                        change = true;
                     let budgetBranch = new branch_class_1.default({ uid: uid });
                     newBranches.push(budgetBranch);
                 }
@@ -73,6 +78,19 @@ let Explorer = class extends Component {
                     throw Error('System error -- unexpected mismatch between state branch list and explorer branch list');
                 }
                 sortedBranches.push(foundbranch[0]);
+            }
+            if (!change) {
+                for (let i = 0; i < budgetBranches.length; i++) {
+                    if (budgetBranches[i].uid != sortedBranches[i].uid) {
+                        change = true;
+                        break;
+                    }
+                }
+            }
+            if (change) {
+                this.setState({
+                    budgetBranches: sortedBranches,
+                });
             }
             return sortedBranches;
         };
@@ -119,13 +137,6 @@ let Explorer = class extends Component {
             this.waitforaction++;
             this.props.addBranchDeclaration(null, defaultSettings);
         }
-        else {
-            let budgetBranches = [...this.state.budgetBranches];
-            budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById);
-            this.setState({
-                budgetBranches: budgetBranches,
-            });
-        }
     }
     componentDidMount() {
         if (this.freshstart) {
@@ -142,10 +153,7 @@ let Explorer = class extends Component {
     componentWillReceiveProps(nextProps) {
         let { branchList, branchesById } = nextProps.declarationData;
         let budgetBranches = [...this.state.budgetBranches];
-        budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById);
-        this.setState({
-            budgetBranches: budgetBranches,
-        });
+        this.harmonizeBranchesToState(budgetBranches, branchList, branchesById);
     }
     shouldComponentUpdate() {
         if (this.waitforaction) {
@@ -155,6 +163,7 @@ let Explorer = class extends Component {
         return true;
     }
     render() {
+        console.log('explorer rendering');
         let explorer = this;
         let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Options", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' }}, React.createElement(IconButton_1.default, {style: {
             top: 0,

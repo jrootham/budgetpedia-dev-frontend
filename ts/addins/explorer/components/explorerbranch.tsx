@@ -140,8 +140,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             workingStatus,
             // local
             onPortalCreation,
-            // updateBranchNodesState,
-            // refreshPresentation,
         }
 
         // complete initialization of budgetBranch class instance
@@ -152,9 +150,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         // assign callbacks to budgetBranch
         budgetBranch.actions = this._stateActions
         budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks
-        // this.setState({
-        //     aspect: this.props.budgetBranch.settings.viewpoint,
-        // })
     }
 
     // initialize once -- set declarationData; initialize viewpointData; initialize branch
