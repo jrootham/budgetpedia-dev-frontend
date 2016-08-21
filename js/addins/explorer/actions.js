@@ -93,7 +93,7 @@ exports.toggleShowOptions = redux_actions_1.createAction(types.TOGGLE_SHOW_OPTIO
 exports.changeBranchData = redux_actions_1.createAction(types.CHANGE_BRANCH_DATA, (branchuid) => ({
     branchuid: branchuid,
 }), () => ({
-    explorer: false
+    explorer: true
 }));
 exports.changeTab = redux_actions_1.createAction(types.CHANGE_TAB, (branchuid, nodeuid, tabvalue) => ({
     nodeuid: nodeuid,

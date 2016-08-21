@@ -122,7 +122,7 @@ export const changeBranchData = createAction(
     types.CHANGE_BRANCH_DATA, (branchuid) => ({
         branchuid,
     }), () => ({
-        explorer:false
+        explorer:true
     })
 )
 

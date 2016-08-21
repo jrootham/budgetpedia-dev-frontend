@@ -25,6 +25,23 @@ class ExplorerBranch extends Component {
         this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
         this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
         this.harmonizecount = null;
+        this.harmonizeNodesToState = (branchNodes, nodeList, nodesById, budgetBranch) => {
+            if (this.harmonizecount === null) {
+                this.harmonizecount = (nodeList.length - branchNodes.length);
+            }
+            if (nodeList.length > branchNodes.length) {
+                if (this.harmonizecount <= 0) {
+                    console.error('System Error: harmonize error', nodeList, branchNodes);
+                }
+                this.harmonizecount--;
+                let nodeIndex = branchNodes.length;
+                let budgetNodeId = nodeList[nodeIndex];
+                budgetBranch.addNode(budgetNodeId, nodeIndex, nodesById[budgetNodeId]);
+            }
+            else {
+                this.harmonizecount = null;
+            }
+        };
         this._respondToGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
             let currentControlData = this.props.declarationData;
@@ -237,7 +254,7 @@ class ExplorerBranch extends Component {
         };
     }
     componentWillMount() {
-        let { budgetBranch, globalStateActions: actions, displayCallbacks } = this.props;
+        let { budgetBranch, globalStateActions: actions, displayCallbacks, declarationData } = this.props;
         this._stateActions = Object.assign({}, actions);
         this._stateActions.addNodeDeclaration = this.addNodeDeclaration(budgetBranch.uid);
         this._stateActions.removeNodeDeclarations = this.removeNodeDeclarations(budgetBranch.uid);
@@ -252,17 +269,14 @@ class ExplorerBranch extends Component {
         budgetBranch.setState = this.setState.bind(this);
         budgetBranch.actions = this._stateActions;
         budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks;
-    }
-    componentDidMount() {
-        let { budgetBranch, declarationData } = this.props;
         this._previousControlData = declarationData;
         budgetBranch.getViewpointData().then(() => {
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
-                this.waitforaction++;
-                this._stateActions.changeBranchData(budgetBranch.uid);
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
+                this.waitforaction++;
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }
+            this._stateActions.changeBranchData(budgetBranch.uid);
         });
     }
     componentWillReceiveProps(nextProps) {
@@ -276,13 +290,17 @@ class ExplorerBranch extends Component {
                 branchNodes: newBranchNodes,
             });
         }
+        let { budgetBranch, declarationData } = nextProps;
+        let branchDeclarations = declarationData.branchesById[budgetBranch.uid];
+        let { nodeList } = branchDeclarations;
+        this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch);
     }
     shouldComponentUpdate(nextProps, nextState) {
+        let { lastAction } = nextProps.declarationData;
         if (this.waitforaction) {
             this.waitforaction--;
             return false;
         }
-        let { lastAction } = nextProps.declarationData;
         if (nextState.snackbar.open != this.state.snackbar.open)
             return true;
         if (!lastAction.explorer)
@@ -295,27 +313,7 @@ class ExplorerBranch extends Component {
         return true;
     }
     componentDidUpdate() {
-        let { budgetBranch, declarationData } = this.props;
-        let { nodes: branchNodes } = budgetBranch;
-        let { nodesById } = declarationData;
-        let branchDeclarations = declarationData.branchesById[budgetBranch.uid];
-        let { nodeList } = branchDeclarations;
-        if (this.harmonizecount === null) {
-            this.harmonizecount = (nodeList.length - branchNodes.length);
-        }
-        if (nodeList.length > branchNodes.length) {
-            if (this.harmonizecount <= 0) {
-                console.error('System Error: harmonize error', nodeList, branchNodes);
-            }
-            this.harmonizecount--;
-            let nodeIndex = branchNodes.length;
-            let budgetNodeId = nodeList[nodeIndex];
-            budgetBranch.addNode(budgetNodeId, nodeIndex, nodesById[budgetNodeId]);
-        }
-        else {
-            this.harmonizecount = null;
-            this._respondToGlobalStateChange();
-        }
+        this._respondToGlobalStateChange();
     }
     render() {
         let branch = this;

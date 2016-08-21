@@ -163,7 +163,6 @@ let Explorer = class extends Component {
         return true;
     }
     render() {
-        console.log('explorer rendering');
         let explorer = this;
         let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Options", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' }}, React.createElement(IconButton_1.default, {style: {
             top: 0,
