@@ -9,16 +9,47 @@ class ExplorerNode extends Component {
         this.state = {
             nodeCells: [],
         };
+        this.waitforaction = 0;
         this.oldDataGenerationCounter = null;
         this.getState = () => this.state;
         this.getProps = () => this.props;
+        this.updateCellsFromDeclarations = () => {
+            let { budgetNode, declarationData } = this.props;
+            if (budgetNode.updated) {
+                this.setState({
+                    nodeCells: budgetNode.newCells
+                });
+                let updatedCells = budgetNode.newCells;
+                let cellslist = [];
+                for (let cell of updatedCells) {
+                    cellslist.push({
+                        celluid: cell.uid,
+                        nodeDataseriesName: cell.nodeDataseriesName
+                    });
+                }
+                budgetNode.newCells = null;
+                budgetNode.updated = false;
+            }
+            else {
+                let cells = budgetNode.cells;
+                let { cellsById } = declarationData;
+                let newCells = cells.filter(cell => {
+                    return !!cellsById[cell.uid];
+                });
+                if (newCells.length != cells.length) {
+                    this.setState({
+                        nodeCells: newCells
+                    });
+                }
+            }
+        };
         this.lastgenerationcounter = 0;
         this._respondToGlobalStateChange = () => {
         };
         this.harmonizecount = null;
-        this._harmonizeCells = () => {
+        this._harmonizeCells = (props) => {
             let returnvalue = false;
-            let { budgetNode, declarationData } = this.props;
+            let { budgetNode, declarationData } = props;
             let cells = budgetNode.cells;
             let { cellList } = declarationData.nodesById[budgetNode.uid];
             if ((cells.length != cellList.length) && (this.harmonizecount == null)) {
@@ -44,6 +75,7 @@ class ExplorerNode extends Component {
             let nodeDeclaration = this.props.declarationData.nodesById[budgetNode.uid];
             let cellList = nodeDeclaration.cellList;
             let yearsRange = budgetNode.viewpointConfigPack.datasetConfig.YearsRange;
+            this.waitforaction++;
             this._stateActions.normalizeCellYearDependencies(budgetNode.uid, cellList, yearsRange);
         };
         this.onChangeTab = (tabref) => {
@@ -92,41 +124,14 @@ class ExplorerNode extends Component {
             let cellDeclarationParms = budgetNode.getCellDeclarationParms();
             this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
         }
-        else {
-            this._harmonizeCells();
-        }
     }
     componentWillReceiveProps(nextProps) {
-        let { budgetNode, declarationData } = nextProps;
-        if (budgetNode.updated) {
-            this.setState({
-                nodeCells: budgetNode.newCells
-            });
-            let updatedCells = budgetNode.newCells;
-            let cellslist = [];
-            for (let cell of updatedCells) {
-                cellslist.push({
-                    celluid: cell.uid,
-                    nodeDataseriesName: cell.nodeDataseriesName
-                });
-            }
-            budgetNode.newCells = null;
-            budgetNode.updated = false;
-        }
-        else {
-            let cells = budgetNode.cells;
-            let { cellsById } = declarationData;
-            let newCells = cells.filter(cell => {
-                return !!cellsById[cell.uid];
-            });
-            if (newCells.length != cells.length) {
-                this.setState({
-                    nodeCells: newCells
-                });
-            }
-        }
     }
     shouldComponentUpdate(nextProps, nextState) {
+        if (this.waitforaction) {
+            this.waitforaction--;
+            return false;
+        }
         let { lastAction } = nextProps.declarationData;
         let { nodeuid } = lastAction;
         if (nodeuid) {
@@ -136,20 +141,18 @@ class ExplorerNode extends Component {
         return true;
     }
     componentDidUpdate() {
-        if (!this._harmonizeCells()) {
-            this._respondToGlobalStateChange();
-        }
-        if (this.props.budgetNode.new) {
-            setTimeout(() => {
-                this.props.budgetNode.new = false;
-            });
-        }
+        this._harmonizeCells(this.props);
         let { dataGenerationCounter } = this.props;
         let { oldDataGenerationCounter } = this;
         if (oldDataGenerationCounter === null || (dataGenerationCounter > oldDataGenerationCounter)) {
             this.oldDataGenerationCounter = dataGenerationCounter;
             this._normalizeCells();
         }
+        this._respondToGlobalStateChange();
+        if (this.props.budgetNode.new) {
+            this.props.budgetNode.new = false;
+        }
+        this.updateCellsFromDeclarations();
     }
     render() {
         let chartTabs = this.getChartTabs();

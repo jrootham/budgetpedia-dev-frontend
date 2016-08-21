@@ -279,7 +279,6 @@ class ExplorerBranch extends Component {
     }
     shouldComponentUpdate(nextProps, nextState) {
         if (this.waitforaction) {
-            console.log('waitforaction', this.waitforaction);
             this.waitforaction--;
             return false;
         }

@@ -85,7 +85,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     let { updateCellChartSelection } = budgetNode.actions
     updateCellChartSelection(budgetCell.uid,chartSelectionData.selection)
 
-    setTimeout(()=>{
+    // setTimeout(()=>{
 
         // refresh nodes after removenode operation above
         // branchNodes = budgetBranch.nodes
@@ -111,7 +111,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
         budgetBranch.createChildNode( childprops )
 
-    })
+    // })
 
 }
 

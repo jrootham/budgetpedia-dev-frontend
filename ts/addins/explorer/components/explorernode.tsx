@@ -48,6 +48,8 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         nodeCells:[],
     }
 
+    waitforaction:number = 0
+
     private oldDataGenerationCounter: number = null
 
     // for BudgetNode instance...
@@ -75,11 +77,12 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         if (nodeDeclaration.cellList == null) {
 
             // get controlData for cellList
+            // this.waitforaction++
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
-        } else {
+        // } else {
 
-            this._harmonizeCells()
+        //     this._harmonizeCells()
 
         }
     }
@@ -87,7 +90,10 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     // TODO: generate action to update cell nodeDataseriesName
     // remove obsolete cell objects; update cell list if needed
     componentWillReceiveProps(nextProps) {
-        let { budgetNode, declarationData }:{budgetNode:BudgetNode, declarationData:any} = nextProps // this.props
+    }
+
+    updateCellsFromDeclarations = () => {
+        let { budgetNode, declarationData }:{budgetNode:BudgetNode, declarationData:any} = this.props // this.props
         if (budgetNode.updated) {
             this.setState({
                 nodeCells:budgetNode.newCells
@@ -117,6 +123,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
                 })
             }
         }
+
     }
 
 /*  
@@ -127,6 +134,10 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     private lastgenerationcounter: number = 0
 
     shouldComponentUpdate(nextProps: ExplorerNodeProps, nextState) {
+        if (this.waitforaction) {
+            this.waitforaction--
+            return false
+        }
         let { lastAction } = nextProps.declarationData
         
         let { nodeuid } = lastAction
@@ -139,14 +150,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     }
 
     componentDidUpdate() {
-        if (!this._harmonizeCells()) {
-            this._respondToGlobalStateChange()
-        }
-        if ( this.props.budgetNode.new ) {
-            setTimeout(()=>{
-                this.props.budgetNode.new = false
-            })
-        } 
+        this._harmonizeCells(this.props)
         let { dataGenerationCounter } = this.props
         let { oldDataGenerationCounter } = this
         // console.log('datagenerationcounter comparison', oldDataGenerationCounter, dataGenerationCounter)
@@ -154,7 +158,16 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
             this.oldDataGenerationCounter = dataGenerationCounter
             // normalize cell settings to year dependency constraints
             this._normalizeCells()
-        }
+        }        
+        // if (!this._harmonizeCells()) {
+            this._respondToGlobalStateChange()
+        // }
+        if ( this.props.budgetNode.new ) {
+            // setTimeout(()=>{
+                this.props.budgetNode.new = false
+            // })
+        } 
+        this.updateCellsFromDeclarations()
     }
 
     // state change machine
@@ -164,9 +177,9 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
 
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes
-    private _harmonizeCells = () => {
+    private _harmonizeCells = (props) => {
         let returnvalue = false
-        let { budgetNode, declarationData } = this.props
+        let { budgetNode, declarationData } = props
         let cells = budgetNode.cells
         let { cellList } = declarationData.nodesById[budgetNode.uid]
         // harmonization required if there is a mismatch between cells and cellList
@@ -202,6 +215,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
 
         // console.log('normalizing cells',budgetNode, nodeDeclaration, budgetNode.uid,cellList,yearsRange)
 
+        this.waitforaction++
         this._stateActions.normalizeCellYearDependencies(budgetNode.uid, cellList, yearsRange)
 
     }

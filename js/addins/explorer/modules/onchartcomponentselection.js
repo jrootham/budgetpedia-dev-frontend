@@ -29,19 +29,17 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     }
     let { updateCellChartSelection } = budgetNode.actions;
     updateCellChartSelection(budgetCell.uid, chartSelectionData.selection);
-    setTimeout(() => {
-        if (!selection) {
-            budgetCell.chartSelection = null;
-            return;
-        }
-        budgetCell.chartSelection = chartSelectionData.selection;
-        let childprops = {
-            selectionrow: selectionrow,
-            nodeIndex: nodeIndex,
-            cellIndex: cellIndex,
-        };
-        budgetBranch.createChildNode(childprops);
-    });
+    if (!selection) {
+        budgetCell.chartSelection = null;
+        return;
+    }
+    budgetCell.chartSelection = chartSelectionData.selection;
+    let childprops = {
+        selectionrow: selectionrow,
+        nodeIndex: nodeIndex,
+        cellIndex: cellIndex,
+    };
+    budgetBranch.createChildNode(childprops);
 };
 exports.onChartComponentSelection = budgetBranch => nodeIndex => cellIndex => chartSelectionData => {
     applyChartComponentSelection(budgetBranch, nodeIndex, cellIndex, chartSelectionData);
