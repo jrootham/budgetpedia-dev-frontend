@@ -48,7 +48,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         nodeCells:[],
     }
 
-    waitforaction:number = 0
+    waitafteraction:number = 0
 
     private oldDataGenerationCounter: number = null
 
@@ -77,7 +77,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         if (nodeDeclaration.cellList == null) {
 
             // get controlData for cellList
-            // this.waitforaction++
+            // this.waitafteraction++
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
         // } else {
@@ -134,8 +134,8 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     private lastgenerationcounter: number = 0
 
     shouldComponentUpdate(nextProps: ExplorerNodeProps, nextState) {
-        if (this.waitforaction) {
-            this.waitforaction--
+        if (this.waitafteraction) {
+            this.waitafteraction--
             return false
         }
         let { lastAction } = nextProps.declarationData
@@ -215,7 +215,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
 
         // console.log('normalizing cells',budgetNode, nodeDeclaration, budgetNode.uid,cellList,yearsRange)
 
-        this.waitforaction++
+        this.waitafteraction++
         this._stateActions.normalizeCellYearDependencies(budgetNode.uid, cellList, yearsRange)
 
     }

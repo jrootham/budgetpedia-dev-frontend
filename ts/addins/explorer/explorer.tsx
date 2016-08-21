@@ -81,7 +81,7 @@ interface MappedBranchActions extends MappedNodeActions {
     changeVersion: Function,
     changeAspect: Function,
     toggleShowOptions: Function,
-    changeBranchData: Function,
+    changeBranchDataVersion: Function,
     updateCellChartSelection:Function,
     updateCellsDataseriesName: Function,
     resetLastAction: Function,
@@ -142,7 +142,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         })
     }
 
-    waitforaction:number = 0
+    waitafteraction:number = 0
     // see if any initialization is required
     /*
         branchList will have a count of zero from a cold start
@@ -155,7 +155,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         if (branchList.length == 0) { // initialize explorer with first branch
             this.freshstart = true
             let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
-            this.waitforaction++ // let state change cycle
+            this.waitafteraction++ // let state change cycle
             this.props.addBranchDeclaration(null,defaultSettings) // change state
         }
     }
@@ -184,8 +184,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
 
     shouldComponentUpdate() {
-        if (this.waitforaction) {
-            this.waitforaction--
+        if (this.waitafteraction) {
+            this.waitafteraction--
             return false
         }
         return true
@@ -279,7 +279,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         if (status) {
             this.props.showWaitingMessage()
         } else {
-            // this.waitforaction++
             this.props.hideWaitingMessage()
         }
 
@@ -407,7 +406,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     changeViewpoint: this.props.changeViewpoint,
                     changeVersion: this.props.changeVersion,
                     changeAspect: this.props.changeAspect,
-                    changeBranchData: this.props.changeBranchData,
+                    changeBranchDataVersion: this.props.changeBranchDataVersion,
                     toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
@@ -598,7 +597,7 @@ Explorer = connect(mapStateToProps, {
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
-    changeBranchData: ExplorerActions.changeBranchData,
+    changeBranchDataVersion: ExplorerActions.changeBranchDataVersion,
     toggleShowOptions: ExplorerActions.toggleShowOptions,
     resetLastAction: ExplorerActions.resetLastAction,
     // toggleInflationAdjustment

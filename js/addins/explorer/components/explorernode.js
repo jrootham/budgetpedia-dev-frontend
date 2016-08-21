@@ -9,7 +9,7 @@ class ExplorerNode extends Component {
         this.state = {
             nodeCells: [],
         };
-        this.waitforaction = 0;
+        this.waitafteraction = 0;
         this.oldDataGenerationCounter = null;
         this.getState = () => this.state;
         this.getProps = () => this.props;
@@ -75,7 +75,7 @@ class ExplorerNode extends Component {
             let nodeDeclaration = this.props.declarationData.nodesById[budgetNode.uid];
             let cellList = nodeDeclaration.cellList;
             let yearsRange = budgetNode.viewpointConfigPack.datasetConfig.YearsRange;
-            this.waitforaction++;
+            this.waitafteraction++;
             this._stateActions.normalizeCellYearDependencies(budgetNode.uid, cellList, yearsRange);
         };
         this.onChangeTab = (tabref) => {
@@ -128,8 +128,8 @@ class ExplorerNode extends Component {
     componentWillReceiveProps(nextProps) {
     }
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.waitforaction) {
-            this.waitforaction--;
+        if (this.waitafteraction) {
+            this.waitafteraction--;
             return false;
         }
         let { lastAction } = nextProps.declarationData;

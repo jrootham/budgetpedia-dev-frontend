@@ -118,11 +118,11 @@ export const toggleShowOptions = createAction(
     })
 )
 
-export const changeBranchData = createAction(
+export const changeBranchDataVersion = createAction(
     types.CHANGE_BRANCH_DATA, (branchuid) => ({
         branchuid,
     }), () => ({
-        explorer:true
+        explorer:false
     })
 )
 

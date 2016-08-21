@@ -51,7 +51,7 @@ export interface ExplorerBranchActions {
     changeViewpoint:Function,
     changeVersion: Function,
     toggleShowOptions: Function,
-    changeBranchData: Function,
+    changeBranchDataVersion: Function,
     changeAspect: Function,
     updateCellChartSelection: Function,  
     updateCellChartCode: Function,
@@ -100,7 +100,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         byunitselection:'Off',
     }
 
-    waitforaction:number = 0
+    waitafteraction:number = 0
 
 /*    
     getState() and getProps() for budgetBranch object:
@@ -147,6 +147,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         budgetBranch.getState = this.getState
         budgetBranch.getProps = this.getProps
         budgetBranch.setState = this.setState.bind(this)
+
         // assign callbacks to budgetBranch
         budgetBranch.actions = this._stateActions
         budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks
@@ -154,15 +155,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         this._previousControlData = declarationData // initialize
         budgetBranch.getViewpointData().then(() => {
 
+            this._stateActions.changeBranchDataVersion(budgetBranch.uid)
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
-                // console.log('call addNodeDeclaration')
-                this.waitforaction++
                 this._stateActions.addNodeDeclaration(budgetNodeParms)
             }
-            // console.log('call changeBranchData')
-            // this.waitforaction++
-            this._stateActions.changeBranchData(budgetBranch.uid)
 
         })
     }
@@ -189,16 +186,17 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     shouldComponentUpdate(nextProps: ExplorerBranchProps, nextState) {
-        let { lastAction } = nextProps.declarationData
-        // console.log('shouldComponentUpdate', this.waitforaction, lastAction)
-        if (this.waitforaction) {
-            // console.log('waitforaction',this.waitforaction)
-            this.waitforaction--
+
+        if (this.waitafteraction) {
+
+            this.waitafteraction--
             return false
+
         }
 
         if (nextState.snackbar.open != this.state.snackbar.open) return true
 
+        let { lastAction } = nextProps.declarationData
         if (!lastAction.explorer) return false
         let { branchuid } = lastAction
         if (branchuid) {
@@ -292,8 +290,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _processChangeViewpointStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData().then(()=>{
 
-            this.waitforaction++
-            this._stateActions.changeBranchData(budgetBranch.uid)
+            this._stateActions.changeBranchDataVersion(budgetBranch.uid)
             let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
             this._stateActions.addNodeDeclaration(budgetNodeParms)
 
@@ -303,8 +300,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _processChangeVersionStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData().then(()=>{
 
-            this.waitforaction++
-            this._stateActions.changeBranchData(budgetBranch.uid)
+            this._stateActions.changeBranchDataVersion(budgetBranch.uid)
             let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
             this._stateActions.addNodeDeclaration(budgetNodeParms)
 
@@ -315,9 +311,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         budgetBranch.getViewpointData().then(() => {
 
-            this.waitforaction++
-
-            this._stateActions.changeBranchData(budgetBranch.uid)
+            this._stateActions.changeBranchDataVersion(budgetBranch.uid)
             let switchResults = budgetBranch.switchAspect()
 
             let { deeperdata, shallowerdata, mismatch } = switchResults

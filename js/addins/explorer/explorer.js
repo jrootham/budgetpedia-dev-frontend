@@ -37,7 +37,7 @@ let Explorer = class extends Component {
                 }
             });
         };
-        this.waitforaction = 0;
+        this.waitafteraction = 0;
         this.addBranch = refbranchuid => {
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
             this.props.addBranchDeclaration(refbranchuid, defaultSettings);
@@ -134,7 +134,7 @@ let Explorer = class extends Component {
         if (branchList.length == 0) {
             this.freshstart = true;
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
-            this.waitforaction++;
+            this.waitafteraction++;
             this.props.addBranchDeclaration(null, defaultSettings);
         }
     }
@@ -156,8 +156,8 @@ let Explorer = class extends Component {
         this.harmonizeBranchesToState(budgetBranches, branchList, branchesById);
     }
     shouldComponentUpdate() {
-        if (this.waitforaction) {
-            this.waitforaction--;
+        if (this.waitafteraction) {
+            this.waitafteraction--;
             return false;
         }
         return true;
@@ -193,7 +193,7 @@ let Explorer = class extends Component {
                     changeViewpoint: this.props.changeViewpoint,
                     changeVersion: this.props.changeVersion,
                     changeAspect: this.props.changeAspect,
-                    changeBranchData: this.props.changeBranchData,
+                    changeBranchDataVersion: this.props.changeBranchDataVersion,
                     toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
@@ -251,7 +251,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
-    changeBranchData: ExplorerActions.changeBranchData,
+    changeBranchDataVersion: ExplorerActions.changeBranchDataVersion,
     toggleShowOptions: ExplorerActions.toggleShowOptions,
     resetLastAction: ExplorerActions.resetLastAction,
     branchMoveUp: ExplorerActions.branchMoveUp,
