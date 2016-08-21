@@ -3,7 +3,7 @@ const React = require('react');
 var { Component } = React;
 const Tabs_1 = require('material-ui/Tabs');
 const explorercell_1 = require('./explorercell');
-class ExporerNode extends Component {
+class ExplorerNode extends Component {
     constructor(...args) {
         super(...args);
         this.state = {
@@ -53,7 +53,6 @@ class ExporerNode extends Component {
         this.getChartTabs = () => {
             let { callbackid, budgetNode } = this.props;
             let budgetCells = budgetNode.cells;
-            console.log('budgetCells in getChartTabs', budgetCells, budgetNode);
             let portalSettings = budgetNode.portalConfig;
             let cellTabs = budgetCells.map((budgetCell, cellIndex) => {
                 let expandable = ((budgetCells.length > 1) && (cellIndex == 0));
@@ -179,4 +178,4 @@ class ExporerNode extends Component {
         }}, (this.props.budgetNode.nodeIndex + 1) + ". " + portalSettings.portalName), tabobject);
     }
 }
-exports.ExporerNode = ExporerNode;
+exports.ExplorerNode = ExplorerNode;

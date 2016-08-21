@@ -142,6 +142,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         })
     }
 
+    waitforaction:number = 0
     // see if any initialization is required
     /*
         branchList will have a count of zero from a cold start
@@ -149,17 +150,12 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         or loading of a saved workspace
     */
     componentWillMount() {
-        // global var used to suppress
-        // unnecessary renders
-        // global var is defined in typings-custom/general.d.ts
-        // window.nodeUpdateControl = {
-        //     nodeuid:null,
-        //     new: null,
-        // }
+
         let { branchList, branchesById } = this.props.declarationData
         if (branchList.length == 0) { // initialize explorer with first branch
             this.freshstart = true
             let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
+            this.waitforaction++
             this.props.addBranchDeclaration(null,defaultSettings)
         } else {
             // this.props.restoreBranches()
@@ -222,6 +218,20 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         return sortedBranches
     }
 
+    componentDidMount() {
+        if (this.freshstart) {
+            this.setState({
+                popover:{
+                    open:true
+                }
+            })
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.resetLastAction()
+    }
+
     /*    
         harmonize budgetBranches objects  with control data
         also update branch settings from declarations
@@ -235,33 +245,19 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById)
         
-        // in any case update settings in case change made
-        // TODO: only update when actual change made
-        // for (let i = 0; i < branchList.length; i++) {
-        //     if (branchList[i] != budgetBranches[i].uid) {
-        //         throw Error('mismatched order between declarationData list and branch list')
-        //     }
-
-        //     budgetBranches[i].settings = branchesById[branchList[i]]
-        // }
-
         this.setState({
             budgetBranches,
         })
     }
 
-    componentDidMount() {
-        if (this.freshstart) {
-            this.setState({
-                popover:{
-                    open:true
-                }
-            })
+    shouldComponentUpdate() {
+        // console.log('explorer should component update')
+        if (this.waitforaction) {
+            this.waitforaction--
+            // console.log('explorer should update = FALSE')
+            return false
         }
-    }
-
-    componentWillUnmount() {
-        this.props.resetLastAction()
+        return true
     }
 
     handleDialogOpen = (e) => {
@@ -283,9 +279,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         if (status) {
             this.props.showWaitingMessage()
         } else {
-            setTimeout(() => {
-                this.props.hideWaitingMessage()
-            })
+            // this.waitforaction++
+            this.props.hideWaitingMessage()
         }
 
     }
@@ -317,7 +312,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     // ---------------------------[ RENDER ]------------------------------ 
 
     render() {
-
+        // console.log('explorer rendering')
         let explorer = this
 
         let dialogbox =  

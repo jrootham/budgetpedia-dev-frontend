@@ -104,7 +104,6 @@ class ExplorerCell extends Component {
         let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid];
         let yearScope = cellDeclaration.yearScope;
         let { chartParms, explorerChartCode, expandable, graph_id, viewpointConfigPack } = budgetCell;
-        console.log('budgetCell', budgetCell, explorerChartCode);
         let { datasetConfig } = viewpointConfigPack;
         let { start: startYear, end: endYear } = datasetConfig.YearsRange;
         let yearSpan = endYear - startYear;

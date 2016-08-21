@@ -42,7 +42,7 @@ export interface ExporerNodeActions {
     normalizeCellYearDependencies: Function,
 }
 
-class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
+class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
 
     state = {
         nodeCells:[],
@@ -219,7 +219,7 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
         // generate array of chart tabs
         let { callbackid, budgetNode } = this.props
         let budgetCells = budgetNode.cells
-        console.log('budgetCells in getChartTabs', budgetCells, budgetNode)
+        // console.log('budgetCells in getChartTabs', budgetCells, budgetNode)
         let portalSettings = budgetNode.portalConfig
         // let { chartConfigs } = portalSettings 
         let cellTabs = budgetCells.map(
@@ -315,5 +315,5 @@ class ExporerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}
     }
 }
 
-export { ExporerNode }
+export { ExplorerNode }
 

@@ -124,7 +124,7 @@ class BudgetNode {
         let cells = []
         // // TODO: should be default for each chart...
         // build cells array
-        console.log('cellDeclarations in setCells',cellDeclarations)
+        // console.log('cellDeclarations in setCells',cellDeclarations)
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration: CellDeclaration = cellDeclarations[cellIndex]
             let {nodeDataseriesName, celluid} = cellDeclaration

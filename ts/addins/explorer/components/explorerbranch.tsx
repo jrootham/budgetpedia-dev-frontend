@@ -36,7 +36,7 @@ import {
     BranchSettings,
 } from '../modules/interfaces'
 
-import { ExporerNode } from './explorernode'
+import { ExplorerNode } from './explorernode'
 
 import { DatasetConfig, ViewpointData } from '../classes/databaseapi'
 
@@ -536,7 +536,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid)
             actions.updateCellChartCode = this._stateActions.updateCellChartCode(budgetNode.uid)
 
-            return <ExporerNode
+            return <ExplorerNode
                 key = {nodeindex}
                 callbackid = { nodeindex }
                 budgetNode = { budgetNode }

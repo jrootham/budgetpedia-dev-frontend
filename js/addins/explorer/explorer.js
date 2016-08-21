@@ -37,6 +37,7 @@ let Explorer = class extends Component {
                 }
             });
         };
+        this.waitforaction = 0;
         this.addBranch = refbranchuid => {
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
             this.props.addBranchDeclaration(refbranchuid, defaultSettings);
@@ -92,9 +93,7 @@ let Explorer = class extends Component {
                 this.props.showWaitingMessage();
             }
             else {
-                setTimeout(() => {
-                    this.props.hideWaitingMessage();
-                });
+                this.props.hideWaitingMessage();
             }
         };
         this.changeTab = branchuid => (nodeuid, tabvalue) => this.props.changeTab(branchuid, nodeuid, tabvalue);
@@ -117,6 +116,7 @@ let Explorer = class extends Component {
         if (branchList.length == 0) {
             this.freshstart = true;
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
+            this.waitforaction++;
             this.props.addBranchDeclaration(null, defaultSettings);
         }
         else {
@@ -126,14 +126,6 @@ let Explorer = class extends Component {
                 budgetBranches: budgetBranches,
             });
         }
-    }
-    componentWillReceiveProps(nextProps) {
-        let { branchList, branchesById } = nextProps.declarationData;
-        let budgetBranches = [...this.state.budgetBranches];
-        budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById);
-        this.setState({
-            budgetBranches: budgetBranches,
-        });
     }
     componentDidMount() {
         if (this.freshstart) {
@@ -146,6 +138,21 @@ let Explorer = class extends Component {
     }
     componentWillUnmount() {
         this.props.resetLastAction();
+    }
+    componentWillReceiveProps(nextProps) {
+        let { branchList, branchesById } = nextProps.declarationData;
+        let budgetBranches = [...this.state.budgetBranches];
+        budgetBranches = this.harmonizeBranches(budgetBranches, branchList, branchesById);
+        this.setState({
+            budgetBranches: budgetBranches,
+        });
+    }
+    shouldComponentUpdate() {
+        if (this.waitforaction) {
+            this.waitforaction--;
+            return false;
+        }
+        return true;
     }
     render() {
         let explorer = this;
