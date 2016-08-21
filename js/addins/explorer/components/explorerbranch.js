@@ -17,9 +17,9 @@ class ExplorerBranch extends Component {
             branchNodes: [],
             viewpointData: null,
             snackbar: { open: false, message: 'empty' },
-            aspect: null,
             byunitselection: 'Off',
         };
+        this.waitforaction = 0;
         this.getState = () => this.state;
         this.getProps = () => this.props;
         this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
@@ -58,55 +58,52 @@ class ExplorerBranch extends Component {
         };
         this._processChangeViewpointStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
-                setTimeout(() => {
-                    this._stateActions.changeBranchData(budgetBranch.uid);
-                    let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
-                    this._stateActions.addNodeDeclaration(budgetNodeParms);
-                });
+                this.waitforaction++;
+                this._stateActions.changeBranchData(budgetBranch.uid);
+                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
+                this._stateActions.addNodeDeclaration(budgetNodeParms);
             });
         };
         this._processChangeVersionStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
-                setTimeout(() => {
-                    this._stateActions.changeBranchData(budgetBranch.uid);
-                    let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
-                    this._stateActions.addNodeDeclaration(budgetNodeParms);
-                });
+                this.waitforaction++;
+                this._stateActions.changeBranchData(budgetBranch.uid);
+                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
+                this._stateActions.addNodeDeclaration(budgetNodeParms);
             });
         };
         this._processChangeAspectStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
-                setTimeout(() => {
-                    this._stateActions.changeBranchData(budgetBranch.uid);
-                    let switchResults = budgetBranch.switchAspect();
-                    let { deeperdata, shallowerdata, mismatch } = switchResults;
-                    if (mismatch) {
-                        let message = switchResults.message;
-                        let { snackbar } = this.state;
-                        snackbar = Object.assign({}, snackbar);
-                        snackbar.message = message;
-                        snackbar.open = true;
-                        this.setState({
-                            snackbar: snackbar,
-                        });
+                this.waitforaction++;
+                this._stateActions.changeBranchData(budgetBranch.uid);
+                let switchResults = budgetBranch.switchAspect();
+                let { deeperdata, shallowerdata, mismatch } = switchResults;
+                if (mismatch) {
+                    let message = switchResults.message;
+                    let { snackbar } = this.state;
+                    snackbar = Object.assign({}, snackbar);
+                    snackbar.message = message;
+                    snackbar.open = true;
+                    this.setState({
+                        snackbar: snackbar,
+                    });
+                }
+                if (deeperdata || shallowerdata) {
+                    let message = null;
+                    if (deeperdata) {
+                        message = "More drilldown is available for current aspect selection";
                     }
-                    if (deeperdata || shallowerdata) {
-                        let message = null;
-                        if (deeperdata) {
-                            message = "More drilldown is available for current aspect selection";
-                        }
-                        else {
-                            message = "Less drilldown is available for current aspect selection";
-                        }
-                        let { snackbar } = this.state;
-                        snackbar = Object.assign({}, snackbar);
-                        snackbar.message = message;
-                        snackbar.open = true;
-                        this.setState({
-                            snackbar: snackbar,
-                        });
+                    else {
+                        message = "Less drilldown is available for current aspect selection";
                     }
-                });
+                    let { snackbar } = this.state;
+                    snackbar = Object.assign({}, snackbar);
+                    snackbar.message = message;
+                    snackbar.open = true;
+                    this.setState({
+                        snackbar: snackbar,
+                    });
+                }
             });
         };
         this.handleSnackbarRequestClose = () => {
@@ -162,9 +159,7 @@ class ExplorerBranch extends Component {
             });
             let globalStateActions = this._stateActions;
             globalStateActions.removeNodeDeclarations(removeditems);
-            setTimeout(() => {
-                globalStateActions.changeViewpoint(budgetBranch.uid, viewpointname);
-            });
+            globalStateActions.changeViewpoint(budgetBranch.uid, viewpointname);
         };
         this.switchVersion = (versionName) => {
             let { budgetBranch } = this.props;
@@ -175,9 +170,7 @@ class ExplorerBranch extends Component {
             });
             let globalStateActions = this._stateActions;
             globalStateActions.removeNodeDeclarations(removeditems);
-            setTimeout(() => {
-                globalStateActions.changeVersion(budgetBranch.uid, versionName);
-            });
+            globalStateActions.changeVersion(budgetBranch.uid, versionName);
         };
         this.switchAspect = (aspect) => {
             switch (aspect) {
@@ -193,7 +186,6 @@ class ExplorerBranch extends Component {
             this.props.globalStateActions.changeAspect(budgetBranch.uid, aspect);
         };
         this.switchUnit = unitindex => {
-            this.props.globalStateActions.resetLastAction();
             this.setState({
                 byunitselection: unitindex
             });
@@ -260,20 +252,16 @@ class ExplorerBranch extends Component {
         budgetBranch.setState = this.setState.bind(this);
         budgetBranch.actions = this._stateActions;
         budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks;
-        this.setState({
-            aspect: this.props.budgetBranch.settings.viewpoint,
-        });
     }
     componentDidMount() {
         let { budgetBranch, declarationData } = this.props;
         this._previousControlData = declarationData;
         budgetBranch.getViewpointData().then(() => {
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
-                setTimeout(() => {
-                    this._stateActions.changeBranchData(budgetBranch.uid);
-                    let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
-                    this._stateActions.addNodeDeclaration(budgetNodeParms);
-                });
+                this.waitforaction++;
+                this._stateActions.changeBranchData(budgetBranch.uid);
+                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
+                this._stateActions.addNodeDeclaration(budgetNodeParms);
             }
         });
     }
@@ -290,6 +278,11 @@ class ExplorerBranch extends Component {
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
+        if (this.waitforaction) {
+            console.log('waitforaction', this.waitforaction);
+            this.waitforaction--;
+            return false;
+        }
         let { lastAction } = nextProps.declarationData;
         if (nextState.snackbar.open != this.state.snackbar.open)
             return true;

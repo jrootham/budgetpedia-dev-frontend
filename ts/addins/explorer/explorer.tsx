@@ -251,10 +251,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
 
     shouldComponentUpdate() {
-        // console.log('explorer should component update')
         if (this.waitforaction) {
             this.waitforaction--
-            // console.log('explorer should update = FALSE')
             return false
         }
         return true

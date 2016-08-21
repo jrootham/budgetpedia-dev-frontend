@@ -181,7 +181,7 @@ class BudgetBranch {
                         return {nodeuid:item.uid, cellList:item.cellDeclarationList}
                     })
                     actions.removeNodeDeclarations(removedids)
-                    setTimeout(()=> {
+                    // setTimeout(()=> {
 
                         let prevBudgetCell:BudgetCell = prevBudgetNode.cells[0]
 
@@ -194,7 +194,7 @@ class BudgetBranch {
                         // let fcurrent = fn(nodeIndex)(0)
                         let budgetBranch = this
                         budgetBranch.createChildNode(childprops)
-                    })
+                    // })
                     budgetNode = null // branchNodes[nodeIndex] // created by createChildNode as side effect
                 } else {
                     budgetNode.update(
@@ -354,10 +354,10 @@ class BudgetBranch {
         setTimeout(() => {
 
             workingStatus(false)
-            setTimeout(() => {
+            // setTimeout(() => {
                 // updateChartSelections()
                 onPortalCreation()
-            })
+            // })
 
         })
     }

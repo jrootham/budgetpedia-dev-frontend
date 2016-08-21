@@ -96,9 +96,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         branchNodes:[],
         viewpointData:null,
         snackbar:{open:false,message:'empty'},
-        aspect:null,
+        // aspect:null,
         byunitselection:'Off',
     }
+
+    waitforaction:number = 0
 
 /*    
     getState() and getProps() for budgetBranch object:
@@ -150,9 +152,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         // assign callbacks to budgetBranch
         budgetBranch.actions = this._stateActions
         budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks
-        this.setState({
-            aspect: this.props.budgetBranch.settings.viewpoint,
-        })
+        // this.setState({
+        //     aspect: this.props.budgetBranch.settings.viewpoint,
+        // })
     }
 
     // initialize once -- set declarationData; initialize viewpointData; initialize branch
@@ -162,13 +164,14 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         budgetBranch.getViewpointData().then(() => {
 
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
-                setTimeout(()=> {
+                // setTimeout(()=> {
                     // this will trigger harmonization between declarations 
                     // and local node instances in componentDidUpdate
+                    this.waitforaction++
                     this._stateActions.changeBranchData(budgetBranch.uid)
                     let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
                     this._stateActions.addNodeDeclaration(budgetNodeParms)
-                })
+                // })
             }
 
         })
@@ -189,6 +192,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     shouldComponentUpdate(nextProps: ExplorerBranchProps, nextState) {
+        if (this.waitforaction) {
+            console.log('waitforaction',this.waitforaction)
+            this.waitforaction--
+            return false
+        }
         let { lastAction } = nextProps.declarationData
 
         if (nextState.snackbar.open != this.state.snackbar.open) return true
@@ -288,11 +296,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _processChangeViewpointStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData().then(()=>{
 
-            setTimeout(()=>{
+            // setTimeout(()=>{
+                this.waitforaction++
                 this._stateActions.changeBranchData(budgetBranch.uid)
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
                 this._stateActions.addNodeDeclaration(budgetNodeParms)
-            })
+            // })
 
         })
     }
@@ -300,11 +309,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _processChangeVersionStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData().then(()=>{
 
-            setTimeout(()=>{
+            // setTimeout(()=>{
+                this.waitforaction++
                 this._stateActions.changeBranchData(budgetBranch.uid)
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
                 this._stateActions.addNodeDeclaration(budgetNodeParms)
-            })
+            // })
 
         })
     }
@@ -313,7 +323,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         budgetBranch.getViewpointData().then(() => {
 
-            setTimeout(() => {
+            // setTimeout(() => {
+                this.waitforaction++
 
                 this._stateActions.changeBranchData(budgetBranch.uid)
                 let switchResults = budgetBranch.switchAspect()
@@ -348,7 +359,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
                 }
 
-            })
+            // })
         })
     }
 
@@ -425,9 +436,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let globalStateActions = this._stateActions
         globalStateActions.removeNodeDeclarations(removeditems)
         // now the viewpoint can be changed, triggering a change in viewpoint data
-        setTimeout(() => {
+        // setTimeout(() => {
             globalStateActions.changeViewpoint(budgetBranch.uid, viewpointname)
-        })
+        // })
     }
 
     switchVersion = (versionName: string) => {
@@ -443,9 +454,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let globalStateActions = this._stateActions
         globalStateActions.removeNodeDeclarations(removeditems)
         // now the viewpoint can be changed, triggering a change in viewpoint data
-        setTimeout(() => {
+        // setTimeout(() => {
             globalStateActions.changeVersion(budgetBranch.uid, versionName)
-        })
+        // })
     }
 
     switchAspect = (aspect:string) => {
@@ -470,7 +481,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     switchUnit = unitindex => {
-        this.props.globalStateActions.resetLastAction() // TODO: this is a hack!!
         this.setState({
             byunitselection:unitindex
         })
@@ -480,6 +490,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
         this.props.globalStateActions.toggleShowOptions( budgetBranch.uid, value )
+
     }
 
     handleSearch = () => {
