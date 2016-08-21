@@ -209,14 +209,26 @@ let cellsById = (state = {}, action) => {
         case actions_1.types.UPDATE_CELL_SELECTION: {
             let { celluid } = action.payload;
             let newcell = Object.assign({}, newstate[celluid]);
-            newcell.chartSelection = action.payload.selection;
+            let chartSelection = action.payload.selection;
+            if (Array.isArray(chartSelection) && chartSelection.length == 0) {
+                chartSelection = null;
+            }
+            let newChartConfigs = Object.assign({}, newcell.yearScopeChartConfigs);
+            let yearSettings = Object.assign({}, newChartConfigs[newcell.yearScope]);
+            yearSettings.chartSelection = chartSelection;
+            newChartConfigs[newcell.yearScope] = yearSettings;
+            newcell.yearScopeChartConfigs = newChartConfigs;
             newstate[celluid] = newcell;
             return newstate;
         }
         case actions_1.types.UPDATE_CELL_CHART_CODE: {
             let { celluid, explorerChartCode } = action.payload;
             let newcell = Object.assign({}, newstate[celluid]);
-            newcell.explorerChartCode = explorerChartCode;
+            let newChartConfigs = Object.assign({}, newcell.yearScopeChartConfigs);
+            let yearSettings = Object.assign({}, newChartConfigs[newcell.yearScope]);
+            yearSettings.explorerChartCode = explorerChartCode;
+            newChartConfigs[newcell.yearScope] = yearSettings;
+            newcell.yearScopeChartConfigs = newChartConfigs;
             newstate[celluid] = newcell;
             return newstate;
         }

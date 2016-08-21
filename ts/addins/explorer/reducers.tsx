@@ -231,12 +231,28 @@ let cellsById = (state = { }, action) => {
             return newstate
         }
 
+        // TODO empty chartSlection - empty array rather than null
         case actiontypes.UPDATE_CELL_SELECTION: {
 
             let { celluid } = action.payload
             let newcell = Object.assign({},newstate[celluid])
-            newcell.chartSelection = action.payload.selection
+
+            let chartSelection = action.payload.selection
+            // console.log('chartSelection',chartSelection)
+            if (Array.isArray(chartSelection) && chartSelection.length == 0) {
+                chartSelection = null
+            }
+            // newcell.chartSelection = chartSelection
+
+            let newChartConfigs = Object.assign({},newcell.yearScopeChartConfigs)
+            let yearSettings = Object.assign({},newChartConfigs[newcell.yearScope])
+            yearSettings.chartSelection = chartSelection
+            newChartConfigs[newcell.yearScope] = yearSettings
+            newcell.yearScopeChartConfigs = newChartConfigs
+
             newstate[celluid] = newcell
+
+            // console.log('newstate from selection',newstate)
             return newstate
         }
 
@@ -253,11 +269,22 @@ let cellsById = (state = { }, action) => {
         // }
 
         case actiontypes.UPDATE_CELL_CHART_CODE: {
+
             let { celluid, explorerChartCode } = action.payload
             let newcell = Object.assign({},newstate[celluid])
-            newcell.explorerChartCode = explorerChartCode
+
+            // newcell.explorerChartCode = explorerChartCode
+
+            let newChartConfigs = Object.assign({},newcell.yearScopeChartConfigs)
+            let yearSettings = Object.assign({},newChartConfigs[newcell.yearScope])
+            yearSettings.explorerChartCode = explorerChartCode
+            newChartConfigs[newcell.yearScope] = yearSettings
+            newcell.yearScopeChartConfigs = newChartConfigs
+
             newstate[celluid] = newcell
+            // console.log('newstate from chart code',newstate)
             return newstate
+
         }
 
         case actiontypes.NORMALIZE_CELL_YEAR_DEPENDENCIES: {

@@ -152,8 +152,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         switch (lastAction.type) {
             case cellActionTypes.UPDATE_CELL_CHART_CODE: {
 
-                budgetCell.switchChartCode(cellDeclaration.explorerChartCode)
-                // this.forceUpdate() // switchChartCode does not trigger redraw // TODO try to avoid this
+                budgetCell.switchChartCode(
+                    cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope].explorerChartCode)
                 break;
             }
         }

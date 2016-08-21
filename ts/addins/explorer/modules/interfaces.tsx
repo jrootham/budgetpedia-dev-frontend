@@ -10,7 +10,7 @@ interface BranchSettings {
     aspect: string,
     defaultVersions:any,
     defaultAspects:any,
-    chartType: string,
+    // chartType: string,
     inflationAdjusted: boolean,
     nodeList:any[],
     showOptions: boolean,

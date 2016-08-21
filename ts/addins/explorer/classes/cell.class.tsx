@@ -50,8 +50,23 @@ interface viewpointConfigPack {
 
 export interface CellDeclaration {
     nodeDataseriesName:string, 
-    explorerChartCode:string, 
-    chartSelection:ChartSelectionCell[],
+    // explorerChartCode:string, 
+    yearScopeChartConfigs:{
+        ['OneYear']:{
+            chartSelection:ChartSelectionCell[],
+            explorerChartCode: string,
+        },
+        ['TwoYears']:{
+            chartSelection:ChartSelectionCell[],
+            explorerChartCode: string,
+        },
+        ['AllYears']:{
+            chartSelection:ChartSelectionCell[],
+            explorerChartCode: string,
+        },
+    },
+    // chartSelection:ChartSelectionCell[],
+    yearScope: string,
     celluid?: string,
 }
 

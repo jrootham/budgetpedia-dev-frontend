@@ -110,7 +110,6 @@ let branchDefaults = {
         'SUMMARY': 'Expenses',
         'PBFT': 'Expenses',
     },
-    chartType: "ColumnChart",
     inflationAdjusted: true,
     nodeList: [],
     showOptions: false,
@@ -137,8 +136,6 @@ let explorer = {
                     explorerChartCode: "Timelines",
                 },
             },
-            chartSelection: null,
-            explorerChartCode: "ColumnChart",
             yearSelections: { leftYear: 2020, rightYear: 2030 },
             yearScope: "TwoYears",
         }

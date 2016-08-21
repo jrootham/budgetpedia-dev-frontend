@@ -64,7 +64,7 @@ class ExplorerCell extends Component {
             let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid];
             switch (lastAction.type) {
                 case actions_1.cellTypes.UPDATE_CELL_CHART_CODE: {
-                    budgetCell.switchChartCode(cellDeclaration.explorerChartCode);
+                    budgetCell.switchChartCode(cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope].explorerChartCode);
                     break;
                 }
             }
