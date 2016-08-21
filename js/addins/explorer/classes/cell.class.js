@@ -19,7 +19,6 @@ class BudgetCell {
             }
         };
         this.switchChartCode = chartCode => {
-            this.explorerChartCode = chartCode;
             this.setChartParms();
         };
         this.setChartParms = () => {
@@ -316,10 +315,14 @@ class BudgetCell {
             return row;
         };
         let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs;
-        this.explorerChartCode = explorerChartCode;
         this.nodeDataseriesName = nodeDataseriesName;
         this.chartSelection = chartSelection;
         this.uid = uid;
+    }
+    get explorerChartCode() {
+        let cellDeclaration = this.getProps().declarationData.cellsById[this.uid];
+        let settings = cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope];
+        return settings.explorerChartCode;
     }
     get googleChartType() {
         return constants_1.ChartCodeToGoogleChartType[this.explorerChartCode];

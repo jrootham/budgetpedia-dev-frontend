@@ -87,7 +87,7 @@ class BudgetCell {
 
     constructor(specs:CellConstructorArgs) {
         let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs
-        this.explorerChartCode = explorerChartCode
+        // this.explorerChartCode = explorerChartCode
         this.nodeDataseriesName = nodeDataseriesName
         this.chartSelection = chartSelection
         this.uid = uid
@@ -102,7 +102,11 @@ class BudgetCell {
 
     // -------------[ primary control properties, set on creation ]---------------
 
-    private explorerChartCode: string // application code for chart type selected; converted to google type
+    get explorerChartCode() {
+        let cellDeclaration:CellDeclaration = this.getProps().declarationData.cellsById[this.uid]
+        let settings = cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope]
+        return settings.explorerChartCode
+    } 
     nodeDataseriesName:string // the ref to the data to be presented, typically Components or CommonObjects
     chartSelection: ChartSelectionCell[] // returned by google chart; points to row selected by user
     uid: string // universal id; set by addCellDeclarations action
@@ -176,7 +180,7 @@ class BudgetCell {
 
     switchChartCode = chartCode => {
 
-        this.explorerChartCode = chartCode
+        // this.explorerChartCode = chartCode
 
         this.setChartParms()
 

@@ -53,6 +53,7 @@ class ExporerNode extends Component {
         this.getChartTabs = () => {
             let { callbackid, budgetNode } = this.props;
             let budgetCells = budgetNode.cells;
+            console.log('budgetCells in getChartTabs', budgetCells, budgetNode);
             let portalSettings = budgetNode.portalConfig;
             let cellTabs = budgetCells.map((budgetCell, cellIndex) => {
                 let expandable = ((budgetCells.length > 1) && (cellIndex == 0));
