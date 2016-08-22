@@ -40,6 +40,7 @@ export interface ExporerNodeActions {
     updateCellChartCode: Function,
     updateCellChartSelection: Function,
     normalizeCellYearDependencies: Function,
+    updateNode: Function,
 }
 
 class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
@@ -49,8 +50,6 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     }
 
     waitafteraction:number = 0
-
-    private oldDataGenerationCounter: number = null
 
     // for BudgetNode instance...
     getState = () => this.state
@@ -71,33 +70,39 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
 
         if (nodeDeclaration.cellList == null) {
-
+            // console.log('declaring new cells')
             // get controlData for cellList
             // this.waitafteraction++
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
 
         } else {
-            this.updateCellsFromDeclarations(this.props)
+            // console.log('updating node from declarations in componentWillMount', budgetNode.uid)
+            this._stateActions.updateNode(budgetNode.uid) // trigger update -> render
+            // this.updateCellsFromDeclarations(this.props)
         }
 
     }
 
-    // TODO: generate action to update cell nodeDataseriesName
+    private oldDataGenerationCounter: number = null
+
     // remove obsolete cell objects; update cell list if needed
     componentWillReceiveProps(nextProps) {
         let { dataGenerationCounter, budgetNode } = nextProps
         let { oldDataGenerationCounter } = this
+        let lastAction = nextProps.declarationData.lastAction
+        // console.log('lastAction from componentWillReceiveProps', lastAction.type, lastAction.nodeuid, budgetNode.uid)
 
         if ( oldDataGenerationCounter === null || (dataGenerationCounter > oldDataGenerationCounter)) {
-
+            // console.log('normalizing cellDeclarations', budgetNode.uid)
             this.oldDataGenerationCounter = dataGenerationCounter
             // normalize cell settings to year dependency constraints
-            this.waitafteraction++
+            // this.waitafteraction++
             this._normalizeCellDeclarations(nextProps)
 
         } else {
 
+            // console.log('updating cells from declarations in componentWillReceiveProps', budgetNode.uid)
             this.updateCellsFromDeclarations(nextProps)
             this._harmonizeCellsToState(nextProps)
             if ( budgetNode.new ) {
@@ -113,66 +118,70 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     this reduces updates by about half, therefore 
     reducing update delay caused by cascading events
 */    
-    private lastgenerationcounter: number = 0
+    private lastactiongeneration: number = 0
+    
+    shouldComponentUpdate(nextProps: ExplorerNodeProps) {
 
-    shouldComponentUpdate(nextProps: ExplorerNodeProps, nextState) {
+        let generation = nextProps.declarationData.generation
+        // let { lastAction } = nextProps.declarationData
+        // console.log('lastAction', Object.assign({},lastAction), this.props.budgetNode.uid, lastAction.nodeuid)
+        // let { nodeuid } = lastAction
+        // console.log('generations', generation, this.lastactiongeneration, this.props.budgetNode)
         if (this.waitafteraction) {
+            this.lastactiongeneration = generation
             this.waitafteraction--
+            // console.log('shouldUpdate = false for waitafteraction', this.props.budgetNode.uid, lastAction)
             return false
         }
-        let { lastAction } = nextProps.declarationData
-        
-        let { nodeuid } = lastAction
-        if (nodeuid) {
-            let retval = (nextProps.budgetNode.uid == nodeuid)? true: false
+        let { lastTargetedAction } = nextProps.declarationData
+        let uid = this.props.budgetNode.uid
+        if (generation > this.lastactiongeneration && lastTargetedAction[uid]) {
+            // let retval = true
+            // console.log('processing action', lastAction, nextProps.budgetNode.uid)
+            // if (nodeuid) {
 
+            //     retval = (nextProps.budgetNode.uid == nodeuid)? true: false
+            //     console.log('allow action = ',retval)
+
+            // }
+            // this.lastactiongeneration = generation
+            // return retval
+            // console.log('processing targetedAction', lastTargetedAction, nextProps.budgetNode.uid)
+            let retval = true
+            if ( !(
+                lastTargetedAction && 
+                lastTargetedAction[uid] && 
+                lastTargetedAction[uid].generation > 
+                this.lastactiongeneration)) {
+                retval = false
+            }
+            this.lastactiongeneration = generation
             return retval
         }
         return true
     }
 
-    componentDidUpdate() {
-        this._respondToGlobalStateChange()
-    }
+    // componentDidUpdate() {
+    //     this._respondToGlobalStateChange()
+    // }
 
     updateCellsFromDeclarations = (props) => {
         let { budgetNode, declarationData }:{budgetNode:BudgetNode, declarationData:any} = props // this.props
         if (budgetNode.updated) {
+            // console.log('updated cells being saved - setState')
             this.setState({
                 nodeCells:budgetNode.newCells
             })
-            let updatedCells = budgetNode.newCells
-            let cellslist = []
-            for (let cell of updatedCells) {
-                cellslist.push(
-                    {
-                        celluid: cell.uid, 
-                        nodeDataseriesName: cell.nodeDataseriesName 
-                    }
-                )
-            }
-            // this._stateActions.updateCellsDataseriesName(cellslist)
             budgetNode.newCells = null
             budgetNode.updated = false
-        } else {
-            let cells = budgetNode.cells
-            let { cellsById } = declarationData
-            let newCells = cells.filter(cell =>{
-                return !!cellsById[cell.uid]
-            })
-            if (newCells.length != cells.length) {
-                this.setState({
-                    nodeCells:newCells
-                })
-            }
         }
 
     }
 
-    // state change machine
-    private _respondToGlobalStateChange = () => {
+    // // state change machine
+    // private _respondToGlobalStateChange = () => {
 
-    }
+    // }
 
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes
@@ -181,6 +190,18 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         let { budgetNode, declarationData } = props
         let cells = budgetNode.cells
         let { cellList } = declarationData.nodesById[budgetNode.uid]
+
+        // remove any deleted cells
+        let { cellsById } = declarationData
+        let newCells = cells.filter(cell =>{
+            return !!cellsById[cell.uid]
+        })
+        if (newCells.length != cells.length) {
+            this.setState({
+                nodeCells:newCells
+            })
+            cells = budgetNode.cells
+        }
         // harmonization required if there is a mismatch between cells and cellList
         if ((cells.length != cellList.length) && (this.harmonizecount == null)) {
             this.harmonizecount = cellList.length - cells.length
@@ -207,7 +228,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         let { budgetNode } = props
         let nodeDeclaration = props.declarationData.nodesById[budgetNode.uid] 
 
-        // console.log('budgetNode in normalizeCells', budgetNode)       
+        // console.log('budgetNode in normalizeCells', budgetNode.uid)       
 
         let cellList = nodeDeclaration.cellList
         let yearsRange = budgetNode.viewpointConfigPack.datasetConfig.YearsRange
@@ -270,7 +291,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
                     verticalAlign:"middle", 
                     lineHeight:"400px"
                 }}>
-            No data...
+            Waiting for data...
             </div>
         }
         return (
@@ -287,6 +308,8 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     }
 
     render() {
+
+        // console.log('render node', this.props.budgetNode.uid, this.props.budgetNode)
 
         let chartTabs = this.getChartTabs()
 

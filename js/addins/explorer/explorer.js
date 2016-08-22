@@ -118,6 +118,7 @@ let Explorer = class extends Component {
         this.normalizeCellYearDependencies = branchuid => (nodeuid, cellList, yearsRange) => this.props.normalizeCellYearDependencies(branchuid, nodeuid, cellList, yearsRange);
         this.updateCellChartSelection = branchuid => nodeuid => (celluid, selection) => this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection);
         this.updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode);
+        this.updateNode = branchuid => nodeuid => this.props.updateNode(branchuid, nodeuid);
         this.onExpandChange = (expanded) => {
             this.props.resetLastAction();
         };
@@ -158,7 +159,8 @@ let Explorer = class extends Component {
         let budgetBranches = [...this.state.budgetBranches];
         this.harmonizeBranchesToState(budgetBranches, branchList, branchesById);
     }
-    shouldComponentUpdate() {
+    shouldComponentUpdate(nextProps) {
+        let { lastAction, generation } = nextProps.declarationData;
         if (this.waitafteraction) {
             this.waitafteraction--;
             return false;
@@ -200,6 +202,7 @@ let Explorer = class extends Component {
                     toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
+                    updateNode: this.updateNode(budgetBranch.uid),
                 };
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,
@@ -262,6 +265,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     changeTab: ExplorerActions.changeTab,
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
     updateCellChartCode: ExplorerActions.updateCellChartCode,
+    updateNode: ExplorerActions.updateNode,
 })(Explorer);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;

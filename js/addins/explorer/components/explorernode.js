@@ -10,41 +10,19 @@ class ExplorerNode extends Component {
             nodeCells: [],
         };
         this.waitafteraction = 0;
-        this.oldDataGenerationCounter = null;
         this.getState = () => this.state;
         this.getProps = () => this.props;
-        this.lastgenerationcounter = 0;
+        this.oldDataGenerationCounter = null;
+        this.lastactiongeneration = 0;
         this.updateCellsFromDeclarations = (props) => {
             let { budgetNode, declarationData } = props;
             if (budgetNode.updated) {
                 this.setState({
                     nodeCells: budgetNode.newCells
                 });
-                let updatedCells = budgetNode.newCells;
-                let cellslist = [];
-                for (let cell of updatedCells) {
-                    cellslist.push({
-                        celluid: cell.uid,
-                        nodeDataseriesName: cell.nodeDataseriesName
-                    });
-                }
                 budgetNode.newCells = null;
                 budgetNode.updated = false;
             }
-            else {
-                let cells = budgetNode.cells;
-                let { cellsById } = declarationData;
-                let newCells = cells.filter(cell => {
-                    return !!cellsById[cell.uid];
-                });
-                if (newCells.length != cells.length) {
-                    this.setState({
-                        nodeCells: newCells
-                    });
-                }
-            }
-        };
-        this._respondToGlobalStateChange = () => {
         };
         this.harmonizecount = null;
         this._harmonizeCellsToState = (props) => {
@@ -52,6 +30,16 @@ class ExplorerNode extends Component {
             let { budgetNode, declarationData } = props;
             let cells = budgetNode.cells;
             let { cellList } = declarationData.nodesById[budgetNode.uid];
+            let { cellsById } = declarationData;
+            let newCells = cells.filter(cell => {
+                return !!cellsById[cell.uid];
+            });
+            if (newCells.length != cells.length) {
+                this.setState({
+                    nodeCells: newCells
+                });
+                cells = budgetNode.cells;
+            }
             if ((cells.length != cellList.length) && (this.harmonizecount == null)) {
                 this.harmonizecount = cellList.length - cells.length;
                 let cellParms = [];
@@ -101,7 +89,7 @@ class ExplorerNode extends Component {
                     textAlign: "center",
                     verticalAlign: "middle",
                     lineHeight: "400px"
-                }}, "No data...");
+                }}, "Waiting for data...");
             }
             return (React.createElement(Tabs_1.Tabs, {value: tabSelection, onChange: (tabref) => {
                 this.onChangeTab(tabref);
@@ -121,15 +109,15 @@ class ExplorerNode extends Component {
             this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
         }
         else {
-            this.updateCellsFromDeclarations(this.props);
+            this._stateActions.updateNode(budgetNode.uid);
         }
     }
     componentWillReceiveProps(nextProps) {
         let { dataGenerationCounter, budgetNode } = nextProps;
         let { oldDataGenerationCounter } = this;
+        let lastAction = nextProps.declarationData.lastAction;
         if (oldDataGenerationCounter === null || (dataGenerationCounter > oldDataGenerationCounter)) {
             this.oldDataGenerationCounter = dataGenerationCounter;
-            this.waitafteraction++;
             this._normalizeCellDeclarations(nextProps);
         }
         else {
@@ -140,21 +128,27 @@ class ExplorerNode extends Component {
             }
         }
     }
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps) {
+        let generation = nextProps.declarationData.generation;
         if (this.waitafteraction) {
+            this.lastactiongeneration = generation;
             this.waitafteraction--;
             return false;
         }
-        let { lastAction } = nextProps.declarationData;
-        let { nodeuid } = lastAction;
-        if (nodeuid) {
-            let retval = (nextProps.budgetNode.uid == nodeuid) ? true : false;
+        let { lastTargetedAction } = nextProps.declarationData;
+        let uid = this.props.budgetNode.uid;
+        if (generation > this.lastactiongeneration && lastTargetedAction[uid]) {
+            let retval = true;
+            if (!(lastTargetedAction &&
+                lastTargetedAction[uid] &&
+                lastTargetedAction[uid].generation >
+                    this.lastactiongeneration)) {
+                retval = false;
+            }
+            this.lastactiongeneration = generation;
             return retval;
         }
         return true;
-    }
-    componentDidUpdate() {
-        this._respondToGlobalStateChange();
     }
     render() {
         let chartTabs = this.getChartTabs();

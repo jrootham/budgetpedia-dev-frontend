@@ -26,6 +26,7 @@ var types;
     types.TOGGLE_NET = 'TOGGLE_NET';
     types.TOGGLE_VARIANCE = 'TOGGLE_VARIANCE';
     types.UPDATE_CELL_YEAR_SELECTIONS = 'UPDATE_CELL_YEAR_SELECTIONS';
+    types.UPDATE_NODE = 'UPDATE_NODE';
 })(types = exports.types || (exports.types = {}));
 var branchTypes;
 (function (branchTypes) {
@@ -43,6 +44,7 @@ var nodeTypes;
     nodeTypes.ADD_CELLS = types.ADD_CELLS;
     nodeTypes.CHANGE_TAB = types.CHANGE_TAB;
     nodeTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES = types.NORMALIZE_CELL_YEAR_DEPENDENCIES;
+    nodeTypes.UPDATE_NODE = types.UPDATE_NODE;
 })(nodeTypes = exports.nodeTypes || (exports.nodeTypes = {}));
 var cellTypes;
 (function (cellTypes) {
@@ -98,6 +100,12 @@ exports.changeBranchDataVersion = redux_actions_1.createAction(types.CHANGE_BRAN
 exports.changeTab = redux_actions_1.createAction(types.CHANGE_TAB, (branchuid, nodeuid, tabvalue) => ({
     nodeuid: nodeuid,
     tabvalue: tabvalue,
+    branchuid: branchuid,
+}), () => ({
+    explorer: true
+}));
+exports.updateNode = redux_actions_1.createAction(types.UPDATE_NODE, (branchuid, nodeuid) => ({
+    nodeuid: nodeuid,
     branchuid: branchuid,
 }), () => ({
     explorer: true

@@ -69,6 +69,7 @@ interface MappedNodeActions {
     changeTab:Function,
     updateCellChartCode:Function,
     normalizeCellYearDependencies: Function,
+    updateNode: Function,
     // removeCellDeclarations:Function,
     // changeChart:Function,
     // toggleDelta:Function,
@@ -188,7 +189,9 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         
     }
 
-    shouldComponentUpdate() {
+    shouldComponentUpdate(nextProps) {
+        let { lastAction, generation } = nextProps.declarationData
+        // console.log('lastAction in explorer', generation, lastAction)
         if (this.waitafteraction) {
             this.waitafteraction--
             return false
@@ -299,6 +302,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection )
     private updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => 
         this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode)
+    private updateNode = branchuid => nodeuid => 
+        this.props.updateNode(branchuid, nodeuid)
 
     onExpandChange = (expanded) => {
         // TODO: change background color of title if it is collapsed
@@ -414,6 +419,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
+                    updateNode: this.updateNode(budgetBranch.uid),
                 }
 
                 let displayCallbackFunctions = { 
@@ -615,6 +621,7 @@ Explorer = connect(mapStateToProps, {
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
     // updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
     updateCellChartCode: ExplorerActions.updateCellChartCode,
+    updateNode: ExplorerActions.updateNode,
     // toggleDelta
     // toggleVariance
     

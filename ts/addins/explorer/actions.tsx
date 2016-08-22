@@ -29,6 +29,7 @@ export namespace types {
     export const TOGGLE_NET = 'TOGGLE_NET'
     export const TOGGLE_VARIANCE = 'TOGGLE_VARIANCE'
     export const UPDATE_CELL_YEAR_SELECTIONS = 'UPDATE_CELL_YEAR_SELECTIONS'
+    export const UPDATE_NODE = 'UPDATE_NODE'
 }
 
 export namespace branchTypes {
@@ -46,6 +47,7 @@ export namespace nodeTypes {
     export import ADD_CELLS = types.ADD_CELLS
     export import CHANGE_TAB = types.CHANGE_TAB
     export import NORMALIZE_CELL_YEAR_DEPENDENCIES = types.NORMALIZE_CELL_YEAR_DEPENDENCIES
+    export import UPDATE_NODE = types.UPDATE_NODE
     // export import UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME
 
 }
@@ -132,6 +134,15 @@ export const changeTab = createAction(
     types.CHANGE_TAB, (branchuid, nodeuid, tabvalue) => ({
         nodeuid,
         tabvalue,
+        branchuid,
+    }), () => ({
+        explorer:true
+    })
+)
+
+export const updateNode = createAction(
+    types.UPDATE_NODE, (branchuid, nodeuid) => ({
+        nodeuid,
         branchuid,
     }), () => ({
         explorer:true

@@ -318,23 +318,25 @@ let cellsById = (state = { }, action) => {
     }
 }
 
-let defaultState = {
+let lastActionDefaultState = {
     type:undefined, branchuid:undefined, nodeuid:undefined,celluid:undefined, explorer:undefined,
 }
 
-let lastAction = (state = defaultState , action) => {
+let lastAction = (state = lastActionDefaultState , action) => {
 
+    // console.log('lastAction from source', action, generationcounter)
+
+    let newstate = Object.assign({},state)
     if (!action.payload && !(action.type == actiontypes.RESET_LAST_ACTION)) {
-        let newstate = Object.assign({}, defaultState)
+        let newstate = Object.assign({}, lastActionDefaultState)
         newstate.type = action.type
         return newstate
     }
 
     let { type } = action
-    let newstate = Object.assign({},state)
     switch (type) {
         case actiontypes.RESET_LAST_ACTION: {
-            let newstate = Object.assign({}, defaultState)
+            let newstate = Object.assign({}, lastActionDefaultState)
             newstate.type = action.type
             newstate.explorer = action.meta.explorer
             return newstate
@@ -344,14 +346,71 @@ let lastAction = (state = defaultState , action) => {
             if (action.meta) {
                 newstate.explorer = action.meta.explorer
             }
+            let { payload } = action
             newstate.type = action.type
-            newstate.branchuid = action.payload.branchuid
-            newstate.nodeuid = action.payload.nodeuid
-            newstate.celluid = action.payload.celluid
+            newstate.branchuid = payload.branchuid
+            newstate.nodeuid = payload.nodeuid
+            newstate.celluid = payload.celluid
+            // console.log('lastaction newstate', newstate)
             return newstate
         }
 
     }
+}
+
+/*
+    There's a race condition which overwrites lastAction before being distributed.
+    This compensates by saveing types by uid rather than type
+*/
+let lastTargetedAction = (state = {} , action) => {
+
+    if (!action.payload || !action.meta ) {
+        return state
+    }
+    let { payload } = action
+
+    if (!payload.branchuid && !payload.nodeuid && !payload.celluid) {
+        return state
+    }
+
+    let newstate = Object.assign({},state)
+
+    switch (action.type) {
+        case actiontypes.REMOVE_BRANCH:
+            delete newstate[payload.branchuid]
+            return newstate
+        case actiontypes.REMOVE_NODES:
+            delete newstate[payload.nodeuid]
+            for (let removeitem of payload.items) {
+                for (let celluid of removeitem.cellList)
+                    delete newstate[celluid]
+            }
+            return newstate
+    }
+
+    if (payload.branchuid) {
+        newstate[payload.branchuid] = {
+            type: action.type,
+            generation: generationcounter,
+        }
+    }
+
+    if (payload.nodeuid) {
+        newstate[payload.nodeuid] = {
+            type: action.type,
+            generation: generationcounter,
+        }
+    }
+
+    if (payload.celluid) {
+        newstate[payload.celluid] = {
+            type: action.type,
+            generation: generationcounter,
+        }
+    }
+
+    return newstate
+
 }
 
 let generation = (state = null, action) => {
@@ -365,6 +424,7 @@ let explorer = combineReducers({
         nodesById,
         cellsById,
         lastAction,
+        lastTargetedAction,
         generation,
 })
 

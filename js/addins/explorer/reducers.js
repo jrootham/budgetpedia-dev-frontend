@@ -257,20 +257,20 @@ let cellsById = (state = {}, action) => {
             return state;
     }
 };
-let defaultState = {
+let lastActionDefaultState = {
     type: undefined, branchuid: undefined, nodeuid: undefined, celluid: undefined, explorer: undefined,
 };
-let lastAction = (state = defaultState, action) => {
+let lastAction = (state = lastActionDefaultState, action) => {
+    let newstate = Object.assign({}, state);
     if (!action.payload && !(action.type == actions_1.types.RESET_LAST_ACTION)) {
-        let newstate = Object.assign({}, defaultState);
+        let newstate = Object.assign({}, lastActionDefaultState);
         newstate.type = action.type;
         return newstate;
     }
     let { type } = action;
-    let newstate = Object.assign({}, state);
     switch (type) {
         case actions_1.types.RESET_LAST_ACTION: {
-            let newstate = Object.assign({}, defaultState);
+            let newstate = Object.assign({}, lastActionDefaultState);
             newstate.type = action.type;
             newstate.explorer = action.meta.explorer;
             return newstate;
@@ -279,13 +279,55 @@ let lastAction = (state = defaultState, action) => {
             if (action.meta) {
                 newstate.explorer = action.meta.explorer;
             }
+            let { payload } = action;
             newstate.type = action.type;
-            newstate.branchuid = action.payload.branchuid;
-            newstate.nodeuid = action.payload.nodeuid;
-            newstate.celluid = action.payload.celluid;
+            newstate.branchuid = payload.branchuid;
+            newstate.nodeuid = payload.nodeuid;
+            newstate.celluid = payload.celluid;
             return newstate;
         }
     }
+};
+let lastTargetedAction = (state = {}, action) => {
+    if (!action.payload || !action.meta) {
+        return state;
+    }
+    let { payload } = action;
+    if (!payload.branchuid && !payload.nodeuid && !payload.celluid) {
+        return state;
+    }
+    let newstate = Object.assign({}, state);
+    switch (action.type) {
+        case actions_1.types.REMOVE_BRANCH:
+            delete newstate[payload.branchuid];
+            return newstate;
+        case actions_1.types.REMOVE_NODES:
+            delete newstate[payload.nodeuid];
+            for (let removeitem of payload.items) {
+                for (let celluid of removeitem.cellList)
+                    delete newstate[celluid];
+            }
+            return newstate;
+    }
+    if (payload.branchuid) {
+        newstate[payload.branchuid] = {
+            type: action.type,
+            generation: generationcounter,
+        };
+    }
+    if (payload.nodeuid) {
+        newstate[payload.nodeuid] = {
+            type: action.type,
+            generation: generationcounter,
+        };
+    }
+    if (payload.celluid) {
+        newstate[payload.celluid] = {
+            type: action.type,
+            generation: generationcounter,
+        };
+    }
+    return newstate;
 };
 let generation = (state = null, action) => {
     return generationcounter++;
@@ -297,6 +339,7 @@ let explorer = redux_1.combineReducers({
     nodesById: nodesById,
     cellsById: cellsById,
     lastAction: lastAction,
+    lastTargetedAction: lastTargetedAction,
     generation: generation,
 });
 Object.defineProperty(exports, "__esModule", { value: true });
