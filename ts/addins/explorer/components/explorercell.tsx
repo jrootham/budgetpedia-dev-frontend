@@ -737,7 +737,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 // used to create and cache html element id attribute
                 graph_id = { graph_id }
                 />
-            :<div> no data... </div>
+            :<div> waiting for data... </div>
 
         let drilldownprompt = 
             <div style={{

@@ -157,6 +157,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
             this.waitafteraction++ // let state change cycle
             this.props.addBranchDeclaration(null,defaultSettings) // change state
+        } else {
+            let { branchList, branchesById } = this.props.declarationData
+            let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
+
+            this.harmonizeBranchesToState(budgetBranches, branchList, branchesById)
         }
     }
 

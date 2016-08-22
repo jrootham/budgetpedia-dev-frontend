@@ -13,8 +13,9 @@ class ExplorerNode extends Component {
         this.oldDataGenerationCounter = null;
         this.getState = () => this.state;
         this.getProps = () => this.props;
-        this.updateCellsFromDeclarations = () => {
-            let { budgetNode, declarationData } = this.props;
+        this.lastgenerationcounter = 0;
+        this.updateCellsFromDeclarations = (props) => {
+            let { budgetNode, declarationData } = props;
             if (budgetNode.updated) {
                 this.setState({
                     nodeCells: budgetNode.newCells
@@ -43,11 +44,10 @@ class ExplorerNode extends Component {
                 }
             }
         };
-        this.lastgenerationcounter = 0;
         this._respondToGlobalStateChange = () => {
         };
         this.harmonizecount = null;
-        this._harmonizeCells = (props) => {
+        this._harmonizeCellsToState = (props) => {
             let returnvalue = false;
             let { budgetNode, declarationData } = props;
             let cells = budgetNode.cells;
@@ -70,12 +70,11 @@ class ExplorerNode extends Component {
             }
             return returnvalue;
         };
-        this._normalizeCells = () => {
-            let { budgetNode } = this.props;
-            let nodeDeclaration = this.props.declarationData.nodesById[budgetNode.uid];
+        this._normalizeCellDeclarations = (props) => {
+            let { budgetNode } = props;
+            let nodeDeclaration = props.declarationData.nodesById[budgetNode.uid];
             let cellList = nodeDeclaration.cellList;
             let yearsRange = budgetNode.viewpointConfigPack.datasetConfig.YearsRange;
-            this.waitafteraction++;
             this._stateActions.normalizeCellYearDependencies(budgetNode.uid, cellList, yearsRange);
         };
         this.onChangeTab = (tabref) => {
@@ -110,22 +109,36 @@ class ExplorerNode extends Component {
         };
     }
     componentWillMount() {
-        let { budgetNode } = this.props;
+        let { budgetNode, declarationData } = this.props;
         this._stateActions = Object.assign({}, this.props.globalStateActions);
         budgetNode.getState = this.getState;
         budgetNode.getProps = this.getProps;
         budgetNode.setState = this.setState.bind(this);
         budgetNode.actions = this._stateActions;
-    }
-    componentDidMount() {
-        let { budgetNode, declarationData } = this.props;
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid];
         if (nodeDeclaration.cellList == null) {
             let cellDeclarationParms = budgetNode.getCellDeclarationParms();
             this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
         }
+        else {
+            this.updateCellsFromDeclarations(this.props);
+        }
     }
     componentWillReceiveProps(nextProps) {
+        let { dataGenerationCounter, budgetNode } = nextProps;
+        let { oldDataGenerationCounter } = this;
+        if (oldDataGenerationCounter === null || (dataGenerationCounter > oldDataGenerationCounter)) {
+            this.oldDataGenerationCounter = dataGenerationCounter;
+            this.waitafteraction++;
+            this._normalizeCellDeclarations(nextProps);
+        }
+        else {
+            this.updateCellsFromDeclarations(nextProps);
+            this._harmonizeCellsToState(nextProps);
+            if (budgetNode.new) {
+                budgetNode.new = false;
+            }
+        }
     }
     shouldComponentUpdate(nextProps, nextState) {
         if (this.waitafteraction) {
@@ -141,18 +154,7 @@ class ExplorerNode extends Component {
         return true;
     }
     componentDidUpdate() {
-        this._harmonizeCells(this.props);
-        let { dataGenerationCounter } = this.props;
-        let { oldDataGenerationCounter } = this;
-        if (oldDataGenerationCounter === null || (dataGenerationCounter > oldDataGenerationCounter)) {
-            this.oldDataGenerationCounter = dataGenerationCounter;
-            this._normalizeCells();
-        }
         this._respondToGlobalStateChange();
-        if (this.props.budgetNode.new) {
-            this.props.budgetNode.new = false;
-        }
-        this.updateCellsFromDeclarations();
     }
     render() {
         let chartTabs = this.getChartTabs();

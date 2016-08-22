@@ -159,6 +159,13 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
                 this._stateActions.addNodeDeclaration(budgetNodeParms)
+            } else {
+                // refresh branchnodes
+                let { nodesById } = declarationData
+                let branchNodes = budgetBranch.nodes // copy
+                let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
+                let { nodeList } = branchDeclarations
+                this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)
             }
 
         })

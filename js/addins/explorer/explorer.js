@@ -137,6 +137,11 @@ let Explorer = class extends Component {
             this.waitafteraction++;
             this.props.addBranchDeclaration(null, defaultSettings);
         }
+        else {
+            let { branchList, branchesById } = this.props.declarationData;
+            let budgetBranches = [...this.state.budgetBranches];
+            this.harmonizeBranchesToState(budgetBranches, branchList, branchesById);
+        }
     }
     componentDidMount() {
         if (this.freshstart) {

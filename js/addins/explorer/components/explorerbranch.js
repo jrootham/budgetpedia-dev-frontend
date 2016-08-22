@@ -273,6 +273,13 @@ class ExplorerBranch extends Component {
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }
+            else {
+                let { nodesById } = declarationData;
+                let branchNodes = budgetBranch.nodes;
+                let branchDeclarations = declarationData.branchesById[budgetBranch.uid];
+                let { nodeList } = branchDeclarations;
+                this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch);
+            }
         });
     }
     componentWillReceiveProps(nextProps) {
