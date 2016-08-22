@@ -243,15 +243,11 @@ class Database {
     private getDatasetPromise(versionName, datasetName: string) {
         let promise = new Promise(resolve => {
             let datasetdata: CurrencyDataset | ItemDataset = db_datasets[versionName][datasetName]
-            resolve(datasetdata)
+            delay(0). then(()=>{
+                resolve(datasetdata)
+            })
         })
         return promise
-        // delay(500).then(() => {
-        //     let dst: CurrencyDataset | ItemDataset
-        //     dst = db_dataseries[dataset]
-        //     if (!dst) throw new Error(`dataset "${dataset}" not found`)
-        //     return dst
-        // })
     }
 
     private getLookupPromise(lookup:string = undefined) {

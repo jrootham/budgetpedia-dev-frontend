@@ -74,7 +74,7 @@ interface MappedNodeActions {
     // toggleDelta:Function,
 }
 
-interface MappedBranchActions extends MappedNodeActions {
+export interface MappedBranchActions extends MappedNodeActions {
     addNodeDeclaration:Function,
     removeNodeDeclarations: Function,
     changeViewpoint: Function,
@@ -83,6 +83,7 @@ interface MappedBranchActions extends MappedNodeActions {
     toggleShowOptions: Function,
     changeBranchDataVersion: Function,
     updateCellChartSelection:Function,
+    updateCellChartCode: Function,
     updateCellsDataseriesName: Function,
     resetLastAction: Function,
     // toggleInflationAdjustement:Function
@@ -155,7 +156,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         if (branchList.length == 0) { // initialize explorer with first branch
             this.freshstart = true
             let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
-            this.waitafteraction++ // let state change cycle
             this.props.addBranchDeclaration(null,defaultSettings) // change state
         } else {
             let { branchList, branchesById } = this.props.declarationData
@@ -262,7 +262,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 budgetBranches:sortedBranches,
             })
         }
-        return sortedBranches
     }
 
     handleDialogOpen = (e) => {

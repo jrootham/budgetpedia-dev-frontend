@@ -24,6 +24,7 @@ class ExplorerBranch extends Component {
         this.getProps = () => this.props;
         this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
         this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
+        this._previousgenerationcounter = 0;
         this.harmonizecount = null;
         this.harmonizeNodesToState = (branchNodes, nodeList, nodesById, budgetBranch) => {
             if (this.harmonizecount === null) {
@@ -274,11 +275,7 @@ class ExplorerBranch extends Component {
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }
             else {
-                let { nodesById } = declarationData;
-                let branchNodes = budgetBranch.nodes;
-                let branchDeclarations = declarationData.branchesById[budgetBranch.uid];
-                let { nodeList } = branchDeclarations;
-                this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch);
+                this._stateActions.resetLastAction();
             }
         });
     }
@@ -305,13 +302,18 @@ class ExplorerBranch extends Component {
         }
         if (nextState.snackbar.open != this.state.snackbar.open)
             return true;
-        let { lastAction } = nextProps.declarationData;
-        if (!lastAction.explorer)
-            return false;
-        let { branchuid } = lastAction;
-        if (branchuid) {
-            let retval = (nextProps.budgetBranch.uid == branchuid) ? true : false;
-            return retval;
+        let { declarationData } = nextProps;
+        let { generation } = declarationData;
+        if (generation > this._previousgenerationcounter) {
+            this._previousgenerationcounter = generation;
+            let { lastAction } = declarationData;
+            if (!lastAction.explorer)
+                return false;
+            let { branchuid } = lastAction;
+            if (branchuid) {
+                let retval = (nextProps.budgetBranch.uid == branchuid) ? true : false;
+                return retval;
+            }
         }
         return true;
     }

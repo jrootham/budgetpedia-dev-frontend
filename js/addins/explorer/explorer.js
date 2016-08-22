@@ -92,7 +92,6 @@ let Explorer = class extends Component {
                     budgetBranches: sortedBranches,
                 });
             }
-            return sortedBranches;
         };
         this.handleDialogOpen = (e) => {
             e.stopPropagation();
@@ -134,7 +133,6 @@ let Explorer = class extends Component {
         if (branchList.length == 0) {
             this.freshstart = true;
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
-            this.waitafteraction++;
             this.props.addBranchDeclaration(null, defaultSettings);
         }
         else {

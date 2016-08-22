@@ -67,7 +67,9 @@ class Database {
     getDatasetPromise(versionName, datasetName) {
         let promise = new Promise(resolve => {
             let datasetdata = db_datasets[versionName][datasetName];
-            resolve(datasetdata);
+            delay(0).then(() => {
+                resolve(datasetdata);
+            });
         });
         return promise;
     }

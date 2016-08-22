@@ -49,48 +49,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         chartParms: null,
     }
 
-    onChangeChartCode = (explorerChartCode) => {
-
-        let { budgetCell } = this.props
-        // budgetCell.switchChartCode(explorerChartCode)
-
-        this.props.globalStateActions.updateCellChartCode(budgetCell.uid,explorerChartCode)
-    }
-
-    onChangeTimeCode = explorerTimeCode => {
-        this.setState({
-            timescope:explorerTimeCode,
-        })
-    }
-
-    onToggleDelta = () => {
-        this.setState({
-            deltastate: !this.state.deltastate
-        })
-    }
-
-
-    onToggleNet = () => {
-        this.setState({
-            netstate: !this.state.netstate
-        })
-    }
-
-    onToggleVariance = () => {
-        this.setState({
-            variancestate: !this.state.variancestate
-        })
-    }
-
-    onDataTable = () => {
-
-    }
-
-    onHarmonize = () => {
-
-    }
-
-
     // for use by BudgetCell instance...
     getState = () => this.state
     getProps = () => this.props
@@ -158,6 +116,47 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             }
         }
         this._previousControlData = currentControlData
+    }
+
+    onChangeChartCode = (explorerChartCode) => {
+
+        let { budgetCell } = this.props
+        // budgetCell.switchChartCode(explorerChartCode)
+
+        this.props.globalStateActions.updateCellChartCode(budgetCell.uid,explorerChartCode)
+    }
+
+    onChangeTimeCode = explorerTimeCode => {
+        this.setState({
+            timescope:explorerTimeCode,
+        })
+    }
+
+    onToggleDelta = () => {
+        this.setState({
+            deltastate: !this.state.deltastate
+        })
+    }
+
+
+    onToggleNet = () => {
+        this.setState({
+            netstate: !this.state.netstate
+        })
+    }
+
+    onToggleVariance = () => {
+        this.setState({
+            variancestate: !this.state.variancestate
+        })
+    }
+
+    onDataTable = () => {
+
+    }
+
+    onHarmonize = () => {
+
     }
 
     render() {

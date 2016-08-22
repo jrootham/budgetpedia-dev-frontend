@@ -19,6 +19,29 @@ class ExplorerCell extends Component {
             variancestate: false,
             chartParms: null,
         };
+        this.getState = () => this.state;
+        this.getProps = () => this.props;
+        this._respondToGlobalStateChange = () => {
+            let previousControlData = this._previousControlData;
+            let currentControlData = this.props.declarationData;
+            let { lastAction } = currentControlData;
+            let returnvalue = true;
+            if (!actions_1.cellTypes[lastAction.type]) {
+                return false;
+            }
+            if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
+                return false;
+            }
+            let { budgetCell } = this.props;
+            let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid];
+            switch (lastAction.type) {
+                case actions_1.cellTypes.UPDATE_CELL_CHART_CODE: {
+                    budgetCell.switchChartCode(cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope].explorerChartCode);
+                    break;
+                }
+            }
+            this._previousControlData = currentControlData;
+        };
         this.onChangeChartCode = (explorerChartCode) => {
             let { budgetCell } = this.props;
             this.props.globalStateActions.updateCellChartCode(budgetCell.uid, explorerChartCode);
@@ -46,29 +69,6 @@ class ExplorerCell extends Component {
         this.onDataTable = () => {
         };
         this.onHarmonize = () => {
-        };
-        this.getState = () => this.state;
-        this.getProps = () => this.props;
-        this._respondToGlobalStateChange = () => {
-            let previousControlData = this._previousControlData;
-            let currentControlData = this.props.declarationData;
-            let { lastAction } = currentControlData;
-            let returnvalue = true;
-            if (!actions_1.cellTypes[lastAction.type]) {
-                return false;
-            }
-            if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
-                return false;
-            }
-            let { budgetCell } = this.props;
-            let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid];
-            switch (lastAction.type) {
-                case actions_1.cellTypes.UPDATE_CELL_CHART_CODE: {
-                    budgetCell.switchChartCode(cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope].explorerChartCode);
-                    break;
-                }
-            }
-            this._previousControlData = currentControlData;
         };
     }
     componentWillMount() {

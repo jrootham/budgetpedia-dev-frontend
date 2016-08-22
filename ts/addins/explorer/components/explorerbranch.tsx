@@ -45,19 +45,9 @@ import BudgetNode from '../classes/node.class'
 import BudgetCell from '../classes/cell.class'
 import BudgetBranch from '../classes/branch.class'
 
-export interface ExplorerBranchActions {
-    addNodeDeclaration:Function,
-    removeNodeDeclarations:Function,
-    changeViewpoint:Function,
-    changeVersion: Function,
-    toggleShowOptions: Function,
-    changeBranchDataVersion: Function,
-    changeAspect: Function,
-    updateCellChartSelection: Function,  
-    updateCellChartCode: Function,
-    updateCellsDataseriesName: Function,
-    resetLastAction: Function,
-}
+import { MappedBranchActions as ExplorerBranchActions } from '../explorer'
+
+export { ExplorerBranchActions }
 
 interface DeclarationData {
     branchesById: Object,
@@ -75,7 +65,6 @@ interface ExplorerBranchProps {
     budgetBranch: BudgetBranch,
     displayCallbacks:{
         workingStatus:Function,
-        // updateChartSelections:Function,
     },
     globalStateActions: ExplorerBranchActions,
     declarationData: DeclarationData
@@ -86,8 +75,7 @@ interface ExplorerBranchState {
     branchNodes?:BudgetNode[], 
     viewpointData?:ViewpointData,
     snackbar?:SnackbarProps, 
-    aspect?: string,
-    byunitselection?: string,
+    byunitselection?: string, // TEMPORARY
 }
 
 class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState> {
@@ -96,7 +84,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         branchNodes:[],
         viewpointData:null,
         snackbar:{open:false,message:'empty'},
-        // aspect:null,
         byunitselection:'Off',
     }
 
@@ -115,10 +102,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _nodeDisplayCallbacks: any
 
     // provide for curried versions
-    private addNodeDeclaration = 
-        branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid,settings)
-    private removeNodeDeclarations = 
-        branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems)
+    private addNodeDeclaration = branchUid => settings => 
+        this.props.globalStateActions.addNodeDeclaration(branchUid,settings);
+
+    private removeNodeDeclarations = branchUid => nodeItems => 
+        this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems)
 
     // finish initialization of budgetBranch and branch explorer objects
     componentWillMount() {
@@ -155,17 +143,20 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         this._previousControlData = declarationData // initialize
         budgetBranch.getViewpointData().then(() => {
 
-            this._stateActions.changeBranchDataVersion(budgetBranch.uid)
+            this._stateActions.changeBranchDataVersion(budgetBranch.uid) // this triggers update with harmonize
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
+                // console.log('creating new branch node')
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
                 this._stateActions.addNodeDeclaration(budgetNodeParms)
             } else {
+                this._stateActions.resetLastAction() // trigger update -> render
                 // refresh branchnodes
-                let { nodesById } = declarationData
-                let branchNodes = budgetBranch.nodes // copy
-                let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
-                let { nodeList } = branchDeclarations
-                this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)
+                // let { nodesById } = declarationData
+                // let branchNodes = budgetBranch.nodes // copy
+                // let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
+                // let { nodeList } = branchDeclarations
+                // console.log('refreshing branch nodes', nodeList)
+                // this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)
             }
 
         })
@@ -188,9 +179,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let { budgetBranch, declarationData } = nextProps
         let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
         let { nodeList } = branchDeclarations
-
+        // console.log('harmonizing from componentWillReceiveProps', nodeList)
         this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)
     }
+
+    private _previousgenerationcounter:number = 0
 
     shouldComponentUpdate(nextProps: ExplorerBranchProps, nextState) {
 
@@ -203,12 +196,18 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         if (nextState.snackbar.open != this.state.snackbar.open) return true
 
-        let { lastAction } = nextProps.declarationData
-        if (!lastAction.explorer) return false
-        let { branchuid } = lastAction
-        if (branchuid) {
-            let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
-            return retval
+        let { declarationData } = nextProps
+        let { generation } = declarationData
+        if ( generation > this._previousgenerationcounter ) {
+            this._previousgenerationcounter = generation
+            let { lastAction } = declarationData
+            // console.log('processing last action', lastAction)
+            if (!lastAction.explorer) return false
+            let { branchuid } = lastAction
+            if (branchuid) {
+                let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
+                return retval
+            }
         }
         return true
     }
@@ -217,17 +216,17 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     acts as a sentinel; if count goes below zero, means that some 
     harmonization operation has failed, which is a system error
 */    
-    harmonizecount: any = null
-    // harmonize branch nodes; add pending node objects, and process state changes
     componentDidUpdate() {
         this._respondToGlobalStateChange()
     }
 
+    harmonizecount: any = null
+    // harmonize branch nodes; add pending node objects, and process state changes
     harmonizeNodesToState = (branchNodes, nodeList, nodesById, budgetBranch) => {
         if (this.harmonizecount === null) { // initialize harmonization count
             this.harmonizecount = (nodeList.length - branchNodes.length)
         }
-
+        // console.log('harmonizecount', this.harmonizecount, branchNodes.length, nodeList.length)
         // first task is to harmonize declarationData nodeList list with local branchNode list
         // this condition will keep adding nodes on each render cycle triggered by 
         // addBranchNode, until all nodes are drawn
