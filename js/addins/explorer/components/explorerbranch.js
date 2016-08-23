@@ -331,6 +331,12 @@ class ExplorerBranch extends Component {
             this.lastactiongeneration = generation;
             return retval;
         }
+        if (generation > this.lastactiongeneration) {
+            console.log('returning default true for action', lastAction, generation, this.lastactiongeneration);
+            this.lastactiongeneration = generation;
+            return true;
+        }
+        console.log('returning default true for NON-ACTION');
         return true;
     }
     componentDidUpdate() {

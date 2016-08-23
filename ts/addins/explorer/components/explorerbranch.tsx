@@ -127,15 +127,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             } else {
                 // console.log('calling resetLastAction', budgetBranch.uid)
                 this._stateActions.resetLastAction() // trigger update -> render
-                // refresh branchnodes
-                // let { nodesById } = declarationData
-                // let branchNodes = budgetBranch.nodes // copy
-                // let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
-                // let { nodeList } = branchDeclarations
-                // setTimeout(()=>{
-                //     console.log('refreshing branch nodes', nodeList, declarationData.branchesById[budgetBranch.uid].branchDataGeneration)
-                //     this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)
-                // })
             }
 
         })
@@ -203,14 +194,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             this.waitafteraction--
             console.log('should update branch return waitafteraction')
             return false
-
         }
 
         if (nextState.snackbar.open != this.state.snackbar.open) {
             console.log('should update branch return true for snackbar')
             return true
         }
-
 
         let { lastAction } = declarationData
         if ( generation > this.lastactiongeneration ) {
@@ -220,8 +209,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 return false
             }
         }
-        // TODO: this screens out legitimate general explorer actions
-        // that are not targeted
+
         let { lastTargetedAction } = nextProps.declarationData
         let uid = budgetBranch.uid
         let lastTargetedBranchAction = lastTargetedAction[uid]
@@ -239,17 +227,14 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             return retval
         }
 
-        // if ( generation > this.lastactiongeneration ) {
-        //     this.lastactiongeneration = generation
-        //     // console.log('processing last action', lastAction)
-        //     let { branchuid } = lastAction
-        //     if (branchuid) {
-        //         let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
-        //         return retval
-        //     }
-        // }
-
+        if (generation > this.lastactiongeneration) {
+            console.log('returning default true for action', lastAction, generation, this.lastactiongeneration)
+            this.lastactiongeneration = generation
+            return true
+        }
+        console.log('returning default true for NON-ACTION')
         return true
+
     }
 /*
     harmonization means creating local nodes to match global declarations
