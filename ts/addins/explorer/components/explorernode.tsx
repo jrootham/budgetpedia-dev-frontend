@@ -25,6 +25,8 @@ import BudgetNode from '../classes/node.class'
 import BudgetCell from '../classes/cell.class'
 import { nodeTypes } from '../actions'
 
+import { MappedNodeActions as ExplorerNodeActions } from '../explorer'
+
 interface ExplorerNodeProps {
     callbackid: string | number,
     budgetNode: BudgetNode,
@@ -34,14 +36,14 @@ interface ExplorerNodeProps {
     dataGenerationCounter: number,
 }
 
-export interface ExporerNodeActions {
-    addCellDeclarations:Function,
-    updateCellsDataseriesName: Function,
-    updateCellChartCode: Function,
-    updateCellChartSelection: Function,
-    normalizeCellYearDependencies: Function,
-    updateNode: Function,
-}
+// export interface ExporerNodeActions {
+//     addCellDeclarations:Function,
+//     // updateCellsDataseriesName: Function,
+//     updateCellChartCode: Function,
+//     updateCellChartSelection: Function,
+//     normalizeCellYearDependencies: Function,
+//     updateNode: Function,
+// }
 
 class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
 
@@ -55,7 +57,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     getState = () => this.state
     getProps = () => this.props
 
-    private _stateActions: ExporerNodeActions
+    private _stateActions: ExplorerNodeActions
 
     componentWillMount() {
         let { budgetNode, declarationData } = this.props

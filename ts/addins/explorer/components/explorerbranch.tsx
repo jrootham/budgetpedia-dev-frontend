@@ -112,6 +112,37 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     // finish initialization of budgetBranch and branch explorer objects
     componentWillMount() {
 
+        this._initialize()
+
+        let { budgetBranch, declarationData } = this.props
+
+        budgetBranch.getViewpointData().then(() => {
+
+            // console.log('invoke on mount change_data_counter', declarationData.branchesById[budgetBranch.uid].branchDataGeneration)
+            this._stateActions.changeBranchDataVersion(budgetBranch.uid) // change counter for child compare
+            if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
+                // console.log('creating new branch node')
+                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
+                this._stateActions.addNodeDeclaration(budgetNodeParms)
+            } else {
+                // console.log('calling resetLastAction', budgetBranch.uid)
+                this._stateActions.resetLastAction() // trigger update -> render
+                // refresh branchnodes
+                // let { nodesById } = declarationData
+                // let branchNodes = budgetBranch.nodes // copy
+                // let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
+                // let { nodeList } = branchDeclarations
+                // setTimeout(()=>{
+                //     console.log('refreshing branch nodes', nodeList, declarationData.branchesById[budgetBranch.uid].branchDataGeneration)
+                //     this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)
+                // })
+            }
+
+        })
+    }
+
+    private _initialize = () => {
+
         let { budgetBranch, globalStateActions:actions, displayCallbacks, declarationData } = this.props
 
         // create global actions bundle for children
@@ -142,26 +173,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks
 
         this._previousControlData = declarationData // initialize
-        budgetBranch.getViewpointData().then(() => {
 
-            this._stateActions.changeBranchDataVersion(budgetBranch.uid) // this triggers update with harmonize
-            if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
-                // console.log('creating new branch node')
-                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
-                this._stateActions.addNodeDeclaration(budgetNodeParms)
-            } else {
-                // console.log('calling resetLastAction', budgetBranch.uid)
-                // this._stateActions.resetLastAction() // trigger update -> render
-                // refresh branchnodes
-                let { nodesById } = declarationData
-                let branchNodes = budgetBranch.nodes // copy
-                let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
-                let { nodeList } = branchDeclarations
-                // console.log('refreshing branch nodes', nodeList)
-                this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)
-            }
-
-        })
     }
 
     // remove obsolete node objects
@@ -189,27 +201,21 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         if (this.waitafteraction) {
             this.lastactiongeneration = generation
             this.waitafteraction--
+            console.log('should update branch return waitafteraction')
             return false
 
         }
 
-        if (nextState.snackbar.open != this.state.snackbar.open) return true
+        if (nextState.snackbar.open != this.state.snackbar.open) {
+            console.log('should update branch return true for snackbar')
+            return true
+        }
 
-        // if ( generation > this.lastactiongeneration ) {
-        //     this.lastactiongeneration = generation
-        //     let { lastAction } = declarationData
-        //     // console.log('processing last action', lastAction)
-        //     if (!lastAction.explorer) return false
-        //     let { branchuid } = lastAction
-        //     if (branchuid) {
-        //         let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
-        //         return retval
-        //     }
-        // }
-        // return true
+
         let { lastAction } = declarationData
         if ( generation > this.lastactiongeneration ) {
             if (!lastAction.explorer) {
+                console.log('should update branch return false for not explorer',generation, this.lastactiongeneration, lastAction)
                 this.lastactiongeneration = generation
                 return false
             }
@@ -218,7 +224,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         // that are not targeted
         let { lastTargetedAction } = nextProps.declarationData
         let uid = budgetBranch.uid
-        if (generation > this.lastactiongeneration && lastTargetedAction[uid]) {
+        let lastTargetedBranchAction = lastTargetedAction[uid]
+        if (lastTargetedBranchAction && this.lastactiongeneration < lastTargetedBranchAction.generation) {
             let retval = true
             if ( !(
                 lastTargetedAction && 
@@ -227,10 +234,21 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                     this.lastactiongeneration)) {
                 retval = false
             }
+            console.log('returning from targeted branch should component update', budgetBranch.uid, retval, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction)
             this.lastactiongeneration = generation
-            // console.log('returning from branch should component update', budgetBranch.uid, retval, generation, lastAction, lastTargetedAction)
             return retval
         }
+
+        // if ( generation > this.lastactiongeneration ) {
+        //     this.lastactiongeneration = generation
+        //     // console.log('processing last action', lastAction)
+        //     let { branchuid } = lastAction
+        //     if (branchuid) {
+        //         let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
+        //         return retval
+        //     }
+        // }
+
         return true
     }
 /*
@@ -247,6 +265,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let branchNodes = this.props.budgetBranch.nodes // copy
         // console.log('harmonizing from componentWillReceiveProps', nodeList)
         // harmonize is here for first setup; called from will mount for re-creation
+        // console.log('refreshing branch nodes', nodeList, declarationData.branchesById[budgetBranch.uid].branchDataGeneration)
         if (!this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)) {
             // console.log( 'calling respondtoglobalstatechange', budgetBranch.uid )
             this._respondToGlobalStateChange()

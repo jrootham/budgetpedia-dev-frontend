@@ -64,7 +64,7 @@ import {
     BranchConfig,
 } from './modules/interfaces'
 
-interface MappedNodeActions {
+export interface MappedNodeActions {
     addCellDeclarations:Function,
     changeTab:Function,
     updateCellChartCode:Function,

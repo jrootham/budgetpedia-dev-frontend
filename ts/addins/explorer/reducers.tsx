@@ -158,6 +158,7 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             newstate = Object.assign({},state)
             newstate[branchuid] = Object.assign({},newstate[branchuid])
             newstate[branchuid].branchDataGeneration++
+            // console.log('reducer changed data counter',newstate[branchuid].branchDataGeneration)
             return newstate
         }
 

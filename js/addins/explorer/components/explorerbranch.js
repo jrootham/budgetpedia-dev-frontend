@@ -24,6 +24,24 @@ class ExplorerBranch extends Component {
         this.getProps = () => this.props;
         this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
         this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
+        this._initialize = () => {
+            let { budgetBranch, globalStateActions: actions, displayCallbacks, declarationData } = this.props;
+            this._stateActions = Object.assign({}, actions);
+            this._stateActions.addNodeDeclaration = this.addNodeDeclaration(budgetBranch.uid);
+            this._stateActions.removeNodeDeclarations = this.removeNodeDeclarations(budgetBranch.uid);
+            let { onPortalCreation } = this;
+            let { workingStatus } = displayCallbacks;
+            this._nodeDisplayCallbacks = {
+                workingStatus: workingStatus,
+                onPortalCreation: onPortalCreation,
+            };
+            budgetBranch.getState = this.getState;
+            budgetBranch.getProps = this.getProps;
+            budgetBranch.setState = this.setState.bind(this);
+            budgetBranch.actions = this._stateActions;
+            budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks;
+            this._previousControlData = declarationData;
+        };
         this.lastactiongeneration = 0;
         this.harmonizecount = null;
         this.harmonizeNodesToState = (branchNodes, nodeList, nodesById, budgetBranch) => {
@@ -252,22 +270,8 @@ class ExplorerBranch extends Component {
         };
     }
     componentWillMount() {
-        let { budgetBranch, globalStateActions: actions, displayCallbacks, declarationData } = this.props;
-        this._stateActions = Object.assign({}, actions);
-        this._stateActions.addNodeDeclaration = this.addNodeDeclaration(budgetBranch.uid);
-        this._stateActions.removeNodeDeclarations = this.removeNodeDeclarations(budgetBranch.uid);
-        let { onPortalCreation } = this;
-        let { workingStatus } = displayCallbacks;
-        this._nodeDisplayCallbacks = {
-            workingStatus: workingStatus,
-            onPortalCreation: onPortalCreation,
-        };
-        budgetBranch.getState = this.getState;
-        budgetBranch.getProps = this.getProps;
-        budgetBranch.setState = this.setState.bind(this);
-        budgetBranch.actions = this._stateActions;
-        budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks;
-        this._previousControlData = declarationData;
+        this._initialize();
+        let { budgetBranch, declarationData } = this.props;
         budgetBranch.getViewpointData().then(() => {
             this._stateActions.changeBranchDataVersion(budgetBranch.uid);
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
@@ -275,11 +279,7 @@ class ExplorerBranch extends Component {
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }
             else {
-                let { nodesById } = declarationData;
-                let branchNodes = budgetBranch.nodes;
-                let branchDeclarations = declarationData.branchesById[budgetBranch.uid];
-                let { nodeList } = branchDeclarations;
-                this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch);
+                this._stateActions.resetLastAction();
             }
         });
     }
@@ -301,20 +301,25 @@ class ExplorerBranch extends Component {
         if (this.waitafteraction) {
             this.lastactiongeneration = generation;
             this.waitafteraction--;
+            console.log('should update branch return waitafteraction');
             return false;
         }
-        if (nextState.snackbar.open != this.state.snackbar.open)
+        if (nextState.snackbar.open != this.state.snackbar.open) {
+            console.log('should update branch return true for snackbar');
             return true;
+        }
         let { lastAction } = declarationData;
         if (generation > this.lastactiongeneration) {
             if (!lastAction.explorer) {
+                console.log('should update branch return false for not explorer', generation, this.lastactiongeneration, lastAction);
                 this.lastactiongeneration = generation;
                 return false;
             }
         }
         let { lastTargetedAction } = nextProps.declarationData;
         let uid = budgetBranch.uid;
-        if (generation > this.lastactiongeneration && lastTargetedAction[uid]) {
+        let lastTargetedBranchAction = lastTargetedAction[uid];
+        if (lastTargetedBranchAction && this.lastactiongeneration < lastTargetedBranchAction.generation) {
             let retval = true;
             if (!(lastTargetedAction &&
                 lastTargetedAction[uid] &&
@@ -322,6 +327,7 @@ class ExplorerBranch extends Component {
                     this.lastactiongeneration)) {
                 retval = false;
             }
+            console.log('returning from targeted branch should component update', budgetBranch.uid, retval, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction);
             this.lastactiongeneration = generation;
             return retval;
         }
