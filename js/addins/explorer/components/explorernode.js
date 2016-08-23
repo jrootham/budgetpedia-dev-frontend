@@ -150,19 +150,24 @@ class ExplorerNode extends Component {
         }
         let { lastTargetedAction } = nextProps.declarationData;
         let uid = budgetNode.uid;
-        let lastTargetedBranchAction = lastTargetedAction[uid];
-        if (lastTargetedBranchAction && this.lastactiongeneration < lastTargetedBranchAction.generation) {
-            let retval = true;
-            if (!(lastTargetedAction &&
-                lastTargetedAction[uid] &&
-                lastTargetedAction[uid].generation >
-                    this.lastactiongeneration)) {
-                retval = false;
-            }
+        let lastTargetedNodeAction = lastTargetedAction[uid];
+        if (lastTargetedNodeAction && this.lastactiongeneration < lastTargetedNodeAction.generation) {
             if (show)
-                console.log('returning from targeted NODE should component update', budgetNode.uid, retval, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction);
+                console.log('returning from targeted NODE should component update', budgetNode.uid, true, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedNodeAction);
             this.lastactiongeneration = generation;
-            return retval;
+            return true;
+        }
+        let filtered = Object.keys(lastTargetedAction).filter((item) => {
+            let itemaction = lastTargetedAction[item];
+            if (itemaction.node && itemaction.generation > this.lastactiongeneration) {
+                return true;
+            }
+        });
+        if (filtered.length > 0) {
+            this.lastactiongeneration = generation;
+            if (show)
+                console.log('returning FALSE viable NODE action for another node', budgetNode.uid);
+            return false;
         }
         if (generation > this.lastactiongeneration) {
             if (show)

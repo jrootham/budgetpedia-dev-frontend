@@ -21,6 +21,8 @@ class ExplorerCell extends Component {
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
+        this.lastactiongeneration = 0;
+        this.waitafteraction = 0;
         this._respondToGlobalStateChange = () => {
             let previousControlData = this._previousControlData;
             let currentControlData = this.props.declarationData;
@@ -86,12 +88,54 @@ class ExplorerCell extends Component {
         });
     }
     shouldComponentUpdate(nextProps, nextState) {
-        let { lastAction } = nextProps.declarationData;
-        let { celluid } = lastAction;
-        if (celluid) {
-            let retval = (nextProps.budgetCell.uid == celluid) ? true : false;
-            return retval;
+        let show = false;
+        let { declarationData, budgetCell } = nextProps;
+        let { generation } = declarationData;
+        if (this.waitafteraction) {
+            this.lastactiongeneration = generation;
+            this.waitafteraction--;
+            if (show)
+                console.log('should update CELL return waitafteraction');
+            return false;
         }
+        let { lastAction } = declarationData;
+        if (generation > this.lastactiongeneration) {
+            if (!lastAction.explorer) {
+                if (show)
+                    console.log('should update CELL return false for not explorer', generation, this.lastactiongeneration, lastAction);
+                this.lastactiongeneration = generation;
+                return false;
+            }
+        }
+        let { lastTargetedAction } = nextProps.declarationData;
+        let uid = budgetCell.uid;
+        let lastTargetedCellAction = lastTargetedAction[uid];
+        if (lastTargetedCellAction && this.lastactiongeneration < lastTargetedCellAction.generation) {
+            if (show)
+                console.log('returning from targeted CELL should component update', budgetCell.uid, true, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedCellAction);
+            this.lastactiongeneration = generation;
+            return true;
+        }
+        let filtered = Object.keys(lastTargetedAction).filter((item) => {
+            let itemaction = lastTargetedAction[item];
+            if (itemaction.cell && itemaction.generation > this.lastactiongeneration) {
+                return true;
+            }
+        });
+        if (filtered.length > 0) {
+            this.lastactiongeneration = generation;
+            if (show)
+                console.log('returning FALSE viable CELL action for another cell', budgetCell.uid);
+            return false;
+        }
+        if (generation > this.lastactiongeneration) {
+            if (show)
+                console.log('returning default true for CELL action', lastAction, generation, this.lastactiongeneration, budgetCell.uid);
+            this.lastactiongeneration = generation;
+            return true;
+        }
+        if (show)
+            console.log('returning default true for CELL NON-ACTION', budgetCell.uid, lastAction, lastTargetedAction);
         return true;
     }
     componentDidUpdate() {

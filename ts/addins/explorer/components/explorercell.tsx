@@ -69,16 +69,69 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         })
     }
 
+    private lastactiongeneration: number = 0
+
+    private waitafteraction:number = 0
+
     shouldComponentUpdate(nextProps: ExplorerCellProps, nextState) {
-        let { lastAction } = nextProps.declarationData
 
-        let { celluid } = lastAction
-        if (celluid) {
-            let retval = (nextProps.budgetCell.uid == celluid)? true: false
+        let show = false
 
-            return retval
+        let { declarationData, budgetCell } = nextProps
+        let { generation } = declarationData
+
+        // explicit call to skip an update
+        if (this.waitafteraction) {
+            this.lastactiongeneration = generation
+            this.waitafteraction--
+            if (show) console.log('should update CELL return waitafteraction')
+            return false
         }
+
+        // if the last action is not marked explorer, cancel update
+        let { lastAction } = declarationData
+        if ( generation > this.lastactiongeneration ) {
+            if (!lastAction.explorer) {
+                if (show) console.log('should update CELL return false for not explorer',generation, this.lastactiongeneration, lastAction)
+                this.lastactiongeneration = generation
+                return false
+            }
+        }
+
+        // look for targeted action (may have been bypassed with redux race condition)
+        let { lastTargetedAction } = nextProps.declarationData
+        let uid = budgetCell.uid
+        let lastTargetedCellAction = lastTargetedAction[uid]
+        if (lastTargetedCellAction && this.lastactiongeneration < lastTargetedCellAction.generation) {
+            if (show) console.log('returning from targeted CELL should component update', budgetCell.uid, true, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedCellAction)
+            this.lastactiongeneration = generation
+            return true
+        }
+
+        let filtered = Object.keys(lastTargetedAction).filter((item) =>{
+            // console.log('item, lastTargetedAction',item,lastTargetedAction)
+            let itemaction = lastTargetedAction[item]
+            if (itemaction.cell && itemaction.generation > this.lastactiongeneration) {
+                return true
+            }
+        })
+
+        if (filtered.length > 0) {
+            this.lastactiongeneration = generation
+            if (show) console.log('returning FALSE viable CELL action for another cell', budgetCell.uid)
+            return false
+        }
+
+        // explorer actions not targeted let through
+        if (generation > this.lastactiongeneration) {
+            if (show) console.log('returning default true for CELL action', lastAction, generation, this.lastactiongeneration, budgetCell.uid)
+            this.lastactiongeneration = generation
+            return true
+        }
+        // default non-actions (local setState) let through
+        if (show) console.log('returning default true for CELL NON-ACTION', budgetCell.uid, lastAction, lastTargetedAction)
         return true
+
     }
 
     componentDidUpdate() {

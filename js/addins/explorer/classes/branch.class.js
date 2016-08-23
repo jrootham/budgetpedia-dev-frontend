@@ -86,14 +86,16 @@ class BudgetBranch {
                             return { nodeuid: item.uid, cellList: item.cellDeclarationList };
                         });
                         actions.removeNodeDeclarations(removedids);
-                        let prevBudgetCell = prevBudgetNode.cells[0];
-                        let childprops = {
-                            selectionrow: prevBudgetCell.chartSelection[0].row,
-                            nodeIndex: prevBudgetNode.nodeIndex,
-                            cellIndex: 0,
-                        };
-                        let budgetBranch = this;
-                        budgetBranch.createChildNode(childprops);
+                        setTimeout(() => {
+                            let prevBudgetCell = prevBudgetNode.cells[0];
+                            let childprops = {
+                                selectionrow: prevBudgetCell.chartSelection[0].row,
+                                nodeIndex: prevBudgetNode.nodeIndex,
+                                cellIndex: 0,
+                            };
+                            let budgetBranch = this;
+                            budgetBranch.createChildNode(childprops);
+                        });
                         budgetNode = null;
                     }
                     else {

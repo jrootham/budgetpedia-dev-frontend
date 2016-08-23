@@ -220,27 +220,33 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let uid = budgetBranch.uid
         let lastTargetedBranchAction = lastTargetedAction[uid]
         if (lastTargetedBranchAction && this.lastactiongeneration < lastTargetedBranchAction.generation) {
-            let retval = true
-            if ( !(
-                lastTargetedAction && 
-                lastTargetedAction[uid] && 
-                lastTargetedAction[uid].generation > 
-                    this.lastactiongeneration)) {
-                retval = false
-            }
-            if (show) console.log('returning from targeted branch should component update', budgetBranch.uid, retval, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction)
+            if (show) console.log('returning from targeted branch should component update', budgetBranch.uid, true, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction)
             this.lastactiongeneration = generation
-            return retval
+            return true
+        }
+
+        let filtered = Object.keys(lastTargetedAction).filter((item) =>{
+            // console.log('item, lastTargetedAction',item,lastTargetedAction)
+            let itemaction = lastTargetedAction[item]
+            if (itemaction.branch && itemaction.generation > this.lastactiongeneration) {
+                return true
+            }
+        })
+
+        if (filtered.length > 0) {
+            this.lastactiongeneration = generation
+            if (show) console.log('returning FALSE viable BRANCH action for another branch', budgetBranch.uid)
+            return false
         }
 
         // explorer actions not targeted let through
         if (generation > this.lastactiongeneration) {
-            if (show) console.log('returning default true for action', lastAction, generation, this.lastactiongeneration)
+            if (show) console.log('returning default true for BRANCH action', lastAction, generation, this.lastactiongeneration)
             this.lastactiongeneration = generation
             return true
         }
         // default non-actions (local setState) let through
-        if (show) console.log('returning default true for NON-ACTION')
+        if (show) console.log('returning default true for BRANCH NON-ACTION')
         return true
 
     }

@@ -184,7 +184,7 @@ class BudgetBranch {
                         return {nodeuid:item.uid, cellList:item.cellDeclarationList}
                     })
                     actions.removeNodeDeclarations(removedids)
-                    // setTimeout(()=> {
+                    setTimeout(()=> { // avoid race condition in which google chart destroyed before react component
 
                         let prevBudgetCell:BudgetCell = prevBudgetNode.cells[0]
 
@@ -197,7 +197,7 @@ class BudgetBranch {
                         // let fcurrent = fn(nodeIndex)(0)
                         let budgetBranch = this
                         budgetBranch.createChildNode(childprops)
-                    // })
+                    })
                     budgetNode = null // branchNodes[nodeIndex] // created by createChildNode as side effect
                 } else {
                     budgetNode.update(

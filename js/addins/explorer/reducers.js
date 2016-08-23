@@ -291,7 +291,7 @@ let lastAction = (state = lastActionDefaultState, action) => {
         }
     }
 };
-let lastTargetedAction = (state = { generation: null }, action) => {
+let lastTargetedAction = (state = { counter: null }, action) => {
     if (!action.payload || !action.meta) {
         return state;
     }
@@ -316,21 +316,24 @@ let lastTargetedAction = (state = { generation: null }, action) => {
         newstate[payload.branchuid] = {
             type: action.type,
             generation: generationcounter,
+            branch: true,
         };
     }
     if (payload.nodeuid) {
         newstate[payload.nodeuid] = {
             type: action.type,
             generation: generationcounter,
+            node: true
         };
     }
     if (payload.celluid) {
         newstate[payload.celluid] = {
             type: action.type,
             generation: generationcounter,
+            cell: true,
         };
     }
-    newstate.generation = generationcounter;
+    newstate.counter = { generation: generationcounter };
     return newstate;
 };
 let generation = (state = null, action) => {

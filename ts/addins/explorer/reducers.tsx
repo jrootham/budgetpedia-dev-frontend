@@ -366,7 +366,7 @@ let lastAction = (state = lastActionDefaultState , action) => {
     There's a race condition which overwrites lastAction before being distributed.
     This compensates by saveing types by uid rather than type
 */
-let lastTargetedAction = (state = {generation:null} , action) => {
+let lastTargetedAction = (state = {counter:null} , action) => {
 
     if (!action.payload || !action.meta ) {
         return state
@@ -396,6 +396,7 @@ let lastTargetedAction = (state = {generation:null} , action) => {
         newstate[payload.branchuid] = {
             type: action.type,
             generation: generationcounter,
+            branch:true,
         }
     }
 
@@ -403,6 +404,7 @@ let lastTargetedAction = (state = {generation:null} , action) => {
         newstate[payload.nodeuid] = {
             type: action.type,
             generation: generationcounter,
+            node: true
         }
     }
 
@@ -410,10 +412,11 @@ let lastTargetedAction = (state = {generation:null} , action) => {
         newstate[payload.celluid] = {
             type: action.type,
             generation: generationcounter,
+            cell: true,
         }
     }
 
-    newstate.generation = generationcounter
+    newstate.counter = {generation:generationcounter}
 
     return newstate
 

@@ -148,19 +148,25 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         // look for targeted action (may have been bypassed with redux race condition)
         let { lastTargetedAction } = nextProps.declarationData
         let uid = budgetNode.uid
-        let lastTargetedBranchAction = lastTargetedAction[uid]
-        if (lastTargetedBranchAction && this.lastactiongeneration < lastTargetedBranchAction.generation) {
-            let retval = true
-            if ( !(
-                lastTargetedAction && 
-                lastTargetedAction[uid] && 
-                lastTargetedAction[uid].generation > 
-                    this.lastactiongeneration)) {
-                retval = false
-            }
-            if (show) console.log('returning from targeted NODE should component update', budgetNode.uid, retval, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction)
+        let lastTargetedNodeAction = lastTargetedAction[uid]
+        if (lastTargetedNodeAction && this.lastactiongeneration < lastTargetedNodeAction.generation) {
+            if (show) console.log('returning from targeted NODE should component update', budgetNode.uid, true, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedNodeAction)
             this.lastactiongeneration = generation
-            return retval
+            return true
+        }
+
+        let filtered = Object.keys(lastTargetedAction).filter((item) =>{
+            // console.log('item, lastTargetedAction',item,lastTargetedAction)
+            let itemaction = lastTargetedAction[item]
+            if (itemaction.node && itemaction.generation > this.lastactiongeneration) {
+                return true
+            }
+        })
+
+        if (filtered.length > 0) {
+            this.lastactiongeneration = generation
+            if (show) console.log('returning FALSE viable NODE action for another node', budgetNode.uid)
+            return false
         }
 
         // explorer actions not targeted let through
@@ -173,30 +179,6 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         if (show) console.log('returning default true for NODE NON-ACTION')
         return true
 
-        // let { declarationData } = nextProps
-        // let { generation } = declarationData
-
-        // if (this.waitafteraction) {
-        //     this.lastactiongeneration = generation
-        //     this.waitafteraction--
-        //     return false
-        // }
-
-        // let { lastTargetedAction } = nextProps.declarationData
-        // let uid = this.props.budgetNode.uid
-        // if (generation > this.lastactiongeneration && lastTargetedAction[uid]) {
-        //     let retval = true
-        //     if ( !(
-        //         lastTargetedAction && 
-        //         lastTargetedAction[uid] && 
-        //         lastTargetedAction[uid].generation > 
-        //         this.lastactiongeneration)) {
-        //         retval = false
-        //     }
-        //     this.lastactiongeneration = generation
-        //     return retval
-        // }
-        // return true
     }
 
     updateCellsFromDeclarations = (props) => {
