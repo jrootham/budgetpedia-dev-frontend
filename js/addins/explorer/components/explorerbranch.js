@@ -296,22 +296,26 @@ class ExplorerBranch extends Component {
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
+        let show = false;
         let { declarationData, budgetBranch } = nextProps;
         let { generation } = declarationData;
         if (this.waitafteraction) {
             this.lastactiongeneration = generation;
             this.waitafteraction--;
-            console.log('should update branch return waitafteraction');
+            if (show)
+                console.log('should update branch return waitafteraction');
             return false;
         }
         if (nextState.snackbar.open != this.state.snackbar.open) {
-            console.log('should update branch return true for snackbar');
+            if (show)
+                console.log('should update branch return true for snackbar');
             return true;
         }
         let { lastAction } = declarationData;
         if (generation > this.lastactiongeneration) {
             if (!lastAction.explorer) {
-                console.log('should update branch return false for not explorer', generation, this.lastactiongeneration, lastAction);
+                if (show)
+                    console.log('should update branch return false for not explorer', generation, this.lastactiongeneration, lastAction);
                 this.lastactiongeneration = generation;
                 return false;
             }
@@ -327,16 +331,19 @@ class ExplorerBranch extends Component {
                     this.lastactiongeneration)) {
                 retval = false;
             }
-            console.log('returning from targeted branch should component update', budgetBranch.uid, retval, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction);
+            if (show)
+                console.log('returning from targeted branch should component update', budgetBranch.uid, retval, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction);
             this.lastactiongeneration = generation;
             return retval;
         }
         if (generation > this.lastactiongeneration) {
-            console.log('returning default true for action', lastAction, generation, this.lastactiongeneration);
+            if (show)
+                console.log('returning default true for action', lastAction, generation, this.lastactiongeneration);
             this.lastactiongeneration = generation;
             return true;
         }
-        console.log('returning default true for NON-ACTION');
+        if (show)
+            console.log('returning default true for NON-ACTION');
         return true;
     }
     componentDidUpdate() {

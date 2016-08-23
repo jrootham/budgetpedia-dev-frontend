@@ -186,7 +186,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
 
     shouldComponentUpdate(nextProps) {
-        let { lastAction, generation } = nextProps.declarationData
+        // let { lastAction, generation } = nextProps.declarationData
         // console.log('lastAction in explorer', generation, lastAction)
         if (this.waitafteraction) {
             this.waitafteraction--

@@ -259,6 +259,7 @@ let cellsById = (state = {}, action) => {
 };
 let lastActionDefaultState = {
     type: undefined, branchuid: undefined, nodeuid: undefined, celluid: undefined, explorer: undefined,
+    generation: null,
 };
 let lastAction = (state = lastActionDefaultState, action) => {
     let newstate = Object.assign({}, state);
@@ -273,6 +274,7 @@ let lastAction = (state = lastActionDefaultState, action) => {
             let newstate = Object.assign({}, lastActionDefaultState);
             newstate.type = action.type;
             newstate.explorer = action.meta.explorer;
+            newstate.generation = generationcounter;
             return newstate;
         }
         default: {
@@ -284,11 +286,12 @@ let lastAction = (state = lastActionDefaultState, action) => {
             newstate.branchuid = payload.branchuid;
             newstate.nodeuid = payload.nodeuid;
             newstate.celluid = payload.celluid;
+            newstate.generation = generationcounter;
             return newstate;
         }
     }
 };
-let lastTargetedAction = (state = {}, action) => {
+let lastTargetedAction = (state = { generation: null }, action) => {
     if (!action.payload || !action.meta) {
         return state;
     }
@@ -327,6 +330,7 @@ let lastTargetedAction = (state = {}, action) => {
             generation: generationcounter,
         };
     }
+    newstate.generation = generationcounter;
     return newstate;
 };
 let generation = (state = null, action) => {

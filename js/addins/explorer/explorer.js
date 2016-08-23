@@ -157,7 +157,6 @@ let Explorer = class extends Component {
     componentWillReceiveProps(nextProps) {
     }
     shouldComponentUpdate(nextProps) {
-        let { lastAction, generation } = nextProps.declarationData;
         if (this.waitafteraction) {
             this.waitafteraction--;
             return false;

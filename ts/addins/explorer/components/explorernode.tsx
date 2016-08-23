@@ -74,7 +74,6 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         if (nodeDeclaration.cellList == null) {
             // console.log('declaring new cells')
             // get controlData for cellList
-            // this.waitafteraction++
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
 
@@ -99,12 +98,11 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
             // console.log('normalizing cellDeclarations', budgetNode.uid)
             this.oldDataGenerationCounter = dataGenerationCounter
             // normalize cell settings to year dependency constraints
-            // this.waitafteraction++
             this._normalizeCellDeclarations(nextProps)
 
         } else {
 
-            // console.log('updating cells from declarations in componentWillReceiveProps', budgetNode.uid)
+            // console.log('updating NODE cells from declarations in componentWillReceiveProps', budgetNode.uid)
             this.updateCellsFromDeclarations(nextProps)
             this._harmonizeCellsToState(nextProps)
             if ( budgetNode.new ) {
@@ -124,30 +122,81 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     
     shouldComponentUpdate(nextProps: ExplorerNodeProps) {
 
-        let { declarationData } = nextProps
+        let show = false
+
+        let { declarationData, budgetNode } = nextProps
         let { generation } = declarationData
 
+        // explicit call to skip an update
         if (this.waitafteraction) {
             this.lastactiongeneration = generation
             this.waitafteraction--
+            if (show) console.log('should update NODE return waitafteraction')
             return false
         }
 
+        // if the last action is not marked explorer, cancel update
+        let { lastAction } = declarationData
+        if ( generation > this.lastactiongeneration ) {
+            if (!lastAction.explorer) {
+                if (show) console.log('should update NODE return false for not explorer',generation, this.lastactiongeneration, lastAction)
+                this.lastactiongeneration = generation
+                return false
+            }
+        }
+
+        // look for targeted action (may have been bypassed with redux race condition)
         let { lastTargetedAction } = nextProps.declarationData
-        let uid = this.props.budgetNode.uid
-        if (generation > this.lastactiongeneration && lastTargetedAction[uid]) {
+        let uid = budgetNode.uid
+        let lastTargetedBranchAction = lastTargetedAction[uid]
+        if (lastTargetedBranchAction && this.lastactiongeneration < lastTargetedBranchAction.generation) {
             let retval = true
             if ( !(
                 lastTargetedAction && 
                 lastTargetedAction[uid] && 
                 lastTargetedAction[uid].generation > 
-                this.lastactiongeneration)) {
+                    this.lastactiongeneration)) {
                 retval = false
             }
+            if (show) console.log('returning from targeted NODE should component update', budgetNode.uid, retval, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction)
             this.lastactiongeneration = generation
             return retval
         }
+
+        // explorer actions not targeted let through
+        if (generation > this.lastactiongeneration) {
+            if (show) console.log('returning default true for NODE action', lastAction, generation, this.lastactiongeneration)
+            this.lastactiongeneration = generation
+            return true
+        }
+        // default non-actions (local setState) let through
+        if (show) console.log('returning default true for NODE NON-ACTION')
         return true
+
+        // let { declarationData } = nextProps
+        // let { generation } = declarationData
+
+        // if (this.waitafteraction) {
+        //     this.lastactiongeneration = generation
+        //     this.waitafteraction--
+        //     return false
+        // }
+
+        // let { lastTargetedAction } = nextProps.declarationData
+        // let uid = this.props.budgetNode.uid
+        // if (generation > this.lastactiongeneration && lastTargetedAction[uid]) {
+        //     let retval = true
+        //     if ( !(
+        //         lastTargetedAction && 
+        //         lastTargetedAction[uid] && 
+        //         lastTargetedAction[uid].generation > 
+        //         this.lastactiongeneration)) {
+        //         retval = false
+        //     }
+        //     this.lastactiongeneration = generation
+        //     return retval
+        // }
+        // return true
     }
 
     updateCellsFromDeclarations = (props) => {

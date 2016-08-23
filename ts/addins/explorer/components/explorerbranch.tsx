@@ -186,30 +186,36 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     shouldComponentUpdate(nextProps: ExplorerBranchProps, nextState) {
 
+        let show = false
+
         let { declarationData, budgetBranch } = nextProps
         let { generation } = declarationData
 
+        // explicit call to skip an update
         if (this.waitafteraction) {
             this.lastactiongeneration = generation
             this.waitafteraction--
-            console.log('should update branch return waitafteraction')
+            if (show) console.log('should update branch return waitafteraction')
             return false
         }
 
+        // allow snackbar open through in any case
         if (nextState.snackbar.open != this.state.snackbar.open) {
-            console.log('should update branch return true for snackbar')
+            if (show) console.log('should update branch return true for snackbar')
             return true
         }
 
+        // if the last action is not marked explorer, cancel update
         let { lastAction } = declarationData
         if ( generation > this.lastactiongeneration ) {
             if (!lastAction.explorer) {
-                console.log('should update branch return false for not explorer',generation, this.lastactiongeneration, lastAction)
+                if (show) console.log('should update branch return false for not explorer',generation, this.lastactiongeneration, lastAction)
                 this.lastactiongeneration = generation
                 return false
             }
         }
 
+        // look for targeted action (may have been bypassed with redux race condition)
         let { lastTargetedAction } = nextProps.declarationData
         let uid = budgetBranch.uid
         let lastTargetedBranchAction = lastTargetedAction[uid]
@@ -222,17 +228,19 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                     this.lastactiongeneration)) {
                 retval = false
             }
-            console.log('returning from targeted branch should component update', budgetBranch.uid, retval, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction)
+            if (show) console.log('returning from targeted branch should component update', budgetBranch.uid, retval, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction)
             this.lastactiongeneration = generation
             return retval
         }
 
+        // explorer actions not targeted let through
         if (generation > this.lastactiongeneration) {
-            console.log('returning default true for action', lastAction, generation, this.lastactiongeneration)
+            if (show) console.log('returning default true for action', lastAction, generation, this.lastactiongeneration)
             this.lastactiongeneration = generation
             return true
         }
-        console.log('returning default true for NON-ACTION')
+        // default non-actions (local setState) let through
+        if (show) console.log('returning default true for NON-ACTION')
         return true
 
     }
@@ -284,6 +292,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let budgetNodeId = nodeList[nodeIndex]
             // this.props.restoreNodes()
             // console.log('adding node')
+            // TODO: investigate doing addNodes instead, and adding them to the nodes state in one operation
             budgetBranch.addNode( // sets state to trigger a render, and re-visitation of this code
                 budgetNodeId,
                 nodeIndex,

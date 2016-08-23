@@ -129,16 +129,29 @@ class ExplorerNode extends Component {
         }
     }
     shouldComponentUpdate(nextProps) {
-        let { declarationData } = nextProps;
+        let show = false;
+        let { declarationData, budgetNode } = nextProps;
         let { generation } = declarationData;
         if (this.waitafteraction) {
             this.lastactiongeneration = generation;
             this.waitafteraction--;
+            if (show)
+                console.log('should update NODE return waitafteraction');
             return false;
         }
+        let { lastAction } = declarationData;
+        if (generation > this.lastactiongeneration) {
+            if (!lastAction.explorer) {
+                if (show)
+                    console.log('should update NODE return false for not explorer', generation, this.lastactiongeneration, lastAction);
+                this.lastactiongeneration = generation;
+                return false;
+            }
+        }
         let { lastTargetedAction } = nextProps.declarationData;
-        let uid = this.props.budgetNode.uid;
-        if (generation > this.lastactiongeneration && lastTargetedAction[uid]) {
+        let uid = budgetNode.uid;
+        let lastTargetedBranchAction = lastTargetedAction[uid];
+        if (lastTargetedBranchAction && this.lastactiongeneration < lastTargetedBranchAction.generation) {
             let retval = true;
             if (!(lastTargetedAction &&
                 lastTargetedAction[uid] &&
@@ -146,9 +159,19 @@ class ExplorerNode extends Component {
                     this.lastactiongeneration)) {
                 retval = false;
             }
+            if (show)
+                console.log('returning from targeted NODE should component update', budgetNode.uid, retval, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction);
             this.lastactiongeneration = generation;
             return retval;
         }
+        if (generation > this.lastactiongeneration) {
+            if (show)
+                console.log('returning default true for NODE action', lastAction, generation, this.lastactiongeneration);
+            this.lastactiongeneration = generation;
+            return true;
+        }
+        if (show)
+            console.log('returning default true for NODE NON-ACTION');
         return true;
     }
     render() {
