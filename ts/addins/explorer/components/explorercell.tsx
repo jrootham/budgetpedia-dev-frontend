@@ -108,6 +108,13 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             return true
         }
 
+        // look for general action
+        if (!lastAction.celluid && generation > this.lastactiongeneration) {
+            if (show) console.log('returning TRUE for lastAction without CELL reference', budgetCell.uid, this.lastactiongeneration, generation, lastAction)
+            this.lastactiongeneration = generation
+            return true
+        }
+
         let filtered = Object.keys(lastTargetedAction).filter((item) =>{
             // console.log('item, lastTargetedAction',item,lastTargetedAction)
             let itemaction = lastTargetedAction[item]
@@ -117,8 +124,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         })
 
         if (filtered.length > 0) {
+            if (show) console.log('returning FALSE viable CELL action for another cell', budgetCell.uid,this.lastactiongeneration, generation, filtered, lastAction, lastTargetedAction)
             this.lastactiongeneration = generation
-            if (show) console.log('returning FALSE viable CELL action for another cell', budgetCell.uid)
             return false
         }
 

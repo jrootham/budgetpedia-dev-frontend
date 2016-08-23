@@ -157,6 +157,12 @@ class ExplorerNode extends Component {
             this.lastactiongeneration = generation;
             return true;
         }
+        if (!lastAction.nodeuid && generation > this.lastactiongeneration) {
+            if (show)
+                console.log('returning TRUE for lastAction without NODE reference', budgetNode.uid, this.lastactiongeneration, generation, lastAction);
+            this.lastactiongeneration = generation;
+            return true;
+        }
         let filtered = Object.keys(lastTargetedAction).filter((item) => {
             let itemaction = lastTargetedAction[item];
             if (itemaction.node && itemaction.generation > this.lastactiongeneration) {

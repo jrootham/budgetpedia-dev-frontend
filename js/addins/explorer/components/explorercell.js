@@ -116,6 +116,12 @@ class ExplorerCell extends Component {
             this.lastactiongeneration = generation;
             return true;
         }
+        if (!lastAction.celluid && generation > this.lastactiongeneration) {
+            if (show)
+                console.log('returning TRUE for lastAction without CELL reference', budgetCell.uid, this.lastactiongeneration, generation, lastAction);
+            this.lastactiongeneration = generation;
+            return true;
+        }
         let filtered = Object.keys(lastTargetedAction).filter((item) => {
             let itemaction = lastTargetedAction[item];
             if (itemaction.cell && itemaction.generation > this.lastactiongeneration) {
@@ -123,9 +129,9 @@ class ExplorerCell extends Component {
             }
         });
         if (filtered.length > 0) {
-            this.lastactiongeneration = generation;
             if (show)
-                console.log('returning FALSE viable CELL action for another cell', budgetCell.uid);
+                console.log('returning FALSE viable CELL action for another cell', budgetCell.uid, this.lastactiongeneration, generation, filtered, lastAction, lastTargetedAction);
+            this.lastactiongeneration = generation;
             return false;
         }
         if (generation > this.lastactiongeneration) {

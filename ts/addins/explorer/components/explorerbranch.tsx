@@ -225,6 +225,13 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             return true
         }
 
+        // look for general action
+        if (!lastAction.branchuid && generation > this.lastactiongeneration) {
+            if (show) console.log('returning TRUE for lastAction without BRANCH reference', budgetBranch.uid, this.lastactiongeneration, generation, lastAction)
+            this.lastactiongeneration = generation
+            return true
+        }
+
         let filtered = Object.keys(lastTargetedAction).filter((item) =>{
             // console.log('item, lastTargetedAction',item,lastTargetedAction)
             let itemaction = lastTargetedAction[item]

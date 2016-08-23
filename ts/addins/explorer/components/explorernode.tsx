@@ -155,6 +155,13 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
             return true
         }
 
+        // look for general action
+        if (!lastAction.nodeuid && generation > this.lastactiongeneration) {
+            if (show) console.log('returning TRUE for lastAction without NODE reference', budgetNode.uid, this.lastactiongeneration, generation, lastAction)
+            this.lastactiongeneration = generation
+            return true
+        }
+
         let filtered = Object.keys(lastTargetedAction).filter((item) =>{
             // console.log('item, lastTargetedAction',item,lastTargetedAction)
             let itemaction = lastTargetedAction[item]
