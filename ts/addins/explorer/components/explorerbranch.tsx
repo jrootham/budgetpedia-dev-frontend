@@ -125,8 +125,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
                 this._stateActions.addNodeDeclaration(budgetNodeParms)
             } else {
-                // console.log('calling resetLastAction', budgetBranch.uid)
-                this._stateActions.resetLastAction() // trigger update -> render
+                setTimeout(()=>{ // attempt to reduce screen flash on return and renewal TODO: verify this!! 
+                    // console.log('calling resetLastAction', budgetBranch.uid)
+                    this._stateActions.resetLastAction() // trigger update -> render
+                })
             }
 
         })

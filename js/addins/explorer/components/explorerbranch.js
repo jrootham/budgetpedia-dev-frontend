@@ -279,7 +279,9 @@ class ExplorerBranch extends Component {
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }
             else {
-                this._stateActions.resetLastAction();
+                setTimeout(() => {
+                    this._stateActions.resetLastAction();
+                });
             }
         });
     }
