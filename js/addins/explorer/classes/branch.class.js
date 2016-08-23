@@ -28,7 +28,10 @@ class BudgetBranch {
         this.addNode = (budgetNodeUid, nodeIndex, budgetNodeParms) => {
             let { dataPath } = budgetNodeParms;
             let branchSettings = this.settings;
+            let branchNode = this;
             let viewpointData = this.state.viewpointData;
+            if (!viewpointData)
+                return;
             let treeNodeData = getbudgetnode_1.default(viewpointData, dataPath);
             let branchNodes = this.nodes;
             let parentNode = (nodeIndex === 0) ? null : branchNodes[branchNodes.length - 1];

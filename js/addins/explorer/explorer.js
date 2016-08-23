@@ -155,9 +155,6 @@ let Explorer = class extends Component {
         this.props.resetLastAction();
     }
     componentWillReceiveProps(nextProps) {
-        let { branchList, branchesById } = nextProps.declarationData;
-        let budgetBranches = [...this.state.budgetBranches];
-        this.harmonizeBranchesToState(budgetBranches, branchList, branchesById);
     }
     shouldComponentUpdate(nextProps) {
         let { lastAction, generation } = nextProps.declarationData;
@@ -166,6 +163,11 @@ let Explorer = class extends Component {
             return false;
         }
         return true;
+    }
+    componentDidUpdate() {
+        let { branchList, branchesById } = this.props.declarationData;
+        let budgetBranches = [...this.state.budgetBranches];
+        this.harmonizeBranchesToState(budgetBranches, branchList, branchesById);
     }
     render() {
         let explorer = this;

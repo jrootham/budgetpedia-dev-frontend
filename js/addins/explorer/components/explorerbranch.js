@@ -24,29 +24,30 @@ class ExplorerBranch extends Component {
         this.getProps = () => this.props;
         this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
         this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
-        this._previousgenerationcounter = 0;
+        this.lastactiongeneration = 0;
         this.harmonizecount = null;
         this.harmonizeNodesToState = (branchNodes, nodeList, nodesById, budgetBranch) => {
             if (this.harmonizecount === null) {
                 this.harmonizecount = (nodeList.length - branchNodes.length);
             }
-            if (nodeList.length > branchNodes.length) {
-                if (this.harmonizecount <= 0) {
-                    console.error('System Error: harmonize error', nodeList, branchNodes);
-                }
+            if (this.harmonizecount > 0) {
                 this.harmonizecount--;
                 let nodeIndex = branchNodes.length;
                 let budgetNodeId = nodeList[nodeIndex];
                 budgetBranch.addNode(budgetNodeId, nodeIndex, nodesById[budgetNodeId]);
+                return true;
             }
             else {
                 this.harmonizecount = null;
+                return false;
             }
         };
         this._respondToGlobalStateChange = () => {
+            let { budgetBranch } = this.props;
             let previousControlData = this._previousControlData;
             let currentControlData = this.props.declarationData;
-            let { lastAction } = currentControlData;
+            let { lastTargetedAction } = currentControlData;
+            let lastAction = lastTargetedAction[budgetBranch.uid] || {};
             let returnvalue = true;
             if (!actions_1.branchTypes[lastAction.type]) {
                 return false;
@@ -54,7 +55,6 @@ class ExplorerBranch extends Component {
             if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
                 return false;
             }
-            let { budgetBranch } = this.props;
             switch (lastAction.type) {
                 case actions_1.branchTypes.CHANGE_VIEWPOINT: {
                     this._processChangeViewpointStateChange(budgetBranch);
@@ -275,7 +275,11 @@ class ExplorerBranch extends Component {
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }
             else {
-                this._stateActions.resetLastAction();
+                let { nodesById } = declarationData;
+                let branchNodes = budgetBranch.nodes;
+                let branchDeclarations = declarationData.branchesById[budgetBranch.uid];
+                let { nodeList } = branchDeclarations;
+                this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch);
             }
         });
     }
@@ -290,35 +294,48 @@ class ExplorerBranch extends Component {
                 branchNodes: newBranchNodes,
             });
         }
-        let { budgetBranch, declarationData } = nextProps;
-        let branchDeclarations = declarationData.branchesById[budgetBranch.uid];
-        let { nodeList } = branchDeclarations;
-        this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch);
     }
     shouldComponentUpdate(nextProps, nextState) {
+        let { declarationData, budgetBranch } = nextProps;
+        let { generation } = declarationData;
         if (this.waitafteraction) {
+            this.lastactiongeneration = generation;
             this.waitafteraction--;
             return false;
         }
         if (nextState.snackbar.open != this.state.snackbar.open)
             return true;
-        let { declarationData } = nextProps;
-        let { generation } = declarationData;
-        if (generation > this._previousgenerationcounter) {
-            this._previousgenerationcounter = generation;
-            let { lastAction } = declarationData;
-            if (!lastAction.explorer)
+        let { lastAction } = declarationData;
+        if (generation > this.lastactiongeneration) {
+            if (!lastAction.explorer) {
+                this.lastactiongeneration = generation;
                 return false;
-            let { branchuid } = lastAction;
-            if (branchuid) {
-                let retval = (nextProps.budgetBranch.uid == branchuid) ? true : false;
-                return retval;
             }
+        }
+        let { lastTargetedAction } = nextProps.declarationData;
+        let uid = budgetBranch.uid;
+        if (generation > this.lastactiongeneration && lastTargetedAction[uid]) {
+            let retval = true;
+            if (!(lastTargetedAction &&
+                lastTargetedAction[uid] &&
+                lastTargetedAction[uid].generation >
+                    this.lastactiongeneration)) {
+                retval = false;
+            }
+            this.lastactiongeneration = generation;
+            return retval;
         }
         return true;
     }
     componentDidUpdate() {
-        this._respondToGlobalStateChange();
+        let { budgetBranch, declarationData } = this.props;
+        let branchDeclarations = declarationData.branchesById[budgetBranch.uid];
+        let { nodeList } = branchDeclarations;
+        let { nodesById } = this.props.declarationData;
+        let branchNodes = this.props.budgetBranch.nodes;
+        if (!this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)) {
+            this._respondToGlobalStateChange();
+        }
     }
     render() {
         let branch = this;

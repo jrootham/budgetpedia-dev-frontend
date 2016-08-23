@@ -129,7 +129,8 @@ class ExplorerNode extends Component {
         }
     }
     shouldComponentUpdate(nextProps) {
-        let generation = nextProps.declarationData.generation;
+        let { declarationData } = nextProps;
+        let { generation } = declarationData;
         if (this.waitafteraction) {
             this.lastactiongeneration = generation;
             this.waitafteraction--;

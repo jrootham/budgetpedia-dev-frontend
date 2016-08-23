@@ -54,6 +54,7 @@ interface DeclarationData {
     generation: number,
     nodesById: Object,
     lastAction: any,
+    lastTargetedAction: any,
 }
 
 interface SnackbarProps {
@@ -149,14 +150,15 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
                 this._stateActions.addNodeDeclaration(budgetNodeParms)
             } else {
-                this._stateActions.resetLastAction() // trigger update -> render
+                // console.log('calling resetLastAction', budgetBranch.uid)
+                // this._stateActions.resetLastAction() // trigger update -> render
                 // refresh branchnodes
-                // let { nodesById } = declarationData
-                // let branchNodes = budgetBranch.nodes // copy
-                // let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
-                // let { nodeList } = branchDeclarations
+                let { nodesById } = declarationData
+                let branchNodes = budgetBranch.nodes // copy
+                let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
+                let { nodeList } = branchDeclarations
                 // console.log('refreshing branch nodes', nodeList)
-                // this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)
+                this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)
             }
 
         })
@@ -175,20 +177,17 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 branchNodes:newBranchNodes,
             })
         }
-        // refresh branchnodes
-        let { budgetBranch, declarationData } = nextProps
-        let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
-        let { nodeList } = branchDeclarations
-        // console.log('harmonizing from componentWillReceiveProps', nodeList)
-        this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)
     }
 
-    private _previousgenerationcounter:number = 0
+    private lastactiongeneration:number = 0
 
     shouldComponentUpdate(nextProps: ExplorerBranchProps, nextState) {
 
-        if (this.waitafteraction) {
+        let { declarationData, budgetBranch } = nextProps
+        let { generation } = declarationData
 
+        if (this.waitafteraction) {
+            this.lastactiongeneration = generation
             this.waitafteraction--
             return false
 
@@ -196,18 +195,41 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         if (nextState.snackbar.open != this.state.snackbar.open) return true
 
-        let { declarationData } = nextProps
-        let { generation } = declarationData
-        if ( generation > this._previousgenerationcounter ) {
-            this._previousgenerationcounter = generation
-            let { lastAction } = declarationData
-            // console.log('processing last action', lastAction)
-            if (!lastAction.explorer) return false
-            let { branchuid } = lastAction
-            if (branchuid) {
-                let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
-                return retval
+        // if ( generation > this.lastactiongeneration ) {
+        //     this.lastactiongeneration = generation
+        //     let { lastAction } = declarationData
+        //     // console.log('processing last action', lastAction)
+        //     if (!lastAction.explorer) return false
+        //     let { branchuid } = lastAction
+        //     if (branchuid) {
+        //         let retval = (nextProps.budgetBranch.uid == branchuid)? true: false
+        //         return retval
+        //     }
+        // }
+        // return true
+        let { lastAction } = declarationData
+        if ( generation > this.lastactiongeneration ) {
+            if (!lastAction.explorer) {
+                this.lastactiongeneration = generation
+                return false
             }
+        }
+        // TODO: this screens out legitimate general explorer actions
+        // that are not targeted
+        let { lastTargetedAction } = nextProps.declarationData
+        let uid = budgetBranch.uid
+        if (generation > this.lastactiongeneration && lastTargetedAction[uid]) {
+            let retval = true
+            if ( !(
+                lastTargetedAction && 
+                lastTargetedAction[uid] && 
+                lastTargetedAction[uid].generation > 
+                    this.lastactiongeneration)) {
+                retval = false
+            }
+            this.lastactiongeneration = generation
+            // console.log('returning from branch should component update', budgetBranch.uid, retval, generation, lastAction, lastTargetedAction)
+            return retval
         }
         return true
     }
@@ -217,27 +239,43 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     harmonization operation has failed, which is a system error
 */    
     componentDidUpdate() {
-        this._respondToGlobalStateChange()
+        // refresh branchnodes
+        let { budgetBranch, declarationData } = this.props
+        let branchDeclarations = declarationData.branchesById[budgetBranch.uid]
+        let { nodeList } = branchDeclarations
+        let { nodesById } = this.props.declarationData
+        let branchNodes = this.props.budgetBranch.nodes // copy
+        // console.log('harmonizing from componentWillReceiveProps', nodeList)
+        // harmonize is here for first setup; called from will mount for re-creation
+        if (!this.harmonizeNodesToState(branchNodes, nodeList, nodesById, budgetBranch)) {
+            // console.log( 'calling respondtoglobalstatechange', budgetBranch.uid )
+            this._respondToGlobalStateChange()
+        }
     }
 
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes
     harmonizeNodesToState = (branchNodes, nodeList, nodesById, budgetBranch) => {
+        // console.log('branchNodes, nodeList, nodesById, budgetBranch', branchNodes, nodeList, nodesById, budgetBranch)
         if (this.harmonizecount === null) { // initialize harmonization count
             this.harmonizecount = (nodeList.length - branchNodes.length)
+            // console.log('setting harmonizecount', this.harmonizecount)
         }
+        // let harmonizecount = (nodeList.length - branchNodes.length)
         // console.log('harmonizecount', this.harmonizecount, branchNodes.length, nodeList.length)
         // first task is to harmonize declarationData nodeList list with local branchNode list
         // this condition will keep adding nodes on each render cycle triggered by 
         // addBranchNode, until all nodes are drawn
-        if (nodeList.length > branchNodes.length) {
+        // if (nodeList.length > branchNodes.length) {
+        if (this.harmonizecount > 0) {
             // places sentinal in place in case addNode below fails
             //   generating an infinite loop
-            if (this.harmonizecount <= 0) {
-                console.error('System Error: harmonize error', nodeList, branchNodes)
-                // throw Error('error harmonizing branch nodes')
-            }
+            // if (this.harmonizecount <= 0) {
+            //     console.error('System Error: harmonize error', nodeList, branchNodes)
+            //     // throw Error('error harmonizing branch nodes')
+            // }
             this.harmonizecount--
+            // console.log('new harmonizecount', this.harmonizecount)
             let nodeIndex = branchNodes.length
             let budgetNodeId = nodeList[nodeIndex]
             // this.props.restoreNodes()
@@ -247,8 +285,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 nodeIndex,
                 nodesById[budgetNodeId] // declarations
             )
+            return true
         } else { // otherwise see if there are other cascading actions that have to be taken
             this.harmonizecount = null // reset
+            return false
         }
 
     }
@@ -258,9 +298,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     // state change machine
     private _respondToGlobalStateChange = () => {
+        let { budgetBranch } = this.props
         let previousControlData = this._previousControlData
         let currentControlData = this.props.declarationData
-        let { lastAction } = currentControlData
+        let { lastTargetedAction } = currentControlData
+        let lastAction = lastTargetedAction[budgetBranch.uid] || {}
         let returnvalue = true
         if (!branchActionTypes[lastAction.type]) {
             return false
@@ -271,7 +313,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             return false
         }
 
-        let { budgetBranch } = this.props
         switch (lastAction.type) {
             case branchActionTypes.CHANGE_VIEWPOINT: {
                 this._processChangeViewpointStateChange(budgetBranch)

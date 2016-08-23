@@ -182,10 +182,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     componentWillReceiveProps(nextProps) {
 
-        let { branchList, branchesById } = nextProps.declarationData
-        let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
-
-        this.harmonizeBranchesToState(budgetBranches, branchList, branchesById)
         
     }
 
@@ -197,6 +193,15 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             return false
         }
         return true
+    }
+
+    componentDidUpdate() {
+
+        let { branchList, branchesById } = this.props.declarationData
+        let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
+
+        this.harmonizeBranchesToState(budgetBranches, branchList, branchesById)
+
     }
 
     addBranch = refbranchuid => {

@@ -122,31 +122,18 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     
     shouldComponentUpdate(nextProps: ExplorerNodeProps) {
 
-        let generation = nextProps.declarationData.generation
-        // let { lastAction } = nextProps.declarationData
-        // console.log('lastAction', Object.assign({},lastAction), this.props.budgetNode.uid, lastAction.nodeuid)
-        // let { nodeuid } = lastAction
-        // console.log('generations', generation, this.lastactiongeneration, this.props.budgetNode)
+        let { declarationData } = nextProps
+        let { generation } = declarationData
+
         if (this.waitafteraction) {
             this.lastactiongeneration = generation
             this.waitafteraction--
-            // console.log('shouldUpdate = false for waitafteraction', this.props.budgetNode.uid, lastAction)
             return false
         }
+
         let { lastTargetedAction } = nextProps.declarationData
         let uid = this.props.budgetNode.uid
         if (generation > this.lastactiongeneration && lastTargetedAction[uid]) {
-            // let retval = true
-            // console.log('processing action', lastAction, nextProps.budgetNode.uid)
-            // if (nodeuid) {
-
-            //     retval = (nextProps.budgetNode.uid == nodeuid)? true: false
-            //     console.log('allow action = ',retval)
-
-            // }
-            // this.lastactiongeneration = generation
-            // return retval
-            // console.log('processing targetedAction', lastTargetedAction, nextProps.budgetNode.uid)
             let retval = true
             if ( !(
                 lastTargetedAction && 
@@ -160,10 +147,6 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         }
         return true
     }
-
-    // componentDidUpdate() {
-    //     this._respondToGlobalStateChange()
-    // }
 
     updateCellsFromDeclarations = (props) => {
         let { budgetNode, declarationData }:{budgetNode:BudgetNode, declarationData:any} = props // this.props
