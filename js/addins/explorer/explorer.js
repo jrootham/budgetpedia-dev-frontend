@@ -37,14 +37,6 @@ let Explorer = class extends Component {
                 }
             });
         };
-        this.waitafteraction = 0;
-        this.addBranch = refbranchuid => {
-            let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
-            this.props.addBranchDeclaration(refbranchuid, defaultSettings);
-        };
-        this.removeBranch = branchuid => {
-            this.props.removeBranchDeclaration(branchuid);
-        };
         this.harmonizeBranchesToState = (budgetBranches, branchList, branchesById) => {
             let change = false;
             let newBranches = budgetBranches.filter((branch) => {
@@ -113,12 +105,12 @@ let Explorer = class extends Component {
                 this.props.hideWaitingMessage();
             }
         };
+        this.updateNode = branchuid => nodeuid => this.props.updateNode(branchuid, nodeuid);
         this.changeTab = branchuid => (nodeuid, tabvalue) => this.props.changeTab(branchuid, nodeuid, tabvalue);
         this.addCellDeclarations = branchuid => (nodeuid, settingslist) => this.props.addCellDeclarations(branchuid, nodeuid, settingslist);
         this.normalizeCellYearDependencies = branchuid => (nodeuid, cellList, yearsRange) => this.props.normalizeCellYearDependencies(branchuid, nodeuid, cellList, yearsRange);
         this.updateCellChartSelection = branchuid => nodeuid => (celluid, selection) => this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection);
         this.updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode);
-        this.updateNode = branchuid => nodeuid => this.props.updateNode(branchuid, nodeuid);
         this.onExpandChange = (expanded) => {
             this.props.resetLastAction();
         };
@@ -127,6 +119,13 @@ let Explorer = class extends Component {
         };
         this.branchMoveDown = branchuid => {
             this.props.branchMoveDown(branchuid);
+        };
+        this.addBranch = refbranchuid => {
+            let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
+            this.props.addBranchDeclaration(refbranchuid, defaultSettings);
+        };
+        this.removeBranch = branchuid => {
+            this.props.removeBranchDeclaration(branchuid);
         };
     }
     componentWillMount() {
@@ -153,15 +152,6 @@ let Explorer = class extends Component {
     }
     componentWillUnmount() {
         this.props.resetLastAction();
-    }
-    componentWillReceiveProps(nextProps) {
-    }
-    shouldComponentUpdate(nextProps) {
-        if (this.waitafteraction) {
-            this.waitafteraction--;
-            return false;
-        }
-        return true;
     }
     componentDidUpdate() {
         let { branchList, branchesById } = this.props.declarationData;

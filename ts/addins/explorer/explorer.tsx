@@ -57,11 +57,7 @@ import { getExplorerDeclarationData } from './reducers'
 import dialogcontent from './content/helpcontent'
 
 import {
-    ChartParmsObj,
-    PortalChartLocation,
-    GetChartParmsProps,
     BranchSettings,
-    BranchConfig,
 } from './modules/interfaces'
 
 export interface MappedNodeActions {
@@ -120,8 +116,7 @@ interface ExplorerState {
 let Explorer = class extends Component< ExplorerProps, ExplorerState > 
 {
 
-    // ============================================================
-    // ---------------------[ INITIALIZE ]-------------------------
+    // ---------------------[ Initialize ]-------------------------
 
     state = {
         budgetBranches:[],
@@ -144,21 +139,20 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         })
     }
 
-    waitafteraction:number = 0
-    // see if any initialization is required
-    /*
-        branchList will have a count of zero from a cold start
-        A count above zero signifies a return to the page during the same session 
-        or loading of a saved workspace
-    */
+    // ----------------------------[ Lifecycle operations ]-------------------------------
+
     componentWillMount() {
 
         let { branchList, branchesById } = this.props.declarationData
+
         if (branchList.length == 0) { // initialize explorer with first branch
+
             this.freshstart = true
             let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
             this.props.addBranchDeclaration(null,defaultSettings) // change state
+
         } else {
+
             let { branchList, branchesById } = this.props.declarationData
             let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
 
@@ -180,21 +174,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         this.props.resetLastAction() // clear sentinals for unmount //TODO verify this!
     }
 
-    componentWillReceiveProps(nextProps) {
-
-        
-    }
-
-    shouldComponentUpdate(nextProps) {
-        // let { lastAction, generation } = nextProps.declarationData
-        // console.log('lastAction in explorer', generation, lastAction)
-        if (this.waitafteraction) {
-            this.waitafteraction--
-            return false
-        }
-        return true
-    }
-
     componentDidUpdate() {
 
         let { branchList, branchesById } = this.props.declarationData
@@ -202,15 +181,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         this.harmonizeBranchesToState(budgetBranches, branchList, branchesById)
 
-    }
-
-    addBranch = refbranchuid => {
-        let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
-        this.props.addBranchDeclaration( refbranchuid, defaultSettings )        
-    }
-
-    removeBranch = branchuid => {
-        this.props.removeBranchDeclaration(branchuid)
     }
 
     /*
@@ -272,6 +242,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         }
     }
 
+    // ------------------------[ andcillary ui ]---------------------------
+
     handleDialogOpen = (e) => {
         e.stopPropagation()
         e.preventDefault()
@@ -296,21 +268,27 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     }
 
-    // create action calls versions for currying (branchid)
+    // ---------------[ create action calls versions for currying (branchid) ]---------------
+
+    // node consumer
+    private updateNode = branchuid => nodeuid => 
+        this.props.updateNode(branchuid, nodeuid)
     private changeTab = branchuid => (nodeuid, tabvalue) => 
         this.props.changeTab(branchuid, nodeuid,tabvalue)
     private addCellDeclarations = branchuid => (nodeuid, settingslist) => 
         this.props.addCellDeclarations(branchuid, nodeuid, settingslist)
     private normalizeCellYearDependencies = branchuid => (nodeuid, cellList, yearsRange) => 
         this.props.normalizeCellYearDependencies(branchuid, nodeuid, cellList, yearsRange)
+
+    // cell consumer
     private updateCellChartSelection = branchuid => nodeuid => (celluid,selection) =>
         this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection )
     private updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => 
         this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode)
-    private updateNode = branchuid => nodeuid => 
-        this.props.updateNode(branchuid, nodeuid)
+    
+    // ----------------------------[ ui responses ]------------------------------
 
-    onExpandChange = (expanded) => {
+    onExpandChange = (expanded) => { // TODO ?????
         // TODO: change background color of title if it is collapsed
         this.props.resetLastAction()
     }
@@ -322,8 +300,18 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     branchMoveDown = branchuid => {
         this.props.branchMoveDown(branchuid)
     }
+
+    addBranch = refbranchuid => {
+        let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
+        this.props.addBranchDeclaration( refbranchuid, defaultSettings )        
+    }
+
+    removeBranch = branchuid => {
+        this.props.removeBranchDeclaration(branchuid)
+    }
+
     // ===================================================================
-    // ---------------------------[ RENDER ]------------------------------ 
+    // ---------------------------[ Render ]------------------------------ 
 
     render() {
         // console.log('explorer rendering')
@@ -592,6 +580,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 let mapStateToProps = state => ({ 
     declarationData:getExplorerDeclarationData(state), 
 })
+
+// initialize all these call backs with dispatch
 
 Explorer = connect(mapStateToProps, {
     // presentation
