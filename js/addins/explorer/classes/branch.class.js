@@ -129,11 +129,11 @@ class BudgetBranch {
         };
         this.getViewpointData = () => {
             let branchSettings = this.settings;
-            let { viewpoint: viewpointName, aspect: aspectName, inflationAdjusted, } = branchSettings;
+            let { viewpoint: viewpointName, aspect: aspectName, inflationAdjusted, version: versionName, } = branchSettings;
             let datasetName = constants_1.AspectNameToDatasetName[aspectName];
             let _promise = databaseapi_1.default.getViewpointData({
                 viewpointName: viewpointName,
-                versionName: 'PBFT',
+                versionName: versionName,
                 datasetName: datasetName,
                 inflationAdjusted: inflationAdjusted
             });

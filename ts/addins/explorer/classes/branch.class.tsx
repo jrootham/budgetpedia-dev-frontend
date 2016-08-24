@@ -92,7 +92,6 @@ class BudgetBranch {
                 firstYear: null,
                 lastYear: null,
             },
-            // datasetSpecs:viewpointData.DatasetSeries,
             dataPath: [],
             nodeIndex:0,
         }
@@ -242,13 +241,14 @@ class BudgetBranch {
             viewpoint: viewpointName, 
             aspect: aspectName, 
             inflationAdjusted,
+            version: versionName,
         } = branchSettings
 
         let datasetName = AspectNameToDatasetName[aspectName]
 
         let _promise = databaseapi.getViewpointData({
             viewpointName, 
-            versionName:'PBFT',
+            versionName,
             datasetName,
             inflationAdjusted
         })

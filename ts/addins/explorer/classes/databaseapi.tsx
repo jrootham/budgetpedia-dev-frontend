@@ -11,6 +11,8 @@
 import updateViewpointData, 
     { SetViewpointDataParms as CalculateViewpointDataParms } from './databaseapi/setviewpointdata'
 
+import { SortedComponentItem } from '../modules/interfaces'
+
 // -----------------------[ collect the data ]------------------------------
 
 // let repo = '../../../../data/' parser needs literals as arguments
@@ -63,9 +65,15 @@ interface Dataset<ItemType> extends DatasetConfig {
 
 // the data component part of the raw ViewpointData structure
 interface Component {
+    // included in declaration
     Index: number,
     NamingConfigRef: string,
     Components?: Components,
+    // added after processing
+    CommonObjects?: Components,
+    SortedComponents?: SortedComponentItem,
+    SortedCommonObjects?: SortedComponentItem,
+    years?: Dataset<CurrencyItemType> | Dataset<NumericItemType>
 }
 
 // the list of a node's components
@@ -77,7 +85,7 @@ interface Components {
 export interface ViewpointData extends Component {
     Lookups: Lookups,
     datasetConfig?: DatasetConfig, // TODO: lose this!
-    Configuration: {
+    NamingConfigurations: {
         [configurationcode:string]:Configuration,
     },
 }
@@ -130,7 +138,7 @@ export interface GetViewpointDataParms {
 // ---------------------------[ local use ]------------------------
 
 // the following two items used only above
-interface CurrencyDataset extends Dataset<CurrencyItemType> {}
+interface CurrencyItemDataset extends Dataset<CurrencyItemType> {}
 
 interface NumericItemDataset extends Dataset<NumericItemType> {}
 
@@ -164,7 +172,8 @@ interface Lookups {
 class Database {
 
     // data caches...
-    private viewpoints: Viewpoints
+    private viewpointTemplates: Viewpoints
+    private processedViewpoints: Viewpoints
     private datasets: Datasets
     private lookups: Lookups
 
@@ -294,7 +303,7 @@ class Database {
 
         let promise = new Promise(resolve => {
 
-            let datasetdata: CurrencyDataset | NumericItemDataset = db_datasets[versionName][datasetName]
+            let datasetdata: CurrencyItemDataset | NumericItemDataset = db_datasets[versionName][datasetName]
 
             delay(0). then(()=>{
                 resolve(datasetdata)

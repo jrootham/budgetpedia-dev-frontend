@@ -255,6 +255,7 @@ class ExplorerBranch extends Component {
                 budgetNode.portalConfig = portalConfig;
                 let viewpointdata = this.state.viewpointData;
                 let { NamingConfigurations: viewpointNamingConfigs, datasetConfig: datasetConfig, } = viewpointdata;
+                console.log('viewpointdata', viewpointdata);
                 let viewpointConfigPack = {
                     viewpointNamingConfigs: viewpointNamingConfigs,
                     datasetConfig: datasetConfig,

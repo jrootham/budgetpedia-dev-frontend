@@ -99,9 +99,9 @@ let hometiles = [
 let workingmessagestate = false;
 let branchDefaults = {
     viewpoint: "FUNCTIONAL",
-    branchDataGeneration: 0,
     version: 'PBFT',
     aspect: "Expenses",
+    branchDataGeneration: 0,
     defaultVersions: {
         'FUNCTIONAL': 'SUMMARY',
         'STRUCTURAL': 'SUMMARY',

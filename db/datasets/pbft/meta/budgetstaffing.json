@@ -1,0 +1,26 @@
+{
+    "ComponentsLookupIndex":"Programs",
+    "CommonObjectsLookupIndex": "TimeAllocations",
+    "InflationAdjustable": false,
+    "YearsRange":{
+        "start":2015,
+        "end":2015
+    },
+    "DatasetName":"Staffing",
+    "DatasetTitle": "Council Approved Staff Positions",
+    "Dataseries": [
+        {
+            "Type": "Components"
+        },
+        {
+            "Type": "CommonObjects"
+        }
+    ],
+    "DataseriesTitles": {
+        "Components": "Programs",
+        "CommonObjects": "Permanence"
+    },
+    "Units": "FTE",
+    "UnitRatio":1,
+    "Structure":["Programs", "Services?","Activities?","CommonObjects"]
+}

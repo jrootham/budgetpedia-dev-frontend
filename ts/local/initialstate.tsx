@@ -213,14 +213,14 @@ let workingmessagestate = false
 
 let branchDefaults:BranchSettings = {
     viewpoint: "FUNCTIONAL",
-    branchDataGeneration:0,
     version: 'PBFT',
     aspect: "Expenses",
-    defaultVersions:{
+    branchDataGeneration:0,
+    defaultVersions:{ // viewpoint versions
         'FUNCTIONAL':'SUMMARY',
         'STRUCTURAL':'SUMMARY',
     },
-    defaultAspects:{
+    defaultAspects:{ // version aspects
         'SUMMARY':'Expenses',
         'PBFT':'Expenses',
     },

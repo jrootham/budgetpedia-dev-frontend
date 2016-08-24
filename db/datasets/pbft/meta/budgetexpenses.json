@@ -1,0 +1,28 @@
+{
+    "ComponentsLookupIndex": "Programs",
+    "CommonObjectsLookupIndex": "Expenditures",
+    "InflationAdjustable": true,
+    "YearsRange":{
+        "start":2015,
+        "end":2015
+    },
+    "DatasetName":"Expenses",
+    "DatasetTitle": "Council Approved Gross Operating Expenditures",
+    "Dataseries": [
+        {
+            "Type": "Components"
+        },
+        {
+            "Type": "CommonObjects"
+        }
+    ],
+    "DataseriesTitles": {
+        "Components": "Programs",
+        "CommonObjects": "Expenses by Object"
+    },
+    "Units": "DOLLAR",
+    "UnitsAlias": "$000's",
+    "UnitRatio": 1000,
+    "Structure":["Programs", "Services?","Activities?","CommonObjects"]
+}
+
