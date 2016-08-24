@@ -193,7 +193,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let { declarationData, budgetBranch } = nextProps
         let { generation } = declarationData
 
-        // explicit call to skip an update
+        // 1. explicit call to skip an update
         if (this.waitafteraction) {
             this.lastactiongeneration = generation
             this.waitafteraction--
@@ -201,13 +201,13 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             return false
         }
 
-        // allow snackbar open through in any case
+        // 2. allow snackbar open through in any case
         if (nextState.snackbar.open != this.state.snackbar.open) {
             if (show) console.log('should update branch return true for snackbar')
             return true
         }
 
-        // if the last action is not marked explorer, cancel update
+        // 3. if the last action is not marked explorer, cancel update
         let { lastAction } = declarationData
         if ( generation > this.lastactiongeneration ) {
             if (!lastAction.explorer) {
@@ -217,7 +217,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             }
         }
 
-        // look for targeted action (may have been bypassed with redux race condition)
+        // 4. look for targeted action (may have been bypassed with redux race condition)
         let { lastTargetedAction } = nextProps.declarationData
         let uid = budgetBranch.uid
         let lastTargetedBranchAction = lastTargetedAction[uid]
@@ -227,13 +227,14 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             return true
         }
 
-        // look for general action
+        // 5. look for general action
         if (!lastAction.branchuid && generation > this.lastactiongeneration) {
             if (show) console.log('returning TRUE for lastAction without BRANCH reference', budgetBranch.uid, this.lastactiongeneration, generation, lastAction)
             this.lastactiongeneration = generation
             return true
         }
 
+        // 6. filter out legitimate mismatched targets
         let filtered = Object.keys(lastTargetedAction).filter((item) =>{
             // console.log('item, lastTargetedAction',item,lastTargetedAction)
             let itemaction = lastTargetedAction[item]
@@ -248,22 +249,19 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             return false
         }
 
-        // explorer actions not targeted let through
+        // 7. explorer actions not targeted let through, but sets lastactiongeneration
         if (generation > this.lastactiongeneration) {
             if (show) console.log('returning default true for BRANCH action', lastAction, generation, this.lastactiongeneration)
             this.lastactiongeneration = generation
             return true
         }
-        // default non-actions (local setState) let through
+
+        // 8. default non-actions (local setState) let through
         if (show) console.log('returning default true for BRANCH NON-ACTION')
         return true
 
     }
-/*
-    harmonization means creating local nodes to match global declarations
-    acts as a sentinel; if count goes below zero, means that some 
-    harmonization operation has failed, which is a system error
-*/    
+
     componentDidUpdate() {
         // refresh branchnodes
         let { budgetBranch, declarationData } = this.props
@@ -280,6 +278,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         }
     }
 
+/*
+    harmonization means creating local nodes to match global declarations
+    acts as a sentinel; if count goes below zero, means that some 
+    harmonization operation has failed, which is a system error
+*/
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes
     harmonizeNodesToState = (branchNodes, nodeList, nodesById, budgetBranch) => {
