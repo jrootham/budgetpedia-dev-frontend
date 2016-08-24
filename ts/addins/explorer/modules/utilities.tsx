@@ -90,7 +90,7 @@ export const filterActionsForUpdate = (nextProps, component, show:boolean = fals
         }
 
         // 4. look for general action
-        if (!lastAction[targetType] && generation > component.lastactiongeneration) {
+        if (!lastAction[targetType + 'uid'] && generation > component.lastactiongeneration) {
             if (show) console.log(`returning TRUE for lastAction without ${text} reference`, instance.uid, component.lastactiongeneration, generation, lastAction)
             component.lastactiongeneration = generation
             return true
