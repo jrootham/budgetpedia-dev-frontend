@@ -8,69 +8,30 @@
     TODO: the interface definitions are of data
 */
 
-import updateViewpointData, { SetViewpointDataParms } from './databaseapi/setviewpointdata'
+import updateViewpointData, 
+    { SetViewpointDataParms as CalculateViewpointDataParms } from './databaseapi/setviewpointdata'
 
-let db_datasets = require('../../../../data/datasets.json')
+// -----------------------[ collect the data ]------------------------------
+
+let repo = '../../../../data/'
+
+// datasets, by version/name
+let db_datasets = require( repo + 'datasets.json' )
 // common lookups
-let db_lookups = require('../../../../data/lookups.json')
+let db_lookups = require( repo + 'lookups.json')
 // top level taxonomies
-let db_viewpoints = require('../../../../data/viewpoints.json')
+let db_viewpoints = require( repo + 'viewpoints.json')
 
 const delay = ms => // for testing!
     new Promise(resolve => setTimeout(resolve,ms))
 
-// TODO complete this!
-interface NodeDataset {
-    Index?:number,
-    NamingConfigRef:string,
-    years: any,
-    Components:Components,
-    CommonObjects:any,
-    SortedComponents: any,
-    SortedCommonObjects?:any
-}
+// =================================[ INTERFACES ]=======================================
 
-interface Component {
-    Index: number,
-    NamingConfigRef: string,
-    Components?: Components,
-}
+// ----------------------[ Assemble basic (common) data structure ]------------------------
 
-interface Components {
-    [componentcode:string]:Component,
-}
-
-interface Name {
-    name: string,
-    alias?: string,
-}
-
-interface Configuration extends Name {
-    Instance: Name,
-}
-
-export interface DataseriesMeta {
-    Type:string,
-}
-
-export interface ViewpointData extends Component {
-    Lookups: Lookups,
-    datasetConfig?: any,
-    Configuration: {
-        [configurationcode:string]:Configuration,
-    },
-   // Datasets: DataseriesMeta[],
-}
-
-interface Viewpoints {
-    [index:string]: ViewpointData
-}
-
-interface YearsContent {
-    [year:string]: number
-}
-
-interface ItemType {
+// the basic format for dataseries record
+// the processed item type
+interface NumericItemType {
     years: YearsContent,
     CommonObjects: {
         [categorycode:string]: {
@@ -79,13 +40,57 @@ interface ItemType {
     }
 }
 
-interface CurrencyItemType {
-    adjusted?: ItemType,
-    nominal?: ItemType,
+// series of years as string index and number
+// used in the 'years' property in NumbericItemType
+interface YearsContent {
+    [year:string]: number
 }
 
-interface MetaData {
-    MetaData:any,
+// the numeric datatype strucure, but with 2 copies: one for adjusted, one for nominal
+interface CurrencyItemType {
+    adjusted?: NumericItemType,
+    nominal?: NumericItemType,
+}
+
+interface Dataset<ItemType> extends DatasetConfig {
+    InflationAdjustable?: boolean,
+    Items: {
+        [itemcode:string]:ItemType
+    }
+}
+
+// -------------------------[ databse API ]--------------------------------
+
+// the data component part of the raw ViewpointData structure
+interface Component {
+    Index: number,
+    NamingConfigRef: string,
+    Components?: Components,
+}
+
+// the list of a node's components
+interface Components {
+    [componentcode:string]:Component,
+}
+// this represents the found raw viewpointdata settings portion
+// TODO; lose datasetConfig as carried by viewpointData; it's independent!
+export interface ViewpointData extends Component {
+    Lookups: Lookups,
+    datasetConfig?: DatasetConfig, // TODO: lose this!
+    Configuration: {
+        [configurationcode:string]:Configuration,
+    },
+}
+
+// used above
+interface Configuration extends Name {
+    Instance: Name,
+}
+
+// used above
+interface Name {
+    name: string,
+    alias?: string,
 }
 
 export interface DatasetConfig {
@@ -105,15 +110,9 @@ export interface DatasetConfig {
     UnitRatio: number,
 }
 
-interface Dataset<ItemType> extends DatasetConfig {
-    InflationAdjustable?: boolean,
-    Items: {
-        [itemcode:string]:ItemType
-    }
-}
-
-interface Datasets {
-    [index: string]: Dataset<CurrencyItemType> | Dataset<ItemType>
+// used above
+export interface DataseriesMeta {
+    Type:string,
 }
 
 export interface YearSpecs {
@@ -128,9 +127,12 @@ export interface GetViewpointDataParms {
     inflationAdjusted: boolean,
 }
 
-export interface CurrencyDataset extends Dataset<CurrencyItemType> {}
+// ---------------------------[ local use ]------------------------
 
-export interface ItemDataset extends Dataset<ItemType> {}
+// the following two items used only above
+interface CurrencyDataset extends Dataset<CurrencyItemType> {}
+
+interface NumericItemDataset extends Dataset<NumericItemType> {}
 
 interface Lookup {
     [index:string]: {
@@ -138,54 +140,84 @@ interface Lookup {
     }
 }
 
+// property of datasetConfig; holds metadata properties
+interface DatasetMetaData {
+    MetaData:DatasetConfig,
+}
+
+// -----------------------[ key data caches, by name ]---------------------
+
+interface Viewpoints {
+    [index:string]: ViewpointData
+}
+
+interface Datasets {
+    [index: string]: Dataset<CurrencyItemType> | Dataset<NumericItemType>
+}
+
 interface Lookups {
     [index:string]: Lookup
 }
 
+// =====================================[ CLASS DECLARATION ]==================================
+
 class Database {
-    viewpoints: Viewpoints
-    datasets: Datasets
-    lookups: Lookups
 
-    // pending
-    public getBranch(viewpointname, path = []) {
+    // data caches...
+    private viewpoints: Viewpoints
+    private datasets: Datasets
+    private lookups: Lookups
 
-    }
+    // // pending
+    // public getBranch(viewpointname, path = []) {
 
+    // }
+
+    // getViewpointData returns a promise.
     public getViewpointData(parms: GetViewpointDataParms) {
 
         let { viewpointName, versionName, datasetName, inflationAdjusted } = parms
 
-        let viewpointDataPromise = this.getViewpointPromise(viewpointName),
+        let viewpointDataTemplatePromise = this.getViewpointTemplatePromise(viewpointName),
             datasetDataPromise = this.getDatasetPromise(versionName,datasetName),
             lookupsPromise = this.getLookupPromise(),
             datasetConfigPromise = this.getDatasetConfigPromise(versionName, datasetName)
 
         let promise = new Promise(resolve => {
 
-            Promise.all([viewpointDataPromise, datasetDataPromise, lookupsPromise, datasetConfigPromise]).then(
+            Promise.all(
+                [
+                    viewpointDataTemplatePromise, 
+                    datasetDataPromise, 
+                    lookupsPromise, 
+                    datasetConfigPromise
+
+                ]).then(
+
                 values => {
-                    let viewpointData
+                    let viewpointDataTemplate
                     let datasetData
                     let lookups
                     let datasetConfig
 
-                    [viewpointData, datasetData, lookups, datasetConfig] = values
+                    // calculate all compatible data together, cached
+                    [viewpointDataTemplate, datasetData, lookups, datasetConfig] = values
 
+                    viewpointDataTemplate.datasetConfig = datasetConfig // TODO try to avoid this
 
-                    viewpointData.datasetConfig = datasetConfig
-                    let setparms:SetViewpointDataParms = {
+                    let setparms:CalculateViewpointDataParms = {
                         datasetName,
                         inflationAdjusted,
-                        viewpointData,
+                        viewpointDataTemplate,
                         datasetData,
                         lookups,
                     }
-                    this.setViewpointData(setparms)
+                    this.calculateViewpointData(setparms)
 
-                    viewpointData = setparms.viewpointData
+                    viewpointDataTemplate = setparms.viewpointDataTemplate
 
-                    resolve(viewpointData)
+                    resolve(viewpointDataTemplate)
+                    
                 }
             )
         })
@@ -193,12 +225,39 @@ class Database {
         return promise
 
     }
-    private getDatasetConfigPromise(versionName, datasetName:string) {
+
+
+    private calculateViewpointData(parms: CalculateViewpointDataParms) {
+        updateViewpointData(parms)
+    }
+
+    // -------------------------[ promises to collect data ]---------------------
+
+    private getViewpointTemplatePromise(viewpoint: string) {
+
+        let promise = new Promise(resolve => {
+
+            let viewpointdata: ViewpointData = db_viewpoints[viewpoint]
+            viewpointdata = JSON.parse(JSON.stringify(viewpointdata))
+
+            resolve(viewpointdata)
+
+        })
+
+        return promise
+
+    }
+
+    // internal promise for dataset config
+    private getDatasetConfigPromise(versionName:string, datasetName:string) {
 
         let datasetpromise = this.getDatasetPromise(versionName, datasetName)
         let promise = new Promise(resolve => {
-            datasetpromise.then((datasetdata: MetaData) => {
+
+            datasetpromise.then((datasetdata: DatasetMetaData) => {
+
                 let metaData:DatasetConfig = datasetdata.MetaData
+
                 let { 
                     DatasetName,
                     YearsRange,
@@ -220,42 +279,45 @@ class Database {
                     UnitsAlias,
                     UnitRatio,
                 }
+
                  resolve(config)
 
             })
-        })
-        return promise
-    }
 
-    private setViewpointData(parms: SetViewpointDataParms) {
-        updateViewpointData(parms)
-    }
-
-    private getViewpointPromise(viewpoint: string) {
-        let promise = new Promise(resolve => {
-            let viewpointdata: ViewpointData = db_viewpoints[viewpoint]
-            viewpointdata = JSON.parse(JSON.stringify(viewpointdata))
-            resolve(viewpointdata)
         })
+
         return promise
+
     }
 
     private getDatasetPromise(versionName, datasetName: string) {
+
         let promise = new Promise(resolve => {
-            let datasetdata: CurrencyDataset | ItemDataset = db_datasets[versionName][datasetName]
+
+            let datasetdata: CurrencyDataset | NumericItemDataset = db_datasets[versionName][datasetName]
+
             delay(0). then(()=>{
                 resolve(datasetdata)
             })
+
         })
+
         return promise
+
     }
 
     private getLookupPromise(lookup:string = undefined) {
+
         let promise = new Promise(resolve => {
+
             let lookupdata: Lookup = db_lookups
+
             resolve(lookupdata)
+
         })
+
         return promise
+
     }
 }
 

@@ -1,7 +1,7 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetnode.tsx
 
-import { DataseriesMeta, YearSpecs } from './databaseapi'
+import { YearSpecs } from './databaseapi'
 import { 
     AspectNameToDatasetName, 
     ChartCodeToGoogleChartType 

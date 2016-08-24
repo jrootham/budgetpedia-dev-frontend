@@ -21,7 +21,7 @@ import {
 export interface SetViewpointDataParms {
     // viewpointname:string,
     datasetName: string,
-    viewpointData:any,
+    viewpointDataTemplate:any,
     datasetData:any,
     lookups:any,
     inflationAdjusted: boolean,
@@ -34,14 +34,14 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
     // let viewpointname = parms.viewpointname,
     let { 
         datasetName, 
-        viewpointData, 
+        viewpointDataTemplate, 
         datasetData, 
         lookups, 
         inflationAdjusted 
     } = parms
 
     // already done if currentDataset matches request
-    if (viewpointData.currentDataset == datasetName)
+    if (viewpointDataTemplate.currentDataset == datasetName)
         return
 
     let datasetMetaData = datasetData.MetaData
@@ -50,7 +50,7 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
 
     let componentlookups = lookups[componentLookupIndex]
     let commonObjectLookups = lookups[commonObjectLookupIndex]
-    let taxonomylookups = viewpointData.Lookups.Taxonomy
+    let taxonomylookups = viewpointDataTemplate.Lookups.Taxonomy
 
     let lookupset = {
         componentlookups,
@@ -62,7 +62,7 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
 
     let isInflationAdjustable = !!datasetMetaData.InflationAdjustable
 
-    let rootcomponent = { "ROOT": viewpointData }
+    let rootcomponent = { "ROOT": viewpointDataTemplate }
 
     // set years, and CommonObjects by years
     // initiates recursion
@@ -70,7 +70,7 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
         lookupset, inflationAdjusted)
 
     // create sentinel to prevent unnucessary processing
-    viewpointData.currentDataset = datasetName
+    viewpointDataTemplate.currentDataset = datasetName
 
     // let text = JSON.stringify(viewpoint, null, 4) + '\n'
 
@@ -79,8 +79,15 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
 // this is recursive, with absence of Components property at leaf
 // special treatment for 'BASELINE' items -- fetches data from data series items
 // sets years and CommonObjects for the node
-let setComponentAggregates = (components, items, isInflationAdjustable,
-    lookups, wantsInflationAdjusted): ComponentAggregates => {
+let setComponentAggregates = (
+
+        components, 
+        items, 
+        isInflationAdjustable,
+        lookups, 
+        wantsInflationAdjusted
+
+    ): ComponentAggregates => {
     // cumulate summaries for this level
     let cumulatingSummaries: ComponentAggregates = {
         years: {},
@@ -109,7 +116,7 @@ let setComponentAggregates = (components, items, isInflationAdjustable,
             if (component.Components) {
 
                 // if (!component.SortedComponents) {
-                let sorted = getIndexSortedComponents(
+                let sorted = getIndexSortedComponentItems(
                     component.Components, lookups)
 
                 component.SortedComponents = sorted
@@ -126,7 +133,7 @@ let setComponentAggregates = (components, items, isInflationAdjustable,
                 if (componentAggregates.CommonObjects) {
                     component.CommonObjects = componentAggregates.CommonObjects
                     if (component.CommonObjects) {// && !component.SortedCommonObjects) {
-                        let sorted = getNameSortedComponents(
+                        let sorted = getNameSortedComponentItems(
                             component.CommonObjects, lookups)
 
                         component.SortedCommonObjects = sorted
@@ -199,13 +206,13 @@ let setComponentAggregates = (components, items, isInflationAdjustable,
                 }
             } 
             if (component.Components && !component.SortedComponents) { // && !component.SortedComponents) {
-                let sorted = getNameSortedComponents(
+                let sorted = getNameSortedComponentItems(
                     component.Components, lookups)
 
                 component.SortedComponents = sorted
             }
             if (component.CommonObjects && !component.SortedCommonObjects) { // && !component.SortedComponents) {
-                let sorted = getNameSortedComponents(
+                let sorted = getNameSortedComponentItems(
                     component.CommonObjects, lookups)
 
                 component.SortedCommonObjects = sorted
@@ -215,7 +222,7 @@ let setComponentAggregates = (components, items, isInflationAdjustable,
 
         // aggregate the collected summaries for the caller
         if (componentAggregates) {
-            aggregateComponentAggregates(cumulatingSummaries, componentAggregates)
+            assembleComponentAggregates(cumulatingSummaries, componentAggregates)
         }
     }
 
@@ -224,7 +231,7 @@ let setComponentAggregates = (components, items, isInflationAdjustable,
 
 // -----------------------[ RETURN SORTED COMPONENT LIST ]------------------------
 
-let getIndexSortedComponents = (components, lookups):SortedComponentItem[] => {
+let getIndexSortedComponentItems = (components, lookups):SortedComponentItem[] => {
     let sorted = []
     let catlookups = lookups.taxonomylookups
     for (let componentcode in components) {
@@ -255,7 +262,7 @@ let getIndexSortedComponents = (components, lookups):SortedComponentItem[] => {
 
 }
 
-let getNameSortedComponents = (components, lookups):SortedComponentItem[] => {
+let getNameSortedComponentItems = (components, lookups):SortedComponentItem[] => {
     let sorted = []
     let complookups = lookups.commonObjectLookups
     for (let componentname in components) {
@@ -287,7 +294,7 @@ let getNameSortedComponents = (components, lookups):SortedComponentItem[] => {
 
 // summarize the componentAggregates into the cumumlatingSummaries
 
-let aggregateComponentAggregates = (
+let assembleComponentAggregates = (
     cumulatingSummaries: ComponentAggregates,
     componentAggregates: ComponentAggregates) => {
 

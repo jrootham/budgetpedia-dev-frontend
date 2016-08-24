@@ -1,34 +1,49 @@
 "use strict";
 const setviewpointdata_1 = require('./databaseapi/setviewpointdata');
-let db_datasets = require('../../../../data/datasets.json');
-let db_lookups = require('../../../../data/lookups.json');
-let db_viewpoints = require('../../../../data/viewpoints.json');
+let repo = '../../../../data/';
+let db_datasets = require(repo + 'datasets.json');
+let db_lookups = require(repo + 'lookups.json');
+let db_viewpoints = require(repo + 'viewpoints.json');
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 class Database {
-    getBranch(viewpointname, path = []) {
-    }
     getViewpointData(parms) {
         let { viewpointName, versionName, datasetName, inflationAdjusted } = parms;
-        let viewpointDataPromise = this.getViewpointPromise(viewpointName), datasetDataPromise = this.getDatasetPromise(versionName, datasetName), lookupsPromise = this.getLookupPromise(), datasetConfigPromise = this.getDatasetConfigPromise(versionName, datasetName);
+        let viewpointDataTemplatePromise = this.getViewpointTemplatePromise(viewpointName), datasetDataPromise = this.getDatasetPromise(versionName, datasetName), lookupsPromise = this.getLookupPromise(), datasetConfigPromise = this.getDatasetConfigPromise(versionName, datasetName);
         let promise = new Promise(resolve => {
-            Promise.all([viewpointDataPromise, datasetDataPromise, lookupsPromise, datasetConfigPromise]).then(values => {
-                let viewpointData;
+            Promise.all([
+                viewpointDataTemplatePromise,
+                datasetDataPromise,
+                lookupsPromise,
+                datasetConfigPromise
+            ]).then(values => {
+                let viewpointDataTemplate;
                 let datasetData;
                 let lookups;
                 let datasetConfig;
-                [viewpointData, datasetData, lookups, datasetConfig] = values;
-                viewpointData.datasetConfig = datasetConfig;
+                [viewpointDataTemplate, datasetData, lookups, datasetConfig] = values;
+                viewpointDataTemplate.datasetConfig = datasetConfig;
                 let setparms = {
                     datasetName: datasetName,
                     inflationAdjusted: inflationAdjusted,
-                    viewpointData: viewpointData,
+                    viewpointDataTemplate: viewpointDataTemplate,
                     datasetData: datasetData,
                     lookups: lookups,
                 };
-                this.setViewpointData(setparms);
-                viewpointData = setparms.viewpointData;
-                resolve(viewpointData);
+                this.calculateViewpointData(setparms);
+                viewpointDataTemplate = setparms.viewpointDataTemplate;
+                resolve(viewpointDataTemplate);
             });
+        });
+        return promise;
+    }
+    calculateViewpointData(parms) {
+        setviewpointdata_1.default(parms);
+    }
+    getViewpointTemplatePromise(viewpoint) {
+        let promise = new Promise(resolve => {
+            let viewpointdata = db_viewpoints[viewpoint];
+            viewpointdata = JSON.parse(JSON.stringify(viewpointdata));
+            resolve(viewpointdata);
         });
         return promise;
     }
@@ -50,17 +65,6 @@ class Database {
                 };
                 resolve(config);
             });
-        });
-        return promise;
-    }
-    setViewpointData(parms) {
-        setviewpointdata_1.default(parms);
-    }
-    getViewpointPromise(viewpoint) {
-        let promise = new Promise(resolve => {
-            let viewpointdata = db_viewpoints[viewpoint];
-            viewpointdata = JSON.parse(JSON.stringify(viewpointdata));
-            resolve(viewpointdata);
         });
         return promise;
     }

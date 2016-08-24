@@ -1,14 +1,14 @@
 "use strict";
 let setViewpointData = (parms) => {
-    let { datasetName, viewpointData, datasetData, lookups, inflationAdjusted } = parms;
-    if (viewpointData.currentDataset == datasetName)
+    let { datasetName, viewpointDataTemplate, datasetData, lookups, inflationAdjusted } = parms;
+    if (viewpointDataTemplate.currentDataset == datasetName)
         return;
     let datasetMetaData = datasetData.MetaData;
     let componentLookupIndex = datasetMetaData.ComponentsLookupIndex;
     let commonObjectLookupIndex = datasetMetaData.CommonObjectsLookupIndex;
     let componentlookups = lookups[componentLookupIndex];
     let commonObjectLookups = lookups[commonObjectLookupIndex];
-    let taxonomylookups = viewpointData.Lookups.Taxonomy;
+    let taxonomylookups = viewpointDataTemplate.Lookups.Taxonomy;
     let lookupset = {
         componentlookups: componentlookups,
         commonObjectLookups: commonObjectLookups,
@@ -16,9 +16,9 @@ let setViewpointData = (parms) => {
     };
     let items = datasetData.Items;
     let isInflationAdjustable = !!datasetMetaData.InflationAdjustable;
-    let rootcomponent = { "ROOT": viewpointData };
+    let rootcomponent = { "ROOT": viewpointDataTemplate };
     setComponentAggregates(rootcomponent, items, isInflationAdjustable, lookupset, inflationAdjusted);
-    viewpointData.currentDataset = datasetName;
+    viewpointDataTemplate.currentDataset = datasetName;
 };
 let setComponentAggregates = (components, items, isInflationAdjustable, lookups, wantsInflationAdjusted) => {
     let cumulatingSummaries = {
@@ -36,7 +36,7 @@ let setComponentAggregates = (components, items, isInflationAdjustable, lookups,
         }
         if (!component.Baseline) {
             if (component.Components) {
-                let sorted = getIndexSortedComponents(component.Components, lookups);
+                let sorted = getIndexSortedComponentItems(component.Components, lookups);
                 component.SortedComponents = sorted;
                 componentAggregates = setComponentAggregates(component.Components, items, isInflationAdjustable, lookups, wantsInflationAdjusted);
                 if (componentAggregates.years)
@@ -44,7 +44,7 @@ let setComponentAggregates = (components, items, isInflationAdjustable, lookups,
                 if (componentAggregates.CommonObjects) {
                     component.CommonObjects = componentAggregates.CommonObjects;
                     if (component.CommonObjects) {
-                        let sorted = getNameSortedComponents(component.CommonObjects, lookups);
+                        let sorted = getNameSortedComponentItems(component.CommonObjects, lookups);
                         component.SortedCommonObjects = sorted;
                     }
                 }
@@ -111,21 +111,21 @@ let setComponentAggregates = (components, items, isInflationAdjustable, lookups,
                 }
             }
             if (component.Components && !component.SortedComponents) {
-                let sorted = getNameSortedComponents(component.Components, lookups);
+                let sorted = getNameSortedComponentItems(component.Components, lookups);
                 component.SortedComponents = sorted;
             }
             if (component.CommonObjects && !component.SortedCommonObjects) {
-                let sorted = getNameSortedComponents(component.CommonObjects, lookups);
+                let sorted = getNameSortedComponentItems(component.CommonObjects, lookups);
                 component.SortedCommonObjects = sorted;
             }
         }
         if (componentAggregates) {
-            aggregateComponentAggregates(cumulatingSummaries, componentAggregates);
+            assembleComponentAggregates(cumulatingSummaries, componentAggregates);
         }
     }
     return cumulatingSummaries;
 };
-let getIndexSortedComponents = (components, lookups) => {
+let getIndexSortedComponentItems = (components, lookups) => {
     let sorted = [];
     let catlookups = lookups.taxonomylookups;
     for (let componentcode in components) {
@@ -153,7 +153,7 @@ let getIndexSortedComponents = (components, lookups) => {
     });
     return sorted;
 };
-let getNameSortedComponents = (components, lookups) => {
+let getNameSortedComponentItems = (components, lookups) => {
     let sorted = [];
     let complookups = lookups.commonObjectLookups;
     for (let componentname in components) {
@@ -177,7 +177,7 @@ let getNameSortedComponents = (components, lookups) => {
     });
     return sorted;
 };
-let aggregateComponentAggregates = (cumulatingSummaries, componentAggregates) => {
+let assembleComponentAggregates = (cumulatingSummaries, componentAggregates) => {
     if (componentAggregates.years) {
         let years = componentAggregates.years;
         for (let yearname in years) {
