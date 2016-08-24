@@ -13,14 +13,14 @@ import updateViewpointData,
 
 // -----------------------[ collect the data ]------------------------------
 
-let repo = '../../../../data/'
+// let repo = '../../../../data/' parser needs literals as arguments
 
 // datasets, by version/name
-let db_datasets = require( repo + 'datasets.json' )
+let db_datasets = require( '../../../../data/datasets.json' )
 // common lookups
-let db_lookups = require( repo + 'lookups.json')
+let db_lookups = require('../../../../data/lookups.json')
 // top level taxonomies
-let db_viewpoints = require( repo + 'viewpoints.json')
+let db_viewpoints = require('../../../../data/viewpoints.json')
 
 const delay = ms => // for testing!
     new Promise(resolve => setTimeout(resolve,ms))

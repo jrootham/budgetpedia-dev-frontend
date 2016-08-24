@@ -66,7 +66,7 @@ exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, (r
 exports.removeBranchDeclaration = redux_actions_1.createAction(types.REMOVE_BRANCH, branchuid => ({
     branchuid: branchuid,
 }), () => ({
-    explorer: true
+    explorer: false
 }));
 exports.changeViewpoint = redux_actions_1.createAction(types.CHANGE_VIEWPOINT, (branchuid, viewpointname) => ({
     branchuid: branchuid,

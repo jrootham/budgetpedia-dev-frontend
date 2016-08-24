@@ -78,7 +78,7 @@ export const removeBranchDeclaration = createAction(
     types.REMOVE_BRANCH,branchuid => ({
         branchuid, 
     }), () => ({
-        explorer:true
+        explorer:false
     })
 )
 

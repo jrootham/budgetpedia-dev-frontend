@@ -1,9 +1,8 @@
 "use strict";
 const setviewpointdata_1 = require('./databaseapi/setviewpointdata');
-let repo = '../../../../data/';
-let db_datasets = require(repo + 'datasets.json');
-let db_lookups = require(repo + 'lookups.json');
-let db_viewpoints = require(repo + 'viewpoints.json');
+let db_datasets = require('../../../../data/datasets.json');
+let db_lookups = require('../../../../data/lookups.json');
+let db_viewpoints = require('../../../../data/viewpoints.json');
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 class Database {
     getViewpointData(parms) {

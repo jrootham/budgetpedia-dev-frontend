@@ -105,7 +105,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     // provide for curried versions
     private addNodeDeclaration = branchUid => settings => 
         this.props.globalStateActions.addNodeDeclaration(branchUid,settings);
-
     private removeNodeDeclarations = branchUid => nodeItems => 
         this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems)
 
