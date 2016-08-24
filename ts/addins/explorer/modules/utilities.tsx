@@ -22,6 +22,9 @@
     post-action behaviour. Put another way, I think the post-action behaviour must be designed to support
     all combinations of post-action behaviour.
 
+    Oh, and all this supports a hybrid redux/flux (global/local) state management system. Global is used 
+    for (more or less) persitent settings, whereas local is used for transient constructs.
+
     These assumptions have not been proven! (but so far it's working)
     TODO: prove these assumptions!
 
