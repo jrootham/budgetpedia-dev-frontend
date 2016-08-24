@@ -3,6 +3,7 @@ const React = require('react');
 var { Component } = React;
 const Tabs_1 = require('material-ui/Tabs');
 const explorercell_1 = require('./explorercell');
+const Utilities = require('../modules/utilities');
 class ExplorerNode extends Component {
     constructor(...args) {
         super(...args);
@@ -129,61 +130,8 @@ class ExplorerNode extends Component {
         }
     }
     shouldComponentUpdate(nextProps) {
-        let show = false;
-        let { declarationData, budgetNode } = nextProps;
-        let { generation } = declarationData;
-        if (this.waitafteraction) {
-            this.lastactiongeneration = generation;
-            this.waitafteraction--;
-            if (show)
-                console.log('should update NODE return waitafteraction');
-            return false;
-        }
-        let { lastAction } = declarationData;
-        if (generation > this.lastactiongeneration) {
-            if (!lastAction.explorer) {
-                if (show)
-                    console.log('should update NODE return false for not explorer', generation, this.lastactiongeneration, lastAction);
-                this.lastactiongeneration = generation;
-                return false;
-            }
-        }
-        let { lastTargetedAction } = nextProps.declarationData;
-        let uid = budgetNode.uid;
-        let lastTargetedNodeAction = lastTargetedAction[uid];
-        if (lastTargetedNodeAction && this.lastactiongeneration < lastTargetedNodeAction.generation) {
-            if (show)
-                console.log('returning from targeted NODE should component update', budgetNode.uid, true, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedNodeAction);
-            this.lastactiongeneration = generation;
-            return true;
-        }
-        if (!lastAction.nodeuid && generation > this.lastactiongeneration) {
-            if (show)
-                console.log('returning TRUE for lastAction without NODE reference', budgetNode.uid, this.lastactiongeneration, generation, lastAction);
-            this.lastactiongeneration = generation;
-            return true;
-        }
-        let filtered = Object.keys(lastTargetedAction).filter((item) => {
-            let itemaction = lastTargetedAction[item];
-            if (itemaction.node && itemaction.generation > this.lastactiongeneration) {
-                return true;
-            }
-        });
-        if (filtered.length > 0) {
-            this.lastactiongeneration = generation;
-            if (show)
-                console.log('returning FALSE viable NODE action for another node', budgetNode.uid);
-            return false;
-        }
-        if (generation > this.lastactiongeneration) {
-            if (show)
-                console.log('returning default true for NODE action', lastAction, generation, this.lastactiongeneration);
-            this.lastactiongeneration = generation;
-            return true;
-        }
-        if (show)
-            console.log('returning default true for NODE NON-ACTION');
-        return true;
+        let nodeComponent = this;
+        return Utilities.filterActionsForUpdate(nextProps, nodeComponent);
     }
     render() {
         let chartTabs = this.getChartTabs();

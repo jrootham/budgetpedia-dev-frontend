@@ -27,6 +27,8 @@ import { nodeTypes } from '../actions'
 
 import { MappedNodeActions as ExplorerNodeActions } from '../explorer'
 
+import * as Utilities from '../modules/utilities'
+
 interface ExplorerNodeProps {
     callbackid: string | number,
     budgetNode: BudgetNode,
@@ -122,69 +124,9 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     
     shouldComponentUpdate(nextProps: ExplorerNodeProps) {
 
-        let show = false
+        let nodeComponent = this
 
-        let { declarationData, budgetNode } = nextProps
-        let { generation } = declarationData
-
-        // explicit call to skip an update
-        if (this.waitafteraction) {
-            this.lastactiongeneration = generation
-            this.waitafteraction--
-            if (show) console.log('should update NODE return waitafteraction')
-            return false
-        }
-
-        // if the last action is not marked explorer, cancel update
-        let { lastAction } = declarationData
-        if ( generation > this.lastactiongeneration ) {
-            if (!lastAction.explorer) {
-                if (show) console.log('should update NODE return false for not explorer',generation, this.lastactiongeneration, lastAction)
-                this.lastactiongeneration = generation
-                return false
-            }
-        }
-
-        // look for targeted action (may have been bypassed with redux race condition)
-        let { lastTargetedAction } = nextProps.declarationData
-        let uid = budgetNode.uid
-        let lastTargetedNodeAction = lastTargetedAction[uid]
-        if (lastTargetedNodeAction && this.lastactiongeneration < lastTargetedNodeAction.generation) {
-            if (show) console.log('returning from targeted NODE should component update', budgetNode.uid, true, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedNodeAction)
-            this.lastactiongeneration = generation
-            return true
-        }
-
-        // look for general action
-        if (!lastAction.nodeuid && generation > this.lastactiongeneration) {
-            if (show) console.log('returning TRUE for lastAction without NODE reference', budgetNode.uid, this.lastactiongeneration, generation, lastAction)
-            this.lastactiongeneration = generation
-            return true
-        }
-
-        let filtered = Object.keys(lastTargetedAction).filter((item) =>{
-            // console.log('item, lastTargetedAction',item,lastTargetedAction)
-            let itemaction = lastTargetedAction[item]
-            if (itemaction.node && itemaction.generation > this.lastactiongeneration) {
-                return true
-            }
-        })
-
-        if (filtered.length > 0) {
-            this.lastactiongeneration = generation
-            if (show) console.log('returning FALSE viable NODE action for another node', budgetNode.uid)
-            return false
-        }
-
-        // explorer actions not targeted let through
-        if (generation > this.lastactiongeneration) {
-            if (show) console.log('returning default true for NODE action', lastAction, generation, this.lastactiongeneration)
-            this.lastactiongeneration = generation
-            return true
-        }
-        // default non-actions (local setState) let through
-        if (show) console.log('returning default true for NODE NON-ACTION')
-        return true
+        return Utilities.filterActionsForUpdate(nextProps, nodeComponent)
 
     }
 

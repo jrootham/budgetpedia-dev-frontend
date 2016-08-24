@@ -47,6 +47,8 @@ import BudgetBranch from '../classes/branch.class'
 
 import { MappedBranchActions as ExplorerBranchActions } from '../explorer'
 
+import * as Utilities from '../modules/utilities'
+
 export { ExplorerBranchActions }
 
 interface DeclarationData {
@@ -189,75 +191,15 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         let show = false
 
-        let { declarationData, budgetBranch } = nextProps
-        let { generation } = declarationData
-
-        // 1. explicit call to skip an update
-        if (this.waitafteraction) {
-            this.lastactiongeneration = generation
-            this.waitafteraction--
-            if (show) console.log('should update branch return waitafteraction')
-            return false
-        }
-
-        // 2. allow snackbar open through in any case
+        // Exception: allow snackbar open through in any case
         if (nextState.snackbar.open != this.state.snackbar.open) {
             if (show) console.log('should update branch return true for snackbar')
             return true
         }
 
-        // 3. if the last action is not marked explorer, cancel update
-        let { lastAction } = declarationData
-        if ( generation > this.lastactiongeneration ) {
-            if (!lastAction.explorer) {
-                if (show) console.log('should update branch return false for not explorer',generation, this.lastactiongeneration, lastAction)
-                this.lastactiongeneration = generation
-                return false
-            }
-        }
+        let branchComponent = this
 
-        // 4. look for targeted action (may have been bypassed with redux race condition)
-        let { lastTargetedAction } = nextProps.declarationData
-        let uid = budgetBranch.uid
-        let lastTargetedBranchAction = lastTargetedAction[uid]
-        if (lastTargetedBranchAction && this.lastactiongeneration < lastTargetedBranchAction.generation) {
-            if (show) console.log('returning from targeted branch should component update', budgetBranch.uid, true, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedBranchAction)
-            this.lastactiongeneration = generation
-            return true
-        }
-
-        // 5. look for general action
-        if (!lastAction.branchuid && generation > this.lastactiongeneration) {
-            if (show) console.log('returning TRUE for lastAction without BRANCH reference', budgetBranch.uid, this.lastactiongeneration, generation, lastAction)
-            this.lastactiongeneration = generation
-            return true
-        }
-
-        // 6. filter out legitimate mismatched targets
-        let filtered = Object.keys(lastTargetedAction).filter((item) =>{
-            // console.log('item, lastTargetedAction',item,lastTargetedAction)
-            let itemaction = lastTargetedAction[item]
-            if (itemaction.branch && itemaction.generation > this.lastactiongeneration) {
-                return true
-            }
-        })
-
-        if (filtered.length > 0) {
-            this.lastactiongeneration = generation
-            if (show) console.log('returning FALSE viable BRANCH action for another branch', budgetBranch.uid)
-            return false
-        }
-
-        // 7. explorer actions not targeted let through, but sets lastactiongeneration
-        if (generation > this.lastactiongeneration) {
-            if (show) console.log('returning default true for BRANCH action', lastAction, generation, this.lastactiongeneration)
-            this.lastactiongeneration = generation
-            return true
-        }
-
-        // 8. default non-actions (local setState) let through
-        if (show) console.log('returning default true for BRANCH NON-ACTION')
-        return true
+        return Utilities.filterActionsForUpdate(nextProps, branchComponent, show)
 
     }
 

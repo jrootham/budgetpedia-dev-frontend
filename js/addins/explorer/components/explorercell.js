@@ -9,6 +9,7 @@ const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
 const constants_1 = require('../constants');
 const actions_1 = require('../actions');
+const Utilities = require('../modules/utilities');
 class ExplorerCell extends Component {
     constructor(...args) {
         super(...args);
@@ -88,61 +89,8 @@ class ExplorerCell extends Component {
         });
     }
     shouldComponentUpdate(nextProps, nextState) {
-        let show = false;
-        let { declarationData, budgetCell } = nextProps;
-        let { generation } = declarationData;
-        if (this.waitafteraction) {
-            this.lastactiongeneration = generation;
-            this.waitafteraction--;
-            if (show)
-                console.log('should update CELL return waitafteraction');
-            return false;
-        }
-        let { lastAction } = declarationData;
-        if (generation > this.lastactiongeneration) {
-            if (!lastAction.explorer) {
-                if (show)
-                    console.log('should update CELL return false for not explorer', generation, this.lastactiongeneration, lastAction);
-                this.lastactiongeneration = generation;
-                return false;
-            }
-        }
-        let { lastTargetedAction } = nextProps.declarationData;
-        let uid = budgetCell.uid;
-        let lastTargetedCellAction = lastTargetedAction[uid];
-        if (lastTargetedCellAction && this.lastactiongeneration < lastTargetedCellAction.generation) {
-            if (show)
-                console.log('returning from targeted CELL should component update', budgetCell.uid, true, this.lastactiongeneration, generation, lastAction, lastTargetedAction, lastTargetedCellAction);
-            this.lastactiongeneration = generation;
-            return true;
-        }
-        if (!lastAction.celluid && generation > this.lastactiongeneration) {
-            if (show)
-                console.log('returning TRUE for lastAction without CELL reference', budgetCell.uid, this.lastactiongeneration, generation, lastAction);
-            this.lastactiongeneration = generation;
-            return true;
-        }
-        let filtered = Object.keys(lastTargetedAction).filter((item) => {
-            let itemaction = lastTargetedAction[item];
-            if (itemaction.cell && itemaction.generation > this.lastactiongeneration) {
-                return true;
-            }
-        });
-        if (filtered.length > 0) {
-            if (show)
-                console.log('returning FALSE viable CELL action for another cell', budgetCell.uid, this.lastactiongeneration, generation, filtered, lastAction, lastTargetedAction);
-            this.lastactiongeneration = generation;
-            return false;
-        }
-        if (generation > this.lastactiongeneration) {
-            if (show)
-                console.log('returning default true for CELL action', lastAction, generation, this.lastactiongeneration, budgetCell.uid);
-            this.lastactiongeneration = generation;
-            return true;
-        }
-        if (show)
-            console.log('returning default true for CELL NON-ACTION', budgetCell.uid, lastAction, lastTargetedAction);
-        return true;
+        let cellComponent = this;
+        return Utilities.filterActionsForUpdate(nextProps, cellComponent);
     }
     componentDidUpdate() {
         let budgetCell = this;
