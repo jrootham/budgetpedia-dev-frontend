@@ -98,13 +98,14 @@ let hometiles = [
 ];
 let workingmessagestate = false;
 let branchDefaults = {
+    repository: "Toronto",
     viewpoint: "FUNCTIONAL",
     version: 'PBFT',
     aspect: "Expenses",
     branchDataGeneration: 0,
     defaultVersions: {
-        'FUNCTIONAL': 'SUMMARY',
-        'STRUCTURAL': 'SUMMARY',
+        'FUNCTIONAL': 'PBFT',
+        'STRUCTURAL': 'PBFT',
     },
     defaultAspects: {
         'SUMMARY': 'Expenses',

@@ -132,6 +132,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 })
             }
 
+        }).catch(reason => {
+            alert('error in data fetch, mount')
         })
     }
 
@@ -313,6 +315,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
             this._stateActions.addNodeDeclaration(budgetNodeParms)
 
+        }).catch(reason => {
+            alert('error in data fetch, changeviewpoint')
         })
     }
 
@@ -323,6 +327,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
             this._stateActions.addNodeDeclaration(budgetNodeParms)
 
+        }).catch(reason => {
+            alert('error in data fetch, changeversion')
         })
     }
 
@@ -363,6 +369,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             }
 
+        }).catch(reason => {
+            alert('error in data fetch, changeaspect')
         })
     }
 
@@ -539,7 +547,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 NamingConfigurations: viewpointNamingConfigs,
                 datasetConfig: datasetConfig,
             } = viewpointdata
-            console.log('viewpointdata', viewpointdata)
+            // console.log('viewpointdata', viewpointdata)
             let viewpointConfigPack = {
                 viewpointNamingConfigs,
                 datasetConfig,
@@ -608,7 +616,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             }
             >
 
-            <MenuItem value={'SUMMARY'} primaryText="Summary"/>
+            <MenuItem disabled value={'SUMMARY'} primaryText="Summary"/>
             <MenuItem value={'PBFT'} primaryText="Detail (PBFT)"/>
             <MenuItem disabled value={'VARIANCE'} primaryText="Variance Reports"/>
 

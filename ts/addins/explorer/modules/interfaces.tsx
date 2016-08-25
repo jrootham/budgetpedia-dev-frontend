@@ -4,6 +4,7 @@ import BudgetNode from '../classes/node.class'
 import { ChartSelectionCell } from './onchartcomponentselection'
 
 interface BranchSettings {
+    repository: string,
     viewpoint: string,
     branchDataGeneration:number,
     version: string,

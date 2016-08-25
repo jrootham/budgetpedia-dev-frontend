@@ -242,18 +242,20 @@ class BudgetBranch {
             aspect: aspectName, 
             inflationAdjusted,
             version: versionName,
+            repository,
         } = branchSettings
 
         let datasetName = AspectNameToDatasetName[aspectName]
 
         let _promise = databaseapi.getViewpointData({
+            repository,
             viewpointName, 
             versionName,
             datasetName,
             inflationAdjusted
         })
 
-        let promise = new Promise(resolve => {
+        let promise = new Promise((resolve, error) => {
 
             _promise.then( (viewpointdata:ViewpointData) => {
 
@@ -265,6 +267,8 @@ class BudgetBranch {
                 // console.log('setting viewpointdata ', budgetBranch.uid, viewpointdata, [...budgetBranch.state])
                 resolve(true)
                 
+            }).catch(reason =>{
+                error(reason)
             })
 
         })

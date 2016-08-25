@@ -98,6 +98,8 @@ class ExplorerBranch extends Component {
                 this._stateActions.changeBranchDataVersion(budgetBranch.uid);
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
+            }).catch(reason => {
+                alert('error in data fetch, changeviewpoint');
             });
         };
         this._processChangeVersionStateChange = (budgetBranch) => {
@@ -105,6 +107,8 @@ class ExplorerBranch extends Component {
                 this._stateActions.changeBranchDataVersion(budgetBranch.uid);
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
+            }).catch(reason => {
+                alert('error in data fetch, changeversion');
             });
         };
         this._processChangeAspectStateChange = (budgetBranch) => {
@@ -138,6 +142,8 @@ class ExplorerBranch extends Component {
                         snackbar: snackbar,
                     });
                 }
+            }).catch(reason => {
+                alert('error in data fetch, changeaspect');
             });
         };
         this.handleSnackbarRequestClose = () => {
@@ -255,7 +261,6 @@ class ExplorerBranch extends Component {
                 budgetNode.portalConfig = portalConfig;
                 let viewpointdata = this.state.viewpointData;
                 let { NamingConfigurations: viewpointNamingConfigs, datasetConfig: datasetConfig, } = viewpointdata;
-                console.log('viewpointdata', viewpointdata);
                 let viewpointConfigPack = {
                     viewpointNamingConfigs: viewpointNamingConfigs,
                     datasetConfig: datasetConfig,
@@ -285,6 +290,8 @@ class ExplorerBranch extends Component {
                     this._stateActions.resetLastAction();
                 });
             }
+        }).catch(reason => {
+            alert('error in data fetch, mount');
         });
     }
     componentWillReceiveProps(nextProps) {
@@ -329,7 +336,7 @@ class ExplorerBranch extends Component {
         }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Budget (by function)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Budget (by structure)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'STATEMENTS', primaryText: "Consolidated Statements"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'EXPENSESBYOBJECT', primaryText: "Expenses by Object"}))) : null;
         let versionselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.version, onChange: (e, index, value) => {
             branch.switchVersion(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'SUMMARY', primaryText: "Summary"}), React.createElement(MenuItem_1.default, {value: 'PBFT', primaryText: "Detail (PBFT)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"}))) : null;
+        }}, React.createElement(MenuItem_1.default, {disabled: true, value: 'SUMMARY', primaryText: "Summary"}), React.createElement(MenuItem_1.default, {value: 'PBFT', primaryText: "Detail (PBFT)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"}))) : null;
         let aspectselection = (branchDeclaration.showOptions)
             ?
                 React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Aspect: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.aspect, onChange: (e, index, value) => {

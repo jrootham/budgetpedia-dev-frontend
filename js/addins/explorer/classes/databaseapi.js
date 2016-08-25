@@ -1,14 +1,13 @@
 "use strict";
 const setviewpointdata_1 = require('./databaseapi/setviewpointdata');
-let db_datasets = require('../../../../data/datasets.json');
-let db_lookups = require('../../../../data/lookups.json');
-let db_viewpoints = require('../../../../data/viewpoints.json');
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 class Database {
     getViewpointData(parms) {
+        this.viewpointDataParms = parms;
+        console.log('getViewpointData in databaseapi parms', parms);
         let { viewpointName, versionName, datasetName, inflationAdjusted } = parms;
-        let viewpointDataTemplatePromise = this.getViewpointTemplatePromise(viewpointName), datasetDataPromise = this.getDatasetPromise(versionName, datasetName), lookupsPromise = this.getLookupPromise(), datasetConfigPromise = this.getDatasetConfigPromise(versionName, datasetName);
-        let promise = new Promise(resolve => {
+        let viewpointDataTemplatePromise = this.getViewpointTemplatePromise(viewpointName), datasetDataPromise = this.getDatasetPromise(versionName, datasetName), lookupsPromise = this.getLookupsPromise(versionName), datasetConfigPromise = this.getDatasetConfigPromise(versionName, datasetName);
+        let promise = new Promise((resolve, error) => {
             Promise.all([
                 viewpointDataTemplatePromise,
                 datasetDataPromise,
@@ -31,6 +30,8 @@ class Database {
                 this.calculateViewpointData(setparms);
                 viewpointDataTemplate = setparms.viewpointDataTemplate;
                 resolve(viewpointDataTemplate);
+            }).catch(reason => {
+                error(reason);
             });
         });
         return promise;
@@ -39,10 +40,19 @@ class Database {
         setviewpointdata_1.default(parms);
     }
     getViewpointTemplatePromise(viewpoint) {
-        let promise = new Promise(resolve => {
-            let viewpointdata = db_viewpoints[viewpoint];
-            viewpointdata = JSON.parse(JSON.stringify(viewpointdata));
-            resolve(viewpointdata);
+        let promise = new Promise((resolve, error) => {
+            let path = '/db/' +
+                this.viewpointDataParms.repository.toLowerCase() +
+                '/viewpoints/' +
+                viewpoint.toLowerCase() + '.json';
+            fetch(path).then((viewpoint) => {
+                return viewpoint.json();
+            }).then((viewpointdata) => {
+                resolve(viewpointdata);
+            }).catch((reason) => {
+                console.log('get viewpoint template error', reason);
+                error(reason);
+            });
         });
         return promise;
     }
@@ -68,18 +78,39 @@ class Database {
         return promise;
     }
     getDatasetPromise(versionName, datasetName) {
-        let promise = new Promise(resolve => {
-            let datasetdata = db_datasets[versionName][datasetName];
-            delay(0).then(() => {
-                resolve(datasetdata);
+        let promise = new Promise((resolve, error) => {
+            let path = '/db/' +
+                this.viewpointDataParms.repository.toLowerCase() +
+                '/datasets/' +
+                versionName.toLowerCase() +
+                '/' +
+                datasetName.toLowerCase() + '.json';
+            fetch(path).then((dataset) => {
+                return dataset.json();
+            }).then((dataset) => {
+                resolve(dataset);
+            }).catch((reason) => {
+                console.log('get dataset error', reason);
+                error(reason);
             });
         });
         return promise;
     }
-    getLookupPromise(lookup = undefined) {
-        let promise = new Promise(resolve => {
-            let lookupdata = db_lookups;
-            resolve(lookupdata);
+    getLookupsPromise(version = undefined) {
+        let promise = new Promise((resolve, error) => {
+            let path = '/db/' +
+                this.viewpointDataParms.repository.toLowerCase() +
+                '/datasets/' +
+                version.toLowerCase() +
+                '/meta/lookups.json';
+            fetch(path).then((lookups) => {
+                return lookups.json();
+            }).then((lookups) => {
+                resolve(lookups);
+            }).catch((reason) => {
+                console.log('get lookups error', reason);
+                error(reason);
+            });
         });
         return promise;
     }

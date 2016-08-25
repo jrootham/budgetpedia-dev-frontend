@@ -212,13 +212,14 @@ let hometiles: [Object] = [
 let workingmessagestate = false
 
 let branchDefaults:BranchSettings = {
+    repository: "Toronto",
     viewpoint: "FUNCTIONAL",
     version: 'PBFT',
     aspect: "Expenses",
     branchDataGeneration:0,
     defaultVersions:{ // viewpoint versions
-        'FUNCTIONAL':'SUMMARY',
-        'STRUCTURAL':'SUMMARY',
+        'FUNCTIONAL':'PBFT',
+        'STRUCTURAL':'PBFT',
     },
     defaultAspects:{ // version aspects
         'SUMMARY':'Expenses',

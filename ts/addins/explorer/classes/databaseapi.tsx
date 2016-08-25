@@ -16,13 +16,20 @@ import { SortedComponentItem } from '../modules/interfaces'
 // -----------------------[ collect the data ]------------------------------
 
 // let repo = '../../../../data/' parser needs literals as arguments
+// fetch('/db/toronto/viewpoints/functionalx.json').then((viewpoint) => {
+//     return viewpoint.json()
+// }).then((viewpoint)=> {
+//     console.log(viewpoint)
+// }).catch((reason)=>{
+//     console.log(reason)
+// })
 
 // datasets, by version/name
-let db_datasets = require( '../../../../data/datasets.json' )
+// let db_datasets = require( '../../../../data/datasets.json' )
 // common lookups
-let db_lookups = require('../../../../data/lookups.json')
-// top level taxonomies
-let db_viewpoints = require('../../../../data/viewpoints.json')
+// let db_lookups = require('../../../../data/lookups.json')
+// // top level taxonomies
+// let db_viewpoints = require('../../../../data/viewpoints.json')
 
 const delay = ms => // for testing!
     new Promise(resolve => setTimeout(resolve,ms))
@@ -129,6 +136,7 @@ export interface YearSpecs {
 }
 
 export interface GetViewpointDataParms {
+    repository:string,
     viewpointName:string,
     versionName: string,
     datasetName: string,
@@ -176,6 +184,7 @@ class Database {
     private processedViewpoints: Viewpoints
     private datasets: Datasets
     private lookups: Lookups
+    private viewpointDataParms: GetViewpointDataParms
 
     // // pending
     // public getBranch(viewpointname, path = []) {
@@ -185,14 +194,18 @@ class Database {
     // getViewpointData returns a promise.
     public getViewpointData(parms: GetViewpointDataParms) {
 
+        this.viewpointDataParms = parms
+
+        console.log('getViewpointData in databaseapi parms', parms)
+
         let { viewpointName, versionName, datasetName, inflationAdjusted } = parms
 
         let viewpointDataTemplatePromise = this.getViewpointTemplatePromise(viewpointName),
             datasetDataPromise = this.getDatasetPromise(versionName,datasetName),
-            lookupsPromise = this.getLookupPromise(),
+            lookupsPromise = this.getLookupsPromise(versionName),
             datasetConfigPromise = this.getDatasetConfigPromise(versionName, datasetName)
 
-        let promise = new Promise(resolve => {
+        let promise = new Promise((resolve, error) => {
 
             Promise.all(
                 [
@@ -228,14 +241,16 @@ class Database {
                     resolve(viewpointDataTemplate)
                     
                 }
-            )
+            ).catch(reason =>{
+                error(reason)
+            })
         })
 
         return promise
 
     }
 
-
+    // TODO: use local cache
     private calculateViewpointData(parms: CalculateViewpointDataParms) {
         updateViewpointData(parms)
     }
@@ -244,12 +259,21 @@ class Database {
 
     private getViewpointTemplatePromise(viewpoint: string) {
 
-        let promise = new Promise(resolve => {
+        let promise = new Promise((resolve, error) => {
 
-            let viewpointdata: ViewpointData = db_viewpoints[viewpoint]
-            viewpointdata = JSON.parse(JSON.stringify(viewpointdata))
+            let path = '/db/' + 
+                this.viewpointDataParms.repository.toLowerCase() +
+                '/viewpoints/' + 
+                viewpoint.toLowerCase() + '.json'
 
-            resolve(viewpointdata)
+            fetch(path).then((viewpoint) => {
+                return viewpoint.json()
+            }).then((viewpointdata)=> {
+                resolve(viewpointdata)
+            }).catch((reason)=>{
+                console.log('get viewpoint template error', reason)
+                error(reason)
+            })
 
         })
 
@@ -301,12 +325,22 @@ class Database {
 
     private getDatasetPromise(versionName, datasetName: string) {
 
-        let promise = new Promise(resolve => {
+        let promise = new Promise((resolve, error) => {
 
-            let datasetdata: CurrencyItemDataset | NumericItemDataset = db_datasets[versionName][datasetName]
+            let path = '/db/' + 
+                this.viewpointDataParms.repository.toLowerCase() +
+                '/datasets/' + 
+                versionName.toLowerCase() + 
+                '/' +
+                datasetName.toLowerCase() + '.json'
 
-            delay(0). then(()=>{
-                resolve(datasetdata)
+            fetch(path).then((dataset) => {
+                return dataset.json()
+            }).then((dataset)=> {
+                resolve(dataset)
+            }).catch((reason)=>{
+                console.log('get dataset error', reason)
+                error(reason)
             })
 
         })
@@ -315,13 +349,24 @@ class Database {
 
     }
 
-    private getLookupPromise(lookup:string = undefined) {
+    private getLookupsPromise(version:string = undefined) {
 
-        let promise = new Promise(resolve => {
+        let promise = new Promise((resolve, error) => {
 
-            let lookupdata: Lookup = db_lookups
+            let path = '/db/' + 
+                this.viewpointDataParms.repository.toLowerCase() +
+                '/datasets/' + 
+                version.toLowerCase() + 
+                '/meta/lookups.json'
 
-            resolve(lookupdata)
+            fetch(path).then((lookups) => {
+                return lookups.json()
+            }).then((lookups)=> {
+                resolve(lookups)
+            }).catch((reason)=>{
+                console.log('get lookups error', reason)
+                error(reason)
+            })
 
         })
 
