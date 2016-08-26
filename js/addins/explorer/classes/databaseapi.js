@@ -2,6 +2,9 @@
 const setviewpointdata_1 = require('./databaseapi/setviewpointdata');
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 class Database {
+    constructor() {
+        this.dbroot = '/db/repositories/';
+    }
     getViewpointData(parms) {
         this.viewpointDataParms = parms;
         console.log('getViewpointData in databaseapi parms', parms);
@@ -41,7 +44,7 @@ class Database {
     }
     getViewpointTemplatePromise(viewpoint) {
         let promise = new Promise((resolve, error) => {
-            let path = '/db/' +
+            let path = this.dbroot +
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/viewpoints/' +
                 viewpoint.toLowerCase() + '.json';
@@ -79,7 +82,7 @@ class Database {
     }
     getDatasetPromise(versionName, datasetName) {
         let promise = new Promise((resolve, error) => {
-            let path = '/db/' +
+            let path = this.dbroot +
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/datasets/' +
                 versionName.toLowerCase() +
@@ -98,7 +101,7 @@ class Database {
     }
     getLookupsPromise(version = undefined) {
         let promise = new Promise((resolve, error) => {
-            let path = '/db/' +
+            let path = this.dbroot +
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/datasets/' +
                 version.toLowerCase() +

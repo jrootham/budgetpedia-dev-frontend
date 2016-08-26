@@ -32,7 +32,7 @@ let content =
             project's <a target = "_blank" href="https://drive.google.com/drive/u/0/folders/0B208oCU9D8OuM2NmUk9XR1VCbEU">research repository)</a></dd>
         <dt><strong>Aspect</strong></dt>
         <dd> particular aspects of the dataset, such as Revenue, Expenses or Staffing</dd>
-        <dt><strong>By Unit</strong></dt>
+        <dt><strong>Intensity</strong></dt>
         <dd> the beginnings of diagnostic analytics, using simple math to view the 
             data compared with relevant related metrics, such as per person or per household</dd>
         <dt><strong>Inflation adjusted</strong></dt>
@@ -201,7 +201,7 @@ let content =
     <hr />
 
     <p>
-        <strong><em>By Unit</em></strong> choices are common for all other choices, and include:
+        <strong><em>Intensity</em></strong> choices are common for all other choices, and include:
     </p>
     <dl>
         <dd>
@@ -209,7 +209,14 @@ let content =
                 <dt><strong>Per staffing position</strong></dt>
                 <dt><strong>Population: per person</strong></dt>
                 <dt><strong>Population: per 100,000 people</strong></dt>
+                <dt><strong>Population: per adult (16 or over)</strong></dt>
+                <dt><strong>Population: per 100,000 adults</strong></dt>
+                <dt><strong>Population: per child (15 or under)</strong></dt>
+                <dt><strong>Population: per 100,000 children</strong></dt>
                 <dt><strong>Per household</strong></dt>
+                <dt><strong>As % GDP</strong></dt>
+                <dt><strong>Per $1B GDP</strong></dt>
+                <dt><strong>Per Ward (average)</strong></dt>
             </dl>
         </dd>
     </dl>
