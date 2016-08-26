@@ -2,6 +2,7 @@
 // budgetcell.tsx
 /*
 TODO: BUG noSortedDataSeries when switching aspect with leaf expenditure cell showing
+Bug: donut hole not showing
 */ 
 
 import {

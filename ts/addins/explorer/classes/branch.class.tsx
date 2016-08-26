@@ -233,6 +233,7 @@ class BudgetBranch {
         return switchResults
     }
 
+    // TODO: generate action to show progress
     public getViewpointData = () => {
 
         let branchSettings:BranchSettings = this.settings

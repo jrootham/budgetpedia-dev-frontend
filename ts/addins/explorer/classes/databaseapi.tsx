@@ -5,7 +5,9 @@
 // deepclone = JSON.parse(JSON.stringify(obj)) // but this destroys dates, undefined, and functions
 
 /*
-    TODO: the interface definitions are of data
+    TODO: 
+        add spinner for progress
+        add cache for all fetch elements
 */
 
 import updateViewpointData, 
@@ -14,22 +16,6 @@ import updateViewpointData,
 import { SortedComponentItem } from '../modules/interfaces'
 
 // -----------------------[ collect the data ]------------------------------
-
-// let repo = '../../../../data/' parser needs literals as arguments
-// fetch('/db/toronto/viewpoints/functionalx.json').then((viewpoint) => {
-//     return viewpoint.json()
-// }).then((viewpoint)=> {
-//     console.log(viewpoint)
-// }).catch((reason)=>{
-//     console.log(reason)
-// })
-
-// datasets, by version/name
-// let db_datasets = require( '../../../../data/datasets.json' )
-// common lookups
-// let db_lookups = require('../../../../data/lookups.json')
-// // top level taxonomies
-// let db_viewpoints = require('../../../../data/viewpoints.json')
 
 const delay = ms => // for testing!
     new Promise(resolve => setTimeout(resolve,ms))
@@ -185,6 +171,7 @@ class Database {
     private datasets: Datasets
     private lookups: Lookups
     private viewpointDataParms: GetViewpointDataParms
+    private dbroot: string = '/db/repositories/'
 
     // // pending
     // public getBranch(viewpointname, path = []) {
@@ -261,7 +248,7 @@ class Database {
 
         let promise = new Promise((resolve, error) => {
 
-            let path = '/db/' + 
+            let path = this.dbroot + 
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/viewpoints/' + 
                 viewpoint.toLowerCase() + '.json'
@@ -282,6 +269,7 @@ class Database {
     }
 
     // internal promise for dataset config
+    // TODO: get this from meta subdir
     private getDatasetConfigPromise(versionName:string, datasetName:string) {
 
         let datasetpromise = this.getDatasetPromise(versionName, datasetName)
@@ -327,7 +315,7 @@ class Database {
 
         let promise = new Promise((resolve, error) => {
 
-            let path = '/db/' + 
+            let path = this.dbroot + 
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/datasets/' + 
                 versionName.toLowerCase() + 
@@ -353,7 +341,7 @@ class Database {
 
         let promise = new Promise((resolve, error) => {
 
-            let path = '/db/' + 
+            let path = this.dbroot + 
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/datasets/' + 
                 version.toLowerCase() + 
