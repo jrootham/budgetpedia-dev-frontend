@@ -10,6 +10,7 @@
 'use strict'
 
 var fs = require('fs');
+var utilities = require('./utilities')
 
 let context = {}
 
@@ -25,7 +26,7 @@ const setup = (context) => {
 
     context.dbroot = './repositories/' // relative to process.cwd(); ../code/run
 
-    context.dirs = fs.readdirSync(context.dbroot)
+    context.dirs = utilities.getDirContents(context.dbroot)
 
     switch (command) {
         case 'help': {
@@ -86,37 +87,32 @@ const setup = (context) => {
 // ============================[ operations ]=============================
 
 const createDataset = context => {
-    log('creating dataset')
+    utilities.log('creating dataset')
 }
 
 const addToDataset = context => {
-    log('adding to dataset')
+    utilities.log('adding to dataset')
 }
 const replaceInDataset = context => {
-    log('replacing in dataset')
+    utilities.log('replacing in dataset')
 }
 
 const removeFromDataset = context => {
-    log('removing from dataset')
+    utilities.log('removing from dataset')
 }
 
 const preprocessPending = context => {
-    log('preprocessing pending')
+    utilities.log('preprocessing pending')
     let preprocess = require('./preprocess')
     preprocess(context)
 }
 
 const preparePreprocessed = context => {
-    log ('preparing preprocessed')
+    utilities.log ('preparing preprocessed')
 }
 
 const prepareCode = context => {
-    log ('preparing codes for reference year')
-}
-// ----------------------[ operations common utilities]--------------------
-
-const log = (message) => {
-    console.log(message)    
+    utilities.log ('preparing codes for reference year')
 }
 
 // =============================[ help text ]=============================
@@ -130,11 +126,11 @@ syntax
 commands
     help
 
-    preprocess <repository> (add program codes to names)
+    preprocess <repository> <version> (add program codes to names)
 
     prepare-codes <repository> (prepare reference codes for current year)
 
-    prepare <repository> (update program codes for reference year)
+    prepare <repository> (update each year's data with program codes for reference year)
 
     create-dataset <repository> [<version> [<aspect> [<filename>]]]
 
@@ -153,7 +149,7 @@ module.export = ((context) => {
 try {
     if (!setup(context)) return
 } catch (e) {
-    // console.log(e)
+    console.log(e)
     return
 }
 
