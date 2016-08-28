@@ -6,6 +6,7 @@
         "start":2015,
         "end":2015
     },
+    "ReferenceYear":2016,
     "DatasetName":"Revenues",
     "DatasetTitle": "Council Approved Gross Operating Revenue",
     "Dataseries": [

@@ -1,5 +1,5 @@
 {
-  "name": "explorerprototype",
+  "name": "budgetpedia-preprocess",
   "version": "1.0.0",
   "description": "",
   "main": "preprocess.js",
@@ -12,6 +12,7 @@
     "csv": "^1.1.0",
     "csvtojson": "^1.0.0",
     "fs": "0.0.2",
+    "json2csv": "^3.6.3",
     "jsonfile": "^2.2.3"
   }
 }
