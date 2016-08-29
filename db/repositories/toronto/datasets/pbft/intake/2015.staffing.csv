@@ -14,11 +14,12 @@ NOTES_CONTENT,"[[GREEN]]This is the operating budget staffing, and does not incl
 [[RED]]Prior to the council-approved version;
 [[ORANGE]]rounding causes totals to differ by 0.2;",
 NOTES_SEVERITY,RED,
-COLUMNS,"Program:NAME, Permanence:NAME, Amount:NAME, Notes:DESCRIPTION, Severity: CODE",
 UNITS_NAME,FTE,
-UNITS_RATIO,1,
+UNITS_MULTIPLIER,1,
 INTAKE_DATETIME,,
 INTAKE_OPERATOR_ID,Henrik,
+COLUMNS_CATEGORIES,"Program:NAME, Permanence:NAME",
+COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE, Discontinue.Program.To:NAME",
 _META_END_,,
 311 Toronto,Permanent,137
 311 Toronto,Temporary,20

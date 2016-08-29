@@ -22,11 +22,11 @@ const setup = (context) => {
     context.repository = context.parms[1]
     context.version = context.parms[2]
     context.aspect = context.parms[3]
-    context.filename = context.parms[4]
+    context.year = context.parms[4]
 
     context.dbroot = './repositories/' // relative to process.cwd(); ../code/run
 
-    context.dirs = utilities.getDirContents(context.dbroot)
+    context.repositorydirs = utilities.getDirContents(context.dbroot)
 
     switch (command) {
         case 'help': {
@@ -34,17 +34,21 @@ const setup = (context) => {
             return false
         } 
         break
-        case 'create-dataset':
-        case 'add-to-dataset': 
-        case 'replace-in-dataset': 
-        case 'remove-from-dataset':
-        case 'preprocess':
-        case 'prepare':
-        case 'prepare-codes':
+        case 'intake':
+        case 'preprocessed': 
+        case 'prepared': 
+        case 'remove':
         {
-            if ((!context.repository) || (context.dirs.indexOf(context.repository) == -1)) {
+            if ((!context.repository) || (context.repositorydirs.indexOf(context.repository) == -1)) {
 
-                console.error(`no repository specified, or repository not found. Use node run ${command} <repository>`)
+                console.error(`no repository specified, or repository not found. Use node run ${command} <repository> <version>`)
+                throw Error()
+
+            }
+            context.versiondirs = utilities.getDirContents(context.dbroot + context.repository + '/datasets')
+            if ((!context.version) || (context.versiondirs.indexOf(context.version) == -1)) {
+
+                console.error(`no repository version specified, or version not found. Use node run ${command} <repository> <version>`)
                 throw Error()
 
             }
@@ -57,27 +61,17 @@ const setup = (context) => {
     }
 
     switch (command) {
-        case 'create-dataset':
-            createDataset(context)
+        case 'intake':
+            intakeToPreprocessed(context)
             break
-        case 'add-to-dataset': 
-            addToDataset(context)
+        case 'preprocessed': 
+            preprocessedToPrepared(context)
             break
-        case 'replace-in-dataset': 
-            replaceInDataset(context)
+        case 'prepared': 
+            preparedToJson(context)
             break
-        case 'remove-from-dataset':
-            context.year = context.filename
-            removeFromDataset(context)
-            break
-        case 'preprocess':
-            preprocessPending(context)
-            break
-        case 'prepare':
-            preparePreprocessed(context)
-            break
-        case 'prepare-codes':
-            prepareCodes(context)
+        case 'remove':
+            removeFromJson(context)
             break
     }
 
@@ -86,33 +80,22 @@ const setup = (context) => {
 
 // ============================[ operations ]=============================
 
-const createDataset = context => {
-    utilities.log('creating dataset')
+const intakeToPreprocessed = context => {
+    utilities.log('processing intake to preprocessed')
+    let intake = require('./intake')
+    intake(context)
 }
 
-const addToDataset = context => {
-    utilities.log('adding to dataset')
-}
-const replaceInDataset = context => {
-    utilities.log('replacing in dataset')
+const preprocessedToPrepared = context => {
+    utilities.log ('processing preprocessed to prepared')
 }
 
-const removeFromDataset = context => {
-    utilities.log('removing from dataset')
+const preparedToJson = context => {
+    utilities.log ('processing prepared to json')
 }
 
-const preprocessPending = context => {
-    utilities.log('preprocessing pending')
-    let preprocess = require('./preprocess')
-    preprocess(context)
-}
-
-const preparePreprocessed = context => {
-    utilities.log ('preparing preprocessed')
-}
-
-const prepareCode = context => {
-    utilities.log ('preparing codes for reference year')
+const removeFromJson = context => {
+    utilities.log('removing from json')
 }
 
 // =============================[ help text ]=============================
@@ -126,19 +109,14 @@ syntax
 commands
     help
 
-    preprocess <repository> <version> (add program codes to names)
+    intake <repository> <version> (add program codes to names, iteratively)
 
-    prepare-codes <repository> (prepare reference codes for current year)
+    preprocessed <repository> <version> (prepare reference codes and combine data for 
+        current year)
 
-    prepare <repository> (update each year's data with program codes for reference year)
+    prepared <repository> <version> (create or add to json aspect files)
 
-    create-dataset <repository> [<version> [<aspect> [<filename>]]]
-
-    add-to-dateset <repository> [<version> [<aspect> [<filename>]]]
-
-    replace-in-dateset <repository> [<version> [<aspect> [<filename>]]]
-
-    remove-from-dateset <repository> <version> <aspect> <year>
+    remove <repository> <version> <aspect> <year> (remove year from json file)
 
 `
     )

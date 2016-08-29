@@ -1,3 +1,7 @@
 {
-    "ReferenceYear":2016
+    "ReferenceYear":2016,
+    "Decimals":{
+        "FTE":1,
+        "DOLLARS":0
+    }
 }
