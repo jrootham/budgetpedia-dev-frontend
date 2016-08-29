@@ -73,21 +73,22 @@ const processIntakeFile = (filename,context) => {
 
     let components = utilities.decomposeCsv(csv, filename) // {meta, data}
 
-    // {names:{<name>:'NAME'},codes:<name>:'CODE', list: <name>[]} 
-    // presence of code for <name> determines whether to lookup code or save it to lookup
     let columndata = getColumnData(components, filename)
-    console.log(columndata)
+
     let columns = columndata.columns
     // process backwards to allow columnindex to be used for column reference
     // in file processing, as processing inserts a column
     for (let columnindex = columns.length -1; columnindex >=0; columnindex--) {
         let column = columndata.columns[columnindex]
-        if (column.type == constants.NAME) {
+        if (column.type == constants.NAME) { // codes are looked up separately, if present
             processFileCategory(columndata,columnindex,filename, components, context)
         }
     }
 }
 
+// {names:{<name>:'NAME'},codes:{<name>:'CODE'}, list: {name:<name>, type:<type>}[]} 
+// presence of code for <name> determines whether to lookup code or save it to lookup
+// CODE columns are expected to appear just before corresponding NAME column
 const getColumnData = (components, filename) => {
     let columns_categories = components.meta.filter(item => {
         return (item[0] == constants.COLUMNS_CATEGORIES)? true: false
@@ -138,18 +139,24 @@ const getColumnData = (components, filename) => {
 
 }
 
+// TODO: vary processing by whether CODE exists in source file
 const processFileCategory = (columndata,columnindex,filename, components, context) => {
 
     let column = columndata.columns[columnindex]
+    let column_name = column.name
+    if (columndata.codes[column_name]) {
+        throw Error('processFileCategory is not yet factored to deal with imported category codes')
+    }
     let columnref = column.name.toLowerCase()
     let fileparts = filename.split('.')
     let fileyear = fileparts[0]
-    let namelookups_filepspec = 
-        `${context.dbroot}${context.repository}/datasets/${context.version}/maps/${fileyear}.${columnref}_name_to_code.csv`
-    let namelookups = utilities.readFileCsv(namelookups_filepspec)
+    let namelookups_path = `${context.dbroot}${context.repository}/datasets/${context.version}/maps/`
+    let namelookups_filename = `${fileyear}.${columnref}_name_to_code.csv`
+    let namelookups_filespec = namelookups_path + namelookups_filename
+        
+    let namelookups = utilities.readFileCsv(namelookups_filespec)
 
-    // TODO process line items once for each category column
-    //    if there are codes for a column, add codes to lookup
+    // TODO if there are codes for a column, add codes to lookup
     let lineitems = components.data
     let newnames = {} // use properties to filter out duplicates
     for (let line of lineitems) {
