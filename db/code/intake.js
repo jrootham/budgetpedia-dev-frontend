@@ -90,6 +90,7 @@ const processIntakeFile = (filename,context) => {
 // presence of code for <name> determines whether to lookup code or save it to lookup
 // CODE columns are expected to appear just before corresponding NAME column
 const getColumnData = (components, filename) => {
+
     let columns_categories = components.meta.filter(item => {
         return (item[0] == constants.COLUMNS_CATEGORIES)? true: false
     })
@@ -168,7 +169,10 @@ const processFileCategory = (columndata,columnindex,filename, components, contex
             line.splice(columnindex,0,filtered[0][1])
         } else {
             line.splice(columnindex,0,null)
-            newnames[name] = null // using an object filters out duplicates
+            if (filtered.length == 0) {
+                console.log('new name', name)
+                newnames[name] = null // using an object filters out duplicates
+            }
         }
     }
     newnames = Object.keys(newnames)
@@ -191,17 +195,18 @@ const processFileCategory = (columndata,columnindex,filename, components, contex
                 return 0
         })
         newlookupslist = sorted
-        // TODO: save namelookups to replaced
-        // overwrite namelookups with newlist
-        // write failed preprocessed file to failed
-        // log result
+        let timestampedfilename = utilities.prefixDateTime(namelookups_filename)
+        console.log('timestampedfilename',timestampedfilename)
+        utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
+        utilities.writeFileCsv(namelookups_filespec, newlookupslist)
+        // TODO log result
     } else {
         // TODO: move intake file to subdir processed, with datetime infix
         // add meta + lineitems to preprocessed dir
         // log result
     }
 
-    console.log(lineitems, namelookups, newnames, newlookupslist)
+    // console.log(lineitems, namelookups, newnames, newlookupslist)
 }
 
 module.exports = intake

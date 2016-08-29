@@ -5,6 +5,8 @@ let jsonfile = require('jsonfile')
 jsonfile.spaces = 4
 var parse = require('csv-parse/lib/sync')
 var stringify = require('csv-stringify')
+var moment = require('moment')
+
 var constants = require('./constants')
 
 exports.decomposeCsv = (csv, filename) => {
@@ -41,7 +43,7 @@ exports.readFileText = filespec => {
 }
 
 exports.writeFileText = (filespec, content) => {
-    fs.writeFileSync(filespec,content)
+    fs.writeFileSync(filespec,content,'utf8')
 }
 
 exports.readFileJson = filespec => {
@@ -76,4 +78,9 @@ exports.log = message => {
 
 exports.getDirContents = dirspec => {
     return fs.readdirSync(dirspec)
+}
+
+exports.prefixDateTime = filename => {
+    let datetimestring = moment().format('YYYY-MM-DD-HH-mm-ss.')
+    return datetimestring + filename
 }

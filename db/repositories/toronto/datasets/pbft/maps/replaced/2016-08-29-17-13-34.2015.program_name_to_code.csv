@@ -7,7 +7,6 @@ Capital & Corporate Financing,CORPFINANCING
 Children's Services,CHILDSERV
 City Clerk's Office,CLERK
 City Council,COUNCIL
-City Manager,CITYMANAGER
 City Manager's Office,CITYMANAGER
 City Planning,PLANNING
 Court Services,COURTSERV
@@ -21,25 +20,20 @@ Heritage Toronto,HERITAGE
 Information & Technology,IT
 Integrity Commissioner's Office,INTEGRITYCOMM
 Legal Services,LEGAL
-Lobbyist Registrar,LOBBYREG
 Local Appeal Body,LOCALAPPEAL
 Long Term Care Homes & Services,LONGTERMHOME
 Mayor's Office,MAYOR
 Municipal Licensing & Standards,LICENCING
-Municipal Licensing and Standards,LICENCING
 Non-Program Expenditures,CORPEXPENDITURES
 Non-Program Revenues,CORPREVENUES
 Office of the Chief Financial Officer,CFO
 Office of the Lobbyist Registrar,LOBBYREG
 Office of the Ombudsman,OMBUDSMAN
 Office of the Treasurer,TREASURER
-Parking Tag Enforcement & Operations,PARKINGTAGS
 "Parks, Forestry & Recreation",PARKS
 "Policy, Planning, Finance & Administration",POLICYADMIN
-"Policy, Planning, Finance and Administration",POLICYADMIN
 Property Tax,PROPERTYTAX
 "Shelter, Support & Housing Administration",SHELTERADMIN
-"Social Development, Finance & Administratio",SOCIALDEV
 "Social Development, Finance & Administration",SOCIALDEV
 Solid Waste Management Services,SOLIDWASTE
 Theatres,THEATRES
@@ -55,7 +49,6 @@ Toronto Public Health,PUBLICHEALTH
 Toronto Public Library,LIBRARY
 Toronto Transit Commission - Conventional,TTCCONV
 Toronto Transit Commission - Wheel Trans,TTCWHEEL
-Toronto Transit Commission - Wheel-Trans,TTCWHEEL
 Toronto Water,WATER
 Toronto Zoo,ZOO
 Transportation Services,TRANSPORTATION
