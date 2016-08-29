@@ -18,13 +18,12 @@
 */
 
 let utilities = require('./utilities')
+let constants = require('./constants')
 
 const intake = context => {
-    console.log('body of preprocess')
+    console.log('body of intake')
     // get settings
     collectBaseData(context)
-
-    console.log(context)
 
     let intakefiles = context.intakefiles
 
@@ -41,8 +40,7 @@ const collectBaseData = context => {
             `${context.repository}/datasets/${context.version}/settings.json`)
         context.settings = settings
     } catch (e) {
-        console.log(e)
-        throw Error()
+        throw Error('Settings file not found in intake collectBaseData')
     }
     // get intake path and intake files list
     try {
@@ -59,36 +57,110 @@ const collectBaseData = context => {
         context.intakepath = intakepath
         context.intakefiles = newintake
     } catch (e) {
-        console.log(e)
-        throw Error()
+        throw Error('intake path not found')
     }
 
 }
 
 const processIntakeFile = (filename,context) => {
     console.log('processing intake file ', filename)
+
     let intakefilespec = context.intakepath + filename
     let csv = utilities.readFileCsv(intakefilespec)
+    if (csv.length == 0) {
+        throw Error('intake file not found:' + filename)
+    }
+
     let components = utilities.decomposeCsv(csv, filename) // {meta, data}
+
+    // {names:{<name>:'NAME'},codes:<name>:'CODE', list: <name>[]} 
+    // presence of code for <name> determines whether to lookup code or save it to lookup
+    let columndata = getColumnData(components, filename)
+    console.log(columndata)
+    let columns = columndata.columns
+    // process backwards to allow columnindex to be used for column reference
+    // in file processing, as processing inserts a column
+    for (let columnindex = columns.length -1; columnindex >=0; columnindex--) {
+        let column = columndata.columns[columnindex]
+        if (column.type == constants.NAME) {
+            processFileCategory(columndata,columnindex,filename, components, context)
+        }
+    }
+}
+
+const getColumnData = (components, filename) => {
+    let columns_categories = components.meta.filter(item => {
+        return (item[0] == constants.COLUMNS_CATEGORIES)? true: false
+    })
+    columns_categories = columns_categories[0]
+    if (columns_categories) {
+        columns_categories.splice(0,1)
+        columns_categories = columns_categories[0].split(',')
+        for (let index in columns_categories) {
+            columns_categories[index] = columns_categories[index].trim()
+        }
+    } else {
+        throw Error(constants.COLUMNS_CATEGORIES + ' not found for ' + filename)
+    }
+
+    let category_names = {}
+    let category_codes = {}
+    let column_list = []
+    for (let columnindex in columns_categories) {
+        let column = columns_categories[columnindex]
+        let parts = column.split(':')
+        if (parts.length != 2) {
+            console.log(parts)
+            throw Error('improper columms format ' + column + ' in ' + filename)
+        }
+        let type = parts[1].trim()
+        let name = parts[0].trim()
+        if (type == constants.NAME) {
+            category_names[name] = type
+        } else if (type == constant.CODE) {
+            category_codes[name] = type
+        } else {
+            Error('wrong column type ' + column + ' in ' + filename)
+        }
+        column_list.push({
+            name:name,
+            type:type
+        })
+    }
+
+    let columndata = {
+        names:category_names,
+        codes:category_codes,
+        columns:column_list
+    }
+
+    return columndata
+
+}
+
+const processFileCategory = (columndata,columnindex,filename, components, context) => {
+
+    let column = columndata.columns[columnindex]
+    let columnref = column.name.toLowerCase()
     let fileparts = filename.split('.')
     let fileyear = fileparts[0]
     let namelookups_filepspec = 
-        `${context.dbroot}${context.repository}/datasets/${context.version}/maps/${fileyear}.program_name_to_code.csv`
+        `${context.dbroot}${context.repository}/datasets/${context.version}/maps/${fileyear}.${columnref}_name_to_code.csv`
     let namelookups = utilities.readFileCsv(namelookups_filepspec)
+
     // TODO process line items once for each category column
     //    if there are codes for a column, add codes to lookup
     let lineitems = components.data
     let newnames = {} // use properties to filter out duplicates
-    let newlist = null
     for (let line of lineitems) {
-        let name = line[0]
+        let name = line[columnindex]
         let filtered = namelookups.filter(item => {
             return (item[0] == name)?true:false
         })
         if (filtered.length > 0 && filtered[0][1]) {
-            line.splice(0,0,filtered[0][1])
+            line.splice(columnindex,0,filtered[0][1])
         } else {
-            line.splice(0,0,null)
+            line.splice(columnindex,0,null)
             newnames[name] = null // using an object filters out duplicates
         }
     }
@@ -96,13 +168,14 @@ const processIntakeFile = (filename,context) => {
     newnames = newnames.map(item =>{
         return [item,null]
     })
+    let newlookupslist = null
     if (newnames.length > 0) {
-        newlist = [...namelookups, ...newnames]
+        newlookupslist = [...namelookups, ...newnames]
     }
 
-    if (newlist) { // still null if no new items
+    if (newlookupslist) { // still null if no new items
         // sort
-        let sorted = newlist.sort((a,b)=>{
+        let sorted = newlookupslist.sort((a,b)=>{
             if (a[0] < b[0])
                 return -1
             else if (a[0] > b[0]) 
@@ -110,7 +183,7 @@ const processIntakeFile = (filename,context) => {
             else 
                 return 0
         })
-        newlist = sorted
+        newlookupslist = sorted
         // TODO: save namelookups to replaced
         // overwrite namelookups with newlist
         // write failed preprocessed file to failed
@@ -121,7 +194,7 @@ const processIntakeFile = (filename,context) => {
         // log result
     }
 
-    console.log(lineitems, namelookups, newnames, newlist)
+    console.log(lineitems, namelookups, newnames, newlookupslist)
 }
 
 module.exports = intake

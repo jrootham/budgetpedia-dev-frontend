@@ -22,8 +22,7 @@ exports.decomposeCsv = (csv, filename) => {
 
     // check for error
     if (metastartpos === null || !found) {
-        exports.log('meta section not found for ' + filename)
-        throw Error()
+        throw Error('meta section not found for ' + filename)
     }
 
     // extract metadata
@@ -56,8 +55,12 @@ exports.writeFileJson = (filespec, content) => {
 }
 
 exports.readFileCsv = filespec => {
-    let filetext = exports.readFileText(filespec)
-    return parse(filetext, {auto_parse:true})
+    try {
+        let filetext = exports.readFileText(filespec)
+        return parse(filetext, {auto_parse:true})
+    } catch (e) {
+        return []
+    }
 }
 
 exports.writeFileCsv = (filespec, csv) => {

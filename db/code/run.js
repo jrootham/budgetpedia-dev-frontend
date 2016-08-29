@@ -35,8 +35,8 @@ const setup = (context) => {
         } 
         break
         case 'intake':
-        case 'preprocessed': 
-        case 'prepared': 
+        case 'preprocess': 
+        case 'prepare': 
         case 'remove':
         {
             if ((!context.repository) || (context.repositorydirs.indexOf(context.repository) == -1)) {
@@ -64,10 +64,10 @@ const setup = (context) => {
         case 'intake':
             intakeToPreprocessed(context)
             break
-        case 'preprocessed': 
+        case 'preprocess': 
             preprocessedToPrepared(context)
             break
-        case 'prepared': 
+        case 'prepare': 
             preparedToJson(context)
             break
         case 'remove':
@@ -109,15 +109,14 @@ syntax
 commands
     help
 
-    intake <repository> <version> (add program codes to names, iteratively)
+    intake <repository> <version> (add category codes to names, iteratively, to preprocessed)
 
-    preprocessed <repository> <version> (prepare reference codes and combine data for 
-        current year)
+    preprocess <repository> <version> (prepare reference codes and combine data for 
+        current year, to prepared)
 
-    prepared <repository> <version> (create or add to json aspect files)
+    prepare <repository> <version> (create or add to json aspect files)
 
     remove <repository> <version> <aspect> <year> (remove year from json file)
-
 `
     )
 }
@@ -127,7 +126,7 @@ module.export = ((context) => {
 try {
     if (!setup(context)) return
 } catch (e) {
-    console.log(e)
+    utilities.log(e)
     return
 }
 
