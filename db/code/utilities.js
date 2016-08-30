@@ -1,6 +1,8 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // utilities.js
 
+'use strict'
+
 let fs = require('fs')
 let jsonfile = require('jsonfile')
 jsonfile.spaces = 4

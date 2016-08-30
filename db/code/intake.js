@@ -7,15 +7,17 @@
         db/repositories/<repository>/datasets/<version>/intake/*.csv
     for each file
     - extract metadata __META_START__ to __META_END__
-    - lookup code for each program name, from
-        db/repositories/<repository>/datasets/<version>/maps/<year>.program_name_to_code.csv        
-    - insert code if found in first column, else insert null
+    - lookup code for each <category> name, from
+        db/repositories/<repository>/datasets/<version>/maps/<year>.<category>_name_to_code.csv        
+    - insert code if found in previous column, else insert null
     - add newly found name to lookup, with warning to operator
     - write successfully completed file to preprocessed, with a successfully
         processed file to intake/processed
-    - abandon unsuccessfully processed file, with copy to pedning/failes
+    - abandon unsuccessfully processed file
     - write revised maps file to maps, with original to maps/replaced
 */
+
+'use strict'
 
 let utilities = require('./utilities')
 let constants = require('./constants')
@@ -129,16 +131,26 @@ const processFileCategory = ( columndata, columnindex, filename, components, con
 
     utilities.log('processing column ' + columndata.columns[columnindex].name)
 
+    let column = columndata.columns[columnindex]
+    let column_name = column.name
+    if (columndata.codes[column_name]) {
+        throw Error('processFileCategory is not yet factored to deal with imported category codes')
+    } else {
+        return insertCodes( columndata, columnindex, filename, components, context )
+    }
+
+}
+
+insertCodes = ( columndata, columnindex, filename, components, context ) => {
+
+    let column = columndata.columns[columnindex]
+    let column_name = column.name
+
     let columnlist = components.meta.filter(item =>{
         return (item[0] == constants.COLUMNS_CATEGORIES)? true:false
     })
     columnlist = columnlist[0]
 
-    let column = columndata.columns[columnindex]
-    let column_name = column.name
-    if (columndata.codes[column_name]) {
-        throw Error('processFileCategory is not yet factored to deal with imported category codes')
-    }
     // insert new column name for added code in columns list
     let columnarray = columnlist[1].split(',')
     columnarray.splice(columnindex,0,column_name + ':' + constants.CODE)
@@ -210,7 +222,6 @@ const processFileCategory = ( columndata, columnindex, filename, components, con
             return true
         }
     }
-
 }
 
 module.exports = intake
