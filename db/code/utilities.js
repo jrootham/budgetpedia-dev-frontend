@@ -1,3 +1,4 @@
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // utilities.js
 
 let fs = require('fs')
@@ -43,6 +44,65 @@ exports.decomposeCsv = (csv, filename) => {
     return components
 }
 
+// {names:{<name>:'NAME'},codes:{<name>:'CODE'}, list: {name:<name>, type:<type>}[]} 
+// presence of code for <name> determines whether to lookup code or save it to lookup
+// CODE columns are expected to appear just before corresponding NAME column
+exports.getColumnData = (components, filename) => {
+
+    let columns_categories = components.meta.filter(item => {
+        return (item[0] == constants.COLUMNS_CATEGORIES)? true: false
+    })
+    columns_categories = [...columns_categories[0]]
+    if (columns_categories) {
+        columns_categories.splice(0,1)
+        columns_categories = columns_categories[0].split(',')
+        for (let index in columns_categories) {
+            columns_categories[index] = columns_categories[index].trim()
+        }
+    } else {
+        throw Error(constants.COLUMNS_CATEGORIES + ' not found for ' + filename)
+    }
+
+    let category_names = {}
+    let category_codes = {}
+    let column_list = []
+    for (let columnindex in columns_categories) {
+        let column = columns_categories[columnindex]
+        let parts = column.split(':')
+        if (parts.length != 2) {
+            console.log(parts)
+            throw Error('improper columms format ' + column + ' in ' + filename)
+        }
+        let type = parts[1].trim()
+        let name = parts[0].trim()
+        if (type == constants.NAME) {
+            category_names[name] = type
+        } else if (type == constant.CODE) {
+            category_codes[name] = type
+        } else {
+            Error('wrong column type ' + column + ' in ' + filename)
+        }
+        column_list.push({
+            name:name,
+            type:type
+        })
+    }
+
+    let columndata = {
+        names:category_names,
+        codes:category_codes,
+        columns:column_list
+    }
+
+    return columndata
+
+}
+
+
+exports.getDirContents = dirspec => {
+    return fs.readdirSync(dirspec)
+}
+
 exports.readFileText = filespec => {
     return fs.readFileSync(filespec,'utf8')
 }
@@ -77,8 +137,28 @@ exports.writeFileCsv = (filespec, csv) => {
     })
 }
 
+exports.fileExists = filespec => {
+    try {
+      fs.accessSync(filespec)
+      return true
+    } catch (e) {
+        return false
+    }
+}
+
 exports.deleteFile = filespec => {
     fs.unlinkSync(filespec)
+}
+
+exports.copyFile = (sourcespec, targetspec) => {
+    let content = exports.readFileText(sourcespec)
+    exports.writeFileText(targetspec, content)
+}
+
+exports.moveFile = (sourcespec, targetspec) => {
+    fs.renameSync(sourcespec, targetspec)
+    // exports.copyFile(sourcespec, targetspec)
+    // exports.deleteFile(sourcespec)
 }
 
 exports.log = message => {
@@ -86,11 +166,18 @@ exports.log = message => {
     // TODO: save to log file    
 }
 
-exports.getDirContents = dirspec => {
-    return fs.readdirSync(dirspec)
+exports.getDateTime = () => {
+    return moment().format('YYYY-MM-DD-HH-mm-ss')
 }
 
 exports.prefixDateTime = filename => {
-    let datetimestring = moment().format('YYYY-MM-DD-HH-mm-ss.')
+    let datetimestring = exports.getDateTime()
     return datetimestring + filename
+}
+
+exports.infixDateTime = filename => {
+    let datetimestring = exports.getDateTime()
+    let parts = filename.split('.')
+    parts.splice(parts.length - 1,0,datetimestring) // insert before file extension
+    return parts.join('.')
 }

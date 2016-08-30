@@ -1,4 +1,4 @@
-// preprocess.js
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 
 /*
     - get settings file; read reference year, from
@@ -21,7 +21,6 @@ let utilities = require('./utilities')
 let constants = require('./constants')
 
 const intake = context => {
-    console.log('body of intake')
     // get settings
     collectBaseData(context)
 
@@ -39,8 +38,10 @@ const intake = context => {
 const collectBaseData = context => {
 
     try {
-        let settings = utilities.readFileJson(context.dbroot + 
-            `${context.repository}/datasets/${context.version}/settings.json`)
+        let settings = utilities.readFileJson(
+            context.dbroot + 
+            `${context.repository}/datasets/${context.version}/settings.json`
+        )
         context.settings = settings
     } catch (e) {
         throw Error('Settings file not found in intake collectBaseData')
@@ -76,7 +77,7 @@ const processIntakeFile = (filename,context) => {
 
     let components = utilities.decomposeCsv(csv, filename) // {meta, data}
 
-    let columndata = getColumnData(components, filename)
+    let columndata = utilities.getColumnData(components, filename) // according to COLUMNS_CATEGORIES
 
     let columns = columndata.columns
     // process backwards to allow columnindex to be used for column reference
@@ -85,88 +86,65 @@ const processIntakeFile = (filename,context) => {
     for (let columnindex = columns.length -1; columnindex >=0; columnindex--) {
         let column = columndata.columns[columnindex]
         if (column.type == constants.NAME) { // codes are looked up separately, if present
+
             let retval = processFileCategory(columndata,columnindex,filename, components, context)
+
             if (!retval) success = false
         }
     }
     if (success) {
         // save result to preprocessed directory
         utilities.log('file processed successfully. Saving to preprocessed directory.')
-        let datatimefilename = utilities.prefixDateTime(filename)
-        utilities.writeFileCsv(context.intakepath + 'processed/' + datatimefilename, csv)
+        // first save original to subdirectory
+        let datetimefilename = utilities.infixDateTime(filename)
+        utilities.writeFileCsv(context.intakepath + 'processed/' + datetimefilename, csv)
+        // then save processed file
         let preprocessed_path = context.dbroot + 
             `${context.repository}/datasets/${context.version}/preprocessed/`
+
+        // save exsiting processed file to 'replaced' subdirecotry
+        if (utilities.fileExists(preprocessed_path + filename)) {
+            let datetimefilename = utilities.infixDateTime(filename)
+            utilities.moveFile(preprocessed_path + filename, preprocessed_path + 
+                'replaced/' + datetimefilename)
+        }
+
+        // assign datetime to components.meta.INTAKE_DATETIME
+        let filtered = components.meta.filter(item => {
+            return (item[0] == constants.INTAKE_DATETIME)?true: false
+        })
+        if (filtered[0]) {
+            filtered[0][1] = utilities.getDateTime()
+        }
         utilities.writeFileCsv(preprocessed_path + filename,[...components.meta,...components.data])
+        // finally delete the processed file
         utilities.deleteFile(intakefilespec)
     } else {
         utilities.log('some lookups need updating')
     }
 }
 
-// {names:{<name>:'NAME'},codes:{<name>:'CODE'}, list: {name:<name>, type:<type>}[]} 
-// presence of code for <name> determines whether to lookup code or save it to lookup
-// CODE columns are expected to appear just before corresponding NAME column
-const getColumnData = (components, filename) => {
-
-    let columns_categories = components.meta.filter(item => {
-        return (item[0] == constants.COLUMNS_CATEGORIES)? true: false
-    })
-    columns_categories = columns_categories[0]
-    if (columns_categories) {
-        columns_categories.splice(0,1)
-        columns_categories = columns_categories[0].split(',')
-        for (let index in columns_categories) {
-            columns_categories[index] = columns_categories[index].trim()
-        }
-    } else {
-        throw Error(constants.COLUMNS_CATEGORIES + ' not found for ' + filename)
-    }
-
-    let category_names = {}
-    let category_codes = {}
-    let column_list = []
-    for (let columnindex in columns_categories) {
-        let column = columns_categories[columnindex]
-        let parts = column.split(':')
-        if (parts.length != 2) {
-            console.log(parts)
-            throw Error('improper columms format ' + column + ' in ' + filename)
-        }
-        let type = parts[1].trim()
-        let name = parts[0].trim()
-        if (type == constants.NAME) {
-            category_names[name] = type
-        } else if (type == constant.CODE) {
-            category_codes[name] = type
-        } else {
-            Error('wrong column type ' + column + ' in ' + filename)
-        }
-        column_list.push({
-            name:name,
-            type:type
-        })
-    }
-
-    let columndata = {
-        names:category_names,
-        codes:category_codes,
-        columns:column_list
-    }
-
-    return columndata
-
-}
-
 // TODO: vary processing by whether CODE exists in source file
-const processFileCategory = (columndata,columnindex,filename, components, context) => {
+const processFileCategory = ( columndata, columnindex, filename, components, context ) => {
 
     utilities.log('processing column ' + columndata.columns[columnindex].name)
+
+    let columnlist = components.meta.filter(item =>{
+        return (item[0] == constants.COLUMNS_CATEGORIES)? true:false
+    })
+    columnlist = columnlist[0]
 
     let column = columndata.columns[columnindex]
     let column_name = column.name
     if (columndata.codes[column_name]) {
         throw Error('processFileCategory is not yet factored to deal with imported category codes')
     }
+    // insert new column name for added code in columns list
+    let columnarray = columnlist[1].split(',')
+    columnarray.splice(columnindex,0,column_name + ':' + constants.CODE)
+    columnlist[1] = columnarray.join(',')
+
+    // process column
     let columnref = column.name.toLowerCase()
     let fileparts = filename.split('.')
     let fileyear = fileparts[0]
@@ -216,8 +194,7 @@ const processFileCategory = (columndata,columnindex,filename, components, contex
                 return 0
         })
         newlookupslist = sorted
-        let timestampedfilename = utilities.prefixDateTime(namelookups_filename)
-        console.log('timestampedfilename',timestampedfilename)
+        let timestampedfilename = utilities.infixDateTime(namelookups_filename)
         utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)
         utilities.log('new lookups found for ' + namelookups_filename + '. Fix new entries and rerun.')
@@ -234,7 +211,6 @@ const processFileCategory = (columndata,columnindex,filename, components, contex
         }
     }
 
-    // console.log(lineitems, namelookups, newnames, newlookupslist)
 }
 
 module.exports = intake

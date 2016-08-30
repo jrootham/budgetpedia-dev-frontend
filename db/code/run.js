@@ -1,3 +1,4 @@
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // run.js
 
 /*
@@ -105,18 +106,18 @@ const showHelp = () => {
 `
 syntax 
     node run <command> <parameters>
-
 commands
-    help
-
-    intake <repository> <version> (add category codes to names, iteratively, to preprocessed)
-
-    preprocess <repository> <version> (prepare reference codes and combine data for 
+    - help
+    - intake <repository> <version> (add category codes to names, to preprocessed)
+        will fail without codes for all category names; 
+        manually add codes to maps for found category names; 
+        then iterate
+    - lookups <repository> <version> (create or update code_to_name lookups)
+    - codes <repository> <version> (update all lookups with reference year codes)
+    - preprocess <repository> <version> (prepare reference codes and combine data for 
         current year, to prepared)
-
-    prepare <repository> <version> (create or add to json aspect files)
-
-    remove <repository> <version> <aspect> <year> (remove year from json file)
+    - prepare <repository> <version> (create or add to json aspect files; create lookup tables)
+    - remove <repository> <version> <aspect> <year> (remove year from json file)
 `
     )
 }
@@ -130,7 +131,7 @@ try {
     return
 }
 
-console.log('Done.')
+utilities.log('Done.')
 
 })(context)
 
