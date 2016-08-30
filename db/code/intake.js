@@ -27,6 +27,9 @@ const intake = context => {
 
     let intakefiles = context.intakefiles
 
+    if (intakefiles.length == 0) {
+        throw Error('no intake files to process.')
+    }
     for (let filename of intakefiles) {
         processIntakeFile(filename,context)
     }
@@ -78,11 +81,25 @@ const processIntakeFile = (filename,context) => {
     let columns = columndata.columns
     // process backwards to allow columnindex to be used for column reference
     // in file processing, as processing inserts a column
+    let success = true
     for (let columnindex = columns.length -1; columnindex >=0; columnindex--) {
         let column = columndata.columns[columnindex]
         if (column.type == constants.NAME) { // codes are looked up separately, if present
-            processFileCategory(columndata,columnindex,filename, components, context)
+            let retval = processFileCategory(columndata,columnindex,filename, components, context)
+            if (!retval) success = false
         }
+    }
+    if (success) {
+        // save result to preprocessed directory
+        utilities.log('file processed successfully. Saving to preprocessed directory.')
+        let datatimefilename = utilities.prefixDateTime(filename)
+        utilities.writeFileCsv(context.intakepath + 'processed/' + datatimefilename, csv)
+        let preprocessed_path = context.dbroot + 
+            `${context.repository}/datasets/${context.version}/preprocessed/`
+        utilities.writeFileCsv(preprocessed_path + filename,[...components.meta,...components.data])
+        utilities.deleteFile(intakefilespec)
+    } else {
+        utilities.log('some lookups need updating')
     }
 }
 
@@ -143,6 +160,8 @@ const getColumnData = (components, filename) => {
 // TODO: vary processing by whether CODE exists in source file
 const processFileCategory = (columndata,columnindex,filename, components, context) => {
 
+    utilities.log('processing column ' + columndata.columns[columnindex].name)
+
     let column = columndata.columns[columnindex]
     let column_name = column.name
     if (columndata.codes[column_name]) {
@@ -160,6 +179,7 @@ const processFileCategory = (columndata,columnindex,filename, components, contex
     // TODO if there are codes for a column, add codes to lookup
     let lineitems = components.data
     let newnames = {} // use properties to filter out duplicates
+    let missedcodecount = 0
     for (let line of lineitems) {
         let name = line[columnindex]
         let filtered = namelookups.filter(item => {
@@ -168,6 +188,7 @@ const processFileCategory = (columndata,columnindex,filename, components, contex
         if (filtered.length > 0 && filtered[0][1]) {
             line.splice(columnindex,0,filtered[0][1])
         } else {
+            missedcodecount++
             line.splice(columnindex,0,null)
             if (filtered.length == 0) {
                 console.log('new name', name)
@@ -199,11 +220,18 @@ const processFileCategory = (columndata,columnindex,filename, components, contex
         console.log('timestampedfilename',timestampedfilename)
         utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)
-        // TODO log result
+        utilities.log('new lookups found for ' + namelookups_filename + '. Fix new entries and rerun.')
+        return false
     } else {
-        // TODO: move intake file to subdir processed, with datetime infix
-        // add meta + lineitems to preprocessed dir
-        // log result
+        if (missedcodecount > 0) {
+            utilities.log('no new lookup terms, but some missed codes: ' + missedcodecount +
+                ' fill in blank codes in lookup ' + namelookups_filename)
+            return false
+        } else {
+            components.data = lineitems
+            utilities.log('no anomalies found')
+            return true
+        }
     }
 
     // console.log(lineitems, namelookups, newnames, newlookupslist)

@@ -11,12 +11,17 @@ var constants = require('./constants')
 
 exports.decomposeCsv = (csv, filename) => {
 
+    // get clean copy of csv file so that original copy can be saved
+    let newcsv = [...csv]
+    for (let index in newcsv) {
+        newcsv[index] = [...newcsv[index]]
+    }
     // get span of meta data
-    let metastartpos = (csv[0][0] == constants.META_START)?0:null
+    let metastartpos = (newcsv[0][0] == constants.META_START)?0:null
 
     let metaendpos = null, found = false
-    for (metaendpos = 1; metaendpos < csv.length; metaendpos++) {
-        if (csv[metaendpos][0] == constants.META_END) {
+    for (metaendpos = 1; metaendpos < newcsv.length; metaendpos++) {
+        if (newcsv[metaendpos][0] == constants.META_END) {
             found = true
             break
         }
@@ -28,11 +33,11 @@ exports.decomposeCsv = (csv, filename) => {
     }
 
     // extract metadata
-    let metapart = csv.splice(metastartpos, metaendpos - metastartpos + 1)
+    let metapart = newcsv.splice(metastartpos, metaendpos - metastartpos + 1)
 
     let components = {
         meta:metapart,
-        data:csv,
+        data:newcsv,
     }
 
     return components
@@ -72,8 +77,13 @@ exports.writeFileCsv = (filespec, csv) => {
     })
 }
 
+exports.deleteFile = filespec => {
+    fs.unlinkSync(filespec)
+}
+
 exports.log = message => {
-    console.log(message)    
+    console.log(message)
+    // TODO: save to log file    
 }
 
 exports.getDirContents = dirspec => {
