@@ -6,11 +6,12 @@
 let fs = require('fs')
 let jsonfile = require('jsonfile')
 jsonfile.spaces = 4
-var parse = require('csv-parse/lib/sync')
-var stringify = require('csv-stringify')
-var moment = require('moment')
+let parse = require('csv-parse/lib/sync')
+let stringify = require('csv-stringify')
+let moment = require('moment')
 
-var constants = require('./constants')
+
+let constants = require('./constants')
 
 exports.decomposeCsv = (csv, filename) => {
 
@@ -79,7 +80,7 @@ exports.getColumnData = (components, filename) => {
         let name = parts[0].trim()
         if (type == constants.NAME) {
             category_names[name] = type
-        } else if (type == constant.CODE) {
+        } else if (type == constants.CODE) {
             category_codes[name] = type
         } else {
             Error('wrong column type ' + column + ' in ' + filename)

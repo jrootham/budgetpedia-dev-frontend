@@ -127,7 +127,7 @@ module.export = ((context) => {
 try {
     if (!setup(context)) return
 } catch (e) {
-    utilities.log(e.message)
+    utilities.log(e)
     return
 }
 

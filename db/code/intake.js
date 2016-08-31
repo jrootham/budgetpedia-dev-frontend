@@ -1,5 +1,7 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 
+// TODO: deal with null category fields
+
 /*
     - get settings file; read reference year, from
         db/repositories/<repository>/datasets/<version>/settings.json
@@ -73,6 +75,7 @@ const processIntakeFile = (filename,context) => {
 
     let intakefilespec = context.intakepath + filename
     let csv = utilities.readFileCsv(intakefilespec)
+
     if (csv.length == 0) {
         throw Error('intake file not found:' + filename)
     }
@@ -86,6 +89,7 @@ const processIntakeFile = (filename,context) => {
     // in file processing, as processing inserts a column
     let success = true
     for (let columnindex = columns.length -1; columnindex >=0; columnindex--) {
+
         let column = columndata.columns[columnindex]
         if (column.type == constants.NAME) { // codes are looked up separately, if present
 
@@ -93,13 +97,18 @@ const processIntakeFile = (filename,context) => {
 
             if (!retval) success = false
         }
+
     }
+
     if (success) {
+
         // save result to preprocessed directory
         utilities.log('file processed successfully. Saving to preprocessed directory.')
+
         // first save original to subdirectory
         let datetimefilename = utilities.infixDateTime(filename)
         utilities.writeFileCsv(context.intakepath + 'processed/' + datetimefilename, csv)
+
         // then save processed file
         let preprocessed_path = context.dbroot + 
             `${context.repository}/datasets/${context.version}/preprocessed/`
@@ -119,10 +128,14 @@ const processIntakeFile = (filename,context) => {
             filtered[0][1] = utilities.getDateTime()
         }
         utilities.writeFileCsv(preprocessed_path + filename,[...components.meta,...components.data])
+
         // finally delete the processed file
         utilities.deleteFile(intakefilespec)
+
     } else {
+
         utilities.log('some lookups need updating')
+
     }
 }
 
@@ -134,14 +147,118 @@ const processFileCategory = ( columndata, columnindex, filename, components, con
     let column = columndata.columns[columnindex]
     let column_name = column.name
     if (columndata.codes[column_name]) {
-        throw Error('processFileCategory is not yet factored to deal with imported category codes')
+
+        // collectCategoryCodes
+        // throw Error('processFileCategory is not yet factored to deal with imported category codes')
+        return collectCategoryCodes( columndata, columnindex, filename, components, context )
+
     } else {
-        return insertCodes( columndata, columnindex, filename, components, context )
+
+        return insertCategoryCodes( columndata, columnindex, filename, components, context )
+
     }
 
 }
 
-insertCodes = ( columndata, columnindex, filename, components, context ) => {
+const collectCategoryCodes = ( columndata, columnindex, filename, components, context ) => {
+
+    let column = columndata.columns[columnindex]
+    let column_name = column.name
+
+    let columnlist = components.meta.filter(item =>{
+        return (item[0] == constants.COLUMNS_CATEGORIES)? true:false
+    })
+    columnlist = columnlist[0]
+
+    // process column
+    let columnref = column.name.toLowerCase()
+    let fileparts = filename.split('.')
+    let fileyear = fileparts[0]
+    let namelookups_path = `${context.dbroot}${context.repository}/datasets/${context.version}/maps/`
+    let namelookups_filename = `${fileyear}.${columnref}_name_to_code.csv`
+    let namelookups_filespec = namelookups_path + namelookups_filename
+        
+    let namelookups = utilities.readFileCsv(namelookups_filespec)
+
+    let lineitems = components.data
+    let newnames = {} // use properties to filter out duplicates
+    let newcodes = {}
+
+    for (let line of lineitems) {
+        let name = line[columnindex]
+        let code = line[columnindex -1]
+        if (!name && !code) { // this category does not exist for this line item
+            continue            
+        }
+        let filtered = namelookups.filter(item => {
+            return (item[0] == name && item[1] == code)?true:false // tries to match name/code pair
+        })
+
+        if (filtered.length == 0) {
+            utilities.log('new name or code ' + name + ':' + code)
+            newnames[name] = code // using an object filters out duplicates
+            newcodes[code] = name // some names may have more than one code
+        }
+
+    }
+    let newnamesbynamelist = Object.keys(newnames)
+    newnamesbynamelist = newnamesbynamelist.map(item =>{
+        return [item,newnames[item]]
+    })
+    let newcodesbynamelist = Object.keys(newcodes)
+    newcodesbynamelist = newcodesbynamelist.map(item => {
+        return [newcodes[item],item]
+    })
+
+    let newitems = []
+    for (let codeitem in newcodesbynamelist) {
+        let filtered = newnamesbynamelist.filter(nameitem => {
+            return (codeitem[0] == nameitem[0] && codeitem[1] == nameitem[1])? true:false
+        })
+        if (filtered.lengh > 0) {
+            newitems.push(filtered[0])
+        }
+    }
+
+    let newentries = [...newnamesbynamelist, ...newitems]
+
+    let newlookupslist = null
+    if (newentries.length > 0) {
+        newlookupslist = [...namelookups, ...newentries]
+    }
+
+    if (newlookupslist) { // still null if no new items
+
+        // sort
+        let sorted = newlookupslist.sort((a,b)=>{
+            if (a[0] < b[0])
+                return -1
+            else if (a[0] > b[0]) 
+                return 1
+            else 
+                return 0
+        })
+        newlookupslist = sorted
+
+        let timestampedfilename = utilities.infixDateTime(namelookups_filename)
+        utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
+        utilities.writeFileCsv(namelookups_filespec, newlookupslist)
+        utilities.log('new lookups found for ' + namelookups_filename + '. Review new entries and rerun if necessary.')
+
+        return false
+
+    } else {
+
+        components.data = lineitems
+
+        utilities.log('no anomalies found')
+
+        return true
+        
+    }
+}
+
+const insertCategoryCodes = ( columndata, columnindex, filename, components, context ) => {
 
     let column = columndata.columns[columnindex]
     let column_name = column.name
@@ -166,12 +283,16 @@ insertCodes = ( columndata, columnindex, filename, components, context ) => {
         
     let namelookups = utilities.readFileCsv(namelookups_filespec)
 
-    // TODO if there are codes for a column, add codes to lookup
     let lineitems = components.data
     let newnames = {} // use properties to filter out duplicates
     let missedcodecount = 0
+
     for (let line of lineitems) {
         let name = line[columnindex]
+        if (!name) { // this category does not exist for this line item
+            line.splice(columnindex,0,null)
+            continue            
+        }
         let filtered = namelookups.filter(item => {
             return (item[0] == name)?true:false
         })
@@ -181,21 +302,24 @@ insertCodes = ( columndata, columnindex, filename, components, context ) => {
             missedcodecount++
             line.splice(columnindex,0,null)
             if (filtered.length == 0) {
-                console.log('new name', name)
+                utilities.log('new name ' + name)
                 newnames[name] = null // using an object filters out duplicates
             }
         }
     }
+
     newnames = Object.keys(newnames)
     newnames = newnames.map(item =>{
         return [item,null]
     })
+
     let newlookupslist = null
     if (newnames.length > 0) {
         newlookupslist = [...namelookups, ...newnames]
     }
 
     if (newlookupslist) { // still null if no new items
+
         // sort
         let sorted = newlookupslist.sort((a,b)=>{
             if (a[0] < b[0])
@@ -206,20 +330,31 @@ insertCodes = ( columndata, columnindex, filename, components, context ) => {
                 return 0
         })
         newlookupslist = sorted
+
         let timestampedfilename = utilities.infixDateTime(namelookups_filename)
         utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)
         utilities.log('new lookups found for ' + namelookups_filename + '. Fix new entries and rerun.')
+
         return false
+
     } else {
+
         if (missedcodecount > 0) {
+
             utilities.log('no new lookup terms, but some missed codes: ' + missedcodecount +
                 ' fill in blank codes in lookup ' + namelookups_filename)
+
             return false
+
         } else {
+
             components.data = lineitems
+
             utilities.log('no anomalies found')
+
             return true
+            
         }
     }
 }
