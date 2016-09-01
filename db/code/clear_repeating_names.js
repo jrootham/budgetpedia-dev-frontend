@@ -2,7 +2,7 @@
 
 utilities = require('./utilities')
 
-let filespec = './temp/2015.expenses.csv'
+let filespec = './temp/2016.expenses.csv'
 
 let csv = utilities.readFileCsv(filespec)
 
