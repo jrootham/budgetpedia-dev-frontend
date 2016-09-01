@@ -24,7 +24,7 @@
 let utilities = require('./utilities')
 let constants = require('./constants')
 
-const intake = context => {
+const preprocess = context => {
     // get settings
     collectBaseData(context)
 
@@ -369,4 +369,4 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
     }
 }
 
-module.exports = intake
+module.exports = preprocess

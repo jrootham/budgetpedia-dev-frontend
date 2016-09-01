@@ -66,13 +66,13 @@ const setup = (context) => {
     }
 
     switch (command) {
-        case 'intake':
+        case 'preprocess':
             intakeToPreprocessed(context)
             break
-        case 'preprocess': 
+        case 'prepare': 
             preprocessedToPrepared(context)
             break
-        case 'prepare': 
+        case 'generate': 
             preparedToJson(context)
             break
         case 'remove':
@@ -87,7 +87,7 @@ const setup = (context) => {
 
 const intakeToPreprocessed = context => {
     utilities.log('processing intake to preprocessed')
-    let intake = require('./intake')
+    let intake = require('./preprocess')
     intake(context)
 }
 
@@ -131,7 +131,7 @@ module.export = ((context) => {
 try {
     if (!setup(context)) return
 } catch (e) {
-    utilities.log(e)
+    utilities.log(e.message)
     return
 }
 
