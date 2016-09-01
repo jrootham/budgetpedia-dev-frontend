@@ -14,8 +14,10 @@ NOTES_CONTENT,"[[GREEN]]This is the operating budget staffing, and does not incl
 [[RED]]Prior to the council-approved version;
 [[ORANGE]]rounding causes totals to differ by 0.2;",
 NOTES_SEVERITY,RED,
-UNITS_NAME,FTE,
+UNITS_NAME,Full Time Equivalent,
+UNITS_CODE,FTE,
 UNITS_MULTIPLIER,1,
+TOTAL_AMOUNT,,
 INTAKE_DATETIME,,
 INTAKE_OPERATOR_ID,Henrik,
 COLUMNS_CATEGORIES,"Program:NAME, Permanence:NAME",

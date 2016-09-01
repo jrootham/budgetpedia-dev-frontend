@@ -1,6 +1,6 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 
-// TODO: deal with null category fields
+// TODO: redue line items to total_amount for preprocessed
 
 /*
     - get settings file; read reference year, from
@@ -107,7 +107,10 @@ const processIntakeFile = (filename,context) => {
 
         // first save original to subdirectory
         let datetimefilename = utilities.infixDateTime(filename)
-        utilities.writeFileCsv(context.intakepath + 'processed/' + datetimefilename, csv)
+        utilities.writeFileCsv(context.intakepath + 'history/' + datetimefilename, csv)
+
+        // then save copy of original for re-processing
+        utilities.writeFileCsv(context.intakepath + 'latest/' + filename, csv)
 
         // then save processed file
         let preprocessed_path = context.dbroot + 
@@ -121,13 +124,24 @@ const processIntakeFile = (filename,context) => {
         }
 
         // assign datetime to components.meta.INTAKE_DATETIME
-        let filtered = components.meta.filter(item => {
-            return (item[0] == constants.INTAKE_DATETIME)?true: false
-        })
-        if (filtered[0]) {
-            filtered[0][1] = utilities.getDateTime()
+        let datetimerow = utilities.getMetaRow(constants.INTAKE_DATETIME,components.meta)
+        if (datetimerow) {
+            datetimerow[1] = utilities.getDateTime()
         }
-        utilities.writeFileCsv(preprocessed_path + filename,[...components.meta,...components.data])
+
+        // calculate the total amount for reconciliation purposes
+        let columnslist = utilities.getMetaRow(constants.COLUMNS_CATEGORIES,components.meta)
+        columnslist = columnslist[1].split(',')
+        let amountindex = columnslist.length
+        let total_amount_row = utilities.getMetaRow(constants.TOTAL_AMOUNT, components.meta)
+        let total = components.data.reduce((aggregate, amountrow) => {
+           return amountrow[amountindex]?aggregate + amountrow[amountindex]:aggregate
+        },0)
+        total_amount_row[1] = total
+
+        // save new file to preprocessed
+        let newdata = [...components.meta,...components.data]
+        utilities.writeFileCsv(preprocessed_path + filename, newdata)
 
         // finally delete the processed file
         utilities.deleteFile(intakefilespec)
@@ -165,10 +179,8 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
     let column = columndata.columns[columnindex]
     let column_name = column.name
 
-    let columnlist = components.meta.filter(item =>{
-        return (item[0] == constants.COLUMNS_CATEGORIES)? true:false
-    })
-    columnlist = columnlist[0]
+    let columnlist = utilities.getMetaRow(constants.COLUMNS_CATEGORIES,components.meta)
+    // columnlist = columnlist[0]
 
     // process column
     let columnref = column.name.toLowerCase()
@@ -263,10 +275,8 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
     let column = columndata.columns[columnindex]
     let column_name = column.name
 
-    let columnlist = components.meta.filter(item =>{
-        return (item[0] == constants.COLUMNS_CATEGORIES)? true:false
-    })
-    columnlist = columnlist[0]
+    let columnlist = utilities.getMetaRow(constants.COLUMNS_CATEGORIES,components.meta)
+    // columnlist = columnlist[0]
 
     // insert new column name for added code in columns list
     let columnarray = columnlist[1].split(',')

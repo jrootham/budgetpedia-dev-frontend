@@ -102,6 +102,15 @@ exports.getColumnData = (components, filename) => {
 }
 
 
+exports.getMetaRow = (rowname,metadata) => {
+    let filtered = metadata.filter(item => {
+        return (item[0] == rowname)?true: false
+    })
+    if (filtered.length > 0)
+        return filtered[0]
+    else return null
+}
+
 exports.getDirContents = dirspec => {
     return fs.readdirSync(dirspec)
 }

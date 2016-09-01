@@ -2,6 +2,10 @@
 // run.js
 
 /*
+    TODO rename intake command to preprocess
+*/
+
+/*
 
     node code/run <command> <parameters>
     see showHelp() at end for details
@@ -35,9 +39,9 @@ const setup = (context) => {
             return false
         } 
         break
-        case 'intake':
-        case 'preprocess': 
-        case 'prepare': 
+        case 'intake': // s/b preprocess
+        case 'preprocess': // s/b prepare
+        case 'prepare': // s/b/ generate
         case 'remove':
         {
             if ((!context.repository) || (context.repositorydirs.indexOf(context.repository) == -1)) {
@@ -108,15 +112,15 @@ syntax
     node run <command> <parameters>
 commands
     - help
-    - intake <repository> <version> (add category codes to names, to preprocessed)
+    - preprocess <repository> <version> (add category codes to names, to preprocessed)
         will fail without codes for all category names; 
         manually add codes to maps for found category names; 
         then iterate
-    - lookups <repository> <version> (create or update code_to_name lookups)
-    - codes <repository> <version> (update all lookups with reference year codes)
-    - preprocess <repository> <version> (prepare reference codes and combine data for 
+    - update-lookups <repository> <version> (create or update code_to_name lookups)
+    - update-codes <repository> <version> (update all lookups with reference year codes)
+    - prepare <repository> <version> (prepare reference codes and combine data for 
         current year, to prepared)
-    - prepare <repository> <version> (create or add to json aspect files; create lookup tables)
+    - generate <repository> <version> (create or add to json aspect files; create lookup tables)
     - remove <repository> <version> <aspect> <year> (remove year from json file)
 `
     )
