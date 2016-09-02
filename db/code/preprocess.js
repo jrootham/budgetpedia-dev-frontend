@@ -1,7 +1,5 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 
-// TODO: redue line items to total_amount for preprocessed
-
 /*
     - get settings file; read reference year, from
         db/repositories/<repository>/datasets/<version>/settings.json
@@ -48,7 +46,7 @@ const collectBaseData = context => {
         )
         context.settings = settings
     } catch (e) {
-        throw Error('Settings file not found in intake collectBaseData')
+        throw Error('Settings file not found in preprocess collectBaseData')
     }
     // get intake path and intake files list
     try {
@@ -105,18 +103,18 @@ const processIntakeFile = (filename,context) => {
         // save result to preprocessed directory
         utilities.log('file processed successfully. Saving to preprocessed directory.')
 
-        // first save original to subdirectory
+        // 1. first save original to subdirectory
         let datetimefilename = utilities.infixDateTime(filename)
         utilities.writeFileCsv(context.intakepath + 'history/' + datetimefilename, csv)
 
-        // then save copy of original for re-processing
+        // 2. then save copy of original for re-processing
         utilities.writeFileCsv(context.intakepath + 'latest/' + filename, csv)
 
-        // then save processed file
+        // 3. then save processed file
         let preprocessed_path = context.dbroot + 
             `${context.repository}/datasets/${context.version}/preprocessed/`
 
-        // save exsiting processed file to 'replaced' subdirecotry
+        // 4. save exsiting processed file to 'replaced' subdirecotry
         if (utilities.fileExists(preprocessed_path + filename)) {
             let datetimefilename = utilities.infixDateTime(filename)
             utilities.moveFile(preprocessed_path + filename, preprocessed_path + 
@@ -139,11 +137,11 @@ const processIntakeFile = (filename,context) => {
         },0)
         total_amount_row[1] = total
 
-        // save new file to preprocessed
+        // 5. save new file to preprocessed
         let newdata = [...components.meta,...components.data]
         utilities.writeFileCsv(preprocessed_path + filename, newdata)
 
-        // finally delete the processed file
+        // 6. finally delete the processed file
         utilities.deleteFile(intakefilespec)
 
     } else {
@@ -180,7 +178,6 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
     let column_name = column.name
 
     let columnlist = utilities.getMetaRow(constants.COLUMNS_CATEGORIES,components.meta)
-    // columnlist = columnlist[0]
 
     // process column
     let columnref = column.name.toLowerCase()
@@ -213,22 +210,27 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
         }
 
     }
+    // reconcile name/code pairs
+    // create two arrays based on name-first and code-first, for comparison
+    // array of [name,code] arrays
     let newnamesbynamelist = Object.keys(newnames)
-    newnamesbynamelist = newnamesbynamelist.map(item =>{
-        return [item,newnames[item]]
+    newnamesbynamelist = newnamesbynamelist.map(nameitem =>{
+        return [nameitem,newnames[nameitem]]
     })
     let newcodesbynamelist = Object.keys(newcodes)
-    newcodesbynamelist = newcodesbynamelist.map(item => {
-        return [newcodes[item],item]
+    newcodesbynamelist = newcodesbynamelist.map(codeitem => {
+        return [newcodes[codeitem],codeitem]
     })
 
+    // collect any code-based items that don't already exist in name-based items
     let newitems = []
-    for (let codeitem in newcodesbynamelist) {
-        let filtered = newnamesbynamelist.filter(nameitem => {
+    for (let codeitem in newcodesbynamelist) { // for each code based item
+        let filtered = newnamesbynamelist.filter(nameitem => { // see if there's a match in name based
             return (codeitem[0] == nameitem[0] && codeitem[1] == nameitem[1])? true:false
         })
-        if (filtered.lengh > 0) {
-            newitems.push(filtered[0])
+        if (filtered.length == 0) { // codeitem pair is unique
+            utilities.log('duplicate name, different code: ' + codeitem.join(':'))
+            newitems.push(codeitem)
         }
     }
 
@@ -255,7 +257,10 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
         let timestampedfilename = utilities.infixDateTime(namelookups_filename)
         utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)
-        utilities.log('new lookups found for ' + namelookups_filename + '. Review new entries and rerun if necessary.')
+        utilities.log('new lookups found for ' + 
+            namelookups_filename + 
+            '. Review new entries and rerun if necessary.'
+        )
 
         return false
 
@@ -276,7 +281,6 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
     let column_name = column.name
 
     let columnlist = utilities.getMetaRow(constants.COLUMNS_CATEGORIES,components.meta)
-    // columnlist = columnlist[0]
 
     // insert new column name for added code in columns list
     let columnarray = columnlist[1].split(',')
@@ -344,7 +348,10 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
         let timestampedfilename = utilities.infixDateTime(namelookups_filename)
         utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)
-        utilities.log('new lookups found for ' + namelookups_filename + '. Fix new entries and rerun.')
+        utilities.log('new lookups found for ' + 
+            namelookups_filename + 
+            '. Fix new entries and rerun.'
+        )
 
         return false
 
@@ -352,8 +359,11 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
 
         if (missedcodecount > 0) {
 
-            utilities.log('no new lookup terms, but some missed codes: ' + missedcodecount +
-                ' fill in blank codes in lookup ' + namelookups_filename)
+            utilities.log('no new lookup terms, but some missed codes: ' + 
+                missedcodecount +
+                ' fill in blank codes in lookup ' + 
+                namelookups_filename
+            )
 
             return false
 
