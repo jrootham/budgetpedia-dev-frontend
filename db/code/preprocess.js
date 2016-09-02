@@ -195,6 +195,11 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
 
     for (let line of lineitems) {
         let name = line[columnindex]
+        let trimmedname = name.trim()
+        if (trimmedname != name) {
+            line[columnindex] = trimmedname
+            name = trimmedname
+        }
         let code = line[columnindex -1]
         if (!name && !code) { // this category does not exist for this line item
             continue            
@@ -306,6 +311,11 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
         if (!name) { // this category does not exist for this line item
             line.splice(columnindex,0,null)
             continue            
+        }
+        let trimmedname = name.trim()
+        if (trimmedname != name) {
+            line[columnindex] = trimmedname
+            name = trimmedname
         }
         let filtered = namelookups.filter(item => {
             return (item[0] == name)?true:false
