@@ -116,6 +116,7 @@ commands
         will fail without codes for all category names; 
         manually add codes to maps for found category names; 
         then iterate
+    - count-lookups <repository> <version> (count category name usage from preprocessed to id orphans)
     - update-lookups <repository> <version> (create or update code_to_name lookups)
     - update-codes <repository> <version> (update all lookups with reference year codes)
     - prepare <repository> <version> (prepare reference codes and combine data for 
