@@ -15,8 +15,8 @@ NOTES_SEVERITY,,
 UNITS_NAME,Dollar,
 UNITS_CODE,DOLLAR,
 UNITS_MULTIPLIER,1000,
-TOTAL_AMOUNT,7154246.318625499,
-INTAKE_DATETIME,2016-09-02-14-29-20,
+TOTAL_AMOUNT,7154510.318625499,
+INTAKE_DATETIME,2016-09-02-13-32-28,
 INTAKE_OPERATOR_ID,Henrik,
 COLUMNS_CATEGORIES,"Program:CODE,Program:NAME,Revenue:CODE,Revenue:NAME",
 COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE",
@@ -57,6 +57,15 @@ LOBBYREG,Accountability Offices - Lobbyist Registrar,920A,Transfers from Capital
 LOBBYREG,Accountability Offices - Lobbyist Registrar,930A,Contribution from Reserve Funds,0
 LOBBYREG,Accountability Offices - Lobbyist Registrar,930A,Contribution from Reserve,0
 LOBBYREG,Accountability Offices - Lobbyist Registrar,940A,Sundry Revenues,9
+COMMCENTRES,Association of Community Centres,750A,Interdivisional Recoveries,
+COMMCENTRES,Association of Community Centres,805A,Provincial Subsidies,
+COMMCENTRES,Association of Community Centres,810A,Federal Subsidies,
+COMMCENTRES,Association of Community Centres,820A,Other Subsidies,
+COMMCENTRES,Association of Community Centres,850A,User Fees & Donations,254.7
+COMMCENTRES,Association of Community Centres,920A,Transfers from Capital Fund,
+COMMCENTRES,Association of Community Centres,930A,Contribution from Reserve Funds,
+COMMCENTRES,Association of Community Centres,930A,Contribution from Reserve,
+COMMCENTRES,Association of Community Centres,940A,Sundry Revenues,9.3
 AFFHOUSING,Affordable Housing Office,750A,Interdivisional Recoveries,121.044
 AFFHOUSING,Affordable Housing Office,805A,Provincial Subsidies,735
 AFFHOUSING,Affordable Housing Office,810A,Federal Subsidies,250

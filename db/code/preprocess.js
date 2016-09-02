@@ -133,7 +133,16 @@ const processIntakeFile = (filename,context) => {
         let amountindex = columnslist.length
         let total_amount_row = utilities.getMetaRow(constants.TOTAL_AMOUNT, components.meta)
         let total = components.data.reduce((aggregate, amountrow) => {
-           return amountrow[amountindex]?aggregate + amountrow[amountindex]:aggregate
+            let amount = amountrow[amountindex]
+            if (!amount) return aggregate
+            if (!Number.isNaN(amount)) {
+                amount = Number(amount)
+            }
+            if (isNaN(amount)) {
+                utilities.log('Not a number ' + amountrow.join(','))
+                return aggregate
+            }
+            return aggregate + amount
         },0)
         total_amount_row[1] = total
 
@@ -328,6 +337,8 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
             if (filtered.length == 0) {
                 utilities.log('new name ' + name)
                 newnames[name] = null // using an object filters out duplicates
+            } else {
+                utilities.log('missed code ' + filtered[0].join(','))
             }
         }
     }
