@@ -12,7 +12,7 @@
     - insert code if found in previous column, else insert null
     - add newly found name to lookup, with warning to operator
     - write successfully completed file to preprocessed, with a successfully
-        processed file to intake/processed
+        processed file to intake/latest and intake/history
     - abandon unsuccessfully processed file
     - write revised maps file to maps, with original to maps/replaced
 */
@@ -20,11 +20,14 @@
 'use strict'
 
 let utilities = require('./utilities')
+let common = require('./common')
 let constants = require('./constants')
+
+let header = ['_COLUMNS_','Category:NAME,Category:CODE,Note:DESCRIPTION,Count:VALUE']
 
 const preprocess = context => {
     // get settings
-    collectBaseData(context)
+    common.collectIntakeBaseData(context)
 
     let intakefiles = context.intakefiles
 
@@ -37,37 +40,15 @@ const preprocess = context => {
 
 }
 
-const collectBaseData = context => {
+module.exports = preprocess
 
-    try {
-        let settings = utilities.readFileJson(
-            context.dbroot + 
-            `${context.repository}/datasets/${context.version}/settings.json`
-        )
-        context.settings = settings
-    } catch (e) {
-        throw Error('Settings file not found in preprocess collectBaseData')
-    }
-    // get intake path and intake files list
-    try {
-        let intakepath = context.dbroot +
-            `${context.repository}/datasets/${context.version}/intake/`
-        let intakefiles = utilities.getDirContents( intakepath )
-        let newintake = []
-        for (let filename of intakefiles) {
-            let fileparts = filename.split('.') // <year>.<aspect>.csv
-            if (fileparts.length == 3 && fileparts[2] == 'csv') {
-                newintake.push(filename)
-            }
-        }
-        context.intakepath = intakepath
-        context.intakefiles = newintake
-    } catch (e) {
-        throw Error('intake path not found')
-    }
-
-}
-
+/*
+    process an individual intake file from the intake directory
+    - successful files will be written to /latest dir
+    - failed files will be left in place
+    - <year> files for process file year in /maps dire can be effected
+    - when successful, modified data files will be written to /preprocessed
+*/
 const processIntakeFile = (filename,context) => {
     console.log('processing intake file ', filename)
 
@@ -78,9 +59,9 @@ const processIntakeFile = (filename,context) => {
         throw Error('intake file not found:' + filename)
     }
 
-    let components = utilities.decomposeCsv(csv, filename) // {meta, data}
+    let components = common.decomposeCsv(csv, filename) // {meta, data}
 
-    let columndata = utilities.getColumnData(components, filename) // according to COLUMNS_CATEGORIES
+    let columndata = common.getColumnData(components, filename) // according to COLUMNS_CATEGORIES
 
     let columns = columndata.columns
     // process backwards to allow columnindex to be used for column reference
@@ -98,7 +79,7 @@ const processIntakeFile = (filename,context) => {
 
     }
 
-    if (success) {
+    if (success) { // write out target files, otherwise not
 
         // save result to preprocessed directory
         utilities.log('file processed successfully. Saving to preprocessed directory.')
@@ -110,16 +91,18 @@ const processIntakeFile = (filename,context) => {
         // 2. then save copy of original for re-processing
         utilities.writeFileCsv(context.intakepath + 'latest/' + filename, csv)
 
-        // 3. then save processed file
+        // prepare to save processed file
         let preprocessed_path = context.dbroot + 
             `${context.repository}/datasets/${context.version}/preprocessed/`
 
-        // 4. save exsiting processed file to 'replaced' subdirecotry
+        // 3. save exsiting processed file to 'replaced' subdirecotry
         if (utilities.fileExists(preprocessed_path + filename)) {
             let datetimefilename = utilities.infixDateTime(filename)
             utilities.moveFile(preprocessed_path + filename, preprocessed_path + 
                 'replaced/' + datetimefilename)
         }
+
+        // -------------[ detour: update metadata for preprocess target file ]--------------
 
         // assign datetime to components.meta.INTAKE_DATETIME
         let datetimerow = utilities.getMetaRow(constants.INTAKE_DATETIME,components.meta)
@@ -146,11 +129,11 @@ const processIntakeFile = (filename,context) => {
         },0)
         total_amount_row[1] = total
 
-        // 5. save new file to preprocessed
+        // 4. save new file to preprocessed
         let newdata = [...components.meta,...components.data]
         utilities.writeFileCsv(preprocessed_path + filename, newdata)
 
-        // 6. finally delete the processed file
+        // 5. finally delete the original intake file
         utilities.deleteFile(intakefilespec)
 
     } else {
@@ -160,7 +143,14 @@ const processIntakeFile = (filename,context) => {
     }
 }
 
-// TODO: vary processing by whether CODE exists in source file
+/*
+    each category column is handled individually
+    if the category has a preceding :CODE column, category names and codes are collected
+        to the category /map file (collectCategoryCodes(...))
+    if the category has no preceding :CODE column, then a /map file will be used to lookup
+        codes, and additional entries made in the map file for newly discovered category names
+        (insertCategoryCodes(...))
+*/
 const processFileCategory = ( columndata, columnindex, filename, components, context ) => {
 
     utilities.log('processing column ' + columndata.columns[columnindex].name)
@@ -169,8 +159,6 @@ const processFileCategory = ( columndata, columnindex, filename, components, con
     let column_name = column.name
     if (columndata.codes[column_name]) {
 
-        // collectCategoryCodes
-        // throw Error('processFileCategory is not yet factored to deal with imported category codes')
         return collectCategoryCodes( columndata, columnindex, filename, components, context )
 
     } else {
@@ -197,6 +185,9 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
     let namelookups_filespec = namelookups_path + namelookups_filename
         
     let namelookups = utilities.readFileCsv(namelookups_filespec)
+    if (namelookups.length > 0 && namelookups[0][1] == constants.COLUMNS) {
+        namelookups.splice(0,1)
+    }
 
     let lineitems = components.data
     let newnames = {} // use properties to filter out duplicates
@@ -224,6 +215,7 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
         }
 
     }
+    
     // reconcile name/code pairs
     // create two arrays based on name-first and code-first, for comparison
     // array of [name,code] arrays
@@ -242,7 +234,7 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
         let filtered = newnamesbynamelist.filter(nameitem => { // see if there's a match in name based
             return (codeitem[0] == nameitem[0] && codeitem[1] == nameitem[1])? true:false
         })
-        if (filtered.length == 0) { // codeitem pair is unique
+        if (filtered.length == 0) { // code/name pair is unique
             utilities.log('duplicate name, different code: ' + codeitem.join(':'))
             newitems.push(codeitem)
         }
@@ -270,6 +262,7 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
 
         let timestampedfilename = utilities.infixDateTime(namelookups_filename)
         utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
+        newlookupslist.splice(0,0,header)
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)
         utilities.log('new lookups found for ' + 
             namelookups_filename + 
@@ -310,6 +303,9 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
     let namelookups_filespec = namelookups_path + namelookups_filename
         
     let namelookups = utilities.readFileCsv(namelookups_filespec)
+    if (namelookups.length > 0 && namelookups[0][1] == constants.COLUMNS) {
+        namelookups.splice(0,1)
+    }
 
     let lineitems = components.data
     let newnames = {} // use properties to filter out duplicates
@@ -368,6 +364,7 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
 
         let timestampedfilename = utilities.infixDateTime(namelookups_filename)
         utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
+        newlookupslist.splice(0,0,header)
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)
         utilities.log('new lookups found for ' + 
             namelookups_filename + 
@@ -399,5 +396,3 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
         }
     }
 }
-
-module.exports = preprocess

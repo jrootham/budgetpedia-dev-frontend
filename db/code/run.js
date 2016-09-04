@@ -2,7 +2,10 @@
 // run.js
 
 /*
-    TODO rename intake command to preprocess
+    TODO
+    - add column headings to map sheets
+    - add source file chart link to meta
+
 */
 
 /*
@@ -39,9 +42,10 @@ const setup = (context) => {
             return false
         } 
         break
-        case 'intake': // s/b preprocess
-        case 'preprocess': // s/b prepare
-        case 'prepare': // s/b/ generate
+        case 'preprocess':
+        case 'count-names':
+        case 'prepare':
+        case 'generate':
         case 'remove':
         {
             if ((!context.repository) || (context.repositorydirs.indexOf(context.repository) == -1)) {
@@ -69,6 +73,9 @@ const setup = (context) => {
         case 'preprocess':
             intakeToPreprocessed(context)
             break
+        case 'count-names':
+            countNames(context)
+            break
         case 'prepare': 
             preprocessedToPrepared(context)
             break
@@ -89,6 +96,12 @@ const intakeToPreprocessed = context => {
     utilities.log('processing intake to preprocessed')
     let intake = require('./preprocess')
     intake(context)
+}
+
+const countNames = context => {
+    utilities.log('counting names in map files')
+    let countnames = require('./count-names')
+    countnames(context)
 }
 
 const preprocessedToPrepared = context => {
@@ -116,11 +129,10 @@ commands
         will fail without codes for all category names; 
         manually add codes to maps for found category names; 
         then iterate
-    - count-lookups <repository> <version> (count category name usage from preprocessed to id orphans)
-    - update-lookups <repository> <version> (create or update code_to_name lookups)
-    - update-codes <repository> <version> (update all lookups with reference year codes)
-    - prepare <repository> <version> (prepare reference codes and combine data for 
-        current year, to prepared)
+    - count-names <repository> <version> (count category name usage from preprocessed to id orphans)
+    - update-codes <repository> <version> (create or update code_to_name lookups)
+    - continuity-report <repository> <version> (create report showing discontinuations of codes)
+    - prepare <repository> <version> (combine data and codes for current year, to prepared, and codes to lookups)
     - generate <repository> <version> (create or add to json aspect files; create lookup tables)
     - remove <repository> <version> <aspect> <year> (remove year from json file)
 `
@@ -132,7 +144,7 @@ module.export = ((context) => {
 try {
     if (!setup(context)) return
 } catch (e) {
-    utilities.log(e.message)
+    utilities.log(e)
     return
 }
 
