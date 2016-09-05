@@ -44,6 +44,7 @@ const setup = (context) => {
         break
         case 'preprocess':
         case 'count-names':
+        case 'map-codes':
         case 'prepare':
         case 'generate':
         case 'remove':
@@ -76,6 +77,9 @@ const setup = (context) => {
         case 'count-names':
             countNames(context)
             break
+        case 'map-codes':
+            mapCodes(context)
+            break
         case 'prepare': 
             preprocessedToPrepared(context)
             break
@@ -104,6 +108,12 @@ const countNames = context => {
     countnames(context)
 }
 
+const mapCodes = context => {
+    utilities.log('mapping codes to names')
+    let mapcodes = require('./map-codes')
+    mapcodes(context)
+}
+
 const preprocessedToPrepared = context => {
     utilities.log ('processing preprocessed to prepared')
 }
@@ -130,7 +140,7 @@ commands
         manually add codes to name maps for found category names; 
         then iterate
     - count-names <repository> <version> (count category name usage from preprocessed to id orphans)
-    - update-codes <repository> <version> (create or update code_to_name lookups)
+    - map-codes <repository> <version> (create or update code_to_name maps)
     - continuity-report <repository> <version> (create report showing discontinuations of codes)
     - prepare <repository> <version> (combine data and codes for current year, to prepared, and codes to lookups)
     - generate <repository> <version> (create or add to json aspect files; create lookup tables)

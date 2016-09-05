@@ -8,7 +8,7 @@
     for each file
     - extract metadata __META_START__ to __META_END__
     - lookup code for each <category> name, from
-        db/repositories/<repository>/datasets/<version>/maps_names/<year>.<category>_name_to_code.csv        
+        db/repositories/<repository>/datasets/<version>/maps_names/<year>.<category>.name_to_code.csv        
     - insert code if found in previous column, else insert null
     - add newly found name to lookup, with warning to operator
     - write successfully completed file to preprocessed, with a successfully
@@ -185,7 +185,7 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
     let fileparts = filename.split('.')
     let fileyear = fileparts[0]
     let namelookups_path = `${context.dbroot}${context.repository}/datasets/${context.version}/maps_names/`
-    let namelookups_filename = `${fileyear}.${columnref}_name_to_code.csv`
+    let namelookups_filename = `${fileyear}.${columnref}.name_to_code.csv`
     let namelookups_filespec = namelookups_path + namelookups_filename
         
     let namelookups = utilities.readFileCsv(namelookups_filespec)
@@ -311,7 +311,7 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
     let fileparts = filename.split('.')
     let fileyear = fileparts[0]
     let namelookups_path = `${context.dbroot}${context.repository}/datasets/${context.version}/maps_names/`
-    let namelookups_filename = `${fileyear}.${columnref}_name_to_code.csv`
+    let namelookups_filename = `${fileyear}.${columnref}.name_to_code.csv`
     let namelookups_filespec = namelookups_path + namelookups_filename
         
     let namelookups = utilities.readFileCsv(namelookups_filespec)

@@ -125,6 +125,26 @@ exports.collectPreprocessedData = context => {
 
 }
 
+exports.collectMapCodesData = context => {
+
+    collectSettingsFile(context)
+
+    let filedata = collectFileData(context, 'maps_names')
+
+    console.log(filedata)
+
+    context.mapspath = filedata.path
+    context.mapsfiles = filedata.files
+
+    filedata = collectFileData(context, 'maps_codes')
+
+    console.log(filedata)
+
+    context.mapscodespath = filedata.path
+    context.mapscodesfiles = filedata.files
+
+}
+
 const collectFileData = (context,dirname) => {
 
     // get intake path and intake files list

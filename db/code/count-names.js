@@ -98,7 +98,7 @@ const countFileCategory = (columndata,columnindex,filename, components, context)
     let fileparts = filename.split('.')
     let fileyear = fileparts[0]
     let namelookups_path = `${context.dbroot}${context.repository}/datasets/${context.version}/maps_names/`
-    let namelookups_filename = `${fileyear}.${columnref}_name_to_code.csv`
+    let namelookups_filename = `${fileyear}.${columnref}.name_to_code.csv`
     let namelookups_filespec = namelookups_path + namelookups_filename
 
     let namelookups = utilities.readFileCsv(namelookups_filespec)
