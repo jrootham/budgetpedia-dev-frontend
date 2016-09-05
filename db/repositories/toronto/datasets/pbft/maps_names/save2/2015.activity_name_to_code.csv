@@ -1,9 +1,6 @@
 _COLUMNS_,"Category:NAME,Category:CODE,Note:DESCRIPTION,Count:VALUE",,
-311 Business Processing,311 Business Processing,,
-311 Information/ Content Management,311 Information/ Content Management,,
 311 PMO,311 PMO,,1
 3rd Party Application Review & Acceptance,3rd Party Application Review & Acceptance,,4
-AM-City Emergency & Major Event Mass Casualty Care,AM-City Emergency & Major Event Mass Casualty Care,,5
 ASD-Accounts Payable Processing,ASD-Accounts Payable Processing,,3
 ASD-Accounts Receivable Processing,ASD-Accounts Receivable Processing,,2
 ASD-Corporate Banking,ASD-Corporate Banking,,1
@@ -12,32 +9,27 @@ ASD-Financial Statement Preparation,ASD-Financial Statement Preparation,,1
 ASD-Management Reporting,ASD-Management Reporting,,2
 ASD-PCard Processing,ASD-PCard Processing,,3
 ASD-Provincial & Federal Reports Submission,ASD-Provincial & Federal Reports Submission,,1
-ASD-SAP Financial Systems Training,ASD-SAP Financial Systems Training,,
-ASD-SAP Solution Delivery,ASD-SAP Solution Delivery,,
 ASD-SAP User Support,ASD-SAP User Support,,1
 ASD-Tax Advisory & Policy,ASD-Tax Advisory & Policy,,2
-Accountability Processes,Accountability Processes,,
 Adult Day Program,Adult Day Program,,2
-Advertising / Corporate Identity Management,Advertising / Corporate Identity Management,,1
+Advertising / Corporate Identity Management,Advertising / Corporate Identity Management,,2
 Animal By-Law Enforcement,Animal By-Law Enforcement,,1
 Animal Mobile Response,Animal Mobile Response,,3
-Animal Sheltering & Adoption,Animal Sheltering & Adoption,,4
+Animal Sheltering & Adoption,Animal Sheltering & Adoption,,5
 Arts Programming,Arts Programming,,4
 Audit Reporting,Audit Reporting,,2
-Authoritative Data Custodianship,Authoritative Data Custodianship,,5
-BIA Support & Governance,BIA Support & Governance,,2
+Authoritative Data Custodianship,Authoritative Data Custodianship,,4
+BIA Support & Governance,BIA Support & Governance,,3
 Beach Access,Beach Access,,2
-Bridge Condition Assessment,Bridge Condition Assessment,,3
+Bridge Condition Assessment,Bridge Condition Assessment,,2
 Budget Planning & coordination,Budget Planning & coordination,,1
-Building Information,Building Information,,6
-Building Inspections,Building Inspections,,6
-Building Investigations,Building Investigations,,6
-Building Permits,Building Permits,,6
+Building Information,Building Information,,5
+Building Inspections,Building Inspections,,5
+Building Investigations,Building Investigations,,5
+Building Permits,Building Permits,,5
 Business & Trade Licensing,Business & Trade Licensing,,3
 Business Permitting,Business Permitting,,3
-Business Retention & Expansion,Business Retention & Expansion,,
 Business Risk & Consulting,Business Risk & Consulting,,1
-By-law Enforcement,By-law Enforcement,,
 CPF-Advisory & Negotiation,CPF-Advisory & Negotiation,,3
 CPF-Claims Management,CPF-Claims Management,,2
 CPF-Debt Management,CPF-Debt Management,,2
@@ -49,33 +41,28 @@ Campaign Based Fire Education,Campaign Based Fire Education,,2
 Cat & Dog Licensing,Cat & Dog Licensing,,3
 "Chemical, Biological, Radiological, Nuclear & Exposive Resp.","Chemical, Biological, Radiological, Nuclear & Exposive Resp.",,1
 Citizen First Response Education,Citizen First Response Education,,5
-City Manager,City Manager,,
 "Client Support, Advice & Consultation","Client Support, Advice & Consultation",,4
-Community Development,Community Development,,6
+Community Development,Community Development,,5
 Community Engagement,Community Engagement,,2
 Community Funding Delivery,Community Funding Delivery,,3
 Community Healthcare Outreach & Referral,Community Healthcare Outreach & Referral,,5
 Community Safety,Community Safety,,2
 Complement Management & Reporting,Complement Management & Reporting,,2
-Computing Infrastructure,Computing Infrastructure,,5
+Computing Infrastructure,Computing Infrastructure,,4
 Construction,Construction,,4
 Construction Permits,Construction Permits,,5
 Corporate Information Production Services,Corporate Information Production Services,,3
-Corporate Issues & Agenda Management,Corporate Issues & Agenda Management,,
-Corporate Partnership Initiatives,Corporate Partnership Initiatives,,
+Corporate Partnership Initiatives,Corporate Partnership Initiatives,,1
 Critical Care Transport,Critical Care Transport,,5
 Cultural Development,Cultural Development,,3
 Cultural Grants,Cultural Grants,,1
 Custodial Care,Custodial Care,,4
-Deliver Provincially Delegated Services,Deliver Provincially Delegated Services,,
 Design,Design,,3
-Develop and implement integrated employment strategies,Develop and implement integrated employment strategies,,3
-Development & Portfolio Planning,Development & Portfolio Planning,,
+Develop and implement integrated employment strategies,Develop and implement integrated employment strategies,,2
+Development & Portfolio Planning,Development & Portfolio Planning,,1
 Development Application Review & Acceptance,Development Application Review & Acceptance,,4
 Development Review,Development Review,,1
 Development Review Applications,Development Review Applications,,4
-Diversity & Inclusion,Diversity & Inclusion,,
-Durable Goods (C&T),Durable Goods (C&T),,
 Durable Goods (P&T),Durable Goods (P&T),,1
 Elections,Elections,,2
 Eligibility determination and case management,Eligibility determination and case management,,3
@@ -85,105 +72,86 @@ Energy Management & Programs,Energy Management & Programs,,4
 Enterprise Planning & Architecture,Enterprise Planning & Architecture,,4
 Entrepreneurship Support,Entrepreneurship Support,,4
 Environment & Energy Outreach,Environment & Energy Outreach,,4
-Environment Days,Environment Days,,1
-Equity & Accessibility,Equity & Accessibility,,
-Event Support,Event Support,,1
-Events Programming,Events Programming,,1
-Exemptions & Permits,Exemptions & Permits,,2
-FPD-Budgeting,FPD-Budgeting,,3
-FPD-Financial Advice,FPD-Financial Advice,,3
-FPD-Financial Planning & Policy,FPD-Financial Planning & Policy,,3
+Equity & Accessibility,Equity & Accessibility,,1
+Event Support,Event Support,,2
+Events Programming,Events Programming,,4
+Exemptions & Permits,Exemptions & Permits,,3
+FPD-Budgeting,FPD-Budgeting,,2
+FPD-Financial Advice,FPD-Financial Advice,,2
+FPD-Financial Planning & Policy,FPD-Financial Planning & Policy,,2
 Facilities Maintenance,Facilities Maintenance,,5
 Filming Activity,Filming Activity,,1
-Financial Management & Program Support,Financial Management & Program Support,,
 Financial Management & Reporting,Financial Management & Reporting,,1
 Financial Planning & Coordination,Financial Planning & Coordination,,1
 Financial Transaction & Payment Processing,Financial Transaction & Payment Processing,,1
-Financial and employment benefits administration,Financial and employment benefits administration,,4
+Financial and employment benefits administration,Financial and employment benefits administration,,5
 Fire Code Enforcement,Fire Code Enforcement,,2
-Fleet Acquisition,Fleet Acquisition,,4
+Fleet Acquisition,Fleet Acquisition,,3
 Fleet Disposal,Fleet Disposal,,1
 Fleet Maintenance,Fleet Maintenance,,4
-Fuel Acquisition,Fuel Acquisition,,2
+Fuel Acquisition,Fuel Acquisition,,3
 Fuel Distribution,Fuel Distribution,,3
-Garbage (C&T),Garbage (C&T),,4
-Garbage (P&T),Garbage (P&T),,5
+Garbage (C&T),Garbage (C&T),,3
+Garbage (P&T),Garbage (P&T),,4
 General Administration,General Administration,,2
-Governance & Organizational Structures,Governance & Organizational Structures,,1
-Government & Official Services,Government & Official Services,,2
-Government Decision Making Processes,Government Decision Making Processes,,3
-Green Bin (C&T),Green Bin (C&T),,
+Government & Official Services,Government & Official Services,,3
+Government Decision Making Processes,Government Decision Making Processes,,4
 Green Bin (P&T),Green Bin (P&T),,1
 Green Lane Landfill Site,Green Lane Landfill Site,,3
 Hearings,Hearings,,3
 Heavy Urban Search & Rescue,Heavy Urban Search & Rescue,,1
 Heritage Programming,Heritage Programming,,7
 Homemakers & Nurses Services,Homemakers & Nurses Services,,1
-Housing Stability Policy & Strategic Investments,Housing Stability Policy & Strategic Investments,,5
-Human Rights Education & Complaints Management,Human Rights Education & Complaints Management,,1
+Housing Stability Policy & Strategic Investments,Housing Stability Policy & Strategic Investments,,6
 Human Services System Planning,Human Services System Planning,,3
-IT Common Components,IT Common Components,,4
-IT Project Management,IT Project Management,,2
-"Infrastructure Planning, Programming & Budgeting","Infrastructure Planning, Programming & Budgeting",,3
+IT Common Components,IT Common Components,,3
+IT Project Management,IT Project Management,,3
+"Infrastructure Planning, Programming & Budgeting","Infrastructure Planning, Programming & Budgeting",,4
 Instructional Recreation Programs,Instructional Recreation Programs,,5
 Intergovernmental & Agency Relations,Intergovernmental & Agency Relations,,1
 Internal Communications,Internal Communications,,1
 Interventions,Interventions,,3
 Investment Funding,Investment Funding,,1
 Land Information,Land Information,,4
-Leaf & Yard Waste (C&T),Leaf & Yard Waste (C&T),,3
-Leaf & Yard Waste (P&T),Leaf & Yard Waste (P&T),,5
-Lease Management,Lease Management,,5
-Leisure Recreation Programs,Leisure Recreation Programs,,4
-License & Permit Enforcement,License & Permit Enforcement,,
-Licensing Tribunal,Licensing Tribunal,,3
+Leaf & Yard Waste (C&T),Leaf & Yard Waste (C&T),,2
+Leaf & Yard Waste (P&T),Leaf & Yard Waste (P&T),,4
+Lease Management,Lease Management,,4
+Leisure Recreation Programs,Leisure Recreation Programs,,5
 Lifecycle Management of City Information,Lifecycle Management of City Information,,4
-Litter Pick-up,Litter Pick-up,,
-Manage Centralized Social Housing Waiting List,Manage Centralized Social Housing Waiting List,,
 Manage New Affordable Housing/Other Non Subsidized Programs,Manage New Affordable Housing/Other Non Subsidized Programs,,5
 Manage Rent Subsidies & Housing Allowances,Manage Rent Subsidies & Housing Allowances,,7
 Manage Social Housing Provider Subsidies,Manage Social Housing Provider Subsidies,,7
 Media Relations,Media Relations,,1
-Municipal Hazardous & Special Waste (C&T),Municipal Hazardous & Special Waste (C&T),,
 Municipal Hazardous & Special Waste (P&T),Municipal Hazardous & Special Waste (P&T),,3
 Network & Telecommunications,Network & Telecommunications,,4
 PPEB-3rd  Party Payroll Payments & Compliance,PPEB-3rd  Party Payroll Payments & Compliance,,2
-PPEB-3rd Party Payments & Compliance,PPEB-3rd Party Payments & Compliance,,
-PPEB-Benefit & Pension Management Reporting,PPEB-Benefit & Pension Management Reporting,,
-PPEB-City Sponsored Pension Administration,PPEB-City Sponsored Pension Administration,,
 PPEB-Employee Benefits & Pension Administration,PPEB-Employee Benefits & Pension Administration,,2
 PPEB-Payroll Administration,PPEB-Payroll Administration,,3
 PPEB-Payroll Management Reporting,PPEB-Payroll Management Reporting,,2
-PPEB-Pension Deduction & 3rd  Party Compliance,PPEB-Pension Deduction & 3rd  Party Compliance,,
-PPEB-Pension Reporting,PPEB-Pension Reporting,,
-PR-Parks Access,PR-Parks Access,,5
+PR-Parks Access,PR-Parks Access,,6
 Parking Permits,Parking Permits,,5
-Parks Bin,Parks Bin,,
-Parks By-Law Enforcement,Parks By-Law Enforcement,,
-Parks Planning & Development,Parks Planning & Development,,3
-Partnership Development,Partnership Development,,
-Partnership Funding,Partnership Funding,,
+Parks By-Law Enforcement,Parks By-Law Enforcement,,1
+Parks Planning & Development,Parks Planning & Development,,4
+Partnership Development,Partnership Development,,1
 Patrols & Investigations,Patrols & Investigations,,3
 Pedestrian & Cycling Infrastructure & Programs,Pedestrian & Cycling Infrastructure & Programs,,4
-Performance Management & Benchmarking,Performance Management & Benchmarking,,
-Permitted Activities & Recration Facilities,Permitted Activities & Recration Facilities,,5
-Perpetual Care,Perpetual Care,,2
+Permitted Activities & Recration Facilities,Permitted Activities & Recration Facilities,,6
+Perpetual Care,Perpetual Care,,1
 Plan and manage employment and career services,Plan and manage employment and career services,,3
 "Plant Production, Greenhouses, Comm Gardens & Conservatories","Plant Production, Greenhouses, Comm Gardens & Conservatories",,4
 Pre-Hospital Emergency Care,Pre-Hospital Emergency Care,,5
-Preliminary Review,Preliminary Review,,6
+Preliminary Review,Preliminary Review,,5
 Program Support,Program Support,,1
-Promotion & Education,Promotion & Education,,
 Property Acquisition,Property Acquisition,,1
-Property Appraisal,Property Appraisal,,3
+Property Appraisal,Property Appraisal,,2
 Property Disposal,Property Disposal,,2
-Property Maintenance,Property Maintenance,,2
-"Property Standards, Inspection & Enforcement","Property Standards, Inspection & Enforcement",,2
-Provide Emergency Shelter & Related Support,Provide Emergency Shelter & Related Support,,5
+Property Maintenance,Property Maintenance,,3
+"Property Standards, Inspection & Enforcement","Property Standards, Inspection & Enforcement",,3
+Provide Emergency Shelter & Related Support,Provide Emergency Shelter & Related Support,,6
 Provide Individualized Employment Service Planning,Provide Individualized Employment Service Planning,,3
-Public Communications,Public Communications,,2
-Public Consultation,Public Consultation,,3
-Public Realm Improvements & Programs,Public Realm Improvements & Programs,,3
+Public Communications,Public Communications,,1
+Public Consultation,Public Consultation,,2
+Public Realm Improvements & Programs,Public Realm Improvements & Programs,,2
 RS-Appeals Processing,RS-Appeals Processing,,
 RS-Apportionments of Property Tax,RS-Apportionments of Property Tax,,1
 RS-Arrears Collections,RS-Arrears Collections,,2
@@ -193,33 +161,31 @@ RS-Parking Ticket Processing,RS-Parking Ticket Processing,,1
 RS-Payment Processing & Collection,RS-Payment Processing & Collection,,1
 RS-Property Assessment Reviews,RS-Property Assessment Reviews,,1
 RS-Property Tax & Payment in Lieu of Tax Billing,RS-Property Tax & Payment in Lieu of Tax Billing,,1
-RS-Rebate & Deferral Programs,RS-Rebate & Deferral Programs,,
 RS-Refund Processing,RS-Refund Processing,,2
 RS-Revenue Accounting,RS-Revenue Accounting,,2
 RS-Revenue Services Contact Centre,RS-Revenue Services Contact Centre,,2
 RS-Revenue Services Counter Operations,RS-Revenue Services Counter Operations,,2
 RS-Solid Waste Billings,RS-Solid Waste Billings,,1
-RS-Tax / Utility Account Administration,RS-Tax / Utility Account Administration,,4
+RS-Tax / Utility Account Administration,RS-Tax / Utility Account Administration,,3
 RS-Water Billings,RS-Water Billings,,2
-Ravines & Watercourses,Ravines & Watercourses,,2
+Ravines & Watercourses,Ravines & Watercourses,,3
 Recreation & Facilities Planning & Development,Recreation & Facilities Planning & Development,,4
 Recyclables (C&T),Recyclables (C&T),,2
 Renewable Energy,Renewable Energy,,2
 Resales of Recyclables (P&T),Resales of Recyclables (P&T),,5
 Research & Policy Development,Research & Policy Development,,1
-Research & Policy on Toronto,Research & Policy on Toronto,,1
+Research & Policy on Toronto,Research & Policy on Toronto,,2
 Revenue & Cash Management,Revenue & Cash Management,,1
-Revenue Generation and Management,Revenue Generation and Management,,1
+Revenue Generation and Management,Revenue Generation and Management,,2
 Road & Sidewalk Repairs & Cleaning,Road & Sidewalk Repairs & Cleaning,,5
 School Based Fire Education,School Based Fire Education,,2
-Sectors Development,Sectors Development,,3
-Security & Safety,Security & Safety,,4
-Sign Tax Billing & Collection,Sign Tax Billing & Collection,,6
+Sectors Development,Sectors Development,,2
+Security & Safety,Security & Safety,,3
+Sign Tax Billing & Collection,Sign Tax Billing & Collection,,5
 Social Policy & Analysis,Social Policy & Analysis,,1
 Social Research & Evaluation,Social Research & Evaluation,,1
 Solution Implementation,Solution Implementation,,3
 Solution Sustainment,Solution Sustainment,,3
-Special Events,Special Events,,
 Strategic Alliances,Strategic Alliances,,3
 Strategic Planning & Policy Development,Strategic Planning & Policy Development,,1
 Street Events,Street Events,,5
@@ -234,9 +200,9 @@ Taxi & Livery Licensing,Taxi & Livery Licensing,,3
 Time & Attendance Data Entry & Reporting,Time & Attendance Data Entry & Reporting,,2
 Toronto Island Ferry Operations,Toronto Island Ferry Operations,,2
 Tower & Neighbourhood Revitalization,Tower & Neighbourhood Revitalization,,3
-Traffic Signal Installation & Maintenance,Traffic Signal Installation & Maintenance,,2
-Traffic Signs & Pavement Markings,Traffic Signs & Pavement Markings,,2
-Transportation Information & Monitoring Systems,Transportation Information & Monitoring Systems,,3
+Traffic Signal Installation & Maintenance,Traffic Signal Installation & Maintenance,,3
+Traffic Signs & Pavement Markings,Traffic Signs & Pavement Markings,,3
+Transportation Information & Monitoring Systems,Transportation Information & Monitoring Systems,,4
 Transportation Studies & Investigations,Transportation Studies & Investigations,,4
 Tree Care & Maintenance,Tree Care & Maintenance,,4
 Tree Planting,Tree Planting,,4
@@ -245,9 +211,9 @@ Urban Forestry Planning & Development,Urban Forestry Planning & Development,,3
 Vehicle Safety,Vehicle Safety,,1
 Veterinary Care,Veterinary Care,,4
 Visitor Information Services,Visitor Information Services,,3
-Waste By-Law Enforcement,Waste By-Law Enforcement,,1
+Waste By-Law Enforcement,Waste By-Law Enforcement,,2
 Water Treatment,Water Treatment,,3
 Winter Operations,Winter Operations,,5
 Youth Development,Youth Development,,3
-Zoning Investigation & Enforcement,Zoning Investigation & Enforcement,,2
-Zoo & Farm Attractions,Zoo & Farm Attractions,,2
+Zoning Investigation & Enforcement,Zoning Investigation & Enforcement,,3
+Zoo & Farm Attractions,Zoo & Farm Attractions,,3

@@ -22,13 +22,9 @@ const countNames = context => {
         throw Error('no intake files to process.')
     }
 
-    setTimeout(()=>{
-
-        for (let filename of preprocessedfiles) {
-            processPreprocessedFile(filename,context)
-        }
-
-    })
+    for (let filename of preprocessedfiles) {
+        processPreprocessedFile(filename,context)
+    }
 
 }
 
@@ -49,7 +45,9 @@ const initializeMaps = context => {
             line[countindex] = null
         }
         let localheader = [...header]
-        utilities.equalizeHeaderToMapLinelengths(namelookups,localheader)
+        // first line is used by writer to normalize remaining records
+        utilities.normalizeHeaderRow(localheader)
+        // utilities.equalizeHeaderToMapLinelengths(namelookups,localheader)
         namelookups.splice(0,0,localheader)
         utilities.writeFileCsv(context.mapspath + filename, namelookups)        
     }
@@ -81,22 +79,25 @@ const processPreprocessedFile = (filename, context) => {
             let retval = countFileCategory(columndata,columnindex,filename, components, context)
 
             if (!retval) success = false
+
         }
 
     }
 }
 
 const countFileCategory = (columndata,columnindex,filename, components, context) => {
-    let column = columndata.columns[columnindex]
+    let colindex = columnindex
+    let column = columndata.columns[colindex]
     let column_name = column.name
 
     let columnlist = utilities.getMetaRow(constants.COLUMNS_CATEGORIES,components.meta)
 
     // process column
     let columnref = column.name.toLowerCase()
+    // console.log(columnref, colindex)
     let fileparts = filename.split('.')
     let fileyear = fileparts[0]
-    let namelookups_path = `${context.dbroot}${context.repository}/datasets/${context.version}/maps/`
+    let namelookups_path = `${context.dbroot}${context.repository}/datasets/${context.version}/maps_names/`
     let namelookups_filename = `${fileyear}.${columnref}_name_to_code.csv`
     let namelookups_filespec = namelookups_path + namelookups_filename
 
@@ -111,22 +112,29 @@ const countFileCategory = (columndata,columnindex,filename, components, context)
     let lineitems = components.data
 
     for (let line of lineitems) {
-        let name = line[columnindex]
-        if (!name) continue
+        let name = line[colindex]
+        // console.log('searching ', name, line)
+        if (!name) {
+            continue
+        }
         let filtered = namelookups.filter(item => {
             return (item[0] == name)?true:false // tries to match name
         })
-
+        // if (colindex == 1 && name[0] == 'A') {
+        //     console.log(name, filtered)
+        // }
         if (filtered.length == 0) {
             utilities.log('name not found!! ' + name)
         } else {
-            let count = filtered[0][countindex] // using an object filters out duplicates
+            let count = filtered[0][countindex]
             filtered[0][countindex] = count?++count:1
         }
     }
 
     let localheader = [...header]
-    utilities.equalizeHeaderToMapLinelengths(namelookups,localheader)
+    // first line is used by writer to normalize remaining records
+    utilities.normalizeHeaderRow(localheader)
+    // utilities.equalizeHeaderToMapLinelengths(namelookups,localheader)
     namelookups.splice(0,0,localheader)
 
     utilities.writeFileCsv(namelookups_filespec, namelookups)

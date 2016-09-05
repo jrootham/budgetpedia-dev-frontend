@@ -127,7 +127,7 @@ commands
     - help
     - preprocess <repository> <version> (add category codes to names, to preprocessed)
         will fail without codes for all category names; 
-        manually add codes to maps for found category names; 
+        manually add codes to name maps for found category names; 
         then iterate
     - count-names <repository> <version> (count category name usage from preprocessed to id orphans)
     - update-codes <repository> <version> (create or update code_to_name lookups)

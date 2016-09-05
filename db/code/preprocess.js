@@ -8,13 +8,13 @@
     for each file
     - extract metadata __META_START__ to __META_END__
     - lookup code for each <category> name, from
-        db/repositories/<repository>/datasets/<version>/maps/<year>.<category>_name_to_code.csv        
+        db/repositories/<repository>/datasets/<version>/maps_names/<year>.<category>_name_to_code.csv        
     - insert code if found in previous column, else insert null
     - add newly found name to lookup, with warning to operator
     - write successfully completed file to preprocessed, with a successfully
         processed file to intake/latest and intake/history
     - abandon unsuccessfully processed file
-    - write revised maps file to maps, with original to maps/replaced
+    - write revised maps file to maps, with original to maps_names/replaced
 */
 
 'use strict'
@@ -46,7 +46,7 @@ module.exports = preprocess
     process an individual intake file from the intake directory
     - successful files will be written to /latest dir
     - failed files will be left in place
-    - <year> files for process file year in /maps dire can be effected
+    - <year> files for process file year in /maps_names dir can be effected
     - when successful, modified data files will be written to /preprocessed
 */
 const processIntakeFile = (filename,context) => {
@@ -184,7 +184,7 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
     let columnref = column.name.toLowerCase()
     let fileparts = filename.split('.')
     let fileyear = fileparts[0]
-    let namelookups_path = `${context.dbroot}${context.repository}/datasets/${context.version}/maps/`
+    let namelookups_path = `${context.dbroot}${context.repository}/datasets/${context.version}/maps_names/`
     let namelookups_filename = `${fileyear}.${columnref}_name_to_code.csv`
     let namelookups_filespec = namelookups_path + namelookups_filename
         
@@ -270,7 +270,9 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
         let normalline = header[1].split(',')
         utilities.equalizeLineLengths([normalline],newlookupslist)
         let localheader = [...header]
-        utilities.equalizeHeaderToMapLinelengths(newlookupslist,localheader)
+        // first line is used by writer to normalize remaining records
+        utilities.normalizeHeaderRow(localheader)
+        // utilities.equalizeHeaderToMapLinelengths(newlookupslist,localheader)
         newlookupslist.splice(0,0,localheader)
 
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)
@@ -308,7 +310,7 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
     let columnref = column.name.toLowerCase()
     let fileparts = filename.split('.')
     let fileyear = fileparts[0]
-    let namelookups_path = `${context.dbroot}${context.repository}/datasets/${context.version}/maps/`
+    let namelookups_path = `${context.dbroot}${context.repository}/datasets/${context.version}/maps_names/`
     let namelookups_filename = `${fileyear}.${columnref}_name_to_code.csv`
     let namelookups_filespec = namelookups_path + namelookups_filename
         
@@ -375,7 +377,11 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
         let timestampedfilename = utilities.infixDateTime(namelookups_filename)
         utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
 
-        newlookupslist.splice(0,0,header)
+        let localheader = [...header]
+        // first line is used by writer to normalize remaining records
+        utilities.normalizeHeaderRow(localheader)
+
+        newlookupslist.splice(0,0,localheader)
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)
         utilities.log('new lookups found for ' + 
             namelookups_filename + 

@@ -119,7 +119,7 @@ exports.collectPreprocessedData = context => {
     context.preprocessedpath = filedata.path
     context.preprocessedfiles = filedata.files
 
-    filedata = collectFileData(context, 'maps')
+    filedata = collectFileData(context, 'maps_names')
     context.mapspath = filedata.path
     context.mapsfiles = filedata.files
 

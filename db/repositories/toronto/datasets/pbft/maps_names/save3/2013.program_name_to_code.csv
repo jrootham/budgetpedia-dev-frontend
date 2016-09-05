@@ -3,6 +3,7 @@ _COLUMNS_,"Category:NAME,Category:CODE,Note:DESCRIPTION,Count:VALUE",,
 Affordable Housing Office,AFFHOUSING,,3
 Arena Boards of Management,ARENAS,,3
 Association of Community Centres,COMMCENTRES,,3
+Auditor General's Office,AUDITGEN,,
 Children's Services,CHILDSERV,,5
 City Clerk's Office,CLERK,,5
 City Manager's Office,CITYMANAGER,,6
@@ -18,11 +19,15 @@ Fire Services,FIRE,,5
 Fleet Services,FLEET,,4
 Heritage Toronto,HERITAGE,,4
 Information & Technology,IT,,5
+Integrity Commissioner's Office,INTEGRITYCOMM,,
 Legal Services,LEGAL,,5
 Long Term Care Homes & Services,LONGTERMHOME,,6
+Mayor's Office,MAYOR,,
 Municipal Licensing & Standards,LICENCING,,5
 Non-Program,CORPEXPENDITURES,,9
 Office of the Chief Financial Officer,CFO,,4
+Office of the Lobbyist Registrar,LOBBYREG,,
+Office of the Ombudsman,OMBUDSMAN,,
 Office of the Treasurer,TREASURER,,5
 "Parks, Forestry & Recreation",PARKS,,8
 "Policy, Planning, Finance & Admin",POLICYADMIN,,5

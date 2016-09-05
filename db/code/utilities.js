@@ -7,7 +7,7 @@ let fs = require('fs')
 let jsonfile = require('jsonfile')
 jsonfile.spaces = 4
 let parse = require('csv-parse/lib/sync')
-let stringify = require('csv-stringify')
+let stringify = require('csv-stringify/lib/sync')
 let moment = require('moment')
 
 
@@ -27,15 +27,23 @@ exports.equalizeLineLengths = (fixed, variable) => {
     }
 }
 
-exports.equalizeHeaderToMapLinelengths =(map, localheader) => {
-    if (map.length == 0) {
-        exports.log('empty map sent to equalize')
-        return
+exports.normalizeHeaderRow = (localheader) => {
+    let length = localheader[1].split(',').length
+    let diff = length - localheader.length
+    for (let i = 0; i < diff; i++) {
+        localheader.push(null)        
     }
-    let localtestlist = [localheader]
-    exports.equalizeLineLengths(map,localtestlist)
-    // localheader = localtestlist[0]    
 }
+
+// exports.equalizeHeaderToMapLinelengths =(map, localheader) => {
+//     if (map.length == 0) {
+//         exports.log('empty map sent to equalize')
+//         return
+//     }
+//     let localtestlist = [localheader]
+//     exports.equalizeLineLengths(map,localtestlist)
+//     // localheader = localtestlist[0]    
+// }
 
 exports.getMetaRow = (rowname,metadata) => {
     let filtered = metadata.filter(item => {
@@ -73,16 +81,16 @@ exports.readFileCsv = filespec => {
         let filetext = exports.readFileText(filespec)
         return parse(filetext, {auto_parse:true})
     } catch (e) {
-        console.log('csv file not found', filespec, 'returning empty array',e)
-        return []
+        console.log('loading ', filespec)
+        throw e //Error('csv file not found' + filespec + 'returning empty array')
+    //     // return []
     }
 }
 
 exports.writeFileCsv = (filespec, csv) => {
-    stringify(csv, function(err, output){
+    let output = stringify(csv)
         // TODO: if (err)...
-        exports.writeFileText(filespec, output)
-    })
+    exports.writeFileText(filespec, output)
 }
 
 exports.fileExists = filespec => {

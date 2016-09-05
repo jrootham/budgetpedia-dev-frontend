@@ -1,11 +1,9 @@
 _COLUMNS_,"Category:NAME,Category:CODE,Note:DESCRIPTION,Count:VALUE",,
-311 Performance Reporting,311 Performance Reporting,,
 311 Service Delivery,311 Service Delivery,,1
 AM-Community Paramedicine & Emergency Call Mitigation,AM-Community Paramedicine & Emergency Call Mitigation,,10
 AM-Emergency Medical Care,AM-Emergency Medical Care,,10
 ASD-Financial Reporting & Control,ASD-Financial Reporting & Control,,7
 ASD-Payment Processing,ASD-Payment Processing,,9
-ASD-SAP Governance,ASD-SAP Governance,,
 ASD-Tax & Financial System Support,ASD-Tax & Financial System Support,,3
 BL-Building Compliance,BL-Building Compliance,,15
 BL-Building Permission & Information,BL-Building Permission & Information,,15
@@ -20,7 +18,6 @@ CD-Financial Management & Program Support,CD-Financial Management & Program Supp
 CD-Social Policy & Planning,CD-Social Policy & Planning,,5
 CD-Toronto Office of Partnerships,CD-Toronto Office of Partnerships,,4
 "CM-Equity, Diversity & Human Rights","CM-Equity, Diversity & Human Rights",,1
-CM-Executive Management,CM-Executive Management,,
 CM-Internal Auditing,CM-Internal Auditing,,3
 CM-Strategic & Corporate Policy,CM-Strategic & Corporate Policy,,2
 CM-Strategic Communications,CM-Strategic Communications,,5
@@ -36,7 +33,6 @@ Civil Litigation,Civil Litigation,,2
 Community Ice & Facility Booking,Community Ice & Facility Booking,,2
 "Conventions, Conferences & Meetings","Conventions, Conferences & Meetings",,2
 Corporate Accounts,Corporate Accounts,,13
-Corporate Leadership,Corporate Leadership,,
 Corporate Leadership (DCM),Corporate Leadership (DCM),,1
 Court Case Management,Court Case Management,,3
 Default Fine Collection Management,Default Fine Collection Management,,3
@@ -51,8 +47,6 @@ Exhibition Place Asset Management,Exhibition Place Asset Management,,2
 Exhibition Place Parking Access,Exhibition Place Parking Access,,1
 Exhibitions & Events,Exhibitions & Events,,2
 F&A-Executive Leadership,F&A-Executive Leadership,,2
-F&A-Financial Management & Program Support,F&A-Financial Management & Program Support,,
-F&A-Organizational Management Consulting,F&A-Organizational Management Consulting,,
 FL-Fleet Management,FL-Fleet Management,,9
 FL-Fuel Management,FL-Fuel Management,,6
 FPD-Financial Planning & Management,FPD-Financial Planning & Management,,6
@@ -98,7 +92,6 @@ PA-Program Support,PA-Program Support,,8
 PMM-Materials Management Stores & Distribution,PMM-Materials Management Stores & Distribution,,3
 PMM-Purchasing,PMM-Purchasing,,5
 PPEB-Employee & Retiree Benefit & OMERS Pension Compensation,PPEB-Employee & Retiree Benefit & OMERS Pension Compensation,,2
-PPEB-Non – OMERS Pension Plans,PPEB-Non – OMERS Pension Plans,,
 PPEB-Payroll,PPEB-Payroll,,7
 PR-Community Recreation,PR-Community Recreation,,25
 PR-Parks,PR-Parks,,24
@@ -117,14 +110,11 @@ SS-Integrated Case Management and Service Planning,SS-Integrated Case Management
 SW-City Beautification,SW-City Beautification,,1
 SW-Residual Management,SW-Residual Management,,6
 SW-Solid Waste Collection & Transfer,SW-Solid Waste Collection & Transfer,,7
-SW-Solid Waste Education & Enforcement,SW-Solid Waste Education & Enforcement,,
 SW-Solid Waste Processing & Transport,SW-Solid Waste Processing & Transport,,18
 Social Economic & Neighbourhood Development,Social Economic & Neighbourhood Development,,3
 Solicitor,Solicitor,,4
-Special Levy for Scarborough Subway,Special Levy for Scarborough Subway,,
 Special Levy for Scarborough Subway (Reserve Contribution),Special Levy for Scarborough Subway (Reserve Contribution),,1
 TO-311 Development,TO-311 Development,,1
-TO-311 Information & Business Processing,TO-311 Information & Business Processing,,
 TP-Permits & Applications,TP-Permits & Applications,,19
 TP-Road & Sidewalk Management,TP-Road & Sidewalk Management,,23
 TP-Transportation Safety & Operations,TP-Transportation Safety & Operations,,14
