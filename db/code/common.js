@@ -119,6 +119,10 @@ exports.collectPreprocessedData = context => {
     context.preprocessedpath = filedata.path
     context.preprocessedfiles = filedata.files
 
+    filedata = collectFileData(context, 'maps')
+    context.mapspath = filedata.path
+    context.mapsfiles = filedata.files
+
 }
 
 const collectFileData = (context,dirname) => {
@@ -131,7 +135,7 @@ const collectFileData = (context,dirname) => {
         let newfiles = []
         for (let filename of files) {
             let fileparts = filename.split('.') // <year>.<aspect>.csv
-            if (fileparts.length == 3 && fileparts[2] == 'csv') {
+            if (fileparts[fileparts.length -1] == 'csv') {
                 newfiles.push(filename)
             }
         }

@@ -13,6 +13,30 @@ let moment = require('moment')
 
 let constants = require('./constants')
 
+exports.equalizeLineLengths = (fixed, variable) => {
+
+    let firstlength = fixed[0].length
+    let secondlength = variable[0].length
+    let lengthdiff = firstlength - secondlength
+    if (lengthdiff > 0) {
+        for (let line of variable) {
+            for (let i = 0; i < lengthdiff; i++) {
+                line.push(null)
+            }
+        }
+    }
+}
+
+exports.equalizeHeaderToMapLinelengths =(map, localheader) => {
+    if (map.length == 0) {
+        exports.log('empty map sent to equalize')
+        return
+    }
+    let localtestlist = [localheader]
+    exports.equalizeLineLengths(map,localtestlist)
+    // localheader = localtestlist[0]    
+}
+
 exports.getMetaRow = (rowname,metadata) => {
     let filtered = metadata.filter(item => {
         return (item[0] == rowname)?true: false
@@ -49,6 +73,7 @@ exports.readFileCsv = filespec => {
         let filetext = exports.readFileText(filespec)
         return parse(filetext, {auto_parse:true})
     } catch (e) {
+        console.log('csv file not found', filespec, 'returning empty array',e)
         return []
     }
 }

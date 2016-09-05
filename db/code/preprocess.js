@@ -23,7 +23,7 @@ let utilities = require('./utilities')
 let common = require('./common')
 let constants = require('./constants')
 
-let header = ['_COLUMNS_','Category:NAME,Category:CODE,Note:DESCRIPTION,Count:VALUE']
+let header = constants.mapheader
 
 const preprocess = context => {
     // get settings
@@ -130,6 +130,10 @@ const processIntakeFile = (filename,context) => {
         total_amount_row[1] = total
 
         // 4. save new file to preprocessed
+
+        // meta and data sections must have the same number of columns
+        utilities.equalizeLineLengths(components.data, components.meta)
+
         let newdata = [...components.meta,...components.data]
         utilities.writeFileCsv(preprocessed_path + filename, newdata)
 
@@ -185,7 +189,7 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
     let namelookups_filespec = namelookups_path + namelookups_filename
         
     let namelookups = utilities.readFileCsv(namelookups_filespec)
-    if (namelookups.length > 0 && namelookups[0][1] == constants.COLUMNS) {
+    if (namelookups.length > 0 && namelookups[0][0] == constants.COLUMNS) {
         namelookups.splice(0,1)
     }
 
@@ -262,7 +266,13 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
 
         let timestampedfilename = utilities.infixDateTime(namelookups_filename)
         utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
-        newlookupslist.splice(0,0,header)
+
+        let normalline = header[1].split(',')
+        utilities.equalizeLineLengths([normalline],newlookupslist)
+        let localheader = [...header]
+        utilities.equalizeHeaderToMapLinelengths(newlookupslist,localheader)
+        newlookupslist.splice(0,0,localheader)
+
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)
         utilities.log('new lookups found for ' + 
             namelookups_filename + 
@@ -303,7 +313,7 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
     let namelookups_filespec = namelookups_path + namelookups_filename
         
     let namelookups = utilities.readFileCsv(namelookups_filespec)
-    if (namelookups.length > 0 && namelookups[0][1] == constants.COLUMNS) {
+    if (namelookups.length > 0 && namelookups[0][0] == constants.COLUMNS) {
         namelookups.splice(0,1)
     }
 
@@ -364,6 +374,7 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
 
         let timestampedfilename = utilities.infixDateTime(namelookups_filename)
         utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
+
         newlookupslist.splice(0,0,header)
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)
         utilities.log('new lookups found for ' + 
