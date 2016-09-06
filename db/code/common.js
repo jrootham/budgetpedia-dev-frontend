@@ -137,7 +137,7 @@ exports.collectMapCodesData = context => {
     filedata = collectFileData(context, 'maps_codes')
 
     context.mapscodespath = filedata.path
-    context.mapscodesfiles = filedata.files
+    // context.mapscodesfiles = filedata.files
 
 }
 

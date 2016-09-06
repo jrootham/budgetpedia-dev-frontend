@@ -1,6 +1,11 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // map-codes.js
 
+/*
+    run this, then manually review names of all map files 
+    substitute preferred name from alternatenames where appropriate
+*/
+
 'use strict'
 
 let utilities = require('./utilities')
@@ -30,6 +35,10 @@ const mapFileCodes = (filename, context) => {
     let fileparts = filename.split('.')
     let mapcodefilename = [fileparts[0],fileparts[1],'code_to_name',fileparts[3]].join('.')
     let existingcodemap = utilities.readFileCsv(path + mapcodefilename)
+    if (existingcodemap.length > 0) { // file must exist
+        let targetfilename = utilities.infixDateTime(mapcodefilename)
+        utilities.moveFile(path + mapcodefilename, path + 'history/' + targetfilename)
+    }
 
     // populate codemap with existing items
     let codemap = {}
@@ -72,7 +81,7 @@ const mapFileCodes = (filename, context) => {
     codes.sort()
     for (let itemindex of codes) {
         let item = codemap[itemindex]
-        if (!item.mark) continue // code imported from old file no longer in source
+        if (!item.mark) continue // code imported from old file no longer in source; abandoned
         let alternatenames = item.alternatenames?item.alternatenames:null
         let line = [itemindex,item.name,,,alternatenames]
         csv.push(line)

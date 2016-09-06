@@ -7,7 +7,7 @@ AUDITGEN,Auditor General's Office,,,
 BUILDINGS,Toronto Building,,,
 CFO,Office of the Chief Financial Officer,,,
 CHILDSERV,Children's Services,,,
-CITYMANAGER,City Manager,,,City Manager;#City Manager's Office
+CITYMANAGER,City Manager's Office,,,City Manager;#City Manager's Office
 CLERK,City Clerk's Office,,,
 COMMCENTRES,Association of Community Centres,,,
 CORPEXPENDITURES,Non-Program Expenditures,,,
@@ -43,7 +43,7 @@ PROPERTYTAX,Property Tax,,,
 PUBLICHEALTH,Toronto Public Health,,,
 REGIONCONSERV,Toronto & Region Conservation Authority,,,
 SHELTERADMIN,"Shelter, Support & Housing Administration",,,
-SOCIALDEV,"Social Development, Finance & Administratio",,,"Social Development, Finance & Administratio;#Social Development, Finance & Administration"
+SOCIALDEV,"Social Development, Finance & Administration",,,"Social Development, Finance & Administratio;#Social Development, Finance & Administration"
 SOCIALSERV,Toronto Employment & Social Services,,,
 SOLIDWASTE,Solid Waste Management Services,,,
 THEATRES,Theatres,,,
