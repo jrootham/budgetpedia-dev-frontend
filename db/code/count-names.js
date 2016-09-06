@@ -35,11 +35,9 @@ const initializeMaps = context => {
     let maps = context.mapsfiles
     let headertemplate = [header[1].split(',')]
     for (let filename of maps) {
-        console.log('initializing', filename)
+        utilities.log('initializing ' + filename)
         let namelookups = utilities.readFileCsv(context.mapspath + filename)
-        if (namelookups.length > 0 && namelookups[0][0] == constants.COLUMNS) {
-            namelookups.splice(0,1)
-        }
+        common.stripMapHeader(namelookups)
         utilities.equalizeLineLengths(headertemplate,namelookups)
         for (let line of namelookups) {
             line[countindex] = null
@@ -105,9 +103,7 @@ const countFileCategory = (columndata,columnindex,filename, components, context)
     let timestampedfilename = utilities.infixDateTime(namelookups_filename)
     utilities.writeFileCsv(namelookups_path + 'replaced/' + timestampedfilename, namelookups)
 
-    if (namelookups.length > 0 && namelookups[0][0] == constants.COLUMNS) {
-        namelookups.splice(0,1)
-    }
+    common.stripMapHeader(namelookups)
 
     let lineitems = components.data
 

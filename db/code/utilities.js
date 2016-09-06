@@ -81,9 +81,8 @@ exports.readFileCsv = filespec => {
         let filetext = exports.readFileText(filespec)
         return parse(filetext, {auto_parse:true})
     } catch (e) {
-        console.log('loading ', filespec)
-        throw e //Error('csv file not found' + filespec + 'returning empty array')
-    //     // return []
+        throw Error('csv file not found' + filespec + 'returning empty array')
+        return []
     }
 }
 

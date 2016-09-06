@@ -1,6 +1,7 @@
 // clear_repeating_names.js
 
 /*
+    - this is a stand-alone utility
     clears same-line repeated category names
     place csv file in './temp', change name below and do
     node clear_repeating_names

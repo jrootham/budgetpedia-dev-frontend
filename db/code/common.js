@@ -131,14 +131,10 @@ exports.collectMapCodesData = context => {
 
     let filedata = collectFileData(context, 'maps_names')
 
-    console.log(filedata)
-
     context.mapspath = filedata.path
     context.mapsfiles = filedata.files
 
     filedata = collectFileData(context, 'maps_codes')
-
-    console.log(filedata)
 
     context.mapscodespath = filedata.path
     context.mapscodesfiles = filedata.files
@@ -179,5 +175,13 @@ const collectSettingsFile = context => {
     } catch (e) {
         throw Error('Settings file not found in preprocess collectBaseData')
     }
+}
+
+exports.stripMapHeader = map => {
+
+    if (map.length > 0 && map[0][0] == constants.COLUMNS) {
+        map.splice(0,1)
+    }
+
 }
 

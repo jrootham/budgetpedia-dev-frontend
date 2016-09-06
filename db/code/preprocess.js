@@ -189,9 +189,7 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
     let namelookups_filespec = namelookups_path + namelookups_filename
         
     let namelookups = utilities.readFileCsv(namelookups_filespec)
-    if (namelookups.length > 0 && namelookups[0][0] == constants.COLUMNS) {
-        namelookups.splice(0,1)
-    }
+    common.stripMapHeader(namelookups)
 
     let lineitems = components.data
     let newnames = {} // use properties to filter out duplicates
@@ -315,9 +313,7 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
     let namelookups_filespec = namelookups_path + namelookups_filename
         
     let namelookups = utilities.readFileCsv(namelookups_filespec)
-    if (namelookups.length > 0 && namelookups[0][0] == constants.COLUMNS) {
-        namelookups.splice(0,1)
-    }
+    common.stripMapHeader(namelookups)
 
     let lineitems = components.data
     let newnames = {} // use properties to filter out duplicates
