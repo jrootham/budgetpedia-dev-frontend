@@ -25,29 +25,68 @@ const mapFileCodes = (filename, context) => {
 
     utilities.log('mapping file codes for ' + filename)
 
+    // get existing file, if it exists
+    let path = context.mapscodespath
+    let fileparts = filename.split('.')
+    let mapcodefilename = [fileparts[0],fileparts[1],'code_to_name',fileparts[3]].join('.')
+    let existingcodemap = utilities.readFileCsv(path + mapcodefilename)
+
+    // populate codemap with existing items
+    let codemap = {}
+    for (let line of existingcodemap) {
+        let code = line[0]
+        let name = line[1]
+        let alternatenames = line[4]
+        codemap[code] = {name:name}
+        if (alternatenames) {
+            codemap[code].alternatenames = alternatenames
+        }
+    }
+
+    // read input file of name to code map
     let map = utilities.readFileCsv(context.mapspath + filename)
     common.stripMapHeader(map)
-    let codemap = {}
-    // TODO get codemap items from file maps_codes file
+
+    // collect data from name to code map
     for (let line of map) {
         let code = line[1]
         let name = line[0]
         let item = codemap[code] || {name:name}
         item.mark = true // later identify unmarked items to leave them out of file write
         if (item.name != name) {
-            console.log('alternate name found', name)
+            // console.log('alternate name found', name)
             let names = item.alternatenames || item.name + ';#' + name
             let namelist = names.split(';#')
             if (namelist.indexOf(name) == -1) {
                 namelist.push(name)
             }
             item.alternatenames = namelist.join(';#')
-            console.log(item)
+            // console.log(item)
         }
         if (!codemap[code]) codemap[code] = item
     }
-    // console.log(codemap)
+
+    // sort by code for convenience
+    let csv = []
+    let codes = Object.keys(codemap)
+    codes.sort()
+    for (let itemindex of codes) {
+        let item = codemap[itemindex]
+        if (!item.mark) continue // code imported from old file no longer in source
+        let alternatenames = item.alternatenames?item.alternatenames:null
+        let line = [itemindex,item.name,,,alternatenames]
+        csv.push(line)
+    }
+
+    // write file
     // write <year>.<category>.code_to_name.csv
+    let localheader = [...header]
+    // first line is used by writer to normalize remaining records
+    utilities.normalizeHeaderRow(localheader)
+    // utilities.equalizeHeaderToMapLinelengths(namelookups,localheader)
+    csv.splice(0,0,localheader)
+
+    utilities.writeFileCsv(path + mapcodefilename, csv)
 
 }
 

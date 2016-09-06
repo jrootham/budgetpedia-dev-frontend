@@ -141,7 +141,7 @@ commands
         then iterate
     - count-names <repository> <version> (count category name usage from preprocessed to id orphans)
     - map-codes <repository> <version> (create or update code_to_name maps)
-    - continuity-report <repository> <version> (create report showing discontinuations of codes)
+    - continuity <repository> <version> (create report showing discontinuations of codes)
     - prepare <repository> <version> (combine data and codes for current year, to prepared, and codes to lookups)
     - generate <repository> <version> (create or add to json aspect files; create lookup tables)
     - remove <repository> <version> <aspect> <year> (remove year from json file)
