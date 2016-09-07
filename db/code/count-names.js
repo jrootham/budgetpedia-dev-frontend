@@ -45,6 +45,7 @@ const initializeMaps = context => {
         let localheader = [...header]
         // first line is used by writer to normalize remaining records
         utilities.normalizeHeaderRow(localheader)
+        utilities.equalizeLineLengths([localheader],namelookups)
         // utilities.equalizeHeaderToMapLinelengths(namelookups,localheader)
         namelookups.splice(0,0,localheader)
         utilities.writeFileCsv(context.mapspath + filename, namelookups)        
@@ -130,6 +131,7 @@ const countFileCategory = (columndata,columnindex,filename, components, context)
     let localheader = [...header]
     // first line is used by writer to normalize remaining records
     utilities.normalizeHeaderRow(localheader)
+    utilities.equalizeLineLengths([localheader],namelookups)
     // utilities.equalizeHeaderToMapLinelengths(namelookups,localheader)
     namelookups.splice(0,0,localheader)
 

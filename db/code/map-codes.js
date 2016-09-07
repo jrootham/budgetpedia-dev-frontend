@@ -92,6 +92,7 @@ const mapFileCodes = (filename, context) => {
     let localheader = [...header]
     // first line is used by writer to normalize remaining records
     utilities.normalizeHeaderRow(localheader)
+    utilities.equalizeLineLengths([localheader],csv)
     // utilities.equalizeHeaderToMapLinelengths(namelookups,localheader)
     csv.splice(0,0,localheader)
 

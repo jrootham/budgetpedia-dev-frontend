@@ -16,13 +16,11 @@ let constants = require('./constants')
 exports.equalizeLineLengths = (fixed, variable) => {
 
     let firstlength = fixed[0].length
-    let secondlength = variable[0].length
-    let lengthdiff = firstlength - secondlength
-    if (lengthdiff > 0) {
-        for (let line of variable) {
-            for (let i = 0; i < lengthdiff; i++) {
-                line.push(null)
-            }
+    for (let line of variable) {
+        let secondlength = line.length
+        let lengthdiff = firstlength - secondlength
+        for (let i = 0; i < lengthdiff; i++) {
+            line.push(null)
         }
     }
 }

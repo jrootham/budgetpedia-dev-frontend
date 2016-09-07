@@ -270,6 +270,7 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
         let localheader = [...header]
         // first line is used by writer to normalize remaining records
         utilities.normalizeHeaderRow(localheader)
+        utilities.equalizeLineLengths([localheader],newlookupslist)
         // utilities.equalizeHeaderToMapLinelengths(newlookupslist,localheader)
         newlookupslist.splice(0,0,localheader)
 
@@ -376,6 +377,7 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
         let localheader = [...header]
         // first line is used by writer to normalize remaining records
         utilities.normalizeHeaderRow(localheader)
+        utilities.equalizeLineLengths([localheader],newlookupslist)
 
         newlookupslist.splice(0,0,localheader)
         utilities.writeFileCsv(namelookups_filespec, newlookupslist)

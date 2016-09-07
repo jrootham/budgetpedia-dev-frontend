@@ -137,7 +137,22 @@ exports.collectMapCodesData = context => {
     filedata = collectFileData(context, 'maps_codes')
 
     context.mapscodespath = filedata.path
-    // context.mapscodesfiles = filedata.files
+
+}
+
+exports.collectContinuityData = context => {
+
+    collectSettingsFile(context)
+
+    let filedata = collectFileData(context, 'maps_codes')
+
+    context.mapscodespath = filedata.path
+    context.mapscodesfiles = filedata.files
+
+    filedata = collectFileData(context, 'continuity')
+
+    context.continuitypath = filedata.path
+    context.continuityfiles = filedata.files
 
 }
 

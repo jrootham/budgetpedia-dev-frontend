@@ -45,6 +45,8 @@ const setup = (context) => {
         case 'preprocess':
         case 'count-names':
         case 'map-codes':
+        case 'continuity':
+        case 'allocate':
         case 'prepare':
         case 'generate':
         case 'remove':
@@ -80,6 +82,12 @@ const setup = (context) => {
         case 'map-codes':
             mapCodes(context)
             break
+        case 'continuity':
+            continuity(context)
+            break
+        case 'allocate':
+            allocate(context)
+            break
         case 'prepare': 
             preprocessedToPrepared(context)
             break
@@ -114,6 +122,18 @@ const mapCodes = context => {
     mapcodes(context)
 }
 
+const continuity = context => {
+    utilities.log('creating or updating continuity file')
+    let continuity = require('./continuity')
+    continuity(context)
+}
+
+const allocate = context => {
+    utilities.log('allocationg codes from continuity list')
+    // let continuity = require('./continuity')
+    // continuity(context)
+}
+
 const preprocessedToPrepared = context => {
     utilities.log ('processing preprocessed to prepared')
 }
@@ -141,8 +161,10 @@ commands
         then iterate
     - count-names <repository> <version> (count category name usage from preprocessed to id orphans)
     - map-codes <repository> <version> (create or update code_to_name maps)
-    - continuity <repository> <version> (create report showing discontinuations of codes)
-    - prepare <repository> <version> (combine data and codes for current year, to prepared, and codes to lookups)
+    - continuity <repository> <version> (create or update file showing discontinuations of codes)
+    - assert-codes <repository> <version> (assert reference year codes in map-codes per continuity file)
+    - prepare <repository> <version> (combine data and codes for reference year, to prepared, 
+        and reference year codes and names to lookups)
     - generate <repository> <version> (create or add to json aspect files; create lookup tables)
     - remove <repository> <version> <aspect> <year> (remove year from json file)
 `
