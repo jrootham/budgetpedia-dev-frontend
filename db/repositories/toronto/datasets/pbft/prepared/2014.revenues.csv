@@ -145,8 +145,8 @@ POLICYADMIN,"Policy, Planning, Finance & Administration",750A,Inter-Divisional R
 POLICYADMIN,"Policy, Planning, Finance & Administration",805A,Provincial Subsidies,85000,
 POLICYADMIN,"Policy, Planning, Finance & Administration",920A,Transfers From Capital,2389912,
 POLICYADMIN,"Policy, Planning, Finance & Administration",940A,Sundry and Other Revenues,232040,
-PROPERTYTAX,Property Tax,940A,Property Tax,3762089651,
-PROPERTYTAX,Property Tax,940A,Special Levy for Scarborough Subway,12207000,revenue code was missing
+PROPERTYTAX,Property Tax,940A,Sundry and Other Revenues,3762089651,
+PROPERTYTAX,Property Tax,940A,Sundry and Other Revenues,12207000,revenue code was missing
 SHELTERADMIN,"Shelter, Support & Housing Administration",750A,Inter-Divisional Recoveries,37989783,
 SHELTERADMIN,"Shelter, Support & Housing Administration",805A,Provincial Subsidies,131649626,
 SHELTERADMIN,"Shelter, Support & Housing Administration",810A,Federal Subsidies,166507179,

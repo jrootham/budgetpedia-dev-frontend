@@ -40,13 +40,13 @@ exports.decomposeCsv = (csv, filename) => {
     return components
 }
 
-// {names:{<name>:'NAME'},codes:{<name>:'CODE'}, list: {name:<name>, type:<type>}[]} 
+// {names:{<name>:'NAME'},codes:{<name>:'CODE'}, columns: {name:<name>, type:<type>}[]} 
 // presence of code for <name> determines whether to lookup code or save it to lookup
 // CODE columns are expected to appear just before corresponding NAME column
-exports.getColumnData = (components, filename) => {
+exports.getCategoryData = (components, filename) => {
 
     let columns_categories = components.meta.filter(item => {
-        return (item[0] == constants.COLUMNS_CATEGORIES)? true: false
+        return (item[0] == constants.COLUMNS_CATEGORIES)
     })
     columns_categories = [...columns_categories[0]]
     if (columns_categories) {
@@ -61,7 +61,8 @@ exports.getColumnData = (components, filename) => {
 
     let category_names = {}
     let category_codes = {}
-    let column_list = []
+    let category_list = []
+    let category_name_list = []
     for (let columnindex in columns_categories) {
         let column = columns_categories[columnindex]
         let parts = column.split(':')
@@ -78,16 +79,76 @@ exports.getColumnData = (components, filename) => {
         } else {
             Error('wrong column type ' + column + ' in ' + filename)
         }
-        column_list.push({
+        category_list.push({
             name:name,
             type:type
         })
+        category_name_list.push(name)
     }
 
     let columndata = {
         names:category_names,
         codes:category_codes,
-        columns:column_list
+        columns:category_list,
+        column_names:category_name_list
+    }
+
+    return columndata
+
+}
+
+// {names:{<name>:'NAME'},codes:{<name>:'CODE'}, columns: {name:<name>, type:<type>}[]} 
+// presence of code for <name> determines whether to lookup code or save it to lookup
+// CODE columns are expected to appear just before corresponding NAME column
+// TODO merge common code with getCategoryData
+exports.getAttributeData = (components, filename) => {
+
+    let columns_attributes = components.meta.filter(item => {
+        return (item[0] == constants.COLUMNS_ATTRIBUTES)
+    })
+    columns_attributes = [...columns_attributes[0]]
+    if (columns_attributes) {
+        columns_attributes.splice(0,1)
+        columns_attributes = columns_attributes[0].split(',')
+        for (let index in columns_attributes) {
+            columns_attributes[index] = columns_attributes[index].trim()
+        }
+    } else {
+        throw Error(constants.COLUMNS_ATTRIBUTES + ' not found for ' + filename)
+    }
+
+    let attribute_names = {}
+    let attribute_codes = {}
+    let attribute_list = []
+    let attribute_name_list = []
+    for (let columnindex in columns_attributes) {
+        let column = columns_attributes[columnindex]
+        let parts = column.split(':')
+        if (parts.length != 2) {
+            console.log(parts)
+            throw Error('improper columms format ' + column + ' in ' + filename)
+        }
+        let type = parts[1].trim()
+        let name = parts[0].trim()
+        if (type == constants.NAME) {
+            attribute_names[name] = type
+        } else if (type == constants.CODE) {
+            attribute_codes[name] = type
+        } else {
+            Error('wrong column type ' + column + ' in ' + filename)
+        }
+        attribute_list.push({
+            name:name,
+            type:type
+        })
+        attribute_name_list.push(name)
+    }
+
+    let columndata = {
+        names:attribute_names,
+        codes:attribute_codes,
+        columns:attribute_list,
+        column_names:attribute_name_list
     }
 
     return columndata
@@ -153,6 +214,27 @@ exports.collectContinuityData = context => {
 
     context.continuitypath = filedata.path
     context.continuityfiles = filedata.files
+
+}
+
+exports.collectPrepareData = context => {
+
+    collectSettingsFile(context)
+
+    let filedata = collectFileData(context, 'continuity')
+
+    context.continuitypath = filedata.path
+    context.continuityfiles = filedata.files
+
+    filedata = collectFileData(context, 'preprocessed')
+
+    context.preprocessedpath = filedata.path
+    context.preprocessedfiles = filedata.files
+
+    filedata = collectFileData(context, 'prepared')
+
+    context.preparedpath = filedata.path
+    context.preparedfiles = filedata.files
 
 }
 

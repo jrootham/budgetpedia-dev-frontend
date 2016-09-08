@@ -61,7 +61,7 @@ const processIntakeFile = (filename,context) => {
 
     let components = common.decomposeCsv(csv, filename) // {meta, data}
 
-    let columndata = common.getColumnData(components, filename) // according to COLUMNS_CATEGORIES
+    let columndata = common.getCategoryData(components, filename) // according to COLUMNS_CATEGORIES
 
     let columns = columndata.columns
     // process backwards to allow columnindex to be used for column reference
@@ -207,7 +207,7 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
             continue            
         }
         let filtered = namelookups.filter(item => {
-            return (item[0] == name && item[1] == code)?true:false // tries to match name/code pair
+            return (item[0] == name && item[1] == code) // tries to match name/code pair
         })
 
         if (filtered.length == 0) {
@@ -234,7 +234,7 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
     let newitems = []
     for (let codeitem in newcodesbynamelist) { // for each code based item
         let filtered = newnamesbynamelist.filter(nameitem => { // see if there's a match in name based
-            return (codeitem[0] == nameitem[0] && codeitem[1] == nameitem[1])? true:false
+            return (codeitem[0] == nameitem[0] && codeitem[1] == nameitem[1])
         })
         if (filtered.length == 0) { // code/name pair is unique
             utilities.log('duplicate name, different code: ' + codeitem.join(':'))
@@ -332,7 +332,7 @@ const insertCategoryCodes = ( columndata, columnindex, filename, components, con
             name = trimmedname
         }
         let filtered = namelookups.filter(item => {
-            return (item[0] == name)?true:false
+            return (item[0] == name)
         })
         if (filtered.length > 0 && filtered[0][1]) {
             line.splice(columnindex,0,filtered[0][1])

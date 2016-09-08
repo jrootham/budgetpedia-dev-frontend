@@ -7,6 +7,12 @@
     node clear_repeating_names
 */
 
+/*
+    TODO consider reporting sub categories that are single subs to super categories
+*/
+
+'use strict'
+
 utilities = require('./utilities')
 
 let filespec = './temp/2016.expenses.csv'

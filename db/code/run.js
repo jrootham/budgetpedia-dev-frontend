@@ -126,6 +126,8 @@ const continuity = context => {
 
 const preprocessedToPrepared = context => {
     utilities.log ('processing preprocessed to prepared')
+    let prepare = require('./prepare')
+    prepare(context)
 }
 
 const preparedToJson = context => {

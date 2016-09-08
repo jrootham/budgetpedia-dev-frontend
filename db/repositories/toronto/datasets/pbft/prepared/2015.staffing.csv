@@ -39,8 +39,8 @@ CLERK,City Clerk's Office,PERM,Permanent,396.3
 CLERK,City Clerk's Office,TEMP,Temporary,7.6
 COUNCIL,City Council,PERM,Permanent,44
 COUNCIL,City Council,TEMP,Temporary,132
-CITYMANAGER,City Manager,PERM,Permanent,415.5
-CITYMANAGER,City Manager,TEMP,Temporary,9
+CITYMANAGER,City Manager's Office,PERM,Permanent,415.5
+CITYMANAGER,City Manager's Office,TEMP,Temporary,9
 PLANNING,City Planning,PERM,Permanent,347
 PLANNING,City Planning,TEMP,Temporary,13
 COURTSERV,Court Services,PERM,Permanent,282
@@ -65,14 +65,14 @@ INTEGRITYCOMM,Integrity Commissioner's Office,PERM,Permanent,4
 INTEGRITYCOMM,Integrity Commissioner's Office,TEMP,Temporary,0
 LEGAL,Legal Services,PERM,Permanent,268.4
 LEGAL,Legal Services,TEMP,Temporary,33
-LOBBYREG,Lobbyist Registrar,PERM,Permanent,8
-LOBBYREG,Lobbyist Registrar,TEMP,Temporary,0.3
+LOBBYREG,Office of the Lobbyist Registrar,PERM,Permanent,8
+LOBBYREG,Office of the Lobbyist Registrar,TEMP,Temporary,0.3
 LONGTERMHOME,Long Term Care Homes & Services,PERM,Permanent,2225.9
 LONGTERMHOME,Long Term Care Homes & Services,TEMP,Temporary,0
 MAYOR,Mayor's Office,PERM,Permanent,1
 MAYOR,Mayor's Office,TEMP,Temporary,19
-LICENCING,Municipal Licensing and Standards,PERM,Permanent,459
-LICENCING,Municipal Licensing and Standards,TEMP,Temporary,1
+LICENCING,Municipal Licensing & Standards,PERM,Permanent,459
+LICENCING,Municipal Licensing & Standards,TEMP,Temporary,1
 CFO,Office of the Chief Financial Officer,PERM,Permanent,101
 CFO,Office of the Chief Financial Officer,TEMP,Temporary,1
 OMBUDSMAN,Office of the Ombudsman,PERM,Permanent,17
@@ -83,12 +83,12 @@ PARKINGTAGS,Parking Tag Enforcement & Operations,PERM,Permanent,394
 PARKINGTAGS,Parking Tag Enforcement & Operations,TEMP,Temporary,0
 PARKS,"Parks, Forestry & Recreation",PERM,Permanent,1876.2
 PARKS,"Parks, Forestry & Recreation",TEMP,Temporary,2559.6
-POLICYADMIN,"Policy, Planning, Finance and Administration",PERM,Permanent,192
-POLICYADMIN,"Policy, Planning, Finance and Administration",TEMP,Temporary,7.4
+POLICYADMIN,"Policy, Planning, Finance & Administration",PERM,Permanent,192
+POLICYADMIN,"Policy, Planning, Finance & Administration",TEMP,Temporary,7.4
 SHELTERADMIN,"Shelter, Support & Housing Administration",PERM,Permanent,568
 SHELTERADMIN,"Shelter, Support & Housing Administration",TEMP,Temporary,139.2
-SOCIALDEV,"Social Development, Finance & Administratio",PERM,Permanent,120.5
-SOCIALDEV,"Social Development, Finance & Administratio",TEMP,Temporary,7
+SOCIALDEV,"Social Development, Finance & Administration",PERM,Permanent,120.5
+SOCIALDEV,"Social Development, Finance & Administration",TEMP,Temporary,7
 SOLIDWASTE,Solid Waste Management Services,PERM,Permanent,964
 SOLIDWASTE,Solid Waste Management Services,TEMP,Temporary,117.7
 THEATRES,Theatres,PERM,Permanent,85.9
@@ -113,8 +113,8 @@ LIBRARY,Toronto Public Library,PERM,Permanent,1736.3
 LIBRARY,Toronto Public Library,TEMP,Temporary,0
 TTCCONV,Toronto Transit Commission - Conventional,PERM,Permanent,11747
 TTCCONV,Toronto Transit Commission - Conventional,TEMP,Temporary,9
-TTCWHEEL,Toronto Transit Commission - Wheel-Trans,PERM,Permanent,562
-TTCWHEEL,Toronto Transit Commission - Wheel-Trans,TEMP,Temporary,0
+TTCWHEEL,Toronto Transit Commission - Wheel Trans,PERM,Permanent,562
+TTCWHEEL,Toronto Transit Commission - Wheel Trans,TEMP,Temporary,0
 WATER,Toronto Water,PERM,Permanent,1640
 WATER,Toronto Water,TEMP,Temporary,70.3
 ZOO,Toronto Zoo,PERM,Permanent,278

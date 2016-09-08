@@ -1,6 +1,10 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // count-names.js
 
+/*
+    TODO: scan and report on blank count items after running
+*/
+
 'use strict'
 
 let utilities = require('./utilities')
@@ -64,7 +68,7 @@ const processPreprocessedFile = (filename, context) => {
 
     let components = common.decomposeCsv(csv, filename) // {meta, data}
 
-    let columndata = common.getColumnData(components, filename) // according to COLUMNS_CATEGORIES
+    let columndata = common.getCategoryData(components, filename) // according to COLUMNS_CATEGORIES
 
     let columns = columndata.columns
     // process backwards to allow columnindex to be used for column reference
@@ -115,7 +119,7 @@ const countFileCategory = (columndata,columnindex,filename, components, context)
             continue
         }
         let filtered = namelookups.filter(item => {
-            return (item[0] == name)?true:false // tries to match name
+            return (item[0] == name) // tries to match name
         })
         // if (colindex == 1 && name[0] == 'A') {
         //     console.log(name, filtered)
