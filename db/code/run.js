@@ -46,7 +46,6 @@ const setup = (context) => {
         case 'count-names':
         case 'map-codes':
         case 'continuity':
-        case 'allocate':
         case 'prepare':
         case 'generate':
         case 'remove':
@@ -84,9 +83,6 @@ const setup = (context) => {
             break
         case 'continuity':
             continuity(context)
-            break
-        case 'allocate':
-            allocate(context)
             break
         case 'prepare': 
             preprocessedToPrepared(context)
@@ -128,12 +124,6 @@ const continuity = context => {
     continuity(context)
 }
 
-const allocate = context => {
-    utilities.log('allocationg codes from continuity list')
-    // let continuity = require('./continuity')
-    // continuity(context)
-}
-
 const preprocessedToPrepared = context => {
     utilities.log ('processing preprocessed to prepared')
 }
@@ -162,7 +152,6 @@ commands
     - count-names <repository> <version> (count category name usage from preprocessed to id orphans)
     - map-codes <repository> <version> (create or update code_to_name maps)
     - continuity <repository> <version> (create or update file showing discontinuations of codes)
-    - assert-codes <repository> <version> (assert reference year codes in map-codes per continuity file)
     - prepare <repository> <version> (combine data and codes for reference year, to prepared, 
         and reference year codes and names to lookups)
     - generate <repository> <version> (create or add to json aspect files; create lookup tables)

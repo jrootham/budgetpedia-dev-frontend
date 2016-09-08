@@ -6,13 +6,17 @@
     substitute preferred name from alternatenames where appropriate
 */
 
+/*
+    TODO: carry forward notes from maps_names
+*/
+
 'use strict'
 
 let utilities = require('./utilities')
 let constants = require('./constants')
 let common = require('./common')
 
-let header = ['_COLUMNS_','Category:CODE,Category:NAME,ReferenceCategory:CODE,ReferenceCategory:NAME,AlternateNames:LIST']
+let header = ['_COLUMNS_','Category:CODE,Category:NAME,AlternateNames:LIST,Notes:LIST']
 
 const mapCodes = context => {
 
@@ -45,7 +49,7 @@ const mapFileCodes = (filename, context) => {
     for (let line of existingcodemap) {
         let code = line[0]
         let name = line[1]
-        let alternatenames = line[4]
+        let alternatenames = line[2]
         codemap[code] = {name:name}
         if (alternatenames) {
             codemap[code].alternatenames = alternatenames
@@ -60,6 +64,7 @@ const mapFileCodes = (filename, context) => {
     for (let line of map) {
         let code = line[1]
         let name = line[0]
+        let note = line[2] || null
         let item = codemap[code] || {name:name}
         item.mark = true // later identify unmarked items to leave them out of file write
         if (item.name != name) {
@@ -72,6 +77,15 @@ const mapFileCodes = (filename, context) => {
             item.alternatenames = namelist.join(';#')
             // console.log(item)
         }
+        if (note) {
+            let notes = item.notes || null
+            if (notes) {
+                notes += (';#' + note)
+            } else {
+                notes = note
+            }
+            item.notes = notes
+        }
         if (!codemap[code]) codemap[code] = item
     }
 
@@ -82,8 +96,9 @@ const mapFileCodes = (filename, context) => {
     for (let itemindex of codes) {
         let item = codemap[itemindex]
         if (!item.mark) continue // code imported from old file no longer in source; abandoned
-        let alternatenames = item.alternatenames?item.alternatenames:null
-        let line = [itemindex,item.name,,,alternatenames]
+        let alternatenames = item.alternatenames || null
+        let notes = item.notes || null
+        let line = [itemindex,item.name,alternatenames,notes]
         csv.push(line)
     }
 

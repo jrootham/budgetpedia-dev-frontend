@@ -1,6 +1,10 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // continuity.js
 
+/*
+    if a code is marked as discontinued, but no discontinuedTo code is added in the file
+    then the code will be forwarded to all future years, albeit with no value data
+*/
 'use strict'
 
 let utilities = require('./utilities')
@@ -31,6 +35,7 @@ const continuity = context => {
         groups[groupname].sort()
     }
 
+    // process groups = categories one at a time
     for (let groupname in groups) {
         let group = groups[groupname]
         updateContinuityGroup(groupname, group, context)
@@ -43,14 +48,21 @@ module.exports = continuity
 // groups are pre-sorted arrays of files
 const updateContinuityGroup = (groupname, group, context) => {
 
-    // console.log(groupname, group)
+    // collect previous continuity file, to save discontinutTo info
     let continuityfilename = `${groupname}.continuity.csv`
     let path = context.continuitypath
     let filespec = path + continuityfilename
     let continuity = {}
     let previouscsv = utilities.readFileCsv(filespec)
-    common.stripMapHeader(previouscsv)
-    // let previouscsv = []
+    // move the file to history subdir
+    if (previouscsv.length > 0) { // file must exist
+        let targetfilename = utilities.infixDateTime(continuityfilename)
+        utilities.moveFile(path + continuityfilename, path + 'history/' + targetfilename)
+    }
+    // strip header in anticiparion of line processing
+    common.stripMapHeader(previouscsv) 
+
+    // save previous data to object for later comparison and forwarding
     let previouscontinuity = {}
     for (let line of previouscsv) {
         let code = line[0]
@@ -68,10 +80,12 @@ const updateContinuityGroup = (groupname, group, context) => {
         }
     }
 
+    // update continuity from all files for greoup
     for (let filename of group) {
         updateContinuityFromFile(groupname, continuity, filename, context)
     }
 
+    // add back previous continuity discontinueTo data, if end year matches
     for (let code in continuity) {
         if (previouscontinuity[code]) {
             let previousitem = previouscontinuity[code]
@@ -86,6 +100,8 @@ const updateContinuityGroup = (groupname, group, context) => {
             }
         }
     }
+
+    // convert data to csv format
     let csv = []
     let keys = Object.keys(continuity)
     keys.sort()
@@ -100,7 +116,8 @@ const updateContinuityGroup = (groupname, group, context) => {
         }
         csv.push(line)
     }
-    // console.log(csv)
+
+    // save to file
     let localheader = [...header]
     utilities.normalizeHeaderRow(localheader)
     utilities.equalizeLineLengths([localheader],csv)
@@ -111,10 +128,12 @@ const updateContinuityGroup = (groupname, group, context) => {
 const updateContinuityFromFile = (groupname, continuity, filename, context) => {
     let parts = filename.split('.')
     let year = parseInt(parts[0])
-    // let referenceyear = context.settings.ReferenceYear
+
     let filespec = context.mapscodespath + filename
     let map = utilities.readFileCsv(filespec)
     common.stripMapHeader(map)
+
+    // for each line of this year, update continuity record of code
     for (let line of map) {
         let code = line[0]
         let name = line[1]
@@ -126,6 +145,13 @@ const updateContinuityFromFile = (groupname, continuity, filename, context) => {
         codeitem.mark = true
         codeitem.end = null
     }
+
+    /*    
+        identify items for which no code exists for this year,
+        and mark it as discontinued, by adding end year to end field
+        if the item resurfaces in subsequent years, the end year will
+        be unset above
+    */    
     for (let code in continuity) {
         let item = continuity[code]
         if (item.mark) {
