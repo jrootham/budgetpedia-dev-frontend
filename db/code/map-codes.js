@@ -6,10 +6,6 @@
     substitute preferred name from alternatenames where appropriate
 */
 
-/*
-    TODO: carry forward notes from maps_names
-*/
-
 'use strict'
 
 let utilities = require('./utilities')

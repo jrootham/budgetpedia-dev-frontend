@@ -119,7 +119,7 @@ const mapCodes = context => {
 }
 
 const continuity = context => {
-    utilities.log('creating or updating continuity file')
+    utilities.log('creating or updating continuity files')
     let continuity = require('./continuity')
     continuity(context)
 }

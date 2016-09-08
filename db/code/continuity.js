@@ -50,6 +50,7 @@ const updateContinuityGroup = (groupname, group, context) => {
 
     // collect previous continuity file, to save discontinutTo info
     let continuityfilename = `${groupname}.continuity.csv`
+    utilities.log(continuityfilename)
     let path = context.continuitypath
     let filespec = path + continuityfilename
     let continuity = {}
