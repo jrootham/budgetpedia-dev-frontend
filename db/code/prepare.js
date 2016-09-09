@@ -41,11 +41,6 @@ module.exports = prepare
 const prepareFile = (filename, continuity, context) => {
     utilities.log('preparing ' + filename)
 
-    // let parts = filename.split('.')
-    // let yearstring = parts[0]
-
-    // move previous prepared file to replaced
-
     // load preprocess file
     let csv = utilities.readFileCsv(context.preprocessedpath + filename)
     if (csv.length == 0) {
@@ -59,75 +54,143 @@ const prepareFile = (filename, continuity, context) => {
     let columnarray = columnlist[1].split(',')
     columnarray.push('Allocations' + ':' + constants.DESCRIPTION)
     columnlist[1] = columnarray.join(',')
-    let columndata = common.getCategoryData(components, filename) // names, codes, columns, per _COLUMNS_CATEGORIES_
+
+    // collect control data
+    let categorydata = common.getCategoryData(components, filename) // names, codes, columns, per _COLUMNS_CATEGORIES_
 
     let attributedata = common.getAttributeData(components, filename) // names, codes, columns, per _COLUMNS_ATTRIBUTES_
 
-    let allocationsfound = imposeFileContinuity(components,columndata, attributedata, continuity, filename)
+    // impose file continuity
+    let allocationsfound = imposeFileContinuity(components, categorydata, attributedata, continuity, filename)
 
     if (allocationsfound) { // reduce resulting lines
-        let reduction = reduceList(components, columndata, attributedata)
+        let reduction = reduceList(components, categorydata, attributedata)
 
-        let newlist = reconstituteList(reduction, columndata)
+        let newList = reconstituteList(reduction, categorydata, attributedata)
+        // assign newList to components.data
+        components.data = newList
     }
 
-    // equalize rows to new allocations column
-
     // for preprocessed file, save latest; save processed
+    // move previous prepared file to replaced
+
+    utilities.equalizeLineLengths(components.data, components.meta)
 
     let newcsv = [...components.meta, ...components.data]
     let targetfilespec = context.preparedpath + filename
     utilities.writeFileCsv(targetfilespec,newcsv)
 }
 
-const reconstituteList = (reduction, columndata) => {
+const reconstituteList = (reduction, categorydata, attributedata) => {
 
-    let columnarray = columndata.column_names
+    let columnarray = categorydata.column_names
 
     let newList = []
 
-    let components = reduction.components
-    for (let code in components) {
-        let node = components[code]
+    let rootcomponents = reduction.components
+    let rootkeys = Object.keys(rootcomponents)
+    rootkeys.sort()
+    // for each code in rootcomponents, create a block of reconstituted line items
+    for (let code of rootkeys) {
+        let node = rootcomponents[code]
         node.code = code
         let queue = [node]
-        let matrix = [] // data for each category column
+        let block = [] // data for each category column
+
         for (let columnindex in columnarray) {
+
             let category = columnarray[columnindex]
             let nextqueue = []
-            let column = matrix[columnindex] = []
-            for (let item of queue) {
-                let display = {
+            let column = block[columnindex] = []
+
+            for (let queueindex in queue) {
+
+                let node = queue[queueindex]
+
+                let backlink = parseInt(node.backlink)
+                let item = {
                     category:category,
-                    code:item.code,
-                    name:item.name
+                    type:node.type,
+                    code:node.code,
+                    name:node.name,
+                    backlink:Number.isNaN(backlink)?null:backlink
                 }
-                if (!item.components) {
-                    display.amount = item.amount?item.amount:null
-                    display.allocations = item.allocations?item.allocations:null
+                if (!node.components) {
+                    item.amount = (node.amount !== undefined)?node.amount:null
+                    item.allocations = node.allocations?node.allocations:null
+                    item.notes = node.notes?node.notes:null
+                    item.severity = node.severity?node.severity:null
+                    item.leaf = true
                 }
-                column.push(display)
-                let components = item.components
+
+                column.push(item)
+                let components = node.components
+
                 if (components) {
                     for (let code in components) {
-                        let item = components[code]
-                        item.code = code
-                        nextqueue.push(item)
+
+                        let node = components[code]
+
+                        node.backlink = queueindex
+                        nextqueue.push(node)
+
                     }
                 }
             }
             queue = nextqueue
         }
-        // flesh out the matrix and add to newList here
-        console.log(matrix)
+        // flesh out the block and add to newList here
+        // console.log(block)
+        let columnindex = 0
+        let rowindex = 0
+        let line_precursor = []
+        let line_length = categorydata.columns.length + attributedata.columns.length
+        // create placeholders
+        for (let i = 0; i < line_length; i++) {
+            line_precursor.push(null)
+        }
+        let blocklines = []
+        reconstituteLines(block, columnindex, rowindex, line_precursor, blocklines, columnarray)
+        newList.splice(newList.length -1, 0, ...blocklines)
+        // add the block to newList
     }
 
     // console.log(newList)
 
     // throw Error('end of newList')
 
-    return [] //newList
+    return newList
 
+}
+
+const reconstituteLines = (block, columnindex, rowindex, line_precursor, blocklines, columnarray) => {
+    let node = block[columnindex][rowindex]
+    let typeindex = columnarray.indexOf(node.type)
+    if (typeindex == -1) {
+        throw Error(`node type not found in type list in reconstituteLines: ${node.type}, ${node.name}` )
+    }
+    let lineindex = typeindex * 2
+    let line = [...line_precursor]
+    line[lineindex] = node.code
+    line[lineindex + 1] = node.name
+    if (node.leaf) { // insert attributes
+
+        let line_length = line.length
+        line.splice(line_length - 4,4,node.amount, node.notes, node.severity, node.allocations)
+        // console.log(line)
+        blocklines.push(line)
+
+    } else { // recurse
+
+        let column = block[columnindex + 1]
+        for (let columnlink in column) {
+            let node = column[columnlink]
+            if (node.backlink == rowindex) {
+                reconstituteLines(block, columnindex + 1, columnlink, line, blocklines, columnarray)
+            }
+        }
+
+    }
 }
 
 const reduceList = (components, columndata, attributedata) => {
@@ -149,14 +212,16 @@ const reduceList = (components, columndata, attributedata) => {
             if (codeitem.type == constants.CODE) {
                 let type = codeitem.name
                 let code = line[columnindex]
-                if (!code) break
+
+                if (!code) break // previous iteration node was the leaf
+
                 let name = line[columnindex + 1]
                 if (!node.components) {
                     node.components = {}
                 }
                 // console.log('saving name', name)
                 if (!node.components[code]) {
-                    node.components[code] = {name:name, type:type}
+                    node.components[code] = {code:code, name:name, type:type}
                 }
                 node = node.components[code]
             }
@@ -165,16 +230,7 @@ const reduceList = (components, columndata, attributedata) => {
             throw Error('no line item code found ' + line.join(',') + ' in ' + filename)
         }
 
-        let amount = line[amountindex]
-        if (typeof amount == 'string') amount = amount.trim() // sometimes a blank char shows up for some reason
-        if (amount && !Number.isNaN(amount)) { // ignore if no amount is involved
-            if (node.amount) {
-                node.amount += amount
-            } else {
-                node.amount = amount
-            }
-        }
-
+        // node is the leaf
         let note = line[noteindex]
         if (note) {
             if (node.note) {
@@ -198,9 +254,22 @@ const reduceList = (components, columndata, attributedata) => {
             if (node.allocations) {
                 node.allocations += '\n' + allocation
             } else {
+                let amount = node.amount
+                if (amount === undefined) amount = null
+                allocation = 'Original amount was ' + amount + ', plus:\n' + allocation
                 node.allocations = allocation
             }
         }
+        let amount = line[amountindex]
+        if (typeof amount == 'string') amount = amount.trim() // sometimes a blank char shows up for some reason
+        if (amount && !Number.isNaN(amount)) { // ignore if no amount is involved
+            if (node.amount) {
+                node.amount += amount
+            } else {
+                node.amount = amount
+            }
+        }
+
         return reduction
     },reduction)
 

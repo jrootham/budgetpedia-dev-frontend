@@ -48,7 +48,6 @@ const setup = (context) => {
         case 'continuity':
         case 'prepare':
         case 'generate':
-        case 'remove':
         {
             if ((!context.repository) || (context.repositorydirs.indexOf(context.repository) == -1)) {
 
@@ -89,9 +88,6 @@ const setup = (context) => {
             break
         case 'generate': 
             preparedToJson(context)
-            break
-        case 'remove':
-            removeFromJson(context)
             break
     }
 
@@ -134,10 +130,6 @@ const preparedToJson = context => {
     utilities.log ('processing prepared to json')
 }
 
-const removeFromJson = context => {
-    utilities.log('removing from json')
-}
-
 // =============================[ help text ]=============================
 
 const showHelp = () => {
@@ -157,7 +149,6 @@ commands
     - prepare <repository> <version> (combine data and codes for reference year, to prepared, 
         and reference year codes and names to lookups)
     - generate <repository> <version> (create or add to json aspect files; create lookup tables)
-    - remove <repository> <version> <aspect> <year> (remove year from json file)
 `
     )
 }
