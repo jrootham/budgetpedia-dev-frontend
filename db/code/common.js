@@ -83,7 +83,9 @@ exports.getCategoryData = (components, filename) => {
             name:name,
             type:type
         })
-        category_name_list.push(name)
+        if (type == constants.NAME) {
+            category_name_list.push(name)
+        }
     }
 
     let columndata = {
@@ -141,7 +143,9 @@ exports.getAttributeData = (components, filename) => {
             name:name,
             type:type
         })
-        attribute_name_list.push(name)
+        if (type == constants.NAME) {
+            attribute_name_list.push(name)
+        }
     }
 
     let columndata = {
