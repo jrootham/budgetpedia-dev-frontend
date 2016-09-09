@@ -14,6 +14,12 @@ const prepare = context => {
 
     common.collectPrepareData(context)
 
+    let preprocessedfiles = context.preprocessedfiles
+
+    if (preprocessedfiles.length == 0) {
+        throw Error('no preprocessed files to prepare.')
+    }
+    
     let continuity = {}
     let continuityfiles = context.continuityfiles
     let continuitypath = context.continuitypath
@@ -29,8 +35,6 @@ const prepare = context => {
         continuity[category] = csv
     }
 
-    let preprocessedfiles = context.preprocessedfiles
-
     for (let filename of preprocessedfiles) {
         prepareFile(filename, continuity, context)
     }
@@ -42,10 +46,13 @@ const prepareFile = (filename, continuity, context) => {
     utilities.log('preparing ' + filename)
 
     // load preprocess file
-    let csv = utilities.readFileCsv(context.preprocessedpath + filename)
+    let sourcefilespec = context.preprocessedpath + filename
+    let csv = utilities.readFileCsv(sourcefilespec)
     if (csv.length == 0) {
         throw Error('preprocessed file not found ' + filename)
     }
+
+    let originalcsv = [...csv]
 
     let components = common.decomposeCsv(csv, filename) // {meta, data}
 
@@ -78,7 +85,16 @@ const prepareFile = (filename, continuity, context) => {
 
     let newcsv = [...components.meta, ...components.data]
     let targetfilespec = context.preparedpath + filename
+    if (utilities.fileExists(targetfilespec)) {
+        let targetdatedspec = utilities.infixDateTime(filename)
+        utilities.moveFile(targetfilespec, context.preparedpath + 'replaced/' + targetdatedspec)
+    }
     utilities.writeFileCsv(targetfilespec,newcsv)
+
+    utilities.writeFileCsv(context.preprocessedpath + 'latest/' + filename, originalcsv)
+    let sourcedatedfilespec = utilities.infixDateTime(filename)
+    utilities.moveFile(sourcefilespec, context.preprocessedpath + 'processed/' + sourcedatedfilespec)
+
 }
 
 const reconstituteList = (reduction, categorydata, attributedata) => {
