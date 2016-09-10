@@ -76,7 +76,7 @@ const prepareFile = (filename, continuity, context) => {
 
         let newList = reconstituteList(reduction, categorydata, attributedata)
 
-        // assign newList to components.data
+        // replace modified list with reduced list
         components.data = newList
 
     }
@@ -295,7 +295,6 @@ const reconstituteList = (reduction, categorydata, attributedata) => {
     */    
     for (let code of rootkeys) {
         let node = rootcomponents[code]
-        // node.code = code // TODO reduncant?
         let queue = [node] // initialize recursrion
         let block = [] // reconstitution data for each category column
 
