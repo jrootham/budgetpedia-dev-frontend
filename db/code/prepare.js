@@ -180,6 +180,7 @@ const findContinuityLine = (code, continuitylookup, filename) => {
     return continuityline
 }
 
+// reduce the spreadsheet into an object hierarchy
 const reduceList = (components, columndata, attributedata) => {
 
     let data = components.data
@@ -192,7 +193,9 @@ const reduceList = (components, columndata, attributedata) => {
 
     data.reduce((reduction, line) => {
 
-        let node = reduction
+        let node = reduction // node is reset recusively
+
+        // ----------------------[ create object hierarchy ]----------------------------
 
         // recurse into category structure; add node components properties recursively
         for (let columnindex = 0; columnindex < columns.length; columnindex++) {
@@ -219,6 +222,8 @@ const reduceList = (components, columndata, attributedata) => {
         if (node === reduction) {
             throw Error('no line item code found ' + line.join(',') + ' in ' + filename)
         }
+
+        // --------------------[ collect attributes ]---------------------
 
         // latest node is the leaf, so add attributes
         // ... amount, note, severity, allocations
@@ -272,7 +277,7 @@ const reduceList = (components, columndata, attributedata) => {
 
 }
 
-// reconsitute list csv structure from json heirarchical structure
+// reconsitute list csv structure from object hierarchy to spreadsheet format
 const reconstituteList = (reduction, categorydata, attributedata) => {
 
     let columnarray = categorydata.column_names
@@ -282,15 +287,25 @@ const reconstituteList = (reduction, categorydata, attributedata) => {
     let rootcomponents = reduction.components
     let rootkeys = Object.keys(rootcomponents)
     rootkeys.sort()
-    // for each code in rootcomponents, create a block of reconstituted line items
+
+    /*   
+        for each code in rootcomponents, create a block of reconstituted line items
+        ie for each code object hierarchy, map to columnar structure ( = block ), 
+        then reconstitute lines from that columnar structure
+    */    
     for (let code of rootkeys) {
         let node = rootcomponents[code]
-        node.code = code
-        let queue = [node]
-        let block = [] // data for each category column
+        // node.code = code // TODO reduncant?
+        let queue = [node] // initialize recursrion
+        let block = [] // reconstitution data for each category column
 
+        // --------------[ collect block data for reconsitution ]---------------
+
+        // recursively cycle through current queue (column), to create nextqueue, then recurse
+        // where nextqueue becomes current queue
         // cycle through block horizontally...
-        for (let columnindex in columnarray) {
+        for (let columnindex in columnarray) { // there should be these numbers of queues
+            // each columnindex represents a category code/name pair
 
             let category = columnarray[columnindex]
             let nextqueue = []
@@ -300,14 +315,16 @@ const reconstituteList = (reduction, categorydata, attributedata) => {
             for (let queueindex in queue) {
 
                 let node = queue[queueindex]
-
                 let backlink = parseInt(node.backlink)
+                backlink = Number.isNaN(backlink)?null:backlink
+
+                // -----------[ create item to reconstitute ]--------------
                 let item = {
                     category:category,
                     type:node.type,
                     code:node.code,
                     name:node.name,
-                    backlink:Number.isNaN(backlink)?null:backlink
+                    backlink:backlink
                 }
                 if (!node.components) {
                     item.amount = (node.amount !== undefined)?node.amount:null
@@ -317,7 +334,9 @@ const reconstituteList = (reduction, categorydata, attributedata) => {
                     item.leaf = true
                 }
 
-                column.push(item)
+                column.push(item) // push to block column
+
+                // --------------------[ accumulate all dependents in nextqueue ]----------------
                 let components = node.components
 
                 if (components) {
@@ -326,15 +345,20 @@ const reconstituteList = (reduction, categorydata, attributedata) => {
 
                         let node = components[code]
 
-                        node.backlink = queueindex
+                        node.backlink = queueindex // track dependencies
                         nextqueue.push(node)
 
                     }
                 }
             }
+            // recurse to next category column
             queue = nextqueue
         }
 
+        // ------------------------[ now reconstitute lines for the block ]------------------
+        /*
+            recurse into the block data, creating a line into blocklines at each leaf point
+        */
         // initialize for recursion launch
         let columnindex = 0
         let rowindex = 0
@@ -345,9 +369,11 @@ const reconstituteList = (reduction, categorydata, attributedata) => {
             line_precursor.push(null)
         }
         let blocklines = []
+
+        // start recursion
         reconstituteLines(block, columnindex, rowindex, line_precursor, blocklines, columnarray)
 
-        // add the block to newList
+        // add the reconstituted blocklines to newList
         newList.splice(newList.length -1, 0, ...blocklines)
 
     }
@@ -356,29 +382,42 @@ const reconstituteList = (reduction, categorydata, attributedata) => {
 
 }
 
-const reconstituteLines = (block, columnindex, rowindex, line_precursor, blocklines, columnarray) => {
+// recursive, stops at leaf node to add attributes to line, and line to blocklines
+const reconstituteLines = (
+    block, // a matrix containing the block data to reconstitute
+    columnindex, // the current block column to process
+    rowindex, // the backlink to identify child nodes to associate with current node
+    line_precursor, // accumulating row data
+    blocklines, // collection of lines for the main root category to add to the file lines
+    columnarray // list of categories, in dependency order
+    ) => {
+
     let node = block[columnindex][rowindex]
-    let typeindex = columnarray.indexOf(node.type)
+    // last category (expense/revenue by object) may skip blank cells...
+    let typeindex = columnarray.indexOf(node.type) 
     if (typeindex == -1) {
         throw Error(`node type not found in type list in reconstituteLines: ${node.type}, ${node.name}` )
     }
-    let lineindex = typeindex * 2
-    let line = [...line_precursor]
+    let lineindex = typeindex * 2 // paired category code and name
+    let line = [...line_precursor] // new copy
+
+    // add category code and name to the line
     line[lineindex] = node.code
     line[lineindex + 1] = node.name
-    if (node.leaf) { // insert attributes
+    
+    if (node.leaf) { // insert attributes; stop recursing
 
         let line_length = line.length
-        line.splice(line_length - 4,4,node.amount, node.notes, node.severity, node.allocations)
-        // console.log(line)
-        blocklines.push(line)
+        line.splice(line_length - 4, 4, node.amount, node.notes, node.severity, node.allocations)
+
+        blocklines.push(line) // emit
 
     } else { // recurse
 
         let column = block[columnindex + 1]
         for (let columnlink in column) {
             let node = column[columnlink]
-            if (node.backlink == rowindex) {
+            if (node.backlink == rowindex) { // only process dependents
                 reconstituteLines(block, columnindex + 1, columnlink, line, blocklines, columnarray)
             }
         }
