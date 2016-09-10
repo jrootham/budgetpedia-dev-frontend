@@ -204,7 +204,7 @@ const reduceList = (components, columndata, attributedata) => {
                 let type = codeitem.name
                 let code = line[columnindex]
 
-                if (!code) break // previous iteration node was the leaf
+                if (!code) continue // this category not part of tree for this line
 
                 let name = line[columnindex + 1]
 
