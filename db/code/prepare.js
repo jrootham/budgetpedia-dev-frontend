@@ -180,7 +180,7 @@ const findContinuityLine = (code, continuitylookup, filename) => {
     return continuityline
 }
 
-// reduce the spreadsheet into an object hierarchy
+// reduce the spreadsheet into an object hierarchy (because it's a highly deterministic normalization)
 const reduceList = (components, columndata, attributedata) => {
 
     let data = components.data
