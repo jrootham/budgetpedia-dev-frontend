@@ -71,7 +71,7 @@ const prepareFile = (filename, continuity, context) => {
     let allocationsfound = imposeFileContinuity(components, categorydata, attributedata, continuity, filename)
 
     if (allocationsfound) { // reduce resulting lines
-
+        utilities.log('reducing')
         let reduction = reduceList(components, categorydata, attributedata)
 
         let newList = reconstituteList(reduction, categorydata, attributedata)
@@ -104,9 +104,9 @@ const prepareFile = (filename, continuity, context) => {
 
 // replace historic codes and names with continuity codes and names; add allocation notes when
 // allocation is encountered
-const imposeFileContinuity = (components,columndata, attributedata, continuity, filename) => {
+const imposeFileContinuity = (components,categorydata, attributedata, continuity, filename) => {
 
-    let columns = columndata.columns
+    let columns = categorydata.columns
 
     let allocationsindex = columns.length + attributedata.columns.length -1
     let amountindex = columns.length // next column
@@ -181,10 +181,10 @@ const findContinuityLine = (code, continuitylookup, filename) => {
 }
 
 // reduce the spreadsheet into an object hierarchy (because it's a highly deterministic normalization)
-const reduceList = (components, columndata, attributedata) => {
+const reduceList = (components, categorydata, attributedata) => {
 
     let data = components.data
-    let columns = columndata.columns
+    let columns = categorydata.columns
     let amountindex = columns.length // next column
     let noteindex = columns.length + 1
     let severityindex = columns.length + 2
