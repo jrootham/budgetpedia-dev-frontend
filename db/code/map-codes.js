@@ -71,7 +71,6 @@ const mapFileCodes = (filename, context) => {
                 namelist.push(name)
             }
             item.alternatenames = namelist.join(';#')
-            // console.log(item)
         }
         if (note) {
             let notes = item.notes || null

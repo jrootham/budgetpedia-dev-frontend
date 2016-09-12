@@ -1,55 +1,56 @@
-3-1-1 Customer Service Strategy,311SERVICE
-Affordable Housing Office,AFFHOUSING
-Arena Boards of Management,ARENAS
-Auditor General's Office,AUDITGEN
-Toronto Building,BUILDING
-Office of the Chief Financial Officer,CFO
-Children's Services,CHILDSERV
-City Manager's Office,CITYMANAGER
-City Clerk's Office,CLERK
-Association of Community Centres,COMMCENTRES
-Non-Program Expenditures,CORPEXPENDITURES
-Capital & Corporate Financing,CORPFINANCING
-Non-Program Revenues,CORPREVENUES
-City Council,COUNCIL
-Court Services,COURTSERV
-Community Partnership and Investment Program,CPIP
-Economic Development & Culture,ECONDEV
-Emergency Medical Services,EMERG
-Toronto Environment Office,ENV
-Exhibition Place,EXHIBPLACE
-Facilities & Real Estate,FACILITIES
-Fire Services,FIRE
-Fleet Services,FLEET
-Heritage Toronto,HERITAGE
-Integrity Commissioner's Office,INTEGRITYCOMM
-Information & Technology,IT
-Legal Services,LEGAL
-Toronto Public Library,LIBRARY
-Municipal Licensing & Standards,LICENCING
-Lobbyist Registrar,LOBBYREG
-Long Term Care Homes & Services,LONGTERMHOME
-Mayor's Office,MAYOR
-Office of the Ombudsman,OMBUDSMAN
-Toronto Parking Authority,PARKING
-"Parks, Forestry & Recreation",PARKS
-City Planning,PLANNING
-Toronto Police Service,POLICE
-Toronto Police Services Board,POLICEBOARD
-"Policy, Planning, Finance and Administration",POLICYADMIN
-Toronto Public Health,PUBLICHEALTH
-Toronto & Region Conservation Authority,REGIONCONSERV
-"Shelter, Support & Housing Administration",SHELTERADMIN
-"Social Development, Finance & Administration",SOCIALDEV
-Toronto Employment & Social Services,SOCIALSERV
-Solid Waste Management Services,SOLIDWASTE
-Technical Services,TECH
-Theatres,THEATRES
-Transportation Services,TRANSPORTATION
-Office of the Treasurer,TREASURER
-Toronto Transit Commission - Conventional,TTCCONV
-Toronto Transit Commission - Wheel-Trans,TTCWHEEL
-Toronto Water,WATER
-Waterfront Secretariat,WATERFRONT
-Yonge-Dundas Square,YONGEDUNDAS
-Toronto Zoo,ZOO
+_COLUMNS_,"Category:NAME,Category:CODE,Note:DESCRIPTION,Count:VALUE",,
+3-1-1 Customer Service Strategy,311SERVICE,,2
+Affordable Housing Office,AFFHOUSING,,2
+Arena Boards of Management,ARENAS,,2
+Auditor General's Office,AUDITGEN,,2
+Toronto Building,BUILDING,,2
+Office of the Chief Financial Officer,CFO,,2
+Children's Services,CHILDSERV,,2
+City Manager's Office,CITYMANAGER,,2
+City Clerk's Office,CLERK,,2
+Association of Community Centres,COMMCENTRES,,2
+Non-Program Expenditures,CORPEXPENDITURES,,2
+Capital & Corporate Financing,CORPFINANCING,,2
+Non-Program Revenues,CORPREVENUES,,2
+City Council,COUNCIL,,2
+Court Services,COURTSERV,,2
+Community Partnership and Investment Program,CPIP,,2
+Economic Development & Culture,ECONDEV,,2
+Emergency Medical Services,EMERG,,2
+Toronto Environment Office,ENV,,2
+Exhibition Place,EXHIBPLACE,,2
+Facilities & Real Estate,FACILITIES,,2
+Fire Services,FIRE,,2
+Fleet Services,FLEET,,2
+Heritage Toronto,HERITAGE,,2
+Integrity Commissioner's Office,INTEGRITYCOMM,,2
+Information & Technology,IT,,2
+Legal Services,LEGAL,,2
+Toronto Public Library,LIBRARY,,2
+Municipal Licensing & Standards,LICENCING,,2
+Lobbyist Registrar,LOBBYREG,,2
+Long Term Care Homes & Services,LONGTERMHOME,,2
+Mayor's Office,MAYOR,,2
+Office of the Ombudsman,OMBUDSMAN,,2
+Toronto Parking Authority,PARKING,,2
+"Parks, Forestry & Recreation",PARKS,,2
+City Planning,PLANNING,,2
+Toronto Police Service,POLICE,,2
+Toronto Police Services Board,POLICEBOARD,,2
+"Policy, Planning, Finance and Administration",POLICYADMIN,,2
+Toronto Public Health,PUBLICHEALTH,,2
+Toronto & Region Conservation Authority,REGIONCONSERV,,2
+"Shelter, Support & Housing Administration",SHELTERADMIN,,2
+"Social Development, Finance & Administration",SOCIALDEV,,2
+Toronto Employment & Social Services,SOCIALSERV,,2
+Solid Waste Management Services,SOLIDWASTE,,2
+Technical Services,TECH,,2
+Theatres,THEATRES,,2
+Transportation Services,TRANSPORTATION,,2
+Office of the Treasurer,TREASURER,,2
+Toronto Transit Commission - Conventional,TTCCONV,,2
+Toronto Transit Commission - Wheel-Trans,TTCWHEEL,,2
+Toronto Water,WATER,,2
+Waterfront Secretariat,WATERFRONT,,2
+Yonge-Dundas Square,YONGEDUNDAS,,2
+Toronto Zoo,ZOO,,2
