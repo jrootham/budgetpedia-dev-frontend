@@ -52,29 +52,29 @@ const prepareFile = (filename, continuity, context) => {
         throw Error('preprocessed file not found ' + filename)
     }
 
-    let originalcsv = [...csv]
+    let originalcsv = [...csv] // for save original later
 
     let components = common.decomposeCsv(csv, filename) // {meta, data}
 
     // add allocations column
-    let columnlist = utilities.getMetaRow(constants.COLUMNS_ATTRIBUTES,components.meta)
-    let columnarray = columnlist[1].split(',')
+    let attributelist = utilities.getMetaRow(constants.COLUMNS_ATTRIBUTES,components.meta)
+    let columnarray = attributelist[1].split(',')
     columnarray.push('Allocations' + ':' + constants.DESCRIPTION)
-    columnlist[1] = columnarray.join(',')
+    attributelist[1] = columnarray.join(',')
 
     // collect control data
-    let categorydata = common.getCategoryData(components, filename) // names, codes, columns, per _COLUMNS_CATEGORIES_
+    let categorymeta = common.getCategoryMeta(components, filename) // names, codes, columns, per _COLUMNS_CATEGORIES_
 
-    let attributedata = common.getAttributeData(components, filename) // names, codes, columns, per _COLUMNS_ATTRIBUTES_
+    let attributemeta = common.getAttributeMeta(components, filename) // names, codes, columns, per _COLUMNS_ATTRIBUTES_
 
     // impose file continuity; allocations to current codes; apply current names
-    let allocationsfound = imposeFileContinuity(components, categorydata, attributedata, continuity, filename)
+    let allocationsfound = imposeFileContinuity(components, categorymeta, attributemeta, continuity, filename)
 
     if (allocationsfound) { // reduce resulting lines
         utilities.log('reducing')
-        let reduction = reduceList(components, categorydata, attributedata)
+        let reduction = reduceList(components, categorymeta, attributemeta)
 
-        let newList = reconstituteList(reduction, categorydata, attributedata)
+        let newList = reconstituteList(reduction, categorymeta, attributemeta)
 
         // replace modified list with reduced list
         components.data = newList
@@ -104,11 +104,11 @@ const prepareFile = (filename, continuity, context) => {
 
 // replace historic codes and names with continuity codes and names; add allocation notes when
 // allocation is encountered
-const imposeFileContinuity = (components,categorydata, attributedata, continuity, filename) => {
+const imposeFileContinuity = (components,categorymeta, attributemeta, continuity, filename) => {
 
-    let columns = categorydata.columns
+    let columns = categorymeta.columns
 
-    let allocationsindex = columns.length + attributedata.columns.length -1
+    let allocationsindex = columns.length + attributemeta.columns.length -1
     let amountindex = columns.length // next column
 
     let allocationfound = false
@@ -181,14 +181,14 @@ const findContinuityLine = (code, continuitylookup, filename) => {
 }
 
 // reduce the spreadsheet into an object hierarchy (because it's a highly deterministic normalization)
-const reduceList = (components, categorydata, attributedata) => {
+const reduceList = (components, categorymeta, attributemeta) => {
 
     let data = components.data
-    let columns = categorydata.columns
+    let columns = categorymeta.columns
     let amountindex = columns.length // next column
     let noteindex = columns.length + 1
     let severityindex = columns.length + 2
-    let allocationsindex = columns.length + attributedata.columns.length - 1
+    let allocationsindex = columns.length + attributemeta.columns.length - 1
     let reduction = {}
 
     data.reduce((reduction, line) => {
@@ -280,9 +280,9 @@ const reduceList = (components, categorydata, attributedata) => {
 }
 
 // reconsitute list csv structure from object hierarchy to spreadsheet format
-const reconstituteList = (reduction, categorydata, attributedata) => {
+const reconstituteList = (reduction, categorymeta, attributemeta) => {
 
-    let columnarray = categorydata.column_names
+    let columnarray = categorymeta.column_names
 
     let newList = []
 
@@ -294,6 +294,7 @@ const reconstituteList = (reduction, categorydata, attributedata) => {
         for each code in rootcomponents, create a block of reconstituted line items
         ie for each code object hierarchy, map to columnar structure ( = block ), 
         then reconstitute lines from that columnar structure
+        -> depth level = column number - dependencey is preseverd through backlink property
     */    
     for (let code of rootkeys) {
         let node = rootcomponents[code]
@@ -364,14 +365,14 @@ const reconstituteList = (reduction, categorydata, attributedata) => {
         let columnindex = 0
         let rowindex = 0
         let line_precursor = []
-        let line_length = categorydata.columns.length + attributedata.columns.length
+        let line_length = categorymeta.columns.length + attributemeta.columns.length
         // create placeholders in line_precursor
         for (let i = 0; i < line_length; i++) {
             line_precursor.push(null)
         }
         let blocklines = []
 
-        // start recursion
+        // start recursion; emit lines at leaves of recursion
         reconstituteLines(block, columnindex, rowindex, line_precursor, blocklines, columnarray)
 
         // add the reconstituted blocklines to newList

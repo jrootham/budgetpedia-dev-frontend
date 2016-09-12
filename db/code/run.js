@@ -70,24 +70,27 @@ const setup = (context) => {
         }
     }
 
+    // start with intake files (from sources/precursor through pending/add meta headers)
     switch (command) {
         case 'preprocess':
-            intakeToPreprocessed(context)
+            intakeToPreprocessed(context) // process to preprocessed
             break
+        // fix categories
         case 'count-names':
-            countNames(context)
+            countNames(context) // feedback for maps_names files
             break
         case 'map-codes':
-            mapCodes(context)
+            mapCodes(context) // create maps_codes files
             break
         case 'continuity':
-            continuity(context)
+            continuity(context) // create continuity files
             break
+        // continue file processing
         case 'prepare': 
-            preprocessedToPrepared(context)
+            preprocessedToPrepared(context) // process to prepared
             break
         case 'generate': 
-            preparedToJson(context)
+            preparedToJson(context) // process to json
             break
     }
 

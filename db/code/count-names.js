@@ -68,7 +68,7 @@ const processPreprocessedFile = (filename, context) => {
 
     let components = common.decomposeCsv(csv, filename) // {meta, data}
 
-    let columndata = common.getCategoryData(components, filename) // according to COLUMNS_CATEGORIES
+    let columndata = common.getCategoryMeta(components, filename) // according to COLUMNS_CATEGORIES
 
     let columns = columndata.columns
     // process backwards to allow columnindex to be used for column reference

@@ -43,7 +43,7 @@ exports.decomposeCsv = (csv, filename) => {
 // {names:{<name>:'NAME'},codes:{<name>:'CODE'}, columns: {name:<name>, type:<type>}[]} 
 // presence of code for <name> determines whether to lookup code or save it to lookup
 // CODE columns are expected to appear just before corresponding NAME column
-exports.getCategoryData = (components, filename) => {
+exports.getCategoryMeta = (components, filename) => {
 
     let columns_categories = components.meta.filter(item => {
         return (item[0] == constants.COLUMNS_CATEGORIES)
@@ -102,8 +102,8 @@ exports.getCategoryData = (components, filename) => {
 // {names:{<name>:'NAME'},codes:{<name>:'CODE'}, columns: {name:<name>, type:<type>}[]} 
 // presence of code for <name> determines whether to lookup code or save it to lookup
 // CODE columns are expected to appear just before corresponding NAME column
-// TODO merge common code with getCategoryData
-exports.getAttributeData = (components, filename) => {
+// TODO merge common code with getCategoryMeta
+exports.getAttributeMeta = (components, filename) => {
 
     let columns_attributes = components.meta.filter(item => {
         return (item[0] == constants.COLUMNS_ATTRIBUTES)
