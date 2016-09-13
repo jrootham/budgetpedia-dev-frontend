@@ -30,9 +30,31 @@ const countNames = context => {
         processPreprocessedFile(filename,context)
     }
 
+    let mapsfiles = context.mapsfiles
+    for (let filename of mapsfiles) {
+        showNoCount(filename, context)
+    }
+
 }
 
 module.exports = countNames
+
+const showNoCount = (filename, context) => {
+    let filespec = filename + context.mapspath
+    let csv = utilities.readFileCsv(filespec)
+    common.stripMapHeader(csv)
+    let count = 0
+    utilities.log('Not used for ' + filename + ':')
+    for (let line of csv) {
+        if (!line[countindex]) {
+            utilities.log(line.join(','))
+            count++
+        }
+    }
+    if (!count) {
+        utilities.log('all lines used.')
+    }
+}
 
 const initializeMaps = context => {
 
