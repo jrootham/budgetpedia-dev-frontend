@@ -294,7 +294,7 @@ const reconstituteList = (reduction, categorymeta, attributemeta) => {
         for each code in rootcomponents, create a block of reconstituted line items
         ie for each code object hierarchy, map to columnar structure ( = block ), 
         then reconstitute lines from that columnar structure
-        -> depth level = column number - dependencey is preseverd through backlink property
+        -> depth level = column number - dependency is preserved through backlink property
     */    
     for (let code of rootkeys) {
         let node = rootcomponents[code]

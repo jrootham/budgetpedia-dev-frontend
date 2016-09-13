@@ -2,6 +2,10 @@
 // map-codes.js
 
 /*
+    TODO: overwrite old name options with new ones
+*/
+
+/*
     run this, then manually review names of all map files 
     substitute preferred name from alternatenames where appropriate
 */

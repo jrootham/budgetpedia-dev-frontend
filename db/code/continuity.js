@@ -2,6 +2,10 @@
 // continuity.js
 
 /*
+    TODO: Add note column for explanation of discontinue choice
+*/
+
+/*
     if a code is marked as discontinued, but no discontinuedTo code is added in the file
     then the code will be forwarded to all future years, albeit with no value data
 */
@@ -11,7 +15,7 @@ let utilities = require('./utilities')
 let constants = require('./constants')
 let common = require('./common')
 
-let header = ['_COLUMNS_','Category:CODE,Category:NAME,Start:VALUE,End:Value,DiscontinueTo:CODE,DiscontinueTo:NAME']
+let header = ['_COLUMNS_','Category:CODE,Category:NAME,Start:VALUE,End:Value,DiscontinueTo:CODE,DiscontinueTo:NAME,Note:DESCRIPTION']
 
 const continuity = context => {
 
@@ -72,12 +76,14 @@ const updateContinuityGroup = (groupname, group, context) => {
         let end = line[3]
         let tocode = line[4]
         let toname = line[5]
+        let note = line[6]
         previouscontinuity[code] = {
             name:name,
             start:start,
             end:end,
             tocode:tocode,
-            toname:toname
+            toname:toname,
+            note:note
         }
     }
 
@@ -98,6 +104,9 @@ const updateContinuityGroup = (groupname, group, context) => {
                 if (previousitem.toname) {
                     item.toname = previousitem.toname
                 }
+                if (previousitem.note) {
+                    item.note = previousitem.note
+                }
             }
         }
     }
@@ -113,6 +122,11 @@ const updateContinuityGroup = (groupname, group, context) => {
             line.push(item.tocode)
             if (item.toname) {
                 line.push(item.toname)
+            } else {
+                line.push(null)
+            }
+            if (item.note) {
+                line.push(item.note)
             }
         }
         csv.push(line)
