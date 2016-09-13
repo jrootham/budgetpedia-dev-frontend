@@ -14,7 +14,6 @@ Court Services,COURTSERV,,4
 Economic Development & Culture,ECONDEV,,4
 Engineering & Construction Services,ENGINEERING,,4
 Exhibition Place,EXHIBPLACE,,4
-Expense Suspense,EXPENSESUSPENSE,,1
 "Facilities, Real Estate, Environment & Energy",FACILITIES,,4
 Fire Services,FIRE,,4
 Fleet Services,FLEET,,4
@@ -34,10 +33,11 @@ Office of the Treasurer,TREASURER,,4
 Parking Tag Enforcement & Operations,PARKINGTAGS,,2
 "Parks, Forestry & Recreation",PARKS,,4
 "Policy, Planning, Finance & Administration",POLICYADMIN,,4
-Revenue Suspense,REVENUESUSPENSE,,1
 "Shelter, Support & Housing Administration",SHELTERADMIN,,4
 "Social Development, Finance & Administration",SOCIALDEV,,4
 Solid Waste Management Services,SOLIDWASTE,,4
+Special Expense Line Item,SPECIALEXPENSE,,1
+Special Revenue Line Item,SPECIALREVENUE,,1
 Theatres,THEATRES,,4
 Toronto & Region Conservation Authority,REGIONCONSERV,,4
 Toronto Atmospheric Fund,ATMOSPHERE,,2

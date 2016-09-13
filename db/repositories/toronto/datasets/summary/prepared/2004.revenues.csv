@@ -60,14 +60,14 @@ PLANNING,City Planning,77986.2,,,
 POLICE,Toronto Police Service,28461.7,,,
 PUBLICHEALTH,Toronto Public Health,109227.9,,,
 REGIONCONSERV,Toronto & Region Conservation Authority,23906.2,,,
-REVENUESUSPENSE,Revenue Suspense,28721.6,,,"Original amount was null, plus:
-Allocation from: ASSESSMENT,Assessment Growth - 2004,26570.3,
-Allocation from: CHARITYREBATE,C & I Charity Rebate - Special Levy,2151.3,"
 SHELTERADMIN,"Shelter, Support & Housing Administration",395987,,,"Original amount was 360469.9, plus:
 Allocation from: SUPPORTSERV,WES - Support Services,35517.1,"
 SOCIALDEV,"Social Development, Finance & Administration",9822,,,
 SOCIALSERV,Toronto Employment & Social Services,720475.1,,,
 SOLIDWASTE,Solid Waste Management Services,58041.5,,,
+SPECIALREVENUE,Special Revenue Line Item,28721.6,,,"Original amount was null, plus:
+Allocation from: ASSESSMENT,Assessment Growth - 2004,26570.3,
+Allocation from: CHARITYREBATE,C & I Charity Rebate - Special Levy,2151.3,"
 THEATRES,Theatres,17336.8,,,
 TRANSPORTATION,Transportation Services,78981.8,,,
 TTCCONV,Toronto Transit Commission - Conventional,779052.4,,,

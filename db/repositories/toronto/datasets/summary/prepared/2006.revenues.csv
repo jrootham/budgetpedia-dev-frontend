@@ -66,12 +66,12 @@ POLICE,Toronto Police Service,44531.7,,,
 POLICEBOARD,Toronto Police Services Board,,,,
 PUBLICHEALTH,Toronto Public Health,146646.3,,,
 REGIONCONSERV,Toronto & Region Conservation Authority,30969.5,,,
-REVENUESUSPENSE,Revenue Suspense,59761.3,,,"Original amount was null, plus:
-Allocation from: ASSESSMENT,Assessment Growth 2006,59761.3"
 SHELTERADMIN,"Shelter, Support & Housing Administration",422259.4,,,
 SOCIALDEV,"Social Development, Finance & Administration",11533.5,,,
 SOCIALSERV,Toronto Employment & Social Services,759045.5,,,
 SOLIDWASTE,Solid Waste Management Services,55235.9,,,
+SPECIALREVENUE,Special Revenue Line Item,59761.3,,,"Original amount was null, plus:
+Allocation from: ASSESSMENT,Assessment Growth 2006,59761.3"
 THEATRES,Theatres,26931.2,,,
 TRANSPORTATION,Transportation Services,97871.7,,,
 TREASURER,Office of the Treasurer,32290,,,

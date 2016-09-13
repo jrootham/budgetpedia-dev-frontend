@@ -64,13 +64,13 @@ POLICE,Toronto Police Service,32587.8,,,
 POLICEBOARD,Toronto Police Services Board,,,,
 PUBLICHEALTH,Toronto Public Health,118620,,,
 REGIONCONSERV,Toronto & Region Conservation Authority,27032.9,,,
-REVENUESUSPENSE,Revenue Suspense,13068.3,,,"Original amount was null, plus:
-Allocation from: ASSESSMENT,Assessment Growth - 2005,13068.3,"
 SHELTERADMIN,"Shelter, Support & Housing Administration",440221.89999999997,,,"Original amount was 404445.1, plus:
 Allocation from: SUPPORTSERV,WES - Support Services,35776.8,"
 SOCIALDEV,"Social Development, Finance & Administration",9489.6,,,
 SOCIALSERV,Toronto Employment & Social Services,749739.6,,,
 SOLIDWASTE,Solid Waste Management Services,59796.1,,,
+SPECIALREVENUE,Special Revenue Line Item,13068.3,,,"Original amount was null, plus:
+Allocation from: ASSESSMENT,Assessment Growth - 2005,13068.3,"
 THEATRES,Theatres,17012,,,
 TRANSPORTATION,Transportation Services,87654.7,,,
 TTCWHEEL,Toronto Transit Commission - Wheel Trans,744996.6,,,

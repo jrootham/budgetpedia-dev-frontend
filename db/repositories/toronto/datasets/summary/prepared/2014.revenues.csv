@@ -61,13 +61,13 @@ POLICEBOARD,Toronto Police Services Board,500,,,
 POLICYADMIN,"Policy, Planning, Finance & Administration",11716,,,
 PUBLICHEALTH,Toronto Public Health,193494,,,
 REGIONCONSERV,Toronto & Region Conservation Authority,35534,,,
-REVENUESUSPENSE,Revenue Suspense,6970,,,"Original amount was null, plus:
-Allocation from: ASSESSMENT,Assessment Change,25385
-Allocation from: TCHCEXEMPT,TCHC Exempt,-18415"
 SHELTERADMIN,"Shelter, Support & Housing Administration",447132,,,
 SOCIALDEV,"Social Development, Finance & Administration",10570,,,
 SOCIALSERV,Toronto Employment & Social Services,999764,,,
 SOLIDWASTE,Solid Waste Management Services,353924,,,
+SPECIALREVENUE,Special Revenue Line Item,6970,,,"Original amount was null, plus:
+Allocation from: ASSESSMENT,Assessment Change,25385
+Allocation from: TCHCEXEMPT,TCHC Exempt,-18415"
 THEATRES,Theatres,17404,,,
 TRANSPORTATION,Transportation Services,133905,,,
 TREASURER,Office of the Treasurer,43558,,,
