@@ -15,7 +15,7 @@ let utilities = require('./utilities')
 let constants = require('./constants')
 let common = require('./common')
 
-let header = ['_COLUMNS_','Category:CODE,Category:NAME,Start:VALUE,End:Value,DiscontinueTo:CODE,DiscontinueTo:NAME,Note:DESCRIPTION']
+let header = ['_COLUMNS_','Category:CODE,Category:NAME,Start:VALUE,End:Value,AllocateTo:CODE,AllocateTo:NAME,Note:DESCRIPTION']
 
 const continuity = context => {
 

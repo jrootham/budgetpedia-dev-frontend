@@ -1,4 +1,4 @@
-_COLUMNS_,"Category:CODE,Category:NAME,Start:VALUE,End:Value,AllocateTo:CODE,AllocateTo:NAME,Note:DESCRIPTION",,,,,
+_COLUMNS_,"Category:CODE,Category:NAME,Start:VALUE,End:Value,DiscontinueTo:CODE,DiscontinueTo:NAME,Note:DESCRIPTION",,,,,
 311SERVICE,311 Toronto,2005,,,,
 AFFHOUSING,Affordable Housing Office,2006,,,,
 AGEDHOMES,Homes for the Aged,2003,2008,LONGTERMHOME,Long Term Care Homes & Services,logical
@@ -64,8 +64,8 @@ SHELTERADMIN,"Shelter, Support & Housing Administration",2003,,,,
 SOCIALDEV,"Social Development, Finance & Administration",2003,,,,
 SOCIALSERV,Toronto Employment & Social Services,2003,,,,
 SOLIDWASTE,Solid Waste Management Services,2003,,,,
-SPECIALEXPENSE,Special Expense Line Item,2016,,,,
-SPECIALREVENUE,Special Revenue Line Item,2016,,,,
+SPECIALEXPENSE,Temporary Expense Line Item (by Budgetpedia),2016,,,,
+SPECIALREVENUE,Temporary Revenue Line Item (by Budgetpedia),2016,,,,
 SUBWAYLEVY,Special Levy for Scarborough Subway,2015,2015,SPECIALREVENUE,Temporary Revenue Line Item (by Budgetpedia),Temporary
 SUPPORTSERV,Support Services,2003,2006,SHELTERADMIN,"Shelter, Support & Housing Administration",budget jumped after WES support services discontinued
 TCHCEXEMPT,TCHC Exempt,2014,2014,SPECIALREVENUE,Temporary Revenue Line Item (by Budgetpedia),Temporary
