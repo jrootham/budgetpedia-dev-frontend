@@ -16,7 +16,7 @@ UNITS_NAME,Dollar,
 UNITS_CODE,DOLLAR,
 UNITS_MULTIPLIER,1000,
 TOTAL_AMOUNT,5327155.300000001,
-INTAKE_DATETIME,2016-09-13-12-11-50,
+INTAKE_DATETIME,2016-09-16-15-46-23,
 INTAKE_OPERATOR_ID,Henrik,
 COLUMNS_CATEGORIES,"Program:CODE,Program:NAME",
 COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE",
@@ -38,7 +38,7 @@ CORPFINANCING,Capital & Corporate Financing,8463
 CORPREVENUES,Non-Program Revenues,944691.9
 COUNCIL,City Council,0
 COURTSERV,Court Services,46226.7
-COMMPARTNER,Community Partnership and Investment Program,259
+COMMPARTNERREV,Community Partnership and Investment Program revenue,259
 CREATIVEINFO,Pubic Information & Creative Services,143.1
 ECONDEV,"Economic Development, Culture & Tourism",9079.9
 EMERG,Emergency Medical Services,87607

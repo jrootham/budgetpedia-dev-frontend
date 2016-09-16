@@ -16,7 +16,7 @@ UNITS_NAME,Dollar,,,,
 UNITS_CODE,DOLLAR,,,,
 UNITS_MULTIPLIER,1000,,,,
 TOTAL_AMOUNT,7094271,,,,
-INTAKE_DATETIME,2016-09-13-12-11-50,,,,
+INTAKE_DATETIME,2016-09-16-15-46-23,,,,
 INTAKE_OPERATOR_ID,Henrik,,,,
 COLUMNS_CATEGORIES,"Program:CODE,Program:NAME",,,,
 COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION",,,,
@@ -32,8 +32,8 @@ CITYMANAGER,City Manager's Office,6877.9,,,"Original amount was 6277.9, plus:
 Allocation from: WATERFRONT,Waterfront Secretariat,600"
 CLERK,City Clerk's Office,18980.6,,,
 COMMCENTRES,Association of Community Centres,201.7,,,
-CORPEXPENDITURES,Non-Program Expenditures,114056.1,,,"Original amount was 113976.1, plus:
-Allocation from: COMMPARTNER,Community Partnership and Investment Program,80"
+COMMPARTNERREV,Community Partnership and Investment Program revenue,80,,,
+CORPEXPENDITURES,Non-Program Expenditures,113976.1,,,
 CORPFINANCING,Capital & Corporate Financing,38021.7,,,
 CORPREVENUES,Non-Program Revenues,1161756.9,,,
 COUNCIL,City Council,,,,

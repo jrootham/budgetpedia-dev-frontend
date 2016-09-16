@@ -16,7 +16,7 @@ UNITS_NAME,Dollar,,,,
 UNITS_CODE,DOLLAR,,,,
 UNITS_MULTIPLIER,1000,,,,
 TOTAL_AMOUNT,5251540,,,,
-INTAKE_DATETIME,2016-09-13-12-11-50,,,,
+INTAKE_DATETIME,2016-09-16-15-46-23,,,,
 INTAKE_OPERATOR_ID,Henrik,,,,
 COLUMNS_CATEGORIES,"Program:CODE,Program:NAME",,,,
 COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION",,,,
@@ -33,8 +33,9 @@ Allocation from: HUMANRESOURCES,Human Resources,1834.8
 Allocation from: WATERFRONT,Waterfront Secretariat,166.7"
 CLERK,City Clerk's Office,18050.9,,,
 COMMCENTRES,Association of Community Centres,159.4,,,
-CORPEXPENDITURES,Non-Program Expenditures,111096.1,,,"Original amount was 103474.6, plus:
-Allocation from: COMMPARTNER,Community Partnership and Investment Program,7621.5"
+COMMPARTNERREV,Community Partnership and Investment Program revenue,7621.5,,,
+CORPEXPENDITURES,Non-Program Expenditures,163235.90000000002,,,"Original amount was null, plus:
+Allocation from: ASSESSMENT,Assessment Growth 2006,59761.3"
 CORPFINANCING,Capital & Corporate Financing,4931,,,
 CORPREVENUES,Non-Program Revenues,841648.7,,,
 COUNCIL,City Council,,,,
@@ -70,8 +71,6 @@ SHELTERADMIN,"Shelter, Support & Housing Administration",422259.4,,,
 SOCIALDEV,"Social Development, Finance & Administration",11533.5,,,
 SOCIALSERV,Toronto Employment & Social Services,759045.5,,,
 SOLIDWASTE,Solid Waste Management Services,55235.9,,,
-SPECIALREVENUE,Temporary Revenue Line Item (by Budgetpedia),59761.3,,,"Original amount was null, plus:
-Allocation from: ASSESSMENT,Assessment Growth 2006,59761.3"
 THEATRES,Theatres,26931.2,,,
 TRANSPORTATION,Transportation Services,97871.7,,,
 TREASURER,Office of the Treasurer,32290,,,

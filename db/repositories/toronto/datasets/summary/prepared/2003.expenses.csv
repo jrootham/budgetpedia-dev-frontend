@@ -16,7 +16,7 @@ UNITS_NAME,Dollar,,,,
 UNITS_CODE,DOLLAR,,,,
 UNITS_MULTIPLIER,1000,,,,
 TOTAL_AMOUNT,7050552.7,,,,
-INTAKE_DATETIME,2016-09-13-12-11-50,,,,
+INTAKE_DATETIME,2016-09-16-15-42-52,,,,
 INTAKE_OPERATOR_ID,Henrik,,,,
 COLUMNS_CATEGORIES,"Program:CODE,Program:NAME",,,,
 COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION",,,,
@@ -32,8 +32,9 @@ Allocation from: HUMANRESOURCES,Human Resources,26472.7
 Allocation from: INNOVATION,Service Improvement & Innovation,2654.6"
 CLERK,City Clerk's Office,44435.9,,,
 COMMCENTRES,Association of Community Centres,4961.8,,,
-CORPEXPENDITURES,Non-Program Expenditures,275920,,,"Original amount was 236357.3, plus:
-Allocation from: GRANTPROGRAM,Consolidated Grant Program,39562.7"
+CORPEXPENDITURES,Non-Program Expenditures,297345,,,"Original amount was 236357.3, plus:
+Allocation from: GRANTPROGRAM,Consolidated Grant Program,39562.7
+Allocation from: KVC,Keele Valley Closure (KVC),21425"
 CORPFINANCING,Capital & Corporate Financing,391078.9,,,
 COUNCIL,City Council,17615.7,,,
 COURTSERV,Court Services,27339.7,,,
@@ -67,8 +68,6 @@ Allocation from: SUPPORTSERV,WES - Support Services,33813.9"
 SOCIALDEV,"Social Development, Finance & Administration",17486.1,,,
 SOCIALSERV,Toronto Employment & Social Services,934105,,,
 SOLIDWASTE,Solid Waste Management Services,182689,,,
-SPECIALEXPENSE,Temporary Expense Line Item (by Budgetpedia),21425,,,"Original amount was null, plus:
-Allocation from: KVC,Keele Valley Closure (KVC),21425"
 THEATRES,Theatres,20502.3,,,
 TRANSPORTATION,Transportation Services,242915.8,,,
 TTCCONV,Toronto Transit Commission - Conventional,957167.2,,,"Original amount was null, plus:
