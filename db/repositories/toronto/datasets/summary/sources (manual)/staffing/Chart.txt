@@ -13,3 +13,4 @@ Chart.txt
 2007.bn_oppositions.pdf, extract p.11, remove unnecessary rows and columns, use regex to format
 2006.bnop2006_cfo_approvedpositions.pdf extract p.9, remove unnecessary rows and columns, use regex to format
 2005.corpiss_approvedpostions.pdf extract p 7-8, combine, remove unnecessary rows and columns, use regex to format
+same for 2004
