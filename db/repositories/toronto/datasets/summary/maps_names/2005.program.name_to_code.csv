@@ -1,61 +1,70 @@
 _COLUMNS_,"Category:NAME,Category:CODE,Note:DESCRIPTION,Count:VALUE",,
-3-1-1 Project,311SERVICE,,2
-Arena Boards of Management,ARENAS,,2
-Assessment Growth - 2005,ASSESSMENT,,1
-Association of Community Centers,COMMCENTRES,,2
-Auditor General's Office,AUDITGEN,,2
-Capital & Corporate Financing,CORPFINANCING,,2
-Chief Administrator's Office,CITYMANAGER,,2
-Children's Services,CHILDSERV,,2
-City Clerk's Office,CLERK,,2
+3-1-1 Project,311SERVICE,,
+Arena Boards of Management,ARENAS,,1
+Assessment Growth - 2005,ASSESSMENT,,
+Association of Community Centers,COMMCENTRES,,
+Association of Community Centres,COMMCENTRES,,1
+Auditor General's Office,AUDITGEN,,1
+Capital & Corporate Financing,CORPFINANCING,,
+Chief Administrator's Office,CITYMANAGER,,1
+Children's Services,CHILDSERV,,1
+City Clerk's Office,CLERK,,1
 Community Partnership and Investment Program,COMMPARTNER,,
-Community Partnership and Investment Program revenue,COMMPARTNERREV,,1
-Corporate Accounts Community Partnership and Investment Program,COMMPARTNER,,1
-Corporate Communications,CORPCOMMS,,2
-Council,COUNCIL,,2
-Court Services,COURTSERV,,2
-Culture,CULTURE,,2
-Customer & Business Support,BIZSUPPORT,,2
-Economic Development,ECONDEV,,2
-Economic Recovery,ECONRECOV,,2
-Emergency Management Plan,EMERGPLAN,,2
-Emergency Medical Services,EMERG,,2
-Exhibition Place,EXHIBPLACE,,2
-Facilities & Real Estate,FACILITIES,,2
-Finance,FINANCE,,2
-Fire Services,FIRE,,2
-Fleet Services,FLEET,,2
-Heritage Toronto,HERITAGE,,2
-Homes for the Aged,AGEDHOMES,,2
-Human Resources,HUMANRESOURCES,,2
-Information & Technology,IT,,2
-Legal,LEGAL,,2
-Mayor's Office,MAYOR,,2
-Non-Program Expenditures,CORPEXPENDITURES,,1
-Non-Program Revenues,CORPREVENUES,,1
-Parking Authority,PARKING,,2
-Parks & Recreation,PARKS,,2
-Service Improvement & Innovation,INNOVATION,,2
-"Shelter, Housing & Support",SHELTERADMIN,,2
-Social Development & Administration,SOCIALDEV,,2
-Social Services,SOCIALSERV,,2
-Solid Waste Management Services,SOLIDWASTE,,2
-Theatres,THEATRES,,2
-Toronto & Region Conservation Authority,REGIONCONSERV,,2
-Toronto Police Board,POLICEBOARD,,2
-Toronto Police Service,POLICE,,2
-Toronto Public Health,PUBLICHEALTH,,2
-Toronto Public Library,LIBRARY,,2
-Toronto Transit Commission - Conventional,TTCCONV,,1
-Toronto Transit Commission - Wheel Trans,TTCWHEEL,,2
-Toronto Transit Commission – Conventional,TTCWHEEL,,1
-Toronto Water,WATER,,2
-Toronto Zoo,ZOO,,2
-Total Non-Program Expenditures,CORPEXPENDITURES,,1
-Total Non-Program Revenues,CORPREVENUES,,1
-Tourism,TOURISM,,2
-Transportation Services,TRANSPORTATION,,2
-Urban Development Services,PLANNING,,2
-WES - Support Services,SUPPORTSERV,,2
-WES - Technical Services,TECH,,2
-Yonge/Dundas Square,YONGEDUNDAS,,2
+Community Partnership and Investment Program revenue,COMMPARTNERREV,,
+Corporate Accounts Community Partnership and Investment Program,COMMPARTNER,,
+Corporate Communications,CORPCOMMS,,1
+Council,COUNCIL,,1
+Court Services,COURTSERV,,1
+Culture,CULTURE,,1
+Customer & Business Support,BIZSUPPORT,,1
+Economic Development,ECONDEV,,1
+Economic Recovery,ECONRECOV,,
+Emergency Management Plan,EMERGPLAN,,1
+Emergency Medical Services,EMERG,,1
+Exhibition Place,EXHIBPLACE,,1
+Facilities & Real Estate,FACILITIES,,1
+Finance,FINANCE,,1
+Fire Services,FIRE,,1
+Fleet Services,FLEET,,1
+Heritage Toronto,HERITAGE,,1
+Homes for the Aged,AGEDHOMES,,1
+Human Resources,HUMANRESOURCES,,1
+Information & Technology,IT,,1
+Legal,LEGAL,,1
+Mayor's Office,MAYOR,,1
+Non Program,NONPROGRAM,,1
+Non-Program Expenditures,CORPEXPENDITURES,,
+Non-Program Revenues,CORPREVENUES,,
+Parking Authority,PARKING,,
+Parking Enforcement Unit,PARKINGTAGS,,1
+Parks & Recreation,PARKS,,1
+Public Health,PUBLICHEALTH,,1
+Service Improvement & Innovation,INNOVATION,,1
+"Shelter, Housing & Support",SHELTERADMIN,,1
+Social Development & Administration,SOCIALDEV,,1
+Social Services,SOCIALSERV,,1
+Solid Waste Management Services,SOLIDWASTE,,1
+Theatres,THEATRES,,1
+Toronto & Region Conservation Authority,REGIONCONSERV,,1
+Toronto Atmospheric Fund,ATMOSPHERE,,1
+Toronto Parking Authority,PARKING,,1
+Toronto Police Board,POLICEBOARD,,
+Toronto Police Service,POLICE,,
+Toronto Police Services(excludes Board),POLICE,,1
+Toronto Public Health,PUBLICHEALTH,,
+Toronto Public Library,LIBRARY,,1
+Toronto Transit Commission - Conventional,TTCCONV,,
+Toronto Transit Commission - Wheel Trans,TTCWHEEL,,
+Toronto Transit Commission – Conventional,TTCCONV,,
+Toronto Transit Commission**,TTCCONV,,1
+Toronto Water,WATER,,
+Toronto Zoo,ZOO,,1
+Total Non-Program Expenditures,CORPEXPENDITURES,,
+Total Non-Program Revenues,CORPREVENUES,,
+Tourism,TOURISM,,1
+Transportation Services,TRANSPORTATION,,1
+Urban Development Services,PLANNING,,1
+WES - Support Services,SUPPORTSERV,,1
+WES - Technical Services,TECH,,1
+Yonge Dundas Square,YONGEDUNDAS,,1
+Yonge/Dundas Square,YONGEDUNDAS,,

@@ -1,64 +1,71 @@
 _COLUMNS_,"Category:NAME,Category:CODE,Note:DESCRIPTION,Count:VALUE",,
-311 Toronto,311SERVICE,,2
-Affordable Housing Office,AFFHOUSING,,2
-Arena Boards of Management,ARENAS,,2
-Association of Community Centres,COMMCENTRES,,2
-Auditor General's Office,AUDITGEN,,2
-Capital & Corporate Financing,CORPFINANCING,,2
-Children's Services,CHILDSERV,,2
-City Clerk's Office,CLERK,,2
-City Council,COUNCIL,,2
+311 Toronto,311SERVICE,,1
+Affordable Housing Office,AFFHOUSING,,1
+Arena Boards of Management,ARENAS,,1
+Association of Community Centres,COMMCENTRES,,1
+Auditor General's Office,AUDITGEN,,1
+Capital & Corporate Financing,CORPFINANCING,,
+Children's Services,CHILDSERV,,1
+City Clerk's Office,CLERK,,1
+City Council,COUNCIL,,1
 City Manager,CITYMANAGER,,
-City Manager's Office,CITYMANAGER,,2
-City Planning,PLANNING,,2
-Court Services,COURTSERV,,2
-Economic Development & Culture,ECONDEV,,2
-Engineering & Construction Services,ENGINEERING,,2
-Exhibition Place,EXHIBPLACE,,2
-"Facilities, Real Estate, Environment & Energy",FACILITIES,,2
-Fire Services,FIRE,,2
-Fleet Services,FLEET,,2
-Heritage Toronto,HERITAGE,,2
-Information & Technology,IT,,2
-Integrity Commissioner's Office,INTEGRITYCOMM,,2
-Legal Services,LEGAL,,2
+City Manager's Office,CITYMANAGER,,1
+City Planning,PLANNING,,1
+Court Services,COURTSERV,,1
+Economic Development & Culture,ECONDEV,,1
+Engineering & Construction Services,ENGINEERING,,
+Engineering and Construction Services,ENGINEERING,,1
+Exhibition Place,EXHIBPLACE,,1
+"Facilities, Real Estate, Environment & Energy",FACILITIES,,1
+Fire Services,FIRE,,1
+Fleet Services,FLEET,,1
+Heritage Toronto,HERITAGE,,1
+Information & Technology,IT,,1
+Integrity Commissioner's Office,INTEGRITYCOMM,,1
+Legal Services,LEGAL,,1
 Lobbyist Registrar,LOBBYREG,,
-Local Appeal Body,LOCALAPPEAL,,2
-Long Term Care Homes & Services,LONGTERMHOME,,2
-Mayor's Office,MAYOR,,2
-Municipal Licensing & Standards,LICENCING,,2
+Lobbyist Registrar's Office,LOBBYREG,,1
+Local Appeal Body,LOCALAPPEAL,,
+Long Term Care Homes & Services,LONGTERMHOME,,1
+Mayor's Office,MAYOR,,1
+Municipal Licensing & Standards,LICENCING,,1
 Municipal Licensing and Standards,LICENCING,,
-Non-Program Expenditures,CORPEXPENDITURES,,2
-Non-Program Revenues,CORPREVENUES,,2
-Office of the Chief Financial Officer,CFO,,2
-Office of the Lobbyist Registrar,LOBBYREG,,2
-Office of the Ombudsman,OMBUDSMAN,,2
-Office of the Treasurer,TREASURER,,2
+Non-Program Expenditures,CORPEXPENDITURES,,
+Non-Program Revenues,CORPREVENUES,,
+Office of the Chief Financial Officer,CFO,,1
+Office of the Lobbyist Registrar,LOBBYREG,,
+Office of the Ombudsman,OMBUDSMAN,,
+Office of the Treasurer,TREASURER,,1
+Ombudsman's Office,OMBUDSMAN,,1
+Parking Tag Enforcement & Oper.,PARKINGTAGS,,1
 Parking Tag Enforcement & Operations,PARKINGTAGS,,
-"Parks, Forestry & Recreation",PARKS,,2
-"Policy, Planning, Finance & Administration",POLICYADMIN,,2
-"Policy, Planning, Finance and Administration",POLICYADMIN,,
-"Shelter, Support & Housing Administration",SHELTERADMIN,,2
+"Parks, Forestry & Recreation",PARKS,,1
+"Policy, Planning, Finance & Administration",POLICYADMIN,,
+"Policy, Planning, Finance and Administration",POLICYADMIN,,1
+"Shelter, Support & Housing Administration",SHELTERADMIN,,1
 "Social Development, Finance & Administratio",SOCIALDEV,,
-"Social Development, Finance & Administration",SOCIALDEV,,2
-Solid Waste Management Services,SOLIDWASTE,,2
-Special Levy for Scarborough Subway,SUBWAYLEVY,,1
-Theatres,THEATRES,,2
-Toronto & Region Conservation Authority,REGIONCONSERV,,2
+"Social Development, Finance & Administration",SOCIALDEV,,1
+Solid Waste Management Services,SOLIDWASTE,,1
+Special Levy for Scarborough Subway,SUBWAYLEVY,,
+TTC - Conventional,TTCCONV,,1
+TTC - WT,TTCWHEEL,,1
+Theatres,THEATRES,,1
+Toronto & Region Conservation Authority,REGIONCONSERV,,1
 Toronto Atmospheric Fund,ATMOSPHERE,,
 Toronto Building,BUILDINGS,,
-Toronto Buildings,BUILDINGS,,2
-Toronto Employment & Social Services,SOCIALSERV,,2
-Toronto Paramedic Services,PARAMEDIC,,2
-Toronto Parking Authority,PARKING,,2
-Toronto Police Service,POLICE,,2
-Toronto Police Services Board,POLICEBOARD,,2
-Toronto Public Health,PUBLICHEALTH,,2
-Toronto Public Library,LIBRARY,,2
-Toronto Transit Commission - Conventional,TTCCONV,,2
-Toronto Transit Commission - Wheel Trans,TTCWHEEL,,2
+Toronto Buildings,BUILDINGS,,1
+Toronto Employment & Social Services,SOCIALSERV,,1
+Toronto Paramedic Services,PARAMEDIC,,1
+Toronto Parking Authority,PARKING,,1
+Toronto Police Service,POLICE,,1
+Toronto Police Services Board,POLICEBOARD,,1
+Toronto Public Health,PUBLICHEALTH,,1
+Toronto Public Library,LIBRARY,,1
+Toronto Transit Commission - Conventional,TTCCONV,,
+Toronto Transit Commission - Wheel Trans,TTCWHEEL,,
 Toronto Transit Commission - Wheel-Trans,TTCWHEEL,,
-Toronto Water,WATER,,2
-Toronto Zoo,ZOO,,2
-Transportation Services,TRANSPORTATION,,2
-Yonge-Dundas Square,YONGEDUNDAS,,2
+Toronto Water,WATER,,1
+Toronto Zoo,ZOO,,1
+Transportation Services,TRANSPORTATION,,1
+Yonge Dundas Square,YONGEDUNDAS,,1
+Yonge-Dundas Square,YONGEDUNDAS,,
