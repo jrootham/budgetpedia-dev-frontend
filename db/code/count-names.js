@@ -40,7 +40,7 @@ const countNames = context => {
 module.exports = countNames
 
 const showNoCount = (filename, context) => {
-    let filespec = filename + context.mapspath
+    let filespec = context.mapspath + filename
     let csv = utilities.readFileCsv(filespec)
     common.stripMapHeader(csv)
     let count = 0

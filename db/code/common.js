@@ -242,7 +242,38 @@ exports.collectPrepareData = context => {
 
 }
 
-const collectFileData = (context,dirname) => {
+exports.collectGenerateData = context => {
+
+    collectSettingsFile(context)
+
+    let filedata = collectFileData(context, 'continuity')
+
+    context.continuitypath = filedata.path
+    context.continuityfiles = filedata.files
+
+    filedata = collectFileData(context, 'lookups', 'json')
+
+    context.lookupspath = filedata.path
+    context.lookupfiles = filedata.files
+
+    filedata = collectFileData(context, 'prepared')
+
+    context.preparedpath = filedata.path
+    context.preparedfiles = filedata.files
+
+    filedata = collectFileData(context, 'json', 'json')
+
+    context.jsonpath = filedata.path
+    context.jsonfiles = filedata.files
+
+    filedata = collectFileData(context, 'meta', 'json')
+
+    context.metapath = filedata.path
+    context.metafiles = filedata.files
+
+}
+
+const collectFileData = (context, dirname, ext = 'csv') => {
 
     // get intake path and intake files list
     try {
@@ -252,7 +283,7 @@ const collectFileData = (context,dirname) => {
         let newfiles = []
         for (let filename of files) {
             let fileparts = filename.split('.') // <year>.<aspect>.csv
-            if (fileparts[fileparts.length -1] == 'csv') {
+            if (fileparts[fileparts.length -1] == ext) {
                 newfiles.push(filename)
             }
         }

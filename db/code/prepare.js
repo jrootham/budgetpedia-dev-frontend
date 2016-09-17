@@ -1,6 +1,10 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // prepare.js
 
+/*
+    TODO: create notes lists per code like allocations list per code
+*/
+
 'use strict'
 
 let utilities = require('./utilities')

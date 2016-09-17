@@ -21,10 +21,10 @@ INTAKE_OPERATOR_ID,Henrik,,,,
 COLUMNS_CATEGORIES,"Program:CODE,Program:NAME",,,,
 COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION",,,,
 _META_END_,,,,,
-ATMOSPHERE,Toronto Atmospheric Fund,4,,,
 AUDITGEN,Auditor General's Office,28,,,
-CFO,Office of the Chief Financial Officer,813,,,"Original amount was null, plus:
-Allocation from: FINANCE,Finance,813"
+CFO,Office of the Chief Financial Officer,817,,,"Original amount was null, plus:
+Allocation from: FINANCE,Finance,813
+Allocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
 CHILDSERV,Children's Services,921.6,,,
 CITYMANAGER,City Manager's Office,536,,,"Original amount was null, plus:
 Allocation from: INNOVATION,Service Improvement & Innovation,84

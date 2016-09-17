@@ -32,10 +32,10 @@ CITYMANAGER,City Manager's Office,6877.9,,,"Original amount was 6277.9, plus:
 Allocation from: WATERFRONT,Waterfront Secretariat,600"
 CLERK,City Clerk's Office,18980.6,,,
 COMMCENTRES,Association of Community Centres,201.7,,,
-COMMPARTNERREV,Community Partnership and Investment Program revenue,80,,,
 CORPEXPENDITURES,Non-Program Expenditures,113976.1,,,
 CORPFINANCING,Capital & Corporate Financing,38021.7,,,
-CORPREVENUES,Non-Program Revenues,1161756.9,,,
+CORPREVENUES,Non-Program Revenues,1161836.9,,,"Original amount was 1161756.9, plus:
+Allocation from: COMMPARTNERREV,Community Partnership and Investment Program revenue,80"
 COUNCIL,City Council,,,,
 COURTSERV,Court Services,66476.6,,,
 ECONDEV,Economic Development & Culture,9413.3,,,

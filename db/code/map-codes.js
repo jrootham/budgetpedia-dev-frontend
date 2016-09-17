@@ -59,7 +59,6 @@ const mapFileCodes = (filename, context) => {
     // read input file of name to code map
     let map = utilities.readFileCsv(context.mapspath + filename)
     common.stripMapHeader(map)
-
     // collect data from name to code map
     for (let line of map) {
         let code = line[1]
@@ -68,7 +67,6 @@ const mapFileCodes = (filename, context) => {
         let item = codemap[code] || {name:name}
         item.mark = true // later identify unmarked items to leave them out of file write
         if (item.name != name) {
-            // console.log('alternate name found', name)
             let names = item.alternatenames || item.name + ';#' + name
             let namelist = names.split(';#')
             if (namelist.indexOf(name) == -1) {
@@ -87,7 +85,6 @@ const mapFileCodes = (filename, context) => {
         }
         if (!codemap[code]) codemap[code] = item
     }
-
     // sort by code for convenience
     let csv = []
     let codes = Object.keys(codemap)

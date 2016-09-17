@@ -23,11 +23,11 @@ COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:
 _META_END_,,,,,
 AFFHOUSING,Affordable Housing Office,19,,,
 ARENAS,Arena Boards of Management,65.5,,,
-ATMOSPHERE,Toronto Atmospheric Fund,7,,,
 AUDITGEN,Auditor General's Office,29,,,
 BUILDINGS,Toronto Building,420,,,
-CFO,Office of the Chief Financial Officer,117.6,,,"Original amount was null, plus:
-Allocation from: ENV,Toronto Environment Office,22.6"
+CFO,Office of the Chief Financial Officer,124.6,,,"Original amount was null, plus:
+Allocation from: ENV,Toronto Environment Office,22.6
+Allocation from: ATMOSPHERE,Toronto Atmospheric Fund,7"
 CHILDSERV,Children's Services,927.8,,,
 CITYMANAGER,City Manager's Office,392,,,
 CLERK,City Clerk's Office,399.8,,,

@@ -1,0 +1,17 @@
+{
+    "InflationAdjustable": false,
+    "DatasetName":"Staffing",
+    "DatasetTitle": "Staff Positions",
+    "Dataseries": [
+        {
+            "Type": "Components"
+        }
+    ],
+    "Structure":["Program"],
+    "CellTitles": {
+        "Components": "Programs"
+    },
+    "Units": "FTE",
+    "UnitRatio":1,
+    "CommonObjects":false
+}

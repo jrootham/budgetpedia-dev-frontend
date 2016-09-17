@@ -33,6 +33,7 @@ const setup = (context) => {
     context.year = context.parms[4]
 
     context.dbroot = './repositories/' // relative to process.cwd(); ../code/run
+    context.dataseriespath = context.dbroot + context.repository + '/dataseries/'
 
     context.repositorydirs = utilities.getDirContents(context.dbroot)
 
@@ -130,7 +131,9 @@ const preprocessedToPrepared = context => {
 }
 
 const preparedToJson = context => {
-    utilities.log ('processing prepared to json')
+    utilities.log ('generating prepared to json')
+    let generate = require('./generate')
+    generate(context)    
 }
 
 // =============================[ help text ]=============================
@@ -161,7 +164,7 @@ module.export = ((context) => {
 try {
     if (!setup(context)) return
 } catch (e) {
-    utilities.log(e.message)
+    utilities.log(e) // .message)
     return
 }
 

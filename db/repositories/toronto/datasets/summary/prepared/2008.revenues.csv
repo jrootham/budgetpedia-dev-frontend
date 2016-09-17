@@ -32,10 +32,10 @@ Allocation from: CREATIVEINFO,Pubic Information & Creative Services,78.1,
 Allocation from: WATERFRONT,Waterfront Secretariat,331,"
 CLERK,City Clerk's Office,13745.6,,,
 COMMCENTRES,Association of Community Centres,170,,,
-COMMPARTNERREV,Community Partnership and Investment Program revenue,259,,,
 CORPEXPENDITURES,Non-Program Expenditures,93529.2,,,
 CORPFINANCING,Capital & Corporate Financing,66511.7,,,
-CORPREVENUES,Non-Program Revenues,837682.7,,,
+CORPREVENUES,Non-Program Revenues,837941.7,,,"Original amount was 837682.7, plus:
+Allocation from: COMMPARTNERREV,Community Partnership and Investment Program revenue,259,"
 COUNCIL,City Council,,,,
 COURTSERV,Court Services,50717.9,,,
 ECONDEV,Economic Development & Culture,6990.2,,,
