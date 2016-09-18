@@ -95,7 +95,6 @@ const generateJsonFile = (aspect, aspects, context) => {
     let metafilename = aspect + '.json'
     let metapath = context.metapath
     let metadata = utilities.readFileJson(metapath + metafilename)
-    let dataseriespath = context.dataseriespath
     let inflationseries = null
     let Decimals = context.settings.Decimals
     json.MetaData = metadata
@@ -103,7 +102,6 @@ const generateJsonFile = (aspect, aspects, context) => {
     metadata.ReferenceYear = context.settings.ReferenceYear
     if (metadata.InflationAdjustable) {
         metadata.InflationReferenceYear = context.settings.InflationReferenceYear
-        inflationseries = utilities.readFileJson(dataseriespath + 'inflation.json')
     }
     metadata.YearsRange = {
         start:null,
@@ -138,9 +136,23 @@ const generateJsonFile = (aspect, aspects, context) => {
     for (let filename of aspectfiles) {
         addData(filename, basedata, notes, metadata, context)
     }
+    if (metadata.InflationAdjustable) {
+        addAdjusted(data, metadata, context)
+    }
     let targetfilename = aspect + '.json'
     utilities.log('saving json file ' + targetfilename)
     utilities.writeFileJson(context.jsonpath + targetfilename, json)
+}
+
+const addAdjusted = (data, metadata, context) => {
+    let adjusted = data.Adjusted
+    let nominal = data.Nominal
+    let inflationseries = utilities.readFileJson(dataseriespath + 'inflation.json')
+}
+
+// recursive
+const addSeries = () => {
+
 }
 
 // add base data and notes data
