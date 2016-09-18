@@ -141,54 +141,13 @@ const generateJsonFile = (aspect, aspects, context) => {
         addAdjusted(data, metadata, context)
     }
     let targetfilename = aspect + '.json'
-    utilities.log('saving json file ' + targetfilename)
-    utilities.writeFileJson(context.jsonpath + targetfilename, json)
-}
-
-const addAdjusted = (data, metadata, context) => {
-    let adjusted = data.Adjusted
-    let nominal = data.Nominal
-    let inflationseries = utilities.readFileJson(context.dataseriespath + 'inflation.json')
-
-    addSeries(nominal, adjusted, inflationseries, metadata.Decimals)
-
-}
-
-// recursive
-const addSeries = (nominalcomponents, adjustedcomponents, inflationseries, decimals) => {
-
-    let multiplier, amount
-
-    for (let category in nominalcomponents) {
-        let nominalcomponent = nominalcomponents[category]
-        let adjustedcomponent = adjustedcomponents[category] = {}
-        let subcomponents = nominalcomponent.Components
-        if (subcomponents) {
-            adjustedcomponent.Components = {}
-            addSeries(subcomponents, adjustedcomponents.Components, inflationseries, decimals)
-        }
-        if (!nominalcomponent.years) {
-            continue
-        }
-        let nominalyears = nominalcomponent.years
-        if (!adjustedcomponent.years) {
-            adjustedcomponent.years = {}
-        }
-        // adjust years
-        let adjustedyears = adjustedcomponent.years
-        for (let year in nominalyears) {
-            multiplier = inflationseries.years[year] || 1
-            amount = nominalyears[year] * multiplier
-            amount = Number(amount.toFixed(decimals))
-            adjustedyears[year] = amount
-        }
+    let targetfilespec = context.jsonpath + targetfilename
+    if (utilities.fileExists(targetfilespec)) {
+        let datedfilename = utilities.infixDateTime(targetfilename)
+        utilities.moveFile(targetfilespec, context.jsonpath + 'history/' + datedfilename)
     }
-
-    // console.log(adjustedcomponents)
-    // drill down on Components
-
-    // drill down on CommonDimension
-
+    utilities.log('saving json file ' + targetfilename)
+    utilities.writeFileJson(targetfilespec, json)
 }
 
 // add base data and notes data
@@ -252,13 +211,70 @@ const addData = (filename, basedata, notes, metadata, context) => {
             }
             code = line[columnindex]
             if (code) { // else no category at this level
-                // create components property
-                if (!node.Components) {
-                    node.Components = {}
+                if (metdata.CommonDimension && metdata.CommonDimension == code) {
+                    // create components property
+                    if (!node.CommonDimension) {
+                        node.CommonDimension = {}
+                    }
+                    components = node.CommonDimension
+                } else {
+                    // create components property
+                    if (!node.Components) {
+                        node.Components = {}
+                    }
+                    components = node.Components
                 }
-                components = node.Components
             }
         } while (true)
     }
 }
+
+const addAdjusted = (data, metadata, context) => {
+    let adjusted = data.Adjusted
+    let nominal = data.Nominal
+    let inflationseries = utilities.readFileJson(context.dataseriespath + 'inflation.json')
+
+    // start recursion
+    addSeries(nominal, adjusted, inflationseries, metadata.Decimals)
+
+}
+
+// recursive
+const addSeries = (nominalcomponents, adjustedcomponents, inflationseries, decimals) => {
+
+    let multiplier, amount
+
+    for (let category in nominalcomponents) {
+        let nominalcomponent = nominalcomponents[category]
+        let adjustedcomponent = adjustedcomponents[category] = {}
+        let subcomponents = nominalcomponent.Components
+        if (subcomponents) {
+            adjustedcomponent.Components = {}
+            addSeries(subcomponents, adjustedcomponents.Components, inflationseries, decimals)
+        }
+        let commondimensions = nominalcomponent.CommonDimension
+        if (commondimensions) {
+            adjustedcomponent.CommonDimension = {}
+            addSeries(commondimensions, adjustedcomponent.CommonDimension, inflationseries, decimals)
+        }
+        if (!nominalcomponent.years) {
+            continue
+        }
+        let nominalyears = nominalcomponent.years
+        if (!adjustedcomponent.years) {
+            adjustedcomponent.years = {}
+        }
+        // adjust years
+        let adjustedyears = adjustedcomponent.years
+        for (let year in nominalyears) {
+            multiplier = inflationseries.years[year] || 1
+            amount = nominalyears[year] * multiplier
+            amount = Number(amount.toFixed(decimals))
+            adjustedyears[year] = amount
+        }
+    }
+    
+}
+
+
 
