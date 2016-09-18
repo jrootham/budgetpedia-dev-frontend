@@ -8,7 +8,7 @@
                 "Type": "Components"
             }
         ],
-        "Structure": [
+        "Dimensions": [
             "Program"
         ],
         "CellTitles": {
@@ -16,8 +16,9 @@
         },
         "Units": "FTE",
         "UnitRatio": 1,
-        "CommonObjects": false,
+        "CommonDimension": false,
         "ReferenceYear": 2016,
+        "Decimals": 1,
         "YearsRange": {
             "start": 2004,
             "end": 2016

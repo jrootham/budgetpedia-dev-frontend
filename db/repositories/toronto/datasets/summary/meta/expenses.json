@@ -7,13 +7,13 @@
             "Type": "Components"
         }
     ],
-    "Structure":["Program"],
+    "Dimensions":["Program"],
     "CellTitles": {
         "Components": "Programs"
     },
     "Units": "DOLLAR",
     "UnitsAlias": "$000's",
     "UnitRatio": 1000,
-    "CommonObjects":false
+    "CommonDimension":false
 }
 

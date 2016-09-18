@@ -7,11 +7,11 @@
             "Type": "Components"
         }
     ],
-    "Structure":["Program"],
+    "Dimensions":["Program"],
     "CellTitles": {
         "Components": "Programs"
     },
     "Units": "FTE",
     "UnitRatio":1,
-    "CommonObjects":false
+    "CommonDimension":false
 }

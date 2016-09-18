@@ -100,6 +100,7 @@ const generateJsonFile = (aspect, aspects, context) => {
     json.MetaData = metadata
     // add ReferenceYear, InflationReferenceYear, and YearsRange:{start, end}
     metadata.ReferenceYear = context.settings.ReferenceYear
+    metadata.Decimals = context.settings.Decimals[metadata.Units]
     if (metadata.InflationAdjustable) {
         metadata.InflationReferenceYear = context.settings.InflationReferenceYear
     }
@@ -147,17 +148,52 @@ const generateJsonFile = (aspect, aspects, context) => {
 const addAdjusted = (data, metadata, context) => {
     let adjusted = data.Adjusted
     let nominal = data.Nominal
-    let inflationseries = utilities.readFileJson(dataseriespath + 'inflation.json')
+    let inflationseries = utilities.readFileJson(context.dataseriespath + 'inflation.json')
+
+    addSeries(nominal, adjusted, inflationseries, metadata.Decimals)
+
 }
 
 // recursive
-const addSeries = () => {
+const addSeries = (nominalcomponents, adjustedcomponents, inflationseries, decimals) => {
+
+    let multiplier, amount
+
+    for (let category in nominalcomponents) {
+        let nominalcomponent = nominalcomponents[category]
+        let adjustedcomponent = adjustedcomponents[category] = {}
+        let subcomponents = nominalcomponent.Components
+        if (subcomponents) {
+            adjustedcomponent.Components = {}
+            addSeries(subcomponents, adjustedcomponents.Components, inflationseries, decimals)
+        }
+        if (!nominalcomponent.years) {
+            continue
+        }
+        let nominalyears = nominalcomponent.years
+        if (!adjustedcomponent.years) {
+            adjustedcomponent.years = {}
+        }
+        // adjust years
+        let adjustedyears = adjustedcomponent.years
+        for (let year in nominalyears) {
+            multiplier = inflationseries.years[year] || 1
+            amount = nominalyears[year] * multiplier
+            amount = Number(amount.toFixed(decimals))
+            adjustedyears[year] = amount
+        }
+    }
+
+    // console.log(adjustedcomponents)
+    // drill down on Components
+
+    // drill down on CommonDimension
 
 }
 
 // add base data and notes data
 const addData = (filename, basedata, notes, metadata, context) => {
-    let structure = metadata.Structure
+    let dimensions = metadata.Dimensions
     let preparedpath = context.preparedpath
     let csv = utilities.readFileCsv(preparedpath + filename)
     let filecomponents = common.decomposeCsv(csv, filename) // {meta, data}
@@ -176,9 +212,9 @@ const addData = (filename, basedata, notes, metadata, context) => {
     let unitsmultiplier = utilities.getMetaRow(constants.UNITS_MULTIPLIER, metasource)
     unitsmultiplier = unitsmultiplier[1] // multiply for singles
     let unitsratio = metadata.UnitRatio // divide for presentation
-    let multiplier = unitsmultiplier/unitsratio // expects to be an integer
+    let multiplier = unitsmultiplier/unitsratio
     let unitdecimals = context.settings.Decimals[unitscode] || 0
-    // console.log(filename, unitsmultiplier, metadata.UnitRatio)
+
     for (let line of datasource) {
         let amount = line[amountindex]
         if (typeof amount == 'string') amount = amount.trim() // sometimes a blank char shows up for some reason
