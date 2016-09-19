@@ -2,6 +2,7 @@
 // generate.js
 
 /*
+    TODO: resave file total to remove unwanted decimals
 */
 
 'use strict'
@@ -184,6 +185,7 @@ const addData = (filename, basedata, notes, allocations, headers, metadata, cont
     for (let index = 1; index < metasource.length - 1; index ++) {
         headersource[metasource[index][0]] = metasource[index][1]
     }
+    headersource.TOTAL_AMOUNT = Number(headersource.TOTAL_AMOUNT.toFixed(1)) // avoid numeric conversion issues
     headers[year] = headersource
 
     for (let line of datasource) {
@@ -213,7 +215,7 @@ const addData = (filename, basedata, notes, allocations, headers, metadata, cont
                         node.years += amount
                     }
                 }
-                codeindex += code + '.'
+                codeindex += ((columnindex/2)+1).toFixed(0) + '.' + code + '.'
             }
             columnindex += 2 // skip name
             if (columnindex >= columns.length) {
