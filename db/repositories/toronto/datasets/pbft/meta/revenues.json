@@ -1,28 +1,22 @@
 {
-    "ComponentsLookupIndex": "Programs",
-    "CommonObjectsLookupIndex": "Revenues",
     "InflationAdjustable": true,
-    "YearsRange":{
-        "start":2015,
-        "end":2015
-    },
-    "ReferenceYear":2016,
     "DatasetName":"Revenues",
-    "DatasetTitle": "Council Approved Gross Operating Revenue",
+    "DatasetTitle": "Gross Operating Revenue",
     "Dataseries": [
         {
             "Type": "Components"
         },
         {
-            "Type": "CommonObjects"
+            "Type": "CommonDimension"
         }
     ],
-    "DataseriesTitles": {
+    "Dimensions":["Program", "Service","Activity","Revenue"],
+    "CellTitles": {
         "Components": "Programs",
-        "CommonObjects": "Revenues by Object"
+        "CommonDimension": "Receipts"
     },
     "Units": "DOLLAR",
     "UnitsAlias": "$000's",
     "UnitRatio": 1000,
-    "Structure":["Programs", "Services?","Activities?","CommonObjects"]
+    "CommonDimension":"Revenue"
 }

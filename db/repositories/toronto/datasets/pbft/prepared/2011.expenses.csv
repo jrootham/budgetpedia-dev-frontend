@@ -16,7 +16,7 @@ UNITS_NAME,Dollar,,,,,,
 UNITS_CODE,DOLLAR,,,,,,
 UNITS_MULTIPLIER,1000,,,,,,
 TOTAL_AMOUNT,10619554.329202082,,,,,,
-INTAKE_DATETIME,2016-09-08-15-23-41,,,,,,
+INTAKE_DATETIME,2016-09-19-14-04-33,,,,,,
 INTAKE_OPERATOR_ID,Henrik,,,,,,
 COLUMNS_CATEGORIES,"Program:CODE,Program:NAME,Expense:CODE, Expense:NAME",,,,,,
 COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION",,,,,,
@@ -102,8 +102,7 @@ Allocation from: WATERFRONT,Waterfront Secretariat,400A,Services & Rents,225.4,"
 CITYMANAGER,City Manager's Office,505A,Contribution To Capital,,,,
 CITYMANAGER,City Manager's Office,510A,Contribution To Reserves/Reserve Funds,75.60000000000001,,,"Original amount was 73.4, plus:
 Allocation from: WATERFRONT,Waterfront Secretariat,510A,Contributions to Reserve/Res Funds,2.2,"
-CITYMANAGER,City Manager's Office,650A,Other Expenditures,47277.1,,,"Original amount was null, plus:
-Allocation from: COMMPARTNER,Community Partnership and Investment Program,650A,Other Expenditures,47277.1,"
+CITYMANAGER,City Manager's Office,650A,Other Expenditures,,,,
 CITYMANAGER,City Manager's Office,700A,Inter-Divisional Charges,546.3000000000001,,,"Original amount was 541.6, plus:
 Allocation from: WATERFRONT,Waterfront Secretariat,700A,Interdivisional Charges,4.7,"
 CLERK,City Clerk's Office,100A,Salaries And Benefits,37485.6,,,
@@ -122,6 +121,15 @@ COMMCENTRES,Association of Community Centres,505A,Contribution To Capital,,,,
 COMMCENTRES,Association of Community Centres,510A,Contribution To Reserves/Reserve Funds,24.4,,,
 COMMCENTRES,Association of Community Centres,650A,Other Expenditures,7.1,,,
 COMMCENTRES,Association of Community Centres,700A,Inter-Divisional Charges,,,,
+CORPEXPENDITURES,Non-Program Expenditures,100A,Salaries And Benefits,,,,
+CORPEXPENDITURES,Non-Program Expenditures,200A,Materials & Supplies,,,,
+CORPEXPENDITURES,Non-Program Expenditures,300A,Equipment,,,,
+CORPEXPENDITURES,Non-Program Expenditures,400A,Service And Rent,,,,
+CORPEXPENDITURES,Non-Program Expenditures,505A,Contribution To Capital,,,,
+CORPEXPENDITURES,Non-Program Expenditures,510A,Contribution To Reserves/Reserve Funds,,,,
+CORPEXPENDITURES,Non-Program Expenditures,650A,Other Expenditures,47277.1,,,"Original amount was null, plus:
+Allocation from: COMMPARTNER,Community Partnership and Investment Program,650A,Other Expenditures,47277.1,"
+CORPEXPENDITURES,Non-Program Expenditures,700A,Inter-Divisional Charges,,,,
 CORPFINANCING,Capital & Corporate Financing,100A,Salaries And Benefits,48330.2,,,
 CORPFINANCING,Capital & Corporate Financing,200A,Materials & Supplies,29000.45,,,
 CORPFINANCING,Capital & Corporate Financing,300A,Equipment,,,,
@@ -168,7 +176,7 @@ EXHIBPLACE,Exhibition Place,300A,Equipment,177.2,,,
 EXHIBPLACE,Exhibition Place,400A,Service And Rent,36284.5,,,
 EXHIBPLACE,Exhibition Place,505A,Contribution To Capital,,,,
 EXHIBPLACE,Exhibition Place,510A,Contribution To Reserves/Reserve Funds,2122.7,,,
-EXHIBPLACE,Exhibition Place,650A,Other Expenditures,-16526.6,,,
+EXHIBPLACE,Exhibition Place,650A,Other Expenditures,-16526.6,Non-normal value,,
 EXHIBPLACE,Exhibition Place,700A,Inter-Divisional Charges,,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",100A,Salaries And Benefits,77515.7405862716,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",200A,Materials & Supplies,31456.4987145245,,,

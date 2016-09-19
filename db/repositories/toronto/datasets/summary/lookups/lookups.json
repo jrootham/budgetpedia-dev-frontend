@@ -1,8 +1,4 @@
 {
-    "permanence": {
-        "PERM": "Permanent",
-        "TEMP": "Temporary"
-    },
     "program": {
         "311SERVICE": "311 Toronto",
         "AFFHOUSING": "Affordable Housing Office",

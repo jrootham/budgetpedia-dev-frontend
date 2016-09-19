@@ -1,0 +1,1523 @@
+{
+    "MetaData": {
+        "InflationAdjustable": true,
+        "DatasetName": "Staffing",
+        "DatasetTitle": "Staff Positions",
+        "Dataseries": [
+            {
+                "Type": "Components"
+            },
+            {
+                "Type": "CommonDimension"
+            }
+        ],
+        "Dimensions": [
+            "Program",
+            "Permanence"
+        ],
+        "CellTitles": {
+            "Components": "Programs",
+            "CommonDimension": "Permanence"
+        },
+        "Units": "DOLLAR",
+        "UnitsAlias": "$000's",
+        "UnitRatio": 1000,
+        "CommonDimension": "Permanence",
+        "ReferenceYear": 2016,
+        "InflationReferenceYear": 2016,
+        "YearsRange": {
+            "start": 2015,
+            "end": 2015
+        }
+    },
+    "Data": {
+        "Adjusted": {
+            "311SERVICE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "AFFHOUSING": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {}
+            },
+            "ARENAS": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {}
+            },
+            "COMMCENTRES": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "AUDITGEN": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {}
+            },
+            "CHILDSERV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 1
+                }
+            },
+            "CLERK": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "COUNCIL": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "CITYMANAGER": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "PLANNING": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "COURTSERV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "ECONDEV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "ENGINEERING": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "EXHIBPLACE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "FACILITIES": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 1
+                }
+            },
+            "FIRE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 3
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 3
+                }
+            },
+            "FLEET": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "HERITAGE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {}
+            },
+            "IT": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 1
+                }
+            },
+            "INTEGRITYCOMM": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {}
+            },
+            "LEGAL": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "LOBBYREG": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {}
+            },
+            "LONGTERMHOME": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 2
+                }
+            },
+            "MAYOR": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {}
+            },
+            "LICENCING": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 1
+                }
+            },
+            "CFO": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "OMBUDSMAN": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {}
+            },
+            "TREASURER": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 1
+                }
+            },
+            "PARKINGTAGS": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "PARKS": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 3
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 5
+                }
+            },
+            "POLICYADMIN": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "SHELTERADMIN": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 1
+                }
+            },
+            "SOCIALDEV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "SOLIDWASTE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 1
+                }
+            },
+            "THEATRES": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "ATMOSPHERE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {}
+            },
+            "BUILDINGS": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "SOCIALSERV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 2
+                }
+            },
+            "PARAMEDIC": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 1
+                }
+            },
+            "PARKING": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "POLICE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 8
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 8
+                }
+            },
+            "POLICEBOARD": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {}
+            },
+            "PUBLICHEALTH": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 2
+                }
+            },
+            "LIBRARY": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 2
+                }
+            },
+            "TTCCONV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 12
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 12
+                }
+            },
+            "TTCWHEEL": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 1
+                }
+            },
+            "WATER": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 2
+                }
+            },
+            "ZOO": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0
+                        }
+                    }
+                },
+                "years": {
+                    "2015": 0
+                }
+            },
+            "TRANSPORTATION": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {
+                    "2015": 1
+                }
+            },
+            "YONGEDUNDAS": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "years": {}
+            }
+        },
+        "Nominal": {
+            "311SERVICE": {
+                "years": {
+                    "2015": 0.1
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "AFFHOUSING": {
+                "years": {},
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "ARENAS": {
+                "years": {},
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "COMMCENTRES": {
+                "years": {
+                    "2015": 0.1
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "AUDITGEN": {
+                "years": {},
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "CHILDSERV": {
+                "years": {
+                    "2015": 0.8999999999999999
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.2
+                        }
+                    }
+                }
+            },
+            "CLERK": {
+                "years": {
+                    "2015": 0.4
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "COUNCIL": {
+                "years": {
+                    "2015": 0.1
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    }
+                }
+            },
+            "CITYMANAGER": {
+                "years": {
+                    "2015": 0.4
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "PLANNING": {
+                "years": {
+                    "2015": 0.3
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.3
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "COURTSERV": {
+                "years": {
+                    "2015": 0.3
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.3
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "ECONDEV": {
+                "years": {
+                    "2015": 0.30000000000000004
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    }
+                }
+            },
+            "ENGINEERING": {
+                "years": {
+                    "2015": 0.1
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "EXHIBPLACE": {
+                "years": {
+                    "2015": 0.4
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "FACILITIES": {
+                "years": {
+                    "2015": 0.9
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.9
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "FIRE": {
+                "years": {
+                    "2015": 3.1
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 3.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "FLEET": {
+                "years": {
+                    "2015": 0.2
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "HERITAGE": {
+                "years": {},
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "IT": {
+                "years": {
+                    "2015": 0.6
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.6
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "INTEGRITYCOMM": {
+                "years": {},
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "LEGAL": {
+                "years": {
+                    "2015": 0.3
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.3
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "LOBBYREG": {
+                "years": {},
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "LONGTERMHOME": {
+                "years": {
+                    "2015": 2.2
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "MAYOR": {
+                "years": {},
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "LICENCING": {
+                "years": {
+                    "2015": 0.5
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.5
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "CFO": {
+                "years": {
+                    "2015": 0.1
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "OMBUDSMAN": {
+                "years": {},
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "TREASURER": {
+                "years": {
+                    "2015": 0.7
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "PARKINGTAGS": {
+                "years": {
+                    "2015": 0.4
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "PARKS": {
+                "years": {
+                    "2015": 4.5
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1.9
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 2.6
+                        }
+                    }
+                }
+            },
+            "POLICYADMIN": {
+                "years": {
+                    "2015": 0.2
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "SHELTERADMIN": {
+                "years": {
+                    "2015": 0.7
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.6
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    }
+                }
+            },
+            "SOCIALDEV": {
+                "years": {
+                    "2015": 0.1
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "SOLIDWASTE": {
+                "years": {
+                    "2015": 1.1
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    }
+                }
+            },
+            "THEATRES": {
+                "years": {
+                    "2015": 0.2
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    }
+                }
+            },
+            "ATMOSPHERE": {
+                "years": {},
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "BUILDINGS": {
+                "years": {
+                    "2015": 0.4
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "SOCIALSERV": {
+                "years": {
+                    "2015": 2.1
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    }
+                }
+            },
+            "PARAMEDIC": {
+                "years": {
+                    "2015": 1.4
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1.4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "PARKING": {
+                "years": {
+                    "2015": 0.30000000000000004
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    }
+                }
+            },
+            "POLICE": {
+                "years": {
+                    "2015": 7.9
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 7.7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.2
+                        }
+                    }
+                }
+            },
+            "POLICEBOARD": {
+                "years": {},
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "PUBLICHEALTH": {
+                "years": {
+                    "2015": 1.8
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1.8
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "LIBRARY": {
+                "years": {
+                    "2015": 1.7
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1.7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "TTCCONV": {
+                "years": {
+                    "2015": 11.7
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 11.7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "TTCWHEEL": {
+                "years": {
+                    "2015": 0.6
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.6
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "WATER": {
+                "years": {
+                    "2015": 1.7000000000000002
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1.6
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    }
+                }
+            },
+            "ZOO": {
+                "years": {
+                    "2015": 0.4
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 0.3
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.1
+                        }
+                    }
+                }
+            },
+            "TRANSPORTATION": {
+                "years": {
+                    "2015": 1
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            },
+            "YONGEDUNDAS": {
+                "years": {},
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {}
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                }
+            }
+        }
+    },
+    "Notes": {},
+    "Allocations": {},
+    "Headers": {
+        "2015": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuamFPRFNZZXhWRDg",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuRGdBOVBWLTFGRTg",
+            "SOURCE_DOCUMENT_TITLE": "2015 OPERATING BUDGET BRIEFING NOTE Staff Recommended Position Changes ",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "PDF p. 19",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2015 STAFF RECOMMENDED OPERATING BUDGET OPERATING POSITIONS",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OubVNjU2RvVVBELWc",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2015,
+            "VERSION": "PBFT",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "[[GREEN]]This is the operating budget staffing, and does not include capital budget staff;\n[[RED]]Prior to the council-approved version;\n[[ORANGE]]rounding causes totals to differ by 0.2;",
+            "NOTES_SEVERITY": "RED",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 50734.9,
+            "INTAKE_DATETIME": "2016-09-19-14-04-34",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME,Permanence:CODE, Permanence:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        }
+    },
+    "Messages": null
+}

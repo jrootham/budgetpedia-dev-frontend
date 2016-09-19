@@ -1,27 +1,22 @@
 {
-    "ComponentsLookupIndex":"Programs",
-    "CommonObjectsLookupIndex": "TimeAllocations",
-    "InflationAdjustable": false,
-    "YearsRange":{
-        "start":2015,
-        "end":2015
-    },
-    "ReferenceYear":2016,
+    "InflationAdjustable": true,
     "DatasetName":"Staffing",
-    "DatasetTitle": "Council Approved Staff Positions",
+    "DatasetTitle": "Staff Positions",
     "Dataseries": [
         {
             "Type": "Components"
         },
         {
-            "Type": "CommonObjects"
+            "Type": "CommonDimension"
         }
     ],
-    "DataseriesTitles": {
+    "Dimensions":["Program", "Permanence"],
+    "CellTitles": {
         "Components": "Programs",
-        "CommonObjects": "Permanence"
+        "CommonDimension": "Permanence"
     },
-    "Units": "FTE",
-    "UnitRatio":1,
-    "Structure":["Programs", "Services?","Activities?","CommonObjects"]
+    "Units": "DOLLAR",
+    "UnitsAlias": "$000's",
+    "UnitRatio": 1000,
+    "CommonDimension":"Permanence"
 }

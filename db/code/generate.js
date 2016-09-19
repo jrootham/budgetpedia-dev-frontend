@@ -187,6 +187,7 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
     let categorymeta = common.getCategoryMeta(filecomponents, filename) // names, codes, columns, per _COLUMNS_CATEGORIES_
     let attributemeta = common.getAttributeMeta(filecomponents, filename) // names, codes, columns, per _COLUMNS_ATTRIBUTES_
     let columns = categorymeta.columns
+    // console.log('columns for ' + filename, columns)
     let allocationsindex = columns.length + attributemeta.columns.length -1
     let amountindex = columns.length // next column
     let notesindex = amountindex + 1
@@ -197,6 +198,7 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
     unitsmultiplier = unitsmultiplier[1] // multiply for singles
     let unitsratio = metadata.UnitRatio // divide for presentation
     let multiplier = unitsmultiplier/unitsratio
+    // console.log('multiplier',multiplier, filename)
     let unitdecimals = context.settings.Decimals[unitscode] || 0
 
     let headersource = {}
@@ -209,7 +211,13 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
     for (let line of datasource) {
         let amount = line[amountindex]
         if (typeof amount == 'string') amount = amount.trim() // sometimes a blank char shows up for some reason
-        amount = Number(line[amountindex])
+        amount = Number(amount)
+        if (amount && !Number.isNaN(amount)) {
+            if (multiplier != 1) {
+                amount *= multiplier
+            }
+            amount = Number(amount.toFixed(unitdecimals))
+        }
         let components = basedata
         let columnindex = 0
         let code = line[columnindex]
@@ -222,15 +230,10 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
                 }
                 node = components[code]
                 if (amount && !Number.isNaN(amount)) { // ignore if no amount is involved
-                    if (multiplier != 1) {
-                        amount *= multiplier
-                    }
-                    amount = Number(amount.toFixed(unitdecimals))
-                    // TODO: format amount to correct number of decimals
                     if (!node.years[year]) {
                         node.years[year] = amount
                     } else { // increment amount
-                        node.years += amount
+                        node.years[year] += amount
                     }
                 }
                 codeindex += ((columnindex/2)+1).toFixed(0) + '.' + code + '.'
@@ -245,7 +248,7 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
             }
             code = line[columnindex]
             if (code) { // else no category at this level
-                if (metdata.CommonDimension && metdata.CommonDimension == code) {
+                if (metadata.CommonDimension && (metadata.CommonDimension == columndef.name)) {
                     // create components property
                     if (!node.CommonDimension) {
                         node.CommonDimension = {}
@@ -292,7 +295,7 @@ const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationserie
         let subcomponents = nominalcomponent.Components
         if (subcomponents) {
             adjustedcomponent.Components = {}
-            addAdjustedSeries(subcomponents, adjustedcomponents.Components, inflationseries, decimals)
+            addAdjustedSeries(subcomponents, adjustedcomponent.Components, inflationseries, decimals)
         }
         let commondimensions = nominalcomponent.CommonDimension
         if (commondimensions) {
