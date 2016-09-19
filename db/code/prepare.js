@@ -102,7 +102,7 @@ const prepareFile = (filename, continuity, context) => {
 
     utilities.writeFileCsv(context.preprocessedpath + 'latest/' + filename, originalcsv)
     let sourcedatedfilespec = utilities.infixDateTime(filename)
-    utilities.moveFile(sourcefilespec, context.preprocessedpath + 'processed/' + sourcedatedfilespec)
+    // utilities.moveFile(sourcefilespec, context.preprocessedpath + 'processed/' + sourcedatedfilespec)
 
 }
 
