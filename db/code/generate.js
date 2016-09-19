@@ -2,7 +2,6 @@
 // generate.js
 
 /*
-    TODO: resave file total to remove unwanted decimals
 */
 
 'use strict'
@@ -106,7 +105,7 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     let json = {
         "MetaData":null,
         "Data":null,
-        "Notes":{}, // by year: Metadata, Allocations (by code), Notes (by code)
+        "Notes":{}, 
         "Allocations":{},
         "Headers":{},
         "Messages":null
@@ -114,8 +113,8 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     let metafilename = aspect + '.json'
     let metapath = context.metapath
     let metadata = utilities.readFileJson(metapath + metafilename)
-    let inflationseries = null
-    let Decimals = context.settings.Decimals
+
+    // let Decimals = context.settings.Decimals
     json.MetaData = metadata
     if (messages[aspect]) {
         json.Messages = messages[aspect]
@@ -159,10 +158,10 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     let headers = json.Headers
     let allocations = json.Allocations
     for (let filename of aspectfiles) {
-        addData(filename, basedata, notes, allocations, headers, metadata, context)
+        addPreparedData(filename, basedata, notes, allocations, headers, metadata, context)
     }
     if (metadata.InflationAdjustable) {
-        addAdjusted(data, metadata, context)
+        addAdjustedData(data, metadata, context)
     }
     // save files
     let targetfilename = aspect + '.json'
@@ -176,7 +175,7 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
 }
 
 // add base data and notes data
-const addData = (filename, basedata, notes, allocations, headers, metadata, context) => {
+const addPreparedData = (filename, basedata, notes, allocations, headers, metadata, context) => {
     let dimensions = metadata.Dimensions
     let preparedpath = context.preparedpath
     let csv = utilities.readFileCsv(preparedpath + filename)
@@ -261,27 +260,29 @@ const addData = (filename, basedata, notes, allocations, headers, metadata, cont
                 }
             }
         } while (true)
+        // add notes
         if (line[notesindex]) {
             notes[codeindex] = line[notesindex]
         }
+        // add allocations
         if (line[allocationsindex]) {
             allocations[codeindex] = line[allocationsindex]
         }
     }
 }
 
-const addAdjusted = (data, metadata, context) => {
+const addAdjustedData = (data, metadata, context) => {
     let adjusted = data.Adjusted
     let nominal = data.Nominal
     let inflationseries = utilities.readFileJson(context.dataseriespath + 'inflation.json')
 
     // start recursion
-    addSeries(nominal, adjusted, inflationseries, metadata.Decimals)
+    addAdjustedSeries(nominal, adjusted, inflationseries, metadata.Decimals)
 
 }
 
 // recursive
-const addSeries = (nominalcomponents, adjustedcomponents, inflationseries, decimals) => {
+const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationseries, decimals) => {
 
     let multiplier, amount
 
@@ -291,12 +292,12 @@ const addSeries = (nominalcomponents, adjustedcomponents, inflationseries, decim
         let subcomponents = nominalcomponent.Components
         if (subcomponents) {
             adjustedcomponent.Components = {}
-            addSeries(subcomponents, adjustedcomponents.Components, inflationseries, decimals)
+            addAdjustedSeries(subcomponents, adjustedcomponents.Components, inflationseries, decimals)
         }
         let commondimensions = nominalcomponent.CommonDimension
         if (commondimensions) {
             adjustedcomponent.CommonDimension = {}
-            addSeries(commondimensions, adjustedcomponent.CommonDimension, inflationseries, decimals)
+            addAdjustedSeries(commondimensions, adjustedcomponent.CommonDimension, inflationseries, decimals)
         }
         if (!nominalcomponent.years) {
             continue
