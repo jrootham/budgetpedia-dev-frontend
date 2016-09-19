@@ -60,6 +60,8 @@ const generateLookups = context => {
 const generateJsonFiles = context => {
     let preparedfiles = context.preparedfiles
     let preparedpath = context.preparedpath
+    let messagesfiles = context.messagesfiles
+    let messagespath = context.messagespath
 
     // sort files into aspects
     let aspects = {}
@@ -76,13 +78,26 @@ const generateJsonFiles = context => {
         aspects[aspect].sort()
     }
 
+    let messages = {} 
+    for (let filename of messagesfiles) {
+        let parts = filename.split('.')
+        let aspect = parts[0]
+        let csv = utilities.readFileCsv(messagespath + filename)
+        if (!messages[aspect]) {
+            messages[aspect] = {}
+        }
+        for (let line of csv) {
+            messages[aspect][line[0]] = line[1]
+        }
+    }
+
     for (let aspect in aspects) {
-        generateJsonFile(aspect, aspects, context)
+        generateJsonFile(aspect, aspects, messages, context)
     }
 
 }
 
-const generateJsonFile = (aspect, aspects, context) => {
+const generateJsonFile = (aspect, aspects, messages, context) => {
     if (aspects[aspect].length == 0) {
         utilities.log('no files for aspect ' + aspect)
         return
@@ -93,7 +108,8 @@ const generateJsonFile = (aspect, aspects, context) => {
         "Data":null,
         "Notes":{}, // by year: Metadata, Allocations (by code), Notes (by code)
         "Allocations":{},
-        "Headers":{}
+        "Headers":{},
+        "Messages":null
     }
     let metafilename = aspect + '.json'
     let metapath = context.metapath
@@ -101,6 +117,9 @@ const generateJsonFile = (aspect, aspects, context) => {
     let inflationseries = null
     let Decimals = context.settings.Decimals
     json.MetaData = metadata
+    if (messages[aspect]) {
+        json.Messages = messages[aspect]
+    }
     // add ReferenceYear, InflationReferenceYear, and YearsRange:{start, end}
     metadata.ReferenceYear = context.settings.ReferenceYear
     metadata.Decimals = context.settings.Decimals[metadata.Units]

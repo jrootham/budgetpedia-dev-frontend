@@ -271,6 +271,10 @@ exports.collectGenerateData = context => {
     context.metapath = filedata.path
     context.metafiles = filedata.files
 
+    filedata = collectFileData(context, 'messages')
+
+    context.messagespath = filedata.path
+    context.messagesfiles = filedata.files
 }
 
 const collectFileData = (context, dirname, ext = 'csv') => {

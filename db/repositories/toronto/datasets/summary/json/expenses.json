@@ -2226,5 +2226,8 @@
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
         }
+    },
+    "Messages": {
+        "WARNING": "Caution: The datasets used for these charts have multiple issues and uncertainties. Please refer to source documents, and be clear about the interpretation of those documents, before drawing any firm conclusions."
     }
 }
