@@ -825,203 +825,357 @@
             }
         }
     },
-    "Notes": [],
-    "Allocations": [
-        [
-            "2004.CFO.",
-            "Original amount was null, plus:\nAllocation from: FINANCE,Finance,815 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
-        ],
-        [
-            "2004.CITYMANAGER.",
-            "Original amount was null, plus:\nAllocation from: INNOVATION,Service Improvement & Innovation,86 (guess)\nAllocation from: CORPCOMMS,Corporate Communications,84 (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,305 (org chart)"
-        ],
-        [
-            "2004.CORPEXPENDITURES.",
-            "Original amount was null, plus:\nAllocation from: NONPROGRAM,Non Program,1 (consolidate)"
-        ],
-        [
-            "2004.ECONDEV.",
-            "Original amount was null, plus:\nAllocation from: CULTURE,Culture,154.7 (Guess, by name ‘Culture’)\nAllocation from: BIZSUPPORT,Customer & Business Support,247.7 (Guess)\nAllocation from: TOURISM,Tourism,40.3 (guess)"
-        ],
-        [
-            "2004.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,563 (toronto.ca)"
-        ],
-        [
-            "2004.LONGTERMHOME.",
-            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2065.8 (logical)"
-        ],
-        [
-            "2004.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1152 (logical)"
-        ],
-        [
-            "2004.SHELTERADMIN.",
-            "Original amount was 659.6, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,477.9 (budget jumped after WES support services discontinued)"
-        ],
-        [
-            "2005.CFO.",
-            "Original amount was null, plus:\nAllocation from: FINANCE,Finance,813 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
-        ],
-        [
-            "2005.CITYMANAGER.",
-            "Original amount was null, plus:\nAllocation from: INNOVATION,Service Improvement & Innovation,84 (guess)\nAllocation from: CORPCOMMS,Corporate Communications,84 (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,309 (org chart)"
-        ],
-        [
-            "2005.CORPEXPENDITURES.",
-            "Original amount was null, plus:\nAllocation from: NONPROGRAM,Non Program,1 (consolidate)"
-        ],
-        [
-            "2005.ECONDEV.",
-            "Original amount was null, plus:\nAllocation from: CULTURE,Culture,157.7 (Guess, by name ‘Culture’)\nAllocation from: BIZSUPPORT,Customer & Business Support,251.1 (Guess)\nAllocation from: TOURISM,Tourism,43.3 (guess)"
-        ],
-        [
-            "2005.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,587.3 (toronto.ca)"
-        ],
-        [
-            "2005.LONGTERMHOME.",
-            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2106.5 (logical)"
-        ],
-        [
-            "2005.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1164 (logical)"
-        ],
-        [
-            "2005.SHELTERADMIN.",
-            "Original amount was 702.6, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,477.9 (budget jumped after WES support services discontinued)"
-        ],
-        [
-            "2006.CFO.",
-            "Original amount was 165, plus:\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
-        ],
-        [
-            "2006.CITYMANAGER.",
-            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,6 (org chart)\nAllocation from: CORPCOMMS,Corporate Communications,83 (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,305 (org chart)"
-        ],
-        [
-            "2006.ECONDEV.",
-            "Original amount was null, plus:\nAllocation from: CULTURE,Culture,144 (Guess, by name ‘Culture’)\nAllocation from: TOURISM,Tourism,41.3 (guess)\nAllocation from: BIZSUPPORT,Business Support,82 (Guess)"
-        ],
-        [
-            "2006.LONGTERMHOME.",
-            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2126.9 (logical)"
-        ],
-        [
-            "2006.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1197.3 (logical)"
-        ],
-        [
-            "2006.SHELTERADMIN.",
-            "Original amount was 689, plus:\nAllocation from: SUPPORTSERV,WES - Technical Services,384.5 (budget jumped after WES support services discontinued)"
-        ],
-        [
-            "2006.TRANSPORTATION.",
-            "Original amount was null, plus:\nAllocation from: BEAUTY,Clean & Beautiful Secretariat,2 (Guess)"
-        ],
-        [
-            "2007.CFO.",
-            "Original amount was 120, plus:\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
-        ],
-        [
-            "2007.CITYMANAGER.",
-            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,7 (org chart)\nAllocation from: CREATIVEINFO,Public Information & Creative Services,60 (Guess)"
-        ],
-        [
-            "2007.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,196.7 (toronto.ca)"
-        ],
-        [
-            "2007.LONGTERMHOME.",
-            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2121.5 (logical)"
-        ],
-        [
-            "2007.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1211.3 (logical)"
-        ],
-        [
-            "2007.TRANSPORTATION.",
-            "Original amount was null, plus:\nAllocation from: BEAUTY,Clean & Beautiful Secretariat,2 (Guess)"
-        ],
-        [
-            "2008.CFO.",
-            "Original amount was 124, plus:\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
-        ],
-        [
-            "2008.CITYMANAGER.",
-            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,11 (org chart)\nAllocation from: CREATIVEINFO,Public Information & Creative Services,61 (Guess)"
-        ],
-        [
-            "2008.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,165.7 (toronto.ca)"
-        ],
-        [
-            "2008.LONGTERMHOME.",
-            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2167.4 (logical)"
-        ],
-        [
-            "2008.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1204 (logical)"
-        ],
-        [
-            "2009.CFO.",
-            "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,27.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,6"
-        ],
-        [
-            "2009.CITYMANAGER.",
-            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,6 (org chart)"
-        ],
-        [
-            "2009.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,161.4 (toronto.ca)"
-        ],
-        [
-            "2009.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1213 (logical)"
-        ],
-        [
-            "2010.CFO.",
-            "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,28.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,7"
-        ],
-        [
-            "2010.CITYMANAGER.",
-            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,6 (org chart)"
-        ],
-        [
-            "2010.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,167.4 (toronto.ca)"
-        ],
-        [
-            "2010.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1210.5 (logical)"
-        ],
-        [
-            "2011.CFO.",
-            "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,26.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,7"
-        ],
-        [
-            "2011.CITYMANAGER.",
-            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,7 (org chart)"
-        ],
-        [
-            "2011.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,164.7 (toronto.ca)"
-        ],
-        [
-            "2011.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1218 (logical)"
-        ],
-        [
-            "2012.CFO.",
-            "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,22.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,7"
-        ],
-        [
-            "2012.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,147.8 (toronto.ca)"
-        ],
-        [
-            "2012.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1213 (logical)"
-        ]
-    ]
+    "Notes": {},
+    "Allocations": {
+        "2004.CFO.": "Original amount was null, plus:\nAllocation from: FINANCE,Finance,815 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4",
+        "2004.CITYMANAGER.": "Original amount was null, plus:\nAllocation from: INNOVATION,Service Improvement & Innovation,86 (guess)\nAllocation from: CORPCOMMS,Corporate Communications,84 (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,305 (org chart)",
+        "2004.CORPEXPENDITURES.": "Original amount was null, plus:\nAllocation from: NONPROGRAM,Non Program,1 (consolidate)",
+        "2004.ECONDEV.": "Original amount was null, plus:\nAllocation from: CULTURE,Culture,154.7 (Guess, by name ‘Culture’)\nAllocation from: BIZSUPPORT,Customer & Business Support,247.7 (Guess)\nAllocation from: TOURISM,Tourism,40.3 (guess)",
+        "2004.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,563 (toronto.ca)",
+        "2004.LONGTERMHOME.": "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2065.8 (logical)",
+        "2004.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1152 (logical)",
+        "2004.SHELTERADMIN.": "Original amount was 659.6, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,477.9 (budget jumped after WES support services discontinued)",
+        "2005.CFO.": "Original amount was null, plus:\nAllocation from: FINANCE,Finance,813 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4",
+        "2005.CITYMANAGER.": "Original amount was null, plus:\nAllocation from: INNOVATION,Service Improvement & Innovation,84 (guess)\nAllocation from: CORPCOMMS,Corporate Communications,84 (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,309 (org chart)",
+        "2005.CORPEXPENDITURES.": "Original amount was null, plus:\nAllocation from: NONPROGRAM,Non Program,1 (consolidate)",
+        "2005.ECONDEV.": "Original amount was null, plus:\nAllocation from: CULTURE,Culture,157.7 (Guess, by name ‘Culture’)\nAllocation from: BIZSUPPORT,Customer & Business Support,251.1 (Guess)\nAllocation from: TOURISM,Tourism,43.3 (guess)",
+        "2005.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,587.3 (toronto.ca)",
+        "2005.LONGTERMHOME.": "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2106.5 (logical)",
+        "2005.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1164 (logical)",
+        "2005.SHELTERADMIN.": "Original amount was 702.6, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,477.9 (budget jumped after WES support services discontinued)",
+        "2006.CFO.": "Original amount was 165, plus:\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4",
+        "2006.CITYMANAGER.": "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,6 (org chart)\nAllocation from: CORPCOMMS,Corporate Communications,83 (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,305 (org chart)",
+        "2006.ECONDEV.": "Original amount was null, plus:\nAllocation from: CULTURE,Culture,144 (Guess, by name ‘Culture’)\nAllocation from: TOURISM,Tourism,41.3 (guess)\nAllocation from: BIZSUPPORT,Business Support,82 (Guess)",
+        "2006.LONGTERMHOME.": "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2126.9 (logical)",
+        "2006.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1197.3 (logical)",
+        "2006.SHELTERADMIN.": "Original amount was 689, plus:\nAllocation from: SUPPORTSERV,WES - Technical Services,384.5 (budget jumped after WES support services discontinued)",
+        "2006.TRANSPORTATION.": "Original amount was null, plus:\nAllocation from: BEAUTY,Clean & Beautiful Secretariat,2 (Guess)",
+        "2007.CFO.": "Original amount was 120, plus:\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4",
+        "2007.CITYMANAGER.": "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,7 (org chart)\nAllocation from: CREATIVEINFO,Public Information & Creative Services,60 (Guess)",
+        "2007.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,196.7 (toronto.ca)",
+        "2007.LONGTERMHOME.": "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2121.5 (logical)",
+        "2007.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1211.3 (logical)",
+        "2007.TRANSPORTATION.": "Original amount was null, plus:\nAllocation from: BEAUTY,Clean & Beautiful Secretariat,2 (Guess)",
+        "2008.CFO.": "Original amount was 124, plus:\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4",
+        "2008.CITYMANAGER.": "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,11 (org chart)\nAllocation from: CREATIVEINFO,Public Information & Creative Services,61 (Guess)",
+        "2008.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,165.7 (toronto.ca)",
+        "2008.LONGTERMHOME.": "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2167.4 (logical)",
+        "2008.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1204 (logical)",
+        "2009.CFO.": "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,27.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,6",
+        "2009.CITYMANAGER.": "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,6 (org chart)",
+        "2009.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,161.4 (toronto.ca)",
+        "2009.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1213 (logical)",
+        "2010.CFO.": "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,28.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,7",
+        "2010.CITYMANAGER.": "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,6 (org chart)",
+        "2010.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,167.4 (toronto.ca)",
+        "2010.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1210.5 (logical)",
+        "2011.CFO.": "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,26.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,7",
+        "2011.CITYMANAGER.": "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,7 (org chart)",
+        "2011.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,164.7 (toronto.ca)",
+        "2011.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1218 (logical)",
+        "2012.CFO.": "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,22.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,7",
+        "2012.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,147.8 (toronto.ca)",
+        "2012.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1213 (logical)"
+    },
+    "Headers": {
+        "2004": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuSmJqenVPMGVaUWM",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "2005 BUDGET BRIEFING NOTE - Summary of 2005 Staff Recommended Approved Positions",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 7-8",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2005 STAFF RECOMMENDED OPERATING BUDGET CORPORATE SUMMARY OF APPROVED POSITIONS PERMANENT VS TEMPORARY",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuUGRxbjh0M3R3akU",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2004,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 46129.1,
+            "INTAKE_DATETIME": "2016-09-16-16-13-06",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2005": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuYk5Yb1o0d2ZXdVU",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "2005 BUDGET BRIEFING NOTE - Summary of 2005 Staff Recommended Approved Positions",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 7-8",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2005 STAFF RECOMMENDED OPERATING BUDGET CORPORATE SUMMARY OF APPROVED POSITIONS PERMANENT VS TEMPORARY",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuN2lnOE1aWWdVREU",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2005,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 46681.299999999996,
+            "INTAKE_DATETIME": "2016-09-16-16-13-06",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2006": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OueVpxSzVXb2pCbFE",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "2006 BUDGET BRIEFING NOTE - Summary of 2006 Proposed Approved Positions (Levy Operations)",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 9",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2006 PROPOSED OPERATING BUDGET CORPORATE SUMMARY OF APPROVED POSITIONS (OPERATING) PERMANENT VS TEMPORARY",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OubkpOcW9KTnZER2M",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2006,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 45677.8,
+            "INTAKE_DATETIME": "2016-09-16-16-13-06",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2007": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuTzhtMjZDLWU2ZkE",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "2007 BUDGET BRIEFING NOTE Summary of 2007 Council Approved Positions",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 11",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2007 COUNCIL APPROVED OPERATING BUDGET CORPORATE SUMMARY OF APPROVED POSITIONS (OPERATING) PERMANENT VS TEMPORARY",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuSTdqV0ZSemo1V3c",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2007,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 48333,
+            "INTAKE_DATETIME": "2016-09-16-16-13-07",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2008": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OucVZPSlozZ3h4bDQ",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "2008 BUDGET BRIEFING NOTE 2008 Executive Committee Recommended Approved Positions",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 9",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2008 EXECUTIVE COMMITTEE RECOMMENDED OPERATING BUDGET APPROVED POSITIONS - OPERATING",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuTnc1eUZHWks0RE0",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2008,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 48736.700000000004,
+            "INTAKE_DATETIME": "2016-09-16-16-13-07",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2009": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuZ0R6NTc3QWkxX0U",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "2009 BUDGET BRIEFING NOTE 2009 Staff Recommended Approved Positions",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 21",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2009 STAFF RECOMMENDED OPERATING BUDGET APPROVED OPERATING POSITIONS",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuaHJRbjhGUlpac0U",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2009,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 50015.6,
+            "INTAKE_DATETIME": "2016-09-16-16-13-07",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2010": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OudjJ2Q19aWTY1ZjQ",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "2010 BUDGET BRIEFING NOTE Staff Recommended Approved Position Changes Revised",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 11",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2010 STAFF RECOMMENDED OPERATING BUDGET APPROVED OPERATING POSITIONS - ADDITIONS",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuTVoyakNHNUNlZFE",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2010,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 50258.899999999994,
+            "INTAKE_DATETIME": "2016-09-16-16-13-07",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2011": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuY2t5c1JTby1Oc0k",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "2011 Budget Committee Recommended Tax Supported Operating Budget",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 31",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2011 BUDGET COMMITTEE RECOMMENDED OPERATING BUDGET APPROVED OPERATING POSITIONS",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuRnl6OW1ONWdOTHM",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2011,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 50314.299999999996,
+            "INTAKE_DATETIME": "2016-09-16-16-13-07",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2012": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuRnFxVFdwRGdtUFE",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "2013 BUDGET BRIEFING NOTE Budget Committee Recommended Position Changes and 2012 Actual Staffing and Year-End Vacancy Projection ",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 13",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2013 BUDGET COMMITTEE RECOMMENDED OPERATING BUDGET OPERATING POSITIONS",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8Ouc2NFTmJVQl9hQms",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2012,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 48909.3,
+            "INTAKE_DATETIME": "2016-09-16-16-13-07",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2013": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuZlFzMkdkamJGcjA",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "Operating Variance Report for the Year Ended December 31, 2013",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 22",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "Appendix D: CITY OF TORONTOCONSOLIDATED APPROVED COMPLEMENTFOR THE YEAR ENDED DECEMBER 31, 2013",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OudThYU0VhUVhqT00",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2013,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 49145.90000000001,
+            "INTAKE_DATETIME": "2016-09-16-16-13-50",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2014": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuSDVsQ3RQb19pbE0",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "Operating Variance Report for the Year Ended 12/31/14",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 25",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "Appendix D: CITY OF TORONTOCONSOLIDATED APPROVED COMPLEMENTFOR THE YEAR ENDED DECEMBER 31, 2014",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuQVJjZ2x2YjlpdkE",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2014,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 48071.200000000004,
+            "INTAKE_DATETIME": "2016-09-16-16-13-07",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2015": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuQWNSNnFSVkUzVm8",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "Operating Variance Report for the Year Ended December 31, 2015",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p.26",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "Appendix D: CITY OF TORONTOCONSOLIDATED APPROVED COMPLEMENTFOR THE YEAR ENDED DECEMBER 31, 2015 ",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuNUlNRWxndGQ2UjA",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2015,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 51146.1,
+            "INTAKE_DATETIME": "2016-09-16-16-13-07",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2016": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuWW5NNzA5RlZsX28",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
+            "SOURCE_DOCUMENT_TITLE": "Operating Variance Report for the Six Month Period Ended June 30, 2016",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p.27",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "Appendix D: CITY OF TORONTOCONSOLIDATED APPROVED COMPLEMENTFOR THE SIX MONTHS ENDED JUNE 30, 2016",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuazZCa2xHMTR0T2M",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2016,
+            "VERSION": "Summary",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 52039.00000000001,
+            "INTAKE_DATETIME": "2016-09-16-16-13-07",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        }
+    }
 }

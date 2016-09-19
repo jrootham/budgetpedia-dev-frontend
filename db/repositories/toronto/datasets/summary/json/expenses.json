@@ -1824,308 +1824,407 @@
             }
         }
     },
-    "Notes": [
-        [
-            "2004.PARKING.",
-            "Parking Authority (TPA): Net revenue has been distributed according to City's Revenue Sharing Agreement: 25% retained by TPA, 75% to the City (with $4.679 m to Transportation and the balance to Non-program)."
-        ],
-        [
-            "2005.PARKING.",
-            "Parking Authority's net revenue is distributed according to City's Revenue Sharing Agreement: 75% to the City, and 25% retained by Parking Authority."
-        ],
-        [
-            "2008.PARKING.",
-            "https://drive.google.com/open?id=0BzB3t6aSc9bDQ3BJNTZBeHhyZEU"
-        ],
-        [
-            "2008.WATER.",
-            "https://drive.google.com/open?id=0BzB3t6aSc9bDQ3BJNTZBeHhyZEU"
-        ],
-        [
-            "2013.PARKING.",
-            "http://www1.toronto.ca/City%20Of%20Toronto/Strategic%20Communications/City%20Budget/2013/Operating%20Budget%20Summaries/op13_an_tpa.pdf"
-        ],
-        [
-            "2013.SOLIDWASTE.",
-            "http://www1.toronto.ca/City%20Of%20Toronto/Strategic%20Communications/City%20Budget/2013/Operating%20Budget%20Summaries/op13_an_swms.pdf https://drive.google.com/open?id=0BzB3t6aSc9bDb1lJY1NJbHBTOFk"
-        ],
-        [
-            "2013.WATER.",
-            "http://www1.toronto.ca/City%20Of%20Toronto/Strategic%20Communications/City%20Budget/2013/Operating%20Budget%20Summaries/op13_an_water.pdf https://drive.google.com/open?id=0BzB3t6aSc9bDWmhZSXNKSWN1aTQ"
-        ]
-    ],
-    "Allocations": [
-        [
-            "2003.CFO.",
-            "Original amount was null, plus:\nAllocation from: FINANCE,Finance,68975.3 (org chart)"
-        ],
-        [
-            "2003.CITYMANAGER.",
-            "Original amount was 5625.5, plus:\nAllocation from: CORPCOMMS,Corporate Communications,6439.6 (Guess)\nAllocation from: EMERGPLAN,Emergency Management Plan,1854.3 (org chart)\nAllocation from: HUMANRESOURCES,Human Resources,26472.7 (org chart)\nAllocation from: INNOVATION,Service Improvement & Innovation,2654.6 (guess)"
-        ],
-        [
-            "2003.CORPEXPENDITURES.",
-            "Original amount was 236357.3, plus:\nAllocation from: GRANTPROGRAM,Consolidated Grant Program,39562.7 (guess)\nAllocation from: KVC,Keele Valley Closure (KVC),21425 (consolidate)"
-        ],
-        [
-            "2003.ECONDEV.",
-            "Original amount was null, plus:\nAllocation from: BIZSUPPORT,Customer & Business Support,19368.9 (Guess)\nAllocation from: CULTURE,Culture,12190.4 (Guess, by name ‘Culture’)\nAllocation from: TOURISM,Tourism,12068.1 (guess)"
-        ],
-        [
-            "2003.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,48132.1 (toronto.ca)"
-        ],
-        [
-            "2003.LONGTERMHOME.",
-            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,159418.9 (logical)"
-        ],
-        [
-            "2003.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,114268.1 (logical)"
-        ],
-        [
-            "2003.POLICE.",
-            "Original amount was null, plus:\nAllocation from: TOTALPOLICE,Toronto Police Service & Board,659680 (later split out board)"
-        ],
-        [
-            "2003.SHELTERADMIN.",
-            "Original amount was 638854.6, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,33813.9 (budget jumped after WES support services discontinued)"
-        ],
-        [
-            "2003.TTCCONV.",
-            "Original amount was null, plus:\nAllocation from: TOTALTTC,Toronto Transit Commission (Incl. Wheel Trans),957167.2 (later split out wheel trans)"
-        ],
-        [
-            "2004.CFO.",
-            "Original amount was null, plus:\nAllocation from: FINANCE,Finance,70199.2, (org chart)"
-        ],
-        [
-            "2004.CITYMANAGER.",
-            "Original amount was 5804.5, plus:\nAllocation from: CORPCOMMS,Corporate Communications,6507.6, (Guess)\nAllocation from: EMERGPLAN,Emergency Management Plan,1770.3, (org chart)\nAllocation from: HUMANRESOURCES,Human Resources,27416.9, (org chart)\nAllocation from: INNOVATION,Service Improvement & Innovation,3579.1, (guess)"
-        ],
-        [
-            "2004.CORPEXPENDITURES.",
-            "Original amount was 219613.3, plus:\nAllocation from: COMMPARTNER,Community Partnership & Investment Program,42105.2, (should be divided between expenditures and revenues)"
-        ],
-        [
-            "2004.ECONDEV.",
-            "Original amount was null, plus:\nAllocation from: BIZSUPPORT,Customer & Business Support,19779.4, (Guess)\nAllocation from: CULTURE,Culture,12890.6, (Guess, by name ‘Culture’)\nAllocation from: ECONRECOV,Economic Recovery,200,\nAllocation from: TOURISM,Tourism,11241.2, (guess)"
-        ],
-        [
-            "2004.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,51514.9, (toronto.ca)"
-        ],
-        [
-            "2004.LONGTERMHOME.",
-            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,169545.9, (logical)"
-        ],
-        [
-            "2004.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,124140.4, (logical)"
-        ],
-        [
-            "2004.SHELTERADMIN.",
-            "Original amount was 634873.7, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,35469.8, (budget jumped after WES support services discontinued)"
-        ],
-        [
-            "2005.CFO.",
-            "Original amount was null, plus:\nAllocation from: FINANCE,Finance,68359.9, (org chart)"
-        ],
-        [
-            "2005.CITYMANAGER.",
-            "Original amount was 5836.7, plus:\nAllocation from: CORPCOMMS,Corporate Communications,6833.1, (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,27697.2, (org chart)\nAllocation from: INNOVATION,Service Improvement & Innovation,7317.7, (guess)"
-        ],
-        [
-            "2005.CORPEXPENDITURES.",
-            "Original amount was 436080.4, plus:\nAllocation from: COMMPARTNER,Corporate Accounts Community Partnership and Investment Program,44078.2, (should be divided between expenditures and revenues)"
-        ],
-        [
-            "2005.ECONDEV.",
-            "Original amount was null, plus:\nAllocation from: BIZSUPPORT,Customer & Business Support,19935.2, (Guess)\nAllocation from: CULTURE,Culture,13570.9, (Guess, by name ‘Culture’)\nAllocation from: TOURISM,Tourism,8929.6, (guess)"
-        ],
-        [
-            "2005.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,55384.9, (toronto.ca)"
-        ],
-        [
-            "2005.LONGTERMHOME.",
-            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,175490.1, (logical)"
-        ],
-        [
-            "2005.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,129783.3, (logical)"
-        ],
-        [
-            "2005.SHELTERADMIN.",
-            "Original amount was 674132.4, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,35726.8, (budget jumped after WES support services discontinued)"
-        ],
-        [
-            "2006.CITYMANAGER.",
-            "Original amount was 6532.7, plus:\nAllocation from: CORPCOMMS,Corporate Communications,7189.4 (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,29644.8 (org chart)\nAllocation from: WATERFRONT,Waterfront Secretariat,993.5 (org chart)"
-        ],
-        [
-            "2006.CORPEXPENDITURES.",
-            "Original amount was 361780, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,47796.4 (should be divided between expenditures and revenues)"
-        ],
-        [
-            "2006.ECONDEV.",
-            "Original amount was null, plus:\nAllocation from: BIZSUPPORT,Business Support Services,10340.7 (Guess)\nAllocation from: CULTURE,Culture,15917.8 (Guess, by name ‘Culture’)\nAllocation from: TOURISM,Tourism,8977.5 (guess)"
-        ],
-        [
-            "2006.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,60585.4 (toronto.ca)"
-        ],
-        [
-            "2006.LONGTERMHOME.",
-            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,186171.3 (logical)"
-        ],
-        [
-            "2006.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,142384.1 (logical)"
-        ],
-        [
-            "2006.TRANSPORTATION.",
-            "Original amount was null, plus:\nAllocation from: BEAUTY,Clean and Beautiful City Secretariat,317.2 (Guess)"
-        ],
-        [
-            "2007.CITYMANAGER.",
-            "Original amount was 39591.2, plus:\nAllocation from: CREATIVEINFO,Pubic Information & Creative Services,4765.3 (Guess)\nAllocation from: WATERFRONT,Waterfront Secretariat,1315.9 (org chart)"
-        ],
-        [
-            "2007.CORPEXPENDITURES.",
-            "Original amount was 341622.8, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,41961.2 (should be divided between expenditures and revenues)"
-        ],
-        [
-            "2007.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,62496.1 (toronto.ca)"
-        ],
-        [
-            "2007.LONGTERMHOME.",
-            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,192320.2 (logical)"
-        ],
-        [
-            "2007.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,149196.5 (logical)"
-        ],
-        [
-            "2007.TRANSPORTATION.",
-            "Original amount was null, plus:\nAllocation from: BEAUTY,Clean and Beautiful City Secretariat,1066.3 (Guess)"
-        ],
-        [
-            "2008.CITYMANAGER.",
-            "Original amount was 39651.5, plus:\nAllocation from: CREATIVEINFO,Pubic Information & Creative Services,4771.7, (Guess)\nAllocation from: WATERFRONT,Waterfront Secretariat,1412.7, (org chart)"
-        ],
-        [
-            "2008.CORPEXPENDITURES.",
-            "Original amount was 394241.1, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,43525.2, (should be divided between expenditures and revenues)"
-        ],
-        [
-            "2008.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,60351.4, (toronto.ca)"
-        ],
-        [
-            "2008.LONGTERMHOME.",
-            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,206613.3, (logical)"
-        ],
-        [
-            "2008.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,151968.6, (logical)"
-        ],
-        [
-            "2009.CFO.",
-            "Original amount was 14384.8, plus:\nAllocation from: ENV,Toronto Environment Office,8887.7 (org chart)"
-        ],
-        [
-            "2009.CITYMANAGER.",
-            "Original amount was 41798.7, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,1596.9 (org chart)"
-        ],
-        [
-            "2009.CORPEXPENDITURES.",
-            "Original amount was 611705.6, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,45691 (should be divided between expenditures and revenues)"
-        ],
-        [
-            "2009.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,64130.5 (toronto.ca)"
-        ],
-        [
-            "2009.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,159546.4 (logical)"
-        ],
-        [
-            "2010.CFO.",
-            "Original amount was 15511.6, plus:\nAllocation from: ENV,Toronto Environment Office,12758 (org chart)"
-        ],
-        [
-            "2010.CITYMANAGER.",
-            "Original amount was 41754, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,1547.1 (org chart)"
-        ],
-        [
-            "2010.CORPEXPENDITURES.",
-            "Original amount was 611188.9, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,46913 (should be divided between expenditures and revenues)"
-        ],
-        [
-            "2010.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,67681.8 (toronto.ca)"
-        ],
-        [
-            "2010.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,165266.1 (logical)"
-        ],
-        [
-            "2011.CFO.",
-            "Original amount was 15321.9, plus:\nAllocation from: ENV,Toronto Environment Office,11515.5 (org chart)"
-        ],
-        [
-            "2011.CITYMANAGER.",
-            "Original amount was 42472.8, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,1509.2 (org chart)"
-        ],
-        [
-            "2011.CORPEXPENDITURES.",
-            "Original amount was 679567.1, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,47277.2 (should be divided between expenditures and revenues)"
-        ],
-        [
-            "2011.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,67560.3 (toronto.ca)"
-        ],
-        [
-            "2011.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,170774.4 (logical)"
-        ],
-        [
-            "2012.CFO.",
-            "Original amount was 16765, plus:\nAllocation from: ENV,Toronto Environment Office,5932.5 (org chart)"
-        ],
-        [
-            "2012.CORPEXPENDITURES.",
-            "Original amount was 724178.4, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,47197.1 (should be divided between expenditures and revenues)"
-        ],
-        [
-            "2012.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,70010.9 (toronto.ca)"
-        ],
-        [
-            "2012.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,169535.5 (logical)"
-        ],
-        [
-            "2013.CFO.",
-            "Original amount was 15526.4, plus:\nAllocation from: ENV,Toronto Environment Office,4539.2, (org chart)"
-        ],
-        [
-            "2013.ENGINEERING.",
-            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,70748, (toronto.ca)"
-        ],
-        [
-            "2013.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,179525.2, (logical)"
-        ],
-        [
-            "2014.PARAMEDIC.",
-            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,187889 (logical)"
-        ],
-        [
-            "2015.COURTSERV.",
-            "Original amount was 49527, plus:\nAllocation from: LOCALAPPEAL,Local Appeal Body,1050 (admin doc)"
-        ]
-    ]
+    "Notes": {
+        "2004.PARKING.": "Parking Authority (TPA): Net revenue has been distributed according to City's Revenue Sharing Agreement: 25% retained by TPA, 75% to the City (with $4.679 m to Transportation and the balance to Non-program).",
+        "2005.PARKING.": "Parking Authority's net revenue is distributed according to City's Revenue Sharing Agreement: 75% to the City, and 25% retained by Parking Authority.",
+        "2008.PARKING.": "https://drive.google.com/open?id=0BzB3t6aSc9bDQ3BJNTZBeHhyZEU",
+        "2008.WATER.": "https://drive.google.com/open?id=0BzB3t6aSc9bDQ3BJNTZBeHhyZEU",
+        "2013.PARKING.": "http://www1.toronto.ca/City%20Of%20Toronto/Strategic%20Communications/City%20Budget/2013/Operating%20Budget%20Summaries/op13_an_tpa.pdf",
+        "2013.SOLIDWASTE.": "http://www1.toronto.ca/City%20Of%20Toronto/Strategic%20Communications/City%20Budget/2013/Operating%20Budget%20Summaries/op13_an_swms.pdf https://drive.google.com/open?id=0BzB3t6aSc9bDb1lJY1NJbHBTOFk",
+        "2013.WATER.": "http://www1.toronto.ca/City%20Of%20Toronto/Strategic%20Communications/City%20Budget/2013/Operating%20Budget%20Summaries/op13_an_water.pdf https://drive.google.com/open?id=0BzB3t6aSc9bDWmhZSXNKSWN1aTQ"
+    },
+    "Allocations": {
+        "2003.CFO.": "Original amount was null, plus:\nAllocation from: FINANCE,Finance,68975.3 (org chart)",
+        "2003.CITYMANAGER.": "Original amount was 5625.5, plus:\nAllocation from: CORPCOMMS,Corporate Communications,6439.6 (Guess)\nAllocation from: EMERGPLAN,Emergency Management Plan,1854.3 (org chart)\nAllocation from: HUMANRESOURCES,Human Resources,26472.7 (org chart)\nAllocation from: INNOVATION,Service Improvement & Innovation,2654.6 (guess)",
+        "2003.CORPEXPENDITURES.": "Original amount was 236357.3, plus:\nAllocation from: GRANTPROGRAM,Consolidated Grant Program,39562.7 (guess)\nAllocation from: KVC,Keele Valley Closure (KVC),21425 (consolidate)",
+        "2003.ECONDEV.": "Original amount was null, plus:\nAllocation from: BIZSUPPORT,Customer & Business Support,19368.9 (Guess)\nAllocation from: CULTURE,Culture,12190.4 (Guess, by name ‘Culture’)\nAllocation from: TOURISM,Tourism,12068.1 (guess)",
+        "2003.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,48132.1 (toronto.ca)",
+        "2003.LONGTERMHOME.": "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,159418.9 (logical)",
+        "2003.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,114268.1 (logical)",
+        "2003.POLICE.": "Original amount was null, plus:\nAllocation from: TOTALPOLICE,Toronto Police Service & Board,659680 (later split out board)",
+        "2003.SHELTERADMIN.": "Original amount was 638854.6, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,33813.9 (budget jumped after WES support services discontinued)",
+        "2003.TTCCONV.": "Original amount was null, plus:\nAllocation from: TOTALTTC,Toronto Transit Commission (Incl. Wheel Trans),957167.2 (later split out wheel trans)",
+        "2004.CFO.": "Original amount was null, plus:\nAllocation from: FINANCE,Finance,70199.2, (org chart)",
+        "2004.CITYMANAGER.": "Original amount was 5804.5, plus:\nAllocation from: CORPCOMMS,Corporate Communications,6507.6, (Guess)\nAllocation from: EMERGPLAN,Emergency Management Plan,1770.3, (org chart)\nAllocation from: HUMANRESOURCES,Human Resources,27416.9, (org chart)\nAllocation from: INNOVATION,Service Improvement & Innovation,3579.1, (guess)",
+        "2004.CORPEXPENDITURES.": "Original amount was 219613.3, plus:\nAllocation from: COMMPARTNER,Community Partnership & Investment Program,42105.2, (should be divided between expenditures and revenues)",
+        "2004.ECONDEV.": "Original amount was null, plus:\nAllocation from: BIZSUPPORT,Customer & Business Support,19779.4, (Guess)\nAllocation from: CULTURE,Culture,12890.6, (Guess, by name ‘Culture’)\nAllocation from: ECONRECOV,Economic Recovery,200,\nAllocation from: TOURISM,Tourism,11241.2, (guess)",
+        "2004.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,51514.9, (toronto.ca)",
+        "2004.LONGTERMHOME.": "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,169545.9, (logical)",
+        "2004.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,124140.4, (logical)",
+        "2004.SHELTERADMIN.": "Original amount was 634873.7, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,35469.8, (budget jumped after WES support services discontinued)",
+        "2005.CFO.": "Original amount was null, plus:\nAllocation from: FINANCE,Finance,68359.9, (org chart)",
+        "2005.CITYMANAGER.": "Original amount was 5836.7, plus:\nAllocation from: CORPCOMMS,Corporate Communications,6833.1, (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,27697.2, (org chart)\nAllocation from: INNOVATION,Service Improvement & Innovation,7317.7, (guess)",
+        "2005.CORPEXPENDITURES.": "Original amount was 436080.4, plus:\nAllocation from: COMMPARTNER,Corporate Accounts Community Partnership and Investment Program,44078.2, (should be divided between expenditures and revenues)",
+        "2005.ECONDEV.": "Original amount was null, plus:\nAllocation from: BIZSUPPORT,Customer & Business Support,19935.2, (Guess)\nAllocation from: CULTURE,Culture,13570.9, (Guess, by name ‘Culture’)\nAllocation from: TOURISM,Tourism,8929.6, (guess)",
+        "2005.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,55384.9, (toronto.ca)",
+        "2005.LONGTERMHOME.": "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,175490.1, (logical)",
+        "2005.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,129783.3, (logical)",
+        "2005.SHELTERADMIN.": "Original amount was 674132.4, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,35726.8, (budget jumped after WES support services discontinued)",
+        "2006.CITYMANAGER.": "Original amount was 6532.7, plus:\nAllocation from: CORPCOMMS,Corporate Communications,7189.4 (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,29644.8 (org chart)\nAllocation from: WATERFRONT,Waterfront Secretariat,993.5 (org chart)",
+        "2006.CORPEXPENDITURES.": "Original amount was 361780, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,47796.4 (should be divided between expenditures and revenues)",
+        "2006.ECONDEV.": "Original amount was null, plus:\nAllocation from: BIZSUPPORT,Business Support Services,10340.7 (Guess)\nAllocation from: CULTURE,Culture,15917.8 (Guess, by name ‘Culture’)\nAllocation from: TOURISM,Tourism,8977.5 (guess)",
+        "2006.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,60585.4 (toronto.ca)",
+        "2006.LONGTERMHOME.": "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,186171.3 (logical)",
+        "2006.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,142384.1 (logical)",
+        "2006.TRANSPORTATION.": "Original amount was null, plus:\nAllocation from: BEAUTY,Clean and Beautiful City Secretariat,317.2 (Guess)",
+        "2007.CITYMANAGER.": "Original amount was 39591.2, plus:\nAllocation from: CREATIVEINFO,Pubic Information & Creative Services,4765.3 (Guess)\nAllocation from: WATERFRONT,Waterfront Secretariat,1315.9 (org chart)",
+        "2007.CORPEXPENDITURES.": "Original amount was 341622.8, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,41961.2 (should be divided between expenditures and revenues)",
+        "2007.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,62496.1 (toronto.ca)",
+        "2007.LONGTERMHOME.": "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,192320.2 (logical)",
+        "2007.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,149196.5 (logical)",
+        "2007.TRANSPORTATION.": "Original amount was null, plus:\nAllocation from: BEAUTY,Clean and Beautiful City Secretariat,1066.3 (Guess)",
+        "2008.CITYMANAGER.": "Original amount was 39651.5, plus:\nAllocation from: CREATIVEINFO,Pubic Information & Creative Services,4771.7, (Guess)\nAllocation from: WATERFRONT,Waterfront Secretariat,1412.7, (org chart)",
+        "2008.CORPEXPENDITURES.": "Original amount was 394241.1, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,43525.2, (should be divided between expenditures and revenues)",
+        "2008.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,60351.4, (toronto.ca)",
+        "2008.LONGTERMHOME.": "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,206613.3, (logical)",
+        "2008.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,151968.6, (logical)",
+        "2009.CFO.": "Original amount was 14384.8, plus:\nAllocation from: ENV,Toronto Environment Office,8887.7 (org chart)",
+        "2009.CITYMANAGER.": "Original amount was 41798.7, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,1596.9 (org chart)",
+        "2009.CORPEXPENDITURES.": "Original amount was 611705.6, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,45691 (should be divided between expenditures and revenues)",
+        "2009.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,64130.5 (toronto.ca)",
+        "2009.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,159546.4 (logical)",
+        "2010.CFO.": "Original amount was 15511.6, plus:\nAllocation from: ENV,Toronto Environment Office,12758 (org chart)",
+        "2010.CITYMANAGER.": "Original amount was 41754, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,1547.1 (org chart)",
+        "2010.CORPEXPENDITURES.": "Original amount was 611188.9, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,46913 (should be divided between expenditures and revenues)",
+        "2010.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,67681.8 (toronto.ca)",
+        "2010.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,165266.1 (logical)",
+        "2011.CFO.": "Original amount was 15321.9, plus:\nAllocation from: ENV,Toronto Environment Office,11515.5 (org chart)",
+        "2011.CITYMANAGER.": "Original amount was 42472.8, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,1509.2 (org chart)",
+        "2011.CORPEXPENDITURES.": "Original amount was 679567.1, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,47277.2 (should be divided between expenditures and revenues)",
+        "2011.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,67560.3 (toronto.ca)",
+        "2011.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,170774.4 (logical)",
+        "2012.CFO.": "Original amount was 16765, plus:\nAllocation from: ENV,Toronto Environment Office,5932.5 (org chart)",
+        "2012.CORPEXPENDITURES.": "Original amount was 724178.4, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,47197.1 (should be divided between expenditures and revenues)",
+        "2012.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,70010.9 (toronto.ca)",
+        "2012.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,169535.5 (logical)",
+        "2013.CFO.": "Original amount was 15526.4, plus:\nAllocation from: ENV,Toronto Environment Office,4539.2, (org chart)",
+        "2013.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,Technical Services,70748, (toronto.ca)",
+        "2013.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,179525.2, (logical)",
+        "2014.PARAMEDIC.": "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,187889 (logical)",
+        "2015.COURTSERV.": "Original amount was 49527, plus:\nAllocation from: LOCALAPPEAL,Local Appeal Body,1050 (admin doc)"
+    },
+    "Headers": {
+        "2003": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDZHpfQks3QmdjV3c",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "City of Toronto 2003 Operating Budget - Gross Expenditures",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuR1BCWnlDRTAzM3c",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2003,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 7050552.7,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2004": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDSkJwMHMwY19sNUU",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "Adjusted 2004 Council Approved Operating Budget – Gross Expenditures",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuOEM1bjNBb1RFc2M",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2004,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 7253501.500000001,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2005": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDUWxuMUdRS2xiOWM",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "City of Toronto 2005 Operating Budget – Gross expenditures",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuekR5WkN3SjB2Wm8",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2005,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 7720505.300000001,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2006": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDWWpVRmRPN25IQWs",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "2006 OPERATING BUDGET SUMMARY BY PROGRAM",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OubHhPS2ZsQ0hyRlU",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2006,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 8283224,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2007": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDdEpsZkJVUjVqUlU",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "2007 COUNCIL APPROVED OPERATING BUDGET SUMMARY BY CITY PROGRAM",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuRUdxZ3lKNEhLaUU",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2007,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 8503385.699999997,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2008": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDNnp4LTdtSFlYTDA",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "CITY OF TORONTO 2008 BUDGET COMMITTEE RECOMMENDED OPERATING BUDGET GROSS EXPENDITURE",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuQ2RfRWRQRUQ4VkU",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2008,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 8911075.4,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2009": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDam0xM1hrX2d6bG8",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "CITY OF TORONTO 2009 COUNCIL APPROVED OPERATING BUDGET GROSS EXPENDITURE",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8Oub2lmRi1XOTZwLWM",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2009,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 9785758.299999999,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2010": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDaGpqSmFIRk52Mm8",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "2010 COUNCIL APPROVED OPERATING BUDGET – GROSS EXPENDITURE",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuVHQtZUx0Wm9Hd28",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2010,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 10369963.999999996,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2011": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDdzZlZk5yVmJWM3c",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "CITY OF TORONTO 2011 COUNCIL APPROVED OPERATING BUDGET GROSS EXPENDITURE",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuUnBkT01ESUp1bHM",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2011,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 10617315.2,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2012": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDR2ZHRFE2Z3RBMXM",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "2012 COUNCIL APPROVED OPERATING BUDGET GROSS EXPENDITURE",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuNUwwNmJUQVlZY28",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2012,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 10701479,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2013": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDcVBGc2xUMUR6Z0k",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "CITY OF TORONTO 2013 COUNCIL APPROVED OPERATING BUDGET GROSS EXPENDITURE",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuUVVHbXBZZUFYamc",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2013,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 10794422.5,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2014": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDQ09OS0h6NXhhb00",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "CITY OF TORONTO 2014 COUNCIL APPROVED OPERATING BUDGET GROSS EXPENDITURE",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuMjVYdERwN1JhOTQ",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2014,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 11176155,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2015": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDVk45OS1xSXNxc2c",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "2015 OPERATING BUDGET - GROSS EXPENDITURES - STAFF RECOMMENDED",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuSEYyNE9wdnY4eUU",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2015,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 11470464,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        },
+        "2016": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuOXV6bnlOY0N4dW8",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
+            "SOURCE_DOCUMENT_TITLE": "CITY OF TORONTO NET EXPENDITURE 2016 COUNCIL APPROVED OPERATING BUDGET",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p3",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO GROSS EXPENDITURE 2016 COUNCIL APPROVED OPERATING BUDGET",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuZWF2VkM5MDAybHc",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2016,
+            "VERSION": "Summary",
+            "ASPECT": "Expenses",
+            "NOTES_CONTENT": "",
+            "NOTES_SEVERITY": "",
+            "UNITS_NAME": "Dollar",
+            "UNITS_CODE": "DOLLAR",
+            "UNITS_MULTIPLIER": 1000,
+            "TOTAL_AMOUNT": 11751895,
+            "INTAKE_DATETIME": "2016-09-16-15-42-52",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        }
+    }
 }

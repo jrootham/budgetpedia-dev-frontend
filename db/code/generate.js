@@ -90,8 +90,9 @@ const generateJsonFile = (aspect, aspects, context) => {
     let json = {
         "MetaData":null,
         "Data":null,
-        "Notes":[], // by year: Metadata, Allocations (by code), Notes (by code)
-        "Allocations":[]
+        "Notes":{}, // by year: Metadata, Allocations (by code), Notes (by code)
+        "Allocations":{},
+        "Headers":{}
     }
     let metafilename = aspect + '.json'
     let metapath = context.metapath
@@ -135,9 +136,10 @@ const generateJsonFile = (aspect, aspects, context) => {
     }
     json.Data = data
     let notes = json.Notes
+    let headers = json.Headers
     let allocations = json.Allocations
     for (let filename of aspectfiles) {
-        addData(filename, basedata, notes, allocations, metadata, context)
+        addData(filename, basedata, notes, allocations, headers, metadata, context)
     }
     if (metadata.InflationAdjustable) {
         addAdjusted(data, metadata, context)
@@ -154,7 +156,7 @@ const generateJsonFile = (aspect, aspects, context) => {
 }
 
 // add base data and notes data
-const addData = (filename, basedata, notes, allocations, metadata, context) => {
+const addData = (filename, basedata, notes, allocations, headers, metadata, context) => {
     let dimensions = metadata.Dimensions
     let preparedpath = context.preparedpath
     let csv = utilities.readFileCsv(preparedpath + filename)
@@ -177,6 +179,12 @@ const addData = (filename, basedata, notes, allocations, metadata, context) => {
     let unitsratio = metadata.UnitRatio // divide for presentation
     let multiplier = unitsmultiplier/unitsratio
     let unitdecimals = context.settings.Decimals[unitscode] || 0
+
+    let headersource = {}
+    for (let index = 1; index < metasource.length - 1; index ++) {
+        headersource[metasource[index][0]] = metasource[index][1]
+    }
+    headers[year] = headersource
 
     for (let line of datasource) {
         let amount = line[amountindex]
@@ -233,10 +241,10 @@ const addData = (filename, basedata, notes, allocations, metadata, context) => {
             }
         } while (true)
         if (line[notesindex]) {
-            notes.push([codeindex,line[notesindex]])
+            notes[codeindex] = line[notesindex]
         }
         if (line[allocationsindex]) {
-            allocations.push([codeindex, line[allocationsindex]])
+            allocations[codeindex] = line[allocationsindex]
         }
     }
 }
