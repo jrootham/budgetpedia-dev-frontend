@@ -134,7 +134,7 @@ const processIntakeFile = (filename,context) => {
         // meta and data sections must have the same number of columns
         utilities.equalizeLineLengths(components.data, components.meta)
 
-        let newdata = [...components.meta,...components.data]
+        let newdata = [...components.meta, ...components.data]
         utilities.writeFileCsv(preprocessed_path + filename, newdata)
 
         // 5. finally delete the original intake file
