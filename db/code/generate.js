@@ -90,7 +90,8 @@ const generateJsonFile = (aspect, aspects, context) => {
     let json = {
         "MetaData":null,
         "Data":null,
-        "Notes":{} // by year: Metadata, Allocations (by code), Notes (by code)
+        "Notes":[], // by year: Metadata, Allocations (by code), Notes (by code)
+        "Allocations":[]
     }
     let metafilename = aspect + '.json'
     let metapath = context.metapath
@@ -134,12 +135,14 @@ const generateJsonFile = (aspect, aspects, context) => {
     }
     json.Data = data
     let notes = json.Notes
+    let allocations = json.Allocations
     for (let filename of aspectfiles) {
-        addData(filename, basedata, notes, metadata, context)
+        addData(filename, basedata, notes, allocations, metadata, context)
     }
     if (metadata.InflationAdjustable) {
         addAdjusted(data, metadata, context)
     }
+    // save files
     let targetfilename = aspect + '.json'
     let targetfilespec = context.jsonpath + targetfilename
     if (utilities.fileExists(targetfilespec)) {
@@ -151,7 +154,7 @@ const generateJsonFile = (aspect, aspects, context) => {
 }
 
 // add base data and notes data
-const addData = (filename, basedata, notes, metadata, context) => {
+const addData = (filename, basedata, notes, allocations, metadata, context) => {
     let dimensions = metadata.Dimensions
     let preparedpath = context.preparedpath
     let csv = utilities.readFileCsv(preparedpath + filename)
@@ -165,6 +168,7 @@ const addData = (filename, basedata, notes, metadata, context) => {
     let columns = categorymeta.columns
     let allocationsindex = columns.length + attributemeta.columns.length -1
     let amountindex = columns.length // next column
+    let notesindex = amountindex + 1
     // getMetaRow UNITS_CODE, UNITS_MULTIPLIER
     let unitscode = utilities.getMetaRow(constants.UNITS_CODE, metasource)
     unitscode = unitscode[1]
@@ -181,6 +185,7 @@ const addData = (filename, basedata, notes, metadata, context) => {
         let components = basedata
         let columnindex = 0
         let code = line[columnindex]
+        let codeindex = year + '.'
         let node
         do  {
             if (code) { // always true on the first pass, therefore node will always be set
@@ -200,6 +205,7 @@ const addData = (filename, basedata, notes, metadata, context) => {
                         node.years += amount
                     }
                 }
+                codeindex += code + '.'
             }
             columnindex += 2 // skip name
             if (columnindex >= columns.length) {
@@ -226,6 +232,12 @@ const addData = (filename, basedata, notes, metadata, context) => {
                 }
             }
         } while (true)
+        if (line[notesindex]) {
+            notes.push([codeindex,line[notesindex]])
+        }
+        if (line[allocationsindex]) {
+            allocations.push([codeindex, line[allocationsindex]])
+        }
     }
 }
 
@@ -275,6 +287,3 @@ const addSeries = (nominalcomponents, adjustedcomponents, inflationseries, decim
     }
     
 }
-
-
-

@@ -28,8 +28,8 @@ BUILDINGS,Toronto Building,53572.6,,,
 CFO,Office of the Chief Financial Officer,4055.4,,,
 CHILDSERV,Children's Services,291863.2,,,
 CITYMANAGER,City Manager's Office,2670,,,"Original amount was 2260.9, plus:
-Allocation from: CREATIVEINFO,Pubic Information & Creative Services,78.1,
-Allocation from: WATERFRONT,Waterfront Secretariat,331,"
+Allocation from: CREATIVEINFO,Pubic Information & Creative Services,78.1, (Guess)
+Allocation from: WATERFRONT,Waterfront Secretariat,331, (org chart)"
 CLERK,City Clerk's Office,13745.6,,,
 COMMCENTRES,Association of Community Centres,170,,,
 CORPEXPENDITURES,Non-Program Expenditures,93529.2,,,
@@ -40,7 +40,7 @@ COUNCIL,City Council,,,,
 COURTSERV,Court Services,50717.9,,,
 ECONDEV,Economic Development & Culture,6990.2,,,
 ENGINEERING,Engineering & Construction Services,44136.8,,,"Original amount was null, plus:
-Allocation from: TECH,Technical Services,44136.8,"
+Allocation from: TECH,Technical Services,44136.8, (toronto.ca)"
 EXHIBPLACE,Exhibition Place,53967.2,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",75881.9,,,
 FIRE,Fire Services,8176.1,,,
@@ -53,12 +53,12 @@ LIBRARY,Toronto Public Library,14314.4,,,
 LICENCING,Municipal Licensing & Standards,22730.2,,,
 LOBBYREG,Office of the Lobbyist Registrar,,,,
 LONGTERMHOME,Long Term Care Homes & Services,165878.9,,,"Original amount was null, plus:
-Allocation from: AGEDHOMES,Homes for the Aged,165878.9,"
+Allocation from: AGEDHOMES,Homes for the Aged,165878.9, (logical)"
 MAYOR,Mayor's Office,,,,
 OMBUDSMAN,Office of the Ombudsman,,,,
 PARAMEDIC,Toronto Paramedic Services,90093.4,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,90093.4,"
-PARKING,Toronto Parking Authority,113115.4,,,
+Allocation from: EMERG,Emergency Medical Services,90093.4, (logical)"
+PARKING,Toronto Parking Authority,113115.4,http://www.celos.ca/wiki/uploads/BudgetDocuments/2008BSweb.pdf,,
 PARKS,"Parks, Forestry & Recreation",82789.8,,,
 PLANNING,City Planning,21265.4,,,
 POLICE,Toronto Police Service,43471.2,,,
@@ -75,7 +75,7 @@ TRANSPORTATION,Transportation Services,92955.7,,,
 TREASURER,Office of the Treasurer,38728.2,,,
 TTCCONV,Toronto Transit Commission - Conventional,953091.1,,,
 TTCWHEEL,Toronto Transit Commission - Wheel Trans,23511,,,
-WATER,Toronto Water,677393.3,,,
+WATER,Toronto Water,677393.3,http://www.celos.ca/wiki/uploads/BudgetDocuments/2008BSweb.pdf,,
 YONGEDUNDAS,Yonge-Dundas Square,768,,,
 ZOO,Toronto Zoo,29534,,,
 311SERVICE,311 Toronto,3065.4,,,

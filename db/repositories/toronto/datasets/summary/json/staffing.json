@@ -825,5 +825,203 @@
             }
         }
     },
-    "Notes": {}
+    "Notes": [],
+    "Allocations": [
+        [
+            "2004.CFO.",
+            "Original amount was null, plus:\nAllocation from: FINANCE,Finance,815 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
+        ],
+        [
+            "2004.CITYMANAGER.",
+            "Original amount was null, plus:\nAllocation from: INNOVATION,Service Improvement & Innovation,86 (guess)\nAllocation from: CORPCOMMS,Corporate Communications,84 (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,305 (org chart)"
+        ],
+        [
+            "2004.CORPEXPENDITURES.",
+            "Original amount was null, plus:\nAllocation from: NONPROGRAM,Non Program,1 (consolidate)"
+        ],
+        [
+            "2004.ECONDEV.",
+            "Original amount was null, plus:\nAllocation from: CULTURE,Culture,154.7 (Guess, by name ‘Culture’)\nAllocation from: BIZSUPPORT,Customer & Business Support,247.7 (Guess)\nAllocation from: TOURISM,Tourism,40.3 (guess)"
+        ],
+        [
+            "2004.ENGINEERING.",
+            "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,563 (toronto.ca)"
+        ],
+        [
+            "2004.LONGTERMHOME.",
+            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2065.8 (logical)"
+        ],
+        [
+            "2004.PARAMEDIC.",
+            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1152 (logical)"
+        ],
+        [
+            "2004.SHELTERADMIN.",
+            "Original amount was 659.6, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,477.9 (budget jumped after WES support services discontinued)"
+        ],
+        [
+            "2005.CFO.",
+            "Original amount was null, plus:\nAllocation from: FINANCE,Finance,813 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
+        ],
+        [
+            "2005.CITYMANAGER.",
+            "Original amount was null, plus:\nAllocation from: INNOVATION,Service Improvement & Innovation,84 (guess)\nAllocation from: CORPCOMMS,Corporate Communications,84 (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,309 (org chart)"
+        ],
+        [
+            "2005.CORPEXPENDITURES.",
+            "Original amount was null, plus:\nAllocation from: NONPROGRAM,Non Program,1 (consolidate)"
+        ],
+        [
+            "2005.ECONDEV.",
+            "Original amount was null, plus:\nAllocation from: CULTURE,Culture,157.7 (Guess, by name ‘Culture’)\nAllocation from: BIZSUPPORT,Customer & Business Support,251.1 (Guess)\nAllocation from: TOURISM,Tourism,43.3 (guess)"
+        ],
+        [
+            "2005.ENGINEERING.",
+            "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,587.3 (toronto.ca)"
+        ],
+        [
+            "2005.LONGTERMHOME.",
+            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2106.5 (logical)"
+        ],
+        [
+            "2005.PARAMEDIC.",
+            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1164 (logical)"
+        ],
+        [
+            "2005.SHELTERADMIN.",
+            "Original amount was 702.6, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,477.9 (budget jumped after WES support services discontinued)"
+        ],
+        [
+            "2006.CFO.",
+            "Original amount was 165, plus:\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
+        ],
+        [
+            "2006.CITYMANAGER.",
+            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,6 (org chart)\nAllocation from: CORPCOMMS,Corporate Communications,83 (Guess)\nAllocation from: HUMANRESOURCES,Human Resources,305 (org chart)"
+        ],
+        [
+            "2006.ECONDEV.",
+            "Original amount was null, plus:\nAllocation from: CULTURE,Culture,144 (Guess, by name ‘Culture’)\nAllocation from: TOURISM,Tourism,41.3 (guess)\nAllocation from: BIZSUPPORT,Business Support,82 (Guess)"
+        ],
+        [
+            "2006.LONGTERMHOME.",
+            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2126.9 (logical)"
+        ],
+        [
+            "2006.PARAMEDIC.",
+            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1197.3 (logical)"
+        ],
+        [
+            "2006.SHELTERADMIN.",
+            "Original amount was 689, plus:\nAllocation from: SUPPORTSERV,WES - Technical Services,384.5 (budget jumped after WES support services discontinued)"
+        ],
+        [
+            "2006.TRANSPORTATION.",
+            "Original amount was null, plus:\nAllocation from: BEAUTY,Clean & Beautiful Secretariat,2 (Guess)"
+        ],
+        [
+            "2007.CFO.",
+            "Original amount was 120, plus:\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
+        ],
+        [
+            "2007.CITYMANAGER.",
+            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,7 (org chart)\nAllocation from: CREATIVEINFO,Public Information & Creative Services,60 (Guess)"
+        ],
+        [
+            "2007.ENGINEERING.",
+            "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,196.7 (toronto.ca)"
+        ],
+        [
+            "2007.LONGTERMHOME.",
+            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2121.5 (logical)"
+        ],
+        [
+            "2007.PARAMEDIC.",
+            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1211.3 (logical)"
+        ],
+        [
+            "2007.TRANSPORTATION.",
+            "Original amount was null, plus:\nAllocation from: BEAUTY,Clean & Beautiful Secretariat,2 (Guess)"
+        ],
+        [
+            "2008.CFO.",
+            "Original amount was 124, plus:\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
+        ],
+        [
+            "2008.CITYMANAGER.",
+            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,11 (org chart)\nAllocation from: CREATIVEINFO,Public Information & Creative Services,61 (Guess)"
+        ],
+        [
+            "2008.ENGINEERING.",
+            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,165.7 (toronto.ca)"
+        ],
+        [
+            "2008.LONGTERMHOME.",
+            "Original amount was null, plus:\nAllocation from: AGEDHOMES,Homes for the Aged,2167.4 (logical)"
+        ],
+        [
+            "2008.PARAMEDIC.",
+            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1204 (logical)"
+        ],
+        [
+            "2009.CFO.",
+            "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,27.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,6"
+        ],
+        [
+            "2009.CITYMANAGER.",
+            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,6 (org chart)"
+        ],
+        [
+            "2009.ENGINEERING.",
+            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,161.4 (toronto.ca)"
+        ],
+        [
+            "2009.PARAMEDIC.",
+            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1213 (logical)"
+        ],
+        [
+            "2010.CFO.",
+            "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,28.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,7"
+        ],
+        [
+            "2010.CITYMANAGER.",
+            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,6 (org chart)"
+        ],
+        [
+            "2010.ENGINEERING.",
+            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,167.4 (toronto.ca)"
+        ],
+        [
+            "2010.PARAMEDIC.",
+            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1210.5 (logical)"
+        ],
+        [
+            "2011.CFO.",
+            "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,26.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,7"
+        ],
+        [
+            "2011.CITYMANAGER.",
+            "Original amount was null, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,7 (org chart)"
+        ],
+        [
+            "2011.ENGINEERING.",
+            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,164.7 (toronto.ca)"
+        ],
+        [
+            "2011.PARAMEDIC.",
+            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1218 (logical)"
+        ],
+        [
+            "2012.CFO.",
+            "Original amount was null, plus:\nAllocation from: ENV,Toronto Environment Office,22.6 (org chart)\nAllocation from: ATMOSPHERE,Toronto Atmospheric Fund,7"
+        ],
+        [
+            "2012.ENGINEERING.",
+            "Original amount was null, plus:\nAllocation from: TECH,Technical Services,147.8 (toronto.ca)"
+        ],
+        [
+            "2012.PARAMEDIC.",
+            "Original amount was null, plus:\nAllocation from: EMERG,Emergency Medical Services,1213 (logical)"
+        ]
+    ]
 }

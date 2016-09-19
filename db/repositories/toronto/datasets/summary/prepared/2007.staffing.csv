@@ -29,15 +29,15 @@ CFO,Office of the Chief Financial Officer,124,,,"Original amount was 120, plus:
 Allocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
 CHILDSERV,Children's Services,956.7,,,
 CITYMANAGER,City Manager's Office,463,,,"Original amount was null, plus:
-Allocation from: WATERFRONT,Waterfront Secretariat,7
-Allocation from: CREATIVEINFO,Public Information & Creative Services,60"
+Allocation from: WATERFRONT,Waterfront Secretariat,7 (org chart)
+Allocation from: CREATIVEINFO,Public Information & Creative Services,60 (Guess)"
 CLERK,City Clerk's Office,367.5,,,
 COMMCENTRES,Association of Community Centres,91.2,,,
 COUNCIL,City Council,182,,,
 COURTSERV,Court Services,224,,,
 ECONDEV,Economic Development & Culture,265.8,,,
 ENGINEERING,Engineering & Construction Services,196.7,,,"Original amount was null, plus:
-Allocation from: TECH,WES - Technical Services,196.7"
+Allocation from: TECH,WES - Technical Services,196.7 (toronto.ca)"
 EXHIBPLACE,Exhibition Place,512.5,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",698.6,,,
 FIRE,Fire Services,3186,,,
@@ -49,10 +49,10 @@ LIBRARY,Toronto Public Library,1814.2,,,
 LICENCING,Municipal Licensing & Standards,380,,,
 LOBBYREG,Office of the Lobbyist Registrar,2,,,
 LONGTERMHOME,Long Term Care Homes & Services,2121.5,,,"Original amount was null, plus:
-Allocation from: AGEDHOMES,Homes for the Aged,2121.5"
+Allocation from: AGEDHOMES,Homes for the Aged,2121.5 (logical)"
 MAYOR,Mayor's Office,23,,,
 PARAMEDIC,Toronto Paramedic Services,1211.3,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,1211.3"
+Allocation from: EMERG,Emergency Medical Services,1211.3 (logical)"
 PARKING,Toronto Parking Authority,297.8,,,
 PARKINGTAGS,Parking Tag Enforcement & Operations,395,,,
 PARKS,"Parks, Forestry & Recreation",4095.8,,,
@@ -67,7 +67,7 @@ SOCIALSERV,Toronto Employment & Social Services,1950,,,
 SOLIDWASTE,Solid Waste Management Services,1339.6,,,
 THEATRES,Theatres,177.2,,,
 TRANSPORTATION,Transportation Services,1367.7,,,"Original amount was null, plus:
-Allocation from: BEAUTY,Clean & Beautiful Secretariat,2"
+Allocation from: BEAUTY,Clean & Beautiful Secretariat,2 (Guess)"
 TREASURER,Office of the Treasurer,738,,,
 TTCCONV,Toronto Transit Commission - Conventional,10284,,,
 WATER,Toronto Water,1779.9,,,

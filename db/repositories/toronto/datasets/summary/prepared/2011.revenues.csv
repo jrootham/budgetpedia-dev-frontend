@@ -26,10 +26,10 @@ ARENAS,Arena Boards of Management,6542.1,,,
 AUDITGEN,Auditor General's Office,,,,
 BUILDINGS,Toronto Building,57488.2,,,
 CFO,Office of the Chief Financial Officer,14896.8,,,"Original amount was 6582, plus:
-Allocation from: ENV,Toronto Environment Office,8314.8"
+Allocation from: ENV,Toronto Environment Office,8314.8 (org chart)"
 CHILDSERV,Children's Services,313629.6,,,
 CITYMANAGER,City Manager's Office,6877.9,,,"Original amount was 6277.9, plus:
-Allocation from: WATERFRONT,Waterfront Secretariat,600"
+Allocation from: WATERFRONT,Waterfront Secretariat,600 (org chart)"
 CLERK,City Clerk's Office,18980.6,,,
 COMMCENTRES,Association of Community Centres,201.7,,,
 CORPEXPENDITURES,Non-Program Expenditures,113976.1,,,
@@ -40,7 +40,7 @@ COUNCIL,City Council,,,,
 COURTSERV,Court Services,66476.6,,,
 ECONDEV,Economic Development & Culture,9413.3,,,
 ENGINEERING,Engineering & Construction Services,57098.6,,,"Original amount was null, plus:
-Allocation from: TECH,Technical Services,57098.6"
+Allocation from: TECH,Technical Services,57098.6 (toronto.ca)"
 EXHIBPLACE,Exhibition Place,64225.1,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",115916.1,,,
 FIRE,Fire Services,15430.1,,,
@@ -56,7 +56,7 @@ LONGTERMHOME,Long Term Care Homes & Services,177462.8,,,
 MAYOR,Mayor's Office,,,,
 OMBUDSMAN,Office of the Ombudsman,,,,
 PARAMEDIC,Toronto Paramedic Services,104763.3,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,104763.3"
+Allocation from: EMERG,Emergency Medical Services,104763.3 (logical)"
 PARKING,Toronto Parking Authority,127297.6,,,
 PARKS,"Parks, Forestry & Recreation",100962.3,,,
 PLANNING,City Planning,24023,,,

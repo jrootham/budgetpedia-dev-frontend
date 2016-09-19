@@ -114,6 +114,7 @@ const imposeFileContinuity = (components,categorymeta, attributemeta, continuity
 
     let allocationsindex = columns.length + attributemeta.columns.length -1
     let amountindex = columns.length // next column
+    let continuityindex = 6
 
     let allocationfound = false
 
@@ -141,10 +142,12 @@ const imposeFileContinuity = (components,categorymeta, attributemeta, continuity
                         let allocations = line[allocationsindex]
                         if (!allocations) { // only make note of allocation once, the first time
                             let addition = 'Allocation from: ' + line.join(',')
+                            if (continuityline[continuityindex]) {
+                                addition += ' (' + continuityline[continuityindex] + ')'
+                            }
                             allocations = addition
                             line[allocationsindex] = allocations
-                        }
-    
+                        }    
                     }
                     line[columnindex] = continuityline[0]                    
                 }
@@ -162,6 +165,7 @@ const findContinuityLine = (code, continuitylookup, filename) => {
     let newcode = code
     let count = 0
     let continuityline = null
+    let notes = null
 
     do {
         count++
@@ -177,11 +181,23 @@ const findContinuityLine = (code, continuitylookup, filename) => {
         }
 
         continuityline = filtered[0]
+        if (continuityline[6]) {
+            if (notes) {
+                notes += continuityline[6]
+            } else {
+                notes = continuityline[6]
+            }
+        }
         newcode = continuityline[4]
 
     } while (newcode)
 
-    return continuityline
+    let returnline = [...continuityline]
+    if (notes) {
+        returnline[6] = notes
+    }
+
+    return returnline
 }
 
 // reduce the spreadsheet into an object hierarchy (because it's a highly deterministic normalization)
@@ -258,7 +274,10 @@ const reduceList = (components, categorymeta, attributemeta) => {
             } else {
                 let amount = node.amount
                 if (amount === undefined) amount = null
-                allocation = 'Original amount was ' + amount + ', plus:\n' + allocation
+                allocation = 'Original amount was ' + 
+                    amount + 
+                    ', plus:\n' + 
+                    allocation
                 node.allocations = allocation
             }
         }
@@ -321,6 +340,8 @@ const reconstituteList = (reduction, categorymeta, attributemeta) => {
             for (let queueindex in queue) {
 
                 let node = queue[queueindex]
+                if (node.note) {
+                }
                 let backlink = parseInt(node.backlink)
                 backlink = Number.isNaN(backlink)?null:backlink
 
@@ -335,7 +356,7 @@ const reconstituteList = (reduction, categorymeta, attributemeta) => {
                 if (!node.components) {
                     item.amount = (node.amount !== undefined)?node.amount:null
                     item.allocations = node.allocations?node.allocations:null
-                    item.notes = node.notes?node.notes:null
+                    item.note = node.note?node.note:null
                     item.severity = node.severity?node.severity:null
                     item.leaf = true
                 }
@@ -414,7 +435,7 @@ const reconstituteLines = (
     if (node.leaf) { // insert attributes; stop recursing
 
         let line_length = line.length
-        line.splice(line_length - 4, 4, node.amount, node.notes, node.severity, node.allocations)
+        line.splice(line_length - 4, 4, node.amount, node.note, node.severity, node.allocations)
 
         blocklines.push(line) // emit
 

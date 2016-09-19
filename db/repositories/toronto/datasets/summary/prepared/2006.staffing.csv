@@ -29,17 +29,17 @@ CFO,Office of the Chief Financial Officer,169,,,"Original amount was 165, plus:
 Allocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
 CHILDSERV,Children's Services,967.7,,,
 CITYMANAGER,City Manager's Office,457,,,"Original amount was null, plus:
-Allocation from: WATERFRONT,Waterfront Secretariat,6
-Allocation from: CORPCOMMS,Corporate Communications,83
-Allocation from: HUMANRESOURCES,Human Resources,305"
+Allocation from: WATERFRONT,Waterfront Secretariat,6 (org chart)
+Allocation from: CORPCOMMS,Corporate Communications,83 (Guess)
+Allocation from: HUMANRESOURCES,Human Resources,305 (org chart)"
 CLERK,City Clerk's Office,360.5,,,
 COMMCENTRES,Association of Community Centres,90.1,,,
 COUNCIL,City Council,183,,,
 COURTSERV,Court Services,221,,,
 ECONDEV,Economic Development & Culture,347.3,,,"Original amount was null, plus:
-Allocation from: CULTURE,Culture,144
-Allocation from: TOURISM,Tourism,41.3
-Allocation from: BIZSUPPORT,Business Support,82"
+Allocation from: CULTURE,Culture,144 (Guess, by name ‘Culture’)
+Allocation from: TOURISM,Tourism,41.3 (guess)
+Allocation from: BIZSUPPORT,Business Support,82 (Guess)"
 EXHIBPLACE,Exhibition Place,447,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",708.3,,,
 FIRE,Fire Services,3186.7,,,
@@ -50,23 +50,23 @@ LEGAL,Legal Services,241,,,
 LIBRARY,Toronto Public Library,1813.2,,,
 LICENCING,Municipal Licensing & Standards,320,,,
 LONGTERMHOME,Long Term Care Homes & Services,2126.9,,,"Original amount was null, plus:
-Allocation from: AGEDHOMES,Homes for the Aged,2126.9"
+Allocation from: AGEDHOMES,Homes for the Aged,2126.9 (logical)"
 MAYOR,Mayor's Office,19,,,
 PARAMEDIC,Toronto Paramedic Services,1197.3,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,1197.3"
+Allocation from: EMERG,Emergency Medical Services,1197.3 (logical)"
 PARKINGTAGS,Parking Tag Enforcement & Operations,395,,,
 PARKS,"Parks, Forestry & Recreation",3884.1,,,
 PLANNING,City Planning,327,,,
 PUBLICHEALTH,Toronto Public Health,9408.7,,,
 REGIONCONSERV,Toronto & Region Conservation Authority,394.7,,,
 SHELTERADMIN,"Shelter, Support & Housing Administration",1073.5,,,"Original amount was 689, plus:
-Allocation from: SUPPORTSERV,WES - Technical Services,384.5"
+Allocation from: SUPPORTSERV,WES - Technical Services,384.5 (budget jumped after WES support services discontinued)"
 SOCIALDEV,"Social Development, Finance & Administration",294.3,,,
 SOCIALSERV,Toronto Employment & Social Services,1940,,,
 SOLIDWASTE,Solid Waste Management Services,1421.1,,,
 THEATRES,Theatres,200,,,
 TRANSPORTATION,Transportation Services,1382.4,,,"Original amount was null, plus:
-Allocation from: BEAUTY,Clean & Beautiful Secretariat,2"
+Allocation from: BEAUTY,Clean & Beautiful Secretariat,2 (Guess)"
 TREASURER,Office of the Treasurer,729,,,
 TTCCONV,Toronto Transit Commission - Conventional,9949,,,
 YONGEDUNDAS,Yonge-Dundas Square,4,,,

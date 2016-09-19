@@ -32,7 +32,7 @@ CLERK,City Clerk's Office,27239,,,
 COMMCENTRES,Association of Community Centres,430,,,
 CORPEXPENDITURES,Non-Program Expenditures,190339,,,"Original amount was null, plus:
 Allocation from: ASSESSMENT,Assessment Change,25385
-Allocation from: TCHCEXEMPT,TCHC Exempt,-18415"
+Allocation from: TCHCEXEMPT,TCHC Exempt,-18415 (Temporary)"
 CORPFINANCING,Capital & Corporate Financing,36195,,,
 CORPREVENUES,Non-Program Revenues,1008357,,,
 COUNCIL,City Council,2330,,,
@@ -54,7 +54,7 @@ LONGTERMHOME,Long Term Care Homes & Services,186010,,,
 MAYOR,Mayor's Office,,,,
 OMBUDSMAN,Office of the Ombudsman,,,,
 PARAMEDIC,Toronto Paramedic Services,115555,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,115555"
+Allocation from: EMERG,Emergency Medical Services,115555 (logical)"
 PARKING,Toronto Parking Authority,138436,,,
 PARKS,"Parks, Forestry & Recreation",148248,,,
 PLANNING,City Planning,25617,,,

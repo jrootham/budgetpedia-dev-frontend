@@ -29,15 +29,15 @@ CFO,Office of the Chief Financial Officer,128,,,"Original amount was 124, plus:
 Allocation from: ATMOSPHERE,Toronto Atmospheric Fund,4"
 CHILDSERV,Children's Services,956.5,,,
 CITYMANAGER,City Manager's Office,471,,,"Original amount was null, plus:
-Allocation from: WATERFRONT,Waterfront Secretariat,11
-Allocation from: CREATIVEINFO,Public Information & Creative Services,61"
+Allocation from: WATERFRONT,Waterfront Secretariat,11 (org chart)
+Allocation from: CREATIVEINFO,Public Information & Creative Services,61 (Guess)"
 CLERK,City Clerk's Office,374.5,,,
 COMMCENTRES,Association of Community Centres,91.2,,,
 COUNCIL,City Council,181,,,
 COURTSERV,Court Services,230,,,
 ECONDEV,Economic Development & Culture,269.8,,,
 ENGINEERING,Engineering & Construction Services,165.7,,,"Original amount was null, plus:
-Allocation from: TECH,Technical Services,165.7"
+Allocation from: TECH,Technical Services,165.7 (toronto.ca)"
 EXHIBPLACE,Exhibition Place,519.5,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",740.5,,,
 FIRE,Fire Services,3144,,,
@@ -49,11 +49,11 @@ LIBRARY,Toronto Public Library,1826.2,,,
 LICENCING,Municipal Licensing & Standards,369,,,
 LOBBYREG,Office of the Lobbyist Registrar,5,,,
 LONGTERMHOME,Long Term Care Homes & Services,2167.4,,,"Original amount was null, plus:
-Allocation from: AGEDHOMES,Homes for the Aged,2167.4"
+Allocation from: AGEDHOMES,Homes for the Aged,2167.4 (logical)"
 MAYOR,Mayor's Office,23,,,
 OMBUDSMAN,Office of the Ombudsman,3,,,
 PARAMEDIC,Toronto Paramedic Services,1204,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,1204"
+Allocation from: EMERG,Emergency Medical Services,1204 (logical)"
 PARKING,Toronto Parking Authority,299,,,
 PARKINGTAGS,Parking Tag Enforcement & Operations,395,,,
 PARKS,"Parks, Forestry & Recreation",4148.6,,,
