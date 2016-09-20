@@ -17,6 +17,6 @@
     },
     "Units": "DOLLAR",
     "UnitsAlias": "$000's",
-    "UnitRatio": 1000,
+    "UnitRatio": 1,
     "CommonDimension":"Permanence"
 }

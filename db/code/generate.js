@@ -157,12 +157,16 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     let notes = json.Notes
     let headers = json.Headers
     let allocations = json.Allocations
+
+    // ---------------------------------
     for (let filename of aspectfiles) {
         addPreparedData(filename, basedata, notes, allocations, headers, metadata, context)
     }
     if (metadata.InflationAdjustable) {
         addAdjustedData(data, metadata, context)
     }
+    // ---------------------------------
+
     // save files
     let targetfilename = aspect + '.json'
     let targetfilespec = context.jsonpath + targetfilename
@@ -175,7 +179,12 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
 }
 
 // add base data and notes data
+// this procedure must be able to deal with files with varying numbers of dimensions
+// however commondimension (rightmost column) must be shared by all
 const addPreparedData = (filename, basedata, notes, allocations, headers, metadata, context) => {
+
+    // --------------------------[ initialize ]----------------------
+
     let dimensions = metadata.Dimensions
     let preparedpath = context.preparedpath
     let csv = utilities.readFileCsv(preparedpath + filename)
@@ -201,6 +210,8 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
     // console.log('multiplier',multiplier, filename)
     let unitdecimals = context.settings.Decimals[unitscode] || 0
 
+    // -----------------------[ populate aspect components ]--------------------------
+
     let headersource = {}
     for (let index = 1; index < metasource.length - 1; index ++) {
         headersource[metasource[index][0]] = metasource[index][1]
@@ -208,7 +219,25 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
     headersource.TOTAL_AMOUNT = Number(headersource.TOTAL_AMOUNT.toFixed(1)) // avoid numeric conversion issues
     headers[year] = headersource
 
-    for (let line of datasource) {
+    let commondimensionindex = null
+    let commondimension = metadata.CommonDimension
+    if (commondimension) {
+        let filtered = columns.filter((item, index) => {
+            if (item.name == commondimension && item.type == constants.CODE) {
+                commondimensionindex = index
+                return true
+            } else {
+                return false
+            }
+        })
+        if (filtered.length == 0) {
+            throw Error('common dimension not found in ' + filename + ': ' + commondimension)
+        }
+    }
+
+    for (let line of datasource) { // for each line of the source file
+
+        // get amount
         let amount = line[amountindex]
         if (typeof amount == 'string') amount = amount.trim() // sometimes a blank char shows up for some reason
         amount = Number(amount)
@@ -218,13 +247,28 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
             }
             amount = Number(amount.toFixed(unitdecimals))
         }
+
+        // get sharedDimension account, if any
+        let commondimensioncode = null
+        if (commondimension) {
+            commondimensioncode = line[commondimensionindex]
+            if (!commondimensioncode) {
+                throw Error('in ' + filename + 'no common dimension code [' + line.join(',') + ']')
+            }
+        }
+
+        // populate components with amount data
         let components = basedata
         let columnindex = 0
         let code = line[columnindex]
         let codeindex = year + '.'
         let node
-        do  {
+
+        do  { // for each dimension of the line
+
+            // add amount to the code node
             if (code) { // always true on the first pass, therefore node will always be set
+
                 if (!components[code]) {
                     components[code] = {years:{}}
                 }
@@ -233,48 +277,81 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
                     if (!node.years[year]) {
                         node.years[year] = amount
                     } else { // increment amount
-                        node.years[year] += amount
+                        let yearamount = Number((amount + node.years[year]).toFixed(unitdecimals))
+                        node.years[year] = yearamount
                     }
                 }
                 codeindex += ((columnindex/2)+1).toFixed(0) + '.' + code + '.'
+
             }
+
+            // move on to next dimension
             columnindex += 2 // skip name
             if (columnindex >= columns.length) {
                 break
             }
+
             let columndef = columns[columnindex]
             if (columndef.type != constants.CODE) {
                 throw Error('wrong order of columns in ' + filename)
             }
+
             code = line[columnindex]
             if (code) { // else no category at this level
-                if (metadata.CommonDimension && (metadata.CommonDimension == columndef.name)) {
+
+                if (commondimension && (commondimension == columndef.name)) {
+
                     // create components property
                     if (!node.CommonDimension) {
                         node.CommonDimension = {}
                     }
                     components = node.CommonDimension
+
                 } else {
+
+                    if (amount && !Number.isNaN(amount)) { // ignore if no amount is involved
+                        if (commondimension) {
+                            if (!node.CommonDimension) {
+                                node.CommonDimension = {}
+                            }
+                            if (!node.CommonDimension[commondimensioncode]) {
+                                node.CommonDimension[commondimensioncode] = {years:{}}
+                            }
+                            let yearslist = node.CommonDimension[commondimensioncode].years
+                            if (yearslist[year]) {
+                                let yearamount = Number((amount + yearslist[year]).toFixed(unitdecimals))
+                                yearslist[year] = yearamount
+                            } else {
+                                yearslist[year] = amount
+                            }
+                        }
+                    }
                     // create components property
                     if (!node.Components) {
                         node.Components = {}
                     }
                     components = node.Components
+
                 }
             }
-        } while (true)
+
+        } while (true) // end of process line
+
         // add notes
         if (line[notesindex]) {
             notes[codeindex] = line[notesindex]
         }
+
         // add allocations
         if (line[allocationsindex]) {
             allocations[codeindex] = line[allocationsindex]
         }
+
     }
 }
 
 const addAdjustedData = (data, metadata, context) => {
+
     let adjusted = data.Adjusted
     let nominal = data.Nominal
     let inflationseries = utilities.readFileJson(context.dataseriespath + 'inflation.json')
@@ -292,31 +369,37 @@ const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationserie
     for (let category in nominalcomponents) {
         let nominalcomponent = nominalcomponents[category]
         let adjustedcomponent = adjustedcomponents[category] = {}
+
         let subcomponents = nominalcomponent.Components
         if (subcomponents) {
             adjustedcomponent.Components = {}
             addAdjustedSeries(subcomponents, adjustedcomponent.Components, inflationseries, decimals)
         }
+
         let commondimensions = nominalcomponent.CommonDimension
         if (commondimensions) {
             adjustedcomponent.CommonDimension = {}
             addAdjustedSeries(commondimensions, adjustedcomponent.CommonDimension, inflationseries, decimals)
         }
+
         if (!nominalcomponent.years) {
             continue
         }
+
         let nominalyears = nominalcomponent.years
         if (!adjustedcomponent.years) {
             adjustedcomponent.years = {}
         }
-        // adjust years
         let adjustedyears = adjustedcomponent.years
+
+        // adjust years
         for (let year in nominalyears) {
             multiplier = inflationseries.years[year] || 1
             amount = nominalyears[year] * multiplier
             amount = Number(amount.toFixed(decimals))
             adjustedyears[year] = amount
         }
+        
     }
     
 }
