@@ -77,6 +77,7 @@ const generateJsonFiles = context => {
         aspects[aspect].sort()
     }
 
+    // collect message sets by aspect
     let messages = {} 
     for (let filename of messagesfiles) {
         let parts = filename.split('.')
@@ -90,6 +91,7 @@ const generateJsonFiles = context => {
         }
     }
 
+    // generate one json file for each aspect
     for (let aspect in aspects) {
         generateJsonFile(aspect, aspects, messages, context)
     }
@@ -101,7 +103,10 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
         utilities.log('no files for aspect ' + aspect)
         return
     }
+
+    // -----------------------[ initialize ]----------------------
     let aspectfiles = aspects[aspect]
+    // create root of json file...
     let json = {
         "MetaData":null,
         "Data":null,
@@ -114,12 +119,13 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     let metapath = context.metapath
     let metadata = utilities.readFileJson(metapath + metafilename)
 
-    // let Decimals = context.settings.Decimals
+    // assign bulk properties
     json.MetaData = metadata
     if (messages[aspect]) {
         json.Messages = messages[aspect]
     }
-    // add ReferenceYear, InflationReferenceYear, and YearsRange:{start, end}
+
+    // add ReferenceYear, Decimals, InflationReferenceYear, and YearsRange:{start, end}
     metadata.ReferenceYear = context.settings.ReferenceYear
     metadata.Decimals = context.settings.Decimals[metadata.Units]
     if (metadata.InflationAdjustable) {
@@ -129,6 +135,7 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
         start:null,
         end:null
     }
+
     // set years range/ files are sorted by year
     let filename = aspectfiles[0]
     let parts = filename.split('.')
@@ -138,8 +145,10 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     parts = filename.split('.')
     year = parseInt(parts[0])
     metadata.YearsRange.end = year
+
+    // initialize data property
     let data
-    let basedata
+    let basedata // to be filled by addPreparedData
     if (metadata.InflationAdjustable) {
         data = {
             Adjusted:{
@@ -154,20 +163,27 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
         basedata = data
     }
     json.Data = data
+
+    // create other parameter objects to be filled
     let notes = json.Notes
     let headers = json.Headers
     let allocations = json.Allocations
 
-    // ---------------------------------
+    // ----------------[ fill data properties for json file ]---------------
     for (let filename of aspectfiles) {
-        addPreparedData(filename, basedata, notes, allocations, headers, metadata, context)
+        addPreparedData(filename, 
+            // objects to be filled
+            basedata, notes, allocations, headers, 
+            // controls
+            metadata, context)
     }
+
+    // --------------[ create adjusted shadof for appropriate sets ]-----------
     if (metadata.InflationAdjustable) {
         addAdjustedData(data, metadata, context)
     }
-    // ---------------------------------
 
-    // save files
+    // ---------------------[ save files ]--------------------
     let targetfilename = aspect + '.json'
     let targetfilespec = context.jsonpath + targetfilename
     if (utilities.fileExists(targetfilespec)) {
@@ -219,6 +235,7 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
     headersource.TOTAL_AMOUNT = Number(headersource.TOTAL_AMOUNT.toFixed(1)) // avoid numeric conversion issues
     headers[year] = headersource
 
+    // set up controls for handling of commondimension
     let commondimensionindex = null
     let commondimension = metadata.CommonDimension
     if (commondimension) {
@@ -235,6 +252,7 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
         }
     }
 
+    // process each line of the data source into object hierarchy
     for (let line of datasource) { // for each line of the source file
 
         // get amount
@@ -269,9 +287,12 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
             // add amount to the code node
             if (code) { // always true on the first pass, therefore node will always be set
 
+                // create node if required
                 if (!components[code]) {
                     components[code] = {years:{}}
                 }
+
+                // add amount to node
                 node = components[code]
                 if (amount && !Number.isNaN(amount)) { // ignore if no amount is involved
                     if (!node.years[year]) {
@@ -281,6 +302,8 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
                         node.years[year] = yearamount
                     }
                 }
+
+                // prepare codeindex for use by notes and allocations
                 codeindex += ((columnindex/2)+1).toFixed(0) + '.' + code + '.'
 
             }
@@ -291,14 +314,17 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
                 break
             }
 
+            // test next column def
             let columndef = columns[columnindex]
             if (columndef.type != constants.CODE) {
                 throw Error('wrong order of columns in ' + filename)
             }
 
+            // get next dimension code
             code = line[columnindex]
             if (code) { // else no category at this level
 
+                // at leaf, if leaf is commondimension, just record the commondimension values
                 if (commondimension && (commondimension == columndef.name)) {
 
                     // create components property
@@ -309,7 +335,10 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
 
                 } else {
 
+                    // not at leaf, or no commondimension is present
                     if (amount && !Number.isNaN(amount)) { // ignore if no amount is involved
+
+                        // if there is a commondimension (not at leaf) record commondimension at every level
                         if (commondimension) {
                             if (!node.CommonDimension) {
                                 node.CommonDimension = {}
@@ -326,16 +355,19 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
                             }
                         }
                     }
-                    // create components property
+
+                    // in any case create components property
                     if (!node.Components) {
                         node.Components = {}
                     }
+
+                    // recurse
                     components = node.Components
 
                 }
             }
 
-        } while (true) // end of process line
+        } while (true) // end of process line dimensions
 
         // add notes
         if (line[notesindex]) {
@@ -350,6 +382,7 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
     }
 }
 
+// create shadow structure with inflation adjusted values
 const addAdjustedData = (data, metadata, context) => {
 
     let adjusted = data.Adjusted
@@ -366,28 +399,33 @@ const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationserie
 
     let multiplier, amount
 
+    // iterate through nodes
     for (let category in nominalcomponents) {
         let nominalcomponent = nominalcomponents[category]
         let adjustedcomponent = adjustedcomponents[category] = {}
 
+        // recurse into components
         let subcomponents = nominalcomponent.Components
         if (subcomponents) {
             adjustedcomponent.Components = {}
             addAdjustedSeries(subcomponents, adjustedcomponent.Components, inflationseries, decimals)
         }
 
+        // recurse into commondimension
         let commondimensions = nominalcomponent.CommonDimension
         if (commondimensions) {
             adjustedcomponent.CommonDimension = {}
             addAdjustedSeries(commondimensions, adjustedcomponent.CommonDimension, inflationseries, decimals)
         }
 
+        // if there are no years to update, iterate
         if (!nominalcomponent.years) {
             continue
         }
 
+        // multiply every year value by inflation multiplier
         let nominalyears = nominalcomponent.years
-        if (!adjustedcomponent.years) {
+        if (!adjustedcomponent.years) { // create container
             adjustedcomponent.years = {}
         }
         let adjustedyears = adjustedcomponent.years
