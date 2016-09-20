@@ -136,7 +136,7 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
         end:null
     }
 
-    // set years range/ files are sorted by year
+    // set years range; files have been sorted by year
     let filename = aspectfiles[0]
     let parts = filename.split('.')
     let year = parseInt(parts[0])
@@ -178,7 +178,7 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
             metadata, context)
     }
 
-    // --------------[ create adjusted shadof for appropriate sets ]-----------
+    // --------------[ create adjusted shadow for appropriate sets ]-----------
     if (metadata.InflationAdjustable) {
         addAdjustedData(data, metadata, context)
     }
@@ -194,28 +194,34 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     utilities.writeFileJson(targetfilespec, json)
 }
 
-// add base data and notes data
+// add base data, notes data, allocations data, and headers data
 // this procedure must be able to deal with files with varying numbers of dimensions
 // however commondimension (rightmost column) must be shared by all
 const addPreparedData = (filename, basedata, notes, allocations, headers, metadata, context) => {
 
     // --------------------------[ initialize ]----------------------
 
-    let dimensions = metadata.Dimensions
+    // get file data
     let preparedpath = context.preparedpath
     let csv = utilities.readFileCsv(preparedpath + filename)
+
     let filecomponents = common.decomposeCsv(csv, filename) // {meta, data}
     let metasource = filecomponents.meta
     let datasource = filecomponents.data
+
+    // get year from file name
     let parts = filename.split('.')
     let year = parseInt(parts[0])
+
+    // set line indexes
     let categorymeta = common.getCategoryMeta(filecomponents, filename) // names, codes, columns, per _COLUMNS_CATEGORIES_
     let attributemeta = common.getAttributeMeta(filecomponents, filename) // names, codes, columns, per _COLUMNS_ATTRIBUTES_
     let columns = categorymeta.columns
-    // console.log('columns for ' + filename, columns)
     let allocationsindex = columns.length + attributemeta.columns.length -1
     let amountindex = columns.length // next column
     let notesindex = amountindex + 1
+
+    // create data multiplier
     // getMetaRow UNITS_CODE, UNITS_MULTIPLIER
     let unitscode = utilities.getMetaRow(constants.UNITS_CODE, metasource)
     unitscode = unitscode[1]
@@ -223,11 +229,13 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
     unitsmultiplier = unitsmultiplier[1] // multiply for singles
     let unitsratio = metadata.UnitRatio // divide for presentation
     let multiplier = unitsmultiplier/unitsratio
-    // console.log('multiplier',multiplier, filename)
+
+    // format control
     let unitdecimals = context.settings.Decimals[unitscode] || 0
 
     // -----------------------[ populate aspect components ]--------------------------
 
+    // collect header
     let headersource = {}
     for (let index = 1; index < metasource.length - 1; index ++) {
         headersource[metasource[index][0]] = metasource[index][1]
