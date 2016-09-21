@@ -173,11 +173,6 @@ class Database {
     private viewpointDataParms: GetViewpointDataParms
     private dbroot: string = '/db/repositories/'
 
-    // // pending
-    // public getBranch(viewpointname, path = []) {
-
-    // }
-
     // getViewpointData returns a promise.
     public getViewpointData(parms: GetViewpointDataParms) {
 
@@ -229,7 +224,8 @@ class Database {
                     
                 }
             ).catch(reason =>{
-                error(reason)
+                console.log(reason)
+                // error(reason)
             })
         })
 
@@ -253,13 +249,15 @@ class Database {
                 '/viewpoints/' + 
                 viewpoint.toLowerCase() + '.json'
 
+            console.log('viewpointpath', path)
+
             fetch(path).then((viewpoint) => {
                 return viewpoint.json()
             }).then((viewpointdata)=> {
                 resolve(viewpointdata)
             }).catch((reason)=>{
                 console.log('get viewpoint template error', reason)
-                error(reason)
+                // error(reason)
             })
 
         })
@@ -322,13 +320,15 @@ class Database {
                 '/' +
                 datasetName.toLowerCase() + '.json'
 
+            console.log('dataset path', path)
+
             fetch(path).then((dataset) => {
                 return dataset.json()
             }).then((dataset)=> {
                 resolve(dataset)
             }).catch((reason)=>{
                 console.log('get dataset error', reason)
-                error(reason)
+                // error(reason)
             })
 
         })
@@ -345,7 +345,9 @@ class Database {
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/datasets/' + 
                 version.toLowerCase() + 
-                '/meta/lookups.json'
+                '/lookups.json'
+
+            console.log('lookup path', path)
 
             fetch(path).then((lookups) => {
                 return lookups.json()
@@ -353,7 +355,7 @@ class Database {
                 resolve(lookups)
             }).catch((reason)=>{
                 console.log('get lookups error', reason)
-                error(reason)
+                // error(reason)
             })
 
         })
