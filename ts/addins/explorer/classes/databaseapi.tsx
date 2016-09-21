@@ -172,6 +172,8 @@ class Database {
     private lookups: Lookups
     private viewpointDataParms: GetViewpointDataParms
     private dbroot: string = '/db/repositories/'
+    private datasetsubpath: string = 'json/'
+    private lookupssubpath: string = 'lookups/'
 
     // getViewpointData returns a promise.
     public getViewpointData(parms: GetViewpointDataParms) {
@@ -317,7 +319,7 @@ class Database {
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/datasets/' + 
                 versionName.toLowerCase() + 
-                '/' +
+                '/' + this.datasetsubpath +
                 datasetName.toLowerCase() + '.json'
 
             console.log('dataset path', path)
@@ -345,7 +347,8 @@ class Database {
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/datasets/' + 
                 version.toLowerCase() + 
-                '/lookups.json'
+                '/' + this.lookupssubpath +
+                'lookups.json'
 
             console.log('lookup path', path)
 

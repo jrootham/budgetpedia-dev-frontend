@@ -4,6 +4,8 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 class Database {
     constructor() {
         this.dbroot = '/db/repositories/';
+        this.datasetsubpath = 'json/';
+        this.lookupssubpath = 'lookups/';
     }
     getViewpointData(parms) {
         this.viewpointDataParms = parms;
@@ -86,7 +88,7 @@ class Database {
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/datasets/' +
                 versionName.toLowerCase() +
-                '/' +
+                '/' + this.datasetsubpath +
                 datasetName.toLowerCase() + '.json';
             console.log('dataset path', path);
             fetch(path).then((dataset) => {
@@ -105,7 +107,8 @@ class Database {
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/datasets/' +
                 version.toLowerCase() +
-                '/lookups.json';
+                '/' + this.lookupssubpath +
+                'lookups.json';
             console.log('lookup path', path);
             fetch(path).then((lookups) => {
                 return lookups.json();

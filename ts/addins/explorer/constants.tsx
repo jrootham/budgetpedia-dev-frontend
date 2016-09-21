@@ -21,9 +21,9 @@ let ChartCodeToGoogleChartType = {
 export { ChartCodeToGoogleChartType }
 
 let AspectNameToDatasetName = {
-    'Expenses':'BudgetExpenses',
-    'Revenues':'BudgetRevenues',
-    'Staffing':'BudgetStaffing'
+    'Expenses':'Expenses',
+    'Revenues':'Revenues',
+    'Staffing':'Staffing'
 }
 
 export var DatasetNameToAspectName = {

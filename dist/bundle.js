@@ -1806,6 +1806,8 @@ var Database = function () {
         _classCallCheck(this, Database);
 
         this.dbroot = '/db/repositories/';
+        this.datasetsubpath = 'json/';
+        this.lookupssubpath = 'lookups/';
     }
 
     _createClass(Database, [{
@@ -1915,7 +1917,7 @@ var Database = function () {
             var _this3 = this;
 
             var promise = new Promise(function (resolve, error) {
-                var path = _this3.dbroot + _this3.viewpointDataParms.repository.toLowerCase() + '/datasets/' + versionName.toLowerCase() + '/' + datasetName.toLowerCase() + '.json';
+                var path = _this3.dbroot + _this3.viewpointDataParms.repository.toLowerCase() + '/datasets/' + versionName.toLowerCase() + '/' + _this3.datasetsubpath + datasetName.toLowerCase() + '.json';
                 console.log('dataset path', path);
                 fetch(path).then(function (dataset) {
                     return dataset.json();
@@ -1935,7 +1937,7 @@ var Database = function () {
             var version = arguments.length <= 0 || arguments[0] === undefined ? undefined : arguments[0];
 
             var promise = new Promise(function (resolve, error) {
-                var path = _this4.dbroot + _this4.viewpointDataParms.repository.toLowerCase() + '/datasets/' + version.toLowerCase() + '/lookups.json';
+                var path = _this4.dbroot + _this4.viewpointDataParms.repository.toLowerCase() + '/datasets/' + version.toLowerCase() + '/' + _this4.lookupssubpath + 'lookups.json';
                 console.log('lookup path', path);
                 fetch(path).then(function (lookups) {
                     return lookups.json();
@@ -3489,9 +3491,9 @@ var ChartCodeToGoogleChartType = {
 };
 exports.ChartCodeToGoogleChartType = ChartCodeToGoogleChartType;
 var AspectNameToDatasetName = {
-    'Expenses': 'BudgetExpenses',
-    'Revenues': 'BudgetRevenues',
-    'Staffing': 'BudgetStaffing'
+    'Expenses': 'Expenses',
+    'Revenues': 'Revenues',
+    'Staffing': 'Staffing'
 };
 exports.AspectNameToDatasetName = AspectNameToDatasetName;
 exports.DatasetNameToAspectName = {};

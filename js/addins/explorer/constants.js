@@ -16,9 +16,9 @@ let ChartCodeToGoogleChartType = {
 };
 exports.ChartCodeToGoogleChartType = ChartCodeToGoogleChartType;
 let AspectNameToDatasetName = {
-    'Expenses': 'BudgetExpenses',
-    'Revenues': 'BudgetRevenues',
-    'Staffing': 'BudgetStaffing'
+    'Expenses': 'Expenses',
+    'Revenues': 'Revenues',
+    'Staffing': 'Staffing'
 };
 exports.AspectNameToDatasetName = AspectNameToDatasetName;
 exports.DatasetNameToAspectName = {};
