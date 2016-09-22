@@ -269,7 +269,8 @@ class BudgetBranch {
                 resolve(true)
                 
             }).catch(reason =>{
-                error(reason)
+                console.error(reason)
+                // error(reason)
             })
 
         })
@@ -341,7 +342,7 @@ class BudgetBranch {
         }
 
         let newnode = treeNodeData.Components[code]
-        if (!newnode.Components && !newnode.CommonObjects) {
+        if (!newnode.Components && !newnode.CommonDimension) {
             return
         }
         workingStatus(true)

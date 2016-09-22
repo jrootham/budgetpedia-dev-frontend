@@ -108,7 +108,7 @@ class BudgetCell {
         let settings = cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope]
         return settings.explorerChartCode
     } 
-    nodeDataseriesName:string // the ref to the data to be presented, typically Components or CommonObjects
+    nodeDataseriesName:string // the ref to the data to be presented, typically Components or CommonDimension
     chartSelection: ChartSelectionCell[] // returned by google chart; points to row selected by user
     uid: string // universal id; set by addCellDeclarations action
 
@@ -316,12 +316,12 @@ class BudgetCell {
         // -------------------[ assemble horizontal label value ]--------------------
 
         let horizontalLabel = null
-        if ((treeNodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
+        if ((treeNodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonDimension')) {
             let titleref = viewpointNamingConfigs[treeNodeData.NamingConfigRef]
             horizontalLabel = titleref.Contents.Alias || titleref.Contents.Name
         } else {
-            let portaltitles = datasetConfig.DataseriesTitles
-            horizontalLabel = portaltitles.CommonObjects
+            let portaltitles = datasetConfig.CellTitles
+            horizontalLabel = portaltitles.CommonDimension
         }
 
         // ----------------------[ assemble chart title ]----------------------

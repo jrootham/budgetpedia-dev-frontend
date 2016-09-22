@@ -9,7 +9,7 @@
 // summarization structure for setviewpointamounts
 interface ComponentAggregates {
     years?: any,
-    CommonObjects?: any,
+    CommonDimension?: any,
 }
 
 import {
@@ -29,7 +29,7 @@ export interface SetViewpointDataParms {
 
 // starts with hash of components, 
 // recursively descends to BASELINE items, then leaves 
-// summaries by year, and CommonObjects by year on ascent
+// summaries by year, and CommonDimension by year on ascent
 let setViewpointData = (parms: SetViewpointDataParms) => {
     // let viewpointname = parms.viewpointname,
     let { 
@@ -45,30 +45,50 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
         return
 
     let datasetMetaData = datasetData.MetaData
-    let componentLookupIndex = datasetMetaData.ComponentsLookupIndex // use for system lookups
-    let commonObjectLookupIndex = datasetMetaData.CommonObjectsLookupIndex
+    console.log('dataset MetaData', datasetData.MetaData)
+    let componentLookupIndex = datasetMetaData.Dimensions[0].toLowerCase() // use for system lookups
+    let commonDimensionLookupIndex = datasetMetaData.CommonDimension
+    if (commonDimensionLookupIndex) {
+        commonDimensionLookupIndex = commonDimensionLookupIndex.toLowerCase()
+    }
 
-    let componentlookups = lookups[componentLookupIndex]
-    let commonObjectLookups = lookups[commonObjectLookupIndex]
+    let baselinelookups = lookups[componentLookupIndex]
+    let commonDimensionLookups = lookups[commonDimensionLookupIndex]
     let taxonomylookups = viewpointDataTemplate.Lookups.Taxonomy
 
     let lookupset = {
-        componentlookups,
-        commonObjectLookups,
+        baselinelookups,
+        commonDimensionLookups,
         taxonomylookups,
     }
 
-    let items = datasetData.Items
+    console.log('lookupset',lookupset)
+
+    let items = datasetData.Data
 
     let isInflationAdjustable = !!datasetMetaData.InflationAdjustable
 
+    if (isInflationAdjustable) {
+        if (inflationAdjusted) {
+            items = items.Adjusted
+        } else {
+            items = items.Nominal
+        }
+    }
+
+    console.log('inflationadjusted, items', inflationAdjusted, items)
+
     let rootcomponent = { "ROOT": viewpointDataTemplate }
 
-    // set years, and CommonObjects by years
-    // initiates recursion
-    setComponentAggregates(rootcomponent, items, isInflationAdjustable,
-        lookupset, inflationAdjusted)
+    // set years, and CommonDimension by years
 
+    try {
+        // initiates recursion
+        setComponentAggregates(rootcomponent, items, lookupset)
+        console.log('completed set viewpointdata')
+    } catch (e) {
+        console.log(e)
+    }
     // create sentinel to prevent unnucessary processing
     viewpointDataTemplate.currentDataset = datasetName
 
@@ -78,20 +98,18 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
 
 // this is recursive, with absence of Components property at leaf
 // special treatment for 'BASELINE' items -- fetches data from data series items
-// sets years and CommonObjects for the node
+// sets years and CommonDimension for the node
 let setComponentAggregates = (
 
         components, 
         items, 
-        isInflationAdjustable,
-        lookups, 
-        wantsInflationAdjusted
+        lookups
 
     ): ComponentAggregates => {
     // cumulate summaries for this level
     let cumulatingSummaries: ComponentAggregates = {
         years: {},
-        CommonObjects: {},
+        CommonDimension: {},
     }
 
     // for every component at this level
@@ -104,9 +122,9 @@ let setComponentAggregates = (
 
         // remove any previous aggregations...
         if (component.years) delete component.years
-        if (component.CommonObjects) {
-            delete component.CommonObjects
-            delete component.SortedCommonObjects
+        if (component.CommonDimension) {
+            delete component.CommonDimension
+            delete component.SortedCommonDimension
         }
 
         // for non-baseline items, recurse to collect aggregations
@@ -124,19 +142,18 @@ let setComponentAggregates = (
 
                 // get child component summaries recursively
                 componentAggregates = setComponentAggregates(
-                    component.Components, items, isInflationAdjustable,
-                    lookups, wantsInflationAdjusted)
+                    component.Components, items, lookups)
 
                 // capture data for chart-making
                 if (componentAggregates.years)
                     component.years = componentAggregates.years
-                if (componentAggregates.CommonObjects) {
-                    component.CommonObjects = componentAggregates.CommonObjects
-                    if (component.CommonObjects) {// && !component.SortedCommonObjects) {
+                if (componentAggregates.CommonDimension) {
+                    component.CommonDimension = componentAggregates.CommonDimension
+                    if (component.CommonDimension) {// && !component.SortedCommonDimension) {
                         let sorted = getNameSortedComponentItems(
-                            component.CommonObjects, lookups)
+                            component.CommonDimension, lookups)
 
-                        component.SortedCommonObjects = sorted
+                        component.SortedCommonDimension = sorted
                     }
 
                 }
@@ -151,39 +168,19 @@ let setComponentAggregates = (
             let importitem = null
             if (!item) console.error('System Error: failed to find item for ', componentname)
             // first set componentAggregates as usual
-            if (isInflationAdjustable) {
-                if (wantsInflationAdjusted) {
-                    importitem = item.Adjusted
-                    if (importitem) {
-                        componentAggregates = {
-                            years: item.Adjusted.years,
-                            CommonObjects: item.Adjusted.CommonObjects,
-                        }
-                    }
-                } else {
-                    importitem = item.Nominal
-                    if (item.Nominal) {
-                        componentAggregates = {
-                            years: item.Nominal.years,
-                            CommonObjects: item.Nominal.CommonObjects,
-                        }
-                    }
-                }
-            } else {
-                importitem = item
-                componentAggregates = {
-                    years: item.years,
-                    CommonObjects: item.CommonObjects,
-                }
+            importitem = item
+            componentAggregates = {
+                years: item.years,
+                CommonDimension: item.CommonDimension,
             }
             // capture data for chart-making
             if (component.Components) {
                 delete component.SortedComponents
                 delete component.Components
             }
-            if (component.CommonObjects) {
-                delete component.SortedCommonObjects
-                delete component.CommonObjects
+            if (component.CommonDimension) {
+                delete component.SortedCommonDimension
+                delete component.CommonDimension
             }
             if (component.years) {
                 delete component.years
@@ -192,11 +189,11 @@ let setComponentAggregates = (
                 if (importitem.years) {
                     component.years = importitem.years
                 } 
-                if (importitem.CommonObjects) {
-                    component.CommonObjects = importitem.CommonObjects
+                if (importitem.CommonDimension) {
+                    component.CommonDimension = importitem.CommonDimension
                 } 
-                if (importitem.SortedCommonObjects) {
-                    component.SortedCommonObjects = importitem.SortedCommonObjects
+                if (importitem.SortedCommonDimension) {
+                    component.SortedCommonDimension = importitem.SortedCommonDimension
                 }
                 if (importitem.Components) {
                     component.Components = importitem.Components
@@ -211,11 +208,11 @@ let setComponentAggregates = (
 
                 component.SortedComponents = sorted
             }
-            if (component.CommonObjects && !component.SortedCommonObjects) { // && !component.SortedComponents) {
+            if (component.CommonDimension && !component.SortedCommonDimension) { // && !component.SortedComponents) {
                 let sorted = getNameSortedComponentItems(
-                    component.CommonObjects, lookups)
+                    component.CommonDimension, lookups)
 
-                component.SortedCommonObjects = sorted
+                component.SortedCommonDimension = sorted
             }
 
         }
@@ -233,13 +230,13 @@ let setComponentAggregates = (
 
 let getIndexSortedComponentItems = (components, lookups):SortedComponentItem[] => {
     let sorted = []
-    let catlookups = lookups.taxonomylookups
+    let taxonomylookups = lookups.taxonomylookups
     for (let componentcode in components) {
         let component = components[componentcode]
         let baseline = !!component.Baseline // config = component.NamingConfigRef
         let name = baseline // (config == 'BASELINE')
-            ? lookups.componentlookups[componentcode]
-            : catlookups[componentcode]
+            ? lookups.baselinelookups[componentcode]
+            : taxonomylookups[componentcode]
         let item = {
             Code: componentcode,
             Index: component.Index,
@@ -264,7 +261,7 @@ let getIndexSortedComponentItems = (components, lookups):SortedComponentItem[] =
 
 let getNameSortedComponentItems = (components, lookups):SortedComponentItem[] => {
     let sorted = []
-    let complookups = lookups.commonObjectLookups
+    let complookups = lookups.commonDimensionLookups
     for (let componentname in components) {
         let component = components[componentname]
         // let config = component.NamingConfigRef
@@ -316,36 +313,36 @@ let assembleComponentAggregates = (
         }
     }
 
-    // if CommonObjects have been collected, add them to the totals
-    if (componentAggregates.CommonObjects) {
+    // if CommonDimension have been collected, add them to the totals
+    if (componentAggregates.CommonDimension) {
 
-        let CommonObjects = componentAggregates.CommonObjects
+        let CommonDimension = componentAggregates.CommonDimension
 
         // for each aggreate...
-        for (let commonObjectName in CommonObjects) {
+        for (let commonDimensionName in CommonDimension) {
 
-            let commonObject = CommonObjects[commonObjectName]
+            let commonDimension = CommonDimension[commonDimensionName]
 
             // for each category year...
-            // collect year values for the CommonObjects if they exist
-            if (commonObject.years) {
+            // collect year values for the CommonDimension if they exist
+            if (commonDimension.years) {
 
-                let years = commonObject.years
+                let years = commonDimension.years
 
                 for (let yearname in years) {
 
                     // accumulate the year value...
                     let yearvalue = years[yearname]
-                    let cumulatingCommonObject =
-                        cumulatingSummaries.CommonObjects[commonObjectName] || { years: {} }
+                    let cumulatingCommonDimension =
+                        cumulatingSummaries.CommonDimension[commonDimensionName] || { years: {} }
 
-                    if (cumulatingCommonObject.years[yearname])
-                        cumulatingCommonObject.years[yearname] += yearvalue
+                    if (cumulatingCommonDimension.years[yearname])
+                        cumulatingCommonDimension.years[yearname] += yearvalue
                     else
-                        cumulatingCommonObject.years[yearname] = yearvalue
+                        cumulatingCommonDimension.years[yearname] = yearvalue
 
                     // re-assemble
-                    cumulatingSummaries.CommonObjects[commonObjectName] = cumulatingCommonObject
+                    cumulatingSummaries.CommonDimension[commonDimensionName] = cumulatingCommonDimension
 
                 }
             }

@@ -133,7 +133,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             }
 
         }).catch(reason => {
-            alert('error in data fetch, mount')
+            console.log('error in data fetch, mount', reason)
+            // alert('error in data fetch, mount' )
         })
     }
 

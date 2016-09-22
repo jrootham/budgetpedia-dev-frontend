@@ -65,13 +65,13 @@ class BudgetCell {
             let verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units;
             verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')';
             let horizontalLabel = null;
-            if ((treeNodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonObjects')) {
+            if ((treeNodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonDimension')) {
                 let titleref = viewpointNamingConfigs[treeNodeData.NamingConfigRef];
                 horizontalLabel = titleref.Contents.Alias || titleref.Contents.Name;
             }
             else {
-                let portaltitles = datasetConfig.DataseriesTitles;
-                horizontalLabel = portaltitles.CommonObjects;
+                let portaltitles = datasetConfig.CellTitles;
+                horizontalLabel = portaltitles.CommonDimension;
             }
             let nodename = null;
             if (treeNodeMetaDataFromParentSortedList) {

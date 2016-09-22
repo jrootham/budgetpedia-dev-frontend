@@ -291,7 +291,7 @@ class ExplorerBranch extends Component {
                 });
             }
         }).catch(reason => {
-            alert('error in data fetch, mount');
+            console.log('error in data fetch, mount', reason);
         });
     }
     componentWillReceiveProps(nextProps) {

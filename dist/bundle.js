@@ -1315,7 +1315,7 @@ var BudgetBranch = function () {
                     });
                     resolve(true);
                 }).catch(function (reason) {
-                    error(reason);
+                    console.error(reason);
                 });
             });
             return promise;
@@ -1356,7 +1356,7 @@ var BudgetBranch = function () {
                 return;
             }
             var newnode = treeNodeData.Components[code];
-            if (!newnode.Components && !newnode.CommonObjects) {
+            if (!newnode.Components && !newnode.CommonDimension) {
                 return;
             }
             workingStatus(true);
@@ -1493,12 +1493,12 @@ var BudgetCell = function () {
             var verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units;
             verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')';
             var horizontalLabel = null;
-            if (treeNodeData.NamingConfigRef && nodeDataseriesName != 'CommonObjects') {
+            if (treeNodeData.NamingConfigRef && nodeDataseriesName != 'CommonDimension') {
                 var titleref = viewpointNamingConfigs[treeNodeData.NamingConfigRef];
                 horizontalLabel = titleref.Contents.Alias || titleref.Contents.Name;
             } else {
-                var portaltitles = datasetConfig.DataseriesTitles;
-                horizontalLabel = portaltitles.CommonObjects;
+                var portaltitles = datasetConfig.CellTitles;
+                horizontalLabel = portaltitles.CommonDimension;
             }
             var nodename = null;
             if (treeNodeMetaDataFromParentSortedList) {
@@ -1891,7 +1891,7 @@ var Database = function () {
                     var YearsRange = metaData.YearsRange;
                     var DatasetTitle = metaData.DatasetTitle;
                     var Dataseries = metaData.Dataseries;
-                    var DataseriesTitles = metaData.DataseriesTitles;
+                    var CellTitles = metaData.CellTitles;
                     var Units = metaData.Units;
                     var UnitsAlias = metaData.UnitsAlias;
                     var UnitRatio = metaData.UnitRatio;
@@ -1901,7 +1901,7 @@ var Database = function () {
                         YearsRange: YearsRange,
                         DatasetTitle: DatasetTitle,
                         Dataseries: Dataseries,
-                        DataseriesTitles: DataseriesTitles,
+                        CellTitles: CellTitles,
                         Units: Units,
                         UnitsAlias: UnitsAlias,
                         UnitRatio: UnitRatio
@@ -1970,46 +1970,64 @@ var setViewpointData = function setViewpointData(parms) {
 
     if (viewpointDataTemplate.currentDataset == datasetName) return;
     var datasetMetaData = datasetData.MetaData;
-    var componentLookupIndex = datasetMetaData.ComponentsLookupIndex;
-    var commonObjectLookupIndex = datasetMetaData.CommonObjectsLookupIndex;
-    var componentlookups = lookups[componentLookupIndex];
-    var commonObjectLookups = lookups[commonObjectLookupIndex];
+    console.log('dataset MetaData', datasetData.MetaData);
+    var componentLookupIndex = datasetMetaData.Dimensions[0].toLowerCase();
+    var commonDimensionLookupIndex = datasetMetaData.CommonDimension;
+    if (commonDimensionLookupIndex) {
+        commonDimensionLookupIndex = commonDimensionLookupIndex.toLowerCase();
+    }
+    var baselinelookups = lookups[componentLookupIndex];
+    var commonDimensionLookups = lookups[commonDimensionLookupIndex];
     var taxonomylookups = viewpointDataTemplate.Lookups.Taxonomy;
     var lookupset = {
-        componentlookups: componentlookups,
-        commonObjectLookups: commonObjectLookups,
+        baselinelookups: baselinelookups,
+        commonDimensionLookups: commonDimensionLookups,
         taxonomylookups: taxonomylookups
     };
-    var items = datasetData.Items;
+    console.log('lookupset', lookupset);
+    var items = datasetData.Data;
     var isInflationAdjustable = !!datasetMetaData.InflationAdjustable;
+    if (isInflationAdjustable) {
+        if (inflationAdjusted) {
+            items = items.Adjusted;
+        } else {
+            items = items.Nominal;
+        }
+    }
+    console.log('inflationadjusted, items', inflationAdjusted, items);
     var rootcomponent = { "ROOT": viewpointDataTemplate };
-    setComponentAggregates(rootcomponent, items, isInflationAdjustable, lookupset, inflationAdjusted);
+    try {
+        setComponentAggregates(rootcomponent, items, lookupset);
+        console.log('completed set viewpointdata');
+    } catch (e) {
+        console.log(e);
+    }
     viewpointDataTemplate.currentDataset = datasetName;
 };
-var setComponentAggregates = function setComponentAggregates(components, items, isInflationAdjustable, lookups, wantsInflationAdjusted) {
+var setComponentAggregates = function setComponentAggregates(components, items, lookups) {
     var cumulatingSummaries = {
         years: {},
-        CommonObjects: {}
+        CommonDimension: {}
     };
     for (var componentname in components) {
         var component = components[componentname];
         var componentAggregates = null;
         if (component.years) delete component.years;
-        if (component.CommonObjects) {
-            delete component.CommonObjects;
-            delete component.SortedCommonObjects;
+        if (component.CommonDimension) {
+            delete component.CommonDimension;
+            delete component.SortedCommonDimension;
         }
         if (!component.Baseline) {
             if (component.Components) {
                 var sorted = getIndexSortedComponentItems(component.Components, lookups);
                 component.SortedComponents = sorted;
-                componentAggregates = setComponentAggregates(component.Components, items, isInflationAdjustable, lookups, wantsInflationAdjusted);
+                componentAggregates = setComponentAggregates(component.Components, items, lookups);
                 if (componentAggregates.years) component.years = componentAggregates.years;
-                if (componentAggregates.CommonObjects) {
-                    component.CommonObjects = componentAggregates.CommonObjects;
-                    if (component.CommonObjects) {
-                        var _sorted = getNameSortedComponentItems(component.CommonObjects, lookups);
-                        component.SortedCommonObjects = _sorted;
+                if (componentAggregates.CommonDimension) {
+                    component.CommonDimension = componentAggregates.CommonDimension;
+                    if (component.CommonDimension) {
+                        var _sorted = getNameSortedComponentItems(component.CommonDimension, lookups);
+                        component.SortedCommonDimension = _sorted;
                     }
                 }
             }
@@ -2017,38 +2035,18 @@ var setComponentAggregates = function setComponentAggregates(components, items, 
             var item = items[componentname];
             var importitem = null;
             if (!item) console.error('System Error: failed to find item for ', componentname);
-            if (isInflationAdjustable) {
-                if (wantsInflationAdjusted) {
-                    importitem = item.Adjusted;
-                    if (importitem) {
-                        componentAggregates = {
-                            years: item.Adjusted.years,
-                            CommonObjects: item.Adjusted.CommonObjects
-                        };
-                    }
-                } else {
-                    importitem = item.Nominal;
-                    if (item.Nominal) {
-                        componentAggregates = {
-                            years: item.Nominal.years,
-                            CommonObjects: item.Nominal.CommonObjects
-                        };
-                    }
-                }
-            } else {
-                importitem = item;
-                componentAggregates = {
-                    years: item.years,
-                    CommonObjects: item.CommonObjects
-                };
-            }
+            importitem = item;
+            componentAggregates = {
+                years: item.years,
+                CommonDimension: item.CommonDimension
+            };
             if (component.Components) {
                 delete component.SortedComponents;
                 delete component.Components;
             }
-            if (component.CommonObjects) {
-                delete component.SortedCommonObjects;
-                delete component.CommonObjects;
+            if (component.CommonDimension) {
+                delete component.SortedCommonDimension;
+                delete component.CommonDimension;
             }
             if (component.years) {
                 delete component.years;
@@ -2057,11 +2055,11 @@ var setComponentAggregates = function setComponentAggregates(components, items, 
                 if (importitem.years) {
                     component.years = importitem.years;
                 }
-                if (importitem.CommonObjects) {
-                    component.CommonObjects = importitem.CommonObjects;
+                if (importitem.CommonDimension) {
+                    component.CommonDimension = importitem.CommonDimension;
                 }
-                if (importitem.SortedCommonObjects) {
-                    component.SortedCommonObjects = importitem.SortedCommonObjects;
+                if (importitem.SortedCommonDimension) {
+                    component.SortedCommonDimension = importitem.SortedCommonDimension;
                 }
                 if (importitem.Components) {
                     component.Components = importitem.Components;
@@ -2074,9 +2072,9 @@ var setComponentAggregates = function setComponentAggregates(components, items, 
                 var _sorted2 = getNameSortedComponentItems(component.Components, lookups);
                 component.SortedComponents = _sorted2;
             }
-            if (component.CommonObjects && !component.SortedCommonObjects) {
-                var _sorted3 = getNameSortedComponentItems(component.CommonObjects, lookups);
-                component.SortedCommonObjects = _sorted3;
+            if (component.CommonDimension && !component.SortedCommonDimension) {
+                var _sorted3 = getNameSortedComponentItems(component.CommonDimension, lookups);
+                component.SortedCommonDimension = _sorted3;
             }
         }
         if (componentAggregates) {
@@ -2087,11 +2085,11 @@ var setComponentAggregates = function setComponentAggregates(components, items, 
 };
 var getIndexSortedComponentItems = function getIndexSortedComponentItems(components, lookups) {
     var sorted = [];
-    var catlookups = lookups.taxonomylookups;
+    var taxonomylookups = lookups.taxonomylookups;
     for (var componentcode in components) {
         var component = components[componentcode];
         var baseline = !!component.Baseline;
-        var name = baseline ? lookups.componentlookups[componentcode] : catlookups[componentcode];
+        var name = baseline ? lookups.baselinelookups[componentcode] : taxonomylookups[componentcode];
         var item = {
             Code: componentcode,
             Index: component.Index,
@@ -2108,7 +2106,7 @@ var getIndexSortedComponentItems = function getIndexSortedComponentItems(compone
 };
 var getNameSortedComponentItems = function getNameSortedComponentItems(components, lookups) {
     var sorted = [];
-    var complookups = lookups.commonObjectLookups;
+    var complookups = lookups.commonDimensionLookups;
     for (var componentname in components) {
         var component = components[componentname];
         var name = complookups[componentname];
@@ -2133,17 +2131,17 @@ var assembleComponentAggregates = function assembleComponentAggregates(cumulatin
             if (cumulatingSummaries.years[yearname]) cumulatingSummaries.years[yearname] += yearvalue;else cumulatingSummaries.years[yearname] = yearvalue;
         }
     }
-    if (componentAggregates.CommonObjects) {
-        var CommonObjects = componentAggregates.CommonObjects;
-        for (var commonObjectName in CommonObjects) {
-            var commonObject = CommonObjects[commonObjectName];
-            if (commonObject.years) {
-                var _years = commonObject.years;
+    if (componentAggregates.CommonDimension) {
+        var CommonDimension = componentAggregates.CommonDimension;
+        for (var commonDimensionName in CommonDimension) {
+            var commonDimension = CommonDimension[commonDimensionName];
+            if (commonDimension.years) {
+                var _years = commonDimension.years;
                 for (var _yearname in _years) {
                     var _yearvalue = _years[_yearname];
-                    var cumulatingCommonObject = cumulatingSummaries.CommonObjects[commonObjectName] || { years: {} };
-                    if (cumulatingCommonObject.years[_yearname]) cumulatingCommonObject.years[_yearname] += _yearvalue;else cumulatingCommonObject.years[_yearname] = _yearvalue;
-                    cumulatingSummaries.CommonObjects[commonObjectName] = cumulatingCommonObject;
+                    var cumulatingCommonDimension = cumulatingSummaries.CommonDimension[commonDimensionName] || { years: {} };
+                    if (cumulatingCommonDimension.years[_yearname]) cumulatingCommonDimension.years[_yearname] += _yearvalue;else cumulatingCommonDimension.years[_yearname] = _yearvalue;
+                    cumulatingSummaries.CommonDimension[commonDimensionName] = cumulatingCommonDimension;
                 }
             }
         }
@@ -2241,10 +2239,10 @@ var BudgetNode = function () {
             budgetNode._setCellTitle(cell);
         };
         this._setCellTitle = function (budgetCell) {
-            var portaltitles = budgetCell.viewpointConfigPack.datasetConfig.DataseriesTitles;
+            var portaltitles = budgetCell.viewpointConfigPack.datasetConfig.CellTitles;
             var chartblocktitle = null;
-            if (budgetCell.nodeDataseriesName == 'CommonObjects') {
-                chartblocktitle = portaltitles.CommonObjects;
+            if (budgetCell.nodeDataseriesName == 'CommonDimension') {
+                chartblocktitle = portaltitles.CommonDimension;
             } else {
                 chartblocktitle = portaltitles.Components;
             }
@@ -2691,7 +2689,7 @@ var ExplorerBranch = function (_Component) {
                     });
                 }
             }).catch(function (reason) {
-                alert('error in data fetch, mount');
+                console.log('error in data fetch, mount', reason);
             });
         }
     }, {
@@ -4158,7 +4156,7 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
         console.error('System Error: budgetNode, faulty cellIndex in applyChartComponentSelection', budgetNode, cellIndex);
         throw Error('faulty cellIndex in applyChartComponentSelection');
     }
-    if (budgetCell.nodeDataseriesName == 'CommonObjects') {
+    if (budgetCell.nodeDataseriesName == 'CommonDimension') {
         return;
     }
     budgetCell.chartSelection = selection ? chartSelectionData.selection : null;

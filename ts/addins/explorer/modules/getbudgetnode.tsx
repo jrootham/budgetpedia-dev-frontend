@@ -7,9 +7,9 @@
     - NamingConfigRef
     - years
     - Components
-    - CommonObjects
+    - CommonDimension
     - SortedComponents
-    - SortedCommonObjects
+    - SortedCommonDimension
 */
 
 let getBudgetNode = (node, path) => {

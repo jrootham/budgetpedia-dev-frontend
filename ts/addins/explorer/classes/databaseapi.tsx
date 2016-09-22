@@ -28,7 +28,7 @@ const delay = ms => // for testing!
 // the processed item type
 interface NumericItemType {
     years: YearsContent,
-    CommonObjects: {
+    CommonDimension: {
         [categorycode:string]: {
             years: YearsContent
         }
@@ -63,9 +63,9 @@ interface Component {
     NamingConfigRef: string,
     Components?: Components,
     // added after processing
-    CommonObjects?: Components,
+    CommonDimension?: Components,
     SortedComponents?: SortedComponentItem,
-    SortedCommonObjects?: SortedComponentItem,
+    SortedCommonDimension?: SortedComponentItem,
     years?: Dataset<CurrencyItemType> | Dataset<NumericItemType>
 }
 
@@ -102,9 +102,9 @@ export interface DatasetConfig {
     DatasetName: string,
     DatasetTitle: string,
     Dataseries: DataseriesMeta[],
-    DataseriesTitles: {
+    CellTitles: {
         Components: string,
-        CommonObjects: string,
+        CommonDimension: string,
     },
     Units: string,
     UnitsAlias: string,
@@ -284,7 +284,7 @@ class Database {
                     YearsRange,
                     DatasetTitle,
                     Dataseries,
-                    DataseriesTitles,
+                    CellTitles,
                     Units,
                     UnitsAlias,
                     UnitRatio,
@@ -295,7 +295,7 @@ class Database {
                     YearsRange,
                     DatasetTitle,
                     Dataseries,
-                    DataseriesTitles, 
+                    CellTitles, 
                     Units, 
                     UnitsAlias,
                     UnitRatio,

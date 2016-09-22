@@ -15,7 +15,7 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         console.error('System Error: budgetNode, faulty cellIndex in applyChartComponentSelection', budgetNode, cellIndex);
         throw Error('faulty cellIndex in applyChartComponentSelection');
     }
-    if (budgetCell.nodeDataseriesName == 'CommonObjects') {
+    if (budgetCell.nodeDataseriesName == 'CommonDimension') {
         return;
     }
     budgetCell.chartSelection = selection ? chartSelectionData.selection : null;

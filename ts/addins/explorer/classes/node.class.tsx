@@ -179,10 +179,10 @@ class BudgetNode {
     }
 
     private _setCellTitle = (budgetCell:BudgetCell) => {
-        let portaltitles = budgetCell.viewpointConfigPack.datasetConfig.DataseriesTitles
+        let portaltitles = budgetCell.viewpointConfigPack.datasetConfig.CellTitles
         let chartblocktitle = null
-        if ((budgetCell.nodeDataseriesName == 'CommonObjects')) {
-            chartblocktitle = portaltitles.CommonObjects
+        if ((budgetCell.nodeDataseriesName == 'CommonDimension')) {
+            chartblocktitle = portaltitles.CommonDimension
         } else {
             chartblocktitle = portaltitles.Components
         }
