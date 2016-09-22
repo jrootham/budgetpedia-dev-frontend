@@ -30,7 +30,7 @@ export interface SetViewpointDataParms {
 // starts with hash of components, 
 // recursively descends to BASELINE items, then leaves 
 // summaries by year, and CommonDimension by year on ascent
-let setViewpointData = (parms: SetViewpointDataParms) => {
+const setViewpointData = (parms: SetViewpointDataParms) => {
     // let viewpointname = parms.viewpointname,
     let { 
         datasetName, 
@@ -46,14 +46,14 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
 
     let datasetMetaData = datasetData.MetaData
     console.log('dataset MetaData', datasetData.MetaData)
-    let componentLookupIndex = datasetMetaData.Dimensions[0].toLowerCase() // use for system lookups
+    let baselineLookupIndex = datasetMetaData.Dimensions[0].toLowerCase() // use for system lookups
     let commonDimensionLookupIndex = datasetMetaData.CommonDimension
     if (commonDimensionLookupIndex) {
         commonDimensionLookupIndex = commonDimensionLookupIndex.toLowerCase()
     }
 
-    let baselinelookups = lookups[componentLookupIndex]
-    let commonDimensionLookups = lookups[commonDimensionLookupIndex]
+    let baselinelookups = lookups[baselineLookupIndex]
+    let commonDimensionLookups = commonDimensionLookupIndex?lookups[commonDimensionLookupIndex]:null
     let taxonomylookups = viewpointDataTemplate.Lookups.Taxonomy
 
     let lookupset = {
@@ -85,21 +85,20 @@ let setViewpointData = (parms: SetViewpointDataParms) => {
     try {
         // initiates recursion
         setComponentAggregates(rootcomponent, items, lookupset)
-        console.log('completed set viewpointdata')
+        console.log('completed set viewpointdata', rootcomponent)
     } catch (e) {
-        console.log(e)
+        console.log('error in setCompomentAggregates', e)
     }
     // create sentinel to prevent unnucessary processing
     viewpointDataTemplate.currentDataset = datasetName
-
-    // let text = JSON.stringify(viewpoint, null, 4) + '\n'
+    viewpointDataTemplate.isInflationAdjusted = inflationAdjusted
 
 }
 
 // this is recursive, with absence of Components property at leaf
 // special treatment for 'BASELINE' items -- fetches data from data series items
 // sets years and CommonDimension for the node
-let setComponentAggregates = (
+const setComponentAggregates = (
 
         components, 
         items, 
@@ -228,7 +227,7 @@ let setComponentAggregates = (
 
 // -----------------------[ RETURN SORTED COMPONENT LIST ]------------------------
 
-let getIndexSortedComponentItems = (components, lookups):SortedComponentItem[] => {
+const getIndexSortedComponentItems = (components, lookups):SortedComponentItem[] => {
     let sorted = []
     let taxonomylookups = lookups.taxonomylookups
     for (let componentcode in components) {
@@ -259,7 +258,7 @@ let getIndexSortedComponentItems = (components, lookups):SortedComponentItem[] =
 
 }
 
-let getNameSortedComponentItems = (components, lookups):SortedComponentItem[] => {
+const getNameSortedComponentItems = (components, lookups):SortedComponentItem[] => {
     let sorted = []
     let complookups = lookups.commonDimensionLookups
     for (let componentname in components) {
@@ -291,7 +290,7 @@ let getNameSortedComponentItems = (components, lookups):SortedComponentItem[] =>
 
 // summarize the componentAggregates into the cumumlatingSummaries
 
-let assembleComponentAggregates = (
+const assembleComponentAggregates = (
     cumulatingSummaries: ComponentAggregates,
     componentAggregates: ComponentAggregates) => {
 

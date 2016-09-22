@@ -461,6 +461,11 @@
                     "Index": 3,
                     "NamingConfigRef": "PROGRAM",
                     "Baseline": true
+                },
+                "PARKINGTAGS": {
+                    "Index": 1,
+                    "NamingConfigRef": "PROGRAM",
+                    "Baseline": true
                 }
             }
         }
