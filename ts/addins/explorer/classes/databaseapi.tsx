@@ -76,11 +76,13 @@ interface Components {
 // this represents the found raw viewpointdata settings portion
 // TODO; lose datasetConfig as carried by viewpointData; it's independent!
 export interface ViewpointData extends Component {
-    Lookups: Lookups,
-    datasetConfig?: DatasetConfig, // TODO: lose this!
-    NamingConfigurations: {
-        [configurationcode:string]:Configuration,
-    },
+    Meta: {
+        Lookups: Lookups,
+        datasetConfig?: DatasetConfig, // TODO: lose this!
+        NamingConfigurations: {
+            [configurationcode:string]:Configuration,
+        },
+    }
 }
 
 // used above
@@ -209,7 +211,7 @@ class Database {
                     // calculate all compatible data together, cached
                     [viewpointDataTemplate, datasetData, lookups, datasetConfig] = values
 
-                    viewpointDataTemplate.datasetConfig = datasetConfig // TODO try to avoid this
+                    viewpointDataTemplate.Meta.datasetConfig = datasetConfig // TODO try to avoid this
 
                     let setparms:CalculateViewpointDataParms = {
                         datasetName,

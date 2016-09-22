@@ -1840,7 +1840,7 @@ var Database = function () {
                     lookups = _values[2];
                     datasetConfig = _values[3];
 
-                    viewpointDataTemplate.datasetConfig = datasetConfig;
+                    viewpointDataTemplate.Meta.datasetConfig = datasetConfig;
                     var setparms = {
                         datasetName: datasetName,
                         inflationAdjusted: inflationAdjusted,
@@ -1968,17 +1968,16 @@ var setViewpointData = function setViewpointData(parms) {
     var lookups = parms.lookups;
     var inflationAdjusted = parms.inflationAdjusted;
 
-    if (viewpointDataTemplate.currentDataset == datasetName) return;
     var datasetMetaData = datasetData.MetaData;
     console.log('dataset MetaData', datasetData.MetaData);
-    var componentLookupIndex = datasetMetaData.Dimensions[0].toLowerCase();
+    var baselineLookupIndex = datasetMetaData.Dimensions[0].toLowerCase();
     var commonDimensionLookupIndex = datasetMetaData.CommonDimension;
     if (commonDimensionLookupIndex) {
         commonDimensionLookupIndex = commonDimensionLookupIndex.toLowerCase();
     }
-    var baselinelookups = lookups[componentLookupIndex];
-    var commonDimensionLookups = lookups[commonDimensionLookupIndex];
-    var taxonomylookups = viewpointDataTemplate.Lookups.Taxonomy;
+    var baselinelookups = lookups[baselineLookupIndex];
+    var commonDimensionLookups = commonDimensionLookupIndex ? lookups[commonDimensionLookupIndex] : null;
+    var taxonomylookups = viewpointDataTemplate.Meta.Lookups.Taxonomy;
     var lookupset = {
         baselinelookups: baselinelookups,
         commonDimensionLookups: commonDimensionLookups,
@@ -1998,11 +1997,12 @@ var setViewpointData = function setViewpointData(parms) {
     var rootcomponent = { "ROOT": viewpointDataTemplate };
     try {
         setComponentAggregates(rootcomponent, items, lookupset);
-        console.log('completed set viewpointdata');
+        console.log('completed set viewpointdata', rootcomponent);
     } catch (e) {
-        console.log(e);
+        console.log('error in setCompomentAggregates', e);
     }
-    viewpointDataTemplate.currentDataset = datasetName;
+    viewpointDataTemplate.Meta.currentDataset = datasetName;
+    viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted;
 };
 var setComponentAggregates = function setComponentAggregates(components, items, lookups) {
     var cumulatingSummaries = {
@@ -2246,7 +2246,7 @@ var BudgetNode = function () {
             } else {
                 chartblocktitle = portaltitles.Components;
             }
-            budgetCell.cellTitle = "By " + chartblocktitle;
+            budgetCell.cellTitle = chartblocktitle;
         };
         this._setCellChartParms = function (cell, cellIndex) {
             var budgetNode = _this;
@@ -2629,7 +2629,7 @@ var ExplorerBranch = function (_Component) {
             var viewpointData = _this.state.viewpointData;
 
             if (!viewpointData) return [];
-            var datasetConfig = viewpointData.datasetConfig;
+            var datasetConfig = viewpointData.Meta.datasetConfig;
             var portalSeriesName = datasetConfig.DatasetName;
             if (datasetConfig.Units == 'DOLLAR') {
                 portalSeriesName += ' (' + datasetConfig.UnitsAlias + ')';
@@ -2648,8 +2648,9 @@ var ExplorerBranch = function (_Component) {
                 };
                 budgetNode.portalConfig = portalConfig;
                 var viewpointdata = _this.state.viewpointData;
-                var viewpointNamingConfigs = viewpointdata.NamingConfigurations;
-                var datasetConfig = viewpointdata.datasetConfig;
+                var _viewpointdata$Meta = viewpointdata.Meta;
+                var viewpointNamingConfigs = _viewpointdata$Meta.NamingConfigurations;
+                var datasetConfig = _viewpointdata$Meta.datasetConfig;
 
                 var viewpointConfigPack = {
                     viewpointNamingConfigs: viewpointNamingConfigs,

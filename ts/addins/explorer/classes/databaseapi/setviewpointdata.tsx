@@ -41,8 +41,8 @@ const setViewpointData = (parms: SetViewpointDataParms) => {
     } = parms
 
     // already done if currentDataset matches request
-    if (viewpointDataTemplate.currentDataset == datasetName)
-        return
+    // if (viewpointDataTemplate.currentDataset == datasetName)
+    //     return
 
     let datasetMetaData = datasetData.MetaData
     console.log('dataset MetaData', datasetData.MetaData)
@@ -54,7 +54,7 @@ const setViewpointData = (parms: SetViewpointDataParms) => {
 
     let baselinelookups = lookups[baselineLookupIndex]
     let commonDimensionLookups = commonDimensionLookupIndex?lookups[commonDimensionLookupIndex]:null
-    let taxonomylookups = viewpointDataTemplate.Lookups.Taxonomy
+    let taxonomylookups = viewpointDataTemplate.Meta.Lookups.Taxonomy
 
     let lookupset = {
         baselinelookups,
@@ -90,8 +90,8 @@ const setViewpointData = (parms: SetViewpointDataParms) => {
         console.log('error in setCompomentAggregates', e)
     }
     // create sentinel to prevent unnucessary processing
-    viewpointDataTemplate.currentDataset = datasetName
-    viewpointDataTemplate.isInflationAdjusted = inflationAdjusted
+    viewpointDataTemplate.Meta.currentDataset = datasetName
+    viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted
 
 }
 

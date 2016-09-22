@@ -1,5 +1,83 @@
 {
     "Index": 1,
+    "Lookups": {
+        "Taxonomy": {
+            "ACCOUNTABILITYAPPEAL2": "Accountability & Appeal Offices",
+            "ADMINOPS": "Core Administrative Operations",
+            "AGENCIES": "Agencies",
+            "CITIZENOPS": "Citizen Centered Operations",
+            "CITIZENSERVICESA": "Citizen-Centered Services \"A\"",
+            "CITIZENSERVICESB": "Citizen-Centered Services \"B\"",
+            "CORESERVICESA": "Core Administrative Services \"A\"",
+            "CORESERVICESB": "Core Administrative Services \"B\"",
+            "CORPORATEACCOUNTS2": "Corporate Accounts",
+            "COUNCILOPS": "Council Domain",
+            "DESTINATIONS2": "Public Destinations",
+            "FIELDSERVICESA": "Field Services \"A\"",
+            "FIELDSERVICESB": "Field Services \"B\"",
+            "MANAGEMENTOFFICES": "Management Offices",
+            "CORPORATESERVICES": "Corporate Services",
+            "MANAGEMENTOPS": "City Manager Domain",
+            "POLICESERV": "Police Services",
+            "RATESUPPORTED": "Rate Supported Services",
+            "SPECIALIZED": "Specialized Agencies",
+            "TRANSITSERV": "Transit Services"
+        }
+    },
+    "NamingConfigurations": {
+        "BUDGET": {
+            "Instance": {
+                "Name": "Type",
+                "Alias": "Budget"
+            },
+            "Contents": {
+                "Name": "Structural",
+                "Alias": "Structure Types"
+            }
+        },
+        "STRUCTURETYPE": {
+            "Instance": {
+                "Name": "Structure Type"
+            },
+            "Contents": {
+                "Name": "Clusters"
+            }
+        },
+        "SUPERCLUSTER": {
+            "Instance": {
+                "Name": "Cluster"
+            },
+            "Contents": {
+                "Name": "Clusters"
+            }
+        },
+        "CLUSTER": {
+            "Instance": {
+                "Name": "Cluster",
+                "Alias": "Cluster"
+            },
+            "Contents": {
+                "Name": "Clusters",
+                "Alias": "Programs"
+            }
+        },
+        "PROGRAM": {
+            "Instance": {
+                "Name": "Program"
+            },
+            "Contents": {
+                "Name": "Services"
+            }
+        },
+        "SERVICE": {
+            "Instance": {
+                "Name": "Service"
+            },
+            "Contents": {
+                "Name": "Activities"
+            }
+        }
+    },
     "NamingConfigRef": "BUDGET",
     "Components": {
         "ADMINOPS": {
@@ -388,86 +466,6 @@
                     "Index": 1,
                     "NamingConfigRef": "PROGRAM",
                     "Baseline": true
-                }
-            }
-        }
-    },
-    "Meta":{
-        "Lookups": {
-            "Taxonomy": {
-                "ACCOUNTABILITYAPPEAL2": "Accountability & Appeal Offices",
-                "ADMINOPS": "Core Administrative Operations",
-                "AGENCIES": "Agencies",
-                "CITIZENOPS": "Citizen Centered Operations",
-                "CITIZENSERVICESA": "Citizen-Centered Services \"A\"",
-                "CITIZENSERVICESB": "Citizen-Centered Services \"B\"",
-                "CORESERVICESA": "Core Administrative Services \"A\"",
-                "CORESERVICESB": "Core Administrative Services \"B\"",
-                "CORPORATEACCOUNTS2": "Corporate Accounts",
-                "COUNCILOPS": "Council Domain",
-                "DESTINATIONS2": "Public Destinations",
-                "FIELDSERVICESA": "Field Services \"A\"",
-                "FIELDSERVICESB": "Field Services \"B\"",
-                "MANAGEMENTOFFICES": "Management Offices",
-                "CORPORATESERVICES": "Corporate Services",
-                "MANAGEMENTOPS": "City Manager Domain",
-                "POLICESERV": "Police Services",
-                "RATESUPPORTED": "Rate Supported Services",
-                "SPECIALIZED": "Specialized Agencies",
-                "TRANSITSERV": "Transit Services"
-            }
-        },
-        "NamingConfigurations": {
-            "BUDGET": {
-                "Instance": {
-                    "Name": "Type",
-                    "Alias": "Budget"
-                },
-                "Contents": {
-                    "Name": "Structural",
-                    "Alias": "Structure Types"
-                }
-            },
-            "STRUCTURETYPE": {
-                "Instance": {
-                    "Name": "Structure Type"
-                },
-                "Contents": {
-                    "Name": "Clusters"
-                }
-            },
-            "SUPERCLUSTER": {
-                "Instance": {
-                    "Name": "Cluster"
-                },
-                "Contents": {
-                    "Name": "Clusters"
-                }
-            },
-            "CLUSTER": {
-                "Instance": {
-                    "Name": "Cluster",
-                    "Alias": "Cluster"
-                },
-                "Contents": {
-                    "Name": "Clusters",
-                    "Alias": "Programs"
-                }
-            },
-            "PROGRAM": {
-                "Instance": {
-                    "Name": "Program"
-                },
-                "Contents": {
-                    "Name": "Services"
-                }
-            },
-            "SERVICE": {
-                "Instance": {
-                    "Name": "Service"
-                },
-                "Contents": {
-                    "Name": "Activities"
                 }
             }
         }

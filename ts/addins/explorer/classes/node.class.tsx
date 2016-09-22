@@ -186,7 +186,7 @@ class BudgetNode {
         } else {
             chartblocktitle = portaltitles.Components
         }
-        budgetCell.cellTitle = "By " + chartblocktitle
+        budgetCell.cellTitle = chartblocktitle
     }
 
     private _setCellChartParms = (cell:BudgetCell, cellIndex) => {

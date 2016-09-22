@@ -517,7 +517,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let { viewpointData } = this.state
 
         if (!viewpointData) return []
-        let datasetConfig: DatasetConfig = viewpointData.datasetConfig
+        let datasetConfig: DatasetConfig = viewpointData.Meta.datasetConfig
 
         let portalSeriesName = datasetConfig.DatasetName
         if (datasetConfig.Units == 'DOLLAR') {
@@ -547,7 +547,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let {
                 NamingConfigurations: viewpointNamingConfigs,
                 datasetConfig: datasetConfig,
-            } = viewpointdata
+            } = viewpointdata.Meta
             // console.log('viewpointdata', viewpointdata)
             let viewpointConfigPack = {
                 viewpointNamingConfigs,

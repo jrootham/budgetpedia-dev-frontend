@@ -240,7 +240,7 @@ class ExplorerBranch extends Component {
             let { viewpointData } = this.state;
             if (!viewpointData)
                 return [];
-            let datasetConfig = viewpointData.datasetConfig;
+            let datasetConfig = viewpointData.Meta.datasetConfig;
             let portalSeriesName = datasetConfig.DatasetName;
             if (datasetConfig.Units == 'DOLLAR') {
                 portalSeriesName += ' (' + datasetConfig.UnitsAlias + ')';
@@ -260,7 +260,7 @@ class ExplorerBranch extends Component {
                 };
                 budgetNode.portalConfig = portalConfig;
                 let viewpointdata = this.state.viewpointData;
-                let { NamingConfigurations: viewpointNamingConfigs, datasetConfig: datasetConfig, } = viewpointdata;
+                let { NamingConfigurations: viewpointNamingConfigs, datasetConfig: datasetConfig, } = viewpointdata.Meta;
                 let viewpointConfigPack = {
                     viewpointNamingConfigs: viewpointNamingConfigs,
                     datasetConfig: datasetConfig,

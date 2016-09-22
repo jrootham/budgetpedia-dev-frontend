@@ -24,7 +24,7 @@ class Database {
                 let lookups;
                 let datasetConfig;
                 [viewpointDataTemplate, datasetData, lookups, datasetConfig] = values;
-                viewpointDataTemplate.datasetConfig = datasetConfig;
+                viewpointDataTemplate.Meta.datasetConfig = datasetConfig;
                 let setparms = {
                     datasetName: datasetName,
                     inflationAdjusted: inflationAdjusted,

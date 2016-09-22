@@ -52,7 +52,7 @@ class BudgetNode {
             else {
                 chartblocktitle = portaltitles.Components;
             }
-            budgetCell.cellTitle = "By " + chartblocktitle;
+            budgetCell.cellTitle = chartblocktitle;
         };
         this._setCellChartParms = (cell, cellIndex) => {
             let budgetNode = this;

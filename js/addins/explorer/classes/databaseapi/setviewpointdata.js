@@ -1,18 +1,16 @@
 "use strict";
-let setViewpointData = (parms) => {
+const setViewpointData = (parms) => {
     let { datasetName, viewpointDataTemplate, datasetData, lookups, inflationAdjusted } = parms;
-    if (viewpointDataTemplate.currentDataset == datasetName)
-        return;
     let datasetMetaData = datasetData.MetaData;
     console.log('dataset MetaData', datasetData.MetaData);
-    let componentLookupIndex = datasetMetaData.Dimensions[0].toLowerCase();
+    let baselineLookupIndex = datasetMetaData.Dimensions[0].toLowerCase();
     let commonDimensionLookupIndex = datasetMetaData.CommonDimension;
     if (commonDimensionLookupIndex) {
         commonDimensionLookupIndex = commonDimensionLookupIndex.toLowerCase();
     }
-    let baselinelookups = lookups[componentLookupIndex];
-    let commonDimensionLookups = lookups[commonDimensionLookupIndex];
-    let taxonomylookups = viewpointDataTemplate.Lookups.Taxonomy;
+    let baselinelookups = lookups[baselineLookupIndex];
+    let commonDimensionLookups = commonDimensionLookupIndex ? lookups[commonDimensionLookupIndex] : null;
+    let taxonomylookups = viewpointDataTemplate.Meta.Lookups.Taxonomy;
     let lookupset = {
         baselinelookups: baselinelookups,
         commonDimensionLookups: commonDimensionLookups,
@@ -33,14 +31,15 @@ let setViewpointData = (parms) => {
     let rootcomponent = { "ROOT": viewpointDataTemplate };
     try {
         setComponentAggregates(rootcomponent, items, lookupset);
-        console.log('completed set viewpointdata');
+        console.log('completed set viewpointdata', rootcomponent);
     }
     catch (e) {
-        console.log(e);
+        console.log('error in setCompomentAggregates', e);
     }
-    viewpointDataTemplate.currentDataset = datasetName;
+    viewpointDataTemplate.Meta.currentDataset = datasetName;
+    viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted;
 };
-let setComponentAggregates = (components, items, lookups) => {
+const setComponentAggregates = (components, items, lookups) => {
     let cumulatingSummaries = {
         years: {},
         CommonDimension: {},
@@ -123,7 +122,7 @@ let setComponentAggregates = (components, items, lookups) => {
     }
     return cumulatingSummaries;
 };
-let getIndexSortedComponentItems = (components, lookups) => {
+const getIndexSortedComponentItems = (components, lookups) => {
     let sorted = [];
     let taxonomylookups = lookups.taxonomylookups;
     for (let componentcode in components) {
@@ -151,7 +150,7 @@ let getIndexSortedComponentItems = (components, lookups) => {
     });
     return sorted;
 };
-let getNameSortedComponentItems = (components, lookups) => {
+const getNameSortedComponentItems = (components, lookups) => {
     let sorted = [];
     let complookups = lookups.commonDimensionLookups;
     for (let componentname in components) {
@@ -175,7 +174,7 @@ let getNameSortedComponentItems = (components, lookups) => {
     });
     return sorted;
 };
-let assembleComponentAggregates = (cumulatingSummaries, componentAggregates) => {
+const assembleComponentAggregates = (cumulatingSummaries, componentAggregates) => {
     if (componentAggregates.years) {
         let years = componentAggregates.years;
         for (let yearname in years) {
