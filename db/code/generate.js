@@ -52,6 +52,7 @@ const generateLookups = context => {
         utilities.writeFileJson(lookupspath + targetname, lookup)
         lookups[category] = lookup
     }
+    context.lookups = lookups
     utilities.writeFileJson(lookupspath + 'lookups.json', lookups)
 
 }
@@ -181,6 +182,8 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     // --------------[ create adjusted shadow for appropriate sets ]-----------
     if (metadata.InflationAdjustable) {
         addAdjustedData(data, metadata, context)
+    } else {
+        addSortedProperties(data, metadata, context)
     }
 
     // ---------------------[ save files ]--------------------
@@ -338,6 +341,7 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
                     // create components property
                     if (!node.CommonDimension) {
                         node.CommonDimension = {}
+                        node.CommonDimensionName = commondimension
                     }
                     components = node.CommonDimension
 
@@ -350,6 +354,7 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
                         if (commondimension) {
                             if (!node.CommonDimension) {
                                 node.CommonDimension = {}
+                                node.CommonDimensionName = commondimension
                             }
                             if (!node.CommonDimension[commondimensioncode]) {
                                 node.CommonDimension[commondimensioncode] = {years:{}}
@@ -367,6 +372,7 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
                     // in any case create components property
                     if (!node.Components) {
                         node.Components = {}
+                        node.ComponentsDimensionName = columndef.name
                     }
 
                     // recurse
@@ -391,6 +397,7 @@ const addPreparedData = (filename, basedata, notes, allocations, headers, metada
 }
 
 // create shadow structure with inflation adjusted values
+// also inserts Sorted... properties
 const addAdjustedData = (data, metadata, context) => {
 
     let adjusted = data.Adjusted
@@ -398,12 +405,34 @@ const addAdjustedData = (data, metadata, context) => {
     let inflationseries = utilities.readFileJson(context.dataseriespath + 'inflation.json')
 
     // start recursion
-    addAdjustedSeries(nominal, adjusted, inflationseries, metadata.Decimals)
+    addAdjustedSeries(nominal, adjusted, inflationseries, metadata.Decimals, context)
 
 }
 
+const addSortedProperties = (data, context) => {
+
+    for (let category in data) {
+        let subcomponents = data.Components
+        if (subcomponents) {
+            let cname = data.ComponentsDimensionName
+            addSortedProperties(subcomponents, context)
+            let sorted = getNameSortedComponentItems(cname, subcomponents, context.lookups)
+            data.SortedComponents = sorted
+        }
+
+        // recurse into commondimension
+        let commondimensions = data.CommonDimension
+        if (commondimensions) {
+            let cname = data.CommmonDimensionName
+            addSortedProperties(commondimensions, context)
+            let sorted = getNameSortedComponentItems(cname, commondimensions, context.lookups)
+            data.SortedCommonDimension = sorted
+        }
+    }
+}
+
 // recursive
-const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationseries, decimals) => {
+const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationseries, decimals, context) => {
 
     let multiplier, amount
 
@@ -416,14 +445,22 @@ const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationserie
         let subcomponents = nominalcomponent.Components
         if (subcomponents) {
             adjustedcomponent.Components = {}
-            addAdjustedSeries(subcomponents, adjustedcomponent.Components, inflationseries, decimals)
+            let cname = adjustedcomponent.ComponentsDimensionName = nominalcomponent.ComponentsDimensionName
+            addAdjustedSeries(subcomponents, adjustedcomponent.Components, inflationseries, decimals, context)
+            let sorted = getNameSortedComponentItems(cname, subcomponents, context.lookups)
+            nominalcomponent.SortedComponents = sorted
+            adjustedcomponent.SortedComponents = sorted
         }
 
         // recurse into commondimension
         let commondimensions = nominalcomponent.CommonDimension
         if (commondimensions) {
             adjustedcomponent.CommonDimension = {}
-            addAdjustedSeries(commondimensions, adjustedcomponent.CommonDimension, inflationseries, decimals)
+            let cname = adjustedcomponent.CommmonDimensionName = nominalcomponent.CommonDimensionName
+            addAdjustedSeries(commondimensions, adjustedcomponent.CommonDimension, inflationseries, decimals, context)
+            let sorted = getNameSortedComponentItems(cname, commondimensions, context.lookups)
+            nominalcomponent.SortedCommonDimension = sorted
+            adjustedcomponent.SortedCommonDimension = sorted
         }
 
         // if there are no years to update, iterate
@@ -450,9 +487,9 @@ const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationserie
     
 }
 
-/*const getNameSortedComponentItems = (components, lookups):SortedComponentItem[] => {
+const getNameSortedComponentItems = (dimensionname, components, lookups) => {
     let sorted = []
-    let complookups = lookups.commonDimensionLookups
+    let complookups = lookups[dimensionname.toLowerCase()]
     for (let componentname in components) {
         let component = components[componentname]
         // let config = component.NamingConfigRef
@@ -477,4 +514,3 @@ const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationserie
     return sorted
 
 }
-*/
