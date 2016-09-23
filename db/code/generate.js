@@ -449,3 +449,32 @@ const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationserie
     }
     
 }
+
+/*const getNameSortedComponentItems = (components, lookups):SortedComponentItem[] => {
+    let sorted = []
+    let complookups = lookups.commonDimensionLookups
+    for (let componentname in components) {
+        let component = components[componentname]
+        // let config = component.NamingConfigRef
+        let name = complookups[componentname]
+        let item = {
+            Code: componentname,
+            Name: name || 'unknown name'
+        }
+        sorted.push(item)
+    }
+    sorted.sort((a, b) => {
+        let value
+        if (a.Name < b.Name)
+            value = -1
+        else if (a.Name > b.Name)
+            value = 1
+        else
+            value = 0
+        return value
+    })
+
+    return sorted
+
+}
+*/

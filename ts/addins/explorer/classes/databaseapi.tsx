@@ -182,7 +182,7 @@ class Database {
 
         this.viewpointDataParms = parms
 
-        console.log('getViewpointData in databaseapi parms', parms)
+        // console.log('getViewpointData in databaseapi parms', parms)
 
         let { viewpointName, versionName, datasetName, inflationAdjusted } = parms
 
@@ -253,7 +253,7 @@ class Database {
                 '/viewpoints/' + 
                 viewpoint.toLowerCase() + '.json'
 
-            console.log('viewpointpath', path)
+            // console.log('viewpointpath', path)
 
             fetch(path).then((viewpoint) => {
                 return viewpoint.json()
@@ -324,7 +324,7 @@ class Database {
                 '/' + this.datasetsubpath +
                 datasetName.toLowerCase() + '.json'
 
-            console.log('dataset path', path)
+            // console.log('dataset path', path)
 
             fetch(path).then((dataset) => {
                 return dataset.json()
@@ -352,7 +352,7 @@ class Database {
                 '/' + this.lookupssubpath +
                 'lookups.json'
 
-            console.log('lookup path', path)
+            // console.log('lookup path', path)
 
             fetch(path).then((lookups) => {
                 return lookups.json()

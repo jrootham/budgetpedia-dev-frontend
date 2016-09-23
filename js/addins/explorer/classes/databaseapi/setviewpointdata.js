@@ -1,126 +1,122 @@
 "use strict";
 const setViewpointData = (parms) => {
     let { datasetName, viewpointDataTemplate, datasetData, lookups, inflationAdjusted } = parms;
-    let datasetMetaData = datasetData.MetaData;
-    console.log('dataset MetaData', datasetData.MetaData);
-    let baselineLookupIndex = datasetMetaData.Dimensions[0].toLowerCase();
-    let commonDimensionLookupIndex = datasetMetaData.CommonDimension;
+    let datasetMeta = datasetData.MetaData;
+    let baselineLookupIndex = datasetMeta.Dimensions[0].toLowerCase();
+    let commonDimensionLookupIndex = datasetMeta.CommonDimension;
     if (commonDimensionLookupIndex) {
         commonDimensionLookupIndex = commonDimensionLookupIndex.toLowerCase();
     }
     let baselinelookups = lookups[baselineLookupIndex];
-    let commonDimensionLookups = commonDimensionLookupIndex ? lookups[commonDimensionLookupIndex] : null;
+    let commonDimensionLookups = commonDimensionLookupIndex ?
+        lookups[commonDimensionLookupIndex] :
+        null;
     let taxonomylookups = viewpointDataTemplate.Meta.Lookups.Taxonomy;
     let lookupset = {
         baselinelookups: baselinelookups,
         commonDimensionLookups: commonDimensionLookups,
         taxonomylookups: taxonomylookups,
     };
-    console.log('lookupset', lookupset);
-    let items = datasetData.Data;
-    let isInflationAdjustable = !!datasetMetaData.InflationAdjustable;
+    let baselineItems = datasetData.Data;
+    let isInflationAdjustable = !!datasetMeta.InflationAdjustable;
     if (isInflationAdjustable) {
         if (inflationAdjusted) {
-            items = items.Adjusted;
+            baselineItems = baselineItems.Adjusted;
         }
         else {
-            items = items.Nominal;
+            baselineItems = baselineItems.Nominal;
         }
     }
-    console.log('inflationadjusted, items', inflationAdjusted, items);
-    let rootcomponent = { "ROOT": viewpointDataTemplate };
     try {
-        setComponentAggregates(rootcomponent, items, lookupset);
-        console.log('completed set viewpointdata', rootcomponent);
+        let node = viewpointDataTemplate;
+        let sorted = getIndexSortedComponentItems(node.Components, lookupset);
+        node.SortedComponents = sorted;
+        let nodeSummaries = getNodeSummaries(node, baselineItems, lookupset);
+        setNodeSummaries(node, nodeSummaries, lookupset);
     }
     catch (e) {
-        console.log('error in setCompomentAggregates', e);
+        console.log('error in setComponentAggregates', e);
     }
     viewpointDataTemplate.Meta.currentDataset = datasetName;
     viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted;
 };
-const setComponentAggregates = (components, items, lookups) => {
-    let cumulatingSummaries = {
-        years: {},
-        CommonDimension: {},
-    };
+const getNodeSummaries = (node, baselineItems, lookups) => {
+    let components = node.Components;
+    let aggregator = {};
     for (let componentname in components) {
-        let component = components[componentname];
-        let componentAggregates = null;
-        if (component.years)
-            delete component.years;
-        if (component.CommonDimension) {
-            delete component.CommonDimension;
-            delete component.SortedCommonDimension;
+        let node = components[componentname];
+        let nodeSummaries = null;
+        if (node.years) {
+            delete node.years;
         }
-        if (!component.Baseline) {
-            if (component.Components) {
-                let sorted = getIndexSortedComponentItems(component.Components, lookups);
-                component.SortedComponents = sorted;
-                componentAggregates = setComponentAggregates(component.Components, items, lookups);
-                if (componentAggregates.years)
-                    component.years = componentAggregates.years;
-                if (componentAggregates.CommonDimension) {
-                    component.CommonDimension = componentAggregates.CommonDimension;
-                    if (component.CommonDimension) {
-                        let sorted = getNameSortedComponentItems(component.CommonDimension, lookups);
-                        component.SortedCommonDimension = sorted;
-                    }
-                }
+        if (node.CommonDimension) {
+            delete node.CommonDimension;
+            delete node.SortedCommonDimension;
+        }
+        if (!node.Baseline) {
+            if (node.Components) {
+                let sorted = getIndexSortedComponentItems(node.Components, lookups);
+                node.SortedComponents = sorted;
+                nodeSummaries = getNodeSummaries(node, baselineItems, lookups);
+                setNodeSummaries(node, nodeSummaries, lookups);
             }
         }
         else {
-            let item = items[componentname];
-            let importitem = null;
-            if (!item)
-                console.error('System Error: failed to find item for ', componentname);
-            importitem = item;
-            componentAggregates = {
-                years: item.years,
-                CommonDimension: item.CommonDimension,
+            let importitem = baselineItems[componentname];
+            if (!importitem)
+                console.error('System Error: failed to find importitem for ', componentname);
+            importitem = importitem;
+            nodeSummaries = {
+                years: importitem.years,
+                CommonDimension: importitem.CommonDimension,
             };
-            if (component.Components) {
-                delete component.SortedComponents;
-                delete component.Components;
-            }
-            if (component.CommonDimension) {
-                delete component.SortedCommonDimension;
-                delete component.CommonDimension;
-            }
-            if (component.years) {
-                delete component.years;
+            if (node.Components) {
+                delete node.SortedComponents;
+                delete node.Components;
             }
             if (importitem) {
                 if (importitem.years) {
-                    component.years = importitem.years;
+                    node.years = importitem.years;
                 }
                 if (importitem.CommonDimension) {
-                    component.CommonDimension = importitem.CommonDimension;
+                    node.CommonDimension = importitem.CommonDimension;
                 }
                 if (importitem.SortedCommonDimension) {
-                    component.SortedCommonDimension = importitem.SortedCommonDimension;
+                    node.SortedCommonDimension = importitem.SortedCommonDimension;
                 }
                 if (importitem.Components) {
-                    component.Components = importitem.Components;
+                    node.Components = importitem.Components;
                 }
                 if (importitem.SortedComponents) {
-                    component.SortedComponents = importitem.SortedComponents;
+                    node.SortedComponents = importitem.SortedComponents;
                 }
             }
-            if (component.Components && !component.SortedComponents) {
-                let sorted = getNameSortedComponentItems(component.Components, lookups);
-                component.SortedComponents = sorted;
+            if (node.Components && !node.SortedComponents) {
+                let sorted = getNameSortedComponentItems(node.Components, lookups);
+                node.SortedComponents = sorted;
             }
-            if (component.CommonDimension && !component.SortedCommonDimension) {
-                let sorted = getNameSortedComponentItems(component.CommonDimension, lookups);
-                component.SortedCommonDimension = sorted;
+            if (node.CommonDimension && !node.SortedCommonDimension) {
+                let sorted = getNameSortedComponentItems(node.CommonDimension, lookups);
+                node.SortedCommonDimension = sorted;
             }
         }
-        if (componentAggregates) {
-            assembleComponentAggregates(cumulatingSummaries, componentAggregates);
+        if (nodeSummaries) {
+            incrementAggregator(aggregator, nodeSummaries);
         }
     }
-    return cumulatingSummaries;
+    return aggregator;
+};
+const setNodeSummaries = (node, nodeSummaries, lookups) => {
+    if (nodeSummaries.years) {
+        node.years = nodeSummaries.years;
+    }
+    if (nodeSummaries.CommonDimension) {
+        node.CommonDimension = nodeSummaries.CommonDimension;
+        if (node.CommonDimension) {
+            let sorted = getNameSortedComponentItems(node.CommonDimension, lookups);
+            node.SortedCommonDimension = sorted;
+        }
+    }
 };
 const getIndexSortedComponentItems = (components, lookups) => {
     let sorted = [];
@@ -174,31 +170,39 @@ const getNameSortedComponentItems = (components, lookups) => {
     });
     return sorted;
 };
-const assembleComponentAggregates = (cumulatingSummaries, componentAggregates) => {
-    if (componentAggregates.years) {
-        let years = componentAggregates.years;
+const incrementAggregator = (aggregator, componentSummaries) => {
+    if (componentSummaries.years) {
+        let years = componentSummaries.years;
         for (let yearname in years) {
             let yearvalue = years[yearname];
-            if (cumulatingSummaries.years[yearname])
-                cumulatingSummaries.years[yearname] += yearvalue;
+            if (!aggregator.years) {
+                aggregator.years = {};
+            }
+            if (aggregator.years[yearname])
+                aggregator.years[yearname] += yearvalue;
             else
-                cumulatingSummaries.years[yearname] = yearvalue;
+                aggregator.years[yearname] = yearvalue;
         }
     }
-    if (componentAggregates.CommonDimension) {
-        let CommonDimension = componentAggregates.CommonDimension;
+    if (componentSummaries.CommonDimension) {
+        let CommonDimension = componentSummaries.CommonDimension;
+        if (!aggregator.CommonDimension) {
+            aggregator.CommonDimension = {};
+        }
         for (let commonDimensionName in CommonDimension) {
             let commonDimension = CommonDimension[commonDimensionName];
             if (commonDimension.years) {
                 let years = commonDimension.years;
                 for (let yearname in years) {
                     let yearvalue = years[yearname];
-                    let cumulatingCommonDimension = cumulatingSummaries.CommonDimension[commonDimensionName] || { years: {} };
-                    if (cumulatingCommonDimension.years[yearname])
+                    let cumulatingCommonDimension = aggregator.CommonDimension[commonDimensionName] || { years: {} };
+                    if (cumulatingCommonDimension.years[yearname]) {
                         cumulatingCommonDimension.years[yearname] += yearvalue;
-                    else
+                    }
+                    else {
                         cumulatingCommonDimension.years[yearname] = yearvalue;
-                    cumulatingSummaries.CommonDimension[commonDimensionName] = cumulatingCommonDimension;
+                    }
+                    aggregator.CommonDimension[commonDimensionName] = cumulatingCommonDimension;
                 }
             }
         }

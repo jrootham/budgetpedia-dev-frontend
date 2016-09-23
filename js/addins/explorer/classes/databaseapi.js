@@ -9,7 +9,6 @@ class Database {
     }
     getViewpointData(parms) {
         this.viewpointDataParms = parms;
-        console.log('getViewpointData in databaseapi parms', parms);
         let { viewpointName, versionName, datasetName, inflationAdjusted } = parms;
         let viewpointDataTemplatePromise = this.getViewpointTemplatePromise(viewpointName), datasetDataPromise = this.getDatasetPromise(versionName, datasetName), lookupsPromise = this.getLookupsPromise(versionName), datasetConfigPromise = this.getDatasetConfigPromise(versionName, datasetName);
         let promise = new Promise((resolve, error) => {
@@ -50,7 +49,6 @@ class Database {
                 this.viewpointDataParms.repository.toLowerCase() +
                 '/viewpoints/' +
                 viewpoint.toLowerCase() + '.json';
-            console.log('viewpointpath', path);
             fetch(path).then((viewpoint) => {
                 return viewpoint.json();
             }).then((viewpointdata) => {
@@ -90,7 +88,6 @@ class Database {
                 versionName.toLowerCase() +
                 '/' + this.datasetsubpath +
                 datasetName.toLowerCase() + '.json';
-            console.log('dataset path', path);
             fetch(path).then((dataset) => {
                 return dataset.json();
             }).then((dataset) => {
@@ -109,7 +106,6 @@ class Database {
                 version.toLowerCase() +
                 '/' + this.lookupssubpath +
                 'lookups.json';
-            console.log('lookup path', path);
             fetch(path).then((lookups) => {
                 return lookups.json();
             }).then((lookups) => {

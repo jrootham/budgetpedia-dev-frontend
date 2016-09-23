@@ -1816,7 +1816,6 @@ var Database = function () {
             var _this = this;
 
             this.viewpointDataParms = parms;
-            console.log('getViewpointData in databaseapi parms', parms);
             var viewpointName = parms.viewpointName;
             var versionName = parms.versionName;
             var datasetName = parms.datasetName;
@@ -1869,7 +1868,6 @@ var Database = function () {
 
             var promise = new Promise(function (resolve, error) {
                 var path = _this2.dbroot + _this2.viewpointDataParms.repository.toLowerCase() + '/viewpoints/' + viewpoint.toLowerCase() + '.json';
-                console.log('viewpointpath', path);
                 fetch(path).then(function (viewpoint) {
                     return viewpoint.json();
                 }).then(function (viewpointdata) {
@@ -1918,7 +1916,6 @@ var Database = function () {
 
             var promise = new Promise(function (resolve, error) {
                 var path = _this3.dbroot + _this3.viewpointDataParms.repository.toLowerCase() + '/datasets/' + versionName.toLowerCase() + '/' + _this3.datasetsubpath + datasetName.toLowerCase() + '.json';
-                console.log('dataset path', path);
                 fetch(path).then(function (dataset) {
                     return dataset.json();
                 }).then(function (dataset) {
@@ -1938,7 +1935,6 @@ var Database = function () {
 
             var promise = new Promise(function (resolve, error) {
                 var path = _this4.dbroot + _this4.viewpointDataParms.repository.toLowerCase() + '/datasets/' + version.toLowerCase() + '/' + _this4.lookupssubpath + 'lookups.json';
-                console.log('lookup path', path);
                 fetch(path).then(function (lookups) {
                     return lookups.json();
                 }).then(function (lookups) {
@@ -1968,10 +1964,9 @@ var setViewpointData = function setViewpointData(parms) {
     var lookups = parms.lookups;
     var inflationAdjusted = parms.inflationAdjusted;
 
-    var datasetMetaData = datasetData.MetaData;
-    console.log('dataset MetaData', datasetData.MetaData);
-    var baselineLookupIndex = datasetMetaData.Dimensions[0].toLowerCase();
-    var commonDimensionLookupIndex = datasetMetaData.CommonDimension;
+    var datasetMeta = datasetData.MetaData;
+    var baselineLookupIndex = datasetMeta.Dimensions[0].toLowerCase();
+    var commonDimensionLookupIndex = datasetMeta.CommonDimension;
     if (commonDimensionLookupIndex) {
         commonDimensionLookupIndex = commonDimensionLookupIndex.toLowerCase();
     }
@@ -1983,105 +1978,102 @@ var setViewpointData = function setViewpointData(parms) {
         commonDimensionLookups: commonDimensionLookups,
         taxonomylookups: taxonomylookups
     };
-    console.log('lookupset', lookupset);
-    var items = datasetData.Data;
-    var isInflationAdjustable = !!datasetMetaData.InflationAdjustable;
+    var baselineItems = datasetData.Data;
+    var isInflationAdjustable = !!datasetMeta.InflationAdjustable;
     if (isInflationAdjustable) {
         if (inflationAdjusted) {
-            items = items.Adjusted;
+            baselineItems = baselineItems.Adjusted;
         } else {
-            items = items.Nominal;
+            baselineItems = baselineItems.Nominal;
         }
     }
-    console.log('inflationadjusted, items', inflationAdjusted, items);
-    var rootcomponent = { "ROOT": viewpointDataTemplate };
     try {
-        setComponentAggregates(rootcomponent, items, lookupset);
-        console.log('completed set viewpointdata', rootcomponent);
+        var node = viewpointDataTemplate;
+        var sorted = getIndexSortedComponentItems(node.Components, lookupset);
+        node.SortedComponents = sorted;
+        var nodeSummaries = getNodeSummaries(node, baselineItems, lookupset);
+        setNodeSummaries(node, nodeSummaries, lookupset);
     } catch (e) {
-        console.log('error in setCompomentAggregates', e);
+        console.log('error in setComponentAggregates', e);
     }
     viewpointDataTemplate.Meta.currentDataset = datasetName;
     viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted;
 };
-var setComponentAggregates = function setComponentAggregates(components, items, lookups) {
-    var cumulatingSummaries = {
-        years: {},
-        CommonDimension: {}
-    };
+var getNodeSummaries = function getNodeSummaries(node, baselineItems, lookups) {
+    var components = node.Components;
+    var aggregator = {};
     for (var componentname in components) {
-        var component = components[componentname];
-        var componentAggregates = null;
-        if (component.years) delete component.years;
-        if (component.CommonDimension) {
-            delete component.CommonDimension;
-            delete component.SortedCommonDimension;
+        var _node = components[componentname];
+        var nodeSummaries = null;
+        if (_node.years) {
+            delete _node.years;
         }
-        if (!component.Baseline) {
-            if (component.Components) {
-                var sorted = getIndexSortedComponentItems(component.Components, lookups);
-                component.SortedComponents = sorted;
-                componentAggregates = setComponentAggregates(component.Components, items, lookups);
-                if (componentAggregates.years) component.years = componentAggregates.years;
-                if (componentAggregates.CommonDimension) {
-                    component.CommonDimension = componentAggregates.CommonDimension;
-                    if (component.CommonDimension) {
-                        var _sorted = getNameSortedComponentItems(component.CommonDimension, lookups);
-                        component.SortedCommonDimension = _sorted;
-                    }
-                }
+        if (_node.CommonDimension) {
+            delete _node.CommonDimension;
+            delete _node.SortedCommonDimension;
+        }
+        if (!_node.Baseline) {
+            if (_node.Components) {
+                var sorted = getIndexSortedComponentItems(_node.Components, lookups);
+                _node.SortedComponents = sorted;
+                nodeSummaries = getNodeSummaries(_node, baselineItems, lookups);
+                setNodeSummaries(_node, nodeSummaries, lookups);
             }
         } else {
-            var item = items[componentname];
-            var importitem = null;
-            if (!item) console.error('System Error: failed to find item for ', componentname);
-            importitem = item;
-            componentAggregates = {
-                years: item.years,
-                CommonDimension: item.CommonDimension
+            var importitem = baselineItems[componentname];
+            if (!importitem) console.error('System Error: failed to find importitem for ', componentname);
+            importitem = importitem;
+            nodeSummaries = {
+                years: importitem.years,
+                CommonDimension: importitem.CommonDimension
             };
-            if (component.Components) {
-                delete component.SortedComponents;
-                delete component.Components;
-            }
-            if (component.CommonDimension) {
-                delete component.SortedCommonDimension;
-                delete component.CommonDimension;
-            }
-            if (component.years) {
-                delete component.years;
+            if (_node.Components) {
+                delete _node.SortedComponents;
+                delete _node.Components;
             }
             if (importitem) {
                 if (importitem.years) {
-                    component.years = importitem.years;
+                    _node.years = importitem.years;
                 }
                 if (importitem.CommonDimension) {
-                    component.CommonDimension = importitem.CommonDimension;
+                    _node.CommonDimension = importitem.CommonDimension;
                 }
                 if (importitem.SortedCommonDimension) {
-                    component.SortedCommonDimension = importitem.SortedCommonDimension;
+                    _node.SortedCommonDimension = importitem.SortedCommonDimension;
                 }
                 if (importitem.Components) {
-                    component.Components = importitem.Components;
+                    _node.Components = importitem.Components;
                 }
                 if (importitem.SortedComponents) {
-                    component.SortedComponents = importitem.SortedComponents;
+                    _node.SortedComponents = importitem.SortedComponents;
                 }
             }
-            if (component.Components && !component.SortedComponents) {
-                var _sorted2 = getNameSortedComponentItems(component.Components, lookups);
-                component.SortedComponents = _sorted2;
+            if (_node.Components && !_node.SortedComponents) {
+                var _sorted = getNameSortedComponentItems(_node.Components, lookups);
+                _node.SortedComponents = _sorted;
             }
-            if (component.CommonDimension && !component.SortedCommonDimension) {
-                var _sorted3 = getNameSortedComponentItems(component.CommonDimension, lookups);
-                component.SortedCommonDimension = _sorted3;
+            if (_node.CommonDimension && !_node.SortedCommonDimension) {
+                var _sorted2 = getNameSortedComponentItems(_node.CommonDimension, lookups);
+                _node.SortedCommonDimension = _sorted2;
             }
         }
-        if (componentAggregates) {
-            assembleComponentAggregates(cumulatingSummaries, componentAggregates);
+        if (nodeSummaries) {
+            incrementAggregator(aggregator, nodeSummaries);
         }
     }
-    return cumulatingSummaries;
+    return aggregator;
+};
+var setNodeSummaries = function setNodeSummaries(node, nodeSummaries, lookups) {
+    if (nodeSummaries.years) {
+        node.years = nodeSummaries.years;
+    }
+    if (nodeSummaries.CommonDimension) {
+        node.CommonDimension = nodeSummaries.CommonDimension;
+        if (node.CommonDimension) {
+            var sorted = getNameSortedComponentItems(node.CommonDimension, lookups);
+            node.SortedCommonDimension = sorted;
+        }
+    }
 };
 var getIndexSortedComponentItems = function getIndexSortedComponentItems(components, lookups) {
     var sorted = [];
@@ -2123,25 +2115,35 @@ var getNameSortedComponentItems = function getNameSortedComponentItems(component
     });
     return sorted;
 };
-var assembleComponentAggregates = function assembleComponentAggregates(cumulatingSummaries, componentAggregates) {
-    if (componentAggregates.years) {
-        var years = componentAggregates.years;
+var incrementAggregator = function incrementAggregator(aggregator, componentSummaries) {
+    if (componentSummaries.years) {
+        var years = componentSummaries.years;
         for (var yearname in years) {
             var yearvalue = years[yearname];
-            if (cumulatingSummaries.years[yearname]) cumulatingSummaries.years[yearname] += yearvalue;else cumulatingSummaries.years[yearname] = yearvalue;
+            if (!aggregator.years) {
+                aggregator.years = {};
+            }
+            if (aggregator.years[yearname]) aggregator.years[yearname] += yearvalue;else aggregator.years[yearname] = yearvalue;
         }
     }
-    if (componentAggregates.CommonDimension) {
-        var CommonDimension = componentAggregates.CommonDimension;
+    if (componentSummaries.CommonDimension) {
+        var CommonDimension = componentSummaries.CommonDimension;
+        if (!aggregator.CommonDimension) {
+            aggregator.CommonDimension = {};
+        }
         for (var commonDimensionName in CommonDimension) {
             var commonDimension = CommonDimension[commonDimensionName];
             if (commonDimension.years) {
                 var _years = commonDimension.years;
                 for (var _yearname in _years) {
                     var _yearvalue = _years[_yearname];
-                    var cumulatingCommonDimension = cumulatingSummaries.CommonDimension[commonDimensionName] || { years: {} };
-                    if (cumulatingCommonDimension.years[_yearname]) cumulatingCommonDimension.years[_yearname] += _yearvalue;else cumulatingCommonDimension.years[_yearname] = _yearvalue;
-                    cumulatingSummaries.CommonDimension[commonDimensionName] = cumulatingCommonDimension;
+                    var cumulatingCommonDimension = aggregator.CommonDimension[commonDimensionName] || { years: {} };
+                    if (cumulatingCommonDimension.years[_yearname]) {
+                        cumulatingCommonDimension.years[_yearname] += _yearvalue;
+                    } else {
+                        cumulatingCommonDimension.years[_yearname] = _yearvalue;
+                    }
+                    aggregator.CommonDimension[commonDimensionName] = cumulatingCommonDimension;
                 }
             }
         }
