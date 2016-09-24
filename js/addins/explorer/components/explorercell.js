@@ -101,13 +101,10 @@ class ExplorerCell extends Component {
         let { budgetCell } = this.props;
         let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid];
         let yearScope = cellDeclaration.yearScope;
-        let { chartParms, explorerChartCode, expandable, graph_id, viewpointConfigPack } = budgetCell;
+        let { chartParms, explorerChartCode, graph_id, viewpointConfigPack } = budgetCell;
         let { datasetConfig } = viewpointConfigPack;
         let { start: startYear, end: endYear } = datasetConfig.YearsRange;
         let yearSpan = endYear - startYear;
-        if (!expandable) {
-            chartParms.options['backgroundColor'] = '#E4E4E4';
-        }
         let timescopes = React.createElement("div", {style: {
             paddingTop: "10px",
             borderRight: "1px solid silver",
@@ -396,7 +393,7 @@ class ExplorerCell extends Component {
             left: "40px",
             fontSize: "9px",
             fontStyle: "italic",
-        }}, expandable ? 'drill down' : 'no drill down');
+        }});
         let yearsoptions = () => {
             let years = [];
             for (let year = startYear; year <= endYear; year++) {

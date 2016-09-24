@@ -222,9 +222,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         // let { chartConfigs } = portalSettings 
         let cellTabs = budgetCells.map(
             (budgetCell:BudgetCell,cellIndex) => {
-                //!Hack! if more than one chart the first must be expandable
-            let expandable = ((budgetCells.length > 1) && (cellIndex == 0))
-            budgetCell.expandable = expandable
+            //!Hack! if more than one chart the first must be expandable
             let { cellTitle } = budgetCell
             return <Tab style={{fontSize:"12px"}} 
                 label={ cellTitle } 

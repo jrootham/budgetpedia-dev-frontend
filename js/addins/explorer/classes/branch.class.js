@@ -45,6 +45,7 @@ class BudgetBranch {
             let budgetBranch = this;
             let nodes = budgetBranch.nodes;
             for (let node of nodes) {
+                console.log('node.cells for saveAspectState', node.cells);
                 node.oldAspectState = node.cells.length;
             }
         };

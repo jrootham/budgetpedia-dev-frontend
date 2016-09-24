@@ -169,11 +169,11 @@ class BudgetCell {
                 height: "400px",
                 width: "400px",
             };
-            let options_extension = budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType);
+            let options_extension = budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType, treeNodeData);
             options = Object.assign(options, options_extension);
             return options;
         };
-        this._chartParmsOptions_chartTypeOptions = (googleChartType) => {
+        this._chartParmsOptions_chartTypeOptions = (googleChartType, treeNodeData) => {
             let options = {};
             switch (googleChartType) {
                 case "ColumnChart":
@@ -187,25 +187,62 @@ class BudgetCell {
                         }
                     };
                     break;
-                case "PieChart":
-                    options = {
-                        pieHole: 0.4,
-                        legend: {
-                            position: "top",
-                            textStyle: {
-                                fontSize: 9,
-                            },
-                            maxLines: 4,
-                        },
-                        chartArea: {
-                            height: '55%',
-                            top: '30%',
-                            left: 'auto',
-                            width: 'auto',
-                        }
-                    };
+                case "PieChart": {
+                    options = this._pieChartOptions(treeNodeData);
                     break;
+                }
             }
+            return options;
+        };
+        this._pieChartOptions = (treeNodeData) => {
+            let budgetCell = this;
+            let cellDeclaration = this.cellDeclaration;
+            let { rightYear, leftYear } = cellDeclaration.yearSelections;
+            let { nodeDataseriesName } = budgetCell;
+            let nodeDataseries = treeNodeData[nodeDataseriesName];
+            let sortedlistName = 'Sorted' + nodeDataseriesName;
+            let sortedDataseries = treeNodeData[sortedlistName];
+            if (!sortedDataseries) {
+                console.error({
+                    errorMessage: 'sorted list "' + sortedlistName + '" not available'
+                });
+                throw Error('sorted list "' + sortedlistName + '" not available');
+            }
+            let sliceslist = sortedDataseries.map((sortedItem) => {
+                let componentItem = nodeDataseries[sortedItem.Code];
+                if (!componentItem) {
+                    console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
+                    throw Error('componentItem not found');
+                }
+                let offset = (!(componentItem.Components || componentItem.CommonDimension)) ? 0.2 : 0;
+                return offset;
+            });
+            let slices = {};
+            for (let index in sliceslist) {
+                slices[index] = { offset: sliceslist[index] };
+                if ((slices[index].offset) != 0) {
+                    slices[index].color = 'silver';
+                }
+            }
+            console.log('slices', slices);
+            let options = {
+                slices: slices,
+                pieHole: 0.4,
+                is3D: true,
+                legend: {
+                    position: "top",
+                    textStyle: {
+                        fontSize: 9,
+                    },
+                    maxLines: 4,
+                },
+                chartArea: {
+                    height: '55%',
+                    top: '30%',
+                    left: 'auto',
+                    width: 'auto',
+                }
+            };
             return options;
         };
         this._chartParmsEvents = () => {
@@ -312,7 +349,10 @@ class BudgetCell {
         this._rows_ColumnCharts_row = (row, componentItem) => {
             let style = '';
             if (componentItem.Baseline) {
-                style = 'stroke-color: Gold; stroke-width: 3';
+                style = 'stroke-color: Gold; stroke-width: 3;';
+            }
+            if (!(componentItem.Components || componentItem.CommonDimension)) {
+                style += 'fill-opacity: 0.5';
             }
             row.push(style);
             return row;

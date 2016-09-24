@@ -32,7 +32,7 @@ var format = require('format-number')
 // settings for individual portal chart
 export interface CellSettings {
     graph_id: string,
-    expandable?: boolean,
+    // expandable?: boolean,
 }
 
 export interface CellCallbacks {
@@ -147,7 +147,7 @@ class BudgetCell {
     aspectName: string
     viewpointConfigPack: viewpointConfigPack
     nodeDataPack: NodeData
-    expandable: boolean
+    // expandable: boolean
 
     // ------------------[ display chart properties ]-------------------
 
@@ -432,7 +432,7 @@ class BudgetCell {
         }
 
         let options_extension = 
-            budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType)
+            budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType, treeNodeData)
 
         options = Object.assign(options, options_extension)
 
@@ -440,7 +440,7 @@ class BudgetCell {
         
     }
 
-    private _chartParmsOptions_chartTypeOptions = (googleChartType) => {
+    private _chartParmsOptions_chartTypeOptions = (googleChartType, treeNodeData) => {
 
         let options = {}
 
@@ -458,28 +458,77 @@ class BudgetCell {
                 }
                 break
             
-            case "PieChart":
-                options = {
-                    pieHole:0.4,
-                    legend: {
-                        position:"top",
-                        textStyle: {
-                            fontSize: 9,
-                        },
-                        maxLines: 4,
-                    },
-                    chartArea: {
-                        height: '55%',
-                        top: '30%',
-                        left: 'auto',
-                        width: 'auto',
-                    }
-                }
+            case "PieChart": {
+                options = this._pieChartOptions(treeNodeData)
                 break
+            }
         }
 
         return options
 
+    }
+
+    private _pieChartOptions = (treeNodeData) => {
+        // try to add a color differentiator for non-drilldown items
+        // for now silver and and offset value is set for slices which cannot expand
+        // TODO: create a better visual cue for non-expanadable items
+        let budgetCell = this
+
+        let cellDeclaration = this.cellDeclaration
+        let { rightYear, leftYear} = cellDeclaration.yearSelections
+
+        let { nodeDataseriesName } = budgetCell
+
+        let nodeDataseries = treeNodeData[nodeDataseriesName]
+
+        let sortedlistName = 'Sorted' + nodeDataseriesName
+
+        let sortedDataseries = treeNodeData[sortedlistName]
+
+        if (!sortedDataseries) {
+            console.error( { 
+                errorMessage:'sorted list "' + sortedlistName + '" not available'
+            })
+            throw Error('sorted list "' + sortedlistName + '" not available')
+        }
+
+        let sliceslist = sortedDataseries.map((sortedItem:SortedComponentItem) => {
+            let componentItem = nodeDataseries[sortedItem.Code]
+            if (!componentItem) {
+                console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ',
+                    treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem)
+                throw Error('componentItem not found')
+            }
+            let offset = (!(componentItem.Components || componentItem.CommonDimension))?0.2:0
+            return offset
+        })
+        let slices = {}
+        for (let index in sliceslist) {
+            slices[index] = {offset:sliceslist[index]}
+            if ((slices[index].offset) != 0) {
+                slices[index].color = 'silver'
+            }
+        }
+        // console.log('slices',slices)
+        let options = {
+            slices,
+            // pieHole:0.4,
+            is3D: true,
+            legend: {
+                position:"top",
+                textStyle: {
+                    fontSize: 9,
+                },
+                maxLines: 4,
+            },
+            chartArea: {
+                height: '55%',
+                top: '30%',
+                left: 'auto',
+                width: 'auto',
+            }
+        }
+        return options
     }
 
 
@@ -548,7 +597,7 @@ class BudgetCell {
             // type is required, else throws silent error
             { type: 'string', label: categorylabel },
             { type: 'number', label: rightYear.toString() },
-            {type:'string', role:'style'}
+            { type:'string', role:'style'}
         ]
 
         return columns
@@ -637,7 +686,10 @@ class BudgetCell {
         let style = ''
 
         if (componentItem.Baseline) { //  == 'BASELINE') {
-            style = 'stroke-color: Gold; stroke-width: 3'
+            style = 'stroke-color: Gold; stroke-width: 3;'
+        }
+        if (!(componentItem.Components || componentItem.CommonDimension)) {
+            style += 'fill-opacity: 0.5'
         }
 
         row.push(style)

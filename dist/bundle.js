@@ -1173,6 +1173,7 @@ var BudgetBranch = function () {
                 for (var _iterator = nodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var node = _step.value;
 
+                    console.log('node.cells for saveAspectState', node.cells);
                     node.oldAspectState = node.cells.length;
                 }
             } catch (err) {
@@ -1591,11 +1592,11 @@ var BudgetCell = function () {
                 height: "400px",
                 width: "400px"
             };
-            var options_extension = budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType);
+            var options_extension = budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType, treeNodeData);
             options = Object.assign(options, options_extension);
             return options;
         };
-        this._chartParmsOptions_chartTypeOptions = function (googleChartType) {
+        this._chartParmsOptions_chartTypeOptions = function (googleChartType, treeNodeData) {
             var options = {};
             switch (googleChartType) {
                 case "ColumnChart":
@@ -1610,24 +1611,65 @@ var BudgetCell = function () {
                     };
                     break;
                 case "PieChart":
-                    options = {
-                        pieHole: 0.4,
-                        legend: {
-                            position: "top",
-                            textStyle: {
-                                fontSize: 9
-                            },
-                            maxLines: 4
-                        },
-                        chartArea: {
-                            height: '55%',
-                            top: '30%',
-                            left: 'auto',
-                            width: 'auto'
-                        }
-                    };
-                    break;
+                    {
+                        options = _this._pieChartOptions(treeNodeData);
+                        break;
+                    }
             }
+            return options;
+        };
+        this._pieChartOptions = function (treeNodeData) {
+            var budgetCell = _this;
+            var cellDeclaration = _this.cellDeclaration;
+            var _cellDeclaration$year2 = cellDeclaration.yearSelections;
+            var rightYear = _cellDeclaration$year2.rightYear;
+            var leftYear = _cellDeclaration$year2.leftYear;
+            var nodeDataseriesName = budgetCell.nodeDataseriesName;
+
+            var nodeDataseries = treeNodeData[nodeDataseriesName];
+            var sortedlistName = 'Sorted' + nodeDataseriesName;
+            var sortedDataseries = treeNodeData[sortedlistName];
+            if (!sortedDataseries) {
+                console.error({
+                    errorMessage: 'sorted list "' + sortedlistName + '" not available'
+                });
+                throw Error('sorted list "' + sortedlistName + '" not available');
+            }
+            var sliceslist = sortedDataseries.map(function (sortedItem) {
+                var componentItem = nodeDataseries[sortedItem.Code];
+                if (!componentItem) {
+                    console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
+                    throw Error('componentItem not found');
+                }
+                var offset = !(componentItem.Components || componentItem.CommonDimension) ? 0.2 : 0;
+                return offset;
+            });
+            var slices = {};
+            for (var index in sliceslist) {
+                slices[index] = { offset: sliceslist[index] };
+                if (slices[index].offset != 0) {
+                    slices[index].color = 'silver';
+                }
+            }
+            console.log('slices', slices);
+            var options = {
+                slices: slices,
+                pieHole: 0.4,
+                is3D: true,
+                legend: {
+                    position: "top",
+                    textStyle: {
+                        fontSize: 9
+                    },
+                    maxLines: 4
+                },
+                chartArea: {
+                    height: '55%',
+                    top: '30%',
+                    left: 'auto',
+                    width: 'auto'
+                }
+            };
             return options;
         };
         this._chartParmsEvents = function () {
@@ -1672,9 +1714,9 @@ var BudgetCell = function () {
         };
         this._columns_ColumnChart = function (yearSpecs) {
             var cellDeclaration = _this.cellDeclaration;
-            var _cellDeclaration$year2 = cellDeclaration.yearSelections;
-            var rightYear = _cellDeclaration$year2.rightYear;
-            var leftYear = _cellDeclaration$year2.leftYear;
+            var _cellDeclaration$year3 = cellDeclaration.yearSelections;
+            var rightYear = _cellDeclaration$year3.rightYear;
+            var leftYear = _cellDeclaration$year3.leftYear;
 
             var budgetCell = _this;
             var categorylabel = 'Component';
@@ -1683,9 +1725,9 @@ var BudgetCell = function () {
         };
         this._columns_PieChart = function (yearSpecs) {
             var cellDeclaration = _this.cellDeclaration;
-            var _cellDeclaration$year3 = cellDeclaration.yearSelections;
-            var rightYear = _cellDeclaration$year3.rightYear;
-            var leftYear = _cellDeclaration$year3.leftYear;
+            var _cellDeclaration$year4 = cellDeclaration.yearSelections;
+            var rightYear = _cellDeclaration$year4.rightYear;
+            var leftYear = _cellDeclaration$year4.leftYear;
 
             var budgetCell = _this;
             var categorylabel = 'Component';
@@ -1695,9 +1737,9 @@ var BudgetCell = function () {
         this._chartParmsRows = function (treeNodeData, yearSpecs) {
             var budgetCell = _this;
             var cellDeclaration = _this.cellDeclaration;
-            var _cellDeclaration$year4 = cellDeclaration.yearSelections;
-            var rightYear = _cellDeclaration$year4.rightYear;
-            var leftYear = _cellDeclaration$year4.leftYear;
+            var _cellDeclaration$year5 = cellDeclaration.yearSelections;
+            var rightYear = _cellDeclaration$year5.rightYear;
+            var leftYear = _cellDeclaration$year5.leftYear;
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
 
             var nodeDataseries = treeNodeData[nodeDataseriesName];
@@ -1736,7 +1778,10 @@ var BudgetCell = function () {
         this._rows_ColumnCharts_row = function (row, componentItem) {
             var style = '';
             if (componentItem.Baseline) {
-                style = 'stroke-color: Gold; stroke-width: 3';
+                style = 'stroke-color: Gold; stroke-width: 3;';
+            }
+            if (!(componentItem.Components || componentItem.CommonDimension)) {
+                style += 'fill-opacity: 0.5';
             }
             row.push(style);
             return row;
@@ -2948,7 +2993,6 @@ var ExplorerCell = function (_Component) {
             var yearScope = cellDeclaration.yearScope;
             var chartParms = budgetCell.chartParms;
             var explorerChartCode = budgetCell.explorerChartCode;
-            var expandable = budgetCell.expandable;
             var graph_id = budgetCell.graph_id;
             var viewpointConfigPack = budgetCell.viewpointConfigPack;
             var datasetConfig = viewpointConfigPack.datasetConfig;
@@ -2957,9 +3001,6 @@ var ExplorerCell = function (_Component) {
             var endYear = _datasetConfig$YearsR.end;
 
             var yearSpan = endYear - startYear;
-            if (!expandable) {
-                chartParms.options['backgroundColor'] = '#E4E4E4';
-            }
             var timescopes = React.createElement("div", { style: {
                     paddingTop: "10px",
                     borderRight: "1px solid silver",
@@ -3215,7 +3256,7 @@ var ExplorerCell = function (_Component) {
                     left: "40px",
                     fontSize: "9px",
                     fontStyle: "italic"
-                } }, expandable ? 'drill down' : 'no drill down');
+                } });
             var yearsoptions = function yearsoptions() {
                 var years = [];
                 for (var year = startYear; year <= endYear; year++) {
@@ -3370,8 +3411,6 @@ var ExplorerNode = function (_Component) {
             var budgetCells = budgetNode.cells;
             var portalSettings = budgetNode.portalConfig;
             var cellTabs = budgetCells.map(function (budgetCell, cellIndex) {
-                var expandable = budgetCells.length > 1 && cellIndex == 0;
-                budgetCell.expandable = expandable;
                 var cellTitle = budgetCell.cellTitle;
 
                 return React.createElement(Tabs_1.Tab, { style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex }, React.createElement(explorercell_1.default, { declarationData: _this.props.declarationData, callbackid: cellIndex, budgetCell: budgetCell, globalStateActions: { updateCellChartCode: _this.props.globalStateActions.updateCellChartCode }, showControls: _this.props.showControls }));
