@@ -63,13 +63,16 @@ const getNodeSummaries = (node, baselineItems, lookups) => {
         }
         else {
             let importitem = baselineItems[componentname];
-            if (!importitem)
-                console.error('System Error: failed to find importitem for ', componentname);
-            importitem = importitem;
-            nodeSummaries = {
-                years: importitem.years,
-                CommonDimension: importitem.CommonDimension,
-            };
+            if (!importitem) {
+                console.log('failed to find dataset item to match viewpoint baseline:', componentname);
+                nodeSummaries = null;
+            }
+            else {
+                nodeSummaries = {
+                    years: importitem.years,
+                    CommonDimension: importitem.CommonDimension,
+                };
+            }
             if (node.Components) {
                 delete node.SortedComponents;
                 delete node.Components;

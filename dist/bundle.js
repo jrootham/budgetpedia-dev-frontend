@@ -2022,12 +2022,15 @@ var getNodeSummaries = function getNodeSummaries(node, baselineItems, lookups) {
             }
         } else {
             var importitem = baselineItems[componentname];
-            if (!importitem) console.error('System Error: failed to find importitem for ', componentname);
-            importitem = importitem;
-            nodeSummaries = {
-                years: importitem.years,
-                CommonDimension: importitem.CommonDimension
-            };
+            if (!importitem) {
+                console.log('failed to find dataset item to match viewpoint baseline:', componentname);
+                nodeSummaries = null;
+            } else {
+                nodeSummaries = {
+                    years: importitem.years,
+                    CommonDimension: importitem.CommonDimension
+                };
+            }
             if (_node.Components) {
                 delete _node.SortedComponents;
                 delete _node.Components;
@@ -2752,7 +2755,7 @@ var ExplorerBranch = function (_Component) {
                 } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Budget (by function)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Budget (by structure)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'STATEMENTS', primaryText: "Consolidated Statements" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'EXPENSESBYOBJECT', primaryText: "Expenses by Object" }))) : null;
             var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Version: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.version, onChange: function onChange(e, index, value) {
                     branch.switchVersion(value);
-                } }, React.createElement(MenuItem_1.default, { disabled: true, value: 'SUMMARY', primaryText: "Summary" }), React.createElement(MenuItem_1.default, { value: 'PBFT', primaryText: "Detail (PBFT)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'VARIANCE', primaryText: "Variance Reports" }))) : null;
+                } }, React.createElement(MenuItem_1.default, { value: 'SUMMARY', primaryText: "Summary" }), React.createElement(MenuItem_1.default, { value: 'PBFT', primaryText: "Detail (PBFT)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'VARIANCE', primaryText: "Variance Reports" }))) : null;
             var aspectselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Aspect: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.aspect, onChange: function onChange(e, index, value) {
                     branch.switchAspect(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'Expenses', primaryText: "Expenses" }), React.createElement(MenuItem_1.default, { value: 'Revenues', primaryText: "Revenues" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Both', primaryText: "Both" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Net', primaryText: "Net" }), React.createElement(MenuItem_1.default, { value: 'Staffing', primaryText: "Staffing" }))) : null;

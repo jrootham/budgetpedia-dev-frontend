@@ -158,12 +158,15 @@ const getNodeSummaries = (
 
             // fetch the data from the dataseries itemlist
             let importitem = baselineItems[componentname]
-            if (!importitem) console.error('System Error: failed to find importitem for ', componentname)
-            // first set nodeSummaries as usual
-            importitem = importitem
-            nodeSummaries = {
-                years: importitem.years,
-                CommonDimension: importitem.CommonDimension,
+            if (!importitem) {
+                console.log('failed to find dataset item to match viewpoint baseline:', componentname)
+                nodeSummaries = null
+            } else {
+
+                nodeSummaries = {
+                    years: importitem.years,
+                    CommonDimension: importitem.CommonDimension,
+                }
             }
             // capture data for chart-making
             if (node.Components) {
