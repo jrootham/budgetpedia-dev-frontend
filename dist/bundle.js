@@ -1611,6 +1611,7 @@ var BudgetCell = function () {
                     break;
                 case "PieChart":
                     options = {
+                        pieHole: 0.4,
                         legend: {
                             position: "top",
                             textStyle: {
@@ -6637,8 +6638,8 @@ var explorer = {
                     explorerChartCode: "Timelines"
                 }
             },
-            yearSelections: { leftYear: 2020, rightYear: 2030 },
-            yearScope: "TwoYears"
+            yearSelections: { leftYear: 2003, rightYear: 2016 },
+            yearScope: "OneYear"
         }
     }
 };

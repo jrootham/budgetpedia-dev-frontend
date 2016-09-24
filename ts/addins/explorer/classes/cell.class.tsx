@@ -460,6 +460,7 @@ class BudgetCell {
             
             case "PieChart":
                 options = {
+                    pieHole:0.4,
                     legend: {
                         position:"top",
                         textStyle: {

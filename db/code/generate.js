@@ -52,7 +52,7 @@ const generateLookups = context => {
         utilities.writeFileJson(lookupspath + targetname, lookup)
         lookups[category] = lookup
     }
-    context.lookups = lookups
+    context.lookups = lookups // for use in add Sorted... components below
     utilities.writeFileJson(lookupspath + 'lookups.json', lookups)
 
 }
@@ -100,6 +100,7 @@ const generateJsonFiles = context => {
 }
 
 const generateJsonFile = (aspect, aspects, messages, context) => {
+
     if (aspects[aspect].length == 0) {
         utilities.log('no files for aspect ' + aspect)
         return
@@ -138,11 +139,11 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     }
 
     // set years range; files have been sorted by year
-    let filename = aspectfiles[0]
+    let filename = aspectfiles[0] // first year
     let parts = filename.split('.')
     let year = parseInt(parts[0])
     metadata.YearsRange.start = year
-    filename = aspectfiles[aspectfiles.length - 1]
+    filename = aspectfiles[aspectfiles.length - 1] // last year
     parts = filename.split('.')
     year = parseInt(parts[0])
     metadata.YearsRange.end = year
@@ -173,13 +174,14 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     // ----------------[ fill data properties for json file ]---------------
     for (let filename of aspectfiles) {
         addPreparedData(filename, 
-            // objects to be filled
+            // objects to be populated
             basedata, notes, allocations, headers, 
             // controls
             metadata, context)
     }
 
     // --------------[ create adjusted shadow for appropriate sets ]-----------
+    // ... and add Sorted... properties for Components and CommonDimension lists
     if (metadata.InflationAdjustable) {
         addAdjustedData(data, metadata, context)
         addSortedProperties(data.Nominal, context)
@@ -198,7 +200,6 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     utilities.log('saving json file ' + targetfilename)
     utilities.writeFileJson(targetfilespec, json)
 
-    // throw Error('debug after first file')
 }
 
 // add base data, notes data, allocations data, and headers data
@@ -413,29 +414,6 @@ const addAdjustedData = (data, metadata, context) => {
 
 }
 
-const addSortedProperties = (data, context) => {
-    for (let category in data) {
-        let node = data[category]
-        let subcomponents = node.Components
-        if (subcomponents) {
-            addSortedProperties(subcomponents, context)
-            let cname = node.ComponentsDimensionName
-            let sorted = getNameSortedComponentItems(cname, subcomponents, context.lookups)
-            node.SortedComponents = sorted
-        }
-
-        // recurse into commondimension
-        let commondimensions = node.CommonDimension
-        if (commondimensions) {
-            addSortedProperties(commondimensions, context)
-            let cname = node.CommonDimensionName
-            let sorted = getNameSortedComponentItems(cname, commondimensions, context.lookups)
-            node.SortedCommonDimension = sorted
-        }
-    }
-    // throw Error('debug', data)
-}
-
 // recursive
 const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationseries, decimals) => {
 
@@ -486,6 +464,38 @@ const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationserie
     
 }
 
+const addSortedProperties = (data, context) => {
+
+    for (let category in data) {
+
+        let node = data[category]
+        let subcomponents = node.Components
+
+        if (subcomponents) {
+
+            addSortedProperties(subcomponents, context)
+            let cname = node.ComponentsDimensionName
+            let sorted = getNameSortedComponentItems(cname, subcomponents, context.lookups)
+            node.SortedComponents = sorted
+
+        }
+
+        // recurse into commondimension
+        let commondimension = node.CommonDimension
+
+        if (commondimension) {
+
+            addSortedProperties(commondimension, context)
+            let cname = node.CommonDimensionName
+            let sorted = getNameSortedComponentItems(cname, commondimension, context.lookups)
+            node.SortedCommonDimension = sorted
+            
+        }
+
+    }
+
+}
+
 const getNameSortedComponentItems = (dimensionname, components, lookups) => {
     let sorted = []
     let complookups = lookups[dimensionname.toLowerCase()]
@@ -513,3 +523,4 @@ const getNameSortedComponentItems = (dimensionname, components, lookups) => {
     return sorted
 
 }
+

@@ -88,7 +88,9 @@ class BudgetCell {
                 catname = instancenames.Alias || instancenames.Name;
             }
             else {
-                if (treeNodeMetaDataFromParentSortedList && treeNodeMetaDataFromParentSortedList.parentBudgetNode && treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData) {
+                if (treeNodeMetaDataFromParentSortedList &&
+                    treeNodeMetaDataFromParentSortedList.parentBudgetNode &&
+                    treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData) {
                     let parentconfigindex = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData.NamingConfigRef;
                     if (parentconfigindex) {
                         let names = viewpointNamingConfigs[parentconfigindex];
@@ -187,6 +189,7 @@ class BudgetCell {
                     break;
                 case "PieChart":
                     options = {
+                        pieHole: 0.4,
                         legend: {
                             position: "top",
                             textStyle: {
