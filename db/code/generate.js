@@ -182,8 +182,10 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     // --------------[ create adjusted shadow for appropriate sets ]-----------
     if (metadata.InflationAdjustable) {
         addAdjustedData(data, metadata, context)
+        addSortedProperties(data.Nominal, context)
+        addSortedProperties(data.Adjusted, context)
     } else {
-        addSortedProperties(data, metadata, context)
+        addSortedProperties(data, context)
     }
 
     // ---------------------[ save files ]--------------------
@@ -195,6 +197,8 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
     }
     utilities.log('saving json file ' + targetfilename)
     utilities.writeFileJson(targetfilespec, json)
+
+    // throw Error('debug after first file')
 }
 
 // add base data, notes data, allocations data, and headers data
@@ -405,34 +409,35 @@ const addAdjustedData = (data, metadata, context) => {
     let inflationseries = utilities.readFileJson(context.dataseriespath + 'inflation.json')
 
     // start recursion
-    addAdjustedSeries(nominal, adjusted, inflationseries, metadata.Decimals, context)
+    addAdjustedSeries(nominal, adjusted, inflationseries, metadata.Decimals)
 
 }
 
 const addSortedProperties = (data, context) => {
-
     for (let category in data) {
-        let subcomponents = data.Components
+        let node = data[category]
+        let subcomponents = node.Components
         if (subcomponents) {
-            let cname = data.ComponentsDimensionName
             addSortedProperties(subcomponents, context)
+            let cname = node.ComponentsDimensionName
             let sorted = getNameSortedComponentItems(cname, subcomponents, context.lookups)
-            data.SortedComponents = sorted
+            node.SortedComponents = sorted
         }
 
         // recurse into commondimension
-        let commondimensions = data.CommonDimension
+        let commondimensions = node.CommonDimension
         if (commondimensions) {
-            let cname = data.CommmonDimensionName
             addSortedProperties(commondimensions, context)
+            let cname = node.CommonDimensionName
             let sorted = getNameSortedComponentItems(cname, commondimensions, context.lookups)
-            data.SortedCommonDimension = sorted
+            node.SortedCommonDimension = sorted
         }
     }
+    // throw Error('debug', data)
 }
 
 // recursive
-const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationseries, decimals, context) => {
+const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationseries, decimals) => {
 
     let multiplier, amount
 
@@ -445,22 +450,16 @@ const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationserie
         let subcomponents = nominalcomponent.Components
         if (subcomponents) {
             adjustedcomponent.Components = {}
-            let cname = adjustedcomponent.ComponentsDimensionName = nominalcomponent.ComponentsDimensionName
-            addAdjustedSeries(subcomponents, adjustedcomponent.Components, inflationseries, decimals, context)
-            let sorted = getNameSortedComponentItems(cname, subcomponents, context.lookups)
-            nominalcomponent.SortedComponents = sorted
-            adjustedcomponent.SortedComponents = sorted
+            adjustedcomponent.ComponentsDimensionName = nominalcomponent.ComponentsDimensionName
+            addAdjustedSeries(subcomponents, adjustedcomponent.Components, inflationseries, decimals)
         }
 
         // recurse into commondimension
         let commondimensions = nominalcomponent.CommonDimension
         if (commondimensions) {
             adjustedcomponent.CommonDimension = {}
-            let cname = adjustedcomponent.CommmonDimensionName = nominalcomponent.CommonDimensionName
-            addAdjustedSeries(commondimensions, adjustedcomponent.CommonDimension, inflationseries, decimals, context)
-            let sorted = getNameSortedComponentItems(cname, commondimensions, context.lookups)
-            nominalcomponent.SortedCommonDimension = sorted
-            adjustedcomponent.SortedCommonDimension = sorted
+            adjustedcomponent.CommonDimensionName = nominalcomponent.CommonDimensionName
+            addAdjustedSeries(commondimensions, adjustedcomponent.CommonDimension, inflationseries, decimals)
         }
 
         // if there are no years to update, iterate
