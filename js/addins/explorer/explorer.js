@@ -29,7 +29,6 @@ let Explorer = class extends Component {
             },
             showdashboard: false
         };
-        this.freshstart = false;
         this.popoverClose = () => {
             this.setState({
                 popover: {
@@ -131,7 +130,6 @@ let Explorer = class extends Component {
     componentWillMount() {
         let { branchList, branchesById } = this.props.declarationData;
         if (branchList.length == 0) {
-            this.freshstart = true;
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
             this.props.addBranchDeclaration(null, defaultSettings);
         }
@@ -142,13 +140,11 @@ let Explorer = class extends Component {
         }
     }
     componentDidMount() {
-        if (this.freshstart) {
-            this.setState({
-                popover: {
-                    open: true
-                }
-            });
-        }
+        this.setState({
+            popover: {
+                open: true
+            }
+        });
     }
     componentWillUnmount() {
         this.props.resetLastAction();
@@ -174,8 +170,8 @@ let Explorer = class extends Component {
             float: "right",
             height: "36px",
             width: "36px",
-        }, onTouchTap: explorer.popoverClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close"))), React.createElement("p", null, "Click or tap on any chart column to drill down."))));
-        let drilldownSegments = () => {
+        }, onTouchTap: explorer.popoverClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close"))), React.createElement("p", null, "Click or tap on any chart column to drill down (except faded columns, which are as deep as you can go)."))));
+        let branchSegments = () => {
             let budgetBranches = explorer.state.budgetBranches;
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
                 let actionFunctions = {
@@ -184,6 +180,7 @@ let Explorer = class extends Component {
                     updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
                     changeTab: this.changeTab(budgetBranch.uid),
                     updateCellChartCode: this.updateCellChartCode(budgetBranch.uid),
+                    updateNode: this.updateNode(budgetBranch.uid),
                     addNodeDeclaration: this.props.addNodeDeclaration,
                     removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
@@ -193,7 +190,6 @@ let Explorer = class extends Component {
                     toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
-                    updateNode: this.updateNode(budgetBranch.uid),
                 };
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,
@@ -219,7 +215,7 @@ let Explorer = class extends Component {
             });
             return segments;
         };
-        let branches = drilldownSegments();
+        let branches = branchSegments();
         return React.createElement("div", null, React.createElement(Card_1.Card, {expanded: this.state.showdashboard}, React.createElement(Card_1.CardTitle, {ref: node => { this.popover_ref = react_dom_1.findDOMNode(node); }}, React.createElement(Toggle_1.default, {label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
             height: '32px', float: "right",
             display: "inline-block",

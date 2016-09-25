@@ -1651,10 +1651,8 @@ var BudgetCell = function () {
                     slices[index].color = 'silver';
                 }
             }
-            console.log('slices', slices);
             var options = {
                 slices: slices,
-                pieHole: 0.4,
                 is3D: true,
                 legend: {
                     position: "top",
@@ -3836,7 +3834,6 @@ var Explorer = function (_Component) {
             },
             showdashboard: false
         };
-        _this.freshstart = false;
         _this.popoverClose = function () {
             _this.setState({
                 popover: {
@@ -3979,7 +3976,6 @@ var Explorer = function (_Component) {
             var branchesById = _props$declarationDat.branchesById;
 
             if (branchList.length == 0) {
-                this.freshstart = true;
                 var defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
                 this.props.addBranchDeclaration(null, defaultSettings);
             } else {
@@ -3994,13 +3990,11 @@ var Explorer = function (_Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            if (this.freshstart) {
-                this.setState({
-                    popover: {
-                        open: true
-                    }
-                });
-            }
+            this.setState({
+                popover: {
+                    open: true
+                }
+            });
         }
     }, {
         key: 'componentWillUnmount',
@@ -4037,8 +4031,8 @@ var Explorer = function (_Component) {
                     float: "right",
                     height: "36px",
                     width: "36px"
-                }, onTouchTap: explorer.popoverClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close"))), React.createElement("p", null, "Click or tap on any chart column to drill down."))));
-            var drilldownSegments = function drilldownSegments() {
+                }, onTouchTap: explorer.popoverClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close"))), React.createElement("p", null, "Click or tap on any chart column to drill down (except faded columns, which are as deep as you can go)."))));
+            var branchSegments = function branchSegments() {
                 var budgetBranches = explorer.state.budgetBranches;
                 var segments = budgetBranches.map(function (budgetBranch, branchIndex) {
                     var actionFunctions = {
@@ -4047,6 +4041,7 @@ var Explorer = function (_Component) {
                         updateCellChartSelection: _this2.updateCellChartSelection(budgetBranch.uid),
                         changeTab: _this2.changeTab(budgetBranch.uid),
                         updateCellChartCode: _this2.updateCellChartCode(budgetBranch.uid),
+                        updateNode: _this2.updateNode(budgetBranch.uid),
                         addNodeDeclaration: _this2.props.addNodeDeclaration,
                         removeNodeDeclarations: _this2.props.removeNodeDeclarations,
                         changeViewpoint: _this2.props.changeViewpoint,
@@ -4055,8 +4050,7 @@ var Explorer = function (_Component) {
                         changeBranchDataVersion: _this2.props.changeBranchDataVersion,
                         toggleShowOptions: _this2.props.toggleShowOptions,
                         updateCellsDataseriesName: _this2.props.updateCellsDataseriesName,
-                        resetLastAction: _this2.props.resetLastAction,
-                        updateNode: _this2.updateNode(budgetBranch.uid)
+                        resetLastAction: _this2.props.resetLastAction
                     };
                     var displayCallbackFunctions = {
                         workingStatus: explorer.workingStatus
@@ -4092,7 +4086,7 @@ var Explorer = function (_Component) {
                 });
                 return segments;
             };
-            var branches = drilldownSegments();
+            var branches = branchSegments();
             return React.createElement("div", null, React.createElement(Card_1.Card, { expanded: this.state.showdashboard }, React.createElement(Card_1.CardTitle, { ref: function ref(node) {
                     _this2.popover_ref = react_dom_1.findDOMNode(node);
                 } }, React.createElement(Toggle_1.default, { label: 'Show dashboard:', toggled: this.state.showdashboard, style: {

@@ -224,10 +224,8 @@ class BudgetCell {
                     slices[index].color = 'silver';
                 }
             }
-            console.log('slices', slices);
             let options = {
                 slices: slices,
-                pieHole: 0.4,
                 is3D: true,
                 legend: {
                     position: "top",

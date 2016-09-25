@@ -84,33 +84,23 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     let { updateCellChartSelection } = budgetNode.actions
     updateCellChartSelection(budgetCell.uid,chartSelectionData.selection)
 
-    // setTimeout(()=>{
+    if (!selection) { // deselected
+        // window.nodeUpdateControl.nodeuid = null
+        // window.nodeUpdateControl.new = null
+        budgetCell.chartSelection = null
+        // updateChartSelections()
+        return
+    }
 
-        // refresh nodes after removenode operation above
-        // branchNodes = budgetBranch.nodes
+    // 3. otherwise create new child node
+    budgetCell.chartSelection = chartSelectionData.selection
+    let childprops: CreateChildNodeProps = {
+        selectionrow,
+        nodeIndex,
+        cellIndex, 
+    }
 
-        // let { updateChartSelections } = budgetBranch.nodeCallbacks
-
-        // 3. if deselected, update parms and quit
-        if (!selection) { // deselected
-            // window.nodeUpdateControl.nodeuid = null
-            // window.nodeUpdateControl.new = null
-            budgetCell.chartSelection = null
-            // updateChartSelections()
-            return
-        }
-
-        // 4. otherwise create new child node
-        budgetCell.chartSelection = chartSelectionData.selection
-        let childprops: CreateChildNodeProps = {
-            selectionrow,
-            nodeIndex,
-            cellIndex, 
-        }
-
-        budgetBranch.createChildNode( childprops )
-
-    // })
+    budgetBranch.createChildNode( childprops )
 
 }
 

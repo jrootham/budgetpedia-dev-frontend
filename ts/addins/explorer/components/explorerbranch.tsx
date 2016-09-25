@@ -19,7 +19,7 @@ var { Component } = React
 
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
-import {Card, CardTitle, CardText} from 'material-ui/Card'
+import { Card, CardTitle, CardText } from 'material-ui/Card'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'

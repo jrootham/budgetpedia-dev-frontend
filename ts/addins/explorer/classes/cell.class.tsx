@@ -2,7 +2,7 @@
 // budgetcell.tsx
 /*
 TODO: BUG noSortedDataSeries when switching aspect with leaf expenditure cell showing
-Bug: donut hole not showing
+TODO: add inflation adjustment info in all chart titles
 */ 
 
 import {
@@ -469,7 +469,8 @@ class BudgetCell {
     }
 
     private _pieChartOptions = (treeNodeData) => {
-        // try to add a color differentiator for non-drilldown items
+        // add a color differentiator for non-drilldown items
+        // see utilities.ColorLuminance
         // for now silver and and offset value is set for slices which cannot expand
         // TODO: create a better visual cue for non-expanadable items
         let budgetCell = this

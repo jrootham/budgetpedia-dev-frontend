@@ -60,10 +60,12 @@ import {
     BranchSettings,
 } from './modules/interfaces'
 
+// mapStateToProps wraps these redux actions with redux dispatch
+// for use in explorernode
 export interface MappedNodeActions {
-    addCellDeclarations:Function,
-    changeTab:Function,
-    updateCellChartCode:Function,
+    addCellDeclarations: Function,
+    changeTab: Function,
+    updateCellChartCode: Function,
     normalizeCellYearDependencies: Function,
     updateNode: Function,
     // removeCellDeclarations:Function,
@@ -71,6 +73,7 @@ export interface MappedNodeActions {
     // toggleDelta:Function,
 }
 
+// for use in explorerbranch
 export interface MappedBranchActions extends MappedNodeActions {
     addNodeDeclaration:Function,
     removeNodeDeclarations: Function,
@@ -86,6 +89,7 @@ export interface MappedBranchActions extends MappedNodeActions {
     // toggleInflationAdjustement:Function
 }
 
+// for use here
 interface MappedExplorerActions extends MappedBranchActions {
     // actions composed with dispatch
     addBranchDeclaration:Function, // dispatcher from ExplorerActions through connect
@@ -95,6 +99,7 @@ interface MappedExplorerActions extends MappedBranchActions {
     branchMoveDown: Function,
 }
 
+// also used here
 interface MappedActions extends MappedExplorerActions{
     showWaitingMessage:Function, // dispatcher from Actions 
     hideWaitingMessage:Function, // dispatcher from Actions
@@ -127,8 +132,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         showdashboard:false
     }
 
-    freshstart:boolean = false
+    // to control
+    // freshstart:boolean = false
 
+    // calculated referece for popover location
     popover_ref:any
 
     popoverClose = () => {
@@ -147,11 +154,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         if (branchList.length == 0) { // initialize explorer with first branch
 
-            this.freshstart = true
+            // this.freshstart = true
             let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
             this.props.addBranchDeclaration(null,defaultSettings) // change state
 
-        } else {
+        } else { // harmonize branch instances to branch declarations
 
             let { branchList, branchesById } = this.props.declarationData
             let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
@@ -160,14 +167,15 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         }
     }
 
+    // start with open reminder to user that click on charts drills down
     componentDidMount() {
-        if (this.freshstart) {
-            this.setState({
-                popover:{
-                    open:true
-                }
-            })
-        }
+        // if (this.freshstart) {
+        this.setState({
+            popover:{
+                open:true
+            }
+        })
+        // }
     }
 
     componentWillUnmount() {
@@ -189,8 +197,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         and from componentWillReceiveProps to modify branch list
     */
     harmonizeBranchesToState = (budgetBranches, branchList, branchesById) => {
-        // delete branches no longer required
+        // reset state branches if a change is made
         let change = false
+
+        // delete branches that are no longer required
         let newBranches = budgetBranches.filter((branch) => {
             return !!branchesById[branch.uid]
         })
@@ -205,14 +215,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 if (branch.uid == uid) 
                     return branch
             })
-            if (foundbranch.length == 0) {
+            if (foundbranch.length == 0) { // branch not found, so add it
                 if (!change) change = true
                 // let settings = branchesById[uid]
                 let budgetBranch = new BudgetBranch({uid})
                 newBranches.push(budgetBranch)
             }
         }
-        // sort branches into correct order
+        // sort branches into correct order, per state branchlist
         let sortedBranches = []
         for ( let i = 0; i < branchList.length ; i++ ) {
             let uid = branchList[i]
@@ -221,7 +231,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     return branch
             })
             if (!(foundbranch.length == 1)) {
-                console.error('System error -- unexpected mismatch between state branch list and explorer branch list',
+                console.error(
+                    'System error -- unexpected mismatch between state branch list and explorer branch list',
                     branchList, newBranches)
                 throw Error('System error -- unexpected mismatch between state branch list and explorer branch list')
             }
@@ -271,24 +282,30 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     // ---------------[ create action calls versions for currying (branchid) ]---------------
 
     // node consumer
-    private updateNode = branchuid => nodeuid => 
+    private updateNode = branchuid => 
+        nodeuid => 
         this.props.updateNode(branchuid, nodeuid)
-    private changeTab = branchuid => (nodeuid, tabvalue) => 
+    private changeTab = branchuid => 
+        (nodeuid, tabvalue) => 
         this.props.changeTab(branchuid, nodeuid,tabvalue)
-    private addCellDeclarations = branchuid => (nodeuid, settingslist) => 
+    private addCellDeclarations = branchuid => 
+        (nodeuid, settingslist) => 
         this.props.addCellDeclarations(branchuid, nodeuid, settingslist)
-    private normalizeCellYearDependencies = branchuid => (nodeuid, cellList, yearsRange) => 
+    private normalizeCellYearDependencies = branchuid => 
+        (nodeuid, cellList, yearsRange) => 
         this.props.normalizeCellYearDependencies(branchuid, nodeuid, cellList, yearsRange)
 
     // cell consumer
-    private updateCellChartSelection = branchuid => nodeuid => (celluid,selection) =>
+    private updateCellChartSelection = branchuid => 
+        nodeuid => (celluid,selection) =>
         this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection )
-    private updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => 
+    private updateCellChartCode = branchuid => 
+        nodeuid => (celluid, explorerChartCode) => 
         this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode)
     
     // ----------------------------[ ui responses ]------------------------------
 
-    onExpandChange = (expanded) => { // TODO ?????
+    onExpandChange = (expanded) => { // TODO: validate this
         // TODO: change background color of title if it is collapsed
         this.props.resetLastAction()
     }
@@ -383,26 +400,31 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                     </IconButton>
                     </div>
-                    <p>Click or tap on any chart column to drill down.</p>
+                    <p>Click or tap on any chart column to drill down (except faded columns, which are as deep as you can go).</p>
                 </CardText>
             </Card>
         </Popover>
 
-        // -----------[ DRILLDOWN SEGMENT]-------------
+        // -----------[ BRANCH SEGMENT]-------------
 
-        let drilldownSegments = () => {
+        let branchSegments = () => {
 
             let budgetBranches = explorer.state.budgetBranches
 
+            // map over budgetBranches state
             let segments = budgetBranches.map((budgetBranch:BudgetBranch, branchIndex) => {
 
+                // collect functions to pass down to nested components
                 let actionFunctions:MappedBranchActions = {
+                    // curried
                     addCellDeclarations: this.addCellDeclarations(budgetBranch.uid),
                     normalizeCellYearDependencies: this.normalizeCellYearDependencies(budgetBranch.uid),
                     updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
                     changeTab: this.changeTab(budgetBranch.uid),
                     updateCellChartCode: this.updateCellChartCode(budgetBranch.uid),
-                    // removeCellDeclarations: this.props.removeCellDeclarations,
+                    updateNode: this.updateNode(budgetBranch.uid),
+
+                    // pass-through
                     addNodeDeclaration: this.props.addNodeDeclaration,
                     removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
@@ -412,7 +434,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
-                    updateNode: this.updateNode(budgetBranch.uid),
                 }
 
                 let displayCallbackFunctions = { 
@@ -530,7 +551,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         }
         // -----------[ COMBINE SEGMENTS ]---------------
 
-        let branches = drilldownSegments()
+        let branches = branchSegments()
 
         return <div>
 

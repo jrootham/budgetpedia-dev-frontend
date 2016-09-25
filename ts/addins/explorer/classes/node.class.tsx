@@ -14,9 +14,6 @@ import {
 } from '../modules/interfaces'
 
 import BudgetCell, { CellDeclaration, NodeData } from './cell.class'
-// import {
-//     ChartSelectionCell, onChartComponentSelection,
-// } from '../modules/onchartcomponentselection'
 
 export interface BudgetNodeParms {
     viewpointName: string,
