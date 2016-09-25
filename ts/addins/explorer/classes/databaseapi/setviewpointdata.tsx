@@ -10,6 +10,7 @@
 interface Summaries {
     years?: any,
     CommonDimension?: any,
+    Drilldown?:string
 }
 
 import {
@@ -85,6 +86,7 @@ const setViewpointData = (parms: SetViewpointDataParms) => {
 
         // initiates recursion
         let nodeSummaries = getNodeSummaries(node, baselineItems, lookupset)
+        node.ComponentsDrilldown = nodeSummaries.Drilldown
         setNodeSummaries(node, nodeSummaries, lookupset)
         // console.log('completed set viewpointdata', node)
 
@@ -96,6 +98,7 @@ const setViewpointData = (parms: SetViewpointDataParms) => {
     // record state
     viewpointDataTemplate.Meta.currentDataset = datasetName
     viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted
+    console.log('viewpoint result',viewpointDataTemplate)
 
 }
 
@@ -111,19 +114,23 @@ const getNodeSummaries = (
     ): Summaries => {
 
     let components = node.Components
+
     // cumulate summaries for this level
     let aggregator: Summaries = {
         // years: {},
         // CommonDimension: {},
     }
-
+    let count = 0
+    let subcomponentscount = 0
+    let commondimensioncount = 0
     // for every component at this level
     for (let componentname in components) {
 
+        count++
         // isolate the node...
         let node = components[componentname]
 
-        let nodeSummaries = null
+        let nodeSummaries:Summaries = null
 
         // remove any previous aggregations...
         if (node.years) {
@@ -139,7 +146,7 @@ const getNodeSummaries = (
 
             // if no components found, loop
             if (node.Components) {
-
+                subcomponentscount++
                 let sorted = getIndexSortedComponentItems(
                     node.Components, lookups)
 
@@ -148,6 +155,11 @@ const getNodeSummaries = (
                 // get child node summaries recursively
                 nodeSummaries = getNodeSummaries(
                     node, baselineItems, lookups)
+                if (nodeSummaries.CommonDimension) {
+                    commondimensioncount++
+                }
+
+                node.ComponentsDrilldown = nodeSummaries.Drilldown
 
                 setNodeSummaries(node, nodeSummaries, lookups)
 
@@ -180,16 +192,25 @@ const getNodeSummaries = (
                     node.years = importitem.years
                 } 
                 if (importitem.CommonDimension) {
+                    commondimensioncount++
                     node.CommonDimension = importitem.CommonDimension
                 } 
                 if (importitem.SortedCommonDimension) {
                     node.SortedCommonDimension = importitem.SortedCommonDimension
                 }
                 if (importitem.Components) {
+                    subcomponentscount++
                     node.Components = importitem.Components
                 }
                 if (importitem.SortedComponents) {
                     node.SortedComponents = importitem.SortedComponents
+                }
+
+                if (importitem.ComponentsDrilldown) {
+                    node.ComponentsDrilldown = importitem.ComponentsDrilldown
+                }
+                if (importitem.CommonDimensionDrilldown) {
+                    node.CommonDimensionDrilldown = importitem.CommonDimensionDrilldown
                 }
 
             } 
@@ -220,6 +241,17 @@ const getNodeSummaries = (
         }
 
     }
+
+    let drilldown
+    if (subcomponentscount == 0 && commondimensioncount == 0) {
+        drilldown = 'None'
+    } else if (subcomponentscount == count || commondimensioncount == count) {
+        drilldown = 'All'
+    } else {
+        drilldown = 'Some'
+    }
+
+    aggregator.Drilldown = drilldown
 
     return aggregator
 }

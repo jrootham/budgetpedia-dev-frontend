@@ -393,7 +393,7 @@ class ExplorerCell extends Component {
             left: "40px",
             fontSize: "9px",
             fontStyle: "italic",
-        }});
+        }}, "bold coloured elements here have drilldown; pale elements have no drill-down");
         let yearsoptions = () => {
             let years = [];
             for (let year = startYear; year <= endYear; year++) {

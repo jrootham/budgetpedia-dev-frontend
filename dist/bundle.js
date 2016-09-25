@@ -2039,17 +2039,23 @@ var setViewpointData = function setViewpointData(parms) {
         var sorted = getIndexSortedComponentItems(node.Components, lookupset);
         node.SortedComponents = sorted;
         var nodeSummaries = getNodeSummaries(node, baselineItems, lookupset);
+        node.ComponentsDrilldown = nodeSummaries.Drilldown;
         setNodeSummaries(node, nodeSummaries, lookupset);
     } catch (e) {
         console.log('error in setComponentAggregates', e);
     }
     viewpointDataTemplate.Meta.currentDataset = datasetName;
     viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted;
+    console.log('viewpoint result', viewpointDataTemplate);
 };
 var getNodeSummaries = function getNodeSummaries(node, baselineItems, lookups) {
     var components = node.Components;
     var aggregator = {};
+    var count = 0;
+    var subcomponentscount = 0;
+    var commondimensioncount = 0;
     for (var componentname in components) {
+        count++;
         var _node = components[componentname];
         var nodeSummaries = null;
         if (_node.years) {
@@ -2061,9 +2067,14 @@ var getNodeSummaries = function getNodeSummaries(node, baselineItems, lookups) {
         }
         if (!_node.Baseline) {
             if (_node.Components) {
+                subcomponentscount++;
                 var sorted = getIndexSortedComponentItems(_node.Components, lookups);
                 _node.SortedComponents = sorted;
                 nodeSummaries = getNodeSummaries(_node, baselineItems, lookups);
+                if (nodeSummaries.CommonDimension) {
+                    commondimensioncount++;
+                }
+                _node.ComponentsDrilldown = nodeSummaries.Drilldown;
                 setNodeSummaries(_node, nodeSummaries, lookups);
             }
         } else {
@@ -2086,16 +2097,24 @@ var getNodeSummaries = function getNodeSummaries(node, baselineItems, lookups) {
                     _node.years = importitem.years;
                 }
                 if (importitem.CommonDimension) {
+                    commondimensioncount++;
                     _node.CommonDimension = importitem.CommonDimension;
                 }
                 if (importitem.SortedCommonDimension) {
                     _node.SortedCommonDimension = importitem.SortedCommonDimension;
                 }
                 if (importitem.Components) {
+                    subcomponentscount++;
                     _node.Components = importitem.Components;
                 }
                 if (importitem.SortedComponents) {
                     _node.SortedComponents = importitem.SortedComponents;
+                }
+                if (importitem.ComponentsDrilldown) {
+                    _node.ComponentsDrilldown = importitem.ComponentsDrilldown;
+                }
+                if (importitem.CommonDimensionDrilldown) {
+                    _node.CommonDimensionDrilldown = importitem.CommonDimensionDrilldown;
                 }
             }
             if (_node.Components && !_node.SortedComponents) {
@@ -2111,6 +2130,15 @@ var getNodeSummaries = function getNodeSummaries(node, baselineItems, lookups) {
             incrementAggregator(aggregator, nodeSummaries);
         }
     }
+    var drilldown = void 0;
+    if (subcomponentscount == 0 && commondimensioncount == 0) {
+        drilldown = 'None';
+    } else if (subcomponentscount == count || commondimensioncount == count) {
+        drilldown = 'All';
+    } else {
+        drilldown = 'Some';
+    }
+    aggregator.Drilldown = drilldown;
     return aggregator;
 };
 var setNodeSummaries = function setNodeSummaries(node, nodeSummaries, lookups) {
@@ -3258,7 +3286,7 @@ var ExplorerCell = function (_Component) {
                     left: "40px",
                     fontSize: "9px",
                     fontStyle: "italic"
-                } });
+                } }, "bold coloured elements here have drilldown; pale elements have no drill-down");
             var yearsoptions = function yearsoptions() {
                 var years = [];
                 for (var year = startYear; year <= endYear; year++) {

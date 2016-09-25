@@ -510,7 +510,7 @@ class BudgetCell {
             if ((slices[index].offset) != 0) {
   
                 slices[index].color = ColorBrightness(GoogleChartColors[index],150)
-                slices[index].offset = 0
+                slices[index].offset = 0 // I changed my mind about having an offset; now just a proxy for no drilldown
                 // console.log('input, output', GoogleChartColors[index], slices[index].color )
             }
         }

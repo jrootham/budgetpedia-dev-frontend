@@ -32,6 +32,7 @@ const setViewpointData = (parms) => {
         let sorted = getIndexSortedComponentItems(node.Components, lookupset);
         node.SortedComponents = sorted;
         let nodeSummaries = getNodeSummaries(node, baselineItems, lookupset);
+        node.ComponentsDrilldown = nodeSummaries.Drilldown;
         setNodeSummaries(node, nodeSummaries, lookupset);
     }
     catch (e) {
@@ -39,11 +40,16 @@ const setViewpointData = (parms) => {
     }
     viewpointDataTemplate.Meta.currentDataset = datasetName;
     viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted;
+    console.log('viewpoint result', viewpointDataTemplate);
 };
 const getNodeSummaries = (node, baselineItems, lookups) => {
     let components = node.Components;
     let aggregator = {};
+    let count = 0;
+    let subcomponentscount = 0;
+    let commondimensioncount = 0;
     for (let componentname in components) {
+        count++;
         let node = components[componentname];
         let nodeSummaries = null;
         if (node.years) {
@@ -55,9 +61,14 @@ const getNodeSummaries = (node, baselineItems, lookups) => {
         }
         if (!node.Baseline) {
             if (node.Components) {
+                subcomponentscount++;
                 let sorted = getIndexSortedComponentItems(node.Components, lookups);
                 node.SortedComponents = sorted;
                 nodeSummaries = getNodeSummaries(node, baselineItems, lookups);
+                if (nodeSummaries.CommonDimension) {
+                    commondimensioncount++;
+                }
+                node.ComponentsDrilldown = nodeSummaries.Drilldown;
                 setNodeSummaries(node, nodeSummaries, lookups);
             }
         }
@@ -82,16 +93,24 @@ const getNodeSummaries = (node, baselineItems, lookups) => {
                     node.years = importitem.years;
                 }
                 if (importitem.CommonDimension) {
+                    commondimensioncount++;
                     node.CommonDimension = importitem.CommonDimension;
                 }
                 if (importitem.SortedCommonDimension) {
                     node.SortedCommonDimension = importitem.SortedCommonDimension;
                 }
                 if (importitem.Components) {
+                    subcomponentscount++;
                     node.Components = importitem.Components;
                 }
                 if (importitem.SortedComponents) {
                     node.SortedComponents = importitem.SortedComponents;
+                }
+                if (importitem.ComponentsDrilldown) {
+                    node.ComponentsDrilldown = importitem.ComponentsDrilldown;
+                }
+                if (importitem.CommonDimensionDrilldown) {
+                    node.CommonDimensionDrilldown = importitem.CommonDimensionDrilldown;
                 }
             }
             if (node.Components && !node.SortedComponents) {
@@ -107,6 +126,17 @@ const getNodeSummaries = (node, baselineItems, lookups) => {
             incrementAggregator(aggregator, nodeSummaries);
         }
     }
+    let drilldown;
+    if (subcomponentscount == 0 && commondimensioncount == 0) {
+        drilldown = 'None';
+    }
+    else if (subcomponentscount == count || commondimensioncount == count) {
+        drilldown = 'All';
+    }
+    else {
+        drilldown = 'Some';
+    }
+    aggregator.Drilldown = drilldown;
     return aggregator;
 };
 const setNodeSummaries = (node, nodeSummaries, lookups) => {

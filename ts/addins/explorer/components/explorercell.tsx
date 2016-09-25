@@ -745,6 +745,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 fontSize:"9px",
                 fontStyle:"italic",
             }}>
+            bold coloured elements here have drilldown; pale elements have no drill-down
             </div>
 
         // ----------------------[ year selections ]---------------------------------

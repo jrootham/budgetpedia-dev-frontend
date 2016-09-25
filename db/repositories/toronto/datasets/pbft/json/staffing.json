@@ -58,7 +58,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "AFFHOUSING": {
                 "CommonDimension": {
@@ -86,7 +87,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "ARENAS": {
                 "CommonDimension": {
@@ -114,7 +116,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "COMMCENTRES": {
                 "CommonDimension": {
@@ -140,7 +143,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "AUDITGEN": {
                 "CommonDimension": {
@@ -166,7 +170,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "CHILDSERV": {
                 "CommonDimension": {
@@ -194,7 +199,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "CLERK": {
                 "CommonDimension": {
@@ -222,7 +228,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "COUNCIL": {
                 "CommonDimension": {
@@ -250,7 +257,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "CITYMANAGER": {
                 "CommonDimension": {
@@ -278,7 +286,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PLANNING": {
                 "CommonDimension": {
@@ -306,7 +315,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "COURTSERV": {
                 "CommonDimension": {
@@ -332,7 +342,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "ECONDEV": {
                 "CommonDimension": {
@@ -360,7 +371,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "ENGINEERING": {
                 "CommonDimension": {
@@ -388,7 +400,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "EXHIBPLACE": {
                 "CommonDimension": {
@@ -416,7 +429,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "FACILITIES": {
                 "CommonDimension": {
@@ -444,7 +458,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "FIRE": {
                 "CommonDimension": {
@@ -472,7 +487,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "FLEET": {
                 "CommonDimension": {
@@ -500,7 +516,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "HERITAGE": {
                 "CommonDimension": {
@@ -526,7 +543,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "IT": {
                 "CommonDimension": {
@@ -554,7 +572,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "INTEGRITYCOMM": {
                 "CommonDimension": {
@@ -580,7 +599,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "LEGAL": {
                 "CommonDimension": {
@@ -608,7 +628,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "LOBBYREG": {
                 "CommonDimension": {
@@ -636,7 +657,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "LONGTERMHOME": {
                 "CommonDimension": {
@@ -662,7 +684,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "MAYOR": {
                 "CommonDimension": {
@@ -690,7 +713,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "LICENCING": {
                 "CommonDimension": {
@@ -718,7 +742,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "CFO": {
                 "CommonDimension": {
@@ -746,7 +771,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "OMBUDSMAN": {
                 "CommonDimension": {
@@ -772,7 +798,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "TREASURER": {
                 "CommonDimension": {
@@ -800,7 +827,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PARKINGTAGS": {
                 "CommonDimension": {
@@ -826,7 +854,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PARKS": {
                 "CommonDimension": {
@@ -854,7 +883,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "POLICYADMIN": {
                 "CommonDimension": {
@@ -882,7 +912,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "SHELTERADMIN": {
                 "CommonDimension": {
@@ -910,7 +941,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "SOCIALDEV": {
                 "CommonDimension": {
@@ -938,7 +970,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "SOLIDWASTE": {
                 "CommonDimension": {
@@ -966,7 +999,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "THEATRES": {
                 "CommonDimension": {
@@ -994,7 +1028,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "ATMOSPHERE": {
                 "CommonDimension": {
@@ -1020,7 +1055,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "BUILDINGS": {
                 "CommonDimension": {
@@ -1048,7 +1084,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "SOCIALSERV": {
                 "CommonDimension": {
@@ -1076,7 +1113,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PARAMEDIC": {
                 "CommonDimension": {
@@ -1104,7 +1142,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PARKING": {
                 "CommonDimension": {
@@ -1132,7 +1171,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "POLICE": {
                 "CommonDimension": {
@@ -1160,7 +1200,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "POLICEBOARD": {
                 "CommonDimension": {
@@ -1186,7 +1227,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PUBLICHEALTH": {
                 "CommonDimension": {
@@ -1214,7 +1256,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "LIBRARY": {
                 "CommonDimension": {
@@ -1240,7 +1283,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "TTCCONV": {
                 "CommonDimension": {
@@ -1268,7 +1312,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "TTCWHEEL": {
                 "CommonDimension": {
@@ -1294,7 +1339,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "WATER": {
                 "CommonDimension": {
@@ -1322,7 +1368,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "ZOO": {
                 "CommonDimension": {
@@ -1350,7 +1397,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "TRANSPORTATION": {
                 "CommonDimension": {
@@ -1378,7 +1426,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "YONGEDUNDAS": {
                 "CommonDimension": {
@@ -1406,7 +1455,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             }
         },
         "Nominal": {
@@ -1436,7 +1486,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "AFFHOUSING": {
                 "years": {
@@ -1464,7 +1515,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "ARENAS": {
                 "years": {
@@ -1492,7 +1544,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "COMMCENTRES": {
                 "years": {
@@ -1518,7 +1571,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "AUDITGEN": {
                 "years": {
@@ -1544,7 +1598,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "CHILDSERV": {
                 "years": {
@@ -1572,7 +1627,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "CLERK": {
                 "years": {
@@ -1600,7 +1656,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "COUNCIL": {
                 "years": {
@@ -1628,7 +1685,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "CITYMANAGER": {
                 "years": {
@@ -1656,7 +1714,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PLANNING": {
                 "years": {
@@ -1684,7 +1743,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "COURTSERV": {
                 "years": {
@@ -1710,7 +1770,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "ECONDEV": {
                 "years": {
@@ -1738,7 +1799,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "ENGINEERING": {
                 "years": {
@@ -1766,7 +1828,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "EXHIBPLACE": {
                 "years": {
@@ -1794,7 +1857,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "FACILITIES": {
                 "years": {
@@ -1822,7 +1886,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "FIRE": {
                 "years": {
@@ -1850,7 +1915,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "FLEET": {
                 "years": {
@@ -1878,7 +1944,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "HERITAGE": {
                 "years": {
@@ -1904,7 +1971,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "IT": {
                 "years": {
@@ -1932,7 +2000,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "INTEGRITYCOMM": {
                 "years": {
@@ -1958,7 +2027,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "LEGAL": {
                 "years": {
@@ -1986,7 +2056,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "LOBBYREG": {
                 "years": {
@@ -2014,7 +2085,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "LONGTERMHOME": {
                 "years": {
@@ -2040,7 +2112,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "MAYOR": {
                 "years": {
@@ -2068,7 +2141,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "LICENCING": {
                 "years": {
@@ -2096,7 +2170,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "CFO": {
                 "years": {
@@ -2124,7 +2199,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "OMBUDSMAN": {
                 "years": {
@@ -2150,7 +2226,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "TREASURER": {
                 "years": {
@@ -2178,7 +2255,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PARKINGTAGS": {
                 "years": {
@@ -2204,7 +2282,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PARKS": {
                 "years": {
@@ -2232,7 +2311,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "POLICYADMIN": {
                 "years": {
@@ -2260,7 +2340,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "SHELTERADMIN": {
                 "years": {
@@ -2288,7 +2369,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "SOCIALDEV": {
                 "years": {
@@ -2316,7 +2398,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "SOLIDWASTE": {
                 "years": {
@@ -2344,7 +2427,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "THEATRES": {
                 "years": {
@@ -2372,7 +2456,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "ATMOSPHERE": {
                 "years": {
@@ -2398,7 +2483,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "BUILDINGS": {
                 "years": {
@@ -2426,7 +2512,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "SOCIALSERV": {
                 "years": {
@@ -2454,7 +2541,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PARAMEDIC": {
                 "years": {
@@ -2482,7 +2570,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PARKING": {
                 "years": {
@@ -2510,7 +2599,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "POLICE": {
                 "years": {
@@ -2538,7 +2628,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "POLICEBOARD": {
                 "years": {
@@ -2564,7 +2655,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "PUBLICHEALTH": {
                 "years": {
@@ -2592,7 +2684,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "LIBRARY": {
                 "years": {
@@ -2618,7 +2711,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "TTCCONV": {
                 "years": {
@@ -2646,7 +2740,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "TTCWHEEL": {
                 "years": {
@@ -2672,7 +2767,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "WATER": {
                 "years": {
@@ -2700,7 +2796,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "ZOO": {
                 "years": {
@@ -2728,7 +2825,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "TRANSPORTATION": {
                 "years": {
@@ -2756,7 +2854,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             },
             "YONGEDUNDAS": {
                 "years": {
@@ -2784,7 +2883,8 @@
                         "Code": "TEMP",
                         "Name": "Temporary"
                     }
-                ]
+                ],
+                "CommonDimensionDrilldown": "None"
             }
         }
     },

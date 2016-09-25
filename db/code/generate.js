@@ -466,17 +466,24 @@ const addAdjustedSeries = (nominalcomponents, adjustedcomponents, inflationserie
 
 const addSortedProperties = (data, context) => {
 
+    let count = 0
+    let subcomponentscount = 0
+    let commondimensioncount = 0
     for (let category in data) {
 
         let node = data[category]
         let subcomponents = node.Components
 
+        let subcomponentdrilldown = "None"
+        let commondimensiondrilldown = "None"
         if (subcomponents) {
 
-            addSortedProperties(subcomponents, context)
+            subcomponentscount++
+            subcomponentdrilldown = addSortedProperties(subcomponents, context)
             let cname = node.ComponentsDimensionName
             let sorted = getNameSortedComponentItems(cname, subcomponents, context.lookups)
             node.SortedComponents = sorted
+            node.ComponentsDrilldown = subcomponentdrilldown
 
         }
 
@@ -485,14 +492,27 @@ const addSortedProperties = (data, context) => {
 
         if (commondimension) {
 
-            addSortedProperties(commondimension, context)
+            commondimensioncount++
+            commondimensiondrilldown = addSortedProperties(commondimension, context)
             let cname = node.CommonDimensionName
             let sorted = getNameSortedComponentItems(cname, commondimension, context.lookups)
             node.SortedCommonDimension = sorted
+            node.CommonDimensionDrilldown = commondimensiondrilldown
             
         }
 
+        count++
+
     }
+    let drilldown
+    if (subcomponentscount == 0 && commondimensioncount == 0) {
+        drilldown = 'None'
+    } else if (subcomponentscount == count || commondimensioncount == count) {
+        drilldown = 'All'
+    } else {
+        drilldown = 'Some'
+    }
+    return drilldown
 
 }
 
