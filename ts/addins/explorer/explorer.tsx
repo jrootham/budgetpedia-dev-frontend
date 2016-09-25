@@ -371,7 +371,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             </Dialog >
 
         let popover = <Popover
-            style={{borderRadius:"15px"}}
+            style={{borderRadius:"15px",maxWidth:"400px"}}
             open = {this.state.popover.open}
             onRequestClose = {this.popoverClose}
             anchorEl = {this.popover_ref}

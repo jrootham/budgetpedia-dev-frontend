@@ -2046,7 +2046,6 @@ var setViewpointData = function setViewpointData(parms) {
     }
     viewpointDataTemplate.Meta.currentDataset = datasetName;
     viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted;
-    console.log('viewpoint result', viewpointDataTemplate);
 };
 var getNodeSummaries = function getNodeSummaries(node, baselineItems, lookups) {
     var components = node.Components;
@@ -3031,6 +3030,18 @@ var ExplorerCell = function (_Component) {
             var endYear = _datasetConfig$YearsR.end;
 
             var yearSpan = endYear - startYear;
+            var datanode = budgetCell.nodeDataPack.treeNodeData;
+            var datasetiestype = budgetCell.nodeDataseriesName;
+            var drillDownProperty = datasetiestype + 'Drilldown';
+            var drillDown = datanode[drillDownProperty] || 'None';
+            var drilldownmessage = void 0;
+            if (drillDown == 'All') {
+                drilldownmessage = 'drilldown available for all elements here';
+            } else if (drillDown == 'Some') {
+                drilldownmessage = 'some drilldown available here (for bold colors; not for pale colors)';
+            } else {
+                drilldownmessage = 'no drilldown available here';
+            }
             var timescopes = React.createElement("div", { style: {
                     paddingTop: "10px",
                     borderRight: "1px solid silver",
@@ -3286,7 +3297,7 @@ var ExplorerCell = function (_Component) {
                     left: "40px",
                     fontSize: "9px",
                     fontStyle: "italic"
-                } }, "bold coloured elements here have drilldown; pale elements have no drill-down");
+                } }, drilldownmessage);
             var yearsoptions = function yearsoptions() {
                 var years = [];
                 for (var year = startYear; year <= endYear; year++) {
@@ -4059,7 +4070,7 @@ var Explorer = function (_Component) {
                     position: "absolute",
                     zIndex: 2
                 }, onTouchTap: explorer.handleDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), helpcontent_1.default);
-            var popover = React.createElement(Popover_1.default, { style: { borderRadius: "15px" }, open: this.state.popover.open, onRequestClose: this.popoverClose, anchorEl: this.popover_ref }, React.createElement(Card_1.Card, { style: { border: "4px solid orange", borderRadius: "15px" } }, React.createElement(Card_1.CardText, null, React.createElement("div", null, React.createElement(IconButton_1.default, { style: {
+            var popover = React.createElement(Popover_1.default, { style: { borderRadius: "15px", maxWidth: "400px" }, open: this.state.popover.open, onRequestClose: this.popoverClose, anchorEl: this.popover_ref }, React.createElement(Card_1.Card, { style: { border: "4px solid orange", borderRadius: "15px" } }, React.createElement(Card_1.CardText, null, React.createElement("div", null, React.createElement(IconButton_1.default, { style: {
                     padding: 0,
                     float: "right",
                     height: "36px",

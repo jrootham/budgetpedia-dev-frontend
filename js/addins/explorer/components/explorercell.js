@@ -105,6 +105,20 @@ class ExplorerCell extends Component {
         let { datasetConfig } = viewpointConfigPack;
         let { start: startYear, end: endYear } = datasetConfig.YearsRange;
         let yearSpan = endYear - startYear;
+        let datanode = budgetCell.nodeDataPack.treeNodeData;
+        let datasetiestype = budgetCell.nodeDataseriesName;
+        let drillDownProperty = datasetiestype + 'Drilldown';
+        let drillDown = datanode[drillDownProperty] || 'None';
+        let drilldownmessage;
+        if (drillDown == 'All') {
+            drilldownmessage = 'drilldown available for all elements here';
+        }
+        else if (drillDown == 'Some') {
+            drilldownmessage = 'some drilldown available here (for bold colors; not for pale colors)';
+        }
+        else {
+            drilldownmessage = 'no drilldown available here';
+        }
         let timescopes = React.createElement("div", {style: {
             paddingTop: "10px",
             borderRight: "1px solid silver",
@@ -393,7 +407,7 @@ class ExplorerCell extends Component {
             left: "40px",
             fontSize: "9px",
             fontStyle: "italic",
-        }}, "bold coloured elements here have drilldown; pale elements have no drill-down");
+        }}, drilldownmessage);
         let yearsoptions = () => {
             let years = [];
             for (let year = startYear; year <= endYear; year++) {

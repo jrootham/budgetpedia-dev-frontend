@@ -171,6 +171,20 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         let {start: startYear, end: endYear } = datasetConfig.YearsRange
         let yearSpan = endYear - startYear
 
+        // get drilldown message
+        let datanode = budgetCell.nodeDataPack.treeNodeData
+        let datasetiestype = budgetCell.nodeDataseriesName
+        let drillDownProperty = datasetiestype + 'Drilldown'
+        let drillDown = datanode[drillDownProperty] || 'None'
+        let drilldownmessage
+        if (drillDown == 'All') {
+            drilldownmessage = 'drilldown available for all elements here'
+        } else if (drillDown == 'Some') {
+            drilldownmessage = 'some drilldown available here (for bold colors; not for pale colors)'
+        } else {
+            drilldownmessage = 'no drilldown available here'
+        }
+
         let timescopes = 
             <div style = {
                 {
@@ -745,7 +759,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 fontSize:"9px",
                 fontStyle:"italic",
             }}>
-            bold coloured elements here have drilldown; pale elements have no drill-down
+            { drilldownmessage }
             </div>
 
         // ----------------------[ year selections ]---------------------------------

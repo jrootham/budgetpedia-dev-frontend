@@ -40,7 +40,6 @@ const setViewpointData = (parms) => {
     }
     viewpointDataTemplate.Meta.currentDataset = datasetName;
     viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted;
-    console.log('viewpoint result', viewpointDataTemplate);
 };
 const getNodeSummaries = (node, baselineItems, lookups) => {
     let components = node.Components;

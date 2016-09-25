@@ -98,7 +98,6 @@ const setViewpointData = (parms: SetViewpointDataParms) => {
     // record state
     viewpointDataTemplate.Meta.currentDataset = datasetName
     viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted
-    console.log('viewpoint result',viewpointDataTemplate)
 
 }
 
