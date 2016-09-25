@@ -1,6 +1,7 @@
 "use strict";
 const constants_1 = require('../constants');
 const constants_2 = require('../constants');
+const utilities_1 = require('../modules/utilities');
 var format = require('format-number');
 class BudgetCell {
     constructor(specs) {
@@ -221,7 +222,8 @@ class BudgetCell {
             for (let index in sliceslist) {
                 slices[index] = { offset: sliceslist[index] };
                 if ((slices[index].offset) != 0) {
-                    slices[index].color = 'silver';
+                    slices[index].color = utilities_1.ColorBrightness(constants_2.GoogleChartColors[index], 150);
+                    slices[index].offset = 0;
                 }
             }
             let options = {

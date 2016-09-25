@@ -25,7 +25,8 @@ import {
 
 import BudgetNode from './node.class'
 import {YearSpecs, DatasetConfig} from './databaseapi'
-import { TimeScope } from '../constants'
+import { TimeScope, GoogleChartColors } from '../constants'
+import {ColorBrightness} from '../modules/utilities'
 
 var format = require('format-number')
 
@@ -507,7 +508,10 @@ class BudgetCell {
         for (let index in sliceslist) {
             slices[index] = {offset:sliceslist[index]}
             if ((slices[index].offset) != 0) {
-                slices[index].color = 'silver'
+  
+                slices[index].color = ColorBrightness(GoogleChartColors[index],150)
+                slices[index].offset = 0
+                // console.log('input, output', GoogleChartColors[index], slices[index].color )
             }
         }
         // console.log('slices',slices)

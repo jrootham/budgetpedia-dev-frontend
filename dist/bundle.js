@@ -1419,6 +1419,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var constants_1 = require('../constants');
 var constants_2 = require('../constants');
+var utilities_1 = require('../modules/utilities');
 var format = require('format-number');
 
 var BudgetCell = function () {
@@ -1649,7 +1650,8 @@ var BudgetCell = function () {
             for (var index in sliceslist) {
                 slices[index] = { offset: sliceslist[index] };
                 if (slices[index].offset != 0) {
-                    slices[index].color = 'silver';
+                    slices[index].color = utilities_1.ColorBrightness(constants_2.GoogleChartColors[index], 150);
+                    slices[index].offset = 0;
                 }
             }
             var options = {
@@ -1830,7 +1832,7 @@ var BudgetCell = function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = BudgetCell;
 
-},{"../constants":25,"format-number":145}],19:[function(require,module,exports){
+},{"../constants":25,"../modules/utilities":30,"format-number":145}],19:[function(require,module,exports){
 "use strict";
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -3524,6 +3526,7 @@ exports.ExplorerNode = ExplorerNode;
     TimeScope[TimeScope["AllYears"] = 2] = "AllYears";
 })(exports.TimeScope || (exports.TimeScope = {}));
 var TimeScope = exports.TimeScope;
+exports.GoogleChartColors = ["#3366CC", "#DC3912", "#FF9900", "#109618", "#990099", "#3B3EAC", "#0099C6", "#DD4477", "#66AA00", "#B82E2E", "#316395", "#994499", "#22AA99", "#AAAA11", "#6633CC", "#E67300", "#8B0707", "#329262", "#5574A6", "#3B3EAC"];
 var ChartCodeToGoogleChartType = {
     'DonutChart': 'PieChart',
     'ColumnChart': 'ColumnChart',
@@ -4321,6 +4324,21 @@ exports.filterActionsForUpdate = function (nextProps, component) {
     }
     if (show) console.log('returning default true for ' + text + ' NON-ACTION');
     return true;
+};
+exports.ColorBrightness = function (col, amt) {
+    var usePound = false;
+    if (col[0] == "#") {
+        col = col.slice(1);
+        usePound = true;
+    }
+    var num = parseInt(col, 16);
+    var r = (num >> 16) + amt;
+    if (r > 255) r = 255;else if (r < 0) r = 0;
+    var b = (num >> 8 & 0x00FF) + amt;
+    if (b > 255) b = 255;else if (b < 0) b = 0;
+    var g = (num & 0x0000FF) + amt;
+    if (g > 255) g = 255;else if (g < 0) g = 0;
+    return (usePound ? "#" : "") + (g | b << 8 | r << 16).toString(16);
 };
 
 },{}],31:[function(require,module,exports){
