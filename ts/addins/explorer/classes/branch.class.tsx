@@ -107,19 +107,21 @@ class BudgetBranch {
 
         // let { actions, nodeCallbacks:callbacks } = this
 
-        let { dataPath } = budgetNodeParms
-        let branchSettings = this.settings
+        let budgetBranch = this
 
-        let branchNode = this
-        // console.log('state inside addNode', this.state, branchNode.uid )
-        let viewpointData = this.state.viewpointData
+        let { dataPath } = budgetNodeParms
+        let branchSettings = budgetBranch.settings
+
+        let branchNode = budgetBranch
+        // console.log('state inside addNode', budgetBranch.state, branchNode.uid )
+        let viewpointData = budgetBranch.state.viewpointData
         if (!viewpointData) return
         let treeNodeData = getBudgetNode(viewpointData, dataPath)
-        let branchNodes = this.nodes
+        let branchNodes = budgetBranch.nodes
         let parentNode = (nodeIndex === 0)? null: branchNodes[branchNodes.length - 1]
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, treeNodeData, parentNode)
         branchNodes[nodeIndex] = budgetNode
-        this.setState({
+        budgetBranch.setState({
             branchNodes,
         })
 
@@ -137,24 +139,26 @@ class BudgetBranch {
     // this resets the branch in response to the change aspect user request
     switchAspect = () => {
 
-        let { actions, nodeCallbacks:callbacks } = this
+        let budgetBranch = this
+
+        let { actions, nodeCallbacks:callbacks } = budgetBranch
         let switchResults = {
             deeperdata: false,
             shallowerdata: false,
             mismatch:false,
             message:null,
         }
-        let branchSettings: BranchSettings = this.settings
-        let viewpointData = this.state.viewpointData
+        let branchSettings: BranchSettings = budgetBranch.settings
+        let viewpointData = budgetBranch.state.viewpointData
 
-        let branchNodes:BudgetNode[] = this.nodes
+        let branchNodes:BudgetNode[] = budgetBranch.nodes
 
         let budgetNode: BudgetNode = null
         let parentBudgetNode: BudgetNode
         let nodeIndex: any
         let isError = false
         let chartParmsObj: ChartParmsObj = null
-        let branchuid = this.uid
+        let branchuid = budgetBranch.uid
 
         for (nodeIndex in branchNodes) {
 
@@ -195,7 +199,7 @@ class BudgetBranch {
                             // chartSelectionData,
                         }
                         // let fcurrent = fn(nodeIndex)(0)
-                        let budgetBranch = this
+                        // let budgetBranch = this
                         budgetBranch.createChildNode(childprops)
                     })
                     budgetNode = null // branchNodes[nodeIndex] // created by createChildNode as side effect
@@ -228,7 +232,7 @@ class BudgetBranch {
             }
         }
 
-        this.setState({
+        budgetBranch.setState({
             branchNodes,
         })
         return switchResults

@@ -1147,18 +1147,19 @@ var BudgetBranch = function () {
             return budgetNodeParms;
         };
         this.addNode = function (budgetNodeUid, nodeIndex, budgetNodeParms) {
+            var budgetBranch = _this;
             var dataPath = budgetNodeParms.dataPath;
 
-            var branchSettings = _this.settings;
-            var branchNode = _this;
-            var viewpointData = _this.state.viewpointData;
+            var branchSettings = budgetBranch.settings;
+            var branchNode = budgetBranch;
+            var viewpointData = budgetBranch.state.viewpointData;
             if (!viewpointData) return;
             var treeNodeData = getbudgetnode_1.default(viewpointData, dataPath);
-            var branchNodes = _this.nodes;
+            var branchNodes = budgetBranch.nodes;
             var parentNode = nodeIndex === 0 ? null : branchNodes[branchNodes.length - 1];
             var budgetNode = new node_class_1.default(budgetNodeParms, budgetNodeUid, treeNodeData, parentNode);
             branchNodes[nodeIndex] = budgetNode;
-            _this.setState({
+            budgetBranch.setState({
                 branchNodes: branchNodes
             });
         };
@@ -1192,8 +1193,9 @@ var BudgetBranch = function () {
             }
         };
         this.switchAspect = function () {
-            var actions = _this.actions;
-            var callbacks = _this.nodeCallbacks;
+            var budgetBranch = _this;
+            var actions = budgetBranch.actions;
+            var callbacks = budgetBranch.nodeCallbacks;
 
             var switchResults = {
                 deeperdata: false,
@@ -1201,15 +1203,15 @@ var BudgetBranch = function () {
                 mismatch: false,
                 message: null
             };
-            var branchSettings = _this.settings;
-            var viewpointData = _this.state.viewpointData;
-            var branchNodes = _this.nodes;
+            var branchSettings = budgetBranch.settings;
+            var viewpointData = budgetBranch.state.viewpointData;
+            var branchNodes = budgetBranch.nodes;
             var budgetNode = null;
             var parentBudgetNode = void 0;
             var nodeIndex = void 0;
             var isError = false;
             var chartParmsObj = null;
-            var branchuid = _this.uid;
+            var branchuid = budgetBranch.uid;
             for (nodeIndex in branchNodes) {
                 parentBudgetNode = budgetNode;
                 budgetNode = branchNodes[nodeIndex];
@@ -1239,7 +1241,6 @@ var BudgetBranch = function () {
                                     nodeIndex: prevBudgetNode.nodeIndex,
                                     cellIndex: 0
                                 };
-                                var budgetBranch = _this;
                                 budgetBranch.createChildNode(childprops);
                             });
                             budgetNode = null;
@@ -1287,7 +1288,7 @@ var BudgetBranch = function () {
                     }
                 }
             }
-            _this.setState({
+            budgetBranch.setState({
                 branchNodes: branchNodes
             });
             return switchResults;
@@ -2427,7 +2428,7 @@ var ExplorerBranch = function (_Component) {
             branchNodes: [],
             viewpointData: null,
             snackbar: { open: false, message: 'empty' },
-            byunitselection: 'Off'
+            comparatorselection: 'Off'
         };
         _this.waitafteraction = 0;
         _this.getState = function () {
@@ -2447,28 +2448,29 @@ var ExplorerBranch = function (_Component) {
             };
         };
         _this._initialize = function () {
-            var _this$props = _this.props;
-            var budgetBranch = _this$props.budgetBranch;
-            var actions = _this$props.globalStateActions;
-            var displayCallbacks = _this$props.displayCallbacks;
-            var declarationData = _this$props.declarationData;
+            var branch = _this;
+            var _branch$props = branch.props;
+            var budgetBranch = _branch$props.budgetBranch;
+            var actions = _branch$props.globalStateActions;
+            var displayCallbacks = _branch$props.displayCallbacks;
+            var declarationData = _branch$props.declarationData;
 
-            _this._stateActions = Object.assign({}, actions);
-            _this._stateActions.addNodeDeclaration = _this.addNodeDeclaration(budgetBranch.uid);
-            _this._stateActions.removeNodeDeclarations = _this.removeNodeDeclarations(budgetBranch.uid);
-            var onPortalCreation = _this.onPortalCreation;
+            branch._stateActions = Object.assign({}, actions);
+            branch._stateActions.addNodeDeclaration = branch.addNodeDeclaration(budgetBranch.uid);
+            branch._stateActions.removeNodeDeclarations = branch.removeNodeDeclarations(budgetBranch.uid);
+            var onPortalCreation = branch.onPortalCreation;
             var workingStatus = displayCallbacks.workingStatus;
 
-            _this._nodeDisplayCallbacks = {
+            branch._nodeDisplayCallbacks = {
                 workingStatus: workingStatus,
                 onPortalCreation: onPortalCreation
             };
-            budgetBranch.getState = _this.getState;
-            budgetBranch.getProps = _this.getProps;
-            budgetBranch.setState = _this.setState.bind(_this);
-            budgetBranch.actions = _this._stateActions;
-            budgetBranch.nodeCallbacks = _this._nodeDisplayCallbacks;
-            _this._previousControlData = declarationData;
+            budgetBranch.getProps = branch.getProps;
+            budgetBranch.getState = branch.getState;
+            budgetBranch.setState = branch.setState.bind(branch);
+            budgetBranch.actions = branch._stateActions;
+            budgetBranch.nodeCallbacks = branch._nodeDisplayCallbacks;
+            branch._previousControlData = declarationData;
         };
         _this.lastactiongeneration = 0;
         _this.harmonizecount = null;
@@ -2530,7 +2532,7 @@ var ExplorerBranch = function (_Component) {
                 var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 _this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(function (reason) {
-                alert('error in data fetch, changeviewpoint');
+                console.error('error in data fetch, changeviewpoint', reason);
             });
         };
         _this._processChangeVersionStateChange = function (budgetBranch) {
@@ -2539,7 +2541,7 @@ var ExplorerBranch = function (_Component) {
                 var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 _this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(function (reason) {
-                alert('error in data fetch, changeversion');
+                console.error('error in data fetch, changeversion', reason);
             });
         };
         _this._processChangeAspectStateChange = function (budgetBranch) {
@@ -2578,7 +2580,7 @@ var ExplorerBranch = function (_Component) {
                     });
                 }
             }).catch(function (reason) {
-                alert('error in data fetch, changeaspect');
+                console.error('error in data fetch, changeaspect', reason);
             });
         };
         _this.handleSnackbarRequestClose = function () {
@@ -2663,9 +2665,9 @@ var ExplorerBranch = function (_Component) {
             budgetBranch.saveAspectState();
             _this.props.globalStateActions.changeAspect(budgetBranch.uid, aspect);
         };
-        _this.switchUnit = function (unitindex) {
+        _this.switchComparator = function (comparatorindex) {
             _this.setState({
-                byunitselection: unitindex
+                comparatorselection: comparatorindex
             });
         };
         _this.toggleShowOptions = function (value) {
@@ -2739,7 +2741,7 @@ var ExplorerBranch = function (_Component) {
                     });
                 }
             }).catch(function (reason) {
-                console.log('error in data fetch, mount', reason);
+                console.error('error in data fetch, mount', reason);
             });
         }
     }, {
@@ -2802,8 +2804,8 @@ var ExplorerBranch = function (_Component) {
             var aspectselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Aspect: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.aspect, onChange: function onChange(e, index, value) {
                     branch.switchAspect(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'Expenses', primaryText: "Expenses" }), React.createElement(MenuItem_1.default, { value: 'Revenues', primaryText: "Revenues" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Both', primaryText: "Both" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Net', primaryText: "Net" }), React.createElement(MenuItem_1.default, { value: 'Staffing', primaryText: "Staffing" }))) : null;
-            var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" } }, "Intensity: "), React.createElement(DropDownMenu_1.default, { disabled: true, value: this.state.byunitselection, onChange: function onChange(e, index, value) {
-                    _this3.switchUnit(value);
+            var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" } }, "Intensity: "), React.createElement(DropDownMenu_1.default, { disabled: true, value: this.state.comparatorselection, onChange: function onChange(e, index, value) {
+                    _this3.switchComparator(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'Off', primaryText: "Off" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Staff', primaryText: "Per staffing position" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Population', primaryText: "Population: per person" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Population100000', primaryText: "Population: per 100,000 people" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Adult', primaryText: "Population: per adult (15 and over)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Adult100000', primaryText: "Population: per 100,000 adults" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Child', primaryText: "Population: per child (14 and under)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Child100000', primaryText: "Population: per 100,000 children" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Household', primaryText: "Per household" }))) : null;
             var inflationadjustment = branchDeclaration.showOptions ? React.createElement("div", { style: {
                     display: 'inline-block',

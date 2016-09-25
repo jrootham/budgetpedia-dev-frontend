@@ -26,18 +26,19 @@ class BudgetBranch {
             return budgetNodeParms;
         };
         this.addNode = (budgetNodeUid, nodeIndex, budgetNodeParms) => {
+            let budgetBranch = this;
             let { dataPath } = budgetNodeParms;
-            let branchSettings = this.settings;
-            let branchNode = this;
-            let viewpointData = this.state.viewpointData;
+            let branchSettings = budgetBranch.settings;
+            let branchNode = budgetBranch;
+            let viewpointData = budgetBranch.state.viewpointData;
             if (!viewpointData)
                 return;
             let treeNodeData = getbudgetnode_1.default(viewpointData, dataPath);
-            let branchNodes = this.nodes;
+            let branchNodes = budgetBranch.nodes;
             let parentNode = (nodeIndex === 0) ? null : branchNodes[branchNodes.length - 1];
             let budgetNode = new node_class_1.default(budgetNodeParms, budgetNodeUid, treeNodeData, parentNode);
             branchNodes[nodeIndex] = budgetNode;
-            this.setState({
+            budgetBranch.setState({
                 branchNodes: branchNodes,
             });
         };
@@ -50,22 +51,23 @@ class BudgetBranch {
             }
         };
         this.switchAspect = () => {
-            let { actions, nodeCallbacks: callbacks } = this;
+            let budgetBranch = this;
+            let { actions, nodeCallbacks: callbacks } = budgetBranch;
             let switchResults = {
                 deeperdata: false,
                 shallowerdata: false,
                 mismatch: false,
                 message: null,
             };
-            let branchSettings = this.settings;
-            let viewpointData = this.state.viewpointData;
-            let branchNodes = this.nodes;
+            let branchSettings = budgetBranch.settings;
+            let viewpointData = budgetBranch.state.viewpointData;
+            let branchNodes = budgetBranch.nodes;
             let budgetNode = null;
             let parentBudgetNode;
             let nodeIndex;
             let isError = false;
             let chartParmsObj = null;
-            let branchuid = this.uid;
+            let branchuid = budgetBranch.uid;
             for (nodeIndex in branchNodes) {
                 parentBudgetNode = budgetNode;
                 budgetNode = branchNodes[nodeIndex];
@@ -94,7 +96,6 @@ class BudgetBranch {
                                 nodeIndex: prevBudgetNode.nodeIndex,
                                 cellIndex: 0,
                             };
-                            let budgetBranch = this;
                             budgetBranch.createChildNode(childprops);
                         });
                         budgetNode = null;
@@ -123,7 +124,7 @@ class BudgetBranch {
                     }
                 }
             }
-            this.setState({
+            budgetBranch.setState({
                 branchNodes: branchNodes,
             });
             return switchResults;

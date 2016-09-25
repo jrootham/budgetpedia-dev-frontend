@@ -18,7 +18,7 @@ class ExplorerBranch extends Component {
             branchNodes: [],
             viewpointData: null,
             snackbar: { open: false, message: 'empty' },
-            byunitselection: 'Off',
+            comparatorselection: 'Off',
         };
         this.waitafteraction = 0;
         this.getState = () => this.state;
@@ -26,22 +26,23 @@ class ExplorerBranch extends Component {
         this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
         this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
         this._initialize = () => {
-            let { budgetBranch, globalStateActions: actions, displayCallbacks, declarationData } = this.props;
-            this._stateActions = Object.assign({}, actions);
-            this._stateActions.addNodeDeclaration = this.addNodeDeclaration(budgetBranch.uid);
-            this._stateActions.removeNodeDeclarations = this.removeNodeDeclarations(budgetBranch.uid);
-            let { onPortalCreation } = this;
+            let branch = this;
+            let { budgetBranch, globalStateActions: actions, displayCallbacks, declarationData } = branch.props;
+            branch._stateActions = Object.assign({}, actions);
+            branch._stateActions.addNodeDeclaration = branch.addNodeDeclaration(budgetBranch.uid);
+            branch._stateActions.removeNodeDeclarations = branch.removeNodeDeclarations(budgetBranch.uid);
+            let { onPortalCreation } = branch;
             let { workingStatus } = displayCallbacks;
-            this._nodeDisplayCallbacks = {
+            branch._nodeDisplayCallbacks = {
                 workingStatus: workingStatus,
                 onPortalCreation: onPortalCreation,
             };
-            budgetBranch.getState = this.getState;
-            budgetBranch.getProps = this.getProps;
-            budgetBranch.setState = this.setState.bind(this);
-            budgetBranch.actions = this._stateActions;
-            budgetBranch.nodeCallbacks = this._nodeDisplayCallbacks;
-            this._previousControlData = declarationData;
+            budgetBranch.getProps = branch.getProps;
+            budgetBranch.getState = branch.getState;
+            budgetBranch.setState = branch.setState.bind(branch);
+            budgetBranch.actions = branch._stateActions;
+            budgetBranch.nodeCallbacks = branch._nodeDisplayCallbacks;
+            branch._previousControlData = declarationData;
         };
         this.lastactiongeneration = 0;
         this.harmonizecount = null;
@@ -99,7 +100,7 @@ class ExplorerBranch extends Component {
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(reason => {
-                alert('error in data fetch, changeviewpoint');
+                console.error('error in data fetch, changeviewpoint', reason);
             });
         };
         this._processChangeVersionStateChange = (budgetBranch) => {
@@ -108,7 +109,7 @@ class ExplorerBranch extends Component {
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(reason => {
-                alert('error in data fetch, changeversion');
+                console.error('error in data fetch, changeversion', reason);
             });
         };
         this._processChangeAspectStateChange = (budgetBranch) => {
@@ -143,7 +144,7 @@ class ExplorerBranch extends Component {
                     });
                 }
             }).catch(reason => {
-                alert('error in data fetch, changeaspect');
+                console.error('error in data fetch, changeaspect', reason);
             });
         };
         this.handleSnackbarRequestClose = () => {
@@ -225,9 +226,9 @@ class ExplorerBranch extends Component {
             budgetBranch.saveAspectState();
             this.props.globalStateActions.changeAspect(budgetBranch.uid, aspect);
         };
-        this.switchUnit = unitindex => {
+        this.switchComparator = comparatorindex => {
             this.setState({
-                byunitselection: unitindex
+                comparatorselection: comparatorindex
             });
         };
         this.toggleShowOptions = value => {
@@ -291,7 +292,7 @@ class ExplorerBranch extends Component {
                 });
             }
         }).catch(reason => {
-            console.log('error in data fetch, mount', reason);
+            console.error('error in data fetch, mount', reason);
         });
     }
     componentWillReceiveProps(nextProps) {
@@ -344,8 +345,8 @@ class ExplorerBranch extends Component {
                 }}, React.createElement(MenuItem_1.default, {value: 'Expenses', primaryText: "Expenses"}), React.createElement(MenuItem_1.default, {value: 'Revenues', primaryText: "Revenues"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Both', primaryText: "Both"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Net', primaryText: "Net"}), React.createElement(MenuItem_1.default, {value: 'Staffing', primaryText: "Staffing"})))
             :
                 null;
-        let byunitselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" }}, "Intensity: "), React.createElement(DropDownMenu_1.default, {disabled: true, value: this.state.byunitselection, onChange: (e, index, value) => {
-            this.switchUnit(value);
+        let byunitselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" }}, "Intensity: "), React.createElement(DropDownMenu_1.default, {disabled: true, value: this.state.comparatorselection, onChange: (e, index, value) => {
+            this.switchComparator(value);
         }}, React.createElement(MenuItem_1.default, {value: 'Off', primaryText: "Off"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Staff', primaryText: "Per staffing position"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Population', primaryText: "Population: per person"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Population100000', primaryText: "Population: per 100,000 people"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Adult', primaryText: "Population: per adult (15 and over)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Adult100000', primaryText: "Population: per 100,000 adults"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Child', primaryText: "Population: per child (14 and under)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Child100000', primaryText: "Population: per 100,000 children"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Household', primaryText: "Per household"}))) : null;
         let inflationadjustment = (branchDeclaration.showOptions)
             ?
