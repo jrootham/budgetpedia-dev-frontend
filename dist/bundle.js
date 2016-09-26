@@ -3333,6 +3333,7 @@ var Component = React.Component;
 
 var Tabs_1 = require('material-ui/Tabs');
 var explorercell_1 = require('./explorercell');
+var actions_1 = require('../actions');
 var Utilities = require('../modules/utilities');
 
 var ExplorerNode = function (_Component) {
@@ -3361,6 +3362,31 @@ var ExplorerNode = function (_Component) {
         };
         _this.oldDataGenerationCounter = null;
         _this.lastactiongeneration = 0;
+        _this._respondToGlobalStateChange = function () {
+            var previousControlData = _this._previousControlData;
+            var currentControlData = _this.props.declarationData;
+            var lastAction = currentControlData.lastAction;
+
+            var returnvalue = true;
+            if (!actions_1.nodeTypes[lastAction.type]) {
+                return false;
+            }
+            if (previousControlData && currentControlData.generation == previousControlData.generation) {
+                return false;
+            }
+            var budgetNode = _this.props.budgetNode;
+
+            var nodeDeclaration = _this.props.declarationData.nodesById[budgetNode.uid];
+            switch (lastAction.type) {
+                case actions_1.nodeTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES:
+                    {
+                        budgetNode.resetCells();
+                        _this.forceUpdate();
+                        break;
+                    }
+            }
+            _this._previousControlData = currentControlData;
+        };
         _this.updateCellsFromDeclarations = function (props) {
             var budgetNode = props.budgetNode;
             var declarationData = props.declarationData;
@@ -3521,6 +3547,12 @@ var ExplorerNode = function (_Component) {
             return Utilities.filterActionsForUpdate(nextProps, nodeComponent);
         }
     }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var budgetNode = this;
+            budgetNode._respondToGlobalStateChange();
+        }
+    }, {
         key: 'render',
         value: function render() {
             var chartTabs = this.getChartTabs();
@@ -3556,7 +3588,7 @@ var ExplorerNode = function (_Component) {
 
 exports.ExplorerNode = ExplorerNode;
 
-},{"../modules/utilities":30,"./explorercell":23,"material-ui/Tabs":450,"react":775}],25:[function(require,module,exports){
+},{"../actions":16,"../modules/utilities":30,"./explorercell":23,"material-ui/Tabs":450,"react":775}],25:[function(require,module,exports){
 "use strict";
 
 (function (TimeScope) {

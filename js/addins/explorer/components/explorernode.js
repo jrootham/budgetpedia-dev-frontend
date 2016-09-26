@@ -3,6 +3,7 @@ const React = require('react');
 var { Component } = React;
 const Tabs_1 = require('material-ui/Tabs');
 const explorercell_1 = require('./explorercell');
+const actions_1 = require('../actions');
 const Utilities = require('../modules/utilities');
 class ExplorerNode extends Component {
     constructor(...args) {
@@ -15,6 +16,28 @@ class ExplorerNode extends Component {
         this.getProps = () => this.props;
         this.oldDataGenerationCounter = null;
         this.lastactiongeneration = 0;
+        this._respondToGlobalStateChange = () => {
+            let previousControlData = this._previousControlData;
+            let currentControlData = this.props.declarationData;
+            let { lastAction } = currentControlData;
+            let returnvalue = true;
+            if (!actions_1.nodeTypes[lastAction.type]) {
+                return false;
+            }
+            if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
+                return false;
+            }
+            let { budgetNode } = this.props;
+            let nodeDeclaration = this.props.declarationData.nodesById[budgetNode.uid];
+            switch (lastAction.type) {
+                case actions_1.nodeTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
+                    budgetNode.resetCells();
+                    this.forceUpdate();
+                    break;
+                }
+            }
+            this._previousControlData = currentControlData;
+        };
         this.updateCellsFromDeclarations = (props) => {
             let { budgetNode, declarationData } = props;
             if (budgetNode.updated) {
@@ -130,6 +153,10 @@ class ExplorerNode extends Component {
     shouldComponentUpdate(nextProps) {
         let nodeComponent = this;
         return Utilities.filterActionsForUpdate(nextProps, nodeComponent);
+    }
+    componentDidUpdate() {
+        let budgetNode = this;
+        budgetNode._respondToGlobalStateChange();
     }
     render() {
         let chartTabs = this.getChartTabs();

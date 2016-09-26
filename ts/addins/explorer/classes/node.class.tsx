@@ -194,8 +194,6 @@ class BudgetNode {
 
         cell.selectionCallback = fcurrent
 
-        // cell.setChartParms()
-
     }
 
     get cellDeclarationList() {

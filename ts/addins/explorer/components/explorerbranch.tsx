@@ -365,7 +365,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _processChangeAspectStateChange = (budgetBranch:BudgetBranch) => {
 
         budgetBranch.getViewpointData().then(() => {
-
+            // console.log('switched viewpoint data in changeaspect')
             this._stateActions.changeBranchDataVersion(budgetBranch.uid)
             let switchResults = budgetBranch.switchAspect()
 

@@ -23,7 +23,7 @@ import {
 import ExplorerCell from './explorercell'
 import BudgetNode from '../classes/node.class'
 import BudgetCell from '../classes/cell.class'
-import { nodeTypes } from '../actions'
+import { nodeTypes as nodeActionTypes} from '../actions'
 
 import { MappedNodeActions as ExplorerNodeActions } from '../explorer'
 
@@ -100,6 +100,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
             // console.log('normalizing cellDeclarations', budgetNode.uid)
             this.oldDataGenerationCounter = dataGenerationCounter
             // normalize cell settings to year dependency constraints
+            // console.log('normalizeCellDeclarations',dataGenerationCounter)
             this._normalizeCellDeclarations(nextProps)
 
         } else {
@@ -129,6 +130,43 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         return Utilities.filterActionsForUpdate(nextProps, nodeComponent)
 
     }
+
+    componentDidUpdate() {
+
+        let budgetNode = this
+        budgetNode._respondToGlobalStateChange()
+
+    }
+
+    private _previousControlData: any
+
+    // state change manager
+    private _respondToGlobalStateChange = () => {
+        let previousControlData = this._previousControlData
+        let currentControlData = this.props.declarationData
+        let { lastAction } = currentControlData
+        let returnvalue = true
+        if (!nodeActionTypes[lastAction.type]) {
+            return false
+        }
+        // only process once
+        if (previousControlData && (currentControlData.generation == previousControlData.generation)) {
+            return false
+        }
+        let { budgetNode } = this.props
+        let nodeDeclaration = this.props.declarationData.nodesById[budgetNode.uid]
+
+        switch (lastAction.type) {
+            case nodeActionTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
+                // console.log('node responding to year dependencies', this.props.declarationData, this.state.nodeCells)
+                budgetNode.resetCells()
+                this.forceUpdate()
+                break
+            }
+        }
+        this._previousControlData = currentControlData
+    }
+
 
     updateCellsFromDeclarations = (props) => {
         let { budgetNode, declarationData }:{budgetNode:BudgetNode, declarationData:any} = props // this.props
