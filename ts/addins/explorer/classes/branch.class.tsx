@@ -130,9 +130,13 @@ class BudgetBranch {
     saveAspectState = () => {
         let budgetBranch = this
         let nodes = budgetBranch.nodes
-        for (let node of nodes) {
-            console.log('node.cells for saveAspectState', node.cells)
-            node.oldAspectState = node.cells.length
+        let node:BudgetNode
+        for (node of nodes) {
+            // let drilldown = node.treeNodeData.ComponentsDrilldown || 'Node'
+            // console.log('drilldown for saveaspect', drilldown)
+            // console.log('node.cells for saveAspectState', node.cells)
+            node.oldAspectState = !!node.treeNodeData.Components
+            // node.oldAspectState = drilldown
         }
     }
 
@@ -169,9 +173,14 @@ class BudgetBranch {
                 // check previous cell configuration against previous node
                 // TODO: THIS IS A PROXY THAT NEEDS TO BE REPLACED
                 // there is only one chart where there should be 2
-                let deeperdata = (!!dataNode.Components && (budgetNode.oldAspectState == 1))
+                // let drilldown = dataNode.ComponentsDrilldown || 'None'
+                // let deeperdata = ((drilldown != 'None') && (budgetNode.oldAspectState == 'None'))
+                let deeperdata = ((!!dataNode.Components) && (!budgetNode.oldAspectState))
                 // there are two charts where there should be 1
-                let shallowerdata = (!dataNode.Components && (budgetNode.oldAspectState == 2))
+                // let shallowerdata = ((drilldown == 'None') && (budgetNode.oldAspectState != 'None'))
+                let shallowerdata = ((!dataNode.Components) && (budgetNode.oldAspectState))
+
+                // console.log('drilldown, deeperdata, shallowerdata', drilldown, deeperdata, shallowerdata)
                 // now set budgetNode with new data node
                 let parentDataNode = null
                 if (nodeIndex > 0) {

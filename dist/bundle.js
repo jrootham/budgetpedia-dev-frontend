@@ -1166,16 +1166,16 @@ var BudgetBranch = function () {
         this.saveAspectState = function () {
             var budgetBranch = _this;
             var nodes = budgetBranch.nodes;
+            var node = void 0;
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
 
             try {
                 for (var _iterator = nodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var node = _step.value;
+                    node = _step.value;
 
-                    console.log('node.cells for saveAspectState', node.cells);
-                    node.oldAspectState = node.cells.length;
+                    node.oldAspectState = !!node.treeNodeData.Components;
                 }
             } catch (err) {
                 _didIteratorError = true;
@@ -1217,8 +1217,8 @@ var BudgetBranch = function () {
                 budgetNode = branchNodes[nodeIndex];
                 var dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
                 if (dataNode) {
-                    var deeperdata = !!dataNode.Components && budgetNode.oldAspectState == 1;
-                    var shallowerdata = !dataNode.Components && budgetNode.oldAspectState == 2;
+                    var deeperdata = !!dataNode.Components && !budgetNode.oldAspectState;
+                    var shallowerdata = !dataNode.Components && budgetNode.oldAspectState;
                     var parentDataNode = null;
                     if (nodeIndex > 0) {
                         parentDataNode = branchNodes[nodeIndex - 1].treeNodeData;
@@ -1656,7 +1656,7 @@ var BudgetCell = function () {
             }
             var options = {
                 slices: slices,
-                is3D: true,
+                pieHole: 0.4,
                 legend: {
                     position: "top",
                     textStyle: {
@@ -3293,8 +3293,8 @@ var ExplorerCell = function (_Component) {
                 }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id }) : React.createElement("div", null, " waiting for chart data... ");
             var drilldownprompt = React.createElement("div", { style: {
                     position: "absolute",
-                    bottom: "10px",
-                    left: "40px",
+                    bottom: "3px",
+                    left: "3px",
                     fontSize: "9px",
                     fontStyle: "italic"
                 } }, drilldownmessage);

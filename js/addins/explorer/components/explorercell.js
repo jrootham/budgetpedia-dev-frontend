@@ -403,8 +403,8 @@ class ExplorerCell extends Component {
             : React.createElement("div", null, " waiting for chart data... ");
         let drilldownprompt = React.createElement("div", {style: {
             position: "absolute",
-            bottom: "10px",
-            left: "40px",
+            bottom: "3px",
+            left: "3px",
             fontSize: "9px",
             fontStyle: "italic",
         }}, drilldownmessage);

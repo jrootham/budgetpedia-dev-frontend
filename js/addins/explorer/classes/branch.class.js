@@ -45,9 +45,9 @@ class BudgetBranch {
         this.saveAspectState = () => {
             let budgetBranch = this;
             let nodes = budgetBranch.nodes;
-            for (let node of nodes) {
-                console.log('node.cells for saveAspectState', node.cells);
-                node.oldAspectState = node.cells.length;
+            let node;
+            for (node of nodes) {
+                node.oldAspectState = !!node.treeNodeData.Components;
             }
         };
         this.switchAspect = () => {
@@ -73,8 +73,8 @@ class BudgetBranch {
                 budgetNode = branchNodes[nodeIndex];
                 let dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
                 if (dataNode) {
-                    let deeperdata = (!!dataNode.Components && (budgetNode.oldAspectState == 1));
-                    let shallowerdata = (!dataNode.Components && (budgetNode.oldAspectState == 2));
+                    let deeperdata = ((!!dataNode.Components) && (!budgetNode.oldAspectState));
+                    let shallowerdata = ((!dataNode.Components) && (budgetNode.oldAspectState));
                     let parentDataNode = null;
                     if (nodeIndex > 0) {
                         parentDataNode = branchNodes[nodeIndex - 1].treeNodeData;

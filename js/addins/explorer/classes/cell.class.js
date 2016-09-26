@@ -228,7 +228,7 @@ class BudgetCell {
             }
             let options = {
                 slices: slices,
-                is3D: true,
+                pieHole: 0.4,
                 legend: {
                     position: "top",
                     textStyle: {

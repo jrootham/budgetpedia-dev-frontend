@@ -754,8 +754,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         let drilldownprompt = 
             <div style={{
                 position:"absolute",
-                bottom:"10px",
-                left:"40px",
+                bottom:"3px",
+                left:"3px",
                 fontSize:"9px",
                 fontStyle:"italic",
             }}>
