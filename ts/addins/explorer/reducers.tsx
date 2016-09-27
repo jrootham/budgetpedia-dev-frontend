@@ -245,11 +245,11 @@ let cellsById = (state = { }, action) => {
             }
             // newcell.chartSelection = chartSelection
 
-            let newChartConfigs = Object.assign({},newcell.yearScopeChartConfigs)
+            let newChartConfigs = Object.assign({},newcell.chartConfigs)
             let yearSettings = Object.assign({},newChartConfigs[newcell.yearScope])
             yearSettings.chartSelection = chartSelection
             newChartConfigs[newcell.yearScope] = yearSettings
-            newcell.yearScopeChartConfigs = newChartConfigs
+            newcell.chartConfigs = newChartConfigs
 
             newstate[celluid] = newcell
 
@@ -276,11 +276,11 @@ let cellsById = (state = { }, action) => {
 
             // newcell.explorerChartCode = explorerChartCode
 
-            let newChartConfigs = Object.assign({},newcell.yearScopeChartConfigs)
+            let newChartConfigs = Object.assign({},newcell.chartConfigs)
             let yearSettings = Object.assign({},newChartConfigs[newcell.yearScope])
             yearSettings.explorerChartCode = explorerChartCode
             newChartConfigs[newcell.yearScope] = yearSettings
-            newcell.yearScopeChartConfigs = newChartConfigs
+            newcell.chartConfigs = newChartConfigs
 
             newstate[celluid] = newcell
             // console.log('newstate from chart code',newstate)

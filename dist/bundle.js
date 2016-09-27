@@ -1801,7 +1801,7 @@ var BudgetCell = function () {
         key: 'explorerChartCode',
         get: function get() {
             var cellDeclaration = this.getProps().declarationData.cellsById[this.uid];
-            var settings = cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope];
+            var settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope];
             return settings.explorerChartCode;
         }
     }, {
@@ -2353,7 +2353,7 @@ var BudgetNode = function () {
                 var nodeDataseriesName = cellDeclaration.nodeDataseriesName;
                 var celluid = cellDeclaration.celluid;
 
-                var settings = cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope];
+                var settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope];
                 var explorerChartCode = settings.explorerChartCode;
                 var chartSelection = settings.chartSelection;
 
@@ -2910,7 +2910,6 @@ var ExplorerCell = function (_Component) {
         var _this = _possibleConstructorReturn(this, (_ref = ExplorerCell.__proto__ || Object.getPrototypeOf(ExplorerCell)).call.apply(_ref, [this].concat(args)));
 
         _this.state = {
-            timescope: constants_1.TimeScope[constants_1.TimeScope.OneYear],
             deltastate: false,
             netstate: false,
             variancestate: false,
@@ -2938,11 +2937,11 @@ var ExplorerCell = function (_Component) {
             }
             var budgetCell = _this.props.budgetCell;
 
-            var cellDeclaration = _this.props.declarationData.cellsById[budgetCell.uid];
+            var cellDeclaration = _this.cellDeclaration;
             switch (lastAction.type) {
                 case actions_1.cellTypes.UPDATE_CELL_CHART_CODE:
                     {
-                        budgetCell.switchChartCode(cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope].explorerChartCode);
+                        budgetCell.switchChartCode(_this.chartConfig.explorerChartCode);
                         break;
                     }
             }
@@ -3007,9 +3006,9 @@ var ExplorerCell = function (_Component) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
-            var budgetCell = this;
-            budgetCell._respondToGlobalStateChange();
-            budgetCell.props.budgetCell.refreshSelection();
+            var explorerCell = this;
+            explorerCell._respondToGlobalStateChange();
+            explorerCell.props.budgetCell.refreshSelection();
         }
     }, {
         key: 'render',
@@ -3030,6 +3029,8 @@ var ExplorerCell = function (_Component) {
             var endYear = _datasetConfig$YearsR.end;
 
             var yearSpan = endYear - startYear;
+            var leftYear = this.cellDeclaration.yearSelections.leftYear;
+            var rightYear = this.cellDeclaration.yearSelections.rightYear;
             var datanode = budgetCell.nodeDataPack.treeNodeData;
             var datasetiestype = budgetCell.nodeDataseriesName;
             var drillDownProperty = datasetiestype + 'Drilldown';
@@ -3049,7 +3050,7 @@ var ExplorerCell = function (_Component) {
                     position: "relative",
                     display: "inline-block"
                 } }, React.createElement("div", { style: { position: "absolute", top: "0", left: "0", fontSize: "8px" } }, "years"), React.createElement(IconButton_1.default, { tooltip: "One year", tooltipPosition: "top-center", style: {
-                    backgroundColor: this.state.timescope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? "rgba(144,238,144,0.5)" : "rgba(255,255,255,0.5)",
+                    backgroundColor: this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? "rgba(144,238,144,0.5)" : "rgba(255,255,255,0.5)",
                     borderRadius: "15%",
                     padding: "0",
                     height: "36px",
@@ -3058,7 +3059,7 @@ var ExplorerCell = function (_Component) {
                 }, onTouchTap: function onTouchTap(e) {
                     _this2.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.OneYear]);
                 } }, React.createElement(SvgIcon_1.default, { style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36" }, React.createElement("rect", { x: "13", y: "13", width: "10", height: "10" }))), React.createElement(IconButton_1.default, { disabled: yearSpan === 0, tooltip: "Two years", tooltipPosition: "top-center", style: {
-                    backgroundColor: this.state.timescope == constants_1.TimeScope[constants_1.TimeScope.TwoYears] ? "rgba(144,238,144,0.5)" : "rgba(255,255,255,0.5)",
+                    backgroundColor: this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears] ? "rgba(144,238,144,0.5)" : "rgba(255,255,255,0.5)",
                     borderRadius: "15%",
                     padding: "0",
                     height: "36px",
@@ -3067,7 +3068,7 @@ var ExplorerCell = function (_Component) {
                 }, onTouchTap: function onTouchTap(e) {
                     _this2.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.TwoYears]);
                 } }, React.createElement(SvgIcon_1.default, { style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36" }, React.createElement("rect", { x: "4", y: "13", width: "10", height: "10" }), React.createElement("rect", { x: "22", y: "13", width: "10", height: "10" }))), React.createElement(IconButton_1.default, { tooltip: "All years", tooltipPosition: "top-center", disabled: yearSpan === 0, style: {
-                    backgroundColor: this.state.timescope == constants_1.TimeScope[constants_1.TimeScope.AllYears] ? "rgba(144,238,144,0.5)" : "rgba(255,255,255,0.5)",
+                    backgroundColor: this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.AllYears] ? "rgba(144,238,144,0.5)" : "rgba(255,255,255,0.5)",
                     borderRadius: "15%",
                     padding: "0",
                     height: "36px",
@@ -3148,7 +3149,7 @@ var ExplorerCell = function (_Component) {
                 } }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "view_stream"));
             var getchartoptions = function getchartoptions() {
                 var chartoptions = void 0;
-                switch (_this2.state.timescope) {
+                switch (_this2.cellDeclaration.yearScope) {
                     case constants_1.TimeScope[constants_1.TimeScope.OneYear]:
                         chartoptions = [columnchart, donutchart, contextchart];
                         break;
@@ -3168,7 +3169,7 @@ var ExplorerCell = function (_Component) {
                     } }, React.createElement("div", { style: { position: "absolute", top: "0", left: "0", fontSize: "8px" } }, "charts"), chartoptions);
             };
             var chartoptions = getchartoptions();
-            var deltatoggle = this.state.timescope != constants_1.TimeScope[constants_1.TimeScope.OneYear] ? React.createElement("div", { style: {
+            var deltatoggle = this.cellDeclaration.yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear] ? React.createElement("div", { style: {
                     paddingTop: "10px",
                     borderRight: "1px solid silver",
                     marginRight: "3px",
@@ -3190,7 +3191,7 @@ var ExplorerCell = function (_Component) {
                 }, onTouchTap: function onTouchTap(e) {
                     _this2.onToggleDelta();
                 } }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "change_history"))) : null;
-            var nettoggle = this.state.timescope != constants_1.TimeScope[constants_1.TimeScope.OneYear] ? React.createElement("div", { style: {
+            var nettoggle = this.cellDeclaration.yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear] ? React.createElement("div", { style: {
                     paddingTop: "10px",
                     borderRight: "1px solid silver",
                     marginRight: "3px",
@@ -3206,7 +3207,7 @@ var ExplorerCell = function (_Component) {
                 }, onTouchTap: function onTouchTap(e) {
                     _this2.onToggleNet();
                 } }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "exposure"))) : null;
-            var variancetoggle = this.state.timescope != constants_1.TimeScope[constants_1.TimeScope.OneYear] ? React.createElement("div", { style: {
+            var variancetoggle = this.cellDeclaration.yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear] ? React.createElement("div", { style: {
                     paddingTop: "10px",
                     borderRight: "1px solid silver",
                     marginRight: "3px",
@@ -3306,8 +3307,19 @@ var ExplorerCell = function (_Component) {
                 }
                 return years;
             };
-            var yearselection = React.createElement("div", { style: { paddingBottom: "3px" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Select ", yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? 'year' : 'years', ": "), yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear] ? React.createElement(DropDownMenu_1.default, { value: startYear, style: {}, onChange: function onChange(e) {} }, yearsoptions()) : null, yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? null : yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears] ? ':' : '-', React.createElement(DropDownMenu_1.default, { value: endYear, style: {}, onChange: function onChange(e) {} }, yearsoptions()));
+            var yearselection = React.createElement("div", { style: { paddingBottom: "3px" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Select ", yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? 'year' : 'years', ": "), yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear] ? React.createElement(DropDownMenu_1.default, { value: leftYear, style: {}, onChange: function onChange(e) {} }, yearsoptions()) : null, yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? null : yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears] ? ':' : '-', React.createElement(DropDownMenu_1.default, { value: rightYear, style: {}, onChange: function onChange(e) {} }, yearsoptions()));
             return React.createElement("div", null, this.props.showControls ? React.createElement("div", { style: { padding: "3px" } }, timescopes, chartoptions, deltatoggle, nettoggle, variancetoggle) : null, React.createElement("div", { style: { position: "relative" } }, chart, drilldownprompt), React.createElement("div", { style: { padding: "3px", textAlign: "center" } }, this.props.showControls ? yearselection : null, informationoptions, socialoptions, datatable, harmonizeoptions));
+        }
+    }, {
+        key: 'cellDeclaration',
+        get: function get() {
+            return this.props.declarationData.cellsById[this.props.budgetCell.uid];
+        }
+    }, {
+        key: 'chartConfig',
+        get: function get() {
+            var cellDeclaration = this.cellDeclaration;
+            return cellDeclaration.chartConfigs[cellDeclaration.yearScope];
         }
     }]);
 
@@ -4778,11 +4790,11 @@ var cellsById = function cellsById() {
                 if (Array.isArray(chartSelection) && chartSelection.length == 0) {
                     chartSelection = null;
                 }
-                var newChartConfigs = Object.assign({}, newcell.yearScopeChartConfigs);
+                var newChartConfigs = Object.assign({}, newcell.chartConfigs);
                 var yearSettings = Object.assign({}, newChartConfigs[newcell.yearScope]);
                 yearSettings.chartSelection = chartSelection;
                 newChartConfigs[newcell.yearScope] = yearSettings;
-                newcell.yearScopeChartConfigs = newChartConfigs;
+                newcell.chartConfigs = newChartConfigs;
                 newstate[_celluid] = newcell;
                 return newstate;
             }
@@ -4793,11 +4805,11 @@ var cellsById = function cellsById() {
                 var explorerChartCode = _action$payload2.explorerChartCode;
 
                 var _newcell = Object.assign({}, newstate[_celluid2]);
-                var _newChartConfigs = Object.assign({}, _newcell.yearScopeChartConfigs);
+                var _newChartConfigs = Object.assign({}, _newcell.chartConfigs);
                 var _yearSettings = Object.assign({}, _newChartConfigs[_newcell.yearScope]);
                 _yearSettings.explorerChartCode = explorerChartCode;
                 _newChartConfigs[_newcell.yearScope] = _yearSettings;
-                _newcell.yearScopeChartConfigs = _newChartConfigs;
+                _newcell.chartConfigs = _newChartConfigs;
                 newstate[_celluid2] = _newcell;
                 return newstate;
             }
@@ -6751,7 +6763,7 @@ var explorer = {
             cellList: null
         },
         cell: {
-            yearScopeChartConfigs: {
+            chartConfigs: {
                 'OneYear': {
                     chartSelection: null,
                     explorerChartCode: "ColumnChart"

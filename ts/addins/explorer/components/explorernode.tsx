@@ -94,7 +94,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         let { dataGenerationCounter, budgetNode } = nextProps
         let { oldDataGenerationCounter } = this
         let lastAction = nextProps.declarationData.lastAction
-        // console.log('lastAction from componentWillReceiveProps', lastAction.type, lastAction.nodeuid, budgetNode.uid)
+        // console.log('lastAction from node componentWillReceiveProps', lastAction.type, lastAction.nodeuid, budgetNode.uid)
 
         if ( oldDataGenerationCounter === null || (dataGenerationCounter > oldDataGenerationCounter)) {
             // console.log('normalizing cellDeclarations', budgetNode.uid)

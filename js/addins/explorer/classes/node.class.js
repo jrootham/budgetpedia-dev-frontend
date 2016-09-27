@@ -89,7 +89,7 @@ class BudgetNode {
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration = cellDeclarations[cellIndex];
             let { nodeDataseriesName, celluid } = cellDeclaration;
-            let settings = cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope];
+            let settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope];
             let { explorerChartCode, chartSelection } = settings;
             let cell = new cell_class_1.default({
                 nodeDataseriesName: nodeDataseriesName,

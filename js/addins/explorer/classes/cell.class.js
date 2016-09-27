@@ -364,7 +364,7 @@ class BudgetCell {
     }
     get explorerChartCode() {
         let cellDeclaration = this.getProps().declarationData.cellsById[this.uid];
-        let settings = cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope];
+        let settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope];
         return settings.explorerChartCode;
     }
     get googleChartType() {

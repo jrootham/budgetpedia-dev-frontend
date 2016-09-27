@@ -37,14 +37,10 @@ interface ExplorerCellProps {
     showControls: boolean,
 }
 
-// interface ExplorerCellState {
-//     timescope:
-// }
-
 class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     state = {
-        timescope: TimeScope[TimeScope.OneYear],
+        // timescope: TimeScope[TimeScope.OneYear],
         deltastate: false,
         netstate:false,
         variancestate:false,
@@ -69,6 +65,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         setTimeout(() =>{ // give time for chart to be assigned to budgetCell
             budgetCell.refreshSelection() // for re-creation; last pie chart is missed
         })
+        // console.log('did mount cell declarationData',this.cellDeclaration)
     }
 
     private lastactiongeneration: number = 0
@@ -85,10 +82,22 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     componentDidUpdate() {
 
-        let budgetCell = this
-        budgetCell._respondToGlobalStateChange()
-        budgetCell.props.budgetCell.refreshSelection()
+        // console.log('did update cell declarationData',this.cellDeclaration)
 
+        let explorerCell = this
+        explorerCell._respondToGlobalStateChange()
+        explorerCell.props.budgetCell.refreshSelection()
+
+    }
+
+    // conveniences... get x 2
+    get cellDeclaration() {
+        return this.props.declarationData.cellsById[this.props.budgetCell.uid]
+    }
+
+    get chartConfig() {
+        let cellDeclaration = this.cellDeclaration
+        return cellDeclaration.chartConfigs[cellDeclaration.yearScope]
     }
 
     private _previousControlData: any
@@ -107,13 +116,12 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             return false
         }
         let { budgetCell } = this.props
-        let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid]
+        let cellDeclaration = this.cellDeclaration
 
         switch (lastAction.type) {
             case cellActionTypes.UPDATE_CELL_CHART_CODE: {
 
-                budgetCell.switchChartCode(
-                    cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope].explorerChartCode)
+                budgetCell.switchChartCode(this.chartConfig.explorerChartCode)
                 break
             }
         }
@@ -170,6 +178,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         let { datasetConfig } = viewpointConfigPack
         let {start: startYear, end: endYear } = datasetConfig.YearsRange
         let yearSpan = endYear - startYear
+        let leftYear = this.cellDeclaration.yearSelections.leftYear
+        let rightYear = this.cellDeclaration.yearSelections.rightYear
 
         // get drilldown message
         let datanode = budgetCell.nodeDataPack.treeNodeData
@@ -201,7 +211,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (this.state.timescope == TimeScope[TimeScope.OneYear])
+                            backgroundColor: (this.cellDeclaration.yearScope == TimeScope[TimeScope.OneYear])
                                 ? "rgba(144,238,144,0.5)"
                                 : "rgba(255,255,255,0.5)",
                             borderRadius:"15%",
@@ -224,7 +234,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     tooltipPosition="top-center"
                     style={
                         {
-                            backgroundColor: (this.state.timescope == TimeScope[TimeScope.TwoYears])
+                            backgroundColor: (this.cellDeclaration.yearScope == TimeScope[TimeScope.TwoYears])
                                 ? "rgba(144,238,144,0.5)"
                                 : "rgba(255,255,255,0.5)",
                             borderRadius:"15%",
@@ -249,7 +259,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     disabled = {yearSpan === 0}
                     style={
                         {
-                            backgroundColor: (this.state.timescope == TimeScope[TimeScope.AllYears])
+                            backgroundColor: (this.cellDeclaration.yearScope == TimeScope[TimeScope.AllYears])
                                 ? "rgba(144,238,144,0.5)"
                                 : "rgba(255,255,255,0.5)",
                             borderRadius:"15%",
@@ -445,7 +455,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
             let chartoptions
 
-            switch (this.state.timescope) {
+            switch (this.cellDeclaration.yearScope) {
                 case TimeScope[TimeScope.OneYear]:
                     chartoptions = [ columnchart, donutchart, contextchart ]
                     break;
@@ -476,7 +486,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
         let chartoptions = getchartoptions()
 
-        let deltatoggle = (this.state.timescope != TimeScope[TimeScope.OneYear])?
+        let deltatoggle = (this.cellDeclaration.yearScope != TimeScope[TimeScope.OneYear])?
             <div style = {
                 {
                     paddingTop:"10px",
@@ -518,7 +528,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 </IconButton>
             </div> : null
 
-        let nettoggle = (this.state.timescope != TimeScope[TimeScope.OneYear])?
+        let nettoggle = (this.cellDeclaration.yearScope != TimeScope[TimeScope.OneYear])?
             <div style = {
                 {
                     paddingTop:"10px",
@@ -552,7 +562,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 </IconButton>
             </div> : null
 
-        let variancetoggle = (this.state.timescope != TimeScope[TimeScope.OneYear])?
+        let variancetoggle = (this.cellDeclaration.yearScope != TimeScope[TimeScope.OneYear])?
             <div style = {
                 {
                     paddingTop:"10px",
@@ -780,7 +790,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     (yearScope == TimeScope[TimeScope.OneYear])? 'year': 'years'}: </span>
                     
                 {(yearScope != TimeScope[TimeScope.OneYear])?(<DropDownMenu
-                    value={startYear}
+                    value={leftYear}
                     style={{
                     }}
                     onChange={ e => {} }
@@ -799,7 +809,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 }
 
                 <DropDownMenu
-                    value={endYear}
+                    value={rightYear}
                     style={{
                     }}
                     onChange={ e => {} }

@@ -53,7 +53,7 @@ interface viewpointConfigPack {
 export interface CellDeclaration {
     nodeDataseriesName:string, 
     // explorerChartCode:string, 
-    yearScopeChartConfigs:{
+    chartConfigs:{
         ['OneYear']:{
             chartSelection:ChartSelectionCell[],
             explorerChartCode: string,
@@ -106,7 +106,7 @@ class BudgetCell {
 
     get explorerChartCode() {
         let cellDeclaration:CellDeclaration = this.getProps().declarationData.cellsById[this.uid]
-        let settings = cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope]
+        let settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope]
         return settings.explorerChartCode
     } 
     nodeDataseriesName:string // the ref to the data to be presented, typically Components or CommonDimension

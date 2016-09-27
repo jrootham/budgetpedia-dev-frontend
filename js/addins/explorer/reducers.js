@@ -213,22 +213,22 @@ let cellsById = (state = {}, action) => {
             if (Array.isArray(chartSelection) && chartSelection.length == 0) {
                 chartSelection = null;
             }
-            let newChartConfigs = Object.assign({}, newcell.yearScopeChartConfigs);
+            let newChartConfigs = Object.assign({}, newcell.chartConfigs);
             let yearSettings = Object.assign({}, newChartConfigs[newcell.yearScope]);
             yearSettings.chartSelection = chartSelection;
             newChartConfigs[newcell.yearScope] = yearSettings;
-            newcell.yearScopeChartConfigs = newChartConfigs;
+            newcell.chartConfigs = newChartConfigs;
             newstate[celluid] = newcell;
             return newstate;
         }
         case actions_1.types.UPDATE_CELL_CHART_CODE: {
             let { celluid, explorerChartCode } = action.payload;
             let newcell = Object.assign({}, newstate[celluid]);
-            let newChartConfigs = Object.assign({}, newcell.yearScopeChartConfigs);
+            let newChartConfigs = Object.assign({}, newcell.chartConfigs);
             let yearSettings = Object.assign({}, newChartConfigs[newcell.yearScope]);
             yearSettings.explorerChartCode = explorerChartCode;
             newChartConfigs[newcell.yearScope] = yearSettings;
-            newcell.yearScopeChartConfigs = newChartConfigs;
+            newcell.chartConfigs = newChartConfigs;
             newstate[celluid] = newcell;
             return newstate;
         }

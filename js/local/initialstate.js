@@ -123,7 +123,7 @@ let explorer = {
             cellList: null
         },
         cell: {
-            yearScopeChartConfigs: {
+            chartConfigs: {
                 'OneYear': {
                     chartSelection: null,
                     explorerChartCode: "ColumnChart",

@@ -14,7 +14,6 @@ class ExplorerCell extends Component {
     constructor(...args) {
         super(...args);
         this.state = {
-            timescope: constants_1.TimeScope[constants_1.TimeScope.OneYear],
             deltastate: false,
             netstate: false,
             variancestate: false,
@@ -36,10 +35,10 @@ class ExplorerCell extends Component {
                 return false;
             }
             let { budgetCell } = this.props;
-            let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid];
+            let cellDeclaration = this.cellDeclaration;
             switch (lastAction.type) {
                 case actions_1.cellTypes.UPDATE_CELL_CHART_CODE: {
-                    budgetCell.switchChartCode(cellDeclaration.yearScopeChartConfigs[cellDeclaration.yearScope].explorerChartCode);
+                    budgetCell.switchChartCode(this.chartConfig.explorerChartCode);
                     break;
                 }
             }
@@ -93,9 +92,16 @@ class ExplorerCell extends Component {
         return Utilities.filterActionsForUpdate(nextProps, cellComponent);
     }
     componentDidUpdate() {
-        let budgetCell = this;
-        budgetCell._respondToGlobalStateChange();
-        budgetCell.props.budgetCell.refreshSelection();
+        let explorerCell = this;
+        explorerCell._respondToGlobalStateChange();
+        explorerCell.props.budgetCell.refreshSelection();
+    }
+    get cellDeclaration() {
+        return this.props.declarationData.cellsById[this.props.budgetCell.uid];
+    }
+    get chartConfig() {
+        let cellDeclaration = this.cellDeclaration;
+        return cellDeclaration.chartConfigs[cellDeclaration.yearScope];
     }
     render() {
         let { budgetCell } = this.props;
@@ -105,6 +111,8 @@ class ExplorerCell extends Component {
         let { datasetConfig } = viewpointConfigPack;
         let { start: startYear, end: endYear } = datasetConfig.YearsRange;
         let yearSpan = endYear - startYear;
+        let leftYear = this.cellDeclaration.yearSelections.leftYear;
+        let rightYear = this.cellDeclaration.yearSelections.rightYear;
         let datanode = budgetCell.nodeDataPack.treeNodeData;
         let datasetiestype = budgetCell.nodeDataseriesName;
         let drillDownProperty = datasetiestype + 'Drilldown';
@@ -126,7 +134,7 @@ class ExplorerCell extends Component {
             position: "relative",
             display: "inline-block"
         }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "years"), React.createElement(IconButton_1.default, {tooltip: "One year", tooltipPosition: "top-center", style: {
-            backgroundColor: (this.state.timescope == constants_1.TimeScope[constants_1.TimeScope.OneYear])
+            backgroundColor: (this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear])
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
             borderRadius: "15%",
@@ -137,7 +145,7 @@ class ExplorerCell extends Component {
         }, onTouchTap: e => {
             this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.OneYear]);
         }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "13", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {disabled: yearSpan === 0, tooltip: "Two years", tooltipPosition: "top-center", style: {
-            backgroundColor: (this.state.timescope == constants_1.TimeScope[constants_1.TimeScope.TwoYears])
+            backgroundColor: (this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears])
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
             borderRadius: "15%",
@@ -148,7 +156,7 @@ class ExplorerCell extends Component {
         }, onTouchTap: e => {
             this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.TwoYears]);
         }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", disabled: yearSpan === 0, style: {
-            backgroundColor: (this.state.timescope == constants_1.TimeScope[constants_1.TimeScope.AllYears])
+            backgroundColor: (this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.AllYears])
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
             borderRadius: "15%",
@@ -245,7 +253,7 @@ class ExplorerCell extends Component {
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "view_stream"));
         let getchartoptions = () => {
             let chartoptions;
-            switch (this.state.timescope) {
+            switch (this.cellDeclaration.yearScope) {
                 case constants_1.TimeScope[constants_1.TimeScope.OneYear]:
                     chartoptions = [columnchart, donutchart, contextchart];
                     break;
@@ -265,7 +273,7 @@ class ExplorerCell extends Component {
             }}, React.createElement("div", {style: { position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "charts"), chartoptions);
         };
         let chartoptions = getchartoptions();
-        let deltatoggle = (this.state.timescope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ?
+        let deltatoggle = (this.cellDeclaration.yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ?
             React.createElement("div", {style: {
                 paddingTop: "10px",
                 borderRight: "1px solid silver",
@@ -290,7 +298,7 @@ class ExplorerCell extends Component {
             }, onTouchTap: (e) => {
                 this.onToggleDelta();
             }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "change_history"))) : null;
-        let nettoggle = (this.state.timescope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ?
+        let nettoggle = (this.cellDeclaration.yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ?
             React.createElement("div", {style: {
                 paddingTop: "10px",
                 borderRight: "1px solid silver",
@@ -309,7 +317,7 @@ class ExplorerCell extends Component {
             }, onTouchTap: e => {
                 this.onToggleNet();
             }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "exposure"))) : null;
-        let variancetoggle = (this.state.timescope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ?
+        let variancetoggle = (this.cellDeclaration.yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ?
             React.createElement("div", {style: {
                 paddingTop: "10px",
                 borderRight: "1px solid silver",
@@ -416,9 +424,9 @@ class ExplorerCell extends Component {
             }
             return years;
         };
-        let yearselection = React.createElement("div", {style: { paddingBottom: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Select ", (yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? 'year' : 'years', ": "), (yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? (React.createElement(DropDownMenu_1.default, {value: startYear, style: {}, onChange: e => { }}, yearsoptions())) : null, (yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? null
+        let yearselection = React.createElement("div", {style: { paddingBottom: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Select ", (yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? 'year' : 'years', ": "), (yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? (React.createElement(DropDownMenu_1.default, {value: leftYear, style: {}, onChange: e => { }}, yearsoptions())) : null, (yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? null
             : ((yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears]) ? ':'
-                : '-'), React.createElement(DropDownMenu_1.default, {value: endYear, style: {}, onChange: e => { }}, yearsoptions()));
+                : '-'), React.createElement(DropDownMenu_1.default, {value: rightYear, style: {}, onChange: e => { }}, yearsoptions()));
         return React.createElement("div", null, (this.props.showControls) ? React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions, deltatoggle, nettoggle, variancetoggle) : null, React.createElement("div", {style: { position: "relative" }}, chart, drilldownprompt), React.createElement("div", {style: { padding: "3px", textAlign: "center" }}, (this.props.showControls) ?
             yearselection : null, informationoptions, socialoptions, datatable, harmonizeoptions));
     }
