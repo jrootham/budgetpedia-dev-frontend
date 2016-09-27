@@ -599,6 +599,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let actions = Object.assign({}, this._stateActions)
             actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid)
             actions.updateCellChartCode = this._stateActions.updateCellChartCode(budgetNode.uid)
+            actions.updateCellYearSelections = this._stateActions.updateCellYearSelections(budgetNode.uid)
 
             return <ExplorerNode
                 key = {nodeindex}

@@ -66,6 +66,7 @@ export interface MappedNodeActions {
     addCellDeclarations: Function,
     changeTab: Function,
     updateCellChartCode: Function,
+    updateCellYearSelections: Function,
     normalizeCellYearDependencies: Function,
     updateNode: Function,
     // removeCellDeclarations:Function,
@@ -83,6 +84,7 @@ export interface MappedBranchActions extends MappedNodeActions {
     toggleShowOptions: Function,
     changeBranchDataVersion: Function,
     updateCellChartSelection:Function,
+    updateCellYearSelections: Function,
     updateCellChartCode: Function,
     updateCellsDataseriesName: Function,
     resetLastAction: Function,
@@ -299,6 +301,9 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     private updateCellChartSelection = branchuid => 
         nodeuid => (celluid,selection) =>
         this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection )
+    private updateCellYearSelections = branchuid => 
+        nodeuid => (celluid,leftyear,rightyear) =>
+        this.props.updateCellYearSelections(branchuid, nodeuid, celluid, leftyear, rightyear )
     private updateCellChartCode = branchuid => 
         nodeuid => (celluid, explorerChartCode) => 
         this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode)
@@ -420,6 +425,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     addCellDeclarations: this.addCellDeclarations(budgetBranch.uid),
                     normalizeCellYearDependencies: this.normalizeCellYearDependencies(budgetBranch.uid),
                     updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
+                    updateCellYearSelections: this.updateCellYearSelections(budgetBranch.uid),
                     changeTab: this.changeTab(budgetBranch.uid),
                     updateCellChartCode: this.updateCellChartCode(budgetBranch.uid),
                     updateNode: this.updateNode(budgetBranch.uid),
@@ -635,6 +641,7 @@ Explorer = connect(mapStateToProps, {
 
     // cell actions
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
+    updateCellYearSelections: ExplorerActions.updateCellYearSelections,
     // updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,
     updateCellChartCode: ExplorerActions.updateCellChartCode,
     updateNode: ExplorerActions.updateNode,

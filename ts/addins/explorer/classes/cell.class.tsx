@@ -182,10 +182,12 @@ class BudgetCell {
 
     switchChartCode = chartCode => {
 
-        // this.explorerChartCode = chartCode
-
         this.setChartParms()
 
+    }
+
+    switchYearCodes = yearCodes => {
+        this.setChartParms()
     }
 
     // ----------------------[ setChartParms ]-------------------------
@@ -509,7 +511,7 @@ class BudgetCell {
             slices[index] = {offset:sliceslist[index]}
             if ((slices[index].offset) != 0) {
   
-                slices[index].color = ColorBrightness(GoogleChartColors[index],150)
+                slices[index].color = ColorBrightness(GoogleChartColors[index],120)
                 slices[index].offset = 0 // I changed my mind about having an offset; now just a proxy for no drilldown
                 // console.log('input, output', GoogleChartColors[index], slices[index].color )
             }

@@ -22,6 +22,9 @@ class BudgetCell {
         this.switchChartCode = chartCode => {
             this.setChartParms();
         };
+        this.switchYearCodes = yearCodes => {
+            this.setChartParms();
+        };
         this.setChartParms = () => {
             let budgetCell = this;
             let { viewpointNamingConfigs, datasetConfig } = budgetCell.viewpointConfigPack;
@@ -222,7 +225,7 @@ class BudgetCell {
             for (let index in sliceslist) {
                 slices[index] = { offset: sliceslist[index] };
                 if ((slices[index].offset) != 0) {
-                    slices[index].color = utilities_1.ColorBrightness(constants_2.GoogleChartColors[index], 150);
+                    slices[index].color = utilities_1.ColorBrightness(constants_2.GoogleChartColors[index], 120);
                     slices[index].offset = 0;
                 }
             }

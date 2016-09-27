@@ -272,6 +272,7 @@ class ExplorerBranch extends Component {
                 let actions = Object.assign({}, this._stateActions);
                 actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = this._stateActions.updateCellChartCode(budgetNode.uid);
+                actions.updateCellYearSelections = this._stateActions.updateCellYearSelections(budgetNode.uid);
                 return React.createElement(explorernode_1.ExplorerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration});
             });
             return portals;

@@ -270,7 +270,10 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
                     declarationData = { this.props.declarationData }
                     callbackid = { cellIndex }
                     budgetCell = { budgetCell }
-                    globalStateActions = { {updateCellChartCode: this.props.globalStateActions.updateCellChartCode } }
+                    globalStateActions = { {
+                        updateCellChartCode: this.props.globalStateActions.updateCellChartCode,
+                        updateCellYearSelections: this.props.globalStateActions.updateCellYearSelections, 
+                    } }
                     showControls = {this.props.showControls}
                 />
             </Tab>

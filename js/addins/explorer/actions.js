@@ -162,6 +162,15 @@ exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHA
 }), () => ({
     explorer: true
 }));
+exports.updateCellYearSelections = redux_actions_1.createAction(types.UPDATE_CELL_YEAR_SELECTIONS, (branchuid, nodeuid, celluid, leftyear, rightyear) => ({
+    branchuid: branchuid,
+    nodeuid: nodeuid,
+    celluid: celluid,
+    leftyear: leftyear,
+    rightyear: rightyear,
+}), () => ({
+    explorer: true
+}));
 exports.resetLastAction = redux_actions_1.createAction(types.RESET_LAST_ACTION, () => ({}), () => ({
     explorer: true
 }));

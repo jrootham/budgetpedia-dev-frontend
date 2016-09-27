@@ -33,6 +33,7 @@ interface ExplorerCellProps {
     declarationData: any,
     globalStateActions: {
         updateCellChartCode:Function,
+        updateCellYearSelections:Function,
     },
     showControls: boolean,
 }
@@ -124,6 +125,10 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 budgetCell.switchChartCode(this.chartConfig.explorerChartCode)
                 break
             }
+            case cellActionTypes.UPDATE_CELL_YEAR_SELECTIONS: {
+                budgetCell.switchYearCodes(this.cellDeclaration.yearSelections)
+                break
+            }
         }
         this._previousControlData = currentControlData
     }
@@ -134,6 +139,12 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         // budgetCell.switchChartCode(explorerChartCode)
 
         this.props.globalStateActions.updateCellChartCode(budgetCell.uid,explorerChartCode)
+    }
+
+    onChangeChartYears = (leftYear, rightYear) => {
+        let { budgetCell } = this.props
+
+        this.props.globalStateActions.updateCellYearSelections(budgetCell.uid, leftYear, rightYear)
     }
 
     onChangeTimeCode = explorerTimeCode => {
@@ -793,7 +804,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     value={leftYear}
                     style={{
                     }}
-                    onChange={ e => {} }
+                    onChange={ (e, key, payload) => {
+                        this.onChangeChartYears(payload, rightYear)
+                    } }
                     >
 
                     { yearsoptions() }
@@ -812,7 +825,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     value={rightYear}
                     style={{
                     }}
-                    onChange={ e => {} }
+                    onChange={ (e, key, payload) => {
+                        this.onChangeChartYears(leftYear, payload)
+                    } }
                     >
 
                     { yearsoptions() }

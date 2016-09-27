@@ -1078,6 +1078,19 @@ exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHA
         explorer: true
     };
 });
+exports.updateCellYearSelections = redux_actions_1.createAction(types.UPDATE_CELL_YEAR_SELECTIONS, function (branchuid, nodeuid, celluid, leftyear, rightyear) {
+    return {
+        branchuid: branchuid,
+        nodeuid: nodeuid,
+        celluid: celluid,
+        leftyear: leftyear,
+        rightyear: rightyear
+    };
+}, function () {
+    return {
+        explorer: true
+    };
+});
 exports.resetLastAction = redux_actions_1.createAction(types.RESET_LAST_ACTION, function () {
     return {};
 }, function () {
@@ -1444,6 +1457,9 @@ var BudgetCell = function () {
         this.switchChartCode = function (chartCode) {
             _this.setChartParms();
         };
+        this.switchYearCodes = function (yearCodes) {
+            _this.setChartParms();
+        };
         this.setChartParms = function () {
             var budgetCell = _this;
             var _budgetCell$viewpoint = budgetCell.viewpointConfigPack;
@@ -1650,7 +1666,7 @@ var BudgetCell = function () {
             for (var index in sliceslist) {
                 slices[index] = { offset: sliceslist[index] };
                 if (slices[index].offset != 0) {
-                    slices[index].color = utilities_1.ColorBrightness(constants_2.GoogleChartColors[index], 150);
+                    slices[index].color = utilities_1.ColorBrightness(constants_2.GoogleChartColors[index], 120);
                     slices[index].offset = 0;
                 }
             }
@@ -2742,6 +2758,7 @@ var ExplorerBranch = function (_Component) {
                 var actions = Object.assign({}, _this._stateActions);
                 actions.updateCellChartSelection = _this._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = _this._stateActions.updateCellChartCode(budgetNode.uid);
+                actions.updateCellYearSelections = _this._stateActions.updateCellYearSelections(budgetNode.uid);
                 return React.createElement(explorernode_1.ExplorerNode, { key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: _this.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration });
             });
             return portals;
@@ -2944,6 +2961,11 @@ var ExplorerCell = function (_Component) {
                         budgetCell.switchChartCode(_this.chartConfig.explorerChartCode);
                         break;
                     }
+                case actions_1.cellTypes.UPDATE_CELL_YEAR_SELECTIONS:
+                    {
+                        budgetCell.switchYearCodes(_this.cellDeclaration.yearSelections);
+                        break;
+                    }
             }
             _this._previousControlData = currentControlData;
         };
@@ -2951,6 +2973,11 @@ var ExplorerCell = function (_Component) {
             var budgetCell = _this.props.budgetCell;
 
             _this.props.globalStateActions.updateCellChartCode(budgetCell.uid, explorerChartCode);
+        };
+        _this.onChangeChartYears = function (leftYear, rightYear) {
+            var budgetCell = _this.props.budgetCell;
+
+            _this.props.globalStateActions.updateCellYearSelections(budgetCell.uid, leftYear, rightYear);
         };
         _this.onChangeTimeCode = function (explorerTimeCode) {
             _this.setState({
@@ -3307,7 +3334,11 @@ var ExplorerCell = function (_Component) {
                 }
                 return years;
             };
-            var yearselection = React.createElement("div", { style: { paddingBottom: "3px" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Select ", yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? 'year' : 'years', ": "), yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear] ? React.createElement(DropDownMenu_1.default, { value: leftYear, style: {}, onChange: function onChange(e) {} }, yearsoptions()) : null, yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? null : yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears] ? ':' : '-', React.createElement(DropDownMenu_1.default, { value: rightYear, style: {}, onChange: function onChange(e) {} }, yearsoptions()));
+            var yearselection = React.createElement("div", { style: { paddingBottom: "3px" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Select ", yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? 'year' : 'years', ": "), yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear] ? React.createElement(DropDownMenu_1.default, { value: leftYear, style: {}, onChange: function onChange(e, key, payload) {
+                    _this2.onChangeChartYears(payload, rightYear);
+                } }, yearsoptions()) : null, yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? null : yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears] ? ':' : '-', React.createElement(DropDownMenu_1.default, { value: rightYear, style: {}, onChange: function onChange(e, key, payload) {
+                    _this2.onChangeChartYears(leftYear, payload);
+                } }, yearsoptions()));
             return React.createElement("div", null, this.props.showControls ? React.createElement("div", { style: { padding: "3px" } }, timescopes, chartoptions, deltatoggle, nettoggle, variancetoggle) : null, React.createElement("div", { style: { position: "relative" } }, chart, drilldownprompt), React.createElement("div", { style: { padding: "3px", textAlign: "center" } }, this.props.showControls ? yearselection : null, informationoptions, socialoptions, datatable, harmonizeoptions));
         }
     }, {
@@ -3492,7 +3523,10 @@ var ExplorerNode = function (_Component) {
             var cellTabs = budgetCells.map(function (budgetCell, cellIndex) {
                 var cellTitle = budgetCell.cellTitle;
 
-                return React.createElement(Tabs_1.Tab, { style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex }, React.createElement(explorercell_1.default, { declarationData: _this.props.declarationData, callbackid: cellIndex, budgetCell: budgetCell, globalStateActions: { updateCellChartCode: _this.props.globalStateActions.updateCellChartCode }, showControls: _this.props.showControls }));
+                return React.createElement(Tabs_1.Tab, { style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex }, React.createElement(explorercell_1.default, { declarationData: _this.props.declarationData, callbackid: cellIndex, budgetCell: budgetCell, globalStateActions: {
+                        updateCellChartCode: _this.props.globalStateActions.updateCellChartCode,
+                        updateCellYearSelections: _this.props.globalStateActions.updateCellYearSelections
+                    }, showControls: _this.props.showControls }));
             });
             return cellTabs;
         };
@@ -4030,6 +4064,13 @@ var Explorer = function (_Component) {
                 };
             };
         };
+        _this.updateCellYearSelections = function (branchuid) {
+            return function (nodeuid) {
+                return function (celluid, leftyear, rightyear) {
+                    return _this.props.updateCellYearSelections(branchuid, nodeuid, celluid, leftyear, rightyear);
+                };
+            };
+        };
         _this.updateCellChartCode = function (branchuid) {
             return function (nodeuid) {
                 return function (celluid, explorerChartCode) {
@@ -4127,6 +4168,7 @@ var Explorer = function (_Component) {
                         addCellDeclarations: _this2.addCellDeclarations(budgetBranch.uid),
                         normalizeCellYearDependencies: _this2.normalizeCellYearDependencies(budgetBranch.uid),
                         updateCellChartSelection: _this2.updateCellChartSelection(budgetBranch.uid),
+                        updateCellYearSelections: _this2.updateCellYearSelections(budgetBranch.uid),
                         changeTab: _this2.changeTab(budgetBranch.uid),
                         updateCellChartCode: _this2.updateCellChartCode(budgetBranch.uid),
                         updateNode: _this2.updateNode(budgetBranch.uid),
@@ -4216,6 +4258,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     branchMoveDown: ExplorerActions.branchMoveDown,
     changeTab: ExplorerActions.changeTab,
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
+    updateCellYearSelections: ExplorerActions.updateCellYearSelections,
     updateCellChartCode: ExplorerActions.updateCellChartCode,
     updateNode: ExplorerActions.updateNode
 })(Explorer);
@@ -4813,11 +4856,26 @@ var cellsById = function cellsById() {
                 newstate[_celluid2] = _newcell;
                 return newstate;
             }
-        case actions_1.types.NORMALIZE_CELL_YEAR_DEPENDENCIES:
+        case actions_1.types.UPDATE_CELL_YEAR_SELECTIONS:
             {
                 var _action$payload3 = action.payload;
-                var cellList = _action$payload3.cellList;
-                var yearsRange = _action$payload3.yearsRange;
+                var _celluid3 = _action$payload3.celluid;
+                var leftyear = _action$payload3.leftyear;
+                var rightyear = _action$payload3.rightyear;
+
+                var _newcell2 = Object.assign({}, newstate[_celluid3]);
+                var newYearSelections = Object.assign({}, _newcell2.yearSelections);
+                newYearSelections.leftYear = leftyear;
+                newYearSelections.rightYear = rightyear;
+                _newcell2.yearSelections = newYearSelections;
+                newstate[_celluid3] = _newcell2;
+                return newstate;
+            }
+        case actions_1.types.NORMALIZE_CELL_YEAR_DEPENDENCIES:
+            {
+                var _action$payload4 = action.payload;
+                var cellList = _action$payload4.cellList;
+                var yearsRange = _action$payload4.yearsRange;
                 var startYear = yearsRange.start;
                 var endYear = yearsRange.end;
 
@@ -4828,21 +4886,21 @@ var cellsById = function cellsById() {
 
                 try {
                     for (var _iterator5 = cellList[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                        var _celluid3 = _step5.value;
+                        var _celluid4 = _step5.value;
 
-                        var _newcell2 = Object.assign({}, newstate[_celluid3]);
+                        var _newcell3 = Object.assign({}, newstate[_celluid4]);
                         if (yearSpan == 0) {
-                            _newcell2.yearScope = constants_1.TimeScope[constants_1.TimeScope.OneYear];
+                            _newcell3.yearScope = constants_1.TimeScope[constants_1.TimeScope.OneYear];
                         }
-                        var range = Object.assign({}, _newcell2.yearSelections);
+                        var range = Object.assign({}, _newcell3.yearSelections);
                         if (range.leftYear < startYear || range.leftYear > endYear) {
                             range.leftYear = startYear;
                         }
                         if (range.rightYear > endYear || range.rightYear < startYear) {
                             range.rightYear = endYear;
                         }
-                        _newcell2.yearSelections = range;
-                        newstate[_celluid3] = _newcell2;
+                        _newcell3.yearSelections = range;
+                        newstate[_celluid4] = _newcell3;
                     }
                 } catch (err) {
                     _didIteratorError5 = true;

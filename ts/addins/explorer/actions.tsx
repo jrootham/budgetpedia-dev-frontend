@@ -222,6 +222,18 @@ export const updateCellChartCode = createAction(
     })
 )
 
+export const updateCellYearSelections = createAction(
+    types.UPDATE_CELL_YEAR_SELECTIONS, (branchuid, nodeuid, celluid, leftyear, rightyear) => ({
+        branchuid,
+        nodeuid,
+        celluid,
+        leftyear,
+        rightyear,
+    }), () => ({
+        explorer:true
+    })
+)
+
 interface CellDataseriesNameItem {
     celluid: string,
     nodeDataseriesName: string,

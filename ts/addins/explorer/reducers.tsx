@@ -274,8 +274,6 @@ let cellsById = (state = { }, action) => {
             let { celluid, explorerChartCode } = action.payload
             let newcell = Object.assign({},newstate[celluid])
 
-            // newcell.explorerChartCode = explorerChartCode
-
             let newChartConfigs = Object.assign({},newcell.chartConfigs)
             let yearSettings = Object.assign({},newChartConfigs[newcell.yearScope])
             yearSettings.explorerChartCode = explorerChartCode
@@ -286,6 +284,23 @@ let cellsById = (state = { }, action) => {
             // console.log('newstate from chart code',newstate)
             return newstate
 
+        }
+
+        case actiontypes.UPDATE_CELL_YEAR_SELECTIONS: {
+
+            let { celluid, leftyear, rightyear } = action.payload
+            let newcell = Object.assign({},newstate[celluid])
+
+            let newYearSelections = Object.assign({},newcell.yearSelections)
+
+            newYearSelections.leftYear = leftyear
+            newYearSelections.rightYear = rightyear
+
+            newcell.yearSelections = newYearSelections
+
+            newstate[celluid] = newcell
+
+            return newstate
         }
 
         case actiontypes.NORMALIZE_CELL_YEAR_DEPENDENCIES: {

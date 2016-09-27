@@ -232,6 +232,16 @@ let cellsById = (state = {}, action) => {
             newstate[celluid] = newcell;
             return newstate;
         }
+        case actions_1.types.UPDATE_CELL_YEAR_SELECTIONS: {
+            let { celluid, leftyear, rightyear } = action.payload;
+            let newcell = Object.assign({}, newstate[celluid]);
+            let newYearSelections = Object.assign({}, newcell.yearSelections);
+            newYearSelections.leftYear = leftyear;
+            newYearSelections.rightYear = rightyear;
+            newcell.yearSelections = newYearSelections;
+            newstate[celluid] = newcell;
+            return newstate;
+        }
         case actions_1.types.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
             let { cellList, yearsRange } = action.payload;
             let { start: startYear, end: endYear } = yearsRange;

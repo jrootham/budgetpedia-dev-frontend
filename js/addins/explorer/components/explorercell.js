@@ -41,12 +41,20 @@ class ExplorerCell extends Component {
                     budgetCell.switchChartCode(this.chartConfig.explorerChartCode);
                     break;
                 }
+                case actions_1.cellTypes.UPDATE_CELL_YEAR_SELECTIONS: {
+                    budgetCell.switchYearCodes(this.cellDeclaration.yearSelections);
+                    break;
+                }
             }
             this._previousControlData = currentControlData;
         };
         this.onChangeChartCode = (explorerChartCode) => {
             let { budgetCell } = this.props;
             this.props.globalStateActions.updateCellChartCode(budgetCell.uid, explorerChartCode);
+        };
+        this.onChangeChartYears = (leftYear, rightYear) => {
+            let { budgetCell } = this.props;
+            this.props.globalStateActions.updateCellYearSelections(budgetCell.uid, leftYear, rightYear);
         };
         this.onChangeTimeCode = explorerTimeCode => {
             this.setState({
@@ -424,9 +432,13 @@ class ExplorerCell extends Component {
             }
             return years;
         };
-        let yearselection = React.createElement("div", {style: { paddingBottom: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Select ", (yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? 'year' : 'years', ": "), (yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? (React.createElement(DropDownMenu_1.default, {value: leftYear, style: {}, onChange: e => { }}, yearsoptions())) : null, (yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? null
+        let yearselection = React.createElement("div", {style: { paddingBottom: "3px" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Select ", (yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? 'year' : 'years', ": "), (yearScope != constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? (React.createElement(DropDownMenu_1.default, {value: leftYear, style: {}, onChange: (e, key, payload) => {
+            this.onChangeChartYears(payload, rightYear);
+        }}, yearsoptions())) : null, (yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear]) ? null
             : ((yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears]) ? ':'
-                : '-'), React.createElement(DropDownMenu_1.default, {value: rightYear, style: {}, onChange: e => { }}, yearsoptions()));
+                : '-'), React.createElement(DropDownMenu_1.default, {value: rightYear, style: {}, onChange: (e, key, payload) => {
+            this.onChangeChartYears(leftYear, payload);
+        }}, yearsoptions()));
         return React.createElement("div", null, (this.props.showControls) ? React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions, deltatoggle, nettoggle, variancetoggle) : null, React.createElement("div", {style: { position: "relative" }}, chart, drilldownprompt), React.createElement("div", {style: { padding: "3px", textAlign: "center" }}, (this.props.showControls) ?
             yearselection : null, informationoptions, socialoptions, datatable, harmonizeoptions));
     }
