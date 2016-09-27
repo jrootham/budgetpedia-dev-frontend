@@ -190,6 +190,19 @@ const generateJsonFile = (aspect, aspects, messages, context) => {
         addSortedProperties(data, context)
     }
 
+    // --------------------[ integrate meta overrides ]---------------------
+
+    let overridefilespec = context.metaoverridepath + aspect + '.json'
+    if (utilities.fileExists(overridefilespec)) {
+        console.log('processing', overridefilespec)
+        let ojson = utilities.readFileJson(overridefilespec)
+        for (let index in ojson) {
+            json.MetaData[index] = ojson[index]
+            utilities.log(aspect + ' override change ' + index + ':' + 
+                JSON.stringify(ojson[index]))
+        }
+    }
+
     // ---------------------[ save files ]--------------------
     let targetfilename = aspect + '.json'
     let targetfilespec = context.jsonpath + targetfilename

@@ -271,6 +271,11 @@ exports.collectGenerateData = context => {
     context.metapath = filedata.path
     context.metafiles = filedata.files
 
+    filedata = collectFileData(context, 'meta-over-rides', 'json')
+
+    context.metaoverridepath = filedata.path
+    context.metaoverridefiles = filedata.files
+
     filedata = collectFileData(context, 'messages')
 
     context.messagespath = filedata.path
