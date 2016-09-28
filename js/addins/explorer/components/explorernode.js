@@ -31,8 +31,17 @@ class ExplorerNode extends Component {
             let nodeDeclaration = this.props.declarationData.nodesById[budgetNode.uid];
             switch (lastAction.type) {
                 case actions_1.nodeTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
-                    budgetNode.resetCells();
-                    this.forceUpdate();
+                    let cells = this.state.nodeCells;
+                    if (cells.length == 0)
+                        break;
+                    let testuid = cells[0].uid;
+                    let testCurrentYearSelections = currentControlData.cellsById[testuid].yearSelections;
+                    let testPreviousYearSelections = previousControlData.cellsById[testuid].yearSelections;
+                    if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear ||
+                        testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) {
+                        budgetNode.resetCells();
+                        this.forceUpdate();
+                    }
                     break;
                 }
             }

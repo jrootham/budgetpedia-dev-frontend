@@ -2,14 +2,14 @@
 // explorerbranch.tsx
 /*
     TODO: 
+    - implement scrolldown to new clone
+    - implement inheritance of settings to new clone
     - add input fields to title, explorer header, and branch rightmost box
       to allow textual explanations of pages
     - add control to explorer header to toggle show/hide controls of charts
     - have per unit and performance views
     - include document source version (eg. summary vs fpars)
     - prevent resetting branch when viewpoint selected is same as previous
-    BUG: after budgetdrilldown a sentinal is left in place which blocks repaint of byUnit menu
-    -- this needs serious rationalization.
 */
 'use strict'
 

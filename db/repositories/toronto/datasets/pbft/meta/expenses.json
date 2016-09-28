@@ -15,7 +15,7 @@
         "Components": "Programs",
         "CommonDimension": "Expenditures"
     },
-    "Units": "DOLLAR",
+    "Units": "FTE",
     "UnitsAlias": "$000's",
     "UnitRatio": 1000,
     "CommonDimension":"Expense"

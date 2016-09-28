@@ -19,7 +19,7 @@
             "Components": "Programs",
             "CommonDimension": "Permanence"
         },
-        "Units": "DOLLAR",
+        "Units": "FTE",
         "UnitsAlias": "$000's",
         "UnitRatio": 1,
         "CommonDimension": "Permanence",

@@ -65,7 +65,6 @@ class BudgetCell {
             let { aspectName, nodeDataseriesName } = budgetCell;
             let datasetName = constants_1.AspectNameToDatasetName[aspectName];
             let units = datasetConfig.Units;
-            let unitRatio = datasetConfig.UnitRatio;
             let verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units;
             verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')';
             let horizontalLabel = null;
@@ -133,17 +132,11 @@ class BudgetCell {
             let simpleroundedone = format({ round: 1, integerSeparator: ',' });
             if (treeNodeData.years) {
                 titleamount = treeNodeData.years[rightYear];
-                if (unitRatio == 1) {
-                    titleamount = simpleroundedone(titleamount);
+                if (units == 'DOLLAR') {
+                    titleamount = dollarformat(titleamount);
                 }
                 else {
-                    titleamount = parseInt(rounded(titleamount / unitRatio));
-                    if (units == 'DOLLAR') {
-                        titleamount = dollarformat(titleamount);
-                    }
-                    else {
-                        titleamount = simpleroundedone(titleamount);
-                    }
+                    titleamount = simpleroundedone(titleamount);
                 }
                 title += ' (Total: ' + titleamount + ')';
             }

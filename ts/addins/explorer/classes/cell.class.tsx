@@ -1,8 +1,28 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetcell.tsx
 /*
-TODO: BUG noSortedDataSeries when switching aspect with leaf expenditure cell showing
 TODO: add inflation adjustment info in all chart titles
+Title components:
+- Node meta category
+- Node cagegory
+- YearsRange
+- Total (for one year charts)
+- Inflation adjustment
+
+Vertical axis:
+- Metric (qualifier)
+
+Horizontal access:
+- Dimension
+
+Implement inheritance of YearScope, yearSelections, and ExplorerChartCode(s)
+
+BUGS:
+
+- horizontal title incorrect for Services chart (Expenditures, s/b Activities)
+- Title Node Meta category incorrect for activity graphs
+- setChartParms seems to get processed twice when once would do
+
 */ 
 
 import {
@@ -197,6 +217,8 @@ class BudgetCell {
     // dataseries is a list of data rows attached to a node
     setChartParms = () => {
 
+        // let err = new Error()
+        // console.log('setChartParms invoked',err)
         let budgetCell: BudgetCell = this
 
         // --------------[ Unpack data bundles ]-------------
@@ -309,7 +331,7 @@ class BudgetCell {
 
         let datasetName = AspectNameToDatasetName[aspectName]
         let units = datasetConfig.Units
-        let unitRatio = datasetConfig.UnitRatio
+        // let unitRatio = datasetConfig.UnitRatio
 
         // --------------------[ assemble vertical label value ]--------------------
 
@@ -390,17 +412,11 @@ class BudgetCell {
 
         if (treeNodeData.years) {
             titleamount = treeNodeData.years[rightYear]
-            if (unitRatio == 1) {
-                titleamount = simpleroundedone(titleamount)
+            if (units == 'DOLLAR') {
+                titleamount = dollarformat(titleamount)
             } else {
-                titleamount = parseInt(rounded(titleamount / unitRatio))
-                if (units == 'DOLLAR') {
-                    titleamount = dollarformat(titleamount)
-                } else {
-                    titleamount = simpleroundedone(titleamount)
-                }
+                titleamount = simpleroundedone(titleamount)
             }
-        
             title += ' (Total: ' + titleamount + ')'
         }
 

@@ -158,9 +158,19 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
 
         switch (lastAction.type) {
             case nodeActionTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
-                // console.log('node responding to year dependencies', this.props.declarationData, this.state.nodeCells)
-                budgetNode.resetCells()
-                this.forceUpdate()
+                // console.log('node responding to year dependencies', currentControlData, previousControlData , this.state.nodeCells)
+                let cells = this.state.nodeCells
+                if (cells.length == 0) break
+                let testuid = cells[0].uid
+                let testCurrentYearSelections = currentControlData.cellsById[testuid].yearSelections
+                let testPreviousYearSelections = previousControlData.cellsById[testuid].yearSelections
+                // console.log('tests', testCurrentYearSelections, testPreviousYearSelections)
+                if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear ||
+                    testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) { 
+                    // console.log('resetting cells')
+                    budgetNode.resetCells()
+                    this.forceUpdate()
+                }
                 break
             }
         }

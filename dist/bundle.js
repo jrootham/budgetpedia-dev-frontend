@@ -1508,7 +1508,6 @@ var BudgetCell = function () {
 
             var datasetName = constants_1.AspectNameToDatasetName[aspectName];
             var units = datasetConfig.Units;
-            var unitRatio = datasetConfig.UnitRatio;
             var verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units;
             verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')';
             var horizontalLabel = null;
@@ -1572,15 +1571,10 @@ var BudgetCell = function () {
             var simpleroundedone = format({ round: 1, integerSeparator: ',' });
             if (treeNodeData.years) {
                 titleamount = treeNodeData.years[rightYear];
-                if (unitRatio == 1) {
-                    titleamount = simpleroundedone(titleamount);
+                if (units == 'DOLLAR') {
+                    titleamount = dollarformat(titleamount);
                 } else {
-                    titleamount = parseInt(rounded(titleamount / unitRatio));
-                    if (units == 'DOLLAR') {
-                        titleamount = dollarformat(titleamount);
-                    } else {
-                        titleamount = simpleroundedone(titleamount);
-                    }
+                    titleamount = simpleroundedone(titleamount);
                 }
                 title += ' (Total: ' + titleamount + ')';
             }
@@ -3423,8 +3417,15 @@ var ExplorerNode = function (_Component) {
             switch (lastAction.type) {
                 case actions_1.nodeTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES:
                     {
-                        budgetNode.resetCells();
-                        _this.forceUpdate();
+                        var cells = _this.state.nodeCells;
+                        if (cells.length == 0) break;
+                        var testuid = cells[0].uid;
+                        var testCurrentYearSelections = currentControlData.cellsById[testuid].yearSelections;
+                        var testPreviousYearSelections = previousControlData.cellsById[testuid].yearSelections;
+                        if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear || testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) {
+                            budgetNode.resetCells();
+                            _this.forceUpdate();
+                        }
                         break;
                     }
             }
