@@ -101,6 +101,19 @@ class BudgetCell {
                             catname = names.Contents.DefaultInstance.Name;
                         }
                     }
+                    else {
+                        let nameindex = this.nodeDataseriesName;
+                        if (nameindex = 'Components') {
+                            nameindex += 'DimensionName';
+                        }
+                        else if (name = 'CommonDimension') {
+                            nameindex += 'Name';
+                        }
+                        else {
+                            console.error('nodeDataseriesName not found for ', this);
+                        }
+                        catname = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData[nameindex];
+                    }
                 }
                 if (!catname) {
                     catname = '(** Unknown Category **)';

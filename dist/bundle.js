@@ -1538,6 +1538,16 @@ var BudgetCell = function () {
                         if (_names && _names.Contents && _names.Contents.DefaultInstance) {
                             catname = _names.Contents.DefaultInstance.Name;
                         }
+                    } else {
+                        var nameindex = _this.nodeDataseriesName;
+                        if (nameindex = 'Components') {
+                            nameindex += 'DimensionName';
+                        } else if (name = 'CommonDimension') {
+                            nameindex += 'Name';
+                        } else {
+                            console.error('nodeDataseriesName not found for ', _this);
+                        }
+                        catname = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData[nameindex];
                     }
                 }
                 if (!catname) {

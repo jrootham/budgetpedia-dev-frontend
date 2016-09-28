@@ -1,6 +1,9 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetcell.tsx
 /*
+TODO: create DimensionNameLookups in aspect metadata for titles category names
+    - currently using parent DimensionName directly
+    - see 'add category' section of _setChartOptions
 TODO: add inflation adjustment info in all chart titles
 Title components:
 - Node meta category
@@ -20,8 +23,6 @@ Implement inheritance of YearScope, yearSelections, and ExplorerChartCode(s)
 BUGS:
 
 - horizontal title incorrect for Services chart (Expenditures, s/b Activities)
-- Title Node Meta category incorrect for activity graphs
-- setChartParms seems to get processed twice when once would do
 
 */ 
 
@@ -358,22 +359,37 @@ class BudgetCell {
         } else {
             nodename = datasetConfig.DatasetTitle
         }
+        // add category name
         let configindex = treeNodeData.NamingConfigRef
         let catname = null
-        if (configindex) {
+        if (configindex) { // viewpoint node
             let names = viewpointNamingConfigs[configindex]
             let instancenames = names.Instance
             catname = instancenames.Alias || instancenames.Name
-        } else {
+        } else { // sub-baseline dataset node
             if (treeNodeMetaDataFromParentSortedList && 
                 treeNodeMetaDataFromParentSortedList.parentBudgetNode && 
                 treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData) {
                 let parentconfigindex = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData.NamingConfigRef
+                // first level below depends in parentconfigindex
                 if (parentconfigindex) {
                     let names = viewpointNamingConfigs[parentconfigindex]
                     if (names && names.Contents && names.Contents.DefaultInstance) {
                         catname = names.Contents.DefaultInstance.Name
                     }
+                // lower levels depend on dimension category names.
+                // TODO: these should be looked up in datasetConfig
+                } else {
+                    let nameindex = this.nodeDataseriesName 
+                    if (nameindex = 'Components') {
+                        nameindex += 'DimensionName'
+                    } else if (name = 'CommonDimension') {
+                        nameindex += 'Name'
+                    } else {
+                        console.error('nodeDataseriesName not found for ', this)
+                    }
+                    // console.log('nameindex, treeNodeData, treeNodeMetaDataFromParentSortedList',nameindex,treeNodeData, treeNodeMetaDataFromParentSortedList)
+                    catname = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData[nameindex]                    
                 }
             } 
             if (!catname) {
