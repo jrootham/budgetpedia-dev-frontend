@@ -438,16 +438,16 @@
                 },
                 "Contents": {
                     "Name": "Functional",
-                    "Alias": "Program Activity Types"
+                    "Alias": "Budgeted Program Functions"
                 }
             },
             "ACTIVITYTYPE": {
                 "Instance": {
-                    "Name": "Activity Type"
+                    "Name": "Function"
                 },
                 "Contents": {
                     "Name": "Clusters",
-                    "Alias": "Program Clusters"
+                    "Alias": "Budgeted Program Clusters"
                 }
             },
             "SUPERCLUSTER": {
@@ -455,7 +455,7 @@
                     "Name": "Program Cluster"
                 },
                 "Contents": {
-                    "Name": "Program Clusters"
+                    "Name": "Budgeted Program Clusters"
                 }
             },
             "CLUSTER": {
@@ -463,7 +463,7 @@
                     "Name": "Program Cluster"
                 },
                 "Contents": {
-                    "Name": "Programs"
+                    "Name": "Budgeted Programs"
                 }
             },
             "PROGRAM": {
@@ -471,7 +471,7 @@
                     "Name": "Program"
                 },
                 "Contents": {
-                    "Name": "Services",
+                    "Name": "Budgeted Services",
                     "DefaultInstance":{
                         "Name":"Service"
                     }

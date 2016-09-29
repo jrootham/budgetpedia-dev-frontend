@@ -18,19 +18,19 @@
     "DimensionNames":{
         "Program":{
             "Instance":"Program",
-            "Collection":"Programs"
+            "Collection":"Budgeted Programs"
         },
         "Service":{
             "Instance":"Service",
-            "Collection":"Services"
+            "Collection":"Budgeted Services"
         },
         "Activity":{
             "Instance":"Activity",
-            "Collection":"Activities"
+            "Collection":"Budgeted Activities"
         },
         "Revenue":{
             "Instance":"Receipt",
-            "Collection":"Receipts"
+            "Collection":"Budgeted Receipts"
         }
     },
     "Units": "DOLLAR",

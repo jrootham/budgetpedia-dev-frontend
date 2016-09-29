@@ -14,11 +14,11 @@
     "DimensionNames":{
         "Program":{
             "Instance":"Program",
-            "Collection":"Programs"
+            "Collection":"Budgeted Programs"
         },
         "Permanence":{
             "Instance":"Permanence",
-            "Collection":"Permanence"
+            "Collection":"Budgeted Permanence"
         }
     },
     "CellTitles": {

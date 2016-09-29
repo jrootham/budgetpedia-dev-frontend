@@ -6,7 +6,6 @@ TODO: create DimensionNameLookups in aspect metadata for titles category names
     - see 'add category' section of _setChartOptions
 TODO: add inflation adjustment info in all chart titles
 
-TODO: test catname line 407
 Title components:
 - Node meta category
 - Node cagegory
@@ -351,13 +350,17 @@ class BudgetCell {
         } else {
 
             if (nodeDataseriesName == 'CommonDimension') {
-                let portaltitles = datasetConfig.CellTitles
-                horizontalLabel = portaltitles[nodeDataseriesName]
+                // let contentdimensionname = 
+                //         treeNodeData.CommonDimensionName
+                let contentdimensionname = datasetConfig.CommonDimension
+                let names = datasetConfig.DimensionNames
+                // console.log('treeNodeData, contentdimensionname, datasetConfig', treeNodeData, contentdimensionname, datasetConfig)
+                horizontalLabel = names[contentdimensionname].Collection
+                // let portaltitles = datasetConfig.CellTitles
+                // horizontalLabel = portaltitles[nodeDataseriesName]
             } else {
-                // console.log( nodeDataseriesName,treeNodeData,datasetConfig)
                 let contentdimensionname = 
                         treeNodeData.ComponentsDimensionName
-                // console.log('dimensionname',contentdimensionname)
 
                 let names = datasetConfig.DimensionNames
                 horizontalLabel = names[contentdimensionname].Collection

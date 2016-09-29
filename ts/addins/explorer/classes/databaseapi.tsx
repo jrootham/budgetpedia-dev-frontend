@@ -112,6 +112,7 @@ export interface DatasetConfig {
     Units: string,
     UnitsAlias: string,
     UnitRatio: number,
+    CommonDimension: any,
 }
 
 // used above
@@ -292,6 +293,7 @@ class Database {
                     Units,
                     UnitsAlias,
                     UnitRatio,
+                    CommonDimension,
                 } = metaData
 
                 let config = {
@@ -304,6 +306,7 @@ class Database {
                     Units, 
                     UnitsAlias,
                     UnitRatio,
+                    CommonDimension,
                 }
 
                  resolve(config)

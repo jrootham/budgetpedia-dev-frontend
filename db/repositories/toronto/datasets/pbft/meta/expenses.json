@@ -18,15 +18,15 @@
         },
         "Service":{
             "Instance":"Service",
-            "Collection":"Services"
+            "Collection":"Budgeted Services"
         },
         "Activity":{
             "Instance":"Activity",
-            "Collection":"Activities"
+            "Collection":"Budgeted Activities"
         },
         "Expense":{
             "Instance":"Expenditure",
-            "Collection":"Expenditures"
+            "Collection":"Budgeted Expenditures"
         }
     },
     "CellTitles": {

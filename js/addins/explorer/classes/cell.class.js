@@ -74,8 +74,9 @@ class BudgetCell {
             }
             else {
                 if (nodeDataseriesName == 'CommonDimension') {
-                    let portaltitles = datasetConfig.CellTitles;
-                    horizontalLabel = portaltitles[nodeDataseriesName];
+                    let contentdimensionname = datasetConfig.CommonDimension;
+                    let names = datasetConfig.DimensionNames;
+                    horizontalLabel = names[contentdimensionname].Collection;
                 }
                 else {
                     let contentdimensionname = treeNodeData.ComponentsDimensionName;

@@ -64,7 +64,7 @@ class Database {
         let promise = new Promise(resolve => {
             datasetpromise.then((datasetdata) => {
                 let metaData = datasetdata.MetaData;
-                let { DatasetName, YearsRange, DatasetTitle, Dataseries, DimensionNames, CellTitles, Units, UnitsAlias, UnitRatio, } = metaData;
+                let { DatasetName, YearsRange, DatasetTitle, Dataseries, DimensionNames, CellTitles, Units, UnitsAlias, UnitRatio, CommonDimension, } = metaData;
                 let config = {
                     DatasetName: DatasetName,
                     YearsRange: YearsRange,
@@ -75,6 +75,7 @@ class Database {
                     Units: Units,
                     UnitsAlias: UnitsAlias,
                     UnitRatio: UnitRatio,
+                    CommonDimension: CommonDimension,
                 };
                 resolve(config);
             });

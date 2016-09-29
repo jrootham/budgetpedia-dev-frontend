@@ -2,6 +2,8 @@
 // generate.js
 
 /*
+    BUG: default 'All' for drilldown inacurately reports drilldown available for all
+    elements when there are none -- for absent services for pbft 2011-2014
 */
 
 'use strict'

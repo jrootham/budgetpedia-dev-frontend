@@ -14,7 +14,7 @@
         "DimensionNames": {
             "Program": {
                 "Instance": "Program",
-                "Collection": "Programs"
+                "Collection": "Budgeted Programs"
             }
         },
         "CellTitles": {
