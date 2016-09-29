@@ -1465,6 +1465,7 @@ var BudgetCell = function () {
             var _budgetCell$viewpoint = budgetCell.viewpointConfigPack;
             var viewpointNamingConfigs = _budgetCell$viewpoint.viewpointNamingConfigs;
             var datasetConfig = _budgetCell$viewpoint.datasetConfig;
+            var isInflationAdjusted = _budgetCell$viewpoint.isInflationAdjusted;
             var _budgetCell$nodeDataP = budgetCell.nodeDataPack;
             var treeNodeData = _budgetCell$nodeDataP.treeNodeData;
             var yearSpecs = _budgetCell$nodeDataP.yearSpecs;
@@ -1583,18 +1584,32 @@ var BudgetCell = function () {
             }
             timeSuffix = ', ' + timeSuffix;
             title += timeSuffix;
-            var titleamount = null;
-            var dollarformat = format({ prefix: "$" });
-            var rounded = format({ round: 0, integerSeparator: '' });
-            var simpleroundedone = format({ round: 1, integerSeparator: ',' });
-            if (treeNodeData.years) {
-                titleamount = treeNodeData.years[rightYear];
-                if (units == 'DOLLAR') {
-                    titleamount = dollarformat(titleamount);
-                } else {
-                    titleamount = simpleroundedone(titleamount);
+            if (yearScope == constants_2.TimeScope[constants_2.TimeScope.OneYear]) {
+                var titleamount = null;
+                var dollarformat = format({ prefix: "$" });
+                var rounded = format({ round: 0, integerSeparator: '' });
+                var simpleroundedone = format({ round: 1, integerSeparator: ',' });
+                if (treeNodeData.years) {
+                    titleamount = treeNodeData.years[rightYear];
+                    if (units == 'DOLLAR') {
+                        titleamount = dollarformat(titleamount);
+                    } else {
+                        titleamount = simpleroundedone(titleamount);
+                    }
+                    title += ' (Total: ' + titleamount + ')';
                 }
-                title += ' (Total: ' + titleamount + ')';
+            }
+            if (datasetConfig.InflationAdjustable) {
+                if (!(yearScope == constants_2.TimeScope[constants_2.TimeScope.OneYear] && datasetConfig.InflationReferenceYear <= rightYear)) {
+                    var isInflationAdjusted = _this.viewpointConfigPack.isInflationAdjusted;
+                    var fragment = void 0;
+                    if (!isInflationAdjusted) {
+                        fragment = ' -- nominal $';
+                    } else {
+                        fragment = ' -- inflation adjusted to ' + datasetConfig.InflationReferenceYear + ' $';
+                    }
+                    title += fragment;
+                }
             }
             var options = {
                 animation: {
@@ -1970,6 +1985,8 @@ var Database = function () {
                     var UnitsAlias = metaData.UnitsAlias;
                     var UnitRatio = metaData.UnitRatio;
                     var CommonDimension = metaData.CommonDimension;
+                    var InflationAdjustable = metaData.InflationAdjustable;
+                    var InflationReferenceYear = metaData.InflationReferenceYear;
 
                     var config = {
                         DatasetName: DatasetName,
@@ -1981,7 +1998,9 @@ var Database = function () {
                         Units: Units,
                         UnitsAlias: UnitsAlias,
                         UnitRatio: UnitRatio,
-                        CommonDimension: CommonDimension
+                        CommonDimension: CommonDimension,
+                        InflationAdjustable: InflationAdjustable,
+                        InflationReferenceYear: InflationReferenceYear
                     };
                     resolve(config);
                 });
@@ -2763,10 +2782,12 @@ var ExplorerBranch = function (_Component) {
                 var _viewpointdata$Meta = viewpointdata.Meta;
                 var viewpointNamingConfigs = _viewpointdata$Meta.NamingConfigurations;
                 var datasetConfig = _viewpointdata$Meta.datasetConfig;
+                var isInflationAdjusted = _viewpointdata$Meta.isInflationAdjusted;
 
                 var viewpointConfigPack = {
                     viewpointNamingConfigs: viewpointNamingConfigs,
-                    datasetConfig: datasetConfig
+                    datasetConfig: datasetConfig,
+                    isInflationAdjusted: isInflationAdjusted
                 };
                 budgetNode.viewpointConfigPack = viewpointConfigPack;
                 budgetNode.branchSettings = _this.props.budgetBranch.settings;

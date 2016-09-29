@@ -27,7 +27,7 @@ class BudgetCell {
         };
         this.setChartParms = () => {
             let budgetCell = this;
-            let { viewpointNamingConfigs, datasetConfig } = budgetCell.viewpointConfigPack;
+            let { viewpointNamingConfigs, datasetConfig, isInflationAdjusted, } = budgetCell.viewpointConfigPack;
             let { treeNodeData, yearSpecs, treeNodeMetaDataFromParentSortedList, } = budgetCell.nodeDataPack;
             if (!treeNodeData) {
                 console.error('System Error: node not found in setChartParms', budgetCell);
@@ -148,19 +148,35 @@ class BudgetCell {
             }
             timeSuffix = ', ' + timeSuffix;
             title += timeSuffix;
-            let titleamount = null;
-            let dollarformat = format({ prefix: "$" });
-            let rounded = format({ round: 0, integerSeparator: '' });
-            let simpleroundedone = format({ round: 1, integerSeparator: ',' });
-            if (treeNodeData.years) {
-                titleamount = treeNodeData.years[rightYear];
-                if (units == 'DOLLAR') {
-                    titleamount = dollarformat(titleamount);
+            if (yearScope == constants_2.TimeScope[constants_2.TimeScope.OneYear]) {
+                let titleamount = null;
+                let dollarformat = format({ prefix: "$" });
+                let rounded = format({ round: 0, integerSeparator: '' });
+                let simpleroundedone = format({ round: 1, integerSeparator: ',' });
+                if (treeNodeData.years) {
+                    titleamount = treeNodeData.years[rightYear];
+                    if (units == 'DOLLAR') {
+                        titleamount = dollarformat(titleamount);
+                    }
+                    else {
+                        titleamount = simpleroundedone(titleamount);
+                    }
+                    title += ' (Total: ' + titleamount + ')';
                 }
-                else {
-                    titleamount = simpleroundedone(titleamount);
+            }
+            if (datasetConfig.InflationAdjustable) {
+                if (!(yearScope == constants_2.TimeScope[constants_2.TimeScope.OneYear] &&
+                    datasetConfig.InflationReferenceYear <= rightYear)) {
+                    let isInflationAdjusted = this.viewpointConfigPack.isInflationAdjusted;
+                    let fragment;
+                    if (!isInflationAdjusted) {
+                        fragment = ' -- nominal $';
+                    }
+                    else {
+                        fragment = ` -- inflation adjusted to ${datasetConfig.InflationReferenceYear} $`;
+                    }
+                    title += fragment;
                 }
-                title += ' (Total: ' + titleamount + ')';
             }
             let options = {
                 animation: {

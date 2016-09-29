@@ -68,6 +68,7 @@ export interface ChartCallbacks {
 interface viewpointConfigPack {
     viewpointNamingConfigs: any,
     datasetConfig: DatasetConfig,
+    isInflationAdjusted: boolean,
 }
 
 export interface CellDeclaration {
@@ -223,9 +224,12 @@ class BudgetCell {
 
         // --------------[ Unpack data bundles ]-------------
 
+        // console.log('viewpointConfigPack', this.viewpointConfigPack)
+
         let { 
             viewpointNamingConfigs, 
-            datasetConfig 
+            datasetConfig,
+            isInflationAdjusted, 
         } = budgetCell.viewpointConfigPack
 
         let { 
@@ -437,23 +441,40 @@ class BudgetCell {
         title += timeSuffix
 
         // add title amount
-        let titleamount = null
+        if (yearScope == TimeScope[TimeScope.OneYear]) {
+            let titleamount = null
 
-        // utility functions for number formatting
-        let dollarformat = format({ prefix: "$" })
-        let rounded = format({ round: 0, integerSeparator: '' })
-        let simpleroundedone = format({ round: 1, integerSeparator: ',' })
+            // utility functions for number formatting
+            let dollarformat = format({ prefix: "$" })
+            let rounded = format({ round: 0, integerSeparator: '' })
+            let simpleroundedone = format({ round: 1, integerSeparator: ',' })
 
-        if (treeNodeData.years) {
-            titleamount = treeNodeData.years[rightYear]
-            if (units == 'DOLLAR') {
-                titleamount = dollarformat(titleamount)
-            } else {
-                titleamount = simpleroundedone(titleamount)
+            if (treeNodeData.years) {
+                titleamount = treeNodeData.years[rightYear]
+                if (units == 'DOLLAR') {
+                    titleamount = dollarformat(titleamount)
+                } else {
+                    titleamount = simpleroundedone(titleamount)
+                }
+                title += ' (Total: ' + titleamount + ')'
             }
-            title += ' (Total: ' + titleamount + ')'
         }
 
+        // add inflation adjustment indicator if appropriate
+        if (datasetConfig.InflationAdjustable) {
+            if (!(yearScope == TimeScope[TimeScope.OneYear] && 
+                datasetConfig.InflationReferenceYear <= rightYear)) {
+                let isInflationAdjusted = this.viewpointConfigPack.isInflationAdjusted
+                // console.log('isInflationAdjusted',isInflationAdjusted)
+                let fragment
+                if (!isInflationAdjusted) {
+                    fragment = ' -- nominal $'
+                } else {
+                    fragment = ` -- inflation adjusted to ${datasetConfig.InflationReferenceYear} $`
+                }
+                title += fragment
+            }
+        }
         // ------------------------------[ assemble options ]--------------------------------
 
         let options = {

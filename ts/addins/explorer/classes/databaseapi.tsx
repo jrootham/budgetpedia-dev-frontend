@@ -82,6 +82,7 @@ export interface ViewpointData extends Component {
         NamingConfigurations: {
             [configurationcode:string]:Configuration,
         },
+        isInflationAdjusted:boolean,
     }
 }
 
@@ -113,6 +114,8 @@ export interface DatasetConfig {
     UnitsAlias: string,
     UnitRatio: number,
     CommonDimension: any,
+    InflationAdjustable?: boolean,
+    InflationReferenceYear?:number,
 }
 
 // used above
@@ -294,6 +297,8 @@ class Database {
                     UnitsAlias,
                     UnitRatio,
                     CommonDimension,
+                    InflationAdjustable,
+                    InflationReferenceYear,
                 } = metaData
 
                 let config = {
@@ -307,6 +312,8 @@ class Database {
                     UnitsAlias,
                     UnitRatio,
                     CommonDimension,
+                    InflationAdjustable,
+                    InflationReferenceYear,
                 }
 
                  resolve(config)

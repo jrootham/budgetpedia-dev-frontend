@@ -587,11 +587,13 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let {
                 NamingConfigurations: viewpointNamingConfigs,
                 datasetConfig: datasetConfig,
+                isInflationAdjusted,
             } = viewpointdata.Meta
             // console.log('viewpointdata', viewpointdata)
             let viewpointConfigPack = {
                 viewpointNamingConfigs,
                 datasetConfig,
+                isInflationAdjusted,
             }
             budgetNode.viewpointConfigPack = viewpointConfigPack
             budgetNode.branchSettings = this.props.budgetBranch.settings
