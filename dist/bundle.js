@@ -1515,8 +1515,14 @@ var BudgetCell = function () {
                 var titleref = viewpointNamingConfigs[treeNodeData.NamingConfigRef];
                 horizontalLabel = titleref.Contents.Alias || titleref.Contents.Name;
             } else {
-                var portaltitles = datasetConfig.CellTitles;
-                horizontalLabel = portaltitles.CommonDimension;
+                if (nodeDataseriesName == 'CommonDimension') {
+                    var portaltitles = datasetConfig.CellTitles;
+                    horizontalLabel = portaltitles[nodeDataseriesName];
+                } else {
+                    var contentdimensionname = treeNodeData.ComponentsDimensionName;
+                    var names = datasetConfig.DimensionNames;
+                    horizontalLabel = names[contentdimensionname].Collection;
+                }
             }
             var nodename = null;
             if (treeNodeMetaDataFromParentSortedList) {
@@ -1527,19 +1533,19 @@ var BudgetCell = function () {
             var configindex = treeNodeData.NamingConfigRef;
             var catname = null;
             if (configindex) {
-                var names = viewpointNamingConfigs[configindex];
-                var instancenames = names.Instance;
+                var _names = viewpointNamingConfigs[configindex];
+                var instancenames = _names.Instance;
                 catname = instancenames.Alias || instancenames.Name;
             } else {
                 if (treeNodeMetaDataFromParentSortedList && treeNodeMetaDataFromParentSortedList.parentBudgetNode && treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData) {
                     var parentconfigindex = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData.NamingConfigRef;
                     if (parentconfigindex) {
-                        var _names = viewpointNamingConfigs[parentconfigindex];
-                        if (_names && _names.Contents && _names.Contents.DefaultInstance) {
-                            catname = _names.Contents.DefaultInstance.Name;
+                        var _names2 = viewpointNamingConfigs[parentconfigindex];
+                        if (_names2 && _names2.Contents && _names2.Contents.DefaultInstance) {
+                            catname = _names2.Contents.DefaultInstance.Name;
                         }
                     } else {
-                        var nameindex = _this.nodeDataseriesName;
+                        var nameindex = nodeDataseriesName;
                         if (nameindex = 'Components') {
                             nameindex += 'DimensionName';
                         } else if (name = 'CommonDimension') {
@@ -1956,6 +1962,7 @@ var Database = function () {
                     var YearsRange = metaData.YearsRange;
                     var DatasetTitle = metaData.DatasetTitle;
                     var Dataseries = metaData.Dataseries;
+                    var DimensionNames = metaData.DimensionNames;
                     var CellTitles = metaData.CellTitles;
                     var Units = metaData.Units;
                     var UnitsAlias = metaData.UnitsAlias;
@@ -1966,6 +1973,7 @@ var Database = function () {
                         YearsRange: YearsRange,
                         DatasetTitle: DatasetTitle,
                         Dataseries: Dataseries,
+                        DimensionNames: DimensionNames,
                         CellTitles: CellTitles,
                         Units: Units,
                         UnitsAlias: UnitsAlias,

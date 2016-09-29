@@ -11,6 +11,16 @@
         }
     ],
     "Dimensions":["Program", "Permanence"],
+    "DimensionNames":{
+        "Program":{
+            "Instance":"Program",
+            "Collection":"Programs"
+        },
+        "Permanence":{
+            "Instance":"Permanence",
+            "Collection":"Permanence"
+        }
+    },
     "CellTitles": {
         "Components": "Programs",
         "CommonDimension": "Permanence"

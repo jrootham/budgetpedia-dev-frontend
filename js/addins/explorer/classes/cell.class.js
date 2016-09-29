@@ -73,8 +73,15 @@ class BudgetCell {
                 horizontalLabel = titleref.Contents.Alias || titleref.Contents.Name;
             }
             else {
-                let portaltitles = datasetConfig.CellTitles;
-                horizontalLabel = portaltitles.CommonDimension;
+                if (nodeDataseriesName == 'CommonDimension') {
+                    let portaltitles = datasetConfig.CellTitles;
+                    horizontalLabel = portaltitles[nodeDataseriesName];
+                }
+                else {
+                    let contentdimensionname = treeNodeData.ComponentsDimensionName;
+                    let names = datasetConfig.DimensionNames;
+                    horizontalLabel = names[contentdimensionname].Collection;
+                }
             }
             let nodename = null;
             if (treeNodeMetaDataFromParentSortedList) {
@@ -102,7 +109,7 @@ class BudgetCell {
                         }
                     }
                     else {
-                        let nameindex = this.nodeDataseriesName;
+                        let nameindex = nodeDataseriesName;
                         if (nameindex = 'Components') {
                             nameindex += 'DimensionName';
                         }

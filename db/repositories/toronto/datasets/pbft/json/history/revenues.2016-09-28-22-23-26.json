@@ -21,24 +21,6 @@
             "Components": "Programs",
             "CommonDimension": "Receipts"
         },
-        "DimensionNames": {
-            "Program": {
-                "Instance": "Program",
-                "Collection": "Programs"
-            },
-            "Service": {
-                "Instance": "Service",
-                "Collection": "Services"
-            },
-            "Activity": {
-                "Instance": "Activity",
-                "Collection": "Activities"
-            },
-            "Revenue": {
-                "Instance": "Receipt",
-                "Collection": "Receipts"
-            }
-        },
         "Units": "DOLLAR",
         "UnitsAlias": "$000's",
         "UnitRatio": 1000,

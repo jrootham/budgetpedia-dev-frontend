@@ -22,8 +22,6 @@ Implement inheritance of YearScope, yearSelections, and ExplorerChartCode(s)
 
 BUGS:
 
-- horizontal title incorrect for Services chart (Expenditures, s/b Activities)
-
 */ 
 
 import {
@@ -343,11 +341,26 @@ class BudgetCell {
 
         let horizontalLabel = null
         if ((treeNodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonDimension')) {
+
+            // console.log('treeNodeData.NamingConfigRef',treeNodeData.NamingConfigRef)
             let titleref = viewpointNamingConfigs[treeNodeData.NamingConfigRef]
             horizontalLabel = titleref.Contents.Alias || titleref.Contents.Name
+
         } else {
-            let portaltitles = datasetConfig.CellTitles
-            horizontalLabel = portaltitles.CommonDimension
+
+            if (nodeDataseriesName == 'CommonDimension') {
+                let portaltitles = datasetConfig.CellTitles
+                horizontalLabel = portaltitles[nodeDataseriesName]
+            } else {
+                // console.log( nodeDataseriesName,treeNodeData,datasetConfig)
+                let contentdimensionname = 
+                        treeNodeData.ComponentsDimensionName
+                // console.log('dimensionname',contentdimensionname)
+
+                let names = datasetConfig.DimensionNames
+                horizontalLabel = names[contentdimensionname].Collection
+            }
+
         }
 
         // ----------------------[ assemble chart title ]----------------------
@@ -380,7 +393,7 @@ class BudgetCell {
                 // lower levels depend on dimension category names.
                 // TODO: these should be looked up in datasetConfig
                 } else {
-                    let nameindex = this.nodeDataseriesName 
+                    let nameindex = nodeDataseriesName 
                     if (nameindex = 'Components') {
                         nameindex += 'DimensionName'
                     } else if (name = 'CommonDimension') {

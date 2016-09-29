@@ -64,12 +64,13 @@ class Database {
         let promise = new Promise(resolve => {
             datasetpromise.then((datasetdata) => {
                 let metaData = datasetdata.MetaData;
-                let { DatasetName, YearsRange, DatasetTitle, Dataseries, CellTitles, Units, UnitsAlias, UnitRatio, } = metaData;
+                let { DatasetName, YearsRange, DatasetTitle, Dataseries, DimensionNames, CellTitles, Units, UnitsAlias, UnitRatio, } = metaData;
                 let config = {
                     DatasetName: DatasetName,
                     YearsRange: YearsRange,
                     DatasetTitle: DatasetTitle,
                     Dataseries: Dataseries,
+                    DimensionNames: DimensionNames,
                     CellTitles: CellTitles,
                     Units: Units,
                     UnitsAlias: UnitsAlias,

@@ -8,6 +8,12 @@
         }
     ],
     "Dimensions":["Program"],
+    "DimensionNames":{
+        "Program":{
+            "Instance":"Program",
+            "Collection":"Programs"
+        }
+    },
     "CellTitles": {
         "Components":"Programs"
     },

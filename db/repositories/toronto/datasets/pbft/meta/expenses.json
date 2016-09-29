@@ -11,6 +11,24 @@
         }
     ],
     "Dimensions":["Program", "Service","Activity","Expense"],
+    "DimensionNames":{
+        "Program":{
+            "Instance":"Program",
+            "Collection":"Programs"
+        },
+        "Service":{
+            "Instance":"Service",
+            "Collection":"Services"
+        },
+        "Activity":{
+            "Instance":"Activity",
+            "Collection":"Activities"
+        },
+        "Expense":{
+            "Instance":"Expenditure",
+            "Collection":"Expenditures"
+        }
+    },
     "CellTitles": {
         "Components": "Programs",
         "CommonDimension": "Expenditures"
