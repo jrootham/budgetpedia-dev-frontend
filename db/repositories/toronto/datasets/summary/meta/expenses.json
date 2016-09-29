@@ -17,7 +17,7 @@
     "CellTitles": {
         "Components": "Programs"
     },
-    "Units": "FTE",
+    "Units": "DOLLAR",
     "UnitsAlias": "$000's",
     "UnitRatio": 1000,
     "CommonDimension":false

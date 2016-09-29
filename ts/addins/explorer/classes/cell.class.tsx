@@ -5,6 +5,8 @@ TODO: create DimensionNameLookups in aspect metadata for titles category names
     - currently using parent DimensionName directly
     - see 'add category' section of _setChartOptions
 TODO: add inflation adjustment info in all chart titles
+
+TODO: test catname line 407
 Title components:
 - Node meta category
 - Node cagegory
@@ -401,8 +403,8 @@ class BudgetCell {
                     } else {
                         console.error('nodeDataseriesName not found for ', this)
                     }
-                    // console.log('nameindex, treeNodeData, treeNodeMetaDataFromParentSortedList',nameindex,treeNodeData, treeNodeMetaDataFromParentSortedList)
-                    catname = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData[nameindex]                    
+                    let dimensionname = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData[nameindex]                    
+                    catname = datasetConfig.DimensionNames[dimensionname].Instance
                 }
             } 
             if (!catname) {

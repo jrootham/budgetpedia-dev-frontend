@@ -11,16 +11,10 @@
         "Dimensions": [
             "Program"
         ],
-        "DimensionNames": {
-            "Program": {
-                "Instance": "Program",
-                "Collection": "Programs"
-            }
-        },
         "CellTitles": {
             "Components": "Programs"
         },
-        "Units": "DOLLAR",
+        "Units": "FTE",
         "UnitsAlias": "$000's",
         "UnitRatio": 1000,
         "CommonDimension": false,

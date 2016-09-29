@@ -119,7 +119,8 @@ class BudgetCell {
                         else {
                             console.error('nodeDataseriesName not found for ', this);
                         }
-                        catname = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData[nameindex];
+                        let dimensionname = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData[nameindex];
+                        catname = datasetConfig.DimensionNames[dimensionname].Instance;
                     }
                 }
                 if (!catname) {

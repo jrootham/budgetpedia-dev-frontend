@@ -1553,7 +1553,8 @@ var BudgetCell = function () {
                         } else {
                             console.error('nodeDataseriesName not found for ', _this);
                         }
-                        catname = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData[nameindex];
+                        var dimensionname = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData[nameindex];
+                        catname = datasetConfig.DimensionNames[dimensionname].Instance;
                     }
                 }
                 if (!catname) {
