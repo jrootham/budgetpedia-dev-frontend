@@ -1230,8 +1230,7 @@ var BudgetBranch = function () {
                     parentDataNode = branchNodes[nodeIndex - 1].treeNodeData;
                 }
                 budgetNode.updateDataNode(dataNode, parentDataNode);
-                var newCells = budgetNode.resetCells();
-                budgetNode.newCells = newCells;
+                budgetNode.resetCells();
             }
             budgetBranch.setState({
                 branchNodes: branchNodes
@@ -1292,8 +1291,7 @@ var BudgetBranch = function () {
                         })();
                     } else {
                         budgetNode.updateAspect(branchSettings.aspect, dataNode, parentDataNode);
-                        var newCells = budgetNode.resetCells();
-                        budgetNode.newCells = newCells;
+                        budgetNode.resetCells();
                     }
                 } else {
                     var _removed = branchNodes.splice(nodeIndex);
@@ -2350,6 +2348,7 @@ var BudgetNode = function () {
                 _this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode;
             }
             _this.updated = true;
+            console.log('updated set to true in updateDataNode');
         };
         this.getCellDeclarationParms = function () {
             var parmsList = [];
@@ -2402,7 +2401,7 @@ var BudgetNode = function () {
             };
             cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeDataPack = nodeDataPack;
-            cell.aspectName = budgetNode.branchSettings.aspect, budgetNode._setCellChartParms(cell, cellIndex);
+            cell.aspectName = budgetNode.branchSettings.aspect, budgetNode._setCellSelectionCallback(cell, cellIndex);
             budgetNode._setCellTitle(cell);
         };
         this._setCellTitle = function (budgetCell) {
@@ -2415,7 +2414,7 @@ var BudgetNode = function () {
             }
             budgetCell.cellTitle = chartblocktitle;
         };
-        this._setCellChartParms = function (cell, cellIndex) {
+        this._setCellSelectionCallback = function (cell, cellIndex) {
             var budgetNode = _this;
             var selectfn = _this.onChartComponentSelection;
             var fcurrent = selectfn(budgetNode.nodeIndex)(cellIndex);
@@ -2466,7 +2465,9 @@ var BudgetNode = function () {
                 budgetNode._updateCell(cell, cellIndex);
                 cell.setChartParms();
             }
-            return cells;
+            this.newCells = cells;
+            this.updated = true;
+            console.log('updated set to true in resetCells');
         }
     }, {
         key: 'treeNodeData',
@@ -3523,8 +3524,7 @@ var ExplorerNode = function (_Component) {
                         var testCurrentYearSelections = currentControlData.cellsById[testuid].yearSelections;
                         var testPreviousYearSelections = previousControlData.cellsById[testuid].yearSelections;
                         if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear || testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) {
-                            var newCells = budgetNode.resetCells();
-                            budgetNode.newCells = newCells;
+                            budgetNode.resetCells();
                             _this.forceUpdate();
                         }
                         break;
@@ -3534,7 +3534,6 @@ var ExplorerNode = function (_Component) {
         };
         _this.updateCellsFromDeclarations = function (props) {
             var budgetNode = props.budgetNode;
-            var declarationData = props.declarationData;
 
             if (budgetNode.updated) {
                 _this.setState({
@@ -3542,6 +3541,7 @@ var ExplorerNode = function (_Component) {
                 });
                 budgetNode.newCells = null;
                 budgetNode.updated = false;
+                console.log('updated cleared in updateCellsFromDeclarations');
             }
         };
         _this.harmonizecount = null;

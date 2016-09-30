@@ -65,8 +65,7 @@ class BudgetBranch {
                     parentDataNode = branchNodes[nodeIndex - 1].treeNodeData;
                 }
                 budgetNode.updateDataNode(dataNode, parentDataNode);
-                let newCells = budgetNode.resetCells();
-                budgetNode.newCells = newCells;
+                budgetNode.resetCells();
             }
             budgetBranch.setState({
                 branchNodes: branchNodes,
@@ -124,8 +123,7 @@ class BudgetBranch {
                     }
                     else {
                         budgetNode.updateAspect(branchSettings.aspect, dataNode, parentDataNode);
-                        let newCells = budgetNode.resetCells();
-                        budgetNode.newCells = newCells;
+                        budgetNode.resetCells();
                     }
                 }
                 else {

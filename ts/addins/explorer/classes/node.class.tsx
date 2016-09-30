@@ -97,6 +97,7 @@ class BudgetNode {
             this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode
         }
         this.updated = true
+        console.log('updated set to true in updateDataNode')
     }
 
     oldAspectState: boolean // !!dataNode.Components
@@ -142,6 +143,8 @@ class BudgetNode {
             this._updateCell(cell, cellIndex)
             cells.push(cell)
         }
+        // this.newCells = cells
+        // this.updated = true
         return cells
     }
 
@@ -157,7 +160,9 @@ class BudgetNode {
             cell.setChartParms()
 
         }
-        return cells
+        this.newCells = cells
+        this.updated = true
+        console.log('updated set to true in resetCells')
     }
 
     private _updateCell = (cell:BudgetCell, cellIndex) => {
@@ -174,7 +179,7 @@ class BudgetNode {
         cell.nodeDataPack = nodeDataPack
         cell.aspectName = budgetNode.branchSettings.aspect,
 
-        budgetNode._setCellChartParms(cell, cellIndex)
+        budgetNode._setCellSelectionCallback(cell, cellIndex)
         budgetNode._setCellTitle(cell)
     }
 
@@ -189,7 +194,7 @@ class BudgetNode {
         budgetCell.cellTitle = chartblocktitle
     }
 
-    private _setCellChartParms = (cell:BudgetCell, cellIndex) => {
+    private _setCellSelectionCallback = (cell:BudgetCell, cellIndex) => {
         let budgetNode = this
 
         let selectfn = this.onChartComponentSelection

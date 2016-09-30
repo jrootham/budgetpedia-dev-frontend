@@ -17,6 +17,7 @@ class BudgetNode {
                 this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode;
             }
             this.updated = true;
+            console.log('updated set to true in updateDataNode');
         };
         this.getCellDeclarationParms = () => {
             let parmsList = [];
@@ -43,7 +44,7 @@ class BudgetNode {
             cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeDataPack = nodeDataPack;
             cell.aspectName = budgetNode.branchSettings.aspect,
-                budgetNode._setCellChartParms(cell, cellIndex);
+                budgetNode._setCellSelectionCallback(cell, cellIndex);
             budgetNode._setCellTitle(cell);
         };
         this._setCellTitle = (budgetCell) => {
@@ -57,7 +58,7 @@ class BudgetNode {
             }
             budgetCell.cellTitle = chartblocktitle;
         };
-        this._setCellChartParms = (cell, cellIndex) => {
+        this._setCellSelectionCallback = (cell, cellIndex) => {
             let budgetNode = this;
             let selectfn = this.onChartComponentSelection;
             let fcurrent = selectfn(budgetNode.nodeIndex)(cellIndex);
@@ -113,7 +114,9 @@ class BudgetNode {
             budgetNode._updateCell(cell, cellIndex);
             cell.setChartParms();
         }
-        return cells;
+        this.newCells = cells;
+        this.updated = true;
+        console.log('updated set to true in resetCells');
     }
     get cellDeclarationList() {
         let list = this.getProps().declarationData.nodesById[this.uid].cellList;

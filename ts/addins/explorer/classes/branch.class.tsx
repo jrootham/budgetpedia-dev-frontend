@@ -166,8 +166,8 @@ class BudgetBranch {
                 dataNode,
                 parentDataNode
             )
-            let newCells = budgetNode.resetCells()
-            budgetNode.newCells = newCells
+            budgetNode.resetCells()
+            // budgetNode.newCells = newCells
 
         }
 
@@ -255,8 +255,8 @@ class BudgetBranch {
                         dataNode,
                         parentDataNode
                     )
-                    let newCells = budgetNode.resetCells()
-                    budgetNode.newCells = newCells
+                    budgetNode.resetCells()
+                    // budgetNode.newCells = newCells
                 }
             } else {
                 // console.error('Sytem Error: no data node', budgetNode, viewpointData)

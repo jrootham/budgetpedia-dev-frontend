@@ -39,8 +39,7 @@ class ExplorerNode extends Component {
                     let testPreviousYearSelections = previousControlData.cellsById[testuid].yearSelections;
                     if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear ||
                         testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) {
-                        let newCells = budgetNode.resetCells();
-                        budgetNode.newCells = newCells;
+                        budgetNode.resetCells();
                         this.forceUpdate();
                     }
                     break;
@@ -49,13 +48,14 @@ class ExplorerNode extends Component {
             this._previousControlData = currentControlData;
         };
         this.updateCellsFromDeclarations = (props) => {
-            let { budgetNode, declarationData } = props;
+            let { budgetNode } = props;
             if (budgetNode.updated) {
                 this.setState({
                     nodeCells: budgetNode.newCells
                 });
                 budgetNode.newCells = null;
                 budgetNode.updated = false;
+                console.log('updated cleared in updateCellsFromDeclarations');
             }
         };
         this.harmonizecount = null;

@@ -168,8 +168,8 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
                 if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear ||
                     testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) { 
                     // console.log('resetting cells')
-                    let newCells = budgetNode.resetCells()
-                    budgetNode.newCells = newCells                    
+                    budgetNode.resetCells()
+                    // budgetNode.newCells = newCells                    
                     this.forceUpdate()
                 }
                 break
@@ -180,7 +180,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
 
 
     updateCellsFromDeclarations = (props) => {
-        let { budgetNode, declarationData }:{budgetNode:BudgetNode, declarationData:any} = props // this.props
+        let { budgetNode}:{budgetNode:BudgetNode} = props // this.props
         if (budgetNode.updated) {
             // console.log('updated cells being saved - setState')
             this.setState({
@@ -188,14 +188,10 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
             })
             budgetNode.newCells = null
             budgetNode.updated = false
+            console.log('updated cleared in updateCellsFromDeclarations')
         }
 
     }
-
-    // // state change machine
-    // private _respondToGlobalStateChange = () => {
-
-    // }
 
     harmonizecount: any = null
     // harmonize branch nodes; add pending node objects, and process state changes
