@@ -17,7 +17,6 @@ class BudgetNode {
                 this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode;
             }
             this.updated = true;
-            console.log('updated set to true in updateDataNode');
         };
         this.getCellDeclarationParms = () => {
             let parmsList = [];
@@ -116,7 +115,6 @@ class BudgetNode {
         }
         this.newCells = cells;
         this.updated = true;
-        console.log('updated set to true in resetCells');
     }
     get cellDeclarationList() {
         let list = this.getProps().declarationData.nodesById[this.uid].cellList;

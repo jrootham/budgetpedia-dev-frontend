@@ -188,7 +188,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
             })
             budgetNode.newCells = null
             budgetNode.updated = false
-            console.log('updated cleared in updateCellsFromDeclarations')
+            // console.log('updated cleared in updateCellsFromDeclarations')
         }
 
     }

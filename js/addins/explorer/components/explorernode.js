@@ -55,7 +55,6 @@ class ExplorerNode extends Component {
                 });
                 budgetNode.newCells = null;
                 budgetNode.updated = false;
-                console.log('updated cleared in updateCellsFromDeclarations');
             }
         };
         this.harmonizecount = null;

@@ -97,7 +97,7 @@ class BudgetNode {
             this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode
         }
         this.updated = true
-        console.log('updated set to true in updateDataNode')
+        // console.log('updated set to true in updateDataNode')
     }
 
     oldAspectState: boolean // !!dataNode.Components
@@ -162,7 +162,7 @@ class BudgetNode {
         }
         this.newCells = cells
         this.updated = true
-        console.log('updated set to true in resetCells')
+        // console.log('updated set to true in resetCells')
     }
 
     private _updateCell = (cell:BudgetCell, cellIndex) => {
