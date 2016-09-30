@@ -162,8 +162,7 @@ class BudgetBranch {
                 parentDataNode = branchNodes[nodeIndex-1].treeNodeData
             }
 
-            budgetNode.update(
-                branchSettings.inflationAdjusted,
+            budgetNode.updateDataNode(
                 dataNode,
                 parentDataNode
             )
@@ -251,7 +250,7 @@ class BudgetBranch {
                     })
                     budgetNode = null // branchNodes[nodeIndex] // created by createChildNode as side effect
                 } else {
-                    budgetNode.update(
+                    budgetNode.updateAspect(
                         branchSettings.aspect,
                         dataNode,
                         parentDataNode
@@ -372,8 +371,9 @@ class BudgetBranch {
         let treeNodeData = budgetNode.treeNodeData
 
         if (!treeNodeData.Components) {
-            // updateChartSelections()
+
             return
+
         }
 
         let components = treeNodeData.Components
@@ -387,10 +387,13 @@ class BudgetBranch {
             code = treeNodeMetaDataFromParentSortedList.Code
         }
         if (code)
+
             childdatapath.push(code)
+
         else {
-            // updateChartSelections()
+
             return
+
         }
 
         let newnode = treeNodeData.Components[code]
@@ -399,17 +402,17 @@ class BudgetBranch {
         }
         workingStatus(true)
         let newrange = Object.assign({}, budgetNode.yearSpecs)
-        // let datasetSpecs = viewpointData.DatasetSeries
 
         let newdatanode = getBudgetNode(viewpointData, childdatapath)
         let newnodeconfigparms: BudgetNodeParms = {
-            // datasetSpecs,
+
             viewpointName,
             aspectName,
             dataPath: childdatapath,
             nodeIndex: nodeIndex + 1,
             treeNodeMetaDataFromParentSortedList,
             yearSpecs: newrange,
+
         }
 
         actions.addNodeDeclaration(newnodeconfigparms)

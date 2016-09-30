@@ -86,10 +86,13 @@ class BudgetNode {
         return [...this.state.nodeCells]
     }
 
-    // reset = (treeNodeData, datasetSpecs, defaultChartType, aspect) => {
-    update = (aspect, treeNodeData, parentDataNode = null) => {
-        this._nodeData = treeNodeData
+    updateAspect = (aspect, treeNodeData, parentDataNode = null) => {
         this.aspectName = aspect
+        this.updateDataNode(treeNodeData, parentDataNode)
+    }
+
+    updateDataNode = (treeNodeData, parentDataNode = null) => {
+        this._nodeData = treeNodeData
         if (this.treeNodeMetaDataFromParentSortedList && parentDataNode) {
             this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode
         }

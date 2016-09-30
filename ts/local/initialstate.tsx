@@ -236,7 +236,8 @@ let explorer = {
         branch: branchDefaults,
         node: {
             cellIndex:0,
-            cellList:null
+            cellList:null,
+            yearSelections:{ leftYear: 2003, rightYear: 2016 },
         },
         cell: {
             chartConfigs:{

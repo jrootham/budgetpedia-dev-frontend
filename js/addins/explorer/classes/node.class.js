@@ -7,9 +7,12 @@ class BudgetNode {
         this.updated = false;
         this.newCells = null;
         this.treeNodeMetaDataFromParentSortedList = null;
-        this.update = (aspect, treeNodeData, parentDataNode = null) => {
-            this._nodeData = treeNodeData;
+        this.updateAspect = (aspect, treeNodeData, parentDataNode = null) => {
             this.aspectName = aspect;
+            this.updateDataNode(treeNodeData, parentDataNode);
+        };
+        this.updateDataNode = (treeNodeData, parentDataNode = null) => {
+            this._nodeData = treeNodeData;
             if (this.treeNodeMetaDataFromParentSortedList && parentDataNode) {
                 this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode;
             }

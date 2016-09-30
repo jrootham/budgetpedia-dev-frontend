@@ -1229,7 +1229,7 @@ var BudgetBranch = function () {
                 if (nodeIndex > 0) {
                     parentDataNode = branchNodes[nodeIndex - 1].treeNodeData;
                 }
-                budgetNode.update(branchSettings.inflationAdjusted, dataNode, parentDataNode);
+                budgetNode.updateDataNode(dataNode, parentDataNode);
                 var newCells = budgetNode.resetCells();
                 budgetNode.newCells = newCells;
             }
@@ -1291,7 +1291,7 @@ var BudgetBranch = function () {
                             budgetNode = null;
                         })();
                     } else {
-                        budgetNode.update(branchSettings.aspect, dataNode, parentDataNode);
+                        budgetNode.updateAspect(branchSettings.aspect, dataNode, parentDataNode);
                         var newCells = budgetNode.resetCells();
                         budgetNode.newCells = newCells;
                     }
@@ -2336,11 +2336,16 @@ var BudgetNode = function () {
         this.updated = false;
         this.newCells = null;
         this.treeNodeMetaDataFromParentSortedList = null;
-        this.update = function (aspect, treeNodeData) {
+        this.updateAspect = function (aspect, treeNodeData) {
             var parentDataNode = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 
-            _this._nodeData = treeNodeData;
             _this.aspectName = aspect;
+            _this.updateDataNode(treeNodeData, parentDataNode);
+        };
+        this.updateDataNode = function (treeNodeData) {
+            var parentDataNode = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+
+            _this._nodeData = treeNodeData;
             if (_this.treeNodeMetaDataFromParentSortedList && parentDataNode) {
                 _this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode;
             }
@@ -6926,7 +6931,8 @@ var explorer = {
         branch: branchDefaults,
         node: {
             cellIndex: 0,
-            cellList: null
+            cellList: null,
+            yearSelections: { leftYear: 2003, rightYear: 2016 }
         },
         cell: {
             chartConfigs: {

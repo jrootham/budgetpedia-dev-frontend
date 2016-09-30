@@ -64,7 +64,7 @@ class BudgetBranch {
                 if (nodeIndex > 0) {
                     parentDataNode = branchNodes[nodeIndex - 1].treeNodeData;
                 }
-                budgetNode.update(branchSettings.inflationAdjusted, dataNode, parentDataNode);
+                budgetNode.updateDataNode(dataNode, parentDataNode);
                 let newCells = budgetNode.resetCells();
                 budgetNode.newCells = newCells;
             }
@@ -123,7 +123,7 @@ class BudgetBranch {
                         budgetNode = null;
                     }
                     else {
-                        budgetNode.update(branchSettings.aspect, dataNode, parentDataNode);
+                        budgetNode.updateAspect(branchSettings.aspect, dataNode, parentDataNode);
                         let newCells = budgetNode.resetCells();
                         budgetNode.newCells = newCells;
                     }
