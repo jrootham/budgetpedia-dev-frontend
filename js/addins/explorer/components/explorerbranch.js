@@ -380,7 +380,7 @@ class ExplorerBranch extends Component {
                     this.toggleInflationAdjustment(value);
                 }, labelStyle: {
                     fontStyle: 'italic'
-                }, defaultToggled: true}))
+                }, defaultToggled: branchDeclaration.inflationAdjusted}))
             :
                 null;
         let showcontrols = React.createElement("div", {style: {

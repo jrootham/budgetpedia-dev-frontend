@@ -2952,7 +2952,7 @@ var ExplorerBranch = function (_Component) {
                     _this3.toggleInflationAdjustment(value);
                 }, labelStyle: {
                     fontStyle: 'italic'
-                }, defaultToggled: true })) : null;
+                }, defaultToggled: branchDeclaration.inflationAdjusted })) : null;
             var showcontrols = React.createElement("div", { style: {
                     display: 'inline-block',
                     whiteSpace: "nowrap",

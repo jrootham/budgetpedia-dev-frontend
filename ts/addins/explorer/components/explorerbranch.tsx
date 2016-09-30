@@ -782,7 +782,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                         fontStyle:'italic'
                     }
                 } 
-                defaultToggled={true} 
+                defaultToggled={branchDeclaration.inflationAdjusted} 
             />
         </div>
         :
