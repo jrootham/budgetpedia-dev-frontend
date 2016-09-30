@@ -940,6 +940,16 @@ exports.changeAspect = redux_actions_1.createAction(types.CHANGE_ASPECT, functio
         explorer: true
     };
 });
+exports.toggleInflationAdjusted = redux_actions_1.createAction(types.TOGGLE_INFLATION_ADJUSTED, function (branchuid, value) {
+    return {
+        branchuid: branchuid,
+        value: value
+    };
+}, function () {
+    return {
+        explorer: true
+    };
+});
 exports.toggleShowOptions = redux_actions_1.createAction(types.TOGGLE_SHOW_OPTIONS, function (branchuid, value) {
     return {
         branchuid: branchuid,
@@ -1204,6 +1214,28 @@ var BudgetBranch = function () {
                     }
                 }
             }
+        };
+        this.toggleInflationAdjusted = function () {
+            var budgetBranch = _this;
+            var nodeIndex = void 0;
+            var branchuid = budgetBranch.uid;
+            var branchSettings = budgetBranch.settings;
+            var viewpointData = budgetBranch.state.viewpointData;
+            var branchNodes = budgetBranch.nodes;
+            for (nodeIndex in branchNodes) {
+                var budgetNode = branchNodes[nodeIndex];
+                var dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
+                var parentDataNode = null;
+                if (nodeIndex > 0) {
+                    parentDataNode = branchNodes[nodeIndex - 1].treeNodeData;
+                }
+                budgetNode.update(branchSettings.inflationAdjusted, dataNode, parentDataNode);
+                var newCells = budgetNode.resetCells();
+                budgetNode.newCells = newCells;
+            }
+            budgetBranch.setState({
+                branchNodes: branchNodes
+            });
         };
         this.switchAspect = function () {
             var budgetBranch = _this;
@@ -2600,6 +2632,11 @@ var ExplorerBranch = function (_Component) {
                         _this._processChangeAspectStateChange(budgetBranch);
                         break;
                     }
+                case actions_1.branchTypes.TOGGLE_INFLATION_ADJUSTED:
+                    {
+                        _this._processToggleInflationAdjustedStateChange(budgetBranch);
+                        break;
+                    }
                 default:
                     returnvalue = false;
             }
@@ -2622,6 +2659,14 @@ var ExplorerBranch = function (_Component) {
                 _this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(function (reason) {
                 console.error('error in data fetch, changeversion', reason);
+            });
+        };
+        _this._processToggleInflationAdjustedStateChange = function (budgetBranch) {
+            budgetBranch.getViewpointData().then(function () {
+                _this._stateActions.changeBranchDataVersion(budgetBranch.uid);
+                budgetBranch.toggleInflationAdjusted();
+            }).catch(function (reason) {
+                console.error('error in data fetch, changeaspect', reason);
             });
         };
         _this._processChangeAspectStateChange = function (budgetBranch) {
@@ -2749,6 +2794,11 @@ var ExplorerBranch = function (_Component) {
             _this.setState({
                 comparatorselection: comparatorindex
             });
+        };
+        _this.toggleInflationAdjustment = function (value) {
+            var budgetBranch = _this.props.budgetBranch;
+
+            _this.props.globalStateActions.toggleInflationAdjusted(budgetBranch.uid, value);
         };
         _this.toggleShowOptions = function (value) {
             var budgetBranch = _this.props.budgetBranch;
@@ -2880,7 +2930,7 @@ var ExplorerBranch = function (_Component) {
             var branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
             var viewpointselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Viewpoint: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.viewpoint, onChange: function onChange(e, index, value) {
                     branch.switchViewpoint(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Budget (by function)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Budget (by structure)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'STATEMENTS', primaryText: "Consolidated Statements" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'EXPENSESBYOBJECT', primaryText: "Expenses by Object" }))) : null;
+                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Budget (by function)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Budget (by structure)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'ACTUALREVENUE', primaryText: "Actual Revenue" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'ACTUALEXPENSES', primaryText: "Actual Expenses" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'EXPENDITURES', primaryText: "Actual Expenditures" }))) : null;
             var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Version: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.version, onChange: function onChange(e, index, value) {
                     branch.switchVersion(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'SUMMARY', primaryText: "Summary" }), React.createElement(MenuItem_1.default, { value: 'PBFT', primaryText: "Detail (PBFT)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'VARIANCE', primaryText: "Variance Reports" }))) : null;
@@ -2895,9 +2945,11 @@ var ExplorerBranch = function (_Component) {
                     whiteSpace: "nowrap",
                     verticalAlign: "bottom",
                     marginRight: '16px'
-                } }, React.createElement(Toggle_1.default, { disabled: true, label: 'Inflation adjusted:', style: {
+                } }, React.createElement(Toggle_1.default, { label: 'Inflation adjusted:', style: {
                     height: '32px',
                     marginTop: '16px'
+                }, onToggle: function onToggle(e, value) {
+                    _this3.toggleInflationAdjustment(value);
                 }, labelStyle: {
                     fontStyle: 'italic'
                 }, defaultToggled: true })) : null;
@@ -3466,7 +3518,8 @@ var ExplorerNode = function (_Component) {
                         var testCurrentYearSelections = currentControlData.cellsById[testuid].yearSelections;
                         var testPreviousYearSelections = previousControlData.cellsById[testuid].yearSelections;
                         if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear || testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) {
-                            budgetNode.resetCells();
+                            var newCells = budgetNode.resetCells();
+                            budgetNode.newCells = newCells;
                             _this.forceUpdate();
                         }
                         break;
@@ -4220,6 +4273,7 @@ var Explorer = function (_Component) {
                         removeNodeDeclarations: _this2.props.removeNodeDeclarations,
                         changeViewpoint: _this2.props.changeViewpoint,
                         changeVersion: _this2.props.changeVersion,
+                        toggleInflationAdjusted: _this2.props.toggleInflationAdjusted,
                         changeAspect: _this2.props.changeAspect,
                         changeBranchDataVersion: _this2.props.changeBranchDataVersion,
                         toggleShowOptions: _this2.props.toggleShowOptions,
@@ -4295,6 +4349,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
+    toggleInflationAdjusted: ExplorerActions.toggleInflationAdjusted,
     changeBranchDataVersion: ExplorerActions.changeBranchDataVersion,
     toggleShowOptions: ExplorerActions.toggleShowOptions,
     resetLastAction: ExplorerActions.resetLastAction,
@@ -4687,22 +4742,31 @@ var branchesById = function branchesById() {
                 newstate[_branchuid5].aspect = action.payload.aspectname;
                 return newstate;
             }
-        case actions_1.types.TOGGLE_SHOW_OPTIONS:
+        case actions_1.types.TOGGLE_INFLATION_ADJUSTED:
             {
                 var _branchuid6 = action.payload.branchuid;
 
                 newstate = Object.assign({}, state);
                 newstate[_branchuid6] = Object.assign({}, newstate[_branchuid6]);
-                newstate[_branchuid6].showOptions = action.payload.value;
+                newstate[_branchuid6].inflationAdjusted = action.payload.value;
                 return newstate;
             }
-        case actions_1.types.CHANGE_BRANCH_DATA:
+        case actions_1.types.TOGGLE_SHOW_OPTIONS:
             {
                 var _branchuid7 = action.payload.branchuid;
 
                 newstate = Object.assign({}, state);
                 newstate[_branchuid7] = Object.assign({}, newstate[_branchuid7]);
-                newstate[_branchuid7].branchDataGeneration++;
+                newstate[_branchuid7].showOptions = action.payload.value;
+                return newstate;
+            }
+        case actions_1.types.CHANGE_BRANCH_DATA:
+            {
+                var _branchuid8 = action.payload.branchuid;
+
+                newstate = Object.assign({}, state);
+                newstate[_branchuid8] = Object.assign({}, newstate[_branchuid8]);
+                newstate[_branchuid8].branchDataGeneration++;
                 return newstate;
             }
         default:

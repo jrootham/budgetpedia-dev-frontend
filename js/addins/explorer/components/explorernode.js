@@ -39,7 +39,8 @@ class ExplorerNode extends Component {
                     let testPreviousYearSelections = previousControlData.cellsById[testuid].yearSelections;
                     if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear ||
                         testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) {
-                        budgetNode.resetCells();
+                        let newCells = budgetNode.resetCells();
+                        budgetNode.newCells = newCells;
                         this.forceUpdate();
                     }
                     break;

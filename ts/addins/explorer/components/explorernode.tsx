@@ -168,7 +168,8 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
                 if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear ||
                     testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) { 
                     // console.log('resetting cells')
-                    budgetNode.resetCells()
+                    let newCells = budgetNode.resetCells()
+                    budgetNode.newCells = newCells                    
                     this.forceUpdate()
                 }
                 break

@@ -111,6 +111,15 @@ export const changeAspect = createAction(
     })
 )
 
+export const toggleInflationAdjusted = createAction(
+    types.TOGGLE_INFLATION_ADJUSTED, (branchuid, value) => ({
+        branchuid,
+        value,
+    }), () => ({
+        explorer:true
+    })
+)
+
 export const toggleShowOptions = createAction(
     types.TOGGLE_SHOW_OPTIONS, (branchuid, value) => ({
         branchuid,

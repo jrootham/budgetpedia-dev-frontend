@@ -88,6 +88,10 @@ class ExplorerBranch extends Component {
                     this._processChangeAspectStateChange(budgetBranch);
                     break;
                 }
+                case actions_1.branchTypes.TOGGLE_INFLATION_ADJUSTED: {
+                    this._processToggleInflationAdjustedStateChange(budgetBranch);
+                    break;
+                }
                 default:
                     returnvalue = false;
             }
@@ -110,6 +114,14 @@ class ExplorerBranch extends Component {
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(reason => {
                 console.error('error in data fetch, changeversion', reason);
+            });
+        };
+        this._processToggleInflationAdjustedStateChange = (budgetBranch) => {
+            budgetBranch.getViewpointData().then(() => {
+                this._stateActions.changeBranchDataVersion(budgetBranch.uid);
+                budgetBranch.toggleInflationAdjusted();
+            }).catch(reason => {
+                console.error('error in data fetch, changeaspect', reason);
             });
         };
         this._processChangeAspectStateChange = (budgetBranch) => {
@@ -231,6 +243,10 @@ class ExplorerBranch extends Component {
                 comparatorselection: comparatorindex
             });
         };
+        this.toggleInflationAdjustment = value => {
+            let { budgetBranch } = this.props;
+            this.props.globalStateActions.toggleInflationAdjusted(budgetBranch.uid, value);
+        };
         this.toggleShowOptions = value => {
             let { budgetBranch } = this.props;
             this.props.globalStateActions.toggleShowOptions(budgetBranch.uid, value);
@@ -336,7 +352,7 @@ class ExplorerBranch extends Component {
         let branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
         let viewpointselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.viewpoint, onChange: (e, index, value) => {
             branch.switchViewpoint(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Budget (by function)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Budget (by structure)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'STATEMENTS', primaryText: "Consolidated Statements"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'EXPENSESBYOBJECT', primaryText: "Expenses by Object"}))) : null;
+        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Budget (by function)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Budget (by structure)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'ACTUALREVENUE', primaryText: "Actual Revenue"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'ACTUALEXPENSES', primaryText: "Actual Expenses"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'EXPENDITURES', primaryText: "Actual Expenditures"}))) : null;
         let versionselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.version, onChange: (e, index, value) => {
             branch.switchVersion(value);
         }}, React.createElement(MenuItem_1.default, {value: 'SUMMARY', primaryText: "Summary"}), React.createElement(MenuItem_1.default, {value: 'PBFT', primaryText: "Detail (PBFT)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"}))) : null;
@@ -357,9 +373,11 @@ class ExplorerBranch extends Component {
                     whiteSpace: "nowrap",
                     verticalAlign: "bottom",
                     marginRight: '16px',
-                }}, React.createElement(Toggle_1.default, {disabled: true, label: 'Inflation adjusted:', style: {
+                }}, React.createElement(Toggle_1.default, {label: 'Inflation adjusted:', style: {
                     height: '32px',
                     marginTop: '16px'
+                }, onToggle: (e, value) => {
+                    this.toggleInflationAdjustment(value);
                 }, labelStyle: {
                     fontStyle: 'italic'
                 }, defaultToggled: true}))

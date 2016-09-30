@@ -309,17 +309,28 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         switch (lastAction.type) {
             case branchActionTypes.CHANGE_VIEWPOINT: {
+
                 this._processChangeViewpointStateChange(budgetBranch)
                 break
+
             }
             case branchActionTypes.CHANGE_VERSION: {
+
                 this._processChangeVersionStateChange(budgetBranch)
                 break
+
             }
             case branchActionTypes.CHANGE_ASPECT: {
 
                 this._processChangeAspectStateChange(budgetBranch)
                 break
+
+            }
+            case branchActionTypes.TOGGLE_INFLATION_ADJUSTED: {
+
+                this._processToggleInflationAdjustedStateChange(budgetBranch)
+                break
+
             }
             default:
                 returnvalue = false
@@ -360,6 +371,19 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         })
 
+    }
+
+    private _processToggleInflationAdjustedStateChange = (budgetBranch:BudgetBranch) => {
+        budgetBranch.getViewpointData().then(() => {
+            // console.log('switched viewpoint data in changeaspect')
+            this._stateActions.changeBranchDataVersion(budgetBranch.uid)
+            budgetBranch.toggleInflationAdjusted()
+
+        }).catch(reason => {
+
+            console.error('error in data fetch, changeaspect',reason)
+
+        })
     }
 
     private _processChangeAspectStateChange = (budgetBranch:BudgetBranch) => {
@@ -533,9 +557,19 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     switchComparator = comparatorindex => {
+
         this.setState({
             comparatorselection:comparatorindex
         })
+
+    }
+
+    toggleInflationAdjustment = value => {
+
+        let { budgetBranch }:{budgetBranch:BudgetBranch} = this.props
+
+        this.props.globalStateActions.toggleInflationAdjusted(budgetBranch.uid, value)
+
     }
 
     toggleShowOptions = value => {
@@ -641,8 +675,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             <MenuItem value={'FUNCTIONAL'} primaryText="Budget (by function)"/>
             <MenuItem value={'STRUCTURAL'} primaryText="Budget (by structure)"/>
-            <MenuItem disabled value={'STATEMENTS'} primaryText="Consolidated Statements"/>
-            <MenuItem disabled value={'EXPENSESBYOBJECT'} primaryText="Expenses by Object"/>
+            <MenuItem disabled value={'ACTUALREVENUE'} primaryText="Actual Revenue"/>
+            <MenuItem disabled value={'ACTUALEXPENSES'} primaryText="Actual Expenses"/>
+            <MenuItem disabled value={'EXPENDITURES'} primaryText="Actual Expenditures"/>
 
         </DropDownMenu>
 
@@ -732,7 +767,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 }
             }>
             <Toggle 
-                disabled
                 label={'Inflation adjusted:'} 
                 style={
                     {
@@ -740,6 +774,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                         marginTop:'16px'
                     }
                 } 
+                onToggle = {(e,value) => {
+                    this.toggleInflationAdjustment(value)
+                }}
                 labelStyle = {
                     {
                         fontStyle:'italic'

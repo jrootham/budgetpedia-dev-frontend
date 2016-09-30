@@ -140,6 +140,44 @@ class BudgetBranch {
         }
     }
 
+    toggleInflationAdjusted = () => {
+
+        let budgetBranch = this
+
+        let nodeIndex: any
+        let branchuid = budgetBranch.uid
+
+        let branchSettings: BranchSettings = budgetBranch.settings
+        let viewpointData = budgetBranch.state.viewpointData
+
+        let branchNodes:BudgetNode[] = budgetBranch.nodes
+
+        for (nodeIndex in branchNodes) {
+
+            let budgetNode: BudgetNode = branchNodes[nodeIndex]
+            let dataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
+
+            let parentDataNode = null
+            if (nodeIndex > 0) {
+                parentDataNode = branchNodes[nodeIndex-1].treeNodeData
+            }
+
+            budgetNode.update(
+                branchSettings.inflationAdjusted,
+                dataNode,
+                parentDataNode
+            )
+            let newCells = budgetNode.resetCells()
+            budgetNode.newCells = newCells
+
+        }
+
+        budgetBranch.setState({
+            branchNodes,
+        })
+
+    }
+
     // this resets the branch in response to the change aspect user request
     switchAspect = () => {
 

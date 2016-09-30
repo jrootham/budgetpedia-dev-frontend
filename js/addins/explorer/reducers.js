@@ -131,6 +131,13 @@ let branchesById = (state = {}, action) => {
             newstate[branchuid].aspect = action.payload.aspectname;
             return newstate;
         }
+        case actions_1.types.TOGGLE_INFLATION_ADJUSTED: {
+            let { branchuid } = action.payload;
+            newstate = Object.assign({}, state);
+            newstate[branchuid] = Object.assign({}, newstate[branchuid]);
+            newstate[branchuid].inflationAdjusted = action.payload.value;
+            return newstate;
+        }
         case actions_1.types.TOGGLE_SHOW_OPTIONS: {
             let { branchuid } = action.payload;
             newstate = Object.assign({}, state);

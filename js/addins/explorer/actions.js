@@ -86,6 +86,12 @@ exports.changeAspect = redux_actions_1.createAction(types.CHANGE_ASPECT, (branch
 }), () => ({
     explorer: true
 }));
+exports.toggleInflationAdjusted = redux_actions_1.createAction(types.TOGGLE_INFLATION_ADJUSTED, (branchuid, value) => ({
+    branchuid: branchuid,
+    value: value,
+}), () => ({
+    explorer: true
+}));
 exports.toggleShowOptions = redux_actions_1.createAction(types.TOGGLE_SHOW_OPTIONS, (branchuid, value) => ({
     branchuid: branchuid,
     value: value,

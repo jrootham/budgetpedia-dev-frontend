@@ -50,6 +50,28 @@ class BudgetBranch {
                 node.oldAspectState = !!node.treeNodeData.Components;
             }
         };
+        this.toggleInflationAdjusted = () => {
+            let budgetBranch = this;
+            let nodeIndex;
+            let branchuid = budgetBranch.uid;
+            let branchSettings = budgetBranch.settings;
+            let viewpointData = budgetBranch.state.viewpointData;
+            let branchNodes = budgetBranch.nodes;
+            for (nodeIndex in branchNodes) {
+                let budgetNode = branchNodes[nodeIndex];
+                let dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
+                let parentDataNode = null;
+                if (nodeIndex > 0) {
+                    parentDataNode = branchNodes[nodeIndex - 1].treeNodeData;
+                }
+                budgetNode.update(branchSettings.inflationAdjusted, dataNode, parentDataNode);
+                let newCells = budgetNode.resetCells();
+                budgetNode.newCells = newCells;
+            }
+            budgetBranch.setState({
+                branchNodes: branchNodes,
+            });
+        };
         this.switchAspect = () => {
             let budgetBranch = this;
             let { actions, nodeCallbacks: callbacks } = budgetBranch;
