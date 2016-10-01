@@ -1530,6 +1530,7 @@ var BudgetCell = function () {
                 columns: columns,
                 rows: rows
             };
+            _this.chartParmsObject = chartParms;
             _this.setState({
                 chartParms: chartParms
             });
@@ -1628,6 +1629,7 @@ var BudgetCell = function () {
                     } else {
                         titleamount = simpleroundedone(titleamount);
                     }
+                    if (!titleamount) titleamount = 'nil';
                     title += ' (Total: ' + titleamount + ')';
                 }
             }
@@ -1873,6 +1875,11 @@ var BudgetCell = function () {
     }
 
     _createClass(BudgetCell, [{
+        key: 'state',
+        get: function get() {
+            return this.getState();
+        }
+    }, {
         key: 'explorerChartCode',
         get: function get() {
             var cellDeclaration = this.getProps().declarationData.cellsById[this.uid];
@@ -2959,7 +2966,7 @@ var ExplorerBranch = function (_Component) {
                 } }, React.createElement(MenuItem_1.default, { value: 'SUMMARY', primaryText: "Summary" }), React.createElement(MenuItem_1.default, { value: 'PBFT', primaryText: "Detail (PBFT)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'VARIANCE', primaryText: "Variance Reports" }))) : null;
             var aspectselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Aspect: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.aspect, onChange: function onChange(e, index, value) {
                     branch.switchAspect(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'Expenses', primaryText: "Expenses" }), React.createElement(MenuItem_1.default, { value: 'Revenues', primaryText: "Revenues" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Both', primaryText: "Both" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Net', primaryText: "Net" }), React.createElement(MenuItem_1.default, { value: 'Staffing', primaryText: "Staffing" }))) : null;
+                } }, React.createElement(MenuItem_1.default, { value: 'Expenses', primaryText: "Expenses" }), React.createElement(MenuItem_1.default, { value: 'Revenues', primaryText: "Revenues" }), React.createElement(MenuItem_1.default, { value: 'Staffing', primaryText: "Staffing" }))) : null;
             var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" } }, "Intensity: "), React.createElement(DropDownMenu_1.default, { disabled: true, value: this.state.comparatorselection, onChange: function onChange(e, index, value) {
                     _this3.switchComparator(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'Off', primaryText: "Off" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Staff', primaryText: "Per staffing position" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Population', primaryText: "Population: per person" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Population100000', primaryText: "Population: per 100,000 people" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Adult', primaryText: "Population: per adult (15 and over)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Adult100000', primaryText: "Population: per 100,000 adults" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Child', primaryText: "Population: per child (14 and under)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Child100000', primaryText: "Population: per 100,000 children" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Household', primaryText: "Per household" }))) : null;
@@ -3176,6 +3183,17 @@ var ExplorerCell = function (_Component) {
                 drilldownmessage = 'some drilldown available here (for bold colors; not for pale colors)';
             } else {
                 drilldownmessage = 'no drilldown available here';
+            }
+            var isDataAvailable = true;
+            if (yearScope == 'OneYear') {
+                isDataAvailable = false;
+                var data = datanode[datasetiestype];
+                for (var index in data) {
+                    if (data[index].years[rightYear]) {
+                        isDataAvailable = true;
+                        break;
+                    }
+                }
             }
             var timescopes = React.createElement("div", { style: {
                     paddingTop: "10px",
@@ -3423,9 +3441,21 @@ var ExplorerCell = function (_Component) {
                     marginRight: "3px",
                     marginLeft: "3px"
                 }, disabled: true }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "note")));
-            var chart = chartParms ? React.createElement(Chart, { ref: function ref(node) {
+            var chart = chartParms ? isDataAvailable ? React.createElement(Chart, { ref: function ref(node) {
                     budgetCell.chartComponent = node;
-                }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id }) : React.createElement("div", null, " waiting for chart data... ");
+                }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id }) : React.createElement("div", { style: {
+                    width: '360px',
+                    height: '220px',
+                    backgroundColor: 'whitesmoke',
+                    textAlign: 'center',
+                    fontStyle: 'italic',
+                    whiteSpace: 'normal',
+                    fontSize: 'smaller',
+                    padding: '40px 20px'
+                } }, " ", React.createElement("p", null, "no data for this chart for the selected year: "), React.createElement("p", null, budgetCell.chartParmsObject.options.title)) : React.createElement("div", null, " waiting for chart data... ");
+            if (!isDataAvailable) {
+                drilldownmessage = null;
+            }
             var drilldownprompt = React.createElement("div", { style: {
                     position: "absolute",
                     bottom: "3px",
@@ -3716,6 +3746,7 @@ var ExplorerNode = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            var nodeDeclaration = this.props.declarationData.nodesById[this.props.budgetNode.uid];
             var chartTabs = this.getChartTabs();
             var tabobject = this.getTabObject(chartTabs);
             var portalSettings = this.props.budgetNode.portalConfig;

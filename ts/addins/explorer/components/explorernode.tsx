@@ -314,6 +314,9 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
 
     render() {
 
+        let nodeDeclaration = this.props.declarationData.nodesById[this.props.budgetNode.uid]
+        // console.log('nodeDeclaration', nodeDeclaration)
+
         let chartTabs = this.getChartTabs()
 
         let tabobject = this.getTabObject(chartTabs)

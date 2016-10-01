@@ -199,6 +199,17 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         } else {
             drilldownmessage = 'no drilldown available here'
         }
+        let isDataAvailable = true
+        if (yearScope == 'OneYear') {
+            isDataAvailable = false
+            let data = datanode[datasetiestype]
+            for (let index in data) {
+                if (data[index].years[rightYear]) {
+                    isDataAvailable = true
+                    break
+                }
+            }
+        }
 
         let timescopes = 
             <div style = {
@@ -752,7 +763,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         // ------------------------------[ the chart itself ]-----------------------------
 
         let chart =  (chartParms)?
-            <Chart
+            (isDataAvailable?<Chart
                 ref = {node => {
                     budgetCell.chartComponent = node
                 }} 
@@ -763,9 +774,25 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 columns = { chartParms.columns }
                 // used to create and cache html element id attribute
                 graph_id = { graph_id }
-                />
+                />:<div 
+                    style={
+                        {
+                            width:'360px',
+                            height:'220px',
+                            backgroundColor:'whitesmoke',
+                            textAlign:'center',
+                            fontStyle:'italic',
+                            whiteSpace:'normal',
+                            fontSize:'smaller',
+                            padding:'40px 20px',
+                        }
+                    }> <p>no data for this chart for the selected year: </p>
+                    <p>{budgetCell.chartParmsObject.options.title}</p></div>
+                )
             :<div> waiting for chart data... </div>
-
+        if (!isDataAvailable) {
+            drilldownmessage = null
+        }
         let drilldownprompt = 
             <div style={{
                 position:"absolute",

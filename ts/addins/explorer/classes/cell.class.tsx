@@ -118,6 +118,10 @@ class BudgetCell {
     }
     public getState: Function
 
+    get state() {
+        return this.getState()
+    }
+
     public getProps: Function
 
     public setState: Function
@@ -158,6 +162,7 @@ class BudgetCell {
             return null
     }
 
+    chartParmsObject: any
     // readonly; set by setChartParms()
     // the formal parameters required by Chart Component for google chart creation
     // private _chartParms: ChartParms
@@ -308,6 +313,8 @@ class BudgetCell {
 
         }
 
+        this.chartParmsObject = chartParms
+
         // save it
         this.setState({
              chartParms,
@@ -453,6 +460,7 @@ class BudgetCell {
                 } else {
                     titleamount = simpleroundedone(titleamount)
                 }
+                if (!titleamount) titleamount = 'nil'
                 title += ' (Total: ' + titleamount + ')'
             }
         }

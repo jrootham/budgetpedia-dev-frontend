@@ -360,7 +360,7 @@ class ExplorerBranch extends Component {
             ?
                 React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Aspect: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.aspect, onChange: (e, index, value) => {
                     branch.switchAspect(value);
-                }}, React.createElement(MenuItem_1.default, {value: 'Expenses', primaryText: "Expenses"}), React.createElement(MenuItem_1.default, {value: 'Revenues', primaryText: "Revenues"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Both', primaryText: "Both"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Net', primaryText: "Net"}), React.createElement(MenuItem_1.default, {value: 'Staffing', primaryText: "Staffing"})))
+                }}, React.createElement(MenuItem_1.default, {value: 'Expenses', primaryText: "Expenses"}), React.createElement(MenuItem_1.default, {value: 'Revenues', primaryText: "Revenues"}), React.createElement(MenuItem_1.default, {value: 'Staffing', primaryText: "Staffing"})))
             :
                 null;
         let byunitselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" }}, "Intensity: "), React.createElement(DropDownMenu_1.default, {disabled: true, value: this.state.comparatorselection, onChange: (e, index, value) => {

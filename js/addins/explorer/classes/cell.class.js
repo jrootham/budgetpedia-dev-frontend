@@ -56,6 +56,7 @@ class BudgetCell {
                 columns: columns,
                 rows: rows,
             };
+            this.chartParmsObject = chartParms;
             this.setState({
                 chartParms: chartParms,
             });
@@ -161,6 +162,8 @@ class BudgetCell {
                     else {
                         titleamount = simpleroundedone(titleamount);
                     }
+                    if (!titleamount)
+                        titleamount = 'nil';
                     title += ' (Total: ' + titleamount + ')';
                 }
             }
@@ -395,6 +398,9 @@ class BudgetCell {
         this.nodeDataseriesName = nodeDataseriesName;
         this.chartSelection = chartSelection;
         this.uid = uid;
+    }
+    get state() {
+        return this.getState();
     }
     get explorerChartCode() {
         let cellDeclaration = this.getProps().declarationData.cellsById[this.uid];

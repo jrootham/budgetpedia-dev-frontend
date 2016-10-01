@@ -131,6 +131,17 @@ class ExplorerCell extends Component {
         else {
             drilldownmessage = 'no drilldown available here';
         }
+        let isDataAvailable = true;
+        if (yearScope == 'OneYear') {
+            isDataAvailable = false;
+            let data = datanode[datasetiestype];
+            for (let index in data) {
+                if (data[index].years[rightYear]) {
+                    isDataAvailable = true;
+                    break;
+                }
+            }
+        }
         let timescopes = React.createElement("div", {style: {
             paddingTop: "10px",
             borderRight: "1px solid silver",
@@ -409,10 +420,22 @@ class ExplorerCell extends Component {
             marginLeft: "3px",
         }, disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")));
         let chart = (chartParms) ?
-            React.createElement(Chart, {ref: node => {
+            (isDataAvailable ? React.createElement(Chart, {ref: node => {
                 budgetCell.chartComponent = node;
-            }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id})
+            }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id}) : React.createElement("div", {style: {
+                width: '360px',
+                height: '220px',
+                backgroundColor: 'whitesmoke',
+                textAlign: 'center',
+                fontStyle: 'italic',
+                whiteSpace: 'normal',
+                fontSize: 'smaller',
+                padding: '40px 20px',
+            }}, " ", React.createElement("p", null, "no data for this chart for the selected year: "), React.createElement("p", null, budgetCell.chartParmsObject.options.title)))
             : React.createElement("div", null, " waiting for chart data... ");
+        if (!isDataAvailable) {
+            drilldownmessage = null;
+        }
         let drilldownprompt = React.createElement("div", {style: {
             position: "absolute",
             bottom: "3px",

@@ -171,6 +171,7 @@ class ExplorerNode extends Component {
         budgetNode._respondToGlobalStateChange();
     }
     render() {
+        let nodeDeclaration = this.props.declarationData.nodesById[this.props.budgetNode.uid];
         let chartTabs = this.getChartTabs();
         let tabobject = this.getTabObject(chartTabs);
         let { portalConfig: portalSettings } = this.props.budgetNode;
