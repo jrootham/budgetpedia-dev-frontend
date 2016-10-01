@@ -130,7 +130,7 @@ class BudgetCell {
             }
             let title = catname + ': ' + nodename;
             let cellDeclaration = this.cellDeclaration;
-            let { rightYear, leftYear } = cellDeclaration.yearSelections;
+            let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
             let { yearScope } = cellDeclaration;
             let timeSuffix = null;
             if (yearScope == constants_2.TimeScope[constants_2.TimeScope.OneYear]) {
@@ -232,7 +232,7 @@ class BudgetCell {
         this._pieChartOptions = (treeNodeData) => {
             let budgetCell = this;
             let cellDeclaration = this.cellDeclaration;
-            let { rightYear, leftYear } = cellDeclaration.yearSelections;
+            let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
             let { nodeDataseriesName } = budgetCell;
             let nodeDataseries = treeNodeData[nodeDataseriesName];
             let sortedlistName = 'Sorted' + nodeDataseriesName;
@@ -321,7 +321,7 @@ class BudgetCell {
         };
         this._columns_ColumnChart = (yearSpecs) => {
             let cellDeclaration = this.cellDeclaration;
-            let { rightYear, leftYear } = cellDeclaration.yearSelections;
+            let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
             let budgetCell = this;
             let categorylabel = 'Component';
             let columns = [
@@ -333,7 +333,7 @@ class BudgetCell {
         };
         this._columns_PieChart = (yearSpecs) => {
             let cellDeclaration = this.cellDeclaration;
-            let { rightYear, leftYear } = cellDeclaration.yearSelections;
+            let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
             let budgetCell = this;
             let categorylabel = 'Component';
             let columns = [
@@ -345,7 +345,7 @@ class BudgetCell {
         this._chartParmsRows = (treeNodeData, yearSpecs) => {
             let budgetCell = this;
             let cellDeclaration = this.cellDeclaration;
-            let { rightYear, leftYear } = cellDeclaration.yearSelections;
+            let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
             let { nodeDataseriesName } = budgetCell;
             let nodeDataseries = treeNodeData[nodeDataseriesName];
             let sortedlistName = 'Sorted' + nodeDataseriesName;

@@ -192,6 +192,33 @@ let nodesById = (state = {}, action) => {
             newstate[nodeuid] = newnode;
             return newstate;
         }
+        case actions_1.types.UPDATE_NODE_YEAR_SELECTIONS: {
+            newstate = Object.assign({}, state);
+            let { nodeuid, leftyear, rightyear } = action.payload;
+            let newnode = Object.assign({}, newstate[nodeuid]);
+            let newYearSelections = Object.assign({}, newnode.yearSelections);
+            newYearSelections.leftYear = leftyear;
+            newYearSelections.rightYear = rightyear;
+            newnode.yearSelections = newYearSelections;
+            newstate[nodeuid] = newnode;
+            return newstate;
+        }
+        case actions_1.types.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
+            newstate = Object.assign({}, state);
+            let { nodeuid, yearsRange } = action.payload;
+            let { start: startYear, end: endYear } = yearsRange;
+            let newnode = Object.assign({}, newstate[nodeuid]);
+            let yearSpan = endYear - startYear;
+            let range = Object.assign({}, newnode.yearSelections);
+            if (range.leftYear < startYear || range.leftYear > endYear) {
+                range.leftYear = startYear;
+            }
+            if (range.rightYear > endYear || range.rightYear < startYear) {
+                range.rightYear = endYear;
+            }
+            newnode.yearSelections = range;
+            return newstate;
+        }
         default:
             return state;
     }
@@ -239,16 +266,6 @@ let cellsById = (state = {}, action) => {
             newstate[celluid] = newcell;
             return newstate;
         }
-        case actions_1.types.UPDATE_CELL_YEAR_SELECTIONS: {
-            let { celluid, leftyear, rightyear } = action.payload;
-            let newcell = Object.assign({}, newstate[celluid]);
-            let newYearSelections = Object.assign({}, newcell.yearSelections);
-            newYearSelections.leftYear = leftyear;
-            newYearSelections.rightYear = rightyear;
-            newcell.yearSelections = newYearSelections;
-            newstate[celluid] = newcell;
-            return newstate;
-        }
         case actions_1.types.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
             let { cellList, yearsRange } = action.payload;
             let { start: startYear, end: endYear } = yearsRange;
@@ -258,14 +275,6 @@ let cellsById = (state = {}, action) => {
                 if (yearSpan == 0) {
                     newcell.yearScope = constants_1.TimeScope[constants_1.TimeScope.OneYear];
                 }
-                let range = Object.assign({}, newcell.yearSelections);
-                if (range.leftYear < startYear || range.leftYear > endYear) {
-                    range.leftYear = startYear;
-                }
-                if (range.rightYear > endYear || range.rightYear < startYear) {
-                    range.rightYear = endYear;
-                }
-                newcell.yearSelections = range;
                 newstate[celluid] = newcell;
             }
             return newstate;

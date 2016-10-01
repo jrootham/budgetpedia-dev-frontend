@@ -138,7 +138,6 @@ let explorer = {
                     explorerChartCode: "Timelines",
                 },
             },
-            yearSelections: { leftYear: 2003, rightYear: 2016 },
             yearScope: "OneYear",
         }
     }

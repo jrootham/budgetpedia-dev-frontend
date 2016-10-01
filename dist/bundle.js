@@ -859,7 +859,7 @@ var types;
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
     types.TOGGLE_NET = 'TOGGLE_NET';
     types.TOGGLE_VARIANCE = 'TOGGLE_VARIANCE';
-    types.UPDATE_CELL_YEAR_SELECTIONS = 'UPDATE_CELL_YEAR_SELECTIONS';
+    types.UPDATE_NODE_YEAR_SELECTIONS = 'UPDATE_NODE_YEAR_SELECTIONS';
     types.UPDATE_NODE = 'UPDATE_NODE';
 })(types = exports.types || (exports.types = {}));
 var branchTypes;
@@ -879,6 +879,7 @@ var nodeTypes;
     nodeTypes.CHANGE_TAB = types.CHANGE_TAB;
     nodeTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES = types.NORMALIZE_CELL_YEAR_DEPENDENCIES;
     nodeTypes.UPDATE_NODE = types.UPDATE_NODE;
+    nodeTypes.UPDATE_NODE_YEAR_SELECTIONS = types.UPDATE_NODE_YEAR_SELECTIONS;
 })(nodeTypes = exports.nodeTypes || (exports.nodeTypes = {}));
 var cellTypes;
 (function (cellTypes) {
@@ -888,7 +889,6 @@ var cellTypes;
     cellTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
     cellTypes.TOGGLE_NET = types.TOGGLE_NET;
     cellTypes.TOGGLE_VARIANCE = types.TOGGLE_VARIANCE;
-    cellTypes.UPDATE_CELL_YEAR_SELECTIONS = types.UPDATE_CELL_YEAR_SELECTIONS;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, function (refbranchuid, settings) {
     return {
@@ -1088,11 +1088,10 @@ exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHA
         explorer: true
     };
 });
-exports.updateCellYearSelections = redux_actions_1.createAction(types.UPDATE_CELL_YEAR_SELECTIONS, function (branchuid, nodeuid, celluid, leftyear, rightyear) {
+exports.updateCellYearSelections = redux_actions_1.createAction(types.UPDATE_NODE_YEAR_SELECTIONS, function (branchuid, nodeuid, leftyear, rightyear) {
     return {
         branchuid: branchuid,
         nodeuid: nodeuid,
-        celluid: celluid,
         leftyear: leftyear,
         rightyear: rightyear
     };
@@ -1163,6 +1162,7 @@ var BudgetBranch = function () {
                     firstYear: null,
                     lastYear: null
                 },
+                yearSelections: Object.assign({}, defaults.yearSelections),
                 dataPath: [],
                 nodeIndex: 0
             };
@@ -1406,6 +1406,7 @@ var BudgetBranch = function () {
             }
             workingStatus(true);
             var newrange = Object.assign({}, budgetNode.yearSpecs);
+            var newselections = Object.assign({}, budgetNode.yearSelections);
             var newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
             var newnodeconfigparms = {
                 viewpointName: viewpointName,
@@ -1413,7 +1414,8 @@ var BudgetBranch = function () {
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
                 treeNodeMetaDataFromParentSortedList: treeNodeMetaDataFromParentSortedList,
-                yearSpecs: newrange
+                yearSpecs: newrange,
+                yearSelections: newselections
             };
             actions.addNodeDeclaration(newnodeconfigparms);
             setTimeout(function () {
@@ -1595,9 +1597,9 @@ var BudgetCell = function () {
             }
             var title = catname + ': ' + nodename;
             var cellDeclaration = _this.cellDeclaration;
-            var _cellDeclaration$year = cellDeclaration.yearSelections;
-            var rightYear = _cellDeclaration$year.rightYear;
-            var leftYear = _cellDeclaration$year.leftYear;
+            var _nodeDataPack$yearSel = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel.rightYear;
+            var leftYear = _nodeDataPack$yearSel.leftYear;
             var yearScope = cellDeclaration.yearScope;
 
             var timeSuffix = null;
@@ -1696,9 +1698,9 @@ var BudgetCell = function () {
         this._pieChartOptions = function (treeNodeData) {
             var budgetCell = _this;
             var cellDeclaration = _this.cellDeclaration;
-            var _cellDeclaration$year2 = cellDeclaration.yearSelections;
-            var rightYear = _cellDeclaration$year2.rightYear;
-            var leftYear = _cellDeclaration$year2.leftYear;
+            var _nodeDataPack$yearSel2 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel2.rightYear;
+            var leftYear = _nodeDataPack$yearSel2.leftYear;
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
 
             var nodeDataseries = treeNodeData[nodeDataseriesName];
@@ -1788,9 +1790,9 @@ var BudgetCell = function () {
         };
         this._columns_ColumnChart = function (yearSpecs) {
             var cellDeclaration = _this.cellDeclaration;
-            var _cellDeclaration$year3 = cellDeclaration.yearSelections;
-            var rightYear = _cellDeclaration$year3.rightYear;
-            var leftYear = _cellDeclaration$year3.leftYear;
+            var _nodeDataPack$yearSel3 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel3.rightYear;
+            var leftYear = _nodeDataPack$yearSel3.leftYear;
 
             var budgetCell = _this;
             var categorylabel = 'Component';
@@ -1799,9 +1801,9 @@ var BudgetCell = function () {
         };
         this._columns_PieChart = function (yearSpecs) {
             var cellDeclaration = _this.cellDeclaration;
-            var _cellDeclaration$year4 = cellDeclaration.yearSelections;
-            var rightYear = _cellDeclaration$year4.rightYear;
-            var leftYear = _cellDeclaration$year4.leftYear;
+            var _nodeDataPack$yearSel4 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel4.rightYear;
+            var leftYear = _nodeDataPack$yearSel4.leftYear;
 
             var budgetCell = _this;
             var categorylabel = 'Component';
@@ -1811,9 +1813,9 @@ var BudgetCell = function () {
         this._chartParmsRows = function (treeNodeData, yearSpecs) {
             var budgetCell = _this;
             var cellDeclaration = _this.cellDeclaration;
-            var _cellDeclaration$year5 = cellDeclaration.yearSelections;
-            var rightYear = _cellDeclaration$year5.rightYear;
-            var leftYear = _cellDeclaration$year5.leftYear;
+            var _nodeDataPack$yearSel5 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel5.rightYear;
+            var leftYear = _nodeDataPack$yearSel5.leftYear;
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
 
             var nodeDataseries = treeNodeData[nodeDataseriesName];
@@ -2348,7 +2350,6 @@ var BudgetNode = function () {
                 _this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode;
             }
             _this.updated = true;
-            console.log('updated set to true in updateDataNode');
         };
         this.getCellDeclarationParms = function () {
             var parmsList = [];
@@ -2391,12 +2392,14 @@ var BudgetNode = function () {
             var viewpointConfigPack = budgetNode.viewpointConfigPack;
             var treeNodeData = budgetNode.treeNodeData;
             var yearSpecs = budgetNode.yearSpecs;
+            var yearSelections = budgetNode.yearSelections;
             var treeNodeMetaDataFromParentSortedList = budgetNode.treeNodeMetaDataFromParentSortedList;
             var nodeIndex = budgetNode.nodeIndex;
 
             var nodeDataPack = {
                 treeNodeData: treeNodeData,
                 yearSpecs: yearSpecs,
+                yearSelections: yearSelections,
                 treeNodeMetaDataFromParentSortedList: treeNodeMetaDataFromParentSortedList
             };
             cell.viewpointConfigPack = viewpointConfigPack;
@@ -2425,6 +2428,7 @@ var BudgetNode = function () {
         this.dataPath = parms.dataPath;
         this.nodeIndex = parms.nodeIndex;
         this.yearSpecs = parms.yearSpecs;
+        this.yearSelections = parms.yearSelections;
         this._nodeData = node;
         this.uid = uid;
         if (parms.treeNodeMetaDataFromParentSortedList) this.treeNodeMetaDataFromParentSortedList = parms.treeNodeMetaDataFromParentSortedList;
@@ -2467,7 +2471,20 @@ var BudgetNode = function () {
             }
             this.newCells = cells;
             this.updated = true;
-            console.log('updated set to true in resetCells');
+        }
+    }, {
+        key: 'switchYearSelections',
+        value: function switchYearSelections(yearSelections) {
+            var budgetNode = this;
+            this.yearSelections = yearSelections;
+            var cells = budgetNode.cells;
+            for (var cellIndex in cells) {
+                var cell = cells[cellIndex];
+                budgetNode._updateCell(cell, cellIndex);
+                cell.setChartParms();
+            }
+            this.newCells = cells;
+            this.updated = true;
         }
     }, {
         key: 'treeNodeData',
@@ -3056,11 +3073,6 @@ var ExplorerCell = function (_Component) {
                         budgetCell.switchChartCode(_this.chartConfig.explorerChartCode);
                         break;
                     }
-                case actions_1.cellTypes.UPDATE_CELL_YEAR_SELECTIONS:
-                    {
-                        budgetCell.switchYearCodes(_this.cellDeclaration.yearSelections);
-                        break;
-                    }
             }
             _this._previousControlData = currentControlData;
         };
@@ -3072,7 +3084,7 @@ var ExplorerCell = function (_Component) {
         _this.onChangeChartYears = function (leftYear, rightYear) {
             var budgetCell = _this.props.budgetCell;
 
-            _this.props.globalStateActions.updateCellYearSelections(budgetCell.uid, leftYear, rightYear);
+            _this.props.globalStateActions.updateCellYearSelections(leftYear, rightYear);
         };
         _this.onChangeTimeCode = function (explorerTimeCode) {
             _this.setState({
@@ -3151,8 +3163,8 @@ var ExplorerCell = function (_Component) {
             var endYear = _datasetConfig$YearsR.end;
 
             var yearSpan = endYear - startYear;
-            var leftYear = this.cellDeclaration.yearSelections.leftYear;
-            var rightYear = this.cellDeclaration.yearSelections.rightYear;
+            var leftYear = budgetCell.nodeDataPack.yearSelections.leftYear;
+            var rightYear = budgetCell.nodeDataPack.yearSelections.rightYear;
             var datanode = budgetCell.nodeDataPack.treeNodeData;
             var datasetiestype = budgetCell.nodeDataseriesName;
             var drillDownProperty = datasetiestype + 'Drilldown';
@@ -3518,15 +3530,17 @@ var ExplorerNode = function (_Component) {
             switch (lastAction.type) {
                 case actions_1.nodeTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES:
                     {
-                        var cells = _this.state.nodeCells;
-                        if (cells.length == 0) break;
-                        var testuid = cells[0].uid;
-                        var testCurrentYearSelections = currentControlData.cellsById[testuid].yearSelections;
-                        var testPreviousYearSelections = previousControlData.cellsById[testuid].yearSelections;
-                        if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear || testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) {
-                            budgetNode.resetCells();
+                        var currentYearSelections = currentControlData.nodesById[budgetNode.uid].yearSelections;
+                        var previousYearSelections = previousControlData.nodesById[budgetNode.uid].yearSelections;
+                        if (currentYearSelections.leftYear !== previousYearSelections.leftYear || currentYearSelections.rightYear !== previousYearSelections.rightYear) {
+                            budgetNode.switchYearSelections(currentYearSelections);
                             _this.forceUpdate();
                         }
+                        break;
+                    }
+                case actions_1.nodeTypes.UPDATE_NODE_YEAR_SELECTIONS:
+                    {
+                        budgetNode.switchYearSelections(currentControlData.nodesById[budgetNode.uid].yearSelections);
                         break;
                     }
             }
@@ -3541,7 +3555,6 @@ var ExplorerNode = function (_Component) {
                 });
                 budgetNode.newCells = null;
                 budgetNode.updated = false;
-                console.log('updated cleared in updateCellsFromDeclarations');
             }
         };
         _this.harmonizecount = null;
@@ -4168,8 +4181,8 @@ var Explorer = function (_Component) {
         };
         _this.updateCellYearSelections = function (branchuid) {
             return function (nodeuid) {
-                return function (celluid, leftyear, rightyear) {
-                    return _this.props.updateCellYearSelections(branchuid, nodeuid, celluid, leftyear, rightyear);
+                return function (leftyear, rightyear) {
+                    return _this.props.updateCellYearSelections(branchuid, nodeuid, leftyear, rightyear);
                 };
             };
         };
@@ -4846,6 +4859,43 @@ var nodesById = function nodesById() {
                 _newstate2[_nodeuid] = _newnode;
                 return _newstate2;
             }
+        case actions_1.types.UPDATE_NODE_YEAR_SELECTIONS:
+            {
+                newstate = Object.assign({}, state);
+                var _action$payload2 = action.payload;
+                var _nodeuid2 = _action$payload2.nodeuid;
+                var leftyear = _action$payload2.leftyear;
+                var rightyear = _action$payload2.rightyear;
+
+                var _newnode2 = Object.assign({}, newstate[_nodeuid2]);
+                var newYearSelections = Object.assign({}, _newnode2.yearSelections);
+                newYearSelections.leftYear = leftyear;
+                newYearSelections.rightYear = rightyear;
+                _newnode2.yearSelections = newYearSelections;
+                newstate[_nodeuid2] = _newnode2;
+                return newstate;
+            }
+        case actions_1.types.NORMALIZE_CELL_YEAR_DEPENDENCIES:
+            {
+                newstate = Object.assign({}, state);
+                var _action$payload3 = action.payload;
+                var _nodeuid3 = _action$payload3.nodeuid;
+                var yearsRange = _action$payload3.yearsRange;
+                var startYear = yearsRange.start;
+                var endYear = yearsRange.end;
+
+                var _newnode3 = Object.assign({}, newstate[_nodeuid3]);
+                var yearSpan = endYear - startYear;
+                var range = Object.assign({}, _newnode3.yearSelections);
+                if (range.leftYear < startYear || range.leftYear > endYear) {
+                    range.leftYear = startYear;
+                }
+                if (range.rightYear > endYear || range.rightYear < startYear) {
+                    range.rightYear = endYear;
+                }
+                _newnode3.yearSelections = range;
+                return newstate;
+            }
         default:
             return state;
     }
@@ -4956,9 +5006,9 @@ var cellsById = function cellsById() {
             }
         case actions_1.types.UPDATE_CELL_CHART_CODE:
             {
-                var _action$payload2 = action.payload;
-                var _celluid2 = _action$payload2.celluid;
-                var explorerChartCode = _action$payload2.explorerChartCode;
+                var _action$payload4 = action.payload;
+                var _celluid2 = _action$payload4.celluid;
+                var explorerChartCode = _action$payload4.explorerChartCode;
 
                 var _newcell = Object.assign({}, newstate[_celluid2]);
                 var _newChartConfigs = Object.assign({}, _newcell.chartConfigs);
@@ -4969,26 +5019,11 @@ var cellsById = function cellsById() {
                 newstate[_celluid2] = _newcell;
                 return newstate;
             }
-        case actions_1.types.UPDATE_CELL_YEAR_SELECTIONS:
-            {
-                var _action$payload3 = action.payload;
-                var _celluid3 = _action$payload3.celluid;
-                var leftyear = _action$payload3.leftyear;
-                var rightyear = _action$payload3.rightyear;
-
-                var _newcell2 = Object.assign({}, newstate[_celluid3]);
-                var newYearSelections = Object.assign({}, _newcell2.yearSelections);
-                newYearSelections.leftYear = leftyear;
-                newYearSelections.rightYear = rightyear;
-                _newcell2.yearSelections = newYearSelections;
-                newstate[_celluid3] = _newcell2;
-                return newstate;
-            }
         case actions_1.types.NORMALIZE_CELL_YEAR_DEPENDENCIES:
             {
-                var _action$payload4 = action.payload;
-                var cellList = _action$payload4.cellList;
-                var yearsRange = _action$payload4.yearsRange;
+                var _action$payload5 = action.payload;
+                var cellList = _action$payload5.cellList;
+                var yearsRange = _action$payload5.yearsRange;
                 var startYear = yearsRange.start;
                 var endYear = yearsRange.end;
 
@@ -4999,21 +5034,13 @@ var cellsById = function cellsById() {
 
                 try {
                     for (var _iterator5 = cellList[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                        var _celluid4 = _step5.value;
+                        var _celluid3 = _step5.value;
 
-                        var _newcell3 = Object.assign({}, newstate[_celluid4]);
+                        var _newcell2 = Object.assign({}, newstate[_celluid3]);
                         if (yearSpan == 0) {
-                            _newcell3.yearScope = constants_1.TimeScope[constants_1.TimeScope.OneYear];
+                            _newcell2.yearScope = constants_1.TimeScope[constants_1.TimeScope.OneYear];
                         }
-                        var range = Object.assign({}, _newcell3.yearSelections);
-                        if (range.leftYear < startYear || range.leftYear > endYear) {
-                            range.leftYear = startYear;
-                        }
-                        if (range.rightYear > endYear || range.rightYear < startYear) {
-                            range.rightYear = endYear;
-                        }
-                        _newcell3.yearSelections = range;
-                        newstate[_celluid4] = _newcell3;
+                        newstate[_celluid3] = _newcell2;
                     }
                 } catch (err) {
                     _didIteratorError5 = true;
@@ -6949,7 +6976,6 @@ var explorer = {
                     explorerChartCode: "Timelines"
                 }
             },
-            yearSelections: { leftYear: 2003, rightYear: 2016 },
             yearScope: "OneYear"
         }
     }

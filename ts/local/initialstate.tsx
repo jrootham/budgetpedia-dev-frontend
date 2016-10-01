@@ -256,7 +256,7 @@ let explorer = {
             },
             // chartSelection: null,
             // explorerChartCode: "ColumnChart",
-            yearSelections:{ leftYear: 2003, rightYear: 2016 },
+            // yearSelections:{ leftYear: 2003, rightYear: 2016 },
             yearScope:"OneYear",
         }
     }

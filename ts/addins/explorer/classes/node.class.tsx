@@ -20,6 +20,7 @@ export interface BudgetNodeParms {
     aspectName: string, // used to select chartset to display
     // datasetSpecs:DataseriesMeta[],
     yearSpecs: YearSpecs,
+    yearSelections: any,
     dataPath: string[],
     nodeIndex: number,
     treeNodeMetaDataFromParentSortedList?:any,
@@ -35,6 +36,7 @@ class BudgetNode {
         this.dataPath = parms.dataPath
         this.nodeIndex = parms.nodeIndex
         this.yearSpecs = parms.yearSpecs
+        this.yearSelections = parms.yearSelections
         this._nodeData = node
         this.uid = uid
         // this.datasetSpecs = parms.datasetSpecs
@@ -53,6 +55,7 @@ class BudgetNode {
     dataPath: string[]
     nodeIndex: number
     yearSpecs: YearSpecs
+    yearSelections: any
     actions: any
     viewpointConfigPack: any
     branchSettings:any
@@ -165,13 +168,35 @@ class BudgetNode {
         // console.log('updated set to true in resetCells')
     }
 
+    switchYearSelections(yearSelections) {
+        let budgetNode = this
+
+        // console.log('inside switchYearSelections', yearSelections)
+
+        this.yearSelections = yearSelections
+
+        let cells = budgetNode.cells
+        for (let cellIndex in cells) {
+
+            let cell:BudgetCell = cells[cellIndex]
+
+            budgetNode._updateCell(cell, cellIndex)
+            cell.setChartParms()
+
+        }
+        this.newCells = cells
+        this.updated = true
+        // console.log('updated set to true in resetCells')
+    }
+
     private _updateCell = (cell:BudgetCell, cellIndex) => {
         let budgetNode = this
 
-        let { viewpointConfigPack, treeNodeData, yearSpecs, treeNodeMetaDataFromParentSortedList, nodeIndex } = budgetNode
+        let { viewpointConfigPack, treeNodeData, yearSpecs, yearSelections, treeNodeMetaDataFromParentSortedList, nodeIndex } = budgetNode
         let nodeDataPack: NodeData = {
             treeNodeData,
             yearSpecs,
+            yearSelections,
             treeNodeMetaDataFromParentSortedList,
         }
 

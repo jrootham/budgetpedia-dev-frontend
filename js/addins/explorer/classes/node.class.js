@@ -34,10 +34,11 @@ class BudgetNode {
         };
         this._updateCell = (cell, cellIndex) => {
             let budgetNode = this;
-            let { viewpointConfigPack, treeNodeData, yearSpecs, treeNodeMetaDataFromParentSortedList, nodeIndex } = budgetNode;
+            let { viewpointConfigPack, treeNodeData, yearSpecs, yearSelections, treeNodeMetaDataFromParentSortedList, nodeIndex } = budgetNode;
             let nodeDataPack = {
                 treeNodeData: treeNodeData,
                 yearSpecs: yearSpecs,
+                yearSelections: yearSelections,
                 treeNodeMetaDataFromParentSortedList: treeNodeMetaDataFromParentSortedList,
             };
             cell.viewpointConfigPack = viewpointConfigPack;
@@ -68,6 +69,7 @@ class BudgetNode {
         this.dataPath = parms.dataPath;
         this.nodeIndex = parms.nodeIndex;
         this.yearSpecs = parms.yearSpecs;
+        this.yearSelections = parms.yearSelections;
         this._nodeData = node;
         this.uid = uid;
         if (parms.treeNodeMetaDataFromParentSortedList)
@@ -107,6 +109,18 @@ class BudgetNode {
     }
     resetCells() {
         let budgetNode = this;
+        let cells = budgetNode.cells;
+        for (let cellIndex in cells) {
+            let cell = cells[cellIndex];
+            budgetNode._updateCell(cell, cellIndex);
+            cell.setChartParms();
+        }
+        this.newCells = cells;
+        this.updated = true;
+    }
+    switchYearSelections(yearSelections) {
+        let budgetNode = this;
+        this.yearSelections = yearSelections;
         let cells = budgetNode.cells;
         for (let cellIndex in cells) {
             let cell = cells[cellIndex];

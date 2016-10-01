@@ -41,10 +41,6 @@ class ExplorerCell extends Component {
                     budgetCell.switchChartCode(this.chartConfig.explorerChartCode);
                     break;
                 }
-                case actions_1.cellTypes.UPDATE_CELL_YEAR_SELECTIONS: {
-                    budgetCell.switchYearCodes(this.cellDeclaration.yearSelections);
-                    break;
-                }
             }
             this._previousControlData = currentControlData;
         };
@@ -54,7 +50,7 @@ class ExplorerCell extends Component {
         };
         this.onChangeChartYears = (leftYear, rightYear) => {
             let { budgetCell } = this.props;
-            this.props.globalStateActions.updateCellYearSelections(budgetCell.uid, leftYear, rightYear);
+            this.props.globalStateActions.updateCellYearSelections(leftYear, rightYear);
         };
         this.onChangeTimeCode = explorerTimeCode => {
             this.setState({
@@ -119,8 +115,8 @@ class ExplorerCell extends Component {
         let { datasetConfig } = viewpointConfigPack;
         let { start: startYear, end: endYear } = datasetConfig.YearsRange;
         let yearSpan = endYear - startYear;
-        let leftYear = this.cellDeclaration.yearSelections.leftYear;
-        let rightYear = this.cellDeclaration.yearSelections.rightYear;
+        let leftYear = budgetCell.nodeDataPack.yearSelections.leftYear;
+        let rightYear = budgetCell.nodeDataPack.yearSelections.rightYear;
         let datanode = budgetCell.nodeDataPack.treeNodeData;
         let datasetiestype = budgetCell.nodeDataseriesName;
         let drillDownProperty = datasetiestype + 'Drilldown';

@@ -145,6 +145,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         let previousControlData = this._previousControlData
         let currentControlData = this.props.declarationData
         let { lastAction } = currentControlData
+        // console.log('node respondToGlobalStateChange', lastAction, nodeActionTypes)
         let returnvalue = true
         if (!nodeActionTypes[lastAction.type]) {
             return false
@@ -158,26 +159,30 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
 
         switch (lastAction.type) {
             case nodeActionTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
+
                 // console.log('node responding to year dependencies', currentControlData, previousControlData , this.state.nodeCells)
-                let cells = this.state.nodeCells
-                if (cells.length == 0) break
-                let testuid = cells[0].uid
-                let testCurrentYearSelections = currentControlData.cellsById[testuid].yearSelections
-                let testPreviousYearSelections = previousControlData.cellsById[testuid].yearSelections
-                // console.log('tests', testCurrentYearSelections, testPreviousYearSelections)
-                if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear ||
-                    testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) { 
+                let currentYearSelections = currentControlData.nodesById[budgetNode.uid].yearSelections
+                let previousYearSelections = previousControlData.nodesById[budgetNode.uid].yearSelections
+
+                // console.log('NORMALIZE_CELL_YEAR_DEPENDENCIES', currentYearSelections)
+
+                if (currentYearSelections.leftYear !== previousYearSelections.leftYear ||
+                    currentYearSelections.rightYear !== previousYearSelections.rightYear) { 
                     // console.log('resetting cells')
-                    budgetNode.resetCells()
+                    budgetNode.switchYearSelections(currentYearSelections)
                     // budgetNode.newCells = newCells                    
                     this.forceUpdate()
                 }
                 break
             }
+            case nodeActionTypes.UPDATE_NODE_YEAR_SELECTIONS: {
+                budgetNode.switchYearSelections(currentControlData.nodesById[budgetNode.uid].yearSelections)
+                break
+            }
+
         }
         this._previousControlData = currentControlData
     }
-
 
     updateCellsFromDeclarations = (props) => {
         let { budgetNode}:{budgetNode:BudgetNode} = props // this.props

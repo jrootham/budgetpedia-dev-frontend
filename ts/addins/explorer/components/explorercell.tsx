@@ -125,10 +125,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 budgetCell.switchChartCode(this.chartConfig.explorerChartCode)
                 break
             }
-            case cellActionTypes.UPDATE_CELL_YEAR_SELECTIONS: {
-                budgetCell.switchYearCodes(this.cellDeclaration.yearSelections)
-                break
-            }
         }
         this._previousControlData = currentControlData
     }
@@ -144,7 +140,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     onChangeChartYears = (leftYear, rightYear) => {
         let { budgetCell } = this.props
 
-        this.props.globalStateActions.updateCellYearSelections(budgetCell.uid, leftYear, rightYear)
+        // console.log('onChangeChartYears', leftYear, rightYear)
+
+        this.props.globalStateActions.updateCellYearSelections(leftYear, rightYear)
     }
 
     onChangeTimeCode = explorerTimeCode => {
@@ -189,8 +187,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         let { datasetConfig } = viewpointConfigPack
         let {start: startYear, end: endYear } = datasetConfig.YearsRange
         let yearSpan = endYear - startYear
-        let leftYear = this.cellDeclaration.yearSelections.leftYear
-        let rightYear = this.cellDeclaration.yearSelections.rightYear
+        let leftYear = budgetCell.nodeDataPack.yearSelections.leftYear
+        let rightYear = budgetCell.nodeDataPack.yearSelections.rightYear
 
         // get drilldown message
         let datanode = budgetCell.nodeDataPack.treeNodeData

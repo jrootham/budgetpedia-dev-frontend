@@ -31,17 +31,17 @@ class ExplorerNode extends Component {
             let nodeDeclaration = this.props.declarationData.nodesById[budgetNode.uid];
             switch (lastAction.type) {
                 case actions_1.nodeTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
-                    let cells = this.state.nodeCells;
-                    if (cells.length == 0)
-                        break;
-                    let testuid = cells[0].uid;
-                    let testCurrentYearSelections = currentControlData.cellsById[testuid].yearSelections;
-                    let testPreviousYearSelections = previousControlData.cellsById[testuid].yearSelections;
-                    if (testCurrentYearSelections.leftYear !== testPreviousYearSelections.leftYear ||
-                        testCurrentYearSelections.rightYear !== testPreviousYearSelections.rightYear) {
-                        budgetNode.resetCells();
+                    let currentYearSelections = currentControlData.nodesById[budgetNode.uid].yearSelections;
+                    let previousYearSelections = previousControlData.nodesById[budgetNode.uid].yearSelections;
+                    if (currentYearSelections.leftYear !== previousYearSelections.leftYear ||
+                        currentYearSelections.rightYear !== previousYearSelections.rightYear) {
+                        budgetNode.switchYearSelections(currentYearSelections);
                         this.forceUpdate();
                     }
+                    break;
+                }
+                case actions_1.nodeTypes.UPDATE_NODE_YEAR_SELECTIONS: {
+                    budgetNode.switchYearSelections(currentControlData.nodesById[budgetNode.uid].yearSelections);
                     break;
                 }
             }

@@ -28,7 +28,7 @@ export namespace types {
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
     export const TOGGLE_NET = 'TOGGLE_NET'
     export const TOGGLE_VARIANCE = 'TOGGLE_VARIANCE'
-    export const UPDATE_CELL_YEAR_SELECTIONS = 'UPDATE_CELL_YEAR_SELECTIONS'
+    export const UPDATE_NODE_YEAR_SELECTIONS = 'UPDATE_NODE_YEAR_SELECTIONS'
     export const UPDATE_NODE = 'UPDATE_NODE'
 }
 
@@ -48,6 +48,7 @@ export namespace nodeTypes {
     export import CHANGE_TAB = types.CHANGE_TAB
     export import NORMALIZE_CELL_YEAR_DEPENDENCIES = types.NORMALIZE_CELL_YEAR_DEPENDENCIES
     export import UPDATE_NODE = types.UPDATE_NODE
+    export import UPDATE_NODE_YEAR_SELECTIONS = types.UPDATE_NODE_YEAR_SELECTIONS
     // export import UPDATE_CELLS_DATASERIESNAME = types.UPDATE_CELLS_DATASERIESNAME
 
 }
@@ -59,7 +60,6 @@ export namespace cellTypes {
     export import TOGGLE_DELTA = types.TOGGLE_DELTA
     export import TOGGLE_NET = types.TOGGLE_NET
     export import TOGGLE_VARIANCE = types.TOGGLE_VARIANCE
-    export import UPDATE_CELL_YEAR_SELECTIONS = types.UPDATE_CELL_YEAR_SELECTIONS
 }
 
 // --------------------[ Branch ]---------------------
@@ -232,10 +232,10 @@ export const updateCellChartCode = createAction(
 )
 
 export const updateCellYearSelections = createAction(
-    types.UPDATE_CELL_YEAR_SELECTIONS, (branchuid, nodeuid, celluid, leftyear, rightyear) => ({
+    types.UPDATE_NODE_YEAR_SELECTIONS, (branchuid, nodeuid, leftyear, rightyear) => ({
         branchuid,
         nodeuid,
-        celluid,
+        // celluid,
         leftyear,
         rightyear,
     }), () => ({

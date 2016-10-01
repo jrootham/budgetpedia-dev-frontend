@@ -303,8 +303,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         nodeuid => (celluid,selection) =>
         this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection )
     private updateCellYearSelections = branchuid => 
-        nodeuid => (celluid,leftyear,rightyear) =>
-        this.props.updateCellYearSelections(branchuid, nodeuid, celluid, leftyear, rightyear )
+        nodeuid => (leftyear,rightyear) =>
+        this.props.updateCellYearSelections(branchuid, nodeuid, leftyear, rightyear )
     private updateCellChartCode = branchuid => 
         nodeuid => (celluid, explorerChartCode) => 
         this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode)

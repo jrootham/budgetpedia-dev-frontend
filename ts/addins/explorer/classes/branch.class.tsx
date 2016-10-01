@@ -92,6 +92,7 @@ class BudgetBranch {
                 firstYear: null,
                 lastYear: null,
             },
+            yearSelections: Object.assign({},defaults.yearSelections),
             dataPath: [],
             nodeIndex:0,
         }
@@ -402,6 +403,7 @@ class BudgetBranch {
         }
         workingStatus(true)
         let newrange = Object.assign({}, budgetNode.yearSpecs)
+        let newselections = Object.assign({},budgetNode.yearSelections)
 
         let newdatanode = getBudgetNode(viewpointData, childdatapath)
         let newnodeconfigparms: BudgetNodeParms = {
@@ -412,6 +414,7 @@ class BudgetBranch {
             nodeIndex: nodeIndex + 1,
             treeNodeMetaDataFromParentSortedList,
             yearSpecs: newrange,
+            yearSelections: newselections,
 
         }
 

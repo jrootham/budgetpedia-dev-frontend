@@ -103,6 +103,7 @@ export interface CellConstructorArgs {
 export interface NodeData {
     treeNodeData: any,
     yearSpecs: YearSpecs,
+    yearSelections: any,
     treeNodeMetaDataFromParentSortedList: any,
 }
 
@@ -422,7 +423,7 @@ class BudgetCell {
 
         // add yearspan to title
         let cellDeclaration = this.cellDeclaration
-        let { rightYear, leftYear} = cellDeclaration.yearSelections
+        let { rightYear, leftYear} = this.nodeDataPack.yearSelections
         let { yearScope } = cellDeclaration
 
         let timeSuffix: string = null
@@ -550,7 +551,7 @@ class BudgetCell {
         let budgetCell = this
 
         let cellDeclaration = this.cellDeclaration
-        let { rightYear, leftYear} = cellDeclaration.yearSelections
+        let { rightYear, leftYear} = this.nodeDataPack.yearSelections
 
         let { nodeDataseriesName } = budgetCell
 
@@ -666,7 +667,7 @@ class BudgetCell {
     private _columns_ColumnChart = (yearSpecs:YearSpecs) => {
 
         let cellDeclaration = this.cellDeclaration
-        let { rightYear, leftYear} = cellDeclaration.yearSelections
+        let { rightYear, leftYear} = this.nodeDataPack.yearSelections
 
         let budgetCell = this
         let categorylabel = 'Component' // placeholder
@@ -685,7 +686,7 @@ class BudgetCell {
     private _columns_PieChart = (yearSpecs:YearSpecs) => {
 
         let cellDeclaration = this.cellDeclaration
-        let { rightYear, leftYear} = cellDeclaration.yearSelections
+        let { rightYear, leftYear} = this.nodeDataPack.yearSelections
 
         let budgetCell = this
         let categorylabel = 'Component' // placeholder
@@ -708,7 +709,7 @@ class BudgetCell {
         let budgetCell = this
 
         let cellDeclaration = this.cellDeclaration
-        let { rightYear, leftYear} = cellDeclaration.yearSelections
+        let { rightYear, leftYear} = this.nodeDataPack.yearSelections
 
         let { nodeDataseriesName } = budgetCell
 
