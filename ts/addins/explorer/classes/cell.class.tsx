@@ -220,12 +220,9 @@ class BudgetCell {
     setChartParms = () => {
 
         // let err = new Error()
-        // console.log('setChartParms invoked',err)
         let budgetCell: BudgetCell = this
 
         // --------------[ Unpack data bundles ]-------------
-
-        // console.log('viewpointConfigPack', this.viewpointConfigPack)
 
         let { 
             viewpointNamingConfigs, 
@@ -348,7 +345,6 @@ class BudgetCell {
         let horizontalLabel = null
         if ((treeNodeData.NamingConfigRef) && (nodeDataseriesName != 'CommonDimension')) {
 
-            // console.log('treeNodeData.NamingConfigRef',treeNodeData.NamingConfigRef)
             let titleref = viewpointNamingConfigs[treeNodeData.NamingConfigRef]
             horizontalLabel = titleref.Contents.Alias || titleref.Contents.Name
 
@@ -359,7 +355,7 @@ class BudgetCell {
                 //         treeNodeData.CommonDimensionName
                 let contentdimensionname = datasetConfig.CommonDimension
                 let names = datasetConfig.DimensionNames
-                // console.log('treeNodeData, contentdimensionname, datasetConfig', treeNodeData, contentdimensionname, datasetConfig)
+
                 horizontalLabel = names[contentdimensionname].Collection
                 // let portaltitles = datasetConfig.CellTitles
                 // horizontalLabel = portaltitles[nodeDataseriesName]
@@ -466,7 +462,7 @@ class BudgetCell {
             if (!(yearScope == TimeScope[TimeScope.OneYear] && 
                 datasetConfig.InflationReferenceYear <= rightYear)) {
                 let isInflationAdjusted = this.viewpointConfigPack.isInflationAdjusted
-                // console.log('isInflationAdjusted',isInflationAdjusted)
+
                 let fragment
                 if (!isInflationAdjusted) {
                     fragment = ' -- nominal $'
@@ -585,10 +581,9 @@ class BudgetCell {
   
                 slices[index].color = ColorBrightness(GoogleChartColors[index],120)
                 slices[index].offset = 0 // I changed my mind about having an offset; now just a proxy for no drilldown
-                // console.log('input, output', GoogleChartColors[index], slices[index].color )
+
             }
         }
-        // console.log('slices',slices)
         let options = {
             slices,
             pieHole:0.4,

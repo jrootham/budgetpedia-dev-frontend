@@ -73,8 +73,6 @@ const setViewpointData = (parms: SetViewpointDataParms) => {
         }
     }
 
-    // console.log('inflationadjusted, baselineItems', inflationAdjusted, baselineItems)
-
     // set years, and CommonDimension by years
     try {
 
@@ -88,7 +86,6 @@ const setViewpointData = (parms: SetViewpointDataParms) => {
         let nodeSummaries = getNodeSummaries(node, baselineItems, lookupset)
         node.ComponentsDrilldown = nodeSummaries.Drilldown
         setNodeSummaries(node, nodeSummaries, lookupset)
-        // console.log('completed set viewpointdata', node)
 
     } catch (e) {
 
@@ -98,7 +95,6 @@ const setViewpointData = (parms: SetViewpointDataParms) => {
     // record state
     viewpointDataTemplate.Meta.currentDataset = datasetName
     viewpointDataTemplate.Meta.isInflationAdjusted = inflationAdjusted
-    // console.log('viewpointDataTemplate', viewpointDataTemplate)
 
 }
 

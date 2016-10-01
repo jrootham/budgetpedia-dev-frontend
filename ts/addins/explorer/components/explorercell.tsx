@@ -66,7 +66,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         setTimeout(() =>{ // give time for chart to be assigned to budgetCell
             budgetCell.refreshSelection() // for re-creation; last pie chart is missed
         })
-        // console.log('did mount cell declarationData',this.cellDeclaration)
+
     }
 
     private lastactiongeneration: number = 0
@@ -82,8 +82,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     }
 
     componentDidUpdate() {
-
-        // console.log('did update cell declarationData',this.cellDeclaration)
 
         let explorerCell = this
         explorerCell._respondToGlobalStateChange()
@@ -140,8 +138,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     onChangeChartYears = (leftYear, rightYear) => {
         let { budgetCell } = this.props
 
-        // console.log('onChangeChartYears', leftYear, rightYear)
-
         this.props.globalStateActions.updateCellYearSelections(leftYear, rightYear)
     }
 
@@ -183,7 +179,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid]
         let yearScope = cellDeclaration.yearScope
         let { chartParms, explorerChartCode, graph_id, viewpointConfigPack } = budgetCell
-        // console.log('budgetCell',budgetCell, explorerChartCode)
+
         let { datasetConfig } = viewpointConfigPack
         let {start: startYear, end: endYear } = datasetConfig.YearsRange
         let yearSpan = endYear - startYear

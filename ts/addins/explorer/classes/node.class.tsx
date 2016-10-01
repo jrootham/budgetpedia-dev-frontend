@@ -100,7 +100,7 @@ class BudgetNode {
             this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode
         }
         this.updated = true
-        // console.log('updated set to true in updateDataNode')
+
     }
 
     oldAspectState: boolean // !!dataNode.Components
@@ -128,7 +128,6 @@ class BudgetNode {
         let cells = []
         // // TODO: should be default for each chart...
         // build cells array
-        // console.log('cellDeclarations in setCells',cellDeclarations)
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration: CellDeclaration = cellDeclarations[cellIndex]
             let {nodeDataseriesName, celluid} = cellDeclaration
@@ -165,13 +164,10 @@ class BudgetNode {
         }
         this.newCells = cells
         this.updated = true
-        // console.log('updated set to true in resetCells')
     }
 
     switchYearSelections(yearSelections) {
         let budgetNode = this
-
-        // console.log('inside switchYearSelections', yearSelections)
 
         this.yearSelections = yearSelections
 
@@ -186,7 +182,7 @@ class BudgetNode {
         }
         this.newCells = cells
         this.updated = true
-        // console.log('updated set to true in resetCells')
+
     }
 
     private _updateCell = (cell:BudgetCell, cellIndex) => {

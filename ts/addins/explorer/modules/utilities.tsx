@@ -98,11 +98,12 @@ export const filterActionsForUpdate = (nextProps, component, show:boolean = fals
 
         // 5. filter out legitimate mismatched targets
         let filtered = Object.keys(lastTargetedAction).filter((item) =>{
-            // console.log('item, lastTargetedAction',item,lastTargetedAction)
+
             let itemaction = lastTargetedAction[item]
             if (itemaction[targetType] && itemaction.generation > component.lastactiongeneration) {
                 return true
             }
+
         })
 
         if (filtered.length > 0) {

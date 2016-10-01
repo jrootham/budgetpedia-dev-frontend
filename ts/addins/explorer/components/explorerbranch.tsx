@@ -375,7 +375,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     private _processToggleInflationAdjustedStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData().then(() => {
-            // console.log('switched viewpoint data in changeaspect')
+
             this._stateActions.changeBranchDataVersion(budgetBranch.uid)
             budgetBranch.toggleInflationAdjusted()
 
@@ -389,7 +389,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _processChangeAspectStateChange = (budgetBranch:BudgetBranch) => {
 
         budgetBranch.getViewpointData().then(() => {
-            // console.log('switched viewpoint data in changeaspect')
+
             this._stateActions.changeBranchDataVersion(budgetBranch.uid)
             let switchResults = budgetBranch.switchAspect()
 
@@ -623,7 +623,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 datasetConfig: datasetConfig,
                 isInflationAdjusted,
             } = viewpointdata.Meta
-            // console.log('viewpointdata', viewpointdata)
+
             let viewpointConfigPack = {
                 viewpointNamingConfigs,
                 datasetConfig,
@@ -654,7 +654,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     render() {
 
-    // console.log('render branch', this.props.budgetBranch.uid)
     let branch = this
     let drilldownrow = branch.props.budgetBranch.nodes
 

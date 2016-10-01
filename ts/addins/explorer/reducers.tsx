@@ -166,7 +166,6 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             newstate = Object.assign({},state)
             newstate[branchuid] = Object.assign({},newstate[branchuid])
             newstate[branchuid].branchDataGeneration++
-            // console.log('reducer changed data counter',newstate[branchuid].branchDataGeneration)
             return newstate
         }
 
@@ -216,7 +215,6 @@ let nodesById = (state = { }, action) => {
         }
         case actiontypes.UPDATE_NODE_YEAR_SELECTIONS: {
 
-            // console.log('UPDATE_NODE_YEAR_SELECTIONS',action)
             newstate = Object.assign({},state)
 
             let { nodeuid, leftyear, rightyear } = action.payload
@@ -242,7 +240,7 @@ let nodesById = (state = { }, action) => {
             let { start: startYear, end: endYear } = yearsRange
             let newnode = Object.assign({},newstate[nodeuid])
             let yearSpan = endYear - startYear
-            // console.log('NORMALIZE_CELL_YEAR_DEPENDENCIES', cellList, yearsRange, startYear, endYear, yearSpan)
+
             let range = Object.assign({}, newnode.yearSelections)
             if ( range.leftYear < startYear || range.leftYear > endYear ) {
                 range.leftYear = startYear
@@ -288,7 +286,7 @@ let cellsById = (state = { }, action) => {
             let newcell = Object.assign({},newstate[celluid])
 
             let chartSelection = action.payload.selection
-            // console.log('chartSelection',chartSelection)
+
             if (Array.isArray(chartSelection) && chartSelection.length == 0) {
                 chartSelection = null
             }
@@ -302,7 +300,6 @@ let cellsById = (state = { }, action) => {
 
             newstate[celluid] = newcell
 
-            // console.log('newstate from selection',newstate)
             return newstate
         }
 
@@ -330,7 +327,7 @@ let cellsById = (state = { }, action) => {
             newcell.chartConfigs = newChartConfigs
 
             newstate[celluid] = newcell
-            // console.log('newstate from chart code',newstate)
+
             return newstate
 
         }
@@ -339,15 +336,15 @@ let cellsById = (state = { }, action) => {
             let { cellList, yearsRange } = action.payload
             let { start: startYear, end: endYear } = yearsRange
             let yearSpan = endYear - startYear
-            // console.log('NORMALIZE_CELL_YEAR_DEPENDENCIES', cellList, yearsRange, startYear, endYear, yearSpan)
+
             for (let celluid of cellList) {
-                // console.log('BEFORE',newstate[celluid])
+
                 let newcell = Object.assign({},newstate[celluid])
                 if ( yearSpan == 0 ) {
                     newcell.yearScope = TimeScope[TimeScope.OneYear]
                 }
                 newstate[celluid] = newcell
-                // console.log('AFTER',newstate[celluid])
+
             }
 
             return newstate
@@ -364,8 +361,6 @@ let lastActionDefaultState = {
 }
 
 let lastAction = (state = lastActionDefaultState , action) => {
-
-    // console.log('lastAction from source', action, generationcounter)
 
     let newstate = Object.assign({},state)
     if (!action.payload && !(action.type == actiontypes.RESET_LAST_ACTION)) {
@@ -394,7 +389,7 @@ let lastAction = (state = lastActionDefaultState , action) => {
             newstate.nodeuid = payload.nodeuid
             newstate.celluid = payload.celluid
             newstate.generation = generationcounter
-            // console.log('lastaction newstate', newstate)
+
             return newstate
         }
 

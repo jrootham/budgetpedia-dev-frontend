@@ -337,7 +337,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     // ---------------------------[ Render ]------------------------------ 
 
     render() {
-        // console.log('explorer rendering')
+
         let explorer = this
 
         let dialogbox =  

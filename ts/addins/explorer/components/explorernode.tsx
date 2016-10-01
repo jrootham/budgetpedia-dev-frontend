@@ -74,13 +74,12 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
 
         if (nodeDeclaration.cellList == null) {
-            // console.log('declaring new cells')
             // get controlData for cellList
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
 
         } else {
-            // console.log('updating node from declarations in componentWillMount', budgetNode.uid)
+
             this._stateActions.updateNode(budgetNode.uid) // trigger update -> render
             // this.updateCellsFromDeclarations(this.props)
         }
@@ -94,18 +93,15 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         let { dataGenerationCounter, budgetNode } = nextProps
         let { oldDataGenerationCounter } = this
         let lastAction = nextProps.declarationData.lastAction
-        // console.log('lastAction from node componentWillReceiveProps', lastAction.type, lastAction.nodeuid, budgetNode.uid)
 
         if ( oldDataGenerationCounter === null || (dataGenerationCounter > oldDataGenerationCounter)) {
-            // console.log('normalizing cellDeclarations', budgetNode.uid)
+
             this.oldDataGenerationCounter = dataGenerationCounter
             // normalize cell settings to year dependency constraints
-            // console.log('normalizeCellDeclarations',dataGenerationCounter)
             this._normalizeCellDeclarations(nextProps)
 
         } else {
 
-            // console.log('updating NODE cells from declarations in componentWillReceiveProps', budgetNode.uid)
             this.updateCellsFromDeclarations(nextProps)
             this._harmonizeCellsToState(nextProps)
             if ( budgetNode.new ) {
@@ -145,7 +141,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         let previousControlData = this._previousControlData
         let currentControlData = this.props.declarationData
         let { lastAction } = currentControlData
-        // console.log('node respondToGlobalStateChange', lastAction, nodeActionTypes)
+
         let returnvalue = true
         if (!nodeActionTypes[lastAction.type]) {
             return false
@@ -160,15 +156,12 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         switch (lastAction.type) {
             case nodeActionTypes.NORMALIZE_CELL_YEAR_DEPENDENCIES: {
 
-                // console.log('node responding to year dependencies', currentControlData, previousControlData , this.state.nodeCells)
                 let currentYearSelections = currentControlData.nodesById[budgetNode.uid].yearSelections
                 let previousYearSelections = previousControlData.nodesById[budgetNode.uid].yearSelections
 
-                // console.log('NORMALIZE_CELL_YEAR_DEPENDENCIES', currentYearSelections)
-
                 if (currentYearSelections.leftYear !== previousYearSelections.leftYear ||
                     currentYearSelections.rightYear !== previousYearSelections.rightYear) { 
-                    // console.log('resetting cells')
+
                     budgetNode.switchYearSelections(currentYearSelections)
                     // budgetNode.newCells = newCells                    
                     this.forceUpdate()
@@ -187,13 +180,13 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     updateCellsFromDeclarations = (props) => {
         let { budgetNode}:{budgetNode:BudgetNode} = props // this.props
         if (budgetNode.updated) {
-            // console.log('updated cells being saved - setState')
+
             this.setState({
                 nodeCells:budgetNode.newCells
             })
             budgetNode.newCells = null
             budgetNode.updated = false
-            // console.log('updated cleared in updateCellsFromDeclarations')
+
         }
 
     }
@@ -243,12 +236,8 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         let { budgetNode } = props
         let nodeDeclaration = props.declarationData.nodesById[budgetNode.uid] 
 
-        // console.log('budgetNode in normalizeCells', budgetNode.uid)       
-
         let cellList = nodeDeclaration.cellList
         let yearsRange = budgetNode.viewpointConfigPack.datasetConfig.YearsRange
-
-        // console.log('normalizing cells',budgetNode, nodeDeclaration, budgetNode.uid,cellList,yearsRange)
 
         this._stateActions.normalizeCellYearDependencies(budgetNode.uid, cellList, yearsRange)
 
@@ -267,12 +256,12 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         // generate array of chart tabs
         let { callbackid, budgetNode } = this.props
         let budgetCells = budgetNode.cells
-        // console.log('budgetCells in getChartTabs', budgetCells, budgetNode)
+
         let portalSettings = budgetNode.portalConfig
         // let { chartConfigs } = portalSettings 
         let cellTabs = budgetCells.map(
             (budgetCell:BudgetCell,cellIndex) => {
-            //!Hack! if more than one chart the first must be expandable
+
             let { cellTitle } = budgetCell
             return <Tab style={{fontSize:"12px"}} 
                 label={ cellTitle } 
@@ -324,8 +313,6 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     }
 
     render() {
-
-        // console.log('render node', this.props.budgetNode.uid, this.props.budgetNode)
 
         let chartTabs = this.getChartTabs()
 

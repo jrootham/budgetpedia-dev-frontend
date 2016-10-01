@@ -114,7 +114,7 @@ class BudgetBranch {
         let branchSettings = budgetBranch.settings
 
         let branchNode = budgetBranch
-        // console.log('state inside addNode', budgetBranch.state, branchNode.uid )
+
         let viewpointData = budgetBranch.state.viewpointData
         if (!viewpointData) return
         let treeNodeData = getBudgetNode(viewpointData, dataPath)
@@ -134,8 +134,6 @@ class BudgetBranch {
         let node:BudgetNode
         for (node of nodes) {
             // let drilldown = node.treeNodeData.ComponentsDrilldown || 'Node'
-            // console.log('drilldown for saveaspect', drilldown)
-            // console.log('node.cells for saveAspectState', node.cells)
             node.oldAspectState = !!node.treeNodeData.Components
             // node.oldAspectState = drilldown
         }
@@ -218,7 +216,6 @@ class BudgetBranch {
                 // let shallowerdata = ((drilldown == 'None') && (budgetNode.oldAspectState != 'None'))
                 let shallowerdata = ((!dataNode.Components) && (budgetNode.oldAspectState))
 
-                // console.log('drilldown, deeperdata, shallowerdata', drilldown, deeperdata, shallowerdata)
                 // now set budgetNode with new data node
                 let parentDataNode = null
                 if (nodeIndex > 0) {
@@ -313,11 +310,11 @@ class BudgetBranch {
             _promise.then( (viewpointdata:ViewpointData) => {
 
                 let budgetBranch = this
-                // console.log('setting viewpointdata ', budgetBranch.uid)
+
                 budgetBranch.setState({
                     viewpointData:viewpointdata
                 })
-                // console.log('setting viewpointdata ', budgetBranch.uid, viewpointdata, [...budgetBranch.state])
+
                 resolve(true)
                 
             }).catch(reason =>{
