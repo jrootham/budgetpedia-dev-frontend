@@ -23,7 +23,17 @@ export interface BudgetNodeParms {
     yearSelections: any,
     dataPath: string[],
     nodeIndex: number,
-    treeNodeMetaDataFromParentSortedList?:any,
+    // treeNodeMetaDataFromParentSortedList?:any,
+}
+
+export interface BudgetNodeDeclarationParms {
+    viewpointName: string,
+    aspectName: string, // used to select chartset to display
+    // datasetSpecs:DataseriesMeta[],
+    yearSpecs: YearSpecs,
+    yearSelections: any,
+    dataPath: string[],
+    nodeIndex: number,
 }
 
 class BudgetNode {
@@ -41,8 +51,8 @@ class BudgetNode {
         this.uid = uid
         // this.datasetSpecs = parms.datasetSpecs
         // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
-        if (parms.treeNodeMetaDataFromParentSortedList) this.treeNodeMetaDataFromParentSortedList = parms.treeNodeMetaDataFromParentSortedList
-        if (parentBudgetNode) this.treeNodeMetaDataFromParentSortedList.parentBudgetNode = parentBudgetNode
+        // if (parms.treeNodeMetaDataFromParentSortedList) this.treeNodeMetaDataFromParentSortedList = parms.treeNodeMetaDataFromParentSortedList
+        if (parentBudgetNode) this.parentBudgetNode = parentBudgetNode
 
     }
 
@@ -80,8 +90,9 @@ class BudgetNode {
 
     public getProps: Function
 
-    treeNodeMetaDataFromParentSortedList: any = null // includes parentNode for now
+    // treeNodeMetaDataFromParentSortedList: any = null // includes parentNode for now
     // parentNode: any = null
+    parentBudgetNode: any = null
 
     portalConfig: PortalConfig
 
@@ -89,16 +100,16 @@ class BudgetNode {
         return [...this.state.nodeCells]
     }
 
-    updateAspect = (aspect, treeNodeData, parentDataNode = null) => {
+    updateAspect = (aspect, treeNodeData) => { //, parentDataNode = null) => {
         this.aspectName = aspect
-        this.updateDataNode(treeNodeData, parentDataNode)
+        this.updateDataNode(treeNodeData) //, parentDataNode)
     }
 
-    updateDataNode = (treeNodeData, parentDataNode = null) => {
+    updateDataNode = (treeNodeData) => {// , parentDataNode = null) => {
         this._nodeData = treeNodeData
-        if (this.treeNodeMetaDataFromParentSortedList && parentDataNode) {
-            this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode
-        }
+        // if (this.treeNodeMetaDataFromParentSortedList && parentDataNode) {
+        //     this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode
+        // }
         this.updated = true
 
     }
@@ -188,12 +199,12 @@ class BudgetNode {
     private _updateCell = (cell:BudgetCell, cellIndex) => {
         let budgetNode = this
 
-        let { viewpointConfigPack, treeNodeData, yearSpecs, yearSelections, treeNodeMetaDataFromParentSortedList, nodeIndex } = budgetNode
+        let { viewpointConfigPack, treeNodeData, yearSpecs, yearSelections, parentBudgetNode, nodeIndex } = budgetNode
         let nodeDataPack: NodeData = {
             treeNodeData,
             yearSpecs,
             yearSelections,
-            treeNodeMetaDataFromParentSortedList,
+            parentBudgetNode,
         }
 
         cell.viewpointConfigPack = viewpointConfigPack

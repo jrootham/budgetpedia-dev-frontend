@@ -104,7 +104,8 @@ export interface NodeData {
     treeNodeData: any,
     yearSpecs: YearSpecs,
     yearSelections: any,
-    treeNodeMetaDataFromParentSortedList: any,
+    parentBudgetNode: any,
+    // treeNodeMetaDataFromParentSortedList: any,
 }
 
 class BudgetCell {
@@ -238,7 +239,7 @@ class BudgetCell {
         let { 
             treeNodeData, 
             yearSpecs, 
-            treeNodeMetaDataFromParentSortedList, 
+            // treeNodeMetaDataFromParentSortedList, 
         } = budgetCell.nodeDataPack
 
         // ---------------------[ get data node components ]------------------
@@ -263,7 +264,7 @@ class BudgetCell {
 
         let options = budgetCell._chartParmsOptions(
             treeNodeData, 
-            treeNodeMetaDataFromParentSortedList, 
+            // treeNodeMetaDataFromParentSortedList, 
             viewpointNamingConfigs, 
             datasetConfig, 
             yearSpecs
@@ -326,7 +327,7 @@ class BudgetCell {
     // ------------------
     private _chartParmsOptions = (
         treeNodeData, 
-        treeNodeMetaDataFromParentSortedList, 
+        // treeNodeMetaDataFromParentSortedList, 
         viewpointNamingConfigs, 
         datasetConfig:DatasetConfig, 
         yearSpecs:YearSpecs
@@ -380,8 +381,8 @@ class BudgetCell {
 
         // set basic title
         let nodename = null
-        if (treeNodeMetaDataFromParentSortedList) {
-            nodename = treeNodeMetaDataFromParentSortedList.Name
+        if (treeNodeData.Name) { // MetaDataFromParentSortedList) {
+            nodename = treeNodeData.Name// treeNodeMetaDataFromParentSortedList.Name
         } else {
             nodename = datasetConfig.DatasetTitle
         }
@@ -393,10 +394,11 @@ class BudgetCell {
             let instancenames = names.Instance
             catname = instancenames.Alias || instancenames.Name
         } else { // sub-baseline dataset node
-            if (treeNodeMetaDataFromParentSortedList && 
-                treeNodeMetaDataFromParentSortedList.parentBudgetNode && 
-                treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData) {
-                let parentconfigindex = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData.NamingConfigRef
+            let { nodeDataPack } = this
+            if (nodeDataPack.parentBudgetNode && 
+                nodeDataPack.parentBudgetNode.treeNodeData) {
+                let {parentBudgetNode} = nodeDataPack
+                let parentconfigindex = parentBudgetNode.treeNodeData.NamingConfigRef
                 // first level below depends in parentconfigindex
                 if (parentconfigindex) {
                     let names = viewpointNamingConfigs[parentconfigindex]
@@ -414,7 +416,7 @@ class BudgetCell {
                     } else {
                         console.error('nodeDataseriesName not found for ', this)
                     }
-                    let dimensionname = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData[nameindex]                    
+                    let dimensionname = parentBudgetNode.treeNodeData[nameindex]                    
                     catname = datasetConfig.DimensionNames[dimensionname].Instance
                 }
             } 

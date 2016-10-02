@@ -4,6 +4,7 @@ let uuid = require('node-uuid') // use uuid.v4() for unique id
 
 export namespace types {
     export const ADD_BRANCH = 'ADD_BRANCH'
+    export const CLONE_BRANCH = 'CLONE_BRANCH'
     export const REMOVE_BRANCH = 'REMOVE_BRANCH'
     export const CHANGE_VIEWPOINT = 'CHANGE_VIEWPOINT'
     export const CHANGE_VERSION = 'CHANGE_VERSION'
@@ -74,6 +75,15 @@ export const addBranchDeclaration = createAction(
     })
 )
     
+export const cloneBranchDeclaration = createAction(
+    types.CLONE_BRANCH,(refbranchuid, settings) => ({
+        settings,
+        refbranchuid,
+    }), () => ({
+        explorer:true
+    })
+)
+
 export const removeBranchDeclaration = createAction(
     types.REMOVE_BRANCH,branchuid => ({
         branchuid, 

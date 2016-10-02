@@ -48,6 +48,8 @@ import ContentRemove from 'material-ui/svg-icons/content/remove'
 import Popover from 'material-ui/Popover'
 import Toggle from 'material-ui/Toggle'
 
+let uuid = require('node-uuid') // use uuid.v4() for unique id
+
 import ExplorerBranch from './components/explorerbranch'
 
 import * as Actions from '../../core/actions/actions'
@@ -96,6 +98,7 @@ export interface MappedBranchActions extends MappedNodeActions {
 interface MappedExplorerActions extends MappedBranchActions {
     // actions composed with dispatch
     addBranchDeclaration:Function, // dispatcher from ExplorerActions through connect
+    cloneBranchDeclaration:Function,
     removeBranchDeclaration:Function,
     resetLastAction:Function,
     branchMoveUp: Function,
@@ -324,9 +327,77 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         this.props.branchMoveDown(branchuid)
     }
 
+    private _getBranchCloneSettings = refbranchid => {
+        let declarationData = this.props.declarationData
+        let clones = {
+            branch:{},
+            nodes:{},
+            cells:{},
+        }
+        let uidmap = {}
+        // clone branch
+        uidmap[refbranchid] = uuid.v4()
+        clones.branch[refbranchid] = this._getClone(declarationData.branchesById[refbranchid])
+        // console.log('clones', clones)
+        // clone branch nodes
+        for (let nodeid of clones.branch[refbranchid]['nodeList']) {
+            let nodeobject = declarationData.nodesById[nodeid]
+            // console.log('nodeobject', nodeobject)
+            clones.nodes[nodeid] = this._getClone(nodeobject)
+            uidmap[nodeid] = uuid.v4()
+        }
+        // clone node cells
+        for (let nodeid in clones.nodes) {
+            for (let cellid of clones.nodes[nodeid].cellList) {
+                clones.cells[cellid] = this._getClone(declarationData.cellsById[cellid])
+                uidmap[cellid] = uuid.v4()
+            }
+        }
+        // map old uid's to new uid's
+        let newclones = {
+            newbranchid:uidmap[refbranchid],
+            branch:{},
+            nodes:{},
+            cells:{},
+        }
+        let newrefbranchid = uidmap[refbranchid]
+        newclones.branch[newrefbranchid] = clones.branch[refbranchid]
+        let oldlist = newclones.branch[newrefbranchid]['nodeList']
+        let newlist = []
+        for (let id of oldlist) {
+            newlist.push(uidmap[id])
+        }
+        newclones.branch[newrefbranchid]['nodeList'] = newlist
+        for (let id in clones.nodes) {
+            let newid = uidmap[id]
+            let nodeclone = newclones.nodes[newid] = clones.nodes[id]
+
+            let oldlist = nodeclone['cellList']
+            let newlist = []
+            for (let id of oldlist) {
+                newlist.push(uidmap[id])
+            }
+            nodeclone['cellList'] = newlist
+
+        }
+        for (let id in clones.cells) {
+            newclones.cells[uidmap[id]] = clones.cells[id]
+        }
+        // console.log('newclones, uidmap', newclones, uidmap)
+        return newclones
+    }
+
+    private _getClone = object => {
+        return JSON.parse(JSON.stringify(object))
+    }
+
     addBranch = refbranchuid => {
-        let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
-        this.props.addBranchDeclaration( refbranchuid, defaultSettings )        
+        let cloneSettings = this._getBranchCloneSettings(refbranchuid)
+
+        // let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
+        // console.log('new branch settings', defaultSettings)
+        // this.props.addBranchDeclaration( refbranchuid, defaultSettings )        
+        this.props.cloneBranchDeclaration( refbranchuid, cloneSettings )        
     }
 
     removeBranch = branchuid => {
@@ -620,6 +691,7 @@ Explorer = connect(mapStateToProps, {
 
     // branch actions - components
     addBranchDeclaration:ExplorerActions.addBranchDeclaration,
+    cloneBranchDeclaration:ExplorerActions.cloneBranchDeclaration,
     removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
     addNodeDeclaration:ExplorerActions.addNodeDeclaration,
     removeNodeDeclarations:ExplorerActions.removeNodeDeclarations,

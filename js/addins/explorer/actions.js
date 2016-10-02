@@ -4,6 +4,7 @@ let uuid = require('node-uuid');
 var types;
 (function (types) {
     types.ADD_BRANCH = 'ADD_BRANCH';
+    types.CLONE_BRANCH = 'CLONE_BRANCH';
     types.REMOVE_BRANCH = 'REMOVE_BRANCH';
     types.CHANGE_VIEWPOINT = 'CHANGE_VIEWPOINT';
     types.CHANGE_VERSION = 'CHANGE_VERSION';
@@ -59,6 +60,12 @@ var cellTypes;
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, (refbranchuid, settings) => ({
     settings: settings,
     branchuid: uuid.v4(),
+    refbranchuid: refbranchuid,
+}), () => ({
+    explorer: true
+}));
+exports.cloneBranchDeclaration = redux_actions_1.createAction(types.CLONE_BRANCH, (refbranchuid, settings) => ({
+    settings: settings,
     refbranchuid: refbranchuid,
 }), () => ({
     explorer: true

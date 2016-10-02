@@ -838,6 +838,7 @@ var uuid = require('node-uuid');
 var types;
 (function (types) {
     types.ADD_BRANCH = 'ADD_BRANCH';
+    types.CLONE_BRANCH = 'CLONE_BRANCH';
     types.REMOVE_BRANCH = 'REMOVE_BRANCH';
     types.CHANGE_VIEWPOINT = 'CHANGE_VIEWPOINT';
     types.CHANGE_VERSION = 'CHANGE_VERSION';
@@ -894,6 +895,16 @@ exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, fu
     return {
         settings: settings,
         branchuid: uuid.v4(),
+        refbranchuid: refbranchuid
+    };
+}, function () {
+    return {
+        explorer: true
+    };
+});
+exports.cloneBranchDeclaration = redux_actions_1.createAction(types.CLONE_BRANCH, function (refbranchuid, settings) {
+    return {
+        settings: settings,
         refbranchuid: refbranchuid
     };
 }, function () {
@@ -1225,11 +1236,7 @@ var BudgetBranch = function () {
             for (nodeIndex in branchNodes) {
                 var budgetNode = branchNodes[nodeIndex];
                 var dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
-                var parentDataNode = null;
-                if (nodeIndex > 0) {
-                    parentDataNode = branchNodes[nodeIndex - 1].treeNodeData;
-                }
-                budgetNode.updateDataNode(dataNode, parentDataNode);
+                budgetNode.updateDataNode(dataNode);
                 budgetNode.resetCells();
             }
             budgetBranch.setState({
@@ -1290,7 +1297,7 @@ var BudgetBranch = function () {
                             budgetNode = null;
                         })();
                     } else {
-                        budgetNode.updateAspect(branchSettings.aspect, dataNode, parentDataNode);
+                        budgetNode.updateAspect(branchSettings.aspect, dataNode);
                         budgetNode.resetCells();
                     }
                 } else {
@@ -1300,7 +1307,7 @@ var BudgetBranch = function () {
                     });
                     actions.removeNodeDeclarations(_removedids);
                     switchResults.mismatch = true;
-                    switchResults.message = 'The new aspect does not have a matching chart for ' + budgetNode.treeNodeMetaDataFromParentSortedList.Name;
+                    switchResults.message = 'The new aspect does not have a matching chart for ' + budgetNode.treeNodeData.Name;
                     var cells = parentBudgetNode.cells;
                     var _iteratorNormalCompletion2 = true;
                     var _didIteratorError2 = false;
@@ -1413,7 +1420,6 @@ var BudgetBranch = function () {
                 aspectName: aspectName,
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
-                treeNodeMetaDataFromParentSortedList: treeNodeMetaDataFromParentSortedList,
                 yearSpecs: newrange,
                 yearSelections: newselections
             };
@@ -1501,14 +1507,13 @@ var BudgetCell = function () {
             var _budgetCell$nodeDataP = budgetCell.nodeDataPack;
             var treeNodeData = _budgetCell$nodeDataP.treeNodeData;
             var yearSpecs = _budgetCell$nodeDataP.yearSpecs;
-            var treeNodeMetaDataFromParentSortedList = _budgetCell$nodeDataP.treeNodeMetaDataFromParentSortedList;
 
             if (!treeNodeData) {
                 console.error('System Error: node not found in setChartParms', budgetCell);
                 throw Error('node not found');
             }
             var chartType = budgetCell.googleChartType;
-            var options = budgetCell._chartParmsOptions(treeNodeData, treeNodeMetaDataFromParentSortedList, viewpointNamingConfigs, datasetConfig, yearSpecs);
+            var options = budgetCell._chartParmsOptions(treeNodeData, viewpointNamingConfigs, datasetConfig, yearSpecs);
             var events = budgetCell._chartParmsEvents();
             var columns = budgetCell._chartParmsColumns(yearSpecs);
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
@@ -1535,7 +1540,7 @@ var BudgetCell = function () {
                 chartParms: chartParms
             });
         };
-        this._chartParmsOptions = function (treeNodeData, treeNodeMetaDataFromParentSortedList, viewpointNamingConfigs, datasetConfig, yearSpecs) {
+        this._chartParmsOptions = function (treeNodeData, viewpointNamingConfigs, datasetConfig, yearSpecs) {
             var budgetCell = _this;
             var aspectName = budgetCell.aspectName;
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
@@ -1560,8 +1565,8 @@ var BudgetCell = function () {
                 }
             }
             var nodename = null;
-            if (treeNodeMetaDataFromParentSortedList) {
-                nodename = treeNodeMetaDataFromParentSortedList.Name;
+            if (treeNodeData.Name) {
+                nodename = treeNodeData.Name;
             } else {
                 nodename = datasetConfig.DatasetTitle;
             }
@@ -1572,8 +1577,12 @@ var BudgetCell = function () {
                 var instancenames = _names2.Instance;
                 catname = instancenames.Alias || instancenames.Name;
             } else {
-                if (treeNodeMetaDataFromParentSortedList && treeNodeMetaDataFromParentSortedList.parentBudgetNode && treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData) {
-                    var parentconfigindex = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData.NamingConfigRef;
+                var nodeDataPack = _this.nodeDataPack;
+
+                if (nodeDataPack.parentBudgetNode && nodeDataPack.parentBudgetNode.treeNodeData) {
+                    var parentBudgetNode = nodeDataPack.parentBudgetNode;
+
+                    var parentconfigindex = parentBudgetNode.treeNodeData.NamingConfigRef;
                     if (parentconfigindex) {
                         var _names3 = viewpointNamingConfigs[parentconfigindex];
                         if (_names3 && _names3.Contents && _names3.Contents.DefaultInstance) {
@@ -1588,7 +1597,7 @@ var BudgetCell = function () {
                         } else {
                             console.error('nodeDataseriesName not found for ', _this);
                         }
-                        var dimensionname = treeNodeMetaDataFromParentSortedList.parentBudgetNode.treeNodeData[nameindex];
+                        var dimensionname = parentBudgetNode.treeNodeData[nameindex];
                         catname = datasetConfig.DimensionNames[dimensionname].Instance;
                     }
                 }
@@ -2254,6 +2263,7 @@ var getIndexSortedComponentItems = function getIndexSortedComponentItems(compone
             Index: component.Index,
             Name: name || 'unknown name'
         };
+        component.Name = name || 'unknown name';
         sorted.push(item);
     }
     sorted.sort(function (a, b) {
@@ -2273,6 +2283,7 @@ var getNameSortedComponentItems = function getNameSortedComponentItems(component
             Code: componentname,
             Name: name || 'unknown name'
         };
+        component.Name = name || 'unknown name';
         sorted.push(item);
     }
     sorted.sort(function (a, b) {
@@ -2342,20 +2353,13 @@ var BudgetNode = function () {
         this.new = true;
         this.updated = false;
         this.newCells = null;
-        this.treeNodeMetaDataFromParentSortedList = null;
+        this.parentBudgetNode = null;
         this.updateAspect = function (aspect, treeNodeData) {
-            var parentDataNode = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
-
             _this.aspectName = aspect;
-            _this.updateDataNode(treeNodeData, parentDataNode);
+            _this.updateDataNode(treeNodeData);
         };
         this.updateDataNode = function (treeNodeData) {
-            var parentDataNode = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-
             _this._nodeData = treeNodeData;
-            if (_this.treeNodeMetaDataFromParentSortedList && parentDataNode) {
-                _this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode;
-            }
             _this.updated = true;
         };
         this.getCellDeclarationParms = function () {
@@ -2400,14 +2404,14 @@ var BudgetNode = function () {
             var treeNodeData = budgetNode.treeNodeData;
             var yearSpecs = budgetNode.yearSpecs;
             var yearSelections = budgetNode.yearSelections;
-            var treeNodeMetaDataFromParentSortedList = budgetNode.treeNodeMetaDataFromParentSortedList;
+            var parentBudgetNode = budgetNode.parentBudgetNode;
             var nodeIndex = budgetNode.nodeIndex;
 
             var nodeDataPack = {
                 treeNodeData: treeNodeData,
                 yearSpecs: yearSpecs,
                 yearSelections: yearSelections,
-                treeNodeMetaDataFromParentSortedList: treeNodeMetaDataFromParentSortedList
+                parentBudgetNode: parentBudgetNode
             };
             cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeDataPack = nodeDataPack;
@@ -2438,8 +2442,7 @@ var BudgetNode = function () {
         this.yearSelections = parms.yearSelections;
         this._nodeData = node;
         this.uid = uid;
-        if (parms.treeNodeMetaDataFromParentSortedList) this.treeNodeMetaDataFromParentSortedList = parms.treeNodeMetaDataFromParentSortedList;
-        if (parentBudgetNode) this.treeNodeMetaDataFromParentSortedList.parentBudgetNode = parentBudgetNode;
+        if (parentBudgetNode) this.parentBudgetNode = parentBudgetNode;
     }
 
     _createClass(BudgetNode, [{
@@ -2848,8 +2851,9 @@ var ExplorerBranch = function (_Component) {
             var portals = budgetNodes.map(function (budgetNode, nodeindex) {
                 var branchDeclaration = _this.props.declarationData.branchesById[_this.props.budgetBranch.uid];
                 var portalName = null;
-                if (budgetNode.treeNodeMetaDataFromParentSortedList) {
-                    portalName = budgetNode.treeNodeMetaDataFromParentSortedList.Name;
+                var treeNodeData = budgetNode.treeNodeData;
+                if (treeNodeData.Name) {
+                    portalName = budgetNode.treeNodeData.Name;
                 } else {
                     portalName = 'City Budget';
                 }
@@ -4074,6 +4078,7 @@ var add_1 = require('material-ui/svg-icons/content/add');
 var remove_1 = require('material-ui/svg-icons/content/remove');
 var Popover_1 = require('material-ui/Popover');
 var Toggle_1 = require('material-ui/Toggle');
+var uuid = require('node-uuid');
 var explorerbranch_1 = require('./components/explorerbranch');
 var Actions = require('../../core/actions/actions');
 var ExplorerActions = require('./actions');
@@ -4233,9 +4238,149 @@ var Explorer = function (_Component) {
         _this.branchMoveDown = function (branchuid) {
             _this.props.branchMoveDown(branchuid);
         };
+        _this._getBranchCloneSettings = function (refbranchid) {
+            var declarationData = _this.props.declarationData;
+            var clones = {
+                branch: {},
+                nodes: {},
+                cells: {}
+            };
+            var uidmap = {};
+            uidmap[refbranchid] = uuid.v4();
+            clones.branch[refbranchid] = _this._getClone(declarationData.branchesById[refbranchid]);
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = clones.branch[refbranchid]['nodeList'][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var _nodeid = _step.value;
+
+                    var nodeobject = declarationData.nodesById[_nodeid];
+                    clones.nodes[_nodeid] = _this._getClone(nodeobject);
+                    uidmap[_nodeid] = uuid.v4();
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            for (var nodeid in clones.nodes) {
+                var _iteratorNormalCompletion2 = true;
+                var _didIteratorError2 = false;
+                var _iteratorError2 = undefined;
+
+                try {
+                    for (var _iterator2 = clones.nodes[nodeid].cellList[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                        var cellid = _step2.value;
+
+                        clones.cells[cellid] = _this._getClone(declarationData.cellsById[cellid]);
+                        uidmap[cellid] = uuid.v4();
+                    }
+                } catch (err) {
+                    _didIteratorError2 = true;
+                    _iteratorError2 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                            _iterator2.return();
+                        }
+                    } finally {
+                        if (_didIteratorError2) {
+                            throw _iteratorError2;
+                        }
+                    }
+                }
+            }
+            var newclones = {
+                newbranchid: uidmap[refbranchid],
+                branch: {},
+                nodes: {},
+                cells: {}
+            };
+            var newrefbranchid = uidmap[refbranchid];
+            newclones.branch[newrefbranchid] = clones.branch[refbranchid];
+            var oldlist = newclones.branch[newrefbranchid]['nodeList'];
+            var newlist = [];
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
+
+            try {
+                for (var _iterator3 = oldlist[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                    var _id3 = _step3.value;
+
+                    newlist.push(uidmap[_id3]);
+                }
+            } catch (err) {
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
+                    }
+                } finally {
+                    if (_didIteratorError3) {
+                        throw _iteratorError3;
+                    }
+                }
+            }
+
+            newclones.branch[newrefbranchid]['nodeList'] = newlist;
+            for (var id in clones.nodes) {
+                var newid = uidmap[id];
+                var nodeclone = newclones.nodes[newid] = clones.nodes[id];
+                var _oldlist = nodeclone['cellList'];
+                var _newlist = [];
+                var _iteratorNormalCompletion4 = true;
+                var _didIteratorError4 = false;
+                var _iteratorError4 = undefined;
+
+                try {
+                    for (var _iterator4 = _oldlist[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                        var _id = _step4.value;
+
+                        _newlist.push(uidmap[_id]);
+                    }
+                } catch (err) {
+                    _didIteratorError4 = true;
+                    _iteratorError4 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                            _iterator4.return();
+                        }
+                    } finally {
+                        if (_didIteratorError4) {
+                            throw _iteratorError4;
+                        }
+                    }
+                }
+
+                nodeclone['cellList'] = _newlist;
+            }
+            for (var _id2 in clones.cells) {
+                newclones.cells[uidmap[_id2]] = clones.cells[_id2];
+            }
+            return newclones;
+        };
+        _this._getClone = function (object) {
+            return JSON.parse(JSON.stringify(object));
+        };
         _this.addBranch = function (refbranchuid) {
-            var defaultSettings = JSON.parse(JSON.stringify(_this.props.declarationData.defaults.branch));
-            _this.props.addBranchDeclaration(refbranchuid, defaultSettings);
+            var cloneSettings = _this._getBranchCloneSettings(refbranchuid);
+            _this.props.cloneBranchDeclaration(refbranchuid, cloneSettings);
         };
         _this.removeBranch = function (branchuid) {
             _this.props.removeBranchDeclaration(branchuid);
@@ -4390,6 +4535,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
     addBranchDeclaration: ExplorerActions.addBranchDeclaration,
+    cloneBranchDeclaration: ExplorerActions.cloneBranchDeclaration,
     removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
     addNodeDeclaration: ExplorerActions.addNodeDeclaration,
     removeNodeDeclarations: ExplorerActions.removeNodeDeclarations,
@@ -4413,7 +4559,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;
 
-},{"../../core/actions/actions":32,"./actions":16,"./classes/branch.class":17,"./components/explorerbranch":22,"./content/helpcontent":26,"./reducers":31,"material-ui/Card":401,"material-ui/Dialog":403,"material-ui/FloatingActionButton":414,"material-ui/FontIcon":416,"material-ui/IconButton":421,"material-ui/Popover":436,"material-ui/Toggle":458,"material-ui/svg-icons/content/add":482,"material-ui/svg-icons/content/remove":483,"react":775,"react-dom":524,"react-redux":528}],28:[function(require,module,exports){
+},{"../../core/actions/actions":32,"./actions":16,"./classes/branch.class":17,"./components/explorerbranch":22,"./content/helpcontent":26,"./reducers":31,"material-ui/Card":401,"material-ui/Dialog":403,"material-ui/FloatingActionButton":414,"material-ui/FontIcon":416,"material-ui/IconButton":421,"material-ui/Popover":436,"material-ui/Toggle":458,"material-ui/svg-icons/content/add":482,"material-ui/svg-icons/content/remove":483,"node-uuid":505,"react":775,"react-dom":524,"react-redux":528}],28:[function(require,module,exports){
 "use strict";
 
 var getBudgetNode = function getBudgetNode(node, path) {
@@ -4662,6 +4808,27 @@ var branchList = function branchList() {
                 }
                 return newstate;
             }
+        case actions_1.types.CLONE_BRANCH:
+            {
+                var _action$payload2 = action.payload;
+                var _refbranchuid = _action$payload2.refbranchuid;
+                var settings = _action$payload2.settings;
+
+                var newbranchuid = settings.newbranchid;
+                if (!_refbranchuid) {
+                    newstate = [].concat(_toConsumableArray(state), [newbranchuid]);
+                } else {
+                    newstate = [].concat(_toConsumableArray(state));
+                    var _index = newstate.indexOf(_refbranchuid);
+                    if (_index == -1) {
+                        console.error('System error; could not find rebranchid', _refbranchuid, state);
+                        newstate.push(newbranchuid);
+                    } else {
+                        newstate.splice(_index + 1, 0, newbranchuid);
+                    }
+                }
+                return newstate;
+            }
         case actions_1.types.REMOVE_BRANCH:
             {
                 newstate = state.filter(function (item) {
@@ -4721,6 +4888,12 @@ var branchesById = function branchesById() {
         case actions_1.types.ADD_BRANCH:
             {
                 newstate = Object.assign({}, state, _defineProperty({}, action.payload.branchuid, action.payload.settings));
+                return newstate;
+            }
+        case actions_1.types.CLONE_BRANCH:
+            {
+                var newbranchid = action.payload.settings.newbranchid;
+                newstate = Object.assign({}, state, _defineProperty({}, newbranchid, action.payload.settings.branch[newbranchid]));
                 return newstate;
             }
         case actions_1.types.REMOVE_BRANCH:
@@ -4836,6 +5009,15 @@ var nodesById = function nodesById() {
                 newstate = Object.assign({}, state, _defineProperty({}, action.payload.nodeuid, node));
                 return newstate;
             }
+        case actions_1.types.CLONE_BRANCH:
+            {
+                var newnodes = action.payload.settings.nodes;
+                newstate = Object.assign({}, state);
+                for (var nodeid in newnodes) {
+                    newstate[nodeid] = newnodes[nodeid];
+                }
+                return newstate;
+            }
         case actions_1.types.REMOVE_NODES:
             {
                 newstate = Object.assign({}, state);
@@ -4893,10 +5075,10 @@ var nodesById = function nodesById() {
         case actions_1.types.UPDATE_NODE_YEAR_SELECTIONS:
             {
                 newstate = Object.assign({}, state);
-                var _action$payload2 = action.payload;
-                var _nodeuid2 = _action$payload2.nodeuid;
-                var leftyear = _action$payload2.leftyear;
-                var rightyear = _action$payload2.rightyear;
+                var _action$payload3 = action.payload;
+                var _nodeuid2 = _action$payload3.nodeuid;
+                var leftyear = _action$payload3.leftyear;
+                var rightyear = _action$payload3.rightyear;
 
                 var _newnode2 = Object.assign({}, newstate[_nodeuid2]);
                 var newYearSelections = Object.assign({}, _newnode2.yearSelections);
@@ -4909,9 +5091,9 @@ var nodesById = function nodesById() {
         case actions_1.types.NORMALIZE_CELL_YEAR_DEPENDENCIES:
             {
                 newstate = Object.assign({}, state);
-                var _action$payload3 = action.payload;
-                var _nodeuid3 = _action$payload3.nodeuid;
-                var yearsRange = _action$payload3.yearsRange;
+                var _action$payload4 = action.payload;
+                var _nodeuid3 = _action$payload4.nodeuid;
+                var yearsRange = _action$payload4.yearsRange;
                 var startYear = yearsRange.start;
                 var endYear = yearsRange.end;
 
@@ -4965,6 +5147,15 @@ var cellsById = function cellsById() {
                     }
                 }
 
+                return newstate;
+            }
+        case actions_1.types.CLONE_BRANCH:
+            {
+                var newcells = action.payload.settings.cells;
+                newstate = Object.assign({}, state);
+                for (var cellid in newcells) {
+                    newstate[cellid] = newcells[cellid];
+                }
                 return newstate;
             }
         case actions_1.types.REMOVE_NODES:
@@ -5037,9 +5228,9 @@ var cellsById = function cellsById() {
             }
         case actions_1.types.UPDATE_CELL_CHART_CODE:
             {
-                var _action$payload4 = action.payload;
-                var _celluid2 = _action$payload4.celluid;
-                var explorerChartCode = _action$payload4.explorerChartCode;
+                var _action$payload5 = action.payload;
+                var _celluid2 = _action$payload5.celluid;
+                var explorerChartCode = _action$payload5.explorerChartCode;
 
                 var _newcell = Object.assign({}, newstate[_celluid2]);
                 var _newChartConfigs = Object.assign({}, _newcell.chartConfigs);
@@ -5052,9 +5243,9 @@ var cellsById = function cellsById() {
             }
         case actions_1.types.NORMALIZE_CELL_YEAR_DEPENDENCIES:
             {
-                var _action$payload5 = action.payload;
-                var cellList = _action$payload5.cellList;
-                var yearsRange = _action$payload5.yearsRange;
+                var _action$payload6 = action.payload;
+                var cellList = _action$payload6.cellList;
+                var yearsRange = _action$payload6.yearsRange;
                 var startYear = yearsRange.start;
                 var endYear = yearsRange.end;
 

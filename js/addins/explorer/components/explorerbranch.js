@@ -265,8 +265,9 @@ class ExplorerBranch extends Component {
             let portals = budgetNodes.map((budgetNode, nodeindex) => {
                 let branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
                 let portalName = null;
-                if (budgetNode.treeNodeMetaDataFromParentSortedList) {
-                    portalName = budgetNode.treeNodeMetaDataFromParentSortedList.Name;
+                let treeNodeData = budgetNode.treeNodeData;
+                if (treeNodeData.Name) {
+                    portalName = budgetNode.treeNodeData.Name;
                 }
                 else {
                     portalName = 'City Budget';

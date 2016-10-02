@@ -61,11 +61,7 @@ class BudgetBranch {
             for (nodeIndex in branchNodes) {
                 let budgetNode = branchNodes[nodeIndex];
                 let dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
-                let parentDataNode = null;
-                if (nodeIndex > 0) {
-                    parentDataNode = branchNodes[nodeIndex - 1].treeNodeData;
-                }
-                budgetNode.updateDataNode(dataNode, parentDataNode);
+                budgetNode.updateDataNode(dataNode);
                 budgetNode.resetCells();
             }
             budgetBranch.setState({
@@ -123,7 +119,7 @@ class BudgetBranch {
                         budgetNode = null;
                     }
                     else {
-                        budgetNode.updateAspect(branchSettings.aspect, dataNode, parentDataNode);
+                        budgetNode.updateAspect(branchSettings.aspect, dataNode);
                         budgetNode.resetCells();
                     }
                 }
@@ -135,7 +131,7 @@ class BudgetBranch {
                     actions.removeNodeDeclarations(removedids);
                     switchResults.mismatch = true;
                     switchResults.message = 'The new aspect does not have a matching chart for ' +
-                        budgetNode.treeNodeMetaDataFromParentSortedList.Name;
+                        budgetNode.treeNodeData.Name;
                     let cells = parentBudgetNode.cells;
                     for (let cell of cells) {
                         let theCell = cell;
@@ -214,7 +210,6 @@ class BudgetBranch {
                 aspectName: aspectName,
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
-                treeNodeMetaDataFromParentSortedList: treeNodeMetaDataFromParentSortedList,
                 yearSpecs: newrange,
                 yearSelections: newselections,
             };

@@ -542,6 +542,7 @@ const getNameSortedComponentItems = (dimensionname, components, lookups) => {
             Code: componentname,
             Name: name || 'unknown name'
         }
+        component.Name = name || 'unknown name'
         sorted.push(item)
     }
     sorted.sort((a, b) => {

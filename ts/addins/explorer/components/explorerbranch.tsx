@@ -41,7 +41,7 @@ import { ExplorerNode } from './explorernode'
 import { DatasetConfig, ViewpointData } from '../classes/databaseapi'
 
 import { branchTypes as branchActionTypes } from '../actions'
-import BudgetNode from '../classes/node.class'
+import BudgetNode, {BudgetNodeDeclarationParms} from '../classes/node.class'
 import BudgetCell from '../classes/cell.class'
 import BudgetBranch from '../classes/branch.class'
 
@@ -127,7 +127,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
 
-                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
+                let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
                 this._stateActions.addNodeDeclaration(budgetNodeParms)
 
             } else {
@@ -347,7 +347,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         budgetBranch.getViewpointData().then(()=>{
 
             this._stateActions.changeBranchDataVersion(budgetBranch.uid)
-            let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
+            let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
             this._stateActions.addNodeDeclaration(budgetNodeParms)
 
         }).catch(reason => {
@@ -362,7 +362,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         budgetBranch.getViewpointData().then(()=>{
 
             this._stateActions.changeBranchDataVersion(budgetBranch.uid)
-            let budgetNodeParms = budgetBranch.getInitialBranchNodeParms()
+            let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
             this._stateActions.addNodeDeclaration(budgetNodeParms)
 
         }).catch(reason => {
@@ -603,8 +603,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let branchDeclaration:BranchSettings = this.props.declarationData.branchesById[this.props.budgetBranch.uid]
 
             let portalName = null
-            if (budgetNode.treeNodeMetaDataFromParentSortedList) {
-                portalName = budgetNode.treeNodeMetaDataFromParentSortedList.Name
+            let treeNodeData = budgetNode.treeNodeData
+            if (treeNodeData.Name) { // .Name) // MetaDataFromParentSortedList) {
+                portalName = budgetNode.treeNodeData.Name
             } else {
                 portalName = 'City Budget'
             }

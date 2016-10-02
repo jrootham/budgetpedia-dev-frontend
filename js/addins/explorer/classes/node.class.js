@@ -6,16 +6,13 @@ class BudgetNode {
         this.new = true;
         this.updated = false;
         this.newCells = null;
-        this.treeNodeMetaDataFromParentSortedList = null;
-        this.updateAspect = (aspect, treeNodeData, parentDataNode = null) => {
+        this.parentBudgetNode = null;
+        this.updateAspect = (aspect, treeNodeData) => {
             this.aspectName = aspect;
-            this.updateDataNode(treeNodeData, parentDataNode);
+            this.updateDataNode(treeNodeData);
         };
-        this.updateDataNode = (treeNodeData, parentDataNode = null) => {
+        this.updateDataNode = (treeNodeData) => {
             this._nodeData = treeNodeData;
-            if (this.treeNodeMetaDataFromParentSortedList && parentDataNode) {
-                this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode;
-            }
             this.updated = true;
         };
         this.getCellDeclarationParms = () => {
@@ -34,12 +31,12 @@ class BudgetNode {
         };
         this._updateCell = (cell, cellIndex) => {
             let budgetNode = this;
-            let { viewpointConfigPack, treeNodeData, yearSpecs, yearSelections, treeNodeMetaDataFromParentSortedList, nodeIndex } = budgetNode;
+            let { viewpointConfigPack, treeNodeData, yearSpecs, yearSelections, parentBudgetNode, nodeIndex } = budgetNode;
             let nodeDataPack = {
                 treeNodeData: treeNodeData,
                 yearSpecs: yearSpecs,
                 yearSelections: yearSelections,
-                treeNodeMetaDataFromParentSortedList: treeNodeMetaDataFromParentSortedList,
+                parentBudgetNode: parentBudgetNode,
             };
             cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeDataPack = nodeDataPack;
@@ -72,10 +69,8 @@ class BudgetNode {
         this.yearSelections = parms.yearSelections;
         this._nodeData = node;
         this.uid = uid;
-        if (parms.treeNodeMetaDataFromParentSortedList)
-            this.treeNodeMetaDataFromParentSortedList = parms.treeNodeMetaDataFromParentSortedList;
         if (parentBudgetNode)
-            this.treeNodeMetaDataFromParentSortedList.parentBudgetNode = parentBudgetNode;
+            this.parentBudgetNode = parentBudgetNode;
     }
     get treeNodeData() {
         return this._nodeData;

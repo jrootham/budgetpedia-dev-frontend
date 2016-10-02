@@ -9,7 +9,7 @@ import {
     BranchSettings,
 } from '../modules/interfaces'
 import getBudgetNode from '../modules/getbudgetnode'
-import BudgetNode,{ BudgetNodeParms } from './node.class'
+import BudgetNode,{ BudgetNodeDeclarationParms, BudgetNodeParms } from './node.class'
 import * as ExplorerActions from '../actions'
 
 import BudgetCell from './cell.class'
@@ -85,7 +85,7 @@ class BudgetBranch {
             aspect:aspectName,
         } = branchSettings
 
-        let budgetNodeParms:BudgetNodeParms = {
+        let budgetNodeParms:BudgetNodeDeclarationParms = {
             viewpointName,
             aspectName,
             yearSpecs: {
@@ -156,14 +156,14 @@ class BudgetBranch {
             let budgetNode: BudgetNode = branchNodes[nodeIndex]
             let dataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
 
-            let parentDataNode = null
-            if (nodeIndex > 0) {
-                parentDataNode = branchNodes[nodeIndex-1].treeNodeData
-            }
+            // let parentDataNode = null
+            // if (nodeIndex > 0) {
+            //     parentDataNode = branchNodes[nodeIndex-1].treeNodeData
+            // }
 
             budgetNode.updateDataNode(
-                dataNode,
-                parentDataNode
+                dataNode
+                // parentDataNode
             )
             budgetNode.resetCells()
             // budgetNode.newCells = newCells
@@ -250,8 +250,8 @@ class BudgetBranch {
                 } else {
                     budgetNode.updateAspect(
                         branchSettings.aspect,
-                        dataNode,
-                        parentDataNode
+                        dataNode
+                        // parentDataNode
                     )
                     budgetNode.resetCells()
                     // budgetNode.newCells = newCells
@@ -265,7 +265,8 @@ class BudgetBranch {
                 actions.removeNodeDeclarations(removedids)
                 switchResults.mismatch = true
                 switchResults.message = 'The new aspect does not have a matching chart for ' + 
-                    budgetNode.treeNodeMetaDataFromParentSortedList.Name
+                    // budgetNode.treeNodeMetaDataFromParentSortedList.Name
+                    budgetNode.treeNodeData.Name
                 let cells = parentBudgetNode.cells
                 for (let cell of cells) {
                     let theCell:BudgetCell = cell
@@ -383,6 +384,7 @@ class BudgetBranch {
             treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow]
             parentNode = treeNodeData
             code = treeNodeMetaDataFromParentSortedList.Code
+            // console.log('treeNodeDataFromParentSortedList', treeNodeMetaDataFromParentSortedList)
         }
         if (code)
 
@@ -403,13 +405,13 @@ class BudgetBranch {
         let newselections = Object.assign({},budgetNode.yearSelections)
 
         let newdatanode = getBudgetNode(viewpointData, childdatapath)
-        let newnodeconfigparms: BudgetNodeParms = {
+        let newnodeconfigparms: BudgetNodeDeclarationParms = {
 
             viewpointName,
             aspectName,
             dataPath: childdatapath,
             nodeIndex: nodeIndex + 1,
-            treeNodeMetaDataFromParentSortedList,
+            // treeNodeMetaDataFromParentSortedList,
             yearSpecs: newrange,
             yearSelections: newselections,
 

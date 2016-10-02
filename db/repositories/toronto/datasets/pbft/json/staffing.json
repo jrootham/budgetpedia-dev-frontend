@@ -49,12 +49,14 @@
                 "PERM": {
                     "years": {
                         "2015": 137
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 20
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -78,12 +80,14 @@
                 "PERM": {
                     "years": {
                         "2015": 15
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 4
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -107,12 +111,14 @@
                 "PERM": {
                     "years": {
                         "2015": 43.2
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 23.4
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -136,10 +142,12 @@
                 "PERM": {
                     "years": {
                         "2015": 77.9
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -163,10 +171,12 @@
                 "PERM": {
                     "years": {
                         "2015": 29.5
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -190,12 +200,14 @@
                 "PERM": {
                     "years": {
                         "2015": 729.9
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 237.7
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -219,12 +231,14 @@
                 "PERM": {
                     "years": {
                         "2015": 396.3
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 7.6
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -248,12 +262,14 @@
                 "PERM": {
                     "years": {
                         "2015": 44
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 132
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -277,12 +293,14 @@
                 "PERM": {
                     "years": {
                         "2015": 415.5
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 9
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -306,12 +324,14 @@
                 "PERM": {
                     "years": {
                         "2015": 347
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 13
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -335,10 +355,12 @@
                 "PERM": {
                     "years": {
                         "2015": 282
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -362,12 +384,14 @@
                 "PERM": {
                     "years": {
                         "2015": 231
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 69.6
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -391,12 +415,14 @@
                 "PERM": {
                     "years": {
                         "2015": 127.5
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 5.5
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -420,12 +446,14 @@
                 "PERM": {
                     "years": {
                         "2015": 379
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 11
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -449,12 +477,14 @@
                 "PERM": {
                     "years": {
                         "2015": 891.2
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 34.3
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -478,12 +508,14 @@
                 "PERM": {
                     "years": {
                         "2015": 3149.5
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 5.3
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -507,12 +539,14 @@
                 "PERM": {
                     "years": {
                         "2015": 175
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 1
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -536,10 +570,12 @@
                 "PERM": {
                     "years": {
                         "2015": 7
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -563,12 +599,14 @@
                 "PERM": {
                     "years": {
                         "2015": 584
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 3
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -592,10 +630,12 @@
                 "PERM": {
                     "years": {
                         "2015": 4
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -619,12 +659,14 @@
                 "PERM": {
                     "years": {
                         "2015": 268.4
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 33
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -648,12 +690,14 @@
                 "PERM": {
                     "years": {
                         "2015": 8
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 0.3
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -677,10 +721,12 @@
                 "PERM": {
                     "years": {
                         "2015": 2225.9
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -704,12 +750,14 @@
                 "PERM": {
                     "years": {
                         "2015": 1
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 19
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -733,12 +781,14 @@
                 "PERM": {
                     "years": {
                         "2015": 459
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 1
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -762,12 +812,14 @@
                 "PERM": {
                     "years": {
                         "2015": 101
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 1
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -791,10 +843,12 @@
                 "PERM": {
                     "years": {
                         "2015": 17
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -818,12 +872,14 @@
                 "PERM": {
                     "years": {
                         "2015": 662
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 31
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -847,10 +903,12 @@
                 "PERM": {
                     "years": {
                         "2015": 394
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -874,12 +932,14 @@
                 "PERM": {
                     "years": {
                         "2015": 1876.2
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 2559.6
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -903,12 +963,14 @@
                 "PERM": {
                     "years": {
                         "2015": 192
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 7.4
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -932,12 +994,14 @@
                 "PERM": {
                     "years": {
                         "2015": 568
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 139.2
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -961,12 +1025,14 @@
                 "PERM": {
                     "years": {
                         "2015": 120.5
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 7
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -990,12 +1056,14 @@
                 "PERM": {
                     "years": {
                         "2015": 964
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 117.7
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1019,12 +1087,14 @@
                 "PERM": {
                     "years": {
                         "2015": 85.9
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 77.2
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1048,10 +1118,12 @@
                 "PERM": {
                     "years": {
                         "2015": 8
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1075,12 +1147,14 @@
                 "PERM": {
                     "years": {
                         "2015": 433
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 7
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1104,12 +1178,14 @@
                 "PERM": {
                     "years": {
                         "2015": 2024
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 58
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1133,12 +1209,14 @@
                 "PERM": {
                     "years": {
                         "2015": 1376.5
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 14.8
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1162,12 +1240,14 @@
                 "PERM": {
                     "years": {
                         "2015": 246.1
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 53.3
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1191,12 +1271,14 @@
                 "PERM": {
                     "years": {
                         "2015": 7672
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 211
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1220,10 +1302,12 @@
                 "PERM": {
                     "years": {
                         "2015": 7
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1247,12 +1331,14 @@
                 "PERM": {
                     "years": {
                         "2015": 1794
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 44.6
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1276,10 +1362,12 @@
                 "PERM": {
                     "years": {
                         "2015": 1736.3
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1303,12 +1391,14 @@
                 "PERM": {
                     "years": {
                         "2015": 11747
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 9
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1332,10 +1422,12 @@
                 "PERM": {
                     "years": {
                         "2015": 562
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
-                    "years": {}
+                    "years": {},
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1359,12 +1451,14 @@
                 "PERM": {
                     "years": {
                         "2015": 1640
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 70.3
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1388,12 +1482,14 @@
                 "PERM": {
                     "years": {
                         "2015": 278
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 124.5
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1417,12 +1513,14 @@
                 "PERM": {
                     "years": {
                         "2015": 1001.1
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 32.7
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",
@@ -1446,12 +1544,14 @@
                 "PERM": {
                     "years": {
                         "2015": 6
-                    }
+                    },
+                    "Name": "Permanent"
                 },
                 "TEMP": {
                     "years": {
                         "2015": 0.5
-                    }
+                    },
+                    "Name": "Temporary"
                 }
             },
             "CommonDimensionName": "Permanence",

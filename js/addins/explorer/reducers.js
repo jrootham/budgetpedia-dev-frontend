@@ -29,6 +29,25 @@ let branchList = (state = [], action) => {
             }
             return newstate;
         }
+        case actions_1.types.CLONE_BRANCH: {
+            let { refbranchuid, settings } = action.payload;
+            let newbranchuid = settings.newbranchid;
+            if (!refbranchuid) {
+                newstate = [...state, newbranchuid];
+            }
+            else {
+                newstate = [...state];
+                let index = newstate.indexOf(refbranchuid);
+                if (index == -1) {
+                    console.error('System error; could not find rebranchid', refbranchuid, state);
+                    newstate.push(newbranchuid);
+                }
+                else {
+                    newstate.splice(index + 1, 0, newbranchuid);
+                }
+            }
+            return newstate;
+        }
         case actions_1.types.REMOVE_BRANCH: {
             newstate = state.filter(item => item != action.payload.branchuid);
             return newstate;
@@ -77,6 +96,11 @@ let branchesById = (state = {}, action) => {
     switch (type) {
         case actions_1.types.ADD_BRANCH: {
             newstate = Object.assign({}, state, { [action.payload.branchuid]: action.payload.settings });
+            return newstate;
+        }
+        case actions_1.types.CLONE_BRANCH: {
+            let newbranchid = action.payload.settings.newbranchid;
+            newstate = Object.assign({}, state, { [newbranchid]: action.payload.settings.branch[newbranchid] });
             return newstate;
         }
         case actions_1.types.REMOVE_BRANCH: {
@@ -166,6 +190,14 @@ let nodesById = (state = {}, action) => {
             newstate = Object.assign({}, state, { [action.payload.nodeuid]: node });
             return newstate;
         }
+        case actions_1.types.CLONE_BRANCH: {
+            let newnodes = action.payload.settings.nodes;
+            newstate = Object.assign({}, state);
+            for (let nodeid in newnodes) {
+                newstate[nodeid] = newnodes[nodeid];
+            }
+            return newstate;
+        }
         case actions_1.types.REMOVE_NODES: {
             newstate = Object.assign({}, state);
             let removelist = action.payload.items;
@@ -230,6 +262,14 @@ let cellsById = (state = {}, action) => {
         case actions_1.types.ADD_CELLS: {
             for (let setting of action.payload.settings) {
                 newstate[setting.celluid] = setting;
+            }
+            return newstate;
+        }
+        case actions_1.types.CLONE_BRANCH: {
+            let newcells = action.payload.settings.cells;
+            newstate = Object.assign({}, state);
+            for (let cellid in newcells) {
+                newstate[cellid] = newcells[cellid];
             }
             return newstate;
         }

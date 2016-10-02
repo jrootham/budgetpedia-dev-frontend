@@ -12,6 +12,7 @@ const add_1 = require('material-ui/svg-icons/content/add');
 const remove_1 = require('material-ui/svg-icons/content/remove');
 const Popover_1 = require('material-ui/Popover');
 const Toggle_1 = require('material-ui/Toggle');
+let uuid = require('node-uuid');
 const explorerbranch_1 = require('./components/explorerbranch');
 const Actions = require('../../core/actions/actions');
 const ExplorerActions = require('./actions');
@@ -120,9 +121,62 @@ let Explorer = class extends Component {
         this.branchMoveDown = branchuid => {
             this.props.branchMoveDown(branchuid);
         };
+        this._getBranchCloneSettings = refbranchid => {
+            let declarationData = this.props.declarationData;
+            let clones = {
+                branch: {},
+                nodes: {},
+                cells: {},
+            };
+            let uidmap = {};
+            uidmap[refbranchid] = uuid.v4();
+            clones.branch[refbranchid] = this._getClone(declarationData.branchesById[refbranchid]);
+            for (let nodeid of clones.branch[refbranchid]['nodeList']) {
+                let nodeobject = declarationData.nodesById[nodeid];
+                clones.nodes[nodeid] = this._getClone(nodeobject);
+                uidmap[nodeid] = uuid.v4();
+            }
+            for (let nodeid in clones.nodes) {
+                for (let cellid of clones.nodes[nodeid].cellList) {
+                    clones.cells[cellid] = this._getClone(declarationData.cellsById[cellid]);
+                    uidmap[cellid] = uuid.v4();
+                }
+            }
+            let newclones = {
+                newbranchid: uidmap[refbranchid],
+                branch: {},
+                nodes: {},
+                cells: {},
+            };
+            let newrefbranchid = uidmap[refbranchid];
+            newclones.branch[newrefbranchid] = clones.branch[refbranchid];
+            let oldlist = newclones.branch[newrefbranchid]['nodeList'];
+            let newlist = [];
+            for (let id of oldlist) {
+                newlist.push(uidmap[id]);
+            }
+            newclones.branch[newrefbranchid]['nodeList'] = newlist;
+            for (let id in clones.nodes) {
+                let newid = uidmap[id];
+                let nodeclone = newclones.nodes[newid] = clones.nodes[id];
+                let oldlist = nodeclone['cellList'];
+                let newlist = [];
+                for (let id of oldlist) {
+                    newlist.push(uidmap[id]);
+                }
+                nodeclone['cellList'] = newlist;
+            }
+            for (let id in clones.cells) {
+                newclones.cells[uidmap[id]] = clones.cells[id];
+            }
+            return newclones;
+        };
+        this._getClone = object => {
+            return JSON.parse(JSON.stringify(object));
+        };
         this.addBranch = refbranchuid => {
-            let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
-            this.props.addBranchDeclaration(refbranchuid, defaultSettings);
+            let cloneSettings = this._getBranchCloneSettings(refbranchuid);
+            this.props.cloneBranchDeclaration(refbranchuid, cloneSettings);
         };
         this.removeBranch = branchuid => {
             this.props.removeBranchDeclaration(branchuid);
@@ -239,6 +293,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
     addBranchDeclaration: ExplorerActions.addBranchDeclaration,
+    cloneBranchDeclaration: ExplorerActions.cloneBranchDeclaration,
     removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
     addNodeDeclaration: ExplorerActions.addNodeDeclaration,
     removeNodeDeclarations: ExplorerActions.removeNodeDeclarations,
