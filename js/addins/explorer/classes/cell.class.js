@@ -167,6 +167,7 @@ class BudgetCell {
                     title += ' (Total: ' + titleamount + ')';
                 }
             }
+            console.log('datasetConfig', datasetConfig);
             if (datasetConfig.InflationAdjustable) {
                 if (!(yearScope == constants_2.TimeScope[constants_2.TimeScope.OneYear] &&
                     datasetConfig.InflationReferenceYear <= rightYear)) {

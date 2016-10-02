@@ -1,0 +1,2930 @@
+{
+    "MetaData": {
+        "InflationAdjustable": false,
+        "DatasetName": "Staffing",
+        "DatasetTitle": "Staff Positions",
+        "Dataseries": [
+            {
+                "Type": "Components"
+            },
+            {
+                "Type": "CommonDimension"
+            }
+        ],
+        "Dimensions": [
+            "Program",
+            "Permanence"
+        ],
+        "DimensionNames": {
+            "Program": {
+                "Instance": "Program",
+                "Collection": "Budgeted Programs"
+            },
+            "Permanence": {
+                "Instance": "Permanence",
+                "Collection": "Budgeted Permanence"
+            }
+        },
+        "CellTitles": {
+            "Components": "Programs",
+            "CommonDimension": "Permanence"
+        },
+        "Units": "FTE",
+        "UnitsAlias": "$000's",
+        "UnitRatio": 1,
+        "CommonDimension": "Permanence",
+        "ReferenceYear": 2016,
+        "Decimals": 1,
+        "InflationReferenceYear": 2016,
+        "YearsRange": {
+            "start": 2011,
+            "end": 2016
+        }
+    },
+    "Data": {
+        "Adjusted": {
+            "311SERVICE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 138.7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 20.3
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 159
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "AFFHOUSING": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 15.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 4.1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 19.2
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "ARENAS": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 43.7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 23.7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 67.4
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "COMMCENTRES": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 78.9
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 78.9
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "AUDITGEN": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 29.9
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 29.9
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "CHILDSERV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 739.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 240.7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 979.8
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "CLERK": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 401.3
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 7.7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 409
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "COUNCIL": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 44.6
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 133.7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 178.2
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "CITYMANAGER": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 420.7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 9.1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 429.8
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PLANNING": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 351.4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 13.2
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 364.5
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "COURTSERV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 285.6
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 285.6
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "ECONDEV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 233.9
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 70.5
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 304.4
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "ENGINEERING": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 129.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 5.6
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 134.7
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "EXHIBPLACE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 383.8
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 11.1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 394.9
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "FACILITIES": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 902.4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 34.7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 937.2
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "FIRE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 3189.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 5.4
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 3194.6
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "FLEET": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 177.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 178.2
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "HERITAGE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 7.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 7.1
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "IT": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 591.4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 3
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 594.4
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "INTEGRITYCOMM": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 4.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 4.1
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "LEGAL": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 271.8
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 33.4
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 305.2
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "LOBBYREG": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 8.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.3
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 8.4
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "LONGTERMHOME": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2253.9
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 2253.9
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "MAYOR": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 19.2
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 20.3
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "LICENCING": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 464.8
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 465.8
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "CFO": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 102.3
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 103.3
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "OMBUDSMAN": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 17.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 17.2
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "TREASURER": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 670.3
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 31.4
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 701.7
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PARKINGTAGS": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 399
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 399
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PARKS": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1899.8
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 2591.9
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 4491.7
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "POLICYADMIN": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 194.4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 7.5
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 201.9
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "SHELTERADMIN": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 575.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 141
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 716.1
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "SOCIALDEV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 122
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 7.1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 129.1
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "SOLIDWASTE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 976.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 119.2
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 1095.3
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "THEATRES": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 87
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 78.2
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 165.2
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "ATMOSPHERE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 8.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 8.1
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "BUILDINGS": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 438.5
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 7.1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 445.5
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "SOCIALSERV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2049.5
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 58.7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 2108.2
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PARAMEDIC": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1393.8
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 15
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 1408.8
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PARKING": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 249.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 54
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 303.2
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "POLICE": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 7768.7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 213.7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 7982.3
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "POLICEBOARD": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 7.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 7.1
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PUBLICHEALTH": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1816.6
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 45.2
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 1861.8
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "LIBRARY": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1758.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 1758.2
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "TTCCONV": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 11895
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 9.1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 11904.1
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "TTCWHEEL": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 569.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 569.1
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "WATER": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1660.7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 71.2
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 1731.8
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "ZOO": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 281.5
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 126.1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 407.6
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "TRANSPORTATION": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1013.7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 33.1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 1046.8
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "YONGEDUNDAS": {
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 6.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.5
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "years": {
+                    "2015": 6.6
+                },
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            }
+        },
+        "Nominal": {
+            "311SERVICE": {
+                "years": {
+                    "2015": 157
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 137
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 20
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "AFFHOUSING": {
+                "years": {
+                    "2015": 19
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 15
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 4
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "ARENAS": {
+                "years": {
+                    "2015": 66.6
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 43.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 23.4
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "COMMCENTRES": {
+                "years": {
+                    "2015": 77.9
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 77.9
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "AUDITGEN": {
+                "years": {
+                    "2015": 29.5
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 29.5
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "CHILDSERV": {
+                "years": {
+                    "2015": 967.6
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 729.9
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 237.7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "CLERK": {
+                "years": {
+                    "2015": 403.9
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 396.3
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 7.6
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "COUNCIL": {
+                "years": {
+                    "2015": 176
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 44
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 132
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "CITYMANAGER": {
+                "years": {
+                    "2015": 424.5
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 415.5
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 9
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PLANNING": {
+                "years": {
+                    "2015": 360
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 347
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 13
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "COURTSERV": {
+                "years": {
+                    "2015": 282
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 282
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "ECONDEV": {
+                "years": {
+                    "2015": 300.6
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 231
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 69.6
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "ENGINEERING": {
+                "years": {
+                    "2015": 133
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 127.5
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 5.5
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "EXHIBPLACE": {
+                "years": {
+                    "2015": 390
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 379
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 11
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "FACILITIES": {
+                "years": {
+                    "2015": 925.5
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 891.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 34.3
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "FIRE": {
+                "years": {
+                    "2015": 3154.8
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 3149.5
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 5.3
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "FLEET": {
+                "years": {
+                    "2015": 176
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 175
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "HERITAGE": {
+                "years": {
+                    "2015": 7
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "IT": {
+                "years": {
+                    "2015": 587
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 584
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 3
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "INTEGRITYCOMM": {
+                "years": {
+                    "2015": 4
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "LEGAL": {
+                "years": {
+                    "2015": 301.4
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 268.4
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 33
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "LOBBYREG": {
+                "years": {
+                    "2015": 8.3
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 8
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.3
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "LONGTERMHOME": {
+                "years": {
+                    "2015": 2225.9
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2225.9
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "MAYOR": {
+                "years": {
+                    "2015": 20
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 19
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "LICENCING": {
+                "years": {
+                    "2015": 460
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 459
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "CFO": {
+                "years": {
+                    "2015": 102
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 101
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 1
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "OMBUDSMAN": {
+                "years": {
+                    "2015": 17
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 17
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "TREASURER": {
+                "years": {
+                    "2015": 693
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 662
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 31
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PARKINGTAGS": {
+                "years": {
+                    "2015": 394
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 394
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PARKS": {
+                "years": {
+                    "2015": 4435.8
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1876.2
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 2559.6
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "POLICYADMIN": {
+                "years": {
+                    "2015": 199.4
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 192
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 7.4
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "SHELTERADMIN": {
+                "years": {
+                    "2015": 707.2
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 568
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 139.2
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "SOCIALDEV": {
+                "years": {
+                    "2015": 127.5
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 120.5
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "SOLIDWASTE": {
+                "years": {
+                    "2015": 1081.7
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 964
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 117.7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "THEATRES": {
+                "years": {
+                    "2015": 163.1
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 85.9
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 77.2
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "ATMOSPHERE": {
+                "years": {
+                    "2015": 8
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 8
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "BUILDINGS": {
+                "years": {
+                    "2015": 440
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 433
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "SOCIALSERV": {
+                "years": {
+                    "2015": 2082
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 2024
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 58
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PARAMEDIC": {
+                "years": {
+                    "2015": 1391.3
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1376.5
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 14.8
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PARKING": {
+                "years": {
+                    "2015": 299.4
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 246.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 53.3
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "POLICE": {
+                "years": {
+                    "2015": 7883
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 7672
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 211
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "POLICEBOARD": {
+                "years": {
+                    "2015": 7
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 7
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "PUBLICHEALTH": {
+                "years": {
+                    "2015": 1838.6
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1794
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 44.6
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "LIBRARY": {
+                "years": {
+                    "2015": 1736.3
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1736.3
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "TTCCONV": {
+                "years": {
+                    "2015": 11756
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 11747
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 9
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "TTCWHEEL": {
+                "years": {
+                    "2015": 562
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 562
+                        }
+                    },
+                    "TEMP": {
+                        "years": {}
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "WATER": {
+                "years": {
+                    "2015": 1710.3
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1640
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 70.3
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "ZOO": {
+                "years": {
+                    "2015": 402.5
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 278
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 124.5
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "TRANSPORTATION": {
+                "years": {
+                    "2015": 1033.8
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 1001.1
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 32.7
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            },
+            "YONGEDUNDAS": {
+                "years": {
+                    "2015": 6.5
+                },
+                "CommonDimension": {
+                    "PERM": {
+                        "years": {
+                            "2015": 6
+                        }
+                    },
+                    "TEMP": {
+                        "years": {
+                            "2015": 0.5
+                        }
+                    }
+                },
+                "CommonDimensionName": "Permanence",
+                "SortedCommonDimension": [
+                    {
+                        "Code": "PERM",
+                        "Name": "Permanent"
+                    },
+                    {
+                        "Code": "TEMP",
+                        "Name": "Temporary"
+                    }
+                ],
+                "CommonDimensionDrilldown": "None"
+            }
+        }
+    },
+    "Notes": {},
+    "Allocations": {},
+    "Headers": {
+        "2015": {
+            "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuamFPRFNZZXhWRDg",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuRGdBOVBWLTFGRTg",
+            "SOURCE_DOCUMENT_TITLE": "2015 OPERATING BUDGET BRIEFING NOTE Staff Recommended Position Changes ",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "PDF p. 19",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2015 STAFF RECOMMENDED OPERATING BUDGET OPERATING POSITIONS",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OubVNjU2RvVVBELWc",
+            "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
+            "YEAR": 2015,
+            "VERSION": "PBFT",
+            "ASPECT": "Staffing",
+            "NOTES_CONTENT": "[[GREEN]]This is the operating budget staffing, and does not include capital budget staff;\n[[RED]]Prior to the council-approved version;\n[[ORANGE]]rounding causes totals to differ by 0.2;",
+            "NOTES_SEVERITY": "RED",
+            "UNITS_NAME": "Full Time Equivalent",
+            "UNITS_CODE": "FTE",
+            "UNITS_MULTIPLIER": 1,
+            "TOTAL_AMOUNT": 50734.9,
+            "INTAKE_DATETIME": "2016-09-19-14-04-34",
+            "INTAKE_OPERATOR_ID": "Henrik",
+            "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME,Permanence:CODE, Permanence:NAME",
+            "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
+        }
+    },
+    "Messages": null
+}

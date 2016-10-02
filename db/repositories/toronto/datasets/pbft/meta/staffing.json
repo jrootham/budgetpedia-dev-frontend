@@ -1,5 +1,5 @@
 {
-    "InflationAdjustable": true,
+    "InflationAdjustable": false,
     "DatasetName":"Staffing",
     "DatasetTitle": "Staff Positions",
     "Dataseries": [
