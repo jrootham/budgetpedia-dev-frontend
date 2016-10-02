@@ -787,7 +787,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                             padding:'40px 20px',
                         }
                     }> <p>no data for this chart for the selected year: </p>
-                    <p>{budgetCell.chartParmsObject.options.title}</p></div>
+                    <p>{budgetCell.chartParmsObject.options.title}</p>
+                    <p>({budgetCell.chartParmsObject.options.hAxis.title})</p></div>
                 )
             :<div> waiting for chart data... </div>
         if (!isDataAvailable) {

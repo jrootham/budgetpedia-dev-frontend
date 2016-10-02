@@ -3452,7 +3452,7 @@ var ExplorerCell = function (_Component) {
                     whiteSpace: 'normal',
                     fontSize: 'smaller',
                     padding: '40px 20px'
-                } }, " ", React.createElement("p", null, "no data for this chart for the selected year: "), React.createElement("p", null, budgetCell.chartParmsObject.options.title)) : React.createElement("div", null, " waiting for chart data... ");
+                } }, " ", React.createElement("p", null, "no data for this chart for the selected year: "), React.createElement("p", null, budgetCell.chartParmsObject.options.title), React.createElement("p", null, "(", budgetCell.chartParmsObject.options.hAxis.title, ")")) : React.createElement("div", null, " waiting for chart data... ");
             if (!isDataAvailable) {
                 drilldownmessage = null;
             }
