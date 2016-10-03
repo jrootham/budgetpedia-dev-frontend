@@ -4381,6 +4381,31 @@ var Explorer = function (_Component) {
         _this.addBranch = function (refbranchuid) {
             var cloneSettings = _this._getBranchCloneSettings(refbranchuid);
             _this.props.cloneBranchDeclaration(refbranchuid, cloneSettings);
+            _this.onCloneCreation();
+        };
+        _this.onCloneCreation = function () {
+            setTimeout(function () {
+                var adjustment = 400;
+                var frames = 60;
+                var t = 1 / frames;
+                var counter = 0;
+                var base = 0;
+                var tick = function tick() {
+                    counter++;
+                    var factor = _this.easeOutCubic(counter * t);
+                    var scrollinterval = adjustment * factor;
+                    window.scrollBy(0, scrollinterval - base);
+                    base = scrollinterval;
+                    if (counter < frames) {
+                        requestAnimationFrame(tick);
+                    }
+                };
+                requestAnimationFrame(tick);
+            }, 1000);
+        };
+        _this.easeOutCubic = function (t) {
+            var t1 = t - 1;
+            return t1 * t1 * t1 + 1;
         };
         _this.removeBranch = function (branchuid) {
             _this.props.removeBranchDeclaration(branchuid);

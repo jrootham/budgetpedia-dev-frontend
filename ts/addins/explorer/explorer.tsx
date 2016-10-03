@@ -397,7 +397,40 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         // let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
         // console.log('new branch settings', defaultSettings)
         // this.props.addBranchDeclaration( refbranchuid, defaultSettings )        
-        this.props.cloneBranchDeclaration( refbranchuid, cloneSettings )        
+        this.props.cloneBranchDeclaration( refbranchuid, cloneSettings )
+        this.onCloneCreation()
+    }
+
+    onCloneCreation = () => {
+
+        setTimeout(() => {
+
+            let adjustment = 400
+            let frames = 60
+            let t = 1 / frames
+            let counter = 0
+            let base = 0
+            let tick = () => {
+                counter++
+                let factor = this.easeOutCubic(counter * t)
+                let scrollinterval = adjustment * factor
+                // console.log(scrollinterval, base)
+                window.scrollBy(0,scrollinterval - base)
+                base = scrollinterval
+                if (counter < frames) {
+                    requestAnimationFrame(tick)
+                }
+            }
+
+            requestAnimationFrame(tick)
+
+        },1000)
+    }
+
+    // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
+    private easeOutCubic = t => {
+        const t1 = t - 1;
+        return t1 * t1 * t1 + 1;
     }
 
     removeBranch = branchuid => {

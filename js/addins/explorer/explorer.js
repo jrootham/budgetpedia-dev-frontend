@@ -177,6 +177,31 @@ let Explorer = class extends Component {
         this.addBranch = refbranchuid => {
             let cloneSettings = this._getBranchCloneSettings(refbranchuid);
             this.props.cloneBranchDeclaration(refbranchuid, cloneSettings);
+            this.onCloneCreation();
+        };
+        this.onCloneCreation = () => {
+            setTimeout(() => {
+                let adjustment = 400;
+                let frames = 60;
+                let t = 1 / frames;
+                let counter = 0;
+                let base = 0;
+                let tick = () => {
+                    counter++;
+                    let factor = this.easeOutCubic(counter * t);
+                    let scrollinterval = adjustment * factor;
+                    window.scrollBy(0, scrollinterval - base);
+                    base = scrollinterval;
+                    if (counter < frames) {
+                        requestAnimationFrame(tick);
+                    }
+                };
+                requestAnimationFrame(tick);
+            }, 1000);
+        };
+        this.easeOutCubic = t => {
+            const t1 = t - 1;
+            return t1 * t1 * t1 + 1;
         };
         this.removeBranch = branchuid => {
             this.props.removeBranchDeclaration(branchuid);
