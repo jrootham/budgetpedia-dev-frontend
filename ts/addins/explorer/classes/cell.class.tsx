@@ -208,12 +208,14 @@ class BudgetCell {
         }        
     }
 
+    // TODO: remove parameter, apparently not needed
     switchChartCode = chartCode => {
 
         this.setChartParms()
 
     }
 
+    // TODO: remove parameter, apparently not needed
     switchYearCodes = yearCodes => {
         this.setChartParms()
     }
@@ -264,7 +266,6 @@ class BudgetCell {
 
         let options = budgetCell._chartParmsOptions(
             treeNodeData, 
-            // treeNodeMetaDataFromParentSortedList, 
             viewpointNamingConfigs, 
             datasetConfig, 
             yearSpecs

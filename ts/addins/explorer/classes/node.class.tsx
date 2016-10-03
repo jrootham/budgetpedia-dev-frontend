@@ -49,9 +49,7 @@ class BudgetNode {
         this.yearSelections = parms.yearSelections
         this._nodeData = node
         this.uid = uid
-        // this.datasetSpecs = parms.datasetSpecs
-        // BOTH SHOULD BE PRESENT OR ABSENT TOGETHER
-        // if (parms.treeNodeMetaDataFromParentSortedList) this.treeNodeMetaDataFromParentSortedList = parms.treeNodeMetaDataFromParentSortedList
+
         if (parentBudgetNode) this.parentBudgetNode = parentBudgetNode
 
     }
@@ -162,6 +160,7 @@ class BudgetNode {
     }
 
     public resetCells() {
+
         let budgetNode = this
 
         let cells = budgetNode.cells
@@ -175,9 +174,11 @@ class BudgetNode {
         }
         this.newCells = cells
         this.updated = true
+
     }
 
     switchYearSelections(yearSelections) {
+
         let budgetNode = this
 
         this.yearSelections = yearSelections
@@ -197,6 +198,7 @@ class BudgetNode {
     }
 
     private _updateCell = (cell:BudgetCell, cellIndex) => {
+
         let budgetNode = this
 
         let { viewpointConfigPack, treeNodeData, yearSpecs, yearSelections, parentBudgetNode, nodeIndex } = budgetNode
@@ -213,9 +215,11 @@ class BudgetNode {
 
         budgetNode._setCellSelectionCallback(cell, cellIndex)
         budgetNode._setCellTitle(cell)
+
     }
 
     private _setCellTitle = (budgetCell:BudgetCell) => {
+
         let portaltitles = budgetCell.viewpointConfigPack.datasetConfig.CellTitles
         let chartblocktitle = null
         if ((budgetCell.nodeDataseriesName == 'CommonDimension')) {
@@ -224,6 +228,7 @@ class BudgetNode {
             chartblocktitle = portaltitles.Components
         }
         budgetCell.cellTitle = chartblocktitle
+        
     }
 
     private _setCellSelectionCallback = (cell:BudgetCell, cellIndex) => {

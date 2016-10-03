@@ -378,10 +378,8 @@ class BudgetBranch {
         let components = treeNodeData.Components
 
         let code = null
-        // let parentNode: any = null
         if (treeNodeData && treeNodeData.SortedComponents && treeNodeData.SortedComponents[selectionrow]) {
             let treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow]
-            // parentNode = treeNodeData
             code = treeNodeMetaDataFromParentSortedList.Code
         }
         if (code)
@@ -409,7 +407,6 @@ class BudgetBranch {
             aspectName,
             dataPath: childdatapath,
             nodeIndex: nodeIndex + 1,
-            // treeNodeMetaDataFromParentSortedList,
             yearSpecs: newrange,
             yearSelections: newselections,
 

@@ -38,15 +38,6 @@ interface ExplorerNodeProps {
     dataGenerationCounter: number,
 }
 
-// export interface ExporerNodeActions {
-//     addCellDeclarations:Function,
-//     // updateCellsDataseriesName: Function,
-//     updateCellChartCode: Function,
-//     updateCellChartSelection: Function,
-//     normalizeCellYearDependencies: Function,
-//     updateNode: Function,
-// }
-
 class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
 
     state = {
@@ -81,7 +72,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         } else {
 
             this._stateActions.updateNode(budgetNode.uid) // trigger update -> render
-            // this.updateCellsFromDeclarations(this.props)
+
         }
 
     }
@@ -163,8 +154,9 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
                     currentYearSelections.rightYear !== previousYearSelections.rightYear) { 
 
                     budgetNode.switchYearSelections(currentYearSelections)
-                    // budgetNode.newCells = newCells                    
+
                     this.forceUpdate()
+
                 }
                 break
             }
@@ -178,6 +170,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     }
 
     updateCellsFromDeclarations = (props) => {
+
         let { budgetNode}:{budgetNode:BudgetNode} = props // this.props
         if (budgetNode.updated) {
 
@@ -244,9 +237,9 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     }
 
     onChangeTab = (tabref) => {
-        // window.nodeUpdateControl.nodeuid = this.props.budgetNode.uid
+
         this.props.globalStateActions.changeTab(this.props.budgetNode.uid,tabref)
-        // this.props.displayCallbacks.onChangePortalTab() 
+
     }
 
     _chartrefs:any[] = []
