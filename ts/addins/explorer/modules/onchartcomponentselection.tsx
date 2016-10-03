@@ -97,8 +97,10 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     let childprops: CreateChildNodeProps = {
         selectionrow,
         nodeIndex,
-        cellIndex, 
+        cellIndex:parseInt(cellIndex), 
     }
+
+    // console.log('calling createChildNode',childprops)
 
     budgetBranch.createChildNode( childprops )
 

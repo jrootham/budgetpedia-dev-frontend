@@ -78,6 +78,7 @@ export const addBranchDeclaration = createAction(
     
 export const cloneBranchDeclaration = createAction(
     types.CLONE_BRANCH,(refbranchuid, settings) => ({
+        branchuid:refbranchuid, // for action filter
         settings,
         refbranchuid,
     }), () => ({

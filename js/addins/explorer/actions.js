@@ -61,6 +61,7 @@ exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, (r
     explorer: true
 }));
 exports.cloneBranchDeclaration = redux_actions_1.createAction(types.CLONE_BRANCH, (refbranchuid, settings) => ({
+    branchuid: refbranchuid,
     settings: settings,
     refbranchuid: refbranchuid,
 }), () => ({

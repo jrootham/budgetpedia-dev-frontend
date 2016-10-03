@@ -254,11 +254,34 @@ class ExplorerBranch extends Component {
         this.handleSearch = () => {
         };
         this.harmonizeCells = (nodeUid, cellUid) => {
+            let { budgetBranch } = this.props;
             let nodeList = [];
             let cellList = [];
-            let nodeProperties = {};
-            let cellProperties = {};
-            let { budgetBranch } = this.props;
+            let nodeProperties = { cellIndex: null, yearSelections: null };
+            let cellProperties = { yearScope: null, chartCode: null, nodeDataseriesName: null };
+            let declarationData = this.props.declarationData;
+            let refnode = declarationData.nodesById[nodeUid];
+            let refcell = declarationData.cellsById[cellUid];
+            nodeProperties.cellIndex = refnode.cellIndex;
+            nodeProperties.yearSelections = Object.assign({}, refnode.yearSelections);
+            console.log('refnode, refcell', refnode, refcell);
+            cellProperties.yearScope = refcell.yearScope;
+            cellProperties.chartCode = refcell.chartConfigs[refcell.yearScope].explorerChartCode;
+            cellProperties.nodeDataseriesName = refcell.nodeDataseriesName;
+            let nodeidlist = declarationData.branchesById[budgetBranch.uid].nodeList;
+            for (let nodeid of nodeidlist) {
+                if (nodeid == nodeUid)
+                    continue;
+                nodeList.push(nodeid);
+                let tempnode = declarationData.nodesById[nodeid];
+                let cellidlist = tempnode.cellList;
+                for (let cellid of cellidlist) {
+                    if (cellid == cellUid)
+                        continue;
+                    cellList.push(cellid);
+                }
+            }
+            console.log('harmonizeCells', budgetBranch.uid, nodeProperties, cellProperties, nodeList, cellList);
             if (nodeList.length > 0) {
                 this._stateActions.harmonizeCells(budgetBranch.uid, nodeProperties, cellProperties, nodeList, cellList);
             }

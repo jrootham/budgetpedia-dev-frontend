@@ -95,6 +95,7 @@ class BudgetBranch {
             yearSelections: Object.assign({},defaults.yearSelections),
             dataPath: [],
             nodeIndex:0,
+            cellIndex:0,
         }
 
         budgetNodeParms = Object.assign( defaults, budgetNodeParms )
@@ -409,8 +410,11 @@ class BudgetBranch {
             nodeIndex: nodeIndex + 1,
             yearSpecs: newrange,
             yearSelections: newselections,
+            cellIndex,
 
         }
+
+        // console.log('newnodeconfigparms',newnodeconfigparms)
 
         actions.addNodeDeclaration(newnodeconfigparms)
 

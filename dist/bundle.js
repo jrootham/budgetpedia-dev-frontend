@@ -852,6 +852,7 @@ var types;
     types.BRANCH_MOVE_DOWN = 'BRANCH_MOVE_DOWN';
     types.CHANGE_BRANCH_DATA = 'CHANGE_BRANCH_DATA';
     types.NORMALIZE_CELL_YEAR_DEPENDENCIES = 'NORMALIZE_CELL_YEAR_DEPENDENCIES';
+    types.HARMONIZE_CELLS = 'HARMONIZE_CELLS';
     types.ADD_CELLS = 'ADD_CELLS';
     types.CHANGE_TAB = 'CHANGE_TAB';
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
@@ -870,6 +871,7 @@ var branchTypes;
     branchTypes.TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED;
     branchTypes.TOGGLE_SHOW_OPTIONS = types.TOGGLE_SHOW_OPTIONS;
     branchTypes.CHANGE_BRANCH_DATA = types.CHANGE_BRANCH_DATA;
+    branchTypes.HARMONIZE_CELLS = types.HARMONIZE_CELLS;
 })(branchTypes = exports.branchTypes || (exports.branchTypes = {}));
 var nodeTypes;
 (function (nodeTypes) {
@@ -898,6 +900,7 @@ exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, fu
 });
 exports.cloneBranchDeclaration = redux_actions_1.createAction(types.CLONE_BRANCH, function (refbranchuid, settings) {
     return {
+        branchuid: refbranchuid,
         settings: settings,
         refbranchuid: refbranchuid
     };
@@ -949,6 +952,19 @@ exports.toggleInflationAdjusted = redux_actions_1.createAction(types.TOGGLE_INFL
     return {
         branchuid: branchuid,
         value: value
+    };
+}, function () {
+    return {
+        explorer: true
+    };
+});
+exports.harmonizeCells = redux_actions_1.createAction(types.HARMONIZE_CELLS, function (branchuid, nodeProperties, cellProperties, nodeList, cellList) {
+    return {
+        branchuid: branchuid,
+        nodeProperties: nodeProperties,
+        cellProperties: cellProperties,
+        nodeList: nodeList,
+        cellList: cellList
     };
 }, function () {
     return {
@@ -1169,7 +1185,8 @@ var BudgetBranch = function () {
                 },
                 yearSelections: Object.assign({}, defaults.yearSelections),
                 dataPath: [],
-                nodeIndex: 0
+                nodeIndex: 0,
+                cellIndex: 0
             };
             budgetNodeParms = Object.assign(defaults, budgetNodeParms);
             return budgetNodeParms;
@@ -1412,7 +1429,8 @@ var BudgetBranch = function () {
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
                 yearSpecs: newrange,
-                yearSelections: newselections
+                yearSelections: newselections,
+                cellIndex: cellIndex
             };
             actions.addNodeDeclaration(newnodeconfigparms);
             setTimeout(function () {
@@ -2832,7 +2850,79 @@ var ExplorerBranch = function (_Component) {
         };
         _this.handleSearch = function () {};
         _this.harmonizeCells = function (nodeUid, cellUid) {
-            console.log('harmonizeCells nodeUid, cellUid', nodeUid, cellUid);
+            var budgetBranch = _this.props.budgetBranch;
+
+            var nodeList = [];
+            var cellList = [];
+            var nodeProperties = { cellIndex: null, yearSelections: null };
+            var cellProperties = { yearScope: null, chartCode: null, nodeDataseriesName: null };
+            var declarationData = _this.props.declarationData;
+            var refnode = declarationData.nodesById[nodeUid];
+            var refcell = declarationData.cellsById[cellUid];
+            nodeProperties.cellIndex = refnode.cellIndex;
+            nodeProperties.yearSelections = Object.assign({}, refnode.yearSelections);
+            console.log('refnode, refcell', refnode, refcell);
+            cellProperties.yearScope = refcell.yearScope;
+            cellProperties.chartCode = refcell.chartConfigs[refcell.yearScope].explorerChartCode;
+            cellProperties.nodeDataseriesName = refcell.nodeDataseriesName;
+            var nodeidlist = declarationData.branchesById[budgetBranch.uid].nodeList;
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = nodeidlist[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var nodeid = _step.value;
+
+                    if (nodeid == nodeUid) continue;
+                    nodeList.push(nodeid);
+                    var tempnode = declarationData.nodesById[nodeid];
+                    var cellidlist = tempnode.cellList;
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
+
+                    try {
+                        for (var _iterator2 = cellidlist[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var cellid = _step2.value;
+
+                            if (cellid == cellUid) continue;
+                            cellList.push(cellid);
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            console.log('harmonizeCells', budgetBranch.uid, nodeProperties, cellProperties, nodeList, cellList);
+            if (nodeList.length > 0) {
+                _this._stateActions.harmonizeCells(budgetBranch.uid, nodeProperties, cellProperties, nodeList, cellList);
+            }
         };
         _this.getPortals = function (budgetNodes) {
             var branch = _this;
@@ -3115,7 +3205,7 @@ var ExplorerCell = function (_Component) {
         };
         _this.onDataTable = function () {};
         _this.onHarmonize = function () {
-            _this.props.callbacks.harmonizeCells(_this.props.budgetCell.uid, _this.props.budgetCell.nodeDataPack.budgetNode.uid);
+            _this.props.callbacks.harmonizeCells(_this.props.budgetCell.nodeDataPack.budgetNode.uid, _this.props.budgetCell.uid);
         };
         return _this;
     }
@@ -3684,7 +3774,7 @@ var ExplorerNode = function (_Component) {
             return cellTabs;
         };
         _this.getTabObject = function (chartTabs) {
-            var tabSelection = _this.props.declarationData.nodesById[_this.props.budgetNode.uid].cellIndex;
+            var tabSelection = _this.props.declarationData.nodesById[_this.props.budgetNode.uid].cellIndex || 0;
             if (chartTabs.length == 0) {
                 return React.createElement("div", { style: {
                         height: "400px",
@@ -4501,7 +4591,8 @@ var Explorer = function (_Component) {
                         incrementBranchDataVersion: _this2.props.incrementBranchDataVersion,
                         toggleShowOptions: _this2.props.toggleShowOptions,
                         updateCellsDataseriesName: _this2.props.updateCellsDataseriesName,
-                        resetLastAction: _this2.props.resetLastAction
+                        resetLastAction: _this2.props.resetLastAction,
+                        harmonizeCells: _this2.props.harmonizeCells
                     };
                     var displayCallbackFunctions = {
                         workingStatus: explorer.workingStatus
@@ -4570,6 +4661,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     removeNodeDeclarations: ExplorerActions.removeNodeDeclarations,
     addCellDeclarations: ExplorerActions.addCellDeclarations,
     normalizeCellYearDependencies: ExplorerActions.normalizeCellYearDependencies,
+    harmonizeCells: ExplorerActions.harmonizeCells,
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
@@ -4674,7 +4766,7 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
     var childprops = {
         selectionrow: selectionrow,
         nodeIndex: nodeIndex,
-        cellIndex: cellIndex
+        cellIndex: parseInt(cellIndex)
     };
     budgetBranch.createChildNode(childprops);
 };

@@ -22,6 +22,7 @@ class BudgetBranch {
                 yearSelections: Object.assign({}, defaults.yearSelections),
                 dataPath: [],
                 nodeIndex: 0,
+                cellIndex: 0,
             };
             budgetNodeParms = Object.assign(defaults, budgetNodeParms);
             return budgetNodeParms;
@@ -209,6 +210,7 @@ class BudgetBranch {
                 nodeIndex: nodeIndex + 1,
                 yearSpecs: newrange,
                 yearSelections: newselections,
+                cellIndex: cellIndex,
             };
             actions.addNodeDeclaration(newnodeconfigparms);
             setTimeout(() => {

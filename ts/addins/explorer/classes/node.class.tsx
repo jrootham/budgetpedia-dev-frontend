@@ -34,6 +34,7 @@ export interface BudgetNodeDeclarationParms {
     yearSelections: any,
     dataPath: string[],
     nodeIndex: number,
+    cellIndex: any,
 }
 
 class BudgetNode {
