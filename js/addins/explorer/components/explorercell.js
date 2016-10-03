@@ -75,6 +75,7 @@ class ExplorerCell extends Component {
         this.onDataTable = () => {
         };
         this.onHarmonize = () => {
+            this.props.callbacks.harmonizeCells(this.props.budgetCell.uid, this.props.budgetCell.nodeDataPack.budgetNode.uid);
         };
     }
     componentWillMount() {
@@ -376,7 +377,13 @@ class ExplorerCell extends Component {
             paddingRight: "3px",
             position: "relative",
             display: "inline-block",
-        }}, React.createElement("div", {style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "harmonize"), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Harmonize settings for row", tooltipPosition: "top-center", style: {
+        }}, React.createElement("div", {style: {
+            paddingLeft: '3px',
+            position: "absolute",
+            top: "0",
+            left: "0",
+            fontSize: "8px"
+        }}, "harmonize"), React.createElement(IconButton_1.default, {tooltip: "Harmonize settings for row", tooltipPosition: "top-center", style: {
             borderRadius: "50%",
             padding: "0",
             height: "36px",

@@ -37,6 +37,7 @@ class BudgetNode {
                 yearSpecs: yearSpecs,
                 yearSelections: yearSelections,
                 parentBudgetNode: parentBudgetNode,
+                budgetNode: budgetNode,
             };
             cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeDataPack = nodeDataPack;

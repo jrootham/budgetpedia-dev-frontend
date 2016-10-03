@@ -207,6 +207,7 @@ class BudgetNode {
             yearSpecs,
             yearSelections,
             parentBudgetNode,
+            budgetNode,
         }
 
         cell.viewpointConfigPack = viewpointConfigPack

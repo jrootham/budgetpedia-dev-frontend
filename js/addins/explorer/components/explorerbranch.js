@@ -253,8 +253,12 @@ class ExplorerBranch extends Component {
         };
         this.handleSearch = () => {
         };
+        this.harmonizeCells = (nodeUid, cellUid) => {
+            console.log('harmonizeCells nodeUid, cellUid', nodeUid, cellUid);
+        };
         this.getPortals = (budgetNodes) => {
-            let { viewpointData } = this.state;
+            let branch = this;
+            let { viewpointData } = branch.state;
             if (!viewpointData)
                 return [];
             let datasetConfig = viewpointData.Meta.datasetConfig;
@@ -263,7 +267,7 @@ class ExplorerBranch extends Component {
                 portalSeriesName += ' (' + datasetConfig.UnitsAlias + ')';
             }
             let portals = budgetNodes.map((budgetNode, nodeindex) => {
-                let branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
+                let branchDeclaration = branch.props.declarationData.branchesById[branch.props.budgetBranch.uid];
                 let portalName = null;
                 let treeNodeData = budgetNode.treeNodeData;
                 if (treeNodeData.Name) {
@@ -277,7 +281,7 @@ class ExplorerBranch extends Component {
                     portalName: portalName,
                 };
                 budgetNode.portalConfig = portalConfig;
-                let viewpointdata = this.state.viewpointData;
+                let viewpointdata = branch.state.viewpointData;
                 let { NamingConfigurations: viewpointNamingConfigs, datasetConfig: datasetConfig, isInflationAdjusted, } = viewpointdata.Meta;
                 let viewpointConfigPack = {
                     viewpointNamingConfigs: viewpointNamingConfigs,
@@ -285,13 +289,13 @@ class ExplorerBranch extends Component {
                     isInflationAdjusted: isInflationAdjusted,
                 };
                 budgetNode.viewpointConfigPack = viewpointConfigPack;
-                budgetNode.branchSettings = this.props.budgetBranch.settings;
-                budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(this.props.budgetBranch);
-                let actions = Object.assign({}, this._stateActions);
-                actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid);
-                actions.updateCellChartCode = this._stateActions.updateCellChartCode(budgetNode.uid);
-                actions.updateCellYearSelections = this._stateActions.updateCellYearSelections(budgetNode.uid);
-                return React.createElement(explorernode_1.ExplorerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: this.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration});
+                budgetNode.branchSettings = branch.props.budgetBranch.settings;
+                budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(branch.props.budgetBranch);
+                let actions = Object.assign({}, branch._stateActions);
+                actions.updateCellChartSelection = branch._stateActions.updateCellChartSelection(budgetNode.uid);
+                actions.updateCellChartCode = branch._stateActions.updateCellChartCode(budgetNode.uid);
+                actions.updateCellYearSelections = branch._stateActions.updateCellYearSelections(budgetNode.uid);
+                return React.createElement(explorernode_1.ExplorerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }});
             });
             return portals;
         };

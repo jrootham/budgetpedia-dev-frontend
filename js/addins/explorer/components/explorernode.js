@@ -111,7 +111,7 @@ class ExplorerNode extends Component {
                 return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorercell_1.default, {declarationData: this.props.declarationData, callbackid: cellIndex, budgetCell: budgetCell, globalStateActions: {
                     updateCellChartCode: this.props.globalStateActions.updateCellChartCode,
                     updateCellYearSelections: this.props.globalStateActions.updateCellYearSelections,
-                }, showControls: this.props.showControls}));
+                }, showControls: this.props.showControls, callbacks: this.props.callbacks}));
             });
             return cellTabs;
         };

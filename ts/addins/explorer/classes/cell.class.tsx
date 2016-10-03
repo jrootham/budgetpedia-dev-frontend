@@ -105,7 +105,7 @@ export interface NodeData {
     yearSpecs: YearSpecs,
     yearSelections: any,
     parentBudgetNode: any,
-    // treeNodeMetaDataFromParentSortedList: any,
+    budgetNode:any,
 }
 
 class BudgetCell {

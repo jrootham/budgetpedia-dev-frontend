@@ -36,6 +36,7 @@ interface ExplorerCellProps {
         updateCellYearSelections:Function,
     },
     showControls: boolean,
+    callbacks: any,
 }
 
 class ExplorerCell extends Component<ExplorerCellProps, any> {
@@ -171,7 +172,10 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     }
 
     onHarmonize = () => {
-
+        this.props.callbacks.harmonizeCells(
+            this.props.budgetCell.uid,
+            this.props.budgetCell.nodeDataPack.budgetNode.uid
+        )
     }
 
     render() {
@@ -659,9 +663,16 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     display:"inline-block",
                 }
             }>
-                <div style={{paddingLeft: '3px', position:"absolute",top:"0", left:"0",fontSize:"8px"}}>harmonize</div>
+                <div style={
+                    {
+                        paddingLeft: '3px', 
+                        position:"absolute",
+                        top:"0", 
+                        left:"0",
+                        fontSize:"8px"
+                    }
+                }>harmonize</div>
                 <IconButton 
-                    disabled
                     tooltip="Harmonize settings for row"
                     tooltipPosition="top-center"
                     style={

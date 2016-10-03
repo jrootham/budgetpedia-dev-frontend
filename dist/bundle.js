@@ -2068,7 +2068,7 @@ var Database = function () {
         value: function getLookupsPromise() {
             var _this4 = this;
 
-            var version = arguments.length <= 0 || arguments[0] === undefined ? undefined : arguments[0];
+            var version = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
 
             var promise = new Promise(function (resolve, error) {
                 var path = _this4.dbroot + _this4.viewpointDataParms.repository.toLowerCase() + '/datasets/' + version.toLowerCase() + '/' + _this4.lookupssubpath + 'lookups.json';
@@ -2337,7 +2337,7 @@ var BudgetNode = function () {
     function BudgetNode(parms, uid, node) {
         var _this = this;
 
-        var parentBudgetNode = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+        var parentBudgetNode = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
         _classCallCheck(this, BudgetNode);
 
@@ -2402,7 +2402,8 @@ var BudgetNode = function () {
                 treeNodeData: treeNodeData,
                 yearSpecs: yearSpecs,
                 yearSelections: yearSelections,
-                parentBudgetNode: parentBudgetNode
+                parentBudgetNode: parentBudgetNode,
+                budgetNode: budgetNode
             };
             cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeDataPack = nodeDataPack;
@@ -2830,8 +2831,12 @@ var ExplorerBranch = function (_Component) {
             _this.props.globalStateActions.toggleShowOptions(budgetBranch.uid, value);
         };
         _this.handleSearch = function () {};
+        _this.harmonizeCells = function (nodeUid, cellUid) {
+            console.log('harmonizeCells nodeUid, cellUid', nodeUid, cellUid);
+        };
         _this.getPortals = function (budgetNodes) {
-            var viewpointData = _this.state.viewpointData;
+            var branch = _this;
+            var viewpointData = branch.state.viewpointData;
 
             if (!viewpointData) return [];
             var datasetConfig = viewpointData.Meta.datasetConfig;
@@ -2840,7 +2845,7 @@ var ExplorerBranch = function (_Component) {
                 portalSeriesName += ' (' + datasetConfig.UnitsAlias + ')';
             }
             var portals = budgetNodes.map(function (budgetNode, nodeindex) {
-                var branchDeclaration = _this.props.declarationData.branchesById[_this.props.budgetBranch.uid];
+                var branchDeclaration = branch.props.declarationData.branchesById[branch.props.budgetBranch.uid];
                 var portalName = null;
                 var treeNodeData = budgetNode.treeNodeData;
                 if (treeNodeData.Name) {
@@ -2853,7 +2858,7 @@ var ExplorerBranch = function (_Component) {
                     portalName: portalName
                 };
                 budgetNode.portalConfig = portalConfig;
-                var viewpointdata = _this.state.viewpointData;
+                var viewpointdata = branch.state.viewpointData;
                 var _viewpointdata$Meta = viewpointdata.Meta;
                 var viewpointNamingConfigs = _viewpointdata$Meta.NamingConfigurations;
                 var datasetConfig = _viewpointdata$Meta.datasetConfig;
@@ -2865,13 +2870,13 @@ var ExplorerBranch = function (_Component) {
                     isInflationAdjusted: isInflationAdjusted
                 };
                 budgetNode.viewpointConfigPack = viewpointConfigPack;
-                budgetNode.branchSettings = _this.props.budgetBranch.settings;
-                budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(_this.props.budgetBranch);
-                var actions = Object.assign({}, _this._stateActions);
-                actions.updateCellChartSelection = _this._stateActions.updateCellChartSelection(budgetNode.uid);
-                actions.updateCellChartCode = _this._stateActions.updateCellChartCode(budgetNode.uid);
-                actions.updateCellYearSelections = _this._stateActions.updateCellYearSelections(budgetNode.uid);
-                return React.createElement(explorernode_1.ExplorerNode, { key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: _this.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration });
+                budgetNode.branchSettings = branch.props.budgetBranch.settings;
+                budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(branch.props.budgetBranch);
+                var actions = Object.assign({}, branch._stateActions);
+                actions.updateCellChartSelection = branch._stateActions.updateCellChartSelection(budgetNode.uid);
+                actions.updateCellChartCode = branch._stateActions.updateCellChartCode(budgetNode.uid);
+                actions.updateCellYearSelections = branch._stateActions.updateCellYearSelections(budgetNode.uid);
+                return React.createElement(explorernode_1.ExplorerNode, { key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells } });
             });
             return portals;
         };
@@ -3109,7 +3114,9 @@ var ExplorerCell = function (_Component) {
             });
         };
         _this.onDataTable = function () {};
-        _this.onHarmonize = function () {};
+        _this.onHarmonize = function () {
+            _this.props.callbacks.harmonizeCells(_this.props.budgetCell.uid, _this.props.budgetCell.nodeDataPack.budgetNode.uid);
+        };
         return _this;
     }
 
@@ -3393,7 +3400,13 @@ var ExplorerCell = function (_Component) {
                     paddingRight: "3px",
                     position: "relative",
                     display: "inline-block"
-                } }, React.createElement("div", { style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px" } }, "harmonize"), React.createElement(IconButton_1.default, { disabled: true, tooltip: "Harmonize settings for row", tooltipPosition: "top-center", style: {
+                } }, React.createElement("div", { style: {
+                    paddingLeft: '3px',
+                    position: "absolute",
+                    top: "0",
+                    left: "0",
+                    fontSize: "8px"
+                } }, "harmonize"), React.createElement(IconButton_1.default, { tooltip: "Harmonize settings for row", tooltipPosition: "top-center", style: {
                     borderRadius: "50%",
                     padding: "0",
                     height: "36px",
@@ -3666,7 +3679,7 @@ var ExplorerNode = function (_Component) {
                 return React.createElement(Tabs_1.Tab, { style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex }, React.createElement(explorercell_1.default, { declarationData: _this.props.declarationData, callbackid: cellIndex, budgetCell: budgetCell, globalStateActions: {
                         updateCellChartCode: _this.props.globalStateActions.updateCellChartCode,
                         updateCellYearSelections: _this.props.globalStateActions.updateCellYearSelections
-                    }, showControls: _this.props.showControls }));
+                    }, showControls: _this.props.showControls, callbacks: _this.props.callbacks }));
             });
             return cellTabs;
         };
@@ -4679,7 +4692,7 @@ exports.onChartComponentSelection = function (budgetBranch) {
 "use strict";
 
 exports.filterActionsForUpdate = function (nextProps, component) {
-    var show = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+    var show = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
     var componentName = component.constructor.name;
     var instance = void 0,
@@ -4792,13 +4805,13 @@ var actions_1 = require('./actions');
 var constants_1 = require('./constants');
 var generationcounter = 0;
 var defaults = function defaults() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.default.explorer.defaults : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialstate_1.default.explorer.defaults;
     var action = arguments[1];
 
     return state;
 };
 var branchList = function branchList() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var action = arguments[1];
     var type = action.type;
 
@@ -4895,7 +4908,7 @@ var branchList = function branchList() {
     }
 };
 var branchesById = function branchesById() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var action = arguments[1];
     var type = action.type;
 
@@ -5012,7 +5025,7 @@ var branchesById = function branchesById() {
     }
 };
 var nodesById = function nodesById() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var action = arguments[1];
     var type = action.type;
 
@@ -5130,7 +5143,7 @@ var nodesById = function nodesById() {
     }
 };
 var cellsById = function cellsById() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var action = arguments[1];
     var type = action.type;
 
@@ -5306,7 +5319,7 @@ var lastActionDefaultState = {
     generation: null
 };
 var lastAction = function lastAction() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? lastActionDefaultState : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : lastActionDefaultState;
     var action = arguments[1];
 
     var newstate = Object.assign({}, state);
@@ -5343,7 +5356,7 @@ var lastAction = function lastAction() {
     }
 };
 var lastTargetedAction = function lastTargetedAction() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? { counter: null } : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { counter: null };
     var action = arguments[1];
 
     if (!action.payload || !action.meta) {
@@ -5435,7 +5448,7 @@ var lastTargetedAction = function lastTargetedAction() {
     return newstate;
 };
 var generation = function generation() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
     var action = arguments[1];
 
     return generationcounter++;
@@ -6791,17 +6804,17 @@ var Actions = require('../actions/actions');
 var initialstate_1 = require("../../local/initialstate");
 var reducers_1 = require('../../addins/explorer/reducers');
 var theme = function theme() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.default.theme : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialstate_1.default.theme;
 
     return state;
 };
 var system = function system() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.default.system : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialstate_1.default.system;
 
     return state;
 };
 var colors = function colors() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.default.colors : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialstate_1.default.colors;
 
     return state;
 };
@@ -6811,13 +6824,13 @@ var resources = redux_1.combineReducers({
     colors: colors
 });
 var appnavbar = function appnavbar() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.default.appnavbar : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialstate_1.default.appnavbar;
     var action = arguments[1];
 
     return state;
 };
 var workingmessagestate = function workingmessagestate() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.default.workingmessagestate : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialstate_1.default.workingmessagestate;
     var action = arguments[1];
 
     switch (action.type) {
@@ -6838,19 +6851,19 @@ var ui = redux_1.combineReducers({
     workingmessagestate: workingmessagestate
 });
 var homepadding = function homepadding() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.default.homepadding : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialstate_1.default.homepadding;
     var action = arguments[1];
 
     return state;
 };
 var hometiles = function hometiles() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.default.hometiles : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialstate_1.default.hometiles;
     var action = arguments[1];
 
     return state;
 };
 var homecolsreducer = function homecolsreducer() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? initialstate_1.default.homecols : arguments[0];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialstate_1.default.homecols;
     var action = arguments[1];
 
     switch (action.type) {
@@ -6891,10 +6904,10 @@ var AUTO_LOGIN_SUCCESS = Actions.AUTO_LOGIN_SUCCESS;
 var AUTO_LOGIN_FAILURE = Actions.AUTO_LOGIN_FAILURE;
 
 function auth() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
         isFetching: false,
         isAuthenticated: false
-    } : arguments[0];
+    };
     var action = arguments[1];
 
     switch (action.type) {
@@ -6954,10 +6967,10 @@ var REGISTER_SUCCESS = Actions.REGISTER_SUCCESS;
 var REGISTER_FAILURE = Actions.REGISTER_FAILURE;
 
 function register() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
         isFetching: false,
         isRegistered: false
-    } : arguments[0];
+    };
     var action = arguments[1];
 
     switch (action.type) {
@@ -7001,10 +7014,10 @@ var REGISTER_CONFIRM_SUCCESS = Actions.REGISTER_CONFIRM_SUCCESS;
 var REGISTER_CONFIRM_FAILURE = Actions.REGISTER_CONFIRM_FAILURE;
 
 function registerconfirm() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
         isFetching: false,
         isConfirmed: false
-    } : arguments[0];
+    };
     var action = arguments[1];
 
     switch (action.type) {
@@ -27907,12 +27920,24 @@ var objectCreate = Object.create;
  * properties to the created object.
  *
  * @private
- * @param {Object} prototype The object to inherit from.
+ * @param {Object} proto The object to inherit from.
  * @returns {Object} Returns the new object.
  */
-function baseCreate(proto) {
-  return isObject(proto) ? objectCreate(proto) : {};
-}
+var baseCreate = (function() {
+  function object() {}
+  return function(proto) {
+    if (!isObject(proto)) {
+      return {};
+    }
+    if (objectCreate) {
+      return objectCreate(proto);
+    }
+    object.prototype = prototype;
+    var result = new object;
+    object.prototype = undefined;
+    return result;
+  };
+}());
 
 module.exports = baseCreate;
 
@@ -29026,6 +29051,21 @@ function cloneArrayBuffer(arrayBuffer) {
 module.exports = cloneArrayBuffer;
 
 },{"./_Uint8Array":205}],262:[function(require,module,exports){
+var root = require('./_root');
+
+/** Detect free variable `exports`. */
+var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Built-in value references. */
+var Buffer = moduleExports ? root.Buffer : undefined,
+    allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined;
+
 /**
  * Creates a clone of  `buffer`.
  *
@@ -29038,14 +29078,16 @@ function cloneBuffer(buffer, isDeep) {
   if (isDeep) {
     return buffer.slice();
   }
-  var result = new buffer.constructor(buffer.length);
+  var length = buffer.length,
+      result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length);
+
   buffer.copy(result);
   return result;
 }
 
 module.exports = cloneBuffer;
 
-},{}],263:[function(require,module,exports){
+},{"./_root":329}],263:[function(require,module,exports){
 var cloneArrayBuffer = require('./_cloneArrayBuffer');
 
 /**
@@ -31445,7 +31487,7 @@ var isObject = require('./isObject'),
     now = require('./now'),
     toNumber = require('./toNumber');
 
-/** Used as the `TypeError` message for "Functions" methods. */
+/** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
@@ -32551,7 +32593,7 @@ module.exports = keysIn;
 },{"./_arrayLikeKeys":211,"./_baseKeysIn":242,"./isArrayLike":359}],374:[function(require,module,exports){
 var MapCache = require('./_MapCache');
 
-/** Used as the `TypeError` message for "Functions" methods. */
+/** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
 
 /**
@@ -32825,7 +32867,7 @@ module.exports = stubFalse;
 var debounce = require('./debounce'),
     isObject = require('./isObject');
 
-/** Used as the `TypeError` message for "Functions" methods. */
+/** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
 
 /**
@@ -51780,6 +51822,7 @@ function syncHistoryWithStore(history, store) {
   var isTimeTraveling = void 0;
   var unsubscribeFromStore = void 0;
   var unsubscribeFromHistory = void 0;
+  var currentLocation = void 0;
 
   // What does the store say about current location?
   var getLocationInStore = function getLocationInStore(useInitialIfEmpty) {
@@ -51787,14 +51830,14 @@ function syncHistoryWithStore(history, store) {
     return locationState.locationBeforeTransitions || (useInitialIfEmpty ? initialLocation : undefined);
   };
 
-  // Init currentLocation with potential location in store
-  var currentLocation = getLocationInStore();
+  // Init initialLocation with potential location in store
+  initialLocation = getLocationInStore();
 
   // If the store is replayed, update the URL in the browser to match.
   if (adjustUrlOnReplay) {
     var handleStoreChange = function handleStoreChange() {
       var locationInStore = getLocationInStore(true);
-      if (currentLocation === locationInStore) {
+      if (currentLocation === locationInStore || initialLocation === locationInStore) {
         return;
       }
 
@@ -51843,7 +51886,6 @@ function syncHistoryWithStore(history, store) {
   // The enhanced history uses store as source of truth
   return _extends({}, history, {
     // The listeners are subscribed to the store instead of history
-
     listen: function listen(listener) {
       // Copy of last location.
       var lastPublishedLocation = getLocationInStore(true);

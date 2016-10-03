@@ -36,6 +36,7 @@ interface ExplorerNodeProps {
     declarationData: any,
     showControls: boolean,
     dataGenerationCounter: number,
+    callbacks: any,
 }
 
 class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
@@ -269,6 +270,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
                         updateCellYearSelections: this.props.globalStateActions.updateCellYearSelections, 
                     } }
                     showControls = {this.props.showControls}
+                    callbacks = {this.props.callbacks}
                 />
             </Tab>
         })

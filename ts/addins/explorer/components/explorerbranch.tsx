@@ -583,12 +583,22 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     }
 
+    // ---------------------------[ callbacks ]------------------------------
+
+    harmonizeCells = (nodeUid, cellUid) => {
+
+        console.log('harmonizeCells nodeUid, cellUid', nodeUid, cellUid)
+
+    }
+
     // -----------------------------[ prepare for render ]---------------------------------
 
     // get React components to render
     getPortals = (budgetNodes:BudgetNode[]) => {
 
-        let { viewpointData } = this.state
+        let branch = this
+
+        let { viewpointData } = branch.state
 
         if (!viewpointData) return []
         let datasetConfig: DatasetConfig = viewpointData.Meta.datasetConfig
@@ -600,7 +610,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         let portals = budgetNodes.map((budgetNode: BudgetNode, nodeindex) => {
 
-            let branchDeclaration:BranchSettings = this.props.declarationData.branchesById[this.props.budgetBranch.uid]
+            let branchDeclaration:BranchSettings = branch.props.declarationData.branchesById[branch.props.budgetBranch.uid]
 
             let portalName = null
             let treeNodeData = budgetNode.treeNodeData
@@ -618,7 +628,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             budgetNode.portalConfig = portalConfig
 
-            let viewpointdata:ViewpointData = this.state.viewpointData
+            let viewpointdata:ViewpointData = branch.state.viewpointData
             let {
                 NamingConfigurations: viewpointNamingConfigs,
                 datasetConfig: datasetConfig,
@@ -631,21 +641,22 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 isInflationAdjusted,
             }
             budgetNode.viewpointConfigPack = viewpointConfigPack
-            budgetNode.branchSettings = this.props.budgetBranch.settings
-            budgetNode.onChartComponentSelection = onChartComponentSelection(this.props.budgetBranch)
-            let actions = Object.assign({}, this._stateActions)
-            actions.updateCellChartSelection = this._stateActions.updateCellChartSelection(budgetNode.uid)
-            actions.updateCellChartCode = this._stateActions.updateCellChartCode(budgetNode.uid)
-            actions.updateCellYearSelections = this._stateActions.updateCellYearSelections(budgetNode.uid)
+            budgetNode.branchSettings = branch.props.budgetBranch.settings
+            budgetNode.onChartComponentSelection = onChartComponentSelection(branch.props.budgetBranch)
+            let actions = Object.assign({}, branch._stateActions)
+            actions.updateCellChartSelection = branch._stateActions.updateCellChartSelection(budgetNode.uid)
+            actions.updateCellChartCode = branch._stateActions.updateCellChartCode(budgetNode.uid)
+            actions.updateCellYearSelections = branch._stateActions.updateCellYearSelections(budgetNode.uid)
 
             return <ExplorerNode
                 key = {nodeindex}
                 callbackid = { nodeindex }
                 budgetNode = { budgetNode }
-                declarationData = {this.props.declarationData}
+                declarationData = {branch.props.declarationData}
                 globalStateActions = { actions }
                 showControls = {branchDeclaration.showOptions}
                 dataGenerationCounter = { branchDeclaration.branchDataGeneration }
+                callbacks = { {harmonizeCells:branch.harmonizeCells} }
             />
         })
 
