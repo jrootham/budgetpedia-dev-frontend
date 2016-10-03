@@ -254,7 +254,14 @@ class ExplorerBranch extends Component {
         this.handleSearch = () => {
         };
         this.harmonizeCells = (nodeUid, cellUid) => {
-            console.log('harmonizeCells nodeUid, cellUid', nodeUid, cellUid);
+            let nodeList = [];
+            let cellList = [];
+            let nodeProperties = {};
+            let cellProperties = {};
+            let { budgetBranch } = this.props;
+            if (nodeList.length > 0) {
+                this._stateActions.harmonizeCells(budgetBranch.uid, nodeProperties, cellProperties, nodeList, cellList);
+            }
         };
         this.getPortals = (budgetNodes) => {
             let branch = this;

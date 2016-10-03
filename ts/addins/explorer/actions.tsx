@@ -18,6 +18,7 @@ export namespace types {
     export const BRANCH_MOVE_DOWN = 'BRANCH_MOVE_DOWN'
     export const CHANGE_BRANCH_DATA = 'CHANGE_BRANCH_DATA'
     export const NORMALIZE_CELL_YEAR_DEPENDENCIES = 'NORMALIZE_CELL_YEAR_DEPENDENCIES'
+    export const HARMONIZE_CELLS = 'HARMONIZE_CELLS'
 
     export const ADD_CELLS = 'ADD_CELLS'
     export const CHANGE_TAB = 'CHANGE_TAB'
@@ -40,7 +41,8 @@ export namespace branchTypes {
     export import CHANGE_ASPECT = types.CHANGE_ASPECT
     export import TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED
     export import TOGGLE_SHOW_OPTIONS = types.TOGGLE_SHOW_OPTIONS
-    export import CHANGE_BRANCH_DATA = types.CHANGE_BRANCH_DATA    
+    export import CHANGE_BRANCH_DATA = types.CHANGE_BRANCH_DATA 
+    export import HARMONIZE_CELLS = types.HARMONIZE_CELLS   
 }
 
 export namespace nodeTypes {
@@ -124,6 +126,18 @@ export const toggleInflationAdjusted = createAction(
     types.TOGGLE_INFLATION_ADJUSTED, (branchuid, value) => ({
         branchuid,
         value,
+    }), () => ({
+        explorer:true
+    })
+)
+
+export const harmonizeCells = createAction(
+    types.HARMONIZE_CELLS, (branchuid, nodeProperties, cellProperties, nodeList, cellList) => ({
+        branchuid, 
+        nodeProperties,
+        cellProperties,
+        nodeList,
+        cellList,
     }), () => ({
         explorer:true
     })

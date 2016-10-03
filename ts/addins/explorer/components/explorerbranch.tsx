@@ -587,7 +587,24 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     harmonizeCells = (nodeUid, cellUid) => {
 
-        console.log('harmonizeCells nodeUid, cellUid', nodeUid, cellUid)
+        let nodeList = []
+        let cellList = []
+        let nodeProperties = {}
+        let cellProperties = {}
+
+        let { budgetBranch } = this.props
+
+        if (nodeList.length > 0) {
+
+            this._stateActions.harmonizeCells(
+                budgetBranch.uid,
+                nodeProperties,
+                cellProperties,
+                nodeList,
+                cellList
+            )
+
+        }
 
     }
 

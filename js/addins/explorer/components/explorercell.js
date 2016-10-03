@@ -75,7 +75,7 @@ class ExplorerCell extends Component {
         this.onDataTable = () => {
         };
         this.onHarmonize = () => {
-            this.props.callbacks.harmonizeCells(this.props.budgetCell.uid, this.props.budgetCell.nodeDataPack.budgetNode.uid);
+            this.props.callbacks.harmonizeCells(this.props.budgetCell.nodeDataPack.budgetNode.uid, this.props.budgetCell.uid);
         };
     }
     componentWillMount() {

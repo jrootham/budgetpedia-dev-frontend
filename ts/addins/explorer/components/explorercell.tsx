@@ -173,8 +173,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     onHarmonize = () => {
         this.props.callbacks.harmonizeCells(
-            this.props.budgetCell.uid,
-            this.props.budgetCell.nodeDataPack.budgetNode.uid
+            this.props.budgetCell.nodeDataPack.budgetNode.uid,
+            this.props.budgetCell.uid
         )
     }
 

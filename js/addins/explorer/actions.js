@@ -18,6 +18,7 @@ var types;
     types.BRANCH_MOVE_DOWN = 'BRANCH_MOVE_DOWN';
     types.CHANGE_BRANCH_DATA = 'CHANGE_BRANCH_DATA';
     types.NORMALIZE_CELL_YEAR_DEPENDENCIES = 'NORMALIZE_CELL_YEAR_DEPENDENCIES';
+    types.HARMONIZE_CELLS = 'HARMONIZE_CELLS';
     types.ADD_CELLS = 'ADD_CELLS';
     types.CHANGE_TAB = 'CHANGE_TAB';
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
@@ -36,6 +37,7 @@ var branchTypes;
     branchTypes.TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED;
     branchTypes.TOGGLE_SHOW_OPTIONS = types.TOGGLE_SHOW_OPTIONS;
     branchTypes.CHANGE_BRANCH_DATA = types.CHANGE_BRANCH_DATA;
+    branchTypes.HARMONIZE_CELLS = types.HARMONIZE_CELLS;
 })(branchTypes = exports.branchTypes || (exports.branchTypes = {}));
 var nodeTypes;
 (function (nodeTypes) {
@@ -90,6 +92,15 @@ exports.changeAspect = redux_actions_1.createAction(types.CHANGE_ASPECT, (branch
 exports.toggleInflationAdjusted = redux_actions_1.createAction(types.TOGGLE_INFLATION_ADJUSTED, (branchuid, value) => ({
     branchuid: branchuid,
     value: value,
+}), () => ({
+    explorer: true
+}));
+exports.harmonizeCells = redux_actions_1.createAction(types.HARMONIZE_CELLS, (branchuid, nodeProperties, cellProperties, nodeList, cellList) => ({
+    branchuid: branchuid,
+    nodeProperties: nodeProperties,
+    cellProperties: cellProperties,
+    nodeList: nodeList,
+    cellList: cellList,
 }), () => ({
     explorer: true
 }));

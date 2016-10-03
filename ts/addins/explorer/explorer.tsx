@@ -91,6 +91,7 @@ export interface MappedBranchActions extends MappedNodeActions {
     updateCellChartCode: Function,
     updateCellsDataseriesName: Function,
     resetLastAction: Function,
+    harmonizeCells: Function,
     // toggleInflationAdjustement:Function
 }
 
@@ -542,6 +543,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
+                    harmonizeCells: this.props.harmonizeCells,
                 }
 
                 let displayCallbackFunctions = { 
@@ -726,6 +728,7 @@ Explorer = connect(mapStateToProps, {
     removeNodeDeclarations:ExplorerActions.removeNodeDeclarations,
     addCellDeclarations:ExplorerActions.addCellDeclarations,
     normalizeCellYearDependencies: ExplorerActions.normalizeCellYearDependencies,
+    harmonizeCells: ExplorerActions.harmonizeCells,
     // removeCellDeclarations:ExplorerActions.removeCellDeclarations,
 
     // branch actions - variations

@@ -272,6 +272,7 @@ let Explorer = class extends Component {
                     toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
+                    harmonizeCells: this.props.harmonizeCells,
                 };
                 let displayCallbackFunctions = {
                     workingStatus: explorer.workingStatus,
@@ -324,6 +325,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     removeNodeDeclarations: ExplorerActions.removeNodeDeclarations,
     addCellDeclarations: ExplorerActions.addCellDeclarations,
     normalizeCellYearDependencies: ExplorerActions.normalizeCellYearDependencies,
+    harmonizeCells: ExplorerActions.harmonizeCells,
     changeViewpoint: ExplorerActions.changeViewpoint,
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
