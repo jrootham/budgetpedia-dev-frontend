@@ -21,14 +21,13 @@ export namespace types {
 
     export const ADD_CELLS = 'ADD_CELLS'
     export const CHANGE_TAB = 'CHANGE_TAB'
-    // export const UPDATE_CELLS_DATASERIESNAME = 'UPDATE_CELLS_DATASERIESNAME'
 
     export const UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION'
-    export const UPDATE_CELL_TIMECODE = 'UPDATE_CELL_TIMECODE'
+    // export const UPDATE_CELL_TIMECODE = 'UPDATE_CELL_TIMECODE'
     export const UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE'
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
-    export const TOGGLE_NET = 'TOGGLE_NET'
-    export const TOGGLE_VARIANCE = 'TOGGLE_VARIANCE'
+    // export const TOGGLE_NET = 'TOGGLE_NET'
+    // export const TOGGLE_VARIANCE = 'TOGGLE_VARIANCE'
     export const UPDATE_NODE_YEAR_SELECTIONS = 'UPDATE_NODE_YEAR_SELECTIONS'
     export const UPDATE_NODE = 'UPDATE_NODE'
 }
@@ -56,11 +55,11 @@ export namespace nodeTypes {
 
 export namespace cellTypes {
     export import UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION
-    export import UPDATE_CELL_TIMECODE = types.UPDATE_CELL_TIMECODE
+    // export import UPDATE_CELL_TIMECODE = types.UPDATE_CELL_TIMECODE
     export import UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE
     export import TOGGLE_DELTA = types.TOGGLE_DELTA
-    export import TOGGLE_NET = types.TOGGLE_NET
-    export import TOGGLE_VARIANCE = types.TOGGLE_VARIANCE
+    // export import TOGGLE_NET = types.TOGGLE_NET
+    // export import TOGGLE_VARIANCE = types.TOGGLE_VARIANCE
 }
 
 // --------------------[ Branch ]---------------------
@@ -139,7 +138,7 @@ export const toggleShowOptions = createAction(
     })
 )
 
-export const changeBranchDataVersion = createAction(
+export const incrementBranchDataVersion = createAction(
     types.CHANGE_BRANCH_DATA, (branchuid) => ({
         branchuid,
     }), () => ({
@@ -159,6 +158,7 @@ export const changeTab = createAction(
     })
 )
 
+// TODO: validate this -- may not do anything
 export const updateNode = createAction(
     types.UPDATE_NODE, (branchuid, nodeuid) => ({
         nodeuid,

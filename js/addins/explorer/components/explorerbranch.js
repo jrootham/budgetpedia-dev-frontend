@@ -100,7 +100,7 @@ class ExplorerBranch extends Component {
         };
         this._processChangeViewpointStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
-                this._stateActions.changeBranchDataVersion(budgetBranch.uid);
+                this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(reason => {
@@ -109,7 +109,7 @@ class ExplorerBranch extends Component {
         };
         this._processChangeVersionStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
-                this._stateActions.changeBranchDataVersion(budgetBranch.uid);
+                this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(reason => {
@@ -118,7 +118,7 @@ class ExplorerBranch extends Component {
         };
         this._processToggleInflationAdjustedStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
-                this._stateActions.changeBranchDataVersion(budgetBranch.uid);
+                this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 budgetBranch.toggleInflationAdjusted();
             }).catch(reason => {
                 console.error('error in data fetch, changeaspect', reason);
@@ -126,7 +126,7 @@ class ExplorerBranch extends Component {
         };
         this._processChangeAspectStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
-                this._stateActions.changeBranchDataVersion(budgetBranch.uid);
+                this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 let switchResults = budgetBranch.switchAspect();
                 let { deeperdata, shallowerdata, mismatch } = switchResults;
                 if (mismatch) {
@@ -300,7 +300,7 @@ class ExplorerBranch extends Component {
         this._initialize();
         let { budgetBranch, declarationData } = this.props;
         budgetBranch.getViewpointData().then(() => {
-            this._stateActions.changeBranchDataVersion(budgetBranch.uid);
+            this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
@@ -311,7 +311,7 @@ class ExplorerBranch extends Component {
                 });
             }
         }).catch(reason => {
-            console.error('error in data fetch, mount', reason);
+            console.error('error in data fetch, componentWillMount (branch)', reason);
         });
     }
     componentWillReceiveProps(nextProps) {

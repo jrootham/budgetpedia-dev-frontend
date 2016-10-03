@@ -21,11 +21,8 @@ var types;
     types.ADD_CELLS = 'ADD_CELLS';
     types.CHANGE_TAB = 'CHANGE_TAB';
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
-    types.UPDATE_CELL_TIMECODE = 'UPDATE_CELL_TIMECODE';
     types.UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE';
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
-    types.TOGGLE_NET = 'TOGGLE_NET';
-    types.TOGGLE_VARIANCE = 'TOGGLE_VARIANCE';
     types.UPDATE_NODE_YEAR_SELECTIONS = 'UPDATE_NODE_YEAR_SELECTIONS';
     types.UPDATE_NODE = 'UPDATE_NODE';
 })(types = exports.types || (exports.types = {}));
@@ -51,11 +48,8 @@ var nodeTypes;
 var cellTypes;
 (function (cellTypes) {
     cellTypes.UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION;
-    cellTypes.UPDATE_CELL_TIMECODE = types.UPDATE_CELL_TIMECODE;
     cellTypes.UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE;
     cellTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
-    cellTypes.TOGGLE_NET = types.TOGGLE_NET;
-    cellTypes.TOGGLE_VARIANCE = types.TOGGLE_VARIANCE;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, (refbranchuid, settings) => ({
     settings: settings,
@@ -105,7 +99,7 @@ exports.toggleShowOptions = redux_actions_1.createAction(types.TOGGLE_SHOW_OPTIO
 }), () => ({
     explorer: true
 }));
-exports.changeBranchDataVersion = redux_actions_1.createAction(types.CHANGE_BRANCH_DATA, (branchuid) => ({
+exports.incrementBranchDataVersion = redux_actions_1.createAction(types.CHANGE_BRANCH_DATA, (branchuid) => ({
     branchuid: branchuid,
 }), () => ({
     explorer: false

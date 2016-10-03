@@ -378,13 +378,11 @@ class BudgetBranch {
         let components = treeNodeData.Components
 
         let code = null
-        let treeNodeMetaDataFromParentSortedList: SortedComponentItem = null
-        let parentNode: any = null
+        // let parentNode: any = null
         if (treeNodeData && treeNodeData.SortedComponents && treeNodeData.SortedComponents[selectionrow]) {
-            treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow]
-            parentNode = treeNodeData
+            let treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow]
+            // parentNode = treeNodeData
             code = treeNodeMetaDataFromParentSortedList.Code
-            // console.log('treeNodeDataFromParentSortedList', treeNodeMetaDataFromParentSortedList)
         }
         if (code)
 
@@ -422,10 +420,7 @@ class BudgetBranch {
         setTimeout(() => {
 
             workingStatus(false)
-            // setTimeout(() => {
-                // updateChartSelections()
-                onPortalCreation()
-            // })
+            onPortalCreation()
 
         })
     }

@@ -185,11 +185,8 @@ class BudgetBranch {
             }
             let components = treeNodeData.Components;
             let code = null;
-            let treeNodeMetaDataFromParentSortedList = null;
-            let parentNode = null;
             if (treeNodeData && treeNodeData.SortedComponents && treeNodeData.SortedComponents[selectionrow]) {
-                treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow];
-                parentNode = treeNodeData;
+                let treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow];
                 code = treeNodeMetaDataFromParentSortedList.Code;
             }
             if (code)

@@ -131,7 +131,7 @@ let Explorer = class extends Component {
             let uidmap = {};
             uidmap[refbranchid] = uuid.v4();
             clones.branch[refbranchid] = this._getClone(declarationData.branchesById[refbranchid]);
-            for (let nodeid of clones.branch[refbranchid]['nodeList']) {
+            for (let nodeid of clones.branch[refbranchid].nodeList) {
                 let nodeobject = declarationData.nodesById[nodeid];
                 clones.nodes[nodeid] = this._getClone(nodeobject);
                 uidmap[nodeid] = uuid.v4();
@@ -150,21 +150,21 @@ let Explorer = class extends Component {
             };
             let newrefbranchid = uidmap[refbranchid];
             newclones.branch[newrefbranchid] = clones.branch[refbranchid];
-            let oldlist = newclones.branch[newrefbranchid]['nodeList'];
+            let oldlist = newclones.branch[newrefbranchid].nodeList;
             let newlist = [];
             for (let id of oldlist) {
                 newlist.push(uidmap[id]);
             }
-            newclones.branch[newrefbranchid]['nodeList'] = newlist;
+            newclones.branch[newrefbranchid].nodeList = newlist;
             for (let id in clones.nodes) {
                 let newid = uidmap[id];
                 let nodeclone = newclones.nodes[newid] = clones.nodes[id];
-                let oldlist = nodeclone['cellList'];
+                let oldlist = nodeclone.cellList;
                 let newlist = [];
                 for (let id of oldlist) {
                     newlist.push(uidmap[id]);
                 }
-                nodeclone['cellList'] = newlist;
+                nodeclone.cellList = newlist;
             }
             for (let id in clones.cells) {
                 newclones.cells[uidmap[id]] = clones.cells[id];
@@ -250,7 +250,7 @@ let Explorer = class extends Component {
             float: "right",
             height: "36px",
             width: "36px",
-        }, onTouchTap: explorer.popoverClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close"))), React.createElement("p", null, "Click or tap on any chart column to drill down (except faded columns, which are as deep as you can go)."))));
+        }, onTouchTap: explorer.popoverClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close"))), React.createElement("p", null, "Click or tap on any chart column to drill down (except as noted)."))));
         let branchSegments = () => {
             let budgetBranches = explorer.state.budgetBranches;
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
@@ -268,7 +268,7 @@ let Explorer = class extends Component {
                     changeVersion: this.props.changeVersion,
                     toggleInflationAdjusted: this.props.toggleInflationAdjusted,
                     changeAspect: this.props.changeAspect,
-                    changeBranchDataVersion: this.props.changeBranchDataVersion,
+                    incrementBranchDataVersion: this.props.incrementBranchDataVersion,
                     toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
@@ -328,7 +328,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
     toggleInflationAdjusted: ExplorerActions.toggleInflationAdjusted,
-    changeBranchDataVersion: ExplorerActions.changeBranchDataVersion,
+    incrementBranchDataVersion: ExplorerActions.incrementBranchDataVersion,
     toggleShowOptions: ExplorerActions.toggleShowOptions,
     resetLastAction: ExplorerActions.resetLastAction,
     branchMoveUp: ExplorerActions.branchMoveUp,

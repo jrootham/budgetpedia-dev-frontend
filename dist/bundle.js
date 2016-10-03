@@ -855,11 +855,8 @@ var types;
     types.ADD_CELLS = 'ADD_CELLS';
     types.CHANGE_TAB = 'CHANGE_TAB';
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
-    types.UPDATE_CELL_TIMECODE = 'UPDATE_CELL_TIMECODE';
     types.UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE';
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
-    types.TOGGLE_NET = 'TOGGLE_NET';
-    types.TOGGLE_VARIANCE = 'TOGGLE_VARIANCE';
     types.UPDATE_NODE_YEAR_SELECTIONS = 'UPDATE_NODE_YEAR_SELECTIONS';
     types.UPDATE_NODE = 'UPDATE_NODE';
 })(types = exports.types || (exports.types = {}));
@@ -885,11 +882,8 @@ var nodeTypes;
 var cellTypes;
 (function (cellTypes) {
     cellTypes.UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION;
-    cellTypes.UPDATE_CELL_TIMECODE = types.UPDATE_CELL_TIMECODE;
     cellTypes.UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE;
     cellTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
-    cellTypes.TOGGLE_NET = types.TOGGLE_NET;
-    cellTypes.TOGGLE_VARIANCE = types.TOGGLE_VARIANCE;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, function (refbranchuid, settings) {
     return {
@@ -971,7 +965,7 @@ exports.toggleShowOptions = redux_actions_1.createAction(types.TOGGLE_SHOW_OPTIO
         explorer: true
     };
 });
-exports.changeBranchDataVersion = redux_actions_1.createAction(types.CHANGE_BRANCH_DATA, function (branchuid) {
+exports.incrementBranchDataVersion = redux_actions_1.createAction(types.CHANGE_BRANCH_DATA, function (branchuid) {
     return {
         branchuid: branchuid
     };
@@ -1397,11 +1391,8 @@ var BudgetBranch = function () {
             }
             var components = treeNodeData.Components;
             var code = null;
-            var treeNodeMetaDataFromParentSortedList = null;
-            var parentNode = null;
             if (treeNodeData && treeNodeData.SortedComponents && treeNodeData.SortedComponents[selectionrow]) {
-                treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow];
-                parentNode = treeNodeData;
+                var treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow];
                 code = treeNodeMetaDataFromParentSortedList.Code;
             }
             if (code) childdatapath.push(code);else {
@@ -2678,7 +2669,7 @@ var ExplorerBranch = function (_Component) {
         };
         _this._processChangeViewpointStateChange = function (budgetBranch) {
             budgetBranch.getViewpointData().then(function () {
-                _this._stateActions.changeBranchDataVersion(budgetBranch.uid);
+                _this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 _this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(function (reason) {
@@ -2687,7 +2678,7 @@ var ExplorerBranch = function (_Component) {
         };
         _this._processChangeVersionStateChange = function (budgetBranch) {
             budgetBranch.getViewpointData().then(function () {
-                _this._stateActions.changeBranchDataVersion(budgetBranch.uid);
+                _this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 _this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(function (reason) {
@@ -2696,7 +2687,7 @@ var ExplorerBranch = function (_Component) {
         };
         _this._processToggleInflationAdjustedStateChange = function (budgetBranch) {
             budgetBranch.getViewpointData().then(function () {
-                _this._stateActions.changeBranchDataVersion(budgetBranch.uid);
+                _this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 budgetBranch.toggleInflationAdjusted();
             }).catch(function (reason) {
                 console.error('error in data fetch, changeaspect', reason);
@@ -2704,7 +2695,7 @@ var ExplorerBranch = function (_Component) {
         };
         _this._processChangeAspectStateChange = function (budgetBranch) {
             budgetBranch.getViewpointData().then(function () {
-                _this._stateActions.changeBranchDataVersion(budgetBranch.uid);
+                _this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 var switchResults = budgetBranch.switchAspect();
                 var deeperdata = switchResults.deeperdata;
                 var shallowerdata = switchResults.shallowerdata;
@@ -2898,7 +2889,7 @@ var ExplorerBranch = function (_Component) {
             var declarationData = _props.declarationData;
 
             budgetBranch.getViewpointData().then(function () {
-                _this2._stateActions.changeBranchDataVersion(budgetBranch.uid);
+                _this2._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
                     var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                     _this2._stateActions.addNodeDeclaration(budgetNodeParms);
@@ -2908,7 +2899,7 @@ var ExplorerBranch = function (_Component) {
                     });
                 }
             }).catch(function (reason) {
-                console.error('error in data fetch, mount', reason);
+                console.error('error in data fetch, componentWillMount (branch)', reason);
             });
         }
     }, {
@@ -4253,7 +4244,7 @@ var Explorer = function (_Component) {
             var _iteratorError = undefined;
 
             try {
-                for (var _iterator = clones.branch[refbranchid]['nodeList'][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                for (var _iterator = clones.branch[refbranchid].nodeList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var _nodeid = _step.value;
 
                     var nodeobject = declarationData.nodesById[_nodeid];
@@ -4310,7 +4301,7 @@ var Explorer = function (_Component) {
             };
             var newrefbranchid = uidmap[refbranchid];
             newclones.branch[newrefbranchid] = clones.branch[refbranchid];
-            var oldlist = newclones.branch[newrefbranchid]['nodeList'];
+            var oldlist = newclones.branch[newrefbranchid].nodeList;
             var newlist = [];
             var _iteratorNormalCompletion3 = true;
             var _didIteratorError3 = false;
@@ -4337,11 +4328,11 @@ var Explorer = function (_Component) {
                 }
             }
 
-            newclones.branch[newrefbranchid]['nodeList'] = newlist;
+            newclones.branch[newrefbranchid].nodeList = newlist;
             for (var id in clones.nodes) {
                 var newid = uidmap[id];
                 var nodeclone = newclones.nodes[newid] = clones.nodes[id];
-                var _oldlist = nodeclone['cellList'];
+                var _oldlist = nodeclone.cellList;
                 var _newlist = [];
                 var _iteratorNormalCompletion4 = true;
                 var _didIteratorError4 = false;
@@ -4368,7 +4359,7 @@ var Explorer = function (_Component) {
                     }
                 }
 
-                nodeclone['cellList'] = _newlist;
+                nodeclone.cellList = _newlist;
             }
             for (var _id2 in clones.cells) {
                 newclones.cells[uidmap[_id2]] = clones.cells[_id2];
@@ -4476,7 +4467,7 @@ var Explorer = function (_Component) {
                     float: "right",
                     height: "36px",
                     width: "36px"
-                }, onTouchTap: explorer.popoverClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close"))), React.createElement("p", null, "Click or tap on any chart column to drill down (except faded columns, which are as deep as you can go)."))));
+                }, onTouchTap: explorer.popoverClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close"))), React.createElement("p", null, "Click or tap on any chart column to drill down (except as noted)."))));
             var branchSegments = function branchSegments() {
                 var budgetBranches = explorer.state.budgetBranches;
                 var segments = budgetBranches.map(function (budgetBranch, branchIndex) {
@@ -4494,7 +4485,7 @@ var Explorer = function (_Component) {
                         changeVersion: _this2.props.changeVersion,
                         toggleInflationAdjusted: _this2.props.toggleInflationAdjusted,
                         changeAspect: _this2.props.changeAspect,
-                        changeBranchDataVersion: _this2.props.changeBranchDataVersion,
+                        incrementBranchDataVersion: _this2.props.incrementBranchDataVersion,
                         toggleShowOptions: _this2.props.toggleShowOptions,
                         updateCellsDataseriesName: _this2.props.updateCellsDataseriesName,
                         resetLastAction: _this2.props.resetLastAction
@@ -4570,7 +4561,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
     toggleInflationAdjusted: ExplorerActions.toggleInflationAdjusted,
-    changeBranchDataVersion: ExplorerActions.changeBranchDataVersion,
+    incrementBranchDataVersion: ExplorerActions.incrementBranchDataVersion,
     toggleShowOptions: ExplorerActions.toggleShowOptions,
     resetLastAction: ExplorerActions.resetLastAction,
     branchMoveUp: ExplorerActions.branchMoveUp,

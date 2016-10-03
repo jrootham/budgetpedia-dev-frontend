@@ -85,7 +85,7 @@ export interface MappedBranchActions extends MappedNodeActions {
     changeAspect: Function,
     toggleInflationAdjusted: Function,
     toggleShowOptions: Function,
-    changeBranchDataVersion: Function,
+    incrementBranchDataVersion: Function,
     updateCellChartSelection:Function,
     updateCellYearSelections: Function,
     updateCellChartCode: Function,
@@ -138,9 +138,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         showdashboard:false
     }
 
-    // to control
-    // freshstart:boolean = false
-
     // calculated referece for popover location
     popover_ref:any
 
@@ -175,13 +172,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     // start with open reminder to user that click on charts drills down
     componentDidMount() {
-        // if (this.freshstart) {
         this.setState({
             popover:{
                 open:true
             }
         })
-        // }
     }
 
     componentWillUnmount() {
@@ -340,7 +335,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         clones.branch[refbranchid] = this._getClone(declarationData.branchesById[refbranchid])
         // console.log('clones', clones)
         // clone branch nodes
-        for (let nodeid of clones.branch[refbranchid]['nodeList']) {
+        for (let nodeid of clones.branch[refbranchid].nodeList) {
             let nodeobject = declarationData.nodesById[nodeid]
             // console.log('nodeobject', nodeobject)
             clones.nodes[nodeid] = this._getClone(nodeobject)
@@ -362,28 +357,27 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         }
         let newrefbranchid = uidmap[refbranchid]
         newclones.branch[newrefbranchid] = clones.branch[refbranchid]
-        let oldlist = newclones.branch[newrefbranchid]['nodeList']
+        let oldlist = newclones.branch[newrefbranchid].nodeList
         let newlist = []
         for (let id of oldlist) {
             newlist.push(uidmap[id])
         }
-        newclones.branch[newrefbranchid]['nodeList'] = newlist
+        newclones.branch[newrefbranchid].nodeList = newlist
         for (let id in clones.nodes) {
             let newid = uidmap[id]
             let nodeclone = newclones.nodes[newid] = clones.nodes[id]
 
-            let oldlist = nodeclone['cellList']
+            let oldlist = nodeclone.cellList
             let newlist = []
             for (let id of oldlist) {
                 newlist.push(uidmap[id])
             }
-            nodeclone['cellList'] = newlist
+            nodeclone.cellList = newlist
 
         }
         for (let id in clones.cells) {
             newclones.cells[uidmap[id]] = clones.cells[id]
         }
-        // console.log('newclones, uidmap', newclones, uidmap)
         return newclones
     }
 
@@ -401,6 +395,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         this.onCloneCreation()
     }
 
+    // crude scroll down on branch clone
     onCloneCreation = () => {
 
         setTimeout(() => {
@@ -414,7 +409,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 counter++
                 let factor = this.easeOutCubic(counter * t)
                 let scrollinterval = adjustment * factor
-                // console.log(scrollinterval, base)
                 window.scrollBy(0,scrollinterval - base)
                 base = scrollinterval
                 if (counter < frames) {
@@ -424,9 +418,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             requestAnimationFrame(tick)
 
-        },1000)
+        },1000) // give charts some time to render and take up space
     }
 
+    // TODO: should be in utilities
     // from https://github.com/DelvarWorld/easing-utils/blob/master/src/easing.js
     private easeOutCubic = t => {
         const t1 = t - 1;
@@ -510,7 +505,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                     </IconButton>
                     </div>
-                    <p>Click or tap on any chart column to drill down (except faded columns, which are as deep as you can go).</p>
+                    <p>Click or tap on any chart column to drill down (except as noted).</p>
                 </CardText>
             </Card>
         </Popover>
@@ -526,6 +521,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                 // collect functions to pass down to nested components
                 let actionFunctions:MappedBranchActions = {
+                    
                     // curried
                     addCellDeclarations: this.addCellDeclarations(budgetBranch.uid),
                     normalizeCellYearDependencies: this.normalizeCellYearDependencies(budgetBranch.uid),
@@ -542,7 +538,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     changeVersion: this.props.changeVersion,
                     toggleInflationAdjusted: this.props.toggleInflationAdjusted,
                     changeAspect: this.props.changeAspect,
-                    changeBranchDataVersion: this.props.changeBranchDataVersion,
+                    incrementBranchDataVersion: this.props.incrementBranchDataVersion,
                     toggleShowOptions: this.props.toggleShowOptions,
                     updateCellsDataseriesName: this.props.updateCellsDataseriesName,
                     resetLastAction: this.props.resetLastAction,
@@ -737,7 +733,7 @@ Explorer = connect(mapStateToProps, {
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
     toggleInflationAdjusted: ExplorerActions.toggleInflationAdjusted,
-    changeBranchDataVersion: ExplorerActions.changeBranchDataVersion,
+    incrementBranchDataVersion: ExplorerActions.incrementBranchDataVersion,
     toggleShowOptions: ExplorerActions.toggleShowOptions,
     resetLastAction: ExplorerActions.resetLastAction,
     // toggleInflationAdjustment

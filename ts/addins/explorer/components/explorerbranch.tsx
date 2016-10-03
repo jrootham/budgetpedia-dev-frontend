@@ -123,7 +123,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         budgetBranch.getViewpointData().then(() => {
 
-            this._stateActions.changeBranchDataVersion(budgetBranch.uid) // change data generation counter for child compare
+            this._stateActions.incrementBranchDataVersion(budgetBranch.uid) // change data generation counter for child compare
 
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
 
@@ -142,7 +142,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         }).catch(reason => {
 
-            console.error('error in data fetch, mount', reason)
+            console.error('error in data fetch, componentWillMount (branch)', reason)
 
         })
     }
@@ -346,7 +346,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         budgetBranch.getViewpointData().then(()=>{
 
-            this._stateActions.changeBranchDataVersion(budgetBranch.uid)
+            this._stateActions.incrementBranchDataVersion(budgetBranch.uid)
             let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
             this._stateActions.addNodeDeclaration(budgetNodeParms)
 
@@ -361,7 +361,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         budgetBranch.getViewpointData().then(()=>{
 
-            this._stateActions.changeBranchDataVersion(budgetBranch.uid)
+            this._stateActions.incrementBranchDataVersion(budgetBranch.uid)
             let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
             this._stateActions.addNodeDeclaration(budgetNodeParms)
 
@@ -376,7 +376,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _processToggleInflationAdjustedStateChange = (budgetBranch:BudgetBranch) => {
         budgetBranch.getViewpointData().then(() => {
 
-            this._stateActions.changeBranchDataVersion(budgetBranch.uid)
+            this._stateActions.incrementBranchDataVersion(budgetBranch.uid)
             budgetBranch.toggleInflationAdjusted()
 
         }).catch(reason => {
@@ -390,7 +390,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         budgetBranch.getViewpointData().then(() => {
 
-            this._stateActions.changeBranchDataVersion(budgetBranch.uid)
+            this._stateActions.incrementBranchDataVersion(budgetBranch.uid)
             let switchResults = budgetBranch.switchAspect()
 
             let { deeperdata, shallowerdata, mismatch } = switchResults
