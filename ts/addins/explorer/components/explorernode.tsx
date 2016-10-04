@@ -282,7 +282,8 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
     getTabObject = chartTabs => {
         // this deals with the edge case where switching aspects causes current tail
         // chart to change from 2 charts to one by adding a value attr to tabs component
-        let tabSelection = this.props.declarationData.nodesById[this.props.budgetNode.uid].cellIndex || 0
+        let nodeDeclaration = this.props.declarationData.nodesById[this.props.budgetNode.uid]
+        let tabSelection = nodeDeclaration.cellIndex
         if (chartTabs.length == 0) {
             return <div style={
                 {

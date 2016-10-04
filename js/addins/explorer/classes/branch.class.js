@@ -69,6 +69,20 @@ class BudgetBranch {
                 branchNodes: branchNodes,
             });
         };
+        this.harmonizeCells = () => {
+            let budgetBranch = this;
+            let nodeIndex;
+            let branchNodes = budgetBranch.nodes;
+            for (nodeIndex in branchNodes) {
+                let budgetNode = branchNodes[nodeIndex];
+                let nodeDeclaration = budgetNode.props.declarationData.nodesById[budgetNode.uid];
+                budgetNode.switchYearSelections(nodeDeclaration.yearSelections);
+                budgetNode.resetCells();
+            }
+            budgetBranch.setState({
+                branchNodes: branchNodes,
+            });
+        };
         this.switchAspect = () => {
             let budgetBranch = this;
             let { actions, nodeCallbacks: callbacks } = budgetBranch;

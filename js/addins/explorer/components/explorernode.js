@@ -116,7 +116,8 @@ class ExplorerNode extends Component {
             return cellTabs;
         };
         this.getTabObject = chartTabs => {
-            let tabSelection = this.props.declarationData.nodesById[this.props.budgetNode.uid].cellIndex || 0;
+            let nodeDeclaration = this.props.declarationData.nodesById[this.props.budgetNode.uid];
+            let tabSelection = nodeDeclaration.cellIndex;
             if (chartTabs.length == 0) {
                 return React.createElement("div", {style: {
                     height: "400px",

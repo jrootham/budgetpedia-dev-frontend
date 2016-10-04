@@ -333,6 +333,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 break
 
             }
+            case branchActionTypes.HARMONIZE_CELLS: {
+                budgetBranch.harmonizeCells()
+                break
+            }
             default:
                 returnvalue = false
         }
@@ -594,6 +598,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         cell:
         - yearScope selection "OneYear" etc.
         - chart selection [YearScope].ExplorerChartCode
+
+        TODO: if the reference chart is an expenditure chart
+            then all other nodes should also show expenditure chart
+            -- so if the reference chart is in the leaf node
     */
     harmonizeCells = (nodeUid, cellUid) => {
 
@@ -610,8 +618,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         nodeProperties.cellIndex = refnode.cellIndex
         nodeProperties.yearSelections = Object.assign({},refnode.yearSelections)
 
-        console.log('refnode, refcell', refnode,refcell)
-
         cellProperties.yearScope = refcell.yearScope
         cellProperties.chartCode = refcell.chartConfigs[refcell.yearScope].explorerChartCode
         cellProperties.nodeDataseriesName = refcell.nodeDataseriesName
@@ -619,7 +625,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         // collect node and cell lists
         let nodeidlist = declarationData.branchesById[budgetBranch.uid].nodeList
         for (let nodeid of nodeidlist) {
-            if (nodeid == nodeUid) continue
+            // if (nodeid == nodeUid) continue
             nodeList.push(nodeid)
             let tempnode = declarationData.nodesById[nodeid]
             let cellidlist = tempnode.cellList
@@ -628,8 +634,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 cellList.push(cellid)
             }
         }
-
-        console.log('harmonizeCells',budgetBranch.uid, nodeProperties, cellProperties, nodeList, cellList)
 
         if (nodeList.length > 0) {
 

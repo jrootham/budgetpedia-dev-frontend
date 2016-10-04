@@ -186,6 +186,7 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             return newstate
         }
 
+        // increment branch data version
         case actiontypes.CHANGE_BRANCH_DATA: {
             let { branchuid } = action.payload
             newstate = Object.assign({},state)
@@ -283,6 +284,26 @@ let nodesById = (state = { }, action) => {
                 range.rightYear = endYear
             }
             newnode.yearSelections = range
+
+            return newstate
+
+        }
+
+        case actiontypes.HARMONIZE_CELLS: {
+            newstate = Object.assign({},state)
+            let { nodeProperties, nodeList } = action.payload
+
+            for (let nodeuid of nodeList) {
+
+                let newnode = Object.assign({},newstate[nodeuid])
+                if (nodeProperties.cellIndex < newnode.cellList.length) {
+                    newnode.cellIndex = nodeProperties.cellIndex
+                }
+                let yearSelections = nodeProperties.yearSelections
+                newnode.yearSelections = Object.assign({},yearSelections)
+                newstate[nodeuid] = newnode
+                
+            }
 
             return newstate
 
@@ -390,6 +411,23 @@ let cellsById = (state = { }, action) => {
             }
 
             return newstate
+        }
+
+        case actiontypes.HARMONIZE_CELLS: {
+            newstate = Object.assign({},state)
+            let { cellProperties, cellList } = action.payload
+
+            for (let celluid of cellList) {
+                let newcell = Object.assign({},newstate[celluid])
+                newcell.yearScope = cellProperties.yearScope
+                let chartconfigs = JSON.parse(JSON.stringify(newcell.chartConfigs))
+                chartconfigs[newcell.yearScope].explorerChartCode = cellProperties.chartCode
+                newcell.chartConfigs = chartconfigs
+                newstate[celluid] = newcell
+            }
+
+            return newstate
+
         }
 
         default:

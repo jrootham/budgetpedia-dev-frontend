@@ -177,6 +177,31 @@ class BudgetBranch {
 
     }
 
+    harmonizeCells = () => {
+
+        let budgetBranch = this
+
+        let nodeIndex: any
+
+        let branchNodes:BudgetNode[] = budgetBranch.nodes
+
+        for (nodeIndex in branchNodes) {
+
+            let budgetNode: BudgetNode = branchNodes[nodeIndex]
+
+            let nodeDeclaration = budgetNode.props.declarationData.nodesById[budgetNode.uid]
+            budgetNode.switchYearSelections(nodeDeclaration.yearSelections)
+            budgetNode.resetCells()
+
+
+        }
+
+        budgetBranch.setState({
+            branchNodes,
+        })
+
+    }
+
     // this resets the branch in response to the change aspect user request
     switchAspect = () => {
 

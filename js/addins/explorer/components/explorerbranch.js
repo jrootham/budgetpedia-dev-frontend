@@ -92,6 +92,10 @@ class ExplorerBranch extends Component {
                     this._processToggleInflationAdjustedStateChange(budgetBranch);
                     break;
                 }
+                case actions_1.branchTypes.HARMONIZE_CELLS: {
+                    budgetBranch.harmonizeCells();
+                    break;
+                }
                 default:
                     returnvalue = false;
             }
@@ -264,14 +268,11 @@ class ExplorerBranch extends Component {
             let refcell = declarationData.cellsById[cellUid];
             nodeProperties.cellIndex = refnode.cellIndex;
             nodeProperties.yearSelections = Object.assign({}, refnode.yearSelections);
-            console.log('refnode, refcell', refnode, refcell);
             cellProperties.yearScope = refcell.yearScope;
             cellProperties.chartCode = refcell.chartConfigs[refcell.yearScope].explorerChartCode;
             cellProperties.nodeDataseriesName = refcell.nodeDataseriesName;
             let nodeidlist = declarationData.branchesById[budgetBranch.uid].nodeList;
             for (let nodeid of nodeidlist) {
-                if (nodeid == nodeUid)
-                    continue;
                 nodeList.push(nodeid);
                 let tempnode = declarationData.nodesById[nodeid];
                 let cellidlist = tempnode.cellList;
@@ -281,7 +282,6 @@ class ExplorerBranch extends Component {
                     cellList.push(cellid);
                 }
             }
-            console.log('harmonizeCells', budgetBranch.uid, nodeProperties, cellProperties, nodeList, cellList);
             if (nodeList.length > 0) {
                 this._stateActions.harmonizeCells(budgetBranch.uid, nodeProperties, cellProperties, nodeList, cellList);
             }

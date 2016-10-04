@@ -251,6 +251,20 @@ let nodesById = (state = {}, action) => {
             newnode.yearSelections = range;
             return newstate;
         }
+        case actions_1.types.HARMONIZE_CELLS: {
+            newstate = Object.assign({}, state);
+            let { nodeProperties, nodeList } = action.payload;
+            for (let nodeuid of nodeList) {
+                let newnode = Object.assign({}, newstate[nodeuid]);
+                if (nodeProperties.cellIndex < newnode.cellList.length) {
+                    newnode.cellIndex = nodeProperties.cellIndex;
+                }
+                let yearSelections = nodeProperties.yearSelections;
+                newnode.yearSelections = Object.assign({}, yearSelections);
+                newstate[nodeuid] = newnode;
+            }
+            return newstate;
+        }
         default:
             return state;
     }
@@ -315,6 +329,19 @@ let cellsById = (state = {}, action) => {
                 if (yearSpan == 0) {
                     newcell.yearScope = constants_1.TimeScope[constants_1.TimeScope.OneYear];
                 }
+                newstate[celluid] = newcell;
+            }
+            return newstate;
+        }
+        case actions_1.types.HARMONIZE_CELLS: {
+            newstate = Object.assign({}, state);
+            let { cellProperties, cellList } = action.payload;
+            for (let celluid of cellList) {
+                let newcell = Object.assign({}, newstate[celluid]);
+                newcell.yearScope = cellProperties.yearScope;
+                let chartconfigs = JSON.parse(JSON.stringify(newcell.chartConfigs));
+                chartconfigs[newcell.yearScope].explorerChartCode = cellProperties.chartCode;
+                newcell.chartConfigs = chartconfigs;
                 newstate[celluid] = newcell;
             }
             return newstate;
