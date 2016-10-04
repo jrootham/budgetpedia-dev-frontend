@@ -286,9 +286,9 @@ const getIndexSortedComponentItems = (components, lookups):SortedComponentItem[]
         let item = {
             Code: componentcode,
             Index: component.Index,
-            Name: name || 'unknown name'
+            Name: name || componentcode // 'unknown name'
         }
-        component.Name = name || 'unknown name'
+        component.Name = name || componentcode // 'unknown name'
         sorted.push(item)
     }
     sorted.sort((a, b) => {
