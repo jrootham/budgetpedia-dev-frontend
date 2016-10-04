@@ -309,6 +309,13 @@ let cellsById = (state = {}, action) => {
             newstate[celluid] = newcell;
             return newstate;
         }
+        case actions_1.types.UPDATE_CELL_TIMECODE: {
+            let { celluid, explorerTimeCode } = action.payload;
+            let newcell = Object.assign({}, newstate[celluid]);
+            newcell.yearScope = explorerTimeCode;
+            newstate[celluid] = newcell;
+            return newstate;
+        }
         case actions_1.types.UPDATE_CELL_CHART_CODE: {
             let { celluid, explorerChartCode } = action.payload;
             let newcell = Object.assign({}, newstate[celluid]);

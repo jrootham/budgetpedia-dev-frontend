@@ -24,7 +24,7 @@ export namespace types {
     export const CHANGE_TAB = 'CHANGE_TAB'
 
     export const UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION'
-    // export const UPDATE_CELL_TIMECODE = 'UPDATE_CELL_TIMECODE'
+    export const UPDATE_CELL_TIMECODE = 'UPDATE_CELL_TIMECODE'
     export const UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE'
     export const TOGGLE_DELTA = 'TOGGLE_DELTA'
     // export const TOGGLE_NET = 'TOGGLE_NET'
@@ -57,7 +57,7 @@ export namespace nodeTypes {
 
 export namespace cellTypes {
     export import UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION
-    // export import UPDATE_CELL_TIMECODE = types.UPDATE_CELL_TIMECODE
+    export import UPDATE_CELL_TIMECODE = types.UPDATE_CELL_TIMECODE
     export import UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE
     export import TOGGLE_DELTA = types.TOGGLE_DELTA
     // export import TOGGLE_NET = types.TOGGLE_NET
@@ -245,6 +245,17 @@ export const updateCellChartSelection = createAction(
     })
 )
 
+export const updateCellTimeScope = createAction(
+    types.UPDATE_CELL_TIMECODE, (branchuid, nodeuid, celluid, explorerTimeCode) => ({
+        branchuid,
+        nodeuid,
+        celluid,
+        explorerTimeCode,
+    }), () => ({
+        explorer:true
+    })
+)
+
 export const updateCellChartCode = createAction(
     types.UPDATE_CELL_CHART_CODE, (branchuid, nodeuid, celluid, explorerChartCode) => ({
         branchuid,
@@ -273,14 +284,6 @@ interface CellDataseriesNameItem {
     nodeDataseriesName: string,
 }
 
-// export const updateCellsDataseriesName = createAction(
-//     types.UPDATE_CELLS_DATASERIESNAME, (cellItemList:CellDataseriesNameItem[]) => ({
-//         cellItemList,
-//     }), () => ({
-//         explorer:false // state change only!
-//     })
-// )
-
 export const resetLastAction = createAction(
     types.RESET_LAST_ACTION, () => ({
 
@@ -304,10 +307,3 @@ export const branchMoveDown = createAction(
         explorer:false
     })
 )
-
-// export const removeCellDeclarations = createAction(
-//     types.REMOVE_CELLS,(nodeuid,uidlist) => ({
-//         uidlist,
-//         nodeuid,
-//     })
-// )

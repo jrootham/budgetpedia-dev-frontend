@@ -34,6 +34,7 @@ interface ExplorerCellProps {
     globalStateActions: {
         updateCellChartCode:Function,
         updateCellYearSelections:Function,
+        updateCellTimeScope:Function,
     },
     showControls: boolean,
     callbacks: any,
@@ -42,7 +43,6 @@ interface ExplorerCellProps {
 class ExplorerCell extends Component<ExplorerCellProps, any> {
 
     state = {
-        // timescope: TimeScope[TimeScope.OneYear],
         deltastate: false,
         netstate:false,
         variancestate:false,
@@ -143,9 +143,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     }
 
     onChangeTimeCode = explorerTimeCode => {
-        this.setState({
-            timescope:explorerTimeCode,
-        })
+        let { budgetCell } = this.props
+        this.props.globalStateActions.updateCellTimeScope(budgetCell.uid, explorerTimeCode)
     }
 
     onToggleDelta = () => {
@@ -181,6 +180,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     render() {
         let { budgetCell } = this.props
         let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid]
+        // console.log('cellDeclaration',cellDeclaration)
         let yearScope = cellDeclaration.yearScope
         let { chartParms, explorerChartCode, graph_id, viewpointConfigPack } = budgetCell
 
@@ -249,7 +249,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     </SvgIcon>
                 </IconButton>
                 <IconButton
-                    disabled = {yearSpan === 0}
+                    disabled = {true}
                     tooltip="Two years"
                     tooltipPosition="top-center"
                     style={
@@ -407,15 +407,14 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                             ? "rgba(144,238,144,0.5)"
                             : "transparent",
                         borderRadius: "50%",
-                        padding:"0",
+                        padding:"0 0 0 6px",
                         height:"36px",
                         width:"36px",
                         marginRight:"3px",
                     }
                 }
-                disabled
                 onTouchTap={ e => {
-                    this.onChangeChartCode('Timeline')
+                    this.onChangeChartCode('TimeLine')
                 } }>
                 <FontIcon className="material-icons">timelines</FontIcon>
             </IconButton>
@@ -437,7 +436,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         marginRight:"3px",
                     }
                 }
-                disabled
                 onTouchTap={ e => {
                     this.onChangeChartCode('StackedArea')
                 } }>
@@ -464,7 +462,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         marginRight:"3px",
                     }
                 }
-                disabled
                 onTouchTap={ e => {
                     this.onChangeChartCode('Proportional')
                 } }>
@@ -875,12 +872,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 { timescopes }
 
                 { chartoptions }
-
-                { deltatoggle }
-
-                { nettoggle }
-
-                { variancetoggle }
 
             </div>:null}
 

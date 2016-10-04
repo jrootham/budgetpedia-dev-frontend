@@ -251,7 +251,7 @@ let explorer = {
                 },
                 'AllYears':{
                     chartSelection: null,
-                    explorerChartCode: "Timelines",
+                    explorerChartCode: "TimeLine",
                 },
             },
             // chartSelection: null,

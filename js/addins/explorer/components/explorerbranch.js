@@ -322,6 +322,7 @@ class ExplorerBranch extends Component {
                 budgetNode.branchSettings = branch.props.budgetBranch.settings;
                 budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(branch.props.budgetBranch);
                 let actions = Object.assign({}, branch._stateActions);
+                actions.updateCellTimeScope = branch._stateActions.updateCellTimeScope(budgetNode.uid);
                 actions.updateCellChartSelection = branch._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = branch._stateActions.updateCellChartCode(budgetNode.uid);
                 actions.updateCellYearSelections = branch._stateActions.updateCellYearSelections(budgetNode.uid);

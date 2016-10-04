@@ -109,6 +109,7 @@ let Explorer = class extends Component {
         this.changeTab = branchuid => (nodeuid, tabvalue) => this.props.changeTab(branchuid, nodeuid, tabvalue);
         this.addCellDeclarations = branchuid => (nodeuid, settingslist) => this.props.addCellDeclarations(branchuid, nodeuid, settingslist);
         this.normalizeCellYearDependencies = branchuid => (nodeuid, cellList, yearsRange) => this.props.normalizeCellYearDependencies(branchuid, nodeuid, cellList, yearsRange);
+        this.updateCellTimeScope = branchuid => nodeuid => (celluid, selection) => this.props.updateCellTimeScope(branchuid, nodeuid, celluid, selection);
         this.updateCellChartSelection = branchuid => nodeuid => (celluid, selection) => this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection);
         this.updateCellYearSelections = branchuid => nodeuid => (leftyear, rightyear) => this.props.updateCellYearSelections(branchuid, nodeuid, leftyear, rightyear);
         this.updateCellChartCode = branchuid => nodeuid => (celluid, explorerChartCode) => this.props.updateCellChartCode(branchuid, nodeuid, celluid, explorerChartCode);
@@ -257,6 +258,7 @@ let Explorer = class extends Component {
                 let actionFunctions = {
                     addCellDeclarations: this.addCellDeclarations(budgetBranch.uid),
                     normalizeCellYearDependencies: this.normalizeCellYearDependencies(budgetBranch.uid),
+                    updateCellTimeScope: this.updateCellTimeScope(budgetBranch.uid),
                     updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
                     updateCellYearSelections: this.updateCellYearSelections(budgetBranch.uid),
                     changeTab: this.changeTab(budgetBranch.uid),
@@ -336,6 +338,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     branchMoveUp: ExplorerActions.branchMoveUp,
     branchMoveDown: ExplorerActions.branchMoveDown,
     changeTab: ExplorerActions.changeTab,
+    updateCellTimeScope: ExplorerActions.updateCellTimeScope,
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
     updateCellYearSelections: ExplorerActions.updateCellYearSelections,
     updateCellChartCode: ExplorerActions.updateCellChartCode,

@@ -109,6 +109,7 @@ class ExplorerNode extends Component {
             let cellTabs = budgetCells.map((budgetCell, cellIndex) => {
                 let { cellTitle } = budgetCell;
                 return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorercell_1.default, {declarationData: this.props.declarationData, callbackid: cellIndex, budgetCell: budgetCell, globalStateActions: {
+                    updateCellTimeScope: this.props.globalStateActions.updateCellTimeScope,
                     updateCellChartCode: this.props.globalStateActions.updateCellChartCode,
                     updateCellYearSelections: this.props.globalStateActions.updateCellYearSelections,
                 }, showControls: this.props.showControls, callbacks: this.props.callbacks}));

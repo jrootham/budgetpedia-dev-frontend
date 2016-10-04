@@ -22,6 +22,7 @@ var types;
     types.ADD_CELLS = 'ADD_CELLS';
     types.CHANGE_TAB = 'CHANGE_TAB';
     types.UPDATE_CELL_SELECTION = 'UPDATE_CELL_SELECTION';
+    types.UPDATE_CELL_TIMECODE = 'UPDATE_CELL_TIMECODE';
     types.UPDATE_CELL_CHART_CODE = 'UPDATE_CELL_CHART_CODE';
     types.TOGGLE_DELTA = 'TOGGLE_DELTA';
     types.UPDATE_NODE_YEAR_SELECTIONS = 'UPDATE_NODE_YEAR_SELECTIONS';
@@ -50,6 +51,7 @@ var nodeTypes;
 var cellTypes;
 (function (cellTypes) {
     cellTypes.UPDATE_CELL_SELECTION = types.UPDATE_CELL_SELECTION;
+    cellTypes.UPDATE_CELL_TIMECODE = types.UPDATE_CELL_TIMECODE;
     cellTypes.UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE;
     cellTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
@@ -170,6 +172,14 @@ exports.updateCellChartSelection = redux_actions_1.createAction(types.UPDATE_CEL
     selection: selection,
     nodeuid: nodeuid,
     branchuid: branchuid,
+}), () => ({
+    explorer: true
+}));
+exports.updateCellTimeScope = redux_actions_1.createAction(types.UPDATE_CELL_TIMECODE, (branchuid, nodeuid, celluid, explorerTimeCode) => ({
+    branchuid: branchuid,
+    nodeuid: nodeuid,
+    celluid: celluid,
+    explorerTimeCode: explorerTimeCode,
 }), () => ({
     explorer: true
 }));

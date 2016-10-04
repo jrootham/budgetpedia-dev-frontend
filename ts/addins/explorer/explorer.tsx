@@ -87,6 +87,7 @@ export interface MappedBranchActions extends MappedNodeActions {
     toggleShowOptions: Function,
     incrementBranchDataVersion: Function,
     updateCellChartSelection:Function,
+    updateCellTimeScope:Function,
     updateCellYearSelections: Function,
     updateCellChartCode: Function,
     updateCellsDataseriesName: Function,
@@ -298,6 +299,9 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         this.props.normalizeCellYearDependencies(branchuid, nodeuid, cellList, yearsRange)
 
     // cell consumer
+    private updateCellTimeScope = branchuid => 
+        nodeuid => (celluid,selection) =>
+        this.props.updateCellTimeScope(branchuid, nodeuid, celluid, selection )
     private updateCellChartSelection = branchuid => 
         nodeuid => (celluid,selection) =>
         this.props.updateCellChartSelection(branchuid, nodeuid, celluid, selection )
@@ -526,6 +530,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     // curried
                     addCellDeclarations: this.addCellDeclarations(budgetBranch.uid),
                     normalizeCellYearDependencies: this.normalizeCellYearDependencies(budgetBranch.uid),
+                    updateCellTimeScope: this.updateCellTimeScope(budgetBranch.uid),
                     updateCellChartSelection: this.updateCellChartSelection(budgetBranch.uid),
                     updateCellYearSelections: this.updateCellYearSelections(budgetBranch.uid),
                     changeTab: this.changeTab(budgetBranch.uid),
@@ -747,6 +752,7 @@ Explorer = connect(mapStateToProps, {
     changeTab: ExplorerActions.changeTab,
 
     // cell actions
+    updateCellTimeScope: ExplorerActions.updateCellTimeScope,
     updateCellChartSelection: ExplorerActions.updateCellChartSelection,
     updateCellYearSelections: ExplorerActions.updateCellYearSelections,
     // updateCellsDataseriesName: ExplorerActions.updateCellsDataseriesName,

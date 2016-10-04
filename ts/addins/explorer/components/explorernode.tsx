@@ -266,6 +266,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
                     callbackid = { cellIndex }
                     budgetCell = { budgetCell }
                     globalStateActions = { {
+                        updateCellTimeScope: this.props.globalStateActions.updateCellTimeScope,
                         updateCellChartCode: this.props.globalStateActions.updateCellChartCode,
                         updateCellYearSelections: this.props.globalStateActions.updateCellYearSelections, 
                     } }
