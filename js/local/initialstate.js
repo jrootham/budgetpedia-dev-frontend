@@ -126,18 +126,16 @@ let explorer = {
         cell: {
             chartConfigs: {
                 'OneYear': {
-                    chartSelection: null,
                     explorerChartCode: "ColumnChart",
                 },
                 'TwoYears': {
-                    chartSelection: null,
                     explorerChartCode: "DoubleColumnChart",
                 },
                 'AllYears': {
-                    chartSelection: null,
                     explorerChartCode: "TimeLine",
                 },
             },
+            chartSelection: null,
             yearScope: "OneYear",
         }
     }

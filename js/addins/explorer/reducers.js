@@ -301,11 +301,7 @@ let cellsById = (state = {}, action) => {
             if (Array.isArray(chartSelection) && chartSelection.length == 0) {
                 chartSelection = null;
             }
-            let newChartConfigs = Object.assign({}, newcell.chartConfigs);
-            let scopeSettings = Object.assign({}, newChartConfigs[newcell.yearScope]);
-            scopeSettings.chartSelection = chartSelection;
-            newChartConfigs[newcell.yearScope] = scopeSettings;
-            newcell.chartConfigs = newChartConfigs;
+            newcell.chartSelection = chartSelection;
             newstate[celluid] = newcell;
             return newstate;
         }

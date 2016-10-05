@@ -358,13 +358,13 @@ let cellsById = (state = { }, action) => {
             if (Array.isArray(chartSelection) && chartSelection.length == 0) {
                 chartSelection = null
             }
-            // newcell.chartSelection = chartSelection
+            newcell.chartSelection = chartSelection
 
-            let newChartConfigs = Object.assign({},newcell.chartConfigs)
-            let scopeSettings = Object.assign({},newChartConfigs[newcell.yearScope])
-            scopeSettings.chartSelection = chartSelection
-            newChartConfigs[newcell.yearScope] = scopeSettings
-            newcell.chartConfigs = newChartConfigs
+            // let newChartConfigs = Object.assign({},newcell.chartConfigs)
+            // let scopeSettings = Object.assign({},newChartConfigs[newcell.yearScope])
+            // scopeSettings.chartSelection = chartSelection
+            // newChartConfigs[newcell.yearScope] = scopeSettings
+            // newcell.chartConfigs = newChartConfigs
 
             newstate[celluid] = newcell
 

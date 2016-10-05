@@ -170,7 +170,7 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.TwoYears]);
-        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", disabled: yearSpan === 0, style: {
+        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", disabled: true, style: {
             backgroundColor: (this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.AllYears])
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",

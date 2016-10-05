@@ -77,18 +77,18 @@ export interface CellDeclaration {
     chartConfigs:{
         ['OneYear']:{
             chartSelection:ChartSelectionCell[],
-            explorerChartCode: string,
+            // explorerChartCode: string,
         },
         ['TwoYears']:{
             chartSelection:ChartSelectionCell[],
-            explorerChartCode: string,
+            // explorerChartCode: string,
         },
         ['AllYears']:{
             chartSelection:ChartSelectionCell[],
-            explorerChartCode: string,
+            // explorerChartCode: string,
         },
     },
-    // chartSelection:ChartSelectionCell[],
+    chartSelection:ChartSelectionCell[],
     yearScope: string,
     celluid?: string,
 }

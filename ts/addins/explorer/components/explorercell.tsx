@@ -276,7 +276,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <IconButton
                     tooltip="All years"
                     tooltipPosition="top-center"
-                    disabled = {yearSpan === 0}
+                    disabled = {true} //yearSpan === 0}
                     style={
                         {
                             backgroundColor: (this.cellDeclaration.yearScope == TimeScope[TimeScope.AllYears])

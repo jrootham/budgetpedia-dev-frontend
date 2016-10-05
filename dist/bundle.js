@@ -2490,10 +2490,10 @@ var BudgetNode = function () {
                 var cellDeclaration = cellDeclarations[cellIndex];
                 var nodeDataseriesName = cellDeclaration.nodeDataseriesName;
                 var celluid = cellDeclaration.celluid;
+                var chartSelection = cellDeclaration.chartSelection;
 
                 var settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope];
                 var explorerChartCode = settings.explorerChartCode;
-                var chartSelection = settings.chartSelection;
 
                 var cell = new cell_class_1.default({
                     nodeDataseriesName: nodeDataseriesName,
@@ -3352,7 +3352,7 @@ var ExplorerCell = function (_Component) {
                     marginRight: "3px"
                 }, onTouchTap: function onTouchTap(e) {
                     _this2.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.TwoYears]);
-                } }, React.createElement(SvgIcon_1.default, { style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36" }, React.createElement("rect", { x: "4", y: "13", width: "10", height: "10" }), React.createElement("rect", { x: "22", y: "13", width: "10", height: "10" }))), React.createElement(IconButton_1.default, { tooltip: "All years", tooltipPosition: "top-center", disabled: yearSpan === 0, style: {
+                } }, React.createElement(SvgIcon_1.default, { style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36" }, React.createElement("rect", { x: "4", y: "13", width: "10", height: "10" }), React.createElement("rect", { x: "22", y: "13", width: "10", height: "10" }))), React.createElement(IconButton_1.default, { tooltip: "All years", tooltipPosition: "top-center", disabled: true, style: {
                     backgroundColor: this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.AllYears] ? "rgba(144,238,144,0.5)" : "rgba(255,255,255,0.5)",
                     borderRadius: "15%",
                     padding: "0",
@@ -5430,11 +5430,7 @@ var cellsById = function cellsById() {
                 if (Array.isArray(chartSelection) && chartSelection.length == 0) {
                     chartSelection = null;
                 }
-                var newChartConfigs = Object.assign({}, newcell.chartConfigs);
-                var scopeSettings = Object.assign({}, newChartConfigs[newcell.yearScope]);
-                scopeSettings.chartSelection = chartSelection;
-                newChartConfigs[newcell.yearScope] = scopeSettings;
-                newcell.chartConfigs = newChartConfigs;
+                newcell.chartSelection = chartSelection;
                 newstate[_celluid] = newcell;
                 return newstate;
             }
@@ -5456,11 +5452,11 @@ var cellsById = function cellsById() {
                 var explorerChartCode = _action$payload7.explorerChartCode;
 
                 var _newcell2 = Object.assign({}, newstate[_celluid3]);
-                var _newChartConfigs = Object.assign({}, _newcell2.chartConfigs);
-                var yearSettings = Object.assign({}, _newChartConfigs[_newcell2.yearScope]);
+                var newChartConfigs = Object.assign({}, _newcell2.chartConfigs);
+                var yearSettings = Object.assign({}, newChartConfigs[_newcell2.yearScope]);
                 yearSettings.explorerChartCode = explorerChartCode;
-                _newChartConfigs[_newcell2.yearScope] = yearSettings;
-                _newcell2.chartConfigs = _newChartConfigs;
+                newChartConfigs[_newcell2.yearScope] = yearSettings;
+                _newcell2.chartConfigs = newChartConfigs;
                 newstate[_celluid3] = _newcell2;
                 return newstate;
             }
@@ -7454,18 +7450,16 @@ var explorer = {
         cell: {
             chartConfigs: {
                 'OneYear': {
-                    chartSelection: null,
                     explorerChartCode: "ColumnChart"
                 },
                 'TwoYears': {
-                    chartSelection: null,
                     explorerChartCode: "DoubleColumnChart"
                 },
                 'AllYears': {
-                    chartSelection: null,
                     explorerChartCode: "TimeLine"
                 }
             },
+            chartSelection: null,
             yearScope: "OneYear"
         }
     }
