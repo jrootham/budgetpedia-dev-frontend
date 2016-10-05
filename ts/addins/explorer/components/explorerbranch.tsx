@@ -743,11 +743,24 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             }
             >
 
-            <MenuItem value={'FUNCTIONAL'} primaryText="Budget (by function)"/>
-            <MenuItem value={'STRUCTURAL'} primaryText="Budget (by structure)"/>
-            <MenuItem disabled value={'ACTUALREVENUE'} primaryText="Actual Revenue"/>
-            <MenuItem disabled value={'ACTUALEXPENSES'} primaryText="Actual Expenses"/>
-            <MenuItem disabled value={'EXPENDITURES'} primaryText="Actual Expenditures"/>
+            <MenuItem value={'FUNCTIONAL'} primaryText="Functional (budget)"/>
+            <MenuItem value={'STRUCTURAL'} primaryText="Structural (budget)"/>
+            <MenuItem disabled value={'ACTUALREVENUE'} primaryText="Revenues (actual)"/>
+            <MenuItem disabled value={'ACTUALEXPENSES'} primaryText="Expenses (actual)"/>
+            <MenuItem disabled value={'EXPENDITURES'} primaryText="Expenditures (actual)"/>
+
+        </DropDownMenu>
+
+    </div>:null
+
+    let governmentselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
+        <span style={{ fontStyle: "italic" }}>Government(s): </span>
+        <DropDownMenu
+            value={"Toronto"}
+            disabled
+            >
+
+            <MenuItem value={'Toronto'} primaryText="Toronto, Ontario"/>
 
         </DropDownMenu>
 
@@ -894,6 +907,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     return <div >
     <div>
+
+        { governmentselection }
 
         { viewpointselection }
 
