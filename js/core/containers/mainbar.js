@@ -138,7 +138,14 @@ let MainBar = class extends React.Component {
             top: 0,
             right: 0,
             padding: "3px",
-        }}, "contact: ", React.createElement("a", {target: "_blank", href: "mailto:mail@budgetpedia.ca"}, "mail@budgetpedia.ca")), username, loginsidebar, menusidebar, workingmessagestate
+        }}, "contact: ", React.createElement("a", {target: "_blank", href: "mailto:mail@budgetpedia.ca"}, "mail@budgetpedia.ca")), React.createElement("div", {style: {
+            position: "absolute",
+            fontSize: "12px",
+            color: "gold",
+            bottom: 0,
+            left: 0,
+            padding: "3px",
+        }}, "We're all about government budgets"), username, loginsidebar, menusidebar, workingmessagestate
             ? React.createElement("div", {style: {
                 position: "absolute",
                 top: "54px",

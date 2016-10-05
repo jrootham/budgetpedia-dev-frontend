@@ -1,6 +1,12 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetbranch.tsx
 
+/*
+
+TODO: fix addnode to pass along cell settings for new child
+
+*/
+
 import databaseapi , { DatasetConfig, YearSpecs, ViewpointData } from './databaseapi'
 import {
     ChartParmsObj,
@@ -107,8 +113,6 @@ class BudgetBranch {
     // this is a response to the addNode action
     addNode = (budgetNodeUid, nodeIndex, budgetNodeParms:BudgetNodeParms) => {
 
-        // let { actions, nodeCallbacks:callbacks } = this
-
         let budgetBranch = this
 
         let { dataPath } = budgetNodeParms
@@ -121,6 +125,7 @@ class BudgetBranch {
         let treeNodeData = getBudgetNode(viewpointData, dataPath)
         let branchNodes = budgetBranch.nodes
         let parentNode = (nodeIndex === 0)? null: branchNodes[branchNodes.length - 1]
+        // TODO: obtain and pass cell configurations - yearScope and chartConfigs
         let budgetNode:BudgetNode = new BudgetNode(budgetNodeParms, budgetNodeUid, treeNodeData, parentNode)
         branchNodes[nodeIndex] = budgetNode
         budgetBranch.setState({
@@ -270,9 +275,9 @@ class BudgetBranch {
                         }
                         // let fcurrent = fn(nodeIndex)(0)
                         // let budgetBranch = this
-                        budgetBranch.createChildNode(childprops)
+                        budgetBranch.createChildNodeDeclaration(childprops)
                     })
-                    budgetNode = null // branchNodes[nodeIndex] // created by createChildNode as side effect
+                    budgetNode = null // branchNodes[nodeIndex] // created by createChildNodeDeclaration as side effect
                 } else {
                     budgetNode.updateAspect(
                         branchSettings.aspect,
@@ -283,7 +288,7 @@ class BudgetBranch {
                     // budgetNode.newCells = newCells
                 }
             } else {
-                // console.error('Sytem Error: no data node', budgetNode, viewpointData)
+
                 let removed = branchNodes.splice(nodeIndex)
                 let removedids = removed.map((item:BudgetNode) => {
                     return {nodeuid:item.uid, cellList:item.cellDeclarationList}
@@ -291,7 +296,6 @@ class BudgetBranch {
                 actions.removeNodeDeclarations(removedids)
                 switchResults.mismatch = true
                 switchResults.message = 'The new aspect does not have a matching chart for ' + 
-                    // budgetNode.treeNodeMetaDataFromParentSortedList.Name
                     budgetNode.treeNodeData.Name
                 let cells = parentBudgetNode.cells
                 for (let cell of cells) {
@@ -300,6 +304,7 @@ class BudgetBranch {
                         theCell.chartSelection = null
                     }
                 }
+                
             }
         }
 
@@ -356,9 +361,15 @@ class BudgetBranch {
 
     // called only by user chart row selection
     // therefore metadata is always component
-    createChildNode = ( props: CreateChildNodeProps ) => {
+    createChildNodeDeclaration = ( props: CreateChildNodeProps ) => {
 
         let budgetBranch = this
+
+        let {
+            selectionrow,
+            nodeIndex,
+            cellIndex,
+        } = props
 
         let { 
             nodes: branchNodes, 
@@ -369,23 +380,13 @@ class BudgetBranch {
 
         let viewpointData = budgetBranch.state.viewpointData
 
-        let {
-            selectionrow,
-            nodeIndex,
-            cellIndex,
-            // chartSelectionData,
-        } = props
-
         let budgetNode = branchNodes[nodeIndex]
 
         let { aspectName, viewpointName } = budgetNode
 
         let {
             workingStatus,
-            // refreshPresentation,
             onPortalCreation,
-            // updateChartSelections,
-            // updateBranchNodesState,
         } = callbacks
 
         // ----------------------------------------------------
@@ -405,8 +406,8 @@ class BudgetBranch {
 
         let code = null
         if (treeNodeData && treeNodeData.SortedComponents && treeNodeData.SortedComponents[selectionrow]) {
-            let treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow]
-            code = treeNodeMetaDataFromParentSortedList.Code
+            let componentMetaDataFromSortedList = treeNodeData.SortedComponents[selectionrow]
+            code = componentMetaDataFromSortedList.Code
         }
         if (code)
 
@@ -438,8 +439,6 @@ class BudgetBranch {
             cellIndex,
 
         }
-
-        // console.log('newnodeconfigparms',newnodeconfigparms)
 
         actions.addNodeDeclaration(newnodeconfigparms)
 

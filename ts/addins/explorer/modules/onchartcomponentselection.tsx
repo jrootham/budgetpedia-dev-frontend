@@ -79,16 +79,14 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         removeNodeDeclarations(removeditems)
 
     }
-    // window.nodeUpdateControl.nodeuid = budgetNode.uid
-    // window.nodeUpdateControl.new = true
+
     let { updateCellChartSelection } = budgetNode.actions
     updateCellChartSelection(budgetCell.uid,chartSelectionData.selection)
 
     if (!selection) { // deselected
-        // window.nodeUpdateControl.nodeuid = null
-        // window.nodeUpdateControl.new = null
+
         budgetCell.chartSelection = null
-        // updateChartSelections()
+
         return
     }
 
@@ -100,9 +98,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         cellIndex:parseInt(cellIndex), 
     }
 
-    // console.log('calling createChildNode',childprops)
-
-    budgetBranch.createChildNode( childprops )
+    budgetBranch.createChildNodeDeclaration( childprops )
 
 }
 

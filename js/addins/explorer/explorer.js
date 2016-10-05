@@ -281,7 +281,7 @@ let Explorer = class extends Component {
                 };
                 return React.createElement(Card_1.Card, {initiallyExpanded: true, key: budgetBranch.uid, onExpandChange: (expanded) => {
                     this.onExpandChange(expanded);
-                }}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Exhibit " + (branchIndex + 1) + " ", React.createElement("input", {type: "text", onTouchTap: (ev) => { ev.stopPropagation(); }}), React.createElement(IconButton_1.default, {style: {
+                }}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Row " + (branchIndex + 1) + " ", React.createElement("input", {type: "text", onTouchTap: (ev) => { ev.stopPropagation(); }}), React.createElement(IconButton_1.default, {style: {
                     float: "right",
                     marginRight: "30px"
                 }, disabled: (branchIndex == (budgetBranches.length - 1)), onTouchTap: (uid => ev => {

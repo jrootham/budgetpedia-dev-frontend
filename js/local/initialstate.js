@@ -2,7 +2,7 @@
 const lightBaseTheme_1 = require('material-ui/styles/baseThemes/lightBaseTheme');
 const colors = require('material-ui/styles/colors');
 let appnavbar = {
-    title: 'Toronto Budgetpedia',
+    title: 'Budgetpedia v0.1',
     username: 'anonymous',
     accountoptions: [],
     menuoptions: [],

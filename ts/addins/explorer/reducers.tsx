@@ -1,4 +1,9 @@
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // explorer reducers.tsx
+
+/*
+    TODO: change chartSelection from yearScope to root cell
+*/
 import { combineReducers } from 'redux'
 import initialstate from "../../local/initialstate"
 import { types as actiontypes} from './actions'
@@ -356,9 +361,9 @@ let cellsById = (state = { }, action) => {
             // newcell.chartSelection = chartSelection
 
             let newChartConfigs = Object.assign({},newcell.chartConfigs)
-            let yearSettings = Object.assign({},newChartConfigs[newcell.yearScope])
-            yearSettings.chartSelection = chartSelection
-            newChartConfigs[newcell.yearScope] = yearSettings
+            let scopeSettings = Object.assign({},newChartConfigs[newcell.yearScope])
+            scopeSettings.chartSelection = chartSelection
+            newChartConfigs[newcell.yearScope] = scopeSettings
             newcell.chartConfigs = newChartConfigs
 
             newstate[celluid] = newcell

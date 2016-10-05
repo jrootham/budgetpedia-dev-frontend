@@ -212,7 +212,6 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
             for (let cellid of cellList) {
                 cellParms.push(cellsById[cellid])
             }
-            // this.props.restoreCells()
             let newcells = budgetNode.setCells(cellParms)
             if (newcells.length == cellList.length) {
                 this.harmonizecount = null

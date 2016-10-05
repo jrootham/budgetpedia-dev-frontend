@@ -39,7 +39,7 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         nodeIndex: nodeIndex,
         cellIndex: parseInt(cellIndex),
     };
-    budgetBranch.createChildNode(childprops);
+    budgetBranch.createChildNodeDeclaration(childprops);
 };
 exports.onChartComponentSelection = budgetBranch => nodeIndex => cellIndex => chartSelectionData => {
     applyChartComponentSelection(budgetBranch, nodeIndex, cellIndex, chartSelectionData);

@@ -1331,7 +1331,7 @@ var BudgetBranch = function () {
                                     nodeIndex: prevBudgetNode.nodeIndex,
                                     cellIndex: 0
                                 };
-                                budgetBranch.createChildNode(childprops);
+                                budgetBranch.createChildNodeDeclaration(childprops);
                             });
                             budgetNode = null;
                         })();
@@ -1411,18 +1411,17 @@ var BudgetBranch = function () {
             });
             return promise;
         };
-        this.createChildNode = function (props) {
+        this.createChildNodeDeclaration = function (props) {
             var budgetBranch = _this;
+            var selectionrow = props.selectionrow;
+            var nodeIndex = props.nodeIndex;
+            var cellIndex = props.cellIndex;
             var branchNodes = budgetBranch.nodes;
             var callbacks = budgetBranch.nodeCallbacks;
             var actions = budgetBranch.actions;
             var branchSettings = budgetBranch.settings;
 
             var viewpointData = budgetBranch.state.viewpointData;
-            var selectionrow = props.selectionrow;
-            var nodeIndex = props.nodeIndex;
-            var cellIndex = props.cellIndex;
-
             var budgetNode = branchNodes[nodeIndex];
             var aspectName = budgetNode.aspectName;
             var viewpointName = budgetNode.viewpointName;
@@ -1437,8 +1436,8 @@ var BudgetBranch = function () {
             var components = treeNodeData.Components;
             var code = null;
             if (treeNodeData && treeNodeData.SortedComponents && treeNodeData.SortedComponents[selectionrow]) {
-                var treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow];
-                code = treeNodeMetaDataFromParentSortedList.Code;
+                var componentMetaDataFromSortedList = treeNodeData.SortedComponents[selectionrow];
+                code = componentMetaDataFromSortedList.Code;
             }
             if (code) childdatapath.push(code);else {
                 return;
@@ -4640,7 +4639,7 @@ var Explorer = function (_Component) {
                     };
                     return React.createElement(Card_1.Card, { initiallyExpanded: true, key: budgetBranch.uid, onExpandChange: function onExpandChange(expanded) {
                             _this2.onExpandChange(expanded);
-                        } }, React.createElement(Card_1.CardTitle, { actAsExpander: true, showExpandableButton: true }, "Exhibit " + (branchIndex + 1) + " ", React.createElement("input", { type: "text", onTouchTap: function onTouchTap(ev) {
+                        } }, React.createElement(Card_1.CardTitle, { actAsExpander: true, showExpandableButton: true }, "Row " + (branchIndex + 1) + " ", React.createElement("input", { type: "text", onTouchTap: function onTouchTap(ev) {
                             ev.stopPropagation();
                         } }), React.createElement(IconButton_1.default, { style: {
                             float: "right",
@@ -4810,7 +4809,7 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
         nodeIndex: nodeIndex,
         cellIndex: parseInt(cellIndex)
     };
-    budgetBranch.createChildNode(childprops);
+    budgetBranch.createChildNodeDeclaration(childprops);
 };
 exports.onChartComponentSelection = function (budgetBranch) {
     return function (nodeIndex) {
@@ -5421,9 +5420,9 @@ var cellsById = function cellsById() {
                     chartSelection = null;
                 }
                 var newChartConfigs = Object.assign({}, newcell.chartConfigs);
-                var yearSettings = Object.assign({}, newChartConfigs[newcell.yearScope]);
-                yearSettings.chartSelection = chartSelection;
-                newChartConfigs[newcell.yearScope] = yearSettings;
+                var scopeSettings = Object.assign({}, newChartConfigs[newcell.yearScope]);
+                scopeSettings.chartSelection = chartSelection;
+                newChartConfigs[newcell.yearScope] = scopeSettings;
                 newcell.chartConfigs = newChartConfigs;
                 newstate[_celluid] = newcell;
                 return newstate;
@@ -5447,9 +5446,9 @@ var cellsById = function cellsById() {
 
                 var _newcell2 = Object.assign({}, newstate[_celluid3]);
                 var _newChartConfigs = Object.assign({}, _newcell2.chartConfigs);
-                var _yearSettings = Object.assign({}, _newChartConfigs[_newcell2.yearScope]);
-                _yearSettings.explorerChartCode = explorerChartCode;
-                _newChartConfigs[_newcell2.yearScope] = _yearSettings;
+                var yearSettings = Object.assign({}, _newChartConfigs[_newcell2.yearScope]);
+                yearSettings.explorerChartCode = explorerChartCode;
+                _newChartConfigs[_newcell2.yearScope] = yearSettings;
                 _newcell2.chartConfigs = _newChartConfigs;
                 newstate[_celluid3] = _newcell2;
                 return newstate;
@@ -6618,7 +6617,14 @@ var MainBar = function (_React$Component) {
                     top: 0,
                     right: 0,
                     padding: "3px"
-                } }, "contact: ", React.createElement("a", { target: "_blank", href: "mailto:mail@budgetpedia.ca" }, "mail@budgetpedia.ca")), username, loginsidebar, menusidebar, workingmessagestate ? React.createElement("div", { style: {
+                } }, "contact: ", React.createElement("a", { target: "_blank", href: "mailto:mail@budgetpedia.ca" }, "mail@budgetpedia.ca")), React.createElement("div", { style: {
+                    position: "absolute",
+                    fontSize: "12px",
+                    color: "gold",
+                    bottom: 0,
+                    left: 0,
+                    padding: "3px"
+                } }, "We're all about government budgets"), username, loginsidebar, menusidebar, workingmessagestate ? React.createElement("div", { style: {
                     position: "absolute",
                     top: "54px",
                     left: 0,
@@ -7321,7 +7327,7 @@ exports.DEFAULT_PARTICIPATION = 'Budget Commons: Member';
 var lightBaseTheme_1 = require('material-ui/styles/baseThemes/lightBaseTheme');
 var colors = require('material-ui/styles/colors');
 var appnavbar = {
-    title: 'Toronto Budgetpedia',
+    title: 'Budgetpedia v0.1',
     username: 'anonymous',
     accountoptions: [],
     menuoptions: []

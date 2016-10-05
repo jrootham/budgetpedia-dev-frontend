@@ -50,7 +50,7 @@ import {BranchSettings} from '../addins/explorer/modules/interfaces'
 import * as colors from 'material-ui/styles/colors'
 
 let appnavbar = {
-	title: 'Toronto Budgetpedia',
+	title: 'Budgetpedia v0.1',
 	username: 'anonymous',
 	accountoptions: [],
 	menuoptions: [],
@@ -255,8 +255,6 @@ let explorer = {
                 },
             },
             // chartSelection: null,
-            // explorerChartCode: "ColumnChart",
-            // yearSelections:{ leftYear: 2003, rightYear: 2016 },
             yearScope:"OneYear",
         }
     }

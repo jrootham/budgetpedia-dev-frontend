@@ -569,7 +569,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         actAsExpander={true}
                         showExpandableButton={true} >
 
-                        {"Exhibit " + (branchIndex + 1 ) + " "} 
+                        {"Row " + (branchIndex + 1 ) + " "} 
                         <input 
                             type="text" 
                             onTouchTap = {(ev) => {ev.stopPropagation()}}

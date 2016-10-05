@@ -366,6 +366,17 @@ let MainBar = class extends React.Component<any, any> {
                     contact: <a target="_blank" href="mailto:mail@budgetpedia.ca">mail@budgetpedia.ca</a>
                 </div>
 
+                <div style={{
+                    position: "absolute",
+                    fontSize: "12px",
+                    color: "gold",
+                    bottom: 0,
+                    left: 0,
+                    padding: "3px",
+                }}>
+                    We're all about government budgets
+                </div>
+
                 { username }
 
                 { loginsidebar }

@@ -129,7 +129,7 @@ class BudgetBranch {
                                 nodeIndex: prevBudgetNode.nodeIndex,
                                 cellIndex: 0,
                             };
-                            budgetBranch.createChildNode(childprops);
+                            budgetBranch.createChildNodeDeclaration(childprops);
                         });
                         budgetNode = null;
                     }
@@ -185,11 +185,11 @@ class BudgetBranch {
             });
             return promise;
         };
-        this.createChildNode = (props) => {
+        this.createChildNodeDeclaration = (props) => {
             let budgetBranch = this;
+            let { selectionrow, nodeIndex, cellIndex, } = props;
             let { nodes: branchNodes, nodeCallbacks: callbacks, actions, settings: branchSettings, } = budgetBranch;
             let viewpointData = budgetBranch.state.viewpointData;
-            let { selectionrow, nodeIndex, cellIndex, } = props;
             let budgetNode = branchNodes[nodeIndex];
             let { aspectName, viewpointName } = budgetNode;
             let { workingStatus, onPortalCreation, } = callbacks;
@@ -201,8 +201,8 @@ class BudgetBranch {
             let components = treeNodeData.Components;
             let code = null;
             if (treeNodeData && treeNodeData.SortedComponents && treeNodeData.SortedComponents[selectionrow]) {
-                let treeNodeMetaDataFromParentSortedList = treeNodeData.SortedComponents[selectionrow];
-                code = treeNodeMetaDataFromParentSortedList.Code;
+                let componentMetaDataFromSortedList = treeNodeData.SortedComponents[selectionrow];
+                code = componentMetaDataFromSortedList.Code;
             }
             if (code)
                 childdatapath.push(code);
