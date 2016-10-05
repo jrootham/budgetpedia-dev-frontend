@@ -428,10 +428,20 @@ class ExplorerBranch extends Component {
             this.toggleShowOptions(value);
         }}));
         let showhelp = (branchDeclaration.showOptions)
-            ? React.createElement(IconButton_1.default, {tooltip: "Help", tooltipPosition: "top-center", onTouchTap: this.props.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline"))
+            ? React.createElement("div", {style: {
+                display: 'inline-block',
+                whiteSpace: "nowrap",
+                verticalAlign: "bottom",
+                position: "relative",
+            }}, React.createElement(IconButton_1.default, {tooltip: "Help", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.props.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")))
             : null;
         let search = (branchDeclaration.showOptions)
-            ? React.createElement(IconButton_1.default, {disabled: true, tooltip: "Search", tooltipPosition: "top-center", onTouchTap: this.handleSearch}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "search"))
+            ? React.createElement("div", {style: {
+                display: 'inline-block',
+                whiteSpace: "nowrap",
+                verticalAlign: "bottom",
+                position: "relative",
+            }}, React.createElement(IconButton_1.default, {disabled: true, tooltip: "Find an entry point", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.handleSearch}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "search")))
             : null;
         return React.createElement("div", null, React.createElement("div", null, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, showhelp, search), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;

@@ -892,17 +892,39 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         </div>
 
     let showhelp = (branchDeclaration.showOptions)
-        ?<IconButton tooltip="Help" tooltipPosition="top-center"
+        ?<div 
+            style={
+                {
+                    display:'inline-block', 
+                    whiteSpace:"nowrap", 
+                    verticalAlign:"bottom",
+                    position:"relative",
+                }
+            }>
+            <IconButton tooltip="Help" tooltipPosition="top-center"
+            style={{top:'3px'}}
             onTouchTap = { this.props.handleDialogOpen }>
-            <FontIcon className="material-icons">help_outline</FontIcon>
-        </IconButton>
+            <FontIcon 
+                className="material-icons">help_outline</FontIcon>
+        </IconButton></div>
         :null
 
     let search = (branchDeclaration.showOptions)
-        ?<IconButton disabled tooltip="Search" tooltipPosition="top-center"
+        ?<div 
+            style={
+                {
+                    display:'inline-block', 
+                    whiteSpace:"nowrap", 
+                    verticalAlign:"bottom",
+                    position:"relative",
+                }
+            }>
+            <IconButton disabled tooltip="Find an entry point" tooltipPosition="top-center"
+            style={{top:'3px'}}
             onTouchTap = { this.handleSearch }>
-            <FontIcon className="material-icons">search</FontIcon>
-        </IconButton>
+            <FontIcon 
+                className="material-icons">search</FontIcon>
+        </IconButton></div>
         :null
 
     return <div >
