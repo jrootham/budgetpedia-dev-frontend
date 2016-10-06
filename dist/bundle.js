@@ -1412,6 +1412,7 @@ var BudgetBranch = function () {
             return promise;
         };
         this.createChildNodeDeclaration = function (props) {
+            console.log('inside create child node declaration', props);
             var budgetBranch = _this;
             var selectionrow = props.selectionrow;
             var nodeIndex = props.nodeIndex;
@@ -1842,7 +1843,6 @@ var BudgetCell = function () {
             var budgetCell = _this;
             var googleChartType = budgetCell.googleChartType;
 
-            console.log('Google Chart Type', googleChartType, budgetCell);
             switch (googleChartType) {
                 case "ColumnChart":
                     return _this._columns_ColumnChart(yearSpecs);
@@ -1866,11 +1866,9 @@ var BudgetCell = function () {
             var chartDimensionType = _this.nodeDataseriesName;
             var listName = 'Sorted' + chartDimensionType;
             var list = treeNodeData[listName];
-            console.log('treenodedata, listname, list', treeNodeData, listName, list);
             for (var listindex in list) {
                 columns.push({ type: 'number', label: list[listindex].Name });
             }
-            console.log('LineChart columns', columns);
             return columns;
         };
         this._columns_ColumnChart = function (yearSpecs) {
@@ -1951,8 +1949,6 @@ var BudgetCell = function () {
             var rightYear = _nodeDataPack$yearSel7.rightYear;
             var leftYear = _nodeDataPack$yearSel7.leftYear;
 
-            console.log('treeNodeData', treeNodeData);
-
             var _loop = function _loop(year) {
                 var items = sortedDataSeries.map(function (sortedItem) {
                     return treeNodeData[_this.nodeDataseriesName][sortedItem.Code].years[year];
@@ -1964,7 +1960,6 @@ var BudgetCell = function () {
             for (var year = leftYear; year <= rightYear; year++) {
                 _loop(year);
             }
-            console.log('rows', rows);
             return rows;
         };
         this._rows_ColumnCharts_row = function (row, componentItem) {
@@ -4867,18 +4862,28 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
     var branchNodes = budgetBranch.nodes;
     var branchuid = budgetBranch.uid;
 
-    var selection = chartSelectionData.selection[0];
-    var selectionrow = void 0;
-    if (selection) {
-        selectionrow = selection.row;
-    } else {
-        selectionrow = null;
-    }
     var budgetNode = branchNodes[nodeIndex];
     var budgetCell = budgetNode.cells[cellIndex];
     if (!budgetCell) {
         console.error('System Error: budgetNode, faulty cellIndex in applyChartComponentSelection', budgetNode, cellIndex);
         throw Error('faulty cellIndex in applyChartComponentSelection');
+    }
+    var selection = chartSelectionData.selection[0];
+    console.log('budgetCell googlecharttype', budgetCell.googleChartType, cellIndex);
+    var selectionrow = void 0;
+    if (selection) {
+        switch (budgetCell.googleChartType) {
+            case "AreaChart":
+            case "LineChart":
+                selectionrow = selection.column - 1;
+                chartSelectionData.selection[0].row = null;
+                break;
+            default:
+                selectionrow = selection.row;
+                break;
+        }
+    } else {
+        selectionrow = null;
     }
     if (budgetCell.nodeDataseriesName == 'CommonDimension') {
         return;
@@ -4912,6 +4917,7 @@ exports.onChartComponentSelection = function (budgetBranch) {
     return function (nodeIndex) {
         return function (cellIndex) {
             return function (chartSelectionData) {
+                console.log('chart selection data', chartSelectionData);
                 applyChartComponentSelection(budgetBranch, nodeIndex, cellIndex, chartSelectionData);
             };
         };

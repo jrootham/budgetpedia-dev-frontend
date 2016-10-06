@@ -36,20 +36,6 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
     let { nodes:branchNodes, uid:branchuid } = budgetBranch
 
-    // unpack chartSelectionData
-    let selection = chartSelectionData.selection[0]
-
-    let selectionrow
-    if (selection) {
-        // TODO: understand this: setting column to null avoids bugs
-        // when chart animation is present
-        // selection.column = null
-        selectionrow = selection.row
-    } else {
-        selectionrow = null
-        // return
-    }
-
     let budgetNode: BudgetNode = branchNodes[nodeIndex]
     // budgetnode is undefined on final expendigure chart
     let budgetCell:BudgetCell = budgetNode.cells[cellIndex]
@@ -57,6 +43,33 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     if (!budgetCell) {
         console.error('System Error: budgetNode, faulty cellIndex in applyChartComponentSelection',budgetNode, cellIndex)
         throw Error('faulty cellIndex in applyChartComponentSelection')
+    }
+    // unpack chartSelectionData
+    let selection = chartSelectionData.selection[0]
+
+
+    console.log('budgetCell googlecharttype',budgetCell.googleChartType, cellIndex)
+
+    let selectionrow
+    if (selection) {
+        // TODO: understand this: setting column to null avoids bugs
+        // when chart animation is present
+        // selection.column = null
+        switch (budgetCell.googleChartType) {
+            case "AreaChart":
+            case "LineChart":
+                selectionrow = selection.column - 1
+                chartSelectionData.selection[0].row = null
+                break;
+            // case "PieChart": 
+            //     chartSelectionData.selection[0].column = null
+            default:
+                selectionrow = selection.row
+                break;
+        }
+    } else {
+        selectionrow = null
+        // return
     }
 
     // 1. stop if chart is not not drillable
@@ -104,6 +117,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
 export const onChartComponentSelection = 
     budgetBranch => nodeIndex => cellIndex => chartSelectionData => {
+        console.log('chart selection data',chartSelectionData)
     applyChartComponentSelection(budgetBranch,nodeIndex, cellIndex, chartSelectionData)
 }
 

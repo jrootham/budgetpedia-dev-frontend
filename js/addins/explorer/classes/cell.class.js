@@ -326,7 +326,6 @@ class BudgetCell {
         this._chartParmsColumns = (yearSpecs, treeNodeData) => {
             let budgetCell = this;
             let { googleChartType } = budgetCell;
-            console.log('Google Chart Type', googleChartType, budgetCell);
             switch (googleChartType) {
                 case "ColumnChart":
                     return this._columns_ColumnChart(yearSpecs);
@@ -349,11 +348,9 @@ class BudgetCell {
             let chartDimensionType = this.nodeDataseriesName;
             let listName = 'Sorted' + chartDimensionType;
             let list = treeNodeData[listName];
-            console.log('treenodedata, listname, list', treeNodeData, listName, list);
             for (let listindex in list) {
                 columns.push({ type: 'number', label: list[listindex].Name });
             }
-            console.log('LineChart columns', columns);
             return columns;
         };
         this._columns_ColumnChart = (yearSpecs) => {
@@ -428,7 +425,6 @@ class BudgetCell {
         this._LineChartRows = (treeNodeData, sortedDataSeries, yearSpecs) => {
             let rows = [];
             let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
-            console.log('treeNodeData', treeNodeData);
             for (let year = leftYear; year <= rightYear; year++) {
                 let items = sortedDataSeries.map((sortedItem) => {
                     return treeNodeData[this.nodeDataseriesName][sortedItem.Code].years[year];
@@ -436,7 +432,6 @@ class BudgetCell {
                 let row = [year.toString(), ...items];
                 rows.push(row);
             }
-            console.log('rows', rows);
             return rows;
         };
         this._rows_ColumnCharts_row = (row, componentItem) => {

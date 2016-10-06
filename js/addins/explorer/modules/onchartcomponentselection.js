@@ -1,19 +1,29 @@
 "use strict";
 let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSelectionData) => {
     let { nodes: branchNodes, uid: branchuid } = budgetBranch;
-    let selection = chartSelectionData.selection[0];
-    let selectionrow;
-    if (selection) {
-        selectionrow = selection.row;
-    }
-    else {
-        selectionrow = null;
-    }
     let budgetNode = branchNodes[nodeIndex];
     let budgetCell = budgetNode.cells[cellIndex];
     if (!budgetCell) {
         console.error('System Error: budgetNode, faulty cellIndex in applyChartComponentSelection', budgetNode, cellIndex);
         throw Error('faulty cellIndex in applyChartComponentSelection');
+    }
+    let selection = chartSelectionData.selection[0];
+    console.log('budgetCell googlecharttype', budgetCell.googleChartType, cellIndex);
+    let selectionrow;
+    if (selection) {
+        switch (budgetCell.googleChartType) {
+            case "AreaChart":
+            case "LineChart":
+                selectionrow = selection.column - 1;
+                chartSelectionData.selection[0].row = null;
+                break;
+            default:
+                selectionrow = selection.row;
+                break;
+        }
+    }
+    else {
+        selectionrow = null;
     }
     if (budgetCell.nodeDataseriesName == 'CommonDimension') {
         return;
@@ -42,5 +52,6 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     budgetBranch.createChildNodeDeclaration(childprops);
 };
 exports.onChartComponentSelection = budgetBranch => nodeIndex => cellIndex => chartSelectionData => {
+    console.log('chart selection data', chartSelectionData);
     applyChartComponentSelection(budgetBranch, nodeIndex, cellIndex, chartSelectionData);
 };
