@@ -2403,6 +2403,13 @@ var BudgetNode = function () {
             var datasetName = constants_1.AspectNameToDatasetName[_this.aspectName];
             var chartSpecs = _this.viewpointConfigPack.datasetConfig.Dataseries;
             var node = _this.treeNodeData;
+            var cellDeclarationData = void 0;
+            if (_this.parentBudgetNode) {
+                var parentCell = _this.parentBudgetNode.cells[_this.props.declarationData.nodesById[_this.parentBudgetNode.uid].cellIndex];
+                cellDeclarationData = JSON.parse(JSON.stringify(_this.props.declarationData.cellsById[parentCell.uid]));
+            } else {
+                cellDeclarationData = _this.props.declarationData.defaults.cell;
+            }
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
@@ -2411,7 +2418,7 @@ var BudgetNode = function () {
                 for (var _iterator = chartSpecs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var chartSpec = _step.value;
 
-                    var cellDeclaration = Object.assign({}, _this.props.declarationData.defaults.cell);
+                    var cellDeclaration = Object.assign({}, cellDeclarationData);
                     if (node[chartSpec.Type]) {
                         cellDeclaration.nodeDataseriesName = chartSpec.Type;
                         parmsList.push(cellDeclaration);
@@ -3372,15 +3379,15 @@ var ExplorerCell = function (_Component) {
                 }, onTouchTap: function onTouchTap(e) {
                     _this2.onChangeChartCode('ColumnChart');
                 } }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "insert_chart"));
-            var doublecolumnchart = React.createElement(IconButton_1.default, { key: 'doublecolumnchart', tooltip: "Column Chart", tooltipPosition: "top-center", style: {
-                    backgroundColor: explorerChartCode == "DoubleColumnChart" ? "rgba(144,238,144,0.5)" : "transparent",
+            var diffchart = React.createElement(IconButton_1.default, { key: 'diffchart', tooltip: "Diff Chart", tooltipPosition: "top-center", style: {
+                    backgroundColor: explorerChartCode == "DiffChart" ? "rgba(144,238,144,0.5)" : "transparent",
                     borderRadius: "50%",
                     padding: "0",
                     height: "36px",
                     width: "36px",
                     marginRight: "3px"
                 }, onTouchTap: function onTouchTap(e) {
-                    _this2.onChangeChartCode('DoubleColumnChart');
+                    _this2.onChangeChartCode('DiffChart');
                 } }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "insert_chart"));
             var donutchart = React.createElement(IconButton_1.default, { key: 'donutchart', tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
                     backgroundColor: explorerChartCode == "DonutChart" ? "rgba(144,238,144,0.5)" : "transparent",
@@ -3436,10 +3443,10 @@ var ExplorerCell = function (_Component) {
                 var chartoptions = void 0;
                 switch (_this2.cellDeclaration.yearScope) {
                     case constants_1.TimeScope[constants_1.TimeScope.OneYear]:
-                        chartoptions = [columnchart, donutchart, contextchart];
+                        chartoptions = [columnchart, donutchart];
                         break;
                     case constants_1.TimeScope[constants_1.TimeScope.TwoYears]:
-                        chartoptions = [doublecolumnchart];
+                        chartoptions = [diffchart];
                         break;
                     case constants_1.TimeScope[constants_1.TimeScope.AllYears]:
                         chartoptions = [timelines, stackedchart, proportionalchart];

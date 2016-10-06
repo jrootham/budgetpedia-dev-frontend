@@ -194,8 +194,8 @@ class ExplorerCell extends Component {
         }, onTouchTap: e => {
             this.onChangeChartCode('ColumnChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "insert_chart"));
-        let doublecolumnchart = React.createElement(IconButton_1.default, {key: 'doublecolumnchart', tooltip: "Column Chart", tooltipPosition: "top-center", style: {
-            backgroundColor: (explorerChartCode == "DoubleColumnChart")
+        let diffchart = React.createElement(IconButton_1.default, {key: 'diffchart', tooltip: "Diff Chart", tooltipPosition: "top-center", style: {
+            backgroundColor: (explorerChartCode == "DiffChart")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%",
@@ -204,7 +204,7 @@ class ExplorerCell extends Component {
             width: "36px",
             marginRight: "3px",
         }, onTouchTap: e => {
-            this.onChangeChartCode('DoubleColumnChart');
+            this.onChangeChartCode('DiffChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "insert_chart"));
         let donutchart = React.createElement(IconButton_1.default, {key: 'donutchart', tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
             backgroundColor: (explorerChartCode == "DonutChart")
@@ -270,10 +270,10 @@ class ExplorerCell extends Component {
             let chartoptions;
             switch (this.cellDeclaration.yearScope) {
                 case constants_1.TimeScope[constants_1.TimeScope.OneYear]:
-                    chartoptions = [columnchart, donutchart, contextchart];
+                    chartoptions = [columnchart, donutchart];
                     break;
                 case constants_1.TimeScope[constants_1.TimeScope.TwoYears]:
-                    chartoptions = [doublecolumnchart];
+                    chartoptions = [diffchart];
                     break;
                 case constants_1.TimeScope[constants_1.TimeScope.AllYears]:
                     chartoptions = [timelines, stackedchart, proportionalchart];

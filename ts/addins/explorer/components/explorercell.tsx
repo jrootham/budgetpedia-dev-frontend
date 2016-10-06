@@ -326,14 +326,14 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <FontIcon className="material-icons">insert_chart</FontIcon>
             </IconButton>
 
-        let doublecolumnchart = 
+        let diffchart = 
             <IconButton
-                key = 'doublecolumnchart'
-                tooltip="Column Chart"
+                key = 'diffchart'
+                tooltip="Diff Chart"
                 tooltipPosition="top-center"
                 style={
                     {
-                        backgroundColor: (explorerChartCode == "DoubleColumnChart")
+                        backgroundColor: (explorerChartCode == "DiffChart")
                             ? "rgba(144,238,144,0.5)"
                             : "transparent",
                         borderRadius: "50%",
@@ -344,7 +344,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     }
                 }
                 onTouchTap={ e => {
-                    this.onChangeChartCode('DoubleColumnChart')
+                    this.onChangeChartCode('DiffChart')
                 } }>
                 <FontIcon className="material-icons">insert_chart</FontIcon>
             </IconButton>
@@ -474,10 +474,10 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
 
             switch (this.cellDeclaration.yearScope) {
                 case TimeScope[TimeScope.OneYear]:
-                    chartoptions = [ columnchart, donutchart, contextchart ]
+                    chartoptions = [ columnchart, donutchart] //, contextchart ]
                     break;
                 case TimeScope[TimeScope.TwoYears]:
-                    chartoptions = [ doublecolumnchart ]
+                    chartoptions = [ diffchart ]
                     break;
                 case TimeScope[TimeScope.AllYears]:
                     chartoptions = [ timelines, stackedchart, proportionalchart ]

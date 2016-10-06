@@ -123,8 +123,17 @@ class BudgetNode {
         let datasetName:string = AspectNameToDatasetName[this.aspectName]
         let chartSpecs = this.viewpointConfigPack.datasetConfig.Dataseries
         let node = this.treeNodeData
+        let cellDeclarationData
+        if (this.parentBudgetNode) {
+            let parentCell = this.parentBudgetNode.cells[
+                this.props.declarationData.nodesById[this.parentBudgetNode.uid].cellIndex
+            ]
+            cellDeclarationData = JSON.parse(JSON.stringify(this.props.declarationData.cellsById[parentCell.uid]))
+        } else {
+            cellDeclarationData = this.props.declarationData.defaults.cell
+        }
         for (let chartSpec of chartSpecs) {
-            let cellDeclaration:CellDeclaration = Object.assign({},this.props.declarationData.defaults.cell)
+            let cellDeclaration:CellDeclaration = Object.assign({},cellDeclarationData)
             // not only must the dataseries be mandated, but also present...
             if (node[chartSpec.Type]) {
                 cellDeclaration.nodeDataseriesName = chartSpec.Type
