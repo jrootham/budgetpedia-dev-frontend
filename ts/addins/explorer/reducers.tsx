@@ -289,6 +289,7 @@ let nodesById = (state = { }, action) => {
                 range.rightYear = endYear
             }
             newnode.yearSelections = range
+            newstate[nodeuid] = newnode
 
             return newstate
 

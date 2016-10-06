@@ -170,7 +170,7 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.TwoYears]);
-        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", disabled: true, style: {
+        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "4", y: "13", width: "10", height: "10"}), React.createElement("rect", {x: "22", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "All years", tooltipPosition: "top-center", disabled: yearSpan === 0, style: {
             backgroundColor: (this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.AllYears])
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
@@ -194,8 +194,8 @@ class ExplorerCell extends Component {
         }, onTouchTap: e => {
             this.onChangeChartCode('ColumnChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "insert_chart"));
-        let diffchart = React.createElement(IconButton_1.default, {key: 'diffchart', tooltip: "Diff Chart", tooltipPosition: "top-center", style: {
-            backgroundColor: (explorerChartCode == "DiffChart")
+        let diffcolumnchart = React.createElement(IconButton_1.default, {key: 'diffchart', tooltip: "Diff Column Chart", tooltipPosition: "top-center", style: {
+            backgroundColor: (explorerChartCode == "DiffColumnChart")
                 ? "rgba(144,238,144,0.5)"
                 : "transparent",
             borderRadius: "50%",
@@ -217,6 +217,18 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeChartCode('DonutChart');
+        }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "donut_small"));
+        let diffpiechart = React.createElement(IconButton_1.default, {key: 'donutchart', tooltip: "Diff Pie Chart", tooltipPosition: "top-center", style: {
+            backgroundColor: (explorerChartCode == "DiffPieChart")
+                ? "rgba(144,238,144,0.5)"
+                : "transparent",
+            borderRadius: "50%",
+            padding: "0",
+            height: "36px",
+            width: "36px",
+            marginRight: "3px",
+        }, onTouchTap: e => {
+            this.onChangeChartCode('DiffPieChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "donut_small"));
         let contextchart = React.createElement(IconButton_1.default, {disabled: true, key: 'contextchart', tooltip: "Context Chart", tooltipPosition: "top-center", style: {
             backgroundColor: (explorerChartCode == "ContextChart")
@@ -273,7 +285,7 @@ class ExplorerCell extends Component {
                     chartoptions = [columnchart, donutchart];
                     break;
                 case constants_1.TimeScope[constants_1.TimeScope.TwoYears]:
-                    chartoptions = [diffchart];
+                    chartoptions = [diffcolumnchart, diffpiechart];
                     break;
                 case constants_1.TimeScope[constants_1.TimeScope.AllYears]:
                     chartoptions = [timelines, stackedchart, proportionalchart];

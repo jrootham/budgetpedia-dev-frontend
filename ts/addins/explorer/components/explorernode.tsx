@@ -154,7 +154,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
                 if (currentYearSelections.leftYear !== previousYearSelections.leftYear ||
                     currentYearSelections.rightYear !== previousYearSelections.rightYear) { 
 
-                    budgetNode.switchYearSelections(currentYearSelections)
+                    budgetNode.switchYearSelections(Object.assign({},currentYearSelections))
 
                     this.forceUpdate()
 

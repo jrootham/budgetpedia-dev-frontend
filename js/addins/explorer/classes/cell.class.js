@@ -36,7 +36,7 @@ class BudgetCell {
             let chartType = budgetCell.googleChartType;
             let options = budgetCell._chartParmsOptions(treeNodeData, viewpointNamingConfigs, datasetConfig, yearSpecs);
             let events = budgetCell._chartParmsEvents();
-            let columns = budgetCell._chartParmsColumns(yearSpecs);
+            let columns = budgetCell._chartParmsColumns(yearSpecs, treeNodeData);
             let { nodeDataseriesName } = budgetCell;
             let nodeDataseries = treeNodeData[nodeDataseriesName];
             let sortedlistName = 'Sorted' + nodeDataseriesName;
@@ -213,7 +213,7 @@ class BudgetCell {
             return options;
         };
         this._chartParmsOptions_chartTypeOptions = (googleChartType, treeNodeData) => {
-            let options = {};
+            let options;
             switch (googleChartType) {
                 case "ColumnChart":
                     options = {
@@ -229,6 +229,18 @@ class BudgetCell {
                 case "PieChart": {
                     options = this._pieChartOptions(treeNodeData);
                     break;
+                }
+                case "AreaChart": {
+                    options = {
+                        isStacked: true,
+                    };
+                    if (this.explorerChartCode == "Proportional") {
+                        options.isStacked = 'percent';
+                    }
+                    break;
+                }
+                default: {
+                    options = {};
                 }
             }
             return options;
@@ -311,17 +323,38 @@ class BudgetCell {
                 }
             ];
         };
-        this._chartParmsColumns = (yearSpecs) => {
+        this._chartParmsColumns = (yearSpecs, treeNodeData) => {
             let budgetCell = this;
             let { googleChartType } = budgetCell;
+            console.log('Google Chart Type', googleChartType, budgetCell);
             switch (googleChartType) {
                 case "ColumnChart":
                     return this._columns_ColumnChart(yearSpecs);
                 case "PieChart":
                     return this._columns_PieChart(yearSpecs);
+                case 'LineChart':
+                case 'AreaChart':
+                    return this._columns_LineChart(treeNodeData);
                 default:
                     return null;
             }
+        };
+        this._columns_LineChart = (treeNodeData) => {
+            let cellDeclaration = this.cellDeclaration;
+            let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
+            let budgetCell = this;
+            let columns = [
+                { type: 'string', label: 'Year' },
+            ];
+            let chartDimensionType = this.nodeDataseriesName;
+            let listName = 'Sorted' + chartDimensionType;
+            let list = treeNodeData[listName];
+            console.log('treenodedata, listname, list', treeNodeData, listName, list);
+            for (let listindex in list) {
+                columns.push({ type: 'number', label: list[listindex].Name });
+            }
+            console.log('LineChart columns', columns);
+            return columns;
         };
         this._columns_ColumnChart = (yearSpecs) => {
             let cellDeclaration = this.cellDeclaration;
@@ -360,28 +393,50 @@ class BudgetCell {
                 });
                 throw Error('sorted list "' + sortedlistName + '" not available');
             }
-            let rows = sortedDataseries.map((sortedItem) => {
-                let componentItem = nodeDataseries[sortedItem.Code];
-                if (!componentItem) {
-                    console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
-                    throw Error('componentItem not found');
+            switch (budgetCell.googleChartType) {
+                case "PieChart":
+                case "ColumnChart": {
+                    let rows = sortedDataseries.map((sortedItem) => {
+                        let componentItem = nodeDataseries[sortedItem.Code];
+                        if (!componentItem) {
+                            console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
+                            throw Error('componentItem not found');
+                        }
+                        let amount;
+                        if (componentItem.years) {
+                            amount = componentItem.years[rightYear];
+                        }
+                        else {
+                            amount = null;
+                        }
+                        let row = [sortedItem.Name, amount];
+                        let { googleChartType } = budgetCell;
+                        switch (googleChartType) {
+                            case "ColumnChart":
+                                row = budgetCell._rows_ColumnCharts_row(row, componentItem);
+                                break;
+                        }
+                        return row;
+                    });
+                    return rows;
                 }
-                let amount;
-                if (componentItem.years) {
-                    amount = componentItem.years[rightYear];
-                }
-                else {
-                    amount = null;
-                }
-                let row = [sortedItem.Name, amount];
-                let { googleChartType } = budgetCell;
-                switch (googleChartType) {
-                    case "ColumnChart":
-                        row = budgetCell._rows_ColumnCharts_row(row, componentItem);
-                        break;
-                }
-                return row;
-            });
+                case "LineChart":
+                case "AreaChart":
+                    return this._LineChartRows(treeNodeData, sortedDataseries, yearSpecs);
+            }
+        };
+        this._LineChartRows = (treeNodeData, sortedDataSeries, yearSpecs) => {
+            let rows = [];
+            let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
+            console.log('treeNodeData', treeNodeData);
+            for (let year = leftYear; year <= rightYear; year++) {
+                let items = sortedDataSeries.map((sortedItem) => {
+                    return treeNodeData[this.nodeDataseriesName][sortedItem.Code].years[year];
+                });
+                let row = [year.toString(), ...items];
+                rows.push(row);
+            }
+            console.log('rows', rows);
             return rows;
         };
         this._rows_ColumnCharts_row = (row, componentItem) => {

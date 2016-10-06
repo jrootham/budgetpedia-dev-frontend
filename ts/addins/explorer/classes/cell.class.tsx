@@ -281,7 +281,7 @@ class BudgetCell {
         // 4. chart columns:
         // ------------------
 
-        let columns = budgetCell._chartParmsColumns(yearSpecs)
+        let columns = budgetCell._chartParmsColumns(yearSpecs, treeNodeData)
 
         // ------------------
         // 5. chart rows:
@@ -524,7 +524,7 @@ class BudgetCell {
 
     private _chartParmsOptions_chartTypeOptions = (googleChartType, treeNodeData) => {
 
-        let options = {}
+        let options
 
         switch (googleChartType) {
 
@@ -544,6 +544,19 @@ class BudgetCell {
                 options = this._pieChartOptions(treeNodeData)
                 break
             }
+            case "AreaChart": {
+                options = {
+                    isStacked:true,
+                }
+                if (this.explorerChartCode == "Proportional") {
+                    options.isStacked = 'percent'
+                }
+                break
+            }
+            default: {
+                options = {}
+            }
+
         }
 
         return options
@@ -653,10 +666,12 @@ class BudgetCell {
     // ------------------
     // 4. chart columns:
     // ------------------
-    private _chartParmsColumns = (yearSpecs:YearSpecs) => {
+    private _chartParmsColumns = (yearSpecs:YearSpecs, treeNodeData) => {
         let budgetCell = this
 
         let { googleChartType } = budgetCell
+
+        console.log('Google Chart Type',googleChartType, budgetCell)
 
         switch (googleChartType) {
             case "ColumnChart":
@@ -665,9 +680,43 @@ class BudgetCell {
             case "PieChart":
                 return this._columns_PieChart(yearSpecs)
 
+            case 'LineChart':
+            case 'AreaChart':
+                return this._columns_LineChart(treeNodeData)
+
             default:
                 return null
         }
+    }
+
+    private _columns_LineChart = (treeNodeData) => {
+
+        let cellDeclaration = this.cellDeclaration
+        let { rightYear, leftYear} = this.nodeDataPack.yearSelections
+
+        let budgetCell = this
+
+        let columns:any[] = [
+            // type is required, else throws silent error
+            { type: 'string', label: 'Year' },
+        ]
+
+        let chartDimensionType = this.nodeDataseriesName
+
+        let listName = 'Sorted' + chartDimensionType
+
+        let list = treeNodeData[listName]
+
+        console.log('treenodedata, listname, list', treeNodeData, listName, list)
+
+        for (let listindex in list) {
+            columns.push({type:'number',label:list[listindex].Name})
+        }
+
+        console.log('LineChart columns', columns)
+
+        return columns
+
     }
 
     private _columns_ColumnChart = (yearSpecs:YearSpecs) => {
@@ -732,45 +781,69 @@ class BudgetCell {
             throw Error('sorted list "' + sortedlistName + '" not available')
         }
 
-        let rows = sortedDataseries.map((sortedItem:SortedComponentItem) => {
-            // TODO: get determination of amount processing from Unit value
-            let componentItem = nodeDataseries[sortedItem.Code]
-            if (!componentItem) {
-                console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ',
-                    treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem)
-                throw Error('componentItem not found')
+        switch (budgetCell.googleChartType) {
+            case "PieChart":
+            case "ColumnChart": {
+                let rows = sortedDataseries.map((sortedItem:SortedComponentItem) => {
+                    // TODO: get determination of amount processing from Unit value
+                    let componentItem = nodeDataseries[sortedItem.Code]
+                    if (!componentItem) {
+                        console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ',
+                            treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem)
+                        throw Error('componentItem not found')
+                    }
+                    let amount
+                    if (componentItem.years) {
+                        amount = componentItem.years[rightYear]
+                    } else {
+                        amount = null
+                    }
+
+                    let row = [sortedItem.Name, amount]
+
+                    let { googleChartType } = budgetCell
+                    // enhance row
+                    switch (googleChartType) {
+
+                        case "ColumnChart":
+                            row = budgetCell._rows_ColumnCharts_row(row, componentItem)
+                            break;
+                        
+                    }
+
+                    return row
+                })
+                return rows
             }
-            let amount
-            if (componentItem.years) {
-                amount = componentItem.years[rightYear]
-            } else {
-                amount = null
-            }
+            case "LineChart":
+            case "AreaChart":
+                return this._LineChartRows(treeNodeData, sortedDataseries, yearSpecs)
 
-            let row = [sortedItem.Name, amount]
-
-            let { googleChartType } = budgetCell
-            // enhance row
-            switch (googleChartType) {
-
-                case "ColumnChart":
-                    row = budgetCell._rows_ColumnCharts_row(row, componentItem)
-                    break;
-                
-            }
-
-            return row
-        })
-
-        return rows
-
+        }
     }
 
-    _rows_ColumnCharts_row = (row, componentItem) => {
+    private _LineChartRows = (treeNodeData, sortedDataSeries, yearSpecs) => {
+
+        let rows = []
+
+        let { rightYear, leftYear} = this.nodeDataPack.yearSelections
+        console.log('treeNodeData', treeNodeData)
+        for (let year = leftYear; year <= rightYear; year++) {
+            let items = sortedDataSeries.map((sortedItem:SortedComponentItem) => {
+                return treeNodeData[this.nodeDataseriesName][sortedItem.Code].years[year]
+            })
+            let row = [year.toString(),...items]
+            rows.push(row)
+        }
+        console.log('rows',rows)
+        return rows
+    }
+
+    private _rows_ColumnCharts_row = (row, componentItem) => {
 
         let style = ''
 
-        if (componentItem.Baseline) { //  == 'BASELINE') {
+        if (componentItem.Baseline) {
             style = 'stroke-color: Gold; stroke-width: 3;'
         }
         if (!(componentItem.Components || componentItem.CommonDimension)) {

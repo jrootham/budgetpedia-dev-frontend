@@ -37,7 +37,7 @@ let ChartCodeToGoogleChartType = {
     'DonutChart':'PieChart',
     'ColumnChart':'ColumnChart',
     'DoubleColumnChart':'ColumnChart',
-    'Timeline':'LineChart',
+    'TimeLine':'LineChart',
     'ContextChart':'TreeMap',
     'StackedArea':'AreaChart', // isStacked:'absolute'
     'Proportional':'AreaChart', // isStacked:'percent'

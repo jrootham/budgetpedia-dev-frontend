@@ -35,7 +35,7 @@ class ExplorerNode extends Component {
                     let previousYearSelections = previousControlData.nodesById[budgetNode.uid].yearSelections;
                     if (currentYearSelections.leftYear !== previousYearSelections.leftYear ||
                         currentYearSelections.rightYear !== previousYearSelections.rightYear) {
-                        budgetNode.switchYearSelections(currentYearSelections);
+                        budgetNode.switchYearSelections(Object.assign({}, currentYearSelections));
                         this.forceUpdate();
                     }
                     break;

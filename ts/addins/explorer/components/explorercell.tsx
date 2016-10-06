@@ -276,7 +276,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <IconButton
                     tooltip="All years"
                     tooltipPosition="top-center"
-                    disabled = {true} //yearSpan === 0}
+                    disabled = {yearSpan === 0}
                     style={
                         {
                             backgroundColor: (this.cellDeclaration.yearScope == TimeScope[TimeScope.AllYears])
@@ -326,14 +326,14 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <FontIcon className="material-icons">insert_chart</FontIcon>
             </IconButton>
 
-        let diffchart = 
+        let diffcolumnchart = 
             <IconButton
                 key = 'diffchart'
-                tooltip="Diff Chart"
+                tooltip="Diff Column Chart"
                 tooltipPosition="top-center"
                 style={
                     {
-                        backgroundColor: (explorerChartCode == "DiffChart")
+                        backgroundColor: (explorerChartCode == "DiffColumnChart")
                             ? "rgba(144,238,144,0.5)"
                             : "transparent",
                         borderRadius: "50%",
@@ -368,6 +368,29 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 }
                 onTouchTap={ e => {
                     this.onChangeChartCode('DonutChart')
+                } }>
+                <FontIcon className="material-icons">donut_small</FontIcon>
+            </IconButton>
+
+        let diffpiechart = 
+            <IconButton
+                key = 'donutchart'
+                tooltip="Diff Pie Chart"
+                tooltipPosition="top-center"
+                style={
+                    {
+                        backgroundColor: (explorerChartCode == "DiffPieChart")
+                            ? "rgba(144,238,144,0.5)"
+                            : "transparent",
+                        borderRadius: "50%",
+                        padding:"0",
+                        height:"36px",
+                        width:"36px",
+                        marginRight:"3px",
+                    }
+                }
+                onTouchTap={ e => {
+                    this.onChangeChartCode('DiffPieChart')
                 } }>
                 <FontIcon className="material-icons">donut_small</FontIcon>
             </IconButton>
@@ -477,7 +500,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     chartoptions = [ columnchart, donutchart] //, contextchart ]
                     break;
                 case TimeScope[TimeScope.TwoYears]:
-                    chartoptions = [ diffchart ]
+                    chartoptions = [ diffcolumnchart, diffpiechart ]
                     break;
                 case TimeScope[TimeScope.AllYears]:
                     chartoptions = [ timelines, stackedchart, proportionalchart ]
@@ -830,7 +853,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 <span style={{ fontStyle: "italic" }}>Select {
                     (yearScope == TimeScope[TimeScope.OneYear])? 'year': 'years'}: </span>
                     
-                {(yearScope != TimeScope[TimeScope.OneYear])?(<DropDownMenu
+                {(yearScope != TimeScope[TimeScope.OneYear])?(
+                    <DropDownMenu
                     value={leftYear}
                     style={{
                     }}

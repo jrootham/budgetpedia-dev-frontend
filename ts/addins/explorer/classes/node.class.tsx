@@ -4,7 +4,6 @@
 import { YearSpecs } from './databaseapi'
 import { 
     AspectNameToDatasetName, 
-    ChartCodeToGoogleChartType 
 } from '../constants'
 import {
     PortalConfig,

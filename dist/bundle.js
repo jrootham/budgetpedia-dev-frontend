@@ -1502,6 +1502,8 @@ exports.default = BudgetBranch;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var constants_1 = require('../constants');
@@ -1551,7 +1553,7 @@ var BudgetCell = function () {
             var chartType = budgetCell.googleChartType;
             var options = budgetCell._chartParmsOptions(treeNodeData, viewpointNamingConfigs, datasetConfig, yearSpecs);
             var events = budgetCell._chartParmsEvents();
-            var columns = budgetCell._chartParmsColumns(yearSpecs);
+            var columns = budgetCell._chartParmsColumns(yearSpecs, treeNodeData);
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
 
             var nodeDataseries = treeNodeData[nodeDataseriesName];
@@ -1721,7 +1723,7 @@ var BudgetCell = function () {
             return options;
         };
         this._chartParmsOptions_chartTypeOptions = function (googleChartType, treeNodeData) {
-            var options = {};
+            var options = void 0;
             switch (googleChartType) {
                 case "ColumnChart":
                     options = {
@@ -1738,6 +1740,20 @@ var BudgetCell = function () {
                     {
                         options = _this._pieChartOptions(treeNodeData);
                         break;
+                    }
+                case "AreaChart":
+                    {
+                        options = {
+                            isStacked: true
+                        };
+                        if (_this.explorerChartCode == "Proportional") {
+                            options.isStacked = 'percent';
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        options = {};
                     }
             }
             return options;
@@ -1822,24 +1838,46 @@ var BudgetCell = function () {
                 }(budgetCell)
             }];
         };
-        this._chartParmsColumns = function (yearSpecs) {
+        this._chartParmsColumns = function (yearSpecs, treeNodeData) {
             var budgetCell = _this;
             var googleChartType = budgetCell.googleChartType;
 
+            console.log('Google Chart Type', googleChartType, budgetCell);
             switch (googleChartType) {
                 case "ColumnChart":
                     return _this._columns_ColumnChart(yearSpecs);
                 case "PieChart":
                     return _this._columns_PieChart(yearSpecs);
+                case 'LineChart':
+                case 'AreaChart':
+                    return _this._columns_LineChart(treeNodeData);
                 default:
                     return null;
             }
         };
-        this._columns_ColumnChart = function (yearSpecs) {
+        this._columns_LineChart = function (treeNodeData) {
             var cellDeclaration = _this.cellDeclaration;
             var _nodeDataPack$yearSel3 = _this.nodeDataPack.yearSelections;
             var rightYear = _nodeDataPack$yearSel3.rightYear;
             var leftYear = _nodeDataPack$yearSel3.leftYear;
+
+            var budgetCell = _this;
+            var columns = [{ type: 'string', label: 'Year' }];
+            var chartDimensionType = _this.nodeDataseriesName;
+            var listName = 'Sorted' + chartDimensionType;
+            var list = treeNodeData[listName];
+            console.log('treenodedata, listname, list', treeNodeData, listName, list);
+            for (var listindex in list) {
+                columns.push({ type: 'number', label: list[listindex].Name });
+            }
+            console.log('LineChart columns', columns);
+            return columns;
+        };
+        this._columns_ColumnChart = function (yearSpecs) {
+            var cellDeclaration = _this.cellDeclaration;
+            var _nodeDataPack$yearSel4 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel4.rightYear;
+            var leftYear = _nodeDataPack$yearSel4.leftYear;
 
             var budgetCell = _this;
             var categorylabel = 'Component';
@@ -1848,9 +1886,9 @@ var BudgetCell = function () {
         };
         this._columns_PieChart = function (yearSpecs) {
             var cellDeclaration = _this.cellDeclaration;
-            var _nodeDataPack$yearSel4 = _this.nodeDataPack.yearSelections;
-            var rightYear = _nodeDataPack$yearSel4.rightYear;
-            var leftYear = _nodeDataPack$yearSel4.leftYear;
+            var _nodeDataPack$yearSel5 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel5.rightYear;
+            var leftYear = _nodeDataPack$yearSel5.leftYear;
 
             var budgetCell = _this;
             var categorylabel = 'Component';
@@ -1860,9 +1898,9 @@ var BudgetCell = function () {
         this._chartParmsRows = function (treeNodeData, yearSpecs) {
             var budgetCell = _this;
             var cellDeclaration = _this.cellDeclaration;
-            var _nodeDataPack$yearSel5 = _this.nodeDataPack.yearSelections;
-            var rightYear = _nodeDataPack$yearSel5.rightYear;
-            var leftYear = _nodeDataPack$yearSel5.leftYear;
+            var _nodeDataPack$yearSel6 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel6.rightYear;
+            var leftYear = _nodeDataPack$yearSel6.leftYear;
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
 
             var nodeDataseries = treeNodeData[nodeDataseriesName];
@@ -1874,28 +1912,59 @@ var BudgetCell = function () {
                 });
                 throw Error('sorted list "' + sortedlistName + '" not available');
             }
-            var rows = sortedDataseries.map(function (sortedItem) {
-                var componentItem = nodeDataseries[sortedItem.Code];
-                if (!componentItem) {
-                    console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
-                    throw Error('componentItem not found');
-                }
-                var amount = void 0;
-                if (componentItem.years) {
-                    amount = componentItem.years[rightYear];
-                } else {
-                    amount = null;
-                }
-                var row = [sortedItem.Name, amount];
-                var googleChartType = budgetCell.googleChartType;
+            switch (budgetCell.googleChartType) {
+                case "PieChart":
+                case "ColumnChart":
+                    {
+                        var rows = sortedDataseries.map(function (sortedItem) {
+                            var componentItem = nodeDataseries[sortedItem.Code];
+                            if (!componentItem) {
+                                console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
+                                throw Error('componentItem not found');
+                            }
+                            var amount = void 0;
+                            if (componentItem.years) {
+                                amount = componentItem.years[rightYear];
+                            } else {
+                                amount = null;
+                            }
+                            var row = [sortedItem.Name, amount];
+                            var googleChartType = budgetCell.googleChartType;
 
-                switch (googleChartType) {
-                    case "ColumnChart":
-                        row = budgetCell._rows_ColumnCharts_row(row, componentItem);
-                        break;
-                }
-                return row;
-            });
+                            switch (googleChartType) {
+                                case "ColumnChart":
+                                    row = budgetCell._rows_ColumnCharts_row(row, componentItem);
+                                    break;
+                            }
+                            return row;
+                        });
+                        return rows;
+                    }
+                case "LineChart":
+                case "AreaChart":
+                    return _this._LineChartRows(treeNodeData, sortedDataseries, yearSpecs);
+            }
+        };
+        this._LineChartRows = function (treeNodeData, sortedDataSeries, yearSpecs) {
+            var rows = [];
+            var _nodeDataPack$yearSel7 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel7.rightYear;
+            var leftYear = _nodeDataPack$yearSel7.leftYear;
+
+            console.log('treeNodeData', treeNodeData);
+
+            var _loop = function _loop(year) {
+                var items = sortedDataSeries.map(function (sortedItem) {
+                    return treeNodeData[_this.nodeDataseriesName][sortedItem.Code].years[year];
+                });
+                var row = [year.toString()].concat(_toConsumableArray(items));
+                rows.push(row);
+            };
+
+            for (var year = leftYear; year <= rightYear; year++) {
+                _loop(year);
+            }
+            console.log('rows', rows);
             return rows;
         };
         this._rows_ColumnCharts_row = function (row, componentItem) {
@@ -3359,7 +3428,7 @@ var ExplorerCell = function (_Component) {
                     marginRight: "3px"
                 }, onTouchTap: function onTouchTap(e) {
                     _this2.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.TwoYears]);
-                } }, React.createElement(SvgIcon_1.default, { style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36" }, React.createElement("rect", { x: "4", y: "13", width: "10", height: "10" }), React.createElement("rect", { x: "22", y: "13", width: "10", height: "10" }))), React.createElement(IconButton_1.default, { tooltip: "All years", tooltipPosition: "top-center", disabled: true, style: {
+                } }, React.createElement(SvgIcon_1.default, { style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36" }, React.createElement("rect", { x: "4", y: "13", width: "10", height: "10" }), React.createElement("rect", { x: "22", y: "13", width: "10", height: "10" }))), React.createElement(IconButton_1.default, { tooltip: "All years", tooltipPosition: "top-center", disabled: yearSpan === 0, style: {
                     backgroundColor: this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.AllYears] ? "rgba(144,238,144,0.5)" : "rgba(255,255,255,0.5)",
                     borderRadius: "15%",
                     padding: "0",
@@ -3379,8 +3448,8 @@ var ExplorerCell = function (_Component) {
                 }, onTouchTap: function onTouchTap(e) {
                     _this2.onChangeChartCode('ColumnChart');
                 } }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "insert_chart"));
-            var diffchart = React.createElement(IconButton_1.default, { key: 'diffchart', tooltip: "Diff Chart", tooltipPosition: "top-center", style: {
-                    backgroundColor: explorerChartCode == "DiffChart" ? "rgba(144,238,144,0.5)" : "transparent",
+            var diffcolumnchart = React.createElement(IconButton_1.default, { key: 'diffchart', tooltip: "Diff Column Chart", tooltipPosition: "top-center", style: {
+                    backgroundColor: explorerChartCode == "DiffColumnChart" ? "rgba(144,238,144,0.5)" : "transparent",
                     borderRadius: "50%",
                     padding: "0",
                     height: "36px",
@@ -3398,6 +3467,16 @@ var ExplorerCell = function (_Component) {
                     marginRight: "3px"
                 }, onTouchTap: function onTouchTap(e) {
                     _this2.onChangeChartCode('DonutChart');
+                } }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "donut_small"));
+            var diffpiechart = React.createElement(IconButton_1.default, { key: 'donutchart', tooltip: "Diff Pie Chart", tooltipPosition: "top-center", style: {
+                    backgroundColor: explorerChartCode == "DiffPieChart" ? "rgba(144,238,144,0.5)" : "transparent",
+                    borderRadius: "50%",
+                    padding: "0",
+                    height: "36px",
+                    width: "36px",
+                    marginRight: "3px"
+                }, onTouchTap: function onTouchTap(e) {
+                    _this2.onChangeChartCode('DiffPieChart');
                 } }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "donut_small"));
             var contextchart = React.createElement(IconButton_1.default, { disabled: true, key: 'contextchart', tooltip: "Context Chart", tooltipPosition: "top-center", style: {
                     backgroundColor: explorerChartCode == "ContextChart" ? "rgba(144,238,144,0.5)" : "transparent",
@@ -3446,7 +3525,7 @@ var ExplorerCell = function (_Component) {
                         chartoptions = [columnchart, donutchart];
                         break;
                     case constants_1.TimeScope[constants_1.TimeScope.TwoYears]:
-                        chartoptions = [diffchart];
+                        chartoptions = [diffcolumnchart, diffpiechart];
                         break;
                     case constants_1.TimeScope[constants_1.TimeScope.AllYears]:
                         chartoptions = [timelines, stackedchart, proportionalchart];
@@ -3709,7 +3788,7 @@ var ExplorerNode = function (_Component) {
                         var currentYearSelections = currentControlData.nodesById[budgetNode.uid].yearSelections;
                         var previousYearSelections = previousControlData.nodesById[budgetNode.uid].yearSelections;
                         if (currentYearSelections.leftYear !== previousYearSelections.leftYear || currentYearSelections.rightYear !== previousYearSelections.rightYear) {
-                            budgetNode.switchYearSelections(currentYearSelections);
+                            budgetNode.switchYearSelections(Object.assign({}, currentYearSelections));
                             _this.forceUpdate();
                         }
                         break;
@@ -3942,7 +4021,7 @@ var ChartCodeToGoogleChartType = {
     'DonutChart': 'PieChart',
     'ColumnChart': 'ColumnChart',
     'DoubleColumnChart': 'ColumnChart',
-    'Timeline': 'LineChart',
+    'TimeLine': 'LineChart',
     'ContextChart': 'TreeMap',
     'StackedArea': 'AreaChart',
     'Proportional': 'AreaChart'
@@ -5287,6 +5366,7 @@ var nodesById = function nodesById() {
                     range.rightYear = endYear;
                 }
                 _newnode3.yearSelections = range;
+                newstate[_nodeuid3] = _newnode3;
                 return newstate;
             }
         case actions_1.types.HARMONIZE_CELLS:

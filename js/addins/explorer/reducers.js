@@ -249,6 +249,7 @@ let nodesById = (state = {}, action) => {
                 range.rightYear = endYear;
             }
             newnode.yearSelections = range;
+            newstate[nodeuid] = newnode;
             return newstate;
         }
         case actions_1.types.HARMONIZE_CELLS: {

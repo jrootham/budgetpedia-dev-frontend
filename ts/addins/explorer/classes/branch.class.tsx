@@ -24,8 +24,6 @@ import {
     AspectNameToDatasetName, 
 } from '../constants'
 
-// import { GoogleChartTypeToChartCode, ChartCodeToGoogleChartType } from '../../constants'
-
 export interface CreateChildNodeProps {
     selectionrow: any,
     nodeIndex: number,
