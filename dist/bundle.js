@@ -1327,7 +1327,7 @@ var BudgetBranch = function () {
                             setTimeout(function () {
                                 var prevBudgetCell = prevBudgetNode.cells[0];
                                 var childprops = {
-                                    selectionrow: prevBudgetCell.chartSelection[0].row,
+                                    selectionrow: prevBudgetCell.chartSelection,
                                     nodeIndex: prevBudgetNode.nodeIndex,
                                     cellIndex: 0,
                                     priorCellSettings: null,
@@ -1359,7 +1359,7 @@ var BudgetBranch = function () {
                             var cell = _step2.value;
 
                             var theCell = cell;
-                            if (theCell.chartSelection) {
+                            if (theCell.chartSelection !== null) {
                                 theCell.chartSelection = null;
                             }
                         }
@@ -1531,16 +1531,32 @@ var BudgetCell = function () {
 
         _classCallCheck(this, BudgetCell);
 
+        this.chartSelection = null;
         this.refreshSelection = function () {
             var budgetCell = _this;
-            if (budgetCell.chartSelection) {
-                if (budgetCell.chartSelection[0] && budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
-                    if (budgetCell.googleChartType == "PieChart") {
-                        budgetCell.chartSelection[0].column = null;
-                    } else {
-                        budgetCell.chartSelection[0].column = 1;
+            if (budgetCell.chartSelection !== null) {
+                var cs = void 0;
+                if (budgetCell.chart) cs = budgetCell.chart.getSelection();
+                if (budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
+                    var selectionObj = { row: null, column: null };
+                    var _chartSelection = [selectionObj];
+                    switch (budgetCell.googleChartType) {
+                        case "PieChart":
+                            selectionObj.row = budgetCell.chartSelection;
+                            break;
+                        case "ColumnChart":
+                            selectionObj.row = budgetCell.chartSelection;
+                            selectionObj.column = 1;
+                            break;
+                        case "LineChart":
+                        case "AreaChart":
+                            selectionObj.column = budgetCell.chartSelection + 1;
+                            break;
+                        default:
+                            console.log('ERROR: default invoked in refreshSelection');
+                            break;
                     }
-                    budgetCell.chart.setSelection(budgetCell.chartSelection);
+                    budgetCell.chart.setSelection(_chartSelection);
                 }
             }
         };
@@ -1863,9 +1879,9 @@ var BudgetCell = function () {
                 callback: function (cell) {
                     return function (Chart) {
                         var selection = Chart.chart.getSelection();
-                        if (selection.length == 0 && cell.chartSelection && cell.chartSelection.length > 0) {
+                        if (selection.length == 0 && cell.chartSelection !== null) {
                             if (cell.chart) {
-                                cell.chart.setSelection(cell.chartSelection);
+                                cell.refreshSelection();
                             }
                         }
                     };
@@ -2612,6 +2628,7 @@ var BudgetNode = function () {
                 var celluid = cellDeclaration.celluid;
                 var chartSelection = cellDeclaration.chartSelection;
 
+                if (chartSelection === undefined) chartSelection = null;
                 var settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope];
                 var explorerChartCode = settings.explorerChartCode;
 
@@ -4927,25 +4944,25 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
         throw Error('faulty cellIndex in applyChartComponentSelection');
     }
     var selection = chartSelectionData.selection[0];
-    var selectionrow = void 0;
+    var logicalselectionrow = null;
     if (selection) {
         switch (budgetCell.googleChartType) {
             case "AreaChart":
             case "LineChart":
-                selectionrow = selection.column - 1;
-                chartSelectionData.selection[0].row = null;
+                logicalselectionrow = selection.column - 1;
+                if (budgetCell.chartSelection == logicalselectionrow) {
+                    logicalselectionrow = null;
+                }
                 break;
             default:
-                selectionrow = selection.row;
+                logicalselectionrow = selection.row;
                 break;
         }
-    } else {
-        selectionrow = null;
     }
     if (budgetCell.nodeDataseriesName == 'CommonDimension') {
         return;
     }
-    budgetCell.chartSelection = selection ? chartSelectionData.selection : null;
+    budgetCell.chartSelection = logicalselectionrow;
     var removed = branchNodes.splice(nodeIndex + 1);
     var removeditems = removed.map(function (item, index) {
         return { nodeuid: item.uid, cellList: item.cellDeclarationList, index: index };
@@ -4971,14 +4988,14 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
     }
     var updateCellChartSelection = budgetNode.actions.updateCellChartSelection;
 
-    updateCellChartSelection(budgetCell.uid, chartSelectionData.selection);
-    if (!selection) {
+    updateCellChartSelection(budgetCell.uid, logicalselectionrow);
+    if (logicalselectionrow === null) {
         budgetCell.chartSelection = null;
         return;
     }
-    budgetCell.chartSelection = chartSelectionData.selection;
+    budgetCell.chartSelection = logicalselectionrow;
     var childprops = {
-        selectionrow: selectionrow,
+        selectionrow: logicalselectionrow,
         nodeIndex: nodeIndex,
         cellIndex: parseInt(cellIndex),
         priorCellSettings: priorCellSettings,
@@ -5592,9 +5609,6 @@ var cellsById = function cellsById() {
 
                 var newcell = Object.assign({}, newstate[_celluid]);
                 var chartSelection = action.payload.selection;
-                if (Array.isArray(chartSelection) && chartSelection.length == 0) {
-                    chartSelection = null;
-                }
                 newcell.chartSelection = chartSelection;
                 newstate[_celluid] = newcell;
                 return newstate;

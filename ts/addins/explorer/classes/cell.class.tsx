@@ -76,19 +76,19 @@ export interface CellDeclaration {
     // explorerChartCode:string, 
     chartConfigs:{
         ['OneYear']:{
-            chartSelection:ChartSelectionCell[],
-            // explorerChartCode: string,
+            // chartSelection:ChartSelectionCell[],
+            explorerChartCode: string,
         },
         ['TwoYears']:{
-            chartSelection:ChartSelectionCell[],
-            // explorerChartCode: string,
+            // chartSelection:ChartSelectionCell[],
+            explorerChartCode: string,
         },
         ['AllYears']:{
-            chartSelection:ChartSelectionCell[],
-            // explorerChartCode: string,
+            // chartSelection:ChartSelectionCell[],
+            explorerChartCode: string,
         },
     },
-    chartSelection:ChartSelectionCell[],
+    chartSelection: number, // ChartSelectionCell[],
     yearScope: string,
     celluid?: string,
 }
@@ -96,7 +96,7 @@ export interface CellDeclaration {
 export interface CellConstructorArgs {
     nodeDataseriesName:string, 
     explorerChartCode:string, 
-    chartSelection:ChartSelectionCell[],
+    chartSelection:number, // ChartSelectionCell[],
     uid: string,
 }
 
@@ -114,6 +114,7 @@ class BudgetCell {
         let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs
         // this.explorerChartCode = explorerChartCode
         this.nodeDataseriesName = nodeDataseriesName
+        // console.log('new BudgetCell', chartSelection)
         this.chartSelection = chartSelection
         this.uid = uid
     }
@@ -137,7 +138,7 @@ class BudgetCell {
         return settings.explorerChartCode
     } 
     nodeDataseriesName:string // the ref to the data to be presented, typically Components or CommonDimension
-    chartSelection: ChartSelectionCell[] // returned by google chart; points to row selected by user
+    chartSelection: number = null// ChartSelectionCell[] // returned by google chart; points to row selected by user
     uid: string // universal id; set by addCellDeclarations action
 
     // ------------[ derivative control properties ]-------------------
@@ -193,17 +194,42 @@ class BudgetCell {
     refreshSelection = () => {
 
         let budgetCell = this
-        if (budgetCell.chartSelection) {
+        // console.log('inside refreshSelection', budgetCell.chartSelection, budgetCell.googleChartType)
+        if (budgetCell.chartSelection !== null) {
             // it turns out that "PieChart" needs column set to null
             // for setSelection to work
-            if (budgetCell.chartSelection[0] && budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
-                if (budgetCell.googleChartType == "PieChart" ) {
-                    budgetCell.chartSelection[0].column = null
-                } else {
-                    // we set it back to original (presumed) for consistency
-                    budgetCell.chartSelection[0].column = 1
+            // if (budgetCell.chartSelection[0] && budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
+            let cs
+            if (budgetCell.chart) cs = budgetCell.chart.getSelection()
+            // console.log('budgetCell.chart.getSelection()', cs)
+            if (budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
+                let selectionObj = {row:null, column:null}
+                let chartSelection = [selectionObj]
+                switch (budgetCell.googleChartType) {
+                    case "PieChart":
+                        selectionObj.row = budgetCell.chartSelection
+                        break;
+                    case "ColumnChart":
+                        selectionObj.row = budgetCell.chartSelection
+                        selectionObj.column = 1
+                        break;
+                    case "LineChart":
+                    case "AreaChart":
+                        selectionObj.column = budgetCell.chartSelection + 1
+                        break
+                    default:
+                        console.log('ERROR: default invoked in refreshSelection')
+                        // code...
+                        break;
                 }
-                budgetCell.chart.setSelection(budgetCell.chartSelection)
+                // console.log('setting selection with ', chartSelection)
+                // if (budgetCell.googleChartType == "PieChart" ) {
+                //     budgetCell.chartSelection[0].column = null
+                // } else {
+                //     // we set it back to original (presumed) for consistency
+                //     budgetCell.chartSelection[0].column = 1
+                // }
+                budgetCell.chart.setSelection(chartSelection)
             }
         }        
     }
@@ -674,9 +700,11 @@ class BudgetCell {
                 eventName:'animationfinish',
                 callback: ((cell:BudgetCell) => Chart => {
                     let selection = Chart.chart.getSelection()
-                    if (selection.length == 0 && cell.chartSelection && cell.chartSelection.length > 0) {
+                    if (selection.length == 0 && cell.chartSelection !== null) { 
+                    // if (selection.length == 0 && cell.chartSelection && cell.chartSelection !== null) { 
                         if (cell.chart) {
-                            cell.chart.setSelection(cell.chartSelection)
+                            cell.refreshSelection()
+                            // cell.chart.setSelection(cell.chartSelection)
                         }
                     }
                 })(budgetCell)

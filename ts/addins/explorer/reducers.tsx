@@ -356,9 +356,11 @@ let cellsById = (state = { }, action) => {
 
             let chartSelection = action.payload.selection
 
-            if (Array.isArray(chartSelection) && chartSelection.length == 0) {
-                chartSelection = null
-            }
+            // console.log('setting newcell chart selection', chartSelection)
+
+            // if (Array.isArray(chartSelection) && chartSelection.length == 0) {
+            //     chartSelection = null
+            // }
             newcell.chartSelection = chartSelection
 
             // let newChartConfigs = Object.assign({},newcell.chartConfigs)

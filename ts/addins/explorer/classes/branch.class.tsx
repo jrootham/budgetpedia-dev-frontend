@@ -276,7 +276,7 @@ class BudgetBranch {
 
                         // TODO: pass prior cell and node settings
                         let childprops: CreateChildNodeProps = {
-                            selectionrow: prevBudgetCell.chartSelection[0].row,
+                            selectionrow: prevBudgetCell.chartSelection, // [0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex:0,
                             priorCellSettings:null,
@@ -310,7 +310,7 @@ class BudgetBranch {
                 let cells = parentBudgetNode.cells
                 for (let cell of cells) {
                     let theCell:BudgetCell = cell
-                    if (theCell.chartSelection) {
+                    if (theCell.chartSelection !== null) {
                         theCell.chartSelection = null
                     }
                 }

@@ -5,17 +5,33 @@ const utilities_1 = require('../modules/utilities');
 var format = require('format-number');
 class BudgetCell {
     constructor(specs) {
+        this.chartSelection = null;
         this.refreshSelection = () => {
             let budgetCell = this;
-            if (budgetCell.chartSelection) {
-                if (budgetCell.chartSelection[0] && budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
-                    if (budgetCell.googleChartType == "PieChart") {
-                        budgetCell.chartSelection[0].column = null;
+            if (budgetCell.chartSelection !== null) {
+                let cs;
+                if (budgetCell.chart)
+                    cs = budgetCell.chart.getSelection();
+                if (budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
+                    let selectionObj = { row: null, column: null };
+                    let chartSelection = [selectionObj];
+                    switch (budgetCell.googleChartType) {
+                        case "PieChart":
+                            selectionObj.row = budgetCell.chartSelection;
+                            break;
+                        case "ColumnChart":
+                            selectionObj.row = budgetCell.chartSelection;
+                            selectionObj.column = 1;
+                            break;
+                        case "LineChart":
+                        case "AreaChart":
+                            selectionObj.column = budgetCell.chartSelection + 1;
+                            break;
+                        default:
+                            console.log('ERROR: default invoked in refreshSelection');
+                            break;
                     }
-                    else {
-                        budgetCell.chartSelection[0].column = 1;
-                    }
-                    budgetCell.chart.setSelection(budgetCell.chartSelection);
+                    budgetCell.chart.setSelection(chartSelection);
                 }
             }
         };
@@ -334,9 +350,9 @@ class BudgetCell {
                     eventName: 'animationfinish',
                     callback: ((cell) => Chart => {
                         let selection = Chart.chart.getSelection();
-                        if (selection.length == 0 && cell.chartSelection && cell.chartSelection.length > 0) {
+                        if (selection.length == 0 && cell.chartSelection !== null) {
                             if (cell.chart) {
-                                cell.chart.setSelection(cell.chartSelection);
+                                cell.refreshSelection();
                             }
                         }
                     })(budgetCell)

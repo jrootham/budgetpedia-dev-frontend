@@ -8,26 +8,25 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         throw Error('faulty cellIndex in applyChartComponentSelection');
     }
     let selection = chartSelectionData.selection[0];
-    let selectionrow;
+    let logicalselectionrow = null;
     if (selection) {
         switch (budgetCell.googleChartType) {
             case "AreaChart":
             case "LineChart":
-                selectionrow = selection.column - 1;
-                chartSelectionData.selection[0].row = null;
+                logicalselectionrow = selection.column - 1;
+                if (budgetCell.chartSelection == logicalselectionrow) {
+                    logicalselectionrow = null;
+                }
                 break;
             default:
-                selectionrow = selection.row;
+                logicalselectionrow = selection.row;
                 break;
         }
-    }
-    else {
-        selectionrow = null;
     }
     if (budgetCell.nodeDataseriesName == 'CommonDimension') {
         return;
     }
-    budgetCell.chartSelection = selection ? chartSelectionData.selection : null;
+    budgetCell.chartSelection = logicalselectionrow;
     let removed = branchNodes.splice(nodeIndex + 1);
     let removeditems = removed.map((item, index) => {
         return { nodeuid: item.uid, cellList: item.cellDeclarationList, index: index };
@@ -51,14 +50,14 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         removeNodeDeclarations(removeditems);
     }
     let { updateCellChartSelection } = budgetNode.actions;
-    updateCellChartSelection(budgetCell.uid, chartSelectionData.selection);
-    if (!selection) {
+    updateCellChartSelection(budgetCell.uid, logicalselectionrow);
+    if (logicalselectionrow === null) {
         budgetCell.chartSelection = null;
         return;
     }
-    budgetCell.chartSelection = chartSelectionData.selection;
+    budgetCell.chartSelection = logicalselectionrow;
     let childprops = {
-        selectionrow: selectionrow,
+        selectionrow: logicalselectionrow,
         nodeIndex: nodeIndex,
         cellIndex: parseInt(cellIndex),
         priorCellSettings: priorCellSettings,

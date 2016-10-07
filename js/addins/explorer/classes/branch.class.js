@@ -125,7 +125,7 @@ class BudgetBranch {
                         setTimeout(() => {
                             let prevBudgetCell = prevBudgetNode.cells[0];
                             let childprops = {
-                                selectionrow: prevBudgetCell.chartSelection[0].row,
+                                selectionrow: prevBudgetCell.chartSelection,
                                 nodeIndex: prevBudgetNode.nodeIndex,
                                 cellIndex: 0,
                                 priorCellSettings: null,
@@ -152,7 +152,7 @@ class BudgetBranch {
                     let cells = parentBudgetNode.cells;
                     for (let cell of cells) {
                         let theCell = cell;
-                        if (theCell.chartSelection) {
+                        if (theCell.chartSelection !== null) {
                             theCell.chartSelection = null;
                         }
                     }

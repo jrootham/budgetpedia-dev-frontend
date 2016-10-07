@@ -167,6 +167,7 @@ class BudgetNode {
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration: CellDeclaration = cellDeclarations[cellIndex]
             let {nodeDataseriesName, celluid, chartSelection} = cellDeclaration
+            if (chartSelection === undefined) chartSelection = null
             let settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope]
             let { explorerChartCode } = settings
             let cell = new BudgetCell(

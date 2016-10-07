@@ -299,9 +299,6 @@ let cellsById = (state = {}, action) => {
             let { celluid } = action.payload;
             let newcell = Object.assign({}, newstate[celluid]);
             let chartSelection = action.payload.selection;
-            if (Array.isArray(chartSelection) && chartSelection.length == 0) {
-                chartSelection = null;
-            }
             newcell.chartSelection = chartSelection;
             newstate[celluid] = newcell;
             return newstate;

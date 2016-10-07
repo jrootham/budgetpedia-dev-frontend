@@ -44,7 +44,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
     // console.log('budgetCell googlecharttype',budgetCell.googleChartType, cellIndex)
 
-    let selectionrow
+    let logicalselectionrow = null
     if (selection) {
         // TODO: understand this: setting column to null avoids bugs
         // when chart animation is present
@@ -52,28 +52,33 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         switch (budgetCell.googleChartType) {
             case "AreaChart":
             case "LineChart":
-                selectionrow = selection.column - 1
+                logicalselectionrow = selection.column - 1
+                if (budgetCell.chartSelection == logicalselectionrow) {
+                    logicalselectionrow = null
+                }
                 // TODO: save row and column separately and allow
                 // mapping among chart types
-                chartSelectionData.selection[0].row = null
+                // chartSelectionData.selection[0].row = null
                 break;
             // TODO: find out why the piechart column null causes fail
             // case "PieChart": 
             //     chartSelectionData.selection[0].column = null
             default:
-                selectionrow = selection.row
+                logicalselectionrow = selection.row
                 break;
         }
-    } else {
-        selectionrow = null
-        // return
+    // } else {
+    //     logicalselectionrow = null
+    //     // return
     }
 
     // 1. stop if chart is not not drillable
     if (budgetCell.nodeDataseriesName == 'CommonDimension') {
         return
     }
-    budgetCell.chartSelection = selection? chartSelectionData.selection: null
+    budgetCell.chartSelection = logicalselectionrow // selection? chartSelectionData.selection: null
+
+    // console.log('setting chartSelection', budgetCell.chartSelection, logicalselectionrow, selection)
 
     // 2. remove any nodes to be replaced or abandoned
 
@@ -107,9 +112,12 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     }
 
     let { updateCellChartSelection } = budgetNode.actions
-    updateCellChartSelection(budgetCell.uid,chartSelectionData.selection)
 
-    if (!selection) { // deselected
+    // console.log('logicalselectionrow', logicalselectionrow)
+
+    updateCellChartSelection(budgetCell.uid,logicalselectionrow) // chartSelectionData.selection)
+
+    if (logicalselectionrow === null) { // deselected
 
         budgetCell.chartSelection = null
 
@@ -117,9 +125,9 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     }
 
     // 3. otherwise create new child node
-    budgetCell.chartSelection = chartSelectionData.selection
+    budgetCell.chartSelection = logicalselectionrow // chartSelectionData.selection
     let childprops: CreateChildNodeProps = {
-        selectionrow,
+        selectionrow:logicalselectionrow,
         nodeIndex,
         cellIndex:parseInt(cellIndex),
         priorCellSettings, 
