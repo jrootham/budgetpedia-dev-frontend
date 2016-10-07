@@ -127,7 +127,12 @@ class BudgetNode {
             let parentCell = this.parentBudgetNode.cells[
                 this.props.declarationData.nodesById[this.parentBudgetNode.uid].cellIndex
             ]
-            cellDeclarationData = JSON.parse(JSON.stringify(this.props.declarationData.cellsById[parentCell.uid]))
+            let callingCellDeclaration = this.props.declarationData.cellsById[parentCell.uid]
+            let chartConfigs = Object.assign({},callingCellDeclaration.chartConfigs)
+            cellDeclarationData = {
+                yearScope:callingCellDeclaration.yearScope,
+                chartConfigs,
+            }
         } else {
             cellDeclarationData = this.props.declarationData.defaults.cell
         }

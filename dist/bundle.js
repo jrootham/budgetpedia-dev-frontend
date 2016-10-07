@@ -1412,7 +1412,6 @@ var BudgetBranch = function () {
             return promise;
         };
         this.createChildNodeDeclaration = function (props) {
-            console.log('inside create child node declaration', props);
             var budgetBranch = _this;
             var selectionrow = props.selectionrow;
             var nodeIndex = props.nodeIndex;
@@ -1535,6 +1534,9 @@ var BudgetCell = function () {
             _this.setChartParms();
         };
         this.switchYearCodes = function (yearCodes) {
+            _this.setChartParms();
+        };
+        this.switchYearScope = function () {
             _this.setChartParms();
         };
         this.setChartParms = function () {
@@ -1951,7 +1953,12 @@ var BudgetCell = function () {
 
             var _loop = function _loop(year) {
                 var items = sortedDataSeries.map(function (sortedItem) {
-                    return treeNodeData[_this.nodeDataseriesName][sortedItem.Code].years[year];
+                    var amount = null;
+                    var years = treeNodeData[_this.nodeDataseriesName][sortedItem.Code].years;
+                    if (years && years[year]) {
+                        amount = years[year];
+                    }
+                    return amount;
                 });
                 var row = [year.toString()].concat(_toConsumableArray(items));
                 rows.push(row);
@@ -2470,7 +2477,12 @@ var BudgetNode = function () {
             var cellDeclarationData = void 0;
             if (_this.parentBudgetNode) {
                 var parentCell = _this.parentBudgetNode.cells[_this.props.declarationData.nodesById[_this.parentBudgetNode.uid].cellIndex];
-                cellDeclarationData = JSON.parse(JSON.stringify(_this.props.declarationData.cellsById[parentCell.uid]));
+                var callingCellDeclaration = _this.props.declarationData.cellsById[parentCell.uid];
+                var chartConfigs = Object.assign({}, callingCellDeclaration.chartConfigs);
+                cellDeclarationData = {
+                    yearScope: callingCellDeclaration.yearScope,
+                    chartConfigs: chartConfigs
+                };
             } else {
                 cellDeclarationData = _this.props.declarationData.defaults.cell;
             }
@@ -3281,6 +3293,10 @@ var ExplorerCell = function (_Component) {
                     {
                         budgetCell.switchChartCode(_this.chartConfig.explorerChartCode);
                         break;
+                    }
+                case actions_1.cellTypes.UPDATE_CELL_TIMECODE:
+                    {
+                        budgetCell.switchYearScope();
                     }
             }
             _this._previousControlData = currentControlData;
@@ -4869,7 +4885,6 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
         throw Error('faulty cellIndex in applyChartComponentSelection');
     }
     var selection = chartSelectionData.selection[0];
-    console.log('budgetCell googlecharttype', budgetCell.googleChartType, cellIndex);
     var selectionrow = void 0;
     if (selection) {
         switch (budgetCell.googleChartType) {
@@ -4917,7 +4932,6 @@ exports.onChartComponentSelection = function (budgetBranch) {
     return function (nodeIndex) {
         return function (cellIndex) {
             return function (chartSelectionData) {
-                console.log('chart selection data', chartSelectionData);
                 applyChartComponentSelection(budgetBranch, nodeIndex, cellIndex, chartSelectionData);
             };
         };

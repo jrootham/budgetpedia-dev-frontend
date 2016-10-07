@@ -8,7 +8,6 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         throw Error('faulty cellIndex in applyChartComponentSelection');
     }
     let selection = chartSelectionData.selection[0];
-    console.log('budgetCell googlecharttype', budgetCell.googleChartType, cellIndex);
     let selectionrow;
     if (selection) {
         switch (budgetCell.googleChartType) {
@@ -52,6 +51,5 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     budgetBranch.createChildNodeDeclaration(childprops);
 };
 exports.onChartComponentSelection = budgetBranch => nodeIndex => cellIndex => chartSelectionData => {
-    console.log('chart selection data', chartSelectionData);
     applyChartComponentSelection(budgetBranch, nodeIndex, cellIndex, chartSelectionData);
 };

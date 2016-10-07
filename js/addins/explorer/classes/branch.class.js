@@ -186,7 +186,6 @@ class BudgetBranch {
             return promise;
         };
         this.createChildNodeDeclaration = (props) => {
-            console.log('inside create child node declaration', props);
             let budgetBranch = this;
             let { selectionrow, nodeIndex, cellIndex, } = props;
             let { nodes: branchNodes, nodeCallbacks: callbacks, actions, settings: branchSettings, } = budgetBranch;

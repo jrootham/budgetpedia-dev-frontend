@@ -361,7 +361,7 @@ class BudgetBranch {
     // therefore metadata is always component
     createChildNodeDeclaration = ( props: CreateChildNodeProps ) => {
 
-        console.log('inside create child node declaration', props)
+        // console.log('inside create child node declaration', props)
 
         let budgetBranch = this
 

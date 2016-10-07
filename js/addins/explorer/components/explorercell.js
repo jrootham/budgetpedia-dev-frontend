@@ -41,6 +41,9 @@ class ExplorerCell extends Component {
                     budgetCell.switchChartCode(this.chartConfig.explorerChartCode);
                     break;
                 }
+                case actions_1.cellTypes.UPDATE_CELL_TIMECODE: {
+                    budgetCell.switchYearScope();
+                }
             }
             this._previousControlData = currentControlData;
         };

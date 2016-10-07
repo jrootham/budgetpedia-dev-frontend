@@ -25,6 +25,9 @@ class BudgetCell {
         this.switchYearCodes = yearCodes => {
             this.setChartParms();
         };
+        this.switchYearScope = () => {
+            this.setChartParms();
+        };
         this.setChartParms = () => {
             let budgetCell = this;
             let { viewpointNamingConfigs, datasetConfig, isInflationAdjusted, } = budgetCell.viewpointConfigPack;
@@ -427,7 +430,12 @@ class BudgetCell {
             let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
             for (let year = leftYear; year <= rightYear; year++) {
                 let items = sortedDataSeries.map((sortedItem) => {
-                    return treeNodeData[this.nodeDataseriesName][sortedItem.Code].years[year];
+                    let amount = null;
+                    let years = treeNodeData[this.nodeDataseriesName][sortedItem.Code].years;
+                    if (years && years[year]) {
+                        amount = years[year];
+                    }
+                    return amount;
                 });
                 let row = [year.toString(), ...items];
                 rows.push(row);

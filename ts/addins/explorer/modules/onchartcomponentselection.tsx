@@ -48,7 +48,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     let selection = chartSelectionData.selection[0]
 
 
-    console.log('budgetCell googlecharttype',budgetCell.googleChartType, cellIndex)
+    // console.log('budgetCell googlecharttype',budgetCell.googleChartType, cellIndex)
 
     let selectionrow
     if (selection) {
@@ -59,8 +59,11 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
             case "AreaChart":
             case "LineChart":
                 selectionrow = selection.column - 1
+                // TODO: save row and column separately and allow
+                // mapping among chart types
                 chartSelectionData.selection[0].row = null
                 break;
+            // TODO: find out why the piechart column null causes fail
             // case "PieChart": 
             //     chartSelectionData.selection[0].column = null
             default:
@@ -117,7 +120,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
 export const onChartComponentSelection = 
     budgetBranch => nodeIndex => cellIndex => chartSelectionData => {
-        console.log('chart selection data',chartSelectionData)
+        // console.log('chart selection data',chartSelectionData)
     applyChartComponentSelection(budgetBranch,nodeIndex, cellIndex, chartSelectionData)
 }
 

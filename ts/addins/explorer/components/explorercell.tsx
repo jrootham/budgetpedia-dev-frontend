@@ -124,6 +124,9 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 budgetCell.switchChartCode(this.chartConfig.explorerChartCode)
                 break
             }
+            case cellActionTypes.UPDATE_CELL_TIMECODE: {
+                budgetCell.switchYearScope()
+            }
         }
         this._previousControlData = currentControlData
     }
