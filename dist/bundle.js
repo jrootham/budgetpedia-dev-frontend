@@ -1752,6 +1752,23 @@ var BudgetCell = function () {
                         if (_this.explorerChartCode == "Proportional") {
                             options.isStacked = 'percent';
                         }
+                    }
+                case "LineChart":
+                    {
+                        if (!options) options = {};
+                        options.legend = {
+                            position: "top",
+                            textStyle: {
+                                fontSize: 9
+                            },
+                            maxLines: 4
+                        };
+                        options.chartArea = {
+                            height: '55%',
+                            top: '30%',
+                            left: 'auto',
+                            width: 'auto'
+                        };
                         break;
                     }
                 default:

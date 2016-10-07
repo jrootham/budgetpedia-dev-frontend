@@ -256,6 +256,11 @@
                                     "NamingConfigRef": "PROGRAM",
                                     "Baseline": true
                                 },
+                                "TREASURER": {
+                                    "Index": 5,
+                                    "NamingConfigRef": "PROGRAM",
+                                    "Baseline": true
+                                },
                                 "ACCOUNTABILITY": {
                                     "Index": 5,
                                     "NamingConfigRef": "CLUSTER",
@@ -363,13 +368,8 @@
                             "NamingConfigRef": "PROGRAM",
                             "Baseline": true
                         },
-                        "TREASURER": {
-                            "Index": 4,
-                            "NamingConfigRef": "PROGRAM",
-                            "Baseline": true
-                        },
                         "LEGAL": {
-                            "Index": 5,
+                            "Index": 4,
                             "NamingConfigRef": "PROGRAM",
                             "Baseline": true
                         }
