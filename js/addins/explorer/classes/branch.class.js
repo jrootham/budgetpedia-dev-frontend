@@ -128,6 +128,8 @@ class BudgetBranch {
                                 selectionrow: prevBudgetCell.chartSelection[0].row,
                                 nodeIndex: prevBudgetNode.nodeIndex,
                                 cellIndex: 0,
+                                priorCellSettings: null,
+                                priorNodeSettings: null,
                             };
                             budgetBranch.createChildNodeDeclaration(childprops);
                         });
@@ -187,10 +189,13 @@ class BudgetBranch {
         };
         this.createChildNodeDeclaration = (props) => {
             let budgetBranch = this;
-            let { selectionrow, nodeIndex, cellIndex, } = props;
+            let { selectionrow, nodeIndex, cellIndex, priorCellSettings, priorNodeSettings, } = props;
             let { nodes: branchNodes, nodeCallbacks: callbacks, actions, settings: branchSettings, } = budgetBranch;
             let viewpointData = budgetBranch.state.viewpointData;
             let budgetNode = branchNodes[nodeIndex];
+            if (priorCellSettings) {
+                budgetNode.priorCellSettings = priorCellSettings;
+            }
             let { aspectName, viewpointName } = budgetNode;
             let { workingStatus, onPortalCreation, } = callbacks;
             let childdatapath = budgetNode.dataPath.slice();
@@ -215,7 +220,15 @@ class BudgetBranch {
             }
             workingStatus(true);
             let newrange = Object.assign({}, budgetNode.yearSpecs);
-            let newselections = Object.assign({}, budgetNode.yearSelections);
+            let newselections;
+            let newCellIndex = cellIndex;
+            if (priorNodeSettings) {
+                newselections = priorNodeSettings.yearSelections;
+                newCellIndex = priorNodeSettings.cellIndex;
+            }
+            else {
+                newselections = Object.assign({}, budgetNode.yearSelections);
+            }
             let newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
             let newnodeconfigparms = {
                 viewpointName: viewpointName,
@@ -224,7 +237,7 @@ class BudgetBranch {
                 nodeIndex: nodeIndex + 1,
                 yearSpecs: newrange,
                 yearSelections: newselections,
-                cellIndex: cellIndex,
+                cellIndex: newCellIndex,
             };
             actions.addNodeDeclaration(newnodeconfigparms);
             setTimeout(() => {

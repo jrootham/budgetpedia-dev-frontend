@@ -29,10 +29,24 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     }
     budgetCell.chartSelection = selection ? chartSelectionData.selection : null;
     let removed = branchNodes.splice(nodeIndex + 1);
-    let removeditems = removed.map((item) => {
-        return { nodeuid: item.uid, cellList: item.cellDeclarationList };
+    let removeditems = removed.map((item, index) => {
+        return { nodeuid: item.uid, cellList: item.cellDeclarationList, index: index };
     });
+    let priorCellSettings = null;
+    let priorNodeSettings = null;
     if (removeditems.length > 0) {
+        let removednode = removed[removeditems[0].index];
+        let priorCell = removednode.cells[removednode.nodeDeclaration.cellIndex];
+        let chartConfigs = Object.assign({}, priorCell.cellDeclaration.chartConfigs);
+        let yearScope = priorCell.cellDeclaration.yearScope;
+        priorCellSettings = {
+            chartConfigs: chartConfigs,
+            yearScope: yearScope,
+        };
+        priorNodeSettings = {
+            yearSelections: Object.assign({}, removednode.nodeDeclaration.yearSelections),
+            cellIndex: removednode.nodeDeclaration.cellIndex
+        };
         let { removeNodeDeclarations } = budgetBranch.actions;
         removeNodeDeclarations(removeditems);
     }
@@ -47,6 +61,8 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
         selectionrow: selectionrow,
         nodeIndex: nodeIndex,
         cellIndex: parseInt(cellIndex),
+        priorCellSettings: priorCellSettings,
+        priorNodeSettings: priorNodeSettings,
     };
     budgetBranch.createChildNodeDeclaration(childprops);
 };

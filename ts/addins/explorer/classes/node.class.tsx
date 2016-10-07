@@ -90,6 +90,13 @@ class BudgetNode {
 
     // treeNodeMetaDataFromParentSortedList: any = null // includes parentNode for now
     // parentNode: any = null
+
+    get nodeDeclaration() {
+        return this.props.declarationData.nodesById[this.uid]
+    }
+
+    priorCellSettings: any // to pass prior cell settings from replaced child for next child
+
     parentBudgetNode: any = null
 
     portalConfig: PortalConfig
@@ -124,14 +131,20 @@ class BudgetNode {
         let node = this.treeNodeData
         let cellDeclarationData
         if (this.parentBudgetNode) {
-            let parentCell = this.parentBudgetNode.cells[
-                this.props.declarationData.nodesById[this.parentBudgetNode.uid].cellIndex
-            ]
-            let callingCellDeclaration = this.props.declarationData.cellsById[parentCell.uid]
-            let chartConfigs = Object.assign({},callingCellDeclaration.chartConfigs)
-            cellDeclarationData = {
-                yearScope:callingCellDeclaration.yearScope,
-                chartConfigs,
+            let parent:BudgetNode = this.parentBudgetNode
+            if (parent.priorCellSettings) {
+                cellDeclarationData = parent.priorCellSettings
+                parent.priorCellSettings = null
+            } else {
+                let parentCell = parent.cells[
+                    this.props.declarationData.nodesById[parent.uid].cellIndex
+                ]
+                let callingCellDeclaration = this.props.declarationData.cellsById[parentCell.uid]
+                let chartConfigs = Object.assign({},callingCellDeclaration.chartConfigs)
+                cellDeclarationData = {
+                    yearScope:callingCellDeclaration.yearScope,
+                    chartConfigs,
+                }
             }
         } else {
             cellDeclarationData = this.props.declarationData.defaults.cell

@@ -1,10 +1,11 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // onchartcomponentselection.tsx
 
+// TODO: replacement node should inherit cellIndex
 // TODO: should be moved to branch.class
 
 import BudgetNode from '../classes/node.class'
-import BudgetBranch from '../classes/branch.class'
+import BudgetBranch, { CreateChildNodeProps } from '../classes/branch.class'
 import BudgetCell from '../classes/cell.class'
 
 export interface ChartSelectionCell {
@@ -18,13 +19,6 @@ export interface ChartSelectionContext {
     // Chart: any,
     selection: ChartSelectionCell[],
     err: any,
-}
-
-export interface CreateChildNodeProps {
-    selectionrow: any,
-    nodeIndex: number,
-    cellIndex: number,
-    // chartSelectionData: any,
 }
 
 // ------------------------[ UPDATE CHART BY SELECTION ]-----------------
@@ -83,13 +77,29 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
     // 2. remove any nodes to be replaced or abandoned
 
-    let removed = branchNodes.splice(nodeIndex + 1) // remove subsequent charts
-    let removeditems = removed.map((item:BudgetNode) => {
-        return {nodeuid:item.uid, cellList:item.cellDeclarationList}
+    let removed:BudgetNode[] = branchNodes.splice(nodeIndex + 1) // remove subsequent charts
+    let removeditems = removed.map((item:BudgetNode, index) => {
+        return {nodeuid:item.uid, cellList:item.cellDeclarationList, index}
     })
+
+    let priorCellSettings = null
+    let priorNodeSettings = null
 
     if (removeditems.length > 0) {
 
+        // TODO: review this for directness and efficiency
+        let removednode:BudgetNode = removed[removeditems[0].index]
+        let priorCell:BudgetCell = removednode.cells[removednode.nodeDeclaration.cellIndex]
+        let chartConfigs = Object.assign({},priorCell.cellDeclaration.chartConfigs)
+        let yearScope = priorCell.cellDeclaration.yearScope
+        priorCellSettings = {
+            chartConfigs,
+            yearScope,
+        }
+        priorNodeSettings = {
+            yearSelections: Object.assign({},removednode.nodeDeclaration.yearSelections),
+            cellIndex: removednode.nodeDeclaration.cellIndex
+        }
         let { removeNodeDeclarations } = budgetBranch.actions
 
         removeNodeDeclarations(removeditems)
@@ -111,7 +121,9 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
     let childprops: CreateChildNodeProps = {
         selectionrow,
         nodeIndex,
-        cellIndex:parseInt(cellIndex), 
+        cellIndex:parseInt(cellIndex),
+        priorCellSettings, 
+        priorNodeSettings,
     }
 
     budgetBranch.createChildNodeDeclaration( childprops )

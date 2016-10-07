@@ -100,12 +100,12 @@ let workingmessagestate = false;
 let branchDefaults = {
     repository: "Toronto",
     viewpoint: "FUNCTIONAL",
-    version: 'PBFT',
+    version: 'SUMMARY',
     aspect: "Expenses",
     branchDataGeneration: 0,
     defaultVersions: {
-        'FUNCTIONAL': 'PBFT',
-        'STRUCTURAL': 'PBFT',
+        'FUNCTIONAL': 'SUMMARY',
+        'STRUCTURAL': 'SUMMARY',
     },
     defaultAspects: {
         'SUMMARY': 'Expenses',

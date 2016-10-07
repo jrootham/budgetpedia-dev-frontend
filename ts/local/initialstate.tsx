@@ -214,12 +214,12 @@ let workingmessagestate = false
 let branchDefaults:BranchSettings = {
     repository: "Toronto",
     viewpoint: "FUNCTIONAL",
-    version: 'PBFT',
+    version: 'SUMMARY',
     aspect: "Expenses",
     branchDataGeneration:0,
     defaultVersions:{ // viewpoint versions
-        'FUNCTIONAL':'PBFT',
-        'STRUCTURAL':'PBFT',
+        'FUNCTIONAL':'SUMMARY',
+        'STRUCTURAL':'SUMMARY',
     },
     defaultAspects:{ // version aspects
         'SUMMARY':'Expenses',
@@ -242,15 +242,12 @@ let explorer = {
         cell: {
             chartConfigs:{
                 'OneYear':{
-                    // chartSelection: null,
                     explorerChartCode: "ColumnChart",
                 },
                 'TwoYears':{
-                    // chartSelection: null,
                     explorerChartCode: "DoubleColumnChart",
                 },
                 'AllYears':{
-                    // chartSelection: null,
                     explorerChartCode: "TimeLine",
                 },
             },

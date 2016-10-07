@@ -22,13 +22,20 @@ class BudgetNode {
             let node = this.treeNodeData;
             let cellDeclarationData;
             if (this.parentBudgetNode) {
-                let parentCell = this.parentBudgetNode.cells[this.props.declarationData.nodesById[this.parentBudgetNode.uid].cellIndex];
-                let callingCellDeclaration = this.props.declarationData.cellsById[parentCell.uid];
-                let chartConfigs = Object.assign({}, callingCellDeclaration.chartConfigs);
-                cellDeclarationData = {
-                    yearScope: callingCellDeclaration.yearScope,
-                    chartConfigs: chartConfigs,
-                };
+                let parent = this.parentBudgetNode;
+                if (parent.priorCellSettings) {
+                    cellDeclarationData = parent.priorCellSettings;
+                    parent.priorCellSettings = null;
+                }
+                else {
+                    let parentCell = parent.cells[this.props.declarationData.nodesById[parent.uid].cellIndex];
+                    let callingCellDeclaration = this.props.declarationData.cellsById[parentCell.uid];
+                    let chartConfigs = Object.assign({}, callingCellDeclaration.chartConfigs);
+                    cellDeclarationData = {
+                        yearScope: callingCellDeclaration.yearScope,
+                        chartConfigs: chartConfigs,
+                    };
+                }
             }
             else {
                 cellDeclarationData = this.props.declarationData.defaults.cell;
@@ -94,6 +101,9 @@ class BudgetNode {
     }
     get props() {
         return this.getProps();
+    }
+    get nodeDeclaration() {
+        return this.props.declarationData.nodesById[this.uid];
     }
     get cells() {
         return [...this.state.nodeCells];

@@ -28,6 +28,15 @@ export interface CreateChildNodeProps {
     selectionrow: any,
     nodeIndex: number,
     cellIndex: number,
+    priorCellSettings: {
+        yearScope:any,
+        chartConfigs:any,
+    },
+    priorNodeSettings: {
+        yearSelections: any,
+        cellIndex: number,
+    }
+    // chartSelectionData: any,
 }
 
 interface BudgetBranchParms {
@@ -265,10 +274,13 @@ class BudgetBranch {
 
                         let prevBudgetCell:BudgetCell = prevBudgetNode.cells[0]
 
+                        // TODO: pass prior cell and node settings
                         let childprops: CreateChildNodeProps = {
                             selectionrow: prevBudgetCell.chartSelection[0].row,
                             nodeIndex: prevBudgetNode.nodeIndex,
                             cellIndex:0,
+                            priorCellSettings:null,
+                            priorNodeSettings:null,
                             // chartSelectionData,
                         }
                         // let fcurrent = fn(nodeIndex)(0)
@@ -361,14 +373,14 @@ class BudgetBranch {
     // therefore metadata is always component
     createChildNodeDeclaration = ( props: CreateChildNodeProps ) => {
 
-        // console.log('inside create child node declaration', props)
-
         let budgetBranch = this
 
         let {
             selectionrow,
             nodeIndex,
             cellIndex,
+            priorCellSettings,
+            priorNodeSettings,
         } = props
 
         let { 
@@ -382,6 +394,10 @@ class BudgetBranch {
 
         let budgetNode = branchNodes[nodeIndex]
 
+        // a hack to pass prior settings to child
+        if (priorCellSettings) {
+            budgetNode.priorCellSettings = priorCellSettings
+        }
         let { aspectName, viewpointName } = budgetNode
 
         let {
@@ -425,7 +441,14 @@ class BudgetBranch {
         }
         workingStatus(true)
         let newrange = Object.assign({}, budgetNode.yearSpecs)
-        let newselections = Object.assign({},budgetNode.yearSelections)
+        let newselections
+        let newCellIndex = cellIndex
+        if (priorNodeSettings) {
+            newselections = priorNodeSettings.yearSelections
+            newCellIndex = priorNodeSettings.cellIndex
+        } else {
+            newselections = Object.assign({},budgetNode.yearSelections)
+        }
 
         let newdatanode = getBudgetNode(viewpointData, childdatapath)
         let newnodeconfigparms: BudgetNodeDeclarationParms = {
@@ -436,7 +459,7 @@ class BudgetBranch {
             nodeIndex: nodeIndex + 1,
             yearSpecs: newrange,
             yearSelections: newselections,
-            cellIndex,
+            cellIndex:newCellIndex,
 
         }
 

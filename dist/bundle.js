@@ -1329,7 +1329,9 @@ var BudgetBranch = function () {
                                 var childprops = {
                                     selectionrow: prevBudgetCell.chartSelection[0].row,
                                     nodeIndex: prevBudgetNode.nodeIndex,
-                                    cellIndex: 0
+                                    cellIndex: 0,
+                                    priorCellSettings: null,
+                                    priorNodeSettings: null
                                 };
                                 budgetBranch.createChildNodeDeclaration(childprops);
                             });
@@ -1416,6 +1418,8 @@ var BudgetBranch = function () {
             var selectionrow = props.selectionrow;
             var nodeIndex = props.nodeIndex;
             var cellIndex = props.cellIndex;
+            var priorCellSettings = props.priorCellSettings;
+            var priorNodeSettings = props.priorNodeSettings;
             var branchNodes = budgetBranch.nodes;
             var callbacks = budgetBranch.nodeCallbacks;
             var actions = budgetBranch.actions;
@@ -1423,6 +1427,9 @@ var BudgetBranch = function () {
 
             var viewpointData = budgetBranch.state.viewpointData;
             var budgetNode = branchNodes[nodeIndex];
+            if (priorCellSettings) {
+                budgetNode.priorCellSettings = priorCellSettings;
+            }
             var aspectName = budgetNode.aspectName;
             var viewpointName = budgetNode.viewpointName;
             var workingStatus = callbacks.workingStatus;
@@ -1448,7 +1455,14 @@ var BudgetBranch = function () {
             }
             workingStatus(true);
             var newrange = Object.assign({}, budgetNode.yearSpecs);
-            var newselections = Object.assign({}, budgetNode.yearSelections);
+            var newselections = void 0;
+            var newCellIndex = cellIndex;
+            if (priorNodeSettings) {
+                newselections = priorNodeSettings.yearSelections;
+                newCellIndex = priorNodeSettings.cellIndex;
+            } else {
+                newselections = Object.assign({}, budgetNode.yearSelections);
+            }
             var newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
             var newnodeconfigparms = {
                 viewpointName: viewpointName,
@@ -1457,7 +1471,7 @@ var BudgetBranch = function () {
                 nodeIndex: nodeIndex + 1,
                 yearSpecs: newrange,
                 yearSelections: newselections,
-                cellIndex: cellIndex
+                cellIndex: newCellIndex
             };
             actions.addNodeDeclaration(newnodeconfigparms);
             setTimeout(function () {
@@ -2493,13 +2507,19 @@ var BudgetNode = function () {
             var node = _this.treeNodeData;
             var cellDeclarationData = void 0;
             if (_this.parentBudgetNode) {
-                var parentCell = _this.parentBudgetNode.cells[_this.props.declarationData.nodesById[_this.parentBudgetNode.uid].cellIndex];
-                var callingCellDeclaration = _this.props.declarationData.cellsById[parentCell.uid];
-                var chartConfigs = Object.assign({}, callingCellDeclaration.chartConfigs);
-                cellDeclarationData = {
-                    yearScope: callingCellDeclaration.yearScope,
-                    chartConfigs: chartConfigs
-                };
+                var parent = _this.parentBudgetNode;
+                if (parent.priorCellSettings) {
+                    cellDeclarationData = parent.priorCellSettings;
+                    parent.priorCellSettings = null;
+                } else {
+                    var parentCell = parent.cells[_this.props.declarationData.nodesById[parent.uid].cellIndex];
+                    var callingCellDeclaration = _this.props.declarationData.cellsById[parentCell.uid];
+                    var chartConfigs = Object.assign({}, callingCellDeclaration.chartConfigs);
+                    cellDeclarationData = {
+                        yearScope: callingCellDeclaration.yearScope,
+                        chartConfigs: chartConfigs
+                    };
+                }
             } else {
                 cellDeclarationData = _this.props.declarationData.defaults.cell;
             }
@@ -2647,6 +2667,11 @@ var BudgetNode = function () {
         key: 'props',
         get: function get() {
             return this.getProps();
+        }
+    }, {
+        key: 'nodeDeclaration',
+        get: function get() {
+            return this.props.declarationData.nodesById[this.uid];
         }
     }, {
         key: 'cells',
@@ -4922,10 +4947,24 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
     }
     budgetCell.chartSelection = selection ? chartSelectionData.selection : null;
     var removed = branchNodes.splice(nodeIndex + 1);
-    var removeditems = removed.map(function (item) {
-        return { nodeuid: item.uid, cellList: item.cellDeclarationList };
+    var removeditems = removed.map(function (item, index) {
+        return { nodeuid: item.uid, cellList: item.cellDeclarationList, index: index };
     });
+    var priorCellSettings = null;
+    var priorNodeSettings = null;
     if (removeditems.length > 0) {
+        var removednode = removed[removeditems[0].index];
+        var priorCell = removednode.cells[removednode.nodeDeclaration.cellIndex];
+        var chartConfigs = Object.assign({}, priorCell.cellDeclaration.chartConfigs);
+        var yearScope = priorCell.cellDeclaration.yearScope;
+        priorCellSettings = {
+            chartConfigs: chartConfigs,
+            yearScope: yearScope
+        };
+        priorNodeSettings = {
+            yearSelections: Object.assign({}, removednode.nodeDeclaration.yearSelections),
+            cellIndex: removednode.nodeDeclaration.cellIndex
+        };
         var removeNodeDeclarations = budgetBranch.actions.removeNodeDeclarations;
 
         removeNodeDeclarations(removeditems);
@@ -4941,7 +4980,9 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
     var childprops = {
         selectionrow: selectionrow,
         nodeIndex: nodeIndex,
-        cellIndex: parseInt(cellIndex)
+        cellIndex: parseInt(cellIndex),
+        priorCellSettings: priorCellSettings,
+        priorNodeSettings: priorNodeSettings
     };
     budgetBranch.createChildNodeDeclaration(childprops);
 };
@@ -7548,12 +7589,12 @@ var workingmessagestate = false;
 var branchDefaults = {
     repository: "Toronto",
     viewpoint: "FUNCTIONAL",
-    version: 'PBFT',
+    version: 'SUMMARY',
     aspect: "Expenses",
     branchDataGeneration: 0,
     defaultVersions: {
-        'FUNCTIONAL': 'PBFT',
-        'STRUCTURAL': 'PBFT'
+        'FUNCTIONAL': 'SUMMARY',
+        'STRUCTURAL': 'SUMMARY'
     },
     defaultAspects: {
         'SUMMARY': 'Expenses',
