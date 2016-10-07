@@ -846,7 +846,7 @@ class BudgetCell {
             let items = sortedDataSeries.map((sortedItem:SortedComponentItem) => {
                 let amount = null
                 let years = treeNodeData[this.nodeDataseriesName][sortedItem.Code].years
-                if (years && years[year]) {
+                if (years && years[year]!== undefined) {
                     amount = years[year]
                 }
                 return amount

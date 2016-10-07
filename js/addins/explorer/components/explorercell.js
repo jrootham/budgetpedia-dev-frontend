@@ -459,7 +459,7 @@ class ExplorerCell extends Component {
         }
         let drilldownprompt = React.createElement("div", {style: {
             position: "absolute",
-            bottom: "3px",
+            bottom: "-12px",
             left: "3px",
             fontSize: "9px",
             fontStyle: "italic",
@@ -480,7 +480,7 @@ class ExplorerCell extends Component {
             this.onChangeChartYears(leftYear, payload);
         }}, yearsoptions()));
         return React.createElement("div", null, (this.props.showControls) ? React.createElement("div", {style: { padding: "3px" }}, timescopes, chartoptions) : null, React.createElement("div", {style: { position: "relative" }}, chart, drilldownprompt), React.createElement("div", {style: { padding: "3px", textAlign: "center" }}, (this.props.showControls) ?
-            yearselection : null, informationoptions, socialoptions, datatable, harmonizeoptions));
+            yearselection : React.createElement("div", {style: { height: "12px" }}), informationoptions, socialoptions, datatable, harmonizeoptions));
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

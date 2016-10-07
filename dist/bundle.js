@@ -1972,7 +1972,7 @@ var BudgetCell = function () {
                 var items = sortedDataSeries.map(function (sortedItem) {
                     var amount = null;
                     var years = treeNodeData[_this.nodeDataseriesName][sortedItem.Code].years;
-                    if (years && years[year]) {
+                    if (years && years[year] !== undefined) {
                         amount = years[year];
                     }
                     return amount;
@@ -3711,7 +3711,7 @@ var ExplorerCell = function (_Component) {
             }
             var drilldownprompt = React.createElement("div", { style: {
                     position: "absolute",
-                    bottom: "3px",
+                    bottom: "-12px",
                     left: "3px",
                     fontSize: "9px",
                     fontStyle: "italic"
@@ -3729,7 +3729,7 @@ var ExplorerCell = function (_Component) {
                 } }, yearsoptions()) : null, yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? null : yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears] ? ':' : '-', React.createElement(DropDownMenu_1.default, { value: rightYear, style: {}, onChange: function onChange(e, key, payload) {
                     _this2.onChangeChartYears(leftYear, payload);
                 } }, yearsoptions()));
-            return React.createElement("div", null, this.props.showControls ? React.createElement("div", { style: { padding: "3px" } }, timescopes, chartoptions) : null, React.createElement("div", { style: { position: "relative" } }, chart, drilldownprompt), React.createElement("div", { style: { padding: "3px", textAlign: "center" } }, this.props.showControls ? yearselection : null, informationoptions, socialoptions, datatable, harmonizeoptions));
+            return React.createElement("div", null, this.props.showControls ? React.createElement("div", { style: { padding: "3px" } }, timescopes, chartoptions) : null, React.createElement("div", { style: { position: "relative" } }, chart, drilldownprompt), React.createElement("div", { style: { padding: "3px", textAlign: "center" } }, this.props.showControls ? yearselection : React.createElement("div", { style: { height: "12px" } }), informationoptions, socialoptions, datatable, harmonizeoptions));
         }
     }, {
         key: 'cellDeclaration',

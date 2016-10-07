@@ -831,7 +831,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         let drilldownprompt = 
             <div style={{
                 position:"absolute",
-                bottom:"3px",
+                bottom:"-12px",
                 left:"3px",
                 fontSize:"9px",
                 fontStyle:"italic",
@@ -913,7 +913,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
             <div style={{ padding: "3px", textAlign:"center" }}>
 
                 {(this.props.showControls)?
-                    yearselection:null}
+                    yearselection:<div style={{height:"12px"}}></div>}
 
                 { informationoptions }
 
