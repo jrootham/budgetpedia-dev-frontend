@@ -1,8 +1,7 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetnode.tsx
 
-import { YearsRange
-             } from './databaseapi'
+import { YearsRange } from './databaseapi'
 import { 
     AspectNameToDatasetName, 
 } from '../constants'
@@ -19,9 +18,7 @@ export interface BudgetNodeParms {
     viewpointName: string,
     aspectName: string, // used to select chartset to display
     // datasetSpecs:DataseriesMeta[],
-    yearsRange
-            : YearsRange
-            ,
+    yearsRange: YearsRange,
     yearSelections: any,
     dataPath: string[],
     nodeIndex: number,
@@ -32,9 +29,7 @@ export interface BudgetNodeDeclarationParms {
     viewpointName: string,
     aspectName: string, // used to select chartset to display
     // datasetSpecs:DataseriesMeta[],
-    yearsRange
-            : YearsRange
-            ,
+    yearsRange: YearsRange,
     yearSelections: any,
     dataPath: string[],
     nodeIndex: number,
@@ -69,9 +64,7 @@ class BudgetNode {
     aspectName: string
     dataPath: string[]
     nodeIndex: number
-    yearsRange
-            : YearsRange
-            
+    yearsRange: YearsRange
     yearSelections: any
     actions: any
     viewpointConfigPack: any
@@ -237,8 +230,8 @@ class BudgetNode {
 
         let budgetNode = this
 
-        let { viewpointConfigPack, treeNodeData, yearsRange
-            , yearSelections, parentBudgetNode, nodeIndex } = budgetNode
+        let { viewpointConfigPack, treeNodeData, yearsRange, 
+            yearSelections, parentBudgetNode, nodeIndex } = budgetNode
         let nodeDataPack: NodeDataPack = {
             treeNodeData,
             yearsRange

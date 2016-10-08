@@ -123,8 +123,7 @@ export interface DataseriesMeta {
     Type:string,
 }
 
-export interface YearsRange
-             {
+export interface YearsRange {
     firstYear: number,
     lastYear: number,
 }

@@ -32,8 +32,7 @@ import {
 } from '../constants'
 
 import BudgetNode from './node.class'
-import {YearsRange
-            , DatasetConfig} from './databaseapi'
+import { YearsRange, DatasetConfig } from './databaseapi'
 import { TimeScope, GoogleChartColors } from '../constants'
 import {ColorBrightness} from '../modules/utilities'
 
@@ -71,9 +70,7 @@ export interface CellConstructorArgs {
 
 export interface NodeDataPack {
     treeNodeData: any,
-    yearsRange
-            : YearsRange
-            ,
+    yearsRange: YearsRange,
     yearSelections: any,
     parentBudgetNode: any,
     budgetNode:any,
@@ -224,9 +221,7 @@ class BudgetCell {
 
         let { 
             treeNodeData, 
-            yearsRange
-            , 
-            // treeNodeMetaDataFromParentSortedList, 
+            yearsRange, 
         } = budgetCell.nodeDataPack
 
         // ---------------------[ get data node components ]------------------
@@ -253,8 +248,7 @@ class BudgetCell {
             treeNodeData, 
             viewpointNamingConfigs, 
             datasetConfig, 
-            yearsRange
-            
+            yearsRange            
         )
 
         // ------------------
@@ -660,21 +654,17 @@ class BudgetCell {
     // ------------------
     // 4. chart columns:
     // ------------------
-    private _chartParmsColumns = (yearsRange
-            :YearsRange
-            , treeNodeData) => {
+    private _chartParmsColumns = (yearsRange:YearsRange, treeNodeData) => {
         let budgetCell = this
 
         let { googleChartType } = budgetCell
 
         switch (googleChartType) {
             case "ColumnChart":
-                return this._columns_ColumnChart(yearsRange
-            )
+                return this._columns_ColumnChart(yearsRange)
             
             case "PieChart":
-                return this._columns_PieChart(yearsRange
-            )
+                return this._columns_PieChart(yearsRange)
 
             case 'LineChart':
             case 'AreaChart':
@@ -711,9 +701,7 @@ class BudgetCell {
 
     }
 
-    private _columns_ColumnChart = (yearsRange
-            :YearsRange
-            ) => {
+    private _columns_ColumnChart = ( yearsRange:YearsRange ) => {
 
         let cellDeclaration = this.cellDeclaration
         let { rightYear, leftYear} = this.nodeDataPack.yearSelections
@@ -755,9 +743,7 @@ class BudgetCell {
     // ------------------
     // 5. chart rows:
     // ------------------
-    private _chartParmsRows = (treeNodeData, yearsRange
-            :YearsRange
-            ) => {
+    private _chartParmsRows = ( treeNodeData, yearsRange:YearsRange ) => {
 
         let budgetCell = this
 
@@ -816,14 +802,12 @@ class BudgetCell {
             }
             case "LineChart":
             case "AreaChart":
-                return this._LineChartRows(treeNodeData, sortedDataseries, yearsRange
-            )
+                return this._LineChartRows( treeNodeData, sortedDataseries, yearsRange )
 
         }
     }
 
-    private _LineChartRows = (treeNodeData, sortedDataSeries, yearsRange
-            ) => {
+    private _LineChartRows = ( treeNodeData, sortedDataSeries, yearsRange ) => {
 
         let rows = []
 
