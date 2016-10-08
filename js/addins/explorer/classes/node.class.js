@@ -51,10 +51,10 @@ class BudgetNode {
         };
         this._updateCell = (cell, cellIndex) => {
             let budgetNode = this;
-            let { viewpointConfigPack, treeNodeData, yearSpecs, yearSelections, parentBudgetNode, nodeIndex } = budgetNode;
+            let { viewpointConfigPack, treeNodeData, yearsRange, yearSelections, parentBudgetNode, nodeIndex } = budgetNode;
             let nodeDataPack = {
                 treeNodeData: treeNodeData,
-                yearSpecs: yearSpecs,
+                yearsRange: yearsRange,
                 yearSelections: yearSelections,
                 parentBudgetNode: parentBudgetNode,
                 budgetNode: budgetNode,
@@ -86,7 +86,8 @@ class BudgetNode {
         this.aspectName = parms.aspectName;
         this.dataPath = parms.dataPath;
         this.nodeIndex = parms.nodeIndex;
-        this.yearSpecs = parms.yearSpecs;
+        this.yearsRange
+            = parms.yearsRange;
         this.yearSelections = parms.yearSelections;
         this._nodeData = node;
         this.uid = uid;
@@ -115,11 +116,8 @@ class BudgetNode {
             let { nodeDataseriesName, celluid, chartSelection } = cellDeclaration;
             if (chartSelection === undefined)
                 chartSelection = null;
-            let settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope];
-            let { explorerChartCode } = settings;
             let cell = new cell_class_1.default({
                 nodeDataseriesName: nodeDataseriesName,
-                explorerChartCode: explorerChartCode,
                 chartSelection: chartSelection,
                 uid: celluid,
             });

@@ -9,9 +9,6 @@ class BudgetCell {
         this.refreshSelection = () => {
             let budgetCell = this;
             if (budgetCell.chartSelection !== null) {
-                let cs;
-                if (budgetCell.chart)
-                    cs = budgetCell.chart.getSelection();
                 if (budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
                     let selectionObj = { row: null, column: null };
                     let chartSelection = [selectionObj];
@@ -35,10 +32,7 @@ class BudgetCell {
                 }
             }
         };
-        this.switchChartCode = chartCode => {
-            this.setChartParms();
-        };
-        this.switchYearCodes = yearCodes => {
+        this.switchChartCode = () => {
             this.setChartParms();
         };
         this.switchYearScope = () => {
@@ -47,22 +41,21 @@ class BudgetCell {
         this.setChartParms = () => {
             let budgetCell = this;
             let { viewpointNamingConfigs, datasetConfig, isInflationAdjusted, } = budgetCell.viewpointConfigPack;
-            let { treeNodeData, yearSpecs, } = budgetCell.nodeDataPack;
+            let { treeNodeData, yearsRange, } = budgetCell.nodeDataPack;
             if (!treeNodeData) {
                 console.error('System Error: node not found in setChartParms', budgetCell);
                 throw Error('node not found');
             }
             let chartType = budgetCell.googleChartType;
-            let options = budgetCell._chartParmsOptions(treeNodeData, viewpointNamingConfigs, datasetConfig, yearSpecs);
+            let options = budgetCell._chartParmsOptions(treeNodeData, viewpointNamingConfigs, datasetConfig, yearsRange);
             let events = budgetCell._chartParmsEvents();
-            let columns = budgetCell._chartParmsColumns(yearSpecs, treeNodeData);
+            let columns = budgetCell._chartParmsColumns(yearsRange, treeNodeData);
             let { nodeDataseriesName } = budgetCell;
-            let nodeDataseries = treeNodeData[nodeDataseriesName];
             let sortedlistName = 'Sorted' + nodeDataseriesName;
             let sortedDataseries = treeNodeData[sortedlistName];
             let rows;
             if (sortedDataseries) {
-                rows = budgetCell._chartParmsRows(treeNodeData, yearSpecs);
+                rows = budgetCell._chartParmsRows(treeNodeData, yearsRange);
             }
             else {
                 console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData);
@@ -80,7 +73,7 @@ class BudgetCell {
                 chartParms: chartParms,
             });
         };
-        this._chartParmsOptions = (treeNodeData, viewpointNamingConfigs, datasetConfig, yearSpecs) => {
+        this._chartParmsOptions = (treeNodeData, viewpointNamingConfigs, datasetConfig, yearsRange) => {
             let budgetCell = this;
             let { aspectName, nodeDataseriesName } = budgetCell;
             let datasetName = constants_1.AspectNameToDatasetName[aspectName];
@@ -227,11 +220,11 @@ class BudgetCell {
                 height: "400px",
                 width: "400px",
             };
-            let options_extension = budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType, treeNodeData);
+            let options_extension = budgetCell._chartTypeOptions(budgetCell.googleChartType, treeNodeData);
             options = Object.assign(options, options_extension);
             return options;
         };
-        this._chartParmsOptions_chartTypeOptions = (googleChartType, treeNodeData) => {
+        this._chartTypeOptions = (googleChartType, treeNodeData) => {
             let options;
             switch (googleChartType) {
                 case "ColumnChart":
@@ -359,14 +352,14 @@ class BudgetCell {
                 }
             ];
         };
-        this._chartParmsColumns = (yearSpecs, treeNodeData) => {
+        this._chartParmsColumns = (yearsRange, treeNodeData) => {
             let budgetCell = this;
             let { googleChartType } = budgetCell;
             switch (googleChartType) {
                 case "ColumnChart":
-                    return this._columns_ColumnChart(yearSpecs);
+                    return this._columns_ColumnChart(yearsRange);
                 case "PieChart":
-                    return this._columns_PieChart(yearSpecs);
+                    return this._columns_PieChart(yearsRange);
                 case 'LineChart':
                 case 'AreaChart':
                     return this._columns_LineChart(treeNodeData);
@@ -389,7 +382,7 @@ class BudgetCell {
             }
             return columns;
         };
-        this._columns_ColumnChart = (yearSpecs) => {
+        this._columns_ColumnChart = (yearsRange) => {
             let cellDeclaration = this.cellDeclaration;
             let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
             let budgetCell = this;
@@ -401,7 +394,7 @@ class BudgetCell {
             ];
             return columns;
         };
-        this._columns_PieChart = (yearSpecs) => {
+        this._columns_PieChart = (yearsRange) => {
             let cellDeclaration = this.cellDeclaration;
             let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
             let budgetCell = this;
@@ -412,7 +405,7 @@ class BudgetCell {
             ];
             return columns;
         };
-        this._chartParmsRows = (treeNodeData, yearSpecs) => {
+        this._chartParmsRows = (treeNodeData, yearsRange) => {
             let budgetCell = this;
             let cellDeclaration = this.cellDeclaration;
             let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
@@ -455,10 +448,10 @@ class BudgetCell {
                 }
                 case "LineChart":
                 case "AreaChart":
-                    return this._LineChartRows(treeNodeData, sortedDataseries, yearSpecs);
+                    return this._LineChartRows(treeNodeData, sortedDataseries, yearsRange);
             }
         };
-        this._LineChartRows = (treeNodeData, sortedDataSeries, yearSpecs) => {
+        this._LineChartRows = (treeNodeData, sortedDataSeries, yearsRange) => {
             let rows = [];
             let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
             for (let year = leftYear; year <= rightYear; year++) {
@@ -486,7 +479,7 @@ class BudgetCell {
             row.push(style);
             return row;
         };
-        let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs;
+        let { nodeDataseriesName, chartSelection, uid } = specs;
         this.nodeDataseriesName = nodeDataseriesName;
         this.chartSelection = chartSelection;
         this.uid = uid;

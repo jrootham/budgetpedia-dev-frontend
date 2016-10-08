@@ -15,7 +15,7 @@ class BudgetBranch {
             let budgetNodeParms = {
                 viewpointName: viewpointName,
                 aspectName: aspectName,
-                yearSpecs: {
+                yearsRange: {
                     firstYear: null,
                     lastYear: null,
                 },
@@ -219,7 +219,7 @@ class BudgetBranch {
                 return;
             }
             workingStatus(true);
-            let newrange = Object.assign({}, budgetNode.yearSpecs);
+            let newrange = Object.assign({}, budgetNode.yearsRange);
             let newselections;
             let newCellIndex = cellIndex;
             if (priorNodeSettings) {
@@ -235,7 +235,7 @@ class BudgetBranch {
                 aspectName: aspectName,
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
-                yearSpecs: newrange,
+                yearsRange: newrange,
                 yearSelections: newselections,
                 cellIndex: newCellIndex,
             };

@@ -7,7 +7,8 @@ TODO: fix addnode to pass along cell settings for new child
 
 */
 
-import databaseapi , { DatasetConfig, YearSpecs, ViewpointData } from './databaseapi'
+import databaseapi , { DatasetConfig, YearsRange
+            , ViewpointData } from './databaseapi'
 import {
     ChartParmsObj,
     SortedComponentItem,
@@ -101,7 +102,8 @@ class BudgetBranch {
         let budgetNodeParms:BudgetNodeDeclarationParms = {
             viewpointName,
             aspectName,
-            yearSpecs: {
+            yearsRange
+            : {
                 firstYear: null,
                 lastYear: null,
             },
@@ -440,7 +442,8 @@ class BudgetBranch {
             return
         }
         workingStatus(true)
-        let newrange = Object.assign({}, budgetNode.yearSpecs)
+        let newrange = Object.assign({}, budgetNode.yearsRange
+            )
         let newselections
         let newCellIndex = cellIndex
         if (priorNodeSettings) {
@@ -457,7 +460,8 @@ class BudgetBranch {
             aspectName,
             dataPath: childdatapath,
             nodeIndex: nodeIndex + 1,
-            yearSpecs: newrange,
+            yearsRange
+            : newrange,
             yearSelections: newselections,
             cellIndex:newCellIndex,
 

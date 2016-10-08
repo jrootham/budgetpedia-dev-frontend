@@ -121,7 +121,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         switch (lastAction.type) {
             case cellActionTypes.UPDATE_CELL_CHART_CODE: {
 
-                budgetCell.switchChartCode(this.chartConfig.explorerChartCode)
+                budgetCell.switchChartCode()
                 break
             }
             case cellActionTypes.UPDATE_CELL_TIMECODE: {
@@ -134,7 +134,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     onChangeChartCode = (explorerChartCode) => {
 
         let { budgetCell } = this.props
-        // budgetCell.switchChartCode(explorerChartCode)
 
         this.props.globalStateActions.updateCellChartCode(budgetCell.uid,explorerChartCode)
     }
@@ -202,7 +201,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
         if (drillDown == 'All') {
             drilldownmessage = 'drilldown available for all elements here'
         } else if (drillDown == 'Some') {
-            drilldownmessage = 'some drilldown available here (for bold colors; not for pale colors)'
+            drilldownmessage = 'some elements allow drilldown here'
         } else {
             drilldownmessage = 'no drilldown available here'
         }

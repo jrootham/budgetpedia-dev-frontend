@@ -1193,7 +1193,7 @@ var BudgetBranch = function () {
             var budgetNodeParms = {
                 viewpointName: viewpointName,
                 aspectName: aspectName,
-                yearSpecs: {
+                yearsRange: {
                     firstYear: null,
                     lastYear: null
                 },
@@ -1454,7 +1454,7 @@ var BudgetBranch = function () {
                 return;
             }
             workingStatus(true);
-            var newrange = Object.assign({}, budgetNode.yearSpecs);
+            var newrange = Object.assign({}, budgetNode.yearsRange);
             var newselections = void 0;
             var newCellIndex = cellIndex;
             if (priorNodeSettings) {
@@ -1469,7 +1469,7 @@ var BudgetBranch = function () {
                 aspectName: aspectName,
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
-                yearSpecs: newrange,
+                yearsRange: newrange,
                 yearSelections: newselections,
                 cellIndex: newCellIndex
             };
@@ -1535,8 +1535,6 @@ var BudgetCell = function () {
         this.refreshSelection = function () {
             var budgetCell = _this;
             if (budgetCell.chartSelection !== null) {
-                var cs = void 0;
-                if (budgetCell.chart) cs = budgetCell.chart.getSelection();
                 if (budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
                     var selectionObj = { row: null, column: null };
                     var _chartSelection = [selectionObj];
@@ -1560,10 +1558,7 @@ var BudgetCell = function () {
                 }
             }
         };
-        this.switchChartCode = function (chartCode) {
-            _this.setChartParms();
-        };
-        this.switchYearCodes = function (yearCodes) {
+        this.switchChartCode = function () {
             _this.setChartParms();
         };
         this.switchYearScope = function () {
@@ -1577,24 +1572,23 @@ var BudgetCell = function () {
             var isInflationAdjusted = _budgetCell$viewpoint.isInflationAdjusted;
             var _budgetCell$nodeDataP = budgetCell.nodeDataPack;
             var treeNodeData = _budgetCell$nodeDataP.treeNodeData;
-            var yearSpecs = _budgetCell$nodeDataP.yearSpecs;
+            var yearsRange = _budgetCell$nodeDataP.yearsRange;
 
             if (!treeNodeData) {
                 console.error('System Error: node not found in setChartParms', budgetCell);
                 throw Error('node not found');
             }
             var chartType = budgetCell.googleChartType;
-            var options = budgetCell._chartParmsOptions(treeNodeData, viewpointNamingConfigs, datasetConfig, yearSpecs);
+            var options = budgetCell._chartParmsOptions(treeNodeData, viewpointNamingConfigs, datasetConfig, yearsRange);
             var events = budgetCell._chartParmsEvents();
-            var columns = budgetCell._chartParmsColumns(yearSpecs, treeNodeData);
+            var columns = budgetCell._chartParmsColumns(yearsRange, treeNodeData);
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
 
-            var nodeDataseries = treeNodeData[nodeDataseriesName];
             var sortedlistName = 'Sorted' + nodeDataseriesName;
             var sortedDataseries = treeNodeData[sortedlistName];
             var rows = void 0;
             if (sortedDataseries) {
-                rows = budgetCell._chartParmsRows(treeNodeData, yearSpecs);
+                rows = budgetCell._chartParmsRows(treeNodeData, yearsRange);
             } else {
                 console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData);
                 return;
@@ -1611,7 +1605,7 @@ var BudgetCell = function () {
                 chartParms: chartParms
             });
         };
-        this._chartParmsOptions = function (treeNodeData, viewpointNamingConfigs, datasetConfig, yearSpecs) {
+        this._chartParmsOptions = function (treeNodeData, viewpointNamingConfigs, datasetConfig, yearsRange) {
             var budgetCell = _this;
             var aspectName = budgetCell.aspectName;
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
@@ -1751,11 +1745,11 @@ var BudgetCell = function () {
                 height: "400px",
                 width: "400px"
             };
-            var options_extension = budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType, treeNodeData);
+            var options_extension = budgetCell._chartTypeOptions(budgetCell.googleChartType, treeNodeData);
             options = Object.assign(options, options_extension);
             return options;
         };
-        this._chartParmsOptions_chartTypeOptions = function (googleChartType, treeNodeData) {
+        this._chartTypeOptions = function (googleChartType, treeNodeData) {
             var options = void 0;
             switch (googleChartType) {
                 case "ColumnChart":
@@ -1888,15 +1882,15 @@ var BudgetCell = function () {
                 }(budgetCell)
             }];
         };
-        this._chartParmsColumns = function (yearSpecs, treeNodeData) {
+        this._chartParmsColumns = function (yearsRange, treeNodeData) {
             var budgetCell = _this;
             var googleChartType = budgetCell.googleChartType;
 
             switch (googleChartType) {
                 case "ColumnChart":
-                    return _this._columns_ColumnChart(yearSpecs);
+                    return _this._columns_ColumnChart(yearsRange);
                 case "PieChart":
-                    return _this._columns_PieChart(yearSpecs);
+                    return _this._columns_PieChart(yearsRange);
                 case 'LineChart':
                 case 'AreaChart':
                     return _this._columns_LineChart(treeNodeData);
@@ -1920,7 +1914,7 @@ var BudgetCell = function () {
             }
             return columns;
         };
-        this._columns_ColumnChart = function (yearSpecs) {
+        this._columns_ColumnChart = function (yearsRange) {
             var cellDeclaration = _this.cellDeclaration;
             var _nodeDataPack$yearSel4 = _this.nodeDataPack.yearSelections;
             var rightYear = _nodeDataPack$yearSel4.rightYear;
@@ -1931,7 +1925,7 @@ var BudgetCell = function () {
             var columns = [{ type: 'string', label: categorylabel }, { type: 'number', label: rightYear.toString() }, { type: 'string', role: 'style' }];
             return columns;
         };
-        this._columns_PieChart = function (yearSpecs) {
+        this._columns_PieChart = function (yearsRange) {
             var cellDeclaration = _this.cellDeclaration;
             var _nodeDataPack$yearSel5 = _this.nodeDataPack.yearSelections;
             var rightYear = _nodeDataPack$yearSel5.rightYear;
@@ -1942,7 +1936,7 @@ var BudgetCell = function () {
             var columns = [{ type: 'string', label: categorylabel }, { type: 'number', label: rightYear.toString() }];
             return columns;
         };
-        this._chartParmsRows = function (treeNodeData, yearSpecs) {
+        this._chartParmsRows = function (treeNodeData, yearsRange) {
             var budgetCell = _this;
             var cellDeclaration = _this.cellDeclaration;
             var _nodeDataPack$yearSel6 = _this.nodeDataPack.yearSelections;
@@ -1989,10 +1983,10 @@ var BudgetCell = function () {
                     }
                 case "LineChart":
                 case "AreaChart":
-                    return _this._LineChartRows(treeNodeData, sortedDataseries, yearSpecs);
+                    return _this._LineChartRows(treeNodeData, sortedDataseries, yearsRange);
             }
         };
-        this._LineChartRows = function (treeNodeData, sortedDataSeries, yearSpecs) {
+        this._LineChartRows = function (treeNodeData, sortedDataSeries, yearsRange) {
             var rows = [];
             var _nodeDataPack$yearSel7 = _this.nodeDataPack.yearSelections;
             var rightYear = _nodeDataPack$yearSel7.rightYear;
@@ -2028,7 +2022,6 @@ var BudgetCell = function () {
             return row;
         };
         var nodeDataseriesName = specs.nodeDataseriesName;
-        var explorerChartCode = specs.explorerChartCode;
         var chartSelection = specs.chartSelection;
         var uid = specs.uid;
 
@@ -2574,14 +2567,14 @@ var BudgetNode = function () {
             var budgetNode = _this;
             var viewpointConfigPack = budgetNode.viewpointConfigPack;
             var treeNodeData = budgetNode.treeNodeData;
-            var yearSpecs = budgetNode.yearSpecs;
+            var yearsRange = budgetNode.yearsRange;
             var yearSelections = budgetNode.yearSelections;
             var parentBudgetNode = budgetNode.parentBudgetNode;
             var nodeIndex = budgetNode.nodeIndex;
 
             var nodeDataPack = {
                 treeNodeData: treeNodeData,
-                yearSpecs: yearSpecs,
+                yearsRange: yearsRange,
                 yearSelections: yearSelections,
                 parentBudgetNode: parentBudgetNode,
                 budgetNode: budgetNode
@@ -2611,7 +2604,7 @@ var BudgetNode = function () {
         this.aspectName = parms.aspectName;
         this.dataPath = parms.dataPath;
         this.nodeIndex = parms.nodeIndex;
-        this.yearSpecs = parms.yearSpecs;
+        this.yearsRange = parms.yearsRange;
         this.yearSelections = parms.yearSelections;
         this._nodeData = node;
         this.uid = uid;
@@ -2629,12 +2622,8 @@ var BudgetNode = function () {
                 var chartSelection = cellDeclaration.chartSelection;
 
                 if (chartSelection === undefined) chartSelection = null;
-                var settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope];
-                var explorerChartCode = settings.explorerChartCode;
-
                 var cell = new cell_class_1.default({
                     nodeDataseriesName: nodeDataseriesName,
-                    explorerChartCode: explorerChartCode,
                     chartSelection: chartSelection,
                     uid: celluid
                 });
@@ -3350,7 +3339,7 @@ var ExplorerCell = function (_Component) {
             switch (lastAction.type) {
                 case actions_1.cellTypes.UPDATE_CELL_CHART_CODE:
                     {
-                        budgetCell.switchChartCode(_this.chartConfig.explorerChartCode);
+                        budgetCell.switchChartCode();
                         break;
                     }
                 case actions_1.cellTypes.UPDATE_CELL_TIMECODE:
@@ -3459,7 +3448,7 @@ var ExplorerCell = function (_Component) {
             if (drillDown == 'All') {
                 drilldownmessage = 'drilldown available for all elements here';
             } else if (drillDown == 'Some') {
-                drilldownmessage = 'some drilldown available here (for bold colors; not for pale colors)';
+                drilldownmessage = 'some elements allow drilldown here';
             } else {
                 drilldownmessage = 'no drilldown available here';
             }
@@ -5436,6 +5425,9 @@ var nodesById = function nodesById() {
 
                 var _newnode2 = Object.assign({}, newstate[_nodeuid2]);
                 var newYearSelections = Object.assign({}, _newnode2.yearSelections);
+                if (leftyear > rightyear) {
+                    leftyear = rightyear;
+                }
                 newYearSelections.leftYear = leftyear;
                 newYearSelections.rightYear = rightyear;
                 _newnode2.yearSelections = newYearSelections;

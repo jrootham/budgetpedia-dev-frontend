@@ -1,10 +1,6 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetcell.tsx
 /*
-TODO: create DimensionNameLookups in aspect metadata for titles category names
-    - currently using parent DimensionName directly
-    - see 'add category' section of _setChartOptions
-TODO: add inflation adjustment info in all chart titles
 
 Title components:
 - Node meta category
@@ -19,19 +15,11 @@ Vertical axis:
 Horizontal access:
 - Dimension
 
-Implement inheritance of YearScope, yearSelections, and ExplorerChartCode(s)
-
-BUGS:
-
 */ 
 
 import {
     ChartParms,
-    ChartParmsObj,
-    PortalChartLocation,
     SortedComponentItem,
-    GetChartParmsProps,
-    BranchSettings,
 } from '../modules/interfaces'
 
 import {
@@ -44,28 +32,14 @@ import {
 } from '../constants'
 
 import BudgetNode from './node.class'
-import {YearSpecs, DatasetConfig} from './databaseapi'
+import {YearsRange
+            , DatasetConfig} from './databaseapi'
 import { TimeScope, GoogleChartColors } from '../constants'
 import {ColorBrightness} from '../modules/utilities'
 
 var format = require('format-number')
 
-// settings for individual portal chart
-export interface CellSettings {
-    graph_id: string,
-    // expandable?: boolean,
-}
-
-export interface CellCallbacks {
-    onSwitchChartCode: Function,
-}
-
-export interface ChartCallbacks {
-    selectionCallback: Function,
-    // next: Function,
-}
-
-interface viewpointConfigPack {
+interface ViewpointConfigPack {
     viewpointNamingConfigs: any,
     datasetConfig: DatasetConfig,
     isInflationAdjusted: boolean,
@@ -73,36 +47,33 @@ interface viewpointConfigPack {
 
 export interface CellDeclaration {
     nodeDataseriesName:string, 
-    // explorerChartCode:string, 
     chartConfigs:{
         ['OneYear']:{
-            // chartSelection:ChartSelectionCell[],
             explorerChartCode: string,
         },
         ['TwoYears']:{
-            // chartSelection:ChartSelectionCell[],
             explorerChartCode: string,
         },
         ['AllYears']:{
-            // chartSelection:ChartSelectionCell[],
             explorerChartCode: string,
         },
     },
-    chartSelection: number, // ChartSelectionCell[],
+    chartSelection: number,
     yearScope: string,
     celluid?: string,
 }
 
 export interface CellConstructorArgs {
     nodeDataseriesName:string, 
-    explorerChartCode:string, 
-    chartSelection:number, // ChartSelectionCell[],
+    chartSelection:number,
     uid: string,
 }
 
-export interface NodeData {
+export interface NodeDataPack {
     treeNodeData: any,
-    yearSpecs: YearSpecs,
+    yearsRange
+            : YearsRange
+            ,
     yearSelections: any,
     parentBudgetNode: any,
     budgetNode:any,
@@ -111,10 +82,8 @@ export interface NodeData {
 class BudgetCell {
 
     constructor(specs:CellConstructorArgs) {
-        let { nodeDataseriesName, explorerChartCode, chartSelection, uid } = specs
-        // this.explorerChartCode = explorerChartCode
+        let { nodeDataseriesName, chartSelection, uid } = specs
         this.nodeDataseriesName = nodeDataseriesName
-        // console.log('new BudgetCell', chartSelection)
         this.chartSelection = chartSelection
         this.uid = uid
     }
@@ -138,7 +107,7 @@ class BudgetCell {
         return settings.explorerChartCode
     } 
     nodeDataseriesName:string // the ref to the data to be presented, typically Components or CommonDimension
-    chartSelection: number = null// ChartSelectionCell[] // returned by google chart; points to row selected by user
+    chartSelection: number = null // interpreted by explorer; the logical row of the selection (per Sorted... lists)
     uid: string // universal id; set by addCellDeclarations action
 
     // ------------[ derivative control properties ]-------------------
@@ -164,7 +133,8 @@ class BudgetCell {
             return null
     }
 
-    chartParmsObject: any
+    chartParmsObject: any // also set by setChartParms; convenience for explorercell to read titles
+
     // readonly; set by setChartParms()
     // the formal parameters required by Chart Component for google chart creation
     // private _chartParms: ChartParms
@@ -174,34 +144,32 @@ class BudgetCell {
 
     // ----------------[ mutable control properties ]-----------------
 
-    aspectName: string
-    viewpointConfigPack: viewpointConfigPack
-    nodeDataPack: NodeData
-    // expandable: boolean
+    aspectName: string // forwarded through branch settings by node
+    viewpointConfigPack: ViewpointConfigPack
+    nodeDataPack: NodeDataPack
 
     // ------------------[ display chart properties ]-------------------
 
-    cellTitle: string
+    cellTitle: string // used by node to set tab title
     graph_id: string // prop for Chart component; required by google charts
 
     // ------------------[ callback functions ]------------------------
 
     // curried; inherited
-    selectionCallback: Function
+    selectionCallback: Function // set by node
 
     // ========================[ METHODS ]==========================
 
+    // reset the visible element selection (if any) on the current chart
+    // google charts clear the selection on blur, must be re-instated after each
+    // operation
+    // called after animation, on mount, and after update
     refreshSelection = () => {
 
         let budgetCell = this
-        // console.log('inside refreshSelection', budgetCell.chartSelection, budgetCell.googleChartType)
+
         if (budgetCell.chartSelection !== null) {
-            // it turns out that "PieChart" needs column set to null
-            // for setSelection to work
-            // if (budgetCell.chartSelection[0] && budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
-            let cs
-            if (budgetCell.chart) cs = budgetCell.chart.getSelection()
-            // console.log('budgetCell.chart.getSelection()', cs)
+
             if (budgetCell.chart && budgetCell.chart.getSelection().length == 0) {
                 let selectionObj = {row:null, column:null}
                 let chartSelection = [selectionObj]
@@ -211,7 +179,7 @@ class BudgetCell {
                         break;
                     case "ColumnChart":
                         selectionObj.row = budgetCell.chartSelection
-                        selectionObj.column = 1
+                        selectionObj.column = 1 // ?
                         break;
                     case "LineChart":
                     case "AreaChart":
@@ -219,34 +187,20 @@ class BudgetCell {
                         break
                     default:
                         console.log('ERROR: default invoked in refreshSelection')
-                        // code...
                         break;
                 }
-                // console.log('setting selection with ', chartSelection)
-                // if (budgetCell.googleChartType == "PieChart" ) {
-                //     budgetCell.chartSelection[0].column = null
-                // } else {
-                //     // we set it back to original (presumed) for consistency
-                //     budgetCell.chartSelection[0].column = 1
-                // }
+
                 budgetCell.chart.setSelection(chartSelection)
             }
         }        
     }
 
-    // TODO: remove parameter, apparently not needed
-    switchChartCode = chartCode => {
+    switchChartCode = () => {
 
         this.setChartParms()
 
     }
 
-    // TODO: remove parameter, apparently not needed
-    switchYearCodes = yearCodes => {
-        this.setChartParms()
-    }
-
-    // TODO: remove parameter, apparently not needed
     switchYearScope = () => {
         this.setChartParms()
     }
@@ -258,7 +212,6 @@ class BudgetCell {
     // dataseries is a list of data rows attached to a node
     setChartParms = () => {
 
-        // let err = new Error()
         let budgetCell: BudgetCell = this
 
         // --------------[ Unpack data bundles ]-------------
@@ -271,7 +224,8 @@ class BudgetCell {
 
         let { 
             treeNodeData, 
-            yearSpecs, 
+            yearsRange
+            , 
             // treeNodeMetaDataFromParentSortedList, 
         } = budgetCell.nodeDataPack
 
@@ -299,7 +253,8 @@ class BudgetCell {
             treeNodeData, 
             viewpointNamingConfigs, 
             datasetConfig, 
-            yearSpecs
+            yearsRange
+            
         )
 
         // ------------------
@@ -312,14 +267,13 @@ class BudgetCell {
         // 4. chart columns:
         // ------------------
 
-        let columns = budgetCell._chartParmsColumns(yearSpecs, treeNodeData)
+        let columns = budgetCell._chartParmsColumns(yearsRange
+            , treeNodeData)
 
         // ------------------
         // 5. chart rows:
         // ------------------
         let { nodeDataseriesName } = budgetCell
-
-        let nodeDataseries = treeNodeData[nodeDataseriesName]
 
         let sortedlistName = 'Sorted' + nodeDataseriesName
 
@@ -327,7 +281,8 @@ class BudgetCell {
 
         let rows
         if (sortedDataseries) {
-            rows = budgetCell._chartParmsRows(treeNodeData, yearSpecs)
+            rows = budgetCell._chartParmsRows(treeNodeData, yearsRange
+            )
         } else {
             // fires on last chart
             console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData )
@@ -359,10 +314,9 @@ class BudgetCell {
     // ------------------
     private _chartParmsOptions = (
         treeNodeData, 
-        // treeNodeMetaDataFromParentSortedList, 
         viewpointNamingConfigs, 
         datasetConfig:DatasetConfig, 
-        yearSpecs:YearSpecs
+        yearsRange:YearsRange            
     ) => {
 
         // ----------------------[ assemble support variables ]-------------------
@@ -373,7 +327,6 @@ class BudgetCell {
 
         let datasetName = AspectNameToDatasetName[aspectName]
         let units = datasetConfig.Units
-        // let unitRatio = datasetConfig.UnitRatio
 
         // --------------------[ assemble vertical label value ]--------------------
 
@@ -391,14 +344,12 @@ class BudgetCell {
         } else {
 
             if (nodeDataseriesName == 'CommonDimension') {
-                // let contentdimensionname = 
-                //         treeNodeData.CommonDimensionName
+
                 let contentdimensionname = datasetConfig.CommonDimension
                 let names = datasetConfig.DimensionNames
 
                 horizontalLabel = names[contentdimensionname].Collection
-                // let portaltitles = datasetConfig.CellTitles
-                // horizontalLabel = portaltitles[nodeDataseriesName]
+
             } else {
                 let contentdimensionname = 
                         treeNodeData.ComponentsDimensionName
@@ -413,8 +364,8 @@ class BudgetCell {
 
         // set basic title
         let nodename = null
-        if (treeNodeData.Name) { // MetaDataFromParentSortedList) {
-            nodename = treeNodeData.Name// treeNodeMetaDataFromParentSortedList.Name
+        if (treeNodeData.Name) { 
+            nodename = treeNodeData.Name
         } else {
             nodename = datasetConfig.DatasetTitle
         }
@@ -438,7 +389,6 @@ class BudgetCell {
                         catname = names.Contents.DefaultInstance.Name
                     }
                 // lower levels depend on dimension category names.
-                // TODO: these should be looked up in datasetConfig
                 } else {
                     let nameindex = nodeDataseriesName 
                     if (nameindex = 'Components') {
@@ -545,7 +495,7 @@ class BudgetCell {
         }
 
         let options_extension = 
-            budgetCell._chartParmsOptions_chartTypeOptions(budgetCell.googleChartType, treeNodeData)
+            budgetCell._chartTypeOptions(budgetCell.googleChartType, treeNodeData)
 
         options = Object.assign(options, options_extension)
 
@@ -553,7 +503,7 @@ class BudgetCell {
         
     }
 
-    private _chartParmsOptions_chartTypeOptions = (googleChartType, treeNodeData) => {
+    private _chartTypeOptions = (googleChartType, treeNodeData) => {
 
         let options
 
@@ -611,10 +561,7 @@ class BudgetCell {
     }
 
     private _pieChartOptions = (treeNodeData) => {
-        // add a color differentiator for non-drilldown items
-        // see utilities.ColorLuminance
-        // for now silver and and offset value is set for slices which cannot expand
-        // TODO: create a better visual cue for non-expanadable items
+
         let budgetCell = this
 
         let cellDeclaration = this.cellDeclaration
@@ -701,10 +648,8 @@ class BudgetCell {
                 callback: ((cell:BudgetCell) => Chart => {
                     let selection = Chart.chart.getSelection()
                     if (selection.length == 0 && cell.chartSelection !== null) { 
-                    // if (selection.length == 0 && cell.chartSelection && cell.chartSelection !== null) { 
                         if (cell.chart) {
                             cell.refreshSelection()
-                            // cell.chart.setSelection(cell.chartSelection)
                         }
                     }
                 })(budgetCell)
@@ -715,17 +660,21 @@ class BudgetCell {
     // ------------------
     // 4. chart columns:
     // ------------------
-    private _chartParmsColumns = (yearSpecs:YearSpecs, treeNodeData) => {
+    private _chartParmsColumns = (yearsRange
+            :YearsRange
+            , treeNodeData) => {
         let budgetCell = this
 
         let { googleChartType } = budgetCell
 
         switch (googleChartType) {
             case "ColumnChart":
-                return this._columns_ColumnChart(yearSpecs)
+                return this._columns_ColumnChart(yearsRange
+            )
             
             case "PieChart":
-                return this._columns_PieChart(yearSpecs)
+                return this._columns_PieChart(yearsRange
+            )
 
             case 'LineChart':
             case 'AreaChart':
@@ -762,7 +711,9 @@ class BudgetCell {
 
     }
 
-    private _columns_ColumnChart = (yearSpecs:YearSpecs) => {
+    private _columns_ColumnChart = (yearsRange
+            :YearsRange
+            ) => {
 
         let cellDeclaration = this.cellDeclaration
         let { rightYear, leftYear} = this.nodeDataPack.yearSelections
@@ -781,7 +732,9 @@ class BudgetCell {
 
     }
 
-    private _columns_PieChart = (yearSpecs:YearSpecs) => {
+    private _columns_PieChart = (yearsRange
+            :YearsRange
+            ) => {
 
         let cellDeclaration = this.cellDeclaration
         let { rightYear, leftYear} = this.nodeDataPack.yearSelections
@@ -802,7 +755,9 @@ class BudgetCell {
     // ------------------
     // 5. chart rows:
     // ------------------
-    private _chartParmsRows = (treeNodeData, yearSpecs:YearSpecs) => {
+    private _chartParmsRows = (treeNodeData, yearsRange
+            :YearsRange
+            ) => {
 
         let budgetCell = this
 
@@ -828,13 +783,14 @@ class BudgetCell {
             case "PieChart":
             case "ColumnChart": {
                 let rows = sortedDataseries.map((sortedItem:SortedComponentItem) => {
-                    // TODO: get determination of amount processing from Unit value
+
                     let componentItem = nodeDataseries[sortedItem.Code]
                     if (!componentItem) {
                         console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ',
                             treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem)
                         throw Error('componentItem not found')
                     }
+                    
                     let amount
                     if (componentItem.years) {
                         amount = componentItem.years[rightYear]
@@ -860,12 +816,14 @@ class BudgetCell {
             }
             case "LineChart":
             case "AreaChart":
-                return this._LineChartRows(treeNodeData, sortedDataseries, yearSpecs)
+                return this._LineChartRows(treeNodeData, sortedDataseries, yearsRange
+            )
 
         }
     }
 
-    private _LineChartRows = (treeNodeData, sortedDataSeries, yearSpecs) => {
+    private _LineChartRows = (treeNodeData, sortedDataSeries, yearsRange
+            ) => {
 
         let rows = []
 

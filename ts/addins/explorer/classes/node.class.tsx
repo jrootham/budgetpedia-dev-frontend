@@ -1,7 +1,8 @@
 // copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // budgetnode.tsx
 
-import { YearSpecs } from './databaseapi'
+import { YearsRange
+             } from './databaseapi'
 import { 
     AspectNameToDatasetName, 
 } from '../constants'
@@ -12,13 +13,15 @@ import {
     ChartParmsObj,
 } from '../modules/interfaces'
 
-import BudgetCell, { CellDeclaration, NodeData } from './cell.class'
+import BudgetCell, { CellDeclaration, NodeDataPack } from './cell.class'
 
 export interface BudgetNodeParms {
     viewpointName: string,
     aspectName: string, // used to select chartset to display
     // datasetSpecs:DataseriesMeta[],
-    yearSpecs: YearSpecs,
+    yearsRange
+            : YearsRange
+            ,
     yearSelections: any,
     dataPath: string[],
     nodeIndex: number,
@@ -29,7 +32,9 @@ export interface BudgetNodeDeclarationParms {
     viewpointName: string,
     aspectName: string, // used to select chartset to display
     // datasetSpecs:DataseriesMeta[],
-    yearSpecs: YearSpecs,
+    yearsRange
+            : YearsRange
+            ,
     yearSelections: any,
     dataPath: string[],
     nodeIndex: number,
@@ -45,7 +50,9 @@ class BudgetNode {
         this.aspectName = parms.aspectName
         this.dataPath = parms.dataPath
         this.nodeIndex = parms.nodeIndex
-        this.yearSpecs = parms.yearSpecs
+        this.yearsRange
+             = parms.yearsRange
+            
         this.yearSelections = parms.yearSelections
         this._nodeData = node
         this.uid = uid
@@ -62,7 +69,9 @@ class BudgetNode {
     aspectName: string
     dataPath: string[]
     nodeIndex: number
-    yearSpecs: YearSpecs
+    yearsRange
+            : YearsRange
+            
     yearSelections: any
     actions: any
     viewpointConfigPack: any
@@ -168,12 +177,11 @@ class BudgetNode {
             let cellDeclaration: CellDeclaration = cellDeclarations[cellIndex]
             let {nodeDataseriesName, celluid, chartSelection} = cellDeclaration
             if (chartSelection === undefined) chartSelection = null
-            let settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope]
-            let { explorerChartCode } = settings
+            // let settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope]
+            // let { explorerChartCode } = settings
             let cell = new BudgetCell(
                 {
                     nodeDataseriesName,
-                    explorerChartCode,
                     chartSelection,
                     uid:celluid,
                 }
@@ -229,10 +237,12 @@ class BudgetNode {
 
         let budgetNode = this
 
-        let { viewpointConfigPack, treeNodeData, yearSpecs, yearSelections, parentBudgetNode, nodeIndex } = budgetNode
-        let nodeDataPack: NodeData = {
+        let { viewpointConfigPack, treeNodeData, yearsRange
+            , yearSelections, parentBudgetNode, nodeIndex } = budgetNode
+        let nodeDataPack: NodeDataPack = {
             treeNodeData,
-            yearSpecs,
+            yearsRange
+            ,
             yearSelections,
             parentBudgetNode,
             budgetNode,

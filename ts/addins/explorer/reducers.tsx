@@ -263,6 +263,10 @@ let nodesById = (state = { }, action) => {
 
             let newYearSelections = Object.assign({},newnode.yearSelections)
 
+            if (leftyear > rightyear) {
+                leftyear = rightyear
+            }
+
             newYearSelections.leftYear = leftyear
             newYearSelections.rightYear = rightyear
 

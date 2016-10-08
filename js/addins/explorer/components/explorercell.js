@@ -38,7 +38,7 @@ class ExplorerCell extends Component {
             let cellDeclaration = this.cellDeclaration;
             switch (lastAction.type) {
                 case actions_1.cellTypes.UPDATE_CELL_CHART_CODE: {
-                    budgetCell.switchChartCode(this.chartConfig.explorerChartCode);
+                    budgetCell.switchChartCode();
                     break;
                 }
                 case actions_1.cellTypes.UPDATE_CELL_TIMECODE: {
@@ -129,7 +129,7 @@ class ExplorerCell extends Component {
             drilldownmessage = 'drilldown available for all elements here';
         }
         else if (drillDown == 'Some') {
-            drilldownmessage = 'some drilldown available here (for bold colors; not for pale colors)';
+            drilldownmessage = 'some elements allow drilldown here';
         }
         else {
             drilldownmessage = 'no drilldown available here';
