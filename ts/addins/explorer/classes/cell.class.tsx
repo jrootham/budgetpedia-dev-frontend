@@ -261,7 +261,7 @@ class BudgetCell {
         // 4. chart columns:
         // ------------------
 
-        let columns = budgetCell._chartParmsColumns(yearsRange, treeNodeData)
+        let columns = null // = budgetCell._chartParmsColumns(yearsRange, treeNodeData)
 
         // ------------------
         // 5. chart rows:
@@ -272,20 +272,37 @@ class BudgetCell {
 
         let sortedDataseries = treeNodeData[sortedlistName]
 
-        let rows
-        if (sortedDataseries) {
-            rows = budgetCell._chartParmsRows( treeNodeData, yearsRange )
-        } else {
-            // fires on last chart
-            console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData )
-            return
+        let explorerChartCode = this.explorerChartCode
+        let rows = null
+        let diffdata = null
+        switch (explorerChartCode) {
+            case "DiffColumnChart":
+            case "DiffPieChart": {
+                let { rightYear, leftYear} = this.nodeDataPack.yearSelections
+                let leftcolumns = budgetCell._columns_diffChart(yearsRange, leftYear)
+                let rightcolumns = budgetCell._columns_diffChart(yearsRange, rightYear)
+                diffdata = this._chartParmsDiffData(treeNodeData, yearsRange)
+                diffdata.old.splice(0,0,leftcolumns)
+                diffdata.new.splice(0,0,rightcolumns)
+                console.log( 'diffdata', diffdata)
+                break
+            }
+            default: {
+                columns = budgetCell._chartParmsColumns(yearsRange, treeNodeData)
+                // code...
+                if (sortedDataseries) {
+                    rows = budgetCell._chartParmsRows( treeNodeData, yearsRange )
+                } else {
+                    // fires on last chart
+                    console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData )
+                    return
+                }
+            }
         }
-
         // ------------------
         // 5. diff data:
         // ------------------
 
-        let diffdata = null
 
         // --------------------[ ASSEMBLE PARMS PACK ]----------------
 
@@ -317,7 +334,7 @@ class BudgetCell {
         viewpointNamingConfigs, 
         datasetConfig:DatasetConfig, 
         yearsRange:YearsRange
-        
+
     ) => {
 
         // ----------------------[ assemble support variables ]-------------------
@@ -726,6 +743,24 @@ class BudgetCell {
 
     }
 
+    private _columns_diffChart = ( yearsRange:YearsRange, year ) => {
+
+        let cellDeclaration = this.cellDeclaration
+        // let { rightYear, leftYear} = this.nodeDataPack.yearSelections
+
+        let budgetCell = this
+        let categorylabel = 'Component' // placeholder
+
+        let columns:any[] = [
+            // type is required, else throws silent error
+            { type: 'string', label: categorylabel },
+            { type: 'number', label: year.toString() },
+        ]
+
+        return columns
+
+    }
+
     private _columns_PieChart = ( yearsRange:YearsRange ) => {
 
         let cellDeclaration = this.cellDeclaration
@@ -781,6 +816,42 @@ class BudgetCell {
                 return this._LineChartRows( treeNodeData, sortedDataseries, yearsRange )
 
         }
+    }
+
+    private _chartParmsDiffData = ( treeNodeData, yearsRange:YearsRange ) => {
+
+        let budgetCell = this
+
+        let diffdata = {
+            old:null,
+            new:null,
+        }
+
+        let cellDeclaration = this.cellDeclaration
+        let { rightYear, leftYear} = this.nodeDataPack.yearSelections
+
+        let { nodeDataseriesName } = budgetCell
+
+        let nodeDataseries = treeNodeData[nodeDataseriesName]
+
+        let sortedlistName = 'Sorted' + nodeDataseriesName
+
+        let sortedDataseries = treeNodeData[sortedlistName]
+
+        if (!sortedDataseries) {
+            console.error( { 
+                errorMessage:'sorted list "' + sortedlistName + '" not available'
+            })
+            throw Error('sorted list "' + sortedlistName + '" not available')
+        }
+
+        let chartType = this.explorerChartCode
+
+        let rows
+        diffdata.new = this._getYearRows( sortedDataseries, nodeDataseries, rightYear, chartType )
+        diffdata.old = this._getYearRows( sortedDataseries, nodeDataseries, leftYear, chartType )
+
+        return diffdata
     }
 
     private _getYearRows = (sortedDataseries, nodeDataseries, year, chartType) => {

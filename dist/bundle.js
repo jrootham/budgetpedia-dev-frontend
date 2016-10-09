@@ -1582,19 +1582,41 @@ var BudgetCell = function () {
             var chartType = budgetCell.googleChartType;
             var options = budgetCell._chartParmsOptions(treeNodeData, viewpointNamingConfigs, datasetConfig, yearsRange);
             var events = budgetCell._chartParmsEvents();
-            var columns = budgetCell._chartParmsColumns(yearsRange, treeNodeData);
+            var columns = null;
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
 
             var sortedlistName = 'Sorted' + nodeDataseriesName;
             var sortedDataseries = treeNodeData[sortedlistName];
-            var rows = void 0;
-            if (sortedDataseries) {
-                rows = budgetCell._chartParmsRows(treeNodeData, yearsRange);
-            } else {
-                console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData);
-                return;
-            }
+            var explorerChartCode = _this.explorerChartCode;
+            var rows = null;
             var diffdata = null;
+            switch (explorerChartCode) {
+                case "DiffColumnChart":
+                case "DiffPieChart":
+                    {
+                        var _nodeDataPack$yearSel = _this.nodeDataPack.yearSelections;
+                        var rightYear = _nodeDataPack$yearSel.rightYear;
+                        var leftYear = _nodeDataPack$yearSel.leftYear;
+
+                        var leftcolumns = budgetCell._columns_diffChart(yearsRange, leftYear);
+                        var rightcolumns = budgetCell._columns_diffChart(yearsRange, rightYear);
+                        diffdata = _this._chartParmsDiffData(treeNodeData, yearsRange);
+                        diffdata.old.splice(0, 0, leftcolumns);
+                        diffdata.new.splice(0, 0, rightcolumns);
+                        console.log('diffdata', diffdata);
+                        break;
+                    }
+                default:
+                    {
+                        columns = budgetCell._chartParmsColumns(yearsRange, treeNodeData);
+                        if (sortedDataseries) {
+                            rows = budgetCell._chartParmsRows(treeNodeData, yearsRange);
+                        } else {
+                            console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData);
+                            return;
+                        }
+                    }
+            }
             var chartParms = {
                 chartType: chartType,
                 options: options,
@@ -1675,9 +1697,9 @@ var BudgetCell = function () {
             }
             var title = catname + ': ' + nodename;
             var cellDeclaration = _this.cellDeclaration;
-            var _nodeDataPack$yearSel = _this.nodeDataPack.yearSelections;
-            var rightYear = _nodeDataPack$yearSel.rightYear;
-            var leftYear = _nodeDataPack$yearSel.leftYear;
+            var _nodeDataPack$yearSel2 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel2.rightYear;
+            var leftYear = _nodeDataPack$yearSel2.leftYear;
             var yearScope = cellDeclaration.yearScope;
 
             var timeSuffix = null;
@@ -1807,9 +1829,9 @@ var BudgetCell = function () {
         };
         this._pieChartOptions = function (treeNodeData) {
             var budgetCell = _this;
-            var _nodeDataPack$yearSel2 = _this.nodeDataPack.yearSelections;
-            var rightYear = _nodeDataPack$yearSel2.rightYear;
-            var leftYear = _nodeDataPack$yearSel2.leftYear;
+            var _nodeDataPack$yearSel3 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel3.rightYear;
+            var leftYear = _nodeDataPack$yearSel3.leftYear;
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
 
             var nodeDataseries = treeNodeData[nodeDataseriesName];
@@ -1902,9 +1924,9 @@ var BudgetCell = function () {
         };
         this._columns_LineChart = function (treeNodeData) {
             var cellDeclaration = _this.cellDeclaration;
-            var _nodeDataPack$yearSel3 = _this.nodeDataPack.yearSelections;
-            var rightYear = _nodeDataPack$yearSel3.rightYear;
-            var leftYear = _nodeDataPack$yearSel3.leftYear;
+            var _nodeDataPack$yearSel4 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel4.rightYear;
+            var leftYear = _nodeDataPack$yearSel4.leftYear;
 
             var budgetCell = _this;
             var columns = [{ type: 'string', label: 'Year' }];
@@ -1918,20 +1940,27 @@ var BudgetCell = function () {
         };
         this._columns_ColumnChart = function (yearsRange) {
             var cellDeclaration = _this.cellDeclaration;
-            var _nodeDataPack$yearSel4 = _this.nodeDataPack.yearSelections;
-            var rightYear = _nodeDataPack$yearSel4.rightYear;
-            var leftYear = _nodeDataPack$yearSel4.leftYear;
+            var _nodeDataPack$yearSel5 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel5.rightYear;
+            var leftYear = _nodeDataPack$yearSel5.leftYear;
 
             var budgetCell = _this;
             var categorylabel = 'Component';
             var columns = [{ type: 'string', label: categorylabel }, { type: 'number', label: rightYear.toString() }, { type: 'string', role: 'style' }];
             return columns;
         };
+        this._columns_diffChart = function (yearsRange, year) {
+            var cellDeclaration = _this.cellDeclaration;
+            var budgetCell = _this;
+            var categorylabel = 'Component';
+            var columns = [{ type: 'string', label: categorylabel }, { type: 'number', label: year.toString() }];
+            return columns;
+        };
         this._columns_PieChart = function (yearsRange) {
             var cellDeclaration = _this.cellDeclaration;
-            var _nodeDataPack$yearSel5 = _this.nodeDataPack.yearSelections;
-            var rightYear = _nodeDataPack$yearSel5.rightYear;
-            var leftYear = _nodeDataPack$yearSel5.leftYear;
+            var _nodeDataPack$yearSel6 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel6.rightYear;
+            var leftYear = _nodeDataPack$yearSel6.leftYear;
 
             var budgetCell = _this;
             var categorylabel = 'Component';
@@ -1941,9 +1970,9 @@ var BudgetCell = function () {
         this._chartParmsRows = function (treeNodeData, yearsRange) {
             var budgetCell = _this;
             var cellDeclaration = _this.cellDeclaration;
-            var _nodeDataPack$yearSel6 = _this.nodeDataPack.yearSelections;
-            var rightYear = _nodeDataPack$yearSel6.rightYear;
-            var leftYear = _nodeDataPack$yearSel6.leftYear;
+            var _nodeDataPack$yearSel7 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel7.rightYear;
+            var leftYear = _nodeDataPack$yearSel7.leftYear;
             var nodeDataseriesName = budgetCell.nodeDataseriesName;
 
             var nodeDataseries = treeNodeData[nodeDataseriesName];
@@ -1968,6 +1997,33 @@ var BudgetCell = function () {
                 case "AreaChart":
                     return _this._LineChartRows(treeNodeData, sortedDataseries, yearsRange);
             }
+        };
+        this._chartParmsDiffData = function (treeNodeData, yearsRange) {
+            var budgetCell = _this;
+            var diffdata = {
+                old: null,
+                new: null
+            };
+            var cellDeclaration = _this.cellDeclaration;
+            var _nodeDataPack$yearSel8 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel8.rightYear;
+            var leftYear = _nodeDataPack$yearSel8.leftYear;
+            var nodeDataseriesName = budgetCell.nodeDataseriesName;
+
+            var nodeDataseries = treeNodeData[nodeDataseriesName];
+            var sortedlistName = 'Sorted' + nodeDataseriesName;
+            var sortedDataseries = treeNodeData[sortedlistName];
+            if (!sortedDataseries) {
+                console.error({
+                    errorMessage: 'sorted list "' + sortedlistName + '" not available'
+                });
+                throw Error('sorted list "' + sortedlistName + '" not available');
+            }
+            var chartType = _this.explorerChartCode;
+            var rows = void 0;
+            diffdata.new = _this._getYearRows(sortedDataseries, nodeDataseries, rightYear, chartType);
+            diffdata.old = _this._getYearRows(sortedDataseries, nodeDataseries, leftYear, chartType);
+            return diffdata;
         };
         this._getYearRows = function (sortedDataseries, nodeDataseries, year, chartType) {
             var budgetCell = _this;
@@ -1995,9 +2051,9 @@ var BudgetCell = function () {
         };
         this._LineChartRows = function (treeNodeData, sortedDataSeries, yearsRange) {
             var rows = [];
-            var _nodeDataPack$yearSel7 = _this.nodeDataPack.yearSelections;
-            var rightYear = _nodeDataPack$yearSel7.rightYear;
-            var leftYear = _nodeDataPack$yearSel7.leftYear;
+            var _nodeDataPack$yearSel9 = _this.nodeDataPack.yearSelections;
+            var rightYear = _nodeDataPack$yearSel9.rightYear;
+            var leftYear = _nodeDataPack$yearSel9.leftYear;
 
             var _loop = function _loop(year) {
                 var items = sortedDataSeries.map(function (sortedItem) {
