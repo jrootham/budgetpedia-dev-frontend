@@ -316,7 +316,6 @@ Chart.defaultProps = {
   chartEvents : [],
   chartActions : null,
   data: null,
-  diffdata:null,
   onSelect: null,
   legend_toggle: false
 }

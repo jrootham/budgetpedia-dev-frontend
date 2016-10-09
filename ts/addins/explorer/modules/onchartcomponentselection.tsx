@@ -38,6 +38,7 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         console.error('System Error: budgetNode, faulty cellIndex in applyChartComponentSelection',budgetNode, cellIndex)
         throw Error('faulty cellIndex in applyChartComponentSelection')
     }
+
     // unpack chartSelectionData
     let selection = chartSelectionData.selection[0]
 

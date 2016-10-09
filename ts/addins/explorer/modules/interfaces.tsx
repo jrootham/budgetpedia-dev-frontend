@@ -40,6 +40,10 @@ interface ChartParms {
     }[]
     rows?: any[],
     columns?: any[],
+    diffdata?: {
+        old: any[],
+        new: any[],
+    }
 }
 
 // =====================================================

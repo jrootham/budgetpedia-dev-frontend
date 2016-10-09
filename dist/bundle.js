@@ -393,6 +393,7 @@ Chart.defaultProps = {
   chartEvents: [],
   chartActions: null,
   data: null,
+  diffdata: null,
   onSelect: null,
   legend_toggle: false
 };
@@ -1593,12 +1594,14 @@ var BudgetCell = function () {
                 console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData);
                 return;
             }
+            var diffdata = null;
             var chartParms = {
                 chartType: chartType,
                 options: options,
                 events: events,
                 columns: columns,
-                rows: rows
+                rows: rows,
+                diffdata: diffdata
             };
             _this.chartParmsObject = chartParms;
             _this.setState({
@@ -1804,7 +1807,6 @@ var BudgetCell = function () {
         };
         this._pieChartOptions = function (treeNodeData) {
             var budgetCell = _this;
-            var cellDeclaration = _this.cellDeclaration;
             var _nodeDataPack$yearSel2 = _this.nodeDataPack.yearSelections;
             var rightYear = _nodeDataPack$yearSel2.rightYear;
             var leftYear = _nodeDataPack$yearSel2.leftYear;
@@ -1957,34 +1959,39 @@ var BudgetCell = function () {
                 case "PieChart":
                 case "ColumnChart":
                     {
-                        var rows = sortedDataseries.map(function (sortedItem) {
-                            var componentItem = nodeDataseries[sortedItem.Code];
-                            if (!componentItem) {
-                                console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
-                                throw Error('componentItem not found');
-                            }
-                            var amount = void 0;
-                            if (componentItem.years) {
-                                amount = componentItem.years[rightYear];
-                            } else {
-                                amount = null;
-                            }
-                            var row = [sortedItem.Name, amount];
-                            var googleChartType = budgetCell.googleChartType;
+                        var chartType = budgetCell.googleChartType;
 
-                            switch (googleChartType) {
-                                case "ColumnChart":
-                                    row = budgetCell._rows_ColumnCharts_row(row, componentItem);
-                                    break;
-                            }
-                            return row;
-                        });
+                        var rows = _this._getYearRows(sortedDataseries, nodeDataseries, rightYear, chartType);
                         return rows;
                     }
                 case "LineChart":
                 case "AreaChart":
                     return _this._LineChartRows(treeNodeData, sortedDataseries, yearsRange);
             }
+        };
+        this._getYearRows = function (sortedDataseries, nodeDataseries, year, chartType) {
+            var budgetCell = _this;
+            var rows = sortedDataseries.map(function (sortedItem) {
+                var componentItem = nodeDataseries[sortedItem.Code];
+                if (!componentItem) {
+                    console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', nodeDataseries, sortedItem.Code, sortedItem);
+                    throw Error('componentItem not found');
+                }
+                var amount = void 0;
+                if (componentItem.years) {
+                    amount = componentItem.years[year];
+                } else {
+                    amount = null;
+                }
+                var row = [sortedItem.Name, amount];
+                switch (chartType) {
+                    case "ColumnChart":
+                        row = budgetCell._rows_ColumnCharts_row(row, componentItem);
+                        break;
+                }
+                return row;
+            });
+            return rows;
         };
         this._LineChartRows = function (treeNodeData, sortedDataSeries, yearsRange) {
             var rows = [];
@@ -3478,7 +3485,7 @@ var ExplorerCell = function (_Component) {
                     marginRight: "3px"
                 }, onTouchTap: function onTouchTap(e) {
                     _this2.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.OneYear]);
-                } }, React.createElement(SvgIcon_1.default, { style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36" }, React.createElement("rect", { x: "13", y: "13", width: "10", height: "10" }))), React.createElement(IconButton_1.default, { disabled: true, tooltip: "Two years", tooltipPosition: "top-center", style: {
+                } }, React.createElement(SvgIcon_1.default, { style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36" }, React.createElement("rect", { x: "13", y: "13", width: "10", height: "10" }))), React.createElement(IconButton_1.default, { tooltip: "Two years", disabled: yearSpan === 0, tooltipPosition: "top-center", style: {
                     backgroundColor: this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears] ? "rgba(144,238,144,0.5)" : "rgba(255,255,255,0.5)",
                     borderRadius: "15%",
                     padding: "0",
@@ -3515,7 +3522,7 @@ var ExplorerCell = function (_Component) {
                     width: "36px",
                     marginRight: "3px"
                 }, onTouchTap: function onTouchTap(e) {
-                    _this2.onChangeChartCode('DiffChart');
+                    _this2.onChangeChartCode('DiffColumnChart');
                 } }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "insert_chart"));
             var donutchart = React.createElement(IconButton_1.default, { key: 'donutchart', tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
                     backgroundColor: explorerChartCode == "DonutChart" ? "rgba(144,238,144,0.5)" : "transparent",
@@ -3727,7 +3734,7 @@ var ExplorerCell = function (_Component) {
                 }, disabled: true }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "note")));
             var chart = chartParms ? isDataAvailable ? React.createElement(Chart, { ref: function ref(node) {
                     budgetCell.chartComponent = node;
-                }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id }) : React.createElement("div", { style: {
+                }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, diffdata: chartParms.diffdata, graph_id: graph_id }) : React.createElement("div", { style: {
                     width: '360px',
                     height: '220px',
                     backgroundColor: 'whitesmoke',
@@ -4079,7 +4086,8 @@ exports.GoogleChartColors = ["#3366CC", "#DC3912", "#FF9900", "#109618", "#99009
 var ChartCodeToGoogleChartType = {
     'DonutChart': 'PieChart',
     'ColumnChart': 'ColumnChart',
-    'DoubleColumnChart': 'ColumnChart',
+    'DiffPieChart': 'PieChart',
+    'DiffColumnChart': 'ColumnChart',
     'TimeLine': 'LineChart',
     'ContextChart': 'TreeMap',
     'StackedArea': 'AreaChart',
@@ -7624,7 +7632,7 @@ var explorer = {
                     explorerChartCode: "ColumnChart"
                 },
                 'TwoYears': {
-                    explorerChartCode: "DoubleColumnChart"
+                    explorerChartCode: "DiffColumnChart"
                 },
                 'AllYears': {
                     explorerChartCode: "TimeLine"

@@ -61,12 +61,14 @@ class BudgetCell {
                 console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData);
                 return;
             }
+            let diffdata = null;
             let chartParms = {
                 chartType: chartType,
                 options: options,
                 events: events,
                 columns: columns,
                 rows: rows,
+                diffdata: diffdata,
             };
             this.chartParmsObject = chartParms;
             this.setState({
@@ -276,7 +278,6 @@ class BudgetCell {
         };
         this._pieChartOptions = (treeNodeData) => {
             let budgetCell = this;
-            let cellDeclaration = this.cellDeclaration;
             let { rightYear, leftYear } = this.nodeDataPack.yearSelections;
             let { nodeDataseriesName } = budgetCell;
             let nodeDataseries = treeNodeData[nodeDataseriesName];
@@ -422,34 +423,39 @@ class BudgetCell {
             switch (budgetCell.googleChartType) {
                 case "PieChart":
                 case "ColumnChart": {
-                    let rows = sortedDataseries.map((sortedItem) => {
-                        let componentItem = nodeDataseries[sortedItem.Code];
-                        if (!componentItem) {
-                            console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem);
-                            throw Error('componentItem not found');
-                        }
-                        let amount;
-                        if (componentItem.years) {
-                            amount = componentItem.years[rightYear];
-                        }
-                        else {
-                            amount = null;
-                        }
-                        let row = [sortedItem.Name, amount];
-                        let { googleChartType } = budgetCell;
-                        switch (googleChartType) {
-                            case "ColumnChart":
-                                row = budgetCell._rows_ColumnCharts_row(row, componentItem);
-                                break;
-                        }
-                        return row;
-                    });
+                    let { googleChartType: chartType } = budgetCell;
+                    let rows = this._getYearRows(sortedDataseries, nodeDataseries, rightYear, chartType);
                     return rows;
                 }
                 case "LineChart":
                 case "AreaChart":
                     return this._LineChartRows(treeNodeData, sortedDataseries, yearsRange);
             }
+        };
+        this._getYearRows = (sortedDataseries, nodeDataseries, year, chartType) => {
+            let budgetCell = this;
+            let rows = sortedDataseries.map((sortedItem) => {
+                let componentItem = nodeDataseries[sortedItem.Code];
+                if (!componentItem) {
+                    console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', nodeDataseries, sortedItem.Code, sortedItem);
+                    throw Error('componentItem not found');
+                }
+                let amount;
+                if (componentItem.years) {
+                    amount = componentItem.years[year];
+                }
+                else {
+                    amount = null;
+                }
+                let row = [sortedItem.Name, amount];
+                switch (chartType) {
+                    case "ColumnChart":
+                        row = budgetCell._rows_ColumnCharts_row(row, componentItem);
+                        break;
+                }
+                return row;
+            });
+            return rows;
         };
         this._LineChartRows = (treeNodeData, sortedDataSeries, yearsRange) => {
             let rows = [];

@@ -245,7 +245,7 @@ let explorer = {
                     explorerChartCode: "ColumnChart",
                 },
                 'TwoYears':{
-                    explorerChartCode: "DoubleColumnChart",
+                    explorerChartCode: "DiffColumnChart",
                 },
                 'AllYears':{
                     explorerChartCode: "TimeLine",

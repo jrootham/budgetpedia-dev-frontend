@@ -261,8 +261,7 @@ class BudgetCell {
         // 4. chart columns:
         // ------------------
 
-        let columns = budgetCell._chartParmsColumns(yearsRange
-            , treeNodeData)
+        let columns = budgetCell._chartParmsColumns(yearsRange, treeNodeData)
 
         // ------------------
         // 5. chart rows:
@@ -275,13 +274,18 @@ class BudgetCell {
 
         let rows
         if (sortedDataseries) {
-            rows = budgetCell._chartParmsRows(treeNodeData, yearsRange
-            )
+            rows = budgetCell._chartParmsRows( treeNodeData, yearsRange )
         } else {
             // fires on last chart
             console.error('System Error: no sortedDataSeries', sortedlistName, sortedDataseries, treeNodeData )
             return
         }
+
+        // ------------------
+        // 5. diff data:
+        // ------------------
+
+        let diffdata = null
 
         // --------------------[ ASSEMBLE PARMS PACK ]----------------
 
@@ -292,6 +296,7 @@ class BudgetCell {
             events,
             columns,
             rows,
+            diffdata,
 
         }
 
@@ -303,14 +308,16 @@ class BudgetCell {
         })
     }
 
-    // ------------------
+    // ===========================================================================
     // 2. chart options:
-    // ------------------
+    // ===========================================================================
     private _chartParmsOptions = (
+
         treeNodeData, 
         viewpointNamingConfigs, 
         datasetConfig:DatasetConfig, 
-        yearsRange:YearsRange            
+        yearsRange:YearsRange
+        
     ) => {
 
         // ----------------------[ assemble support variables ]-------------------
@@ -558,7 +565,7 @@ class BudgetCell {
 
         let budgetCell = this
 
-        let cellDeclaration = this.cellDeclaration
+        // let cellDeclaration = this.cellDeclaration
         let { rightYear, leftYear} = this.nodeDataPack.yearSelections
 
         let { nodeDataseriesName } = budgetCell
@@ -617,10 +624,9 @@ class BudgetCell {
         return options
     }
 
-
-    // ------------------
+    // ===========================================================================
     // 3. chart events:
-    // ------------------
+    // ===========================================================================
     private _chartParmsEvents = () => {
         let budgetCell:BudgetCell = this
         return [
@@ -651,9 +657,9 @@ class BudgetCell {
         ]
     }
 
-    // ------------------
+    // ===========================================================================
     // 4. chart columns:
-    // ------------------
+    // ===========================================================================
     private _chartParmsColumns = (yearsRange:YearsRange, treeNodeData) => {
         let budgetCell = this
 
@@ -720,9 +726,7 @@ class BudgetCell {
 
     }
 
-    private _columns_PieChart = (yearsRange
-            :YearsRange
-            ) => {
+    private _columns_PieChart = ( yearsRange:YearsRange ) => {
 
         let cellDeclaration = this.cellDeclaration
         let { rightYear, leftYear} = this.nodeDataPack.yearSelections
@@ -740,9 +744,9 @@ class BudgetCell {
 
     }
 
-    // ------------------
+    // ===========================================================================
     // 5. chart rows:
-    // ------------------
+    // ===========================================================================
     private _chartParmsRows = ( treeNodeData, yearsRange:YearsRange ) => {
 
         let budgetCell = this
@@ -768,36 +772,8 @@ class BudgetCell {
         switch (budgetCell.googleChartType) {
             case "PieChart":
             case "ColumnChart": {
-                let rows = sortedDataseries.map((sortedItem:SortedComponentItem) => {
-
-                    let componentItem = nodeDataseries[sortedItem.Code]
-                    if (!componentItem) {
-                        console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ',
-                            treeNodeData, sortedlistName, nodeDataseries, sortedItem.Code, sortedItem)
-                        throw Error('componentItem not found')
-                    }
-                    
-                    let amount
-                    if (componentItem.years) {
-                        amount = componentItem.years[rightYear]
-                    } else {
-                        amount = null
-                    }
-
-                    let row = [sortedItem.Name, amount]
-
-                    let { googleChartType } = budgetCell
-                    // enhance row
-                    switch (googleChartType) {
-
-                        case "ColumnChart":
-                            row = budgetCell._rows_ColumnCharts_row(row, componentItem)
-                            break;
-                        
-                    }
-
-                    return row
-                })
+                let { googleChartType:chartType } = budgetCell
+                let rows = this._getYearRows( sortedDataseries, nodeDataseries, rightYear, chartType )
                 return rows
             }
             case "LineChart":
@@ -805,6 +781,41 @@ class BudgetCell {
                 return this._LineChartRows( treeNodeData, sortedDataseries, yearsRange )
 
         }
+    }
+
+    private _getYearRows = (sortedDataseries, nodeDataseries, year, chartType) => {
+        let budgetCell = this
+        let rows = sortedDataseries.map((sortedItem:SortedComponentItem) => {
+
+            let componentItem = nodeDataseries[sortedItem.Code]
+            if (!componentItem) {
+                console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ',
+                    nodeDataseries, sortedItem.Code, sortedItem)
+                throw Error('componentItem not found')
+            }
+            
+            let amount
+            if (componentItem.years) {
+                amount = componentItem.years[year]
+            } else {
+                amount = null
+            }
+
+            let row = [sortedItem.Name, amount]
+
+            // enhance row
+            switch (chartType) {
+
+                case "ColumnChart":
+                    row = budgetCell._rows_ColumnCharts_row(row, componentItem)
+                    break;
+                
+            }
+
+            return row
+        })
+        return rows
+
     }
 
     private _LineChartRows = ( treeNodeData, sortedDataSeries, yearsRange ) => {

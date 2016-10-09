@@ -12,7 +12,6 @@
 import * as React from 'react'
 var { Component } = React
 var { Chart } = require('../../../../forked/react-google-charts/Chart.js')
-// var { Chart } = require('react-google-charts')
 import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
 import SvgIcon from 'material-ui/SvgIcon'
@@ -26,6 +25,8 @@ import { TimeScope } from '../constants'
 import { cellTypes as cellActionTypes } from '../actions'
 
 import * as Utilities from '../modules/utilities'
+
+declare var google
 
 interface ExplorerCellProps {
     callbackid: string | number,
@@ -182,7 +183,6 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     render() {
         let { budgetCell } = this.props
         let cellDeclaration = this.props.declarationData.cellsById[budgetCell.uid]
-        // console.log('cellDeclaration',cellDeclaration)
         let yearScope = cellDeclaration.yearScope
         let { chartParms, explorerChartCode, graph_id, viewpointConfigPack } = budgetCell
 
@@ -251,8 +251,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     </SvgIcon>
                 </IconButton>
                 <IconButton
-                    disabled = {true}
                     tooltip="Two years"
+                    disabled = {yearSpan === 0}
                     tooltipPosition="top-center"
                     style={
                         {
@@ -346,7 +346,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     }
                 }
                 onTouchTap={ e => {
-                    this.onChangeChartCode('DiffChart')
+                    this.onChangeChartCode('DiffColumnChart')
                 } }>
                 <FontIcon className="material-icons">insert_chart</FontIcon>
             </IconButton>
@@ -805,6 +805,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 chartEvents = { chartParms.events }
                 rows = { chartParms.rows }
                 columns = { chartParms.columns }
+                diffdata = { chartParms.diffdata }
                 // used to create and cache html element id attribute
                 graph_id = { graph_id }
                 />:<div 

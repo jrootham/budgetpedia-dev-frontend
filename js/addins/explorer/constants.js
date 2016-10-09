@@ -30,7 +30,8 @@ exports.GoogleChartColors = [
 let ChartCodeToGoogleChartType = {
     'DonutChart': 'PieChart',
     'ColumnChart': 'ColumnChart',
-    'DoubleColumnChart': 'ColumnChart',
+    'DiffPieChart': 'PieChart',
+    'DiffColumnChart': 'ColumnChart',
     'TimeLine': 'LineChart',
     'ContextChart': 'TreeMap',
     'StackedArea': 'AreaChart',

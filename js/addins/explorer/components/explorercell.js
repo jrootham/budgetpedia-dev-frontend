@@ -162,7 +162,7 @@ class ExplorerCell extends Component {
             marginRight: "3px",
         }, onTouchTap: e => {
             this.onChangeTimeCode(constants_1.TimeScope[constants_1.TimeScope.OneYear]);
-        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "13", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {disabled: true, tooltip: "Two years", tooltipPosition: "top-center", style: {
+        }}, React.createElement(SvgIcon_1.default, {style: { height: "36px", width: "36px" }, viewBox: "0 0 36 36"}, React.createElement("rect", {x: "13", y: "13", width: "10", height: "10"}))), React.createElement(IconButton_1.default, {tooltip: "Two years", disabled: yearSpan === 0, tooltipPosition: "top-center", style: {
             backgroundColor: (this.cellDeclaration.yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears])
                 ? "rgba(144,238,144,0.5)"
                 : "rgba(255,255,255,0.5)",
@@ -207,7 +207,7 @@ class ExplorerCell extends Component {
             width: "36px",
             marginRight: "3px",
         }, onTouchTap: e => {
-            this.onChangeChartCode('DiffChart');
+            this.onChangeChartCode('DiffColumnChart');
         }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "insert_chart"));
         let donutchart = React.createElement(IconButton_1.default, {key: 'donutchart', tooltip: "Donut Pie Chart", tooltipPosition: "top-center", style: {
             backgroundColor: (explorerChartCode == "DonutChart")
@@ -443,7 +443,7 @@ class ExplorerCell extends Component {
         let chart = (chartParms) ?
             (isDataAvailable ? React.createElement(Chart, {ref: node => {
                 budgetCell.chartComponent = node;
-            }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, graph_id: graph_id}) : React.createElement("div", {style: {
+            }, chartType: chartParms.chartType, options: chartParms.options, chartEvents: chartParms.events, rows: chartParms.rows, columns: chartParms.columns, diffdata: chartParms.diffdata, graph_id: graph_id}) : React.createElement("div", {style: {
                 width: '360px',
                 height: '220px',
                 backgroundColor: 'whitesmoke',
