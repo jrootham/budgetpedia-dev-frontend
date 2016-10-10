@@ -17,8 +17,14 @@ class BudgetCell {
                             selectionObj.row = budgetCell.chartSelection;
                             break;
                         case "ColumnChart":
-                            selectionObj.row = budgetCell.chartSelection;
-                            selectionObj.column = 1;
+                            if (budgetCell.explorerChartCode == "DiffColumnChart") {
+                                selectionObj.row = Math.round((budgetCell.chartSelection * 2) + 1);
+                                selectionObj.column = 2;
+                            }
+                            else {
+                                selectionObj.row = budgetCell.chartSelection;
+                                selectionObj.column = 1;
+                            }
                             break;
                         case "LineChart":
                         case "AreaChart":

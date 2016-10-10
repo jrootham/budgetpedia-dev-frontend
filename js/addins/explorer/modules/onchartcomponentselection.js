@@ -11,6 +11,15 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     let logicalselectionrow = null;
     if (selection) {
         switch (budgetCell.googleChartType) {
+            case "ColumnChart": {
+                if (budgetCell.explorerChartCode == "DiffColumnChart") {
+                    logicalselectionrow = Math.floor(selection.row / 2);
+                }
+                else {
+                    logicalselectionrow = selection.row;
+                }
+                break;
+            }
             case "AreaChart":
             case "LineChart":
                 logicalselectionrow = selection.column - 1;

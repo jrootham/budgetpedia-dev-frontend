@@ -114,17 +114,17 @@ var Chart = function (_React$Component) {
     value: function buildDataTableFromProps() {
       // debug('buildDataTableFromProps', this.props);
       if (this.props.diffdata) {
-        // if (this.chart.computeDiff) {
-        // let chart = this.wrapper.chart
+
         var diffdata = this.props.diffdata;
         var oldData = google.visualization.arrayToDataTable(diffdata.old);
         var newData = google.visualization.arrayToDataTable(diffdata.new);
         // must take computeDiff from prototypes since not available with charts early in process
         var computeDiff = google.visualization[this.props.chartType].prototype.computeDiff;
         var chartDiff = computeDiff(oldData, newData);
+
         return chartDiff;
-        // }
       }
+
       if (this.props.data === null && this.props.rows.length === 0) {
         throw new Error("Can't build DataTable from rows and columns: rows array in props is empty");
       } else if (this.props.data === null && this.props.columns.length === 0) {
@@ -1566,8 +1566,13 @@ var BudgetCell = function () {
                             selectionObj.row = budgetCell.chartSelection;
                             break;
                         case "ColumnChart":
-                            selectionObj.row = budgetCell.chartSelection;
-                            selectionObj.column = 1;
+                            if (budgetCell.explorerChartCode == "DiffColumnChart") {
+                                selectionObj.row = Math.round(budgetCell.chartSelection * 2 + 1);
+                                selectionObj.column = 2;
+                            } else {
+                                selectionObj.row = budgetCell.chartSelection;
+                                selectionObj.column = 1;
+                            }
                             break;
                         case "LineChart":
                         case "AreaChart":
@@ -5031,6 +5036,15 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
     var logicalselectionrow = null;
     if (selection) {
         switch (budgetCell.googleChartType) {
+            case "ColumnChart":
+                {
+                    if (budgetCell.explorerChartCode == "DiffColumnChart") {
+                        logicalselectionrow = Math.floor(selection.row / 2);
+                    } else {
+                        logicalselectionrow = selection.row;
+                    }
+                    break;
+                }
             case "AreaChart":
             case "LineChart":
                 logicalselectionrow = selection.column - 1;

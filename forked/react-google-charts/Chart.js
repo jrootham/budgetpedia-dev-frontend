@@ -68,17 +68,18 @@ class Chart extends React.Component {
   buildDataTableFromProps() {
     // debug('buildDataTableFromProps', this.props);
     if (this.props.diffdata) {
-      // if (this.chart.computeDiff) {
-        // let chart = this.wrapper.chart
+
         let diffdata = this.props.diffdata
         let oldData = google.visualization.arrayToDataTable(diffdata.old)
         let newData = google.visualization.arrayToDataTable(diffdata.new)
         // must take computeDiff from prototypes since not available with charts early in process
         let computeDiff = google.visualization[this.props.chartType].prototype.computeDiff
         let chartDiff = computeDiff(oldData,newData)
+
         return chartDiff
-      // }
+
     }
+
     if (this.props.data === null && this.props.rows.length === 0){
       throw new Error("Can't build DataTable from rows and columns: rows array in props is empty");
     }

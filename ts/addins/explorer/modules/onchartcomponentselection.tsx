@@ -28,6 +28,8 @@ export interface ChartSelectionContext {
 // on selection, makes a child with the same datasetSpecs offset
 let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellIndex, chartSelectionData:ChartSelectionContext) => {
 
+    // console.log('chartSelection data',chartSelectionData)
+
     let { nodes:branchNodes, uid:branchuid } = budgetBranch
 
     let budgetNode: BudgetNode = branchNodes[nodeIndex]
@@ -51,6 +53,14 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
         // when chart animation is present
         // selection.column = null
         switch (budgetCell.googleChartType) {
+            case "ColumnChart":{
+                if (budgetCell.explorerChartCode == "DiffColumnChart") {
+                    logicalselectionrow = Math.floor(selection.row / 2)
+                } else {
+                    logicalselectionrow = selection.row
+                }
+                break
+            }
             case "AreaChart":
             case "LineChart":
                 logicalselectionrow = selection.column - 1
