@@ -65,7 +65,13 @@ class BudgetCell {
                     diffdata = this._chartParmsDiffData(treeNodeData, yearsRange);
                     diffdata.old.splice(0, 0, leftcolumns);
                     diffdata.new.splice(0, 0, rightcolumns);
-                    console.log('diffdata', diffdata);
+                    if (explorerChartCode == "DiffPieChart") {
+                        options.diff = {
+                            innerCircle: { radiusFactor: 0.5 }
+                        };
+                        options.pieSliceText = 'percentage';
+                        options.pieHole = null;
+                    }
                     break;
                 }
                 default: {
@@ -238,6 +244,9 @@ class BudgetCell {
                 },
                 height: "400px",
                 width: "400px",
+                diff: null,
+                pieHole: null,
+                pieSliceText: null,
             };
             let options_extension = budgetCell._chartTypeOptions(budgetCell.googleChartType, treeNodeData);
             options = Object.assign(options, options_extension);

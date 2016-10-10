@@ -32,6 +32,7 @@ class Chart extends React.Component {
     this.dataTable = [];
   }
   componentDidMount(){
+    console.log('mounting')
     // debug('componentDidMount');
     googleChartLoader.init(this.props.chartPackages, this.props.chartVersion).then((asd)=>{
       // console.log('drawchart from did mount')
@@ -46,37 +47,42 @@ class Chart extends React.Component {
         console.error("Error removing events, error : ", err);
       }
   }
+  componentWillUpdate(nextProps) {
+    if (this.wrapper && this.wrapper.getChartType() != nextProps.chartType) {
+        this.wrapper = null
+        // console.log('updating chart',this.wrapper.getChartType(),nextProps.chartType)
+        // this.updateingchart = true
+        // this.updateChartType(nextProps.chartType)
+    }    
+  }
   componentDidUpdate(){
     // debug('componentDidUpdate');
     if (googleChartLoader.isLoading){
       googleChartLoader.initPromise.then(()=>{
-        // console.log('calling drawchart from did update PROMISE')
+        // console.log('drawchart from did update/loading')
         this.drawChart.bind(this)();
-
       })
 		}
     else if (googleChartLoader.isLoaded) {
-
-      // console.log('calling drawchart from did update ISLOADED')
+      // console.log('drawchart from did update' + this.state.graphID,this.chart.getSelection())
       this.drawChart.bind(this)();
-
-    } else {
-        // console.log('drawchart from did update/loading')
-      // console.log('NOT calling drawChart from componentDidUpdate')
+      // console.log(this.chart.getSelection())
     }
   }
   buildDataTableFromProps() {
     // debug('buildDataTableFromProps', this.props);
     if (this.props.diffdata) {
-      // if (this.chart.computeDiff) {
-        // console.log('updating diffdata')
-        let chart = this.wrapper.chart
-        let diffdata = this.props.diffdata
-        let oldData = google.visualization.arrayToDataTable(diffdata.old)
-        let newData = google.visualization.arrayToDataTable(diffdata.new)
-        let chartDiff = this.chart.computeDiff(oldData,newData)
-        return chartDiff
+      // if (this.wrapper.getChartType() != this.props.chartType) {
+      //   this.updateChartType(this.props.chartType)
       // }
+      let chart = this.wrapper.chart
+      let diffdata = this.props.diffdata
+      let oldData = google.visualization.arrayToDataTable(diffdata.old)
+      let newData = google.visualization.arrayToDataTable(diffdata.new)
+      // let wrapper = this.wrapper
+      // console.log('wrapper for diffdata',wrapper.getChartType(), this.props.chartType, chart, wrapper)
+      let chartDiff = this.chart.computeDiff(oldData,newData)
+      return chartDiff
     }
     if (this.props.data === null && this.props.rows.length === 0){
       throw new Error("Can't build DataTable from rows and columns: rows array in props is empty");
@@ -125,60 +131,47 @@ class Chart extends React.Component {
         containerId: this.state.graphID
       };
       this.wrapper = new google.visualization.ChartWrapper(chartConfig);
-      console.log('newly created wrapper', this.wrapper)
-      // if (this.props.diffdata) {
-      //   try {
-      //     this.wrapper.draw() // trigger update of chart methods, for computeDiff
-      //   } catch (e) {
-
-      //   }
-      // }
-      google.visualization.events.addOneTimeListener(this.wrapper, 'ready', ()=>{
-        this.chart = this.wrapper.getChart();
-        console.log('ready after create',this.chart)
-        this.listenToChartEvents.bind(this)();
-        this.addChartActions.bind(this)();
-      });
-      console.log('calling buildDataTableFromProps from drawchart NO wrapper', this.chart)
       this.dataTable = this.buildDataTableFromProps.bind(this)();
       this.wrapper.setDataTable(this.dataTable)
-      this.wrapper.draw();
-      // this.chart = this.wrapper.getChart()
+
+      google.visualization.events.addOneTimeListener(this.wrapper, 'ready', ()=>{
+        this.chart = this.wrapper.getChart();
+        this.listenToChartEvents.bind(this)();
+        this.addChartActions.bind(this)();
+        this.wrapper.draw();
+      });
     }
     else {
-      if (this.wrapper.getChartType() != this.props.chartType) {
-        google.visualization.events.removeAllListeners(this.wrapper)
-        this.wrapper.setChartType(this.props.chartType)
-        // console.log('newChartType BEFORE ready',this.wrapper.getChartType(),this.wrapper.getChart())
-        var self = this
-        google.visualization.events.addOneTimeListener(this.wrapper, 'ready', () => {
-          this.chart = this.wrapper.getChart();
-          this.listenToChartEvents.bind(this)();
-          this.addChartActions.bind(this)();
-          // self.listenToChartEvents.call(self);
-          // self.chart = self.wrapper.getChart();
-          // console.log('newChartType AFTER ready',self.wrapper.getChartType(),self.wrapper.getChart())
-        });
-        if (this.props.diffdata) {
-            self.wrapper.draw() // trigger update of chart methods, for computeDiff
-        }
-        self.chart = self.wrapper.getChart();
-        self.updateDataTable.bind(self)();
-        self.wrapper.setDataTable(self.dataTable);
-        self.wrapper.setOptions(self.props.options)
-        self.wrapper.draw();
-      } else {
-        console.log('with wrapper same chart type')
-          this.updateDataTable.bind(this)();
-          this.wrapper.setDataTable(this.dataTable);
-          this.wrapper.setOptions(this.props.options)
-          this.wrapper.draw();
-        // this.wrapper.draw();
-      }
+      this.updateDataTable.bind(this)();
+      this.wrapper.setDataTable(this.dataTable);
+      this.wrapper.setOptions(this.props.options)
+      // console.log(this.wrapper.getChartType(), this.props.chartType)
+      // if (this.wrapper.getChartType() != this.props.chartType) {
+      //   this.updateChartType(this.props.chartType)
+        // google.visualization.events.removeAllListeners(this.wrapper)
+        // this.wrapper.setChartType(this.props.chartType)
+        // var self = this
+        // google.visualization.events.addOneTimeListener(this.wrapper, 'ready', function () {
+        //   self.chart = self.wrapper.getChart();
+        //   self.listenToChartEvents.call(self);
+        // });
+      // }
       // issue: this draw clears selection
+      this.wrapper.draw();
     }
     // this.wrapper.draw();
   }
+
+  // updateChartType(chartType) {
+  //     google.visualization.events.removeAllListeners(this.wrapper)
+  //     this.wrapper.setChartType(chartType)
+  //     var self = this
+  //     // self.chart = self.wrapper.getChart();
+  //     google.visualization.events.addOneTimeListener(this.wrapper, 'ready', function () {
+  //       self.chart = self.wrapper.getChart();
+  //       self.listenToChartEvents.call(self);
+  //     });
+  // }
 
   addChartActions() {
     // debug('addChartActions', this.props.chartActions);
@@ -357,6 +350,7 @@ Chart.defaultProps = {
   chartEvents : [],
   chartActions : null,
   data: null,
+  diffdata:null,
   onSelect: null,
   legend_toggle: false
 }

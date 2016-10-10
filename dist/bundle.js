@@ -97,19 +97,33 @@ var Chart = function (_React$Component) {
       // debug('componentDidUpdate');
       if (_GoogleChartLoader2.default.isLoading) {
         _GoogleChartLoader2.default.initPromise.then(function () {
-          // console.log('drawchart from did update/loading')
+          // console.log('calling drawchart from did update PROMISE')
           _this3.drawChart.bind(_this3)();
         });
       } else if (_GoogleChartLoader2.default.isLoaded) {
-        // console.log('drawchart from did update' + this.state.graphID,this.chart.getSelection())
+
+        // console.log('calling drawchart from did update ISLOADED')
         this.drawChart.bind(this)();
-        // console.log(this.chart.getSelection())
+      } else {
+        // console.log('drawchart from did update/loading')
+        // console.log('NOT calling drawChart from componentDidUpdate')
       }
     }
   }, {
     key: 'buildDataTableFromProps',
     value: function buildDataTableFromProps() {
       // debug('buildDataTableFromProps', this.props);
+      if (this.props.diffdata) {
+        // if (this.chart.computeDiff) {
+        // console.log('updating diffdata')
+        var chart = this.wrapper.chart;
+        var diffdata = this.props.diffdata;
+        var oldData = google.visualization.arrayToDataTable(diffdata.old);
+        var newData = google.visualization.arrayToDataTable(diffdata.new);
+        var chartDiff = this.chart.computeDiff(oldData, newData);
+        return chartDiff;
+        // }
+      }
       if (this.props.data === null && this.props.rows.length === 0) {
         throw new Error("Can't build DataTable from rows and columns: rows array in props is empty");
       } else if (this.props.data === null && this.props.columns.length === 0) {
@@ -164,33 +178,58 @@ var Chart = function (_React$Component) {
           containerId: this.state.graphID
         };
         this.wrapper = new google.visualization.ChartWrapper(chartConfig);
-        this.dataTable = this.buildDataTableFromProps.bind(this)();
-        this.wrapper.setDataTable(this.dataTable);
+        console.log('newly created wrapper', this.wrapper);
+        // if (this.props.diffdata) {
+        //   try {
+        //     this.wrapper.draw() // trigger update of chart methods, for computeDiff
+        //   } catch (e) {
 
+        //   }
+        // }
         google.visualization.events.addOneTimeListener(this.wrapper, 'ready', function () {
           _this4.chart = _this4.wrapper.getChart();
+          console.log('ready after create', _this4.chart);
           _this4.listenToChartEvents.bind(_this4)();
           _this4.addChartActions.bind(_this4)();
         });
-        // this.wrapper.draw();
+        console.log('calling buildDataTableFromProps from drawchart NO wrapper', this.chart);
+        this.dataTable = this.buildDataTableFromProps.bind(this)();
+        this.wrapper.setDataTable(this.dataTable);
+        this.wrapper.draw();
+        // this.chart = this.wrapper.getChart()
       } else {
-          this.updateDataTable.bind(this)();
-          this.wrapper.setDataTable(this.dataTable);
-          this.wrapper.setOptions(this.props.options);
-          // console.log(this.wrapper.getChartType(), this.props.chartType)
           if (this.wrapper.getChartType() != this.props.chartType) {
             google.visualization.events.removeAllListeners(this.wrapper);
             this.wrapper.setChartType(this.props.chartType);
+            // console.log('newChartType BEFORE ready',this.wrapper.getChartType(),this.wrapper.getChart())
             var self = this;
             google.visualization.events.addOneTimeListener(this.wrapper, 'ready', function () {
-              self.chart = self.wrapper.getChart();
-              self.listenToChartEvents.call(self);
+              _this4.chart = _this4.wrapper.getChart();
+              _this4.listenToChartEvents.bind(_this4)();
+              _this4.addChartActions.bind(_this4)();
+              // self.listenToChartEvents.call(self);
+              // self.chart = self.wrapper.getChart();
+              // console.log('newChartType AFTER ready',self.wrapper.getChartType(),self.wrapper.getChart())
             });
+            if (this.props.diffdata) {
+              self.wrapper.draw(); // trigger update of chart methods, for computeDiff
+            }
+            self.chart = self.wrapper.getChart();
+            self.updateDataTable.bind(self)();
+            self.wrapper.setDataTable(self.dataTable);
+            self.wrapper.setOptions(self.props.options);
+            self.wrapper.draw();
+          } else {
+            console.log('with wrapper same chart type');
+            this.updateDataTable.bind(this)();
+            this.wrapper.setDataTable(this.dataTable);
+            this.wrapper.setOptions(this.props.options);
+            this.wrapper.draw();
+            // this.wrapper.draw();
           }
           // issue: this draw clears selection
-          // this.wrapper.draw();
         }
-      this.wrapper.draw();
+      // this.wrapper.draw();
     }
   }, {
     key: 'addChartActions',
@@ -393,7 +432,6 @@ Chart.defaultProps = {
   chartEvents: [],
   chartActions: null,
   data: null,
-  diffdata: null,
   onSelect: null,
   legend_toggle: false
 };
@@ -1603,7 +1641,13 @@ var BudgetCell = function () {
                         diffdata = _this._chartParmsDiffData(treeNodeData, yearsRange);
                         diffdata.old.splice(0, 0, leftcolumns);
                         diffdata.new.splice(0, 0, rightcolumns);
-                        console.log('diffdata', diffdata);
+                        if (explorerChartCode == "DiffPieChart") {
+                            options.diff = {
+                                innerCircle: { radiusFactor: 0.5 }
+                            };
+                            options.pieSliceText = 'percentage';
+                            options.pieHole = null;
+                        }
                         break;
                     }
                 default:
@@ -1768,7 +1812,10 @@ var BudgetCell = function () {
                     groupWidth: "95%"
                 },
                 height: "400px",
-                width: "400px"
+                width: "400px",
+                diff: null,
+                pieHole: null,
+                pieSliceText: null
             };
             var options_extension = budgetCell._chartTypeOptions(budgetCell.googleChartType, treeNodeData);
             options = Object.assign(options, options_extension);

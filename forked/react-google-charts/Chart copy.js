@@ -62,6 +62,14 @@ class Chart extends React.Component {
   }
   buildDataTableFromProps() {
     // debug('buildDataTableFromProps', this.props);
+    if (this.props.diffdata) {
+      let chart = this.wrapper.chart
+      let diffdata = this.props.diffdata
+      let oldData = google.visualization.arrayToDataTable(diffdata.old)
+      let newData = google.visualization.arrayToDataTable(diffdata.new)
+      let chartDiff = this.chart.computeDiff(oldData,newData)
+      return chartDiff
+    }
     if (this.props.data === null && this.props.rows.length === 0){
       throw new Error("Can't build DataTable from rows and columns: rows array in props is empty");
     }
@@ -116,27 +124,30 @@ class Chart extends React.Component {
         this.chart = this.wrapper.getChart();
         this.listenToChartEvents.bind(this)();
         this.addChartActions.bind(this)();
+        this.wrapper.draw();
       });
-      // this.wrapper.draw();
     }
     else {
       this.updateDataTable.bind(this)();
       this.wrapper.setDataTable(this.dataTable);
       this.wrapper.setOptions(this.props.options)
-      // console.log(this.wrapper.getChartType(), this.props.chartType)
       if (this.wrapper.getChartType() != this.props.chartType) {
         google.visualization.events.removeAllListeners(this.wrapper)
         this.wrapper.setChartType(this.props.chartType)
+        console.log('newChartType',this.wrapper.getChartType(),this.wrapper.getChart())
         var self = this
         google.visualization.events.addOneTimeListener(this.wrapper, 'ready', function () {
           self.chart = self.wrapper.getChart();
           self.listenToChartEvents.call(self);
+          this.updateDataTable()
+          this.wrapper.draw();
         });
+      } else {
+          this.wrapper.draw();
       }
       // issue: this draw clears selection
-      // this.wrapper.draw();
     }
-    this.wrapper.draw();
+    // this.wrapper.draw();
   }
 
   addChartActions() {

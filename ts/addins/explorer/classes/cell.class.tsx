@@ -276,15 +276,26 @@ class BudgetCell {
         let rows = null
         let diffdata = null
         switch (explorerChartCode) {
+            // ------------------
+            // 5. diff data:
+            // ------------------
             case "DiffColumnChart":
             case "DiffPieChart": {
+                // console.log('processing chart code',explorerChartCode)
                 let { rightYear, leftYear} = this.nodeDataPack.yearSelections
                 let leftcolumns = budgetCell._columns_diffChart(yearsRange, leftYear)
                 let rightcolumns = budgetCell._columns_diffChart(yearsRange, rightYear)
                 diffdata = this._chartParmsDiffData(treeNodeData, yearsRange)
                 diffdata.old.splice(0,0,leftcolumns)
                 diffdata.new.splice(0,0,rightcolumns)
-                console.log( 'diffdata', diffdata)
+                if (explorerChartCode == "DiffPieChart") {
+                    options.diff = {
+                        innerCircle: { radiusFactor: 0.5 }
+                    }
+                    options.pieSliceText = 'percentage'
+                    options.pieHole = null
+                }
+                // console.log( 'diffdata', diffdata, options)
                 break
             }
             default: {
@@ -299,9 +310,6 @@ class BudgetCell {
                 }
             }
         }
-        // ------------------
-        // 5. diff data:
-        // ------------------
 
 
         // --------------------[ ASSEMBLE PARMS PACK ]----------------
@@ -510,6 +518,9 @@ class BudgetCell {
             // width: children.length * 120,// 120 per column
             height: "400px",
             width: "400px",
+            diff:null,
+            pieHole:null,
+            pieSliceText:null,
         }
 
         let options_extension = 
