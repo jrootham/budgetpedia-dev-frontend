@@ -115,12 +115,13 @@ var Chart = function (_React$Component) {
       // debug('buildDataTableFromProps', this.props);
       if (this.props.diffdata) {
         // if (this.chart.computeDiff) {
-        // console.log('updating diffdata')
-        var chart = this.wrapper.chart;
+        // let chart = this.wrapper.chart
         var diffdata = this.props.diffdata;
         var oldData = google.visualization.arrayToDataTable(diffdata.old);
         var newData = google.visualization.arrayToDataTable(diffdata.new);
-        var chartDiff = this.chart.computeDiff(oldData, newData);
+        // must take computeDiff from prototypes since not available with charts early in process
+        var computeDiff = google.visualization[this.props.chartType].prototype.computeDiff;
+        var chartDiff = computeDiff(oldData, newData);
         return chartDiff;
         // }
       }
@@ -178,25 +179,16 @@ var Chart = function (_React$Component) {
           containerId: this.state.graphID
         };
         this.wrapper = new google.visualization.ChartWrapper(chartConfig);
-        console.log('newly created wrapper', this.wrapper);
-        // if (this.props.diffdata) {
-        //   try {
-        //     this.wrapper.draw() // trigger update of chart methods, for computeDiff
-        //   } catch (e) {
-
-        //   }
-        // }
+        // console.log('newly created wrapper', this.wrapper)
         google.visualization.events.addOneTimeListener(this.wrapper, 'ready', function () {
           _this4.chart = _this4.wrapper.getChart();
-          console.log('ready after create', _this4.chart);
+          // console.log('ready after create',this.chart)
           _this4.listenToChartEvents.bind(_this4)();
           _this4.addChartActions.bind(_this4)();
         });
-        console.log('calling buildDataTableFromProps from drawchart NO wrapper', this.chart);
         this.dataTable = this.buildDataTableFromProps.bind(this)();
         this.wrapper.setDataTable(this.dataTable);
-        this.wrapper.draw();
-        // this.chart = this.wrapper.getChart()
+        // this.wrapper.draw();
       } else {
           if (this.wrapper.getChartType() != this.props.chartType) {
             google.visualization.events.removeAllListeners(this.wrapper);
@@ -207,29 +199,21 @@ var Chart = function (_React$Component) {
               _this4.chart = _this4.wrapper.getChart();
               _this4.listenToChartEvents.bind(_this4)();
               _this4.addChartActions.bind(_this4)();
-              // self.listenToChartEvents.call(self);
-              // self.chart = self.wrapper.getChart();
-              // console.log('newChartType AFTER ready',self.wrapper.getChartType(),self.wrapper.getChart())
             });
-            if (this.props.diffdata) {
-              self.wrapper.draw(); // trigger update of chart methods, for computeDiff
-            }
             self.chart = self.wrapper.getChart();
             self.updateDataTable.bind(self)();
             self.wrapper.setDataTable(self.dataTable);
             self.wrapper.setOptions(self.props.options);
-            self.wrapper.draw();
+            // self.wrapper.draw();
           } else {
-            console.log('with wrapper same chart type');
-            this.updateDataTable.bind(this)();
-            this.wrapper.setDataTable(this.dataTable);
-            this.wrapper.setOptions(this.props.options);
-            this.wrapper.draw();
-            // this.wrapper.draw();
-          }
+              this.updateDataTable.bind(this)();
+              this.wrapper.setDataTable(this.dataTable);
+              this.wrapper.setOptions(this.props.options);
+              // this.wrapper.draw();
+            }
           // issue: this draw clears selection
         }
-      // this.wrapper.draw();
+      this.wrapper.draw();
     }
   }, {
     key: 'addChartActions',
