@@ -1420,7 +1420,7 @@ var BudgetBranch = function () {
                         break;
                     }
                 case "PERPERSON":
-                case "PER100000PESONS":
+                case "PER100000PERSONS":
                     prorataseries = 'population';
                     break;
                 case "PERHOUSEHOLD":
@@ -1444,12 +1444,15 @@ var BudgetBranch = function () {
                         resolve(true);
                     }).catch(function (reason) {
                         console.error(reason);
+                        error(reason);
                     });
                 }
             });
             return promise;
         };
-        this._doProRataCalc = function (viewpointdata, proratadata) {};
+        this._doProRataCalc = function (viewpointdata, proratadata) {
+            console.log('proratadata', proratadata);
+        };
         this.getViewpointData = function () {
             var branchSettings = _this.branchDeclaration;
             var viewpointName = branchSettings.viewpoint;
@@ -1476,9 +1479,11 @@ var BudgetBranch = function () {
                         resolve(true);
                     }).catch(function (reason) {
                         console.error(reason);
+                        throw Error(reason);
                     });
                 }).catch(function (reason) {
                     console.error(reason);
+                    error(reason);
                 });
             });
             return promise;
@@ -2244,16 +2249,28 @@ var Database = function () {
     _createClass(Database, [{
         key: 'getProrataData',
         value: function getProrataData(parms) {
+            var _this = this;
+
+            var repository = parms.repository;
+            var prorataseries = parms.prorataseries;
+
             var promise = new Promise(function (resolve, error) {
-                var series = {};
-                resolve(series);
+                var spec = _this.dbroot + repository.toLowerCase() + '/dataseries/' + prorataseries.toLowerCase() + '.json';
+                fetch(spec).then(function (prorataseries) {
+                    return prorataseries.json();
+                }).then(function (prorataseries) {
+                    resolve(prorataseries);
+                }).catch(function (reason) {
+                    console.log('get prorataseries error', reason);
+                    error(reason);
+                });
             });
             return promise;
         }
     }, {
         key: 'getViewpointData',
         value: function getViewpointData(parms) {
-            var _this = this;
+            var _this2 = this;
 
             this.viewpointDataParms = parms;
             var viewpointName = parms.viewpointName;
@@ -2287,7 +2304,7 @@ var Database = function () {
                         datasetData: datasetData,
                         lookups: lookups
                     };
-                    _this.calculateViewpointData(setparms);
+                    _this2.calculateViewpointData(setparms);
                     viewpointDataTemplate = setparms.viewpointDataTemplate;
                     resolve(viewpointDataTemplate);
                 }).catch(function (reason) {
@@ -2304,16 +2321,17 @@ var Database = function () {
     }, {
         key: 'getViewpointTemplatePromise',
         value: function getViewpointTemplatePromise(viewpoint) {
-            var _this2 = this;
+            var _this3 = this;
 
             var promise = new Promise(function (resolve, error) {
-                var path = _this2.dbroot + _this2.viewpointDataParms.repository.toLowerCase() + '/viewpoints/' + viewpoint.toLowerCase() + '.json';
+                var path = _this3.dbroot + _this3.viewpointDataParms.repository.toLowerCase() + '/viewpoints/' + viewpoint.toLowerCase() + '.json';
                 fetch(path).then(function (viewpoint) {
                     return viewpoint.json();
                 }).then(function (viewpointdata) {
                     resolve(viewpointdata);
                 }).catch(function (reason) {
                     console.log('get viewpoint template error', reason);
+                    error(reason);
                 });
             });
             return promise;
@@ -2360,10 +2378,10 @@ var Database = function () {
     }, {
         key: 'getDatasetPromise',
         value: function getDatasetPromise(versionName, datasetName) {
-            var _this3 = this;
+            var _this4 = this;
 
             var promise = new Promise(function (resolve, error) {
-                var path = _this3.dbroot + _this3.viewpointDataParms.repository.toLowerCase() + '/datasets/' + versionName.toLowerCase() + '/' + _this3.datasetsubpath + datasetName.toLowerCase() + '.json';
+                var path = _this4.dbroot + _this4.viewpointDataParms.repository.toLowerCase() + '/datasets/' + versionName.toLowerCase() + '/' + _this4.datasetsubpath + datasetName.toLowerCase() + '.json';
                 fetch(path).then(function (dataset) {
                     return dataset.json();
                 }).then(function (dataset) {
@@ -2377,12 +2395,12 @@ var Database = function () {
     }, {
         key: 'getLookupsPromise',
         value: function getLookupsPromise() {
-            var _this4 = this;
+            var _this5 = this;
 
             var version = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
 
             var promise = new Promise(function (resolve, error) {
-                var path = _this4.dbroot + _this4.viewpointDataParms.repository.toLowerCase() + '/datasets/' + version.toLowerCase() + '/' + _this4.lookupssubpath + 'lookups.json';
+                var path = _this5.dbroot + _this5.viewpointDataParms.repository.toLowerCase() + '/datasets/' + version.toLowerCase() + '/' + _this5.lookupssubpath + 'lookups.json';
                 fetch(path).then(function (lookups) {
                     return lookups.json();
                 }).then(function (lookups) {
@@ -7772,7 +7790,7 @@ var branchDefaults = {
     inflationAdjusted: true,
     nodeList: [],
     showOptions: false,
-    prorata: 'OFF'
+    prorata: 'PERPERSON'
 };
 var explorer = {
     defaults: {

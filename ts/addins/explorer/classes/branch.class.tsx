@@ -340,7 +340,7 @@ class BudgetBranch {
                 break
             }
             case "PERPERSON":
-            case "PER100000PESONS":
+            case "PER100000PERSONS":
                 prorataseries = 'population'
                 break;
 
@@ -366,6 +366,8 @@ class BudgetBranch {
 
                 _promise.then( (proratadata) => {
 
+                    // console.log('returned proratadata',proratadata)
+
                     let budgetBranch = this
 
                     this._doProRataCalc(viewpointdata, proratadata)
@@ -374,7 +376,7 @@ class BudgetBranch {
                     
                 }).catch(reason =>{
                     console.error(reason)
-                    // error(reason)
+                    error(reason)
                 })
 
             }
@@ -386,6 +388,8 @@ class BudgetBranch {
     }
 
     private _doProRataCalc = (viewpointdata, proratadata) => {
+
+        console.log('proratadata',proratadata)
 
     }
 
@@ -430,11 +434,12 @@ class BudgetBranch {
                     }
                 ).catch(reason => {
                     console.error(reason)
+                    throw Error(reason)
                 })
 
             }).catch(reason =>{
                 console.error(reason)
-                // error(reason)
+                error(reason)
             })
 
         })

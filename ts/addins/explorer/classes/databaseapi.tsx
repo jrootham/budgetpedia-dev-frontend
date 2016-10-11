@@ -184,9 +184,29 @@ class Database {
 
     public getProrataData(parms) {
 
+        let { repository, prorataseries } = parms
+
         let promise = new Promise((resolve, error) => {
-            let series = {}
-            resolve(series)
+
+            let spec = this.dbroot + 
+                repository.toLowerCase() +
+                '/dataseries/' + 
+                prorataseries.toLowerCase() + '.json'
+
+            // console.log('fetching', spec)
+
+            fetch(spec).then((prorataseries) => {
+                return prorataseries.json()
+            }).then((prorataseries)=> {
+                // console.log('prorataseries returned', prorataseries)
+                resolve(prorataseries)
+            }).catch((reason)=>{
+                console.log('get prorataseries error', reason)
+                error(reason)
+            })
+
+
+            // resolve(series)
         })
         return promise
     }
@@ -271,7 +291,7 @@ class Database {
                 resolve(viewpointdata)
             }).catch((reason)=>{
                 console.log('get viewpoint template error', reason)
-                // error(reason)
+                error(reason)
             })
 
         })

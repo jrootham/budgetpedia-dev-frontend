@@ -173,7 +173,7 @@ class BudgetBranch {
                     break;
                 }
                 case "PERPERSON":
-                case "PER100000PESONS":
+                case "PER100000PERSONS":
                     prorataseries = 'population';
                     break;
                 case "PERHOUSEHOLD":
@@ -198,12 +198,14 @@ class BudgetBranch {
                         resolve(true);
                     }).catch(reason => {
                         console.error(reason);
+                        error(reason);
                     });
                 }
             });
             return promise;
         };
         this._doProRataCalc = (viewpointdata, proratadata) => {
+            console.log('proratadata', proratadata);
         };
         this.getViewpointData = () => {
             let branchSettings = this.branchDeclaration;
@@ -226,9 +228,11 @@ class BudgetBranch {
                         resolve(true);
                     }).catch(reason => {
                         console.error(reason);
+                        throw Error(reason);
                     });
                 }).catch(reason => {
                     console.error(reason);
+                    error(reason);
                 });
             });
             return promise;

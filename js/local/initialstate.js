@@ -114,7 +114,7 @@ let branchDefaults = {
     inflationAdjusted: true,
     nodeList: [],
     showOptions: false,
-    prorata: 'OFF',
+    prorata: 'PERPERSON',
 };
 let explorer = {
     defaults: {
