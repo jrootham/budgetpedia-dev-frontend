@@ -114,7 +114,6 @@ class BudgetCell {
         return ChartCodeToGoogleChartType[this.explorerChartCode]
     }
 
-    // TODO: untangle this sequencing mess!!
     get cellDeclaration() {
         return this.getProps().declarationData.cellsById[this.uid]
     }

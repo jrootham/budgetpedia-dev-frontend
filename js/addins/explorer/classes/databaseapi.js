@@ -7,6 +7,13 @@ class Database {
         this.datasetsubpath = 'json/';
         this.lookupssubpath = 'lookups/';
     }
+    getProrataData(parms) {
+        let promise = new Promise((resolve, error) => {
+            let series = {};
+            resolve(series);
+        });
+        return promise;
+    }
     getViewpointData(parms) {
         this.viewpointDataParms = parms;
         let { viewpointName, versionName, datasetName, inflationAdjusted } = parms;

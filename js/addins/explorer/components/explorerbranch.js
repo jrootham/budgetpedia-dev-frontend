@@ -243,9 +243,7 @@ class ExplorerBranch extends Component {
             this.props.globalStateActions.changeAspect(budgetBranch.uid, aspect);
         };
         this.switchComparator = comparatorindex => {
-            this.setState({
-                comparatorselection: comparatorindex
-            });
+            console.log('comparator', comparatorindex);
         };
         this.toggleInflationAdjustment = value => {
             let { budgetBranch } = this.props;
@@ -319,7 +317,7 @@ class ExplorerBranch extends Component {
                     isInflationAdjusted: isInflationAdjusted,
                 };
                 budgetNode.viewpointConfigPack = viewpointConfigPack;
-                budgetNode.branchSettings = branch.props.budgetBranch.settings;
+                budgetNode.branchSettings = branch.props.budgetBranch.branchDeclaration;
                 budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(branch.props.budgetBranch);
                 let actions = Object.assign({}, branch._stateActions);
                 actions.updateCellTimeScope = branch._stateActions.updateCellTimeScope(budgetNode.uid);
@@ -400,9 +398,9 @@ class ExplorerBranch extends Component {
                 }}, React.createElement(MenuItem_1.default, {value: 'Expenses', primaryText: "Expenses"}), React.createElement(MenuItem_1.default, {value: 'Revenues', primaryText: "Revenues"}), React.createElement(MenuItem_1.default, {value: 'Staffing', primaryText: "Staffing"})))
             :
                 null;
-        let byunitselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" }}, "Pro-rated: "), React.createElement(DropDownMenu_1.default, {disabled: true, value: this.state.comparatorselection, onChange: (e, index, value) => {
+        let byunitselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" }}, "Pro-rated: "), React.createElement(DropDownMenu_1.default, {onChange: (e, index, value) => {
             this.switchComparator(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'Off', primaryText: "Off"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Staff', primaryText: "Per staffing position"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Population', primaryText: "Population: per person"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Population100000', primaryText: "Population: per 100,000 people"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Adult', primaryText: "Population: per adult (15 and over)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Adult100000', primaryText: "Population: per 100,000 adults"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Child', primaryText: "Population: per child (14 and under)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Child100000', primaryText: "Population: per 100,000 children"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'Household', primaryText: "Per household"}))) : null;
+        }}, React.createElement(MenuItem_1.default, {value: 'OFF', primaryText: "Off"}), React.createElement(MenuItem_1.default, {value: 'PERPERSON', primaryText: "Per person"}), React.createElement(MenuItem_1.default, {value: 'PER100000PERSONS', primaryText: "Per 100,000 people"}), React.createElement(MenuItem_1.default, {value: 'PERHOUSEHOLD', primaryText: "Per household"}), React.createElement(MenuItem_1.default, {value: 'PER50000HOUSEHOLDS', primaryText: "Per 50,000 households"}))) : null;
         let inflationadjustment = (branchDeclaration.showOptions)
             ?
                 React.createElement("div", {style: {

@@ -7,7 +7,7 @@ class BudgetBranch {
     constructor(parms) {
         this.getInitialBranchNodeParms = () => {
             let defaults = this.getProps().declarationData.defaults.node;
-            let branchSettings = this.settings;
+            let branchSettings = this.branchDeclaration;
             let viewpointData = this.state.viewpointData;
             let budgetBranch = this;
             let datapath = [];
@@ -30,7 +30,7 @@ class BudgetBranch {
         this.addNode = (budgetNodeUid, nodeIndex, budgetNodeParms) => {
             let budgetBranch = this;
             let { dataPath } = budgetNodeParms;
-            let branchSettings = budgetBranch.settings;
+            let branchSettings = budgetBranch.branchDeclaration;
             let branchNode = budgetBranch;
             let viewpointData = budgetBranch.state.viewpointData;
             if (!viewpointData)
@@ -56,7 +56,7 @@ class BudgetBranch {
             let budgetBranch = this;
             let nodeIndex;
             let branchuid = budgetBranch.uid;
-            let branchSettings = budgetBranch.settings;
+            let branchSettings = budgetBranch.branchDeclaration;
             let viewpointData = budgetBranch.state.viewpointData;
             let branchNodes = budgetBranch.nodes;
             for (nodeIndex in branchNodes) {
@@ -92,7 +92,7 @@ class BudgetBranch {
                 mismatch: false,
                 message: null,
             };
-            let branchSettings = budgetBranch.settings;
+            let branchSettings = budgetBranch.branchDeclaration;
             let viewpointData = budgetBranch.state.viewpointData;
             let branchNodes = budgetBranch.nodes;
             let budgetNode = null;
@@ -163,8 +163,50 @@ class BudgetBranch {
             });
             return switchResults;
         };
+        this.calculateProRata = (viewpointdata) => {
+            let { branchDeclaration } = this;
+            let { repository, prorata: prorataindex, } = branchDeclaration;
+            let prorataseries;
+            switch (prorataindex) {
+                case "OFF": {
+                    prorataseries = 'none';
+                    break;
+                }
+                case "PERPERSON":
+                case "PER100000PESONS":
+                    prorataseries = 'population';
+                    break;
+                case "PERHOUSEHOLD":
+                case "PER50000HOUSEHOLDS":
+                    prorataseries = 'households';
+                default:
+                    console.error('unknown prorataindex', prorataindex);
+                    return;
+            }
+            let promise = new Promise((resolve, error) => {
+                if (prorataindex == 'OFF') {
+                    resolve(true);
+                }
+                else {
+                    let _promise = databaseapi_1.default.getProrataData({
+                        repository: repository,
+                        prorataseries: prorataseries,
+                    });
+                    _promise.then((proratadata) => {
+                        let budgetBranch = this;
+                        this._doProRataCalc(viewpointdata, proratadata);
+                        resolve(true);
+                    }).catch(reason => {
+                        console.error(reason);
+                    });
+                }
+            });
+            return promise;
+        };
+        this._doProRataCalc = (viewpointdata, proratadata) => {
+        };
         this.getViewpointData = () => {
-            let branchSettings = this.settings;
+            let branchSettings = this.branchDeclaration;
             let { viewpoint: viewpointName, aspect: aspectName, inflationAdjusted, version: versionName, repository, } = branchSettings;
             let datasetName = constants_1.AspectNameToDatasetName[aspectName];
             let _promise = databaseapi_1.default.getViewpointData({
@@ -177,10 +219,14 @@ class BudgetBranch {
             let promise = new Promise((resolve, error) => {
                 _promise.then((viewpointdata) => {
                     let budgetBranch = this;
-                    budgetBranch.setState({
-                        viewpointData: viewpointdata
+                    this.calculateProRata(viewpointdata).then(() => {
+                        budgetBranch.setState({
+                            viewpointData: viewpointdata
+                        });
+                        resolve(true);
+                    }).catch(reason => {
+                        console.error(reason);
                     });
-                    resolve(true);
                 }).catch(reason => {
                     console.error(reason);
                 });
@@ -190,7 +236,7 @@ class BudgetBranch {
         this.createChildNodeDeclaration = (props) => {
             let budgetBranch = this;
             let { selectionrow, nodeIndex, cellIndex, priorCellSettings, priorNodeSettings, } = props;
-            let { nodes: branchNodes, nodeCallbacks: callbacks, actions, settings: branchSettings, } = budgetBranch;
+            let { nodes: branchNodes, nodeCallbacks: callbacks, actions, branchDeclaration: branchSettings, } = budgetBranch;
             let viewpointData = budgetBranch.state.viewpointData;
             let budgetNode = branchNodes[nodeIndex];
             if (priorCellSettings) {
@@ -251,14 +297,14 @@ class BudgetBranch {
         let copy = [...this.state.branchNodes];
         return copy;
     }
-    get settings() {
-        return this.props.declarationData.branchesById[this.uid];
-    }
     get state() {
         return this.getState();
     }
     get props() {
         return this.getProps();
+    }
+    get branchDeclaration() {
+        return this.props.declarationData.branchesById[this.uid];
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

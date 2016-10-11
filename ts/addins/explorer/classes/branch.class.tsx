@@ -40,13 +40,11 @@ export interface CreateChildNodeProps {
 }
 
 interface BudgetBranchParms {
-    // settings:BranchSettings,
     uid:string,
 }
 
 class BudgetBranch {
     constructor(parms:BudgetBranchParms) {
-        // this.settings = parms.settings
         this.uid = parms.uid
     }
 
@@ -55,11 +53,9 @@ class BudgetBranch {
         return copy // new copy
     }
 
-    // public settings:BranchSettings
-
-    get settings() {
-        return this.props.declarationData.branchesById[this.uid]
-    }
+    // get settings() {
+    //     return this.props.declarationData.branchesById[this.uid]
+    // }
 
     public uid: string
 
@@ -75,6 +71,10 @@ class BudgetBranch {
         return this.getProps()
     }
 
+    get branchDeclaration() {
+        return this.props.declarationData.branchesById[this.uid]
+    }
+
     public getState: Function
 
     public getProps: Function
@@ -86,7 +86,7 @@ class BudgetBranch {
 
         let defaults = this.getProps().declarationData.defaults.node
 
-        let branchSettings = this.settings
+        let branchSettings = this.branchDeclaration
         let viewpointData = this.state.viewpointData
 
         let budgetBranch = this
@@ -123,7 +123,7 @@ class BudgetBranch {
         let budgetBranch = this
 
         let { dataPath } = budgetNodeParms
-        let branchSettings = budgetBranch.settings
+        let branchSettings = budgetBranch.branchDeclaration
 
         let branchNode = budgetBranch
 
@@ -159,7 +159,7 @@ class BudgetBranch {
         let nodeIndex: any
         let branchuid = budgetBranch.uid
 
-        let branchSettings: BranchSettings = budgetBranch.settings
+        let branchSettings: BranchSettings = budgetBranch.branchDeclaration
         let viewpointData = budgetBranch.state.viewpointData
 
         let branchNodes:BudgetNode[] = budgetBranch.nodes
@@ -226,7 +226,7 @@ class BudgetBranch {
             mismatch:false,
             message:null,
         }
-        let branchSettings: BranchSettings = budgetBranch.settings
+        let branchSettings: BranchSettings = budgetBranch.branchDeclaration
         let viewpointData = budgetBranch.state.viewpointData
 
         let branchNodes:BudgetNode[] = budgetBranch.nodes
@@ -324,10 +324,75 @@ class BudgetBranch {
         return switchResults
     }
 
+    public calculateProRata = (viewpointdata) => {
+
+        let { branchDeclaration } = this
+
+        let { 
+            repository,
+            prorata:prorataindex,
+        } = branchDeclaration
+
+        let prorataseries
+        switch (prorataindex) {
+            case "OFF": {
+                prorataseries = 'none'
+                break
+            }
+            case "PERPERSON":
+            case "PER100000PESONS":
+                prorataseries = 'population'
+                break;
+
+            case "PERHOUSEHOLD":
+            case "PER50000HOUSEHOLDS":
+                prorataseries = 'households'
+            
+            default:
+                console.error('unknown prorataindex',prorataindex)
+                return
+        }
+
+        let promise = new Promise((resolve, error) => {
+
+            if (prorataindex == 'OFF') {
+                resolve(true)
+            } else {
+
+                let _promise = databaseapi.getProrataData({
+                    repository,
+                    prorataseries,
+                })
+
+                _promise.then( (proratadata) => {
+
+                    let budgetBranch = this
+
+                    this._doProRataCalc(viewpointdata, proratadata)
+
+                    resolve(true)
+                    
+                }).catch(reason =>{
+                    console.error(reason)
+                    // error(reason)
+                })
+
+            }
+
+        })
+
+        return promise
+
+    }
+
+    private _doProRataCalc = (viewpointdata, proratadata) => {
+
+    }
+
     // TODO: generate action to show progress
     public getViewpointData = () => {
 
-        let branchSettings:BranchSettings = this.settings
+        let branchSettings:BranchSettings = this.branchDeclaration
 
         let { 
             viewpoint: viewpointName, 
@@ -353,12 +418,20 @@ class BudgetBranch {
 
                 let budgetBranch = this
 
-                budgetBranch.setState({
-                    viewpointData:viewpointdata
+                this.calculateProRata(viewpointdata).then(
+                    () => {
+
+                        budgetBranch.setState({
+                            viewpointData:viewpointdata
+                        })
+
+                        resolve(true)
+                
+                    }
+                ).catch(reason => {
+                    console.error(reason)
                 })
 
-                resolve(true)
-                
             }).catch(reason =>{
                 console.error(reason)
                 // error(reason)
@@ -387,7 +460,7 @@ class BudgetBranch {
             nodes: branchNodes, 
             nodeCallbacks:callbacks, 
             actions, 
-            settings:branchSettings,
+            branchDeclaration:branchSettings,
         } = budgetBranch
 
         let viewpointData = budgetBranch.state.viewpointData

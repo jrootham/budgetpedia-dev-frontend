@@ -15,12 +15,13 @@ interface BranchSettings {
     inflationAdjusted: boolean,
     nodeList:any[],
     showOptions: boolean,
+    prorata:string,
 }
 
-interface BranchConfig {
-    settings: BranchSettings,
-    uid: string,
-}
+// interface BranchConfig {
+//     settings: BranchSettings,
+//     uid: string,
+// }
 
 interface ChartParmsObj {
     isError: Boolean,
@@ -104,5 +105,5 @@ export {
     SortedComponentItem,
     GetChartParmsProps,
     BranchSettings,
-    BranchConfig,
+    // BranchConfig,
 }

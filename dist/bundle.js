@@ -1206,7 +1206,7 @@ var BudgetBranch = function () {
 
         this.getInitialBranchNodeParms = function () {
             var defaults = _this.getProps().declarationData.defaults.node;
-            var branchSettings = _this.settings;
+            var branchSettings = _this.branchDeclaration;
             var viewpointData = _this.state.viewpointData;
             var budgetBranch = _this;
             var datapath = [];
@@ -1232,7 +1232,7 @@ var BudgetBranch = function () {
             var budgetBranch = _this;
             var dataPath = budgetNodeParms.dataPath;
 
-            var branchSettings = budgetBranch.settings;
+            var branchSettings = budgetBranch.branchDeclaration;
             var branchNode = budgetBranch;
             var viewpointData = budgetBranch.state.viewpointData;
             if (!viewpointData) return;
@@ -1278,7 +1278,7 @@ var BudgetBranch = function () {
             var budgetBranch = _this;
             var nodeIndex = void 0;
             var branchuid = budgetBranch.uid;
-            var branchSettings = budgetBranch.settings;
+            var branchSettings = budgetBranch.branchDeclaration;
             var viewpointData = budgetBranch.state.viewpointData;
             var branchNodes = budgetBranch.nodes;
             for (nodeIndex in branchNodes) {
@@ -1316,7 +1316,7 @@ var BudgetBranch = function () {
                 mismatch: false,
                 message: null
             };
-            var branchSettings = budgetBranch.settings;
+            var branchSettings = budgetBranch.branchDeclaration;
             var viewpointData = budgetBranch.state.viewpointData;
             var branchNodes = budgetBranch.nodes;
             var budgetNode = null;
@@ -1407,8 +1407,51 @@ var BudgetBranch = function () {
             });
             return switchResults;
         };
+        this.calculateProRata = function (viewpointdata) {
+            var branchDeclaration = _this.branchDeclaration;
+            var repository = branchDeclaration.repository;
+            var prorataindex = branchDeclaration.prorata;
+
+            var prorataseries = void 0;
+            switch (prorataindex) {
+                case "OFF":
+                    {
+                        prorataseries = 'none';
+                        break;
+                    }
+                case "PERPERSON":
+                case "PER100000PESONS":
+                    prorataseries = 'population';
+                    break;
+                case "PERHOUSEHOLD":
+                case "PER50000HOUSEHOLDS":
+                    prorataseries = 'households';
+                default:
+                    console.error('unknown prorataindex', prorataindex);
+                    return;
+            }
+            var promise = new Promise(function (resolve, error) {
+                if (prorataindex == 'OFF') {
+                    resolve(true);
+                } else {
+                    var _promise = databaseapi_1.default.getProrataData({
+                        repository: repository,
+                        prorataseries: prorataseries
+                    });
+                    _promise.then(function (proratadata) {
+                        var budgetBranch = _this;
+                        _this._doProRataCalc(viewpointdata, proratadata);
+                        resolve(true);
+                    }).catch(function (reason) {
+                        console.error(reason);
+                    });
+                }
+            });
+            return promise;
+        };
+        this._doProRataCalc = function (viewpointdata, proratadata) {};
         this.getViewpointData = function () {
-            var branchSettings = _this.settings;
+            var branchSettings = _this.branchDeclaration;
             var viewpointName = branchSettings.viewpoint;
             var aspectName = branchSettings.aspect;
             var inflationAdjusted = branchSettings.inflationAdjusted;
@@ -1426,10 +1469,14 @@ var BudgetBranch = function () {
             var promise = new Promise(function (resolve, error) {
                 _promise.then(function (viewpointdata) {
                     var budgetBranch = _this;
-                    budgetBranch.setState({
-                        viewpointData: viewpointdata
+                    _this.calculateProRata(viewpointdata).then(function () {
+                        budgetBranch.setState({
+                            viewpointData: viewpointdata
+                        });
+                        resolve(true);
+                    }).catch(function (reason) {
+                        console.error(reason);
                     });
-                    resolve(true);
                 }).catch(function (reason) {
                     console.error(reason);
                 });
@@ -1446,7 +1493,7 @@ var BudgetBranch = function () {
             var branchNodes = budgetBranch.nodes;
             var callbacks = budgetBranch.nodeCallbacks;
             var actions = budgetBranch.actions;
-            var branchSettings = budgetBranch.settings;
+            var branchSettings = budgetBranch.branchDeclaration;
 
             var viewpointData = budgetBranch.state.viewpointData;
             var budgetNode = branchNodes[nodeIndex];
@@ -1512,11 +1559,6 @@ var BudgetBranch = function () {
             return copy;
         }
     }, {
-        key: 'settings',
-        get: function get() {
-            return this.props.declarationData.branchesById[this.uid];
-        }
-    }, {
         key: 'state',
         get: function get() {
             return this.getState();
@@ -1525,6 +1567,11 @@ var BudgetBranch = function () {
         key: 'props',
         get: function get() {
             return this.getProps();
+        }
+    }, {
+        key: 'branchDeclaration',
+        get: function get() {
+            return this.props.declarationData.branchesById[this.uid];
         }
     }]);
 
@@ -2195,6 +2242,15 @@ var Database = function () {
     }
 
     _createClass(Database, [{
+        key: 'getProrataData',
+        value: function getProrataData(parms) {
+            var promise = new Promise(function (resolve, error) {
+                var series = {};
+                resolve(series);
+            });
+            return promise;
+        }
+    }, {
         key: 'getViewpointData',
         value: function getViewpointData(parms) {
             var _this = this;
@@ -3096,9 +3152,7 @@ var ExplorerBranch = function (_Component) {
             _this.props.globalStateActions.changeAspect(budgetBranch.uid, aspect);
         };
         _this.switchComparator = function (comparatorindex) {
-            _this.setState({
-                comparatorselection: comparatorindex
-            });
+            console.log('comparator', comparatorindex);
         };
         _this.toggleInflationAdjustment = function (value) {
             var budgetBranch = _this.props.budgetBranch;
@@ -3219,7 +3273,7 @@ var ExplorerBranch = function (_Component) {
                     isInflationAdjusted: isInflationAdjusted
                 };
                 budgetNode.viewpointConfigPack = viewpointConfigPack;
-                budgetNode.branchSettings = branch.props.budgetBranch.settings;
+                budgetNode.branchSettings = branch.props.budgetBranch.branchDeclaration;
                 budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(branch.props.budgetBranch);
                 var actions = Object.assign({}, branch._stateActions);
                 actions.updateCellTimeScope = branch._stateActions.updateCellTimeScope(budgetNode.uid);
@@ -3318,9 +3372,9 @@ var ExplorerBranch = function (_Component) {
             var aspectselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Aspect: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.aspect, onChange: function onChange(e, index, value) {
                     branch.switchAspect(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'Expenses', primaryText: "Expenses" }), React.createElement(MenuItem_1.default, { value: 'Revenues', primaryText: "Revenues" }), React.createElement(MenuItem_1.default, { value: 'Staffing', primaryText: "Staffing" }))) : null;
-            var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" } }, "Pro-rated: "), React.createElement(DropDownMenu_1.default, { disabled: true, value: this.state.comparatorselection, onChange: function onChange(e, index, value) {
+            var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" } }, "Pro-rated: "), React.createElement(DropDownMenu_1.default, { onChange: function onChange(e, index, value) {
                     _this3.switchComparator(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'Off', primaryText: "Off" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Staff', primaryText: "Per staffing position" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Population', primaryText: "Population: per person" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Population100000', primaryText: "Population: per 100,000 people" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Adult', primaryText: "Population: per adult (15 and over)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Adult100000', primaryText: "Population: per 100,000 adults" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Child', primaryText: "Population: per child (14 and under)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Child100000', primaryText: "Population: per 100,000 children" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'Household', primaryText: "Per household" }))) : null;
+                } }, React.createElement(MenuItem_1.default, { value: 'OFF', primaryText: "Off" }), React.createElement(MenuItem_1.default, { value: 'PERPERSON', primaryText: "Per person" }), React.createElement(MenuItem_1.default, { value: 'PER100000PERSONS', primaryText: "Per 100,000 people" }), React.createElement(MenuItem_1.default, { value: 'PERHOUSEHOLD', primaryText: "Per household" }), React.createElement(MenuItem_1.default, { value: 'PER50000HOUSEHOLDS', primaryText: "Per 50,000 households" }))) : null;
             var inflationadjustment = branchDeclaration.showOptions ? React.createElement("div", { style: {
                     display: 'inline-block',
                     whiteSpace: "nowrap",
@@ -7717,7 +7771,8 @@ var branchDefaults = {
     },
     inflationAdjusted: true,
     nodeList: [],
-    showOptions: false
+    showOptions: false,
+    prorata: 'OFF'
 };
 var explorer = {
     defaults: {

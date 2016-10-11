@@ -563,9 +563,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     switchComparator = comparatorindex => {
 
-        this.setState({
-            comparatorselection:comparatorindex
-        })
+        console.log('comparator',comparatorindex)
 
     }
 
@@ -699,7 +697,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 isInflationAdjusted,
             }
             budgetNode.viewpointConfigPack = viewpointConfigPack
-            budgetNode.branchSettings = branch.props.budgetBranch.settings
+            budgetNode.branchSettings = branch.props.budgetBranch.branchDeclaration
             budgetNode.onChartComponentSelection = onChartComponentSelection(branch.props.budgetBranch)
             let actions = Object.assign({}, branch._stateActions)
             actions.updateCellTimeScope = branch._stateActions.updateCellTimeScope(budgetNode.uid)
@@ -814,8 +812,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     let byunitselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic",color: "rgba(0, 0, 0, 0.3)" }}>Pro-rated: </span>
         <DropDownMenu
-            disabled
-            value={this.state.comparatorselection}
+            // value={this.state.comparatorselection}
             onChange={
                 (e, index, value) => {
                     this.switchComparator(value)
@@ -823,15 +820,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             }
         >
 
-            <MenuItem value={'Off'} primaryText="Off"/>
-            <MenuItem disabled value={'Staff'} primaryText="Per staffing position"/>
-            <MenuItem disabled value={'Population'} primaryText="Population: per person"/>
-            <MenuItem disabled value={'Population100000'} primaryText="Population: per 100,000 people"/>
-            <MenuItem disabled value={'Adult'} primaryText="Population: per adult (15 and over)"/>
-            <MenuItem disabled value={'Adult100000'} primaryText="Population: per 100,000 adults"/>
-            <MenuItem disabled value={'Child'} primaryText="Population: per child (14 and under)"/>
-            <MenuItem disabled value={'Child100000'} primaryText="Population: per 100,000 children"/>
-            <MenuItem disabled value={'Household'} primaryText="Per household"/>
+            <MenuItem value={'OFF'} primaryText="Off"/>
+            <MenuItem value={'PERPERSON'} primaryText="Per person"/>
+            <MenuItem value={'PER100000PERSONS'} primaryText="Per 100,000 people"/>
+            <MenuItem value={'PERHOUSEHOLD'} primaryText="Per household"/>
+            <MenuItem value={'PER50000HOUSEHOLDS'} primaryText="Per 50,000 households"/>
 
         </DropDownMenu>
     </div>:null

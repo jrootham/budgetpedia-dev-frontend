@@ -220,7 +220,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             })
             if (foundbranch.length == 0) { // branch not found, so add it
                 if (!change) change = true
-                // let settings = branchesById[uid]
                 let budgetBranch = new BudgetBranch({uid})
                 newBranches.push(budgetBranch)
             }
@@ -393,11 +392,9 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     addBranch = refbranchuid => {
         let cloneSettings = this._getBranchCloneSettings(refbranchuid)
 
-        // let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
-        // console.log('new branch settings', defaultSettings)
-        // this.props.addBranchDeclaration( refbranchuid, defaultSettings )        
         this.props.cloneBranchDeclaration( refbranchuid, cloneSettings )
         this.onCloneCreation()
+
     }
 
     // crude scroll down on branch clone

@@ -182,6 +182,15 @@ class Database {
     private datasetsubpath: string = 'json/'
     private lookupssubpath: string = 'lookups/'
 
+    public getProrataData(parms) {
+
+        let promise = new Promise((resolve, error) => {
+            let series = {}
+            resolve(series)
+        })
+        return promise
+    }
+
     // getViewpointData returns a promise.
     public getViewpointData(parms: GetViewpointDataParms) {
 

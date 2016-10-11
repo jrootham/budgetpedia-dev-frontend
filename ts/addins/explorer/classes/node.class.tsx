@@ -170,8 +170,7 @@ class BudgetNode {
             let cellDeclaration: CellDeclaration = cellDeclarations[cellIndex]
             let {nodeDataseriesName, celluid, chartSelection} = cellDeclaration
             if (chartSelection === undefined) chartSelection = null
-            // let settings = cellDeclaration.chartConfigs[cellDeclaration.yearScope]
-            // let { explorerChartCode } = settings
+
             let cell = new BudgetCell(
                 {
                     nodeDataseriesName,
@@ -183,8 +182,7 @@ class BudgetNode {
             this._updateCell(cell, cellIndex)
             cells.push(cell)
         }
-        // this.newCells = cells
-        // this.updated = true
+
         return cells
     }
 
