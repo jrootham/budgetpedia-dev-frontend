@@ -333,6 +333,8 @@ class BudgetCell {
 
         this.chartParmsObject = chartParms
 
+        // console.log('chartParms',chartParms)
+
         // save it
         this.setState({
              chartParms,
