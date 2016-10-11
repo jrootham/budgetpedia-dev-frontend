@@ -812,7 +812,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         null
 
     let byunitselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
-        <span style={{ fontStyle: "italic",color: "rgba(0, 0, 0, 0.3)" }}>Intensity: </span>
+        <span style={{ fontStyle: "italic",color: "rgba(0, 0, 0, 0.3)" }}>Pro-rated: </span>
         <DropDownMenu
             disabled
             value={this.state.comparatorselection}
