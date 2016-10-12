@@ -30,6 +30,8 @@ export class AppTile extends React.Component<any, any> {
 
         let tile = this
 
+        // console.log('tile props',this.props.content)
+
         let wrapperstyle = null
         if (this.props.content.disabled) {
             wrapperstyle = {
@@ -51,6 +53,7 @@ export class AppTile extends React.Component<any, any> {
                 onTouchTap={ tile.transitionTo }
                 title = {this.props.content.title}
                 subtitle = {this.props.content.subtitle}
+                cols = {  this.props.content.cols || 1 }
                 >
                 <div style={wrapperstyle}>
                 <div style={{position:"absolute",top:0,left:0,color:"silver",fontStyle:"italic",fontSize:"smaller"}} >

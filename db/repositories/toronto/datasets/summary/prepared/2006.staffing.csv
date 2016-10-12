@@ -16,7 +16,7 @@ UNITS_NAME,Full Time Equivalent,,,,
 UNITS_CODE,FTE,,,,
 UNITS_MULTIPLIER,1,,,,
 TOTAL_AMOUNT,45677.8,,,,
-INTAKE_DATETIME,2016-09-16-16-13-06,,,,
+INTAKE_DATETIME,2016-10-11-19-27-52,,,,
 INTAKE_OPERATOR_ID,Henrik,,,,
 COLUMNS_CATEGORIES,"Program:CODE,Program:NAME",,,,
 COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION",,,,
@@ -57,7 +57,8 @@ Allocation from: EMERG,Emergency Medical Services,1197.3 (logical)"
 PARKINGTAGS,Parking Tag Enforcement & Operations,395,,,
 PARKS,"Parks, Forestry & Recreation",3884.1,,,
 PLANNING,City Planning,327,,,
-PUBLICHEALTH,Toronto Public Health,9408.7,,,
+POLICE,Toronto Police Service,7572,,,
+PUBLICHEALTH,Toronto Public Health,1836.7,,,
 REGIONCONSERV,Toronto & Region Conservation Authority,394.7,,,
 SHELTERADMIN,"Shelter, Support & Housing Administration",1073.5,,,"Original amount was 689, plus:
 Allocation from: SUPPORTSERV,WES - Technical Services,384.5 (budget jumped after WES support services discontinued)"

@@ -71,16 +71,16 @@ let homepadding: number = 20
 
 let hometiles: [Object] = [
     {
-        id: 6,
+        id: 9,
         content: {
-            title: `About this Site`,
-            subtitle: `History and people`,
-            image: '../../public/icons/ic_info_48px.svg',
-            category: 'information',
-            disabled: false,
+            title: `Budget Explorer`,
+            subtitle: `Interactive tools`,
+            image: '../../public/icons/ic_explore_48px.svg',
+            category: 'tools',
+            cols: 2,
         },
         index: 0,
-        route: 'about',
+        route: 'explorer',
     },
     {
         id: 7,
@@ -89,34 +89,61 @@ let hometiles: [Object] = [
             subtitle: `About budget decisions`,
             image: '../../public/icons/ic_map_48px.svg',
             category: 'tools',
+            cols:2,
             disabled: true,
         },
         index: 1,
         route: 'timeline',
     },
-/*    {
-        id: 1,
+    {
+        id: 6,
         content: {
-            title: `Deputation Helper`,
-            subtitle: `Have your say`,
-            image: '../../public/icons/ic_insert_emoticon_48px.svg',
-            category: 'tools',
+            title: `About Budgetpedia`,
+            subtitle: `History, people, resources`,
+            image: '../../public/icons/ic_info_48px.svg',
+            category: 'information',
+            disabled: true,
         },
         index: 2,
-        route: 'deputations',
-    },
-*/    {
-        id: 9,
-        content: {
-            title: `Budget Explorer`,
-            subtitle: `Interactive tools`,
-            image: '../../public/icons/ic_explore_48px.svg',
-            category: 'tools',
-        },
-        index: 3,
-        route: 'explorer',
+        route: 'about',
     },
     {
+        id: 16,
+        content: {
+            title: `Announcements`,
+            subtitle: `Budgetpedia Plans and News`,
+            image: '../../public/icons/ic_announcement_black_48px.svg',
+            category: 'information',
+            disabled: true,
+        },
+        index: 3,
+        route: 'announcements',
+    },
+    {
+        id: 13,
+        content: {
+            title: `Get a demo`,
+            subtitle: `Resources & training`,
+            image: '../../public/icons/ic_record_voice_over_48px.svg',
+            category: 'get involved',
+            disabled: true,
+        },
+        index: 4,
+        route: 'demos',
+    },
+    {
+        id: 10,
+        content: {
+            title: `Join Us!`,
+            subtitle: `Join one of our teams`,
+            image: '../../public/icons/ic_group_48px.svg',
+            category: 'get involved',
+            disabled: true,
+        },
+        index: 5,
+        route: 'joinus',
+    },
+/*    {
         id: 14,
         content: {
             title: `Activist Pathways`,
@@ -128,7 +155,18 @@ let hometiles: [Object] = [
         index: 4,
         route: 'pathways',
     },
-/*    {
+    {
+        id: 1,
+        content: {
+            title: `Deputation Helper`,
+            subtitle: `Have your say`,
+            image: '../../public/icons/ic_insert_emoticon_48px.svg',
+            category: 'tools',
+        },
+        index: 2,
+        route: 'deputations',
+    },
+    {
         id: 2,
         content: {
             title: `Communities`,
@@ -138,7 +176,7 @@ let hometiles: [Object] = [
         },
         index: 5,
         route: 'communities',
-    }, */
+    },
     {
         id: 8,
         content: {
@@ -150,7 +188,7 @@ let hometiles: [Object] = [
         index: 6,
         route: 'socialmedia',
     },
-/*    {
+    {
         id: 11,
         content: {
             title: `Newsletter`,
@@ -172,19 +210,7 @@ let hometiles: [Object] = [
         index: 8,
         route: 'resources',
     },
-*/    {
-        id: 10,
-        content: {
-            title: `Join Us!`,
-            subtitle: `Join our team`,
-            image: '../../public/icons/ic_group_48px.svg',
-            category: 'get involved',
-            disabled: true,
-        },
-        index: 9,
-        route: 'joinus',
-    },
-/*    {
+    {
         id: 12,
         content: {
             title: `Tell your story`,
@@ -195,19 +221,7 @@ let hometiles: [Object] = [
         index: 10,
         route: 'stories',
     },
-*/    {
-        id: 13,
-        content: {
-            title: `Get a demo`,
-            subtitle: `Resources & training`,
-            image: '../../public/icons/ic_record_voice_over_48px.svg',
-            category: 'get involved',
-            disabled: true,
-        },
-        index: 11,
-        route: 'demos',
-    },
-]
+*/]
 
 let workingmessagestate = false
 

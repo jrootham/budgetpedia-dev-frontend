@@ -1451,7 +1451,79 @@ var BudgetBranch = function () {
             return promise;
         };
         this._doProRataCalc = function (viewpointdata, proratadata) {
-            console.log('proratadata', proratadata);
+            var proratayearlist = Object.assign({}, proratadata.years);
+            var branchDeclaration = _this.branchDeclaration;
+            var prorataindex = branchDeclaration.prorata;
+            var datasetConfig = viewpointdata.Meta.datasetConfig;
+
+            var unitratio = datasetConfig.UnitRatio;
+            var denominator = void 0,
+                multiplier = void 0,
+                precision = 5,
+                threshhold = 10000;
+            switch (prorataindex) {
+                case "PERPERSON":
+                    denominator = 1;
+                    multiplier = 1000;
+                    break;
+                case "PER100000PERSONS":
+                    denominator = 100000;
+                    multiplier = 1;
+                    break;
+                case "PERHOUSEHOLD":
+                    denominator = 1;
+                    multiplier = 1000;
+                    break;
+                case "PER50000HOUSEHOLDS":
+                    denominator = 50000;
+                    multiplier = 1;
+                    break;
+                default:
+                    console.error('unknown prorataindex in _doProRataCalc', prorataindex);
+                    return;
+            }
+            if (multiplier != 1) {
+                datasetConfig.CalcUnitRatio = 1;
+                datasetConfig.CalcUnitsAlias = "dollars";
+            } else {
+                datasetConfig.CalcUnitRatio = datasetConfig.UnitRatio;
+                datasetConfig.CalcUnitsAlias = datasetConfig.UnitsAlias;
+            }
+            for (var yearindex in proratayearlist) {
+                var amount = proratayearlist[yearindex];
+                proratayearlist[yearindex] = amount / denominator / multiplier;
+            }
+            _this._doCalcYears(viewpointdata, proratayearlist, threshhold, precision);
+        };
+        this._doCalcYears = function (node, proratayearlist, threshhold, precision) {
+            var calcyears = {};
+            var years = node.years;
+            if (years) {
+                for (var yearindex in years) {
+                    if (proratayearlist[yearindex]) {
+                        var amount = years[yearindex] / proratayearlist[yearindex];
+                        if (amount < threshhold) {
+                            amount = Number(amount.toPrecision(precision));
+                        } else {
+                            amount = Number(amount.toFixed(0));
+                        }
+                        calcyears[yearindex] = amount;
+                    }
+                }
+                node.calcyears = calcyears;
+            }
+            if (node.Components) {
+                for (var index in node.Components) {
+                    var subnode = node.Components[index];
+                    _this._doCalcYears(subnode, proratayearlist, threshhold, precision);
+                }
+            }
+            if (node.CommonDimension) {
+                for (var _index in node.CommonDimension) {
+                    var _subnode = node.CommonDimension[_index];
+                    _this._doCalcYears(_subnode, proratayearlist, threshhold, precision);
+                }
+            }
         };
         this.getViewpointData = function () {
             var branchSettings = _this.branchDeclaration;
@@ -1644,12 +1716,19 @@ var BudgetCell = function () {
         this.switchYearScope = function () {
             _this.setChartParms();
         };
+        this.prorataControls = {
+            prorataindex: null,
+            yearsselector: null,
+            isprorata: null,
+            proratastring: null
+        };
         this.setChartParms = function () {
             var budgetCell = _this;
             var _budgetCell$viewpoint = budgetCell.viewpointConfigPack;
             var viewpointNamingConfigs = _budgetCell$viewpoint.viewpointNamingConfigs;
             var datasetConfig = _budgetCell$viewpoint.datasetConfig;
             var isInflationAdjusted = _budgetCell$viewpoint.isInflationAdjusted;
+            var prorata = _budgetCell$viewpoint.prorata;
             var _budgetCell$nodeDataP = budgetCell.nodeDataPack;
             var treeNodeData = _budgetCell$nodeDataP.treeNodeData;
             var yearsRange = _budgetCell$nodeDataP.yearsRange;
@@ -1657,6 +1736,36 @@ var BudgetCell = function () {
             if (!treeNodeData) {
                 console.error('System Error: node not found in setChartParms', budgetCell);
                 throw Error('node not found');
+            }
+            var prorataControls = budgetCell.prorataControls;
+
+            prorataControls.prorataindex = prorata;
+            if (prorata == 'OFF') {
+                prorataControls.isprorata = false;
+                prorataControls.yearsselector = 'years';
+                prorataControls.proratastring = null;
+            } else {
+                prorataControls.isprorata = true;
+                prorataControls.yearsselector = 'calcyears';
+                var thestring = void 0;
+                switch (prorata) {
+                    case "PERPERSON":
+                        thestring = 'per person';
+                        break;
+                    case "PER100000PERSONS":
+                        thestring = 'per 100,000 people';
+                        break;
+                    case "PERHOUSEHOLD":
+                        thestring = 'per household';
+                        break;
+                    case "PER50000HOUSEHOLDS":
+                        thestring = 'per 50,000 households';
+                        break;
+                    default:
+                        console.error('unknown prorataindex in _doProRataCalc', prorata);
+                        return;
+                }
+                prorataControls.proratastring = thestring;
             }
             var chartType = budgetCell.googleChartType;
             var options = budgetCell._chartParmsOptions(treeNodeData, viewpointNamingConfigs, datasetConfig, yearsRange);
@@ -1722,7 +1831,11 @@ var BudgetCell = function () {
 
             var datasetName = constants_1.AspectNameToDatasetName[aspectName];
             var units = datasetConfig.Units;
-            var verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units;
+            var calcAlias = void 0;
+            if (budgetCell.prorataControls.isprorata) {
+                calcAlias = datasetConfig.CalcUnitsAlias;
+            }
+            var verticalLabel = calcAlias || datasetConfig.UnitsAlias || datasetConfig.Units;
             verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')';
             var horizontalLabel = null;
             if (treeNodeData.NamingConfigRef && nodeDataseriesName != 'CommonDimension') {
@@ -1806,8 +1919,9 @@ var BudgetCell = function () {
                 var dollarformat = format({ prefix: "$" });
                 var rounded = format({ round: 0, integerSeparator: '' });
                 var simpleroundedone = format({ round: 1, integerSeparator: ',' });
-                if (treeNodeData.years) {
-                    titleamount = treeNodeData.years[rightYear];
+                var yearsselector = budgetCell.prorataControls.yearsselector;
+                if (treeNodeData[yearsselector]) {
+                    titleamount = treeNodeData[yearsselector][rightYear];
                     if (units == 'DOLLAR') {
                         titleamount = dollarformat(titleamount);
                     } else {
@@ -1828,6 +1942,9 @@ var BudgetCell = function () {
                     }
                     title += fragment;
                 }
+            }
+            if (budgetCell.prorataControls.isprorata) {
+                title += ', ' + budgetCell.prorataControls.proratastring;
             }
             var options = {
                 animation: {
@@ -2121,9 +2238,10 @@ var BudgetCell = function () {
                     console.error('System Error: component not found for (node, sortedlistName, nodeDataseries, item, item.Code) ', nodeDataseries, sortedItem.Code, sortedItem);
                     throw Error('componentItem not found');
                 }
+                var yearsselector = budgetCell.prorataControls.yearsselector;
                 var amount = void 0;
-                if (componentItem.years) {
-                    amount = componentItem.years[year];
+                if (componentItem[yearsselector]) {
+                    amount = componentItem[yearsselector][year];
                 } else {
                     amount = null;
                 }
@@ -2139,14 +2257,17 @@ var BudgetCell = function () {
         };
         this._LineChartRows = function (treeNodeData, sortedDataSeries, yearsRange) {
             var rows = [];
+            var budgetCell = _this;
             var _nodeDataPack$yearSel9 = _this.nodeDataPack.yearSelections;
             var rightYear = _nodeDataPack$yearSel9.rightYear;
             var leftYear = _nodeDataPack$yearSel9.leftYear;
 
+            var yearsselector = budgetCell.prorataControls.yearsselector;
+
             var _loop = function _loop(year) {
                 var items = sortedDataSeries.map(function (sortedItem) {
                     var amount = null;
-                    var years = treeNodeData[_this.nodeDataseriesName][sortedItem.Code].years;
+                    var years = treeNodeData[_this.nodeDataseriesName][sortedItem.Code][yearsselector];
                     if (years && years[year] !== undefined) {
                         amount = years[year];
                     }
@@ -2453,6 +2574,7 @@ var setViewpointData = function setViewpointData(parms) {
             baselineItems = baselineItems.Nominal;
         }
     }
+    baselineItems = JSON.parse(JSON.stringify(baselineItems));
     try {
         var node = viewpointDataTemplate;
         var sorted = getIndexSortedComponentItems(node.Components, lookupset);
@@ -2891,6 +3013,7 @@ var FontIcon_1 = require('material-ui/FontIcon');
 var IconButton_1 = require('material-ui/IconButton');
 var Snackbar_1 = require('material-ui/Snackbar');
 var Toggle_1 = require('material-ui/Toggle');
+var RaisedButton_1 = require('material-ui/RaisedButton');
 var onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 var explorernode_1 = require('./explorernode');
 var actions_1 = require('../actions');
@@ -3288,7 +3411,8 @@ var ExplorerBranch = function (_Component) {
                 var viewpointConfigPack = {
                     viewpointNamingConfigs: viewpointNamingConfigs,
                     datasetConfig: datasetConfig,
-                    isInflationAdjusted: isInflationAdjusted
+                    isInflationAdjusted: isInflationAdjusted,
+                    prorata: branchDeclaration.prorata
                 };
                 budgetNode.viewpointConfigPack = viewpointConfigPack;
                 budgetNode.branchSettings = branch.props.budgetBranch.branchDeclaration;
@@ -3383,14 +3507,14 @@ var ExplorerBranch = function (_Component) {
             var viewpointselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Viewpoint: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.viewpoint, onChange: function onChange(e, index, value) {
                     branch.switchViewpoint(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (budget)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (budget)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'ACTUALREVENUE', primaryText: "Revenues (actual)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'ACTUALEXPENSES', primaryText: "Expenses (actual)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'EXPENDITURES', primaryText: "Expenditures (actual)" }))) : null;
-            var governmentselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Government(s): "), React.createElement(DropDownMenu_1.default, { value: "Toronto", disabled: true }, React.createElement(MenuItem_1.default, { value: 'Toronto', primaryText: "Toronto, Ontario" }))) : null;
+            var governmentselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Government: "), React.createElement(DropDownMenu_1.default, { value: "Toronto", disabled: true }, React.createElement(MenuItem_1.default, { value: 'Toronto', primaryText: "Toronto, Ontario" }))) : null;
             var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Version: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.version, onChange: function onChange(e, index, value) {
                     branch.switchVersion(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'SUMMARY', primaryText: "Summary" }), React.createElement(MenuItem_1.default, { value: 'PBFT', primaryText: "Detail (PBFT)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'VARIANCE', primaryText: "Variance Reports" }))) : null;
             var aspectselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Aspect: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.aspect, onChange: function onChange(e, index, value) {
                     branch.switchAspect(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'Expenses', primaryText: "Expenses" }), React.createElement(MenuItem_1.default, { value: 'Revenues', primaryText: "Revenues" }), React.createElement(MenuItem_1.default, { value: 'Staffing', primaryText: "Staffing" }))) : null;
-            var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic", color: "rgba(0, 0, 0, 0.3)" } }, "Pro-rated: "), React.createElement(DropDownMenu_1.default, { onChange: function onChange(e, index, value) {
+            var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Prorated: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.prorata, onChange: function onChange(e, index, value) {
                     _this3.switchComparator(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'OFF', primaryText: "Off" }), React.createElement(MenuItem_1.default, { value: 'PERPERSON', primaryText: "Per person" }), React.createElement(MenuItem_1.default, { value: 'PER100000PERSONS', primaryText: "Per 100,000 people" }), React.createElement(MenuItem_1.default, { value: 'PERHOUSEHOLD', primaryText: "Per household" }), React.createElement(MenuItem_1.default, { value: 'PER50000HOUSEHOLDS', primaryText: "Per 50,000 households" }))) : null;
             var inflationadjustment = branchDeclaration.showOptions ? React.createElement("div", { style: {
@@ -3413,6 +3537,12 @@ var ExplorerBranch = function (_Component) {
                 } }, React.createElement(Toggle_1.default, { label: 'Show options:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: branchDeclaration.showOptions, onToggle: function onToggle(e, value) {
                     _this3.toggleShowOptions(value);
                 } }));
+            var technotes = branchDeclaration.showOptions ? React.createElement("div", { style: {
+                    display: 'inline-block',
+                    whiteSpace: "nowrap",
+                    verticalAlign: "bottom",
+                    position: "relative"
+                } }, React.createElement(IconButton_1.default, { tooltip: "Source documents and technical notes", tooltipPosition: "top-center", disabled: true, style: { top: '3px' } }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "note"))) : null;
             var showhelp = branchDeclaration.showOptions ? React.createElement("div", { style: {
                     display: 'inline-block',
                     whiteSpace: "nowrap",
@@ -3425,7 +3555,8 @@ var ExplorerBranch = function (_Component) {
                     verticalAlign: "bottom",
                     position: "relative"
                 } }, React.createElement(IconButton_1.default, { disabled: true, tooltip: "Find an entry point", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.handleSearch }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "search"))) : null;
-            return React.createElement("div", null, React.createElement("div", null, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, showhelp, search), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
+            var shareurl = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { disabled: true, type: "button", label: "Share" }) : null;
+            return React.createElement("div", null, React.createElement("div", null, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
                     branch.branchScrollBlock = node;
                 }, style: { overflow: "scroll" } }, drilldownportals, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))), React.createElement(Snackbar_1.default, { open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose }));
         }
@@ -3437,7 +3568,7 @@ var ExplorerBranch = function (_Component) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ExplorerBranch;
 
-},{"../actions":16,"../modules/onchartcomponentselection":29,"../modules/utilities":30,"./explorernode":24,"material-ui/DropDownMenu":409,"material-ui/FontIcon":416,"material-ui/IconButton":421,"material-ui/MenuItem":430,"material-ui/Snackbar":441,"material-ui/Toggle":458,"react":775}],23:[function(require,module,exports){
+},{"../actions":16,"../modules/onchartcomponentselection":29,"../modules/utilities":30,"./explorernode":24,"material-ui/DropDownMenu":409,"material-ui/FontIcon":416,"material-ui/IconButton":421,"material-ui/MenuItem":430,"material-ui/RaisedButton":438,"material-ui/Snackbar":441,"material-ui/Toggle":458,"react":775}],23:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6514,7 +6645,7 @@ var AppTile = function (_React$Component) {
                     pointerEvens: "none"
                 };
             }
-            return React.createElement(GridList_1.GridTile, { style: { textAlign: "center" }, onTouchTap: tile.transitionTo, title: this.props.content.title, subtitle: this.props.content.subtitle }, React.createElement("div", { style: wrapperstyle }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, color: "silver", fontStyle: "italic", fontSize: "smaller" } }, this.props.content.category), React.createElement("img", { src: this.props.content.image, style: { height: "120px" } }), React.createElement("div", { style: { position: "abolute", height: "30px", bottom: 0, width: "100%" } })));
+            return React.createElement(GridList_1.GridTile, { style: { textAlign: "center" }, onTouchTap: tile.transitionTo, title: this.props.content.title, subtitle: this.props.content.subtitle, cols: this.props.content.cols || 1 }, React.createElement("div", { style: wrapperstyle }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, color: "silver", fontStyle: "italic", fontSize: "smaller" } }, this.props.content.category), React.createElement("img", { src: this.props.content.image, style: { height: "120px" } }), React.createElement("div", { style: { position: "abolute", height: "30px", bottom: 0, width: "100%" } })));
         }
     }]);
 
@@ -6566,7 +6697,11 @@ var AppTiles = function (_Component) {
             var tiles_ = tiles.map(function (data) {
                 return React.createElement(apptile_1.AppTile, { key: data.id, content: data.content, image: data.image, tilecolors: tilecolors, system: system, route: data.route, transitionTo: transitionTo });
             });
-            return React.createElement(GridList_1.GridList, { style: style, children: tiles_, cols: tilecols, padding: padding, cellHeight: cellHeight });
+            return React.createElement("div", { style: {
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-around'
+                } }, React.createElement(GridList_1.GridList, { style: style, children: tiles_, cols: tilecols, padding: padding, cellHeight: cellHeight }));
         }
     }]);
 
@@ -6704,6 +6839,7 @@ var React = require('react');
 var react_redux_1 = require('react-redux');
 var Actions = require('../actions/actions');
 var apptiles_1 = require("../components/apptiles");
+var Card_1 = require('material-ui/Card');
 var mapStateToProps = function mapStateToProps(_ref) {
     var homegrid = _ref.homegrid;
     var resources = _ref.resources;
@@ -6757,11 +6893,14 @@ var HomeTilesClass = function (_React$Component) {
             var colors = _props.colors;
             var system = _props.system;
 
-            return React.createElement(apptiles_1.AppTiles, { style: { margin: "16px", fontFamily: theme.fontFamily }, tiles: hometiles, tilecols: homecols, padding: homepadding, tilecolors: {
+            return React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, null, "Welcome to Budgetpedia. We're all about government budgets."), React.createElement(Card_1.CardText, null, React.createElement("p", { style: { margin: 0, padding: 0 } }, "Explore the Toronto budget with our Budget Explorer." + ' ' + "See a sample of Toronto's annual budget decision process at our Budget Roadmap."), React.createElement("p", null, "We welcome you to join us (and contribute!) at any of our digital places:"), React.createElement("ul", null, React.createElement("li", null, "For discussions: our Facebook group (facebook.com/groups/budgetpedia)"), React.createElement("li", null, "For lists of resources: our Facebook page (facebook.com/bugetpedia)"), React.createElement("li", null, "For notifications: Twitter (twitter.com/budgetpedia)"), React.createElement("li", null, "For in-depth articles: Medium (medium.com/budgetpedia)"), React.createElement("li", null, "For technical discussions: our Google forum (groups.google.com/d/forum/budgetpedia)")), React.createElement("p", null, "Below are tiles leading to more information about the Budgetpedia Project."))), React.createElement(apptiles_1.AppTiles, { style: {
+                    margin: "16px",
+                    fontFamily: theme.fontFamily
+                }, tiles: hometiles, tilecols: homecols, padding: homepadding, tilecolors: {
                     front: colors.blue50,
                     back: colors.amber50,
                     helpbutton: theme.palette.primary3Color
-                }, system: system, transitionTo: this.props.transitionTo, cellHeight: 180 });
+                }, system: system, transitionTo: this.props.transitionTo, cellHeight: 180 }));
         }
     }]);
 
@@ -6775,7 +6914,7 @@ var HomeTiles = react_redux_1.connect(mapStateToProps, {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = HomeTiles;
 
-},{"../actions/actions":32,"../components/apptiles":38,"react":775,"react-redux":528}],42:[function(require,module,exports){
+},{"../actions/actions":32,"../components/apptiles":38,"material-ui/Card":401,"react":775,"react-redux":528}],42:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -7672,7 +7811,7 @@ exports.getQuery = function (uri) {
 var React = require('react');
 var react_dom_1 = require('react-dom');
 var main_1 = require('./core/containers/main');
-var globalmessage = React.createElement("div", null, "FOR TESTING, YOU'RE IN THE WRONG SPOT! GO TO ", React.createElement("a", { href: "http://staging.budgetpedia.ca" }, "staging.budgetpedia.ca"), " INSTEAD. THIS IS THE DEVELOPER'S VERSION OF THIS SITE (FOR PROTOTYPING)," + ' ' + "AND MAY CHANGE OR BREAK AT ANY TIME. ALSO, THE DATA MAY BE FAKE.");
+var globalmessage = React.createElement("div", null, "THIS IS THE SOFTWARE DEVELOPER'S COPY OF BUDGETPEDIA.");
 react_dom_1.render(React.createElement(main_1.default, { globalmessage: globalmessage, version: "DEVELOPMENT" }), document.getElementById('main'));
 
 },{"./core/containers/main":42,"react":775,"react-dom":524}],53:[function(require,module,exports){
@@ -7697,16 +7836,16 @@ var system = {
 var homecols = 2;
 var homepadding = 20;
 var hometiles = [{
-    id: 6,
+    id: 9,
     content: {
-        title: 'About this Site',
-        subtitle: 'History and people',
-        image: '../../public/icons/ic_info_48px.svg',
-        category: 'information',
-        disabled: false
+        title: 'Budget Explorer',
+        subtitle: 'Interactive tools',
+        image: '../../public/icons/ic_explore_48px.svg',
+        category: 'tools',
+        cols: 2
     },
     index: 0,
-    route: 'about'
+    route: 'explorer'
 }, {
     id: 7,
     content: {
@@ -7714,52 +7853,33 @@ var hometiles = [{
         subtitle: 'About budget decisions',
         image: '../../public/icons/ic_map_48px.svg',
         category: 'tools',
+        cols: 2,
         disabled: true
     },
     index: 1,
     route: 'timeline'
 }, {
-    id: 9,
+    id: 6,
     content: {
-        title: 'Budget Explorer',
-        subtitle: 'Interactive tools',
-        image: '../../public/icons/ic_explore_48px.svg',
-        category: 'tools'
+        title: 'About Budgetpedia',
+        subtitle: 'History, people, resources',
+        image: '../../public/icons/ic_info_48px.svg',
+        category: 'information',
+        disabled: true
+    },
+    index: 2,
+    route: 'about'
+}, {
+    id: 16,
+    content: {
+        title: 'Announcements',
+        subtitle: 'Budgetpedia Plans and News',
+        image: '../../public/icons/ic_announcement_black_48px.svg',
+        category: 'information',
+        disabled: true
     },
     index: 3,
-    route: 'explorer'
-}, {
-    id: 14,
-    content: {
-        title: 'Activist Pathways',
-        subtitle: 'How to make change',
-        image: '../../public/icons/ic_directions_walk_48px.svg',
-        category: 'tools',
-        disabled: true
-    },
-    index: 4,
-    route: 'pathways'
-}, {
-    id: 8,
-    content: {
-        title: 'Social Media',
-        subtitle: 'Public forums',
-        image: '../../public/icons/ic_thumb_up_48px.svg',
-        category: 'support'
-    },
-    index: 6,
-    route: 'socialmedia'
-}, {
-    id: 10,
-    content: {
-        title: 'Join Us!',
-        subtitle: 'Join our team',
-        image: '../../public/icons/ic_group_48px.svg',
-        category: 'get involved',
-        disabled: true
-    },
-    index: 9,
-    route: 'joinus'
+    route: 'announcements'
 }, {
     id: 13,
     content: {
@@ -7769,8 +7889,19 @@ var hometiles = [{
         category: 'get involved',
         disabled: true
     },
-    index: 11,
+    index: 4,
     route: 'demos'
+}, {
+    id: 10,
+    content: {
+        title: 'Join Us!',
+        subtitle: 'Join one of our teams',
+        image: '../../public/icons/ic_group_48px.svg',
+        category: 'get involved',
+        disabled: true
+    },
+    index: 5,
+    route: 'joinus'
 }];
 var workingmessagestate = false;
 var branchDefaults = {

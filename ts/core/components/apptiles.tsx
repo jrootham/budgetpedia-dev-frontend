@@ -58,6 +58,13 @@ class AppTiles extends Component< AppTilesProps, any > {
         })
 
         return (
+            <div
+            style = {{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'space-around',                
+            }}
+            >
             <GridList 
 
                 style       = { style }
@@ -65,6 +72,7 @@ class AppTiles extends Component< AppTilesProps, any > {
                 cols        = { tilecols } 
                 padding     = { padding }
                 cellHeight  = { cellHeight } />
+            </div>
         )
     }
 }

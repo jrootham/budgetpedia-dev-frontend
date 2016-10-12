@@ -25,6 +25,7 @@ import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 import Snackbar from 'material-ui/Snackbar'
 import Toggle from 'material-ui/Toggle'
+import RaisedButton from 'material-ui/RaisedButton'
 
 // ------------------------[ modules ]-----------------------------
 import { 
@@ -695,6 +696,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 viewpointNamingConfigs,
                 datasetConfig,
                 isInflationAdjusted,
+                prorata:branchDeclaration.prorata,
             }
             budgetNode.viewpointConfigPack = viewpointConfigPack
             budgetNode.branchSettings = branch.props.budgetBranch.branchDeclaration
@@ -752,7 +754,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     </div>:null
 
     let governmentselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
-        <span style={{ fontStyle: "italic" }}>Government(s): </span>
+        <span style={{ fontStyle: "italic" }}>Government: </span>
         <DropDownMenu
             value={"Toronto"}
             disabled
@@ -810,9 +812,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         null
 
     let byunitselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
-        <span style={{ fontStyle: "italic",color: "rgba(0, 0, 0, 0.3)" }}>Pro-rated: </span>
+        <span style={{ fontStyle: "italic" }}>Prorated: </span>
         <DropDownMenu
-            // value={this.state.comparatorselection}
+            value={branchDeclaration.prorata}
             onChange={
                 (e, index, value) => {
                     this.switchComparator(value)
@@ -884,6 +886,26 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             />
         </div>
 
+    let technotes = (branchDeclaration.showOptions)
+        ?<div 
+            style={
+                {
+                    display:'inline-block', 
+                    whiteSpace:"nowrap", 
+                    verticalAlign:"bottom",
+                    position:"relative",
+                }
+            }>
+            <IconButton tooltip="Source documents and technical notes" tooltipPosition="top-center"
+            disabled
+            style={{top:'3px'}}
+            // onTouchTap = {}
+            >
+            <FontIcon 
+                className="material-icons">note</FontIcon>
+        </IconButton></div>
+        :null
+
     let showhelp = (branchDeclaration.showOptions)
         ?<div 
             style={
@@ -920,6 +942,15 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         </IconButton></div>
         :null
 
+    let shareurl = (branchDeclaration.showOptions)
+        ?<RaisedButton
+            disabled
+            type="button"
+            label="Share"
+            //onTouchTap={appbar.transitionToRegister} 
+        />:null
+
+
     return <div >
     <div>
 
@@ -937,9 +968,13 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         { showcontrols }
 
+        { technotes }
+
         { showhelp }
 
         { search }
+
+        { shareurl }
 
     </div>
 

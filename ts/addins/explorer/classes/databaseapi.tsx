@@ -116,6 +116,9 @@ export interface DatasetConfig {
     CommonDimension: any,
     InflationAdjustable?: boolean,
     InflationReferenceYear?:number,
+    CalcUnitsAlias?:string,
+    CalcUnitRatio?:string,
+
 }
 
 // used above

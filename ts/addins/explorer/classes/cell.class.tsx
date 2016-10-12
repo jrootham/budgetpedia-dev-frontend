@@ -42,6 +42,7 @@ interface ViewpointConfigPack {
     viewpointNamingConfigs: any,
     datasetConfig: DatasetConfig,
     isInflationAdjusted: boolean,
+    prorata:string,
 }
 
 export interface CellDeclaration {
@@ -209,6 +210,13 @@ class BudgetCell {
 
     // ----------------------[ setChartParms ]-------------------------
 
+    prorataControls = {
+        prorataindex: null,
+        yearsselector:null,
+        isprorata:null,
+        proratastring:null,
+    }
+
     // creates formal input parameters for google charts, through Chart Component
     // dataset is a data tree fetched from database
     // dataseries is a list of data rows attached to a node
@@ -221,7 +229,8 @@ class BudgetCell {
         let { 
             viewpointNamingConfigs, 
             datasetConfig,
-            isInflationAdjusted, 
+            isInflationAdjusted,
+            prorata,
         } = budgetCell.viewpointConfigPack
 
         let { 
@@ -235,6 +244,37 @@ class BudgetCell {
         if (!treeNodeData) {
             console.error('System Error: node not found in setChartParms', budgetCell)
             throw Error('node not found')
+        }
+
+        let { prorataControls } = budgetCell
+        prorataControls.prorataindex = prorata
+        if (prorata == 'OFF') {
+            prorataControls.isprorata = false
+            prorataControls.yearsselector = 'years'
+            prorataControls.proratastring = null
+        } else {
+            prorataControls.isprorata = true
+            prorataControls.yearsselector = 'calcyears'
+            let thestring
+            switch (prorata) {
+                case "PERPERSON":
+                    thestring = 'per person'
+                    break
+                case "PER100000PERSONS":
+                    thestring = 'per 100,000 people'
+                    break;
+
+                case "PERHOUSEHOLD":
+                    thestring = 'per household'
+                    break
+                case "PER50000HOUSEHOLDS":
+                    thestring = 'per 50,000 households'
+                    break
+                default:
+                    console.error('unknown prorataindex in _doProRataCalc',prorata)
+                    return
+            }
+            prorataControls.proratastring = thestring
         }
 
         // ====================[ COLLECT CHART PARMS ]======================
@@ -362,8 +402,11 @@ class BudgetCell {
         let units = datasetConfig.Units
 
         // --------------------[ assemble vertical label value ]--------------------
-
-        let verticalLabel = datasetConfig.UnitsAlias || datasetConfig.Units
+        let calcAlias
+        if (budgetCell.prorataControls.isprorata) {
+            calcAlias = datasetConfig.CalcUnitsAlias
+        }
+        let verticalLabel = (calcAlias || datasetConfig.UnitsAlias) || datasetConfig.Units
         verticalLabel = datasetConfig.DatasetName + ' (' + verticalLabel + ')'
 
         // -------------------[ assemble horizontal label value ]--------------------
@@ -469,9 +512,9 @@ class BudgetCell {
             let dollarformat = format({ prefix: "$" })
             let rounded = format({ round: 0, integerSeparator: '' })
             let simpleroundedone = format({ round: 1, integerSeparator: ',' })
-
-            if (treeNodeData.years) {
-                titleamount = treeNodeData.years[rightYear]
+            let yearsselector = budgetCell.prorataControls.yearsselector
+            if (treeNodeData[yearsselector]) {
+                titleamount = treeNodeData[yearsselector][rightYear]
                 if (units == 'DOLLAR') {
                     titleamount = dollarformat(titleamount)
                 } else {
@@ -496,6 +539,9 @@ class BudgetCell {
                 }
                 title += fragment
             }
+        }
+        if (budgetCell.prorataControls.isprorata) {
+            title += ', ' + budgetCell.prorataControls.proratastring
         }
         // ------------------------------[ assemble options ]--------------------------------
 
@@ -882,10 +928,10 @@ class BudgetCell {
                     nodeDataseries, sortedItem.Code, sortedItem)
                 throw Error('componentItem not found')
             }
-            
+            let yearsselector = budgetCell.prorataControls.yearsselector
             let amount
-            if (componentItem.years) {
-                amount = componentItem.years[year]
+            if (componentItem[yearsselector]) {
+                amount = componentItem[yearsselector][year]
             } else {
                 amount = null
             }
@@ -910,12 +956,14 @@ class BudgetCell {
     private _LineChartRows = ( treeNodeData, sortedDataSeries, yearsRange ) => {
 
         let rows = []
+        let budgetCell = this
 
         let { rightYear, leftYear} = this.nodeDataPack.yearSelections
+        let yearsselector = budgetCell.prorataControls.yearsselector
         for (let year = leftYear; year <= rightYear; year++) {
             let items = sortedDataSeries.map((sortedItem:SortedComponentItem) => {
                 let amount = null
-                let years = treeNodeData[this.nodeDataseriesName][sortedItem.Code].years
+                let years = treeNodeData[this.nodeDataseriesName][sortedItem.Code][yearsselector]
                 if (years && years[year]!== undefined) {
                     amount = years[year]
                 }

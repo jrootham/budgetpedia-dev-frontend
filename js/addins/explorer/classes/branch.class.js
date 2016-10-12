@@ -205,7 +205,77 @@ class BudgetBranch {
             return promise;
         };
         this._doProRataCalc = (viewpointdata, proratadata) => {
-            console.log('proratadata', proratadata);
+            let proratayearlist = Object.assign({}, proratadata.years);
+            let { branchDeclaration } = this;
+            let { prorata: prorataindex } = branchDeclaration;
+            let { datasetConfig } = viewpointdata.Meta;
+            let unitratio = datasetConfig.UnitRatio;
+            let denominator, multiplier, precision = 5, threshhold = 10000;
+            switch (prorataindex) {
+                case "PERPERSON":
+                    denominator = 1;
+                    multiplier = 1000;
+                    break;
+                case "PER100000PERSONS":
+                    denominator = 100000;
+                    multiplier = 1;
+                    break;
+                case "PERHOUSEHOLD":
+                    denominator = 1;
+                    multiplier = 1000;
+                    break;
+                case "PER50000HOUSEHOLDS":
+                    denominator = 50000;
+                    multiplier = 1;
+                    break;
+                default:
+                    console.error('unknown prorataindex in _doProRataCalc', prorataindex);
+                    return;
+            }
+            if (multiplier != 1) {
+                datasetConfig.CalcUnitRatio = 1;
+                datasetConfig.CalcUnitsAlias = "dollars";
+            }
+            else {
+                datasetConfig.CalcUnitRatio = datasetConfig.UnitRatio;
+                datasetConfig.CalcUnitsAlias = datasetConfig.UnitsAlias;
+            }
+            for (let yearindex in proratayearlist) {
+                let amount = proratayearlist[yearindex];
+                proratayearlist[yearindex] = (amount / denominator) / multiplier;
+            }
+            this._doCalcYears(viewpointdata, proratayearlist, threshhold, precision);
+        };
+        this._doCalcYears = (node, proratayearlist, threshhold, precision) => {
+            let calcyears = {};
+            let years = node.years;
+            if (years) {
+                for (let yearindex in years) {
+                    if (proratayearlist[yearindex]) {
+                        let amount = years[yearindex] / proratayearlist[yearindex];
+                        if (amount < threshhold) {
+                            amount = Number(amount.toPrecision(precision));
+                        }
+                        else {
+                            amount = Number(amount.toFixed(0));
+                        }
+                        calcyears[yearindex] = amount;
+                    }
+                }
+                node.calcyears = calcyears;
+            }
+            if (node.Components) {
+                for (let index in node.Components) {
+                    let subnode = node.Components[index];
+                    this._doCalcYears(subnode, proratayearlist, threshhold, precision);
+                }
+            }
+            if (node.CommonDimension) {
+                for (let index in node.CommonDimension) {
+                    let subnode = node.CommonDimension[index];
+                    this._doCalcYears(subnode, proratayearlist, threshhold, precision);
+                }
+            }
         };
         this.getViewpointData = () => {
             let branchSettings = this.branchDeclaration;

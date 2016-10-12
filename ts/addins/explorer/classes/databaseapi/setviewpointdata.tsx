@@ -73,6 +73,8 @@ const setViewpointData = (parms: SetViewpointDataParms) => {
         }
     }
 
+    baselineItems = JSON.parse(JSON.stringify(baselineItems))
+
     // set years, and CommonDimension by years
     try {
 

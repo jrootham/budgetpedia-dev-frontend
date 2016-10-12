@@ -9,6 +9,7 @@ import { compose } from 'redux'
 import * as Actions from '../actions/actions'
 
 import { AppTiles } from "../components/apptiles"
+import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card'
 
 const mapStateToProps = ( { homegrid, resources } ) => 
 ({ 
@@ -52,10 +53,35 @@ class HomeTilesClass extends React.Component<any, any> {
         let { hometiles, homecols, homepadding, theme, colors, system } = this.props
 
         return (
+            <div>
+
+            <Card>
+            <CardTitle>
+            Welcome to Budgetpedia. We're all about government budgets.
+            </CardTitle>
+            <CardText>
+            <p style={{margin:0, padding:0}}>Explore the Toronto budget with our Budget Explorer. 
+            See a sample of Toronto's annual budget decision process at our Budget Roadmap.</p>
+            <p>We welcome you to join us (and contribute!) at any of our digital places:</p>
+            <ul>
+            <li>For discussions: our Facebook group (facebook.com/groups/budgetpedia)</li>
+            <li>For lists of resources: our Facebook page (facebook.com/bugetpedia)</li>
+            <li>For notifications: Twitter (twitter.com/budgetpedia)</li>
+            <li>For in-depth articles: Medium (medium.com/budgetpedia)</li>
+            <li>For technical discussions: our Google forum (groups.google.com/d/forum/budgetpedia)</li>
+            </ul>
+            <p>Below are tiles leading to more information about the Budgetpedia Project.</p>
+            </CardText>
+            </Card>
 
             <AppTiles 
 
-                style = {{margin:"16px",fontFamily:theme.fontFamily}}
+                style = {
+                    {
+                        margin:"16px",
+                        fontFamily:theme.fontFamily,
+                    }
+                }
                 tiles =     { hometiles } 
                 tilecols =  { homecols }
                 padding =   { homepadding }
@@ -70,6 +96,7 @@ class HomeTilesClass extends React.Component<any, any> {
                 transitionTo = { this.props.transitionTo }
                 cellHeight = { 180 }
             />
+            </div>
         )
     }
 }

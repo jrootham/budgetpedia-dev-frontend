@@ -16,8 +16,7 @@ import Main from './core/containers/main'
 // require('isomorphic-fetch')
 
 let globalmessage =  (
-    <div>FOR TESTING, YOU'RE IN THE WRONG SPOT! GO TO <a href="http://staging.budgetpedia.ca">staging.budgetpedia.ca</a> INSTEAD. THIS IS THE DEVELOPER'S VERSION OF THIS SITE (FOR PROTOTYPING), 
-        AND MAY CHANGE OR BREAK AT ANY TIME. ALSO, THE DATA MAY BE FAKE.
+    <div>THIS IS THE SOFTWARE DEVELOPER'S COPY OF BUDGETPEDIA.
     </div>
 )
 

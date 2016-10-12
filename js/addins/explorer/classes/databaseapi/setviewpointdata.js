@@ -27,6 +27,7 @@ const setViewpointData = (parms) => {
             baselineItems = baselineItems.Nominal;
         }
     }
+    baselineItems = JSON.parse(JSON.stringify(baselineItems));
     try {
         let node = viewpointDataTemplate;
         let sorted = getIndexSortedComponentItems(node.Components, lookupset);
