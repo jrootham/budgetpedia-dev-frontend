@@ -243,7 +243,7 @@ let branchDefaults:BranchSettings = {
     inflationAdjusted: true,
     nodeList:[],
     showOptions: false,
-    prorata:'PERPERSON',
+    prorata:'OFF',
 }
 
 let explorer = {

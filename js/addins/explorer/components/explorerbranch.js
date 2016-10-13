@@ -93,6 +93,10 @@ class ExplorerBranch extends Component {
                     this._processToggleInflationAdjustedStateChange(budgetBranch);
                     break;
                 }
+                case actions_1.branchTypes.UPDATE_PRORATA: {
+                    this._processUpdateProrataStateChange(budgetBranch);
+                    break;
+                }
                 case actions_1.branchTypes.HARMONIZE_CELLS: {
                     budgetBranch.harmonizeCells();
                     break;
@@ -126,7 +130,15 @@ class ExplorerBranch extends Component {
                 this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 budgetBranch.toggleInflationAdjusted();
             }).catch(reason => {
-                console.error('error in data fetch, changeaspect', reason);
+                console.error('error in data fetch, toggle inflation adjustment', reason);
+            });
+        };
+        this._processUpdateProrataStateChange = (budgetBranch) => {
+            budgetBranch.calculateProRata(this.state.viewpointData).then(() => {
+                this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
+                budgetBranch.updateProrata();
+            }).catch(reason => {
+                console.error('error in data fetch, updata prorata', reason);
             });
         };
         this._processChangeAspectStateChange = (budgetBranch) => {
@@ -244,7 +256,8 @@ class ExplorerBranch extends Component {
             this.props.globalStateActions.changeAspect(budgetBranch.uid, aspect);
         };
         this.switchComparator = comparatorindex => {
-            console.log('comparator', comparatorindex);
+            let { budgetBranch } = this.props;
+            this.props.globalStateActions.updateProrata(budgetBranch.uid, comparatorindex);
         };
         this.toggleInflationAdjustment = value => {
             let { budgetBranch } = this.props;

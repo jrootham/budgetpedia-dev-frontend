@@ -10,6 +10,7 @@ var types;
     types.CHANGE_VERSION = 'CHANGE_VERSION';
     types.CHANGE_ASPECT = 'CHANGE_ASPECT';
     types.TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED';
+    types.UPDATE_PRORATA = 'UPDATE_PRORATA';
     types.TOGGLE_SHOW_OPTIONS = 'TOGGLE_SHOW_OPTIONS';
     types.ADD_NODE = 'ADD_NODE';
     types.REMOVE_NODES = 'REMOVE_NODES';
@@ -36,6 +37,7 @@ var branchTypes;
     branchTypes.CHANGE_VERSION = types.CHANGE_VERSION;
     branchTypes.CHANGE_ASPECT = types.CHANGE_ASPECT;
     branchTypes.TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED;
+    branchTypes.UPDATE_PRORATA = types.UPDATE_PRORATA;
     branchTypes.TOGGLE_SHOW_OPTIONS = types.TOGGLE_SHOW_OPTIONS;
     branchTypes.CHANGE_BRANCH_DATA = types.CHANGE_BRANCH_DATA;
     branchTypes.HARMONIZE_CELLS = types.HARMONIZE_CELLS;
@@ -93,6 +95,12 @@ exports.changeAspect = redux_actions_1.createAction(types.CHANGE_ASPECT, (branch
     explorer: true
 }));
 exports.toggleInflationAdjusted = redux_actions_1.createAction(types.TOGGLE_INFLATION_ADJUSTED, (branchuid, value) => ({
+    branchuid: branchuid,
+    value: value,
+}), () => ({
+    explorer: true
+}));
+exports.updateProrata = redux_actions_1.createAction(types.UPDATE_PRORATA, (branchuid, value) => ({
     branchuid: branchuid,
     value: value,
 }), () => ({

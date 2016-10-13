@@ -10,6 +10,7 @@ export namespace types {
     export const CHANGE_VERSION = 'CHANGE_VERSION'
     export const CHANGE_ASPECT = 'CHANGE_ASPECT'
     export const TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED'
+    export const UPDATE_PRORATA = 'UPDATE_PRORATA'
     export const TOGGLE_SHOW_OPTIONS = 'TOGGLE_SHOW_OPTIONS'
     export const ADD_NODE = 'ADD_NODE'
     export const REMOVE_NODES = 'REMOVE_NODES'
@@ -40,6 +41,7 @@ export namespace branchTypes {
     export import CHANGE_VERSION = types.CHANGE_VERSION
     export import CHANGE_ASPECT = types.CHANGE_ASPECT
     export import TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED
+    export import UPDATE_PRORATA = types.UPDATE_PRORATA
     export import TOGGLE_SHOW_OPTIONS = types.TOGGLE_SHOW_OPTIONS
     export import CHANGE_BRANCH_DATA = types.CHANGE_BRANCH_DATA 
     export import HARMONIZE_CELLS = types.HARMONIZE_CELLS   
@@ -125,6 +127,15 @@ export const changeAspect = createAction(
 
 export const toggleInflationAdjusted = createAction(
     types.TOGGLE_INFLATION_ADJUSTED, (branchuid, value) => ({
+        branchuid,
+        value,
+    }), () => ({
+        explorer:true
+    })
+)
+
+export const updateProrata = createAction(
+    types.UPDATE_PRORATA, (branchuid, value) => ({
         branchuid,
         value,
     }), () => ({

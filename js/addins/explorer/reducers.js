@@ -162,6 +162,13 @@ let branchesById = (state = {}, action) => {
             newstate[branchuid].inflationAdjusted = action.payload.value;
             return newstate;
         }
+        case actions_1.types.UPDATE_PRORATA: {
+            let { branchuid } = action.payload;
+            newstate = Object.assign({}, state);
+            newstate[branchuid] = Object.assign({}, newstate[branchuid]);
+            newstate[branchuid].prorata = action.payload.value;
+            return newstate;
+        }
         case actions_1.types.TOGGLE_SHOW_OPTIONS: {
             let { branchuid } = action.payload;
             newstate = Object.assign({}, state);

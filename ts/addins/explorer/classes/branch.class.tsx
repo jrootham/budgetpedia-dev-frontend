@@ -169,17 +169,10 @@ class BudgetBranch {
             let budgetNode: BudgetNode = branchNodes[nodeIndex]
             let dataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
 
-            // let parentDataNode = null
-            // if (nodeIndex > 0) {
-            //     parentDataNode = branchNodes[nodeIndex-1].treeNodeData
-            // }
-
             budgetNode.updateDataNode(
                 dataNode
-                // parentDataNode
             )
             budgetNode.resetCells()
-            // budgetNode.newCells = newCells
 
         }
 
@@ -342,12 +335,12 @@ class BudgetBranch {
             case "PERPERSON":
             case "PER100000PERSONS":
                 prorataseries = 'population'
-                break;
+                break
 
             case "PERHOUSEHOLD":
             case "PER50000HOUSEHOLDS":
                 prorataseries = 'households'
-            
+                break
             default:
                 console.error('unknown prorataindex',prorataindex)
                 return
@@ -404,7 +397,7 @@ class BudgetBranch {
         switch (prorataindex) {
             case "PERPERSON":
                 denominator = 1
-                multiplier = 1000
+                multiplier = unitratio
                 break
             case "PER100000PERSONS":
                 denominator = 100000
@@ -413,7 +406,7 @@ class BudgetBranch {
 
             case "PERHOUSEHOLD":
                 denominator = 1
-                multiplier = 1000
+                multiplier = unitratio
                 break
             case "PER50000HOUSEHOLDS":
                 denominator = 50000
@@ -436,11 +429,7 @@ class BudgetBranch {
             proratayearlist[yearindex] = (amount/denominator)/multiplier
         }
 
-        // console.log('prorataindex, proratayearlist', prorataindex, denominator, multiplier, proratayearlist)
-
         this._doCalcYears(viewpointdata, proratayearlist, threshhold, precision)
-
-        // console.log('calculated viewpoint',viewpointdata)
 
     }
 
@@ -473,6 +462,36 @@ class BudgetBranch {
                 this._doCalcYears(subnode, proratayearlist, threshhold, precision)
             }
         }
+    }
+
+    updateProrata = () => {
+
+        let budgetBranch = this
+
+        let nodeIndex: any
+        let branchuid = budgetBranch.uid
+
+        let branchSettings: BranchSettings = budgetBranch.branchDeclaration
+        let viewpointData = budgetBranch.state.viewpointData
+
+        let branchNodes:BudgetNode[] = budgetBranch.nodes
+
+        for (nodeIndex in branchNodes) {
+
+            let budgetNode: BudgetNode = branchNodes[nodeIndex]
+            let dataNode = getBudgetNode(viewpointData, budgetNode.dataPath)
+
+            budgetNode.updateDataNode(
+                dataNode
+            )
+            budgetNode.resetCells()
+
+        }
+
+        budgetBranch.setState({
+            branchNodes,
+        })
+
     }
 
     // TODO: generate action to show progress

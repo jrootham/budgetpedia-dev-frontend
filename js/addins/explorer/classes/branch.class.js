@@ -179,6 +179,7 @@ class BudgetBranch {
                 case "PERHOUSEHOLD":
                 case "PER50000HOUSEHOLDS":
                     prorataseries = 'households';
+                    break;
                 default:
                     console.error('unknown prorataindex', prorataindex);
                     return;
@@ -214,7 +215,7 @@ class BudgetBranch {
             switch (prorataindex) {
                 case "PERPERSON":
                     denominator = 1;
-                    multiplier = 1000;
+                    multiplier = unitratio;
                     break;
                 case "PER100000PERSONS":
                     denominator = 100000;
@@ -222,7 +223,7 @@ class BudgetBranch {
                     break;
                 case "PERHOUSEHOLD":
                     denominator = 1;
-                    multiplier = 1000;
+                    multiplier = unitratio;
                     break;
                 case "PER50000HOUSEHOLDS":
                     denominator = 50000;
@@ -276,6 +277,23 @@ class BudgetBranch {
                     this._doCalcYears(subnode, proratayearlist, threshhold, precision);
                 }
             }
+        };
+        this.updateProrata = () => {
+            let budgetBranch = this;
+            let nodeIndex;
+            let branchuid = budgetBranch.uid;
+            let branchSettings = budgetBranch.branchDeclaration;
+            let viewpointData = budgetBranch.state.viewpointData;
+            let branchNodes = budgetBranch.nodes;
+            for (nodeIndex in branchNodes) {
+                let budgetNode = branchNodes[nodeIndex];
+                let dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
+                budgetNode.updateDataNode(dataNode);
+                budgetNode.resetCells();
+            }
+            budgetBranch.setState({
+                branchNodes: branchNodes,
+            });
         };
         this.getViewpointData = () => {
             let branchSettings = this.branchDeclaration;

@@ -867,6 +867,7 @@ var types;
     types.CHANGE_VERSION = 'CHANGE_VERSION';
     types.CHANGE_ASPECT = 'CHANGE_ASPECT';
     types.TOGGLE_INFLATION_ADJUSTED = 'TOGGLE_INFLATION_ADJUSTED';
+    types.UPDATE_PRORATA = 'UPDATE_PRORATA';
     types.TOGGLE_SHOW_OPTIONS = 'TOGGLE_SHOW_OPTIONS';
     types.ADD_NODE = 'ADD_NODE';
     types.REMOVE_NODES = 'REMOVE_NODES';
@@ -893,6 +894,7 @@ var branchTypes;
     branchTypes.CHANGE_VERSION = types.CHANGE_VERSION;
     branchTypes.CHANGE_ASPECT = types.CHANGE_ASPECT;
     branchTypes.TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED;
+    branchTypes.UPDATE_PRORATA = types.UPDATE_PRORATA;
     branchTypes.TOGGLE_SHOW_OPTIONS = types.TOGGLE_SHOW_OPTIONS;
     branchTypes.CHANGE_BRANCH_DATA = types.CHANGE_BRANCH_DATA;
     branchTypes.HARMONIZE_CELLS = types.HARMONIZE_CELLS;
@@ -974,6 +976,16 @@ exports.changeAspect = redux_actions_1.createAction(types.CHANGE_ASPECT, functio
     };
 });
 exports.toggleInflationAdjusted = redux_actions_1.createAction(types.TOGGLE_INFLATION_ADJUSTED, function (branchuid, value) {
+    return {
+        branchuid: branchuid,
+        value: value
+    };
+}, function () {
+    return {
+        explorer: true
+    };
+});
+exports.updateProrata = redux_actions_1.createAction(types.UPDATE_PRORATA, function (branchuid, value) {
     return {
         branchuid: branchuid,
         value: value
@@ -1426,6 +1438,7 @@ var BudgetBranch = function () {
                 case "PERHOUSEHOLD":
                 case "PER50000HOUSEHOLDS":
                     prorataseries = 'households';
+                    break;
                 default:
                     console.error('unknown prorataindex', prorataindex);
                     return;
@@ -1464,7 +1477,7 @@ var BudgetBranch = function () {
             switch (prorataindex) {
                 case "PERPERSON":
                     denominator = 1;
-                    multiplier = 1000;
+                    multiplier = unitratio;
                     break;
                 case "PER100000PERSONS":
                     denominator = 100000;
@@ -1472,7 +1485,7 @@ var BudgetBranch = function () {
                     break;
                 case "PERHOUSEHOLD":
                     denominator = 1;
-                    multiplier = 1000;
+                    multiplier = unitratio;
                     break;
                 case "PER50000HOUSEHOLDS":
                     denominator = 50000;
@@ -1524,6 +1537,23 @@ var BudgetBranch = function () {
                     _this._doCalcYears(_subnode, proratayearlist, threshhold, precision);
                 }
             }
+        };
+        this.updateProrata = function () {
+            var budgetBranch = _this;
+            var nodeIndex = void 0;
+            var branchuid = budgetBranch.uid;
+            var branchSettings = budgetBranch.branchDeclaration;
+            var viewpointData = budgetBranch.state.viewpointData;
+            var branchNodes = budgetBranch.nodes;
+            for (nodeIndex in branchNodes) {
+                var budgetNode = branchNodes[nodeIndex];
+                var dataNode = getbudgetnode_1.default(viewpointData, budgetNode.dataPath);
+                budgetNode.updateDataNode(dataNode);
+                budgetNode.resetCells();
+            }
+            budgetBranch.setState({
+                branchNodes: branchNodes
+            });
         };
         this.getViewpointData = function () {
             var branchSettings = _this.branchDeclaration;
@@ -3134,6 +3164,11 @@ var ExplorerBranch = function (_Component) {
                         _this._processToggleInflationAdjustedStateChange(budgetBranch);
                         break;
                     }
+                case actions_1.branchTypes.UPDATE_PRORATA:
+                    {
+                        _this._processUpdateProrataStateChange(budgetBranch);
+                        break;
+                    }
                 case actions_1.branchTypes.HARMONIZE_CELLS:
                     {
                         budgetBranch.harmonizeCells();
@@ -3168,7 +3203,15 @@ var ExplorerBranch = function (_Component) {
                 _this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 budgetBranch.toggleInflationAdjusted();
             }).catch(function (reason) {
-                console.error('error in data fetch, changeaspect', reason);
+                console.error('error in data fetch, toggle inflation adjustment', reason);
+            });
+        };
+        _this._processUpdateProrataStateChange = function (budgetBranch) {
+            budgetBranch.calculateProRata(_this.state.viewpointData).then(function () {
+                _this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
+                budgetBranch.updateProrata();
+            }).catch(function (reason) {
+                console.error('error in data fetch, updata prorata', reason);
             });
         };
         _this._processChangeAspectStateChange = function (budgetBranch) {
@@ -3293,7 +3336,9 @@ var ExplorerBranch = function (_Component) {
             _this.props.globalStateActions.changeAspect(budgetBranch.uid, aspect);
         };
         _this.switchComparator = function (comparatorindex) {
-            console.log('comparator', comparatorindex);
+            var budgetBranch = _this.props.budgetBranch;
+
+            _this.props.globalStateActions.updateProrata(budgetBranch.uid, comparatorindex);
         };
         _this.toggleInflationAdjustment = function (value) {
             var budgetBranch = _this.props.budgetBranch;
@@ -5086,6 +5131,7 @@ var Explorer = function (_Component) {
                         changeViewpoint: _this2.props.changeViewpoint,
                         changeVersion: _this2.props.changeVersion,
                         toggleInflationAdjusted: _this2.props.toggleInflationAdjusted,
+                        updateProrata: _this2.props.updateProrata,
                         changeAspect: _this2.props.changeAspect,
                         incrementBranchDataVersion: _this2.props.incrementBranchDataVersion,
                         toggleShowOptions: _this2.props.toggleShowOptions,
@@ -5165,6 +5211,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
     toggleInflationAdjusted: ExplorerActions.toggleInflationAdjusted,
+    updateProrata: ExplorerActions.updateProrata,
     incrementBranchDataVersion: ExplorerActions.incrementBranchDataVersion,
     toggleShowOptions: ExplorerActions.toggleShowOptions,
     resetLastAction: ExplorerActions.resetLastAction,
@@ -5628,22 +5675,31 @@ var branchesById = function branchesById() {
                 newstate[_branchuid6].inflationAdjusted = action.payload.value;
                 return newstate;
             }
-        case actions_1.types.TOGGLE_SHOW_OPTIONS:
+        case actions_1.types.UPDATE_PRORATA:
             {
                 var _branchuid7 = action.payload.branchuid;
 
                 newstate = Object.assign({}, state);
                 newstate[_branchuid7] = Object.assign({}, newstate[_branchuid7]);
-                newstate[_branchuid7].showOptions = action.payload.value;
+                newstate[_branchuid7].prorata = action.payload.value;
                 return newstate;
             }
-        case actions_1.types.CHANGE_BRANCH_DATA:
+        case actions_1.types.TOGGLE_SHOW_OPTIONS:
             {
                 var _branchuid8 = action.payload.branchuid;
 
                 newstate = Object.assign({}, state);
                 newstate[_branchuid8] = Object.assign({}, newstate[_branchuid8]);
-                newstate[_branchuid8].branchDataGeneration++;
+                newstate[_branchuid8].showOptions = action.payload.value;
+                return newstate;
+            }
+        case actions_1.types.CHANGE_BRANCH_DATA:
+            {
+                var _branchuid9 = action.payload.branchuid;
+
+                newstate = Object.assign({}, state);
+                newstate[_branchuid9] = Object.assign({}, newstate[_branchuid9]);
+                newstate[_branchuid9].branchDataGeneration++;
                 return newstate;
             }
         default:
@@ -7921,7 +7977,7 @@ var branchDefaults = {
     inflationAdjusted: true,
     nodeList: [],
     showOptions: false,
-    prorata: 'PERPERSON'
+    prorata: 'OFF'
 };
 var explorer = {
     defaults: {
