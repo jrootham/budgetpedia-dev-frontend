@@ -339,6 +339,9 @@ let cellsById = (state = { }, action) => {
         case actiontypes.ADD_CELLS: {
 
             for (let setting of action.payload.settings) {
+                // TODO: cell declaration should not include celluid property
+                // but the property crept into usage in node.class setCells
+                // leaving for now for sake of stability
                 newstate[setting.celluid] = setting
             }
             return newstate

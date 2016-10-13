@@ -164,6 +164,7 @@ class BudgetNode {
         // build cells array
         for (let cellIndex in cellDeclarations) {
             let cellDeclaration: CellDeclaration = cellDeclarations[cellIndex]
+            // TODO: this should use cellIndex not celluid of cellDeclaration!!
             let {nodeDataseriesName, celluid, chartSelection} = cellDeclaration
             if (chartSelection === undefined) chartSelection = null
 

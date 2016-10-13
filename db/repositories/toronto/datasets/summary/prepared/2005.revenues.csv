@@ -16,7 +16,7 @@ UNITS_NAME,Dollar,,,,
 UNITS_CODE,DOLLAR,,,,
 UNITS_MULTIPLIER,1000,,,,
 TOTAL_AMOUNT,4759977.8,,,,
-INTAKE_DATETIME,2016-10-11-19-27-52,,,,
+INTAKE_DATETIME,2016-10-13-16-35-28,,,,
 INTAKE_OPERATOR_ID,Henrik,,,,
 COLUMNS_CATEGORIES,"Program:CODE,Program:NAME",,,,
 COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION",,,,
@@ -43,6 +43,7 @@ ECONDEV,Economic Development & Culture,11788.699999999999,,,"Original amount was
 Allocation from: BIZSUPPORT,Customer & Business Support,2470.4, (Guess)
 Allocation from: CULTURE,Culture,3758.5, (Guess, by name ‘Culture’)
 Allocation from: TOURISM,Tourism,3571.9, (guess)"
+ECONRECOV,Economic Recovery,,,,
 ENGINEERING,Engineering & Construction Services,50031.7,,,"Original amount was null, plus:
 Allocation from: TECH,WES - Technical Services,50031.7, (toronto.ca)"
 EXHIBPLACE,Exhibition Place,46194,,,

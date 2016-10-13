@@ -26,7 +26,7 @@ COURTSERV,Court Services,2003,,,,
 CREATIVEINFO,Pubic Information & Creative Services,2007,2008,CITYMANAGER,City Manager's Office,Guess
 CULTURE,Culture,2003,2006,ECONDEV,Economic Development & Culture,"Guess, by name ‘Culture’"
 ECONDEV,Economic Development & Culture,2003,,,,
-ECONRECOV,Economic Recovery,2004,2006,ECONDEV,Economic Development & Culture,
+ECONRECOV,Economic Recovery,2004,2005,,,
 EMERG,Emergency Medical Services,2003,2014,PARAMEDIC,Toronto Paramedic Services,logical
 EMERGPLAN,Emergency Management Plan,2003,2005,CITYMANAGER,City Manager's Office,org chart
 ENGINEERING,Engineering & Construction Services,2013,,,,
@@ -46,6 +46,7 @@ KVC,Keele Valley Closure (KVC),2003,2003,CORPEXPENDITURES,Non-Program Expenditur
 LEGAL,Legal Services,2003,,,,
 LIBRARY,Toronto Public Library,2003,,,,
 LICENCING,Municipal Licensing & Standards,2006,,,,
+LOBBYIST,Lobbyist Registrar,2006,2006,LOBBYREG,,
 LOBBYREG,Office of the Lobbyist Registrar,2007,,,,
 LOCALAPPEAL,Local Appeal Body,2015,2015,COURTSERV,Court Services,admin doc
 LONGTERMHOME,Long Term Care Homes & Services,2009,,,,
@@ -59,8 +60,9 @@ PARKS,"Parks, Forestry & Recreation",2003,,,,
 PLANNING,City Planning,2003,,,,
 POLICE,Toronto Police Service,2004,,,,
 POLICEBOARD,Toronto Police Services Board,2004,,,,
-POLICYADMIN,"Policy, Planning, Finance & Administration",2007,,,,
+POLICYADMIN,"Policy, Planning, Finance & Administration",2006,,,,
 PUBLICHEALTH,Toronto Public Health,2003,,,,
+PUBLICINFORMATION,Pubic Information & Creative Services,2006,2006,CITYMANAGER,,
 REGIONCONSERV,Toronto & Region Conservation Authority,2003,,,,
 SHELTERADMIN,"Shelter, Support & Housing Administration",2003,,,,
 SOCIALDEV,"Social Development, Finance & Administration",2003,,,,
