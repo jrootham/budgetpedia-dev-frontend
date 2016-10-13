@@ -107,18 +107,14 @@ class BudgetNode {
         return [...this.state.nodeCells]
     }
 
-    updateAspect = (aspect, treeNodeData) => { //, parentDataNode = null) => {
+    updateAspect = (aspect, treeNodeData) => { 
         this.aspectName = aspect
-        this.updateDataNode(treeNodeData) //, parentDataNode)
+        this.updateDataNode(treeNodeData) 
     }
 
-    updateDataNode = (treeNodeData) => {// , parentDataNode = null) => {
+    updateDataNode = (treeNodeData) => {
         this._nodeData = treeNodeData
-        // if (this.treeNodeMetaDataFromParentSortedList && parentDataNode) {
-        //     this.treeNodeMetaDataFromParentSortedList.treeNodeData = parentDataNode
-        // }
         this.updated = true
-
     }
 
     oldAspectState: boolean // !!dataNode.Components

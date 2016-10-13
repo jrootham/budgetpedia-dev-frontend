@@ -141,6 +141,7 @@ let Explorer = class extends Component {
                 for (let cellid of clones.nodes[nodeid].cellList) {
                     clones.cells[cellid] = this._getClone(declarationData.cellsById[cellid]);
                     uidmap[cellid] = uuid.v4();
+                    clones.cells[cellid].celluid = uidmap[cellid];
                 }
             }
             let newclones = {
@@ -162,13 +163,13 @@ let Explorer = class extends Component {
                 let nodeclone = newclones.nodes[newid] = clones.nodes[id];
                 let oldlist = nodeclone.cellList;
                 let newlist = [];
-                for (let id of oldlist) {
-                    newlist.push(uidmap[id]);
+                for (let cellid of oldlist) {
+                    newlist.push(uidmap[cellid]);
                 }
                 nodeclone.cellList = newlist;
             }
-            for (let id in clones.cells) {
-                newclones.cells[uidmap[id]] = clones.cells[id];
+            for (let oldid in clones.cells) {
+                newclones.cells[uidmap[oldid]] = clones.cells[oldid];
             }
             return newclones;
         };

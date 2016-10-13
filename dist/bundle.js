@@ -4133,6 +4133,8 @@ exports.default = ExplorerCell;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -4212,7 +4214,7 @@ var ExplorerNode = function (_Component) {
 
             if (budgetNode.updated) {
                 _this.setState({
-                    nodeCells: budgetNode.newCells
+                    nodeCells: [].concat(_toConsumableArray(budgetNode.newCells))
                 });
                 budgetNode.newCells = null;
                 budgetNode.updated = false;
@@ -4923,6 +4925,7 @@ var Explorer = function (_Component) {
 
                         clones.cells[cellid] = _this._getClone(declarationData.cellsById[cellid]);
                         uidmap[cellid] = uuid.v4();
+                        clones.cells[cellid].celluid = uidmap[cellid];
                     }
                 } catch (err) {
                     _didIteratorError2 = true;
@@ -4955,9 +4958,9 @@ var Explorer = function (_Component) {
 
             try {
                 for (var _iterator3 = oldlist[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                    var _id3 = _step3.value;
+                    var _id = _step3.value;
 
-                    newlist.push(uidmap[_id3]);
+                    newlist.push(uidmap[_id]);
                 }
             } catch (err) {
                 _didIteratorError3 = true;
@@ -4986,9 +4989,9 @@ var Explorer = function (_Component) {
 
                 try {
                     for (var _iterator4 = _oldlist[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                        var _id = _step4.value;
+                        var _cellid = _step4.value;
 
-                        _newlist.push(uidmap[_id]);
+                        _newlist.push(uidmap[_cellid]);
                     }
                 } catch (err) {
                     _didIteratorError4 = true;
@@ -5007,8 +5010,8 @@ var Explorer = function (_Component) {
 
                 nodeclone.cellList = _newlist;
             }
-            for (var _id2 in clones.cells) {
-                newclones.cells[uidmap[_id2]] = clones.cells[_id2];
+            for (var oldid in clones.cells) {
+                newclones.cells[uidmap[oldid]] = clones.cells[oldid];
             }
             return newclones;
         };
@@ -5320,16 +5323,20 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
     if (removeditems.length > 0) {
         var removednode = removed[removeditems[0].index];
         var priorCell = removednode.cells[removednode.nodeDeclaration.cellIndex];
-        var chartConfigs = Object.assign({}, priorCell.cellDeclaration.chartConfigs);
-        var yearScope = priorCell.cellDeclaration.yearScope;
-        priorCellSettings = {
-            chartConfigs: chartConfigs,
-            yearScope: yearScope
-        };
-        priorNodeSettings = {
-            yearSelections: Object.assign({}, removednode.nodeDeclaration.yearSelections),
-            cellIndex: removednode.nodeDeclaration.cellIndex
-        };
+        if (priorCell) {
+            var chartConfigs = Object.assign({}, priorCell.cellDeclaration.chartConfigs);
+            var yearScope = priorCell.cellDeclaration.yearScope;
+            priorCellSettings = {
+                chartConfigs: chartConfigs,
+                yearScope: yearScope
+            };
+            priorNodeSettings = {
+                yearSelections: Object.assign({}, removednode.nodeDeclaration.yearSelections),
+                cellIndex: removednode.nodeDeclaration.cellIndex
+            };
+        } else {
+            console.log('error: did not find priorCell for node', removednode);
+        }
         var removeNodeDeclarations = budgetBranch.actions.removeNodeDeclarations;
 
         removeNodeDeclarations(removeditems);

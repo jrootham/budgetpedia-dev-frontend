@@ -2,6 +2,7 @@
 // explorer.tsx
 
 /*
+    BUG: in _getBranchCloneSettings unselect parent child creates 'data not availble in child branch'
     BUG: 'Working' sign persists when click fails to drill down,
         such as when staff aspect is selected and max depth is reached
     BUG: navigating to dialog help box loses bar selection
@@ -351,8 +352,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             for (let cellid of clones.nodes[nodeid].cellList) {
                 clones.cells[cellid] = this._getClone(declarationData.cellsById[cellid])
                 uidmap[cellid] = uuid.v4()
+                clones.cells[cellid].celluid = uidmap[cellid] // TODO: this reference shouldn't be in cell declaration!!
             }
         }
+
+        // console.log('cell clones',clones.cells)
         // map old uid's to new uid's
         let newclones = {
             newbranchid:uidmap[refbranchid],
@@ -374,14 +378,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             let oldlist = nodeclone.cellList
             let newlist = []
-            for (let id of oldlist) {
-                newlist.push(uidmap[id])
+            for (let cellid of oldlist) {
+                newlist.push(uidmap[cellid])
             }
             nodeclone.cellList = newlist
 
         }
-        for (let id in clones.cells) {
-            newclones.cells[uidmap[id]] = clones.cells[id]
+        for (let oldid in clones.cells) {
+            newclones.cells[uidmap[oldid]] = clones.cells[oldid]
         }
         return newclones
     }
@@ -392,6 +396,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     addBranch = refbranchuid => {
         let cloneSettings = this._getBranchCloneSettings(refbranchuid)
+
+        // console.log('branch clone',refbranchuid,cloneSettings)
 
         this.props.cloneBranchDeclaration( refbranchuid, cloneSettings )
         this.onCloneCreation()
@@ -519,6 +525,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             let budgetBranches = explorer.state.budgetBranches
 
+            // console.log('budgetBranches',budgetBranches)
             // map over budgetBranches state
             let segments = budgetBranches.map((budgetBranch:BudgetBranch, branchIndex) => {
 

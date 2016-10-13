@@ -103,18 +103,23 @@ let applyChartComponentSelection = (budgetBranch: BudgetBranch, nodeIndex, cellI
 
     if (removeditems.length > 0) {
 
+        // console.log('removed,removeditems',removed,removeditems)
         // TODO: review this for directness and efficiency
         let removednode:BudgetNode = removed[removeditems[0].index]
         let priorCell:BudgetCell = removednode.cells[removednode.nodeDeclaration.cellIndex]
-        let chartConfigs = Object.assign({},priorCell.cellDeclaration.chartConfigs)
-        let yearScope = priorCell.cellDeclaration.yearScope
-        priorCellSettings = {
-            chartConfigs,
-            yearScope,
-        }
-        priorNodeSettings = {
-            yearSelections: Object.assign({},removednode.nodeDeclaration.yearSelections),
-            cellIndex: removednode.nodeDeclaration.cellIndex
+        if (priorCell) {
+            let chartConfigs = Object.assign({},priorCell.cellDeclaration.chartConfigs)
+            let yearScope = priorCell.cellDeclaration.yearScope
+            priorCellSettings = {
+                chartConfigs,
+                yearScope,
+            }
+            priorNodeSettings = {
+                yearSelections: Object.assign({},removednode.nodeDeclaration.yearSelections),
+                cellIndex: removednode.nodeDeclaration.cellIndex
+            }
+        } else {
+            console.log('error: did not find priorCell for node',removednode)
         }
         let { removeNodeDeclarations } = budgetBranch.actions
 

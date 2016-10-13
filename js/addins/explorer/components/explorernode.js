@@ -51,7 +51,7 @@ class ExplorerNode extends Component {
             let { budgetNode } = props;
             if (budgetNode.updated) {
                 this.setState({
-                    nodeCells: budgetNode.newCells
+                    nodeCells: [...budgetNode.newCells]
                 });
                 budgetNode.newCells = null;
                 budgetNode.updated = false;

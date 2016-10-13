@@ -176,7 +176,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         if (budgetNode.updated) {
 
             this.setState({
-                nodeCells:budgetNode.newCells
+                nodeCells:[...budgetNode.newCells]
             })
             budgetNode.newCells = null
             budgetNode.updated = false
@@ -206,6 +206,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         }
         // harmonization required if there is a mismatch between cells and cellList
         if ((cells.length != cellList.length) && (this.harmonizecount == null)) {
+            // console.log('harmonizing cells for',budgetNode.uid)
             this.harmonizecount = cellList.length - cells.length
             let cellParms = []
             let { cellsById } = declarationData
