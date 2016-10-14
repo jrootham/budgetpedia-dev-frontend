@@ -97,10 +97,12 @@ let branchDefaults = {
     defaultVersions: {
         'FUNCTIONAL': 'SUMMARY',
         'STRUCTURAL': 'SUMMARY',
+        'ACTUALEXPENSES': 'ACTUALEXPENSES',
     },
     defaultAspects: {
         'SUMMARY': 'Expenses',
         'PBFT': 'Expenses',
+        'ACTUALEXPENSES': 'Expenses',
     },
     inflationAdjusted: true,
     nodeList: [],

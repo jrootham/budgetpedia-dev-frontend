@@ -234,10 +234,12 @@ let branchDefaults:BranchSettings = {
     defaultVersions:{ // viewpoint versions
         'FUNCTIONAL':'SUMMARY',
         'STRUCTURAL':'SUMMARY',
+        'ACTUALEXPENSES':'ACTUALEXPENSES',
     },
     defaultAspects:{ // version aspects
         'SUMMARY':'Expenses',
         'PBFT':'Expenses',
+        'ACTUALEXPENSES':'Expenses',
     },
     // chartType: "ColumnChart",
     inflationAdjusted: true,
