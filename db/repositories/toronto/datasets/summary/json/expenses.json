@@ -91,7 +91,7 @@
             "CITYMANAGER": {
                 "years": {
                     "2003": 54080,
-                    "2004": 55338,
+                    "2004": 55583,
                     "2005": 57389,
                     "2006": 52133,
                     "2007": 52564,
@@ -736,11 +736,6 @@
                     "2016": 8644
                 }
             },
-            "ECONRECOV": {
-                "years": {
-                    "2004": 246
-                }
-            },
             "HERITAGE": {
                 "years": {
                     "2004": 570,
@@ -994,7 +989,7 @@
             "CITYMANAGER": {
                 "years": {
                     "2003": 43047,
-                    "2004": 45078,
+                    "2004": 45278,
                     "2005": 47685,
                     "2006": 44327,
                     "2007": 45672,
@@ -1639,11 +1634,6 @@
                     "2016": 8644
                 }
             },
-            "ECONRECOV": {
-                "years": {
-                    "2004": 200
-                }
-            },
             "HERITAGE": {
                 "years": {
                     "2004": 464,
@@ -1861,7 +1851,7 @@
         "2003.1.SHELTERADMIN.": "Original amount was 638854.6, plus:\nAllocation from: SUPPORTSERV,WES - Support Services,33813.9 (budget jumped after WES support services discontinued)",
         "2003.1.TTCCONV.": "Original amount was null, plus:\nAllocation from: TOTALTTC,Toronto Transit Commission (Incl. Wheel Trans),957167.2 (later split out wheel trans)",
         "2004.1.CFO.": "Original amount was null, plus:\nAllocation from: FINANCE,Finance,70199.2, (org chart)",
-        "2004.1.CITYMANAGER.": "Original amount was 5804.5, plus:\nAllocation from: CORPCOMMS,Corporate Communications,6507.6, (Guess)\nAllocation from: EMERGPLAN,Emergency Management Plan,1770.3, (org chart)\nAllocation from: HUMANRESOURCES,Human Resources,27416.9, (org chart)\nAllocation from: INNOVATION,Service Improvement & Innovation,3579.1, (guess)",
+        "2004.1.CITYMANAGER.": "Original amount was 5804.5, plus:\nAllocation from: CORPCOMMS,Corporate Communications,6507.6, (Guess)\nAllocation from: ECONRECOV,Economic Recovery,200,\nAllocation from: EMERGPLAN,Emergency Management Plan,1770.3, (org chart)\nAllocation from: HUMANRESOURCES,Human Resources,27416.9, (org chart)\nAllocation from: INNOVATION,Service Improvement & Innovation,3579.1, (guess)",
         "2004.1.CORPEXPENDITURES.": "Original amount was 219613.3, plus:\nAllocation from: COMMPARTNER,Community Partnership & Investment Program,42105.2, (should be divided between expenditures and revenues)",
         "2004.1.ECONDEV.": "Original amount was null, plus:\nAllocation from: BIZSUPPORT,Customer & Business Support,19779.4, (Guess)\nAllocation from: CULTURE,Culture,12890.6, (Guess, by name ‘Culture’)\nAllocation from: TOURISM,Tourism,11241.2, (guess)",
         "2004.1.ENGINEERING.": "Original amount was null, plus:\nAllocation from: TECH,WES - Technical Services,51514.9, (toronto.ca)",
@@ -1936,7 +1926,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 7050552.7,
-            "INTAKE_DATETIME": "2016-10-13-16-35-28",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1959,7 +1949,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 7253501.5,
-            "INTAKE_DATETIME": "2016-10-13-16-35-28",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1982,14 +1972,14 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 7720505.3,
-            "INTAKE_DATETIME": "2016-10-13-16-35-28",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
         },
         "2006": {
             "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
-            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDWWpVRmRPN25IQWs",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuaVZNRkVPZ0h0M1E",
             "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
             "SOURCE_DOCUMENT_TITLE": "2006 OPERATING BUDGET SUMMARY BY PROGRAM",
             "SOURCE_DOCUMENT_TABLE_LOCATION": "",
@@ -2005,14 +1995,14 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 8269483.9,
-            "INTAKE_DATETIME": "2016-10-13-16-47-04",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
         },
         "2007": {
             "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
-            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuaVZNRkVPZ0h0M1E",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDdEpsZkJVUjVqUlU",
             "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OubHdZVEpCZmdfNlE",
             "SOURCE_DOCUMENT_TITLE": "2007 COUNCIL APPROVED OPERATING BUDGET SUMMARY BY CITY PROGRAM",
             "SOURCE_DOCUMENT_TABLE_LOCATION": "",
@@ -2022,13 +2012,13 @@
             "YEAR": 2007,
             "VERSION": "Summary",
             "ASPECT": "Expenses",
-            "NOTES_CONTENT": "used content from 2007 version as it seemed more accurate: here is the 2006 version https://drive.google.com/open?id=0BzB3t6aSc9bDWWpVRmRPN25IQW",
+            "NOTES_CONTENT": "",
             "NOTES_SEVERITY": "",
             "UNITS_NAME": "Dollar",
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 8503385.7,
-            "INTAKE_DATETIME": "2016-10-13-16-35-28",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -2051,7 +2041,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 8911075.4,
-            "INTAKE_DATETIME": "2016-10-13-16-35-28",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -2074,7 +2064,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 9785758.3,
-            "INTAKE_DATETIME": "2016-10-13-16-35-28",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -2097,7 +2087,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 10369964,
-            "INTAKE_DATETIME": "2016-10-13-16-35-28",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -2120,7 +2110,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 10617315.2,
-            "INTAKE_DATETIME": "2016-10-13-16-35-29",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -2143,7 +2133,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 10701479,
-            "INTAKE_DATETIME": "2016-10-13-16-35-29",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -2166,7 +2156,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 10794422.5,
-            "INTAKE_DATETIME": "2016-10-13-16-35-29",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -2189,7 +2179,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 11176155,
-            "INTAKE_DATETIME": "2016-10-13-16-35-29",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -2212,7 +2202,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 11470464,
-            "INTAKE_DATETIME": "2016-10-13-16-35-29",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -2235,7 +2225,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 11751895,
-            "INTAKE_DATETIME": "2016-10-13-16-35-29",
+            "INTAKE_DATETIME": "2016-10-14-14-16-42",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
