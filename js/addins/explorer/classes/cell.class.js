@@ -554,9 +554,11 @@ class BudgetCell {
                 let amount;
                 if (componentItem[yearsselector]) {
                     amount = componentItem[yearsselector][year];
+                    if (amount === undefined)
+                        amount = 0;
                 }
                 else {
-                    amount = null;
+                    amount = 0;
                 }
                 let row = [sortedItem.Name, amount];
                 switch (chartType) {

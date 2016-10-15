@@ -784,6 +784,19 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     </div>:null
 
+    // TODO externalize this; make it metadata-driven
+    const versionchoices = () => {
+        switch (branchDeclaration.viewpoint) {
+            case "FUNCTIONAL":
+            case "STRUCTURAL":
+                return [<MenuItem key = {1} value={'SUMMARY'} primaryText="Summary"/>,
+                <MenuItem key = {2} value={'PBFT'} primaryText="Detail (PBFT)"/>,
+                <MenuItem key = {3} disabled value={'VARIANCE'} primaryText="Variance Reports"/>]
+            case 'ACTUALEXPENSES':
+                return [<MenuItem key = {4} value={'ACTUALEXPENSES'} primaryText="Expense Summary"/>]
+        }
+    }
+
     // TODO: add contitional logic depending on viewpoint selection
     let versionselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>Version: </span>
@@ -796,12 +809,23 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             }
             >
 
-            <MenuItem value={'SUMMARY'} primaryText="Summary"/>
-            <MenuItem value={'PBFT'} primaryText="Detail (PBFT)"/>
-            <MenuItem disabled value={'VARIANCE'} primaryText="Variance Reports"/>
+            { versionchoices() }
 
         </DropDownMenu>
     </div>:null
+
+    // TODO externalize this; make it metadata-driven
+    const aspectchoices = () => {
+        switch (branchDeclaration.viewpoint) {
+            case "FUNCTIONAL":
+            case "STRUCTURAL":
+                return [<MenuItem key = {1} value={'Expenses'} primaryText="Expenses"/>,
+                <MenuItem key = {2} value={'Revenues'} primaryText="Revenues"/>,
+                <MenuItem key = {3} value={'Staffing'} primaryText="Staffing" />]
+            case 'ACTUALEXPENSES':
+                return [<MenuItem key = {4} value={'Expenses'} primaryText="Expenses"/>]
+        }
+    }
 
     // TODO: add conditional logic depending on version selection
     let aspectselection = (branchDeclaration.showOptions)
@@ -819,9 +843,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 }
                 >
 
-                <MenuItem value={'Expenses'} primaryText="Expenses"/>
-                <MenuItem value={'Revenues'} primaryText="Revenues"/>
-                <MenuItem value={'Staffing'} primaryText="Staffing" />
+                { aspectchoices() }
 
             </DropDownMenu>
 

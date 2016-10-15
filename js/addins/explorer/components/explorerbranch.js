@@ -403,14 +403,36 @@ class ExplorerBranch extends Component {
             branch.switchViewpoint(value);
         }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional (budget)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural (budget)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'ACTUALREVENUE', primaryText: "Revenues (actual)"}), React.createElement(MenuItem_1.default, {value: 'ACTUALEXPENSES', primaryText: "Expenses (actual)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'EXPENDITURES', primaryText: "Expenditures (actual)"}))) : null;
         let governmentselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Government: "), React.createElement(DropDownMenu_1.default, {value: "Toronto", disabled: true}, React.createElement(MenuItem_1.default, {value: 'Toronto', primaryText: "Toronto, Ontario"}))) : null;
+        const versionchoices = () => {
+            switch (branchDeclaration.viewpoint) {
+                case "FUNCTIONAL":
+                case "STRUCTURAL":
+                    return [React.createElement(MenuItem_1.default, {key: 1, value: 'SUMMARY', primaryText: "Summary"}),
+                        React.createElement(MenuItem_1.default, {key: 2, value: 'PBFT', primaryText: "Detail (PBFT)"}),
+                        React.createElement(MenuItem_1.default, {key: 3, disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"})];
+                case 'ACTUALEXPENSES':
+                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'ACTUALEXPENSES', primaryText: "Expense Summary"})];
+            }
+        };
         let versionselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.version, onChange: (e, index, value) => {
             branch.switchVersion(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'SUMMARY', primaryText: "Summary"}), React.createElement(MenuItem_1.default, {value: 'PBFT', primaryText: "Detail (PBFT)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"}))) : null;
+        }}, versionchoices())) : null;
+        const aspectchoices = () => {
+            switch (branchDeclaration.viewpoint) {
+                case "FUNCTIONAL":
+                case "STRUCTURAL":
+                    return [React.createElement(MenuItem_1.default, {key: 1, value: 'Expenses', primaryText: "Expenses"}),
+                        React.createElement(MenuItem_1.default, {key: 2, value: 'Revenues', primaryText: "Revenues"}),
+                        React.createElement(MenuItem_1.default, {key: 3, value: 'Staffing', primaryText: "Staffing"})];
+                case 'ACTUALEXPENSES':
+                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'Expenses', primaryText: "Expenses"})];
+            }
+        };
         let aspectselection = (branchDeclaration.showOptions)
             ?
                 React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Aspect: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.aspect, onChange: (e, index, value) => {
                     branch.switchAspect(value);
-                }}, React.createElement(MenuItem_1.default, {value: 'Expenses', primaryText: "Expenses"}), React.createElement(MenuItem_1.default, {value: 'Revenues', primaryText: "Revenues"}), React.createElement(MenuItem_1.default, {value: 'Staffing', primaryText: "Staffing"})))
+                }}, aspectchoices()))
             :
                 null;
         let byunitselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Prorated: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.prorata, onChange: (e, index, value) => {

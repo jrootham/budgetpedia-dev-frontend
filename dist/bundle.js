@@ -2272,8 +2272,9 @@ var BudgetCell = function () {
                 var amount = void 0;
                 if (componentItem[yearsselector]) {
                     amount = componentItem[yearsselector][year];
+                    if (amount === undefined) amount = 0;
                 } else {
-                    amount = null;
+                    amount = 0;
                 }
                 var row = [sortedItem.Name, amount];
                 switch (chartType) {
@@ -3553,12 +3554,30 @@ var ExplorerBranch = function (_Component) {
                     branch.switchViewpoint(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (budget)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (budget)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'ACTUALREVENUE', primaryText: "Revenues (actual)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALEXPENSES', primaryText: "Expenses (actual)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'EXPENDITURES', primaryText: "Expenditures (actual)" }))) : null;
             var governmentselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Government: "), React.createElement(DropDownMenu_1.default, { value: "Toronto", disabled: true }, React.createElement(MenuItem_1.default, { value: 'Toronto', primaryText: "Toronto, Ontario" }))) : null;
+            var versionchoices = function versionchoices() {
+                switch (branchDeclaration.viewpoint) {
+                    case "FUNCTIONAL":
+                    case "STRUCTURAL":
+                        return [React.createElement(MenuItem_1.default, { key: 1, value: 'SUMMARY', primaryText: "Summary" }), React.createElement(MenuItem_1.default, { key: 2, value: 'PBFT', primaryText: "Detail (PBFT)" }), React.createElement(MenuItem_1.default, { key: 3, disabled: true, value: 'VARIANCE', primaryText: "Variance Reports" })];
+                    case 'ACTUALEXPENSES':
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALEXPENSES', primaryText: "Expense Summary" })];
+                }
+            };
             var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Version: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.version, onChange: function onChange(e, index, value) {
                     branch.switchVersion(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'SUMMARY', primaryText: "Summary" }), React.createElement(MenuItem_1.default, { value: 'PBFT', primaryText: "Detail (PBFT)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'VARIANCE', primaryText: "Variance Reports" }))) : null;
+                } }, versionchoices())) : null;
+            var aspectchoices = function aspectchoices() {
+                switch (branchDeclaration.viewpoint) {
+                    case "FUNCTIONAL":
+                    case "STRUCTURAL":
+                        return [React.createElement(MenuItem_1.default, { key: 1, value: 'Expenses', primaryText: "Expenses" }), React.createElement(MenuItem_1.default, { key: 2, value: 'Revenues', primaryText: "Revenues" }), React.createElement(MenuItem_1.default, { key: 3, value: 'Staffing', primaryText: "Staffing" })];
+                    case 'ACTUALEXPENSES':
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'Expenses', primaryText: "Expenses" })];
+                }
+            };
             var aspectselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Aspect: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.aspect, onChange: function onChange(e, index, value) {
                     branch.switchAspect(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'Expenses', primaryText: "Expenses" }), React.createElement(MenuItem_1.default, { value: 'Revenues', primaryText: "Revenues" }), React.createElement(MenuItem_1.default, { value: 'Staffing', primaryText: "Staffing" }))) : null;
+                } }, aspectchoices())) : null;
             var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Prorated: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.prorata, onChange: function onChange(e, index, value) {
                     _this3.switchComparator(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'OFF', primaryText: "Off" }), React.createElement(MenuItem_1.default, { value: 'PERPERSON', primaryText: "Per person" }), React.createElement(MenuItem_1.default, { value: 'PER100000PERSONS', primaryText: "Per 100,000 people" }), React.createElement(MenuItem_1.default, { value: 'PERHOUSEHOLD', primaryText: "Per household" }), React.createElement(MenuItem_1.default, { value: 'PER50000HOUSEHOLDS', primaryText: "Per 50,000 households" }))) : null;

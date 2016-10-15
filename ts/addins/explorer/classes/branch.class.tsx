@@ -431,6 +431,8 @@ class BudgetBranch {
 
         this._doCalcYears(viewpointdata, proratayearlist, threshhold, precision)
 
+        // console.log('_doProRataCalc', viewpointdata, proratayearlist, threshhold, precision)
+
     }
 
     private _doCalcYears = (node, proratayearlist, threshhold, precision) => {
