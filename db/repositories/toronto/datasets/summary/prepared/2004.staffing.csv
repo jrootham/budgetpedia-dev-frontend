@@ -22,26 +22,16 @@ COLUMNS_CATEGORIES,"Program:CODE,Program:NAME",,,,
 COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION",,,,
 _META_END_,,,,,
 AUDITGEN,Auditor General's Office,26,,,
-CFO,Office of the Chief Financial Officer,819,,,"Original amount was null, plus:
-Allocation from: FINANCE,Finance,815, (org chart)
-Allocation from: ATMOSPHERE,Toronto Atmospheric Fund,4, (Org chart environment)"
+CFO,Office of the Chief Financial Officer,819,,,
 CHILDSERV,Children's Services,919.8,,,
-CITYMANAGER,City Manager's Office,535,,,"Original amount was null, plus:
-Allocation from: INNOVATION,Service Improvement & Innovation,86, (guess)
-Allocation from: CORPCOMMS,Corporate Communications,84, (Guess)
-Allocation from: HUMANRESOURCES,Human Resources,305, (org chart)"
+CITYMANAGER,City Manager's Office,535,,,
 CLERK,City Clerk's Office,382,,,
 COMMCENTRES,Association of Community Centres,85.6,,,
-CORPEXPENDITURES,Non-Program Expenditures,1,,,"Original amount was null, plus:
-Allocation from: NONPROGRAM,Non Program,1, (consolidate)"
+CORPEXPENDITURES,Non-Program Expenditures,1,,,
 COUNCIL,City Council,177,,,
 COURTSERV,Court Services,221,,,
-ECONDEV,Economic Development & Culture,526.6999999999999,,,"Original amount was null, plus:
-Allocation from: CULTURE,Culture,154.7, (Guess, by name ‘Culture’)
-Allocation from: BIZSUPPORT,Customer & Business Support,247.7, (Guess)
-Allocation from: TOURISM,Tourism,40.3, (guess)"
-ENGINEERING,Engineering & Construction Services,563,,,"Original amount was null, plus:
-Allocation from: TECH,WES - Technical Services,563, (toronto.ca)"
+ECONDEV,Economic Development & Culture,526.6999999999999,,,
+ENGINEERING,Engineering & Construction Services,563,,,
 EXHIBPLACE,Exhibition Place,426,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",749,,,
 FIRE,Fire Services,3142,,,
@@ -50,11 +40,9 @@ HERITAGE,Heritage Toronto,5,,,
 IT,Information & Technology,331,,,
 LEGAL,Legal Services,238,,,
 LIBRARY,Toronto Public Library,1817.7,,,
-LONGTERMHOME,Long Term Care Homes & Services,2065.8,,,"Original amount was null, plus:
-Allocation from: AGEDHOMES,Homes for the Aged,2065.8, (logical)"
+LONGTERMHOME,Long Term Care Homes & Services,2065.8,,,
 MAYOR,Mayor's Office,18,,,
-PARAMEDIC,Toronto Paramedic Services,1152,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,1152, (logical)"
+PARAMEDIC,Toronto Paramedic Services,1152,,,
 PARKING,Toronto Parking Authority,313.4,,,
 PARKINGTAGS,Parking Tag Enforcement & Operations,395,,,
 PARKS,"Parks, Forestry & Recreation",3682.2,,,
@@ -62,8 +50,7 @@ PLANNING,City Planning,1098.5,,,
 POLICE,Toronto Police Service,7296,,,
 PUBLICHEALTH,Toronto Public Health,1819,,,
 REGIONCONSERV,Toronto & Region Conservation Authority,356.6,,,
-SHELTERADMIN,"Shelter, Support & Housing Administration",1137.5,,,"Original amount was 659.6, plus:
-Allocation from: SUPPORTSERV,WES - Support Services,477.9, (budget jumped after WES support services discontinued)"
+SHELTERADMIN,"Shelter, Support & Housing Administration",1137.5,,,
 SOCIALDEV,"Social Development, Finance & Administration",159.9,,,
 SOCIALSERV,Toronto Employment & Social Services,1953,,,
 SOLIDWASTE,Solid Waste Management Services,1301.9,,,

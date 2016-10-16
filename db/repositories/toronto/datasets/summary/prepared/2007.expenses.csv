@@ -27,20 +27,16 @@ AUDITGEN,Auditor General's Office,3988.4,,,
 BUILDINGS,Toronto Building,39699.5,,,
 CFO,Office of the Chief Financial Officer,13546.4,,,
 CHILDSERV,Children's Services,336738.5,,,
-CITYMANAGER,City Manager's Office,45672.4,,,"Original amount was 39591.2, plus:
-Allocation from: CREATIVEINFO,Pubic Information & Creative Services,4765.3 (Guess)
-Allocation from: WATERFRONT,Waterfront Secretariat,1315.9 (org chart)"
+CITYMANAGER,City Manager's Office,45672.4,,,
 CLERK,City Clerk's Office,44301.1,,,
 COMMCENTRES,Association of Community Centres,6394,,,
-CORPEXPENDITURES,Non-Program Expenditures,383584,,,"Original amount was 341622.8, plus:
-Allocation from: COMMPARTNER,Community Partnership and Investment Program,41961.2 (should be divided between expenditures and revenues)"
+CORPEXPENDITURES,Non-Program Expenditures,383584,,,
 CORPFINANCING,Capital & Corporate Financing,547052.5,,,
 CORPREVENUES,Non-Program Revenues,513.3,,,
 COUNCIL,City Council,19649.2,,,
 COURTSERV,Court Services,35097.3,,,
 ECONDEV,Economic Development & Culture,33676.8,,,
-ENGINEERING,Engineering & Construction Services,62496.1,,,"Original amount was null, plus:
-Allocation from: TECH,Technical Services,62496.1 (toronto.ca)"
+ENGINEERING,Engineering & Construction Services,62496.1,,,
 EXHIBPLACE,Exhibition Place,53381.7,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",122421,,,
 FIRE,Fire Services,344750.7,,,
@@ -51,11 +47,9 @@ LEGAL,Legal Services,31808.3,,,
 LIBRARY,Toronto Public Library,164347.9,,,
 LICENCING,Municipal Licensing & Standards,33638.2,,,
 LOBBYREG,Office of the Lobbyist Registrar,241,,,
-LONGTERMHOME,Long Term Care Homes & Services,192320.2,,,"Original amount was null, plus:
-Allocation from: AGEDHOMES,Homes for the Aged,192320.2 (logical)"
+LONGTERMHOME,Long Term Care Homes & Services,192320.2,,,
 MAYOR,Mayor's Office,2447.1,,,
-PARAMEDIC,Toronto Paramedic Services,149196.5,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,149196.5 (logical)"
+PARAMEDIC,Toronto Paramedic Services,149196.5,,,
 PARKING,Toronto Parking Authority,57804.7,,,
 PARKS,"Parks, Forestry & Recreation",303909.2,,,
 PLANNING,City Planning,33885.4,,,
@@ -69,8 +63,7 @@ SOCIALDEV,"Social Development, Finance & Administration",28365,,,
 SOCIALSERV,Toronto Employment & Social Services,1071336.1,,,
 SOLIDWASTE,Solid Waste Management Services,237796.3,,,
 THEATRES,Theatres,30604.4,,,
-TRANSPORTATION,Transportation Services,275247.89999999997,,,"Original amount was null, plus:
-Allocation from: BEAUTY,Clean and Beautiful City Secretariat,1066.3 (Guess)"
+TRANSPORTATION,Transportation Services,275247.89999999997,,,
 TREASURER,Office of the Treasurer,66694.3,,,
 TTCCONV,Toronto Transit Commission - Conventional,1082893.5,,,
 TTCWHEEL,Toronto Transit Commission - Wheel Trans,68771.3,,,

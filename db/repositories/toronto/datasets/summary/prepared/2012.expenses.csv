@@ -25,21 +25,18 @@ AFFHOUSING,Affordable Housing Office,2580.7,,,
 ARENAS,Arena Boards of Management,6730.7,,,
 AUDITGEN,Auditor General's Office,4271.3,,,
 BUILDINGS,Toronto Building,46719.5,,,
-CFO,Office of the Chief Financial Officer,22697.5,,,"Original amount was 16765, plus:
-Allocation from: ENV,Toronto Environment Office,5932.5 (org chart)"
+CFO,Office of the Chief Financial Officer,22697.5,,,
 CHILDSERV,Children's Services,392491.5,,,
 CITYMANAGER,City Manager's Office,43507.2,,,
 CLERK,City Clerk's Office,47576.8,,,
 COMMCENTRES,Association of Community Centres,6951.3,,,
-CORPEXPENDITURES,Non-Program Expenditures,771375.5,,,"Original amount was 724178.4, plus:
-Allocation from: COMMPARTNER,Community Partnership and Investment Program,47197.1 (should be divided between expenditures and revenues)"
+CORPEXPENDITURES,Non-Program Expenditures,771375.5,,,
 CORPFINANCING,Capital & Corporate Financing,639178.3,,,
 CORPREVENUES,Non-Program Revenues,9102.1,,,
 COUNCIL,City Council,19145.3,,,
 COURTSERV,Court Services,52262.3,,,
 ECONDEV,Economic Development & Culture,33436,,,
-ENGINEERING,Engineering & Construction Services,70010.9,,,"Original amount was null, plus:
-Allocation from: TECH,Technical Services,70010.9 (toronto.ca)"
+ENGINEERING,Engineering & Construction Services,70010.9,,,
 EXHIBPLACE,Exhibition Place,64765,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",175749.8,,,
 FIRE,Fire Services,369756.2,,,
@@ -54,8 +51,7 @@ LOBBYREG,Office of the Lobbyist Registrar,1061.4,,,
 LONGTERMHOME,Long Term Care Homes & Services,224765.3,,,
 MAYOR,Mayor's Office,1908.3,,,
 OMBUDSMAN,Office of the Ombudsman,1421.1,,,
-PARAMEDIC,Toronto Paramedic Services,169535.5,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,169535.5 (logical)"
+PARAMEDIC,Toronto Paramedic Services,169535.5,,,
 PARKING,Toronto Parking Authority,72326.9,,,
 PARKS,"Parks, Forestry & Recreation",382635.6,,,
 PLANNING,City Planning,38418.2,,,

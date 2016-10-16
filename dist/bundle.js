@@ -3440,10 +3440,10 @@ var ExplorerBranch = function (_Component) {
                 var treeNodeData = budgetNode.treeNodeData;
                 if (treeNodeData.Name) {
                     portalName = budgetNode.treeNodeData.Name;
+                    portalName += ' ' + portalSeriesName;
                 } else {
-                    portalName = 'City Budget';
+                    portalName = datasetConfig.DatasetTitle;
                 }
-                portalName += ' ' + portalSeriesName;
                 var portalConfig = {
                     portalName: portalName
                 };
@@ -3451,7 +3451,6 @@ var ExplorerBranch = function (_Component) {
                 var viewpointdata = branch.state.viewpointData;
                 var _viewpointdata$Meta = viewpointdata.Meta;
                 var viewpointNamingConfigs = _viewpointdata$Meta.NamingConfigurations;
-                var datasetConfig = _viewpointdata$Meta.datasetConfig;
                 var isInflationAdjusted = _viewpointdata$Meta.isInflationAdjusted;
 
                 var viewpointConfigPack = {
@@ -8013,7 +8012,7 @@ var explorer = {
         node: {
             cellIndex: 0,
             cellList: null,
-            yearSelections: { leftYear: 2003, rightYear: 2016 }
+            yearSelections: { leftYear: 1998, rightYear: 2016 }
         },
         cell: {
             chartConfigs: {

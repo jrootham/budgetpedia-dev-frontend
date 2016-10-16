@@ -314,17 +314,17 @@ class ExplorerBranch extends Component {
                 let treeNodeData = budgetNode.treeNodeData;
                 if (treeNodeData.Name) {
                     portalName = budgetNode.treeNodeData.Name;
+                    portalName += ' ' + portalSeriesName;
                 }
                 else {
-                    portalName = 'City Budget';
+                    portalName = datasetConfig.DatasetTitle;
                 }
-                portalName += ' ' + portalSeriesName;
                 let portalConfig = {
                     portalName: portalName,
                 };
                 budgetNode.portalConfig = portalConfig;
                 let viewpointdata = branch.state.viewpointData;
-                let { NamingConfigurations: viewpointNamingConfigs, datasetConfig: datasetConfig, isInflationAdjusted, } = viewpointdata.Meta;
+                let { NamingConfigurations: viewpointNamingConfigs, isInflationAdjusted, } = viewpointdata.Meta;
                 let viewpointConfigPack = {
                     viewpointNamingConfigs: viewpointNamingConfigs,
                     datasetConfig: datasetConfig,

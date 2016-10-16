@@ -25,21 +25,17 @@ AFFHOUSING,Affordable Housing Office,3185.3,,,
 ARENAS,Arena Boards of Management,6255.8,,,
 AUDITGEN,Auditor General's Office,4338.4,,,
 BUILDINGS,Toronto Building,45068.1,,,
-CFO,Office of the Chief Financial Officer,23272.5,,,"Original amount was 14384.8, plus:
-Allocation from: ENV,Toronto Environment Office,8887.7 (org chart)"
+CFO,Office of the Chief Financial Officer,23272.5,,,
 CHILDSERV,Children's Services,369453.9,,,
-CITYMANAGER,City Manager's Office,43395.6,,,"Original amount was 41798.7, plus:
-Allocation from: WATERFRONT,Waterfront Secretariat,1596.9 (org chart)"
+CITYMANAGER,City Manager's Office,43395.6,,,
 CLERK,City Clerk's Office,53057.9,,,
 COMMCENTRES,Association of Community Centres,7171.7,,,
-CORPEXPENDITURES,Non-Program Expenditures,657396.6,,,"Original amount was 611705.6, plus:
-Allocation from: COMMPARTNER,Community Partnership and Investment Program,45691 (should be divided between expenditures and revenues)"
+CORPEXPENDITURES,Non-Program Expenditures,657396.6,,,
 CORPFINANCING,Capital & Corporate Financing,628229.7,,,
 COUNCIL,City Council,19445.7,,,
 COURTSERV,Court Services,47566.8,,,
 ECONDEV,Economic Development & Culture,36410.8,,,
-ENGINEERING,Engineering & Construction Services,64130.5,,,"Original amount was null, plus:
-Allocation from: TECH,Technical Services,64130.5 (toronto.ca)"
+ENGINEERING,Engineering & Construction Services,64130.5,,,
 EXHIBPLACE,Exhibition Place,59687.4,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",163961.2,,,
 FIRE,Fire Services,365028.1,,,
@@ -54,8 +50,7 @@ LOBBYREG,Office of the Lobbyist Registrar,942,,,
 LONGTERMHOME,Long Term Care Homes & Services,213460.4,,,
 MAYOR,Mayor's Office,2603.3,,,
 OMBUDSMAN,Office of the Ombudsman,1218.3,,,
-PARAMEDIC,Toronto Paramedic Services,159546.4,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,159546.4 (logical)"
+PARAMEDIC,Toronto Paramedic Services,159546.4,,,
 PARKING,Toronto Parking Authority,65661.3,,,
 PARKS,"Parks, Forestry & Recreation",337664.9,,,
 PLANNING,City Planning,37114.3,,,

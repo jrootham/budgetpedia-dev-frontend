@@ -127,37 +127,47 @@ const imposeFileContinuity = (components,categorymeta, attributemeta, continuity
                 throw Error('continuitylookup not found for ' + categoryname + ' in ' + filename)
             }
             let data = components.data
+            let newdata = []
             for (let line of data) {
                 let code = line[columnindex]
                 if (!code) { // no category at this level
                     continue
                 }
                 // look for continuity item
-                let continuityline = findContinuityLine(code, continuitylookup, filename)
-                if (code != continuityline[0]) {
-                    let amount = line[amountindex]
-                    if (typeof amount == 'string') amount = amount.trim() // sometimes a blank char shows up for some reason
-                    if (amount && !Number.isNaN(amount)) { // ignore if no amount is involved
-                        allocationfound = true
-                        let allocations = line[allocationsindex]
-                        if (!allocations) { // only make note of allocation once, the first time
-                            let addition = 'Allocation from: ' + line.join(',')
-                            if (continuityline[continuityindex]) {
-                                addition += ' (' + continuityline[continuityindex] + ')'
-                            }
-                            allocations = addition
-                            line[allocationsindex] = allocations
-                        }    
+                let continuitylines = findContinuityLines(code, continuitylookup, filename)
+                for (let continuityline of continuitylines) {
+                    let newline = [...line]
+                    if (code != continuityline[0]) {
+                        let amount = line[amountindex]
+                        if (typeof amount == 'string') amount = amount.trim() // sometimes a blank char shows up for some reason
+                        if (amount && !Number.isNaN(amount)) { // ignore if no amount is involved
+                            allocationfound = true
+                            let allocations = line[allocationsindex]
+                            if (!allocations) { // only make note of allocation once, the first time
+                                let addition = 'Allocation from: ' + line.join(',')
+                                if (continuityline[continuityindex]) {
+                                    addition += ' (' + continuityline[continuityindex] + ')'
+                                }
+                                allocations = addition
+                                line[allocationsindex] = allocations
+                            }    
+                        }
+                        newline[columnindex] = continuityline[0]                    
                     }
-                    line[columnindex] = continuityline[0]                    
+                    newline[columnindex + 1] = continuityline[1] // update name in any case
+                    newdata.push(newline)
                 }
-                line[columnindex + 1] = continuityline[1] // update name in any case
             }
+            components.data = newdata
         }
     }
 
     return allocationfound
 
+}
+
+const findContinuityLines = (code, continuitylookup, filename) => {
+    return findContinuityLine(code, continuitylookup, filename)
 }
 
 const findContinuityLine = (code, continuitylookup, filename) => {
@@ -197,7 +207,7 @@ const findContinuityLine = (code, continuitylookup, filename) => {
         returnline[6] = notes
     }
 
-    return returnline
+    return [returnline]
 }
 
 // reduce the spreadsheet into an object hierarchy (because it's a highly deterministic normalization)

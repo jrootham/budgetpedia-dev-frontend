@@ -27,19 +27,16 @@ AUDITGEN,Auditor General's Office,3881.2,,,
 BUILDINGS,Toronto Building,38853.6,,,
 CFO,Office of the Chief Financial Officer,13215.5,,,
 CHILDSERV,Children's Services,379350.7,,,
-CITYMANAGER,City Manager's Office,44326.9,,,"Original amount was null, plus:
-Allocation from: PUBLICINFORMATION,Pubic Information & Creative Services,4808.4"
+CITYMANAGER,City Manager's Office,44326.9,,,
 CLERK,City Clerk's Office,48655.3,,,
 COMMCENTRES,Association of Community Centres,6304.7,,,
-CORPEXPENDITURES,Non-Program Expenditures,392844.80000000005,,,"Original amount was null, plus:
-Allocation from: COMMPARTNER,Community Partnership and Investment Program,40443.9 (should be divided between expenditures and revenues)"
+CORPEXPENDITURES,Non-Program Expenditures,392844.80000000005,,,
 CORPFINANCING,Capital & Corporate Financing,477442.3,,,
 CORPREVENUES,Non-Program Revenues,,,,
 COUNCIL,City Council,18761.5,,,
 COURTSERV,Court Services,32459.3,,,
 ECONDEV,Economic Development & Culture,36509.4,,,
-ENGINEERING,Engineering & Construction Services,58462.5,,,"Original amount was null, plus:
-Allocation from: TECH,Technical Services,58462.5 (toronto.ca)"
+ENGINEERING,Engineering & Construction Services,58462.5,,,
 EXHIBPLACE,Exhibition Place,47230.6,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",117761.2,,,
 FIRE,Fire Services,335386.4,,,
@@ -50,11 +47,9 @@ LEGAL,Legal Services,29420.5,,,
 LIBRARY,Toronto Public Library,158572.6,,,
 LICENCING,Municipal Licensing & Standards,33610.3,,,
 LOBBYREG,Office of the Lobbyist Registrar,,,,
-LONGTERMHOME,Long Term Care Homes & Services,186005.2,,,"Original amount was null, plus:
-Allocation from: AGEDHOMES,Homes for the Aged,186005.2 (logical)"
+LONGTERMHOME,Long Term Care Homes & Services,186005.2,,,
 MAYOR,Mayor's Office,1886.2,,,
-PARAMEDIC,Toronto Paramedic Services,142528.2,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,142528.2 (logical)"
+PARAMEDIC,Toronto Paramedic Services,142528.2,,,
 PARKING,Toronto Parking Authority,54801.3,,,
 PARKS,"Parks, Forestry & Recreation",289166.3,,,
 PLANNING,City Planning,32237.2,,,

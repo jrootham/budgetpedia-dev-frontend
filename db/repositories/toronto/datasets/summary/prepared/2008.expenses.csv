@@ -27,20 +27,16 @@ AUDITGEN,Auditor General's Office,4147.4,,,
 BUILDINGS,Toronto Building,41912.6,,,
 CFO,Office of the Chief Financial Officer,14244.4,,,
 CHILDSERV,Children's Services,360773.4,,,
-CITYMANAGER,City Manager's Office,45835.899999999994,,,"Original amount was 39651.5, plus:
-Allocation from: CREATIVEINFO,Pubic Information & Creative Services,4771.7, (Guess)
-Allocation from: WATERFRONT,Waterfront Secretariat,1412.7, (org chart)"
+CITYMANAGER,City Manager's Office,45835.899999999994,,,
 CLERK,City Clerk's Office,45625.1,,,
 COMMCENTRES,Association of Community Centres,6930.7,,,
-CORPEXPENDITURES,Non-Program Expenditures,437766.3,,,"Original amount was 394241.1, plus:
-Allocation from: COMMPARTNER,Community Partnership and Investment Program,43525.2, (should be divided between expenditures and revenues)"
+CORPEXPENDITURES,Non-Program Expenditures,437766.3,,,
 CORPFINANCING,Capital & Corporate Financing,597904.7,,,
 CORPREVENUES,Non-Program Revenues,3164.6,,,
 COUNCIL,City Council,19743.7,,,
 COURTSERV,Court Services,39334.6,,,
 ECONDEV,Economic Development & Culture,32950.9,,,
-ENGINEERING,Engineering & Construction Services,60351.4,,,"Original amount was null, plus:
-Allocation from: TECH,Technical Services,60351.4, (toronto.ca)"
+ENGINEERING,Engineering & Construction Services,60351.4,,,
 EXHIBPLACE,Exhibition Place,53997.2,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",131125.7,,,
 FIRE,Fire Services,356046.6,,,
@@ -52,12 +48,10 @@ LEGAL,Legal Services,36680.5,,,
 LIBRARY,Toronto Public Library,169988.1,,,
 LICENCING,Municipal Licensing & Standards,34149.7,,,
 LOBBYREG,Office of the Lobbyist Registrar,711.3,,,
-LONGTERMHOME,Long Term Care Homes & Services,206613.3,,,"Original amount was null, plus:
-Allocation from: AGEDHOMES,Homes for the Aged,206613.3, (logical)"
+LONGTERMHOME,Long Term Care Homes & Services,206613.3,,,
 MAYOR,Mayor's Office,2601.1,,,
 OMBUDSMAN,Office of the Ombudsman,404.3,,,
-PARAMEDIC,Toronto Paramedic Services,151968.6,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,151968.6, (logical)"
+PARAMEDIC,Toronto Paramedic Services,151968.6,,,
 PARKING,Toronto Parking Authority,63498.2,https://drive.google.com/open?id=0BzB3t6aSc9bDQ3BJNTZBeHhyZEU,,
 PARKS,"Parks, Forestry & Recreation",322077.9,,,
 PLANNING,City Planning,35316.6,,,

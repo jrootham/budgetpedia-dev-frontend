@@ -34,8 +34,7 @@ CORPEXPENDITURES,Non-Program Expenditures,643542,,,
 CORPFINANCING,Capital & Corporate Financing,732229,,,
 CORPREVENUES,Non-Program Revenues,49440,,,
 COUNCIL,City Council,20815,,,
-COURTSERV,Court Services,50577,,,"Original amount was 49527, plus:
-Allocation from: LOCALAPPEAL,Local Appeal Body,1050 (admin doc)"
+COURTSERV,Court Services,50577,,,
 ECONDEV,Economic Development & Culture,79113,,,
 ENGINEERING,Engineering & Construction Services,66898,,,
 EXHIBPLACE,Exhibition Place,38131,,,

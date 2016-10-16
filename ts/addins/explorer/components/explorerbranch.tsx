@@ -691,11 +691,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let treeNodeData = budgetNode.treeNodeData
             if (treeNodeData.Name) { // .Name) // MetaDataFromParentSortedList) {
                 portalName = budgetNode.treeNodeData.Name
+                portalName += ' ' + portalSeriesName
             } else {
-                portalName = 'City Budget'
+                portalName = datasetConfig.DatasetTitle //'City Budget'
             }
-
-            portalName += ' ' + portalSeriesName
 
             let portalConfig: PortalConfig = {
                 portalName,
@@ -706,7 +705,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let viewpointdata:ViewpointData = branch.state.viewpointData
             let {
                 NamingConfigurations: viewpointNamingConfigs,
-                datasetConfig: datasetConfig,
+                // datasetConfig, declared previously
                 isInflationAdjusted,
             } = viewpointdata.Meta
 

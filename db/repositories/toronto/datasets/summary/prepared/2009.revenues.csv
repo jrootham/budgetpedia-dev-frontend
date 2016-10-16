@@ -26,18 +26,15 @@ ARENAS,Arena Boards of Management,6262.6,,,
 BUILDINGS,Toronto Building,56488.2,,,
 CFO,Office of the Chief Financial Officer,4395.8,,,
 CHILDSERV,Children's Services,301841.1,,,
-CITYMANAGER,City Manager's Office,3896.4,,,"Original amount was 3311.4, plus:
-Allocation from: WATERFRONT,Waterfront Secretariat,585 (org chart)"
+CITYMANAGER,City Manager's Office,3896.4,,,
 CLERK,City Clerk's Office,18041.3,,,
 COMMCENTRES,Association of Community Centres,178.3,,,
 CORPEXPENDITURES,Non-Program Expenditures,106427.5,,,
 CORPFINANCING,Capital & Corporate Financing,263311.7,,,
-CORPREVENUES,Non-Program Revenues,856313.8,,,"Original amount was 855954.8, plus:
-Allocation from: COMMPARTNERREV,Community Partnership and Investment Program revenue,359"
+CORPREVENUES,Non-Program Revenues,856313.8,,,
 COURTSERV,Court Services,59748.8,,,
 ECONDEV,Economic Development & Culture,9097.4,,,
-ENGINEERING,Engineering & Construction Services,49148.5,,,"Original amount was null, plus:
-Allocation from: TECH,Technical Services,49148.5 (toronto.ca)"
+ENGINEERING,Engineering & Construction Services,49148.5,,,
 EXHIBPLACE,Exhibition Place,59737.9,,,
 FACILITIES,"Facilities, Real Estate, Environment & Energy",109860.7,,,
 FIRE,Fire Services,7852.9,,,
@@ -48,8 +45,7 @@ LEGAL,Legal Services,19113.3,,,
 LIBRARY,Toronto Public Library,13761.9,,,
 LICENCING,Municipal Licensing & Standards,29445.9,,,
 LONGTERMHOME,Long Term Care Homes & Services,171149.1,,,
-PARAMEDIC,Toronto Paramedic Services,95833.7,,,"Original amount was null, plus:
-Allocation from: EMERG,Emergency Medical Services,95833.7 (logical)"
+PARAMEDIC,Toronto Paramedic Services,95833.7,,,
 PARKING,Toronto Parking Authority,120207.5,,,
 PARKS,"Parks, Forestry & Recreation",91318,,,
 PLANNING,City Planning,23501.5,,,
