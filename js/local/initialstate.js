@@ -39,6 +39,18 @@ let hometiles = [
         route: 'timeline',
     },
     {
+        id: 14,
+        content: {
+            title: `Activist Pathways`,
+            subtitle: `How to make change`,
+            image: '../../public/icons/ic_directions_walk_48px.svg',
+            category: 'tools',
+            disabled: true,
+        },
+        index: 2,
+        route: 'pathways',
+    },
+    {
         id: 6,
         content: {
             title: `About Budgetpedia`,
@@ -47,7 +59,7 @@ let hometiles = [
             category: 'information',
             disabled: true,
         },
-        index: 2,
+        index: 3,
         route: 'about',
     },
     {
@@ -59,7 +71,7 @@ let hometiles = [
             category: 'information',
             disabled: true,
         },
-        index: 3,
+        index: 4,
         route: 'announcements',
     },
     {
@@ -71,7 +83,7 @@ let hometiles = [
             category: 'get involved',
             disabled: true,
         },
-        index: 4,
+        index: 5,
         route: 'demos',
     },
     {
@@ -83,7 +95,7 @@ let hometiles = [
             category: 'get involved',
             disabled: true,
         },
-        index: 5,
+        index: 6,
         route: 'joinus',
     },
 ];

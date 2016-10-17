@@ -60,9 +60,12 @@ class HomeTilesClass extends React.Component<any, any> {
             Welcome to Budgetpedia. We're all about government budgets.
             </CardTitle>
             <CardText>
+            <div style = {{float:"left"}}>
+            <img style={{width:"100px"}} src= "./public/icons/budgetpedia-logo.png" />
+            </div>
             <p style={{margin:0, padding:0}}>Explore the Toronto budget with our Budget Explorer. 
             See a sample of Toronto's annual budget decision process at our Budget Roadmap.</p>
-            <p>We welcome you to join us (and contribute!) at any of our digital places:</p>
+            <p>We welcome you to join us (and contribute!) on any of our digital platforms:</p>
             <ul>
             <li>For discussions: our Facebook group (facebook.com/groups/budgetpedia)</li>
             <li>For lists of resources: our Facebook page (facebook.com/bugetpedia)</li>

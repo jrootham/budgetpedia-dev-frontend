@@ -4424,7 +4424,7 @@ var ExplorerNode = function (_Component) {
                     fontWeight: "bold",
                     display: "inline-block",
                     backgroundColor: "#00bcd4"
-                } }, this.props.budgetNode.nodeIndex + 1 + ". " + portalSettings.portalName), tabobject);
+                } }, "#" + (this.props.budgetNode.nodeIndex + 1) + ". " + portalSettings.portalName), tabobject);
         }
     }]);
 
@@ -6974,7 +6974,7 @@ var HomeTilesClass = function (_React$Component) {
             var colors = _props.colors;
             var system = _props.system;
 
-            return React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, null, "Welcome to Budgetpedia. We're all about government budgets."), React.createElement(Card_1.CardText, null, React.createElement("p", { style: { margin: 0, padding: 0 } }, "Explore the Toronto budget with our Budget Explorer." + ' ' + "See a sample of Toronto's annual budget decision process at our Budget Roadmap."), React.createElement("p", null, "We welcome you to join us (and contribute!) at any of our digital places:"), React.createElement("ul", null, React.createElement("li", null, "For discussions: our Facebook group (facebook.com/groups/budgetpedia)"), React.createElement("li", null, "For lists of resources: our Facebook page (facebook.com/bugetpedia)"), React.createElement("li", null, "For notifications: Twitter (twitter.com/budgetpedia)"), React.createElement("li", null, "For in-depth articles: Medium (medium.com/budgetpedia)"), React.createElement("li", null, "For technical discussions: our Google forum (groups.google.com/d/forum/budgetpedia)")), React.createElement("p", null, "Below are tiles leading to more information about the Budgetpedia Project."))), React.createElement(apptiles_1.AppTiles, { style: {
+            return React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, null, "Welcome to Budgetpedia. We're all about government budgets."), React.createElement(Card_1.CardText, null, React.createElement("div", { style: { float: "left" } }, React.createElement("img", { style: { width: "100px" }, src: "./public/icons/budgetpedia-logo.png" })), React.createElement("p", { style: { margin: 0, padding: 0 } }, "Explore the Toronto budget with our Budget Explorer." + ' ' + "See a sample of Toronto's annual budget decision process at our Budget Roadmap."), React.createElement("p", null, "We welcome you to join us (and contribute!) on any of our digital platforms:"), React.createElement("ul", null, React.createElement("li", null, "For discussions: our Facebook group (facebook.com/groups/budgetpedia)"), React.createElement("li", null, "For lists of resources: our Facebook page (facebook.com/bugetpedia)"), React.createElement("li", null, "For notifications: Twitter (twitter.com/budgetpedia)"), React.createElement("li", null, "For in-depth articles: Medium (medium.com/budgetpedia)"), React.createElement("li", null, "For technical discussions: our Google forum (groups.google.com/d/forum/budgetpedia)")), React.createElement("p", null, "Below are tiles leading to more information about the Budgetpedia Project."))), React.createElement(apptiles_1.AppTiles, { style: {
                     margin: "16px",
                     fontFamily: theme.fontFamily
                 }, tiles: hometiles, tilecols: homecols, padding: homepadding, tilecolors: {
@@ -7940,6 +7940,17 @@ var hometiles = [{
     index: 1,
     route: 'timeline'
 }, {
+    id: 14,
+    content: {
+        title: 'Activist Pathways',
+        subtitle: 'How to make change',
+        image: '../../public/icons/ic_directions_walk_48px.svg',
+        category: 'tools',
+        disabled: true
+    },
+    index: 2,
+    route: 'pathways'
+}, {
     id: 6,
     content: {
         title: 'About Budgetpedia',
@@ -7948,7 +7959,7 @@ var hometiles = [{
         category: 'information',
         disabled: true
     },
-    index: 2,
+    index: 3,
     route: 'about'
 }, {
     id: 16,
@@ -7959,7 +7970,7 @@ var hometiles = [{
         category: 'information',
         disabled: true
     },
-    index: 3,
+    index: 4,
     route: 'announcements'
 }, {
     id: 13,
@@ -7970,7 +7981,7 @@ var hometiles = [{
         category: 'get involved',
         disabled: true
     },
-    index: 4,
+    index: 5,
     route: 'demos'
 }, {
     id: 10,
@@ -7981,7 +7992,7 @@ var hometiles = [{
         category: 'get involved',
         disabled: true
     },
-    index: 5,
+    index: 6,
     route: 'joinus'
 }];
 var workingmessagestate = false;

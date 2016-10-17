@@ -165,11 +165,6 @@
                                     "Index": 2,
                                     "NamingConfigRef": "PROGRAM",
                                     "Baseline": true
-                                },
-                                "PARKINGTAGS": {
-                                    "Index": 3,
-                                    "NamingConfigRef": "PROGRAM",
-                                    "Baseline": true
                                 }
                             }
                         }
@@ -389,13 +384,18 @@
                             "NamingConfigRef": "PROGRAM",
                             "Baseline": true
                         },
-                        "CORPREVENUES": {
+                        "PARKINGTAGS": {
                             "Index": 2,
                             "NamingConfigRef": "PROGRAM",
                             "Baseline": true
                         },
-                        "PROPERTYTAX": {
+                        "CORPREVENUES": {
                             "Index": 3,
+                            "NamingConfigRef": "PROGRAM",
+                            "Baseline": true
+                        },
+                        "PROPERTYTAX": {
+                            "Index": 4,
                             "NamingConfigRef": "PROGRAM",
                             "Baseline": true
                         }

@@ -166,16 +166,26 @@ const imposeFileContinuity = (components,categorymeta, attributemeta, continuity
 
 }
 
+// return continuity leaf lines with ratios in cell 4
 const findContinuityLines = (code, continuitylookup, filename) => {
-    return findContinuityLine(code, continuitylookup, filename)
+
+    let leaf_lines = []
+    let allocationlist = prepareAllocationList(code)
+    for (let item of allocationlist) {
+        // leaves are returned, at least one line per item
+        returnlines = findContinuityLine(item[0], item[1], continuitylookup, filename)
+        leaf_lines = [...all_lines,...returnlines]
+    }
+    return leaf_lines
 }
 
-const findContinuityLine = (code, continuitylookup, filename) => {
+const findContinuityLine = (code, ratio, continuitylookup, filename) => {
 
     let newcode = code
     let count = 0
     let continuityline = null
     let notes = null
+    let returnlines = []
 
     do {
         count++
@@ -207,7 +217,24 @@ const findContinuityLine = (code, continuitylookup, filename) => {
         returnline[6] = notes
     }
 
-    return [returnline]
+    returnlines = [...returnlines,returnline]
+
+    return returnlines
+}
+const prepareAllocationList = (allocationspecs) => {
+    let allocationlist = allocationspecs.split(',')
+    for (let itemindex in allocationlist) {
+        let item = trim(allocationlist[itemindex])
+        item = item.split('=')
+        item[0] = trim(item[0])
+        if (item[1]) {
+            item[1] = Number(item[1])
+        } else {
+            item[1] = 1
+        }
+        allocationlist[itemindex] = item
+    }
+    return allocationlist
 }
 
 // reduce the spreadsheet into an object hierarchy (because it's a highly deterministic normalization)
