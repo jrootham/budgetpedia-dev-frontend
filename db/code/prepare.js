@@ -3,6 +3,7 @@
 
 /*
     TODO: create notes lists per code like allocations list per code
+        - trace not accumulation given new proportional allocation
 */
 
 'use strict'
