@@ -79,20 +79,38 @@ class HomeTilesClass extends React.Component<any, any> {
             See a sample of Toronto's annual budget decision process at our Budget Roadmap <em>[link pending]</em>.</p>
             <p>We welcome you to join us (and contribute!) on any of our digital platforms:</p>
             <ul>
-            <li>For discussions: our Facebook group (<a 
+            <li><a 
+                    href="http://facebook.com/groups/budgetpedia" 
+                    target="_blank">
+                    <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> For 
+                    discussions: our Facebook group (<a 
                     href="http://facebook.com/groups/budgetpedia" 
                     target="_blank">
                     facebook.com/groups/budgetpedia</a>)</li>
-            <li>For lists of resources: our Facebook page (<a 
+            <li><a 
+                href="http://facebook.com/budgetpedia" 
+                target="_blank">
+                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> For 
+                lists of resources: our Facebook page (<a 
                 href="http://facebook.com/budgetpedia" 
                 target="_blank">facebook.com/budgetpedia</a>)</li>
-            <li>For notifications: Twitter (<a 
+            <li><a 
+                href="http://twitter.com/budgetpedia" 
+                target="_blank">
+                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/twitter.png"/></a> For 
+                notifications: Twitter (<a 
                 href="http://twitter.com/budgetpedia" 
                 target="_blank">twitter.com/budgetpedia</a>)</li>
-            <li>For in-depth articles: Medium (
+            <li><a href="http://medium.com/budgetpedia"
+                target = "_blank">
+                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/medium.png"/></a> For 
+                in-depth articles: Medium (
                 <a href="http://medium.com/budgetpedia"
                 target = "_blank">medium.com/budgetpedia</a>)</li>
-            <li>For technical discussions: our Google forum (
+            <li><a href="http://groups.google.com/d/forum/budgetpedia"
+                target="_blank">
+                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/g-logo.png"/></a> For 
+                technical discussions: our Google forum (
                 <a href="http://groups.google.com/d/forum/budgetpedia"
                 target="_blank">groups.google.com/d/forum/budgetpedia</a>)</li>
             </ul>
