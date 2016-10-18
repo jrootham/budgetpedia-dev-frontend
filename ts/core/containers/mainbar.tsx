@@ -260,7 +260,7 @@ let MainBar = class extends React.Component<any, any> {
                 <MenuTile 
                     transitionTo = { transitionToFunc }
                     key = {'home'}
-                    primaryText = "Budget Commons"
+                    primaryText = "Budgetpedia Home"
                     image = '../../public/icons/ic_home_24px.svg'
                     route = '/'
                 />

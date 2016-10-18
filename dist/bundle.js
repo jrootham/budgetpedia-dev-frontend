@@ -6946,26 +6946,34 @@ var HomeTilesClass = function (_React$Component) {
             args[_key] = arguments[_key];
         }
 
-        var _this = _possibleConstructorReturn(this, (_ref2 = HomeTilesClass.__proto__ || Object.getPrototypeOf(HomeTilesClass)).call.apply(_ref2, [this].concat(args)));
+        var _this2 = _possibleConstructorReturn(this, (_ref2 = HomeTilesClass.__proto__ || Object.getPrototypeOf(HomeTilesClass)).call.apply(_ref2, [this].concat(args)));
 
-        _this.handleHomeResize = function () {
-            _this.props.setHomeTileCols();
+        _this2.handleHomeResize = function () {
+            _this2.props.setHomeTileCols();
         };
-        _this.componentWillMount = function () {
-            _this.props.setHomeTileCols();
+        _this2.componentWillMount = function () {
+            _this2.props.setHomeTileCols();
         };
-        _this.componentDidMount = function () {
-            window.addEventListener('resize', _this.handleHomeResize);
+        _this2.componentDidMount = function () {
+            window.addEventListener('resize', _this2.handleHomeResize);
         };
-        _this.componentWillUnmount = function () {
-            window.removeEventListener('resize', _this.handleHomeResize);
+        _this2.componentWillUnmount = function () {
+            window.removeEventListener('resize', _this2.handleHomeResize);
         };
-        return _this;
+        _this2.transitionTo = function (e, target) {
+            e.stopPropagation();
+            e.preventDefault();
+            var _this = _this2;
+            _this.props.transitionTo(target);
+        };
+        return _this2;
     }
 
     _createClass(HomeTilesClass, [{
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             var _props = this.props;
             var hometiles = _props.hometiles;
             var homecols = _props.homecols;
@@ -6974,7 +6982,9 @@ var HomeTilesClass = function (_React$Component) {
             var colors = _props.colors;
             var system = _props.system;
 
-            return React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, null, "Welcome to Budgetpedia. We're all about government budgets."), React.createElement(Card_1.CardText, null, React.createElement("div", { style: { float: "left" } }, React.createElement("img", { style: { width: "100px" }, src: "./public/icons/budgetpedia-logo.png" })), React.createElement("p", { style: { margin: 0, padding: 0 } }, "Explore the Toronto budget with our Budget Explorer." + ' ' + "See a sample of Toronto's annual budget decision process at our Budget Roadmap."), React.createElement("p", null, "We welcome you to join us (and contribute!) on any of our digital platforms:"), React.createElement("ul", null, React.createElement("li", null, "For discussions: our Facebook group (facebook.com/groups/budgetpedia)"), React.createElement("li", null, "For lists of resources: our Facebook page (facebook.com/bugetpedia)"), React.createElement("li", null, "For notifications: Twitter (twitter.com/budgetpedia)"), React.createElement("li", null, "For in-depth articles: Medium (medium.com/budgetpedia)"), React.createElement("li", null, "For technical discussions: our Google forum (groups.google.com/d/forum/budgetpedia)")), React.createElement("p", null, "Below are tiles leading to more information about the Budgetpedia Project."))), React.createElement(apptiles_1.AppTiles, { style: {
+            return React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, null, "Welcome to Budgetpedia. We're all about government budgets."), React.createElement(Card_1.CardText, null, React.createElement("div", { style: { float: "left" } }, React.createElement("img", { style: { width: "100px" }, src: "./public/icons/budgetpedia-logo.png" })), React.createElement("p", { style: { margin: 0, padding: 0 } }, "Explore the Toronto budget with our ", React.createElement("a", { href: "javascript:void(0);", onTouchTap: function onTouchTap(e) {
+                    _this3.transitionTo(e, 'explorer');
+                } }, "Budget Explorer"), "." + ' ' + "See a sample of Toronto's annual budget decision process at our Budget Roadmap ", React.createElement("em", null, "[link pending]"), "."), React.createElement("p", null, "We welcome you to join us (and contribute!) on any of our digital platforms:"), React.createElement("ul", null, React.createElement("li", null, "For discussions: our Facebook group (", React.createElement("a", { href: "http://facebook.com/groups/budgetpedia", target: "_blank" }, "facebook.com/groups/budgetpedia"), ")"), React.createElement("li", null, "For lists of resources: our Facebook page (", React.createElement("a", { href: "http://facebook.com/budgetpedia", target: "_blank" }, "facebook.com/budgetpedia"), ")"), React.createElement("li", null, "For notifications: Twitter (", React.createElement("a", { href: "http://twitter.com/budgetpedia", target: "_blank" }, "twitter.com/budgetpedia"), ")"), React.createElement("li", null, "For in-depth articles: Medium (", React.createElement("a", { href: "http://medium.com/budgetpedia", target: "_blank" }, "medium.com/budgetpedia"), ")"), React.createElement("li", null, "For technical discussions: our Google forum (", React.createElement("a", { href: "http://groups.google.com/d/forum/budgetpedia", target: "_blank" }, "groups.google.com/d/forum/budgetpedia"), ")")), React.createElement("p", null, "Below are tiles leading to more information about the Budgetpedia Project."))), React.createElement(apptiles_1.AppTiles, { style: {
                     margin: "16px",
                     fontFamily: theme.fontFamily
                 }, tiles: hometiles, tilecols: homecols, padding: homepadding, tilecolors: {
@@ -7172,7 +7182,7 @@ var MainBar = function (_React$Component) {
             });
             var menusidebar = React.createElement(Drawer_1.default, { width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: function onRequestChange(open) {
                     return appbar.setState({ menusidebaropen: open });
-                }, open: this.state.menusidebaropen }, React.createElement(menutile_1.MenuTile, { transitionTo: transitionToFunc, key: 'home', primaryText: "Budget Commons", image: '../../public/icons/ic_home_24px.svg', route: '/' }), React.createElement(Divider_1.default, null), menuitems);
+                }, open: this.state.menusidebaropen }, React.createElement(menutile_1.MenuTile, { transitionTo: transitionToFunc, key: 'home', primaryText: "Budgetpedia Home", image: '../../public/icons/ic_home_24px.svg', route: '/' }), React.createElement(Divider_1.default, null), menuitems);
             var menuicon = React.createElement(IconButton_1.default, { onTouchTap: function onTouchTap() {
                     appbar.handleMenuSidebarToggle();
                 } }, React.createElement(FontIcon_1.default, { className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" } }, "menu"));

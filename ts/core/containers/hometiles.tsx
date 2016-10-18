@@ -21,6 +21,7 @@ const mapStateToProps = ( { homegrid, resources } ) =>
     system:resources.system,
 })
 
+
 class HomeTilesClass extends React.Component<any, any> {
 
     handleHomeResize = () => { 
@@ -48,6 +49,15 @@ class HomeTilesClass extends React.Component<any, any> {
 
     }
 
+    transitionTo = (e, target) => {
+
+        e.stopPropagation()
+        e.preventDefault()
+        var _this = this;
+        _this.props.transitionTo(target)
+
+    }
+
     render() {
 
         let { hometiles, homecols, homepadding, theme, colors, system } = this.props
@@ -63,15 +73,28 @@ class HomeTilesClass extends React.Component<any, any> {
             <div style = {{float:"left"}}>
             <img style={{width:"100px"}} src= "./public/icons/budgetpedia-logo.png" />
             </div>
-            <p style={{margin:0, padding:0}}>Explore the Toronto budget with our Budget Explorer. 
-            See a sample of Toronto's annual budget decision process at our Budget Roadmap.</p>
+            <p style={{margin:0, padding:0}}>Explore the Toronto budget with our <a 
+                href="javascript:void(0);"
+                onTouchTap={ e => {this.transitionTo(e,'explorer')}}>Budget Explorer</a>. 
+            See a sample of Toronto's annual budget decision process at our Budget Roadmap <em>[link pending]</em>.</p>
             <p>We welcome you to join us (and contribute!) on any of our digital platforms:</p>
             <ul>
-            <li>For discussions: our Facebook group (facebook.com/groups/budgetpedia)</li>
-            <li>For lists of resources: our Facebook page (facebook.com/bugetpedia)</li>
-            <li>For notifications: Twitter (twitter.com/budgetpedia)</li>
-            <li>For in-depth articles: Medium (medium.com/budgetpedia)</li>
-            <li>For technical discussions: our Google forum (groups.google.com/d/forum/budgetpedia)</li>
+            <li>For discussions: our Facebook group (<a 
+                    href="http://facebook.com/groups/budgetpedia" 
+                    target="_blank">
+                    facebook.com/groups/budgetpedia</a>)</li>
+            <li>For lists of resources: our Facebook page (<a 
+                href="http://facebook.com/budgetpedia" 
+                target="_blank">facebook.com/budgetpedia</a>)</li>
+            <li>For notifications: Twitter (<a 
+                href="http://twitter.com/budgetpedia" 
+                target="_blank">twitter.com/budgetpedia</a>)</li>
+            <li>For in-depth articles: Medium (
+                <a href="http://medium.com/budgetpedia"
+                target = "_blank">medium.com/budgetpedia</a>)</li>
+            <li>For technical discussions: our Google forum (
+                <a href="http://groups.google.com/d/forum/budgetpedia"
+                target="_blank">groups.google.com/d/forum/budgetpedia</a>)</li>
             </ul>
             <p>Below are tiles leading to more information about the Budgetpedia Project.</p>
             </CardText>
