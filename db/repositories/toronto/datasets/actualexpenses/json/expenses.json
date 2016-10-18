@@ -37,6 +37,9 @@
                 "years": {
                     "1998": 826641,
                     "1999": 671064,
+                    "2000": 835284,
+                    "2001": 816192,
+                    "2002": 870724,
                     "2003": 935529,
                     "2004": 929513,
                     "2005": 940783,
@@ -56,9 +59,9 @@
                 "years": {
                     "1998": 835948,
                     "1999": 1918664,
-                    "2000": 971270,
-                    "2001": 1090932,
-                    "2002": 964796,
+                    "2000": 708827,
+                    "2001": 842409,
+                    "2002": 660085,
                     "2003": 674771,
                     "2004": 704278,
                     "2005": 737449,
@@ -78,6 +81,9 @@
                 "years": {
                     "1998": 208314,
                     "1999": 238498,
+                    "2000": 313804,
+                    "2001": 344122,
+                    "2002": 345608,
                     "2003": 374985,
                     "2004": 381227,
                     "2005": 390164,
@@ -97,9 +103,9 @@
                 "years": {
                     "1998": 623824,
                     "1999": 524982,
-                    "2000": 107310,
-                    "2001": 112040,
-                    "2002": 124542,
+                    "2000": 59021,
+                    "2001": 61622,
+                    "2002": 67760,
                     "2003": 67937,
                     "2004": 70699,
                     "2005": 90769,
@@ -119,6 +125,9 @@
                 "years": {
                     "1998": 1171981,
                     "1999": 1264106,
+                    "2000": 1340895,
+                    "2001": 1422719,
+                    "2002": 1451149,
                     "2003": 1532577,
                     "2004": 1580636,
                     "2005": 1509045,
@@ -138,9 +147,9 @@
                 "years": {
                     "1998": 1973952,
                     "1999": 1887793,
-                    "2000": 2440691,
-                    "2001": 2157916,
-                    "2002": 2305044,
+                    "2000": 1952553,
+                    "2001": 1726333,
+                    "2002": 1853088,
                     "2003": 1860215,
                     "2004": 1866680,
                     "2005": 1937935,
@@ -160,6 +169,9 @@
                 "years": {
                     "1998": 2482234,
                     "1999": 1663911,
+                    "2000": 1993185,
+                    "2001": 2116335,
+                    "2002": 2118415,
                     "2003": 2174484,
                     "2004": 2318873,
                     "2005": 2363202,
@@ -179,9 +191,9 @@
                 "years": {
                     "1998": 759761,
                     "1999": 582425,
-                    "2000": 368423,
-                    "2001": 377248,
-                    "2002": 370142,
+                    "2000": 753532,
+                    "2001": 707894,
+                    "2002": 735415,
                     "2003": 740152,
                     "2004": 776998,
                     "2005": 832570,
@@ -197,22 +209,11 @@
                     "2015": 1001815
                 }
             },
-            "WORKS": {
-                "years": {
-                    "2000": 1815834,
-                    "2001": 1774332,
-                    "2002": 1874989
-                }
-            },
-            "AGENCIES": {
-                "years": {
-                    "2000": 3138038,
-                    "2001": 3441218,
-                    "2002": 3442827
-                }
-            },
             "HOUSING": {
                 "years": {
+                    "2000": 884467,
+                    "2001": 916062,
+                    "2002": 980096,
                     "2003": 916414,
                     "2004": 886882,
                     "2005": 959797,
@@ -237,6 +238,9 @@
                 "years": {
                     "1998": 587061,
                     "1999": 486490,
+                    "2000": 621121,
+                    "2001": 624048,
+                    "2002": 678874,
                     "2003": 744670,
                     "2004": 757179,
                     "2005": 781706,
@@ -256,9 +260,9 @@
                 "years": {
                     "1998": 593671,
                     "1999": 1390941,
-                    "2000": 722241,
-                    "2001": 834110,
-                    "2002": 752219,
+                    "2000": 527087,
+                    "2001": 644093,
+                    "2002": 514646,
                     "2003": 537110,
                     "2004": 573703,
                     "2005": 612754,
@@ -278,6 +282,9 @@
                 "years": {
                     "1998": 147940,
                     "1999": 172900,
+                    "2000": 233346,
+                    "2001": 263110,
+                    "2002": 269459,
                     "2003": 298484,
                     "2004": 310547,
                     "2005": 324191,
@@ -297,9 +304,9 @@
                 "years": {
                     "1998": 443025,
                     "1999": 380587,
-                    "2000": 79796,
-                    "2001": 85664,
-                    "2002": 97101,
+                    "2000": 43888,
+                    "2001": 47115,
+                    "2002": 52830,
                     "2003": 54077,
                     "2004": 57591,
                     "2005": 75421,
@@ -319,6 +326,9 @@
                 "years": {
                     "1998": 832314,
                     "1999": 916417,
+                    "2000": 997096,
+                    "2001": 1087789,
+                    "2002": 1131412,
                     "2003": 1219913,
                     "2004": 1287582,
                     "2005": 1253880,
@@ -338,9 +348,9 @@
                 "years": {
                     "1998": 1401855,
                     "1999": 1368561,
-                    "2000": 1814910,
-                    "2001": 1649909,
-                    "2002": 1797165,
+                    "2000": 1451928,
+                    "2001": 1319927,
+                    "2002": 1444790,
                     "2003": 1480709,
                     "2004": 1520593,
                     "2005": 1610249,
@@ -360,6 +370,9 @@
                 "years": {
                     "1998": 1762825,
                     "1999": 1206257,
+                    "2000": 1482142,
+                    "2001": 1618117,
+                    "2002": 1651657,
                     "2003": 1730864,
                     "2004": 1888948,
                     "2005": 1963608,
@@ -379,9 +392,9 @@
                 "years": {
                     "1998": 539565,
                     "1999": 422231,
-                    "2000": 273961,
-                    "2001": 288438,
-                    "2002": 288587,
+                    "2000": 560330,
+                    "2001": 541245,
+                    "2002": 573378,
                     "2003": 589152,
                     "2004": 632941,
                     "2005": 691791,
@@ -397,22 +410,11 @@
                     "2015": 989349
                 }
             },
-            "WORKS": {
-                "years": {
-                    "2000": 1350263,
-                    "2001": 1356627,
-                    "2002": 1461866
-                }
-            },
-            "AGENCIES": {
-                "years": {
-                    "2000": 2333461,
-                    "2001": 2631102,
-                    "2002": 2684256
-                }
-            },
             "HOUSING": {
                 "years": {
+                    "2000": 657694,
+                    "2001": 700407,
+                    "2002": 764148,
                     "2003": 729455,
                     "2004": 722452,
                     "2005": 797505,
@@ -435,21 +437,18 @@
     },
     "Notes": {},
     "Allocations": {
-        "1998.1.TRANSPORTATION.": "Original amount was null, plus:\nAllocation from: TRANSPORTSERVICES,Transportation services,1762825",
-        "1999.1.GOVERNMENT.": "Original amount was 472234, plus:\nAllocation from: ELECTRICITY,Electricity (Note 2),918707",
-        "1999.1.TRANSPORTATION.": "Original amount was null, plus:\nAllocation from: TRANSPORTSERVICES,Transportation services,1206257",
-        "2000.1.CULTURE.": "Original amount was null, plus:\nAllocation from: ECONDEV,Economic Development, Culture and Tourism,273961",
-        "2000.1.GOVERNMENT.": "Original amount was null, plus:\nAllocation from: CORPORATE,Corporate Services,250197\nAllocation from: FINANCE,Finance,35732\nAllocation from: OTHER,Other programs,26807\nAllocation from: NONPROGRAM,Non-program and corporate accounts,409505",
+        "2000.1.ENVIRONMENT.": "Original amount was null, plus:\nAllocation from: WORKS,Works and Emergency Services,1350263",
+        "2000.1.HEALTH.": "Original amount was null, plus:\nAllocation from: AGENCIES,Agencies, Boards and Commissions,2333461",
+        "2000.1.HOUSING.": "Original amount was null, plus:\nAllocation from: ECONDEV,Economic Development, Culture and Tourism,273961\nAllocation from: CORPORATE,Corporate Services,250197\nAllocation from: AGENCIES,Agencies, Boards and Commissions,2333461",
         "2000.1.PLANNING.": "Original amount was null, plus:\nAllocation from: URBANDEV,Urban Development Services,79796",
-        "2000.1.SOCIALSERVICES.": "Original amount was null, plus:\nAllocation from: COMMUNITY,Community and Neighbourhood Services,1814910",
-        "2001.1.CULTURE.": "Original amount was null, plus:\nAllocation from: ECONDEV,Economic Development, Culture and Tourism,288438",
-        "2001.1.GOVERNMENT.": "Original amount was null, plus:\nAllocation from: CORPORATE,Corporate Services,243612\nAllocation from: FINANCE,Finance,45949\nAllocation from: OTHER,Other (Note 12),544549",
+        "2000.1.TRANSPORTATION.": "Original amount was null, plus:\nAllocation from: WORKS,Works and Emergency Services,1350263\nAllocation from: AGENCIES,Agencies, Boards and Commissions,2333461",
+        "2000.1.CULTURE.": "Original amount was null, plus:\nAllocation from: COMMUNITY,Community and Neighbourhood Services,1814910\nAllocation from: AGENCIES,Agencies, Boards and Commissions,2333461",
+        "2001.1.ENVIRONMENT.": "Original amount was null, plus:\nAllocation from: WORKS,Works and Emergency Services,1356627",
+        "2001.1.HEALTH.": "Original amount was null, plus:\nAllocation from: AGENCIES,Agencies, Boards and Commissions (Note 12),2631102",
+        "2001.1.HOUSING.": "Original amount was null, plus:\nAllocation from: ECONDEV,Economic Development, Culture and Tourism,288438\nAllocation from: CORPORATE,Corporate Services,243612\nAllocation from: AGENCIES,Agencies, Boards and Commissions (Note 12),2631102",
         "2001.1.PLANNING.": "Original amount was null, plus:\nAllocation from: URBANDEV,Urban Development Services,85664",
-        "2001.1.SOCIALSERVICES.": "Original amount was null, plus:\nAllocation from: COMMUNITY,Community and Neighbourhood Services,1649909",
-        "2002.1.CULTURE.": "Original amount was null, plus:\nAllocation from: ECONDEV,Economic Development, Culture and Tourism,288587",
-        "2002.1.GOVERNMENT.": "Original amount was null, plus:\nAllocation from: CORPORATE,Corporate Services,304521\nAllocation from: FINANCE,Finance,42316\nAllocation from: OTHER,Other (Note 11 (a)),405382",
-        "2002.1.PLANNING.": "Original amount was null, plus:\nAllocation from: URBANDEV,Urban Development Services,97101",
-        "2002.1.SOCIALSERVICES.": "Original amount was null, plus:\nAllocation from: COMMUNITY,Community and Neighbourhood Services,1797165"
+        "2001.1.TRANSPORTATION.": "Original amount was null, plus:\nAllocation from: WORKS,Works and Emergency Services,1356627\nAllocation from: AGENCIES,Agencies, Boards and Commissions (Note 12),2631102",
+        "2001.1.CULTURE.": "Original amount was null, plus:\nAllocation from: COMMUNITY,Community and Neighbourhood Services,1649909\nAllocation from: AGENCIES,Agencies, Boards and Commissions (Note 12),2631102"
     },
     "Headers": {
         "1998": {
@@ -562,7 +561,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 7081194,
-            "INTAKE_DATETIME": "2016-10-01-21-58-58",
+            "INTAKE_DATETIME": "2016-10-15-18-06-08",
             "INTAKE_OPERATOR_ID": "Chris",
             "COLUMNS_CATEGORIES": "Expense:CODE,Expense:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"

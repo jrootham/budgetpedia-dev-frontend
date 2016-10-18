@@ -16,16 +16,17 @@ UNITS_NAME,Dollar,
 UNITS_CODE,DOLLAR,
 UNITS_MULTIPLIER,1000,
 TOTAL_AMOUNT,7081194,
-INTAKE_DATETIME,2016-10-01-21-58-58,
+INTAKE_DATETIME,2016-10-15-18-06-08,
 INTAKE_OPERATOR_ID,Chris,
 COLUMNS_CATEGORIES,"Expense:CODE,Expense:NAME",
 COLUMNS_ATTRIBUTES,"Amount:VALUE, Notes:DESCRIPTION, Severity: CODE",
 _META_END_,,
-COMMUNITY,Community and Neighbourhood Services,1797165
-WORKS,Works and Emergency Services,1461866
-ECONDEV,"Economic Development, Culture and Tourism",288587
-URBANDEV,Urban Development Services,97101
-CORPORATE,Corporate Services,304521
-FINANCE,Finance,42316
-OTHER,Other (Note 11 (a)),405382
-AGENCIES,"Agencies, Boards and Commissions (Note 11 (b))",2684256
+GOVERNMENT,General government,514646
+PROTECTION,Protection to persons and property,1131412
+TRANSPORTATION,Transportation,1651657
+ENVIRONMENT,Environmental services,678874
+HEALTH,Health services,269459
+SOCIALSERVICES,Social and family services,1444790
+HOUSING,Social housing,764148
+CULTURE,Recreation and cultural services,573378
+PLANNING,Planning and development,52830

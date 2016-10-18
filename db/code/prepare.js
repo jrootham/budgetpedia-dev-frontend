@@ -133,14 +133,18 @@ const imposeFileContinuity = (components,categorymeta, attributemeta, continuity
                 if (!code) { // no category at this level
                     continue
                 }
+                // console.log('calling findContinuityLines',code)
                 // look for continuity item
+                // console.log('finding continuitylines for',code)
                 let continuitylines = findContinuityLines(code, continuitylookup, filename)
+                // console.log('continuitylines for line',line, continuitylines)
                 for (let continuityline of continuitylines) {
                     let newline = [...line]
                     if (code != continuityline[0]) {
                         let amount = line[amountindex]
                         if (typeof amount == 'string') amount = amount.trim() // sometimes a blank char shows up for some reason
                         if (amount && !Number.isNaN(amount)) { // ignore if no amount is involved
+                            amount *= [continuityline[4]]
                             allocationfound = true
                             let allocations = line[allocationsindex]
                             if (!allocations) { // only make note of allocation once, the first time
@@ -152,7 +156,8 @@ const imposeFileContinuity = (components,categorymeta, attributemeta, continuity
                                 line[allocationsindex] = allocations
                             }    
                         }
-                        newline[columnindex] = continuityline[0]                    
+                        newline[columnindex] = continuityline[0]
+                        newline[amountindex] = amount                   
                     }
                     newline[columnindex + 1] = continuityline[1] // update name in any case
                     newdata.push(newline)
@@ -167,66 +172,72 @@ const imposeFileContinuity = (components,categorymeta, attributemeta, continuity
 }
 
 // return continuity leaf lines with ratios in cell 4
-const findContinuityLines = (code, continuitylookup, filename) => {
+const findContinuityLines = (linecode, continuitylookup, filename) => {
 
-    let leaf_lines = []
-    let allocationlist = prepareAllocationList(code)
-    for (let item of allocationlist) {
-        // leaves are returned, at least one line per item
-        returnlines = findContinuityLine(item[0], item[1], continuitylookup, filename)
-        leaf_lines = [...all_lines,...returnlines]
-    }
-    return leaf_lines
+    let ratio = 1
+    let allocationlines = findContinuityLine(linecode, ratio, continuitylookup, filename)
+    return allocationlines
 }
 
-const findContinuityLine = (code, ratio, continuitylookup, filename) => {
 
-    let newcode = code
-    let count = 0
+// TODO: prevent infinite recursion through infinite reflection
+const findContinuityLine = (listcode, ratio, continuitylookup, filename) => {
+
     let continuityline = null
     let notes = null
-    let returnlines = []
+    let allocationlines = []
 
-    do {
-        count++
-        if (count > 10) {
-            throw Error('infinite loop looking for continuity lookup ' + code)
-        }
+    // console.log('find continuity line for listcode',listcode, ratio)
 
-        let filtered = continuitylookup.filter(item => {
-            return (item[0] == newcode)
-        })
-        if (filtered.length == 0 ) {
-            throw Error(`continuity code ${code} not found in ${filename}`)
-        }
-
-        continuityline = filtered[0]
-        if (continuityline[6]) {
-            if (notes) {
-                notes += continuityline[6]
-            } else {
-                notes = continuityline[6]
-            }
-        }
-        newcode = continuityline[4]
-
-    } while (newcode)
-
-    let returnline = [...continuityline]
-    if (notes) {
-        returnline[6] = notes
+    let filtered = continuitylookup.filter(item => {
+        return (item[0] == listcode)
+    })
+    if (filtered.length == 0 ) {
+        throw Error(`continuity listcode ${listcode} not found in ${filename}`)
     }
 
-    returnlines = [...returnlines,returnline]
+    continuityline = [...filtered[0]]
+    if (continuityline[6]) {
+        if (notes) {
+            notes += continuityline[6]
+        } else {
+            notes = continuityline[6]
+        }
+    }
+    let allocationcode = continuityline[4].trim()
 
-    return returnlines
+    if (allocationcode) { // recurse
+
+        let allocationlist = prepareAllocationList(allocationcode)
+
+        for (let item of allocationlist) {
+
+            let [allocationcode, newratio] = item
+            let ratioarg = newratio * ratio
+            let returnlines = findContinuityLine(allocationcode, ratio * ratioarg, continuitylookup, filename)
+            allocationlines = [...allocationlines, ... returnlines]
+
+        }
+
+    } else {
+
+        let allocationline = [...continuityline]
+        if (notes) {
+            allocationine[6] = notes
+        }
+        allocationline[4] = ratio
+        allocationlines = [allocationline]
+
+    }
+
+    return allocationlines
 }
 const prepareAllocationList = (allocationspecs) => {
     let allocationlist = allocationspecs.split(',')
     for (let itemindex in allocationlist) {
-        let item = trim(allocationlist[itemindex])
+        let item = allocationlist[itemindex].trim()
         item = item.split('=')
-        item[0] = trim(item[0])
+        item[0] = item[0].trim()
         if (item[1]) {
             item[1] = Number(item[1])
         } else {
@@ -234,6 +245,7 @@ const prepareAllocationList = (allocationspecs) => {
         }
         allocationlist[itemindex] = item
     }
+    // console.log('allocationlist for', allocationspecs, allocationlist)
     return allocationlist
 }
 
