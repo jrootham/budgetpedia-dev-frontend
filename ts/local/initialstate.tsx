@@ -235,11 +235,13 @@ let branchDefaults:BranchSettings = {
         'FUNCTIONAL':'SUMMARY',
         'STRUCTURAL':'SUMMARY',
         'ACTUALEXPENSES':'ACTUALEXPENSES',
+        'ACTUALREVENUES':'ACTUALREVENUES',
     },
     defaultAspects:{ // version aspects
         'SUMMARY':'Expenses',
         'PBFT':'Expenses',
         'ACTUALEXPENSES':'Expenses',
+        'ACTUALREVENUES':'Revenues',
     },
     // chartType: "ColumnChart",
     inflationAdjusted: true,

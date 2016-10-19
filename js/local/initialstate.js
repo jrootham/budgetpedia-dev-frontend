@@ -110,11 +110,13 @@ let branchDefaults = {
         'FUNCTIONAL': 'SUMMARY',
         'STRUCTURAL': 'SUMMARY',
         'ACTUALEXPENSES': 'ACTUALEXPENSES',
+        'ACTUALREVENUES': 'ACTUALREVENUES',
     },
     defaultAspects: {
         'SUMMARY': 'Expenses',
         'PBFT': 'Expenses',
         'ACTUALEXPENSES': 'Expenses',
+        'ACTUALREVENUES': 'Revenues',
     },
     inflationAdjusted: true,
     nodeList: [],

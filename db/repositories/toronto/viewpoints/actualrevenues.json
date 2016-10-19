@@ -2,73 +2,68 @@
     "Index": 0,
     "NamingConfigRef": "AUDITED",
     "Components": {
-        "MUNICIPAL": {
+        "GENERAL": {
             "Index": 0,
             "NamingConfigRef": "CATEGORY",
             "Components": {
-                "GOVERNMENT": {
+                "DEVELOPMENT": {
                     "Index": 0,
-                    "NamingConfigRef": "EXPENSE",
+                    "NamingConfigRef": "REVENUE",
                     "Baseline": true
                 },
-                "PLANNING": {
+                "ENTERPRISES": {
                     "Index": 1,
-                    "NamingConfigRef": "EXPENSE",
+                    "NamingConfigRef": "REVENUE",
+                    "Baseline": true
+                },
+                "INVESTMENT": {
+                    "Index": 2,
+                    "NamingConfigRef": "REVENUE",
+                    "Baseline": true
+                },
+                "RENTS": {
+                    "Index": 3,
+                    "NamingConfigRef": "REVENUE",
+                    "Baseline": true
+                },
+                "OTHER": {
+                    "Index": 4,
+                    "NamingConfigRef": "REVENUE",
                     "Baseline": true
                 }
             }
         },
-        "SHARED": {
+        "LOCAL": {
             "Index": 1,
             "NamingConfigRef": "CATEGORY",
             "Components": {
-                "AGENCIES": {
+                "PROPERTYTAX": {
                     "Index": 0,
-                    "NamingConfigRef": "EXPENSE",
+                    "NamingConfigRef": "REVENUE",
                     "Baseline": true
                 },
-                "CULTURE": {
+                "USERCHARGES": {
                     "Index": 1,
-                    "NamingConfigRef": "EXPENSE",
+                    "NamingConfigRef": "REVENUE",
                     "Baseline": true
                 },
-                "ENVIRONMENT": {
-                    "Index": 1,
-                    "NamingConfigRef": "EXPENSE",
-                    "Baseline": true
-                },
-                "TRANSPORTATION": {
-                    "Index": 1,
-                    "NamingConfigRef": "EXPENSE",
-                    "Baseline": true
-                },
-                "WORKS": {
-                    "Index": 1,
-                    "NamingConfigRef": "EXPENSE",
+                "LANDTRANSFER": {
+                    "Index": 2,
+                    "NamingConfigRef": "REVENUE",
                     "Baseline": true
                 }
             }
         },
-        "SUPPORT": {
+        "OTHERGOV": {
             "Index": 2,
             "NamingConfigRef": "CATEGORY",
             "Components": {
-                "HEALTH": {
+                "TRANSFERS": {
                     "Index": 0,
                     "NamingConfigRef": "EXPENSE",
                     "Baseline": true
                 },
-                "HOUSING": {
-                    "Index": 1,
-                    "NamingConfigRef": "EXPENSE",
-                    "Baseline": true
-                },
-                "PROTECTION": {
-                    "Index": 1,
-                    "NamingConfigRef": "EXPENSE",
-                    "Baseline": true
-                },
-                "SOCIALSERVICES": {
+                "OTHERGOVTAX": {
                     "Index": 1,
                     "NamingConfigRef": "EXPENSE",
                     "Baseline": true
@@ -79,10 +74,10 @@
     "Meta":{
         "Lookups": {
             "Taxonomy": {
-                "MUNICIPAL": "Municipal operations",
-                "SHARED": "Shared operations",
-                "SUPPORT": "Support operations",
-                "AUDITED": "Audited expenses"
+                "OTHERGOV": "Other government",
+                "GENERAL": "General revenue",
+                "LOCAL": "Local revenue",
+                "AUDITED": "Audited revenues"
             }
         },
         "NamingConfigurations": {
@@ -93,7 +88,7 @@
                 },
                 "Contents": {
                     "Name": "Expenses",
-                    "Alias": "Audited Expense Statement"
+                    "Alias": "Audited Revenue Statement"
                 }
             },
             "CATEGORY": {
@@ -103,17 +98,17 @@
                 },
                 "Contents": {
                     "Name": "Expenses",
-                    "Alias": "Audited Expenses"
+                    "Alias": "Audited Revenues"
                 }
             },
-            "EXPENSE": {
+            "REVENUE": {
                 "Instance": {
                     "Name": "Type",
-                    "Alias": "Expense"
+                    "Alias": "Revenue"
                 },
                 "Contents": {
-                    "Name": "Expenses",
-                    "Alias": "Audited Expenses"
+                    "Name": "Revenues",
+                    "Alias": "Audited Revenues"
                 }
             }
         }

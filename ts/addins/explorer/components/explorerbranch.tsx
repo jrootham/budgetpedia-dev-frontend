@@ -762,8 +762,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             <MenuItem value={'FUNCTIONAL'} primaryText="Functional (budget)"/>
             <MenuItem value={'STRUCTURAL'} primaryText="Structural (budget)"/>
-            <MenuItem disabled value={'ACTUALREVENUE'} primaryText="Revenues (actual)"/>
             <MenuItem value={'ACTUALEXPENSES'} primaryText="Expenses (actual)"/>
+            <MenuItem value={'ACTUALREVENUES'} primaryText="Revenues (actual)"/>
             <MenuItem disabled value={'EXPENDITURES'} primaryText="Expenditures (actual)"/>
 
         </DropDownMenu>
@@ -793,6 +793,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 <MenuItem key = {3} disabled value={'VARIANCE'} primaryText="Variance Reports"/>]
             case 'ACTUALEXPENSES':
                 return [<MenuItem key = {4} value={'ACTUALEXPENSES'} primaryText="Expense Summary"/>]
+            case 'ACTUALREVENUES':
+                return [<MenuItem key = {4} value={'ACTUALREVENUES'} primaryText="Revenue Summary"/>]
         }
     }
 
@@ -823,6 +825,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 <MenuItem key = {3} value={'Staffing'} primaryText="Staffing" />]
             case 'ACTUALEXPENSES':
                 return [<MenuItem key = {4} value={'Expenses'} primaryText="Expenses"/>]
+            case 'ACTUALREVENUES':
+                return [<MenuItem key = {4} value={'Revenues'} primaryText="Revenues"/>]
         }
     }
 

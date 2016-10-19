@@ -3551,7 +3551,7 @@ var ExplorerBranch = function (_Component) {
             var branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
             var viewpointselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Viewpoint: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.viewpoint, onChange: function onChange(e, index, value) {
                     branch.switchViewpoint(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (budget)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (budget)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'ACTUALREVENUE', primaryText: "Revenues (actual)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALEXPENSES', primaryText: "Expenses (actual)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'EXPENDITURES', primaryText: "Expenditures (actual)" }))) : null;
+                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (budget)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (budget)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALEXPENSES', primaryText: "Expenses (actual)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALREVENUES', primaryText: "Revenues (actual)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'EXPENDITURES', primaryText: "Expenditures (actual)" }))) : null;
             var governmentselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Government: "), React.createElement(DropDownMenu_1.default, { value: "Toronto", disabled: true }, React.createElement(MenuItem_1.default, { value: 'Toronto', primaryText: "Toronto, Ontario" }))) : null;
             var versionchoices = function versionchoices() {
                 switch (branchDeclaration.viewpoint) {
@@ -3560,6 +3560,8 @@ var ExplorerBranch = function (_Component) {
                         return [React.createElement(MenuItem_1.default, { key: 1, value: 'SUMMARY', primaryText: "Summary" }), React.createElement(MenuItem_1.default, { key: 2, value: 'PBFT', primaryText: "Detail (PBFT)" }), React.createElement(MenuItem_1.default, { key: 3, disabled: true, value: 'VARIANCE', primaryText: "Variance Reports" })];
                     case 'ACTUALEXPENSES':
                         return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALEXPENSES', primaryText: "Expense Summary" })];
+                    case 'ACTUALREVENUES':
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALREVENUES', primaryText: "Revenue Summary" })];
                 }
             };
             var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Version: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.version, onChange: function onChange(e, index, value) {
@@ -3572,6 +3574,8 @@ var ExplorerBranch = function (_Component) {
                         return [React.createElement(MenuItem_1.default, { key: 1, value: 'Expenses', primaryText: "Expenses" }), React.createElement(MenuItem_1.default, { key: 2, value: 'Revenues', primaryText: "Revenues" }), React.createElement(MenuItem_1.default, { key: 3, value: 'Staffing', primaryText: "Staffing" })];
                     case 'ACTUALEXPENSES':
                         return [React.createElement(MenuItem_1.default, { key: 4, value: 'Expenses', primaryText: "Expenses" })];
+                    case 'ACTUALREVENUES':
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'Revenues', primaryText: "Revenues" })];
                 }
             };
             var aspectselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Aspect: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.aspect, onChange: function onChange(e, index, value) {
@@ -8015,12 +8019,14 @@ var branchDefaults = {
     defaultVersions: {
         'FUNCTIONAL': 'SUMMARY',
         'STRUCTURAL': 'SUMMARY',
-        'ACTUALEXPENSES': 'ACTUALEXPENSES'
+        'ACTUALEXPENSES': 'ACTUALEXPENSES',
+        'ACTUALREVENUES': 'ACTUALREVENUES'
     },
     defaultAspects: {
         'SUMMARY': 'Expenses',
         'PBFT': 'Expenses',
-        'ACTUALEXPENSES': 'Expenses'
+        'ACTUALEXPENSES': 'Expenses',
+        'ACTUALREVENUES': 'Revenues'
     },
     inflationAdjusted: true,
     nodeList: [],
