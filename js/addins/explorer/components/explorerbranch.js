@@ -401,7 +401,7 @@ class ExplorerBranch extends Component {
         let branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
         let viewpointselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.viewpoint, onChange: (e, index, value) => {
             branch.switchViewpoint(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional (budget)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural (budget)"}), React.createElement(MenuItem_1.default, {value: 'ACTUALEXPENSES', primaryText: "Expenses (actual)"}), React.createElement(MenuItem_1.default, {value: 'ACTUALREVENUES', primaryText: "Revenues (actual)"}), React.createElement(MenuItem_1.default, {disabled: true, value: 'EXPENDITURES', primaryText: "Expenditures (actual)"}))) : null;
+        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional (budget)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural (budget)"}), React.createElement(MenuItem_1.default, {value: 'ACTUALEXPENSES', primaryText: "Expenses (actual)"}), React.createElement(MenuItem_1.default, {value: 'ACTUALREVENUES', primaryText: "Revenues (actual)"}), React.createElement(MenuItem_1.default, {value: 'EXPENDITURES', primaryText: "Expenses by Object (actual)"}))) : null;
         let governmentselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Government: "), React.createElement(DropDownMenu_1.default, {value: "Toronto", disabled: true}, React.createElement(MenuItem_1.default, {value: 'Toronto', primaryText: "Toronto, Ontario"}))) : null;
         const versionchoices = () => {
             switch (branchDeclaration.viewpoint) {
@@ -414,6 +414,8 @@ class ExplorerBranch extends Component {
                     return [React.createElement(MenuItem_1.default, {key: 4, value: 'ACTUALEXPENSES', primaryText: "Expense Summary"})];
                 case 'ACTUALREVENUES':
                     return [React.createElement(MenuItem_1.default, {key: 4, value: 'ACTUALREVENUES', primaryText: "Revenue Summary"})];
+                case 'EXPENDITURES':
+                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'EXPENDITURES', primaryText: "Expenses by Object"})];
             }
         };
         let versionselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.version, onChange: (e, index, value) => {
@@ -430,6 +432,8 @@ class ExplorerBranch extends Component {
                     return [React.createElement(MenuItem_1.default, {key: 4, value: 'Expenses', primaryText: "Expenses"})];
                 case 'ACTUALREVENUES':
                     return [React.createElement(MenuItem_1.default, {key: 4, value: 'Revenues', primaryText: "Revenues"})];
+                case 'EXPENDITURES':
+                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'Expenditure', primaryText: "Expenditure"})];
             }
         };
         let aspectselection = (branchDeclaration.showOptions)

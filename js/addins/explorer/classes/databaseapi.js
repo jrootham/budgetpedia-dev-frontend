@@ -26,6 +26,7 @@ class Database {
         return promise;
     }
     getViewpointData(parms) {
+        console.log('getViewpointData parms', parms);
         this.viewpointDataParms = parms;
         let { viewpointName, versionName, datasetName, inflationAdjusted } = parms;
         let viewpointDataTemplatePromise = this.getViewpointTemplatePromise(viewpointName), datasetDataPromise = this.getDatasetPromise(versionName, datasetName), lookupsPromise = this.getLookupsPromise(versionName), datasetConfigPromise = this.getDatasetConfigPromise(versionName, datasetName);

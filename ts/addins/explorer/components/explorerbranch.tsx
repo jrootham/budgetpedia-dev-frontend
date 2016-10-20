@@ -764,7 +764,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             <MenuItem value={'STRUCTURAL'} primaryText="Structural (budget)"/>
             <MenuItem value={'ACTUALEXPENSES'} primaryText="Expenses (actual)"/>
             <MenuItem value={'ACTUALREVENUES'} primaryText="Revenues (actual)"/>
-            <MenuItem disabled value={'EXPENDITURES'} primaryText="Expenditures (actual)"/>
+            <MenuItem value={'EXPENDITURES'} primaryText="Expenses by Object (actual)"/>
 
         </DropDownMenu>
 
@@ -795,6 +795,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 return [<MenuItem key = {4} value={'ACTUALEXPENSES'} primaryText="Expense Summary"/>]
             case 'ACTUALREVENUES':
                 return [<MenuItem key = {4} value={'ACTUALREVENUES'} primaryText="Revenue Summary"/>]
+            case 'EXPENDITURES':
+                return [<MenuItem key = {4} value={'EXPENDITURES'} primaryText="Expenses by Object"/>]
         }
     }
 
@@ -827,6 +829,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 return [<MenuItem key = {4} value={'Expenses'} primaryText="Expenses"/>]
             case 'ACTUALREVENUES':
                 return [<MenuItem key = {4} value={'Revenues'} primaryText="Revenues"/>]
+            case 'EXPENDITURES':
+                return [<MenuItem key = {4} value={'Expenditure'} primaryText="Expenditure"/>]
         }
     }
 

@@ -2424,6 +2424,7 @@ var Database = function () {
         value: function getViewpointData(parms) {
             var _this2 = this;
 
+            console.log('getViewpointData parms', parms);
             this.viewpointDataParms = parms;
             var viewpointName = parms.viewpointName;
             var versionName = parms.versionName;
@@ -3551,7 +3552,7 @@ var ExplorerBranch = function (_Component) {
             var branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
             var viewpointselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Viewpoint: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.viewpoint, onChange: function onChange(e, index, value) {
                     branch.switchViewpoint(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (budget)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (budget)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALEXPENSES', primaryText: "Expenses (actual)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALREVENUES', primaryText: "Revenues (actual)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'EXPENDITURES', primaryText: "Expenditures (actual)" }))) : null;
+                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (budget)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (budget)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALEXPENSES', primaryText: "Expenses (actual)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALREVENUES', primaryText: "Revenues (actual)" }), React.createElement(MenuItem_1.default, { value: 'EXPENDITURES', primaryText: "Expenses by Object (actual)" }))) : null;
             var governmentselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Government: "), React.createElement(DropDownMenu_1.default, { value: "Toronto", disabled: true }, React.createElement(MenuItem_1.default, { value: 'Toronto', primaryText: "Toronto, Ontario" }))) : null;
             var versionchoices = function versionchoices() {
                 switch (branchDeclaration.viewpoint) {
@@ -3562,6 +3563,8 @@ var ExplorerBranch = function (_Component) {
                         return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALEXPENSES', primaryText: "Expense Summary" })];
                     case 'ACTUALREVENUES':
                         return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALREVENUES', primaryText: "Revenue Summary" })];
+                    case 'EXPENDITURES':
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'EXPENDITURES', primaryText: "Expenses by Object" })];
                 }
             };
             var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Version: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.version, onChange: function onChange(e, index, value) {
@@ -3576,6 +3579,8 @@ var ExplorerBranch = function (_Component) {
                         return [React.createElement(MenuItem_1.default, { key: 4, value: 'Expenses', primaryText: "Expenses" })];
                     case 'ACTUALREVENUES':
                         return [React.createElement(MenuItem_1.default, { key: 4, value: 'Revenues', primaryText: "Revenues" })];
+                    case 'EXPENDITURES':
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'Expenditure', primaryText: "Expenditure" })];
                 }
             };
             var aspectselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Aspect: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.aspect, onChange: function onChange(e, index, value) {
@@ -4461,7 +4466,8 @@ exports.ChartCodeToGoogleChartType = ChartCodeToGoogleChartType;
 var AspectNameToDatasetName = {
     'Expenses': 'Expenses',
     'Revenues': 'Revenues',
-    'Staffing': 'Staffing'
+    'Staffing': 'Staffing',
+    'Expenditure': 'Expenditure'
 };
 exports.AspectNameToDatasetName = AspectNameToDatasetName;
 exports.DatasetNameToAspectName = {};
@@ -8020,13 +8026,15 @@ var branchDefaults = {
         'FUNCTIONAL': 'SUMMARY',
         'STRUCTURAL': 'SUMMARY',
         'ACTUALEXPENSES': 'ACTUALEXPENSES',
-        'ACTUALREVENUES': 'ACTUALREVENUES'
+        'ACTUALREVENUES': 'ACTUALREVENUES',
+        'EXPENDITURES': 'EXPENDITURES'
     },
     defaultAspects: {
         'SUMMARY': 'Expenses',
         'PBFT': 'Expenses',
         'ACTUALEXPENSES': 'Expenses',
-        'ACTUALREVENUES': 'Revenues'
+        'ACTUALREVENUES': 'Revenues',
+        'EXPENDITURES': 'Expenditure'
     },
     inflationAdjusted: true,
     nodeList: [],
