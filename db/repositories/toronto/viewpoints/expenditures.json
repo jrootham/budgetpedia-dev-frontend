@@ -47,7 +47,7 @@
     "Meta":{
         "Lookups": {
             "Taxonomy": {
-                "ALLOTHEREXPENSES": "All other expenses",
+                "ALLOTHEREXPENSES": "Non-salary expenses",
                 "AUDITED": "Audited Expenses by Object"
             }
         },
