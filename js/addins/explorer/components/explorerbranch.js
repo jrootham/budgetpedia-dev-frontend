@@ -8,6 +8,7 @@ const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
 const Toggle_1 = require('material-ui/Toggle');
 const RaisedButton_1 = require('material-ui/RaisedButton');
+let jsonpack = require('jsonpack');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 const explorernode_1 = require('./explorernode');
 const actions_1 = require('../actions');
@@ -343,6 +344,65 @@ class ExplorerBranch extends Component {
             });
             return portals;
         };
+        this.shareBranch = () => {
+            let branch = this;
+            console.log('declarationData', branch.props.declarationData);
+            let branchDeclaration = branch.props.declarationData.branchesById[branch.props.budgetBranch.uid];
+            let government = branchDeclaration.repository;
+            let viewpoint = branchDeclaration.viewpoint;
+            let version = branchDeclaration.version;
+            let aspect = branchDeclaration.aspect;
+            let prorata = branchDeclaration.prorata;
+            let adjusted = branchDeclaration.inflationAdjusted;
+            let path = this.state.branchNodes[this.state.branchNodes.length - 1].dataPath;
+            let query = {
+                g: government,
+                vi: viewpoint,
+                ve: version,
+                as: aspect,
+                pr: prorata,
+                ad: adjusted,
+                pa: path,
+            };
+            let nodeDeclarations = [];
+            let node;
+            for (node of this.state.branchNodes) {
+                nodeDeclarations.push(node.nodeDeclaration);
+            }
+            let settings = [];
+            for (let nodeDeclaration of nodeDeclarations) {
+                let cellDeclarations = [];
+                for (let celluid of nodeDeclaration.cellList) {
+                    cellDeclarations.push(branch.props.declarationData.cellsById[celluid]);
+                }
+                let cellSettingsList = [];
+                for (let cellDeclaration of cellDeclarations) {
+                    let cellSettings = {
+                        ys: cellDeclaration.yearScope,
+                        cs: cellDeclaration.chartSelection,
+                        ct: cellDeclaration.chartConfigs[cellDeclaration.yearScope].explorerChartCode
+                    };
+                    cellSettingsList.push(cellSettings);
+                }
+                let nodesettings = {
+                    ci: nodeDeclaration.cellIndex,
+                    ys: {
+                        ly: nodeDeclaration.yearSelections.leftYear,
+                        ry: nodeDeclaration.yearSelections.rightYear,
+                    },
+                    c: cellSettingsList[nodeDeclaration.cellIndex],
+                };
+                settings.push(nodesettings);
+            }
+            let branchstring = jsonpack.pack(query);
+            let bsencoded = encodeURIComponent(branchstring);
+            let settingsstring = jsonpack.pack(settings);
+            let ssencoded = encodeURIComponent(settingsstring);
+            console.log('query', query, branchstring, branchstring.length, bsencoded, bsencoded.length);
+            console.log('settings', settings, settingsstring, settingsstring.length, ssencoded, ssencoded.length);
+            let url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded;
+            console.log('url', url, url.length);
+        };
     }
     componentWillMount() {
         this._initialize();
@@ -495,7 +555,7 @@ class ExplorerBranch extends Component {
             }}, React.createElement(IconButton_1.default, {disabled: true, tooltip: "Find an entry point", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.handleSearch}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "search")))
             : null;
         let shareurl = (branchDeclaration.showOptions)
-            ? React.createElement(RaisedButton_1.default, {disabled: true, type: "button", label: "Share"}) : null;
+            ? React.createElement(RaisedButton_1.default, {type: "button", label: "Share", onTouchTap: this.shareBranch}) : null;
         return React.createElement("div", null, React.createElement("div", null, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;
         }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));

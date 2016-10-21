@@ -21,6 +21,7 @@
     "isomorphic-fetch": "^2.2.1",
     "joi": "^9.1.0",
     "joi-validation-strategy": "^0.3.3",
+    "jsonpack": "^1.1.5",
     "lodash": "^4.16.2",
     "lodash.assign": "^4.2.0",
     "material-ui": "^0.15.4",

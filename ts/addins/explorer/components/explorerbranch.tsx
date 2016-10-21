@@ -26,6 +26,7 @@ import Dialog from 'material-ui/Dialog'
 import Snackbar from 'material-ui/Snackbar'
 import Toggle from 'material-ui/Toggle'
 import RaisedButton from 'material-ui/RaisedButton'
+let jsonpack = require('jsonpack')
 
 // ------------------------[ modules ]-----------------------------
 import { 
@@ -740,6 +741,66 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     }
 
+    shareBranch = () => {
+        let branch = this
+        console.log('declarationData',branch.props.declarationData)
+        let branchDeclaration:BranchSettings = branch.props.declarationData.branchesById[branch.props.budgetBranch.uid]
+        let government = branchDeclaration.repository
+        let viewpoint = branchDeclaration.viewpoint
+        let version = branchDeclaration.version
+        let aspect = branchDeclaration.aspect
+        let prorata = branchDeclaration.prorata
+        let adjusted = branchDeclaration.inflationAdjusted
+        let path = this.state.branchNodes[this.state.branchNodes.length - 1].dataPath
+        let query = {
+            g:government,
+            vi:viewpoint,
+            ve:version,
+            as:aspect,
+            pr:prorata,
+            ad:adjusted,
+            pa:path,
+        }
+        let nodeDeclarations = []
+        let node:BudgetNode
+        for (node of this.state.branchNodes) {
+            nodeDeclarations.push(node.nodeDeclaration)
+        }
+        let settings = []
+        for (let nodeDeclaration of nodeDeclarations) {
+            let cellDeclarations = []
+            for (let celluid of nodeDeclaration.cellList) {
+                cellDeclarations.push(branch.props.declarationData.cellsById[celluid])
+            }
+            let cellSettingsList=[]
+            for (let cellDeclaration of cellDeclarations) {
+                let cellSettings = {
+                    ys:cellDeclaration.yearScope,
+                    cs:cellDeclaration.chartSelection,
+                    ct:cellDeclaration.chartConfigs[cellDeclaration.yearScope].explorerChartCode
+                }
+                cellSettingsList.push(cellSettings)
+            }
+            let nodesettings = {
+                ci:nodeDeclaration.cellIndex,
+                ys:{
+                    ly:nodeDeclaration.yearSelections.leftYear,
+                    ry:nodeDeclaration.yearSelections.rightYear,
+                },
+                c:cellSettingsList[nodeDeclaration.cellIndex],
+            }
+            settings.push(nodesettings)
+        }
+        let branchstring = jsonpack.pack(query)
+        let bsencoded = encodeURIComponent(branchstring)
+        let settingsstring = jsonpack.pack(settings)
+        let ssencoded = encodeURIComponent(settingsstring)
+        console.log('query',query, branchstring,branchstring.length,bsencoded,bsencoded.length)
+        console.log('settings',settings,settingsstring, settingsstring.length,ssencoded,ssencoded.length)
+        let url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded
+        console.log('url',url,url.length)
+    }
+
     render() {
 
     let branch = this
@@ -991,10 +1052,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     let shareurl = (branchDeclaration.showOptions)
         ?<RaisedButton
-            disabled
             type="button"
             label="Share"
-            //onTouchTap={appbar.transitionToRegister} 
+            onTouchTap={this.shareBranch} 
         />:null
 
 
