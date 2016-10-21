@@ -325,11 +325,6 @@
                             "NamingConfigRef": "PROGRAM",
                             "Baseline": true
                         },
-                        "ATMOSPHERE": {
-                            "Index": 4,
-                            "NamingConfigRef": "PROGRAM",
-                            "Baseline": true
-                        },
                         "DESTINATIONS2": {
                             "Index": 5,
                             "NamingConfigRef": "CLUSTER",
@@ -379,11 +374,6 @@
                     "NamingConfigRef": "PROGRAM",
                     "Baseline": true
                 },
-                "PROPERTYTAX": {
-                    "Index": 3,
-                    "NamingConfigRef": "PROGRAM",
-                    "Baseline": true
-                },
                 "PARKINGTAGS": {
                     "Index": 1,
                     "NamingConfigRef": "PROGRAM",
@@ -396,18 +386,18 @@
         "Lookups": {
             "Taxonomy": {
                 "ACCOUNTABILITYAPPEAL2": "Accountability & Appeal Offices",
-                "ADMINOPS": "Core Administrative Operations",
+                "ADMINOPS": "Administrative Operations",
                 "AGENCIES": "Agencies",
                 "CITIZENOPS": "Citizen Centered Operations",
-                "CITIZENSERVICESA": "Citizen-Centered Services \"A\"",
-                "CITIZENSERVICESB": "Citizen-Centered Services \"B\"",
-                "CORESERVICESA": "Core Administrative Services \"A\"",
-                "CORESERVICESB": "Core Administrative Services \"B\"",
+                "CITIZENSERVICESA": "Human and Social Services",
+                "CITIZENSERVICESB": "Building and Infrastructure Services",
+                "CORESERVICESA": "Human and Social Office Services",
+                "CORESERVICESB": "Building and Infrastructure Offie Services",
                 "CORPORATEACCOUNTS2": "Corporate Accounts",
                 "COUNCILOPS": "Council Domain",
                 "DESTINATIONS2": "Public Destinations",
-                "FIELDSERVICESA": "Field Services \"A\"",
-                "FIELDSERVICESB": "Field Services \"B\"",
+                "FIELDSERVICESA": "Human and Social Field Services",
+                "FIELDSERVICESB": "Building and Infrastructure Field Services",
                 "MANAGEMENTOFFICES": "Management Offices",
                 "CORPORATESERVICES": "Corporate Services",
                 "MANAGEMENTOPS": "City Manager Domain",
