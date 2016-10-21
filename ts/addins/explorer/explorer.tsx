@@ -50,6 +50,7 @@ import Popover from 'material-ui/Popover'
 import Toggle from 'material-ui/Toggle'
 
 let uuid = require('node-uuid') // use uuid.v4() for unique id
+let jsonpack = require('jsonpack')
 
 import ExplorerBranch from './components/explorerbranch'
 
@@ -117,6 +118,7 @@ interface MappedActions extends MappedExplorerActions{
 
 interface ExplorerProps extends MappedActions {
     declarationData:any, // from global state.explorer; contains object declarations
+    location?:any,
 }
 
 interface ExplorerState {
@@ -156,6 +158,21 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     // ----------------------------[ Lifecycle operations ]-------------------------------
 
     componentWillMount() {
+
+        console.log('explorer props location.query',this.props.location.query)
+
+        let {query} = this.props.location
+
+        let branchdata, settingsdata
+
+        if (query.branch && query.settings) {
+
+            branchdata = jsonpack.unpack(query.branch)
+            settingsdata = jsonpack.unpack(query.settings)
+
+        }
+
+        console.log('branchdata, settingsdata',branchdata,settingsdata)
 
         let { branchList, branchesById } = this.props.declarationData
 

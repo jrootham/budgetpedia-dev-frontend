@@ -13,6 +13,7 @@ const remove_1 = require('material-ui/svg-icons/content/remove');
 const Popover_1 = require('material-ui/Popover');
 const Toggle_1 = require('material-ui/Toggle');
 let uuid = require('node-uuid');
+let jsonpack = require('jsonpack');
 const explorerbranch_1 = require('./components/explorerbranch');
 const Actions = require('../../core/actions/actions');
 const ExplorerActions = require('./actions');
@@ -210,6 +211,14 @@ let Explorer = class extends Component {
         };
     }
     componentWillMount() {
+        console.log('explorer props location.query', this.props.location.query);
+        let { query } = this.props.location;
+        let branchdata, settingsdata;
+        if (query.branch && query.settings) {
+            branchdata = jsonpack.unpack(query.branch);
+            settingsdata = jsonpack.unpack(query.settings);
+        }
+        console.log('branchdata, settingsdata', branchdata, settingsdata);
         let { branchList, branchesById } = this.props.declarationData;
         if (branchList.length == 0) {
             let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));

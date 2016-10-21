@@ -773,10 +773,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 cellDeclarations.push(branch.props.declarationData.cellsById[celluid])
             }
             let cellSettingsList=[]
+            // TODO: only process the cellDeclaration for current cellIndex
             for (let cellDeclaration of cellDeclarations) {
                 let cellSettings = {
                     ys:cellDeclaration.yearScope,
-                    cs:cellDeclaration.chartSelection,
+                    // cs:cellDeclaration.chartSelection,
                     ct:cellDeclaration.chartConfigs[cellDeclaration.yearScope].explorerChartCode
                 }
                 cellSettingsList.push(cellSettings)

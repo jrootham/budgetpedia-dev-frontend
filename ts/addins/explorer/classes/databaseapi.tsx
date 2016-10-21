@@ -217,7 +217,7 @@ class Database {
     // getViewpointData returns a promise.
     public getViewpointData(parms: GetViewpointDataParms) {
 
-        console.log('getViewpointData parms',parms)
+        // console.log('getViewpointData parms',parms)
 
         this.viewpointDataParms = parms
 

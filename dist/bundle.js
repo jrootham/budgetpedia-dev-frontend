@@ -2424,7 +2424,6 @@ var Database = function () {
         value: function getViewpointData(parms) {
             var _this2 = this;
 
-            console.log('getViewpointData parms', parms);
             this.viewpointDataParms = parms;
             var viewpointName = parms.viewpointName;
             var versionName = parms.versionName;
@@ -3566,7 +3565,6 @@ var ExplorerBranch = function (_Component) {
 
                             var cellSettings = {
                                 ys: cellDeclaration.yearScope,
-                                cs: cellDeclaration.chartSelection,
                                 ct: cellDeclaration.chartConfigs[cellDeclaration.yearScope].explorerChartCode
                             };
                             cellSettingsList.push(cellSettings);
@@ -4887,6 +4885,7 @@ var remove_1 = require('material-ui/svg-icons/content/remove');
 var Popover_1 = require('material-ui/Popover');
 var Toggle_1 = require('material-ui/Toggle');
 var uuid = require('node-uuid');
+var jsonpack = require('jsonpack');
 var explorerbranch_1 = require('./components/explorerbranch');
 var Actions = require('../../core/actions/actions');
 var ExplorerActions = require('./actions');
@@ -5232,6 +5231,16 @@ var Explorer = function (_Component) {
     _createClass(Explorer, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
+            console.log('explorer props location.query', this.props.location.query);
+            var query = this.props.location.query;
+
+            var branchdata = void 0,
+                settingsdata = void 0;
+            if (query.branch && query.settings) {
+                branchdata = jsonpack.unpack(query.branch);
+                settingsdata = jsonpack.unpack(query.settings);
+            }
+            console.log('branchdata, settingsdata', branchdata, settingsdata);
             var _props$declarationDat = this.props.declarationData;
             var branchList = _props$declarationDat.branchList;
             var branchesById = _props$declarationDat.branchesById;
@@ -5406,7 +5415,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;
 
-},{"../../core/actions/actions":32,"./actions":16,"./classes/branch.class":17,"./components/explorerbranch":22,"./content/helpcontent":26,"./reducers":31,"material-ui/Card":402,"material-ui/Dialog":404,"material-ui/FloatingActionButton":415,"material-ui/FontIcon":417,"material-ui/IconButton":422,"material-ui/Popover":437,"material-ui/Toggle":459,"material-ui/svg-icons/content/add":483,"material-ui/svg-icons/content/remove":484,"node-uuid":506,"react":776,"react-dom":525,"react-redux":529}],28:[function(require,module,exports){
+},{"../../core/actions/actions":32,"./actions":16,"./classes/branch.class":17,"./components/explorerbranch":22,"./content/helpcontent":26,"./reducers":31,"jsonpack":189,"material-ui/Card":402,"material-ui/Dialog":404,"material-ui/FloatingActionButton":415,"material-ui/FontIcon":417,"material-ui/IconButton":422,"material-ui/Popover":437,"material-ui/Toggle":459,"material-ui/svg-icons/content/add":483,"material-ui/svg-icons/content/remove":484,"node-uuid":506,"react":776,"react-dom":525,"react-redux":529}],28:[function(require,module,exports){
 "use strict";
 
 var getBudgetNode = function getBudgetNode(node, path) {

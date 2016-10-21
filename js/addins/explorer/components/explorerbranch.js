@@ -379,7 +379,6 @@ class ExplorerBranch extends Component {
                 for (let cellDeclaration of cellDeclarations) {
                     let cellSettings = {
                         ys: cellDeclaration.yearScope,
-                        cs: cellDeclaration.chartSelection,
                         ct: cellDeclaration.chartConfigs[cellDeclaration.yearScope].explorerChartCode
                     };
                     cellSettingsList.push(cellSettings);
