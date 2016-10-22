@@ -39,6 +39,7 @@ interface ExplorerCellProps {
     },
     showControls: boolean,
     callbacks: any,
+    urlparms: any,
 }
 
 class ExplorerCell extends Component<ExplorerCellProps, any> {
@@ -54,12 +55,17 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
     getState = () => this.state
     getProps = () => this.props
 
+    urlparms:any = null
+
     componentWillMount() {
-        let { budgetCell } = this.props
+        let { budgetCell,urlparms } = this.props
         budgetCell.getProps = this.getProps
         budgetCell.getState = this.getState
         budgetCell.setState = this.setState.bind(this)
         budgetCell.setChartParms()
+        if (urlparms) {
+            this.urlparms = urlparms
+        }
     }
 
     componentDidMount() {

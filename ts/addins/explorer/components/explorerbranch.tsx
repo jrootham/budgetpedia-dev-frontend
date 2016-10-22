@@ -73,8 +73,13 @@ interface ExplorerBranchProps {
         workingStatus:Function,
     },
     globalStateActions: ExplorerBranchActions,
-    declarationData: DeclarationData
-    handleDialogOpen: Function
+    declarationData: DeclarationData,
+    handleDialogOpen: Function,
+    urlparms: {
+        branchdata: any,
+        settingsdata: any,
+    },
+    clearUrlParms: Function,
 }
 
 interface ExplorerBranchState {
@@ -117,6 +122,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         nodeItems => 
         this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems)
 
+    urlparms:any = null
+
     // finish initialization of budgetBranch and branch explorer objects
     componentWillMount() {
 
@@ -129,6 +136,14 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             this._stateActions.incrementBranchDataVersion(budgetBranch.uid) // change data generation counter for child compare
 
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
+
+                let { urlparms } = this.props
+
+                if (urlparms) {
+                    this.urlparms = urlparms
+                    this.props.clearUrlParms()
+                }
+                console.log('this.urlparms in branch will mount',this.urlparms)
 
                 let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
                 this._stateActions.addNodeDeclaration(budgetNodeParms)
@@ -734,6 +749,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 showControls = {branchDeclaration.showOptions}
                 dataGenerationCounter = { branchDeclaration.branchDataGeneration }
                 callbacks = { {harmonizeCells:branch.harmonizeCells} }
+                urlparms = {this.urlparms}
             />
         })
 

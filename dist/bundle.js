@@ -3088,6 +3088,7 @@ var ExplorerBranch = function (_Component) {
                 return _this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
             };
         };
+        _this.urlparms = null;
         _this._initialize = function () {
             var branch = _this;
             var _branch$props = branch.props;
@@ -3634,6 +3635,13 @@ var ExplorerBranch = function (_Component) {
             budgetBranch.getViewpointData().then(function () {
                 _this2._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
+                    var urlparms = _this2.props.urlparms;
+
+                    if (urlparms) {
+                        _this2.urlparms = urlparms;
+                        _this2.props.clearUrlParms();
+                    }
+                    console.log('this.urlparms in branch will mount', _this2.urlparms);
                     var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                     _this2._stateActions.addNodeDeclaration(budgetNodeParms);
                 } else {
@@ -4921,6 +4929,10 @@ var Explorer = function (_Component) {
                 }
             });
         };
+        _this.urlparms = null;
+        _this.clearUrlParms = function () {
+            _this.urlparms = null;
+        };
         _this.harmonizeBranchesToState = function (budgetBranches, branchList, branchesById) {
             var change = false;
             var newBranches = budgetBranches.filter(function (branch) {
@@ -5239,15 +5251,31 @@ var Explorer = function (_Component) {
             if (query.branch && query.settings) {
                 branchdata = jsonpack.unpack(query.branch);
                 settingsdata = jsonpack.unpack(query.settings);
+                this.urlparms = {
+                    branchdata: branchdata,
+                    settingsdata: settingsdata
+                };
+                var defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
+                console.log('branchdata, settingsdata,defaultSettings', branchdata, settingsdata, defaultSettings);
+                var querysettings = {
+                    inflationAdjusted: branchdata.ad,
+                    aspect: branchdata.as,
+                    prorata: branchdata.pr,
+                    repository: branchdata.g,
+                    version: branchdata.ve,
+                    viewpoint: branchdata.vi
+                };
+                var settings = Object.assign(defaultSettings, querysettings);
+                this.props.addBranchDeclaration(null, settings);
+                return;
             }
-            console.log('branchdata, settingsdata', branchdata, settingsdata);
             var _props$declarationDat = this.props.declarationData;
             var branchList = _props$declarationDat.branchList;
             var branchesById = _props$declarationDat.branchesById;
 
             if (branchList.length == 0) {
-                var defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
-                this.props.addBranchDeclaration(null, defaultSettings);
+                var _defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
+                this.props.addBranchDeclaration(null, _defaultSettings);
             } else {
                 var _props$declarationDat2 = this.props.declarationData;
                 var _branchList = _props$declarationDat2.branchList;
@@ -5305,6 +5333,10 @@ var Explorer = function (_Component) {
             var branchSegments = function branchSegments() {
                 var budgetBranches = explorer.state.budgetBranches;
                 var segments = budgetBranches.map(function (budgetBranch, branchIndex) {
+                    var urlparms = null;
+                    if (branchIndex == 0 && _this2.urlparms) {
+                        urlparms = _this2.urlparms;
+                    }
                     var actionFunctions = {
                         addCellDeclarations: _this2.addCellDeclarations(budgetBranch.uid),
                         normalizeCellYearDependencies: _this2.normalizeCellYearDependencies(budgetBranch.uid),
@@ -5349,7 +5381,7 @@ var Explorer = function (_Component) {
                                 ev.stopPropagation();
                                 _this2.branchMoveUp(uid);
                             };
-                        }(budgetBranch.uid), tooltip: "Move up" }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "arrow_upward"))), React.createElement(Card_1.CardText, { expandable: true }, React.createElement(explorerbranch_1.default, { budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: _this2.handleDialogOpen })), React.createElement(Card_1.CardActions, { expandable: true }, React.createElement(FloatingActionButton_1.default, { onTouchTap: function (uid) {
+                        }(budgetBranch.uid), tooltip: "Move up" }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "arrow_upward"))), React.createElement(Card_1.CardText, { expandable: true }, React.createElement(explorerbranch_1.default, { budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: _this2.handleDialogOpen, urlparms: urlparms, clearUrlParms: _this2.clearUrlParms })), React.createElement(Card_1.CardActions, { expandable: true }, React.createElement(FloatingActionButton_1.default, { onTouchTap: function (uid) {
                             return function () {
                                 _this2.addBranch(uid);
                             };

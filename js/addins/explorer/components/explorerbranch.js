@@ -27,6 +27,7 @@ class ExplorerBranch extends Component {
         this.getProps = () => this.props;
         this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
         this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
+        this.urlparms = null;
         this._initialize = () => {
             let branch = this;
             let { budgetBranch, globalStateActions: actions, displayCallbacks, declarationData } = branch.props;
@@ -409,6 +410,12 @@ class ExplorerBranch extends Component {
         budgetBranch.getViewpointData().then(() => {
             this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
+                let { urlparms } = this.props;
+                if (urlparms) {
+                    this.urlparms = urlparms;
+                    this.props.clearUrlParms();
+                }
+                console.log('this.urlparms in branch will mount', this.urlparms);
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }

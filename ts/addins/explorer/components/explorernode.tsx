@@ -37,6 +37,7 @@ interface ExplorerNodeProps {
     showControls: boolean,
     dataGenerationCounter: number,
     callbacks: any,
+    urlparms: any,
 }
 
 class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
@@ -53,8 +54,14 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
 
     private _stateActions: ExplorerNodeActions
 
+    urlparms:any = null
+
     componentWillMount() {
-        let { budgetNode, declarationData } = this.props
+        let { budgetNode, declarationData, urlparms } = this.props
+
+        if (urlparms) {
+            this.urlparms = urlparms
+        }
 
         this._stateActions = Object.assign({},this.props.globalStateActions)
 
@@ -272,6 +279,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
                     } }
                     showControls = {this.props.showControls}
                     callbacks = {this.props.callbacks}
+                    urlparms = {this.urlparms}
                 />
             </Tab>
         })

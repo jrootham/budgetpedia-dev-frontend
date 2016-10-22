@@ -157,6 +157,12 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     // ----------------------------[ Lifecycle operations ]-------------------------------
 
+    urlparms:any = null
+
+    clearUrlParms = () => {
+        this.urlparms = null
+    }
+
     componentWillMount() {
 
         console.log('explorer props location.query',this.props.location.query)
@@ -170,9 +176,29 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             branchdata = jsonpack.unpack(query.branch)
             settingsdata = jsonpack.unpack(query.settings)
 
-        }
+            this.urlparms = {
+                branchdata,
+                settingsdata,
+            }
 
-        console.log('branchdata, settingsdata',branchdata,settingsdata)
+            let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
+            console.log('branchdata, settingsdata,defaultSettings',branchdata,settingsdata,defaultSettings)
+
+            let querysettings = {
+                inflationAdjusted:branchdata.ad,
+                aspect:branchdata.as,
+                prorata:branchdata.pr,
+                repository:branchdata.g,
+                version:branchdata.ve,
+                viewpoint:branchdata.vi,
+            }
+
+            let settings = Object.assign(defaultSettings,querysettings)
+
+            this.props.addBranchDeclaration(null,settings) // change state
+            return
+
+        }
 
         let { branchList, branchesById } = this.props.declarationData
 
@@ -546,6 +572,12 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             // map over budgetBranches state
             let segments = budgetBranches.map((budgetBranch:BudgetBranch, branchIndex) => {
 
+                let urlparms = null
+                if (branchIndex == 0 && this.urlparms) {
+                    urlparms = this.urlparms
+                    // this.urlparms = null // pass once only
+                    // console.log('branchIndex, urlparms in explorer map branches',branchIndex,urlparms)
+                }
                 // collect functions to pass down to nested components
                 let actionFunctions:MappedBranchActions = {
                     
@@ -659,6 +691,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         globalStateActions = { actionFunctions }
                         displayCallbacks = { displayCallbackFunctions }
                         handleDialogOpen = {this.handleDialogOpen}
+                        urlparms = { urlparms }
+                        clearUrlParms = {this.clearUrlParms}
                     />
                     </CardText>
                     <CardActions expandable>
