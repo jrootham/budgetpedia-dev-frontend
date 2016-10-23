@@ -146,6 +146,14 @@ class ExplorerNode extends Component {
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid];
         if (nodeDeclaration.cellList == null) {
             let cellDeclarationParms = budgetNode.getCellDeclarationParms();
+            if (urlparms) {
+                let cellurlparms = urlparms.settingsdata[budgetNode.nodeIndex];
+                let cellIndex = cellurlparms.ci;
+                let cellparms = cellDeclarationParms[cellIndex];
+                cellparms.yearScope = cellurlparms.c.ys;
+                cellparms.chartConfigs[cellparms.yearScope].explorerChartCode = cellurlparms.c.ct;
+                console.log('node will mount', cellIndex, cellparms);
+            }
             this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
         }
         else {

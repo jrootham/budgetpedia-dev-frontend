@@ -438,6 +438,7 @@ class BudgetCell {
 
         // ----------------------[ assemble chart title ]----------------------
 
+        // TODO: report reason for 'unknown category'
         // set basic title
         let nodename = null
         if (treeNodeData.Name) { 
@@ -463,6 +464,9 @@ class BudgetCell {
                     let names = viewpointNamingConfigs[parentconfigindex]
                     if (names && names.Contents && names.Contents.DefaultInstance) {
                         catname = names.Contents.DefaultInstance.Name
+                        if (!catname) {
+                            console.log('category name not found in names.Contents.DefaultInstance.Name',parentconfigindex,viewpointNamingConfigs)
+                        }
                     }
                 // lower levels depend on dimension category names.
                 } else {
@@ -476,6 +480,9 @@ class BudgetCell {
                     }
                     let dimensionname = parentBudgetNode.treeNodeData[nameindex]                    
                     catname = datasetConfig.DimensionNames[dimensionname].Instance
+                    if (!catname) {
+                        console.log('category name not found in datasetConfig.DimensionNames[dimensionname].Instance',datasetConfig)
+                    }
                 }
             } 
             if (!catname) {

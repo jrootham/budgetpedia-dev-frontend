@@ -1947,6 +1947,9 @@ var BudgetCell = function () {
                         var _names3 = viewpointNamingConfigs[parentconfigindex];
                         if (_names3 && _names3.Contents && _names3.Contents.DefaultInstance) {
                             catname = _names3.Contents.DefaultInstance.Name;
+                            if (!catname) {
+                                console.log('category name not found in names.Contents.DefaultInstance.Name', parentconfigindex, viewpointNamingConfigs);
+                            }
                         }
                     } else {
                         var nameindex = nodeDataseriesName;
@@ -1959,6 +1962,9 @@ var BudgetCell = function () {
                         }
                         var dimensionname = parentBudgetNode.treeNodeData[nameindex];
                         catname = datasetConfig.DimensionNames[dimensionname].Instance;
+                        if (!catname) {
+                            console.log('category name not found in datasetConfig.DimensionNames[dimensionname].Instance', datasetConfig);
+                        }
                     }
                 }
                 if (!catname) {
@@ -4618,6 +4624,14 @@ var ExplorerNode = function (_Component) {
             var nodeDeclaration = declarationData.nodesById[budgetNode.uid];
             if (nodeDeclaration.cellList == null) {
                 var cellDeclarationParms = budgetNode.getCellDeclarationParms();
+                if (urlparms) {
+                    var cellurlparms = urlparms.settingsdata[budgetNode.nodeIndex];
+                    var cellIndex = cellurlparms.ci;
+                    var cellparms = cellDeclarationParms[cellIndex];
+                    cellparms.yearScope = cellurlparms.c.ys;
+                    cellparms.chartConfigs[cellparms.yearScope].explorerChartCode = cellurlparms.c.ct;
+                    console.log('node will mount', cellIndex, cellparms);
+                }
                 this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
             } else {
                 this._stateActions.updateNode(budgetNode.uid);
