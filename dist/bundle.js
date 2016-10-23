@@ -4623,14 +4623,44 @@ var ExplorerNode = function (_Component) {
             budgetNode.actions = this._stateActions;
             var nodeDeclaration = declarationData.nodesById[budgetNode.uid];
             if (nodeDeclaration.cellList == null) {
-                var cellDeclarationParms = budgetNode.getCellDeclarationParms();
+                var cellDeclarationParms = JSON.parse(JSON.stringify(budgetNode.getCellDeclarationParms()));
                 if (urlparms) {
                     var cellurlparms = urlparms.settingsdata[budgetNode.nodeIndex];
                     var cellIndex = cellurlparms.ci;
                     var cellparms = cellDeclarationParms[cellIndex];
                     cellparms.yearScope = cellurlparms.c.ys;
                     cellparms.chartConfigs[cellparms.yearScope].explorerChartCode = cellurlparms.c.ct;
-                    console.log('node will mount', cellIndex, cellparms);
+                    var nodeIndex = budgetNode.nodeIndex;
+
+                    if (nodeIndex < urlparms.branchdata.pa.length) {
+                        var code = urlparms.branchdata.pa[nodeIndex];
+                        var datasetConfig = budgetNode.viewpointConfigPack.datasetConfig;
+                        var Dataseries = datasetConfig.Dataseries;
+
+                        var drilldownindex = null;
+                        for (var itemindex in Dataseries) {
+                            var item = Dataseries[itemindex];
+                            if (item.Type == 'Components') {
+                                drilldownindex = parseInt(itemindex);
+                                break;
+                            }
+                        }
+                        if (drilldownindex !== null) {
+                            var drilldownparms = cellDeclarationParms[drilldownindex];
+                            var nodeDataList = budgetNode.treeNodeData.SortedComponents;
+                            var chartSelection = null;
+                            for (var index in nodeDataList) {
+                                var _item = nodeDataList[index];
+                                if (_item.Code == code) {
+                                    chartSelection = parseInt(index);
+                                    break;
+                                }
+                            }
+                            if (chartSelection !== null) {
+                                drilldownparms.chartSelection = chartSelection;
+                            }
+                        }
+                    }
                 }
                 this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
             } else {

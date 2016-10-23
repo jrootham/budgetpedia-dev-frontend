@@ -145,14 +145,42 @@ class ExplorerNode extends Component {
         budgetNode.actions = this._stateActions;
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid];
         if (nodeDeclaration.cellList == null) {
-            let cellDeclarationParms = budgetNode.getCellDeclarationParms();
+            let cellDeclarationParms = JSON.parse(JSON.stringify(budgetNode.getCellDeclarationParms()));
             if (urlparms) {
                 let cellurlparms = urlparms.settingsdata[budgetNode.nodeIndex];
                 let cellIndex = cellurlparms.ci;
                 let cellparms = cellDeclarationParms[cellIndex];
                 cellparms.yearScope = cellurlparms.c.ys;
                 cellparms.chartConfigs[cellparms.yearScope].explorerChartCode = cellurlparms.c.ct;
-                console.log('node will mount', cellIndex, cellparms);
+                let { nodeIndex } = budgetNode;
+                if (nodeIndex < urlparms.branchdata.pa.length) {
+                    let code = urlparms.branchdata.pa[nodeIndex];
+                    let { datasetConfig } = budgetNode.viewpointConfigPack;
+                    let { Dataseries } = datasetConfig;
+                    let drilldownindex = null;
+                    for (let itemindex in Dataseries) {
+                        let item = Dataseries[itemindex];
+                        if (item.Type == 'Components') {
+                            drilldownindex = parseInt(itemindex);
+                            break;
+                        }
+                    }
+                    if (drilldownindex !== null) {
+                        let drilldownparms = cellDeclarationParms[drilldownindex];
+                        let nodeDataList = budgetNode.treeNodeData.SortedComponents;
+                        let chartSelection = null;
+                        for (let index in nodeDataList) {
+                            let item = nodeDataList[index];
+                            if (item.Code == code) {
+                                chartSelection = parseInt(index);
+                                break;
+                            }
+                        }
+                        if (chartSelection !== null) {
+                            drilldownparms.chartSelection = chartSelection;
+                        }
+                    }
+                }
             }
             this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
         }

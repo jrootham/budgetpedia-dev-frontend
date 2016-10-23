@@ -74,19 +74,47 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
 
         if (nodeDeclaration.cellList == null) {
-            // URLPARMSTODO: update cellparms per urlparms
             // get controlData for cellList
-            // console.log('calling cellDeclarationParms',budgetNode)
-            let cellDeclarationParms = budgetNode.getCellDeclarationParms()
-            if (urlparms) {
+            // TODO: cloning with JSON is required here to avoid cross linking chartType - shoud be traced
+            let cellDeclarationParms = JSON.parse(JSON.stringify(budgetNode.getCellDeclarationParms()))
+            if (urlparms) { // apply imported parms
                 let cellurlparms = urlparms.settingsdata[budgetNode.nodeIndex]
                 let cellIndex = cellurlparms.ci
                 let cellparms = cellDeclarationParms[cellIndex]
                 cellparms.yearScope = cellurlparms.c.ys
                 cellparms.chartConfigs[cellparms.yearScope].explorerChartCode = cellurlparms.c.ct
-                console.log('node will mount',cellIndex,cellparms)
+                // set chartSelectionValue for drilldown cell if required
+                let { nodeIndex } = budgetNode
+                // console.log('cellparms',nodeIndex,cellIndex,cellparms)
+                if (nodeIndex < urlparms.branchdata.pa.length) {
+                    let code = urlparms.branchdata.pa[nodeIndex]
+                    let { datasetConfig } = budgetNode.viewpointConfigPack
+                    let { Dataseries } = datasetConfig
+                    let drilldownindex = null
+                    for (let itemindex in Dataseries) {
+                        let item = Dataseries[itemindex]
+                        if (item.Type == 'Components') {
+                            drilldownindex = parseInt(itemindex)
+                            break
+                        }
+                    }
+                    if (drilldownindex !== null) {
+                        let drilldownparms = cellDeclarationParms[drilldownindex]
+                        let nodeDataList = budgetNode.treeNodeData.SortedComponents
+                        let chartSelection = null
+                        for (let index in nodeDataList) {
+                            let item = nodeDataList[index]
+                            if (item.Code == code) {
+                                chartSelection = parseInt(index)
+                                break
+                            }
+                        }
+                        if (chartSelection !== null) {
+                            drilldownparms.chartSelection = chartSelection
+                        }
+                    }
+                }
             }
-            // console.log('cellDeclarationParms',cellDeclarationParms, this.urlparms, budgetNode)
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
 
         } else {
