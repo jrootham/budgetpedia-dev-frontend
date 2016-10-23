@@ -14,6 +14,7 @@ class ExplorerNode extends Component {
         this.waitafteraction = 0;
         this.getState = () => this.state;
         this.getProps = () => this.props;
+        this.urlparms = null;
         this.oldDataGenerationCounter = null;
         this.lastactiongeneration = 0;
         this._respondToGlobalStateChange = () => {
@@ -112,7 +113,7 @@ class ExplorerNode extends Component {
                     updateCellTimeScope: this.props.globalStateActions.updateCellTimeScope,
                     updateCellChartCode: this.props.globalStateActions.updateCellChartCode,
                     updateCellYearSelections: this.props.globalStateActions.updateCellYearSelections,
-                }, showControls: this.props.showControls, callbacks: this.props.callbacks}));
+                }, showControls: this.props.showControls, callbacks: this.props.callbacks, urlparms: this.urlparms}));
             });
             return cellTabs;
         };
@@ -133,7 +134,10 @@ class ExplorerNode extends Component {
         };
     }
     componentWillMount() {
-        let { budgetNode, declarationData } = this.props;
+        let { budgetNode, declarationData, urlparms } = this.props;
+        if (urlparms) {
+            this.urlparms = urlparms;
+        }
         this._stateActions = Object.assign({}, this.props.globalStateActions);
         budgetNode.getState = this.getState;
         budgetNode.getProps = this.getProps;

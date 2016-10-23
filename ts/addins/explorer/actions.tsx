@@ -1,4 +1,11 @@
+// copyright (c) 2016 Henrik Bechmann, Toronto, MIT Licence
 // actions.tsx
+
+/*
+
+    URLPARMSTODO: create addNodeDeclarations (plural) ADD_NODES
+
+*/
 import { createAction } from 'redux-actions';
 let uuid = require('node-uuid') // use uuid.v4() for unique id
 
@@ -13,6 +20,7 @@ export namespace types {
     export const UPDATE_PRORATA = 'UPDATE_PRORATA'
     export const TOGGLE_SHOW_OPTIONS = 'TOGGLE_SHOW_OPTIONS'
     export const ADD_NODE = 'ADD_NODE'
+    export const ADD_NODES = 'ADD_NODES'
     export const REMOVE_NODES = 'REMOVE_NODES'
     export const RESET_LAST_ACTION = 'RESET_LAST_ACTION'
     export const BRANCH_MOVE_UP = 'BRANCH_MOVE_UP'
@@ -36,6 +44,7 @@ export namespace types {
 
 export namespace branchTypes {
     export import ADD_NODE = types.ADD_NODE
+    export import ADD_NODES = types.ADD_NODES
     export import REMOVE_NODES = types.REMOVE_NODES
     export import CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT
     export import CHANGE_VERSION = types.CHANGE_VERSION
@@ -198,6 +207,24 @@ export const addNodeDeclaration = createAction(
     types.ADD_NODE,(branchuid,settings) => ({
         settings,
         nodeuid: uuid.v4(),
+        branchuid,
+    }), () => ({
+        explorer:true
+    })
+)
+
+export const addNodeDeclarations = (branchuid, settingslist) => {
+    return dispatch => {
+        for (let settingsdata of settingslist) {
+            settingsdata.nodeuid = uuid.v4()
+        }
+        dispatch(_addNodeDeclarations(branchuid,settingslist))
+    }
+}
+
+export const _addNodeDeclarations = createAction(
+    types.ADD_NODES,(branchuid,settingslist) => ({
+        settingslist,
         branchuid,
     }), () => ({
         explorer:true

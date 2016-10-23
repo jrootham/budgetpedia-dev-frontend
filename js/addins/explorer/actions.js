@@ -13,6 +13,7 @@ var types;
     types.UPDATE_PRORATA = 'UPDATE_PRORATA';
     types.TOGGLE_SHOW_OPTIONS = 'TOGGLE_SHOW_OPTIONS';
     types.ADD_NODE = 'ADD_NODE';
+    types.ADD_NODES = 'ADD_NODES';
     types.REMOVE_NODES = 'REMOVE_NODES';
     types.RESET_LAST_ACTION = 'RESET_LAST_ACTION';
     types.BRANCH_MOVE_UP = 'BRANCH_MOVE_UP';
@@ -32,6 +33,7 @@ var types;
 var branchTypes;
 (function (branchTypes) {
     branchTypes.ADD_NODE = types.ADD_NODE;
+    branchTypes.ADD_NODES = types.ADD_NODES;
     branchTypes.REMOVE_NODES = types.REMOVE_NODES;
     branchTypes.CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT;
     branchTypes.CHANGE_VERSION = types.CHANGE_VERSION;
@@ -142,6 +144,20 @@ exports.updateNode = redux_actions_1.createAction(types.UPDATE_NODE, (branchuid,
 exports.addNodeDeclaration = redux_actions_1.createAction(types.ADD_NODE, (branchuid, settings) => ({
     settings: settings,
     nodeuid: uuid.v4(),
+    branchuid: branchuid,
+}), () => ({
+    explorer: true
+}));
+exports.addNodeDeclarations = (branchuid, settingslist) => {
+    return dispatch => {
+        for (let settingsdata of settingslist) {
+            settingsdata.nodeuid = uuid.v4();
+        }
+        dispatch(exports._addNodeDeclarations(branchuid, settingslist));
+    };
+};
+exports._addNodeDeclarations = redux_actions_1.createAction(types.ADD_NODES, (branchuid, settingslist) => ({
+    settingslist: settingslist,
     branchuid: branchuid,
 }), () => ({
     explorer: true

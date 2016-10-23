@@ -73,6 +73,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         let nodeDeclaration = declarationData.nodesById[budgetNode.uid]        
 
         if (nodeDeclaration.cellList == null) {
+            // URLPARMSTODO: update cellparms per urlparms
             // get controlData for cellList
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)

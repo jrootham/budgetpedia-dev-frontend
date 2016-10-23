@@ -81,6 +81,7 @@ export interface MappedNodeActions {
 // for use in explorerbranch
 export interface MappedBranchActions extends MappedNodeActions {
     addNodeDeclaration:Function,
+    addNodeDeclarations:Function,
     removeNodeDeclarations: Function,
     changeViewpoint: Function,
     changeVersion: Function,
@@ -593,6 +594,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                     // pass-through
                     addNodeDeclaration: this.props.addNodeDeclaration,
+                    addNodeDeclarations: this.props.addNodeDeclarations,
                     removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
                     changeVersion: this.props.changeVersion,
@@ -787,6 +789,7 @@ Explorer = connect(mapStateToProps, {
     cloneBranchDeclaration:ExplorerActions.cloneBranchDeclaration,
     removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
     addNodeDeclaration:ExplorerActions.addNodeDeclaration,
+    addNodeDeclarations: ExplorerActions.addNodeDeclarations,
     removeNodeDeclarations:ExplorerActions.removeNodeDeclarations,
     addCellDeclarations:ExplorerActions.addCellDeclarations,
     normalizeCellYearDependencies: ExplorerActions.normalizeCellYearDependencies,

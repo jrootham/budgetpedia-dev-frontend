@@ -116,6 +116,19 @@ let branchesById = (state = {}, action) => {
                 [...state[branchuid].nodeList, action.payload.nodeuid];
             return newstate;
         }
+        case actions_1.types.ADD_NODES: {
+            let { branchuid } = action.payload;
+            newstate = Object.assign({}, state);
+            newstate[branchuid] = Object.assign({}, newstate[branchuid]);
+            let { settingslist } = action.payload;
+            let newnodelist = [];
+            for (let settingsdata of settingslist) {
+                newnodelist.push(settingsdata.nodeuid);
+            }
+            newstate[branchuid].nodeList =
+                [...state[branchuid].nodeList, newnodelist];
+            return newstate;
+        }
         case actions_1.types.REMOVE_NODES: {
             let { branchuid } = action.payload;
             newstate = Object.assign({}, state);
@@ -195,6 +208,17 @@ let nodesById = (state = {}, action) => {
             let node = state[action.payload.nodeuid] || {};
             node = Object.assign(node, action.payload.settings);
             newstate = Object.assign({}, state, { [action.payload.nodeuid]: node });
+            return newstate;
+        }
+        case actions_1.types.ADD_NODES: {
+            let { settingslist } = action.payload;
+            console.log('settingslist in reducers ADD_NODES', settingslist);
+            let newstate = Object.assign({}, state);
+            for (let settingsdata of settingslist) {
+                let node = newstate[settingsdata.nodeuid] || {};
+                node = Object.assign(node, settingsdata.settings);
+                newstate[settingsdata.nodeuid] = node;
+            }
             return newstate;
         }
         case actions_1.types.CLONE_BRANCH: {

@@ -870,6 +870,7 @@ var types;
     types.UPDATE_PRORATA = 'UPDATE_PRORATA';
     types.TOGGLE_SHOW_OPTIONS = 'TOGGLE_SHOW_OPTIONS';
     types.ADD_NODE = 'ADD_NODE';
+    types.ADD_NODES = 'ADD_NODES';
     types.REMOVE_NODES = 'REMOVE_NODES';
     types.RESET_LAST_ACTION = 'RESET_LAST_ACTION';
     types.BRANCH_MOVE_UP = 'BRANCH_MOVE_UP';
@@ -889,6 +890,7 @@ var types;
 var branchTypes;
 (function (branchTypes) {
     branchTypes.ADD_NODE = types.ADD_NODE;
+    branchTypes.ADD_NODES = types.ADD_NODES;
     branchTypes.REMOVE_NODES = types.REMOVE_NODES;
     branchTypes.CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT;
     branchTypes.CHANGE_VERSION = types.CHANGE_VERSION;
@@ -1059,6 +1061,46 @@ exports.addNodeDeclaration = redux_actions_1.createAction(types.ADD_NODE, functi
         explorer: true
     };
 });
+exports.addNodeDeclarations = function (branchuid, settingslist) {
+    return function (dispatch) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = settingslist[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var settingsdata = _step.value;
+
+                settingsdata.nodeuid = uuid.v4();
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        dispatch(exports._addNodeDeclarations(branchuid, settingslist));
+    };
+};
+exports._addNodeDeclarations = redux_actions_1.createAction(types.ADD_NODES, function (branchuid, settingslist) {
+    return {
+        settingslist: settingslist,
+        branchuid: branchuid
+    };
+}, function () {
+    return {
+        explorer: true
+    };
+});
 exports.removeNodeDeclarations = redux_actions_1.createAction(types.REMOVE_NODES, function (branchuid, items) {
     return {
         items: items,
@@ -1094,27 +1136,27 @@ var _addCellDeclaration = redux_actions_1.createAction(types.ADD_CELLS, function
 });
 exports.addCellDeclarations = function (branchuid, nodeuid, settingslist) {
     return function (dispatch) {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
 
         try {
-            for (var _iterator = settingslist[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var settings = _step.value;
+            for (var _iterator2 = settingslist[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                var settings = _step2.value;
 
                 settings.celluid = uuid.v4();
             }
         } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
         } finally {
             try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                    _iterator.return();
+                if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                    _iterator2.return();
                 }
             } finally {
-                if (_didIteratorError) {
-                    throw _iteratorError;
+                if (_didIteratorError2) {
+                    throw _iteratorError2;
                 }
             }
         }
@@ -3080,7 +3122,14 @@ var ExplorerBranch = function (_Component) {
         };
         _this.addNodeDeclaration = function (branchUid) {
             return function (settings) {
+                console.log('running addNodeDeclaration SINGULAR');
                 return _this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
+            };
+        };
+        _this.addNodeDeclarations = function (branchUid) {
+            return function (settingslist) {
+                console.log('running addNodeDeclarations PLURAL');
+                return _this.props.globalStateActions.addNodeDeclarations(branchUid, settingslist);
             };
         };
         _this.removeNodeDeclarations = function (branchUid) {
@@ -3089,6 +3138,31 @@ var ExplorerBranch = function (_Component) {
             };
         };
         _this.urlparms = null;
+        _this._geturlsettingslist = function (urlparms) {
+            var nodesettings = urlparms.settingsdata;
+            var branch = urlparms.branchdata;
+            var settingslist = [];
+            for (var nodeindex in nodesettings) {
+                var node = nodesettings[nodeindex];
+                var settings = {
+                    aspectName: branch.as,
+                    cellIndex: node.ci,
+                    cellList: null,
+                    dataPath: branch.pa.slice(0, parseInt(nodeindex)),
+                    nodeIndex: parseInt(nodeindex),
+                    viewpointName: branch.vi,
+                    yearSelections: node.ys,
+                    yearsRange: {
+                        firstYear: null,
+                        lastYear: null
+                    }
+                };
+                settingslist.push({
+                    settings: settings
+                });
+            }
+            return settingslist;
+        };
         _this._initialize = function () {
             var branch = _this;
             var _branch$props = branch.props;
@@ -3099,6 +3173,7 @@ var ExplorerBranch = function (_Component) {
 
             branch._stateActions = Object.assign({}, actions);
             branch._stateActions.addNodeDeclaration = branch.addNodeDeclaration(budgetBranch.uid);
+            branch._stateActions.addNodeDeclarations = branch.addNodeDeclarations(budgetBranch.uid);
             branch._stateActions.removeNodeDeclarations = branch.removeNodeDeclarations(budgetBranch.uid);
             var onPortalCreation = branch.onPortalCreation;
             var workingStatus = displayCallbacks.workingStatus;
@@ -3469,7 +3544,7 @@ var ExplorerBranch = function (_Component) {
                 actions.updateCellChartSelection = branch._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = branch._stateActions.updateCellChartCode(budgetNode.uid);
                 actions.updateCellYearSelections = branch._stateActions.updateCellYearSelections(budgetNode.uid);
-                return React.createElement(explorernode_1.ExplorerNode, { key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells } });
+                return React.createElement(explorernode_1.ExplorerNode, { key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }, urlparms: _this.urlparms });
             });
             return portals;
         };
@@ -3640,10 +3715,15 @@ var ExplorerBranch = function (_Component) {
                     if (urlparms) {
                         _this2.urlparms = urlparms;
                         _this2.props.clearUrlParms();
+                        console.log('this.urlparms in branch will mount', _this2.urlparms);
+                        var settingslist = _this2._geturlsettingslist(urlparms);
+                        console.log('settingslist in branch will mount', settingslist);
+                        _this2._stateActions.addNodeDeclarations(settingslist);
+                    } else {
+                        var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
+                        console.log('budgetNodeParms in branchWillMount', budgetNodeParms);
+                        _this2._stateActions.addNodeDeclaration(budgetNodeParms);
                     }
-                    console.log('this.urlparms in branch will mount', _this2.urlparms);
-                    var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
-                    _this2._stateActions.addNodeDeclaration(budgetNodeParms);
                 } else {
                     setTimeout(function () {
                         _this2._stateActions.resetLastAction();
@@ -3847,6 +3927,7 @@ var ExplorerCell = function (_Component) {
         _this.getProps = function () {
             return _this.props;
         };
+        _this.urlparms = null;
         _this.lastactiongeneration = 0;
         _this.waitafteraction = 0;
         _this._respondToGlobalStateChange = function () {
@@ -3917,12 +3998,17 @@ var ExplorerCell = function (_Component) {
     _createClass(ExplorerCell, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var budgetCell = this.props.budgetCell;
+            var _props = this.props;
+            var budgetCell = _props.budgetCell;
+            var urlparms = _props.urlparms;
 
             budgetCell.getProps = this.getProps;
             budgetCell.getState = this.getState;
             budgetCell.setState = this.setState.bind(this);
             budgetCell.setChartParms();
+            if (urlparms) {
+                this.urlparms = urlparms;
+            }
         }
     }, {
         key: 'componentDidMount',
@@ -4354,6 +4440,7 @@ var ExplorerNode = function (_Component) {
         _this.getProps = function () {
             return _this.props;
         };
+        _this.urlparms = null;
         _this.oldDataGenerationCounter = null;
         _this.lastactiongeneration = 0;
         _this._respondToGlobalStateChange = function () {
@@ -4486,7 +4573,7 @@ var ExplorerNode = function (_Component) {
                         updateCellTimeScope: _this.props.globalStateActions.updateCellTimeScope,
                         updateCellChartCode: _this.props.globalStateActions.updateCellChartCode,
                         updateCellYearSelections: _this.props.globalStateActions.updateCellYearSelections
-                    }, showControls: _this.props.showControls, callbacks: _this.props.callbacks }));
+                    }, showControls: _this.props.showControls, callbacks: _this.props.callbacks, urlparms: _this.urlparms }));
             });
             return cellTabs;
         };
@@ -4514,7 +4601,11 @@ var ExplorerNode = function (_Component) {
             var _props = this.props;
             var budgetNode = _props.budgetNode;
             var declarationData = _props.declarationData;
+            var urlparms = _props.urlparms;
 
+            if (urlparms) {
+                this.urlparms = urlparms;
+            }
             this._stateActions = Object.assign({}, this.props.globalStateActions);
             budgetNode.getState = this.getState;
             budgetNode.getProps = this.getProps;
@@ -5347,6 +5438,7 @@ var Explorer = function (_Component) {
                         updateCellChartCode: _this2.updateCellChartCode(budgetBranch.uid),
                         updateNode: _this2.updateNode(budgetBranch.uid),
                         addNodeDeclaration: _this2.props.addNodeDeclaration,
+                        addNodeDeclarations: _this2.props.addNodeDeclarations,
                         removeNodeDeclarations: _this2.props.removeNodeDeclarations,
                         changeViewpoint: _this2.props.changeViewpoint,
                         changeVersion: _this2.props.changeVersion,
@@ -5423,6 +5515,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     cloneBranchDeclaration: ExplorerActions.cloneBranchDeclaration,
     removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
     addNodeDeclaration: ExplorerActions.addNodeDeclaration,
+    addNodeDeclarations: ExplorerActions.addNodeDeclarations,
     removeNodeDeclarations: ExplorerActions.removeNodeDeclarations,
     addCellDeclarations: ExplorerActions.addCellDeclarations,
     normalizeCellYearDependencies: ExplorerActions.normalizeCellYearDependencies,
@@ -5837,6 +5930,43 @@ var branchesById = function branchesById() {
                 newstate[branchuid].nodeList = [].concat(_toConsumableArray(state[branchuid].nodeList), [action.payload.nodeuid]);
                 return newstate;
             }
+        case actions_1.types.ADD_NODES:
+            {
+                var _branchuid3 = action.payload.branchuid;
+
+                newstate = Object.assign({}, state);
+                newstate[_branchuid3] = Object.assign({}, newstate[_branchuid3]);
+                var settingslist = action.payload.settingslist;
+
+                var newnodelist = [];
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = settingslist[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var settingsdata = _step.value;
+
+                        newnodelist.push(settingsdata.nodeuid);
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+
+                newstate[_branchuid3].nodeList = [].concat(_toConsumableArray(state[_branchuid3].nodeList), [newnodelist]);
+                return newstate;
+            }
         case actions_1.types.REMOVE_NODES:
             {
                 var _ret = function () {
@@ -5860,70 +5990,70 @@ var branchesById = function branchesById() {
             }
         case actions_1.types.CHANGE_VIEWPOINT:
             {
-                var _branchuid3 = action.payload.branchuid;
+                var _branchuid4 = action.payload.branchuid;
 
                 newstate = Object.assign({}, state);
-                var newbranchstate = Object.assign({}, newstate[_branchuid3]);
+                var newbranchstate = Object.assign({}, newstate[_branchuid4]);
                 newbranchstate.viewpoint = action.payload.viewpointname;
                 newbranchstate.version = newbranchstate.defaultVersions[newbranchstate.viewpoint];
                 newbranchstate.aspect = newbranchstate.defaultAspects[newbranchstate.version];
-                newstate[_branchuid3] = newbranchstate;
+                newstate[_branchuid4] = newbranchstate;
                 return newstate;
             }
         case actions_1.types.CHANGE_VERSION:
             {
-                var _branchuid4 = action.payload.branchuid;
-
-                newstate = Object.assign({}, state);
-                var _newbranchstate = Object.assign({}, newstate[_branchuid4]);
-                _newbranchstate.version = action.payload.versionname;
-                _newbranchstate.aspect = _newbranchstate.defaultAspects[_newbranchstate.version];
-                newstate[_branchuid4] = _newbranchstate;
-                return newstate;
-            }
-        case actions_1.types.CHANGE_ASPECT:
-            {
                 var _branchuid5 = action.payload.branchuid;
 
                 newstate = Object.assign({}, state);
-                newstate[_branchuid5] = Object.assign({}, newstate[_branchuid5]);
-                newstate[_branchuid5].aspect = action.payload.aspectname;
+                var _newbranchstate = Object.assign({}, newstate[_branchuid5]);
+                _newbranchstate.version = action.payload.versionname;
+                _newbranchstate.aspect = _newbranchstate.defaultAspects[_newbranchstate.version];
+                newstate[_branchuid5] = _newbranchstate;
                 return newstate;
             }
-        case actions_1.types.TOGGLE_INFLATION_ADJUSTED:
+        case actions_1.types.CHANGE_ASPECT:
             {
                 var _branchuid6 = action.payload.branchuid;
 
                 newstate = Object.assign({}, state);
                 newstate[_branchuid6] = Object.assign({}, newstate[_branchuid6]);
-                newstate[_branchuid6].inflationAdjusted = action.payload.value;
+                newstate[_branchuid6].aspect = action.payload.aspectname;
                 return newstate;
             }
-        case actions_1.types.UPDATE_PRORATA:
+        case actions_1.types.TOGGLE_INFLATION_ADJUSTED:
             {
                 var _branchuid7 = action.payload.branchuid;
 
                 newstate = Object.assign({}, state);
                 newstate[_branchuid7] = Object.assign({}, newstate[_branchuid7]);
-                newstate[_branchuid7].prorata = action.payload.value;
+                newstate[_branchuid7].inflationAdjusted = action.payload.value;
                 return newstate;
             }
-        case actions_1.types.TOGGLE_SHOW_OPTIONS:
+        case actions_1.types.UPDATE_PRORATA:
             {
                 var _branchuid8 = action.payload.branchuid;
 
                 newstate = Object.assign({}, state);
                 newstate[_branchuid8] = Object.assign({}, newstate[_branchuid8]);
-                newstate[_branchuid8].showOptions = action.payload.value;
+                newstate[_branchuid8].prorata = action.payload.value;
                 return newstate;
             }
-        case actions_1.types.CHANGE_BRANCH_DATA:
+        case actions_1.types.TOGGLE_SHOW_OPTIONS:
             {
                 var _branchuid9 = action.payload.branchuid;
 
                 newstate = Object.assign({}, state);
                 newstate[_branchuid9] = Object.assign({}, newstate[_branchuid9]);
-                newstate[_branchuid9].branchDataGeneration++;
+                newstate[_branchuid9].showOptions = action.payload.value;
+                return newstate;
+            }
+        case actions_1.types.CHANGE_BRANCH_DATA:
+            {
+                var _branchuid10 = action.payload.branchuid;
+
+                newstate = Object.assign({}, state);
+                newstate[_branchuid10] = Object.assign({}, newstate[_branchuid10]);
+                newstate[_branchuid10].branchDataGeneration++;
                 return newstate;
             }
         default:
@@ -5944,6 +6074,41 @@ var nodesById = function nodesById() {
                 newstate = Object.assign({}, state, _defineProperty({}, action.payload.nodeuid, node));
                 return newstate;
             }
+        case actions_1.types.ADD_NODES:
+            {
+                var settingslist = action.payload.settingslist;
+
+                console.log('settingslist in reducers ADD_NODES', settingslist);
+                var _newstate = Object.assign({}, state);
+                var _iteratorNormalCompletion2 = true;
+                var _didIteratorError2 = false;
+                var _iteratorError2 = undefined;
+
+                try {
+                    for (var _iterator2 = settingslist[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                        var settingsdata = _step2.value;
+
+                        var _node = _newstate[settingsdata.nodeuid] || {};
+                        _node = Object.assign(_node, settingsdata.settings);
+                        _newstate[settingsdata.nodeuid] = _node;
+                    }
+                } catch (err) {
+                    _didIteratorError2 = true;
+                    _iteratorError2 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                            _iterator2.return();
+                        }
+                    } finally {
+                        if (_didIteratorError2) {
+                            throw _iteratorError2;
+                        }
+                    }
+                }
+
+                return _newstate;
+            }
         case actions_1.types.CLONE_BRANCH:
             {
                 var newnodes = action.payload.settings.nodes;
@@ -5957,27 +6122,27 @@ var nodesById = function nodesById() {
             {
                 newstate = Object.assign({}, state);
                 var removelist = action.payload.items;
-                var _iteratorNormalCompletion = true;
-                var _didIteratorError = false;
-                var _iteratorError = undefined;
+                var _iteratorNormalCompletion3 = true;
+                var _didIteratorError3 = false;
+                var _iteratorError3 = undefined;
 
                 try {
-                    for (var _iterator = removelist[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        var removeitem = _step.value;
+                    for (var _iterator3 = removelist[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                        var removeitem = _step3.value;
 
                         delete newstate[removeitem.nodeuid];
                     }
                 } catch (err) {
-                    _didIteratorError = true;
-                    _iteratorError = err;
+                    _didIteratorError3 = true;
+                    _iteratorError3 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion && _iterator.return) {
-                            _iterator.return();
+                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                            _iterator3.return();
                         }
                     } finally {
-                        if (_didIteratorError) {
-                            throw _iteratorError;
+                        if (_didIteratorError3) {
+                            throw _iteratorError3;
                         }
                     }
                 }
@@ -5986,26 +6151,26 @@ var nodesById = function nodesById() {
             }
         case actions_1.types.ADD_CELLS:
             {
-                var _newstate = Object.assign({}, state);
+                var _newstate2 = Object.assign({}, state);
                 var nodeuid = action.payload.nodeuid;
-                var newnode = Object.assign({}, _newstate[nodeuid]);
+                var newnode = Object.assign({}, _newstate2[nodeuid]);
                 newnode.cellList = newnode.cellList || [];
                 var newcellList = action.payload.settings.map(function (setting) {
                     return setting.celluid;
                 });
                 newnode.cellList = [].concat(_toConsumableArray(newnode.cellList), _toConsumableArray(newcellList));
-                _newstate[nodeuid] = newnode;
-                return _newstate;
+                _newstate2[nodeuid] = newnode;
+                return _newstate2;
             }
         case actions_1.types.CHANGE_TAB:
             {
-                var _newstate2 = Object.assign({}, state);
+                var _newstate3 = Object.assign({}, state);
                 var _nodeuid = action.payload.nodeuid;
 
-                var _newnode = Object.assign({}, _newstate2[action.payload.nodeuid]);
+                var _newnode = Object.assign({}, _newstate3[action.payload.nodeuid]);
                 _newnode.cellIndex = action.payload.tabvalue;
-                _newstate2[_nodeuid] = _newnode;
-                return _newstate2;
+                _newstate3[_nodeuid] = _newnode;
+                return _newstate3;
             }
         case actions_1.types.UPDATE_NODE_YEAR_SELECTIONS:
             {
@@ -6054,13 +6219,13 @@ var nodesById = function nodesById() {
                 var _action$payload5 = action.payload;
                 var nodeProperties = _action$payload5.nodeProperties;
                 var nodeList = _action$payload5.nodeList;
-                var _iteratorNormalCompletion2 = true;
-                var _didIteratorError2 = false;
-                var _iteratorError2 = undefined;
+                var _iteratorNormalCompletion4 = true;
+                var _didIteratorError4 = false;
+                var _iteratorError4 = undefined;
 
                 try {
-                    for (var _iterator2 = nodeList[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                        var _nodeuid4 = _step2.value;
+                    for (var _iterator4 = nodeList[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                        var _nodeuid4 = _step4.value;
 
                         var _newnode4 = Object.assign({}, newstate[_nodeuid4]);
                         if (nodeProperties.cellIndex < _newnode4.cellList.length) {
@@ -6071,16 +6236,16 @@ var nodesById = function nodesById() {
                         newstate[_nodeuid4] = _newnode4;
                     }
                 } catch (err) {
-                    _didIteratorError2 = true;
-                    _iteratorError2 = err;
+                    _didIteratorError4 = true;
+                    _iteratorError4 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                            _iterator2.return();
+                        if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                            _iterator4.return();
                         }
                     } finally {
-                        if (_didIteratorError2) {
-                            throw _iteratorError2;
+                        if (_didIteratorError4) {
+                            throw _iteratorError4;
                         }
                     }
                 }
@@ -6100,27 +6265,27 @@ var cellsById = function cellsById() {
     switch (type) {
         case actions_1.types.ADD_CELLS:
             {
-                var _iteratorNormalCompletion3 = true;
-                var _didIteratorError3 = false;
-                var _iteratorError3 = undefined;
+                var _iteratorNormalCompletion5 = true;
+                var _didIteratorError5 = false;
+                var _iteratorError5 = undefined;
 
                 try {
-                    for (var _iterator3 = action.payload.settings[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                        var setting = _step3.value;
+                    for (var _iterator5 = action.payload.settings[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                        var setting = _step5.value;
 
                         newstate[setting.celluid] = setting;
                     }
                 } catch (err) {
-                    _didIteratorError3 = true;
-                    _iteratorError3 = err;
+                    _didIteratorError5 = true;
+                    _iteratorError5 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                            _iterator3.return();
+                        if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                            _iterator5.return();
                         }
                     } finally {
-                        if (_didIteratorError3) {
-                            throw _iteratorError3;
+                        if (_didIteratorError5) {
+                            throw _iteratorError5;
                         }
                     }
                 }
@@ -6138,49 +6303,49 @@ var cellsById = function cellsById() {
             }
         case actions_1.types.REMOVE_NODES:
             {
-                var _iteratorNormalCompletion4 = true;
-                var _didIteratorError4 = false;
-                var _iteratorError4 = undefined;
+                var _iteratorNormalCompletion6 = true;
+                var _didIteratorError6 = false;
+                var _iteratorError6 = undefined;
 
                 try {
-                    for (var _iterator4 = action.payload.items[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                        var removeitem = _step4.value;
-                        var _iteratorNormalCompletion5 = true;
-                        var _didIteratorError5 = false;
-                        var _iteratorError5 = undefined;
+                    for (var _iterator6 = action.payload.items[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                        var removeitem = _step6.value;
+                        var _iteratorNormalCompletion7 = true;
+                        var _didIteratorError7 = false;
+                        var _iteratorError7 = undefined;
 
                         try {
-                            for (var _iterator5 = removeitem.cellList[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                                var celluid = _step5.value;
+                            for (var _iterator7 = removeitem.cellList[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+                                var celluid = _step7.value;
 
                                 delete newstate[celluid];
                             }
                         } catch (err) {
-                            _didIteratorError5 = true;
-                            _iteratorError5 = err;
+                            _didIteratorError7 = true;
+                            _iteratorError7 = err;
                         } finally {
                             try {
-                                if (!_iteratorNormalCompletion5 && _iterator5.return) {
-                                    _iterator5.return();
+                                if (!_iteratorNormalCompletion7 && _iterator7.return) {
+                                    _iterator7.return();
                                 }
                             } finally {
-                                if (_didIteratorError5) {
-                                    throw _iteratorError5;
+                                if (_didIteratorError7) {
+                                    throw _iteratorError7;
                                 }
                             }
                         }
                     }
                 } catch (err) {
-                    _didIteratorError4 = true;
-                    _iteratorError4 = err;
+                    _didIteratorError6 = true;
+                    _iteratorError6 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                            _iterator4.return();
+                        if (!_iteratorNormalCompletion6 && _iterator6.return) {
+                            _iterator6.return();
                         }
                     } finally {
-                        if (_didIteratorError4) {
-                            throw _iteratorError4;
+                        if (_didIteratorError6) {
+                            throw _iteratorError6;
                         }
                     }
                 }
@@ -6232,13 +6397,13 @@ var cellsById = function cellsById() {
                 var endYear = yearsRange.end;
 
                 var yearSpan = endYear - startYear;
-                var _iteratorNormalCompletion6 = true;
-                var _didIteratorError6 = false;
-                var _iteratorError6 = undefined;
+                var _iteratorNormalCompletion8 = true;
+                var _didIteratorError8 = false;
+                var _iteratorError8 = undefined;
 
                 try {
-                    for (var _iterator6 = cellList[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-                        var _celluid4 = _step6.value;
+                    for (var _iterator8 = cellList[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+                        var _celluid4 = _step8.value;
 
                         var _newcell3 = Object.assign({}, newstate[_celluid4]);
                         if (yearSpan == 0) {
@@ -6247,16 +6412,16 @@ var cellsById = function cellsById() {
                         newstate[_celluid4] = _newcell3;
                     }
                 } catch (err) {
-                    _didIteratorError6 = true;
-                    _iteratorError6 = err;
+                    _didIteratorError8 = true;
+                    _iteratorError8 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion6 && _iterator6.return) {
-                            _iterator6.return();
+                        if (!_iteratorNormalCompletion8 && _iterator8.return) {
+                            _iterator8.return();
                         }
                     } finally {
-                        if (_didIteratorError6) {
-                            throw _iteratorError6;
+                        if (_didIteratorError8) {
+                            throw _iteratorError8;
                         }
                     }
                 }
@@ -6269,13 +6434,13 @@ var cellsById = function cellsById() {
                 var _action$payload9 = action.payload;
                 var cellProperties = _action$payload9.cellProperties;
                 var _cellList = _action$payload9.cellList;
-                var _iteratorNormalCompletion7 = true;
-                var _didIteratorError7 = false;
-                var _iteratorError7 = undefined;
+                var _iteratorNormalCompletion9 = true;
+                var _didIteratorError9 = false;
+                var _iteratorError9 = undefined;
 
                 try {
-                    for (var _iterator7 = _cellList[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-                        var _celluid5 = _step7.value;
+                    for (var _iterator9 = _cellList[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+                        var _celluid5 = _step9.value;
 
                         var _newcell4 = Object.assign({}, newstate[_celluid5]);
                         _newcell4.yearScope = cellProperties.yearScope;
@@ -6285,16 +6450,16 @@ var cellsById = function cellsById() {
                         newstate[_celluid5] = _newcell4;
                     }
                 } catch (err) {
-                    _didIteratorError7 = true;
-                    _iteratorError7 = err;
+                    _didIteratorError9 = true;
+                    _iteratorError9 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion7 && _iterator7.return) {
-                            _iterator7.return();
+                        if (!_iteratorNormalCompletion9 && _iterator9.return) {
+                            _iterator9.return();
                         }
                     } finally {
-                        if (_didIteratorError7) {
-                            throw _iteratorError7;
+                        if (_didIteratorError9) {
+                            throw _iteratorError9;
                         }
                     }
                 }
@@ -6315,20 +6480,20 @@ var lastAction = function lastAction() {
 
     var newstate = Object.assign({}, state);
     if (!action.payload && !(action.type == actions_1.types.RESET_LAST_ACTION)) {
-        var _newstate3 = Object.assign({}, lastActionDefaultState);
-        _newstate3.type = action.type;
-        return _newstate3;
+        var _newstate4 = Object.assign({}, lastActionDefaultState);
+        _newstate4.type = action.type;
+        return _newstate4;
     }
     var type = action.type;
 
     switch (type) {
         case actions_1.types.RESET_LAST_ACTION:
             {
-                var _newstate4 = Object.assign({}, lastActionDefaultState);
-                _newstate4.type = action.type;
-                _newstate4.explorer = action.meta.explorer;
-                _newstate4.generation = generationcounter;
-                return _newstate4;
+                var _newstate5 = Object.assign({}, lastActionDefaultState);
+                _newstate5.type = action.type;
+                _newstate5.explorer = action.meta.explorer;
+                _newstate5.generation = generationcounter;
+                return _newstate5;
             }
         default:
             {
@@ -6365,49 +6530,49 @@ var lastTargetedAction = function lastTargetedAction() {
             return newstate;
         case actions_1.types.REMOVE_NODES:
             delete newstate[payload.nodeuid];
-            var _iteratorNormalCompletion8 = true;
-            var _didIteratorError8 = false;
-            var _iteratorError8 = undefined;
+            var _iteratorNormalCompletion10 = true;
+            var _didIteratorError10 = false;
+            var _iteratorError10 = undefined;
 
             try {
-                for (var _iterator8 = payload.items[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-                    var removeitem = _step8.value;
-                    var _iteratorNormalCompletion9 = true;
-                    var _didIteratorError9 = false;
-                    var _iteratorError9 = undefined;
+                for (var _iterator10 = payload.items[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+                    var removeitem = _step10.value;
+                    var _iteratorNormalCompletion11 = true;
+                    var _didIteratorError11 = false;
+                    var _iteratorError11 = undefined;
 
                     try {
-                        for (var _iterator9 = removeitem.cellList[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-                            var celluid = _step9.value;
+                        for (var _iterator11 = removeitem.cellList[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+                            var celluid = _step11.value;
 
                             delete newstate[celluid];
                         }
                     } catch (err) {
-                        _didIteratorError9 = true;
-                        _iteratorError9 = err;
+                        _didIteratorError11 = true;
+                        _iteratorError11 = err;
                     } finally {
                         try {
-                            if (!_iteratorNormalCompletion9 && _iterator9.return) {
-                                _iterator9.return();
+                            if (!_iteratorNormalCompletion11 && _iterator11.return) {
+                                _iterator11.return();
                             }
                         } finally {
-                            if (_didIteratorError9) {
-                                throw _iteratorError9;
+                            if (_didIteratorError11) {
+                                throw _iteratorError11;
                             }
                         }
                     }
                 }
             } catch (err) {
-                _didIteratorError8 = true;
-                _iteratorError8 = err;
+                _didIteratorError10 = true;
+                _iteratorError10 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion8 && _iterator8.return) {
-                        _iterator8.return();
+                    if (!_iteratorNormalCompletion10 && _iterator10.return) {
+                        _iterator10.return();
                     }
                 } finally {
-                    if (_didIteratorError8) {
-                        throw _iteratorError8;
+                    if (_didIteratorError10) {
+                        throw _iteratorError10;
                     }
                 }
             }

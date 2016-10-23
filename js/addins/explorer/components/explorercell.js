@@ -21,6 +21,7 @@ class ExplorerCell extends Component {
         };
         this.getState = () => this.state;
         this.getProps = () => this.props;
+        this.urlparms = null;
         this.lastactiongeneration = 0;
         this.waitafteraction = 0;
         this._respondToGlobalStateChange = () => {
@@ -81,11 +82,14 @@ class ExplorerCell extends Component {
         };
     }
     componentWillMount() {
-        let { budgetCell } = this.props;
+        let { budgetCell, urlparms } = this.props;
         budgetCell.getProps = this.getProps;
         budgetCell.getState = this.getState;
         budgetCell.setState = this.setState.bind(this);
         budgetCell.setChartParms();
+        if (urlparms) {
+            this.urlparms = urlparms;
+        }
     }
     componentDidMount() {
         this._previousControlData = this.props.declarationData;

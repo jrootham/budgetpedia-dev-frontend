@@ -115,12 +115,25 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _nodeDisplayCallbacks: any
 
     // provide for curried versions
-    private addNodeDeclaration = branchUid => 
-        settings => 
-        this.props.globalStateActions.addNodeDeclaration(branchUid,settings);
-    private removeNodeDeclarations = branchUid => 
-        nodeItems => 
-        this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems)
+    private addNodeDeclaration = (branchUid) => {
+        return (settings) => {
+            console.log('running addNodeDeclaration SINGULAR')
+            return this.props.globalStateActions.addNodeDeclaration(branchUid,settings);
+        }
+    }
+
+    private addNodeDeclarations = (branchUid) => {
+        return (settingslist) => {
+            console.log('running addNodeDeclarations PLURAL')
+            return this.props.globalStateActions.addNodeDeclarations(branchUid,settingslist);
+        }
+    }
+
+    private removeNodeDeclarations = (branchUid) => {
+        return (nodeItems) => {
+            return this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems)
+        }
+    }
 
     urlparms:any = null
 
@@ -142,11 +155,21 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 if (urlparms) {
                     this.urlparms = urlparms
                     this.props.clearUrlParms()
-                }
-                console.log('this.urlparms in branch will mount',this.urlparms)
+                    console.log('this.urlparms in branch will mount',this.urlparms)
 
-                let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
-                this._stateActions.addNodeDeclaration(budgetNodeParms)
+                    let settingslist = this._geturlsettingslist(urlparms)
+
+                    console.log('settingslist in branch will mount',settingslist)
+                    this._stateActions.addNodeDeclarations(settingslist)
+
+                } else {
+
+                    let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
+
+                    console.log('budgetNodeParms in branchWillMount',budgetNodeParms)
+                    this._stateActions.addNodeDeclaration(budgetNodeParms)
+
+                }
 
             } else {
 
@@ -165,6 +188,33 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         })
     }
 
+    private _geturlsettingslist = (urlparms) => {
+        let nodesettings = urlparms.settingsdata
+        let branch = urlparms.branchdata
+        let settingslist = []
+        for (let nodeindex in nodesettings) {
+            let node = nodesettings[nodeindex]
+            let settings = {
+                aspectName:branch.as,
+                cellIndex:node.ci,
+                cellList:null,
+                dataPath: branch.pa.slice(0,parseInt(nodeindex)),
+                nodeIndex:parseInt(nodeindex),
+                viewpointName:branch.vi,
+                yearSelections:node.ys,
+                yearsRange:{
+                    firstYear:null,
+                    lastYear:null,
+                },
+            }
+            settingslist.push({
+                settings,
+            })
+        }
+
+        return settingslist
+    } 
+
     private _initialize = () => {
 
         let branch = this
@@ -175,6 +225,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         branch._stateActions = Object.assign({}, actions)
         // replace originals with curried versions
         branch._stateActions.addNodeDeclaration = branch.addNodeDeclaration(budgetBranch.uid)
+        branch._stateActions.addNodeDeclarations = branch.addNodeDeclarations(budgetBranch.uid)
         branch._stateActions.removeNodeDeclarations = branch.removeNodeDeclarations(budgetBranch.uid)
 
         let { onPortalCreation } = branch

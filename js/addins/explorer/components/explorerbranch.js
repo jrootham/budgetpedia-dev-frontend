@@ -25,14 +25,55 @@ class ExplorerBranch extends Component {
         this.waitafteraction = 0;
         this.getState = () => this.state;
         this.getProps = () => this.props;
-        this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
-        this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
+        this.addNodeDeclaration = (branchUid) => {
+            return (settings) => {
+                console.log('running addNodeDeclaration SINGULAR');
+                return this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
+            };
+        };
+        this.addNodeDeclarations = (branchUid) => {
+            return (settingslist) => {
+                console.log('running addNodeDeclarations PLURAL');
+                return this.props.globalStateActions.addNodeDeclarations(branchUid, settingslist);
+            };
+        };
+        this.removeNodeDeclarations = (branchUid) => {
+            return (nodeItems) => {
+                return this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
+            };
+        };
         this.urlparms = null;
+        this._geturlsettingslist = (urlparms) => {
+            let nodesettings = urlparms.settingsdata;
+            let branch = urlparms.branchdata;
+            let settingslist = [];
+            for (let nodeindex in nodesettings) {
+                let node = nodesettings[nodeindex];
+                let settings = {
+                    aspectName: branch.as,
+                    cellIndex: node.ci,
+                    cellList: null,
+                    dataPath: branch.pa.slice(0, parseInt(nodeindex)),
+                    nodeIndex: parseInt(nodeindex),
+                    viewpointName: branch.vi,
+                    yearSelections: node.ys,
+                    yearsRange: {
+                        firstYear: null,
+                        lastYear: null,
+                    },
+                };
+                settingslist.push({
+                    settings: settings,
+                });
+            }
+            return settingslist;
+        };
         this._initialize = () => {
             let branch = this;
             let { budgetBranch, globalStateActions: actions, displayCallbacks, declarationData } = branch.props;
             branch._stateActions = Object.assign({}, actions);
             branch._stateActions.addNodeDeclaration = branch.addNodeDeclaration(budgetBranch.uid);
+            branch._stateActions.addNodeDeclarations = branch.addNodeDeclarations(budgetBranch.uid);
             branch._stateActions.removeNodeDeclarations = branch.removeNodeDeclarations(budgetBranch.uid);
             let { onPortalCreation } = branch;
             let { workingStatus } = displayCallbacks;
@@ -341,7 +382,7 @@ class ExplorerBranch extends Component {
                 actions.updateCellChartSelection = branch._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = branch._stateActions.updateCellChartCode(budgetNode.uid);
                 actions.updateCellYearSelections = branch._stateActions.updateCellYearSelections(budgetNode.uid);
-                return React.createElement(explorernode_1.ExplorerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }});
+                return React.createElement(explorernode_1.ExplorerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }, urlparms: this.urlparms});
             });
             return portals;
         };
@@ -414,10 +455,16 @@ class ExplorerBranch extends Component {
                 if (urlparms) {
                     this.urlparms = urlparms;
                     this.props.clearUrlParms();
+                    console.log('this.urlparms in branch will mount', this.urlparms);
+                    let settingslist = this._geturlsettingslist(urlparms);
+                    console.log('settingslist in branch will mount', settingslist);
+                    this._stateActions.addNodeDeclarations(settingslist);
                 }
-                console.log('this.urlparms in branch will mount', this.urlparms);
-                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
-                this._stateActions.addNodeDeclaration(budgetNodeParms);
+                else {
+                    let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
+                    console.log('budgetNodeParms in branchWillMount', budgetNodeParms);
+                    this._stateActions.addNodeDeclaration(budgetNodeParms);
+                }
             }
             else {
                 setTimeout(() => {
