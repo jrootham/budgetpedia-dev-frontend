@@ -126,7 +126,7 @@ let branchesById = (state = {}, action) => {
                 newnodelist.push(settingsdata.nodeuid);
             }
             newstate[branchuid].nodeList =
-                [...state[branchuid].nodeList, newnodelist];
+                [...state[branchuid].nodeList, ...newnodelist];
             return newstate;
         }
         case actions_1.types.REMOVE_NODES: {
@@ -212,7 +212,6 @@ let nodesById = (state = {}, action) => {
         }
         case actions_1.types.ADD_NODES: {
             let { settingslist } = action.payload;
-            console.log('settingslist in reducers ADD_NODES', settingslist);
             let newstate = Object.assign({}, state);
             for (let settingsdata of settingslist) {
                 let node = newstate[settingsdata.nodeuid] || {};

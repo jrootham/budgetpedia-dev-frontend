@@ -115,25 +115,14 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _nodeDisplayCallbacks: any
 
     // provide for curried versions
-    private addNodeDeclaration = (branchUid) => {
-        return (settings) => {
-            console.log('running addNodeDeclaration SINGULAR')
-            return this.props.globalStateActions.addNodeDeclaration(branchUid,settings);
-        }
-    }
+    private addNodeDeclaration = branchUid => settings => 
+            this.props.globalStateActions.addNodeDeclaration(branchUid,settings);
 
-    private addNodeDeclarations = (branchUid) => {
-        return (settingslist) => {
-            console.log('running addNodeDeclarations PLURAL')
-            return this.props.globalStateActions.addNodeDeclarations(branchUid,settingslist);
-        }
-    }
+    private addNodeDeclarations = branchUid => settingslist => 
+            this.props.globalStateActions.addNodeDeclarations(branchUid,settingslist);
 
-    private removeNodeDeclarations = (branchUid) => {
-        return (nodeItems) => {
-            return this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems)
-        }
-    }
+    private removeNodeDeclarations = branchUid => nodeItems => 
+            this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
 
     urlparms:any = null
 
@@ -155,18 +144,18 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 if (urlparms) {
                     this.urlparms = urlparms
                     this.props.clearUrlParms()
-                    console.log('this.urlparms in branch will mount',this.urlparms)
+                    // console.log('this.urlparms in branch will mount',this.urlparms)
 
                     let settingslist = this._geturlsettingslist(urlparms)
 
-                    console.log('settingslist in branch will mount',settingslist)
+                    // console.log('settingslist in branch will mount',settingslist)
                     this._stateActions.addNodeDeclarations(settingslist)
 
                 } else {
 
                     let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
 
-                    console.log('budgetNodeParms in branchWillMount',budgetNodeParms)
+                    // console.log('budgetNodeParms in branchWillMount',budgetNodeParms)
                     this._stateActions.addNodeDeclaration(budgetNodeParms)
 
                 }
@@ -201,7 +190,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 dataPath: branch.pa.slice(0,parseInt(nodeindex)),
                 nodeIndex:parseInt(nodeindex),
                 viewpointName:branch.vi,
-                yearSelections:node.ys,
+                yearSelections:{
+                    leftYear:node.ys.ly,
+                    rightYear:node.ys.ry,
+                },
                 yearsRange:{
                     firstYear:null,
                     lastYear:null,
@@ -333,7 +325,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             let nodeIndex = branchNodes.length
             let budgetNodeId = nodeList[nodeIndex]
-
+            // console.log('arguments for addNode',nodeIndex,nodeList,budgetNodeId,nodesById,this.harmonizecount)
             // TODO: investigate doing addNodes instead, and adding them to the nodes state in one operation
             budgetBranch.addNode( // sets state to trigger a render, and re-visitation of this code
                 budgetNodeId,
@@ -792,7 +784,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             actions.updateCellYearSelections = branch._stateActions.updateCellYearSelections(budgetNode.uid)
 
             return <ExplorerNode
-                key = {nodeindex}
+                key = {budgetNode.uid}
                 callbackid = { nodeindex }
                 budgetNode = { budgetNode }
                 declarationData = {branch.props.declarationData}
@@ -810,7 +802,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     shareBranch = () => {
         let branch = this
-        console.log('declarationData',branch.props.declarationData)
+        // console.log('declarationData',branch.props.declarationData)
         let branchDeclaration:BranchSettings = branch.props.declarationData.branchesById[branch.props.budgetBranch.uid]
         let government = branchDeclaration.repository
         let viewpoint = branchDeclaration.viewpoint
@@ -873,6 +865,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     let branch = this
     let drilldownrow = branch.props.budgetBranch.nodes
+
+    // console.log('drilldownrow',drilldownrow)
 
     let drilldownportals = branch.getPortals(drilldownrow)
 

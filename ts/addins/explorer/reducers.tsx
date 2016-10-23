@@ -142,7 +142,7 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
                 newnodelist.push(settingsdata.nodeuid)
             }
             newstate[branchuid].nodeList = 
-                [...state[branchuid].nodeList,newnodelist]
+                [...state[branchuid].nodeList,...newnodelist]
             return newstate
         }
 
@@ -240,13 +240,14 @@ let nodesById = (state = { }, action) => {
 
         case actiontypes.ADD_NODES: {
             let { settingslist } = action.payload
-            console.log('settingslist in reducers ADD_NODES',settingslist)
+            // console.log('settingslist in reducers ADD_NODES',settingslist)
             let newstate = Object.assign({},state)
             for (let settingsdata of settingslist) {
                 let node = newstate[settingsdata.nodeuid] || {}
                 node = Object.assign(node,settingsdata.settings)
                 newstate[settingsdata.nodeuid] = node
             }
+            // console.log('ADD_NODES',newstate)
             return newstate
         }
 

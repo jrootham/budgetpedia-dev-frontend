@@ -123,25 +123,31 @@ class BudgetNode {
     // ---------------------[ PRIVATE ]------------------------------------
 
     getCellDeclarationParms = () => {
+        let budgetNode = this
         let parmsList:CellDeclaration[] = []
-        let datasetName:string = AspectNameToDatasetName[this.aspectName]
-        let chartSpecs = this.viewpointConfigPack.datasetConfig.Dataseries
-        let node = this.treeNodeData
+        let datasetName:string = AspectNameToDatasetName[budgetNode.aspectName]
+        let chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries
+        let node = budgetNode.treeNodeData
         let cellDeclarationData
-        if (this.parentBudgetNode) {
+        if (budgetNode.parentBudgetNode) {
             let parent:BudgetNode = this.parentBudgetNode
             if (parent.priorCellSettings) {
                 cellDeclarationData = parent.priorCellSettings
                 parent.priorCellSettings = null
             } else {
-                let parentCell = parent.cells[
-                    this.props.declarationData.nodesById[parent.uid].cellIndex
-                ]
-                let callingCellDeclaration = this.props.declarationData.cellsById[parentCell.uid]
-                let chartConfigs = Object.assign({},callingCellDeclaration.chartConfigs)
-                cellDeclarationData = {
-                    yearScope:callingCellDeclaration.yearScope,
-                    chartConfigs,
+                let parentNodeDeclaration = budgetNode.props.declarationData.nodesById[parent.uid]
+                let cellIndex = parentNodeDeclaration.cellIndex
+                let parentCell = parent.cells[cellIndex]
+                if (parentCell) { // could fail with race condition of multiple concurrent node declarations from urlparms
+                    // console.log('getCellDeclarationParms budgetNode',budgetNode)
+                    let callingCellDeclaration = budgetNode.props.declarationData.cellsById[parentCell.uid]
+                    let chartConfigs = Object.assign({},callingCellDeclaration.chartConfigs)
+                    cellDeclarationData = {
+                        yearScope:callingCellDeclaration.yearScope,
+                        chartConfigs,
+                    }
+                } else {
+                    cellDeclarationData = this.props.declarationData.defaults.cell
                 }
             }
         } else {

@@ -58,6 +58,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
 
     componentWillMount() {
         let { budgetNode, declarationData, urlparms } = this.props
+        // console.log('componentWillMount for',budgetNode)
 
         if (urlparms) {
             this.urlparms = urlparms
@@ -75,6 +76,7 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
         if (nodeDeclaration.cellList == null) {
             // URLPARMSTODO: update cellparms per urlparms
             // get controlData for cellList
+            // console.log('calling cellDeclarationParms',budgetNode)
             let cellDeclarationParms = budgetNode.getCellDeclarationParms()
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
 

@@ -25,23 +25,9 @@ class ExplorerBranch extends Component {
         this.waitafteraction = 0;
         this.getState = () => this.state;
         this.getProps = () => this.props;
-        this.addNodeDeclaration = (branchUid) => {
-            return (settings) => {
-                console.log('running addNodeDeclaration SINGULAR');
-                return this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
-            };
-        };
-        this.addNodeDeclarations = (branchUid) => {
-            return (settingslist) => {
-                console.log('running addNodeDeclarations PLURAL');
-                return this.props.globalStateActions.addNodeDeclarations(branchUid, settingslist);
-            };
-        };
-        this.removeNodeDeclarations = (branchUid) => {
-            return (nodeItems) => {
-                return this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
-            };
-        };
+        this.addNodeDeclaration = branchUid => settings => this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
+        this.addNodeDeclarations = branchUid => settingslist => this.props.globalStateActions.addNodeDeclarations(branchUid, settingslist);
+        this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
         this.urlparms = null;
         this._geturlsettingslist = (urlparms) => {
             let nodesettings = urlparms.settingsdata;
@@ -56,7 +42,10 @@ class ExplorerBranch extends Component {
                     dataPath: branch.pa.slice(0, parseInt(nodeindex)),
                     nodeIndex: parseInt(nodeindex),
                     viewpointName: branch.vi,
-                    yearSelections: node.ys,
+                    yearSelections: {
+                        leftYear: node.ys.ly,
+                        rightYear: node.ys.ry,
+                    },
                     yearsRange: {
                         firstYear: null,
                         lastYear: null,
@@ -382,13 +371,12 @@ class ExplorerBranch extends Component {
                 actions.updateCellChartSelection = branch._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = branch._stateActions.updateCellChartCode(budgetNode.uid);
                 actions.updateCellYearSelections = branch._stateActions.updateCellYearSelections(budgetNode.uid);
-                return React.createElement(explorernode_1.ExplorerNode, {key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }, urlparms: this.urlparms});
+                return React.createElement(explorernode_1.ExplorerNode, {key: budgetNode.uid, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }, urlparms: this.urlparms});
             });
             return portals;
         };
         this.shareBranch = () => {
             let branch = this;
-            console.log('declarationData', branch.props.declarationData);
             let branchDeclaration = branch.props.declarationData.branchesById[branch.props.budgetBranch.uid];
             let government = branchDeclaration.repository;
             let viewpoint = branchDeclaration.viewpoint;
@@ -455,14 +443,11 @@ class ExplorerBranch extends Component {
                 if (urlparms) {
                     this.urlparms = urlparms;
                     this.props.clearUrlParms();
-                    console.log('this.urlparms in branch will mount', this.urlparms);
                     let settingslist = this._geturlsettingslist(urlparms);
-                    console.log('settingslist in branch will mount', settingslist);
                     this._stateActions.addNodeDeclarations(settingslist);
                 }
                 else {
                     let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
-                    console.log('budgetNodeParms in branchWillMount', budgetNodeParms);
                     this._stateActions.addNodeDeclaration(budgetNodeParms);
                 }
             }

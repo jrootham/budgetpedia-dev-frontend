@@ -2878,24 +2878,31 @@ var BudgetNode = function () {
             _this.updated = true;
         };
         this.getCellDeclarationParms = function () {
+            var budgetNode = _this;
             var parmsList = [];
-            var datasetName = constants_1.AspectNameToDatasetName[_this.aspectName];
-            var chartSpecs = _this.viewpointConfigPack.datasetConfig.Dataseries;
-            var node = _this.treeNodeData;
+            var datasetName = constants_1.AspectNameToDatasetName[budgetNode.aspectName];
+            var chartSpecs = budgetNode.viewpointConfigPack.datasetConfig.Dataseries;
+            var node = budgetNode.treeNodeData;
             var cellDeclarationData = void 0;
-            if (_this.parentBudgetNode) {
+            if (budgetNode.parentBudgetNode) {
                 var parent = _this.parentBudgetNode;
                 if (parent.priorCellSettings) {
                     cellDeclarationData = parent.priorCellSettings;
                     parent.priorCellSettings = null;
                 } else {
-                    var parentCell = parent.cells[_this.props.declarationData.nodesById[parent.uid].cellIndex];
-                    var callingCellDeclaration = _this.props.declarationData.cellsById[parentCell.uid];
-                    var chartConfigs = Object.assign({}, callingCellDeclaration.chartConfigs);
-                    cellDeclarationData = {
-                        yearScope: callingCellDeclaration.yearScope,
-                        chartConfigs: chartConfigs
-                    };
+                    var parentNodeDeclaration = budgetNode.props.declarationData.nodesById[parent.uid];
+                    var cellIndex = parentNodeDeclaration.cellIndex;
+                    var parentCell = parent.cells[cellIndex];
+                    if (parentCell) {
+                        var callingCellDeclaration = budgetNode.props.declarationData.cellsById[parentCell.uid];
+                        var chartConfigs = Object.assign({}, callingCellDeclaration.chartConfigs);
+                        cellDeclarationData = {
+                            yearScope: callingCellDeclaration.yearScope,
+                            chartConfigs: chartConfigs
+                        };
+                    } else {
+                        cellDeclarationData = _this.props.declarationData.defaults.cell;
+                    }
                 }
             } else {
                 cellDeclarationData = _this.props.declarationData.defaults.cell;
@@ -3122,13 +3129,11 @@ var ExplorerBranch = function (_Component) {
         };
         _this.addNodeDeclaration = function (branchUid) {
             return function (settings) {
-                console.log('running addNodeDeclaration SINGULAR');
                 return _this.props.globalStateActions.addNodeDeclaration(branchUid, settings);
             };
         };
         _this.addNodeDeclarations = function (branchUid) {
             return function (settingslist) {
-                console.log('running addNodeDeclarations PLURAL');
                 return _this.props.globalStateActions.addNodeDeclarations(branchUid, settingslist);
             };
         };
@@ -3151,7 +3156,10 @@ var ExplorerBranch = function (_Component) {
                     dataPath: branch.pa.slice(0, parseInt(nodeindex)),
                     nodeIndex: parseInt(nodeindex),
                     viewpointName: branch.vi,
-                    yearSelections: node.ys,
+                    yearSelections: {
+                        leftYear: node.ys.ly,
+                        rightYear: node.ys.ry
+                    },
                     yearsRange: {
                         firstYear: null,
                         lastYear: null
@@ -3544,13 +3552,12 @@ var ExplorerBranch = function (_Component) {
                 actions.updateCellChartSelection = branch._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = branch._stateActions.updateCellChartCode(budgetNode.uid);
                 actions.updateCellYearSelections = branch._stateActions.updateCellYearSelections(budgetNode.uid);
-                return React.createElement(explorernode_1.ExplorerNode, { key: nodeindex, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }, urlparms: _this.urlparms });
+                return React.createElement(explorernode_1.ExplorerNode, { key: budgetNode.uid, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }, urlparms: _this.urlparms });
             });
             return portals;
         };
         _this.shareBranch = function () {
             var branch = _this;
-            console.log('declarationData', branch.props.declarationData);
             var branchDeclaration = branch.props.declarationData.branchesById[branch.props.budgetBranch.uid];
             var government = branchDeclaration.repository;
             var viewpoint = branchDeclaration.viewpoint;
@@ -3715,13 +3722,10 @@ var ExplorerBranch = function (_Component) {
                     if (urlparms) {
                         _this2.urlparms = urlparms;
                         _this2.props.clearUrlParms();
-                        console.log('this.urlparms in branch will mount', _this2.urlparms);
                         var settingslist = _this2._geturlsettingslist(urlparms);
-                        console.log('settingslist in branch will mount', settingslist);
                         _this2._stateActions.addNodeDeclarations(settingslist);
                     } else {
                         var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
-                        console.log('budgetNodeParms in branchWillMount', budgetNodeParms);
                         _this2._stateActions.addNodeDeclaration(budgetNodeParms);
                     }
                 } else {
@@ -5964,7 +5968,7 @@ var branchesById = function branchesById() {
                     }
                 }
 
-                newstate[_branchuid3].nodeList = [].concat(_toConsumableArray(state[_branchuid3].nodeList), [newnodelist]);
+                newstate[_branchuid3].nodeList = [].concat(_toConsumableArray(state[_branchuid3].nodeList), newnodelist);
                 return newstate;
             }
         case actions_1.types.REMOVE_NODES:
@@ -6078,7 +6082,6 @@ var nodesById = function nodesById() {
             {
                 var settingslist = action.payload.settingslist;
 
-                console.log('settingslist in reducers ADD_NODES', settingslist);
                 var _newstate = Object.assign({}, state);
                 var _iteratorNormalCompletion2 = true;
                 var _didIteratorError2 = false;
