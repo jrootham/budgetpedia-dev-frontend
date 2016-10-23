@@ -181,6 +181,8 @@ class ExplorerNode extends Component {
                         }
                     }
                 }
+                this.urlparms = null;
+                this.props.clearUrlParms(budgetNode.nodeIndex);
             }
             this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
         }

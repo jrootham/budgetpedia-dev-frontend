@@ -29,6 +29,17 @@ class ExplorerBranch extends Component {
         this.addNodeDeclarations = branchUid => settingslist => this.props.globalStateActions.addNodeDeclarations(branchUid, settingslist);
         this.removeNodeDeclarations = branchUid => nodeItems => this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
         this.urlparms = null;
+        this.urlparmscleared = [];
+        this.clearUrlParms = nodeIndex => {
+            if (!this.urlparms) {
+                console.error('call to remove expired urlparms', nodeIndex);
+            }
+            this.urlparmscleared.push(nodeIndex);
+            if (this.urlparmscleared.length == this.urlparms.settingsdata.length) {
+                this.urlparms = null;
+                this.urlparmscleared = [];
+            }
+        };
         this._geturlsettingslist = (urlparms) => {
             let nodesettings = urlparms.settingsdata;
             let branch = urlparms.branchdata;
@@ -371,7 +382,7 @@ class ExplorerBranch extends Component {
                 actions.updateCellChartSelection = branch._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = branch._stateActions.updateCellChartCode(budgetNode.uid);
                 actions.updateCellYearSelections = branch._stateActions.updateCellYearSelections(budgetNode.uid);
-                return React.createElement(explorernode_1.ExplorerNode, {key: budgetNode.uid, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }, urlparms: this.urlparms});
+                return React.createElement(explorernode_1.ExplorerNode, {key: budgetNode.uid, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }, urlparms: this.urlparms, clearUrlParms: this.clearUrlParms});
             });
             return portals;
         };

@@ -3149,6 +3149,17 @@ var ExplorerBranch = function (_Component) {
             };
         };
         _this.urlparms = null;
+        _this.urlparmscleared = [];
+        _this.clearUrlParms = function (nodeIndex) {
+            if (!_this.urlparms) {
+                console.error('call to remove expired urlparms', nodeIndex);
+            }
+            _this.urlparmscleared.push(nodeIndex);
+            if (_this.urlparmscleared.length == _this.urlparms.settingsdata.length) {
+                _this.urlparms = null;
+                _this.urlparmscleared = [];
+            }
+        };
         _this._geturlsettingslist = function (urlparms) {
             var nodesettings = urlparms.settingsdata;
             var branch = urlparms.branchdata;
@@ -3558,7 +3569,7 @@ var ExplorerBranch = function (_Component) {
                 actions.updateCellChartSelection = branch._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = branch._stateActions.updateCellChartCode(budgetNode.uid);
                 actions.updateCellYearSelections = branch._stateActions.updateCellYearSelections(budgetNode.uid);
-                return React.createElement(explorernode_1.ExplorerNode, { key: budgetNode.uid, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }, urlparms: _this.urlparms });
+                return React.createElement(explorernode_1.ExplorerNode, { key: budgetNode.uid, callbackid: nodeindex, budgetNode: budgetNode, declarationData: branch.props.declarationData, globalStateActions: actions, showControls: branchDeclaration.showOptions, dataGenerationCounter: branchDeclaration.branchDataGeneration, callbacks: { harmonizeCells: branch.harmonizeCells }, urlparms: _this.urlparms, clearUrlParms: _this.clearUrlParms });
             });
             return portals;
         };
@@ -4661,6 +4672,8 @@ var ExplorerNode = function (_Component) {
                             }
                         }
                     }
+                    this.urlparms = null;
+                    this.props.clearUrlParms(budgetNode.nodeIndex);
                 }
                 this._stateActions.addCellDeclarations(budgetNode.uid, cellDeclarationParms);
             } else {

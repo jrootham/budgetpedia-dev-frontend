@@ -125,6 +125,18 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             this.props.globalStateActions.removeNodeDeclarations(branchUid, nodeItems);
 
     urlparms:any = null
+    urlparmscleared = []
+
+    clearUrlParms = nodeIndex => {
+        if (!this.urlparms) {
+            console.error('call to remove expired urlparms', nodeIndex)
+        }
+        this.urlparmscleared.push(nodeIndex)
+        if (this.urlparmscleared.length == this.urlparms.settingsdata.length) {
+            this.urlparms = null
+            this.urlparmscleared = []
+        }
+    }
 
     // finish initialization of budgetBranch and branch explorer objects
     componentWillMount() {
@@ -793,6 +805,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 dataGenerationCounter = { branchDeclaration.branchDataGeneration }
                 callbacks = { {harmonizeCells:branch.harmonizeCells} }
                 urlparms = {this.urlparms}
+                clearUrlParms = {this.clearUrlParms}
             />
         })
 

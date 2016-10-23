@@ -38,6 +38,7 @@ interface ExplorerNodeProps {
     dataGenerationCounter: number,
     callbacks: any,
     urlparms: any,
+    clearUrlParms: Function,
 }
 
 class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]}> {
@@ -114,6 +115,8 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
                         }
                     }
                 }
+                this.urlparms = null
+                this.props.clearUrlParms(budgetNode.nodeIndex)
             }
             this._stateActions.addCellDeclarations(budgetNode.uid,cellDeclarationParms)
 
