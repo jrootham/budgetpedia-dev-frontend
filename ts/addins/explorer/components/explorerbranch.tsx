@@ -156,21 +156,28 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 if (urlparms) {
                     this.urlparms = urlparms
                     this.props.clearUrlParms()
-                    // console.log('this.urlparms in branch will mount',this.urlparms)
 
-                    let settingslist = this._geturlsettingslist(urlparms)
+                    try {
 
-                    // console.log('settingslist in branch will mount',settingslist)
-                    this._stateActions.addNodeDeclarations(settingslist)
+                        let settingslist = this._geturlsettingslist(urlparms)
 
-                } else {
+                        this._stateActions.addNodeDeclarations(settingslist)
 
-                    let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
+                        return
 
-                    // console.log('budgetNodeParms in branchWillMount',budgetNodeParms)
-                    this._stateActions.addNodeDeclaration(budgetNodeParms)
+                    } catch (e) {
+
+                        console.log('urlparms failure',urlparms)
+                        this.urlparms = null
+
+                    }
 
                 }
+
+                let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
+
+                // console.log('budgetNodeParms in branchWillMount',budgetNodeParms)
+                this._stateActions.addNodeDeclaration(budgetNodeParms)
 
             } else {
 
@@ -868,9 +875,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let bsencoded = encodeURIComponent(branchstring)
         let settingsstring = jsonpack.pack(settings)
         let ssencoded = encodeURIComponent(settingsstring)
+        let hashcode = Utilities.hashCode(branchstring + settingsstring)
         console.log('query',query, branchstring,branchstring.length,bsencoded,bsencoded.length)
         console.log('settings',settings,settingsstring, settingsstring.length,ssencoded,ssencoded.length)
-        let url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded
+        let url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded + '&hash=' + hashcode
         console.log('url',url,url.length)
     }
 

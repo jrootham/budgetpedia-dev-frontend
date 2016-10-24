@@ -5,6 +5,11 @@ declare module 'react-router/es6/index' {
     export { withRouter }
 }
 
+// declare module 'react-alert' {
+//     var AlertContainer: any
+//     export default AlertContainer
+// }
+
 interface Window {
     nodeUpdateControl: {
         nodeuid: string,

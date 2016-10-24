@@ -8,3 +8,4 @@ export const getQuery = (uri) => {
     )
     return queryString
 }
+

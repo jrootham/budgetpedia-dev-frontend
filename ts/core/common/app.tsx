@@ -21,7 +21,6 @@ class App extends Component<any, any> {
                         })
                     }
                 </ReactCSSTransitionGroup>
-
             </div>
         )
     }

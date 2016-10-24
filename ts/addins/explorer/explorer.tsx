@@ -59,6 +59,7 @@ import * as ExplorerActions from './actions'
 import BudgetBranch from './classes/branch.class'
 import { getExplorerDeclarationData } from './reducers'
 import dialogcontent from './content/helpcontent'
+import * as Utilities from './modules/utilities'
 
 import {
     BranchSettings,
@@ -170,34 +171,44 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         let {query} = this.props.location
 
-        let branchdata, settingsdata
+        let branchdata, settingsdata, hash
 
-        if (query.branch && query.settings) {
+        if (query.branch && query.settings && query.hash) {
 
             branchdata = jsonpack.unpack(query.branch)
             settingsdata = jsonpack.unpack(query.settings)
 
-            this.urlparms = {
-                branchdata,
-                settingsdata,
+            let newhash = Utilities.hashCode(query.branch + query.settings).toString()
+
+            if (newhash == query.hash) {
+
+                // TODO: validate data path
+
+                this.urlparms = {
+                    branchdata,
+                    settingsdata,
+                }
+
+                let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
+                console.log('branchdata, settingsdata,defaultSettings',branchdata,settingsdata,defaultSettings)
+
+                let querysettings = {
+                    inflationAdjusted:branchdata.ad,
+                    aspect:branchdata.as,
+                    prorata:branchdata.pr,
+                    repository:branchdata.g,
+                    version:branchdata.ve,
+                    viewpoint:branchdata.vi,
+                }
+
+                let settings = Object.assign(defaultSettings,querysettings)
+
+                this.props.addBranchDeclaration(null,settings) // change state
+                return
+
+            } else {
+                console.error('url hash no match',query.hash, newhash)
             }
-
-            let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
-            console.log('branchdata, settingsdata,defaultSettings',branchdata,settingsdata,defaultSettings)
-
-            let querysettings = {
-                inflationAdjusted:branchdata.ad,
-                aspect:branchdata.as,
-                prorata:branchdata.pr,
-                repository:branchdata.g,
-                version:branchdata.ve,
-                viewpoint:branchdata.vi,
-            }
-
-            let settings = Object.assign(defaultSettings,querysettings)
-
-            this.props.addBranchDeclaration(null,settings) // change state
-            return
 
         }
 

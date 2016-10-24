@@ -438,9 +438,10 @@ class ExplorerBranch extends Component {
             let bsencoded = encodeURIComponent(branchstring);
             let settingsstring = jsonpack.pack(settings);
             let ssencoded = encodeURIComponent(settingsstring);
+            let hashcode = Utilities.hashCode(branchstring + settingsstring);
             console.log('query', query, branchstring, branchstring.length, bsencoded, bsencoded.length);
             console.log('settings', settings, settingsstring, settingsstring.length, ssencoded, ssencoded.length);
-            let url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded;
+            let url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded + '&hash=' + hashcode;
             console.log('url', url, url.length);
         };
     }
@@ -454,13 +455,18 @@ class ExplorerBranch extends Component {
                 if (urlparms) {
                     this.urlparms = urlparms;
                     this.props.clearUrlParms();
-                    let settingslist = this._geturlsettingslist(urlparms);
-                    this._stateActions.addNodeDeclarations(settingslist);
+                    try {
+                        let settingslist = this._geturlsettingslist(urlparms);
+                        this._stateActions.addNodeDeclarations(settingslist);
+                        return;
+                    }
+                    catch (e) {
+                        console.log('urlparms failure', urlparms);
+                        this.urlparms = null;
+                    }
                 }
-                else {
-                    let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
-                    this._stateActions.addNodeDeclaration(budgetNodeParms);
-                }
+                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
+                this._stateActions.addNodeDeclaration(budgetNodeParms);
             }
             else {
                 setTimeout(() => {

@@ -20,6 +20,7 @@ const ExplorerActions = require('./actions');
 const branch_class_1 = require('./classes/branch.class');
 const reducers_1 = require('./reducers');
 const helpcontent_1 = require('./content/helpcontent');
+const Utilities = require('./modules/utilities');
 let Explorer = class extends Component {
     constructor(...args) {
         super(...args);
@@ -217,27 +218,33 @@ let Explorer = class extends Component {
     componentWillMount() {
         console.log('explorer props location.query', this.props.location.query);
         let { query } = this.props.location;
-        let branchdata, settingsdata;
-        if (query.branch && query.settings) {
+        let branchdata, settingsdata, hash;
+        if (query.branch && query.settings && query.hash) {
             branchdata = jsonpack.unpack(query.branch);
             settingsdata = jsonpack.unpack(query.settings);
-            this.urlparms = {
-                branchdata: branchdata,
-                settingsdata: settingsdata,
-            };
-            let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
-            console.log('branchdata, settingsdata,defaultSettings', branchdata, settingsdata, defaultSettings);
-            let querysettings = {
-                inflationAdjusted: branchdata.ad,
-                aspect: branchdata.as,
-                prorata: branchdata.pr,
-                repository: branchdata.g,
-                version: branchdata.ve,
-                viewpoint: branchdata.vi,
-            };
-            let settings = Object.assign(defaultSettings, querysettings);
-            this.props.addBranchDeclaration(null, settings);
-            return;
+            let newhash = Utilities.hashCode(query.branch + query.settings).toString();
+            if (newhash == query.hash) {
+                this.urlparms = {
+                    branchdata: branchdata,
+                    settingsdata: settingsdata,
+                };
+                let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
+                console.log('branchdata, settingsdata,defaultSettings', branchdata, settingsdata, defaultSettings);
+                let querysettings = {
+                    inflationAdjusted: branchdata.ad,
+                    aspect: branchdata.as,
+                    prorata: branchdata.pr,
+                    repository: branchdata.g,
+                    version: branchdata.ve,
+                    viewpoint: branchdata.vi,
+                };
+                let settings = Object.assign(defaultSettings, querysettings);
+                this.props.addBranchDeclaration(null, settings);
+                return;
+            }
+            else {
+                console.error('url hash no match', query.hash, newhash);
+            }
         }
         let { branchList, branchesById } = this.props.declarationData;
         if (branchList.length == 0) {
