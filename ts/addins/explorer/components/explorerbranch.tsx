@@ -838,8 +838,20 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     shareBranch = () => {
+        let url = this._getShareUrl()
+        let toastrOptions = {
+            component: (
+                <div style={{width:"200px"}}>
+                <p style={{width:"190px"}}>To share the selected row of charts, copy the url below, and send it to a friend.</p>
+                <textarea style={{minHeight:"200px",width:"190px"}} value = {url} readOnly />
+                </div>
+            )
+        }
+        toastr.message('Share charts',toastrOptions)
+    }
+
+    private _getShareUrl = () => {
         let branch = this
-        // console.log('declarationData',branch.props.declarationData)
         let branchDeclaration:BranchSettings = branch.props.declarationData.branchesById[branch.props.budgetBranch.uid]
         let government = branchDeclaration.repository
         let viewpoint = branchDeclaration.viewpoint
@@ -897,6 +909,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         console.log('settings',settings,settingsstring, settingsstring.length,ssencoded,ssencoded.length)
         let url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded + '&hash=' + hashcode
         console.log('url',url,url.length)
+        return url
     }
 
     render() {

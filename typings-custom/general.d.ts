@@ -19,6 +19,14 @@ declare module 'react-redux-toastr' {
 //     export default AlertContainer
 // }
 
+// for react-redux-toastr
+// declare module __React {
+//     interface DOMAttributes {
+//         remove?: Function,
+//     }
+// }
+
+
 interface Window {
     nodeUpdateControl: {
         nodeuid: string,

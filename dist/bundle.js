@@ -3100,6 +3100,7 @@ var IconButton_1 = require('material-ui/IconButton');
 var Snackbar_1 = require('material-ui/Snackbar');
 var Toggle_1 = require('material-ui/Toggle');
 var RaisedButton_1 = require('material-ui/RaisedButton');
+var react_redux_toastr_1 = require('react-redux-toastr');
 var jsonpack = require('jsonpack');
 var onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 var getbudgetnode_1 = require('../modules/getbudgetnode');
@@ -3575,6 +3576,13 @@ var ExplorerBranch = function (_Component) {
             return portals;
         };
         _this.shareBranch = function () {
+            var url = _this._getShareUrl();
+            var toastrOptions = {
+                component: React.createElement("div", { style: { width: "200px" } }, React.createElement("p", { style: { width: "190px" } }, "To share the selected row of charts, copy the url below, and send it to a friend."), React.createElement("textarea", { style: { minHeight: "200px", width: "190px" }, value: url, readOnly: true }))
+            };
+            react_redux_toastr_1.toastr.message('Share charts', toastrOptions);
+        };
+        _this._getShareUrl = function () {
             var branch = _this;
             var branchDeclaration = branch.props.declarationData.branchesById[branch.props.budgetBranch.uid];
             var government = branchDeclaration.repository;
@@ -3719,6 +3727,7 @@ var ExplorerBranch = function (_Component) {
             console.log('settings', settings, settingsstring, settingsstring.length, ssencoded, ssencoded.length);
             var url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded + '&hash=' + hashcode;
             console.log('url', url, url.length);
+            return url;
         };
         return _this;
     }
@@ -3908,7 +3917,7 @@ var ExplorerBranch = function (_Component) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ExplorerBranch;
 
-},{"../actions":16,"../modules/getbudgetnode":28,"../modules/onchartcomponentselection":29,"../modules/utilities":30,"./explorernode":24,"jsonpack":193,"material-ui/DropDownMenu":397,"material-ui/FontIcon":404,"material-ui/IconButton":409,"material-ui/MenuItem":418,"material-ui/RaisedButton":425,"material-ui/Snackbar":428,"material-ui/Toggle":445,"react":773}],23:[function(require,module,exports){
+},{"../actions":16,"../modules/getbudgetnode":28,"../modules/onchartcomponentselection":29,"../modules/utilities":30,"./explorernode":24,"jsonpack":193,"material-ui/DropDownMenu":397,"material-ui/FontIcon":404,"material-ui/IconButton":409,"material-ui/MenuItem":418,"material-ui/RaisedButton":425,"material-ui/Snackbar":428,"material-ui/Toggle":445,"react":773,"react-redux-toastr":520}],23:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();

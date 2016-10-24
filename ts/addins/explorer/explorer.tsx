@@ -501,7 +501,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         let dialogbox =  
             <Dialog
                 title = "Budget Explorer Options"
-                modal = { false}
+                modal = { false }
                 open = { explorer.state.dialogOpen }
                 onRequestClose = { explorer.handleDialogClose }
                 bodyStyle={{padding:'12px'}}

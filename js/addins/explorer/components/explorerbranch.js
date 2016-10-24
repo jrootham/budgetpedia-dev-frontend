@@ -8,6 +8,7 @@ const IconButton_1 = require('material-ui/IconButton');
 const Snackbar_1 = require('material-ui/Snackbar');
 const Toggle_1 = require('material-ui/Toggle');
 const RaisedButton_1 = require('material-ui/RaisedButton');
+const react_redux_toastr_1 = require('react-redux-toastr');
 let jsonpack = require('jsonpack');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 const getbudgetnode_1 = require('../modules/getbudgetnode');
@@ -388,6 +389,13 @@ class ExplorerBranch extends Component {
             return portals;
         };
         this.shareBranch = () => {
+            let url = this._getShareUrl();
+            let toastrOptions = {
+                component: (React.createElement("div", {style: { width: "200px" }}, React.createElement("p", {style: { width: "190px" }}, "To share the selected row of charts, copy the url below, and send it to a friend."), React.createElement("textarea", {style: { minHeight: "200px", width: "190px" }, value: url, readOnly: true})))
+            };
+            react_redux_toastr_1.toastr.message('Share charts', toastrOptions);
+        };
+        this._getShareUrl = () => {
             let branch = this;
             let branchDeclaration = branch.props.declarationData.branchesById[branch.props.budgetBranch.uid];
             let government = branchDeclaration.repository;
@@ -444,6 +452,7 @@ class ExplorerBranch extends Component {
             console.log('settings', settings, settingsstring, settingsstring.length, ssencoded, ssencoded.length);
             let url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded + '&hash=' + hashcode;
             console.log('url', url, url.length);
+            return url;
         };
     }
     componentWillMount() {
