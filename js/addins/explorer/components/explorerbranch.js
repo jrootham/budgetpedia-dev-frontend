@@ -10,6 +10,7 @@ const Toggle_1 = require('material-ui/Toggle');
 const RaisedButton_1 = require('material-ui/RaisedButton');
 let jsonpack = require('jsonpack');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
+const getbudgetnode_1 = require('../modules/getbudgetnode');
 const explorernode_1 = require('./explorernode');
 const actions_1 = require('../actions');
 const Utilities = require('../modules/utilities');
@@ -456,9 +457,16 @@ class ExplorerBranch extends Component {
                     this.urlparms = urlparms;
                     this.props.clearUrlParms();
                     try {
-                        let settingslist = this._geturlsettingslist(urlparms);
-                        this._stateActions.addNodeDeclarations(settingslist);
-                        return;
+                        let path = urlparms.branchdata.pa;
+                        let dataNode = getbudgetnode_1.default(this.state.viewpointData, path);
+                        if (dataNode) {
+                            let settingslist = this._geturlsettingslist(urlparms);
+                            this._stateActions.addNodeDeclarations(settingslist);
+                            return;
+                        }
+                        else {
+                            this.props.setToast('error', 'unable to locate data requested by url parameter. Using defaults...');
+                        }
                     }
                     catch (e) {
                         console.log('urlparms failure', urlparms);

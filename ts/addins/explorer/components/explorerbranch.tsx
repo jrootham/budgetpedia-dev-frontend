@@ -33,6 +33,7 @@ let jsonpack = require('jsonpack')
 import { 
     onChartComponentSelection,
 } from '../modules/onchartcomponentselection'
+import getBudgetNode from '../modules/getbudgetnode'
 
 import {
     PortalConfig,
@@ -81,6 +82,7 @@ interface ExplorerBranchProps {
         settingsdata: any,
     },
     clearUrlParms: Function,
+    setToast: Function,
 }
 
 interface ExplorerBranchState {
@@ -160,11 +162,25 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
                     try {
 
-                        let settingslist = this._geturlsettingslist(urlparms)
+                        let path = urlparms.branchdata.pa
 
-                        this._stateActions.addNodeDeclarations(settingslist)
+                        // TODO: validate data path
+                        let dataNode = getBudgetNode(this.state.viewpointData, path)
+                        // let dataNode = null
 
-                        return
+                        if (dataNode) {
+
+                            let settingslist = this._geturlsettingslist(urlparms)
+
+                            this._stateActions.addNodeDeclarations(settingslist)
+
+                            return
+
+                        } else {
+
+                            this.props.setToast('error','unable to locate data requested by url parameter. Using defaults...')
+
+                        }
 
                     } catch (e) {
 

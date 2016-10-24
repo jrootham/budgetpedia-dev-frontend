@@ -1,6 +1,5 @@
 'use strict';
 const React = require('react');
-const react_dom_1 = require('react-dom');
 var { Component } = React;
 const react_redux_1 = require('react-redux');
 const Card_1 = require('material-ui/Card');
@@ -10,7 +9,6 @@ const Dialog_1 = require('material-ui/Dialog');
 const FloatingActionButton_1 = require('material-ui/FloatingActionButton');
 const add_1 = require('material-ui/svg-icons/content/add');
 const remove_1 = require('material-ui/svg-icons/content/remove');
-const Popover_1 = require('material-ui/Popover');
 const Toggle_1 = require('material-ui/Toggle');
 const react_redux_toastr_1 = require('react-redux-toastr');
 let uuid = require('node-uuid');
@@ -28,23 +26,16 @@ let Explorer = class extends Component {
         this.state = {
             budgetBranches: [],
             dialogOpen: false,
-            popover: {
-                open: false
-            },
             showdashboard: false
-        };
-        this.popoverClose = () => {
-            this.setState({
-                popover: {
-                    open: false
-                }
-            });
         };
         this.toastrmessages = {
             error: null,
             warning: null,
             success: null,
             info: null,
+        };
+        this.setToast = (version, message) => {
+            this.toastrmessages[version] = message;
         };
         this.urlparms = null;
         this.clearUrlParms = () => {
@@ -224,6 +215,7 @@ let Explorer = class extends Component {
     }
     componentWillMount() {
         console.log('explorer props location.query', this.props.location.query);
+        this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted).";
         let { query } = this.props.location;
         let branchdata, settingsdata, hash;
         if (query.branch && query.settings && query.hash) {
@@ -250,7 +242,7 @@ let Explorer = class extends Component {
                 return;
             }
             else {
-                this.toastrmessages.error = 'url hash no match';
+                this.toastrmessages.error = 'the url parameters have apparently been damaged. Using defaults instead...';
                 console.error('url hash no match', react_redux_toastr_1.toastr, query.hash, newhash);
             }
         }
@@ -264,13 +256,6 @@ let Explorer = class extends Component {
             let budgetBranches = [...this.state.budgetBranches];
             this.harmonizeBranchesToState(budgetBranches, branchList, branchesById);
         }
-    }
-    componentDidMount() {
-        this.setState({
-            popover: {
-                open: true
-            }
-        });
     }
     componentWillUnmount() {
         this.props.resetLastAction();
@@ -299,12 +284,6 @@ let Explorer = class extends Component {
             position: "absolute",
             zIndex: 2,
         }, onTouchTap: explorer.handleDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), helpcontent_1.default);
-        let popover = React.createElement(Popover_1.default, {style: { borderRadius: "15px", maxWidth: "400px" }, open: this.state.popover.open, onRequestClose: this.popoverClose, anchorEl: this.popover_ref}, React.createElement(Card_1.Card, {style: { border: "4px solid orange", borderRadius: "15px" }}, React.createElement(Card_1.CardText, null, React.createElement("div", null, React.createElement(IconButton_1.default, {style: {
-            padding: 0,
-            float: "right",
-            height: "36px",
-            width: "36px",
-        }, onTouchTap: explorer.popoverClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close"))), React.createElement("p", null, "Click or tap on any chart column to drill down (except as noted)."))));
         let branchSegments = () => {
             let budgetBranches = explorer.state.budgetBranches;
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
@@ -351,7 +330,7 @@ let Explorer = class extends Component {
                 }, disabled: (branchIndex == 0), onTouchTap: (uid => ev => {
                     ev.stopPropagation();
                     this.branchMoveUp(uid);
-                })(budgetBranch.uid), tooltip: "Move up"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_upward"))), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: this.handleDialogOpen, urlparms: urlparms, clearUrlParms: this.clearUrlParms})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
+                })(budgetBranch.uid), tooltip: "Move up"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_upward"))), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: this.handleDialogOpen, urlparms: urlparms, clearUrlParms: this.clearUrlParms, setToast: this.setToast})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
                     this.addBranch(uid);
                 })(budgetBranch.uid)}, React.createElement(add_1.default, null)), (budgetBranches.length > 1) ? React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
                     this.removeBranch(uid);
@@ -360,7 +339,7 @@ let Explorer = class extends Component {
             return segments;
         };
         let branches = branchSegments();
-        return React.createElement("div", null, React.createElement(Card_1.Card, {expanded: this.state.showdashboard}, React.createElement(Card_1.CardTitle, {ref: node => { this.popover_ref = react_dom_1.findDOMNode(node); }}, React.createElement(Toggle_1.default, {label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
+        return React.createElement("div", null, React.createElement(Card_1.Card, {expanded: this.state.showdashboard}, React.createElement(Card_1.CardTitle, null, React.createElement(Toggle_1.default, {label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
             height: '32px', float: "right",
             display: "inline-block",
             width: 'auto',
@@ -369,7 +348,7 @@ let Explorer = class extends Component {
             this.setState({
                 showdashboard: value
             });
-        }}), "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement("span", {style: { fontStyle: 'italic' }}, "[content to be determined]"))), dialogbox, popover, branches);
+        }}), "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement("span", {style: { fontStyle: 'italic' }}, "[content to be determined]"))), dialogbox, branches);
     }
 }
 ;

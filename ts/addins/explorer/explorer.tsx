@@ -7,10 +7,6 @@
         such as when staff aspect is selected and max depth is reached
     BUG: navigating to dialog help box loses bar selection
     TODO: 
-    - use general state to track fact that popover has been seen in session in explorer
-      to avoid having it appear whenever user returns to explorer
-    - add popover from componentDidMount to explain that the charts are drill-down
-      (maybe for first branch)
     - scroll down to new branch after hitting + sign
     - do systematic check for error handling requirements; protect against 
         unexpected data (extrenal)
@@ -46,7 +42,7 @@ import Dialog from 'material-ui/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import ContentRemove from 'material-ui/svg-icons/content/remove'
-import Popover from 'material-ui/Popover'
+// import Popover from 'material-ui/Popover'
 import Toggle from 'material-ui/Toggle'
 import {toastr} from 'react-redux-toastr'
 let uuid = require('node-uuid') // use uuid.v4() for unique id
@@ -126,9 +122,6 @@ interface ExplorerProps extends MappedActions {
 interface ExplorerState {
     budgetBranches?:BudgetBranch[],
     dialogOpen?: boolean,
-    popover?: {
-        open:boolean
-    },
     showdashboard?: boolean
 }
 
@@ -140,21 +133,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     state = {
         budgetBranches:[],
         dialogOpen: false,
-        popover:{
-            open:false
-        },
         showdashboard:false
-    }
-
-    // calculated referece for popover location
-    popover_ref:any
-
-    popoverClose = () => {
-        this.setState({
-            popover: {
-                open:false
-            }
-        })
     }
 
     toastrmessages = {
@@ -162,6 +141,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         warning:null,
         success:null,
         info:null,
+    }
+
+    setToast = (version,message) => {
+        this.toastrmessages[version] = message
     }
 
     // ----------------------------[ Lifecycle operations ]-------------------------------
@@ -176,6 +159,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         console.log('explorer props location.query',this.props.location.query)
 
+        this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted)."
+
         let {query} = this.props.location
 
         let branchdata, settingsdata, hash
@@ -188,8 +173,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             let newhash = Utilities.hashCode(query.branch + query.settings).toString()
 
             if (newhash == query.hash) {
-
-                // TODO: validate data path
 
                 this.urlparms = {
                     branchdata,
@@ -214,8 +197,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 return
 
             } else {
-                this.toastrmessages.error = 'url hash no match'
+
+                this.toastrmessages.error = 'the url parameters have apparently been damaged. Using defaults instead...'
                 console.error('url hash no match',toastr,query.hash, newhash)
+
             }
 
         }
@@ -238,13 +223,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     }
 
     // start with open reminder to user that click on charts drills down
-    componentDidMount() {
-        this.setState({
-            popover:{
-                open:true
-            }
-        })
-    }
 
     componentWillUnmount() {
         this.props.resetLastAction() // clear sentinals for unmount //TODO verify this!
@@ -556,41 +534,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             </Dialog >
 
-        let popover = <Popover
-            style={{borderRadius:"15px",maxWidth:"400px"}}
-            open = {this.state.popover.open}
-            onRequestClose = {this.popoverClose}
-            anchorEl = {this.popover_ref}
-        >
-            <Card 
-                style={{border:"4px solid orange", borderRadius:"15px"}}
-            >
-                <CardText>
-                <div>
-                    <IconButton
-                        style={{
-                            padding: 0,
-                            float:"right",
-                            height: "36px",
-                            width: "36px",
-                        }}
-                        onTouchTap={ explorer.popoverClose } >
-
-                        <FontIcon
-                            className="material-icons"
-                            style = {{ cursor: "pointer" }} >
-
-                            close
-
-                        </FontIcon>
-
-                    </IconButton>
-                    </div>
-                    <p>Click or tap on any chart column to drill down (except as noted).</p>
-                </CardText>
-            </Card>
-        </Popover>
-
         // -----------[ BRANCH SEGMENT]-------------
 
         let branchSegments = () => {
@@ -723,6 +666,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         handleDialogOpen = {this.handleDialogOpen}
                         urlparms = { urlparms }
                         clearUrlParms = {this.clearUrlParms}
+                        setToast = {this.setToast}
                     />
                     </CardText>
                     <CardActions expandable>
@@ -759,8 +703,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         <Card expanded = {this.state.showdashboard}>
 
-            <CardTitle
-                ref = {node => {this.popover_ref = findDOMNode(node)}} >
+            <CardTitle>
 
                 <Toggle 
                     label={'Show dashboard:'} 
@@ -788,8 +731,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         </Card>
         
             { dialogbox }
-
-            { popover }
 
             { branches }
 
