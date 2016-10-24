@@ -837,13 +837,24 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     }
 
+    private _textarearef
+
+    private _textareaonfocus = () => {
+        this._textarearef.setSelectionRange(0, this._textarearef.value.length)
+    }
+
     shareBranch = () => {
         let url = this._getShareUrl()
         let toastrOptions = {
             component: (
-                <div style={{width:"200px"}}>
-                <p style={{width:"190px"}}>To share the selected row of charts, copy the url below, and send it to a friend.</p>
-                <textarea style={{minHeight:"200px",width:"190px"}} value = {url} readOnly />
+                <div style={{width:"300px"}}>
+                <p style={{width:"290px"}}>To share the selected row of charts, copy the url below, and send it to a friend.</p>
+                <textarea 
+                    ref = {node => {
+                        this._textarearef = node
+                    }}
+                    onFocus= {this._textareaonfocus}
+                    style={{minHeight:"200px",width:"290px"}} value = {url} readOnly />
                 </div>
             )
         }
@@ -905,10 +916,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let settingsstring = jsonpack.pack(settings)
         let ssencoded = encodeURIComponent(settingsstring)
         let hashcode = Utilities.hashCode(branchstring + settingsstring)
-        console.log('query',query, branchstring,branchstring.length,bsencoded,bsencoded.length)
-        console.log('settings',settings,settingsstring, settingsstring.length,ssencoded,ssencoded.length)
+        // console.log('query',query, branchstring,branchstring.length,bsencoded,bsencoded.length)
+        // console.log('settings',settings,settingsstring, settingsstring.length,ssencoded,ssencoded.length)
         let url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded + '&hash=' + hashcode
-        console.log('url',url,url.length)
+        // console.log('url',url,url.length)
         return url
     }
 

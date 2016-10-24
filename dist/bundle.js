@@ -3575,10 +3575,15 @@ var ExplorerBranch = function (_Component) {
             });
             return portals;
         };
+        _this._textareaonfocus = function () {
+            _this._textarearef.setSelectionRange(0, _this._textarearef.value.length);
+        };
         _this.shareBranch = function () {
             var url = _this._getShareUrl();
             var toastrOptions = {
-                component: React.createElement("div", { style: { width: "200px" } }, React.createElement("p", { style: { width: "190px" } }, "To share the selected row of charts, copy the url below, and send it to a friend."), React.createElement("textarea", { style: { minHeight: "200px", width: "190px" }, value: url, readOnly: true }))
+                component: React.createElement("div", { style: { width: "300px" } }, React.createElement("p", { style: { width: "290px" } }, "To share the selected row of charts, copy the url below, and send it to a friend."), React.createElement("textarea", { ref: function ref(node) {
+                        _this._textarearef = node;
+                    }, onFocus: _this._textareaonfocus, style: { minHeight: "200px", width: "290px" }, value: url, readOnly: true }))
             };
             react_redux_toastr_1.toastr.message('Share charts', toastrOptions);
         };
@@ -3723,10 +3728,7 @@ var ExplorerBranch = function (_Component) {
             var settingsstring = jsonpack.pack(settings);
             var ssencoded = encodeURIComponent(settingsstring);
             var hashcode = Utilities.hashCode(branchstring + settingsstring);
-            console.log('query', query, branchstring, branchstring.length, bsencoded, bsencoded.length);
-            console.log('settings', settings, settingsstring, settingsstring.length, ssencoded, ssencoded.length);
             var url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded + '&hash=' + hashcode;
-            console.log('url', url, url.length);
             return url;
         };
         return _this;

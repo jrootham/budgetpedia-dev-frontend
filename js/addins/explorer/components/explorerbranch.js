@@ -388,10 +388,15 @@ class ExplorerBranch extends Component {
             });
             return portals;
         };
+        this._textareaonfocus = () => {
+            this._textarearef.setSelectionRange(0, this._textarearef.value.length);
+        };
         this.shareBranch = () => {
             let url = this._getShareUrl();
             let toastrOptions = {
-                component: (React.createElement("div", {style: { width: "200px" }}, React.createElement("p", {style: { width: "190px" }}, "To share the selected row of charts, copy the url below, and send it to a friend."), React.createElement("textarea", {style: { minHeight: "200px", width: "190px" }, value: url, readOnly: true})))
+                component: (React.createElement("div", {style: { width: "300px" }}, React.createElement("p", {style: { width: "290px" }}, "To share the selected row of charts, copy the url below, and send it to a friend."), React.createElement("textarea", {ref: node => {
+                    this._textarearef = node;
+                }, onFocus: this._textareaonfocus, style: { minHeight: "200px", width: "290px" }, value: url, readOnly: true})))
             };
             react_redux_toastr_1.toastr.message('Share charts', toastrOptions);
         };
@@ -448,10 +453,7 @@ class ExplorerBranch extends Component {
             let settingsstring = jsonpack.pack(settings);
             let ssencoded = encodeURIComponent(settingsstring);
             let hashcode = Utilities.hashCode(branchstring + settingsstring);
-            console.log('query', query, branchstring, branchstring.length, bsencoded, bsencoded.length);
-            console.log('settings', settings, settingsstring, settingsstring.length, ssencoded, ssencoded.length);
             let url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded + '&hash=' + hashcode;
-            console.log('url', url, url.length);
             return url;
         };
     }
