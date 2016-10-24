@@ -26,6 +26,7 @@ import Dialog from 'material-ui/Dialog'
 import Snackbar from 'material-ui/Snackbar'
 import Toggle from 'material-ui/Toggle'
 import RaisedButton from 'material-ui/RaisedButton'
+import {toastr} from 'react-redux-toastr'
 let jsonpack = require('jsonpack')
 
 // ------------------------[ modules ]-----------------------------

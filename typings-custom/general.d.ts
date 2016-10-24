@@ -5,6 +5,15 @@ declare module 'react-router/es6/index' {
     export { withRouter }
 }
 
+declare module 'react-redux-toastr' {
+    var reducer:any
+    export {reducer}
+    var toastr:any
+    export {toastr}
+    var ReduxToastr: any
+    export default ReduxToastr
+}
+
 // declare module 'react-alert' {
 //     var AlertContainer: any
 //     export default AlertContainer

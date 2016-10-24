@@ -9,7 +9,7 @@ import { combineReducers } from 'redux'
 import { isFSA } from 'flux-standard-action'
 import { handleActions } from 'redux-actions'; // handleAction doesn't work with combineReducers
 import { routerReducer } from 'react-router-redux'
-
+import {reducer as toastrReducer} from 'react-redux-toastr'
 
 // -------------[ app resources ]---------------
 import * as Actions from '../actions/actions'
@@ -332,6 +332,8 @@ let mainReducerCore = combineReducers(
         login,
 
         homegrid,
+
+        toastr:toastrReducer,
 
         // ui management
         ui,

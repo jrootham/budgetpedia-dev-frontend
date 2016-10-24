@@ -12,6 +12,7 @@ const add_1 = require('material-ui/svg-icons/content/add');
 const remove_1 = require('material-ui/svg-icons/content/remove');
 const Popover_1 = require('material-ui/Popover');
 const Toggle_1 = require('material-ui/Toggle');
+const react_redux_toastr_1 = require('react-redux-toastr');
 let uuid = require('node-uuid');
 let jsonpack = require('jsonpack');
 const explorerbranch_1 = require('./components/explorerbranch');
@@ -38,6 +39,12 @@ let Explorer = class extends Component {
                     open: false
                 }
             });
+        };
+        this.toastrmessages = {
+            error: null,
+            warning: null,
+            success: null,
+            info: null,
         };
         this.urlparms = null;
         this.clearUrlParms = () => {
@@ -243,7 +250,8 @@ let Explorer = class extends Component {
                 return;
             }
             else {
-                console.error('url hash no match', query.hash, newhash);
+                this.toastrmessages.error = 'url hash no match';
+                console.error('url hash no match', react_redux_toastr_1.toastr, query.hash, newhash);
             }
         }
         let { branchList, branchesById } = this.props.declarationData;
@@ -271,6 +279,14 @@ let Explorer = class extends Component {
         let { branchList, branchesById } = this.props.declarationData;
         let budgetBranches = [...this.state.budgetBranches];
         this.harmonizeBranchesToState(budgetBranches, branchList, branchesById);
+        let { toastrmessages } = this;
+        for (let version in toastrmessages) {
+            let msg = toastrmessages[version];
+            if (msg) {
+                toastrmessages[version] = null;
+                react_redux_toastr_1.toastr[version](msg);
+            }
+        }
     }
     render() {
         let explorer = this;

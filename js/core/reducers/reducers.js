@@ -3,6 +3,7 @@ const redux_1 = require('redux');
 const flux_standard_action_1 = require('flux-standard-action');
 const redux_actions_1 = require('redux-actions');
 const react_router_redux_1 = require('react-router-redux');
+const react_redux_toastr_1 = require('react-redux-toastr');
 const Actions = require('../actions/actions');
 const initialstate_1 = require("../../local/initialstate");
 const reducers_1 = require('../../addins/explorer/reducers');
@@ -216,6 +217,7 @@ let mainReducerCore = redux_1.combineReducers({
     routing: react_router_redux_1.routerReducer,
     login: login,
     homegrid: homegrid,
+    toastr: react_redux_toastr_1.reducer,
     ui: ui,
 });
 let mainReducer = (state, action) => {

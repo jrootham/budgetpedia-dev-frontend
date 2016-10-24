@@ -48,7 +48,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import ContentRemove from 'material-ui/svg-icons/content/remove'
 import Popover from 'material-ui/Popover'
 import Toggle from 'material-ui/Toggle'
-
+import {toastr} from 'react-redux-toastr'
 let uuid = require('node-uuid') // use uuid.v4() for unique id
 let jsonpack = require('jsonpack')
 
@@ -157,6 +157,13 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         })
     }
 
+    toastrmessages = {
+        error:null,
+        warning:null,
+        success:null,
+        info:null,
+    }
+
     // ----------------------------[ Lifecycle operations ]-------------------------------
 
     urlparms:any = null
@@ -207,7 +214,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 return
 
             } else {
-                console.error('url hash no match',query.hash, newhash)
+                this.toastrmessages.error = 'url hash no match'
+                console.error('url hash no match',toastr,query.hash, newhash)
             }
 
         }
@@ -248,6 +256,15 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         let budgetBranches:BudgetBranch[] = [...this.state.budgetBranches]
 
         this.harmonizeBranchesToState(budgetBranches, branchList, branchesById)
+
+        let { toastrmessages } = this
+        for (let version in toastrmessages) {
+            let msg = toastrmessages[version]
+            if (msg) {
+                toastrmessages[version] = null
+                toastr[version](msg)
+            }
+        }
 
     }
 

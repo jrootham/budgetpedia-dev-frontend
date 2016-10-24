@@ -3,7 +3,7 @@
 import * as React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-
+import ReduxToastr from 'react-redux-toastr'
 // import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 // custom...
@@ -23,6 +23,10 @@ const Root = ({store, globalmessage}) => (
 
                 { routes }
                 
+                <ReduxToastr
+                      timeOut={4000}
+                      newestOnTop={false}
+                      position="top-left"/>
             </div>
         </Provider>
     </MuiThemeProvider>
