@@ -337,7 +337,7 @@ let Explorer = class extends Component {
             return segments;
         };
         let branches = branchSegments();
-        return React.createElement("div", null, React.createElement(Card_1.Card, {expanded: this.state.showdashboard}, React.createElement(Card_1.CardTitle, null, React.createElement(Toggle_1.default, {label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
+        return React.createElement("div", null, React.createElement("div", {style: { backgroundColor: "palegoldenrod", padding: "3px", margin: "3px", borderRadius: "8px" }}, "This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), React.createElement(Card_1.Card, {expanded: this.state.showdashboard}, React.createElement(Card_1.CardTitle, null, React.createElement(Toggle_1.default, {label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
             height: '32px', float: "right",
             display: "inline-block",
             width: 'auto',
