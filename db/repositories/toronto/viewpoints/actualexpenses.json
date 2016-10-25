@@ -22,28 +22,18 @@
             "Index": 1,
             "NamingConfigRef": "CATEGORY",
             "Components": {
-                "AGENCIES": {
-                    "Index": 0,
-                    "NamingConfigRef": "EXPENSE",
-                    "Baseline": true
-                },
                 "CULTURE": {
                     "Index": 1,
                     "NamingConfigRef": "EXPENSE",
                     "Baseline": true
                 },
                 "ENVIRONMENT": {
-                    "Index": 1,
+                    "Index": 2,
                     "NamingConfigRef": "EXPENSE",
                     "Baseline": true
                 },
                 "TRANSPORTATION": {
-                    "Index": 1,
-                    "NamingConfigRef": "EXPENSE",
-                    "Baseline": true
-                },
-                "WORKS": {
-                    "Index": 1,
+                    "Index": 3,
                     "NamingConfigRef": "EXPENSE",
                     "Baseline": true
                 }
@@ -64,12 +54,12 @@
                     "Baseline": true
                 },
                 "PROTECTION": {
-                    "Index": 1,
+                    "Index": 2,
                     "NamingConfigRef": "EXPENSE",
                     "Baseline": true
                 },
                 "SOCIALSERVICES": {
-                    "Index": 1,
+                    "Index": 3,
                     "NamingConfigRef": "EXPENSE",
                     "Baseline": true
                 }

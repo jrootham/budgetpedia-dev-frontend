@@ -4178,7 +4178,7 @@ var ExplorerCell = function (_Component) {
                 isDataAvailable = false;
                 var data = datanode[datasetiestype];
                 for (var index in data) {
-                    if (data[index].years[rightYear]) {
+                    if (data[index].years && data[index].years[rightYear]) {
                         isDataAvailable = true;
                         break;
                     }

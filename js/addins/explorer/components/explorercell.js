@@ -143,7 +143,7 @@ class ExplorerCell extends Component {
             isDataAvailable = false;
             let data = datanode[datasetiestype];
             for (let index in data) {
-                if (data[index].years[rightYear]) {
+                if (data[index].years && data[index].years[rightYear]) {
                     isDataAvailable = true;
                     break;
                 }
