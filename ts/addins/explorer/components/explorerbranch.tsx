@@ -90,6 +90,7 @@ interface ExplorerBranchState {
     viewpointData?:ViewpointData,
     snackbar?:SnackbarProps, 
     comparatorselection?: string,
+    techDialogOpen?:boolean,
 }
 
 class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState> {
@@ -100,6 +101,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         viewpointData:null,
         snackbar:{open:false,message:'empty'},
         comparatorselection:'Off',
+        techDialogOpen:false,
 
     }
 
@@ -149,6 +151,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let { budgetBranch, declarationData } = this.props
 
         budgetBranch.getViewpointData().then(() => {
+
+            console.log('viewpointdata',this.state.viewpointData)
 
             this._stateActions.incrementBranchDataVersion(budgetBranch.uid) // change data generation counter for child compare
 
@@ -923,6 +927,20 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         return url
     }
 
+    handleTechDialogOpen = (e) => {
+        e.stopPropagation()
+        e.preventDefault()
+        this.setState({
+            techDialogOpen: true
+        })
+    }
+
+    handleTechDialogClose = () => {
+        this.setState({
+            techDialogOpen: false
+        })
+    }
+
     render() {
 
     let branch = this
@@ -1118,6 +1136,48 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             />
         </div>
 
+    let getTechNotesDisplay = () => {
+
+        return <div>placeholder</div>
+
+    }
+
+    let technotesdialog =
+        <Dialog
+            title = "Row Data Sources"
+            modal = { false }
+            open = { branch.state.techDialogOpen }
+            onRequestClose = { branch.handleTechDialogClose }
+            bodyStyle={{padding:'12px'}}
+            autoScrollBodyContent
+            contentStyle = {{width:'95%',maxWidth:'600px'}}
+        >
+            <IconButton
+                style={{
+                    top: 0,
+                    right: 0,
+                    padding: 0,
+                    height: "36px",
+                    width: "36px",
+                    position: "absolute",
+                    zIndex: 2,
+                }}
+                onTouchTap={ branch.handleTechDialogClose } >
+
+                <FontIcon
+                    className="material-icons"
+                    style = {{ cursor: "pointer" }} >
+
+                    close
+
+                </FontIcon>
+
+            </IconButton>
+
+            { getTechNotesDisplay() }
+
+        </Dialog >
+
     let technotes = (branchDeclaration.showOptions)
         ?<div 
             style={
@@ -1129,9 +1189,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 }
             }>
             <IconButton tooltip="Source documents and technical notes" tooltipPosition="top-center"
-            disabled
             style={{top:'3px'}}
-            // onTouchTap = {}
+            onTouchTap = {branch.handleTechDialogOpen}
             >
             <FontIcon 
                 className="material-icons">note</FontIcon>
@@ -1184,6 +1243,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     return <div >
     <div>
+
+        { technotesdialog }
 
         { governmentselection }
 

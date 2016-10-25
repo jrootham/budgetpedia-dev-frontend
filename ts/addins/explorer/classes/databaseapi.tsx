@@ -155,6 +155,10 @@ interface Lookup {
 // property of datasetConfig; holds metadata properties
 interface DatasetMetaData {
     MetaData:DatasetConfig,
+    Headers:any, 
+    Notes:any, 
+    Allocations:any, 
+    Messages:any,
 }
 
 // -----------------------[ key data caches, by name ]---------------------
@@ -315,6 +319,13 @@ class Database {
             datasetpromise.then((datasetdata: DatasetMetaData) => {
 
                 let metaData:DatasetConfig = datasetdata.MetaData
+                let {Headers, Notes, Allocations, Messages} = datasetdata
+                let Sources = {
+                    Headers,
+                    Notes,
+                    Allocations,
+                    Messages,
+                }
 
                 let { 
                     DatasetName,
@@ -344,6 +355,7 @@ class Database {
                     CommonDimension,
                     InflationAdjustable,
                     InflationReferenceYear,
+                    Sources,
                 }
 
                  resolve(config)

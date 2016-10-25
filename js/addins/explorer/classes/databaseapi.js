@@ -83,6 +83,13 @@ class Database {
         let promise = new Promise(resolve => {
             datasetpromise.then((datasetdata) => {
                 let metaData = datasetdata.MetaData;
+                let { Headers, Notes, Allocations, Messages } = datasetdata;
+                let Sources = {
+                    Headers: Headers,
+                    Notes: Notes,
+                    Allocations: Allocations,
+                    Messages: Messages,
+                };
                 let { DatasetName, YearsRange, DatasetTitle, Dataseries, DimensionNames, CellTitles, Units, UnitsAlias, UnitRatio, CommonDimension, InflationAdjustable, InflationReferenceYear, } = metaData;
                 let config = {
                     DatasetName: DatasetName,
@@ -97,6 +104,7 @@ class Database {
                     CommonDimension: CommonDimension,
                     InflationAdjustable: InflationAdjustable,
                     InflationReferenceYear: InflationReferenceYear,
+                    Sources: Sources,
                 };
                 resolve(config);
             });

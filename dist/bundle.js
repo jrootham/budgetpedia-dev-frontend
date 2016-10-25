@@ -2543,6 +2543,17 @@ var Database = function () {
             var promise = new Promise(function (resolve) {
                 datasetpromise.then(function (datasetdata) {
                     var metaData = datasetdata.MetaData;
+                    var Headers = datasetdata.Headers;
+                    var Notes = datasetdata.Notes;
+                    var Allocations = datasetdata.Allocations;
+                    var Messages = datasetdata.Messages;
+
+                    var Sources = {
+                        Headers: Headers,
+                        Notes: Notes,
+                        Allocations: Allocations,
+                        Messages: Messages
+                    };
                     var DatasetName = metaData.DatasetName;
                     var YearsRange = metaData.YearsRange;
                     var DatasetTitle = metaData.DatasetTitle;
@@ -2568,7 +2579,8 @@ var Database = function () {
                         UnitRatio: UnitRatio,
                         CommonDimension: CommonDimension,
                         InflationAdjustable: InflationAdjustable,
-                        InflationReferenceYear: InflationReferenceYear
+                        InflationReferenceYear: InflationReferenceYear,
+                        Sources: Sources
                     };
                     resolve(config);
                 });
@@ -3097,6 +3109,7 @@ var DropDownMenu_1 = require('material-ui/DropDownMenu');
 var MenuItem_1 = require('material-ui/MenuItem');
 var FontIcon_1 = require('material-ui/FontIcon');
 var IconButton_1 = require('material-ui/IconButton');
+var Dialog_1 = require('material-ui/Dialog');
 var Snackbar_1 = require('material-ui/Snackbar');
 var Toggle_1 = require('material-ui/Toggle');
 var RaisedButton_1 = require('material-ui/RaisedButton');
@@ -3126,7 +3139,8 @@ var ExplorerBranch = function (_Component) {
             branchNodes: [],
             viewpointData: null,
             snackbar: { open: false, message: 'empty' },
-            comparatorselection: 'Off'
+            comparatorselection: 'Off',
+            techDialogOpen: false
         };
         _this.waitafteraction = 0;
         _this.getState = function () {
@@ -3731,6 +3745,18 @@ var ExplorerBranch = function (_Component) {
             var url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded + '&hash=' + hashcode;
             return url;
         };
+        _this.handleTechDialogOpen = function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            _this.setState({
+                techDialogOpen: true
+            });
+        };
+        _this.handleTechDialogClose = function () {
+            _this.setState({
+                techDialogOpen: false
+            });
+        };
         return _this;
     }
 
@@ -3745,6 +3771,7 @@ var ExplorerBranch = function (_Component) {
             var declarationData = _props.declarationData;
 
             budgetBranch.getViewpointData().then(function () {
+                console.log('viewpointdata', _this2.state.viewpointData);
                 _this2._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
                     var urlparms = _this2.props.urlparms;
@@ -3888,12 +3915,24 @@ var ExplorerBranch = function (_Component) {
                 } }, React.createElement(Toggle_1.default, { label: 'Show options:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: branchDeclaration.showOptions, onToggle: function onToggle(e, value) {
                     _this3.toggleShowOptions(value);
                 } }));
+            var getTechNotesDisplay = function getTechNotesDisplay() {
+                return React.createElement("div", null, "placeholder");
+            };
+            var technotesdialog = React.createElement(Dialog_1.default, { title: "Row Data Sources", modal: false, open: branch.state.techDialogOpen, onRequestClose: branch.handleTechDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' } }, React.createElement(IconButton_1.default, { style: {
+                    top: 0,
+                    right: 0,
+                    padding: 0,
+                    height: "36px",
+                    width: "36px",
+                    position: "absolute",
+                    zIndex: 2
+                }, onTouchTap: branch.handleTechDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), getTechNotesDisplay());
             var technotes = branchDeclaration.showOptions ? React.createElement("div", { style: {
                     display: 'inline-block',
                     whiteSpace: "nowrap",
                     verticalAlign: "bottom",
                     position: "relative"
-                } }, React.createElement(IconButton_1.default, { tooltip: "Source documents and technical notes", tooltipPosition: "top-center", disabled: true, style: { top: '3px' } }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "note"))) : null;
+                } }, React.createElement(IconButton_1.default, { tooltip: "Source documents and technical notes", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: branch.handleTechDialogOpen }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "note"))) : null;
             var showhelp = branchDeclaration.showOptions ? React.createElement("div", { style: {
                     display: 'inline-block',
                     whiteSpace: "nowrap",
@@ -3907,7 +3946,7 @@ var ExplorerBranch = function (_Component) {
                     position: "relative"
                 } }, React.createElement(IconButton_1.default, { disabled: true, tooltip: "Find an entry point", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.handleSearch }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "search"))) : null;
             var shareurl = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { type: "button", label: "Share", onTouchTap: this.shareBranch }) : null;
-            return React.createElement("div", null, React.createElement("div", null, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
+            return React.createElement("div", null, React.createElement("div", null, technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
                     branch.branchScrollBlock = node;
                 }, style: { overflow: "scroll" } }, drilldownportals, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))), React.createElement(Snackbar_1.default, { open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose }));
         }
@@ -3919,7 +3958,7 @@ var ExplorerBranch = function (_Component) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ExplorerBranch;
 
-},{"../actions":16,"../modules/getbudgetnode":28,"../modules/onchartcomponentselection":29,"../modules/utilities":30,"./explorernode":24,"jsonpack":193,"material-ui/DropDownMenu":397,"material-ui/FontIcon":404,"material-ui/IconButton":409,"material-ui/MenuItem":418,"material-ui/RaisedButton":425,"material-ui/Snackbar":428,"material-ui/Toggle":445,"react":773,"react-redux-toastr":520}],23:[function(require,module,exports){
+},{"../actions":16,"../modules/getbudgetnode":28,"../modules/onchartcomponentselection":29,"../modules/utilities":30,"./explorernode":24,"jsonpack":193,"material-ui/Dialog":391,"material-ui/DropDownMenu":397,"material-ui/FontIcon":404,"material-ui/IconButton":409,"material-ui/MenuItem":418,"material-ui/RaisedButton":425,"material-ui/Snackbar":428,"material-ui/Toggle":445,"react":773,"react-redux-toastr":520}],23:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();

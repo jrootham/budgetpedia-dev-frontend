@@ -5,6 +5,7 @@ const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
+const Dialog_1 = require('material-ui/Dialog');
 const Snackbar_1 = require('material-ui/Snackbar');
 const Toggle_1 = require('material-ui/Toggle');
 const RaisedButton_1 = require('material-ui/RaisedButton');
@@ -23,6 +24,7 @@ class ExplorerBranch extends Component {
             viewpointData: null,
             snackbar: { open: false, message: 'empty' },
             comparatorselection: 'Off',
+            techDialogOpen: false,
         };
         this.waitafteraction = 0;
         this.getState = () => this.state;
@@ -456,11 +458,24 @@ class ExplorerBranch extends Component {
             let url = location.hostname + '/explorer?branch=' + bsencoded + '&settings=' + ssencoded + '&hash=' + hashcode;
             return url;
         };
+        this.handleTechDialogOpen = (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            this.setState({
+                techDialogOpen: true
+            });
+        };
+        this.handleTechDialogClose = () => {
+            this.setState({
+                techDialogOpen: false
+            });
+        };
     }
     componentWillMount() {
         this._initialize();
         let { budgetBranch, declarationData } = this.props;
         budgetBranch.getViewpointData().then(() => {
+            console.log('viewpointdata', this.state.viewpointData);
             this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
                 let { urlparms } = this.props;
@@ -604,13 +619,25 @@ class ExplorerBranch extends Component {
         }}, React.createElement(Toggle_1.default, {label: 'Show options:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: branchDeclaration.showOptions, onToggle: (e, value) => {
             this.toggleShowOptions(value);
         }}));
+        let getTechNotesDisplay = () => {
+            return React.createElement("div", null, "placeholder");
+        };
+        let technotesdialog = React.createElement(Dialog_1.default, {title: "Row Data Sources", modal: false, open: branch.state.techDialogOpen, onRequestClose: branch.handleTechDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' }}, React.createElement(IconButton_1.default, {style: {
+            top: 0,
+            right: 0,
+            padding: 0,
+            height: "36px",
+            width: "36px",
+            position: "absolute",
+            zIndex: 2,
+        }, onTouchTap: branch.handleTechDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), getTechNotesDisplay());
         let technotes = (branchDeclaration.showOptions)
             ? React.createElement("div", {style: {
                 display: 'inline-block',
                 whiteSpace: "nowrap",
                 verticalAlign: "bottom",
                 position: "relative",
-            }}, React.createElement(IconButton_1.default, {tooltip: "Source documents and technical notes", tooltipPosition: "top-center", disabled: true, style: { top: '3px' }}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")))
+            }}, React.createElement(IconButton_1.default, {tooltip: "Source documents and technical notes", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: branch.handleTechDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")))
             : null;
         let showhelp = (branchDeclaration.showOptions)
             ? React.createElement("div", {style: {
@@ -630,7 +657,7 @@ class ExplorerBranch extends Component {
             : null;
         let shareurl = (branchDeclaration.showOptions)
             ? React.createElement(RaisedButton_1.default, {type: "button", label: "Share", onTouchTap: this.shareBranch}) : null;
-        return React.createElement("div", null, React.createElement("div", null, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
+        return React.createElement("div", null, React.createElement("div", null, technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;
         }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));
     }
