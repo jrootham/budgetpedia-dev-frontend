@@ -10,9 +10,9 @@ const Dialog_1 = require('material-ui/Dialog');
 const Snackbar_1 = require('material-ui/Snackbar');
 const Toggle_1 = require('material-ui/Toggle');
 const RaisedButton_1 = require('material-ui/RaisedButton');
-const List_1 = require('material-ui/List');
 const react_redux_toastr_1 = require('react-redux-toastr');
 let jsonpack = require('jsonpack');
+let validurl = require('valid-url');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
 const getbudgetnode_1 = require('../modules/getbudgetnode');
 const explorernode_1 = require('./explorernode');
@@ -480,16 +480,32 @@ class ExplorerBranch extends Component {
                 return null;
             let { datasetConfig } = this.state.viewpointData.Meta;
             let { DatasetTitle, Sources } = datasetConfig;
-            return React.createElement("div", null, React.createElement(List_1.List, null, React.createElement(Subheader_1.default, null, DatasetTitle), React.createElement(List_1.ListItem, {onTouchTap: () => {
-                this.openwindow('https://drive.google.com/open?id=0BzB3t6aSc9bDZHpfQks3QmdjV3c');
-            }, primaryText: "Test Item"})));
+            let { Headers } = Sources;
+            let headerkeys = Object.keys(Headers);
+            let itemlist = headerkeys.map(headerkey => {
+                let item = Headers[headerkey];
+                let notes = item.NOTES_CONTENT;
+                let link = item.SOURCE_DOCUMENT_LINK_COPY;
+                let isvalidurl = validurl.isUri(link);
+                let doctitle = item.SOURCE_DOCUMENT_TITLE;
+                let tablelocation = item.SOURCE_DOCUMENT_TABLE_LOCATION;
+                let tabletitle = item.SOURCE_DOCUMENT_TABLE_TITLE;
+                return React.createElement("div", {key: headerkey, style: {
+                    marginBottom: "8px",
+                    border: "1px solid silver",
+                    borderRadius: "8px",
+                    padding: "3px",
+                }}, React.createElement(RaisedButton_1.default, {style: { marginLeft: "3px", float: "right" }, disabled: !isvalidurl, type: "button", label: "Source", onTouchTap: () => {
+                    isvalidurl ? this.openwindow(link) : void (0);
+                }}), React.createElement("div", {style: { fontWeight: "bold" }}, headerkey), React.createElement("div", {style: { whiteSpace: "normal" }}, React.createElement("div", null, "Document title: ", doctitle), (!isvalidurl) ? React.createElement("div", null, "Invalid link! no source available") : null, tabletitle ? React.createElement("div", null, "Table title: ", tabletitle) : null, tablelocation ? React.createElement("div", null, "Table location: ", tablelocation) : null, notes ? React.createElement("div", null, "Note: ", notes) : null));
+            });
+            return React.createElement("div", null, React.createElement(Subheader_1.default, null, DatasetTitle), itemlist);
         };
     }
     componentWillMount() {
         this._initialize();
         let { budgetBranch, declarationData } = this.props;
         budgetBranch.getViewpointData().then(() => {
-            console.log('viewpointdata', this.state.viewpointData);
             this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
             if (declarationData.branchesById[budgetBranch.uid].nodeList.length == 0) {
                 let { urlparms } = this.props;
@@ -641,15 +657,9 @@ class ExplorerBranch extends Component {
             width: "36px",
             position: "absolute",
             zIndex: 2,
-        }, onTouchTap: branch.handleTechDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), branch.getTechNotesDisplay());
+        }, onTouchTap: branch.handleTechDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("div", null, "Please report" + ' ' + "any problems to ", React.createElement("a", {target: "_blank", href: "mailto:mail@budgetpedia.ca"}, "mail@budgetpedia.ca"), " "), branch.state.techDialogOpen ? branch.getTechNotesDisplay() : null, React.createElement("div", null, "Note: some historical numbers have been allocated to contemporary categories" + ' ' + "for continuity -- to make the numbers more easily comparable. We plan to disclose" + ' ' + "continuity details here."));
         let technotes = (branchDeclaration.showOptions)
-            ? React.createElement("div", {style: {
-                display: 'inline-block',
-                whiteSpace: "nowrap",
-                verticalAlign: "bottom",
-                position: "relative",
-            }}, React.createElement(IconButton_1.default, {tooltip: "Source documents and technical notes", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: branch.handleTechDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "note")))
-            : null;
+            ? React.createElement(RaisedButton_1.default, {style: { marginLeft: "12px" }, type: "button", label: "Sources", onTouchTap: branch.handleTechDialogOpen}) : null;
         let showhelp = (branchDeclaration.showOptions)
             ? React.createElement("div", {style: {
                 display: 'inline-block',

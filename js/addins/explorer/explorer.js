@@ -214,7 +214,6 @@ let Explorer = class extends Component {
         };
     }
     componentWillMount() {
-        console.log('explorer props location.query', this.props.location.query);
         this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted).";
         let { query } = this.props.location;
         let branchdata, settingsdata, hash;
@@ -228,7 +227,6 @@ let Explorer = class extends Component {
                     settingsdata: settingsdata,
                 };
                 let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
-                console.log('branchdata, settingsdata,defaultSettings', branchdata, settingsdata, defaultSettings);
                 let querysettings = {
                     inflationAdjusted: branchdata.ad,
                     aspect: branchdata.as,

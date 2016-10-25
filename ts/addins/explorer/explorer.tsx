@@ -157,7 +157,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     componentWillMount() {
 
-        console.log('explorer props location.query',this.props.location.query)
+        // console.log('explorer props location.query',this.props.location.query)
 
         this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted)."
 
@@ -180,7 +180,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 }
 
                 let defaultSettings:BranchSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch))
-                console.log('branchdata, settingsdata,defaultSettings',branchdata,settingsdata,defaultSettings)
+                // console.log('branchdata, settingsdata,defaultSettings',branchdata,settingsdata,defaultSettings)
 
                 let querysettings = {
                     inflationAdjusted:branchdata.ad,

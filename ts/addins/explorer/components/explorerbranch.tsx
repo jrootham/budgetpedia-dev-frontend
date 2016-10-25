@@ -30,6 +30,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {List, ListItem} from 'material-ui/List'
 import {toastr} from 'react-redux-toastr'
 let jsonpack = require('jsonpack')
+let validurl = require('valid-url')
 
 // ------------------------[ modules ]-----------------------------
 import { 
@@ -154,7 +155,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         budgetBranch.getViewpointData().then(() => {
 
-            console.log('viewpointdata',this.state.viewpointData)
+            // console.log('viewpointdata',this.state.viewpointData)
 
             this._stateActions.incrementBranchDataVersion(budgetBranch.uid) // change data generation counter for child compare
 
@@ -955,18 +956,56 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         let {  DatasetTitle, Sources } = datasetConfig
 
-        return <div>
-            <List>
-                <Subheader>{DatasetTitle}</Subheader>
-                <ListItem 
-                    onTouchTap = {
-                        () => {
-                            this.openwindow('https://drive.google.com/open?id=0BzB3t6aSc9bDZHpfQks3QmdjV3c')
-                        }
+        let { Headers } = Sources
+
+        // console.log('headers',Headers)
+
+        let headerkeys = Object.keys(Headers)
+
+        let itemlist = headerkeys.map(headerkey => {
+            let item = Headers[headerkey]
+            let notes = item.NOTES_CONTENT
+            let link = item.SOURCE_DOCUMENT_LINK_COPY
+            let isvalidurl = validurl.isUri(link)
+            let doctitle = item.SOURCE_DOCUMENT_TITLE
+            let tablelocation = item.SOURCE_DOCUMENT_TABLE_LOCATION
+            let tabletitle = item.SOURCE_DOCUMENT_TABLE_TITLE
+            // console.log('ListItem values',notes, link, isvalidurl, doctitle, tablelocation,tabletitle)
+            return <div
+                key={headerkey}
+                style={
+                    {
+                        marginBottom:"8px",
+                        border:"1px solid silver",
+                        borderRadius:"8px",
+                        padding:"3px",
                     }
-                    primaryText = "Test Item">
-                </ListItem>
-            </List>
+                }
+                ><RaisedButton
+                    style={{marginLeft:"3px",float:"right"}}
+                    disabled = {!isvalidurl}
+                    type="button"
+                    label="Source"
+                    onTouchTap={
+                        () => {
+                            isvalidurl?this.openwindow(link):void(0)
+                        }
+                    } 
+                />
+                <div style={{fontWeight:"bold"}}>{headerkey}</div>
+                <div style={{whiteSpace:"normal"}}>
+                    <div>Document title: {doctitle}</div>
+                    {(!isvalidurl)?<div>Invalid link! no source available</div>:null}
+                    {tabletitle?<div>Table title: {tabletitle}</div>:null}
+                    {tablelocation?<div>Table location: {tablelocation}</div>:null}
+                    {notes?<div>Note: {notes}</div>:null}
+                </div>
+            </div>
+        })
+
+        return <div>
+                <Subheader>{DatasetTitle}</Subheader>
+                { itemlist }
         </div>
 
     }
@@ -1198,29 +1237,25 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 </FontIcon>
 
             </IconButton>
+            <div>Please report
+            any problems to <a target="_blank" href="mailto:mail@budgetpedia.ca">
+            mail@budgetpedia.ca</a> </div>
 
-            { branch.getTechNotesDisplay() }
+            { branch.state.techDialogOpen?branch.getTechNotesDisplay():null }
+
+            <div>Note: some historical numbers have been allocated to contemporary categories
+            for continuity -- to make the numbers more easily comparable. We plan to disclose
+            continuity details here.</div>
 
         </Dialog >
 
     let technotes = (branchDeclaration.showOptions)
-        ?<div 
-            style={
-                {
-                    display:'inline-block', 
-                    whiteSpace:"nowrap", 
-                    verticalAlign:"bottom",
-                    position:"relative",
-                }
-            }>
-            <IconButton tooltip="Source documents and technical notes" tooltipPosition="top-center"
-            style={{top:'3px'}}
-            onTouchTap = {branch.handleTechDialogOpen}
-            >
-            <FontIcon 
-                className="material-icons">note</FontIcon>
-        </IconButton></div>
-        :null
+        ?<RaisedButton
+            style={{marginLeft:"12px"}}
+            type="button"
+            label="Sources"
+            onTouchTap={branch.handleTechDialogOpen} 
+        />:null
 
     let showhelp = (branchDeclaration.showOptions)
         ?<div 
