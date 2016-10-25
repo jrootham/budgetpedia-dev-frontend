@@ -948,6 +948,34 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         open(url,'_blank')
     }
 
+    getBranchDataMessages = () => {
+        if (!this.state.viewpointData) return null
+
+        let {datasetConfig} = this.state.viewpointData.Meta
+
+        let {  DatasetTitle, Sources } = datasetConfig
+
+        let { Messages } = Sources
+
+        let messages = []
+
+        for (let index in Messages) {
+            messages.push(
+                <div key={index}>{Messages[index]}</div>
+            )
+        }
+
+        // console.log('messages',messages, Messages)
+
+        return ((messages.length > 0)?<div 
+            style={{padding:"3px",margin:"3px",backgroundColor:"LemonChiffon"}}
+        >
+            {messages}
+        </div>:null)
+
+    }
+
+
     getTechNotesDisplay = () => {
 
         if (!this.state.viewpointData) return null
@@ -1303,6 +1331,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     return <div >
     <div>
+        { this.getBranchDataMessages() }
 
         { technotesdialog }
 

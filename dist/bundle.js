@@ -3762,6 +3762,19 @@ var ExplorerBranch = function (_Component) {
         _this.openwindow = function (url) {
             open(url, '_blank');
         };
+        _this.getBranchDataMessages = function () {
+            if (!_this.state.viewpointData) return null;
+            var datasetConfig = _this.state.viewpointData.Meta.datasetConfig;
+            var DatasetTitle = datasetConfig.DatasetTitle;
+            var Sources = datasetConfig.Sources;
+            var Messages = Sources.Messages;
+
+            var messages = [];
+            for (var index in Messages) {
+                messages.push(React.createElement("div", { key: index }, Messages[index]));
+            }
+            return messages.length > 0 ? React.createElement("div", { style: { padding: "3px", margin: "3px", backgroundColor: "LemonChiffon" } }, messages) : null;
+        };
         _this.getTechNotesDisplay = function () {
             if (!_this.state.viewpointData) return null;
             var datasetConfig = _this.state.viewpointData.Meta.datasetConfig;
@@ -3969,7 +3982,7 @@ var ExplorerBranch = function (_Component) {
                     position: "relative"
                 } }, React.createElement(IconButton_1.default, { disabled: true, tooltip: "Find an entry point", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.handleSearch }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "search"))) : null;
             var shareurl = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { type: "button", label: "Share", onTouchTap: this.shareBranch }) : null;
-            return React.createElement("div", null, React.createElement("div", null, technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
+            return React.createElement("div", null, React.createElement("div", null, this.getBranchDataMessages(), technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
                     branch.branchScrollBlock = node;
                 }, style: { overflow: "scroll" } }, drilldownportals, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))), React.createElement(Snackbar_1.default, { open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose }));
         }
@@ -5632,7 +5645,14 @@ var Explorer = function (_Component) {
                 return segments;
             };
             var branches = branchSegments();
-            return React.createElement("div", null, React.createElement("div", { style: { backgroundColor: "lemonchiffon", padding: "3px", margin: "3px", borderRadius: "8px" } }, "This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), React.createElement(Card_1.Card, { expanded: this.state.showdashboard }, React.createElement(Card_1.CardTitle, null, React.createElement(Toggle_1.default, { label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
+            return React.createElement("div", null, React.createElement("div", { style: {
+                    backgroundColor: "lemonchiffon",
+                    padding: "3px",
+                    margin: "3px",
+                    borderRadius: "8px",
+                    fontFamily: "Roboto,sans-serif",
+                    fontSize: "12px"
+                } }, "Caution: This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), React.createElement(Card_1.Card, { expanded: this.state.showdashboard }, React.createElement(Card_1.CardTitle, null, React.createElement(Toggle_1.default, { label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
                     height: '32px', float: "right",
                     display: "inline-block",
                     width: 'auto'

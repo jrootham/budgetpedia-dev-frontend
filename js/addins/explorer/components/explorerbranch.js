@@ -475,6 +475,18 @@ class ExplorerBranch extends Component {
         this.openwindow = (url) => {
             open(url, '_blank');
         };
+        this.getBranchDataMessages = () => {
+            if (!this.state.viewpointData)
+                return null;
+            let { datasetConfig } = this.state.viewpointData.Meta;
+            let { DatasetTitle, Sources } = datasetConfig;
+            let { Messages } = Sources;
+            let messages = [];
+            for (let index in Messages) {
+                messages.push(React.createElement("div", {key: index}, Messages[index]));
+            }
+            return ((messages.length > 0) ? React.createElement("div", {style: { padding: "3px", margin: "3px", backgroundColor: "LemonChiffon" }}, messages) : null);
+        };
         this.getTechNotesDisplay = () => {
             if (!this.state.viewpointData)
                 return null;
@@ -678,7 +690,7 @@ class ExplorerBranch extends Component {
             : null;
         let shareurl = (branchDeclaration.showOptions)
             ? React.createElement(RaisedButton_1.default, {type: "button", label: "Share", onTouchTap: this.shareBranch}) : null;
-        return React.createElement("div", null, React.createElement("div", null, technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
+        return React.createElement("div", null, React.createElement("div", null, this.getBranchDataMessages(), technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
             branch.branchScrollBlock = node;
         }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));
     }
