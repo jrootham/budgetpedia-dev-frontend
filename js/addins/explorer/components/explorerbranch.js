@@ -3,12 +3,14 @@ const React = require('react');
 var { Component } = React;
 const DropDownMenu_1 = require('material-ui/DropDownMenu');
 const MenuItem_1 = require('material-ui/MenuItem');
+const Subheader_1 = require('material-ui/Subheader');
 const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Dialog_1 = require('material-ui/Dialog');
 const Snackbar_1 = require('material-ui/Snackbar');
 const Toggle_1 = require('material-ui/Toggle');
 const RaisedButton_1 = require('material-ui/RaisedButton');
+const List_1 = require('material-ui/List');
 const react_redux_toastr_1 = require('react-redux-toastr');
 let jsonpack = require('jsonpack');
 const onchartcomponentselection_1 = require('../modules/onchartcomponentselection');
@@ -470,6 +472,18 @@ class ExplorerBranch extends Component {
                 techDialogOpen: false
             });
         };
+        this.openwindow = (url) => {
+            open(url, '_blank');
+        };
+        this.getTechNotesDisplay = () => {
+            if (!this.state.viewpointData)
+                return null;
+            let { datasetConfig } = this.state.viewpointData.Meta;
+            let { DatasetTitle, Sources } = datasetConfig;
+            return React.createElement("div", null, React.createElement(List_1.List, null, React.createElement(Subheader_1.default, null, DatasetTitle), React.createElement(List_1.ListItem, {onTouchTap: () => {
+                this.openwindow('https://drive.google.com/open?id=0BzB3t6aSc9bDZHpfQks3QmdjV3c');
+            }, primaryText: "Test Item"})));
+        };
     }
     componentWillMount() {
         this._initialize();
@@ -619,9 +633,6 @@ class ExplorerBranch extends Component {
         }}, React.createElement(Toggle_1.default, {label: 'Show options:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: branchDeclaration.showOptions, onToggle: (e, value) => {
             this.toggleShowOptions(value);
         }}));
-        let getTechNotesDisplay = () => {
-            return React.createElement("div", null, "placeholder");
-        };
         let technotesdialog = React.createElement(Dialog_1.default, {title: "Row Data Sources", modal: false, open: branch.state.techDialogOpen, onRequestClose: branch.handleTechDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' }}, React.createElement(IconButton_1.default, {style: {
             top: 0,
             right: 0,
@@ -630,7 +641,7 @@ class ExplorerBranch extends Component {
             width: "36px",
             position: "absolute",
             zIndex: 2,
-        }, onTouchTap: branch.handleTechDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), getTechNotesDisplay());
+        }, onTouchTap: branch.handleTechDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), branch.getTechNotesDisplay());
         let technotes = (branchDeclaration.showOptions)
             ? React.createElement("div", {style: {
                 display: 'inline-block',

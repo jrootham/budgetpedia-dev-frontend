@@ -20,12 +20,14 @@ var { Component } = React
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import { Card, CardTitle, CardText } from 'material-ui/Card'
+import Subheader from 'material-ui/Subheader'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 import Snackbar from 'material-ui/Snackbar'
 import Toggle from 'material-ui/Toggle'
 import RaisedButton from 'material-ui/RaisedButton'
+import {List, ListItem} from 'material-ui/List'
 import {toastr} from 'react-redux-toastr'
 let jsonpack = require('jsonpack')
 
@@ -941,6 +943,35 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         })
     }
 
+    openwindow = (url) => {
+        open(url,'_blank')
+    }
+
+    getTechNotesDisplay = () => {
+
+        if (!this.state.viewpointData) return null
+
+        let {datasetConfig} = this.state.viewpointData.Meta
+
+        let {  DatasetTitle, Sources } = datasetConfig
+
+        return <div>
+            <List>
+                <Subheader>{DatasetTitle}</Subheader>
+                <ListItem 
+                    onTouchTap = {
+                        () => {
+                            this.openwindow('https://drive.google.com/open?id=0BzB3t6aSc9bDZHpfQks3QmdjV3c')
+                        }
+                    }
+                    primaryText = "Test Item">
+                </ListItem>
+            </List>
+        </div>
+
+    }
+
+
     render() {
 
     let branch = this
@@ -1136,12 +1167,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             />
         </div>
 
-    let getTechNotesDisplay = () => {
-
-        return <div>placeholder</div>
-
-    }
-
     let technotesdialog =
         <Dialog
             title = "Row Data Sources"
@@ -1174,7 +1199,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             </IconButton>
 
-            { getTechNotesDisplay() }
+            { branch.getTechNotesDisplay() }
 
         </Dialog >
 

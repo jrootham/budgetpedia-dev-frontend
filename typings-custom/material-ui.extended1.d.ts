@@ -52,6 +52,7 @@ declare module "material-ui" {
     export import SvgIcon = __MaterialUI.SvgIcon; // require('material-ui/lib/svg-icon');
     export import Styles = __MaterialUI.Styles; // require('material-ui/lib/styles');
     export import Snackbar = __MaterialUI.Snackbar; // require('material-ui/lib/snackbar');
+    export import Subheader = __MaterialUI.Subheader; // require('material-ui/lib/snackbar');
     export import Tab = __MaterialUI.Tabs.Tab; // require('material-ui/lib/tabs/tab');
     export import Tabs = __MaterialUI.Tabs.Tabs; // require('material-ui/lib/tabs/tabs');
     export import Table = __MaterialUI.Table.Table; // require('material-ui/lib/table/table');
@@ -90,6 +91,8 @@ declare module "material-ui" {
 }
 
 declare namespace __MaterialUI {
+    export class Subheader extends React.Component<any, {}> {
+    }
     export import React = __React;
 
     // ReactLink is from "react/addons"
@@ -2054,14 +2057,20 @@ declare module 'material-ui/Drawer' {
     export default Drawer;
 }
 
+declare module 'material-ui/Subheader' {
+    export import Subheader = __MaterialUI.Subheader
+    export default Subheader
+}
+
 declare module 'material-ui/lib/linear-progress' {
     export import LinearProgress = __MaterialUI.LinearProgress;
     export default LinearProgress;
 }
 
-declare module 'material-ui/lib/lists/list' {
-    export import List = __MaterialUI.Lists.List;
-    export default List;
+declare module 'material-ui/List' {
+    import List = __MaterialUI.Lists.List;
+    import ListItem = __MaterialUI.Lists.ListItem;
+    export {List, ListItem};
 }
 
 declare module 'material-ui/lib/lists/list-divider' {
