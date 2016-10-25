@@ -701,7 +701,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         return <div>
 
-        <div style={{backgroundColor:"palegoldenrod",padding:"3px",margin:"3px",borderRadius:"8px"}} >
+        <div style={{backgroundColor:"lemonchiffon",padding:"3px",margin:"3px",borderRadius:"8px"}} >
         This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations.
         There are numerous data source quality issues, the intake process has not been
         validated, and the data presented has not been rigorously verified against source data.</div>
