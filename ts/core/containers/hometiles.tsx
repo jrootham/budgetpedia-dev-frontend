@@ -65,14 +65,15 @@ class HomeTilesClass extends React.Component<any, any> {
         return (
             <div>
 
-            <Card>
+            <Card style={{backgroundImage:"url(./public/icons/budgetpedia-pale.jpg",
+                backgroundSize:"cover"}}>
+            <div style = {{float:"left",margin:"9px 3px 3px 3px"}}>
+                <img style={{width:"100px"}} src= "./public/icons/budgetpedia-logo.png" />
+            </div>
             <CardTitle>
             Welcome to Budgetpedia. We're all about government budgets.
             </CardTitle>
             <CardText>
-            <div style = {{float:"left"}}>
-            <img style={{width:"100px"}} src= "./public/icons/budgetpedia-logo.png" />
-            </div>
             <p style={{margin:0, padding:0}}>Explore the Toronto budget with our <a 
                 href="javascript:void(0);"
                 onTouchTap={ e => {this.transitionTo(e,'explorer')}}>Budget Explorer</a>. 
