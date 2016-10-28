@@ -35,8 +35,8 @@ Non-Program Revenues,CORPREVENUES,,2
 Office of the Chief Financial Officer,CFO,,3
 Office of the Integrity Commissioner,INTEGRITYCOMM,,1
 Office of the Lobbyist Registrar,LOBBYREG,,1
+Office of the Ombudman,OMBUDSMAN,,1
 Office of the Ombudsman,OMBUDSMAN,,2
-Office of the Ombudsperson,OMBUDSMAN,,1
 Office of the Treasurer,TREASURER,,3
 Parking Tag Enforcement & Operations,PARKINGTAGS,,1
 "Parks, Forestry & Recreation",PARKS,,3
@@ -54,8 +54,8 @@ Toronto Building,BUILDINGS,,3
 Toronto Employment & Social Services,SOCIALSERV,,3
 Toronto Environment Office,ENV,,3
 Toronto Parking Authority,PARKING,,3
-Toronto Police Service,POLICE,,2
-Toronto Police Service (excludes Board),POLICE,,1
+Toronto Police Service,POLICE,,3
+Toronto Police Service Board,POLICEBOARD,,1
 Toronto Police Services Board,POLICEBOARD,,2
 Toronto Public Health,PUBLICHEALTH,,3
 Toronto Public Library,LIBRARY,,3

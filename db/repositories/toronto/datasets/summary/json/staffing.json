@@ -31,6 +31,23 @@
         }
     },
     "Data": {
+        "ATMOSPHERE": {
+            "years": {
+                "2004": 4,
+                "2005": 4,
+                "2006": 4,
+                "2007": 4,
+                "2008": 4,
+                "2009": 6,
+                "2010": 7,
+                "2011": 7,
+                "2012": 7,
+                "2013": 7,
+                "2014": 8,
+                "2015": 8,
+                "2016": 8
+            }
+        },
         "AUDITGEN": {
             "years": {
                 "2004": 26,
@@ -49,18 +66,18 @@
         },
         "CFO": {
             "years": {
-                "2004": 819,
-                "2005": 817,
-                "2006": 124,
-                "2007": 124,
-                "2008": 128,
-                "2009": 160.6,
-                "2010": 144.6,
-                "2011": 140.6,
+                "2004": 815,
+                "2005": 813,
+                "2006": 120,
+                "2007": 120,
+                "2008": 124,
+                "2009": 154.6,
+                "2010": 137.6,
+                "2011": 134.6,
                 "2012": 124.6,
                 "2013": 96,
                 "2014": 100,
-                "2015": 103,
+                "2015": 102,
                 "2016": 103
             }
         },
@@ -78,7 +95,7 @@
                 "2013": 922.4,
                 "2014": 942.7,
                 "2015": 967.6,
-                "2016": 977.9
+                "2016": 977.8
             }
         },
         "CITYMANAGER": {
@@ -91,11 +108,11 @@
                 "2009": 414,
                 "2010": 404,
                 "2011": 388,
-                "2012": 392,
+                "2012": 375,
                 "2013": 406.5,
-                "2014": 421.5,
-                "2015": 426.5,
-                "2016": 411
+                "2014": 410.5,
+                "2015": 424.5,
+                "2016": 413
             }
         },
         "CLERK": {
@@ -107,12 +124,12 @@
                 "2008": 374.5,
                 "2009": 440.9,
                 "2010": 489.6,
-                "2011": 427.5,
-                "2012": 399.8,
+                "2011": 425.5,
+                "2012": 397.8,
                 "2013": 402.8,
-                "2014": 429.7,
+                "2014": 439.7,
                 "2015": 403.9,
-                "2016": 403
+                "2016": 403.6
             }
         },
         "COMMCENTRES": {
@@ -125,7 +142,7 @@
                 "2009": 120.2,
                 "2010": 91.2,
                 "2011": 91.2,
-                "2012": 79,
+                "2012": 82.7,
                 "2013": 77.4,
                 "2014": 77.4,
                 "2015": 77.9,
@@ -181,10 +198,10 @@
                 "2008": 269.8,
                 "2009": 276.2,
                 "2010": 276.8,
-                "2011": 275.8,
-                "2012": 266.8,
+                "2011": 284.8,
+                "2012": 275.8,
                 "2013": 264.8,
-                "2014": 296,
+                "2014": 289,
                 "2015": 300.6,
                 "2016": 297.5
             }
@@ -198,8 +215,8 @@
                 "2008": 165.7,
                 "2009": 161.4,
                 "2010": 167.4,
-                "2011": 164.7,
-                "2012": 147.8,
+                "2011": 162.7,
+                "2012": 162.7,
                 "2013": 139.8,
                 "2014": 133.8,
                 "2015": 133,
@@ -218,7 +235,7 @@
                 "2011": 529.5,
                 "2012": 529.5,
                 "2013": 392.5,
-                "2014": 379,
+                "2014": 392.5,
                 "2015": 390,
                 "2016": 356
             }
@@ -232,12 +249,12 @@
                 "2008": 740.5,
                 "2009": 813,
                 "2010": 812.6,
-                "2011": 819.5,
+                "2011": 843.8,
                 "2012": 723.6,
                 "2013": 770.2,
-                "2014": 920.5,
-                "2015": 928.5,
-                "2016": 930.5
+                "2014": 799.7,
+                "2015": 925.5,
+                "2016": 927.5
             }
         },
         "FIRE": {
@@ -253,8 +270,8 @@
                 "2012": 3176.3,
                 "2013": 3170.8,
                 "2014": 3126.8,
-                "2015": 3153.3,
-                "2016": 3167.3
+                "2015": 3154.8,
+                "2016": 3168.3
             }
         },
         "FLEET": {
@@ -300,12 +317,12 @@
                 "2008": 384,
                 "2009": 366,
                 "2010": 575.5,
-                "2011": 525,
-                "2012": 506,
+                "2011": 527,
+                "2012": 508,
                 "2013": 587,
-                "2014": 582,
-                "2015": 602,
-                "2016": 618
+                "2014": 593,
+                "2015": 587,
+                "2016": 619
             }
         },
         "LEGAL": {
@@ -317,12 +334,12 @@
                 "2008": 260,
                 "2009": 276,
                 "2010": 276,
-                "2011": 280,
+                "2011": 277,
                 "2012": 273,
                 "2013": 294,
                 "2014": 297,
-                "2015": 301.4,
-                "2016": 306.4
+                "2015": 302.4,
+                "2016": 305.9
             }
         },
         "LIBRARY": {
@@ -351,8 +368,8 @@
                 "2008": 2167.4,
                 "2009": 2218.3,
                 "2010": 2183,
-                "2011": 2188.3,
-                "2012": 2169.9,
+                "2011": 2188.4,
+                "2012": 2153.5,
                 "2013": 2151.3,
                 "2014": 2179.7,
                 "2015": 2225.9,
@@ -371,7 +388,7 @@
                 "2011": 17,
                 "2012": 18,
                 "2013": 9,
-                "2014": 18,
+                "2014": 9,
                 "2015": 20,
                 "2016": 20
             }
@@ -388,8 +405,8 @@
                 "2011": 1218,
                 "2012": 1213,
                 "2013": 1264,
-                "2014": 1327.3,
-                "2015": 1394.3,
+                "2014": 1325,
+                "2015": 1391.3,
                 "2016": 1444.8
             }
         },
@@ -437,11 +454,11 @@
                 "2009": 4213.3,
                 "2010": 4230.1,
                 "2011": 4280.6,
-                "2012": 4202.2,
-                "2013": 4192,
-                "2014": 4331.2,
-                "2015": 4440.1,
-                "2016": 4521.9
+                "2012": 4200.2,
+                "2013": 4206,
+                "2014": 4347.6,
+                "2015": 4454.8,
+                "2016": 4503.5
             }
         },
         "PLANNING": {
@@ -453,12 +470,12 @@
                 "2008": 359.5,
                 "2009": 362.5,
                 "2010": 350,
-                "2011": 335,
-                "2012": 340,
+                "2011": 342,
+                "2012": 333,
                 "2013": 339,
                 "2014": 352,
-                "2015": 366,
-                "2016": 367
+                "2015": 360,
+                "2016": 368
             }
         },
         "POLICE": {
@@ -472,7 +489,7 @@
                 "2010": 7834,
                 "2011": 7888,
                 "2012": 7869,
-                "2013": 7868,
+                "2013": 7869,
                 "2014": 7870,
                 "2015": 7883,
                 "2016": 7881
@@ -487,12 +504,12 @@
                 "2008": 1937.2,
                 "2009": 1863.3,
                 "2010": 1865.7,
-                "2011": 1886.6,
-                "2012": 1842.2,
-                "2013": 1837.7,
-                "2014": 1838.1,
-                "2015": 1841.8,
-                "2016": 1845.9
+                "2011": 1902.3,
+                "2012": 1835.7,
+                "2013": 1836.2,
+                "2014": 1838.7,
+                "2015": 1841.6,
+                "2016": 1850
             }
         },
         "REGIONCONSERV": {
@@ -501,7 +518,6 @@
                 "2005": 371.2,
                 "2006": 394.7,
                 "2007": 410.8,
-                "2015": 409.3,
                 "2016": 419.6
             }
         },
@@ -514,12 +530,12 @@
                 "2008": 695.5,
                 "2009": 743.9,
                 "2010": 748.8,
-                "2011": 748.7,
-                "2012": 735.2,
-                "2013": 723.4,
-                "2014": 717.6,
-                "2015": 756.2,
-                "2016": 756.2
+                "2011": 752.7,
+                "2012": 739.4,
+                "2013": 723.9,
+                "2014": 718.6,
+                "2015": 707.2,
+                "2016": 756.5
             }
         },
         "SOCIALDEV": {
@@ -531,12 +547,12 @@
                 "2008": 214.8,
                 "2009": 202.8,
                 "2010": 172.9,
-                "2011": 172.9,
-                "2012": 120.4,
-                "2013": 127.5,
-                "2014": 126.5,
-                "2015": 130.5,
-                "2016": 139.5
+                "2011": 145.3,
+                "2012": 129.7,
+                "2013": 127.6,
+                "2014": 126.3,
+                "2015": 127.5,
+                "2016": 136.5
             }
         },
         "SOCIALSERV": {
@@ -548,11 +564,11 @@
                 "2008": 1982,
                 "2009": 2148,
                 "2010": 2354,
-                "2011": 2286,
-                "2012": 2187.5,
+                "2011": 2289,
+                "2012": 2190.5,
                 "2013": 2186,
                 "2014": 2148.5,
-                "2015": 2091,
+                "2015": 2092,
                 "2016": 2120
             }
         },
@@ -566,11 +582,11 @@
                 "2009": 1354.8,
                 "2010": 1309.1,
                 "2011": 1327.7,
-                "2012": 1096,
+                "2012": 1093.2,
                 "2013": 1091.7,
                 "2014": 1075.7,
                 "2015": 1081.7,
-                "2016": 1065.7
+                "2016": 1108.7
             }
         },
         "THEATRES": {
@@ -587,7 +603,7 @@
                 "2013": 165.2,
                 "2014": 156.5,
                 "2015": 163.1,
-                "2016": 172.9
+                "2016": 171.9
             }
         },
         "TRANSPORTATION": {
@@ -599,12 +615,12 @@
                 "2008": 1302.2,
                 "2009": 1350.2,
                 "2010": 1279.2,
-                "2011": 1266,
-                "2012": 1047.2,
+                "2011": 1265,
+                "2012": 1043.7,
                 "2013": 1032.4,
                 "2014": 1055.4,
-                "2015": 1025.1,
-                "2016": 1026.8
+                "2015": 1028.8,
+                "2016": 1030.5
             }
         },
         "TTCCONV": {
@@ -617,11 +633,11 @@
                 "2009": 11049,
                 "2010": 10560,
                 "2011": 10706,
-                "2012": 10614,
-                "2013": 11413,
+                "2012": 10561,
+                "2013": 10882,
                 "2014": 11179,
                 "2015": 11691,
-                "2016": 12247
+                "2016": 11870
             }
         },
         "WATER": {
@@ -633,12 +649,12 @@
                 "2008": 1678.5,
                 "2009": 1723.5,
                 "2010": 1726.4,
-                "2011": 1702.3,
+                "2011": 1706.3,
                 "2012": 1659.3,
                 "2013": 1696.3,
-                "2014": 1710.3,
-                "2015": 1713.3,
-                "2016": 1710.3
+                "2014": 1702.3,
+                "2015": 1710.3,
+                "2016": 1753.7
             }
         },
         "YONGEDUNDAS": {
@@ -667,7 +683,7 @@
                 "2008": 358.3,
                 "2009": 373.8,
                 "2010": 383.5,
-                "2011": 388,
+                "2011": 389,
                 "2012": 388,
                 "2013": 419.4,
                 "2014": 410.2,
@@ -714,12 +730,12 @@
                 "2008": 407.5,
                 "2009": 417.5,
                 "2010": 428.5,
-                "2011": 427,
-                "2012": 420,
+                "2011": 426,
+                "2012": 418,
                 "2013": 425,
                 "2014": 425,
                 "2015": 442,
-                "2016": 450
+                "2016": 456
             }
         },
         "LICENCING": {
@@ -732,9 +748,9 @@
                 "2011": 487.6,
                 "2012": 452.6,
                 "2013": 452.6,
-                "2014": 458,
+                "2014": 456,
                 "2015": 460,
-                "2016": 470
+                "2016": 460
             }
         },
         "LOBBYREG": {
@@ -758,11 +774,11 @@
                 "2008": 442.2,
                 "2009": 400.2,
                 "2010": 239.1,
-                "2011": 234.1,
-                "2012": 195.1,
+                "2011": 229.1,
+                "2012": 208.1,
                 "2013": 199.1,
-                "2014": 202.4,
-                "2015": 196.4,
+                "2014": 200.4,
+                "2015": 199.4,
                 "2016": 196.4
             }
         },
@@ -776,9 +792,9 @@
                 "2011": 753,
                 "2012": 730,
                 "2013": 682,
-                "2014": 687,
-                "2015": 691,
-                "2016": 660.2
+                "2014": 684,
+                "2015": 693,
+                "2016": 680.2
             }
         },
         "311SERVICE": {
@@ -789,11 +805,11 @@
                 "2009": 152,
                 "2010": 146.7,
                 "2011": 159,
-                "2012": 158,
+                "2012": 154,
                 "2013": 154,
                 "2014": 158,
-                "2015": 146,
-                "2016": 164
+                "2015": 157,
+                "2016": 145
             }
         },
         "OMBUDSMAN": {
@@ -826,13 +842,15 @@
                 "2010": 530,
                 "2011": 532,
                 "2012": 529,
+                "2013": 531,
                 "2014": 557,
                 "2015": 562,
-                "2016": 581
+                "2016": 565
             }
         },
         "POLICEBOARD": {
             "years": {
+                "2011": 8,
                 "2012": 8,
                 "2013": 8,
                 "2014": 8,
@@ -1010,35 +1028,35 @@
         },
         "2011": {
             "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
-            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuY2t5c1JTby1Oc0k",
-            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
-            "SOURCE_DOCUMENT_TITLE": "2011 Budget Committee Recommended Tax Supported Operating Budget",
-            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 31",
-            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2011 BUDGET COMMITTEE RECOMMENDED OPERATING BUDGET APPROVED OPERATING POSITIONS",
-            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuRnl6OW1ONWdOTHM",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuR21kODNzalQzNGc",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuaUJtdGpFb0lVWlE",
+            "SOURCE_DOCUMENT_TITLE": "APPENDIX 2 2012 COUNCIL APPROVED OPERATING BUDGET APPROVED OPERATING POSITIONS",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 1",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8Oub0RpcloxWmtCNU0",
             "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
             "YEAR": 2011,
             "VERSION": "Summary",
             "ASPECT": "Staffing",
-            "NOTES_CONTENT": "",
+            "NOTES_CONTENT": "Taken from 2012 council approved budget, prior year column",
             "NOTES_SEVERITY": "",
             "UNITS_NAME": "Full Time Equivalent",
             "UNITS_CODE": "FTE",
             "UNITS_MULTIPLIER": 1,
-            "TOTAL_AMOUNT": 50314.3,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "TOTAL_AMOUNT": 50351.8,
+            "INTAKE_DATETIME": "2016-10-27-12-09-16",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
         },
         "2012": {
             "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
-            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuRnFxVFdwRGdtUFE",
-            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
-            "SOURCE_DOCUMENT_TITLE": "2013 BUDGET BRIEFING NOTE Budget Committee Recommended Position Changes and 2012 Actual Staffing and Year-End Vacancy Projection ",
-            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 13",
-            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2013 BUDGET COMMITTEE RECOMMENDED OPERATING BUDGET OPERATING POSITIONS",
-            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8Ouc2NFTmJVQl9hQms",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuR21kODNzalQzNGc",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuaUJtdGpFb0lVWlE",
+            "SOURCE_DOCUMENT_TITLE": "APPENDIX 2 2012 COUNCIL APPROVED OPERATING BUDGET APPROVED OPERATING POSITIONS",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 1",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuclBJOWNIUVRLT28",
             "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
             "YEAR": 2012,
             "VERSION": "Summary",
@@ -1048,43 +1066,43 @@
             "UNITS_NAME": "Full Time Equivalent",
             "UNITS_CODE": "FTE",
             "UNITS_MULTIPLIER": 1,
-            "TOTAL_AMOUNT": 48909.3,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "TOTAL_AMOUNT": 48859.2,
+            "INTAKE_DATETIME": "2016-10-27-12-09-16",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
         },
         "2013": {
             "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
-            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuZlFzMkdkamJGcjA",
-            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
-            "SOURCE_DOCUMENT_TITLE": "Operating Variance Report for the Year Ended December 31, 2013",
-            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 22",
-            "SOURCE_DOCUMENT_TABLE_TITLE": "Appendix D: CITY OF TORONTOCONSOLIDATED APPROVED COMPLEMENTFOR THE YEAR ENDED DECEMBER 31, 2013",
-            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OudThYU0VhUVhqT00",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuaXNFVEpDbTRJdDQ",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuaUJtdGpFb0lVWlE",
+            "SOURCE_DOCUMENT_TITLE": "CITY OF TORONTO 2014 COUNCIL APPROVED OPERATING BUDGET TOTAL OPERATING AND CAPITAL POSITIONS",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 2",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2014 COUNCIL APPROVED OPERATING BUDGET OPERATING POSITIONS",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuYXhQWE8yelktTTQ",
             "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
             "YEAR": 2013,
             "VERSION": "Summary",
             "ASPECT": "Staffing",
-            "NOTES_CONTENT": "",
+            "NOTES_CONTENT": "Taken from 2014 document, previous year columns",
             "NOTES_SEVERITY": "",
             "UNITS_NAME": "Full Time Equivalent",
             "UNITS_CODE": "FTE",
             "UNITS_MULTIPLIER": 1,
-            "TOTAL_AMOUNT": 49145.9,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "TOTAL_AMOUNT": 49167,
+            "INTAKE_DATETIME": "2016-10-27-12-09-16",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
         },
         "2014": {
             "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
-            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuSDVsQ3RQb19pbE0",
-            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
-            "SOURCE_DOCUMENT_TITLE": "Operating Variance Report for the Year Ended 12/31/14",
-            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 25",
-            "SOURCE_DOCUMENT_TABLE_TITLE": "Appendix D: CITY OF TORONTOCONSOLIDATED APPROVED COMPLEMENTFOR THE YEAR ENDED DECEMBER 31, 2014",
-            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuQVJjZ2x2YjlpdkE",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuaXNFVEpDbTRJdDQ",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuaUJtdGpFb0lVWlE",
+            "SOURCE_DOCUMENT_TITLE": "CITY OF TORONTO 2014 COUNCIL APPROVED OPERATING BUDGET TOTAL OPERATING AND CAPITAL POSITIONS",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p. 2",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2014 COUNCIL APPROVED OPERATING BUDGET OPERATING POSITIONS",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuWkpBZFBZUGswRDA",
             "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
             "YEAR": 2014,
             "VERSION": "Summary",
@@ -1094,20 +1112,20 @@
             "UNITS_NAME": "Full Time Equivalent",
             "UNITS_CODE": "FTE",
             "UNITS_MULTIPLIER": 1,
-            "TOTAL_AMOUNT": 49909.3,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "TOTAL_AMOUNT": 49804.5,
+            "INTAKE_DATETIME": "2016-10-27-12-09-16",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
         },
         "2015": {
             "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
-            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuQWNSNnFSVkUzVm8",
-            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
-            "SOURCE_DOCUMENT_TITLE": "Operating Variance Report for the Year Ended December 31, 2015",
-            "SOURCE_DOCUMENT_TABLE_LOCATION": "p.26",
-            "SOURCE_DOCUMENT_TABLE_TITLE": "Appendix D: CITY OF TORONTOCONSOLIDATED APPROVED COMPLEMENTFOR THE YEAR ENDED DECEMBER 31, 2015 ",
-            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuNUlNRWxndGQ2UjA",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuNUMyYm43VmpWUWM",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuaUJtdGpFb0lVWlE",
+            "SOURCE_DOCUMENT_TITLE": "CITY OF TORONTO 2015 COUNCIL APPROVED OPERATING BUDGET TOTAL OPERATING AND CAPITAL POSITIONS",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "p.2",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2015 COUNCIL APPROVED OPERATING BUDGET OPERATING POSITIONS",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuMzE0QXpEa09FMmc",
             "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
             "YEAR": 2015,
             "VERSION": "Summary",
@@ -1117,37 +1135,37 @@
             "UNITS_NAME": "Full Time Equivalent",
             "UNITS_CODE": "FTE",
             "UNITS_MULTIPLIER": 1,
-            "TOTAL_AMOUNT": 51146.1,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "TOTAL_AMOUNT": 50697.5,
+            "INTAKE_DATETIME": "2016-10-28-01-09-39",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
         },
         "2016": {
             "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
-            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuWW5NNzA5RlZsX28",
-            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuTDRIWm1BVU9mT0k",
-            "SOURCE_DOCUMENT_TITLE": "Operating Variance Report for the Six Month Period Ended June 30, 2016",
-            "SOURCE_DOCUMENT_TABLE_LOCATION": "p.27",
-            "SOURCE_DOCUMENT_TABLE_TITLE": "Appendix D: CITY OF TORONTOCONSOLIDATED APPROVED COMPLEMENTFOR THE SIX MONTHS ENDED JUNE 30, 2016",
-            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuazZCa2xHMTR0T2M",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuX0txYk0yTVJaYlk",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuaUJtdGpFb0lVWlE",
+            "SOURCE_DOCUMENT_TITLE": "2016 Budget Committee Recommended Tax Supported Operating Budget",
+            "SOURCE_DOCUMENT_TABLE_LOCATION": "pdf p.36",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "BUDGET COMMITTEE RECOMMENDED OPERATING BUDGET OPERATING POSITIONS",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuN1R5OE9ITTI3dEE",
             "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
-            "YEAR": 2016,
+            "YEAR": 2015,
             "VERSION": "Summary",
             "ASPECT": "Staffing",
-            "NOTES_CONTENT": "",
+            "NOTES_CONTENT": "Rate supported total amounts were taken from 2016 gfoa per department; permanent and temp were calculated based on prior year ratios",
             "NOTES_SEVERITY": "",
             "UNITS_NAME": "Full Time Equivalent",
             "UNITS_CODE": "FTE",
             "UNITS_MULTIPLIER": 1,
-            "TOTAL_AMOUNT": 52039,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "TOTAL_AMOUNT": 51725.1,
+            "INTAKE_DATETIME": "2016-10-28-01-09-39",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
         }
     },
     "Messages": {
-        "WARNING": "Caution: The datasets used for these charts have multiple issues and uncertainties. Please refer to source documents, and be clear about the interpretation of those documents, before drawing any firm conclusions."
+        "WARNING": "Caution: The staffing datasets before 2011 are mostly recommended (prior to approval – all we could find). Data for 2011, 2013, 2015 are taken from subsequent year reports, from previous year columns – all we could find. 2015 and 2016 ttc seems to incorrectly include capital positions, inflating the overall total."
     }
 }
