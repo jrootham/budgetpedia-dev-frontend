@@ -1,55 +1,63 @@
 _COLUMNS_,"Category:NAME,Category:CODE,Note:DESCRIPTION,Count:VALUE",,
-311 Toronto,311SERVICE,,9
-Affordable Housing Office,AFFHOUSING,,9
-Arena Boards of Management,ARENAS,,8
-Association of Community Centres,COMMCENTRES,,9
-Auditor General's Office,AUDITGEN,,6
+311 Toronto,311SERVICE,,11
+Affordable Housing Office,AFFHOUSING,,11
+Arena Boards of Management,ARENAS,,10
+Association of Community Centres,COMMCENTRES,,11
+Auditor General's Office,AUDITGEN,,8
 Capital & Corporate Financing,CORPFINANCING,,8
-Children's Services,CHILDSERV,,12
-City Clerk's Office,CLERK,,12
-City Council,COUNCIL,,7
-City Manager's Office,CITYMANAGER,,12
-City Planning,PLANNING,,11
-Court Services,COURTSERV,,10
-Economic Development & Culture,ECONDEV,,15
-Engineering & Construction Services,ENGINEERING,,10
-Exhibition Place,EXHIBPLACE,,9
+Children's Services,CHILDSERV,,14
+City Clerk's Office,CLERK,,14
+City Council,COUNCIL,,9
+City Manager's Office,CITYMANAGER,,14
+City Planning,PLANNING,,13
+Court Services,COURTSERV,,12
+Economic Development & Culture,ECONDEV,,17
+Emergency Medical Services,PARAMEDIC,,2
+Engineering & Construction Services,ENGINEERING,,12
+Exhibition Place,EXHIBPLACE,,11
+Facilities Management & Real Estate (incl TE,FACILITIES,,2
 "Facilities, Real Estate, Environment & Energy",FACILITIES,,14
-Fire Services,FIRE,,11
-Fleet Services,FLEET,,9
-Heritage Toronto,HERITAGE,,10
-Information & Technology,IT,,12
-Integrity Commissioner's Office,INTEGRITYCOMM,,6
-Legal Services,LEGAL,,11
-Long Term Care Homes & Services,LONGTERMHOME,,12
-Mayor's Office,MAYOR,,5
+Fire Services,FIRE,,13
+Fleet Services,FLEET,,11
+Heritage Toronto,HERITAGE,,12
+Information & Technology,IT,,14
+Integrity Commissioner's Office,INTEGRITYCOMM,,8
+Legal Services,LEGAL,,13
+Lobbyist Registrar,LOBBYREG,,2
+Long Term Care Homes & Services,LONGTERMHOME,,14
+Mayor's Office,MAYOR,,7
 Municipal Licensing & Standards,LICENCING,,12
+Municipal Licensing and Standards,LICENCING,,2
 Non-Program Expenditures,CORPEXPENDITURES,,11
 Non-Program Revenues,CORPREVENUES,,9
-Office of the Chief Financial Officer,CFO,,11
+Office of the Chief Financial Officer,CFO,,13
 Office of the Lobbyist Registrar,LOBBYREG,,6
-Office of the Ombudsman,OMBUDSMAN,,6
-Office of the Treasurer,TREASURER,,12
-"Parks, Forestry & Recreation",PARKS,,15
+Office of the Ombudsman,OMBUDSMAN,,8
+Office of the Treasurer,TREASURER,,14
+Parking Tag Enforcement & Operations,PARKINGTAGS,,2
+"Parks, Forestry & Recreation",PARKS,,17
 "Policy, Planning, Finance & Administration",POLICYADMIN,,10
+"Policy, Planning, Finance and Administration",POLICYADMIN,,2
 Property Tax,PROPERTYTAX,,3
-"Shelter, Support & Housing Administration",SHELTERADMIN,,15
+"Shelter, Support & Housing Administration",SHELTERADMIN,,17
+"Social Development, Finance & Administratio",SOCIALDEV,,2
 "Social Development, Finance & Administration",SOCIALDEV,,12
-Solid Waste Management Services,SOLIDWASTE,,13
-Theatres,THEATRES,,9
+Solid Waste Management Services,SOLIDWASTE,,15
+Theatres,THEATRES,,11
 Toronto & Region Conservation Authority,REGIONCONSERV,,7
-Toronto Atmospheric Fund,ATMOSPHERE,,6
-Toronto Building,BUILDINGS,,13
-Toronto Employment & Social Services,SOCIALSERV,,14
+Toronto Atmospheric Fund,ATMOSPHERE,,8
+Toronto Building,BUILDINGS,,15
+Toronto Employment & Social Services,SOCIALSERV,,16
 Toronto Paramedic Services,PARAMEDIC,,13
-Toronto Parking Authority,PARKING,,7
-Toronto Police Service,POLICE,,10
-Toronto Police Services Board,POLICEBOARD,,6
-Toronto Public Health,PUBLICHEALTH,,14
-Toronto Public Library,LIBRARY,,13
-Toronto Transit Commission - Conventional,TTCCONV,,7
+Toronto Parking Authority,PARKING,,9
+Toronto Police Service,POLICE,,12
+Toronto Police Services Board,POLICEBOARD,,8
+Toronto Public Health,PUBLICHEALTH,,16
+Toronto Public Library,LIBRARY,,15
+Toronto Transit Commission - Conventional,TTCCONV,,9
 Toronto Transit Commission - Wheel Trans,TTCWHEEL,,5
-Toronto Water,WATER,,11
-Toronto Zoo,ZOO,,10
-Transportation Services,TRANSPORTATION,,13
-Yonge-Dundas Square,YONGEDUNDAS,,8
+Toronto Transit Commission - Wheel-Trans,TTCWHEEL,,2
+Toronto Water,WATER,,13
+Toronto Zoo,ZOO,,12
+Transportation Services,TRANSPORTATION,,15
+Yonge-Dundas Square,YONGEDUNDAS,,10

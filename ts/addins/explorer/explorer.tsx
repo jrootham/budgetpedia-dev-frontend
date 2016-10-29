@@ -189,6 +189,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     repository:branchdata.g,
                     version:branchdata.ve,
                     viewpoint:branchdata.vi,
+                    showOptions:true,
                 }
 
                 let settings = Object.assign(defaultSettings,querysettings)

@@ -4,7 +4,7 @@ COMMUNITY,Community and Neighbourhood Services,2000,2002,"SOCIALSERVICES=.8,CULT
 CORPORATE,Corporate Services,2000,2002,"GOVERNMENT=.22,HOUSING=.78"
 CULTURE,Recreation and cultural services,1998,,
 ECONDEV,"Economic Development, Culture and Tourism",2000,2002,"CULTURE=.55,HOUSING=.45"
-ELECTRICITY,Electricity (Note 2),1999,1999,GOVERNMENT
+ELECTRICITY,Electricity (Note 2),1999,1999,"GOVERNMENT=.3,TRANSPORTATION=.3,HOUSING=.4"
 ENVIRONMENT,Environmental services,1998,,
 FINANCE,Finance,2000,2002,GOVERNMENT=1
 GOVERNMENT,General government,1998,,

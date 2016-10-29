@@ -135,7 +135,8 @@ const processIntakeFile = (filename,context) => {
         utilities.equalizeLineLengths(components.data, components.meta)
 
         let newdata = [...components.meta, ...components.data]
-        utilities.writeFileCsv(preprocessed_path + filename, newdata)
+        let filespec = preprocessed_path + filename
+        utilities.writeFileCsv(filespec, newdata)
 
         // 5. finally delete the original intake file
         utilities.deleteFile(intakefilespec)

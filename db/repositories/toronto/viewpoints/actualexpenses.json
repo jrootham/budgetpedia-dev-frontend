@@ -48,12 +48,12 @@
                     "NamingConfigRef": "EXPENSE",
                     "Baseline": true
                 },
-                "HOUSING": {
+                "PROTECTION": {
                     "Index": 1,
                     "NamingConfigRef": "EXPENSE",
                     "Baseline": true
                 },
-                "PROTECTION": {
+                "HOUSING": {
                     "Index": 2,
                     "NamingConfigRef": "EXPENSE",
                     "Baseline": true

@@ -58,7 +58,7 @@
             "GOVERNMENT": {
                 "years": {
                     "1998": 835948,
-                    "1999": 1918664,
+                    "1999": 1031579,
                     "2000": 708827,
                     "2001": 842409,
                     "2002": 660085,
@@ -168,7 +168,7 @@
             "TRANSPORTATION": {
                 "years": {
                     "1998": 2482234,
-                    "1999": 1663911,
+                    "1999": 2044090,
                     "2000": 1993185,
                     "2001": 2116335,
                     "2002": 2118415,
@@ -211,6 +211,7 @@
             },
             "HOUSING": {
                 "years": {
+                    "1999": 506906,
                     "2000": 884467,
                     "2001": 916062,
                     "2002": 980096,
@@ -259,7 +260,7 @@
             "GOVERNMENT": {
                 "years": {
                     "1998": 593671,
-                    "1999": 1390941,
+                    "1999": 747846,
                     "2000": 527087,
                     "2001": 644093,
                     "2002": 514646,
@@ -369,7 +370,7 @@
             "TRANSPORTATION": {
                 "years": {
                     "1998": 1762825,
-                    "1999": 1206257,
+                    "1999": 1481869,
                     "2000": 1482142,
                     "2001": 1618117,
                     "2002": 1651657,
@@ -412,6 +413,7 @@
             },
             "HOUSING": {
                 "years": {
+                    "1999": 367483,
                     "2000": 657694,
                     "2001": 700407,
                     "2002": 764148,
@@ -437,6 +439,8 @@
     },
     "Notes": {},
     "Allocations": {
+        "1999.1.HOUSING.": "Original amount was null, plus:\nAllocation from: ELECTRICITY,Electricity (Note 2),918707",
+        "1999.1.TRANSPORTATION.": "Original amount was 1206257, plus:\nAllocation from: ELECTRICITY,Electricity (Note 2),918707",
         "2000.1.ENVIRONMENT.": "Original amount was null, plus:\nAllocation from: WORKS,Works and Emergency Services,1350263",
         "2000.1.HEALTH.": "Original amount was null, plus:\nAllocation from: AGENCIES,Agencies, Boards and Commissions,2333461",
         "2000.1.HOUSING.": "Original amount was null, plus:\nAllocation from: ECONDEV,Economic Development, Culture and Tourism,273961\nAllocation from: CORPORATE,Corporate Services,250197\nAllocation from: AGENCIES,Agencies, Boards and Commissions,2333461",

@@ -119,25 +119,32 @@ const imposeFileContinuity = (components,categorymeta, attributemeta, continuity
 
     let allocationfound = false
 
+    // this is a breadth-first dive
     for (let columnindex = 0; columnindex < columns.length;columnindex ++) {
+        // for each column of the source data
         let columndef = columns[columnindex]
+        // skip name columns...
         if (columndef.type == constants.CODE) {
-            let categoryname = columndef.name.toLowerCase()
-            let continuitylookup = continuity[categoryname]
-            if (!continuitylookup) {
-                throw Error('continuitylookup not found for ' + categoryname + ' in ' + filename)
+            // we're in a dimension code column
+            let dimensioncode = columndef.name.toLowerCase()
+            // get the continuity lookups for the dimensioncode
+            let continuitylookups = continuity[dimensioncode]
+            if (!continuitylookups) {
+                throw Error('continuitylookups not found for ' + dimensioncode + ' in ' + filename)
             }
             let data = components.data
+            // the idea is to create new data lines for allocations,
+            // or save the current line
             let newdata = []
             for (let line of data) {
                 let code = line[columnindex]
                 if (!code) { // no category at this level
+                    newdata.push([...line]) // no change
                     continue
                 }
-                // console.log('calling findContinuityLines',code)
                 // look for continuity item
                 // console.log('finding continuitylines for',code)
-                let continuitylines = findContinuityLines(code, continuitylookup, filename)
+                let continuitylines = findContinuityLines(code, continuitylookups, filename)
                 // console.log('continuitylines for line',line, continuitylines)
                 for (let continuityline of continuitylines) {
                     let newline = [...line]
@@ -145,7 +152,9 @@ const imposeFileContinuity = (components,categorymeta, attributemeta, continuity
                         let amount = line[amountindex]
                         if (typeof amount == 'string') amount = amount.trim() // sometimes a blank char shows up for some reason
                         if (amount && !Number.isNaN(amount)) { // ignore if no amount is involved
+                            // let preamount = amount
                             amount *= [continuityline[4]]
+                            // console.log('cancellarion value',preamount,continuityline[4],amount)
                             allocationfound = true
                             let allocations = line[allocationsindex]
                             if (!allocations) { // only make note of allocation once, the first time

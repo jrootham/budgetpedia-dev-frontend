@@ -49635,24 +49635,7 @@
         "2016.1.TRANSPORTATION.2.TP-Permits & Applications.3.Parking Permits.4.940A.": "Non-normal value",
         "2016.1.TRANSPORTATION.2.TP-Permits & Applications.3.Street Events.4.940A.": "Non-normal value"
     },
-    "Allocations": {
-        "2011.1.CFO.2.805A.": "Original amount was null, plus:\nAllocation from: ENVIRONMENTOFFICE,Toronto Environment Office,805A,Provincial Subsidies,328",
-        "2011.1.CFO.2.850A.": "Original amount was null, plus:\nAllocation from: ENVIRONMENTOFFICE,Toronto Environment Office,850A,User Fees & Donations,432",
-        "2011.1.CFO.2.930A.": "Original amount was 1502, plus:\nAllocation from: ENVIRONMENTOFFICE,Toronto Environment Office,930A,Contribution from Reserve Funds,7544.8",
-        "2011.1.CFO.2.940A.": "Original amount was 138.1, plus:\nAllocation from: ENVIRONMENTOFFICE,Toronto Environment Office,940A,Sundry Revenues,10",
-        "2011.1.CITYMANAGER.2.920A.": "Original amount was 2456.4, plus:\nAllocation from: WATERFRONT,Waterfront Secretariat,920A,Transfers from Capital Fund,600",
-        "2011.1.CORPEXPENDITURES.2.930A.": "Original amount was null, plus:\nAllocation from: COMMPARTNER,Community Partnership and Investment Program,930A,Contribution from Reserve,80",
-        "2011.1.THEATRES.2.850A.": "Original amount was null, plus:\nAllocation from: SONYCENTRE,Theatres - Sony Centre for the Performing Arts,850A,User Fees & Donations,15631.1\nAllocation from: STLAWRENCECENTRE,Theatres - St. Lawrence Centre for the Arts,850A,User Fees & Donations,2190.5\nAllocation from: TORONTOCENTRE,Theatres - Toronto Centre for the Arts,850A,User Fees & Donations,3789.8",
-        "2011.1.THEATRES.2.930A.": "Original amount was null, plus:\nAllocation from: SONYCENTRE,Theatres - Sony Centre for the Performing Arts,930A,Contribution from Reserve,1326.8\nAllocation from: STLAWRENCECENTRE,Theatres - St. Lawrence Centre for the Arts,930A,Contribution from Reserve,75\nAllocation from: TORONTOCENTRE,Theatres - Toronto Centre for the Arts,930A,Contribution from Reserve Funds,600",
-        "2011.1.THEATRES.2.940A.": "Original amount was null, plus:\nAllocation from: STLAWRENCECENTRE,Theatres - St. Lawrence Centre for the Arts,940A,Sundry Revenues,33.6",
-        "2012.1.CFO.2.805A.": "Original amount was null, plus:\nAllocation from: ENVIRONMENTOFFICE,Toronto Environment Office,805A,Provincial Subsidies,508.2",
-        "2012.1.CFO.2.850A.": "Original amount was null, plus:\nAllocation from: ENVIRONMENTOFFICE,Toronto Environment Office,850A,User Fees & Donations,382",
-        "2012.1.CFO.2.930A.": "Original amount was 1468.9, plus:\nAllocation from: ENVIRONMENTOFFICE,Toronto Environment Office,930A,Contribution from Reserve Funds,2346.5",
-        "2012.1.CFO.2.940A.": "Original amount was 128.1, plus:\nAllocation from: ENVIRONMENTOFFICE,Toronto Environment Office,940A,Sundry Revenues,35",
-        "2012.1.THEATRES.2.850A.": "Original amount was null, plus:\nAllocation from: SONYCENTRE,Sony Centre for the Performing Arts,850A,User Fees & Donations,14910.2\nAllocation from: STLAWRENCECENTRE,St. Lawrence Cenmtre for the Arts,850A,User Fees & Donations,2318.9\nAllocation from: TORONTOCENTRE,Toronto Centre for the Arts,850A,User Fees & Donations,2958.2",
-        "2012.1.THEATRES.2.930A.": "Original amount was null, plus:\nAllocation from: SONYCENTRE,Sony Centre for the Performing Arts,930A,Contributions from Reserves,142.5\nAllocation from: SONYCENTRE,Sony Centre for the Performing Arts,930A,Contributions from Reserve Funds,1398.7\nAllocation from: STLAWRENCECENTRE,St. Lawrence Cenmtre for the Arts,930A,Contribution from Reserve/Res Funds,75\nAllocation from: TORONTOCENTRE,Toronto Centre for the Arts,930A,Contribution from Reserve/Res Funds,550",
-        "2012.1.THEATRES.2.940A.": "Original amount was null, plus:\nAllocation from: SONYCENTRE,Sony Centre for the Performing Arts,940A,Other Revenue,2548\nAllocation from: STLAWRENCECENTRE,St. Lawrence Cenmtre for the Arts,940A,Other Revenues,36.2"
-    },
+    "Allocations": {},
     "Headers": {
         "2011": {
             "SOURCE_DOCUMENT_LINK_ORIGINAL": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=96c98f90dba60310VgnVCM1000003dd60f89RCRD&vgnextchannel=1a66e03bb8d1e310VgnVCM10000071d60f89RCRD",
@@ -49672,7 +49655,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 7096507,
-            "INTAKE_DATETIME": "2016-09-19-14-04-33",
+            "INTAKE_DATETIME": "2016-10-28-22-50-32",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME,Revenue:CODE,Revenue:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -49695,7 +49678,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 7154246.3,
-            "INTAKE_DATETIME": "2016-09-19-14-04-33",
+            "INTAKE_DATETIME": "2016-10-28-22-50-32",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME,Revenue:CODE,Revenue:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -49718,7 +49701,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1,
             "TOTAL_AMOUNT": 10895172470,
-            "INTAKE_DATETIME": "2016-09-19-14-04-33",
+            "INTAKE_DATETIME": "2016-10-28-22-50-33",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME,Revenue:CODE, Revenue:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -49741,7 +49724,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1,
             "TOTAL_AMOUNT": 11207754430,
-            "INTAKE_DATETIME": "2016-09-19-14-04-34",
+            "INTAKE_DATETIME": "2016-10-28-22-50-33",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME,Revenue:CODE, Revenue:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -49764,7 +49747,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1,
             "TOTAL_AMOUNT": 11599101787,
-            "INTAKE_DATETIME": "2016-09-19-14-04-34",
+            "INTAKE_DATETIME": "2016-10-28-22-50-33",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME,Service:CODE, Service:NAME,Activity:CODE, Activity:NAME, Revenue:CODE, Revenue:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -49787,7 +49770,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1,
             "TOTAL_AMOUNT": 11763793375,
-            "INTAKE_DATETIME": "2016-09-19-14-04-34",
+            "INTAKE_DATETIME": "2016-10-28-22-50-34",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME,Service:CODE, Service:NAME,Activity:CODE, Activity:NAME, Revenue:CODE, Revenue:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
