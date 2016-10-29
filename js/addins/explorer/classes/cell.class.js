@@ -128,16 +128,16 @@ class BudgetCell {
                 }
             }
             let chartParms = {
-                chartType: chartType,
-                options: options,
-                events: events,
-                columns: columns,
-                rows: rows,
-                diffdata: diffdata,
+                chartType,
+                options,
+                events,
+                columns,
+                rows,
+                diffdata,
             };
             this.chartParmsObject = chartParms;
             this.setState({
-                chartParms: chartParms,
+                chartParms,
             });
         };
         this._chartParmsOptions = (treeNodeData, viewpointNamingConfigs, datasetConfig, yearsRange) => {
@@ -199,10 +199,10 @@ class BudgetCell {
                     }
                     else {
                         let nameindex = nodeDataseriesName;
-                        if (nameindex = 'Components') {
+                        if (nameindex == 'Components') {
                             nameindex += 'DimensionName';
                         }
-                        else if (name = 'CommonDimension') {
+                        else if (nameindex == 'CommonDimension') {
                             nameindex += 'Name';
                         }
                         else {
@@ -281,7 +281,7 @@ class BudgetCell {
                     duration: 500,
                     easing: 'out',
                 },
-                title: title,
+                title,
                 vAxis: {
                     title: verticalLabel,
                     minValue: 0,
@@ -389,7 +389,7 @@ class BudgetCell {
                 }
             }
             let options = {
-                slices: slices,
+                slices,
                 pieHole: 0.4,
                 legend: {
                     position: "top",
@@ -416,8 +416,8 @@ class BudgetCell {
                         let chart = Chart.chart;
                         let selection = chart.getSelection();
                         let chartSelectionData = {
-                            selection: selection,
-                            err: err
+                            selection,
+                            err
                         };
                         budgetCell.selectionCallback(chartSelectionData);
                     }

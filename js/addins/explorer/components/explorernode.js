@@ -6,8 +6,8 @@ const explorercell_1 = require('./explorercell');
 const actions_1 = require('../actions');
 const Utilities = require('../modules/utilities');
 class ExplorerNode extends Component {
-    constructor(...args) {
-        super(...args);
+    constructor() {
+        super(...arguments);
         this.state = {
             nodeCells: [],
         };
@@ -109,11 +109,13 @@ class ExplorerNode extends Component {
             let portalSettings = budgetNode.portalConfig;
             let cellTabs = budgetCells.map((budgetCell, cellIndex) => {
                 let { cellTitle } = budgetCell;
-                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, React.createElement(explorercell_1.default, {declarationData: this.props.declarationData, callbackid: cellIndex, budgetCell: budgetCell, globalStateActions: {
-                    updateCellTimeScope: this.props.globalStateActions.updateCellTimeScope,
-                    updateCellChartCode: this.props.globalStateActions.updateCellChartCode,
-                    updateCellYearSelections: this.props.globalStateActions.updateCellYearSelections,
-                }, showControls: this.props.showControls, callbacks: this.props.callbacks, urlparms: this.urlparms}));
+                return React.createElement(Tabs_1.Tab, {style: { fontSize: "12px" }, label: cellTitle, value: cellIndex, key: cellIndex}, 
+                    React.createElement(explorercell_1.default, {declarationData: this.props.declarationData, callbackid: cellIndex, budgetCell: budgetCell, globalStateActions: {
+                        updateCellTimeScope: this.props.globalStateActions.updateCellTimeScope,
+                        updateCellChartCode: this.props.globalStateActions.updateCellChartCode,
+                        updateCellYearSelections: this.props.globalStateActions.updateCellYearSelections,
+                    }, showControls: this.props.showControls, callbacks: this.props.callbacks, urlparms: this.urlparms})
+                );
             });
             return cellTabs;
         };
@@ -227,19 +229,21 @@ class ExplorerNode extends Component {
             verticalAlign: "top",
             width: "400px",
             borderRight: "1px solid silver",
-        }}, React.createElement("div", {style: {
-            position: "absolute",
-            top: 0,
-            left: "10px",
-            padding: "3px 20px 3px 20px",
-            borderRadius: "6px",
-            border: "1px solid silver",
-            fontSize: "12px",
-            color: "lightgreen",
-            fontWeight: "bold",
-            display: "inline-block",
-            backgroundColor: "#00bcd4",
-        }}, ("#" + (this.props.budgetNode.nodeIndex + 1)) + ". " + portalSettings.portalName), tabobject);
+        }}, 
+            React.createElement("div", {style: {
+                position: "absolute",
+                top: 0,
+                left: "10px",
+                padding: "3px 20px 3px 20px",
+                borderRadius: "6px",
+                border: "1px solid silver",
+                fontSize: "12px",
+                color: "lightgreen",
+                fontWeight: "bold",
+                display: "inline-block",
+                backgroundColor: "#00bcd4",
+            }}, ("#" + (this.props.budgetNode.nodeIndex + 1)) + ". " + portalSettings.portalName), 
+            tabobject);
     }
 }
 exports.ExplorerNode = ExplorerNode;

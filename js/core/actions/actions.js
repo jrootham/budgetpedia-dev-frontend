@@ -19,7 +19,7 @@ exports.LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 exports.LOGIN_FAILURE = 'LOGIN_FAILURE';
 let requestLogin = redux_actions_1.createAction(exports.LOGIN_REQUEST, creds => {
     return {
-        creds: creds,
+        creds,
     };
 });
 let receiveLogin = redux_actions_1.createAction(exports.LOGIN_SUCCESS, user => {
@@ -30,8 +30,8 @@ let receiveLogin = redux_actions_1.createAction(exports.LOGIN_SUCCESS, user => {
 });
 let loginError = redux_actions_1.createAction(exports.LOGIN_FAILURE, (message, data) => {
     return {
-        message: message,
-        data: data,
+        message,
+        data,
     };
 });
 exports.loginUser = (creds, callback) => {
@@ -50,7 +50,7 @@ exports.loginUser = (creds, callback) => {
                     response.status + ')');
             }
             return response.text().then(text => {
-                return { text: text, response: response };
+                return { text, response };
             });
         })
             .then(({ text, response }) => {
@@ -90,7 +90,7 @@ exports.AUTO_LOGIN_SUCCESS = 'AUTO_LOGIN_SUCCESS';
 exports.AUTO_LOGIN_FAILURE = 'AUTO_LOGIN_FAILURE';
 let requestAutoLogin = redux_actions_1.createAction(exports.AUTO_LOGIN_REQUEST, creds => {
     return {
-        creds: creds,
+        creds,
     };
 });
 let receiveAutoLogin = redux_actions_1.createAction(exports.AUTO_LOGIN_SUCCESS, user => {
@@ -101,8 +101,8 @@ let receiveAutoLogin = redux_actions_1.createAction(exports.AUTO_LOGIN_SUCCESS, 
 });
 let autoLoginError = redux_actions_1.createAction(exports.AUTO_LOGIN_FAILURE, (message, data) => {
     return {
-        message: message,
-        data: data,
+        message,
+        data,
     };
 });
 exports.autoLoginUser = (token, callback) => {
@@ -123,7 +123,7 @@ exports.autoLoginUser = (token, callback) => {
                     response.status + ')');
             }
             return response.text().then(text => {
-                return { text: text, response: response };
+                return { text, response };
             });
         })
             .then(({ text, response }) => {
@@ -181,23 +181,23 @@ exports.REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 exports.REGISTER_FAILURE = 'REGISTER_FAILURE';
 let requestRegister = redux_actions_1.createAction(exports.REGISTER_REQUEST, profile => {
     return {
-        profile: profile,
+        profile,
     };
 });
 let receiveRegister = redux_actions_1.createAction(exports.REGISTER_SUCCESS, profile => {
     return {
-        profile: profile,
+        profile,
     };
 });
 let registerError = redux_actions_1.createAction(exports.REGISTER_FAILURE, (message, data) => {
     return {
-        message: message,
-        data: data,
+        message,
+        data,
     };
 });
 exports.registerUser = profile => {
     let data = {
-        profile: profile,
+        profile,
         origin: location.origin,
     };
     let config = {
@@ -215,7 +215,7 @@ exports.registerUser = profile => {
                     response.status + ')');
             }
             return response.text().then(text => {
-                return { text: text, response: response };
+                return { text, response };
             });
         })
             .then(({ text, response }) => {
@@ -263,12 +263,12 @@ let requestConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFI
 });
 let receiveConfirmRegister = redux_actions_1.createAction(exports.REGISTER_CONFIRM_SUCCESS, data => {
     return {
-        data: data,
+        data,
     };
 });
 let registerConfirmError = redux_actions_1.createAction(exports.REGISTER_CONFIRM_FAILURE, (message) => {
     return {
-        message: message,
+        message,
     };
 });
 exports.confirmUser = () => {
@@ -296,7 +296,7 @@ exports.confirmUser = () => {
                         response.status + ')');
                 }
                 return response.text().then(text => {
-                    return { text: text, response: response };
+                    return { text, response };
                 });
             })
                 .then(({ text, response }) => {

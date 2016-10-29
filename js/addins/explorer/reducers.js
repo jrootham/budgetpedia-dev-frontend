@@ -467,14 +467,14 @@ let generation = (state = null, action) => {
     return generationcounter++;
 };
 let explorer = redux_1.combineReducers({
-    defaults: defaults,
-    branchList: branchList,
-    branchesById: branchesById,
-    nodesById: nodesById,
-    cellsById: cellsById,
-    lastAction: lastAction,
-    lastTargetedAction: lastTargetedAction,
-    generation: generation,
+    defaults,
+    branchList,
+    branchesById,
+    nodesById,
+    cellsById,
+    lastAction,
+    lastTargetedAction,
+    generation,
 });
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = explorer;

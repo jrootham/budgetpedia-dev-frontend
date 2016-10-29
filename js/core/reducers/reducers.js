@@ -17,9 +17,9 @@ let colors = (state = initialstate_1.default.colors) => {
     return state;
 };
 let resources = redux_1.combineReducers({
-    theme: theme,
-    system: system,
-    colors: colors,
+    theme,
+    system,
+    colors,
 });
 let appnavbar = (state = initialstate_1.default.appnavbar, action) => {
     return state;
@@ -37,8 +37,8 @@ let workingmessagestate = (state = initialstate_1.default.workingmessagestate, a
     }
 };
 let ui = redux_1.combineReducers({
-    appnavbar: appnavbar,
-    workingmessagestate: workingmessagestate,
+    appnavbar,
+    workingmessagestate,
 });
 let homepadding = (state = initialstate_1.default.homepadding, action) => {
     return state;
@@ -77,9 +77,9 @@ let homecols = redux_actions_1.handleActions({
     [Actions.SET_HOMETILECOLS]: homecolsreducer,
 }, initialstate_1.default.homecols);
 let homegrid = redux_1.combineReducers({
-    homepadding: homepadding,
-    hometiles: hometiles,
-    homecols: homecols,
+    homepadding,
+    hometiles,
+    homecols,
 });
 let { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, AUTO_LOGIN_REQUEST, AUTO_LOGIN_SUCCESS, AUTO_LOGIN_FAILURE, } = Actions;
 function auth(state = {
@@ -121,7 +121,7 @@ function auth(state = {
             }
             return Object.assign({}, state, {
                 isFetching: false,
-                fieldMessages: fieldMessages,
+                fieldMessages,
                 errorMessage: action.payload.message,
                 user: null,
                 token: null,
@@ -169,7 +169,7 @@ function register(state = {
             }
             return Object.assign({}, state, {
                 isFetching: false,
-                fieldMessages: fieldMessages,
+                fieldMessages,
                 errorMessage: action.payload.message,
                 user: null,
             });
@@ -207,18 +207,18 @@ function registerconfirm(state = {
     }
 }
 let login = redux_1.combineReducers({
-    auth: auth,
-    register: register,
-    registerconfirm: registerconfirm,
+    auth,
+    register,
+    registerconfirm,
 });
 let mainReducerCore = redux_1.combineReducers({
     explorer: reducers_1.default,
-    resources: resources,
+    resources,
     routing: react_router_redux_1.routerReducer,
-    login: login,
-    homegrid: homegrid,
+    login,
+    homegrid,
     toastr: react_redux_toastr_1.reducer,
-    ui: ui,
+    ui,
 });
 let mainReducer = (state, action) => {
     if (!flux_standard_action_1.isFSA(action)) {

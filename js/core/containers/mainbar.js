@@ -88,7 +88,9 @@ let MainBar = class extends React.Component {
             width: "36px",
             position: "absolute",
             zIndex: 2,
-        }, onTouchTap: appbar.close}, React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.primary3Color, style: { cursor: "pointer" }}, "close"));
+        }, onTouchTap: appbar.close}, 
+            React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.primary3Color, style: { cursor: "pointer" }}, "close")
+        );
         let elements = [
             {
                 index: 'email',
@@ -110,16 +112,41 @@ let MainBar = class extends React.Component {
             },
         ];
         let loginform = React.createElement(basicform_1.BasicForm, {submit: appbar.submitLogin, elements: elements, submitButtonLabel: 'Sign in', errorMessage: appbar.props.auth.errorMessage});
-        let registerprompt = React.createElement("div", null, React.createElement(Card_1.CardText, null, React.createElement("a", {href: "javascript:void(0);", onTouchTap: appbar.transitionToResetPassword}, "Forgot your password?")), React.createElement(Divider_1.default, null), React.createElement(Card_1.CardText, null, "Not a member? Register:"), React.createElement(Card_1.CardActions, null, React.createElement(RaisedButton_1.default, {type: "button", label: "Register", onTouchTap: appbar.transitionToRegister})));
-        let loginsidebar = React.createElement(Drawer_1.default, {width: 300, disableSwipeToOpen: true, docked: false, openRight: true, onRequestChange: open => appbar.setState({ accountsidebaropen: open, }), open: appbar.state.accountsidebaropen}, React.createElement(Card_1.Card, {style: { margin: "5px" }}, closeicon, React.createElement(Card_1.CardTitle, {title: "Member Sign In", style: { paddingBottom: 0 }}), loginform, registerprompt));
+        let registerprompt = React.createElement("div", null, 
+            React.createElement(Card_1.CardText, null, 
+                React.createElement("a", {href: "javascript:void(0);", onTouchTap: appbar.transitionToResetPassword}, "Forgot your password?")
+            ), 
+            React.createElement(Divider_1.default, null), 
+            React.createElement(Card_1.CardText, null, "Not a member? Register:"), 
+            React.createElement(Card_1.CardActions, null, 
+                React.createElement(RaisedButton_1.default, {type: "button", label: "Register", onTouchTap: appbar.transitionToRegister})
+            ));
+        let loginsidebar = React.createElement(Drawer_1.default, {width: 300, disableSwipeToOpen: true, docked: false, openRight: true, onRequestChange: open => appbar.setState({ accountsidebaropen: open, }), open: appbar.state.accountsidebaropen}, 
+            React.createElement(Card_1.Card, {style: { margin: "5px" }}, 
+                closeicon, 
+                React.createElement(Card_1.CardTitle, {title: "Member Sign In", style: { paddingBottom: 0 }}), 
+                loginform, 
+                registerprompt)
+        );
         let transitionToFunc = redux_1.compose(menutransition, this.props.transitionTo);
         let menuitems = hometiles.map(menutile => {
             return React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: menutile.id, primaryText: menutile.content.title, image: menutile.content.image, route: menutile.route, disabled: menutile.content.disabled});
         });
-        let menusidebar = React.createElement(Drawer_1.default, {width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: open => appbar.setState({ menusidebaropen: open, }), open: this.state.menusidebaropen}, React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: 'home', primaryText: "Budgetpedia Home", image: '../../public/icons/ic_home_24px.svg', route: '/'}), React.createElement(Divider_1.default, null), menuitems);
-        let menuicon = React.createElement(IconButton_1.default, {onTouchTap: () => { appbar.handleMenuSidebarToggle(); }}, React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "menu"));
-        let accountmenu = React.createElement(IconMenu_1.default, {iconButtonElement: React.createElement(IconButton_1.default, null, React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "account_circle")), targetOrigin: { horizontal: 'right', vertical: 'top' }, anchorOrigin: { horizontal: 'right', vertical: 'top' }}, React.createElement(MenuItem_1.default, {onTouchTap: appbar.transitionToProfile, primaryText: "Profile"}), React.createElement(MenuItem_1.default, {onTouchTap: appbar.logout, primaryText: "Sign out"}));
-        let accounticon = React.createElement(IconButton_1.default, {onTouchTap: () => { appbar.handleAccountSidebarToggle(); }}, React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "account_circle"));
+        let menusidebar = React.createElement(Drawer_1.default, {width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: open => appbar.setState({ menusidebaropen: open, }), open: this.state.menusidebaropen}, 
+            React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: 'home', primaryText: "Budgetpedia Home", image: '../../public/icons/ic_home_24px.svg', route: '/'}), 
+            React.createElement(Divider_1.default, null), 
+            menuitems);
+        let menuicon = React.createElement(IconButton_1.default, {onTouchTap: () => { appbar.handleMenuSidebarToggle(); }}, 
+            React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "menu")
+        );
+        let accountmenu = React.createElement(IconMenu_1.default, {iconButtonElement: React.createElement(IconButton_1.default, null, 
+            React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "account_circle")
+        ), targetOrigin: { horizontal: 'right', vertical: 'top' }, anchorOrigin: { horizontal: 'right', vertical: 'top' }}, 
+            React.createElement(MenuItem_1.default, {onTouchTap: appbar.transitionToProfile, primaryText: "Profile"}), 
+            React.createElement(MenuItem_1.default, {onTouchTap: appbar.logout, primaryText: "Sign out"}));
+        let accounticon = React.createElement(IconButton_1.default, {onTouchTap: () => { appbar.handleAccountSidebarToggle(); }}, 
+            React.createElement(FontIcon_1.default, {className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" }}, "account_circle")
+        );
         let username = React.createElement("div", {style: {
             position: "absolute",
             bottom: 0,
@@ -131,43 +158,53 @@ let MainBar = class extends React.Component {
         let workingmessagestate = this.props.workingmessagestate;
         return (React.createElement(AppBar_1.default, {onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated
             ? accountmenu
-            : accounticon}, React.createElement("div", {style: {
-            position: "absolute",
-            fontSize: "12px",
-            color: "white",
-            top: 0,
-            right: 0,
-            padding: "3px",
-        }}, "contact: ", React.createElement("a", {target: "_blank", href: "mailto:mail@budgetpedia.ca"}, "mail@budgetpedia.ca")), React.createElement("div", {style: {
-            position: "absolute",
-            fontSize: "12px",
-            color: "gold",
-            bottom: 0,
-            left: 0,
-            padding: "3px",
-        }}, "We're all about government budgets"), username, loginsidebar, menusidebar, workingmessagestate
-            ? React.createElement("div", {style: {
+            : accounticon}, 
+            React.createElement("div", {style: {
                 position: "absolute",
-                top: "54px",
-                left: 0,
-                textAlign: "center",
-                width: "100%",
-            }}, React.createElement("div", {style: {
-                display: "inline-block", color: "green",
-                backgroundColor: "beige",
                 fontSize: "12px",
+                color: "white",
+                top: 0,
+                right: 0,
                 padding: "3px",
-                border: "1px solid silver",
-                borderRadius: "10%"
-            }}, "Working..."))
-            : null));
+            }}, 
+                "contact: ", 
+                React.createElement("a", {target: "_blank", href: "mailto:mail@budgetpedia.ca"}, "mail@budgetpedia.ca")), 
+            React.createElement("div", {style: {
+                position: "absolute",
+                fontSize: "12px",
+                color: "gold",
+                bottom: 0,
+                left: 0,
+                padding: "3px",
+            }}, "We're all about government budgets"), 
+            username, 
+            loginsidebar, 
+            menusidebar, 
+            workingmessagestate
+                ? React.createElement("div", {style: {
+                    position: "absolute",
+                    top: "54px",
+                    left: 0,
+                    textAlign: "center",
+                    width: "100%",
+                }}, 
+                    React.createElement("div", {style: {
+                        display: "inline-block", color: "green",
+                        backgroundColor: "beige",
+                        fontSize: "12px",
+                        padding: "3px",
+                        border: "1px solid silver",
+                        borderRadius: "10%"
+                    }}, "Working...")
+                )
+                : null));
     }
 }
 ;
 function mapStateToProps(state) {
     let { resources, login, homegrid, ui } = state;
     return {
-        state: state,
+        state,
         auth: login.auth,
         appnavbar: ui.appnavbar,
         theme: resources.theme,

@@ -13,9 +13,9 @@ const setViewpointData = (parms) => {
         null;
     let taxonomylookups = viewpointDataTemplate.Meta.Lookups.Taxonomy;
     let lookupset = {
-        baselinelookups: baselinelookups,
-        commonDimensionLookups: commonDimensionLookups,
-        taxonomylookups: taxonomylookups,
+        baselinelookups,
+        commonDimensionLookups,
+        taxonomylookups,
     };
     let baselineItems = datasetData.Data;
     let isInflationAdjustable = !!datasetMeta.InflationAdjustable;

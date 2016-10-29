@@ -514,7 +514,7 @@ exports.default = approutes;
 
 var React = require('react');
 var About = function About() {
-  return React.createElement("div", null, React.createElement("p", null, "This is a list of resources in the GDrive project repository"), React.createElement("iframe", { src: "https://drive.google.com/embeddedfolderview?id=0B208oCU9D8OuSms5bEZxcnRLZzA#list", style: { width: "100%", height: "600px", border: 0 } }));
+    return React.createElement("div", null, React.createElement("p", null, "This is a list of resources in the GDrive project repository"), React.createElement("iframe", { src: "https://drive.google.com/embeddedfolderview?id=0B208oCU9D8OuSms5bEZxcnRLZzA#list", style: { width: "100%", height: "600px", border: 0 } }));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = About;
@@ -776,7 +776,7 @@ exports.default = Resources;
 
 var React = require('react');
 var SocialMedia = function SocialMedia() {
-  return React.createElement("div", null, React.createElement("h1", null, "Facebook"), React.createElement("iframe", { src: "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbudgetpedia%2F&tabs=timeline&width=500&height=700&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId", width: "500", height: "700", style: { border: "none", overflow: "hidden" }, scrolling: "no", frameborder: "0", allowTransparency: "true" }));
+    return React.createElement("div", null, React.createElement("h1", null, "Facebook"), React.createElement("iframe", { src: "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbudgetpedia%2F&tabs=timeline&width=500&height=700&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId", width: "500", height: "700", style: { border: "none", overflow: "hidden" }, scrolling: "no", frameborder: "0", allowTransparency: true }));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = SocialMedia;
@@ -1953,9 +1953,9 @@ var BudgetCell = function () {
                         }
                     } else {
                         var nameindex = nodeDataseriesName;
-                        if (nameindex = 'Components') {
+                        if (nameindex == 'Components') {
                             nameindex += 'DimensionName';
-                        } else if (name = 'CommonDimension') {
+                        } else if (nameindex == 'CommonDimension') {
                             nameindex += 'Name';
                         } else {
                             console.error('nodeDataseriesName not found for ', _this);
@@ -3127,15 +3127,9 @@ var ExplorerBranch = function (_Component) {
     _inherits(ExplorerBranch, _Component);
 
     function ExplorerBranch() {
-        var _ref;
-
         _classCallCheck(this, ExplorerBranch);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this = _possibleConstructorReturn(this, (_ref = ExplorerBranch.__proto__ || Object.getPrototypeOf(ExplorerBranch)).call.apply(_ref, [this].concat(args)));
+        var _this = _possibleConstructorReturn(this, (ExplorerBranch.__proto__ || Object.getPrototypeOf(ExplorerBranch)).apply(this, arguments));
 
         _this.state = {
             branchNodes: [],
@@ -3802,6 +3796,9 @@ var ExplorerBranch = function (_Component) {
             });
             return React.createElement("div", null, React.createElement(Subheader_1.default, null, DatasetTitle), itemlist);
         };
+        _this.handleDialogOpen = function () {
+            _this.props.handleDialogOpen();
+        };
         return _this;
     }
 
@@ -3902,7 +3899,7 @@ var ExplorerBranch = function (_Component) {
             var branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
             var viewpointselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Viewpoint: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.viewpoint, onChange: function onChange(e, index, value) {
                     branch.switchViewpoint(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (budget)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (budget)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALEXPENSES', primaryText: "Expenses (actual)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALREVENUES', primaryText: "Revenues (actual)" }), React.createElement(MenuItem_1.default, { value: 'EXPENDITURES', primaryText: "Expenses by Object (actual)" }))) : null;
+                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (operating budgets)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (operating budgets)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALEXPENSES', primaryText: "Expenses (audited statements)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALREVENUES', primaryText: "Revenues (audited statements)" }), React.createElement(MenuItem_1.default, { value: 'EXPENDITURES', primaryText: "Expenses by Object (audited statements)" })), " ", React.createElement("span", { style: { marginRight: "6px" } }, "|")) : null;
             var governmentselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Government: "), React.createElement(DropDownMenu_1.default, { value: "Toronto", disabled: true }, React.createElement(MenuItem_1.default, { value: 'Toronto', primaryText: "Toronto, Ontario" }))) : null;
             var versionchoices = function versionchoices() {
                 switch (branchDeclaration.viewpoint) {
@@ -3910,14 +3907,14 @@ var ExplorerBranch = function (_Component) {
                     case "STRUCTURAL":
                         return [React.createElement(MenuItem_1.default, { key: 1, value: 'SUMMARY', primaryText: "Summary" }), React.createElement(MenuItem_1.default, { key: 2, value: 'PBFT', primaryText: "Detail (PBFT)" }), React.createElement(MenuItem_1.default, { key: 3, disabled: true, value: 'VARIANCE', primaryText: "Variance Reports" })];
                     case 'ACTUALEXPENSES':
-                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALEXPENSES', primaryText: "Expense Summary" })];
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALEXPENSES', primaryText: "Summary" })];
                     case 'ACTUALREVENUES':
-                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALREVENUES', primaryText: "Revenue Summary" })];
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALREVENUES', primaryText: "Summary" })];
                     case 'EXPENDITURES':
-                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'EXPENDITURES', primaryText: "Expenses by Object" })];
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'EXPENDITURES', primaryText: "Summary" })];
                 }
             };
-            var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Version: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.version, onChange: function onChange(e, index, value) {
+            var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Version: "), React.createElement(DropDownMenu_1.default, { disabled: versionchoices().length < 2, value: branchDeclaration.version, onChange: function onChange(e, index, value) {
                     branch.switchVersion(value);
                 } }, versionchoices())) : null;
             var aspectchoices = function aspectchoices() {
@@ -3930,12 +3927,12 @@ var ExplorerBranch = function (_Component) {
                     case 'ACTUALREVENUES':
                         return [React.createElement(MenuItem_1.default, { key: 4, value: 'Revenues', primaryText: "Revenues" })];
                     case 'EXPENDITURES':
-                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'Expenditure', primaryText: "Expenditure" })];
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'Expenditure', primaryText: "Expenditures" })];
                 }
             };
-            var aspectselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Aspect: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.aspect, onChange: function onChange(e, index, value) {
+            var aspectselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Aspect: "), React.createElement(DropDownMenu_1.default, { disabled: aspectchoices().length < 2, value: branchDeclaration.aspect, onChange: function onChange(e, index, value) {
                     branch.switchAspect(value);
-                } }, aspectchoices())) : null;
+                } }, aspectchoices()), " ", React.createElement("span", { style: { marginRight: "6px" } }, "|")) : null;
             var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Prorated: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.prorata, onChange: function onChange(e, index, value) {
                     _this3.switchComparator(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'OFF', primaryText: "Off" }), React.createElement(MenuItem_1.default, { value: 'PERPERSON', primaryText: "Per person" }), React.createElement(MenuItem_1.default, { value: 'PER100000PERSONS', primaryText: "Per 100,000 people" }), React.createElement(MenuItem_1.default, { value: 'PERHOUSEHOLD', primaryText: "Per household" }), React.createElement(MenuItem_1.default, { value: 'PER50000HOUSEHOLDS', primaryText: "Per 50,000 households" }))) : null;
@@ -3946,12 +3943,13 @@ var ExplorerBranch = function (_Component) {
                     marginRight: '16px'
                 } }, React.createElement(Toggle_1.default, { label: 'Inflation adjusted:', style: {
                     height: '32px',
-                    marginTop: '16px'
+                    marginTop: '16px',
+                    display: 'inline-block'
                 }, onToggle: function onToggle(e, value) {
                     _this3.toggleInflationAdjustment(value);
                 }, labelStyle: {
                     fontStyle: 'italic'
-                }, defaultToggled: branchDeclaration.inflationAdjusted })) : null;
+                }, defaultToggled: branchDeclaration.inflationAdjusted }), " ", React.createElement("span", { style: { marginLeft: "6px" } }, "|")) : null;
             var showcontrols = React.createElement("div", { style: {
                     display: 'inline-block',
                     whiteSpace: "nowrap",
@@ -3974,7 +3972,7 @@ var ExplorerBranch = function (_Component) {
                     whiteSpace: "nowrap",
                     verticalAlign: "bottom",
                     position: "relative"
-                } }, React.createElement(IconButton_1.default, { tooltip: "Help", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.props.handleDialogOpen }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "help_outline"))) : null;
+                } }, React.createElement(IconButton_1.default, { tooltip: "Help", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.handleDialogOpen }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "help_outline"))) : null;
             var search = branchDeclaration.showOptions ? React.createElement("div", { style: {
                     display: 'inline-block',
                     whiteSpace: "nowrap",
@@ -4025,15 +4023,9 @@ var ExplorerCell = function (_Component) {
     _inherits(ExplorerCell, _Component);
 
     function ExplorerCell() {
-        var _ref;
-
         _classCallCheck(this, ExplorerCell);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this = _possibleConstructorReturn(this, (_ref = ExplorerCell.__proto__ || Object.getPrototypeOf(ExplorerCell)).call.apply(_ref, [this].concat(args)));
+        var _this = _possibleConstructorReturn(this, (ExplorerCell.__proto__ || Object.getPrototypeOf(ExplorerCell)).apply(this, arguments));
 
         _this.state = {
             deltastate: false,
@@ -4344,7 +4336,7 @@ var ExplorerCell = function (_Component) {
                     top: "0",
                     left: "0",
                     fontSize: "8px",
-                    zIndex: "10"
+                    zIndex: 10
                 } }, "year-over-", React.createElement("br", null), " year"), React.createElement(IconButton_1.default, { disabled: false, tooltip: "Year-over-year change", tooltipPosition: "top-center", style: {
                     backgroundColor: this.state.deltastate ? "rgba(144,238,144,0.5)" : "rgba(255,255,255,0.5)",
                     borderRadius: "15%",
@@ -4540,15 +4532,9 @@ var ExplorerNode = function (_Component) {
     _inherits(ExplorerNode, _Component);
 
     function ExplorerNode() {
-        var _ref;
-
         _classCallCheck(this, ExplorerNode);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this = _possibleConstructorReturn(this, (_ref = ExplorerNode.__proto__ || Object.getPrototypeOf(ExplorerNode)).call.apply(_ref, [this].concat(args)));
+        var _this = _possibleConstructorReturn(this, (ExplorerNode.__proto__ || Object.getPrototypeOf(ExplorerNode)).apply(this, arguments));
 
         _this.state = {
             nodeCells: []
@@ -5155,15 +5141,9 @@ var Explorer = function (_Component) {
     _inherits(Explorer, _Component);
 
     function Explorer() {
-        var _ref;
-
         _classCallCheck(this, Explorer);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this = _possibleConstructorReturn(this, (_ref = Explorer.__proto__ || Object.getPrototypeOf(Explorer)).call.apply(_ref, [this].concat(args)));
+        var _this = _possibleConstructorReturn(this, (Explorer.__proto__ || Object.getPrototypeOf(Explorer)).apply(this, arguments));
 
         _this.state = {
             budgetBranches: [],
@@ -5515,7 +5495,8 @@ var Explorer = function (_Component) {
                         prorata: branchdata.pr,
                         repository: branchdata.g,
                         version: branchdata.ve,
-                        viewpoint: branchdata.vi
+                        viewpoint: branchdata.vi,
+                        showOptions: true
                     };
                     var settings = Object.assign(defaultSettings, querysettings);
                     this.props.addBranchDeclaration(null, settings);
@@ -5652,7 +5633,7 @@ var Explorer = function (_Component) {
                     borderRadius: "8px",
                     fontFamily: "Roboto,sans-serif",
                     fontSize: "12px"
-                } }, "Caution: This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), React.createElement(Card_1.Card, { expanded: this.state.showdashboard }, React.createElement(Card_1.CardTitle, null, React.createElement(Toggle_1.default, { label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
+                } }, "Caution: This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality and continuity issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), React.createElement(Card_1.Card, { expanded: this.state.showdashboard }, React.createElement(Card_1.CardTitle, null, React.createElement(Toggle_1.default, { label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
                     height: '32px', float: "right",
                     display: "inline-block",
                     width: 'auto'
@@ -7185,9 +7166,9 @@ var react_redux_1 = require('react-redux');
 var mainbar_1 = require('../containers/mainbar');
 var routes_1 = require('./routes');
 var Root = function Root(_ref) {
-  var store = _ref.store;
-  var globalmessage = _ref.globalmessage;
-  return React.createElement(MuiThemeProvider_1.default, { muiTheme: getMuiTheme_1.default() }, React.createElement(react_redux_1.Provider, { store: store }, React.createElement("div", null, React.createElement(mainbar_1.default, null), React.createElement("div", { style: { height: "64px" } }, " "), globalmessage, routes_1.default, React.createElement(react_redux_toastr_1.default, { timeOut: 4000, newestOnTop: false, position: "top-left" }))));
+    var store = _ref.store;
+    var globalmessage = _ref.globalmessage;
+    return React.createElement(MuiThemeProvider_1.default, { muiTheme: getMuiTheme_1.default() }, React.createElement(react_redux_1.Provider, { store: store }, React.createElement("div", null, React.createElement(mainbar_1.default, null), React.createElement("div", { style: { height: "64px" } }, " "), globalmessage, routes_1.default, React.createElement(react_redux_toastr_1.default, { timeOut: 4000, newestOnTop: false, position: "top-left" }))));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Root;
@@ -7340,6 +7321,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var __assign = undefined && undefined.__assign || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) {
+            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+    }
+    return t;
+};
 var React = require('react');
 var Component = React.Component;
 
@@ -7351,15 +7341,9 @@ var BasicForm = function (_React$Component) {
     _inherits(BasicForm, _React$Component);
 
     function BasicForm() {
-        var _ref;
-
         _classCallCheck(this, BasicForm);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this = _possibleConstructorReturn(this, (_ref = BasicForm.__proto__ || Object.getPrototypeOf(BasicForm)).call.apply(_ref, [this].concat(args)));
+        var _this = _possibleConstructorReturn(this, (BasicForm.__proto__ || Object.getPrototypeOf(BasicForm)).apply(this, arguments));
 
         _this.textFields = {};
         _this.submit = function (e) {
@@ -7387,7 +7371,7 @@ var BasicForm = function (_React$Component) {
                 return React.createElement("div", { className: "textfieldwrapper", style: {
                         display: display,
                         marginRight: "5px"
-                    }, key: element.index }, React.createElement(TextField_1.default, React.__spread({ ref: function ref(node) {
+                    }, key: element.index }, React.createElement(TextField_1.default, __assign({ ref: function ref(node) {
                         basicform.textFields[element.index] = node;
                     } }, attributes)));
             });
@@ -7476,15 +7460,9 @@ var HomeTilesClass = function (_React$Component) {
     _inherits(HomeTilesClass, _React$Component);
 
     function HomeTilesClass() {
-        var _ref2;
-
         _classCallCheck(this, HomeTilesClass);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this2 = _possibleConstructorReturn(this, (_ref2 = HomeTilesClass.__proto__ || Object.getPrototypeOf(HomeTilesClass)).call.apply(_ref2, [this].concat(args)));
+        var _this2 = _possibleConstructorReturn(this, (HomeTilesClass.__proto__ || Object.getPrototypeOf(HomeTilesClass)).apply(this, arguments));
 
         _this2.handleHomeResize = function () {
             _this2.props.setHomeTileCols();
@@ -7854,15 +7832,9 @@ var Register = function (_Component) {
     _inherits(Register, _Component);
 
     function Register() {
-        var _ref;
-
         _classCallCheck(this, Register);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this = _possibleConstructorReturn(this, (_ref = Register.__proto__ || Object.getPrototypeOf(Register)).call.apply(_ref, [this].concat(args)));
+        var _this = _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).apply(this, arguments));
 
         _this.submitRegistration = function (elements) {
             var profile = {};
@@ -7980,15 +7952,9 @@ var RegisterConfirm = function (_Component) {
     _inherits(RegisterConfirm, _Component);
 
     function RegisterConfirm() {
-        var _ref;
-
         _classCallCheck(this, RegisterConfirm);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this = _possibleConstructorReturn(this, (_ref = RegisterConfirm.__proto__ || Object.getPrototypeOf(RegisterConfirm)).call.apply(_ref, [this].concat(args)));
+        var _this = _possibleConstructorReturn(this, (RegisterConfirm.__proto__ || Object.getPrototypeOf(RegisterConfirm)).apply(this, arguments));
 
         _this.componentWillMount = function () {
             _this.props.confirmUser();

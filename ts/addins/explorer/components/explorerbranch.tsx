@@ -1038,6 +1038,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     }
 
+    handleDialogOpen = () => {
+        this.props.handleDialogOpen()
+    }
+
 
     render() {
 
@@ -1061,13 +1065,13 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             }
             >
 
-            <MenuItem value={'FUNCTIONAL'} primaryText="Functional (budget)"/>
-            <MenuItem value={'STRUCTURAL'} primaryText="Structural (budget)"/>
-            <MenuItem value={'ACTUALEXPENSES'} primaryText="Expenses (actual)"/>
-            <MenuItem value={'ACTUALREVENUES'} primaryText="Revenues (actual)"/>
-            <MenuItem value={'EXPENDITURES'} primaryText="Expenses by Object (actual)"/>
+            <MenuItem value={'FUNCTIONAL'} primaryText="Functional (operating budgets)"/>
+            <MenuItem value={'STRUCTURAL'} primaryText="Structural (operating budgets)"/>
+            <MenuItem value={'ACTUALEXPENSES'} primaryText="Expenses (audited statements)"/>
+            <MenuItem value={'ACTUALREVENUES'} primaryText="Revenues (audited statements)"/>
+            <MenuItem value={'EXPENDITURES'} primaryText="Expenses by Object (audited statements)"/>
 
-        </DropDownMenu>
+        </DropDownMenu> <span style={{marginRight:"6px"}}>|</span>
 
     </div>:null
 
@@ -1093,11 +1097,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 <MenuItem key = {2} value={'PBFT'} primaryText="Detail (PBFT)"/>,
                 <MenuItem key = {3} disabled value={'VARIANCE'} primaryText="Variance Reports"/>]
             case 'ACTUALEXPENSES':
-                return [<MenuItem key = {4} value={'ACTUALEXPENSES'} primaryText="Expense Summary"/>]
+                return [<MenuItem key = {4} value={'ACTUALEXPENSES'} primaryText="Summary"/>]
             case 'ACTUALREVENUES':
-                return [<MenuItem key = {4} value={'ACTUALREVENUES'} primaryText="Revenue Summary"/>]
+                return [<MenuItem key = {4} value={'ACTUALREVENUES'} primaryText="Summary"/>]
             case 'EXPENDITURES':
-                return [<MenuItem key = {4} value={'EXPENDITURES'} primaryText="Expenses by Object"/>]
+                return [<MenuItem key = {4} value={'EXPENDITURES'} primaryText="Summary"/>]
         }
     }
 
@@ -1105,6 +1109,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     let versionselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
         <span style={{ fontStyle: "italic" }}>Version: </span>
         <DropDownMenu
+            disabled = {versionchoices().length < 2}
             value = {branchDeclaration.version}
             onChange={
                 (e, index, value) => {
@@ -1131,7 +1136,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             case 'ACTUALREVENUES':
                 return [<MenuItem key = {4} value={'Revenues'} primaryText="Revenues"/>]
             case 'EXPENDITURES':
-                return [<MenuItem key = {4} value={'Expenditure'} primaryText="Expenditure"/>]
+                return [<MenuItem key = {4} value={'Expenditure'} primaryText="Expenditures"/>]
         }
     }
 
@@ -1143,6 +1148,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             <span style={{ fontStyle: "italic" }}>Aspect: </span>
 
             <DropDownMenu
+                disabled = { aspectchoices().length < 2}
                 value={branchDeclaration.aspect}
                 onChange={
                     (e, index, value) => {
@@ -1153,7 +1159,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
                 { aspectchoices() }
 
-            </DropDownMenu>
+            </DropDownMenu> <span style={{marginRight:"6px"}}>|</span>
 
         </div>
         :
@@ -1195,7 +1201,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 style={
                     {
                         height:'32px', 
-                        marginTop:'16px'
+                        marginTop:'16px',
+                        display:'inline-block',
                     }
                 } 
                 onToggle = {(e,value) => {
@@ -1207,7 +1214,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                     }
                 } 
                 defaultToggled={branchDeclaration.inflationAdjusted} 
-            />
+            /> <span style={{marginLeft:"6px"}}>|</span>
         </div>
         :
         null
@@ -1297,7 +1304,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             }>
             <IconButton tooltip="Help" tooltipPosition="top-center"
             style={{top:'3px'}}
-            onTouchTap = { this.props.handleDialogOpen }>
+            onTouchTap = { this.handleDialogOpen }>
             <FontIcon 
                 className="material-icons">help_outline</FontIcon>
         </IconButton></div>

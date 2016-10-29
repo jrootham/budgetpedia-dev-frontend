@@ -21,8 +21,8 @@ const reducers_1 = require('./reducers');
 const helpcontent_1 = require('./content/helpcontent');
 const Utilities = require('./modules/utilities');
 let Explorer = class extends Component {
-    constructor(...args) {
-        super(...args);
+    constructor() {
+        super(...arguments);
         this.state = {
             budgetBranches: [],
             dialogOpen: false,
@@ -58,7 +58,7 @@ let Explorer = class extends Component {
                 if (foundbranch.length == 0) {
                     if (!change)
                         change = true;
-                    let budgetBranch = new branch_class_1.default({ uid: uid });
+                    let budgetBranch = new branch_class_1.default({ uid });
                     newBranches.push(budgetBranch);
                 }
             }
@@ -223,8 +223,8 @@ let Explorer = class extends Component {
             let newhash = Utilities.hashCode(query.branch + query.settings).toString();
             if (newhash == query.hash) {
                 this.urlparms = {
-                    branchdata: branchdata,
-                    settingsdata: settingsdata,
+                    branchdata,
+                    settingsdata,
                 };
                 let defaultSettings = JSON.parse(JSON.stringify(this.props.declarationData.defaults.branch));
                 let querysettings = {
@@ -234,6 +234,7 @@ let Explorer = class extends Component {
                     repository: branchdata.g,
                     version: branchdata.ve,
                     viewpoint: branchdata.vi,
+                    showOptions: true,
                 };
                 let settings = Object.assign(defaultSettings, querysettings);
                 this.props.addBranchDeclaration(null, settings);
@@ -273,15 +274,19 @@ let Explorer = class extends Component {
     }
     render() {
         let explorer = this;
-        let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Options", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' }}, React.createElement(IconButton_1.default, {style: {
-            top: 0,
-            right: 0,
-            padding: 0,
-            height: "36px",
-            width: "36px",
-            position: "absolute",
-            zIndex: 2,
-        }, onTouchTap: explorer.handleDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), helpcontent_1.default);
+        let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Options", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' }}, 
+            React.createElement(IconButton_1.default, {style: {
+                top: 0,
+                right: 0,
+                padding: 0,
+                height: "36px",
+                width: "36px",
+                position: "absolute",
+                zIndex: 2,
+            }, onTouchTap: explorer.handleDialogClose}, 
+                React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")
+            ), 
+            helpcontent_1.default);
         let branchSegments = () => {
             let budgetBranches = explorer.state.budgetBranches;
             let segments = budgetBranches.map((budgetBranch, branchIndex) => {
@@ -317,43 +322,72 @@ let Explorer = class extends Component {
                 };
                 return React.createElement(Card_1.Card, {initiallyExpanded: true, key: budgetBranch.uid, onExpandChange: (expanded) => {
                     this.onExpandChange(expanded);
-                }}, React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, "Row " + (branchIndex + 1) + " ", React.createElement("input", {type: "text", onTouchTap: (ev) => { ev.stopPropagation(); }}), React.createElement(IconButton_1.default, {style: {
-                    float: "right",
-                    marginRight: "30px"
-                }, disabled: (branchIndex == (budgetBranches.length - 1)), onTouchTap: (uid => ev => {
-                    ev.stopPropagation();
-                    this.branchMoveDown(uid);
-                })(budgetBranch.uid), tooltip: "Move down"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_downward")), React.createElement(IconButton_1.default, {style: {
-                    float: "right"
-                }, disabled: (branchIndex == 0), onTouchTap: (uid => ev => {
-                    ev.stopPropagation();
-                    this.branchMoveUp(uid);
-                })(budgetBranch.uid), tooltip: "Move up"}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_upward"))), React.createElement(Card_1.CardText, {expandable: true}, React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: this.handleDialogOpen, urlparms: urlparms, clearUrlParms: this.clearUrlParms, setToast: this.setToast})), React.createElement(Card_1.CardActions, {expandable: true}, React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
-                    this.addBranch(uid);
-                })(budgetBranch.uid)}, React.createElement(add_1.default, null)), (budgetBranches.length > 1) ? React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
-                    this.removeBranch(uid);
-                })(budgetBranch.uid), secondary: true}, React.createElement(remove_1.default, null)) : null));
+                }}, 
+                    React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true}, 
+                        "Row " + (branchIndex + 1) + " ", 
+                        React.createElement("input", {type: "text", onTouchTap: (ev) => { ev.stopPropagation(); }}), 
+                        React.createElement(IconButton_1.default, {style: {
+                            float: "right",
+                            marginRight: "30px"
+                        }, disabled: (branchIndex == (budgetBranches.length - 1)), onTouchTap: (uid => ev => {
+                            ev.stopPropagation();
+                            this.branchMoveDown(uid);
+                        })(budgetBranch.uid), tooltip: "Move down"}, 
+                            React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_downward")
+                        ), 
+                        React.createElement(IconButton_1.default, {style: {
+                            float: "right"
+                        }, disabled: (branchIndex == 0), onTouchTap: (uid => ev => {
+                            ev.stopPropagation();
+                            this.branchMoveUp(uid);
+                        })(budgetBranch.uid), tooltip: "Move up"}, 
+                            React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_upward")
+                        )), 
+                    React.createElement(Card_1.CardText, {expandable: true}, 
+                        React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: this.handleDialogOpen, urlparms: urlparms, clearUrlParms: this.clearUrlParms, setToast: this.setToast})
+                    ), 
+                    React.createElement(Card_1.CardActions, {expandable: true}, 
+                        React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
+                            this.addBranch(uid);
+                        })(budgetBranch.uid)}, 
+                            React.createElement(add_1.default, null)
+                        ), 
+                        (budgetBranches.length > 1) ? React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
+                            this.removeBranch(uid);
+                        })(budgetBranch.uid), secondary: true}, 
+                            React.createElement(remove_1.default, null)
+                        ) : null));
             });
             return segments;
         };
         let branches = branchSegments();
-        return React.createElement("div", null, React.createElement("div", {style: {
-            backgroundColor: "lemonchiffon",
-            padding: "3px",
-            margin: "3px",
-            borderRadius: "8px",
-            fontFamily: "Roboto,sans-serif",
-            fontSize: "12px",
-        }}, "Caution: This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), React.createElement(Card_1.Card, {expanded: this.state.showdashboard}, React.createElement(Card_1.CardTitle, null, React.createElement(Toggle_1.default, {label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
-            height: '32px', float: "right",
-            display: "inline-block",
-            width: 'auto',
-        }, labelStyle: { fontStyle: 'italic' }, onToggle: (e, value) => {
-            e.stopPropagation();
-            this.setState({
-                showdashboard: value
-            });
-        }}), "Budget Explorer"), React.createElement(Card_1.CardText, {expandable: true}, React.createElement("span", {style: { fontStyle: 'italic' }}, "[content to be determined]"))), dialogbox, branches);
+        return React.createElement("div", null, 
+            React.createElement("div", {style: {
+                backgroundColor: "lemonchiffon",
+                padding: "3px",
+                margin: "3px",
+                borderRadius: "8px",
+                fontFamily: "Roboto,sans-serif",
+                fontSize: "12px",
+            }}, "Caution: This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality and continuity issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), 
+            React.createElement(Card_1.Card, {expanded: this.state.showdashboard}, 
+                React.createElement(Card_1.CardTitle, null, 
+                    React.createElement(Toggle_1.default, {label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
+                        height: '32px', float: "right",
+                        display: "inline-block",
+                        width: 'auto',
+                    }, labelStyle: { fontStyle: 'italic' }, onToggle: (e, value) => {
+                        e.stopPropagation();
+                        this.setState({
+                            showdashboard: value
+                        });
+                    }}), 
+                    "Budget Explorer"), 
+                React.createElement(Card_1.CardText, {expandable: true}, 
+                    React.createElement("span", {style: { fontStyle: 'italic' }}, "[content to be determined]")
+                )), 
+            dialogbox, 
+            branches);
     }
 }
 ;

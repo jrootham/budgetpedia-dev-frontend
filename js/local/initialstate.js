@@ -151,15 +151,15 @@ let explorer = {
     }
 };
 var initialstate = {
-    hometiles: hometiles,
-    homecols: homecols,
-    homepadding: homepadding,
-    appnavbar: appnavbar,
+    hometiles,
+    homecols,
+    homepadding,
+    appnavbar,
     theme: lightBaseTheme_1.default,
-    colors: colors,
-    system: system,
-    explorer: explorer,
-    workingmessagestate: workingmessagestate,
+    colors,
+    system,
+    explorer,
+    workingmessagestate,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = initialstate;

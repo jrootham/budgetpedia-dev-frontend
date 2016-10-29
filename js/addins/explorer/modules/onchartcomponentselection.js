@@ -38,7 +38,7 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     budgetCell.chartSelection = logicalselectionrow;
     let removed = branchNodes.splice(nodeIndex + 1);
     let removeditems = removed.map((item, index) => {
-        return { nodeuid: item.uid, cellList: item.cellDeclarationList, index: index };
+        return { nodeuid: item.uid, cellList: item.cellDeclarationList, index };
     });
     let priorCellSettings = null;
     let priorNodeSettings = null;
@@ -49,8 +49,8 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
             let chartConfigs = Object.assign({}, priorCell.cellDeclaration.chartConfigs);
             let yearScope = priorCell.cellDeclaration.yearScope;
             priorCellSettings = {
-                chartConfigs: chartConfigs,
-                yearScope: yearScope,
+                chartConfigs,
+                yearScope,
             };
             priorNodeSettings = {
                 yearSelections: Object.assign({}, removednode.nodeDeclaration.yearSelections),
@@ -72,10 +72,10 @@ let applyChartComponentSelection = (budgetBranch, nodeIndex, cellIndex, chartSel
     budgetCell.chartSelection = logicalselectionrow;
     let childprops = {
         selectionrow: logicalselectionrow,
-        nodeIndex: nodeIndex,
+        nodeIndex,
         cellIndex: parseInt(cellIndex),
-        priorCellSettings: priorCellSettings,
-        priorNodeSettings: priorNodeSettings,
+        priorCellSettings,
+        priorNodeSettings,
     };
     budgetBranch.createChildNodeDeclaration(childprops);
 };

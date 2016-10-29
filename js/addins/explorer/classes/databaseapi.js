@@ -43,11 +43,11 @@ class Database {
                 [viewpointDataTemplate, datasetData, lookups, datasetConfig] = values;
                 viewpointDataTemplate.Meta.datasetConfig = datasetConfig;
                 let setparms = {
-                    datasetName: datasetName,
-                    inflationAdjusted: inflationAdjusted,
-                    viewpointDataTemplate: viewpointDataTemplate,
-                    datasetData: datasetData,
-                    lookups: lookups,
+                    datasetName,
+                    inflationAdjusted,
+                    viewpointDataTemplate,
+                    datasetData,
+                    lookups,
                 };
                 this.calculateViewpointData(setparms);
                 viewpointDataTemplate = setparms.viewpointDataTemplate;
@@ -85,26 +85,26 @@ class Database {
                 let metaData = datasetdata.MetaData;
                 let { Headers, Notes, Allocations, Messages } = datasetdata;
                 let Sources = {
-                    Headers: Headers,
-                    Notes: Notes,
-                    Allocations: Allocations,
-                    Messages: Messages,
+                    Headers,
+                    Notes,
+                    Allocations,
+                    Messages,
                 };
                 let { DatasetName, YearsRange, DatasetTitle, Dataseries, DimensionNames, CellTitles, Units, UnitsAlias, UnitRatio, CommonDimension, InflationAdjustable, InflationReferenceYear, } = metaData;
                 let config = {
-                    DatasetName: DatasetName,
-                    YearsRange: YearsRange,
-                    DatasetTitle: DatasetTitle,
-                    Dataseries: Dataseries,
-                    DimensionNames: DimensionNames,
-                    CellTitles: CellTitles,
-                    Units: Units,
-                    UnitsAlias: UnitsAlias,
-                    UnitRatio: UnitRatio,
-                    CommonDimension: CommonDimension,
-                    InflationAdjustable: InflationAdjustable,
-                    InflationReferenceYear: InflationReferenceYear,
-                    Sources: Sources,
+                    DatasetName,
+                    YearsRange,
+                    DatasetTitle,
+                    Dataseries,
+                    DimensionNames,
+                    CellTitles,
+                    Units,
+                    UnitsAlias,
+                    UnitRatio,
+                    CommonDimension,
+                    InflationAdjustable,
+                    InflationReferenceYear,
+                    Sources,
                 };
                 resolve(config);
             });

@@ -7,8 +7,8 @@ const basicform_1 = require('../components/basicform');
 const Card_1 = require('material-ui/Card');
 const constants_1 = require('../../local/constants');
 let Register = class extends Component {
-    constructor(...args) {
-        super(...args);
+    constructor() {
+        super(...arguments);
         this.submitRegistration = elements => {
             let profile = {};
             for (var index in elements) {
@@ -29,7 +29,7 @@ let Register = class extends Component {
                 type: 'email',
                 required: true,
                 errorText: fieldMessages['email'],
-                disabled: disabled,
+                disabled,
             },
             {
                 index: 'userhandle',
@@ -38,7 +38,7 @@ let Register = class extends Component {
                 type: 'text',
                 required: true,
                 errorText: fieldMessages['userhandle'],
-                disabled: disabled,
+                disabled,
             },
             {
                 index: 'username',
@@ -47,7 +47,7 @@ let Register = class extends Component {
                 type: 'text',
                 required: true,
                 errorText: fieldMessages['username'],
-                disabled: disabled
+                disabled
             },
             {
                 index: 'participation',
@@ -63,7 +63,7 @@ let Register = class extends Component {
                 type: 'password',
                 required: true,
                 errorText: fieldMessages['password'],
-                disabled: disabled,
+                disabled,
             },
             {
                 index: 'password2',
@@ -72,7 +72,7 @@ let Register = class extends Component {
                 type: 'password',
                 required: true,
                 errorText: fieldMessages['password2'],
-                disabled: disabled
+                disabled
             },
             {
                 index: 'intro',
@@ -81,20 +81,22 @@ let Register = class extends Component {
                 multiLine: true,
                 rows: 4,
                 errorText: fieldMessages['intro'],
-                disabled: disabled
+                disabled
             },
         ];
         let registerform = React.createElement(basicform_1.BasicForm, {submit: registerpage.submitRegistration, elements: elements, submitButtonLabel: 'Register', errorMessage: registerpage.props.register.errorMessage});
-        return React.createElement(Card_1.Card, {style: { margin: "5px" }}, React.createElement(Card_1.CardTitle, {title: "Register", style: { paddingBottom: 0 }}), registerpage.props.auth.isAuthenticated
-            ? React.createElement("p", null, "Cannot register while logged in. Please log out to register a new membership.")
-            : registerform);
+        return React.createElement(Card_1.Card, {style: { margin: "5px" }}, 
+            React.createElement(Card_1.CardTitle, {title: "Register", style: { paddingBottom: 0 }}), 
+            registerpage.props.auth.isAuthenticated
+                ? React.createElement("p", null, "Cannot register while logged in. Please log out to register a new membership.")
+                : registerform);
     }
 }
 ;
 function mapStateToProps(state) {
     let { resources, login } = state;
     return {
-        state: state,
+        state,
         auth: login.auth,
         theme: resources.theme,
         register: login.register,

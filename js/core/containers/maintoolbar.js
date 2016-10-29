@@ -9,13 +9,13 @@ const toolbar_group_1 = require('material-ui/lib/toolbar/toolbar-group');
 function mapStateToProps(state) {
     let { toolsnavbar, resources } = state;
     return {
-        toolsnavbar: toolsnavbar,
+        toolsnavbar,
         theme: resources.theme,
     };
 }
 let MainToolbar = class extends React.Component {
-    constructor(...args) {
-        super(...args);
+    constructor() {
+        super(...arguments);
         this.transitionToHome = () => {
             this.props.transitionTo('/');
         };
@@ -28,12 +28,29 @@ let MainToolbar = class extends React.Component {
             display: "flex",
             justifyContent: "center",
             borderTop: "2px solid silver"
-        }}, React.createElement(toolbar_group_1.default, {style: {
-            float: "none",
-            width: "70%",
-            display: "flex",
-            justifyContent: "space-around"
-        }}, React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "arrow_back")), React.createElement(IconButton_1.default, {onTouchTap: this.transitionToHome}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "radio_button_unchecked")), React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "check_box_outline_blank")), React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")), React.createElement(IconButton_1.default, {disabled: true}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "arrow_forward")))));
+        }}, 
+            React.createElement(toolbar_group_1.default, {style: {
+                float: "none",
+                width: "70%",
+                display: "flex",
+                justifyContent: "space-around"
+            }}, 
+                React.createElement(IconButton_1.default, {disabled: true}, 
+                    React.createElement(FontIcon_1.default, {className: "material-icons"}, "arrow_back")
+                ), 
+                React.createElement(IconButton_1.default, {onTouchTap: this.transitionToHome}, 
+                    React.createElement(FontIcon_1.default, {className: "material-icons"}, "radio_button_unchecked")
+                ), 
+                React.createElement(IconButton_1.default, {disabled: true}, 
+                    React.createElement(FontIcon_1.default, {className: "material-icons"}, "check_box_outline_blank")
+                ), 
+                React.createElement(IconButton_1.default, {disabled: true}, 
+                    React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")
+                ), 
+                React.createElement(IconButton_1.default, {disabled: true}, 
+                    React.createElement(FontIcon_1.default, {className: "material-icons"}, "arrow_forward")
+                ))
+        ));
     }
 }
 ;

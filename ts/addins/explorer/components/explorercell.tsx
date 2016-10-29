@@ -550,7 +550,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         top:"0", 
                         left:"0",
                         fontSize:"8px",
-                        zIndex:"10"
+                        zIndex:10,
                     }
                 }>year-over-<br /> year</div>
                 <IconButton 

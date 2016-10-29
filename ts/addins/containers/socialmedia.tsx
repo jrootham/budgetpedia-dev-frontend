@@ -12,7 +12,7 @@ const SocialMedia = () =>
             style={{ border: "none", overflow: "hidden" }}
             scrolling="no" 
             frameborder="0" 
-            allowTransparency="true">
+            allowTransparency={true}>
                 
         </iframe> 
     </div>   

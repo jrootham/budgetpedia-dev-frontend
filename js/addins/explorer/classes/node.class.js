@@ -37,7 +37,7 @@ class BudgetNode {
                         let chartConfigs = Object.assign({}, callingCellDeclaration.chartConfigs);
                         cellDeclarationData = {
                             yearScope: callingCellDeclaration.yearScope,
-                            chartConfigs: chartConfigs,
+                            chartConfigs,
                         };
                     }
                     else {
@@ -61,11 +61,11 @@ class BudgetNode {
             let budgetNode = this;
             let { viewpointConfigPack, treeNodeData, yearsRange, yearSelections, parentBudgetNode, nodeIndex } = budgetNode;
             let nodeDataPack = {
-                treeNodeData: treeNodeData,
-                yearsRange: yearsRange,
-                yearSelections: yearSelections,
-                parentBudgetNode: parentBudgetNode,
-                budgetNode: budgetNode,
+                treeNodeData,
+                yearsRange,
+                yearSelections,
+                parentBudgetNode,
+                budgetNode,
             };
             cell.viewpointConfigPack = viewpointConfigPack;
             cell.nodeDataPack = nodeDataPack;
@@ -125,8 +125,8 @@ class BudgetNode {
             if (chartSelection === undefined)
                 chartSelection = null;
             let cell = new cell_class_1.default({
-                nodeDataseriesName: nodeDataseriesName,
-                chartSelection: chartSelection,
+                nodeDataseriesName,
+                chartSelection,
                 uid: celluid,
             });
             this._updateCell(cell, cellIndex);

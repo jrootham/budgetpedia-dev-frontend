@@ -471,9 +471,9 @@ class BudgetCell {
                 // lower levels depend on dimension category names.
                 } else {
                     let nameindex = nodeDataseriesName 
-                    if (nameindex = 'Components') {
+                    if (nameindex == 'Components') {
                         nameindex += 'DimensionName'
-                    } else if (name = 'CommonDimension') {
+                    } else if (nameindex == 'CommonDimension') {
                         nameindex += 'Name'
                     } else {
                         console.error('nodeDataseriesName not found for ', this)

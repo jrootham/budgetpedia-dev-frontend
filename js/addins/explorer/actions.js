@@ -60,91 +60,91 @@ var cellTypes;
     cellTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, (refbranchuid, settings) => ({
-    settings: settings,
+    settings,
     branchuid: uuid.v4(),
-    refbranchuid: refbranchuid,
+    refbranchuid,
 }), () => ({
     explorer: true
 }));
 exports.cloneBranchDeclaration = redux_actions_1.createAction(types.CLONE_BRANCH, (refbranchuid, settings) => ({
     branchuid: refbranchuid,
-    settings: settings,
-    refbranchuid: refbranchuid,
+    settings,
+    refbranchuid,
 }), () => ({
     explorer: true
 }));
 exports.removeBranchDeclaration = redux_actions_1.createAction(types.REMOVE_BRANCH, branchuid => ({
-    branchuid: branchuid,
+    branchuid,
 }), () => ({
     explorer: false
 }));
 exports.changeViewpoint = redux_actions_1.createAction(types.CHANGE_VIEWPOINT, (branchuid, viewpointname) => ({
-    branchuid: branchuid,
-    viewpointname: viewpointname,
+    branchuid,
+    viewpointname,
 }), () => ({
     explorer: true
 }));
 exports.changeVersion = redux_actions_1.createAction(types.CHANGE_VERSION, (branchuid, versionname) => ({
-    branchuid: branchuid,
-    versionname: versionname,
+    branchuid,
+    versionname,
 }), () => ({
     explorer: true
 }));
 exports.changeAspect = redux_actions_1.createAction(types.CHANGE_ASPECT, (branchuid, aspectname) => ({
-    branchuid: branchuid,
-    aspectname: aspectname,
+    branchuid,
+    aspectname,
 }), () => ({
     explorer: true
 }));
 exports.toggleInflationAdjusted = redux_actions_1.createAction(types.TOGGLE_INFLATION_ADJUSTED, (branchuid, value) => ({
-    branchuid: branchuid,
-    value: value,
+    branchuid,
+    value,
 }), () => ({
     explorer: true
 }));
 exports.updateProrata = redux_actions_1.createAction(types.UPDATE_PRORATA, (branchuid, value) => ({
-    branchuid: branchuid,
-    value: value,
+    branchuid,
+    value,
 }), () => ({
     explorer: true
 }));
 exports.harmonizeCells = redux_actions_1.createAction(types.HARMONIZE_CELLS, (branchuid, nodeProperties, cellProperties, nodeList, cellList) => ({
-    branchuid: branchuid,
-    nodeProperties: nodeProperties,
-    cellProperties: cellProperties,
-    nodeList: nodeList,
-    cellList: cellList,
+    branchuid,
+    nodeProperties,
+    cellProperties,
+    nodeList,
+    cellList,
 }), () => ({
     explorer: true
 }));
 exports.toggleShowOptions = redux_actions_1.createAction(types.TOGGLE_SHOW_OPTIONS, (branchuid, value) => ({
-    branchuid: branchuid,
-    value: value,
+    branchuid,
+    value,
 }), () => ({
     explorer: true
 }));
 exports.incrementBranchDataVersion = redux_actions_1.createAction(types.CHANGE_BRANCH_DATA, (branchuid) => ({
-    branchuid: branchuid,
+    branchuid,
 }), () => ({
     explorer: false
 }));
 exports.changeTab = redux_actions_1.createAction(types.CHANGE_TAB, (branchuid, nodeuid, tabvalue) => ({
-    nodeuid: nodeuid,
-    tabvalue: tabvalue,
-    branchuid: branchuid,
+    nodeuid,
+    tabvalue,
+    branchuid,
 }), () => ({
     explorer: true
 }));
 exports.updateNode = redux_actions_1.createAction(types.UPDATE_NODE, (branchuid, nodeuid) => ({
-    nodeuid: nodeuid,
-    branchuid: branchuid,
+    nodeuid,
+    branchuid,
 }), () => ({
     explorer: true
 }));
 exports.addNodeDeclaration = redux_actions_1.createAction(types.ADD_NODE, (branchuid, settings) => ({
-    settings: settings,
+    settings,
     nodeuid: uuid.v4(),
-    branchuid: branchuid,
+    branchuid,
 }), () => ({
     explorer: true
 }));
@@ -157,29 +157,29 @@ exports.addNodeDeclarations = (branchuid, settingslist) => {
     };
 };
 exports._addNodeDeclarations = redux_actions_1.createAction(types.ADD_NODES, (branchuid, settingslist) => ({
-    settingslist: settingslist,
-    branchuid: branchuid,
+    settingslist,
+    branchuid,
 }), () => ({
     explorer: true
 }));
 exports.removeNodeDeclarations = redux_actions_1.createAction(types.REMOVE_NODES, (branchuid, items) => ({
-    items: items,
-    branchuid: branchuid,
+    items,
+    branchuid,
 }), () => ({
     explorer: true
 }));
 exports.normalizeCellYearDependencies = redux_actions_1.createAction(types.NORMALIZE_CELL_YEAR_DEPENDENCIES, (branchuid, nodeuid, cellList, yearsRange) => ({
-    branchuid: branchuid,
-    nodeuid: nodeuid,
-    cellList: cellList,
-    yearsRange: yearsRange,
+    branchuid,
+    nodeuid,
+    cellList,
+    yearsRange,
 }), () => ({
     explorer: true
 }));
 const _addCellDeclaration = redux_actions_1.createAction(types.ADD_CELLS, (branchuid, nodeuid, settings) => ({
-    branchuid: branchuid,
-    settings: settings,
-    nodeuid: nodeuid,
+    branchuid,
+    settings,
+    nodeuid,
 }), () => ({
     explorer: true
 }));
@@ -192,34 +192,34 @@ exports.addCellDeclarations = (branchuid, nodeuid, settingslist) => {
     };
 };
 exports.updateCellChartSelection = redux_actions_1.createAction(types.UPDATE_CELL_SELECTION, (branchuid, nodeuid, celluid, selection) => ({
-    celluid: celluid,
-    selection: selection,
-    nodeuid: nodeuid,
-    branchuid: branchuid,
+    celluid,
+    selection,
+    nodeuid,
+    branchuid,
 }), () => ({
     explorer: true
 }));
 exports.updateCellTimeScope = redux_actions_1.createAction(types.UPDATE_CELL_TIMECODE, (branchuid, nodeuid, celluid, explorerTimeCode) => ({
-    branchuid: branchuid,
-    nodeuid: nodeuid,
-    celluid: celluid,
-    explorerTimeCode: explorerTimeCode,
+    branchuid,
+    nodeuid,
+    celluid,
+    explorerTimeCode,
 }), () => ({
     explorer: true
 }));
 exports.updateCellChartCode = redux_actions_1.createAction(types.UPDATE_CELL_CHART_CODE, (branchuid, nodeuid, celluid, explorerChartCode) => ({
-    branchuid: branchuid,
-    nodeuid: nodeuid,
-    celluid: celluid,
-    explorerChartCode: explorerChartCode,
+    branchuid,
+    nodeuid,
+    celluid,
+    explorerChartCode,
 }), () => ({
     explorer: true
 }));
 exports.updateCellYearSelections = redux_actions_1.createAction(types.UPDATE_NODE_YEAR_SELECTIONS, (branchuid, nodeuid, leftyear, rightyear) => ({
-    branchuid: branchuid,
-    nodeuid: nodeuid,
-    leftyear: leftyear,
-    rightyear: rightyear,
+    branchuid,
+    nodeuid,
+    leftyear,
+    rightyear,
 }), () => ({
     explorer: true
 }));
@@ -227,12 +227,12 @@ exports.resetLastAction = redux_actions_1.createAction(types.RESET_LAST_ACTION, 
     explorer: true
 }));
 exports.branchMoveUp = redux_actions_1.createAction(types.BRANCH_MOVE_UP, (branchuid) => ({
-    branchuid: branchuid,
+    branchuid,
 }), () => ({
     explorer: false
 }));
 exports.branchMoveDown = redux_actions_1.createAction(types.BRANCH_MOVE_DOWN, (branchuid) => ({
-    branchuid: branchuid,
+    branchuid,
 }), () => ({
     explorer: false
 }));

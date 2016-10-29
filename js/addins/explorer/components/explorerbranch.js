@@ -19,8 +19,8 @@ const explorernode_1 = require('./explorernode');
 const actions_1 = require('../actions');
 const Utilities = require('../modules/utilities');
 class ExplorerBranch extends Component {
-    constructor(...args) {
-        super(...args);
+    constructor() {
+        super(...arguments);
         this.state = {
             branchNodes: [],
             viewpointData: null,
@@ -69,7 +69,7 @@ class ExplorerBranch extends Component {
                     },
                 };
                 settingslist.push({
-                    settings: settings,
+                    settings,
                 });
             }
             return settingslist;
@@ -84,8 +84,8 @@ class ExplorerBranch extends Component {
             let { onPortalCreation } = branch;
             let { workingStatus } = displayCallbacks;
             branch._nodeDisplayCallbacks = {
-                workingStatus: workingStatus,
-                onPortalCreation: onPortalCreation,
+                workingStatus,
+                onPortalCreation,
             };
             budgetBranch.getProps = branch.getProps;
             budgetBranch.getState = branch.getState;
@@ -202,7 +202,7 @@ class ExplorerBranch extends Component {
                     snackbar.message = message;
                     snackbar.open = true;
                     this.setState({
-                        snackbar: snackbar,
+                        snackbar,
                     });
                 }
                 if (deeperdata || shallowerdata) {
@@ -218,7 +218,7 @@ class ExplorerBranch extends Component {
                     snackbar.message = message;
                     snackbar.open = true;
                     this.setState({
-                        snackbar: snackbar,
+                        snackbar,
                     });
                 }
             }).catch(reason => {
@@ -369,15 +369,15 @@ class ExplorerBranch extends Component {
                     portalName = datasetConfig.DatasetTitle;
                 }
                 let portalConfig = {
-                    portalName: portalName,
+                    portalName,
                 };
                 budgetNode.portalConfig = portalConfig;
                 let viewpointdata = branch.state.viewpointData;
                 let { NamingConfigurations: viewpointNamingConfigs, isInflationAdjusted, } = viewpointdata.Meta;
                 let viewpointConfigPack = {
-                    viewpointNamingConfigs: viewpointNamingConfigs,
-                    datasetConfig: datasetConfig,
-                    isInflationAdjusted: isInflationAdjusted,
+                    viewpointNamingConfigs,
+                    datasetConfig,
+                    isInflationAdjusted,
                     prorata: branchDeclaration.prorata,
                 };
                 budgetNode.viewpointConfigPack = viewpointConfigPack;
@@ -398,9 +398,11 @@ class ExplorerBranch extends Component {
         this.shareBranch = () => {
             let url = this._getShareUrl();
             let toastrOptions = {
-                component: (React.createElement("div", {style: { width: "300px" }}, React.createElement("p", {style: { width: "290px" }}, "To share the selected row of charts, copy the url below, and send it to a friend."), React.createElement("textarea", {ref: node => {
-                    this._textarearef = node;
-                }, onFocus: this._textareaonfocus, style: { minHeight: "200px", width: "290px" }, value: url, readOnly: true})))
+                component: (React.createElement("div", {style: { width: "300px" }}, 
+                    React.createElement("p", {style: { width: "290px" }}, "To share the selected row of charts, copy the url below, and send it to a friend."), 
+                    React.createElement("textarea", {ref: node => {
+                        this._textarearef = node;
+                    }, onFocus: this._textareaonfocus, style: { minHeight: "200px", width: "290px" }, value: url, readOnly: true})))
             };
             react_redux_toastr_1.toastr.message('Share charts', toastrOptions);
         };
@@ -507,11 +509,32 @@ class ExplorerBranch extends Component {
                     border: "1px solid silver",
                     borderRadius: "8px",
                     padding: "3px",
-                }}, React.createElement(RaisedButton_1.default, {style: { marginLeft: "3px", float: "right" }, disabled: !isvalidurl, type: "button", label: "Source", onTouchTap: () => {
-                    isvalidurl ? this.openwindow(link) : void (0);
-                }}), React.createElement("div", {style: { fontWeight: "bold" }}, headerkey), React.createElement("div", {style: { whiteSpace: "normal" }}, React.createElement("div", null, "Document title: ", doctitle), (!isvalidurl) ? React.createElement("div", null, "Invalid link! no source available") : null, tabletitle ? React.createElement("div", null, "Table title: ", tabletitle) : null, tablelocation ? React.createElement("div", null, "Table location: ", tablelocation) : null, notes ? React.createElement("div", null, "Note: ", notes) : null));
+                }}, 
+                    React.createElement(RaisedButton_1.default, {style: { marginLeft: "3px", float: "right" }, disabled: !isvalidurl, type: "button", label: "Source", onTouchTap: () => {
+                        isvalidurl ? this.openwindow(link) : void (0);
+                    }}), 
+                    React.createElement("div", {style: { fontWeight: "bold" }}, headerkey), 
+                    React.createElement("div", {style: { whiteSpace: "normal" }}, 
+                        React.createElement("div", null, 
+                            "Document title: ", 
+                            doctitle), 
+                        (!isvalidurl) ? React.createElement("div", null, "Invalid link! no source available") : null, 
+                        tabletitle ? React.createElement("div", null, 
+                            "Table title: ", 
+                            tabletitle) : null, 
+                        tablelocation ? React.createElement("div", null, 
+                            "Table location: ", 
+                            tablelocation) : null, 
+                        notes ? React.createElement("div", null, 
+                            "Note: ", 
+                            notes) : null));
             });
-            return React.createElement("div", null, React.createElement(Subheader_1.default, null, DatasetTitle), itemlist);
+            return React.createElement("div", null, 
+                React.createElement(Subheader_1.default, null, DatasetTitle), 
+                itemlist);
+        };
+        this.handleDialogOpen = () => {
+            this.props.handleDialogOpen();
         };
     }
     componentWillMount() {
@@ -590,10 +613,23 @@ class ExplorerBranch extends Component {
         let drilldownrow = branch.props.budgetBranch.nodes;
         let drilldownportals = branch.getPortals(drilldownrow);
         let branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
-        let viewpointselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.viewpoint, onChange: (e, index, value) => {
-            branch.switchViewpoint(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional (budget)"}), React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural (budget)"}), React.createElement(MenuItem_1.default, {value: 'ACTUALEXPENSES', primaryText: "Expenses (actual)"}), React.createElement(MenuItem_1.default, {value: 'ACTUALREVENUES', primaryText: "Revenues (actual)"}), React.createElement(MenuItem_1.default, {value: 'EXPENDITURES', primaryText: "Expenses by Object (actual)"}))) : null;
-        let governmentselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Government: "), React.createElement(DropDownMenu_1.default, {value: "Toronto", disabled: true}, React.createElement(MenuItem_1.default, {value: 'Toronto', primaryText: "Toronto, Ontario"}))) : null;
+        let viewpointselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, 
+            React.createElement("span", {style: { fontStyle: "italic" }}, "Viewpoint: "), 
+            React.createElement(DropDownMenu_1.default, {value: branchDeclaration.viewpoint, onChange: (e, index, value) => {
+                branch.switchViewpoint(value);
+            }}, 
+                React.createElement(MenuItem_1.default, {value: 'FUNCTIONAL', primaryText: "Functional (operating budgets)"}), 
+                React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural (operating budgets)"}), 
+                React.createElement(MenuItem_1.default, {value: 'ACTUALEXPENSES', primaryText: "Expenses (audited statements)"}), 
+                React.createElement(MenuItem_1.default, {value: 'ACTUALREVENUES', primaryText: "Revenues (audited statements)"}), 
+                React.createElement(MenuItem_1.default, {value: 'EXPENDITURES', primaryText: "Expenses by Object (audited statements)"})), 
+            " ", 
+            React.createElement("span", {style: { marginRight: "6px" }}, "|")) : null;
+        let governmentselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, 
+            React.createElement("span", {style: { fontStyle: "italic" }}, "Government: "), 
+            React.createElement(DropDownMenu_1.default, {value: "Toronto", disabled: true}, 
+                React.createElement(MenuItem_1.default, {value: 'Toronto', primaryText: "Toronto, Ontario"})
+            )) : null;
         const versionchoices = () => {
             switch (branchDeclaration.viewpoint) {
                 case "FUNCTIONAL":
@@ -602,16 +638,18 @@ class ExplorerBranch extends Component {
                         React.createElement(MenuItem_1.default, {key: 2, value: 'PBFT', primaryText: "Detail (PBFT)"}),
                         React.createElement(MenuItem_1.default, {key: 3, disabled: true, value: 'VARIANCE', primaryText: "Variance Reports"})];
                 case 'ACTUALEXPENSES':
-                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'ACTUALEXPENSES', primaryText: "Expense Summary"})];
+                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'ACTUALEXPENSES', primaryText: "Summary"})];
                 case 'ACTUALREVENUES':
-                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'ACTUALREVENUES', primaryText: "Revenue Summary"})];
+                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'ACTUALREVENUES', primaryText: "Summary"})];
                 case 'EXPENDITURES':
-                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'EXPENDITURES', primaryText: "Expenses by Object"})];
+                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'EXPENDITURES', primaryText: "Summary"})];
             }
         };
-        let versionselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.version, onChange: (e, index, value) => {
-            branch.switchVersion(value);
-        }}, versionchoices())) : null;
+        let versionselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, 
+            React.createElement("span", {style: { fontStyle: "italic" }}, "Version: "), 
+            React.createElement(DropDownMenu_1.default, {disabled: versionchoices().length < 2, value: branchDeclaration.version, onChange: (e, index, value) => {
+                branch.switchVersion(value);
+            }}, versionchoices())) : null;
         const aspectchoices = () => {
             switch (branchDeclaration.viewpoint) {
                 case "FUNCTIONAL":
@@ -624,19 +662,30 @@ class ExplorerBranch extends Component {
                 case 'ACTUALREVENUES':
                     return [React.createElement(MenuItem_1.default, {key: 4, value: 'Revenues', primaryText: "Revenues"})];
                 case 'EXPENDITURES':
-                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'Expenditure', primaryText: "Expenditure"})];
+                    return [React.createElement(MenuItem_1.default, {key: 4, value: 'Expenditure', primaryText: "Expenditures"})];
             }
         };
         let aspectselection = (branchDeclaration.showOptions)
             ?
-                React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Aspect: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.aspect, onChange: (e, index, value) => {
-                    branch.switchAspect(value);
-                }}, aspectchoices()))
+                React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, 
+                    React.createElement("span", {style: { fontStyle: "italic" }}, "Aspect: "), 
+                    React.createElement(DropDownMenu_1.default, {disabled: aspectchoices().length < 2, value: branchDeclaration.aspect, onChange: (e, index, value) => {
+                        branch.switchAspect(value);
+                    }}, aspectchoices()), 
+                    " ", 
+                    React.createElement("span", {style: { marginRight: "6px" }}, "|"))
             :
                 null;
-        let byunitselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, React.createElement("span", {style: { fontStyle: "italic" }}, "Prorated: "), React.createElement(DropDownMenu_1.default, {value: branchDeclaration.prorata, onChange: (e, index, value) => {
-            this.switchComparator(value);
-        }}, React.createElement(MenuItem_1.default, {value: 'OFF', primaryText: "Off"}), React.createElement(MenuItem_1.default, {value: 'PERPERSON', primaryText: "Per person"}), React.createElement(MenuItem_1.default, {value: 'PER100000PERSONS', primaryText: "Per 100,000 people"}), React.createElement(MenuItem_1.default, {value: 'PERHOUSEHOLD', primaryText: "Per household"}), React.createElement(MenuItem_1.default, {value: 'PER50000HOUSEHOLDS', primaryText: "Per 50,000 households"}))) : null;
+        let byunitselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, 
+            React.createElement("span", {style: { fontStyle: "italic" }}, "Prorated: "), 
+            React.createElement(DropDownMenu_1.default, {value: branchDeclaration.prorata, onChange: (e, index, value) => {
+                this.switchComparator(value);
+            }}, 
+                React.createElement(MenuItem_1.default, {value: 'OFF', primaryText: "Off"}), 
+                React.createElement(MenuItem_1.default, {value: 'PERPERSON', primaryText: "Per person"}), 
+                React.createElement(MenuItem_1.default, {value: 'PER100000PERSONS', primaryText: "Per 100,000 people"}), 
+                React.createElement(MenuItem_1.default, {value: 'PERHOUSEHOLD', primaryText: "Per household"}), 
+                React.createElement(MenuItem_1.default, {value: 'PER50000HOUSEHOLDS', primaryText: "Per 50,000 households"}))) : null;
         let inflationadjustment = (branchDeclaration.showOptions)
             ?
                 React.createElement("div", {style: {
@@ -644,32 +693,47 @@ class ExplorerBranch extends Component {
                     whiteSpace: "nowrap",
                     verticalAlign: "bottom",
                     marginRight: '16px',
-                }}, React.createElement(Toggle_1.default, {label: 'Inflation adjusted:', style: {
-                    height: '32px',
-                    marginTop: '16px'
-                }, onToggle: (e, value) => {
-                    this.toggleInflationAdjustment(value);
-                }, labelStyle: {
-                    fontStyle: 'italic'
-                }, defaultToggled: branchDeclaration.inflationAdjusted}))
+                }}, 
+                    React.createElement(Toggle_1.default, {label: 'Inflation adjusted:', style: {
+                        height: '32px',
+                        marginTop: '16px',
+                        display: 'inline-block',
+                    }, onToggle: (e, value) => {
+                        this.toggleInflationAdjustment(value);
+                    }, labelStyle: {
+                        fontStyle: 'italic'
+                    }, defaultToggled: branchDeclaration.inflationAdjusted}), 
+                    " ", 
+                    React.createElement("span", {style: { marginLeft: "6px" }}, "|"))
             :
                 null;
         let showcontrols = React.createElement("div", {style: {
             display: 'inline-block',
             whiteSpace: "nowrap",
             verticalAlign: "bottom"
-        }}, React.createElement(Toggle_1.default, {label: 'Show options:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: branchDeclaration.showOptions, onToggle: (e, value) => {
-            this.toggleShowOptions(value);
-        }}));
-        let technotesdialog = React.createElement(Dialog_1.default, {title: "Row Data Sources", modal: false, open: branch.state.techDialogOpen, onRequestClose: branch.handleTechDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' }}, React.createElement(IconButton_1.default, {style: {
-            top: 0,
-            right: 0,
-            padding: 0,
-            height: "36px",
-            width: "36px",
-            position: "absolute",
-            zIndex: 2,
-        }, onTouchTap: branch.handleTechDialogClose}, React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")), React.createElement("div", null, "Please report" + ' ' + "any problems to ", React.createElement("a", {target: "_blank", href: "mailto:mail@budgetpedia.ca"}, "mail@budgetpedia.ca"), " "), branch.state.techDialogOpen ? branch.getTechNotesDisplay() : null, React.createElement("div", null, "Note: some historical numbers have been allocated to contemporary categories" + ' ' + "for continuity -- to make the numbers more easily comparable. We plan to disclose" + ' ' + "continuity details here."));
+        }}, 
+            React.createElement(Toggle_1.default, {label: 'Show options:', style: { height: '32px', marginTop: '16px' }, labelStyle: { fontStyle: 'italic' }, defaultToggled: branchDeclaration.showOptions, onToggle: (e, value) => {
+                this.toggleShowOptions(value);
+            }})
+        );
+        let technotesdialog = React.createElement(Dialog_1.default, {title: "Row Data Sources", modal: false, open: branch.state.techDialogOpen, onRequestClose: branch.handleTechDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' }}, 
+            React.createElement(IconButton_1.default, {style: {
+                top: 0,
+                right: 0,
+                padding: 0,
+                height: "36px",
+                width: "36px",
+                position: "absolute",
+                zIndex: 2,
+            }, onTouchTap: branch.handleTechDialogClose}, 
+                React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")
+            ), 
+            React.createElement("div", null, 
+                "Please report" + ' ' + "any problems to ", 
+                React.createElement("a", {target: "_blank", href: "mailto:mail@budgetpedia.ca"}, "mail@budgetpedia.ca"), 
+                " "), 
+            branch.state.techDialogOpen ? branch.getTechNotesDisplay() : null, 
+            React.createElement("div", null, "Note: some historical numbers have been allocated to contemporary categories" + ' ' + "for continuity -- to make the numbers more easily comparable. We plan to disclose" + ' ' + "continuity details here."));
         let technotes = (branchDeclaration.showOptions)
             ? React.createElement(RaisedButton_1.default, {style: { marginLeft: "12px" }, type: "button", label: "Sources", onTouchTap: branch.handleTechDialogOpen}) : null;
         let showhelp = (branchDeclaration.showOptions)
@@ -678,7 +742,11 @@ class ExplorerBranch extends Component {
                 whiteSpace: "nowrap",
                 verticalAlign: "bottom",
                 position: "relative",
-            }}, React.createElement(IconButton_1.default, {tooltip: "Help", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.props.handleDialogOpen}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")))
+            }}, 
+                React.createElement(IconButton_1.default, {tooltip: "Help", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.handleDialogOpen}, 
+                    React.createElement(FontIcon_1.default, {className: "material-icons"}, "help_outline")
+                )
+            )
             : null;
         let search = (branchDeclaration.showOptions)
             ? React.createElement("div", {style: {
@@ -686,13 +754,37 @@ class ExplorerBranch extends Component {
                 whiteSpace: "nowrap",
                 verticalAlign: "bottom",
                 position: "relative",
-            }}, React.createElement(IconButton_1.default, {disabled: true, tooltip: "Find an entry point", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.handleSearch}, React.createElement(FontIcon_1.default, {className: "material-icons"}, "search")))
+            }}, 
+                React.createElement(IconButton_1.default, {disabled: true, tooltip: "Find an entry point", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.handleSearch}, 
+                    React.createElement(FontIcon_1.default, {className: "material-icons"}, "search")
+                )
+            )
             : null;
         let shareurl = (branchDeclaration.showOptions)
             ? React.createElement(RaisedButton_1.default, {type: "button", label: "Share", onTouchTap: this.shareBranch}) : null;
-        return React.createElement("div", null, React.createElement("div", null, this.getBranchDataMessages(), technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", {style: { whiteSpace: "nowrap" }}, React.createElement("div", {ref: node => {
-            branch.branchScrollBlock = node;
-        }, style: { overflow: "scroll" }}, drilldownportals, React.createElement("div", {style: { display: "inline-block", width: "500px" }}))), React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));
+        return React.createElement("div", null, 
+            React.createElement("div", null, 
+                this.getBranchDataMessages(), 
+                technotesdialog, 
+                governmentselection, 
+                viewpointselection, 
+                versionselection, 
+                aspectselection, 
+                byunitselection, 
+                inflationadjustment, 
+                showcontrols, 
+                technotes, 
+                showhelp, 
+                search, 
+                shareurl), 
+            React.createElement("div", {style: { whiteSpace: "nowrap" }}, 
+                React.createElement("div", {ref: node => {
+                    branch.branchScrollBlock = node;
+                }, style: { overflow: "scroll" }}, 
+                    drilldownportals, 
+                    React.createElement("div", {style: { display: "inline-block", width: "500px" }}))
+            ), 
+            React.createElement(Snackbar_1.default, {open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose}));
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

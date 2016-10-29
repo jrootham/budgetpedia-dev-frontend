@@ -13,8 +13,8 @@ class BudgetBranch {
             let datapath = [];
             let { viewpoint: viewpointName, aspect: aspectName, } = branchSettings;
             let budgetNodeParms = {
-                viewpointName: viewpointName,
-                aspectName: aspectName,
+                viewpointName,
+                aspectName,
                 yearsRange: {
                     firstYear: null,
                     lastYear: null,
@@ -41,7 +41,7 @@ class BudgetBranch {
             let budgetNode = new node_class_1.default(budgetNodeParms, budgetNodeUid, treeNodeData, parentNode);
             branchNodes[nodeIndex] = budgetNode;
             budgetBranch.setState({
-                branchNodes: branchNodes,
+                branchNodes,
             });
         };
         this.saveAspectState = () => {
@@ -66,7 +66,7 @@ class BudgetBranch {
                 budgetNode.resetCells();
             }
             budgetBranch.setState({
-                branchNodes: branchNodes,
+                branchNodes,
             });
         };
         this.harmonizeCells = () => {
@@ -80,7 +80,7 @@ class BudgetBranch {
                 budgetNode.resetCells();
             }
             budgetBranch.setState({
-                branchNodes: branchNodes,
+                branchNodes,
             });
         };
         this.switchAspect = () => {
@@ -159,7 +159,7 @@ class BudgetBranch {
                 }
             }
             budgetBranch.setState({
-                branchNodes: branchNodes,
+                branchNodes,
             });
             return switchResults;
         };
@@ -190,8 +190,8 @@ class BudgetBranch {
                 }
                 else {
                     let _promise = databaseapi_1.default.getProrataData({
-                        repository: repository,
-                        prorataseries: prorataseries,
+                        repository,
+                        prorataseries,
                     });
                     _promise.then((proratadata) => {
                         let budgetBranch = this;
@@ -292,7 +292,7 @@ class BudgetBranch {
                 budgetNode.resetCells();
             }
             budgetBranch.setState({
-                branchNodes: branchNodes,
+                branchNodes,
             });
         };
         this.getViewpointData = () => {
@@ -300,11 +300,11 @@ class BudgetBranch {
             let { viewpoint: viewpointName, aspect: aspectName, inflationAdjusted, version: versionName, repository, } = branchSettings;
             let datasetName = constants_1.AspectNameToDatasetName[aspectName];
             let _promise = databaseapi_1.default.getViewpointData({
-                repository: repository,
-                viewpointName: viewpointName,
-                versionName: versionName,
-                datasetName: datasetName,
-                inflationAdjusted: inflationAdjusted
+                repository,
+                viewpointName,
+                versionName,
+                datasetName,
+                inflationAdjusted
             });
             let promise = new Promise((resolve, error) => {
                 _promise.then((viewpointdata) => {
@@ -369,8 +369,8 @@ class BudgetBranch {
             }
             let newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
             let newnodeconfigparms = {
-                viewpointName: viewpointName,
-                aspectName: aspectName,
+                viewpointName,
+                aspectName,
                 dataPath: childdatapath,
                 nodeIndex: nodeIndex + 1,
                 yearsRange: newrange,
