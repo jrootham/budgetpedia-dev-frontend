@@ -179,7 +179,7 @@
                     "2012": 1081140,
                     "2013": 1013834,
                     "2014": 1034070,
-                    "2015": 1126332,
+                    "2015": 7230701,
                     "2016": 1237399
                 }
             },
@@ -1008,7 +1008,7 @@
                     "2012": 1019078,
                     "2013": 968230,
                     "2014": 1008357,
-                    "2015": 1112317,
+                    "2015": 7140728,
                     "2016": 1237399
                 }
             },
@@ -1721,7 +1721,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 4228027.6,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1744,7 +1744,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 4380763.7,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1767,7 +1767,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 4759977.8,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1790,7 +1790,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 5251540,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1813,7 +1813,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 5327155.3,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1836,7 +1836,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 5638781.9,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1859,7 +1859,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 6396646.7,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1882,7 +1882,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 6891171.7,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1905,7 +1905,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 7094271,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1928,7 +1928,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 7071318.3,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1951,7 +1951,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 7144716.3,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -1974,19 +1974,19 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 7421035,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
         },
         "2015": {
             "SOURCE_DOCUMENT_LINK_ORIGINAL": "",
-            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0BzB3t6aSc9bDZmdsN3ZpYUItNnM",
-            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuRDNTajhMcnV6RTg",
-            "SOURCE_DOCUMENT_TITLE": "2015 COUNCIL APPROVED OPERATING BUDGET – GROSS REVENUE",
+            "SOURCE_DOCUMENT_LINK_COPY": "https://drive.google.com/open?id=0B208oCU9D8OuT2dlc016ZWNmMWM",
+            "SOURCE_DOCUMENT_LINK_WORKING_DIRECTORY": "https://drive.google.com/open?id=0B208oCU9D8OuV1U5UktLdW1hUTg",
+            "SOURCE_DOCUMENT_TITLE": "2015 CITY OF TORONTO BUDGET SUMMARY",
             "SOURCE_DOCUMENT_TABLE_LOCATION": "",
-            "SOURCE_DOCUMENT_TABLE_TITLE": "",
-            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuMklXOC02MjZfLTQ",
+            "SOURCE_DOCUMENT_TABLE_TITLE": "CITY OF TORONTO 2015 COUNCIL APPROVED OPERATING BUDGET GROSS REVENUE",
+            "SOURCE_CSV_PRECURSOR_LINK": "https://drive.google.com/open?id=0B208oCU9D8OuTE5JUk9vVEs2UFE",
             "SOURCE_CSV_PRECURSOR_AUTHOR_ID": "Henrik",
             "YEAR": 2015,
             "VERSION": "Summary",
@@ -1996,8 +1996,8 @@
             "UNITS_NAME": "Dollar",
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
-            "TOTAL_AMOUNT": 7614098,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "TOTAL_AMOUNT": 13642509,
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
@@ -2020,7 +2020,7 @@
             "UNITS_CODE": "DOLLAR",
             "UNITS_MULTIPLIER": 1000,
             "TOTAL_AMOUNT": 7820672,
-            "INTAKE_DATETIME": "2016-10-14-14-16-42",
+            "INTAKE_DATETIME": "2016-10-29-20-48-52",
             "INTAKE_OPERATOR_ID": "Henrik",
             "COLUMNS_CATEGORIES": "Program:CODE,Program:NAME",
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
