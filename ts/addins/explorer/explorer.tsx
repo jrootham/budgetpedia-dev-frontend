@@ -163,6 +163,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         let {query} = this.props.location
 
+        // console.log('query',query)
+
         let branchdata, settingsdata, hash
 
         if (query.branch && query.settings && query.hash) {

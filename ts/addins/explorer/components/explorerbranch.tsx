@@ -844,28 +844,55 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     }
 
-    private _textarearef
+    private _inputfieldref
 
-    private _textareaonfocus = () => {
-        this._textarearef.setSelectionRange(0, this._textarearef.value.length)
+    private _inputonfocus = () => {
+        this._inputfieldref.setSelectionRange(0, this._inputfieldref.value.length)
     }
 
     shareBranch = () => {
-        let url = this._getShareUrl()
-        let toastrOptions = {
-            component: (
-                <div style={{width:"300px"}}>
-                <p style={{width:"290px"}}>To share the selected row of charts, copy the url below, and send it to a friend.</p>
-                <textarea 
-                    ref = {node => {
-                        this._textarearef = node
-                    }}
-                    onFocus= {this._textareaonfocus}
-                    style={{minHeight:"200px",width:"290px"}} value = {url} readOnly />
-                </div>
-            )
-        }
-        toastr.message('Share charts',toastrOptions)
+        let longurl = this._getShareUrl()
+        // console.log('long url',longurl)
+        this._getBitlyUrl(longurl).then((json)=>{
+            // console.log('result',json)
+            if (json.status_code != 200) {
+                let errmessage = json.status_txt + '(' + json.status_code + ')'
+                console.log('error message',errmessage)
+                throw new Error(errmessage)
+            }
+            let url = json.data.url
+            let toastrOptions = {
+                component: (
+                    <div style={{width:"300px"}}>
+                    <p style={{width:"290px"}}>To share the selected row of charts, copy the url below, and send it to a friend.</p>
+                    <input 
+                        ref = {node => {
+                            this._inputfieldref = node
+                        }}
+                        onFocus= {this._inputonfocus}
+                        style={{width:"290px"}} value = {url} readOnly />
+                    </div>
+                )
+            }
+            toastr.message('Share charts',toastrOptions)
+        }).catch(error => {
+            console.log('error getting bitly',error)
+            toastr.error('Bitly error',error.message)
+        })
+    }
+
+    // bitly token: bdf92b4b130fbc1d19871694f8fe957ccb775e12
+    private _getBitlyUrl = (longurl) => {
+        let token = 'bdf92b4b130fbc1d19871694f8fe957ccb775e12'
+        return fetch('https://api-ssl.bitly.com/v3/shorten?access_token=' + token + '&longUrl=' + encodeURIComponent('http://'+longurl)).then(
+            (response) => {
+                // let reply = response.
+                let json = response.json()
+                return json
+
+            }).catch(error => {
+                console.error('error getting bitly url',error)
+            })
     }
 
     private _getShareUrl = () => {

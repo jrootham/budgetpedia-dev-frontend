@@ -392,19 +392,39 @@ class ExplorerBranch extends Component {
             });
             return portals;
         };
-        this._textareaonfocus = () => {
-            this._textarearef.setSelectionRange(0, this._textarearef.value.length);
+        this._inputonfocus = () => {
+            this._inputfieldref.setSelectionRange(0, this._inputfieldref.value.length);
         };
         this.shareBranch = () => {
-            let url = this._getShareUrl();
-            let toastrOptions = {
-                component: (React.createElement("div", {style: { width: "300px" }}, 
-                    React.createElement("p", {style: { width: "290px" }}, "To share the selected row of charts, copy the url below, and send it to a friend."), 
-                    React.createElement("textarea", {ref: node => {
-                        this._textarearef = node;
-                    }, onFocus: this._textareaonfocus, style: { minHeight: "200px", width: "290px" }, value: url, readOnly: true})))
-            };
-            react_redux_toastr_1.toastr.message('Share charts', toastrOptions);
+            let longurl = this._getShareUrl();
+            this._getBitlyUrl(longurl).then((json) => {
+                if (json.status_code != 200) {
+                    let errmessage = json.status_txt + '(' + json.status_code + ')';
+                    console.log('error message', errmessage);
+                    throw new Error(errmessage);
+                }
+                let url = json.data.url;
+                let toastrOptions = {
+                    component: (React.createElement("div", {style: { width: "300px" }}, 
+                        React.createElement("p", {style: { width: "290px" }}, "To share the selected row of charts, copy the url below, and send it to a friend."), 
+                        React.createElement("input", {ref: node => {
+                            this._inputfieldref = node;
+                        }, onFocus: this._inputonfocus, style: { width: "290px" }, value: url, readOnly: true})))
+                };
+                react_redux_toastr_1.toastr.message('Share charts', toastrOptions);
+            }).catch(error => {
+                console.log('error getting bitly', error);
+                react_redux_toastr_1.toastr.error('Bitly error', error.message);
+            });
+        };
+        this._getBitlyUrl = (longurl) => {
+            let token = 'bdf92b4b130fbc1d19871694f8fe957ccb775e12';
+            return fetch('https://api-ssl.bitly.com/v3/shorten?access_token=' + token + '&longUrl=' + encodeURIComponent('http://' + longurl)).then((response) => {
+                let json = response.json();
+                return json;
+            }).catch(error => {
+                console.error('error getting bitly url', error);
+            });
         };
         this._getShareUrl = () => {
             let branch = this;
