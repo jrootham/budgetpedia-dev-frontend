@@ -1038,8 +1038,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     }
 
-    handleDialogOpen = () => {
-        this.props.handleDialogOpen()
+    handleDialogOpen = (e) => {
+        this.props.handleDialogOpen(e)
     }
 
 

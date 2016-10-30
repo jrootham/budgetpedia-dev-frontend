@@ -533,8 +533,8 @@ class ExplorerBranch extends Component {
                 React.createElement(Subheader_1.default, null, DatasetTitle), 
                 itemlist);
         };
-        this.handleDialogOpen = () => {
-            this.props.handleDialogOpen();
+        this.handleDialogOpen = (e) => {
+            this.props.handleDialogOpen(e);
         };
     }
     componentWillMount() {

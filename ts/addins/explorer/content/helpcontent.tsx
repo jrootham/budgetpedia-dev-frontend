@@ -25,8 +25,8 @@ let content =
     <p>There are several dataset options available for charts:</p>
     <dl>
         <dt><strong>Viewpoint</strong></dt>
-        <dd> broad approaches to budget (or actual) data, based on similar 
-            classification schemes (taxonomies), and data sources.</dd>
+        <dd> a viewpoint is a classification scheme (taxonomy) of a set of accounts. 
+        </dd>
         <dt><strong>Version</strong></dt>
         <dd>alternate detailed datasets available for the selected Viewpoint (see the Budgetpedia
             project's <a target = "_blank" href="https://drive.google.com/drive/u/0/folders/0B208oCU9D8OuM2NmUk9XR1VCbEU">research repository)</a></dd>

@@ -671,5 +671,7 @@
             "COLUMNS_ATTRIBUTES": "Amount:VALUE, Notes:DESCRIPTION, Severity: CODE,Allocations:DESCRIPTION"
         }
     },
-    "Messages": null
+    "Messages": {
+        "WARNING": "Caution: There were material accounting policy changes in the late 2000’s."
+    }
 }

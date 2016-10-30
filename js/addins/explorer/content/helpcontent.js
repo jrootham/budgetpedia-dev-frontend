@@ -18,7 +18,7 @@ let content = React.createElement("div", null,
                 React.createElement("dt", null, 
                     React.createElement("strong", null, "Viewpoint")
                 ), 
-                React.createElement("dd", null, " broad approaches to budget (or actual) data, based on similar" + ' ' + "classification schemes (taxonomies), and data sources."), 
+                React.createElement("dd", null, " a viewpoint is a classification scheme (taxonomy) of a set of accounts."), 
                 React.createElement("dt", null, 
                     React.createElement("strong", null, "Version")
                 ), 
