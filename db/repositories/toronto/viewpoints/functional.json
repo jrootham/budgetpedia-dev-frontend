@@ -288,27 +288,27 @@
                             "Index": 1,
                             "NamingConfigRef": "CLUSTER",
                             "Components": {
-                                "ECONDEV": {
+                                "PLANNING": {
                                     "Index": 0,
                                     "NamingConfigRef": "PROGRAM",
                                     "Baseline": true
                                 },
-                                "SOCIALDEV": {
+                                "POLICYADMIN": {
                                     "Index": 1,
                                     "NamingConfigRef": "PROGRAM",
                                     "Baseline": true
                                 },
-                                "PLANNING": {
+                                "311SERVICE": {
                                     "Index": 2,
                                     "NamingConfigRef": "PROGRAM",
                                     "Baseline": true
                                 },
-                                "311SERVICE": {
+                                "SOCIALDEV": {
                                     "Index": 3,
                                     "NamingConfigRef": "PROGRAM",
                                     "Baseline": true
                                 },
-                                "POLICYADMIN": {
+                                "ECONDEV": {
                                     "Index": 4,
                                     "NamingConfigRef": "PROGRAM",
                                     "Baseline": true
