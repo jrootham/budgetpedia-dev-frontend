@@ -261,7 +261,7 @@ let MainBar = class extends React.Component<any, any> {
                     transitionTo = { transitionToFunc }
                     key = {'home'}
                     primaryText = "Budgetpedia Home"
-                    image = '../../public/icons/ic_home_24px.svg'
+                    image = '../../public/icons/budgetpedia-logo.png'
                     route = '/'
                 />
 
@@ -356,10 +356,12 @@ let MainBar = class extends React.Component<any, any> {
                 title={ <span>{ appnavbar.title }</span> }
 
                 iconElementLeft={ menuicon }
-                iconElementRight={ 
-                    appbar.props.auth.isAuthenticated
-                    ? accountmenu
-                    : accounticon } >
+                // iconElementRight={ 
+                    //appbar.props.auth.isAuthenticated
+                    //? accountmenu
+                    //: accounticon 
+                // } 
+                >
                 <div style={{
                     position: "absolute",
                     fontSize: "12px",
@@ -368,7 +370,19 @@ let MainBar = class extends React.Component<any, any> {
                     right: 0,
                     padding: "3px",
                 }}>
-                    contact: <a target="_blank" href="mailto:mail@budgetpedia.ca">mail@budgetpedia.ca</a>
+                    <style> {`
+                        #contact:link {
+                            color:white
+                        }
+                        #contact:visited {
+                            color:gold
+                        }
+                        #contact:hover {
+                            color:white
+                        }
+                    `} </style>
+                    contact: <a id="contact"
+                    target="_blank" href="mailto:mail@budgetpedia.ca">mail@budgetpedia.ca</a>
                 </div>
 
                 <div style={{
@@ -382,9 +396,11 @@ let MainBar = class extends React.Component<any, any> {
                     We're all about government budgets
                 </div>
 
-                { username }
+                { // username 
+                }
 
-                { loginsidebar }
+                { // loginsidebar 
+                }
 
                 { menusidebar }
 

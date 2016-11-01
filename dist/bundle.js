@@ -7718,7 +7718,7 @@ var MainBar = function (_React$Component) {
             });
             var menusidebar = React.createElement(Drawer_1.default, { width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: function onRequestChange(open) {
                     return appbar.setState({ menusidebaropen: open });
-                }, open: this.state.menusidebaropen }, React.createElement(menutile_1.MenuTile, { transitionTo: transitionToFunc, key: 'home', primaryText: "Budgetpedia Home", image: '../../public/icons/ic_home_24px.svg', route: '/' }), React.createElement(Divider_1.default, null), menuitems);
+                }, open: this.state.menusidebaropen }, React.createElement(menutile_1.MenuTile, { transitionTo: transitionToFunc, key: 'home', primaryText: "Budgetpedia Home", image: '../../public/icons/budgetpedia-logo.png', route: '/' }), React.createElement(Divider_1.default, null), menuitems);
             var menuicon = React.createElement(IconButton_1.default, { onTouchTap: function onTouchTap() {
                     appbar.handleMenuSidebarToggle();
                 } }, React.createElement(FontIcon_1.default, { className: "material-icons", color: theme.palette.alternateTextColor, style: { cursor: "pointer" } }, "menu"));
@@ -7738,21 +7738,21 @@ var MainBar = function (_React$Component) {
             return React.createElement(AppBar_1.default, { onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: {
                     position: "fixed",
                     backgroundColor: "#336797"
-                }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated ? accountmenu : accounticon }, React.createElement("div", { style: {
+                }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon }, React.createElement("div", { style: {
                     position: "absolute",
                     fontSize: "12px",
                     color: "white",
                     top: 0,
                     right: 0,
                     padding: "3px"
-                } }, "contact: ", React.createElement("a", { target: "_blank", href: "mailto:mail@budgetpedia.ca" }, "mail@budgetpedia.ca")), React.createElement("div", { style: {
+                } }, React.createElement("style", null, " ", '\n                        #contact:link {\n                            color:white\n                        }\n                        #contact:visited {\n                            color:gold\n                        }\n                        #contact:hover {\n                            color:white\n                        }\n                    ', " "), "contact: ", React.createElement("a", { id: "contact", target: "_blank", href: "mailto:mail@budgetpedia.ca" }, "mail@budgetpedia.ca")), React.createElement("div", { style: {
                     position: "absolute",
                     fontSize: "12px",
                     color: "gold",
                     bottom: 0,
                     left: 0,
                     padding: "3px"
-                } }, "We're all about government budgets"), username, loginsidebar, menusidebar, workingmessagestate ? React.createElement("div", { style: {
+                } }, "We're all about government budgets"), menusidebar, workingmessagestate ? React.createElement("div", { style: {
                     position: "absolute",
                     top: "54px",
                     left: 0,

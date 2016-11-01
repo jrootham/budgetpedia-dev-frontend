@@ -133,7 +133,7 @@ let MainBar = class extends React.Component {
             return React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: menutile.id, primaryText: menutile.content.title, image: menutile.content.image, route: menutile.route, disabled: menutile.content.disabled});
         });
         let menusidebar = React.createElement(Drawer_1.default, {width: 300, docked: false, openRight: false, disableSwipeToOpen: true, onRequestChange: open => appbar.setState({ menusidebaropen: open, }), open: this.state.menusidebaropen}, 
-            React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: 'home', primaryText: "Budgetpedia Home", image: '../../public/icons/ic_home_24px.svg', route: '/'}), 
+            React.createElement(menutile_1.MenuTile, {transitionTo: transitionToFunc, key: 'home', primaryText: "Budgetpedia Home", image: '../../public/icons/budgetpedia-logo.png', route: '/'}), 
             React.createElement(Divider_1.default, null), 
             menuitems);
         let menuicon = React.createElement(IconButton_1.default, {onTouchTap: () => { appbar.handleMenuSidebarToggle(); }}, 
@@ -159,9 +159,7 @@ let MainBar = class extends React.Component {
         return (React.createElement(AppBar_1.default, {onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: {
             position: "fixed",
             backgroundColor: "#336797"
-        }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated
-            ? accountmenu
-            : accounticon}, 
+        }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon}, 
             React.createElement("div", {style: {
                 position: "absolute",
                 fontSize: "12px",
@@ -170,8 +168,22 @@ let MainBar = class extends React.Component {
                 right: 0,
                 padding: "3px",
             }}, 
+                React.createElement("style", null, 
+                    " ", 
+                    `
+                        #contact:link {
+                            color:white
+                        }
+                        #contact:visited {
+                            color:gold
+                        }
+                        #contact:hover {
+                            color:white
+                        }
+                    `, 
+                    " "), 
                 "contact: ", 
-                React.createElement("a", {target: "_blank", href: "mailto:mail@budgetpedia.ca"}, "mail@budgetpedia.ca")), 
+                React.createElement("a", {id: "contact", target: "_blank", href: "mailto:mail@budgetpedia.ca"}, "mail@budgetpedia.ca")), 
             React.createElement("div", {style: {
                 position: "absolute",
                 fontSize: "12px",
@@ -180,8 +192,6 @@ let MainBar = class extends React.Component {
                 left: 0,
                 padding: "3px",
             }}, "We're all about government budgets"), 
-            username, 
-            loginsidebar, 
             menusidebar, 
             workingmessagestate
                 ? React.createElement("div", {style: {
