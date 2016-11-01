@@ -34,7 +34,8 @@ let routedata = [
 let coreroutes = routedata.map((item, index) => (
    <Route key = {'coreroute'+index} path={item.path} component = {item.component} />
 ))
-
+// TODO: see https://github.com/reactjs/react-router-redux
+//    for enhanced history link
 let routes = (
     <Router history={ browserHistory }>
         <Route path="/" component={ App } >

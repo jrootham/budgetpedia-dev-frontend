@@ -347,7 +347,12 @@ let MainBar = class extends React.Component<any, any> {
             <AppBar
                 onTitleTouchTap = { appbar.transitionToHome }
                 titleStyle = {{cursor:'pointer'}}
-                style={ { position: "fixed" } }
+                style={ 
+                    { 
+                        position: "fixed",
+                        backgroundColor:"#336797" 
+                    } 
+                }
                 title={ <span>{ appnavbar.title }</span> }
 
                 iconElementLeft={ menuicon }

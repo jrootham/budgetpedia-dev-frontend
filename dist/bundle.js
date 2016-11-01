@@ -7735,7 +7735,10 @@ var MainBar = function (_React$Component) {
                     color: theme.palette.alternateTextColor
                 } }, auth.isAuthenticated ? auth.profile.userhandle : appnavbar.username);
             var workingmessagestate = this.props.workingmessagestate;
-            return React.createElement(AppBar_1.default, { onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: { position: "fixed" }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated ? accountmenu : accounticon }, React.createElement("div", { style: {
+            return React.createElement(AppBar_1.default, { onTitleTouchTap: appbar.transitionToHome, titleStyle: { cursor: 'pointer' }, style: {
+                    position: "fixed",
+                    backgroundColor: "#336797"
+                }, title: React.createElement("span", null, appnavbar.title), iconElementLeft: menuicon, iconElementRight: appbar.props.auth.isAuthenticated ? accountmenu : accounticon }, React.createElement("div", { style: {
                     position: "absolute",
                     fontSize: "12px",
                     color: "white",
