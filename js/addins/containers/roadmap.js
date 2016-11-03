@@ -11,7 +11,9 @@ class Roadmap extends Component {
         };
         this.roadmapintro = React.createElement(Card_1.Card, null, 
             React.createElement(Card_1.CardTitle, {title: "Budget Roadmap", subtitle: "Annual cycle of decision points"}), 
-            React.createElement(Card_1.CardText, null, "This is a summary of the decision making process used for the 2016 budget."));
+            React.createElement(Card_1.CardText, null, 
+                React.createElement("div", null, "This is a summary of the program-by-program decision making process used for the 2016 budget."), 
+                React.createElement("div", null, "(A program is a division or an agency)")));
         this.phases = null;
         this.prepareRoadmap = () => {
             if (!this.state.roadmap)

@@ -63,7 +63,8 @@ class Roadmap extends Component<any, State> {
                 subtitle = {"Annual cycle of decision points"}
             /> 
             <CardText>
-            This is a summary of the decision making process used for the 2016 budget.
+            <div>This is a summary of the program-by-program decision making process used for the 2016 budget.</div>
+            <div>(A program is a division or an agency)</div>
             </CardText>
         </Card>
 
