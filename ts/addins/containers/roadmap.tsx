@@ -3,6 +3,7 @@
 import * as React from 'react'
 var { Component } = React
 import {Card, CardTitle, CardText} from 'material-ui/Card'
+let moment = require('moment')
 
 interface Phase {
     index: number,
@@ -89,7 +90,8 @@ class Roadmap extends Component<any, State> {
         console.log('prepared phases',phaselist)
     }
 
-    getEventClusterElement = (eventcode, lookups, eventslist, phasetitle) => {
+    getEventClusterElement = (
+        eventcode, lookups, eventslist, phasetitle) => {
         return <CardText
             expandable = {true}
             style = {{
@@ -104,7 +106,8 @@ class Roadmap extends Component<any, State> {
                     fontStyle:'italic',
                     marginBottom:"8px"
                 }
-            }>{ phasetitle + ' phase: ' + lookups[eventcode] }</div>
+            }>{ 'Part of ' + phasetitle + ' phase: ' + lookups[eventcode]
+            }</div>
 
             { eventslist }
 
@@ -112,6 +115,7 @@ class Roadmap extends Component<any, State> {
     }
 
     getEventElement = (event:BudgetEvent,eventindex) => {
+
         return <div
             key = {eventindex}
             style = {{
@@ -124,7 +128,7 @@ class Roadmap extends Component<any, State> {
 
         <div><em>Budget type:</em> { event.budget_type } </div>
         <div><em>Description:</em> { event.budget_event } </div>
-        {event.date?<div><em>Date:</em> { event.date }</div>:null }
+        {event.date?<div><em>Date:</em> { moment(event.date,'YYYY-M-D').format('MMMM D, YYYY') }</div>:null }
         {event.location?<div><em>Location:</em> { event.location } </div>:null}
         {event.notes?<div><em>Notes:</em> { event.notes } </div>:null}
         <div><em>Public:</em> { event.public} </div>
@@ -144,7 +148,8 @@ class Roadmap extends Component<any, State> {
             event = events[eventindex]
             if (event.budget_event_code !== eventcode) {
                 if (eventcode) {
-                    eventClusterElement = this.getEventClusterElement(eventcode,lookups,eventslist,phasetitle)
+                    eventClusterElement = this.getEventClusterElement(
+                        eventcode,lookups,eventslist,phasetitle)
                     eventClusterElements.push(eventClusterElement)
                 }
                 eventcode = event.budget_event_code
@@ -156,18 +161,24 @@ class Roadmap extends Component<any, State> {
 
         // tail settlement
         if (eventcode) {
-            eventClusterElement = this.getEventClusterElement(eventcode,lookups,eventslist,phasetitle)
+            eventClusterElement = this.getEventClusterElement(
+                eventcode,lookups,eventslist,phasetitle)
             eventClusterElements.push(eventClusterElement)
         }
 
         return eventClusterElements
     }
 
+ // +
+ //                moment(startdate,'YYYY-MM-DD').format('MMMM D, YYYY') + 
+ //                ' - ' +
+ //                moment(enddate,'YYYY-MM-DD').format('MMMM D, YYYY')
     getRoadmap = () => {
         if (!this.phases) return null
         let phasesinput = this.phases
         let phases = phasesinput.map((phase,index) => {
             let phasecontent = this.getPhaseContent(phase.events, phase.title)
+            let [startdate, enddate] = this.getDateRange(phase.events)
             let phaseElement = <Card
                     key = {phase.index}
                 >
@@ -175,7 +186,10 @@ class Roadmap extends Component<any, State> {
                     actAsExpander={true}
                     showExpandableButton={true}
                     title = { phase.title }
-                    subtitle = {phase.subtitle?phase.subtitle:null}
+                    subtitle = {phase.subtitle + ' from ' + 
+                        moment(startdate,'YYYY-MM-DD').format('MMMM D, YYYY') + ' to ' + 
+                        moment(enddate,'YYYY-MM-DD').format('MMMM D, YYYY')
+                    }
                 />
                 { phasecontent }
             </Card>
@@ -183,6 +197,22 @@ class Roadmap extends Component<any, State> {
         })
         return phases
 
+    }
+
+    getDateRange = (events) => {
+        let startdate = null
+        let enddate = null
+        for (let event of events) {
+            let eventdate = moment(event.date,'YYYY-M-D').format('YYYY-MM-DD')
+            if (!startdate || startdate > eventdate) {
+                startdate = eventdate
+            }
+            if (!enddate || enddate < eventdate) {
+                enddate = eventdate
+            }
+
+        }
+        return [startdate,enddate]
     }
 
     render() {

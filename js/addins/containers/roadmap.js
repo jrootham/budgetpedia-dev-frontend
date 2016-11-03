@@ -2,6 +2,7 @@
 const React = require('react');
 var { Component } = React;
 const Card_1 = require('material-ui/Card');
+let moment = require('moment');
 class Roadmap extends Component {
     constructor() {
         super(...arguments);
@@ -43,7 +44,7 @@ class Roadmap extends Component {
                 React.createElement("div", {style: {
                     fontStyle: 'italic',
                     marginBottom: "8px"
-                }}, phasetitle + ' phase: ' + lookups[eventcode]), 
+                }}, 'Part of ' + phasetitle + ' phase: ' + lookups[eventcode]), 
                 eventslist);
         };
         this.getEventElement = (event, eventindex) => {
@@ -66,7 +67,7 @@ class Roadmap extends Component {
                 event.date ? React.createElement("div", null, 
                     React.createElement("em", null, "Date:"), 
                     " ", 
-                    event.date) : null, 
+                    moment(event.date, 'YYYY-M-D').format('MMMM D, YYYY')) : null, 
                 event.location ? React.createElement("div", null, 
                     React.createElement("em", null, "Location:"), 
                     " ", 
@@ -115,12 +116,29 @@ class Roadmap extends Component {
             let phasesinput = this.phases;
             let phases = phasesinput.map((phase, index) => {
                 let phasecontent = this.getPhaseContent(phase.events, phase.title);
+                let [startdate, enddate] = this.getDateRange(phase.events);
                 let phaseElement = React.createElement(Card_1.Card, {key: phase.index}, 
-                    React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true, title: phase.title, subtitle: phase.subtitle ? phase.subtitle : null}), 
+                    React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true, title: phase.title, subtitle: phase.subtitle + ' from ' +
+                        moment(startdate, 'YYYY-MM-DD').format('MMMM D, YYYY') + ' to ' +
+                        moment(enddate, 'YYYY-MM-DD').format('MMMM D, YYYY')}), 
                     phasecontent);
                 return phaseElement;
             });
             return phases;
+        };
+        this.getDateRange = (events) => {
+            let startdate = null;
+            let enddate = null;
+            for (let event of events) {
+                let eventdate = moment(event.date, 'YYYY-M-D').format('YYYY-MM-DD');
+                if (!startdate || startdate > eventdate) {
+                    startdate = eventdate;
+                }
+                if (!enddate || enddate < eventdate) {
+                    enddate = eventdate;
+                }
+            }
+            return [startdate, enddate];
         };
     }
     componentDidMount() {
