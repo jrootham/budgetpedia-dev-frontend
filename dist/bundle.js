@@ -801,7 +801,7 @@ var Roadmap = function (_Component) {
         _this.state = {
             roadmap: null
         };
-        _this.roadmapintro = React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "Budget Roadmap", subtitle: "Annual cycle of decision points" }), React.createElement(Card_1.CardText, null, React.createElement("div", null, "This is a summary of the program-by-program decision making process used for the 2016 budget."), React.createElement("div", null, "(A program is a division or an agency)")));
+        _this.roadmapintro = React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "Budget Roadmap", subtitle: "Annual cycle of decision points" }), React.createElement(Card_1.CardText, null, React.createElement("div", null, "This is a summary of the program-by-program decision making process used for the 2016 budget."), React.createElement("div", null, "(A program is a division or an agency)"), React.createElement("div", null, "The data was gathered through a combination of public sources and city staff interviews.")));
         _this.phases = null;
         _this.prepareRoadmap = function () {
             if (!_this.state.roadmap) return;

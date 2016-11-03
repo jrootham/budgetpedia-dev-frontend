@@ -65,6 +65,7 @@ class Roadmap extends Component<any, State> {
             <CardText>
             <div>This is a summary of the program-by-program decision making process used for the 2016 budget.</div>
             <div>(A program is a division or an agency)</div>
+            <div>The data was gathered through a combination of public sources and city staff interviews.</div>
             </CardText>
         </Card>
 
