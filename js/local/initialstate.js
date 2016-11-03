@@ -33,10 +33,9 @@ let hometiles = [
             image: '../../public/icons/ic_map_48px.svg',
             category: 'tools',
             cols: 2,
-            disabled: true,
         },
         index: 1,
-        route: 'timeline',
+        route: 'roadmap',
     },
     {
         id: 14,

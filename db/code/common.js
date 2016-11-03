@@ -67,7 +67,7 @@ exports.getCategoryMeta = (components, filename) => {
         let column = columns_categories[columnindex]
         let parts = column.split(':')
         if (parts.length != 2) {
-            console.log(parts)
+            console.log(parts, columns_categories)
             throw Error('improper columms format ' + column + ' in ' + filename)
         }
         let type = parts[1].trim()

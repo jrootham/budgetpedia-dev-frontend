@@ -491,7 +491,7 @@ exports.default = googleChartLoader;
 var React = require('react');
 var react_router_1 = require('react-router');
 var about_1 = require('./containers/about');
-var timeline_1 = require('./containers/timeline');
+var roadmap_1 = require('./containers/roadmap');
 var deputations_1 = require('./containers/deputations');
 var explorer_1 = require('./explorer/explorer');
 var communities_1 = require('./containers/communities');
@@ -502,14 +502,14 @@ var joinus_1 = require('./containers/joinus');
 var stories_1 = require('./containers/stories');
 var demos_1 = require('./containers/demos');
 var pathways_1 = require('./containers/pathways');
-var routedata = [{ path: "about", component: about_1.default }, { path: "timeline", component: timeline_1.default }, { path: "deputations", component: deputations_1.default }, { path: "explorer", component: explorer_1.default }, { path: "communities", component: communities_1.default }, { path: "socialmedia", component: socialmedia_1.default }, { path: "newsletter", component: newsletter_1.default }, { path: "resources", component: resources_1.default }, { path: "joinus", component: joinus_1.default }, { path: "stories", component: stories_1.default }, { path: "demos", component: demos_1.default }, { path: "pathways", component: pathways_1.default }];
+var routedata = [{ path: "about", component: about_1.default }, { path: "roadmap", component: roadmap_1.default }, { path: "deputations", component: deputations_1.default }, { path: "explorer", component: explorer_1.default }, { path: "communities", component: communities_1.default }, { path: "socialmedia", component: socialmedia_1.default }, { path: "newsletter", component: newsletter_1.default }, { path: "resources", component: resources_1.default }, { path: "joinus", component: joinus_1.default }, { path: "stories", component: stories_1.default }, { path: "demos", component: demos_1.default }, { path: "pathways", component: pathways_1.default }];
 var approutes = routedata.map(function (item, index) {
     return React.createElement(react_router_1.Route, { key: 'approute' + index, path: item.path, component: item.component });
 });
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = approutes;
 
-},{"./containers/about":5,"./containers/communities":6,"./containers/demos":7,"./containers/deputations":8,"./containers/joinus":9,"./containers/newsletter":10,"./containers/pathways":11,"./containers/resources":12,"./containers/socialmedia":13,"./containers/stories":14,"./containers/timeline":15,"./explorer/explorer":27,"react":855,"react-router":649}],5:[function(require,module,exports){
+},{"./containers/about":5,"./containers/communities":6,"./containers/demos":7,"./containers/deputations":8,"./containers/joinus":9,"./containers/newsletter":10,"./containers/pathways":11,"./containers/resources":12,"./containers/roadmap":13,"./containers/socialmedia":14,"./containers/stories":15,"./explorer/explorer":27,"react":855,"react-router":649}],5:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -774,6 +774,42 @@ exports.default = Resources;
 },{"react":855}],13:[function(require,module,exports){
 "use strict";
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+var Component = React.Component;
+
+var Roadmap = function (_Component) {
+    _inherits(Roadmap, _Component);
+
+    function Roadmap() {
+        _classCallCheck(this, Roadmap);
+
+        return _possibleConstructorReturn(this, (Roadmap.__proto__ || Object.getPrototypeOf(Roadmap)).apply(this, arguments));
+    }
+
+    _createClass(Roadmap, [{
+        key: "render",
+        value: function render() {
+            return React.createElement("div", null, "Roadmap Page");
+        }
+    }]);
+
+    return Roadmap;
+}(Component);
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Roadmap;
+
+},{"react":855}],14:[function(require,module,exports){
+"use strict";
+
 var React = require('react');
 var SocialMedia = function SocialMedia() {
     return React.createElement("div", null, React.createElement("h1", null, "Facebook"), React.createElement("iframe", { src: "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbudgetpedia%2F&tabs=timeline&width=500&height=700&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId", width: "500", height: "700", style: { border: "none", overflow: "hidden" }, scrolling: "no", frameborder: "0", allowTransparency: true }));
@@ -781,7 +817,7 @@ var SocialMedia = function SocialMedia() {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = SocialMedia;
 
-},{"react":855}],14:[function(require,module,exports){
+},{"react":855}],15:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -816,42 +852,6 @@ var Stories = function (_Component) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Stories;
-
-},{"react":855}],15:[function(require,module,exports){
-"use strict";
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = require('react');
-var Component = React.Component;
-
-var Timeline = function (_Component) {
-    _inherits(Timeline, _Component);
-
-    function Timeline() {
-        _classCallCheck(this, Timeline);
-
-        return _possibleConstructorReturn(this, (Timeline.__proto__ || Object.getPrototypeOf(Timeline)).apply(this, arguments));
-    }
-
-    _createClass(Timeline, [{
-        key: "render",
-        value: function render() {
-            return React.createElement("div", null, "Timeline Page");
-        }
-    }]);
-
-    return Timeline;
-}(Component);
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = Timeline;
 
 },{"react":855}],16:[function(require,module,exports){
 "use strict";
@@ -8473,11 +8473,10 @@ var hometiles = [{
         subtitle: 'About budget decisions',
         image: '../../public/icons/ic_map_48px.svg',
         category: 'tools',
-        cols: 2,
-        disabled: true
+        cols: 2
     },
     index: 1,
-    route: 'timeline'
+    route: 'roadmap'
 }, {
     id: 14,
     content: {

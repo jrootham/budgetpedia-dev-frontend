@@ -70,6 +70,7 @@ const processIntakeFile = (filename,context) => {
     for (let columnindex = columns.length -1; columnindex >=0; columnindex--) {
 
         let column = columndata.columns[columnindex]
+        // console.log('processing column',column)
         if (column.type == constants.NAME) { // codes are looked up separately, if present
 
             let retval = processFileCategory(columndata,columnindex,filename, components, context)
@@ -233,7 +234,8 @@ const collectCategoryCodes = ( columndata, columnindex, filename, components, co
 
     // collect any code-based items that don't already exist in name-based items
     let newitems = []
-    for (let codeitem in newcodesbynamelist) { // for each code based item
+    for (let codeitem of newcodesbynamelist) { // for each code based item
+        // console.log('codeitem',codeitem)
         let filtered = newnamesbynamelist.filter(nameitem => { // see if there's a match in name based
             return (codeitem[0] == nameitem[0] && codeitem[1] == nameitem[1])
         })

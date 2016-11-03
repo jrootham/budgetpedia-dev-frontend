@@ -8,7 +8,7 @@ import * as React from 'react'
 import { Route } from 'react-router'
 
 import About from './containers/about'
-import Timeline from './containers/timeline'
+import Roadmap from './containers/roadmap'
 import Deputations from './containers/deputations'
 import Explorer from './explorer/explorer'
 import Communities from './containers/communities'
@@ -22,7 +22,7 @@ import Pathways from './containers/pathways'
 
 let routedata = [
     { path: "about", component: About },
-    { path: "timeline", component: Timeline },
+    { path: "roadmap", component: Roadmap },
     { path: "deputations", component: Deputations },
     { path: "explorer", component: Explorer },
     { path: "communities", component: Communities },

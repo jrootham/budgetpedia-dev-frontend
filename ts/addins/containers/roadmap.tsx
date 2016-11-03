@@ -3,10 +3,10 @@
 import * as React from 'react'
 var { Component } = React
 
-class Timeline extends Component<any, any> {
+class Roadmap extends Component<any, any> {
     render() {
-        return <div>Timeline Page</div>
+        return <div>Roadmap Page</div>
     }
 }
 
-export default Timeline
+export default Roadmap

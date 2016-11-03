@@ -2,7 +2,7 @@
 const React = require('react');
 const react_router_1 = require('react-router');
 const about_1 = require('./containers/about');
-const timeline_1 = require('./containers/timeline');
+const roadmap_1 = require('./containers/roadmap');
 const deputations_1 = require('./containers/deputations');
 const explorer_1 = require('./explorer/explorer');
 const communities_1 = require('./containers/communities');
@@ -15,7 +15,7 @@ const demos_1 = require('./containers/demos');
 const pathways_1 = require('./containers/pathways');
 let routedata = [
     { path: "about", component: about_1.default },
-    { path: "timeline", component: timeline_1.default },
+    { path: "roadmap", component: roadmap_1.default },
     { path: "deputations", component: deputations_1.default },
     { path: "explorer", component: explorer_1.default },
     { path: "communities", component: communities_1.default },
