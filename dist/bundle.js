@@ -791,12 +791,83 @@ var Roadmap = function (_Component) {
     function Roadmap() {
         _classCallCheck(this, Roadmap);
 
-        return _possibleConstructorReturn(this, (Roadmap.__proto__ || Object.getPrototypeOf(Roadmap)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Roadmap.__proto__ || Object.getPrototypeOf(Roadmap)).apply(this, arguments));
+
+        _this.state = {
+            roadmap: null
+        };
+        _this.phases = null;
+        _this.prepareRoadmap = function () {
+            if (!_this.state.roadmap) return;
+            if (_this.phases) return;
+            var roadmap = _this.state.roadmap;
+            var phases = roadmap.phases;
+            var rawevents = roadmap.events;
+            var rawevent = void 0;
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = rawevents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    rawevent = _step.value;
+
+                    phases[rawevent.phase].events.push(rawevent);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            var phaselist = [];
+            for (var phasename in phases) {
+                phaselist.push(phases[phasename]);
+            }
+            phaselist = phaselist.sort(function (a, b) {
+                return a.index - b.index;
+            });
+            _this.phases = phaselist;
+            console.log('prepared phases', phaselist);
+        };
+        return _this;
     }
 
     _createClass(Roadmap, [{
-        key: "render",
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            console.log('componentWillMount');
+            fetch('./db/repositories/toronto/roadmaps/government_events.json').then(function (response) {
+                if (response.ok) {
+                    console.log('response', response);
+                    return response.json();
+                } else {
+                    console.log('response error', response);
+                }
+            }).then(function (json) {
+                console.log('json', json);
+                _this2.setState({
+                    roadmap: json
+                });
+            }).catch(function (error) {
+                console.log('error', error);
+            });
+        }
+    }, {
+        key: 'render',
         value: function render() {
+            this.prepareRoadmap();
             return React.createElement("div", null, "Roadmap Page");
         }
     }]);
