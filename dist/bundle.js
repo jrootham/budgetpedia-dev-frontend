@@ -785,6 +785,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = require('react');
 var Component = React.Component;
 
+var Card_1 = require('material-ui/Card');
+
 var Roadmap = function (_Component) {
     _inherits(Roadmap, _Component);
 
@@ -796,6 +798,7 @@ var Roadmap = function (_Component) {
         _this.state = {
             roadmap: null
         };
+        _this.roadmapintro = React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "Budget Roadmap", subtitle: "Annual cycle of decision points" }), React.createElement(Card_1.CardText, null, "This is a summary of the decision making process used for the 2016 budget."));
         _this.phases = null;
         _this.prepareRoadmap = function () {
             if (!_this.state.roadmap) return;
@@ -839,6 +842,60 @@ var Roadmap = function (_Component) {
             _this.phases = phaselist;
             console.log('prepared phases', phaselist);
         };
+        _this.getEventClusterElement = function (eventcode, lookups, eventslist, phasetitle) {
+            return React.createElement(Card_1.CardText, { expandable: true, style: {
+                    border: "1px solid silver",
+                    margin: "0 3px 8px 3px",
+                    borderRadius: "8px"
+                }, key: eventcode }, React.createElement("div", { style: {
+                    fontStyle: 'italic',
+                    marginBottom: "8px"
+                } }, phasetitle + ' phase: ' + lookups[eventcode]), eventslist);
+        };
+        _this.getEventElement = function (event, eventindex) {
+            return React.createElement("div", { key: eventindex, style: {
+                    border: "1px dashed silver",
+                    margin: "0 3px 8px 3px",
+                    padding: "3px",
+                    borderRadius: "8px"
+                } }, React.createElement("div", null, React.createElement("em", null, "Budget type:"), " ", event.budget_type, " "), React.createElement("div", null, React.createElement("em", null, "Description:"), " ", event.budget_event, " "), event.date ? React.createElement("div", null, React.createElement("em", null, "Date:"), " ", event.date) : null, event.location ? React.createElement("div", null, React.createElement("em", null, "Location:"), " ", event.location, " ") : null, event.notes ? React.createElement("div", null, React.createElement("em", null, "Notes:"), " ", event.notes, " ") : null, React.createElement("div", null, React.createElement("em", null, "Public:"), " ", event.public, " "));
+        };
+        _this.getPhaseContent = function (events, phasetitle) {
+            var lookups = _this.state.roadmap.lookups;
+            var eventcode = null;
+            var eventClusterElements = [];
+            var eventClusterElement = null;
+            var eventslist = void 0;
+            var event = null;
+            for (var eventindex in events) {
+                event = events[eventindex];
+                if (event.budget_event_code !== eventcode) {
+                    if (eventcode) {
+                        eventClusterElement = _this.getEventClusterElement(eventcode, lookups, eventslist, phasetitle);
+                        eventClusterElements.push(eventClusterElement);
+                    }
+                    eventcode = event.budget_event_code;
+                    eventslist = [];
+                }
+                var eventElement = _this.getEventElement(event, eventindex);
+                eventslist.push(eventElement);
+            }
+            if (eventcode) {
+                eventClusterElement = _this.getEventClusterElement(eventcode, lookups, eventslist, phasetitle);
+                eventClusterElements.push(eventClusterElement);
+            }
+            return eventClusterElements;
+        };
+        _this.getRoadmap = function () {
+            if (!_this.phases) return null;
+            var phasesinput = _this.phases;
+            var phases = phasesinput.map(function (phase, index) {
+                var phasecontent = _this.getPhaseContent(phase.events, phase.title);
+                var phaseElement = React.createElement(Card_1.Card, { key: phase.index }, React.createElement(Card_1.CardTitle, { actAsExpander: true, showExpandableButton: true, title: phase.title, subtitle: phase.subtitle ? phase.subtitle : null }), phasecontent);
+                return phaseElement;
+            });
+            return phases;
+        };
         return _this;
     }
 
@@ -868,7 +925,8 @@ var Roadmap = function (_Component) {
         key: 'render',
         value: function render() {
             this.prepareRoadmap();
-            return React.createElement("div", null, "Roadmap Page");
+            var roadmap = this.getRoadmap();
+            return React.createElement("div", null, this.roadmapintro, roadmap);
         }
     }]);
 
@@ -878,7 +936,7 @@ var Roadmap = function (_Component) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Roadmap;
 
-},{"react":855}],14:[function(require,module,exports){
+},{"material-ui/Card":455,"react":855}],14:[function(require,module,exports){
 "use strict";
 
 var React = require('react');

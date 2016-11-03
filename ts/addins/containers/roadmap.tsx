@@ -2,11 +2,25 @@
 // required by bundler
 import * as React from 'react'
 var { Component } = React
+import {Card, CardTitle, CardText} from 'material-ui/Card'
 
 interface Phase {
     index: number,
     events:any[],
     title:string,
+    subtitle?:string,
+}
+
+interface BudgetEvent {
+    budget_event:string,
+    budget_event_code: string,
+    budget_type: string,
+    category: string,
+    location: string,
+    date:string,
+    notes:string,
+    phase:string,
+    public: string,
 }
 
 interface Roadmap {
@@ -41,6 +55,17 @@ class Roadmap extends Component<any, State> {
         })
     }
 
+    roadmapintro = 
+        <Card> 
+            <CardTitle 
+                title = {"Budget Roadmap"}
+                subtitle = {"Annual cycle of decision points"}
+            /> 
+            <CardText>
+            This is a summary of the decision making process used for the 2016 budget.
+            </CardText>
+        </Card>
+
     phases:Phase[] = null
 
     prepareRoadmap = () => {
@@ -64,9 +89,111 @@ class Roadmap extends Component<any, State> {
         console.log('prepared phases',phaselist)
     }
 
+    getEventClusterElement = (eventcode, lookups, eventslist, phasetitle) => {
+        return <CardText
+            expandable = {true}
+            style = {{
+                border:"1px solid silver",
+                margin:"0 3px 8px 3px",
+                borderRadius:"8px",
+            }}
+            key = {eventcode}
+        > 
+            <div style={
+                {
+                    fontStyle:'italic',
+                    marginBottom:"8px"
+                }
+            }>{ phasetitle + ' phase: ' + lookups[eventcode] }</div>
+
+            { eventslist }
+
+        </CardText>
+    }
+
+    getEventElement = (event:BudgetEvent,eventindex) => {
+        return <div
+            key = {eventindex}
+            style = {{
+                border:"1px dashed silver",
+                margin:"0 3px 8px 3px",
+                padding:"3px",
+                borderRadius:"8px",
+            }}
+        >
+
+        <div><em>Budget type:</em> { event.budget_type } </div>
+        <div><em>Description:</em> { event.budget_event } </div>
+        {event.date?<div><em>Date:</em> { event.date }</div>:null }
+        {event.location?<div><em>Location:</em> { event.location } </div>:null}
+        {event.notes?<div><em>Notes:</em> { event.notes } </div>:null}
+        <div><em>Public:</em> { event.public} </div>
+
+        </div>
+
+    }
+
+    getPhaseContent = (events, phasetitle) => {
+        let lookups = this.state.roadmap.lookups
+        let eventcode = null
+        let eventClusterElements = []
+        let eventClusterElement = null
+        let eventslist
+        let event:BudgetEvent = null
+        for (let eventindex in events) {
+            event = events[eventindex]
+            if (event.budget_event_code !== eventcode) {
+                if (eventcode) {
+                    eventClusterElement = this.getEventClusterElement(eventcode,lookups,eventslist,phasetitle)
+                    eventClusterElements.push(eventClusterElement)
+                }
+                eventcode = event.budget_event_code
+                eventslist = []
+            }
+            let eventElement = this.getEventElement(event, eventindex)
+            eventslist.push(eventElement)
+        }
+
+        // tail settlement
+        if (eventcode) {
+            eventClusterElement = this.getEventClusterElement(eventcode,lookups,eventslist,phasetitle)
+            eventClusterElements.push(eventClusterElement)
+        }
+
+        return eventClusterElements
+    }
+
+    getRoadmap = () => {
+        if (!this.phases) return null
+        let phasesinput = this.phases
+        let phases = phasesinput.map((phase,index) => {
+            let phasecontent = this.getPhaseContent(phase.events, phase.title)
+            let phaseElement = <Card
+                    key = {phase.index}
+                >
+                <CardTitle 
+                    actAsExpander={true}
+                    showExpandableButton={true}
+                    title = { phase.title }
+                    subtitle = {phase.subtitle?phase.subtitle:null}
+                />
+                { phasecontent }
+            </Card>
+            return phaseElement
+        })
+        return phases
+
+    }
+
     render() {
         this.prepareRoadmap()
-        return <div>Roadmap Page</div>
+        let roadmap = this.getRoadmap()
+        return <div>
+            { this.roadmapintro }
+
+            { roadmap }
+
+        </div>
     }
 }
 

@@ -1,9 +1,11 @@
 {
     "phases": {
         "PREPARATION":{
+            "html":"<p>The first phase of budget production begins with analyst meetings, and continues with creation of preliminary budgets<\/p>",
             "index":0,
             "events":[],
-            "title":"Preparation"
+            "title":"Preparation",
+            "subtitle":"Analyst meetings and preliminary budget creation at the program level"
         },
         "REVIEWS":{
             "index":1,
@@ -25,6 +27,30 @@
             "events":[],
             "title":"Corporate Acceptance"
         }
+    },
+    "lookups":{
+        "ANALYSTMEETINGS":"Programs meet with analysts",
+        "PRESUBMISSION":"Presubmission budget versions are shared",
+        "PRELIMINARYSUBMISSION":"Preliminary budget versions are shared",
+
+        "SERVICELEVELREVIEW":"Standing committees perform comprehensive service review",
+        "EXECUTIVEREVIEW1":"First Financial Planning Division review of budgets",
+        "FINALDEADLINE":"Final submissions",
+        "EXECUTIVEREVIEW2":"Second Financial Planning Division review of budgets",
+        "BUDGETCOMMITTEEREVIEW1":"Informal Budget Committee review of budgets",
+        "SENIOREXECUTIVEREVIEW":"City Manager and Chief Financial Officer meet with programs",
+        "SENIOREXECUTIVEFINALMEETINGS":"Final meetings of City Manager, Chief Financial Officer, and Deputy City Managers with programs",
+
+        "BUDGETCOMMITTEELAUNCH":"Budget Committee launches the budgets",
+        "BUDGETCOMMITTEBRIEFINGS":"Budget Committee is briefed",
+
+        "BUDGETCOMMITTEPUBLIC":"Public Budget Committee hearings with deputations",
+        "TOWNHALL":"Town halls can be held for special purposes",
+        "BUDGETCOMMITTEWRAPUP":"Budget Committee has wrapup meetings",
+
+        "BUDGETCOMMITTEFINALWRAPUP":"Budget Committee finalizes recommended budgets",
+        "SPECIALEXECUTIVECOMMITTEE":"Special Executive Committee meetings debate the budgets",
+        "SPECIALCITYCOUNCIL":"City Council debates and passes budgets"
     },
     "events":
     [
@@ -487,7 +513,7 @@
       {
         "category": "City",
         "budget_type": "Operating",
-        "phase":"ACCEPTANCE",
+        "phase":"PUBLICREVIEWS",
         "budget_event_code":"BUDGETCOMMITTEWRAPUP",
         "budget_event": "Budget Committee Wrap-up",
         "date": "1/18/2016",
@@ -499,7 +525,7 @@
       {
         "category": "City",
         "budget_type": "Capital",
-        "phase":"ACCEPTANCE",
+        "phase":"PUBLICREVIEWS",
         "budget_event_code":"BUDGETCOMMITTEWRAPUP",
         "budget_event": "Budget Committee Wrap-up",
         "date": "1/18/2016",
@@ -563,8 +589,8 @@
         "budget_event_code":"SPECIALEXECUTIVECOMMITTEE",
         "budget_event": "Special Executive Committee",
         "date": "2/9/2016",
-        "time": "TBD",
-        "location": "TBD",
+        "time": null,
+        "location": null,
         "public": "Yes",
         "notes": null
       },
@@ -575,8 +601,8 @@
         "budget_event_code":"SPECIALEXECUTIVECOMMITTEE",
         "budget_event": "Special Executive Committee",
         "date": "2/9/2016",
-        "time": "TBD",
-        "location": "TBD",
+        "time": null,
+        "location": null,
         "public": "Yes",
         "notes": null
       },
@@ -599,8 +625,8 @@
         "budget_event_code":"SPECIALCITYCOUNCIL",
         "budget_event": "Special City Council",
         "date": "2/17/2016",
-        "time": "TBD",
-        "location": "TBD",
+        "time": null,
+        "location": null,
         "public": "Yes",
         "notes": null
       },
@@ -611,8 +637,8 @@
         "budget_event_code":"SPECIALCITYCOUNCIL",
         "budget_event": "Special City Council",
         "date": "2/17/2016",
-        "time": "TBD",
-        "location": "TBD",
+        "time": null,
+        "location": null,
         "public": "Yes",
         "notes": null
       }
