@@ -49,7 +49,14 @@ export class AppTile extends React.Component<any, any> {
 
             <GridTile 
 
-                style = {{textAlign: "center" }}
+                style = {
+                    {
+                        textAlign: "center",
+                        backgroundColor:'white',
+                        border:'2px solid silver',
+                        borderRadius: '8px',
+                    }
+                }
                 onTouchTap={ tile.transitionTo }
                 title = {this.props.content.title}
                 subtitle = {this.props.content.subtitle}

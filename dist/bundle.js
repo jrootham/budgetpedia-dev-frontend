@@ -7434,7 +7434,12 @@ var AppTile = function (_React$Component) {
                     pointerEvens: "none"
                 };
             }
-            return React.createElement(GridList_1.GridTile, { style: { textAlign: "center" }, onTouchTap: tile.transitionTo, title: this.props.content.title, subtitle: this.props.content.subtitle, cols: this.props.content.cols || 1 }, React.createElement("div", { style: wrapperstyle }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, color: "silver", fontStyle: "italic", fontSize: "smaller" } }, this.props.content.category), React.createElement("img", { src: this.props.content.image, style: { height: "120px" } }), React.createElement("div", { style: { position: "abolute", height: "30px", bottom: 0, width: "100%" } })));
+            return React.createElement(GridList_1.GridTile, { style: {
+                    textAlign: "center",
+                    backgroundColor: 'white',
+                    border: '2px solid silver',
+                    borderRadius: '8px'
+                }, onTouchTap: tile.transitionTo, title: this.props.content.title, subtitle: this.props.content.subtitle, cols: this.props.content.cols || 1 }, React.createElement("div", { style: wrapperstyle }, React.createElement("div", { style: { position: "absolute", top: 0, left: 0, color: "silver", fontStyle: "italic", fontSize: "smaller" } }, this.props.content.category), React.createElement("img", { src: this.props.content.image, style: { height: "120px" } }), React.createElement("div", { style: { position: "abolute", height: "30px", bottom: 0, width: "100%" } })));
         }
     }]);
 
@@ -7489,7 +7494,8 @@ var AppTiles = function (_Component) {
             return React.createElement("div", { style: {
                     display: 'flex',
                     flexWrap: 'wrap',
-                    justifyContent: 'space-around'
+                    justifyContent: 'space-around',
+                    backgroundColor: '#749261'
                 } }, React.createElement(GridList_1.GridList, { style: style, children: tiles_, cols: tilecols, padding: padding, cellHeight: cellHeight }));
         }
     }]);
@@ -7687,12 +7693,20 @@ var HomeTilesClass = function (_React$Component) {
                 colors = _props.colors,
                 system = _props.system;
 
-            return React.createElement("div", null, React.createElement(Card_1.Card, { style: { backgroundImage: "url(./public/icons/budgetpedia-pale.jpg",
-                    backgroundSize: "cover" } }, React.createElement("div", { style: { float: "left", margin: "9px 3px 3px 3px" } }, React.createElement("img", { style: { width: "100px" }, src: "./public/icons/budgetpedia-logo.png" })), React.createElement(Card_1.CardTitle, null, "Welcome to Budgetpedia. We're all about government budgets."), React.createElement(Card_1.CardText, null, React.createElement("p", { style: { margin: 0, padding: 0 } }, "Explore the Toronto budget with our ", React.createElement("a", { href: "javascript:void(0);", onTouchTap: function onTouchTap(e) {
+            return React.createElement("div", null, React.createElement("div", { style: {
+                    backgroundColor: "#404244",
+                    padding: "8px"
+                } }, React.createElement(Card_1.Card, { style: {
+                    backgroundImage: "url(./public/icons/budgetpedia-pale.jpg",
+                    backgroundSize: "cover",
+                    margin: "8px",
+                    border: "2px solid silver",
+                    borderRadius: "8px"
+                } }, React.createElement("div", { style: { float: "left", margin: "9px 3px 3px 3px" } }, React.createElement("img", { style: { width: "100px" }, src: "./public/icons/budgetpedia-logo.png" })), React.createElement(Card_1.CardTitle, null, "Welcome to Budgetpedia. We're all about government budgets."), React.createElement(Card_1.CardText, null, React.createElement("p", { style: { margin: 0, padding: 0 } }, "Explore the Toronto budget with our ", React.createElement("a", { href: "javascript:void(0);", onTouchTap: function onTouchTap(e) {
                     _this3.transitionTo(e, 'explorer');
                 } }, "Budget Explorer"), "." + ' ' + "See a sample of Toronto's annual budget decision process at our ", React.createElement("a", { href: "javascript:void(0);", onTouchTap: function onTouchTap(e) {
                     _this3.transitionTo(e, 'roadmap');
-                } }, "Budget Roadmap"), "."), React.createElement("p", null, "We welcome you to join us (and contribute!) on any of our digital platforms:"), React.createElement("ul", null, React.createElement("li", null, React.createElement("a", { href: "http://facebook.com/groups/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/facebook.png" })), " For" + ' ' + "discussions: our Facebook group (", React.createElement("a", { href: "http://facebook.com/groups/budgetpedia", target: "_blank" }, "facebook.com/groups/budgetpedia"), ")"), React.createElement("li", null, React.createElement("a", { href: "http://facebook.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/facebook.png" })), " For" + ' ' + "lists of resources: our Facebook page (", React.createElement("a", { href: "http://facebook.com/budgetpedia", target: "_blank" }, "facebook.com/budgetpedia"), ")"), React.createElement("li", null, React.createElement("a", { href: "http://twitter.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/twitter.png" })), " For" + ' ' + "notifications: Twitter (", React.createElement("a", { href: "http://twitter.com/budgetpedia", target: "_blank" }, "twitter.com/budgetpedia"), ")"), React.createElement("li", null, React.createElement("a", { href: "http://medium.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/medium.png" })), " For" + ' ' + "in-depth articles: Medium (", React.createElement("a", { href: "http://medium.com/budgetpedia", target: "_blank" }, "medium.com/budgetpedia"), ")"), React.createElement("li", null, React.createElement("a", { href: "http://groups.google.com/d/forum/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/g-logo.png" })), " For" + ' ' + "technical discussions: our Google forum (", React.createElement("a", { href: "http://groups.google.com/d/forum/budgetpedia", target: "_blank" }, "groups.google.com/d/forum/budgetpedia"), ")")), React.createElement("p", null, "Below are tiles leading to more information about the Budgetpedia Project."))), React.createElement(apptiles_1.AppTiles, { style: {
+                } }, "Budget Roadmap"), "."), React.createElement("p", null, "We welcome you to join us (and contribute!) on any of our digital platforms:"), React.createElement("ul", null, React.createElement("li", null, React.createElement("a", { href: "http://facebook.com/groups/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/facebook.png" })), " For" + ' ' + "discussions: our Facebook group (", React.createElement("a", { href: "http://facebook.com/groups/budgetpedia", target: "_blank" }, "facebook.com/groups/budgetpedia"), ")"), React.createElement("li", null, React.createElement("a", { href: "http://facebook.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/facebook.png" })), " For" + ' ' + "lists of resources: our Facebook page (", React.createElement("a", { href: "http://facebook.com/budgetpedia", target: "_blank" }, "facebook.com/budgetpedia"), ")"), React.createElement("li", null, React.createElement("a", { href: "http://twitter.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/twitter.png" })), " For" + ' ' + "notifications: Twitter (", React.createElement("a", { href: "http://twitter.com/budgetpedia", target: "_blank" }, "twitter.com/budgetpedia"), ")"), React.createElement("li", null, React.createElement("a", { href: "http://medium.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/medium.png" })), " For" + ' ' + "in-depth articles: Medium (", React.createElement("a", { href: "http://medium.com/budgetpedia", target: "_blank" }, "medium.com/budgetpedia"), ")"), React.createElement("li", null, React.createElement("a", { href: "http://groups.google.com/d/forum/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/g-logo.png" })), " For" + ' ' + "technical discussions: our Google forum (", React.createElement("a", { href: "http://groups.google.com/d/forum/budgetpedia", target: "_blank" }, "groups.google.com/d/forum/budgetpedia"), ")")), React.createElement("p", null, "Below are tiles leading to more information about the Budgetpedia Project.")))), React.createElement(apptiles_1.AppTiles, { style: {
                     margin: "16px",
                     fontFamily: theme.fontFamily
                 }, tiles: hometiles, tilecols: homecols, padding: homepadding, tilecolors: {
@@ -8389,14 +8403,8 @@ var homecolsreducer = function homecolsreducer() {
                 var mainElement = document.getElementById('main');
                 var elementwidth = mainElement.getBoundingClientRect().width;
                 var columns = void 0;
-                if (elementwidth > 960) {
-                    columns = 5;
-                } else if (elementwidth > 760) {
-                    columns = 4;
-                } else if (elementwidth > 480) {
+                if (elementwidth > 480) {
                     columns = 3;
-                } else if (elementwidth > 200) {
-                    columns = 2;
                 } else {
                     columns = 1;
                 }

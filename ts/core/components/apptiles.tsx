@@ -62,7 +62,8 @@ class AppTiles extends Component< AppTilesProps, any > {
             style = {{
                 display: 'flex',
                 flexWrap: 'wrap',
-                justifyContent: 'space-around',                
+                justifyContent: 'space-around', 
+                backgroundColor: '#749261',               
             }}
             >
             <GridList 

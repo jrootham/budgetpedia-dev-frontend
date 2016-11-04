@@ -64,9 +64,23 @@ class HomeTilesClass extends React.Component<any, any> {
 
         return (
             <div>
-
-            <Card style={{backgroundImage:"url(./public/icons/budgetpedia-pale.jpg",
-                backgroundSize:"cover"}}>
+            <div 
+                style = {
+                    {
+                        backgroundColor:"#404244",
+                        padding:"8px",
+                    }
+                }
+            >
+            <Card style={
+                {
+                    backgroundImage:"url(./public/icons/budgetpedia-pale.jpg",
+                    backgroundSize:"cover",
+                    margin:"8px",
+                    border:"2px solid silver",
+                    borderRadius:"8px",
+                }
+            }>
             <div style = {{float:"left",margin:"9px 3px 3px 3px"}}>
                 <img style={{width:"100px"}} src= "./public/icons/budgetpedia-logo.png" />
             </div>
@@ -120,7 +134,7 @@ class HomeTilesClass extends React.Component<any, any> {
             <p>Below are tiles leading to more information about the Budgetpedia Project.</p>
             </CardText>
             </Card>
-
+            </div>
             <AppTiles 
 
                 style = {

@@ -13,6 +13,7 @@ class AppTiles extends Component {
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'space-around',
+            backgroundColor: '#749261',
         }}, 
             React.createElement(GridList_1.GridList, {style: style, children: tiles_, cols: tilecols, padding: padding, cellHeight: cellHeight})
         ));
