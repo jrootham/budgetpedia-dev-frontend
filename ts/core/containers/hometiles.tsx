@@ -77,7 +77,9 @@ class HomeTilesClass extends React.Component<any, any> {
             <p style={{margin:0, padding:0}}>Explore the Toronto budget with our <a 
                 href="javascript:void(0);"
                 onTouchTap={ e => {this.transitionTo(e,'explorer')}}>Budget Explorer</a>. 
-            See a sample of Toronto's annual budget decision process at our Budget Roadmap <em>[link pending]</em>.</p>
+            See a sample of Toronto's annual budget decision process at our <a 
+                href="javascript:void(0);"
+                onTouchTap={ e => {this.transitionTo(e,'roadmap')}}>Budget Roadmap</a>.</p>
             <p>We welcome you to join us (and contribute!) on any of our digital platforms:</p>
             <ul>
             <li><a 

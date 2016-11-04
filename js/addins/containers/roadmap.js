@@ -12,9 +12,9 @@ class Roadmap extends Component {
         this.roadmapintro = React.createElement(Card_1.Card, null, 
             React.createElement(Card_1.CardTitle, {title: "Budget Roadmap", subtitle: "Annual cycle of decision points"}), 
             React.createElement(Card_1.CardText, null, 
-                React.createElement("div", null, "This is a summary of the program-by-program decision making process used for the 2016 budget."), 
+                React.createElement("div", null, "This is a summary of the program-by-program decision making process used for the Toronto 2016 budget."), 
                 React.createElement("div", null, "(A program is a division or an agency)"), 
-                React.createElement("div", null, "The data was gathered through a combination of public sources and city staff interviews.")));
+                React.createElement("div", null, "The data was gathered through a combination of public sources and interviews with city staff.")));
         this.phases = null;
         this.prepareRoadmap = () => {
             if (!this.state.roadmap)
@@ -36,7 +36,6 @@ class Roadmap extends Component {
                 return a.index - b.index;
             });
             this.phases = phaselist;
-            console.log('prepared phases', phaselist);
         };
         this.getEventClusterElement = (eventcode, lookups, eventslist, phasetitle) => {
             return React.createElement(Card_1.CardText, {expandable: true, style: {
@@ -145,17 +144,14 @@ class Roadmap extends Component {
         };
     }
     componentDidMount() {
-        console.log('componentWillMount');
         fetch('./db/repositories/toronto/roadmaps/government_events.json').then(response => {
             if (response.ok) {
-                console.log('response', response);
                 return response.json();
             }
             else {
                 console.log('response error', response);
             }
         }).then(json => {
-            console.log('json', json);
             this.setState({
                 roadmap: json
             });
