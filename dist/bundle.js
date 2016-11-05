@@ -8397,7 +8397,7 @@ var homecolsreducer = function homecolsreducer() {
                 var mainElement = document.getElementById('main');
                 var elementwidth = mainElement.getBoundingClientRect().width;
                 var columns = void 0;
-                if (elementwidth > 480) {
+                if (elementwidth > 620) {
                     columns = 3;
                 } else {
                     columns = 1;
@@ -8652,6 +8652,17 @@ var hometiles = [{
     index: 1,
     route: 'roadmap'
 }, {
+    id: 15,
+    content: {
+        title: 'Resources',
+        subtitle: 'External websites',
+        image: '../../public/icons/ic_library_books_48px.svg',
+        category: 'support',
+        disabled: true
+    },
+    index: 2,
+    route: 'resources'
+}, {
     id: 14,
     content: {
         title: 'Activist Pathways',
@@ -8660,7 +8671,7 @@ var hometiles = [{
         category: 'tools',
         disabled: true
     },
-    index: 2,
+    index: 3,
     route: 'pathways'
 }, {
     id: 6,
@@ -8671,7 +8682,7 @@ var hometiles = [{
         category: 'information',
         disabled: true
     },
-    index: 3,
+    index: 4,
     route: 'about'
 }, {
     id: 16,
@@ -8682,7 +8693,7 @@ var hometiles = [{
         category: 'information',
         disabled: true
     },
-    index: 4,
+    index: 5,
     route: 'announcements'
 }, {
     id: 13,
@@ -8693,7 +8704,7 @@ var hometiles = [{
         category: 'get involved',
         disabled: true
     },
-    index: 5,
+    index: 6,
     route: 'demos'
 }, {
     id: 10,
@@ -8704,7 +8715,7 @@ var hometiles = [{
         category: 'get involved',
         disabled: true
     },
-    index: 6,
+    index: 7,
     route: 'joinus'
 }];
 var workingmessagestate = false;

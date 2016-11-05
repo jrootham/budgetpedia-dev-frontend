@@ -52,7 +52,7 @@ let homecolsreducer = (state = initialstate_1.default.homecols, action) => {
             let mainElement = document.getElementById('main');
             let elementwidth = mainElement.getBoundingClientRect().width;
             let columns;
-            if (elementwidth > 480) {
+            if (elementwidth > 620) {
                 columns = 3;
             }
             else {

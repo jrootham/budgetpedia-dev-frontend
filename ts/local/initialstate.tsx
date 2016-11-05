@@ -95,6 +95,18 @@ let hometiles: [Object] = [
         route: 'roadmap',
     },
     {
+        id: 15,
+        content: {
+            title: `Resources`,
+            subtitle: `External websites`,
+            image: '../../public/icons/ic_library_books_48px.svg',
+            category: 'support',
+            disabled: true,
+        },
+        index: 2,
+        route: 'resources',
+    },
+    {
         id: 14,
         content: {
             title: `Activist Pathways`,
@@ -103,7 +115,7 @@ let hometiles: [Object] = [
             category: 'tools',
             disabled: true,
         },
-        index: 2,
+        index: 3,
         route: 'pathways',
     },
     {
@@ -115,7 +127,7 @@ let hometiles: [Object] = [
             category: 'information',
             disabled: true,
         },
-        index: 3,
+        index: 4,
         route: 'about',
     },
     {
@@ -127,7 +139,7 @@ let hometiles: [Object] = [
             category: 'information',
             disabled: true,
         },
-        index: 4,
+        index: 5,
         route: 'announcements',
     },
     {
@@ -139,7 +151,7 @@ let hometiles: [Object] = [
             category: 'get involved',
             disabled: true,
         },
-        index: 5,
+        index: 6,
         route: 'demos',
     },
     {
@@ -151,7 +163,7 @@ let hometiles: [Object] = [
             category: 'get involved',
             disabled: true,
         },
-        index: 6,
+        index: 7,
         route: 'joinus',
     },
 /*    {
@@ -197,17 +209,6 @@ let hometiles: [Object] = [
         },
         index: 7,
         route: 'newsletter',
-    },
-    {
-        id: 15,
-        content: {
-            title: `Resources`,
-            subtitle: `External websites`,
-            image: '../../public/icons/ic_library_books_48px.svg',
-            category: 'support',
-        },
-        index: 8,
-        route: 'resources',
     },
     {
         id: 12,
