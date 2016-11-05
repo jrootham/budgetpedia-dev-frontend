@@ -97,12 +97,23 @@ class HomeTilesClass extends React.Component<any, any> {
             Welcome to Budgetpedia.
             </CardTitle>
             <CardText>
-            <p style={{margin:0, padding:0}}>Explore the Toronto budget with our <a 
+            <p style={{margin:0, padding:0}}>Explore the Toronto budget with our <span
+                style = {{whiteSpace:'pre'}} ><img 
+                style = {{height:'18px',verticalAlign:'middle'}}
+                src={'./public/icons/ic_explore_48px.svg'}/><a 
                 href="javascript:void(0);"
-                onTouchTap={ e => {this.transitionTo(e,'explorer')}}>Budget Explorer</a>. 
-            See a sample of Toronto's annual budget decision process at our <a 
+                onTouchTap={ e => {this.transitionTo(e,'explorer')}}>Budget Explorer</a></span>, 
+            see a sample of Toronto's annual budget decision process at our <span
+                style = {{whiteSpace:'pre'}} ><img 
+                style = {{height:'18px',verticalAlign:'middle'}}
+                src={'./public/icons/ic_map_48px.svg'}/><a 
                 href="javascript:void(0);"
-                onTouchTap={ e => {this.transitionTo(e,'roadmap')}}>Budget Roadmap</a>. Find related Resources.</p>
+                onTouchTap={ e => {this.transitionTo(e,'roadmap')}}>Budget Roadmap</a></span>, and find related <span
+                style = {{whiteSpace:'pre'}} ><img 
+                style = {{height:'18px',verticalAlign:'middle'}}
+                src={'./public/icons/ic_library_books_48px.svg'}/><a
+                href="javascript:void(0);"
+                onTouchTap={ e => {this.transitionTo(e,'resources')}}>Resources</a></span>.</p>
                 <hr style={{clear:"right"}} />
             <p>We also welcome you to join us (and contribute!) on any of our digital platforms:</p>
             <ul>

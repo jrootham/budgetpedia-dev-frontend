@@ -46,7 +46,6 @@ let hometiles = [
             subtitle: `External websites`,
             image: '../../public/icons/ic_library_books_48px.svg',
             category: 'support',
-            disabled: true,
         },
         index: 2,
         tier: 'primary',
