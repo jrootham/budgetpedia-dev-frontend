@@ -5315,7 +5315,6 @@ var Dialog_1 = require('material-ui/Dialog');
 var FloatingActionButton_1 = require('material-ui/FloatingActionButton');
 var add_1 = require('material-ui/svg-icons/content/add');
 var remove_1 = require('material-ui/svg-icons/content/remove');
-var Toggle_1 = require('material-ui/Toggle');
 var react_redux_toastr_1 = require('react-redux-toastr');
 var uuid = require('node-uuid');
 var jsonpack = require('jsonpack');
@@ -5822,16 +5821,7 @@ var Explorer = function (_Component) {
                     borderRadius: "8px",
                     fontFamily: "Roboto,sans-serif",
                     fontSize: "12px"
-                } }, "Caution: This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality and continuity issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), React.createElement(Card_1.Card, { expanded: this.state.showdashboard }, React.createElement(Card_1.CardTitle, null, React.createElement(Toggle_1.default, { label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
-                    height: '32px', float: "right",
-                    display: "inline-block",
-                    width: 'auto'
-                }, labelStyle: { fontStyle: 'italic' }, onToggle: function onToggle(e, value) {
-                    e.stopPropagation();
-                    _this2.setState({
-                        showdashboard: value
-                    });
-                } }), "Budget Explorer"), React.createElement(Card_1.CardText, { expandable: true }, React.createElement("span", { style: { fontStyle: 'italic' } }, "[content to be determined]"))), dialogbox, branches);
+                } }, "Caution: This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality and continuity issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), React.createElement(Card_1.Card, { expanded: this.state.showdashboard }, React.createElement(Card_1.CardTitle, null, "Budget Explorer"), React.createElement(Card_1.CardText, { expandable: true }, React.createElement("span", { style: { fontStyle: 'italic' } }, "[content to be determined]"))), dialogbox, branches);
         }
     }]);
 
@@ -5874,7 +5864,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Explorer;
 
-},{"../../core/actions/actions":32,"./actions":16,"./classes/branch.class":17,"./components/explorerbranch":22,"./content/helpcontent":26,"./modules/utilities":30,"./reducers":31,"jsonpack":291,"material-ui/Card":457,"material-ui/Dialog":459,"material-ui/FloatingActionButton":470,"material-ui/FontIcon":472,"material-ui/IconButton":477,"material-ui/Toggle":513,"material-ui/svg-icons/content/add":555,"material-ui/svg-icons/content/remove":556,"node-uuid":578,"react":858,"react-redux":616,"react-redux-toastr":610}],28:[function(require,module,exports){
+},{"../../core/actions/actions":32,"./actions":16,"./classes/branch.class":17,"./components/explorerbranch":22,"./content/helpcontent":26,"./modules/utilities":30,"./reducers":31,"jsonpack":291,"material-ui/Card":457,"material-ui/Dialog":459,"material-ui/FloatingActionButton":470,"material-ui/FontIcon":472,"material-ui/IconButton":477,"material-ui/svg-icons/content/add":555,"material-ui/svg-icons/content/remove":556,"node-uuid":578,"react":858,"react-redux":616,"react-redux-toastr":610}],28:[function(require,module,exports){
 "use strict";
 
 var getBudgetNode = function getBudgetNode(node, path) {

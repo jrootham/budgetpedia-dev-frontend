@@ -722,21 +722,23 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             <CardTitle>
 
-                <Toggle 
-                    label={'Show dashboard:'} 
-                    toggled = {this.state.showdashboard}
-                    style={{
-                        height:'32px', float:"right",
-                        display:"inline-block",
-                        width:'auto',
-                    }} 
-                    labelStyle = {{fontStyle:'italic'}} 
-                    onToggle = { (e,value) => {
-                        e.stopPropagation()
-                        this.setState({
-                            showdashboard:value
-                        })
-                    }}/>
+                {
+                // <Toggle 
+                //     label={'Show dashboard:'} 
+                //     toggled = {this.state.showdashboard}
+                //     style={{
+                //         height:'32px', float:"right",
+                //         display:"inline-block",
+                //         width:'auto',
+                //     }} 
+                //     labelStyle = {{fontStyle:'italic'}} 
+                //     onToggle = { (e,value) => {
+                //         e.stopPropagation()
+                //         this.setState({
+                //             showdashboard:value
+                //         })
+                //     }}/>
+                }
 
                 Budget Explorer
 

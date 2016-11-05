@@ -9,7 +9,6 @@ const Dialog_1 = require('material-ui/Dialog');
 const FloatingActionButton_1 = require('material-ui/FloatingActionButton');
 const add_1 = require('material-ui/svg-icons/content/add');
 const remove_1 = require('material-ui/svg-icons/content/remove');
-const Toggle_1 = require('material-ui/Toggle');
 const react_redux_toastr_1 = require('react-redux-toastr');
 let uuid = require('node-uuid');
 let jsonpack = require('jsonpack');
@@ -371,18 +370,7 @@ let Explorer = class extends Component {
                 fontSize: "12px",
             }}, "Caution: This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality and continuity issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), 
             React.createElement(Card_1.Card, {expanded: this.state.showdashboard}, 
-                React.createElement(Card_1.CardTitle, null, 
-                    React.createElement(Toggle_1.default, {label: 'Show dashboard:', toggled: this.state.showdashboard, style: {
-                        height: '32px', float: "right",
-                        display: "inline-block",
-                        width: 'auto',
-                    }, labelStyle: { fontStyle: 'italic' }, onToggle: (e, value) => {
-                        e.stopPropagation();
-                        this.setState({
-                            showdashboard: value
-                        });
-                    }}), 
-                    "Budget Explorer"), 
+                React.createElement(Card_1.CardTitle, null, "Budget Explorer"), 
                 React.createElement(Card_1.CardText, {expandable: true}, 
                     React.createElement("span", {style: { fontStyle: 'italic' }}, "[content to be determined]")
                 )), 
