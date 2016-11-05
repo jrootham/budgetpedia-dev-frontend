@@ -466,6 +466,14 @@ let lastTargetedAction = (state = { counter: null }, action) => {
 let generation = (state = null, action) => {
     return generationcounter++;
 };
+let onetimenotification = (state = false, action) => {
+    if (action.type == actions_1.types.ONETIME_NOTIFICATION) {
+        return true;
+    }
+    else {
+        return state;
+    }
+};
 let explorer = redux_1.combineReducers({
     defaults,
     branchList,
@@ -475,6 +483,7 @@ let explorer = redux_1.combineReducers({
     lastAction,
     lastTargetedAction,
     generation,
+    onetimenotification,
 });
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = explorer;

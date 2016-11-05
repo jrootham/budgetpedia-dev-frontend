@@ -3,6 +3,7 @@ const redux_actions_1 = require('redux-actions');
 let uuid = require('node-uuid');
 var types;
 (function (types) {
+    types.ONETIME_NOTIFICATION = 'ONETIME_NOTIFICATION';
     types.ADD_BRANCH = 'ADD_BRANCH';
     types.CLONE_BRANCH = 'CLONE_BRANCH';
     types.REMOVE_BRANCH = 'REMOVE_BRANCH';
@@ -59,6 +60,7 @@ var cellTypes;
     cellTypes.UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE;
     cellTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
+exports.onetimeNotification = redux_actions_1.createAction(types.ONETIME_NOTIFICATION);
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, (refbranchuid, settings) => ({
     settings,
     branchuid: uuid.v4(),

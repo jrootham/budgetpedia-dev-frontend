@@ -10,6 +10,7 @@ import { createAction } from 'redux-actions';
 let uuid = require('node-uuid') // use uuid.v4() for unique id
 
 export namespace types {
+    export const ONETIME_NOTIFICATION = 'ONETIME_NOTIFICATION'
     export const ADD_BRANCH = 'ADD_BRANCH'
     export const CLONE_BRANCH = 'CLONE_BRANCH'
     export const REMOVE_BRANCH = 'REMOVE_BRANCH'
@@ -74,6 +75,12 @@ export namespace cellTypes {
     // export import TOGGLE_NET = types.TOGGLE_NET
     // export import TOGGLE_VARIANCE = types.TOGGLE_VARIANCE
 }
+
+// --------------------[ Explorer ]---------------------
+
+export const onetimeNotification = createAction(
+    types.ONETIME_NOTIFICATION
+)
 
 // --------------------[ Branch ]---------------------
 

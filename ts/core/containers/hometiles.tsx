@@ -90,7 +90,7 @@ class HomeTilesClass extends React.Component<any, any> {
                     }
                 }
             >
-            <div style = {{float:"right",margin:"9px 3px 3px 3px"}}>
+            <div style = {{float:"right",margin:"9px 3px 3px 3px",borderRadius:"8px"}}>
                 <img style={{width:"100px"}} src= "./public/icons/budgetpedia-logo.png" />
             </div>
             <CardTitle>
@@ -107,18 +107,18 @@ class HomeTilesClass extends React.Component<any, any> {
             <p>We also welcome you to join us (and contribute!) on any of our digital platforms:</p>
             <ul>
             <li><a 
-                    href="http://facebook.com/groups/budgetpedia" 
-                    target="_blank">
-                    <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> <a 
-                    href="http://facebook.com/groups/budgetpedia" 
-                    target="_blank">
-                    our Facebook group</a></li>
-            <li><a 
                 href="http://facebook.com/budgetpedia" 
                 target="_blank">
                 <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> <a 
                 href="http://facebook.com/budgetpedia" 
                 target="_blank">our Facebook page</a></li>
+            <li><a 
+                href="http://facebook.com/groups/budgetpedia" 
+                target="_blank">
+                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> <a 
+                href="http://facebook.com/groups/budgetpedia" 
+                target="_blank">
+                our Facebook group</a></li>
             <li><a 
                 href="http://twitter.com/budgetpedia" 
                 target="_blank">

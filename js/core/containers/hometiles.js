@@ -53,7 +53,7 @@ class HomeTilesClass extends React.Component {
                         backgroundColor: 'rgba(255, 255, 255, 0.7)',
                         borderRadius: '7px',
                     }}, 
-                        React.createElement("div", {style: { float: "right", margin: "9px 3px 3px 3px" }}, 
+                        React.createElement("div", {style: { float: "right", margin: "9px 3px 3px 3px", borderRadius: "8px" }}, 
                             React.createElement("img", {style: { width: "100px" }, src: "./public/icons/budgetpedia-logo.png"})
                         ), 
                         React.createElement(Card_1.CardTitle, null, "Welcome to Budgetpedia."), 
@@ -68,17 +68,17 @@ class HomeTilesClass extends React.Component {
                             React.createElement("p", null, "We also welcome you to join us (and contribute!) on any of our digital platforms:"), 
                             React.createElement("ul", null, 
                                 React.createElement("li", null, 
-                                    React.createElement("a", {href: "http://facebook.com/groups/budgetpedia", target: "_blank"}, 
-                                        React.createElement("img", {style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/facebook.png"})
-                                    ), 
-                                    " ", 
-                                    React.createElement("a", {href: "http://facebook.com/groups/budgetpedia", target: "_blank"}, "our Facebook group")), 
-                                React.createElement("li", null, 
                                     React.createElement("a", {href: "http://facebook.com/budgetpedia", target: "_blank"}, 
                                         React.createElement("img", {style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/facebook.png"})
                                     ), 
                                     " ", 
                                     React.createElement("a", {href: "http://facebook.com/budgetpedia", target: "_blank"}, "our Facebook page")), 
+                                React.createElement("li", null, 
+                                    React.createElement("a", {href: "http://facebook.com/groups/budgetpedia", target: "_blank"}, 
+                                        React.createElement("img", {style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/facebook.png"})
+                                    ), 
+                                    " ", 
+                                    React.createElement("a", {href: "http://facebook.com/groups/budgetpedia", target: "_blank"}, "our Facebook group")), 
                                 React.createElement("li", null, 
                                     React.createElement("a", {href: "http://twitter.com/budgetpedia", target: "_blank"}, 
                                         React.createElement("img", {style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/twitter.png"})

@@ -94,7 +94,7 @@ let hometiles = [
     {
         id: 13,
         content: {
-            title: `Get a demo`,
+            title: `Get a Demo`,
             subtitle: `Resources & training`,
             image: '../../public/icons/ic_record_voice_over_48px.svg',
             category: 'get involved',

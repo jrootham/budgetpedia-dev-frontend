@@ -213,7 +213,10 @@ let Explorer = class extends Component {
         };
     }
     componentWillMount() {
-        this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted).";
+        if (!this.props.declarationData.onetimenotification) {
+            this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted).";
+            this.props.onetimeNotification();
+        }
         let { query } = this.props.location;
         let branchdata, settingsdata, hash;
         if (query.branch && query.settings && query.hash) {
@@ -385,6 +388,7 @@ let mapStateToProps = state => ({
 Explorer = react_redux_1.connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
+    onetimeNotification: ExplorerActions.onetimeNotification,
     addBranchDeclaration: ExplorerActions.addBranchDeclaration,
     cloneBranchDeclaration: ExplorerActions.cloneBranchDeclaration,
     removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,

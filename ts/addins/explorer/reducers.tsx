@@ -591,6 +591,14 @@ let generation = (state = null, action) => {
     return generationcounter++
 }
 
+let onetimenotification = (state = false,action) => {
+    if (action.type == actiontypes.ONETIME_NOTIFICATION) {
+        return true
+    } else {
+        return state
+    }
+}
+
 let explorer = combineReducers({
         defaults,
         branchList,
@@ -600,6 +608,7 @@ let explorer = combineReducers({
         lastAction,
         lastTargetedAction,
         generation,
+        onetimenotification,
 })
 
 export default explorer

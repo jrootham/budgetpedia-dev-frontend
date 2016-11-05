@@ -1030,6 +1030,7 @@ var redux_actions_1 = require('redux-actions');
 var uuid = require('node-uuid');
 var types;
 (function (types) {
+    types.ONETIME_NOTIFICATION = 'ONETIME_NOTIFICATION';
     types.ADD_BRANCH = 'ADD_BRANCH';
     types.CLONE_BRANCH = 'CLONE_BRANCH';
     types.REMOVE_BRANCH = 'REMOVE_BRANCH';
@@ -1086,6 +1087,7 @@ var cellTypes;
     cellTypes.UPDATE_CELL_CHART_CODE = types.UPDATE_CELL_CHART_CODE;
     cellTypes.TOGGLE_DELTA = types.TOGGLE_DELTA;
 })(cellTypes = exports.cellTypes || (exports.cellTypes = {}));
+exports.onetimeNotification = redux_actions_1.createAction(types.ONETIME_NOTIFICATION);
 exports.addBranchDeclaration = redux_actions_1.createAction(types.ADD_BRANCH, function (refbranchuid, settings) {
     return {
         settings: settings,
@@ -5663,7 +5665,10 @@ var Explorer = function (_Component) {
     _createClass(Explorer, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted).";
+            if (!this.props.declarationData.onetimenotification) {
+                this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted).";
+                this.props.onetimeNotification();
+            }
             var query = this.props.location.query;
 
             var branchdata = void 0,
@@ -5837,6 +5842,7 @@ var mapStateToProps = function mapStateToProps(state) {
 Explorer = react_redux_1.connect(mapStateToProps, {
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
+    onetimeNotification: ExplorerActions.onetimeNotification,
     addBranchDeclaration: ExplorerActions.addBranchDeclaration,
     cloneBranchDeclaration: ExplorerActions.cloneBranchDeclaration,
     removeBranchDeclaration: ExplorerActions.removeBranchDeclaration,
@@ -6944,6 +6950,16 @@ var generation = function generation() {
 
     return generationcounter++;
 };
+var onetimenotification = function onetimenotification() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var action = arguments[1];
+
+    if (action.type == actions_1.types.ONETIME_NOTIFICATION) {
+        return true;
+    } else {
+        return state;
+    }
+};
 var explorer = redux_1.combineReducers({
     defaults: defaults,
     branchList: branchList,
@@ -6952,7 +6968,8 @@ var explorer = redux_1.combineReducers({
     cellsById: cellsById,
     lastAction: lastAction,
     lastTargetedAction: lastTargetedAction,
-    generation: generation
+    generation: generation,
+    onetimenotification: onetimenotification
 });
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = explorer;
@@ -7698,11 +7715,11 @@ var HomeTilesClass = function (_React$Component) {
                 } }, React.createElement("div", { style: {
                     backgroundColor: 'rgba(255, 255, 255, 0.7)',
                     borderRadius: '7px'
-                } }, React.createElement("div", { style: { float: "right", margin: "9px 3px 3px 3px" } }, React.createElement("img", { style: { width: "100px" }, src: "./public/icons/budgetpedia-logo.png" })), React.createElement(Card_1.CardTitle, null, "Welcome to Budgetpedia."), React.createElement(Card_1.CardText, null, React.createElement("p", { style: { margin: 0, padding: 0 } }, "Explore the Toronto budget with our ", React.createElement("a", { href: "javascript:void(0);", onTouchTap: function onTouchTap(e) {
+                } }, React.createElement("div", { style: { float: "right", margin: "9px 3px 3px 3px", borderRadius: "8px" } }, React.createElement("img", { style: { width: "100px" }, src: "./public/icons/budgetpedia-logo.png" })), React.createElement(Card_1.CardTitle, null, "Welcome to Budgetpedia."), React.createElement(Card_1.CardText, null, React.createElement("p", { style: { margin: 0, padding: 0 } }, "Explore the Toronto budget with our ", React.createElement("a", { href: "javascript:void(0);", onTouchTap: function onTouchTap(e) {
                     _this3.transitionTo(e, 'explorer');
                 } }, "Budget Explorer"), "." + ' ' + "See a sample of Toronto's annual budget decision process at our ", React.createElement("a", { href: "javascript:void(0);", onTouchTap: function onTouchTap(e) {
                     _this3.transitionTo(e, 'roadmap');
-                } }, "Budget Roadmap"), ". Find related Resources."), React.createElement("hr", { style: { clear: "right" } }), React.createElement("p", null, "We also welcome you to join us (and contribute!) on any of our digital platforms:"), React.createElement("ul", null, React.createElement("li", null, React.createElement("a", { href: "http://facebook.com/groups/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/facebook.png" })), " ", React.createElement("a", { href: "http://facebook.com/groups/budgetpedia", target: "_blank" }, "our Facebook group")), React.createElement("li", null, React.createElement("a", { href: "http://facebook.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/facebook.png" })), " ", React.createElement("a", { href: "http://facebook.com/budgetpedia", target: "_blank" }, "our Facebook page")), React.createElement("li", null, React.createElement("a", { href: "http://twitter.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/twitter.png" })), " ", React.createElement("a", { href: "http://twitter.com/budgetpedia", target: "_blank" }, "Twitter")), React.createElement("li", null, React.createElement("a", { href: "http://medium.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/medium.png" })), " For" + ' ' + "in-depth articles: ", React.createElement("a", { href: "http://medium.com/budgetpedia", target: "_blank" }, "Medium")), React.createElement("li", null, React.createElement("a", { href: "http://groups.google.com/d/forum/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/g-logo.png" })), " For" + ' ' + "technical discussions: ", React.createElement("a", { href: "http://groups.google.com/d/forum/budgetpedia", target: "_blank" }, "our Google forum"))), React.createElement("hr", null), React.createElement("p", null, "Below are tiles leading to more information about the Budgetpedia Project."))))), React.createElement(apptiles_1.AppTiles, { style: {
+                } }, "Budget Roadmap"), ". Find related Resources."), React.createElement("hr", { style: { clear: "right" } }), React.createElement("p", null, "We also welcome you to join us (and contribute!) on any of our digital platforms:"), React.createElement("ul", null, React.createElement("li", null, React.createElement("a", { href: "http://facebook.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/facebook.png" })), " ", React.createElement("a", { href: "http://facebook.com/budgetpedia", target: "_blank" }, "our Facebook page")), React.createElement("li", null, React.createElement("a", { href: "http://facebook.com/groups/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/facebook.png" })), " ", React.createElement("a", { href: "http://facebook.com/groups/budgetpedia", target: "_blank" }, "our Facebook group")), React.createElement("li", null, React.createElement("a", { href: "http://twitter.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/twitter.png" })), " ", React.createElement("a", { href: "http://twitter.com/budgetpedia", target: "_blank" }, "Twitter")), React.createElement("li", null, React.createElement("a", { href: "http://medium.com/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/medium.png" })), " For" + ' ' + "in-depth articles: ", React.createElement("a", { href: "http://medium.com/budgetpedia", target: "_blank" }, "Medium")), React.createElement("li", null, React.createElement("a", { href: "http://groups.google.com/d/forum/budgetpedia", target: "_blank" }, React.createElement("img", { style: { height: "16px", verticalAlign: "middle" }, src: "./public/icons/g-logo.png" })), " For" + ' ' + "technical discussions: ", React.createElement("a", { href: "http://groups.google.com/d/forum/budgetpedia", target: "_blank" }, "our Google forum"))), React.createElement("hr", null), React.createElement("p", null, "Below are tiles leading to more information about the Budgetpedia Project."))))), React.createElement(apptiles_1.AppTiles, { style: {
                     margin: "16px",
                     fontFamily: theme.fontFamily
                 }, tiles: hometiles, tilecols: homecols, padding: homepadding, tilecolors: {
@@ -8708,7 +8725,7 @@ var hometiles = [{
 }, {
     id: 13,
     content: {
-        title: 'Get a demo',
+        title: 'Get a Demo',
         subtitle: 'Resources & training',
         image: '../../public/icons/ic_record_voice_over_48px.svg',
         category: 'get involved',

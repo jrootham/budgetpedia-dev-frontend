@@ -112,6 +112,7 @@ interface MappedExplorerActions extends MappedBranchActions {
 interface MappedActions extends MappedExplorerActions{
     showWaitingMessage:Function, // dispatcher from Actions 
     hideWaitingMessage:Function, // dispatcher from Actions
+    onetimeNotification:Function, 
 }
 
 interface ExplorerProps extends MappedActions {
@@ -159,7 +160,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
         // console.log('explorer props location.query',this.props.location.query)
 
-        this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted)."
+        if (!this.props.declarationData.onetimenotification) {
+            this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted)."
+            this.props.onetimeNotification()
+        }
 
         let {query} = this.props.location
 
@@ -770,6 +774,7 @@ Explorer = connect(mapStateToProps, {
     // presentation
     showWaitingMessage: Actions.showWaitingMessage,
     hideWaitingMessage: Actions.hideWaitingMessage,
+    onetimeNotification: ExplorerActions.onetimeNotification,
     // toggleShowControls
 
     // branch actions - components
