@@ -112,7 +112,7 @@ let hometiles: [Object] = [
             title: `Activist Pathways`,
             subtitle: `How to make change`,
             image: '../../public/icons/ic_directions_walk_48px.svg',
-            category: 'tools',
+            category: 'support',
             disabled: true,
         },
         index: 3,

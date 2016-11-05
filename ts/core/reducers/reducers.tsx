@@ -87,15 +87,16 @@ let homecolsreducer = (state: any = initialstate.homecols, action) => {
 
             //     columns = 5
                 
-            // } else if (elementwidth > 760) {
-
-            //     columns = 4
-
             // } else 
-            // if (elementwidth > 480) {
-            if (elementwidth > 620) {
+            if (elementwidth > 760) {
 
-                columns = 3
+                columns = 4
+
+            } else 
+            if (elementwidth > 480) {
+            // if (elementwidth > 620) {
+
+                columns = 2
 
             // } else if (elementwidth > 200) {
 

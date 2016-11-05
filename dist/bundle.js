@@ -8397,8 +8397,10 @@ var homecolsreducer = function homecolsreducer() {
                 var mainElement = document.getElementById('main');
                 var elementwidth = mainElement.getBoundingClientRect().width;
                 var columns = void 0;
-                if (elementwidth > 620) {
-                    columns = 3;
+                if (elementwidth > 760) {
+                    columns = 4;
+                } else if (elementwidth > 480) {
+                    columns = 2;
                 } else {
                     columns = 1;
                 }
@@ -8668,7 +8670,7 @@ var hometiles = [{
         title: 'Activist Pathways',
         subtitle: 'How to make change',
         image: '../../public/icons/ic_directions_walk_48px.svg',
-        category: 'tools',
+        category: 'support',
         disabled: true
     },
     index: 3,
