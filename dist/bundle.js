@@ -7479,7 +7479,7 @@ var AppTiles = function (_Component) {
                 cellHeight = _props.cellHeight;
 
             var tiles_ = tiles.map(function (data) {
-                return React.createElement(apptile_1.AppTile, { key: data.id, content: data.content, image: data.image, tilecolors: tilecolors, system: system, route: data.route, transitionTo: transitionTo });
+                return React.createElement(apptile_1.AppTile, { key: data.id, content: data.content, tilecolors: tilecolors, system: system, route: data.route, transitionTo: transitionTo });
             });
             return React.createElement("div", { style: {
                     display: 'flex',
@@ -8641,6 +8641,7 @@ var hometiles = [{
         cols: 2
     },
     index: 0,
+    tier: 'primary',
     route: 'explorer'
 }, {
     id: 7,
@@ -8652,6 +8653,7 @@ var hometiles = [{
         cols: 2
     },
     index: 1,
+    tier: 'primary',
     route: 'roadmap'
 }, {
     id: 15,
@@ -8663,6 +8665,7 @@ var hometiles = [{
         disabled: true
     },
     index: 2,
+    tier: 'primary',
     route: 'resources'
 }, {
     id: 14,
@@ -8674,6 +8677,7 @@ var hometiles = [{
         disabled: true
     },
     index: 3,
+    tier: 'primary',
     route: 'pathways'
 }, {
     id: 6,
@@ -8685,6 +8689,7 @@ var hometiles = [{
         disabled: true
     },
     index: 4,
+    tier: 'secondary',
     route: 'about'
 }, {
     id: 16,
@@ -8696,6 +8701,7 @@ var hometiles = [{
         disabled: true
     },
     index: 5,
+    tier: 'secondary',
     route: 'announcements'
 }, {
     id: 13,
@@ -8707,6 +8713,7 @@ var hometiles = [{
         disabled: true
     },
     index: 6,
+    tier: 'secondary',
     route: 'demos'
 }, {
     id: 10,
@@ -8718,6 +8725,7 @@ var hometiles = [{
         disabled: true
     },
     index: 7,
+    tier: 'secondary',
     route: 'joinus'
 }];
 var workingmessagestate = false;

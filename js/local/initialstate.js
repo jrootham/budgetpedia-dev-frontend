@@ -23,6 +23,7 @@ let hometiles = [
             cols: 2,
         },
         index: 0,
+        tier: 'primary',
         route: 'explorer',
     },
     {
@@ -35,6 +36,7 @@ let hometiles = [
             cols: 2,
         },
         index: 1,
+        tier: 'primary',
         route: 'roadmap',
     },
     {
@@ -47,6 +49,7 @@ let hometiles = [
             disabled: true,
         },
         index: 2,
+        tier: 'primary',
         route: 'resources',
     },
     {
@@ -59,6 +62,7 @@ let hometiles = [
             disabled: true,
         },
         index: 3,
+        tier: 'primary',
         route: 'pathways',
     },
     {
@@ -71,6 +75,7 @@ let hometiles = [
             disabled: true,
         },
         index: 4,
+        tier: 'secondary',
         route: 'about',
     },
     {
@@ -83,6 +88,7 @@ let hometiles = [
             disabled: true,
         },
         index: 5,
+        tier: 'secondary',
         route: 'announcements',
     },
     {
@@ -95,6 +101,7 @@ let hometiles = [
             disabled: true,
         },
         index: 6,
+        tier: 'secondary',
         route: 'demos',
     },
     {
@@ -107,6 +114,7 @@ let hometiles = [
             disabled: true,
         },
         index: 7,
+        tier: 'secondary',
         route: 'joinus',
     },
 ];

@@ -14,11 +14,10 @@ import { AppTile } from "./apptile"
 interface NavTilesData {
 
     id:         number,
-    style?:     Object,
-    content:    string,
-    help?:      string,
-    route?:     string,
-    image?:     string,
+    content:    Object,
+    route:     string,
+    index: number,
+    tier: string,
 
 }
 
@@ -48,7 +47,6 @@ class AppTiles extends Component< AppTilesProps, any > {
                 <AppTile 
                     key     = { data.id } 
                     content  = { data.content }
-                    image = {data.image}
                     tilecolors = { tilecolors }
                     system = { system }
                     route = { data.route }
