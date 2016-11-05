@@ -90,11 +90,11 @@ class HomeTilesClass extends React.Component<any, any> {
                     }
                 }
             >
-            <div style = {{float:"left",margin:"9px 3px 3px 3px"}}>
+            <div style = {{float:"right",margin:"9px 3px 3px 3px"}}>
                 <img style={{width:"100px"}} src= "./public/icons/budgetpedia-logo.png" />
             </div>
             <CardTitle>
-            Welcome to Budgetpedia. We're all about government budgets.
+            Welcome to Budgetpedia.
             </CardTitle>
             <CardText>
             <p style={{margin:0, padding:0}}>Explore the Toronto budget with our <a 
@@ -102,8 +102,9 @@ class HomeTilesClass extends React.Component<any, any> {
                 onTouchTap={ e => {this.transitionTo(e,'explorer')}}>Budget Explorer</a>. 
             See a sample of Toronto's annual budget decision process at our <a 
                 href="javascript:void(0);"
-                onTouchTap={ e => {this.transitionTo(e,'roadmap')}}>Budget Roadmap</a>.</p>
-            <p>We welcome you to join us (and contribute!) on any of our digital platforms:</p>
+                onTouchTap={ e => {this.transitionTo(e,'roadmap')}}>Budget Roadmap</a>. Find related Resources.</p>
+                <hr style={{clear:"right"}} />
+            <p>We also welcome you to join us (and contribute!) on any of our digital platforms:</p>
             <ul>
             <li><a 
                     href="http://facebook.com/groups/budgetpedia" 
@@ -127,16 +128,15 @@ class HomeTilesClass extends React.Component<any, any> {
             <li><a href="http://medium.com/budgetpedia"
                 target = "_blank">
                 <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/medium.png"/></a> For 
-                in-depth articles: 
-                <a href="http://medium.com/budgetpedia"
+                in-depth articles: <a href="http://medium.com/budgetpedia"
                 target = "_blank">Medium</a></li>
             <li><a href="http://groups.google.com/d/forum/budgetpedia"
                 target="_blank">
                 <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/g-logo.png"/></a> For 
-                technical discussions: 
-                <a href="http://groups.google.com/d/forum/budgetpedia"
+                technical discussions: <a href="http://groups.google.com/d/forum/budgetpedia"
                 target="_blank">our Google forum</a></li>
             </ul>
+            <hr />
             <p>Below are tiles leading to more information about the Budgetpedia Project.</p>
             </CardText>
             </div>

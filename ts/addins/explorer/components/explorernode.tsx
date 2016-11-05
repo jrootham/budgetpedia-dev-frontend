@@ -307,7 +307,12 @@ class ExplorerNode extends Component<ExplorerNodeProps, {nodeCells: BudgetCell[]
             (budgetCell:BudgetCell,cellIndex) => {
 
             let { cellTitle } = budgetCell
-            return <Tab style={{fontSize:"12px"}} 
+            return <Tab style=
+                {
+                    {
+                        fontSize:"12px",
+                    }
+                } 
                 label={ cellTitle } 
                 value={ cellIndex }
                 key={ cellIndex }>

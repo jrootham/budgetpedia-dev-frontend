@@ -54,7 +54,7 @@ class AppTiles extends Component< AppTilesProps, any > {
                     />
             )
         })
-
+// 152    102    103   #986667 
         return (
             <div
             style = {{
