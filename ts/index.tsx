@@ -15,10 +15,11 @@ import Main from './core/containers/main'
 // install fetch as global function for browsers (eg Safari) that don't have it
 // require('isomorphic-fetch')
 
-let globalmessage =  (
-    <div>THIS IS THE SOFTWARE DEVELOPER'S COPY OF BUDGETPEDIA.
-    </div>
-)
+let globalmessage = null
+//  (
+//     <div>THIS IS THE SOFTWARE DEVELOPER'S COPY OF BUDGETPEDIA.
+//     </div>
+// )
 
 render(
 	<Main globalmessage = {globalmessage} version={"DEVELOPMENT"}/>,

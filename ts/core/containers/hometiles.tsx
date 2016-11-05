@@ -74,13 +74,22 @@ class HomeTilesClass extends React.Component<any, any> {
             >
             <Card style={
                 {
-                    backgroundImage:"url(./public/icons/budgetpedia-pale.jpg",
+                    backgroundImage:"url(./public/icons/budgetpedia.jpg",
                     backgroundSize:"cover",
                     margin:"8px",
                     border:"2px solid silver",
                     borderRadius:"8px",
+                    fontSize:"18px"
                 }
             }>
+            <div
+                style = {
+                    {
+                        backgroundColor:'rgba(255, 255, 255, 0.7)',
+                        borderRadius:'7px',
+                    }
+                }
+            >
             <div style = {{float:"left",margin:"9px 3px 3px 3px"}}>
                 <img style={{width:"100px"}} src= "./public/icons/budgetpedia-logo.png" />
             </div>
@@ -99,40 +108,38 @@ class HomeTilesClass extends React.Component<any, any> {
             <li><a 
                     href="http://facebook.com/groups/budgetpedia" 
                     target="_blank">
-                    <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> For 
-                    discussions: our Facebook group (<a 
+                    <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> <a 
                     href="http://facebook.com/groups/budgetpedia" 
                     target="_blank">
-                    facebook.com/groups/budgetpedia</a>)</li>
+                    our Facebook group</a></li>
             <li><a 
                 href="http://facebook.com/budgetpedia" 
                 target="_blank">
-                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> For 
-                lists of resources: our Facebook page (<a 
+                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> <a 
                 href="http://facebook.com/budgetpedia" 
-                target="_blank">facebook.com/budgetpedia</a>)</li>
+                target="_blank">our Facebook page</a></li>
             <li><a 
                 href="http://twitter.com/budgetpedia" 
                 target="_blank">
-                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/twitter.png"/></a> For 
-                notifications: Twitter (<a 
+                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/twitter.png"/></a> <a 
                 href="http://twitter.com/budgetpedia" 
-                target="_blank">twitter.com/budgetpedia</a>)</li>
+                target="_blank">Twitter</a></li>
             <li><a href="http://medium.com/budgetpedia"
                 target = "_blank">
                 <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/medium.png"/></a> For 
-                in-depth articles: Medium (
+                in-depth articles: 
                 <a href="http://medium.com/budgetpedia"
-                target = "_blank">medium.com/budgetpedia</a>)</li>
+                target = "_blank">Medium</a></li>
             <li><a href="http://groups.google.com/d/forum/budgetpedia"
                 target="_blank">
                 <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/g-logo.png"/></a> For 
-                technical discussions: our Google forum (
+                technical discussions: 
                 <a href="http://groups.google.com/d/forum/budgetpedia"
-                target="_blank">groups.google.com/d/forum/budgetpedia</a>)</li>
+                target="_blank">our Google forum</a></li>
             </ul>
             <p>Below are tiles leading to more information about the Budgetpedia Project.</p>
             </CardText>
+            </div>
             </Card>
             </div>
             <AppTiles 
