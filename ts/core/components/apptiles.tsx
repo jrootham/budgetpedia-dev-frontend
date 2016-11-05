@@ -40,8 +40,31 @@ class AppTiles extends Component< AppTilesProps, any > {
     render() {
 
         let { tiles, tilecols, padding, tilecolors, style, system, route, transitionTo, cellHeight } = this.props
+        let primarytiledata = []
+        let secondarytiledata = []
+        style['width'] = '100%'
+        for (let tiledata of tiles) {
+            if (tiledata.tier == 'primary') {
+                primarytiledata.push(tiledata)
+            } else {
+                secondarytiledata.push(tiledata)
+            }
+        }
 
-        let tiles_ = tiles.map ( function ( data ) {
+        let primarytiles = primarytiledata.map ( function ( data ) {
+
+            return (
+                <AppTile 
+                    key     = { data.id } 
+                    content  = { data.content }
+                    tilecolors = { tilecolors }
+                    system = { system }
+                    route = { data.route }
+                    transitionTo = { transitionTo } 
+                    />
+            )
+        })
+        let secondarytiles = secondarytiledata.map ( function ( data ) {
 
             return (
                 <AppTile 
@@ -56,21 +79,39 @@ class AppTiles extends Component< AppTilesProps, any > {
         })
 // 152    102    103   #986667 
         return (
-            <div
-            style = {{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'space-around', 
-                backgroundColor: '#749261',               
-            }}
-            >
-            <GridList 
+            <div>
+                <div
+                style = {{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-around', 
+                    backgroundColor: '#749261',               
+                }}
+                >
+                <GridList 
 
-                style       = { style }
-                children    = { tiles_ } 
-                cols        = { tilecols } 
-                padding     = { padding }
-                cellHeight  = { cellHeight } />
+                    style       = { style }
+                    children    = { primarytiles } 
+                    cols        = { tilecols } 
+                    padding     = { padding }
+                    cellHeight  = { cellHeight } />
+                </div>
+                <div
+                style = {{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-around', 
+                    backgroundColor: '#986667 ',               
+                }}
+                >
+                <GridList 
+
+                    style       = { style }
+                    children    = { secondarytiles } 
+                    cols        = { tilecols } 
+                    padding     = { padding }
+                    cellHeight  = { cellHeight } />
+                </div>
             </div>
         )
     }

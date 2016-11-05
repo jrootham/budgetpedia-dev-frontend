@@ -7497,15 +7497,55 @@ var AppTiles = function (_Component) {
                 transitionTo = _props.transitionTo,
                 cellHeight = _props.cellHeight;
 
-            var tiles_ = tiles.map(function (data) {
+            var primarytiledata = [];
+            var secondarytiledata = [];
+            style['width'] = '100%';
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = tiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var tiledata = _step.value;
+
+                    if (tiledata.tier == 'primary') {
+                        primarytiledata.push(tiledata);
+                    } else {
+                        secondarytiledata.push(tiledata);
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            var primarytiles = primarytiledata.map(function (data) {
                 return React.createElement(apptile_1.AppTile, { key: data.id, content: data.content, tilecolors: tilecolors, system: system, route: data.route, transitionTo: transitionTo });
             });
-            return React.createElement("div", { style: {
+            var secondarytiles = secondarytiledata.map(function (data) {
+                return React.createElement(apptile_1.AppTile, { key: data.id, content: data.content, tilecolors: tilecolors, system: system, route: data.route, transitionTo: transitionTo });
+            });
+            return React.createElement("div", null, React.createElement("div", { style: {
                     display: 'flex',
                     flexWrap: 'wrap',
                     justifyContent: 'space-around',
                     backgroundColor: '#749261'
-                } }, React.createElement(GridList_1.GridList, { style: style, children: tiles_, cols: tilecols, padding: padding, cellHeight: cellHeight }));
+                } }, React.createElement(GridList_1.GridList, { style: style, children: primarytiles, cols: tilecols, padding: padding, cellHeight: cellHeight })), React.createElement("div", { style: {
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-around',
+                    backgroundColor: '#986667 '
+                } }, React.createElement(GridList_1.GridList, { style: style, children: secondarytiles, cols: tilecols, padding: padding, cellHeight: cellHeight })));
         }
     }]);
 
