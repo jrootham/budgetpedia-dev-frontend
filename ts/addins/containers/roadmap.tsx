@@ -63,7 +63,8 @@ class Roadmap extends Component<any, State> {
                 subtitle = {"Annual cycle of decision points"}
             /> 
             <CardText>
-            <div>This is a summary of the program-by-program decision making process used for the Toronto 2016 budget.</div>
+            <div>Here is a link to Toronto's 2017 public budget process schedule: <a target="_blank" href="http://bit.ly/2eKcrfK">bit.ly/2eKcrfK</a></div>
+            <div>Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget.</div>
             <div>(A program is a division or an agency)</div>
             <div>The data was gathered through a combination of public sources and interviews with city staff.</div>
             </CardText>
