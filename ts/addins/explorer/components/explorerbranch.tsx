@@ -1241,7 +1241,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                     }
                 } 
                 defaultToggled={branchDeclaration.inflationAdjusted} 
-            /> <span style={{marginLeft:"6px"}}>|</span>
+            /> 
         </div>
         :
         null
@@ -1370,6 +1370,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         { shareurl }
 
+        { showcontrols }
         </div>
 
         <div>
@@ -1387,7 +1388,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         { inflationadjustment }
 
-        { showcontrols }
         </div>
 
     </div>

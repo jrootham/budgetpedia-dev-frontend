@@ -722,9 +722,8 @@ class ExplorerBranch extends Component {
                         this.toggleInflationAdjustment(value);
                     }, labelStyle: {
                         fontStyle: 'italic'
-                    }, defaultToggled: branchDeclaration.inflationAdjusted}), 
-                    " ", 
-                    React.createElement("span", {style: { marginLeft: "6px" }}, "|"))
+                    }, defaultToggled: branchDeclaration.inflationAdjusted})
+                )
             :
                 null;
         let showcontrols = React.createElement("div", {style: {
@@ -771,7 +770,8 @@ class ExplorerBranch extends Component {
                     technotes, 
                     showhelp, 
                     search, 
-                    shareurl), 
+                    shareurl, 
+                    showcontrols), 
                 React.createElement("div", null, 
                     technotesdialog, 
                     governmentselection, 
@@ -779,8 +779,7 @@ class ExplorerBranch extends Component {
                     versionselection, 
                     aspectselection, 
                     byunitselection, 
-                    inflationadjustment, 
-                    showcontrols)), 
+                    inflationadjustment)), 
             React.createElement("div", {style: { whiteSpace: "nowrap" }}, 
                 React.createElement("div", {ref: node => {
                     branch.branchScrollBlock = node;
