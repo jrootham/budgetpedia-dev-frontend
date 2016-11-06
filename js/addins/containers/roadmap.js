@@ -9,15 +9,28 @@ class Roadmap extends Component {
         this.state = {
             roadmap: null
         };
-        this.roadmapintro = React.createElement(Card_1.Card, null, 
-            React.createElement(Card_1.CardTitle, {title: "Budget Roadmap", subtitle: "Annual cycle of decision points"}), 
-            React.createElement(Card_1.CardText, null, 
-                React.createElement("div", null, 
-                    "Here is a link to Toronto's 2017 public budget process schedule: ", 
-                    React.createElement("a", {target: "_blank", href: "http://bit.ly/2eKcrfK"}, "bit.ly/2eKcrfK")), 
-                React.createElement("div", null, "Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget."), 
-                React.createElement("div", null, "(A program is a division or an agency)"), 
-                React.createElement("div", null, "The data was gathered through a combination of public sources and interviews with city staff.")));
+        this.roadmapintro = React.createElement("div", null, 
+            React.createElement(Card_1.Card, null, 
+                React.createElement(Card_1.CardTitle, {title: "Budget Roadmap", subtitle: "Annual cycle of decision points"}), 
+                React.createElement(Card_1.CardTitle, {title: "2017"}), 
+                React.createElement(Card_1.CardText, null, 
+                    React.createElement("div", null, 
+                        "Here is a link to Toronto's 2017 public budget process schedule: ", 
+                        React.createElement("a", {target: "_blank", href: "http://bit.ly/2eKcrfK"}, "bit.ly/2eKcrfK"))
+                )), 
+            React.createElement(Card_1.Card, null, 
+                React.createElement(Card_1.CardTitle, {actAsExpander: true, showExpandableButton: true, title: "Committee Meetings"}), 
+                React.createElement(Card_1.CardText, {expandable: true, style: {
+                    border: "1px solid silver",
+                    margin: "0 3px 8px 3px",
+                    borderRadius: "8px",
+                }}, "Committee data")), 
+            React.createElement(Card_1.Card, null, 
+                React.createElement(Card_1.CardTitle, {title: "2016"}), 
+                React.createElement(Card_1.CardText, null, 
+                    React.createElement("div", null, "Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget."), 
+                    React.createElement("div", null, "(A program is a division or an agency)"), 
+                    React.createElement("div", null, "The data was gathered through a combination of public sources and interviews with city staff."))));
         this.phases = null;
         this.prepareRoadmap = () => {
             if (!this.state.roadmap)

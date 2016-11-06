@@ -57,18 +57,47 @@ class Roadmap extends Component<any, State> {
 
     }
 
-    roadmapintro = <Card> 
+    roadmapintro = <div>
+        <Card> 
             <CardTitle 
                 title = {"Budget Roadmap"}
                 subtitle = {"Annual cycle of decision points"}
             /> 
+            <CardTitle 
+                title = "2017"
+            /> 
             <CardText>
             <div>Here is a link to Toronto's 2017 public budget process schedule: <a target="_blank" href="http://bit.ly/2eKcrfK">bit.ly/2eKcrfK</a></div>
+            </CardText>
+        </Card>
+        <Card>
+            <CardTitle 
+                actAsExpander={true}
+                showExpandableButton={true}
+                title = "Committee Meetings"
+            />
+            <CardText
+            expandable = {true}
+                style = {{
+                    border:"1px solid silver",
+                    margin:"0 3px 8px 3px",
+                    borderRadius:"8px",
+                }}
+            > 
+            Committee data
+            </CardText>
+        </Card>
+        <Card>
+            <CardTitle 
+                title = "2016"
+            /> 
+            <CardText>
             <div>Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget.</div>
             <div>(A program is a division or an agency)</div>
             <div>The data was gathered through a combination of public sources and interviews with city staff.</div>
             </CardText>
         </Card>
+        </div>
 
     phases:Phase[] = null
 

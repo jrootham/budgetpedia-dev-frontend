@@ -103,7 +103,7 @@ class HomeTilesClass extends React.Component<any, any> {
                 src={'./public/icons/ic_explore_48px.svg'}/><a 
                 href="javascript:void(0);"
                 onTouchTap={ e => {this.transitionTo(e,'explorer')}}>Budget Explorer</a></span>, 
-            see a sample of Toronto's annual budget decision process at our <span
+            see information about Toronto's budget decision schedule at our <span
                 style = {{whiteSpace:'pre'}} ><img 
                 style = {{height:'18px',verticalAlign:'middle'}}
                 src={'./public/icons/ic_map_48px.svg'}/><a 

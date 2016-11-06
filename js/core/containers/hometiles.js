@@ -63,7 +63,7 @@ class HomeTilesClass extends React.Component {
                                 React.createElement("span", {style: { whiteSpace: 'pre' }}, 
                                     React.createElement("img", {style: { height: '18px', verticalAlign: 'middle' }, src: './public/icons/ic_explore_48px.svg'}), 
                                     React.createElement("a", {href: "javascript:void(0);", onTouchTap: e => { this.transitionTo(e, 'explorer'); }}, "Budget Explorer")), 
-                                "," + ' ' + "see a sample of Toronto's annual budget decision process at our ", 
+                                "," + ' ' + "see information about Toronto's budget decision schedule at our ", 
                                 React.createElement("span", {style: { whiteSpace: 'pre' }}, 
                                     React.createElement("img", {style: { height: '18px', verticalAlign: 'middle' }, src: './public/icons/ic_map_48px.svg'}), 
                                     React.createElement("a", {href: "javascript:void(0);", onTouchTap: e => { this.transitionTo(e, 'roadmap'); }}, "Budget Roadmap")), 
