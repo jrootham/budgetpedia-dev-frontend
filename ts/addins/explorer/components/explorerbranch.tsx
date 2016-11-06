@@ -1313,51 +1313,42 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     let technotes = (branchDeclaration.showOptions)
         ?<RaisedButton
-            style={{marginLeft:"12px"}}
+            style={{margin:'3px 6px 0 0'}}
             type="button"
             label="Sources"
             onTouchTap={branch.handleTechDialogOpen} 
         />:null
 
     let showhelp = (branchDeclaration.showOptions)
-        ?<div 
-            style={
-                {
-                    display:'inline-block', 
-                    whiteSpace:"nowrap", 
-                    verticalAlign:"bottom",
-                    position:"relative",
-                }
-            }>
-            <IconButton tooltip="Help" tooltipPosition="top-center"
-            style={{top:'3px'}}
-            onTouchTap = { this.handleDialogOpen }>
-            <FontIcon 
-                className="material-icons">help_outline</FontIcon>
-        </IconButton></div>
+        ?<RaisedButton
+            label = "Help"
+            style={{margin:'3px 6px 0 0'}}
+            type="button"
+            onTouchTap = { this.handleDialogOpen } 
+            labelPosition="before"
+            icon = {<FontIcon 
+                style={{color:'rgba(0,0,0,0.5'}}
+                className="material-icons">help_outline</FontIcon>}
+            />
         :null
 
-    let search = (branchDeclaration.showOptions)
-        ?<div 
-            style={
-                {
-                    display:'inline-block', 
-                    whiteSpace:"nowrap", 
-                    verticalAlign:"bottom",
-                    position:"relative",
-                }
-            }>
-            <IconButton disabled tooltip="Find an entry point" tooltipPosition="top-center"
-            style={{top:'3px'}}
-            onTouchTap = { this.handleSearch }>
-            <FontIcon 
-                className="material-icons">search</FontIcon>
-        </IconButton></div>
+    let search = (branchDeclaration.showOptions)?
+        <RaisedButton disabled
+            label = "Find"
+            style={{margin:'3px 6px 0 0'}}
+            type="button"
+            onTouchTap = { this.handleSearch }
+            labelPosition="before"
+            icon = {<FontIcon 
+                style={{color:'rgba(0,0,0,0.5)'}}
+                className="material-icons">search</FontIcon>}
+            />
         :null
 
     let shareurl = (branchDeclaration.showOptions)
         ?<RaisedButton
             type="button"
+            style={{margin:'3px 6px 0 0'}}
             label="Share"
             onTouchTap={this.shareBranch} 
         />:null
@@ -1365,8 +1356,23 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     return <div >
     <div>
+        <div>
         { this.getBranchDataMessages() }
+        </div>
 
+        <div>
+
+        { technotes }
+
+        { showhelp }
+
+        { search }
+
+        { shareurl }
+
+        </div>
+
+        <div>
         { technotesdialog }
 
         { governmentselection }
@@ -1382,14 +1388,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         { inflationadjustment }
 
         { showcontrols }
-
-        { technotes }
-
-        { showhelp }
-
-        { search }
-
-        { shareurl }
+        </div>
 
     </div>
 

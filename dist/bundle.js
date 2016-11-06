@@ -4162,21 +4162,11 @@ var ExplorerBranch = function (_Component) {
                     position: "absolute",
                     zIndex: 2
                 }, onTouchTap: branch.handleTechDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement("div", null, "Please report" + ' ' + "any problems to ", React.createElement("a", { target: "_blank", href: "mailto:mail@budgetpedia.ca" }, "mail@budgetpedia.ca"), " "), branch.state.techDialogOpen ? branch.getTechNotesDisplay() : null, React.createElement("div", null, "Note: some historical numbers have been allocated to contemporary categories" + ' ' + "for continuity -- to make the numbers more easily comparable. We plan to disclose" + ' ' + "continuity details here."));
-            var technotes = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { style: { marginLeft: "12px" }, type: "button", label: "Sources", onTouchTap: branch.handleTechDialogOpen }) : null;
-            var showhelp = branchDeclaration.showOptions ? React.createElement("div", { style: {
-                    display: 'inline-block',
-                    whiteSpace: "nowrap",
-                    verticalAlign: "bottom",
-                    position: "relative"
-                } }, React.createElement(IconButton_1.default, { tooltip: "Help", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.handleDialogOpen }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "help_outline"))) : null;
-            var search = branchDeclaration.showOptions ? React.createElement("div", { style: {
-                    display: 'inline-block',
-                    whiteSpace: "nowrap",
-                    verticalAlign: "bottom",
-                    position: "relative"
-                } }, React.createElement(IconButton_1.default, { disabled: true, tooltip: "Find an entry point", tooltipPosition: "top-center", style: { top: '3px' }, onTouchTap: this.handleSearch }, React.createElement(FontIcon_1.default, { className: "material-icons" }, "search"))) : null;
-            var shareurl = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { type: "button", label: "Share", onTouchTap: this.shareBranch }) : null;
-            return React.createElement("div", null, React.createElement("div", null, this.getBranchDataMessages(), technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols, technotes, showhelp, search, shareurl), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
+            var technotes = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { style: { margin: '3px 6px 0 0' }, type: "button", label: "Sources", onTouchTap: branch.handleTechDialogOpen }) : null;
+            var showhelp = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { label: "Help", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleDialogOpen, labelPosition: "before", icon: React.createElement(FontIcon_1.default, { style: { color: 'rgba(0,0,0,0.5' }, className: "material-icons" }, "help_outline") }) : null;
+            var search = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { disabled: true, label: "Find", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleSearch, labelPosition: "before", icon: React.createElement(FontIcon_1.default, { style: { color: 'rgba(0,0,0,0.5)' }, className: "material-icons" }, "search") }) : null;
+            var shareurl = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { type: "button", style: { margin: '3px 6px 0 0' }, label: "Share", onTouchTap: this.shareBranch }) : null;
+            return React.createElement("div", null, React.createElement("div", null, React.createElement("div", null, this.getBranchDataMessages()), React.createElement("div", null, technotes, showhelp, search, shareurl), React.createElement("div", null, technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment, showcontrols)), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
                     branch.branchScrollBlock = node;
                 }, style: { overflow: "scroll" } }, drilldownportals, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))), React.createElement(Snackbar_1.default, { open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose }));
         }
