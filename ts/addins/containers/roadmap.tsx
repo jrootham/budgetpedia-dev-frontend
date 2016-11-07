@@ -66,15 +66,12 @@ class Roadmap extends Component<any, State> {
             <CardTitle 
                 title = "2017"
             /> 
-            <CardText>
-            <div>Here is a link to Toronto's 2017 public budget process schedule: <a target="_blank" href="http://bit.ly/2eKcrfK">bit.ly/2eKcrfK</a></div>
-            </CardText>
         </Card>
         <Card>
             <CardTitle 
                 actAsExpander={true}
                 showExpandableButton={true}
-                title = "Committee Meetings"
+                title = "Committee Meetings about the 2017 budget"
             />
             <CardText
             expandable = {true}
@@ -84,7 +81,16 @@ class Roadmap extends Component<any, State> {
                     borderRadius:"8px",
                 }}
             > 
-            Committee data
+            <p>Toronto's 2017 public budget process schedule is published <a 
+                target="_blank" href="http://bit.ly/2eKcrfK">here.</a></p>
+            <p>Follow events in these committees using the City's TMMIS (Toronto Meeting Management Information System).
+            Each committee's agendas, minutes, and background documents can be found through these links:</p>
+            <ul>
+            <li>Budget Committee: <a 
+                target = "_blank" href="">November 4</a> <a>November 18</a> [wrapup TBD] <a>November 28</a> </li>
+            <li>Executive Committee: <a target = "_blank" href="">December 1</a></li>
+            <li>City Council: <a target = "_blank" href="">December 13 & 14</a></li>
+            </ul>
             </CardText>
         </Card>
         <Card>
@@ -92,7 +98,7 @@ class Roadmap extends Component<any, State> {
                 title = "2016"
             /> 
             <CardText>
-            <div>Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget.</div>
+            <div>Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget, to provide some insight into the annual cycle.</div>
             <div>(A program is a division or an agency)</div>
             <div>The data was gathered through a combination of public sources and interviews with city staff.</div>
             </CardText>

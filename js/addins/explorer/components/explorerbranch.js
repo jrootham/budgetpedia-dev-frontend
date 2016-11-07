@@ -691,9 +691,7 @@ class ExplorerBranch extends Component {
                     React.createElement("span", {style: { fontStyle: "italic" }}, "Aspect: "), 
                     React.createElement(DropDownMenu_1.default, {disabled: aspectchoices().length < 2, value: branchDeclaration.aspect, onChange: (e, index, value) => {
                         branch.switchAspect(value);
-                    }}, aspectchoices()), 
-                    " ", 
-                    React.createElement("span", {style: { marginRight: "6px" }}, "|"))
+                    }}, aspectchoices()))
             :
                 null;
         let byunitselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, 
@@ -767,10 +765,19 @@ class ExplorerBranch extends Component {
             React.createElement("div", null, 
                 React.createElement("div", null, this.getBranchDataMessages()), 
                 React.createElement("div", null, 
-                    technotes, 
-                    showhelp, 
-                    search, 
-                    shareurl, 
+                    React.createElement("div", {style: {
+                        display: "inline-block",
+                        backgroundColor: "cornsilk",
+                        border: "1px solid silver",
+                        borderRadius: "8px",
+                        margin: "3px",
+                        paddingLeft: "6px",
+                        paddingBottom: "3px",
+                    }}, 
+                        technotes, 
+                        showhelp, 
+                        search, 
+                        shareurl), 
                     showcontrols), 
                 React.createElement("div", null, 
                     technotesdialog, 
@@ -778,8 +785,16 @@ class ExplorerBranch extends Component {
                     viewpointselection, 
                     versionselection, 
                     aspectselection, 
-                    byunitselection, 
-                    inflationadjustment)), 
+                    React.createElement("div", {style: {
+                        display: "inline-block",
+                        backgroundColor: "cornsilk",
+                        border: "1px solid silver",
+                        borderRadius: "8px",
+                        margin: "3px",
+                        paddingLeft: "6px",
+                    }}, 
+                        byunitselection, 
+                        inflationadjustment))), 
             React.createElement("div", {style: { whiteSpace: "nowrap" }}, 
                 React.createElement("div", {ref: node => {
                     branch.branchScrollBlock = node;

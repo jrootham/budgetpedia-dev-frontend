@@ -801,11 +801,11 @@ var Roadmap = function (_Component) {
         _this.state = {
             roadmap: null
         };
-        _this.roadmapintro = React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "Budget Roadmap", subtitle: "Annual cycle of decision points" }), React.createElement(Card_1.CardTitle, { title: "2017" }), React.createElement(Card_1.CardText, null, React.createElement("div", null, "Here is a link to Toronto's 2017 public budget process schedule: ", React.createElement("a", { target: "_blank", href: "http://bit.ly/2eKcrfK" }, "bit.ly/2eKcrfK")))), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { actAsExpander: true, showExpandableButton: true, title: "Committee Meetings" }), React.createElement(Card_1.CardText, { expandable: true, style: {
+        _this.roadmapintro = React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "Budget Roadmap", subtitle: "Annual cycle of decision points" }), React.createElement(Card_1.CardTitle, { title: "2017" })), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { actAsExpander: true, showExpandableButton: true, title: "Committee Meetings about the 2017 budget" }), React.createElement(Card_1.CardText, { expandable: true, style: {
                 border: "1px solid silver",
                 margin: "0 3px 8px 3px",
                 borderRadius: "8px"
-            } }, "Committee data")), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "2016" }), React.createElement(Card_1.CardText, null, React.createElement("div", null, "Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget."), React.createElement("div", null, "(A program is a division or an agency)"), React.createElement("div", null, "The data was gathered through a combination of public sources and interviews with city staff."))));
+            } }, React.createElement("p", null, "Toronto's 2017 public budget process schedule is published ", React.createElement("a", { target: "_blank", href: "http://bit.ly/2eKcrfK" }, "here.")), React.createElement("p", null, "Follow events in these committees using the City's TMMIS (Toronto Meeting Management Information System)." + ' ' + "Each committee's agendas, minutes, and background documents can be found through these links:"), React.createElement("ul", null, React.createElement("li", null, "Budget Committee: ", React.createElement("a", { target: "_blank", href: "" }, "November 4"), " ", React.createElement("a", null, "November 18"), " [wrapup TBD] ", React.createElement("a", null, "November 28"), " "), React.createElement("li", null, "Executive Committee: ", React.createElement("a", { target: "_blank", href: "" }, "December 1")), React.createElement("li", null, "City Council: ", React.createElement("a", { target: "_blank", href: "" }, "December 13 & 14"))))), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "2016" }), React.createElement(Card_1.CardText, null, React.createElement("div", null, "Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget, to provide some insight into the annual cycle."), React.createElement("div", null, "(A program is a division or an agency)"), React.createElement("div", null, "The data was gathered through a combination of public sources and interviews with city staff."))));
         _this.phases = null;
         _this.prepareRoadmap = function () {
             if (!_this.state.roadmap) return;
@@ -4128,7 +4128,7 @@ var ExplorerBranch = function (_Component) {
             };
             var aspectselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Aspect: "), React.createElement(DropDownMenu_1.default, { disabled: aspectchoices().length < 2, value: branchDeclaration.aspect, onChange: function onChange(e, index, value) {
                     branch.switchAspect(value);
-                } }, aspectchoices()), " ", React.createElement("span", { style: { marginRight: "6px" } }, "|")) : null;
+                } }, aspectchoices())) : null;
             var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Prorated: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.prorata, onChange: function onChange(e, index, value) {
                     _this3.switchComparator(value);
                 } }, React.createElement(MenuItem_1.default, { value: 'OFF', primaryText: "Off" }), React.createElement(MenuItem_1.default, { value: 'PERPERSON', primaryText: "Per person" }), React.createElement(MenuItem_1.default, { value: 'PER100000PERSONS', primaryText: "Per 100,000 people" }), React.createElement(MenuItem_1.default, { value: 'PERHOUSEHOLD', primaryText: "Per household" }), React.createElement(MenuItem_1.default, { value: 'PER50000HOUSEHOLDS', primaryText: "Per 50,000 households" }))) : null;
@@ -4166,7 +4166,22 @@ var ExplorerBranch = function (_Component) {
             var showhelp = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { label: "Help", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleDialogOpen, labelPosition: "before", icon: React.createElement(FontIcon_1.default, { style: { color: 'rgba(0,0,0,0.5' }, className: "material-icons" }, "help_outline") }) : null;
             var search = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { disabled: true, label: "Find", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleSearch, labelPosition: "before", icon: React.createElement(FontIcon_1.default, { style: { color: 'rgba(0,0,0,0.5)' }, className: "material-icons" }, "search") }) : null;
             var shareurl = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { type: "button", style: { margin: '3px 6px 0 0' }, label: "Share", onTouchTap: this.shareBranch }) : null;
-            return React.createElement("div", null, React.createElement("div", null, React.createElement("div", null, this.getBranchDataMessages()), React.createElement("div", null, technotes, showhelp, search, shareurl, showcontrols), React.createElement("div", null, technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection, byunitselection, inflationadjustment)), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
+            return React.createElement("div", null, React.createElement("div", null, React.createElement("div", null, this.getBranchDataMessages()), React.createElement("div", null, React.createElement("div", { style: {
+                    display: "inline-block",
+                    backgroundColor: "cornsilk",
+                    border: "1px solid silver",
+                    borderRadius: "8px",
+                    margin: "3px",
+                    paddingLeft: "6px",
+                    paddingBottom: "3px"
+                } }, technotes, showhelp, search, shareurl), showcontrols), React.createElement("div", null, technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection, React.createElement("div", { style: {
+                    display: "inline-block",
+                    backgroundColor: "cornsilk",
+                    border: "1px solid silver",
+                    borderRadius: "8px",
+                    margin: "3px",
+                    paddingLeft: "6px"
+                } }, byunitselection, inflationadjustment))), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
                     branch.branchScrollBlock = node;
                 }, style: { overflow: "scroll" } }, drilldownportals, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))), React.createElement(Snackbar_1.default, { open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose }));
         }

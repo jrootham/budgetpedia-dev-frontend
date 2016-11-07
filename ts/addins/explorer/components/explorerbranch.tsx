@@ -1186,7 +1186,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
                 { aspectchoices() }
 
-            </DropDownMenu> <span style={{marginRight:"6px"}}>|</span>
+            </DropDownMenu>
 
         </div>
         :
@@ -1361,6 +1361,19 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         </div>
 
         <div>
+        <div
+            style = {
+                {
+                    display:"inline-block",
+                    backgroundColor:"cornsilk",
+                    border:"1px solid silver",
+                    borderRadius:"8px",
+                    margin:"3px",
+                    paddingLeft:"6px",
+                    paddingBottom:"3px",
+                }
+            }
+        >
 
         { technotes }
 
@@ -1369,6 +1382,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         { search }
 
         { shareurl }
+        </div>
 
         { showcontrols }
         </div>
@@ -1384,9 +1398,22 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         { aspectselection }
 
+        <div
+            style = {
+                {
+                    display:"inline-block",
+                    backgroundColor:"cornsilk",
+                    border:"1px solid silver",
+                    borderRadius:"8px",
+                    margin:"3px",
+                    paddingLeft:"6px",
+                }
+            }
+        >
         { byunitselection }
 
         { inflationadjustment }
+        </div>
 
         </div>
 
