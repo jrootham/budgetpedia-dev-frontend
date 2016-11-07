@@ -921,6 +921,8 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 {(this.props.showControls)?
                     yearselection:<div style={{height:"12px"}}></div>}
 
+                {this.props.showControls?<div style={{display:"inline-block"}} >
+
                 { informationoptions }
 
                 { socialoptions }
@@ -928,6 +930,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                 { datatable }
 
                 { harmonizeoptions }
+                </div>:null}
 
             </div>
             

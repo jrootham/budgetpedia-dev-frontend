@@ -4686,7 +4686,7 @@ var ExplorerCell = function (_Component) {
                 } }, yearsoptions()) : null, yearScope == constants_1.TimeScope[constants_1.TimeScope.OneYear] ? null : yearScope == constants_1.TimeScope[constants_1.TimeScope.TwoYears] ? ':' : '-', React.createElement(DropDownMenu_1.default, { value: rightYear, style: {}, onChange: function onChange(e, key, payload) {
                     _this2.onChangeChartYears(leftYear, payload);
                 } }, yearsoptions()));
-            return React.createElement("div", null, this.props.showControls ? React.createElement("div", { style: { padding: "3px" } }, timescopes, chartoptions) : null, React.createElement("div", { style: { position: "relative" } }, chart, drilldownprompt), React.createElement("div", { style: { padding: "3px", textAlign: "center" } }, this.props.showControls ? yearselection : React.createElement("div", { style: { height: "12px" } }), informationoptions, socialoptions, datatable, harmonizeoptions));
+            return React.createElement("div", null, this.props.showControls ? React.createElement("div", { style: { padding: "3px" } }, timescopes, chartoptions) : null, React.createElement("div", { style: { position: "relative" } }, chart, drilldownprompt), React.createElement("div", { style: { padding: "3px", textAlign: "center" } }, this.props.showControls ? yearselection : React.createElement("div", { style: { height: "12px" } }), this.props.showControls ? React.createElement("div", { style: { display: "inline-block" } }, informationoptions, socialoptions, datatable, harmonizeoptions) : null));
         }
     }, {
         key: 'cellDeclaration',

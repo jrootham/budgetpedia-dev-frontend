@@ -581,10 +581,11 @@ class ExplorerCell extends Component {
             React.createElement("div", {style: { padding: "3px", textAlign: "center" }}, 
                 (this.props.showControls) ?
                     yearselection : React.createElement("div", {style: { height: "12px" }}), 
-                informationoptions, 
-                socialoptions, 
-                datatable, 
-                harmonizeoptions));
+                this.props.showControls ? React.createElement("div", {style: { display: "inline-block" }}, 
+                    informationoptions, 
+                    socialoptions, 
+                    datatable, 
+                    harmonizeoptions) : null));
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
