@@ -74,7 +74,7 @@ class HomeTilesClass extends React.Component<any, any> {
             >
             <Card style={
                 {
-                    backgroundImage:"url(./public/icons/budgetpedia.jpg",
+                    backgroundImage:"url(./public/icons/WebsiteBanner.png",
                     backgroundSize:"cover",
                     margin:"8px",
                     border:"2px solid silver",
@@ -82,75 +82,66 @@ class HomeTilesClass extends React.Component<any, any> {
                     fontSize:"18px"
                 }
             }>
-            <div
-                style = {
-                    {
-                        backgroundColor:'rgba(255, 255, 255, 0.7)',
-                        borderRadius:'7px',
-                    }
-                }
-            >
-            <div style = {{float:"right",margin:"9px 3px 3px 3px",borderRadius:"8px"}}>
-                <img style={{width:"100px"}} src= "./public/icons/budgetpedia-logo.png" />
-            </div>
-            <CardTitle>
-            Welcome to Budgetpedia.
-            </CardTitle>
-            <CardText>
-            <p style={{margin:0, padding:0}}>Explore the Toronto budget with our <span
-                style = {{whiteSpace:'pre'}} ><img 
-                style = {{height:'18px',verticalAlign:'middle'}}
-                src={'./public/icons/ic_explore_48px.svg'}/><a 
-                href="javascript:void(0);"
-                onTouchTap={ e => {this.transitionTo(e,'explorer')}}>Budget Explorer</a></span>, 
-            see information about Toronto's budget decision schedule at our <span
-                style = {{whiteSpace:'pre'}} ><img 
-                style = {{height:'18px',verticalAlign:'middle'}}
-                src={'./public/icons/ic_map_48px.svg'}/><a 
-                href="javascript:void(0);"
-                onTouchTap={ e => {this.transitionTo(e,'roadmap')}}>Budget Roadmap</a></span>, and find related <span
-                style = {{whiteSpace:'pre'}} ><img 
-                style = {{height:'18px',verticalAlign:'middle'}}
-                src={'./public/icons/ic_library_books_48px.svg'}/><a
-                href="javascript:void(0);"
-                onTouchTap={ e => {this.transitionTo(e,'resources')}}>Resources</a></span>.</p>
-                <hr style={{clear:"right"}} />
-            <p>We also welcome you to join us (and contribute!) on any of our digital platforms:</p>
-            <ul>
-            <li><a 
-                href="http://facebook.com/budgetpedia" 
-                target="_blank">
-                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> <a 
-                href="http://facebook.com/budgetpedia" 
-                target="_blank">our Facebook page</a></li>
-            <li><a 
-                href="http://facebook.com/groups/budgetpedia" 
-                target="_blank">
-                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> <a 
-                href="http://facebook.com/groups/budgetpedia" 
-                target="_blank">
-                our Facebook group</a></li>
-            <li><a 
-                href="http://twitter.com/budgetpedia" 
-                target="_blank">
-                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/twitter.png"/></a> <a 
-                href="http://twitter.com/budgetpedia" 
-                target="_blank">Twitter</a></li>
-            <li><a href="http://medium.com/budgetpedia"
-                target = "_blank">
-                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/medium.png"/></a> For 
-                in-depth articles: <a href="http://medium.com/budgetpedia"
-                target = "_blank">Medium</a></li>
-            <li><a href="http://groups.google.com/d/forum/budgetpedia"
-                target="_blank">
-                <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/g-logo.png"/></a> For 
-                technical discussions: <a href="http://groups.google.com/d/forum/budgetpedia"
-                target="_blank">our Google forum</a></li>
-            </ul>
-            <hr />
-            <p>Below are tiles leading to more information about the Budgetpedia Project.</p>
-            </CardText>
-            </div>
+                <div style = {{float:"right",margin:"9px 3px 3px 3px",borderRadius:"8px"}}>
+                    <img style={{width:"100px"}} src= "./public/icons/budgetpedia-logo.png" />
+                </div>
+                <CardTitle>
+                Welcome to Budgetpedia.
+                </CardTitle>
+                <CardText>
+                <p style={{margin:0, padding:0}}>Explore the Toronto budget with our <span
+                    style = {{whiteSpace:'pre'}} ><img 
+                    style = {{height:'18px',verticalAlign:'middle'}}
+                    src={'./public/icons/ic_explore_48px.svg'}/><a 
+                    href="javascript:void(0);"
+                    onTouchTap={ e => {this.transitionTo(e,'explorer')}}>Budget Explorer</a></span>, 
+                see information about Toronto's budget decision schedule at our <span
+                    style = {{whiteSpace:'pre'}} ><img 
+                    style = {{height:'18px',verticalAlign:'middle'}}
+                    src={'./public/icons/ic_map_48px.svg'}/><a 
+                    href="javascript:void(0);"
+                    onTouchTap={ e => {this.transitionTo(e,'roadmap')}}>Budget Roadmap</a></span>, and find related <span
+                    style = {{whiteSpace:'pre'}} ><img 
+                    style = {{height:'18px',verticalAlign:'middle'}}
+                    src={'./public/icons/ic_library_books_48px.svg'}/><a
+                    href="javascript:void(0);"
+                    onTouchTap={ e => {this.transitionTo(e,'resources')}}>Resources</a></span>.</p>
+                    <hr style={{clear:"right"}} />
+                <p>We also welcome you to join us (and contribute!) on any of our digital platforms:</p>
+                <ul>
+                <li><a 
+                    href="http://facebook.com/budgetpedia" 
+                    target="_blank">
+                    <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> <a 
+                    href="http://facebook.com/budgetpedia" 
+                    target="_blank">our Facebook page</a></li>
+                <li><a 
+                    href="http://facebook.com/groups/budgetpedia" 
+                    target="_blank">
+                    <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/facebook.png"/></a> <a 
+                    href="http://facebook.com/groups/budgetpedia" 
+                    target="_blank">
+                    our Facebook group</a></li>
+                <li><a 
+                    href="http://twitter.com/budgetpedia" 
+                    target="_blank">
+                    <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/twitter.png"/></a> <a 
+                    href="http://twitter.com/budgetpedia" 
+                    target="_blank">Twitter</a></li>
+                <li><a href="http://medium.com/budgetpedia"
+                    target = "_blank">
+                    <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/medium.png"/></a> For 
+                    in-depth articles: <a href="http://medium.com/budgetpedia"
+                    target = "_blank">Medium</a></li>
+                <li><a href="http://groups.google.com/d/forum/budgetpedia"
+                    target="_blank">
+                    <img style={{height:"16px",verticalAlign:"middle"}} src="./public/icons/g-logo.png"/></a> For 
+                    technical discussions: <a href="http://groups.google.com/d/forum/budgetpedia"
+                    target="_blank">our Google forum</a></li>
+                </ul>
+                <hr />
+                <p>Below are tiles leading to more information about the Budgetpedia Project.</p>
+                </CardText>
             </Card>
             </div>
             <AppTiles 
