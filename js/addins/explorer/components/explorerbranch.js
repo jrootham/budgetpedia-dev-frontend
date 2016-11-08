@@ -787,7 +787,7 @@ class ExplorerBranch extends Component {
                     aspectselection, 
                     React.createElement("div", {style: {
                         display: "inline-block",
-                        backgroundColor: "cornsilk",
+                        backgroundColor: "#ebfaf9",
                         border: "1px solid silver",
                         borderRadius: "8px",
                         margin: "3px",

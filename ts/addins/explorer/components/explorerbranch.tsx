@@ -1402,7 +1402,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             style = {
                 {
                     display:"inline-block",
-                    backgroundColor:"cornsilk",
+                    backgroundColor:"#ebfaf9",
                     border:"1px solid silver",
                     borderRadius:"8px",
                     margin:"3px",

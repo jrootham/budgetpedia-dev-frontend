@@ -57,6 +57,27 @@ class Roadmap extends Component<any, State> {
 
     }
 
+    // <h3>Rate supported budgets (waste, water, parking)</h3>
+    // <ul>
+    // <li>Budget Committee: <a 
+    //     target = "_blank" href = "http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2016.BU25">November 4</a> <a
+    //     target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2016.BU26">November 18</a> [wrapup TBD] <a
+    //     target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2016.BU27">November 28</a> </li>
+    // <li>Executive Committee: <a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=966#Meeting-2016.EX20">December 1</a></li>
+    // <li>City Council: <a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=961#Meeting-2016.CC23">December 13 & 14</a></li>
+    // </ul>
+    // <h3>Tax supported budgets (eveything else)</h3>
+    // <ul>
+    // <li>Budget Committee: <a 
+    //     target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2016.BU28">December 2</a> <a
+    //     target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2016.BU29">December 16, 19 & 20, possibly 21</a> [wrapup TBD] <a
+    //     target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2017.BU30">January 5, 9 & 10</a> <a
+    //     target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2017.BU31">January 12</a> <a
+    //     target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2017.BU32">January 24</a> </li>
+    // <li>Executive Committee: <a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=966#Meeting-2017.EX22">February 7</a></li>
+    // <li>City Council: <a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=961#Meeting-2017.CC25">February 15, 16, possibly 17</a></li>
+    // </ul>
+
     roadmapintro = <div>
         <Card> 
             <CardTitle 
@@ -87,23 +108,15 @@ class Roadmap extends Component<any, State> {
             Each committee's agendas, minutes, and background documents can be found through these links:</p>
             <h3>Rate supported budgets (waste, water, parking)</h3>
             <ul>
-            <li>Budget Committee: <a 
-                target = "_blank" href = "http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2016.BU25">November 4</a> <a
-                target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2016.BU26">November 18</a> [wrapup TBD] <a
-                target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2016.BU27">November 28</a> </li>
-            <li>Executive Committee: <a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=966#Meeting-2016.EX20">December 1</a></li>
-            <li>City Council: <a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=961#Meeting-2016.CC23">December 13 & 14</a></li>
+                <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022">Budget Committee</a>: November 4, November 18, [wrapup TBD], November 28 </li>
+                <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=966">Executive Committee</a>: December 1</li>
+                <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=961">City Council</a>: December 13 & 14</li>
             </ul>
             <h3>Tax supported budgets (eveything else)</h3>
             <ul>
-            <li>Budget Committee: <a 
-                target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2016.BU28">December 2</a> <a
-                target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2016.BU29">December 16, 19 & 20, possibly 21</a> [wrapup TBD] <a
-                target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2017.BU30">January 5, 9 & 10</a> <a
-                target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2017.BU31">January 12</a> <a
-                target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022#Meeting-2017.BU32">January 24</a> </li>
-            <li>Executive Committee: <a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=966#Meeting-2017.EX22">February 7</a></li>
-            <li>City Council: <a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=961#Meeting-2017.CC25">February 15, 16, possibly 17</a></li>
+                <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022">Budget Committee</a>: December 2, December 16, 19 & 20, possibly 21, [wrapup TBD], January 5, 9 & 10, January 12, January 24 </li>
+                <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=966">Executive Committee</a>: February 7</li>
+                <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=961">City Council</a>: February 15, 16, possibly 17</li>
             </ul>
             </CardText>
         </Card>
