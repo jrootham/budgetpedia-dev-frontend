@@ -74,7 +74,7 @@ class HomeTilesClass extends React.Component<any, any> {
             >
             <Card style={
                 {
-                    backgroundImage:"url(./public/icons/WebsiteBanner.png",
+                    backgroundImage:"url(./public/icons/WebsiteBanner.png)",
                     backgroundSize:"cover",
                     margin:"8px",
                     border:"2px solid silver",

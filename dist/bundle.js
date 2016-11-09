@@ -7756,7 +7756,7 @@ var HomeTilesClass = function (_React$Component) {
                     backgroundColor: "#404244",
                     padding: "8px"
                 } }, React.createElement(Card_1.Card, { style: {
-                    backgroundImage: "url(./public/icons/WebsiteBanner.png",
+                    backgroundImage: "url(./public/icons/WebsiteBanner.png)",
                     backgroundSize: "cover",
                     margin: "8px",
                     border: "2px solid silver",
@@ -8776,7 +8776,8 @@ var hometiles = [{
         title: 'Get a Demo',
         subtitle: 'Resources & training',
         image: '../../public/icons/ic_record_voice_over_48px.svg',
-        category: 'get involved'
+        category: 'get involved',
+        disabled: true
     },
     index: 6,
     tier: 'secondary',

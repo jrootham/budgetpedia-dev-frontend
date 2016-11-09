@@ -154,6 +154,7 @@ let hometiles: [Object] = [
             subtitle: `Resources & training`,
             image: '../../public/icons/ic_record_voice_over_48px.svg',
             category: 'get involved',
+            disabled: true,
         },
         index: 6,
         tier:'secondary',

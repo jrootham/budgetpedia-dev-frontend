@@ -42,7 +42,7 @@ class HomeTilesClass extends React.Component {
                 padding: "8px",
             }}, 
                 React.createElement(Card_1.Card, {style: {
-                    backgroundImage: "url(./public/icons/WebsiteBanner.png",
+                    backgroundImage: "url(./public/icons/WebsiteBanner.png)",
                     backgroundSize: "cover",
                     margin: "8px",
                     border: "2px solid silver",
