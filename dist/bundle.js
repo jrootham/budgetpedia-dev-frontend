@@ -567,6 +567,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('react');
+var Card_1 = require('material-ui/Card');
 var Component = React.Component;
 
 var Demos = function (_Component) {
@@ -579,9 +580,9 @@ var Demos = function (_Component) {
     }
 
     _createClass(Demos, [{
-        key: "render",
+        key: 'render',
         value: function render() {
-            return React.createElement("div", null, "Demos Page");
+            return React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, null, "Get a Demo"), React.createElement(Card_1.CardText, null, React.createElement("ul", { style: { marginTop: "0", marginBottom: "0" } }, React.createElement("li", null, "Interested in learning more about Budgetpedia?"), React.createElement("li", null, "Want to get a better understanding of how the budget process" + ' ' + "works in Toronto?"), React.createElement("li", null, "Have a group that would like a hands-on demonstration of how you can" + ' ' + "use budgetpedia to better understand Toronto's city finances?"))), React.createElement(Card_1.CardText, null, "Get Henrik (the project lead) to demo the site for you."), React.createElement(Card_1.CardText, null, "If you've got a group of 10 or more people anywhere in the City of Toronto," + ' ' + "we're happy to come out and provide a brief overview of what Budgetpedia" + ' ' + "is and how you can use it to better understand the city budget and budget-" + ' ' + "making process."), React.createElement(Card_1.CardText, null, "We can provide a brief (10-30 minute) overview of the website and tools," + ' ' + "as well as a chance for your group to explore the tools available on the" + ' ' + "site"), React.createElement(Card_1.CardText, null, "In addition to gaining a better understanding of the city budget, you'll" + ' ' + "also learn how you can get involved in making a difference in the" + ' ' + "development of the newest city budget."), React.createElement(Card_1.CardText, null, React.createElement("strong", null, "PLUS!"), " Learn how you can get involved in making Budgetpedia even" + ' ' + "better.  Give us your input on what tools you'd like and how the site" + ' ' + "coulcd better help your organization.  We're still in the early stages and" + ' ' + "are actively looking for input."), React.createElement(Card_1.CardText, null, React.createElement("h4", null, React.createElement("b", null, "Contact")), React.createElement("ul", null, React.createElement("li", null, React.createElement("b", null, "Email:"), " ", React.createElement("a", { href: "mailto:mail@budgetpeida.ca" }, "mail@budgetpedia.ca"))))));
         }
     }]);
 
@@ -591,7 +592,7 @@ var Demos = function (_Component) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Demos;
 
-},{"react":858}],8:[function(require,module,exports){
+},{"material-ui/Card":457,"react":858}],8:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -8775,8 +8776,7 @@ var hometiles = [{
         title: 'Get a Demo',
         subtitle: 'Resources & training',
         image: '../../public/icons/ic_record_voice_over_48px.svg',
-        category: 'get involved',
-        disabled: true
+        category: 'get involved'
     },
     index: 6,
     tier: 'secondary',
