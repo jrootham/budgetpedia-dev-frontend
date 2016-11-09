@@ -108,13 +108,13 @@ class Roadmap extends Component<any, State> {
             Each committee's agendas, minutes, and background documents can be found through these links:</p>
             <h3>Rate supported budgets (waste, water, parking)</h3>
             <ul>
-                <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022">Budget Committee</a>: November 4, November 18, [wrapup TBD], November 28 </li>
+                <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022">Budget Committee</a>: November 4, November 18, [wrapup TBD], November 28</li>
                 <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=966">Executive Committee</a>: December 1</li>
                 <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=961">City Council</a>: December 13 & 14</li>
             </ul>
             <h3>Tax supported budgets (eveything else)</h3>
             <ul>
-                <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022">Budget Committee</a>: December 2, December 16, 19 & 20, possibly 21, [wrapup TBD], January 5, 9 & 10, January 12, January 24 </li>
+                <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022">Budget Committee</a>: December 2, December 16, 19 & 20, possibly 21, January 5, 9 & 10, January 12, January 24</li>
                 <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=966">Executive Committee</a>: February 7</li>
                 <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=961">City Council</a>: February 15, 16, possibly 17</li>
             </ul>

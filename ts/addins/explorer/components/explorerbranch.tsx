@@ -1398,6 +1398,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         { aspectselection }
 
+        </div>
+
         <div
             style = {
                 {
@@ -1413,8 +1415,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         { byunitselection }
 
         { inflationadjustment }
-        </div>
-
         </div>
 
     </div>

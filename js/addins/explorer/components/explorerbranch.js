@@ -784,17 +784,17 @@ class ExplorerBranch extends Component {
                     governmentselection, 
                     viewpointselection, 
                     versionselection, 
-                    aspectselection, 
-                    React.createElement("div", {style: {
-                        display: "inline-block",
-                        backgroundColor: "#ebfaf9",
-                        border: "1px solid silver",
-                        borderRadius: "8px",
-                        margin: "3px",
-                        paddingLeft: "6px",
-                    }}, 
-                        byunitselection, 
-                        inflationadjustment))), 
+                    aspectselection), 
+                React.createElement("div", {style: {
+                    display: "inline-block",
+                    backgroundColor: "#ebfaf9",
+                    border: "1px solid silver",
+                    borderRadius: "8px",
+                    margin: "3px",
+                    paddingLeft: "6px",
+                }}, 
+                    byunitselection, 
+                    inflationadjustment)), 
             React.createElement("div", {style: { whiteSpace: "nowrap" }}, 
                 React.createElement("div", {ref: node => {
                     branch.branchScrollBlock = node;

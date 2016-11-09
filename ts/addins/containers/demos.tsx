@@ -8,7 +8,7 @@ class Demos extends Component<any, any> {
     render() { return <div>
 
     <Card>
-    <CardTitle>Get a Demo</CardTitle>
+    <CardTitle title = "Get a Demo" />
 
     <CardText>
         <ul style={{marginTop:"0", marginBottom:"0"}} >
@@ -21,7 +21,7 @@ class Demos extends Component<any, any> {
     </CardText>
 
     <CardText>
-        Get Henrik (the project lead) to demo the site for you.
+        Get Henrik Bechmann (the project lead) to demo the site for you.
     </CardText>
      <CardText>
    If you've got a group of 10 or more people anywhere in the City of Toronto,
@@ -35,9 +35,9 @@ class Demos extends Component<any, any> {
         site
      </CardText>
      <CardText>
-    In addition to gaining a better understanding of the city budget, you'll
-        also learn how you can get involved in making a difference in the
-        development of the newest city budget.
+         Note from Henrik: <span style = {{fontStyle:"italic"}}>My preference is to bicylce
+         to my destination, anywhere in downtown Toronto from, say, Dundas West to Logan, not very far
+         north of Bloor to the waterfront. Otherwise, please make it close to the subway.</span>
      </CardText>
      <CardText>
     <strong>PLUS!</strong> Learn how you can get involved in making Budgetpedia even
@@ -47,9 +47,9 @@ class Demos extends Component<any, any> {
     </CardText>
 
     <CardText>
-<h4><b>Contact</b></h4>
+<h4><strong>Contact</strong></h4>
 <ul>
-    <li><b>Email:</b> <a href="mailto:mail@budgetpeida.ca">mail@budgetpedia.ca</a></li>
+    <li><strong>Email:</strong> <a href="mailto:mail@budgetpeida.ca">mail@budgetpedia.ca</a></li>
 </ul>
     </CardText>
 
