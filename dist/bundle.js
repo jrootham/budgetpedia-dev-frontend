@@ -1656,7 +1656,7 @@ var BudgetBranch = function () {
                     prorataseries = 'population';
                     break;
                 case "PERHOUSEHOLD":
-                case "PER50000HOUSEHOLDS":
+                case "PER40000HOUSEHOLDS":
                     prorataseries = 'households';
                     break;
                 default:
@@ -1707,8 +1707,8 @@ var BudgetBranch = function () {
                     denominator = 1;
                     multiplier = unitratio;
                     break;
-                case "PER50000HOUSEHOLDS":
-                    denominator = 50000;
+                case "PER40000HOUSEHOLDS":
+                    denominator = 40000;
                     multiplier = 1;
                     break;
                 default:
@@ -2008,8 +2008,8 @@ var BudgetCell = function () {
                     case "PERHOUSEHOLD":
                         thestring = 'per household';
                         break;
-                    case "PER50000HOUSEHOLDS":
-                        thestring = 'per 50,000 households';
+                    case "PER40000HOUSEHOLDS":
+                        thestring = 'per 40,000 households';
                         break;
                     default:
                         console.error('unknown prorataindex in _doProRataCalc', prorata);
@@ -4133,7 +4133,7 @@ var ExplorerBranch = function (_Component) {
                 } }, aspectchoices())) : null;
             var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Prorated: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.prorata, onChange: function onChange(e, index, value) {
                     _this3.switchComparator(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'OFF', primaryText: "Off" }), React.createElement(MenuItem_1.default, { value: 'PERPERSON', primaryText: "Per person" }), React.createElement(MenuItem_1.default, { value: 'PER100000PERSONS', primaryText: "Per 100,000 people" }), React.createElement(MenuItem_1.default, { value: 'PERHOUSEHOLD', primaryText: "Per household" }), React.createElement(MenuItem_1.default, { value: 'PER50000HOUSEHOLDS', primaryText: "Per 50,000 households" }))) : null;
+                } }, React.createElement(MenuItem_1.default, { value: 'OFF', primaryText: "Off" }), React.createElement(MenuItem_1.default, { value: 'PERPERSON', primaryText: "Per person" }), React.createElement(MenuItem_1.default, { value: 'PER100000PERSONS', primaryText: "Per 100,000 people" }), React.createElement(MenuItem_1.default, { value: 'PERHOUSEHOLD', primaryText: "Per household" }), React.createElement(MenuItem_1.default, { value: 'PER40000HOUSEHOLDS', primaryText: "Per 40,000 households" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'PERWARD', primaryText: "Per ward (x 44)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'PERNEIGHBOURHOOD', primaryText: "Per neighbourhood (x 4 x 44)" }))) : null;
             var inflationadjustment = branchDeclaration.showOptions ? React.createElement("div", { style: {
                     display: 'inline-block',
                     whiteSpace: "nowrap",

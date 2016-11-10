@@ -177,7 +177,7 @@ class BudgetBranch {
                     prorataseries = 'population';
                     break;
                 case "PERHOUSEHOLD":
-                case "PER50000HOUSEHOLDS":
+                case "PER40000HOUSEHOLDS":
                     prorataseries = 'households';
                     break;
                 default:
@@ -225,8 +225,8 @@ class BudgetBranch {
                     denominator = 1;
                     multiplier = unitratio;
                     break;
-                case "PER50000HOUSEHOLDS":
-                    denominator = 50000;
+                case "PER40000HOUSEHOLDS":
+                    denominator = 40000;
                     multiplier = 1;
                     break;
                 default:

@@ -267,8 +267,8 @@ class BudgetCell {
                 case "PERHOUSEHOLD":
                     thestring = 'per household'
                     break
-                case "PER50000HOUSEHOLDS":
-                    thestring = 'per 50,000 households'
+                case "PER40000HOUSEHOLDS":
+                    thestring = 'per 40,000 households'
                     break
                 default:
                     console.error('unknown prorataindex in _doProRataCalc',prorata)
