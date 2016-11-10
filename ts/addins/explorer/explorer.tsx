@@ -373,8 +373,9 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     // ----------------------------[ ui responses ]------------------------------
 
     onExpandChange = (expanded) => { // TODO: validate this
+        return
         // TODO: change background color of title if it is collapsed
-        this.props.resetLastAction()
+        // this.props.resetLastAction()
     }
 
     branchMoveUp = branchuid => {
@@ -601,14 +602,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     >
 
                     <CardTitle
-                        actAsExpander={true}
-                        showExpandableButton={true} >
+                        actAsExpander={false}
+                        showExpandableButton={false} >
 
                         {"Row " + (branchIndex + 1 ) + " "} 
                         <input 
                             type="text" 
                             onTouchTap = {(ev) => {ev.stopPropagation()}}
-                        />
+                        /> 
 
                         <IconButton
                             style={{
@@ -664,7 +665,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
                     </CardTitle>
 
-                    <CardText expandable>
+                    <CardText expandable = {false}>
                     <ExplorerBranch 
                         budgetBranch = { budgetBranch }
                         declarationData = { explorer.props.declarationData }
@@ -676,7 +677,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         setToast = {this.setToast}
                     />
                     </CardText>
-                    <CardActions expandable>
+                    <CardActions expandable = {false}>
                         <FloatingActionButton
                             onTouchTap = {
                                 (uid => () => {

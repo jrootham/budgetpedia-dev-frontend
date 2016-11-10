@@ -4097,8 +4097,8 @@ var ExplorerBranch = function (_Component) {
             var branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
             var viewpointselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Viewpoint: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.viewpoint, onChange: function onChange(e, index, value) {
                     branch.switchViewpoint(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (operating budgets)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (operating budgets)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALEXPENSES', primaryText: "Expenses (audited statements)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALREVENUES', primaryText: "Revenues (audited statements)" }), React.createElement(MenuItem_1.default, { value: 'EXPENDITURES', primaryText: "Expenses by Object (audited statements)" })), " ", React.createElement("span", { style: { marginRight: "6px" } }, "|")) : null;
-            var governmentselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Government: "), React.createElement(DropDownMenu_1.default, { value: "Toronto", disabled: true }, React.createElement(MenuItem_1.default, { value: 'Toronto', primaryText: "Toronto, Ontario" }))) : null;
+                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (operating budgets)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (operating budgets)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALEXPENSES', primaryText: "Expenses (audited statements)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALREVENUES', primaryText: "Revenues (audited statements)" }), React.createElement(MenuItem_1.default, { value: 'EXPENDITURES', primaryText: "Expenses by Object (audited statements)" }))) : null;
+            var governmentselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement(DropDownMenu_1.default, { value: "Toronto", disabled: true }, React.createElement(MenuItem_1.default, { value: 'Toronto', primaryText: "Toronto, Ontario" }))) : null;
             var versionchoices = function versionchoices() {
                 switch (branchDeclaration.viewpoint) {
                     case "FUNCTIONAL":
@@ -4176,7 +4176,7 @@ var ExplorerBranch = function (_Component) {
                     margin: "3px",
                     paddingLeft: "6px",
                     paddingBottom: "3px"
-                } }, technotes, showhelp, search, shareurl), showcontrols), React.createElement("div", null, technotesdialog, governmentselection, viewpointselection, versionselection, aspectselection), React.createElement("div", { style: {
+                } }, technotes, showhelp, search, shareurl), governmentselection, showcontrols), React.createElement("div", null, technotesdialog, viewpointselection, versionselection, aspectselection), React.createElement("div", { style: {
                     display: "inline-block",
                     backgroundColor: "#ebfaf9",
                     border: "1px solid silver",
@@ -5489,7 +5489,7 @@ var Explorer = function (_Component) {
             };
         };
         _this.onExpandChange = function (expanded) {
-            _this.props.resetLastAction();
+            return;
         };
         _this.branchMoveUp = function (branchuid) {
             _this.props.branchMoveUp(branchuid);
@@ -5802,7 +5802,7 @@ var Explorer = function (_Component) {
                     };
                     return React.createElement(Card_1.Card, { initiallyExpanded: true, key: budgetBranch.uid, onExpandChange: function onExpandChange(expanded) {
                             _this2.onExpandChange(expanded);
-                        } }, React.createElement(Card_1.CardTitle, { actAsExpander: true, showExpandableButton: true }, "Row " + (branchIndex + 1) + " ", React.createElement("input", { type: "text", onTouchTap: function onTouchTap(ev) {
+                        } }, React.createElement(Card_1.CardTitle, { actAsExpander: false, showExpandableButton: false }, "Row " + (branchIndex + 1) + " ", React.createElement("input", { type: "text", onTouchTap: function onTouchTap(ev) {
                             ev.stopPropagation();
                         } }), React.createElement(IconButton_1.default, { style: {
                             float: "right",
@@ -5819,7 +5819,7 @@ var Explorer = function (_Component) {
                                 ev.stopPropagation();
                                 _this2.branchMoveUp(uid);
                             };
-                        }(budgetBranch.uid), tooltip: "Move up" }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "arrow_upward"))), React.createElement(Card_1.CardText, { expandable: true }, React.createElement(explorerbranch_1.default, { budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: _this2.handleDialogOpen, urlparms: urlparms, clearUrlParms: _this2.clearUrlParms, setToast: _this2.setToast })), React.createElement(Card_1.CardActions, { expandable: true }, React.createElement(FloatingActionButton_1.default, { onTouchTap: function (uid) {
+                        }(budgetBranch.uid), tooltip: "Move up" }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "arrow_upward"))), React.createElement(Card_1.CardText, { expandable: false }, React.createElement(explorerbranch_1.default, { budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: _this2.handleDialogOpen, urlparms: urlparms, clearUrlParms: _this2.clearUrlParms, setToast: _this2.setToast })), React.createElement(Card_1.CardActions, { expandable: false }, React.createElement(FloatingActionButton_1.default, { onTouchTap: function (uid) {
                             return function () {
                                 _this2.addBranch(uid);
                             };

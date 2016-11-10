@@ -642,14 +642,12 @@ class ExplorerBranch extends Component {
                 React.createElement(MenuItem_1.default, {value: 'STRUCTURAL', primaryText: "Structural (operating budgets)"}), 
                 React.createElement(MenuItem_1.default, {value: 'ACTUALEXPENSES', primaryText: "Expenses (audited statements)"}), 
                 React.createElement(MenuItem_1.default, {value: 'ACTUALREVENUES', primaryText: "Revenues (audited statements)"}), 
-                React.createElement(MenuItem_1.default, {value: 'EXPENDITURES', primaryText: "Expenses by Object (audited statements)"})), 
-            " ", 
-            React.createElement("span", {style: { marginRight: "6px" }}, "|")) : null;
+                React.createElement(MenuItem_1.default, {value: 'EXPENDITURES', primaryText: "Expenses by Object (audited statements)"}))) : null;
         let governmentselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, 
-            React.createElement("span", {style: { fontStyle: "italic" }}, "Government: "), 
             React.createElement(DropDownMenu_1.default, {value: "Toronto", disabled: true}, 
                 React.createElement(MenuItem_1.default, {value: 'Toronto', primaryText: "Toronto, Ontario"})
-            )) : null;
+            )
+        ) : null;
         const versionchoices = () => {
             switch (branchDeclaration.viewpoint) {
                 case "FUNCTIONAL":
@@ -778,10 +776,10 @@ class ExplorerBranch extends Component {
                         showhelp, 
                         search, 
                         shareurl), 
+                    governmentselection, 
                     showcontrols), 
                 React.createElement("div", null, 
                     technotesdialog, 
-                    governmentselection, 
                     viewpointselection, 
                     versionselection, 
                     aspectselection), 

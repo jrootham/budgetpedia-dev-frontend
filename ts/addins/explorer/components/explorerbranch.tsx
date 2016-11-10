@@ -1098,12 +1098,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             <MenuItem value={'ACTUALREVENUES'} primaryText="Revenues (audited statements)"/>
             <MenuItem value={'EXPENDITURES'} primaryText="Expenses by Object (audited statements)"/>
 
-        </DropDownMenu> <span style={{marginRight:"6px"}}>|</span>
+        </DropDownMenu>
 
     </div>:null
 
+    // <span style={{ fontStyle: "italic" }}>Government: </span>
     let governmentselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
-        <span style={{ fontStyle: "italic" }}>Government: </span>
         <DropDownMenu
             value={"Toronto"}
             disabled
@@ -1384,13 +1384,14 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         { shareurl }
         </div>
 
+        { governmentselection }
+
         { showcontrols }
+
         </div>
 
         <div>
         { technotesdialog }
-
-        { governmentselection }
 
         { viewpointselection }
 
