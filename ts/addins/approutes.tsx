@@ -18,6 +18,7 @@ import Resources from './containers/resources'
 import JoinUs from './containers/joinus'
 import Stories from './containers/stories'
 import Demos from './containers/demos'
+import Announcements from './containers/announcements'
 import Pathways from './containers/pathways'
 
 let routedata = [
@@ -32,6 +33,7 @@ let routedata = [
     { path: "joinus", component: JoinUs },
     { path: "stories", component: Stories },
     { path: "demos", component: Demos },
+    { path: "announcements", component: Announcements },
     { path: "pathways", component: Pathways },
 ]
 

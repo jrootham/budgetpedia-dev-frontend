@@ -85,7 +85,6 @@ let hometiles = [
             subtitle: `Budgetpedia Plans and News`,
             image: '../../public/icons/ic_announcement_black_48px.svg',
             category: 'information',
-            disabled: true,
         },
         index: 5,
         tier: 'secondary',

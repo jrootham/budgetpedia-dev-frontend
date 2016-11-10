@@ -12,6 +12,7 @@ const resources_1 = require('./containers/resources');
 const joinus_1 = require('./containers/joinus');
 const stories_1 = require('./containers/stories');
 const demos_1 = require('./containers/demos');
+const announcements_1 = require('./containers/announcements');
 const pathways_1 = require('./containers/pathways');
 let routedata = [
     { path: "about", component: about_1.default },
@@ -25,6 +26,7 @@ let routedata = [
     { path: "joinus", component: joinus_1.default },
     { path: "stories", component: stories_1.default },
     { path: "demos", component: demos_1.default },
+    { path: "announcements", component: announcements_1.default },
     { path: "pathways", component: pathways_1.default },
 ];
 const approutes = routedata.map((item, index) => (React.createElement(react_router_1.Route, {key: 'approute' + index, path: item.path, component: item.component})));
