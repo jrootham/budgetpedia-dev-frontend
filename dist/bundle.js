@@ -841,7 +841,7 @@ var Roadmap = function (_Component) {
         _this.state = {
             roadmap: null
         };
-        _this.roadmapintro = React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "Budget Roadmap", subtitle: "Annual cycle of decision points" }), React.createElement(Card_1.CardTitle, { title: "2017" })), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { actAsExpander: true, showExpandableButton: true, title: "Committee Meetings about the 2017 budget" }), React.createElement(Card_1.CardText, { expandable: true, style: {
+        _this.roadmapintro = React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "Budget Roadmap", subtitle: "Annual cycle of decision points" }), React.createElement(Card_1.CardTitle, { title: "2017" })), React.createElement(Card_1.Card, { initiallyExpanded: true }, React.createElement(Card_1.CardTitle, { actAsExpander: true, showExpandableButton: true, title: "Committee Meetings for the 2017 budget" }), React.createElement(Card_1.CardText, { expandable: true, style: {
                 border: "1px solid silver",
                 margin: "0 3px 8px 3px",
                 borderRadius: "8px"

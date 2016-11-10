@@ -88,11 +88,11 @@ class Roadmap extends Component<any, State> {
                 title = "2017"
             /> 
         </Card>
-        <Card>
+        <Card initiallyExpanded >
             <CardTitle 
                 actAsExpander={true}
                 showExpandableButton={true}
-                title = "Committee Meetings about the 2017 budget"
+                title = "Committee Meetings for the 2017 budget"
             />
             <CardText
             expandable = {true}
