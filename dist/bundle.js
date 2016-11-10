@@ -1659,6 +1659,10 @@ var BudgetBranch = function () {
                 case "PER40000HOUSEHOLDS":
                     prorataseries = 'households';
                     break;
+                case "PERWARD":
+                case "PERNEIGHBOURHOOD":
+                    prorataseries = 'none';
+                    break;
                 default:
                     console.error('unknown prorataindex', prorataindex);
                     return;
@@ -1667,18 +1671,34 @@ var BudgetBranch = function () {
                 if (prorataindex == 'OFF') {
                     resolve(true);
                 } else {
-                    var _promise = databaseapi_1.default.getProrataData({
-                        repository: repository,
-                        prorataseries: prorataseries
-                    });
-                    _promise.then(function (proratadata) {
+                    if (prorataseries == 'none') {
+                        var YearsRange = viewpointdata.Meta.datasetConfig.YearsRange;
+                        var start = YearsRange.start,
+                            end = YearsRange.end;
+
+                        var proratadata = {
+                            years: {}
+                        };
+                        for (var year = start; year <= end; year++) {
+                            proratadata.years[year] = null;
+                        }
                         var budgetBranch = _this;
-                        _this._doProRataCalc(viewpointdata, proratadata);
+                        budgetBranch._doProRataCalc(viewpointdata, proratadata);
                         resolve(true);
-                    }).catch(function (reason) {
-                        console.error(reason);
-                        error(reason);
-                    });
+                    } else {
+                        var _promise = databaseapi_1.default.getProrataData({
+                            repository: repository,
+                            prorataseries: prorataseries
+                        });
+                        _promise.then(function (proratadata) {
+                            var budgetBranch = _this;
+                            budgetBranch._doProRataCalc(viewpointdata, proratadata);
+                            resolve(true);
+                        }).catch(function (reason) {
+                            console.error(reason);
+                            error(reason);
+                        });
+                    }
                 }
             });
             return promise;
@@ -1694,6 +1714,7 @@ var BudgetBranch = function () {
                 multiplier = void 0,
                 precision = 5,
                 threshhold = 10000;
+            var proratatype = 'yearly';
             switch (prorataindex) {
                 case "PERPERSON":
                     denominator = 1;
@@ -1711,6 +1732,16 @@ var BudgetBranch = function () {
                     denominator = 40000;
                     multiplier = 1;
                     break;
+                case "PERWARD":
+                    denominator = 44;
+                    multiplier = 1;
+                    proratatype = 'fixed';
+                    break;
+                case "PERNEIGHBOURHOOD":
+                    denominator = 4 * 44;
+                    multiplier = 1;
+                    proratatype = 'fixed';
+                    break;
                 default:
                     console.error('unknown prorataindex in _doProRataCalc', prorataindex);
                     return;
@@ -1722,9 +1753,15 @@ var BudgetBranch = function () {
                 datasetConfig.CalcUnitRatio = datasetConfig.UnitRatio;
                 datasetConfig.CalcUnitsAlias = datasetConfig.UnitsAlias;
             }
-            for (var yearindex in proratayearlist) {
-                var amount = proratayearlist[yearindex];
-                proratayearlist[yearindex] = amount / denominator / multiplier;
+            if (proratatype == 'fixed') {
+                for (var yearindex in proratayearlist) {
+                    proratayearlist[yearindex] = denominator;
+                }
+            } else {
+                for (var _yearindex in proratayearlist) {
+                    var amount = proratayearlist[_yearindex];
+                    proratayearlist[_yearindex] = amount / denominator / multiplier;
+                }
             }
             _this._doCalcYears(viewpointdata, proratayearlist, threshhold, precision);
         };
@@ -2010,6 +2047,12 @@ var BudgetCell = function () {
                         break;
                     case "PER40000HOUSEHOLDS":
                         thestring = 'per 40,000 households';
+                        break;
+                    case "PERWARD":
+                        thestring = 'per ward (average)';
+                        break;
+                    case "PERNEIGHBOURHOOD":
+                        thestring = 'per neighbourhood (average)';
                         break;
                     default:
                         console.error('unknown prorataindex in _doProRataCalc', prorata);
@@ -4133,7 +4176,7 @@ var ExplorerBranch = function (_Component) {
                 } }, aspectchoices())) : null;
             var byunitselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Prorated: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.prorata, onChange: function onChange(e, index, value) {
                     _this3.switchComparator(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'OFF', primaryText: "Off" }), React.createElement(MenuItem_1.default, { value: 'PERPERSON', primaryText: "Per person" }), React.createElement(MenuItem_1.default, { value: 'PER100000PERSONS', primaryText: "Per 100,000 people" }), React.createElement(MenuItem_1.default, { value: 'PERHOUSEHOLD', primaryText: "Per household" }), React.createElement(MenuItem_1.default, { value: 'PER40000HOUSEHOLDS', primaryText: "Per 40,000 households" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'PERWARD', primaryText: "Per ward (x 44)" }), React.createElement(MenuItem_1.default, { disabled: true, value: 'PERNEIGHBOURHOOD', primaryText: "Per neighbourhood (x 4 x 44)" }))) : null;
+                } }, React.createElement(MenuItem_1.default, { value: 'OFF', primaryText: "Off" }), React.createElement(MenuItem_1.default, { value: 'PERPERSON', primaryText: "Per person" }), React.createElement(MenuItem_1.default, { value: 'PER100000PERSONS', primaryText: "Per 100,000 people" }), React.createElement(MenuItem_1.default, { value: 'PERHOUSEHOLD', primaryText: "Per household" }), React.createElement(MenuItem_1.default, { value: 'PER40000HOUSEHOLDS', primaryText: "Per 40,000 households" }), React.createElement(MenuItem_1.default, { value: 'PERWARD', primaryText: "Per ward (x 44)" }), React.createElement(MenuItem_1.default, { value: 'PERNEIGHBOURHOOD', primaryText: "Per neighbourhood (x 4 x 44)" }))) : null;
             var inflationadjustment = branchDeclaration.showOptions ? React.createElement("div", { style: {
                     display: 'inline-block',
                     whiteSpace: "nowrap",

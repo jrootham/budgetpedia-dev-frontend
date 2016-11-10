@@ -180,6 +180,10 @@ class BudgetBranch {
                 case "PER40000HOUSEHOLDS":
                     prorataseries = 'households';
                     break;
+                case "PERWARD":
+                case "PERNEIGHBOURHOOD":
+                    prorataseries = 'none';
+                    break;
                 default:
                     console.error('unknown prorataindex', prorataindex);
                     return;
@@ -189,18 +193,33 @@ class BudgetBranch {
                     resolve(true);
                 }
                 else {
-                    let _promise = databaseapi_1.default.getProrataData({
-                        repository,
-                        prorataseries,
-                    });
-                    _promise.then((proratadata) => {
+                    if (prorataseries == 'none') {
+                        let { YearsRange } = viewpointdata.Meta.datasetConfig;
+                        let { start, end } = YearsRange;
+                        let proratadata = {
+                            years: {}
+                        };
+                        for (let year = start; year <= end; year++) {
+                            proratadata.years[year] = null;
+                        }
                         let budgetBranch = this;
-                        this._doProRataCalc(viewpointdata, proratadata);
+                        budgetBranch._doProRataCalc(viewpointdata, proratadata);
                         resolve(true);
-                    }).catch(reason => {
-                        console.error(reason);
-                        error(reason);
-                    });
+                    }
+                    else {
+                        let _promise = databaseapi_1.default.getProrataData({
+                            repository,
+                            prorataseries,
+                        });
+                        _promise.then((proratadata) => {
+                            let budgetBranch = this;
+                            budgetBranch._doProRataCalc(viewpointdata, proratadata);
+                            resolve(true);
+                        }).catch(reason => {
+                            console.error(reason);
+                            error(reason);
+                        });
+                    }
                 }
             });
             return promise;
@@ -212,6 +231,7 @@ class BudgetBranch {
             let { datasetConfig } = viewpointdata.Meta;
             let unitratio = datasetConfig.UnitRatio;
             let denominator, multiplier, precision = 5, threshhold = 10000;
+            let proratatype = 'yearly';
             switch (prorataindex) {
                 case "PERPERSON":
                     denominator = 1;
@@ -229,6 +249,16 @@ class BudgetBranch {
                     denominator = 40000;
                     multiplier = 1;
                     break;
+                case "PERWARD":
+                    denominator = 44;
+                    multiplier = 1;
+                    proratatype = 'fixed';
+                    break;
+                case "PERNEIGHBOURHOOD":
+                    denominator = (4 * 44);
+                    multiplier = 1;
+                    proratatype = 'fixed';
+                    break;
                 default:
                     console.error('unknown prorataindex in _doProRataCalc', prorataindex);
                     return;
@@ -241,9 +271,16 @@ class BudgetBranch {
                 datasetConfig.CalcUnitRatio = datasetConfig.UnitRatio;
                 datasetConfig.CalcUnitsAlias = datasetConfig.UnitsAlias;
             }
-            for (let yearindex in proratayearlist) {
-                let amount = proratayearlist[yearindex];
-                proratayearlist[yearindex] = (amount / denominator) / multiplier;
+            if (proratatype == 'fixed') {
+                for (let yearindex in proratayearlist) {
+                    proratayearlist[yearindex] = denominator;
+                }
+            }
+            else {
+                for (let yearindex in proratayearlist) {
+                    let amount = proratayearlist[yearindex];
+                    proratayearlist[yearindex] = (amount / denominator) / multiplier;
+                }
             }
             this._doCalcYears(viewpointdata, proratayearlist, threshhold, precision);
         };

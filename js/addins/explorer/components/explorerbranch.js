@@ -702,8 +702,8 @@ class ExplorerBranch extends Component {
                 React.createElement(MenuItem_1.default, {value: 'PER100000PERSONS', primaryText: "Per 100,000 people"}), 
                 React.createElement(MenuItem_1.default, {value: 'PERHOUSEHOLD', primaryText: "Per household"}), 
                 React.createElement(MenuItem_1.default, {value: 'PER40000HOUSEHOLDS', primaryText: "Per 40,000 households"}), 
-                React.createElement(MenuItem_1.default, {disabled: true, value: 'PERWARD', primaryText: "Per ward (x 44)"}), 
-                React.createElement(MenuItem_1.default, {disabled: true, value: 'PERNEIGHBOURHOOD', primaryText: "Per neighbourhood (x 4 x 44)"}))) : null;
+                React.createElement(MenuItem_1.default, {value: 'PERWARD', primaryText: "Per ward (x 44)"}), 
+                React.createElement(MenuItem_1.default, {value: 'PERNEIGHBOURHOOD', primaryText: "Per neighbourhood (x 4 x 44)"}))) : null;
         let inflationadjustment = (branchDeclaration.showOptions)
             ?
                 React.createElement("div", {style: {

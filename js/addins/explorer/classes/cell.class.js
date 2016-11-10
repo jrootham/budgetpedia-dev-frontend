@@ -82,6 +82,12 @@ class BudgetCell {
                     case "PER40000HOUSEHOLDS":
                         thestring = 'per 40,000 households';
                         break;
+                    case "PERWARD":
+                        thestring = 'per ward (average)';
+                        break;
+                    case "PERNEIGHBOURHOOD":
+                        thestring = 'per neighbourhood (average)';
+                        break;
                     default:
                         console.error('unknown prorataindex in _doProRataCalc', prorata);
                         return;

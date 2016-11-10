@@ -1208,8 +1208,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             <MenuItem value={'PER100000PERSONS'} primaryText="Per 100,000 people"/>
             <MenuItem value={'PERHOUSEHOLD'} primaryText="Per household"/>
             <MenuItem value={'PER40000HOUSEHOLDS'} primaryText="Per 40,000 households"/>
-            <MenuItem disabled value={'PERWARD'} primaryText="Per ward (x 44)"/>
-            <MenuItem disabled value={'PERNEIGHBOURHOOD'} primaryText="Per neighbourhood (x 4 x 44)"/>
+            <MenuItem value={'PERWARD'} primaryText="Per ward (x 44)"/>
+            <MenuItem value={'PERNEIGHBOURHOOD'} primaryText="Per neighbourhood (x 4 x 44)"/>
 
         </DropDownMenu>
     </div>:null
