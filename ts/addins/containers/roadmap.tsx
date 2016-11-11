@@ -95,7 +95,7 @@ class Roadmap extends Component<any, State> {
                 title = "Committee Meetings for the 2017 budget"
             />
             <CardText
-            expandable = {true}
+                expandable
                 style = {{
                     border:"1px solid silver",
                     margin:"0 3px 8px 3px",
@@ -121,8 +121,35 @@ class Roadmap extends Component<any, State> {
             </CardText>
         </Card>
         <Card>
+            <CardTitle title = {'Toronto\'s "Investing in our future" consultations'} 
+                actAsExpander={true}
+                showExpandableButton={true}
+            />
+            <CardText expandable
+                style = {{
+                    border:"1px solid silver",
+                    margin:"0 3px 8px 3px",
+                    borderRadius:"8px",
+                }}
+            >
+                <p>Toronto is undertaking a planning process to find additional sources of funding. The 
+                website for this initiative is here: <a target="_blank" href="http://www.investinginto.ca/">www.investinginto.ca</a>.
+                </p>
+                <p>The public consultation options for this process are outlined <a target="_blank" href="http://www.investinginto.ca/join-the-consultation/">here</a>.
+                They include surveys open November 9 - 20 and December 5 - 23, 2015, and public meetings December 5, 6, 7 and 8 for which you have to sign up.</p>
+                <p>There's a second phase planned - Governance and Financial Oversight - for the winter and spring 2017.</p>
+            </CardText>
+        </Card>
+        <hr style = {
+            {
+                borderWidth:"4px",
+                borderStyle:"outset",
+            }
+        }
+        />
+        <Card>
             <CardTitle 
-                title = "2016"
+                title = "2016 sample decision pattern"
             /> 
             <CardText>
             <div>Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget, to provide some insight into the annual cycle.</div>
