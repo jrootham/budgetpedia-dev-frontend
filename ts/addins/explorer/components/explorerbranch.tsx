@@ -1094,9 +1094,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             <MenuItem value={'FUNCTIONAL'} primaryText="Functional (operating budgets)"/>
             <MenuItem value={'STRUCTURAL'} primaryText="Structural (operating budgets)"/>
-            <MenuItem value={'ACTUALEXPENSES'} primaryText="Expenses (audited statements)"/>
-            <MenuItem value={'ACTUALREVENUES'} primaryText="Revenues (audited statements)"/>
-            <MenuItem value={'EXPENDITURES'} primaryText="Expenses by Object (audited statements)"/>
+            <MenuItem value={'ACTUALEXPENSES'} primaryText="Audited Expenses"/>
+            <MenuItem value={'ACTUALREVENUES'} primaryText="Audited Revenues"/>
+            <MenuItem value={'EXPENDITURES'} primaryText="Audited Expenses by Object"/>
 
         </DropDownMenu>
 
@@ -1120,21 +1120,21 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         switch (branchDeclaration.viewpoint) {
             case "FUNCTIONAL":
             case "STRUCTURAL":
-                return [<MenuItem key = {1} value={'SUMMARY'} primaryText="Summary"/>,
-                <MenuItem key = {2} value={'PBFT'} primaryText="Detail (PBFT)"/>,
-                <MenuItem key = {3} disabled value={'VARIANCE'} primaryText="Variance Reports"/>]
+                return [<MenuItem key = {1} value={'SUMMARY'} primaryText="Summary PDF reports"/>,
+                <MenuItem key = {2} value={'PBFT'} primaryText="Detailed open data files"/>,
+                <MenuItem key = {3} disabled value={'VARIANCE'} primaryText="PDF Variance Reports"/>]
             case 'ACTUALEXPENSES':
-                return [<MenuItem key = {4} value={'ACTUALEXPENSES'} primaryText="Summary"/>]
+                return [<MenuItem key = {4} value={'ACTUALEXPENSES'} primaryText="Audited statements"/>]
             case 'ACTUALREVENUES':
-                return [<MenuItem key = {4} value={'ACTUALREVENUES'} primaryText="Summary"/>]
+                return [<MenuItem key = {4} value={'ACTUALREVENUES'} primaryText="Audited statements"/>]
             case 'EXPENDITURES':
-                return [<MenuItem key = {4} value={'EXPENDITURES'} primaryText="Summary"/>]
+                return [<MenuItem key = {4} value={'EXPENDITURES'} primaryText="Audited statements"/>]
         }
     }
 
     // TODO: add contitional logic depending on viewpoint selection
     let versionselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
-        <span style={{ fontStyle: "italic" }}>Version: </span>
+        <span style={{ fontStyle: "italic" }}>Sources: </span>
         <DropDownMenu
             disabled = {versionchoices().length < 2}
             value = {branchDeclaration.version}

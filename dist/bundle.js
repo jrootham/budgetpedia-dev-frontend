@@ -4178,22 +4178,22 @@ var ExplorerBranch = function (_Component) {
             var branchDeclaration = this.props.declarationData.branchesById[this.props.budgetBranch.uid];
             var viewpointselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Viewpoint: "), React.createElement(DropDownMenu_1.default, { value: branchDeclaration.viewpoint, onChange: function onChange(e, index, value) {
                     branch.switchViewpoint(value);
-                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (operating budgets)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (operating budgets)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALEXPENSES', primaryText: "Expenses (audited statements)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALREVENUES', primaryText: "Revenues (audited statements)" }), React.createElement(MenuItem_1.default, { value: 'EXPENDITURES', primaryText: "Expenses by Object (audited statements)" }))) : null;
+                } }, React.createElement(MenuItem_1.default, { value: 'FUNCTIONAL', primaryText: "Functional (operating budgets)" }), React.createElement(MenuItem_1.default, { value: 'STRUCTURAL', primaryText: "Structural (operating budgets)" }), React.createElement(MenuItem_1.default, { value: 'ACTUALEXPENSES', primaryText: "Audited Expenses" }), React.createElement(MenuItem_1.default, { value: 'ACTUALREVENUES', primaryText: "Audited Revenues" }), React.createElement(MenuItem_1.default, { value: 'EXPENDITURES', primaryText: "Audited Expenses by Object" }))) : null;
             var governmentselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement(DropDownMenu_1.default, { value: "Toronto", disabled: true }, React.createElement(MenuItem_1.default, { value: 'Toronto', primaryText: "Toronto, Ontario" }))) : null;
             var versionchoices = function versionchoices() {
                 switch (branchDeclaration.viewpoint) {
                     case "FUNCTIONAL":
                     case "STRUCTURAL":
-                        return [React.createElement(MenuItem_1.default, { key: 1, value: 'SUMMARY', primaryText: "Summary" }), React.createElement(MenuItem_1.default, { key: 2, value: 'PBFT', primaryText: "Detail (PBFT)" }), React.createElement(MenuItem_1.default, { key: 3, disabled: true, value: 'VARIANCE', primaryText: "Variance Reports" })];
+                        return [React.createElement(MenuItem_1.default, { key: 1, value: 'SUMMARY', primaryText: "Summary PDF reports" }), React.createElement(MenuItem_1.default, { key: 2, value: 'PBFT', primaryText: "Detailed open data files" }), React.createElement(MenuItem_1.default, { key: 3, disabled: true, value: 'VARIANCE', primaryText: "PDF Variance Reports" })];
                     case 'ACTUALEXPENSES':
-                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALEXPENSES', primaryText: "Summary" })];
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALEXPENSES', primaryText: "Audited statements" })];
                     case 'ACTUALREVENUES':
-                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALREVENUES', primaryText: "Summary" })];
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALREVENUES', primaryText: "Audited statements" })];
                     case 'EXPENDITURES':
-                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'EXPENDITURES', primaryText: "Summary" })];
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'EXPENDITURES', primaryText: "Audited statements" })];
                 }
             };
-            var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Version: "), React.createElement(DropDownMenu_1.default, { disabled: versionchoices().length < 2, value: branchDeclaration.version, onChange: function onChange(e, index, value) {
+            var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Sources: "), React.createElement(DropDownMenu_1.default, { disabled: versionchoices().length < 2, value: branchDeclaration.version, onChange: function onChange(e, index, value) {
                     branch.switchVersion(value);
                 } }, versionchoices())) : null;
             var aspectchoices = function aspectchoices() {
