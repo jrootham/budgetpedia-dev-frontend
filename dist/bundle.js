@@ -4184,13 +4184,13 @@ var ExplorerBranch = function (_Component) {
                 switch (branchDeclaration.viewpoint) {
                     case "FUNCTIONAL":
                     case "STRUCTURAL":
-                        return [React.createElement(MenuItem_1.default, { key: 1, value: 'SUMMARY', primaryText: "Summary PDF reports" }), React.createElement(MenuItem_1.default, { key: 2, value: 'PBFT', primaryText: "Detailed open data files" }), React.createElement(MenuItem_1.default, { key: 3, disabled: true, value: 'VARIANCE', primaryText: "PDF Variance Reports" })];
+                        return [React.createElement(MenuItem_1.default, { key: 1, value: 'SUMMARY', primaryText: "Summary PDF reports 2003 - 2016" }), React.createElement(MenuItem_1.default, { key: 2, value: 'PBFT', primaryText: "Detailed open data files 2011 - 2016" }), React.createElement(MenuItem_1.default, { key: 3, disabled: true, value: 'VARIANCE', primaryText: "PDF Variance Reports" })];
                     case 'ACTUALEXPENSES':
-                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALEXPENSES', primaryText: "Audited statements" })];
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALEXPENSES', primaryText: "Audited statements 1998 - 2015" })];
                     case 'ACTUALREVENUES':
-                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALREVENUES', primaryText: "Audited statements" })];
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'ACTUALREVENUES', primaryText: "Audited statements 1998 - 2015" })];
                     case 'EXPENDITURES':
-                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'EXPENDITURES', primaryText: "Audited statements" })];
+                        return [React.createElement(MenuItem_1.default, { key: 4, value: 'EXPENDITURES', primaryText: "Audited statements 1998 - 2015" })];
                 }
             };
             var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Sources: "), React.createElement(DropDownMenu_1.default, { disabled: versionchoices().length < 2, value: branchDeclaration.version, onChange: function onChange(e, index, value) {

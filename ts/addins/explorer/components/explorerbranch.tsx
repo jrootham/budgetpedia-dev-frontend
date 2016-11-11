@@ -1120,15 +1120,15 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         switch (branchDeclaration.viewpoint) {
             case "FUNCTIONAL":
             case "STRUCTURAL":
-                return [<MenuItem key = {1} value={'SUMMARY'} primaryText="Summary PDF reports"/>,
-                <MenuItem key = {2} value={'PBFT'} primaryText="Detailed open data files"/>,
+                return [<MenuItem key = {1} value={'SUMMARY'} primaryText="Summary PDF reports 2003 - 2016"/>,
+                <MenuItem key = {2} value={'PBFT'} primaryText="Detailed open data files 2011 - 2016"/>,
                 <MenuItem key = {3} disabled value={'VARIANCE'} primaryText="PDF Variance Reports"/>]
             case 'ACTUALEXPENSES':
-                return [<MenuItem key = {4} value={'ACTUALEXPENSES'} primaryText="Audited statements"/>]
+                return [<MenuItem key = {4} value={'ACTUALEXPENSES'} primaryText="Audited statements 1998 - 2015"/>]
             case 'ACTUALREVENUES':
-                return [<MenuItem key = {4} value={'ACTUALREVENUES'} primaryText="Audited statements"/>]
+                return [<MenuItem key = {4} value={'ACTUALREVENUES'} primaryText="Audited statements 1998 - 2015"/>]
             case 'EXPENDITURES':
-                return [<MenuItem key = {4} value={'EXPENDITURES'} primaryText="Audited statements"/>]
+                return [<MenuItem key = {4} value={'EXPENDITURES'} primaryText="Audited statements 1998 - 2015"/>]
         }
     }
 
