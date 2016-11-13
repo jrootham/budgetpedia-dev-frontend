@@ -2,16 +2,420 @@
     "Sections":{
         "CITY":{
             "description":"",
-            "index":"",
-            "title":""
+            "link":"",
+            "index":0,
+            "title":"",
+            "note":""
+        },
+        "TORONTOIST":{
+            "description":"Torontoist Resources, courtesy of David Haines",
+            "link":"",
+            "index":1,
+            "title":"Torontoist Resources",
+            "note":""
+        },
+        "DATACLUB":{
+            "description":"Open data book club budget presentations",
+            "link":"",
+            "index":2,
+            "title":"Open Data Book Club presentations",
+            "note":""
+        },
+        "CIVILSOCIETY":{
+            "description":"",
+            "link":"",
+            "index":3,
+            "title":"",
+            "note":""
+        },
+        "REPOSITORIES":{
+            "description":"Budgetpedia repositories",
+            "link":"",
+            "index":4,
+            "title":"",
+            "note":""
+        },
+        "OPENDATA":{
+            "description":"Links about open data",
+            "link":"",
+            "index":5,
+            "title":"",
+            "note":""
         }
     },
     "Data":[
         {
+            "title":"How Property Taxes Work",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2014/01/everything-you-ever-wanted-to-know-about-property-taxes/"
+        },
+        {
+            "title":"Explaining the debt ceiling",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2015/12/like-the-debt-ceiling-cant-hold-us/"
+        },
+        {
+            "title":"Inflation and the city budget",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2015/12/torontoist-explains-inflation-and-the-city-budget/"
+        },
+        {
+            "title":"Revenue tools",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2016/02/torontoist-explains-city-council-revenue-tools/"
+        },
+        {
+            "title":"How gapping works",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2015/12/mind-the-gap-gapping-101/"
+        },
+        {
+            "title":"How the Municipal Land Transfer Tax works http",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2015/12/torontoist-explains-the-municipal-land-transfer-tax/"
+        },
+        {
+            "title":"Analyzing the 2016 rate-supported budget",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2015/11/a-dumpster-dive-into-torontos-rate-supported-budget/"
+        },
+        {
+            "title":"Your glossary of city council terms",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2015/09/your-glossary-of-city-council-terms/"
+        },
+        {
+            "title":"Glossary of budget terms",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2013/11/torontos-2013-budget-a-decoder/"
+        },
+        {
+            "title":"Toronto's unfunded parks plan",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2015/09/torontos-unfunded-parks-plan/"
+        },
+        {
+            "title":"How Section 37 funds work",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2016/09/torontoist-explains-the-uses-and-misuses-of-section-37/"
+        },
+        {
+            "title":"How city council procedure works",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2015/11/torontoist-explains-how-city-council-procedure-works/"
+        },
+        {
+            "title":"Not everything in the budget gets funded. Here's why",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2016/03/whats-missing-from-the-2016-municipal-budget/"
+        },
+        {
+            "title":"Torontoist explains the social housing waitlist",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2016/01/torontoist-explains-the-social-housing-waitlist/"
+        },
+        {
+            "title":"Torontoist explains the TCHC capital repair backlog",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2016/01/toronto-community-housings-daunting-repair-backlog/"
+        },
+        {
+            "title":"The consequences of an underfunded poverty reduction strategy",
+            "description":"",
+            "section":"TORONTOIST",
+            "link":"http://torontoist.com/2015/12/the-impact-of-an-underfunded-poverty-reduction-strategy/"
+        },
+        {
+            "title":"Toronto District School Board Learning Opportunities Index",
+            "description":"Rayis Imayev",
+            "section":"DATACLUB",
+            "link":"https://app.powerbi.com/view?r=eyJrIjoiMTA2MmFjNTItNDUyMS00NGI5LWJiYTgtZGUzMmMwOTJiYjlhIiwidCI6ImRlNWFjMjU4LTZlOTUtNDkzNS05ODk0LTI3MDg4YjhlOThlMSIsImMiOjN9"
+        },
+        {
+            "title":"311 Toronto",
+            "description":"Richard Hydomako",
+            "section":"DATACLUB",
+            "link":"http://rhydomako.ca/311/"
+        },
+        {
+            "title":"311 Toronto",
+            "description":"David Dou",
+            "section":"DATACLUB",
+            "link":"https://public.tableau.com/profile/daviddou82#!/vizhome/Toronto311OpenData/Dashboard1"
+        },
+        {
+            "title":"211 Youth Data",
+            "description":"Rayis Imayev",
+            "section":"DATACLUB",
+            "link":"https://app.powerbi.com/view?r=eyJrIjoiODEwOWJkMDQtMWY1ZC00OWUzLTgxM2ItNTY1OTI0NDc3OGUyIiwidCI6ImRlNWFjMjU4LTZlOTUtNDkzNS05ODk0LTI3MDg4YjhlOThlMSIsImMiOjN9"
+        },
+        {
+            "title":"Toronto Dashboard",
+            "description":"David Dou",
+            "section":"DATACLUB",
+            "link":"http://www.davidanalytics.com/toronto-dashboard.html"
+        },
+        {
+            "title":"MP Expenditures",
+            "description":"Murali Aiyer",
+            "section":"DATACLUB",
+            "link":"http://rpubs.com/kattuvan/MP"
+        },
+        {
+            "title":"Toronto Public Library Subject Map",
+            "description":"Richard Hydomako",
+            "section":"DATACLUB",
+            "link":"http://rhydomako.ca/tpl-catalogue-map/"
+        },
+        {
+            "title":"Toronto Public Library Alternate Open Data Portal",
+            "description":"Patrick Connolly",
+            "section":"DATACLUB",
+            "link":"http://data.t0ronto.ca/"
+        },
+        {
+            "title":"Municipal Financial Information Return",
+            "description":"Rayis Imayev",
+            "section":"DATACLUB",
+            "link":"https://app.powerbi.com/view?r=eyJrIjoiZGVlOWJlOGUtN2E0MC00ZmU5LWI3MjgtZjU2OTE1Y2EzZDI4IiwidCI6ImRlNWFjMjU4LTZlOTUtNDkzNS05ODk0LTI3MDg4YjhlOThlMSIsImMiOjN9"
+        },
+        {
+            "title":"Budget Data: Toronto Transit Commission (part 1)",
+            "description":"John Matyskiel",
+            "section":"DATACLUB",
+            "link":"http://www.graspyourdata.com/ttc-budget-open-data-part-1/"
+        },
+        {
+            "title":"Budget Data: Toronto Transit Commission (part 2)",
+            "description":"John Matyskiel",
+            "section":"DATACLUB",
+            "link":"http://www.graspyourdata.com/ttc-budget-open-data-visualization-part-2/"
+        },
+        {
+            "title":"Budget Data: Toronto Capital Budget Data",
+            "description":"Richard Hydomako",
+            "section":"DATACLUB",
+            "link":"http://rhydomako.ca/to-capital-budget-2014/"
+        },
+        {
+            "title":"Budget Data: 2016 Preliminary Operating Budget",
+            "description":"",
+            "section":"DATACLUB",
+            "link":"http://rhydomako.ca/to-preliminary-operating-budget-2016/"
+        },
+        {
+            "title":"Toronto District School Board LOI measures",
+            "description":"Richard Hydomako; LOI = learning opportunities Index",
+            "section":"DATACLUB",
+            "link":"https://app.powerbi.com/view?r=eyJrIjoiMTA2MmFjNTItNDUyMS00NGI5LWJiYTgtZGUzMmMwOTJiYjlhIiwidCI6ImRlNWFjMjU4LTZlOTUtNDkzNS05ODk0LTI3MDg4YjhlOThlMSIsImMiOjN9"
+        },
+        {
+            "title":"Budget Data: Toronto Capital Budget Plan By Ward (approved)",
+            "description":"David Dou",
+            "section":"DATACLUB",
+            "link":"http://www.davidanalytics.com/toronto-capital-budget--plan-by-ward-approved.html"
+        },
+        {
+            "title":"Budget Data: Toronto Operating Budget",
+            "description":"David Dou",
+            "section":"DATACLUB",
+            "link":"http://www.davidanalytics.com/toronto-operating-budget.html"
+        },
+        {
+            "title":"Budget Data: Toronto Historical Operating Budget",
+            "description":"David Dou",
+            "section":"DATACLUB",
+            "link":"http://www.davidanalytics.com/toronto-operating-budget-historical.html"
+        },
+        {
+            "title":"2011 Election Data (runoff off ballot simulation)",
+            "description":"Richard Hydomako",
+            "section":"DATACLUB",
+            "link":"http://rhydomako.ca/elections-canada-irv/"
+        },
+        {
+            "title":"Wellbeing Toronto Cartogram",
+            "description":"Richard Hydomako",
+            "section":"DATACLUB",
+            "link":"http://rhydomako.ca/wellbeing/"
+        },
+        {
+            "title":"Wellbeing Toronto Data Matrix",
+            "description":"David Dou",
+            "section":"DATACLUB",
+            "link":"http://www.davidanalytics.com/toronto-well-being.html"
+        },
+        {
+            "title":"GDrive folder",
+            "description":"",
+            "section":"REPOSITORIES",
+            "link":"https://www.google.com/url?q=https://drive.google.com/drive/u/0/folders/0B208oCU9D8OuSms5bEZxcnRLZzA&amp;sa=D&amp;ust=1479072832089000&amp;usg=AFQjCNFF-hQFs7B2-zaXVBR7lbqrWXFtKQ"
+        },
+        {
+            "title":"background documents",
+            "description":"",
+            "section":"REPOSITORIES",
+            "link":"https://www.google.com/url?q=https://github.com/HenrikBechmann/CivicTechTO-TorontoBudget&amp;sa=D&amp;ust=1479072832090000&amp;usg=AFQjCNFBGIRmSShdbi84e4BTWGTLfbHCLA"
+        },
+        {
+            "title":"planning notes",
+            "description":"",
+            "section":"REPOSITORIES",
+            "link":"https://www.google.com/url?q=https://github.com/HenrikBechmann/CivicTechTO-TorontoBudget/wiki&amp;sa=D&amp;ust=1479072832091000&amp;usg=AFQjCNFbRdVEZGyiV1F60gq9RQfy9v1cGg"
+        },
+        {
+            "title":"dev-frontend",
+            "description":"Github code repository",
+            "section":"REPOSITORIES",
+            "link":"https://www.google.com/url?q=https://github.com/CivicTechTO/budgetpedia-dev-frontend&amp;sa=D&amp;ust=1479072832091000&amp;usg=AFQjCNH1wcPZVconjNcGcVoaXfDH07xhUw"
+        },
+        {
+            "title":"dev-backend",
+            "description":"Github code repository",
+            "section":"REPOSITORIES",
+            "link":"https://www.google.com/url?q=https://github.com/CivicTechTO/budgetpedia-dev-backend&amp;sa=D&amp;ust=1479072832093000&amp;usg=AFQjCNGgl0OKXeI9PstQZ1haGROgDt0dLw"
+        },
+        {
+            "title":"staging-frontend",
+            "description":"Github code repository",
+            "section":"REPOSITORIES",
+            "link":"https://www.google.com/url?q=https://github.com/CivicTechTO/budgetpedia-staging-frontend&amp;sa=D&amp;ust=1479072832093000&amp;usg=AFQjCNEcy0eYzF2KvGy9Z7KTabF70DRv0A"
+        },
+        {
+            "title":"staging-backend",
+            "description":"Github code repository",
+            "section":"REPOSITORIES",
+            "link":"https://www.google.com/url?q=https://github.com/CivicTechTO/budgetpedia-staging-backend&amp;sa=D&amp;ust=1479072832094000&amp;usg=AFQjCNG3wvpnGrRaGlY5HSK4FHFVbWCrpA"
+        },
+        {
+            "title":"production-front-end",
+            "description":"Github code repository",
+            "section":"REPOSITORIES",
+            "link":"https://www.google.com/url?q=https://github.com/CivicTechTO/budgetpedia-frontend&amp;sa=D&amp;ust=1479072832095000&amp;usg=AFQjCNF0dG4qewQipyXwcvUpJ2PeDJoSJg"
+        },
+        {
+            "title":"Data preparation - javascript",
+            "description":"6 automated and 6 manual steps to prepare data for front-end loading",
+            "section":"REPOSITORIES",
+            "link":"https://github.com/CivicTechTO/budgetpedia-dev-frontend/tree/master/db"
+        },
+        {
+            "title":"data preparation (Jupyter - now obsolete)",
+            "description":"Data preparation",
+            "section":"REPOSITORIES",
+            "link":"https://www.google.com/url?q=https://github.com/derekhoward/TObudget_cleaning&amp;sa=D&amp;ust=1479072832096000&amp;usg=AFQjCNFk_zZEIJXTIzltp3Ay1YdEaGWo9g"
+        },
+        {
+            "title":"FIR processing",
+            "description":"(fir) for ontario municipal financial information return processing (main routine in FIR_DATA/create_input_file.py)",
+            "section":"REPOSITORIES",
+            "link":"https://www.google.com/url?q=https://github.com/asterix135/Budgetpedia_data&amp;sa=D&amp;ust=1479072832097000&amp;usg=AFQjCNHiaJ0PRPIbsCNnR9XWKLK6s-focg"
+        },
+        {
+            "title":"task management",
+            "description":"TRELLO",
+            "section":"REPOSITORIES",
+            "link":"https://www.google.com/url?q=https://trello.com/b/vyHbx4XE/civictechto-budget-project&amp;sa=D&amp;ust=1479072832098000&amp;usg=AFQjCNFnmdqFhKzZjxucytTmBFUabVZwkw"
+        },
+        {
+            "title":"Toronto's open data portal",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=9e56e03bb8d1e310VgnVCM10000071d60f89RCRD"
+        },
+        {
+            "title":"Wellbeing Toronto",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"http://map.toronto.ca/wellbeing/#eyJ0b3Itd2lkZ2V0LWNsYXNzYnJlYWsiOsSAcGVyY2VudE9wYWNpdHnElzcwfSwiY3VzxIJtYcSTYcSXxIBuZWlnaGJvdXJob29kc8S2fcSrxIHEg8SFxIfEicSLdGFixYXEmCLEo3RpdmVUxZBJZMSXxYnEhMWPYi1pbmRpY2HEgnLFhcWIYWdzTWFwxLYiesWCbcSXMTPErHjEly04ODM3NzYzLjXGhDcyN8SsxKc6NTQxMjkzMS4yNMaDMjg1xYjFpMWmxajFqsWSxIDFmMWraW9uxJcyxKxzxaRnbGXFtMSucsSTxJ9UaW1lxZzGqsSsxZbGucajIjLFtHNlxrBjdGVkScWlxafFqcSDxrs6IjczIsSsxp%2FHjcWqxZxzQcWlV8S5xLt0xZJbxIDEh8Wex5PHlSJ3x59odMW5xKzEk8alx4RQb8SOcsSlxo5mYWzHhH1dxYfFiMa%2BZceEx7bIgsWGxKzGs8a1dMeLxqDHjnJNxYPGsceRxq1uxq%2FGscWH"
+        },
+        {
+            "title":"Toronto public library open data",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"http://opendata.tplcs.ca/"
+        },
+        {
+            "title":"Toronto open data policy",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=7e27e03bb8d1e310VgnVCM10000071d60f89RCRD"
+        },
+        {
+            "title":"Toronto open data institute",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"http://oditoronto.org/about/"
+        },
+        {
+            "title":"UK Open data institute",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"http://oditoronto.org/about/"
+        },
+        {
+            "title":"Open data 101 - Canada",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"http://open.canada.ca/en/open-data-principles"
+        },
+        {
+            "title":"Canada Open Govenment Portal",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"http://open.canada.ca/data/en/dataset"
+        },
+        {
+            "title":"Ontario open government",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"https://www.ontario.ca/page/open-government"
+        },
+        {
+            "title":"Ontario, sharing open government",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"https://www.ontario.ca/page/sharing-government-data"
+        },
+        {
+            "title":"Ontario open data catalog",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"https://www.ontario.ca/search/data-catalogue?sort=asc"
+        },
+        {
+            "title":"Ontario open data directive",
+            "description":"",
+            "section":"OPENDATA",
+            "link":"https://www.ontario.ca/page/ontarios-open-data-directive"
+        },
+        {
+            "title":"Open Government Partnership",
+            "description":"International",
+            "section":"OPENDATA",
+            "link":"http://www.opengovpartnership.org/"
+        },
+        {
             "title":"",
             "description":"",
-            "section":"",
+            "section":"OPENDATA",
             "link":""
-        }
+        },
     ]
 }
+

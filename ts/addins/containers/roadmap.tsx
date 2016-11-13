@@ -149,7 +149,7 @@ class Roadmap extends Component<any, State> {
         />
         <Card>
             <CardTitle 
-                title = "2016 sample decision pattern"
+                title = "2016 sample decision roadmap pattern"
             /> 
             <CardText>
             <div>Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget, to provide some insight into the annual cycle.</div>

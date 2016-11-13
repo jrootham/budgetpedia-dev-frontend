@@ -1134,7 +1134,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     // TODO: add contitional logic depending on viewpoint selection
     let versionselection = (branchDeclaration.showOptions)?<div style={{display:'inline-block', whiteSpace:"nowrap"}}>
-        <span style={{ fontStyle: "italic" }}>Sources: </span>
+        <span style={{ fontStyle: "italic" }}>Source: </span>
         <DropDownMenu
             disabled = {versionchoices().length < 2}
             value = {branchDeclaration.version}
