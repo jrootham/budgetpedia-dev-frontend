@@ -4,43 +4,49 @@
             "description":"",
             "link":"",
             "index":0,
-            "title":"",
-            "note":""
+            "title":"City of Toronto",
+            "note":"",
+            "links":[]
         },
         "TORONTOIST":{
             "description":"Torontoist Resources, courtesy of David Haines",
             "link":"",
             "index":1,
             "title":"Torontoist Resources",
-            "note":""
+            "note":"",
+            "links":[]
         },
         "DATACLUB":{
             "description":"Open data book club budget presentations",
             "link":"",
             "index":2,
             "title":"Open Data Book Club presentations",
-            "note":""
+            "note":"",
+            "links":[]
         },
         "CIVILSOCIETY":{
             "description":"",
             "link":"",
             "index":3,
-            "title":"",
-            "note":""
+            "title":"Civil Society websites",
+            "note":"",
+            "links":[]
         },
         "REPOSITORIES":{
             "description":"Budgetpedia repositories",
             "link":"",
             "index":4,
-            "title":"",
-            "note":""
+            "title":"Budgetpedia repositories",
+            "note":"",
+            "links":[]
         },
         "OPENDATA":{
             "description":"Links about open data",
             "link":"",
             "index":5,
-            "title":"",
-            "note":""
+            "title":"Open Data sites",
+            "note":"",
+            "links":[]
         }
     },
     "Data":[

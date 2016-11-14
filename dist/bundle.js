@@ -804,6 +804,48 @@ var Resources = function (_Component) {
             resources: null
         };
         _this.resourcesintro = React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "Budget Resources", subtitle: "A starter kit of external links" })));
+        _this.lists = null;
+        _this.prepareLists = function () {
+            if (!_this.state.resources) return;
+            if (_this.lists) return;
+            var resources = _this.state.resources;
+            var sections = resources.Sections;
+            var rawlinks = resources.Data;
+            var rawlink = void 0;
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = rawlinks[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    rawlink = _step.value;
+
+                    sections[rawlink.section].links.push(rawlink);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            var sectionlist = [];
+            for (var sectionname in sections) {
+                sectionlist.push(sections[sectionname]);
+            }
+            sectionlist = sectionlist.sort(function (a, b) {
+                return a.index - b.index;
+            });
+            _this.lists = sectionlist;
+        };
         return _this;
     }
 
@@ -830,6 +872,8 @@ var Resources = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            this.prepareLists();
+            console.log('lists', this.lists);
             return React.createElement("div", null, this.resourcesintro);
         }
     }]);

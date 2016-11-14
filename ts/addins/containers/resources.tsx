@@ -38,7 +38,39 @@ class Resources extends Component<any, any> {
         </Card>
         </div>
 
+    lists = null
+
+    prepareLists = () => {
+
+        if (!this.state.resources) return
+        if (this.lists) return
+        let resources = this.state.resources
+        let sections = resources.Sections
+        let rawlinks = resources.Data as Object[]
+        let rawlink:any
+
+        for (rawlink of rawlinks) {
+            sections[rawlink.section].links.push(rawlink)
+        }
+
+        let sectionlist = []
+        for (let sectionname in sections) {
+            sectionlist.push(sections[sectionname])
+        }
+
+        sectionlist = sectionlist.sort((a,b) => {
+            return a.index - b.index
+        })
+
+        this.lists = sectionlist
+
+    }
+
     render() {
+
+        this.prepareLists()
+        console.log('lists',this.lists)
+
         return <div>
             {this.resourcesintro}
         </div>
