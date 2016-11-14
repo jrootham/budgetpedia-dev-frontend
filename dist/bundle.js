@@ -789,19 +789,48 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = require('react');
 var Component = React.Component;
 
+var Card_1 = require('material-ui/Card');
+var moment = require('moment');
+
 var Resources = function (_Component) {
     _inherits(Resources, _Component);
 
     function Resources() {
         _classCallCheck(this, Resources);
 
-        return _possibleConstructorReturn(this, (Resources.__proto__ || Object.getPrototypeOf(Resources)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Resources.__proto__ || Object.getPrototypeOf(Resources)).apply(this, arguments));
+
+        _this.state = {
+            resources: null
+        };
+        _this.resourcesintro = React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "Budget Resources", subtitle: "A starter kit of external links" })));
+        return _this;
     }
 
     _createClass(Resources, [{
-        key: "render",
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            fetch('./db/repositories/toronto/resources/resources.json').then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    console.log('response error', response);
+                }
+            }).then(function (json) {
+                console.log('json', json);
+                _this2.setState({
+                    resources: json
+                });
+            }).catch(function (error) {
+                console.log('error', error);
+            });
+        }
+    }, {
+        key: 'render',
         value: function render() {
-            return React.createElement("div", null, "Resources Page");
+            return React.createElement("div", null, this.resourcesintro);
         }
     }]);
 
@@ -811,7 +840,7 @@ var Resources = function (_Component) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Resources;
 
-},{"react":859}],14:[function(require,module,exports){
+},{"material-ui/Card":458,"moment":577,"react":859}],14:[function(require,module,exports){
 "use strict";
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -852,7 +881,7 @@ var Roadmap = function (_Component) {
             } }, React.createElement("p", null, "Toronto is undertaking a planning process to find additional sources of funding. The" + ' ' + "website for this initiative is here: ", React.createElement("a", { target: "_blank", href: "http://www.investinginto.ca/" }, "www.investinginto.ca"), "."), React.createElement("p", null, "The public consultation options for this process are outlined ", React.createElement("a", { target: "_blank", href: "http://www.investinginto.ca/join-the-consultation/" }, "here"), "." + ' ' + "They include surveys open November 9 - 20 and December 5 - 23, 2015, and public meetings December 5, 6, 7 and 8 for which you have to sign up."), React.createElement("p", null, "There's a second phase planned - Governance and Financial Oversight - for the winter and spring 2017."))), React.createElement("hr", { style: {
                 borderWidth: "4px",
                 borderStyle: "outset"
-            } }), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "2016 sample decision pattern" }), React.createElement(Card_1.CardText, null, React.createElement("div", null, "Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget, to provide some insight into the annual cycle."), React.createElement("div", null, "(A program is a division or an agency)"), React.createElement("div", null, "The data was gathered through a combination of public sources and interviews with city staff."))));
+            } }), React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "2016 sample decision roadmap pattern" }), React.createElement(Card_1.CardText, null, React.createElement("div", null, "Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget, to provide some insight into the annual cycle."), React.createElement("div", null, "(A program is a division or an agency)"), React.createElement("div", null, "The data was gathered through a combination of public sources and interviews with city staff."))));
         _this.phases = null;
         _this.prepareRoadmap = function () {
             if (!_this.state.roadmap) return;
@@ -4200,7 +4229,7 @@ var ExplorerBranch = function (_Component) {
                         return [React.createElement(MenuItem_1.default, { key: 4, value: 'EXPENDITURES', primaryText: "Audited statements 1998 - 2015" })];
                 }
             };
-            var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Sources: "), React.createElement(DropDownMenu_1.default, { disabled: versionchoices().length < 2, value: branchDeclaration.version, onChange: function onChange(e, index, value) {
+            var versionselection = branchDeclaration.showOptions ? React.createElement("div", { style: { display: 'inline-block', whiteSpace: "nowrap" } }, React.createElement("span", { style: { fontStyle: "italic" } }, "Source: "), React.createElement(DropDownMenu_1.default, { disabled: versionchoices().length < 2, value: branchDeclaration.version, onChange: function onChange(e, index, value) {
                     branch.switchVersion(value);
                 } }, versionchoices())) : null;
             var aspectchoices = function aspectchoices() {
@@ -8818,8 +8847,7 @@ var hometiles = [{
         title: 'Resources',
         subtitle: 'External websites',
         image: '../../public/icons/ic_library_books_48px.svg',
-        category: 'support',
-        disabled: true
+        category: 'support'
     },
     index: 2,
     tier: 'primary',

@@ -664,7 +664,7 @@ class ExplorerBranch extends Component {
             }
         };
         let versionselection = (branchDeclaration.showOptions) ? React.createElement("div", {style: { display: 'inline-block', whiteSpace: "nowrap" }}, 
-            React.createElement("span", {style: { fontStyle: "italic" }}, "Sources: "), 
+            React.createElement("span", {style: { fontStyle: "italic" }}, "Source: "), 
             React.createElement(DropDownMenu_1.default, {disabled: versionchoices().length < 2, value: branchDeclaration.version, onChange: (e, index, value) => {
                 branch.switchVersion(value);
             }}, versionchoices())) : null;

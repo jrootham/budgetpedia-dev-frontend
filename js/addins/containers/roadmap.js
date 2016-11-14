@@ -70,7 +70,7 @@ class Roadmap extends Component {
                 borderStyle: "outset",
             }}), 
             React.createElement(Card_1.Card, null, 
-                React.createElement(Card_1.CardTitle, {title: "2016 sample decision pattern"}), 
+                React.createElement(Card_1.CardTitle, {title: "2016 sample decision roadmap pattern"}), 
                 React.createElement(Card_1.CardText, null, 
                     React.createElement("div", null, "Below is a summary of the program-by-program decision making process used for the Toronto 2016 budget, to provide some insight into the annual cycle."), 
                     React.createElement("div", null, "(A program is a division or an agency)"), 
