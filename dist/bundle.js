@@ -791,6 +791,7 @@ var Component = React.Component;
 
 var Card_1 = require('material-ui/Card');
 var moment = require('moment');
+var validurl = require('valid-url');
 
 var Resources = function (_Component) {
     _inherits(Resources, _Component);
@@ -803,7 +804,7 @@ var Resources = function (_Component) {
         _this.state = {
             resources: null
         };
-        _this.resourcesintro = React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "Budget Resources", subtitle: "A starter kit of external links" })));
+        _this.resourcesintro = React.createElement("div", null, React.createElement(Card_1.Card, null, React.createElement(Card_1.CardTitle, { title: "Budget Resources", subtitle: "A starter kit of external links" }), React.createElement(Card_1.CardText, null, "We've assembled some web links to get you started. Click on a class of links below, to see details." + ' ' + "If you find something that should be added to this list, let us know at ", React.createElement("a", { target: "_blank", href: "mailto:mail@budgetpedia.ca" }, "mail@budgetpedia.ca"), ".")));
         _this.lists = null;
         _this.prepareLists = function () {
             if (!_this.state.resources) return;
@@ -846,6 +847,58 @@ var Resources = function (_Component) {
             });
             _this.lists = sectionlist;
         };
+        _this.getSectionContent = function (links) {
+            var linkslist = links.map(function (linkdata, index) {
+                var title = linkdata.title,
+                    description = linkdata.description,
+                    link = linkdata.link;
+
+                var displaylink = void 0;
+                if (!validurl.isUri(link)) {
+                    displaylink = null;
+                    console.log('invalid resource link', linkdata);
+                } else {
+                    displaylink = link;
+                }
+                return React.createElement("div", { key: index, style: {
+                        border: "1px dashed silver",
+                        margin: "0 3px 8px 3px",
+                        padding: "3px",
+                        borderRadius: "8px"
+                    } }, React.createElement("div", null, React.createElement("em", null, "Title:"), " ", title), description ? React.createElement("div", null, React.createElement("em", null, "Description:"), " ", description, " ") : null, React.createElement("div", null, displaylink ? React.createElement("span", null, React.createElement("em", null, "See"), " ", React.createElement("a", { target: "_blank", href: displaylink }, "web page")) : React.createElement("em", null, "Link not available")));
+            });
+            return linkslist;
+        };
+        _this.getSections = function () {
+            var lists = _this.lists;
+            var sections = lists.map(function (section, index) {
+                var content = _this.getSectionContent(section.links);
+                var intro = null;
+                if (section.link || section.note) {
+                    var link = null;
+                    var note = null;
+                    if (section.link) {
+                        var isvalidurl = validurl.isUri(section.link);
+                        if (!isvalidurl) {
+                            console.log('invalidurl for section', section);
+                        }
+                        link = React.createElement("span", null, "See ", React.createElement("a", { target: "_blank", href: section.link }, "website"));
+                    }
+                    if (section.note) {
+                        note = section.note + '. ';
+                    }
+                    intro = React.createElement(Card_1.CardText, { expandable: true }, React.createElement("p", null, note, link));
+                }
+                return React.createElement(Card_1.Card, { key: index }, React.createElement(Card_1.CardTitle, { actAsExpander: true, showExpandableButton: true, title: section.title, subtitle: section.description || null }), intro, React.createElement(Card_1.CardText, { expandable: true }, content));
+            });
+            return sections;
+        };
+        _this.getResources = function () {
+            var resources = null;
+            if (!_this.lists) return resources;
+            resources = _this.getSections();
+            return resources;
+        };
         return _this;
     }
 
@@ -873,8 +926,9 @@ var Resources = function (_Component) {
         key: 'render',
         value: function render() {
             this.prepareLists();
+            var resources = this.getResources();
             console.log('lists', this.lists);
-            return React.createElement("div", null, this.resourcesintro);
+            return React.createElement("div", null, this.resourcesintro, resources);
         }
     }]);
 
@@ -884,7 +938,7 @@ var Resources = function (_Component) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Resources;
 
-},{"material-ui/Card":458,"moment":577,"react":859}],14:[function(require,module,exports){
+},{"material-ui/Card":458,"moment":577,"react":859,"valid-url":915}],14:[function(require,module,exports){
 "use strict";
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();

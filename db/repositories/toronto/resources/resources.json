@@ -1,8 +1,8 @@
 {
     "Sections":{
         "CITY":{
-            "description":"",
-            "link":"",
+            "description":"Core budget pages from toronto.ca",
+            "link":"http://toronto.ca",
             "index":0,
             "title":"City of Toronto",
             "note":"",
@@ -10,22 +10,22 @@
         },
         "TORONTOIST":{
             "description":"Torontoist Resources, courtesy of David Haines",
-            "link":"",
+            "link":"http://torontoist.com/",
             "index":1,
             "title":"Torontoist Resources",
-            "note":"",
+            "note":"The Torontoist is one of our favourite publications. Its people provide in-depth coverage of Toronto City Hall to its readers",
             "links":[]
         },
         "DATACLUB":{
-            "description":"Open data book club budget presentations",
-            "link":"",
+            "description":"Open data book club budget related presentations",
+            "link":"http://www.meetup.com/opentoronto/",
             "index":2,
             "title":"Open Data Book Club presentations",
-            "note":"",
+            "note":"The open data book club meets periodically to review open datasets (analogous to reviewing books!)",
             "links":[]
         },
         "CIVILSOCIETY":{
-            "description":"",
+            "description":"A selected set of civil society websites",
             "link":"",
             "index":3,
             "title":"Civil Society websites",
@@ -33,11 +33,11 @@
             "links":[]
         },
         "REPOSITORIES":{
-            "description":"Budgetpedia repositories",
+            "description":"Collected Budgetpedia project repositories",
             "link":"",
             "index":4,
             "title":"Budgetpedia repositories",
-            "note":"",
+            "note":"Our own project has collected a lot of notes and data over its lifetime, with high quality content that could (and should!) be mined to improve the project",
             "links":[]
         },
         "OPENDATA":{
@@ -81,7 +81,7 @@
             "link":"http://torontoist.com/2015/12/mind-the-gap-gapping-101/"
         },
         {
-            "title":"How the Municipal Land Transfer Tax works http",
+            "title":"How the Municipal Land Transfer Tax works",
             "description":"",
             "section":"TORONTOIST",
             "link":"http://torontoist.com/2015/12/torontoist-explains-the-municipal-land-transfer-tax/"
@@ -270,49 +270,49 @@
             "title":"GDrive folder",
             "description":"",
             "section":"REPOSITORIES",
-            "link":"https://www.google.com/url?q=https://drive.google.com/drive/u/0/folders/0B208oCU9D8OuSms5bEZxcnRLZzA&amp;sa=D&amp;ust=1479072832089000&amp;usg=AFQjCNFF-hQFs7B2-zaXVBR7lbqrWXFtKQ"
+            "link":"https://drive.google.com/drive/u/0/folders/0B208oCU9D8OuSms5bEZxcnRLZzA"
         },
         {
             "title":"background documents",
             "description":"",
             "section":"REPOSITORIES",
-            "link":"https://www.google.com/url?q=https://github.com/HenrikBechmann/CivicTechTO-TorontoBudget&amp;sa=D&amp;ust=1479072832090000&amp;usg=AFQjCNFBGIRmSShdbi84e4BTWGTLfbHCLA"
+            "link":"https://github.com/HenrikBechmann/CivicTechTO-TorontoBudget"
         },
         {
             "title":"planning notes",
             "description":"",
             "section":"REPOSITORIES",
-            "link":"https://www.google.com/url?q=https://github.com/HenrikBechmann/CivicTechTO-TorontoBudget/wiki&amp;sa=D&amp;ust=1479072832091000&amp;usg=AFQjCNFbRdVEZGyiV1F60gq9RQfy9v1cGg"
+            "link":"https://github.com/HenrikBechmann/CivicTechTO-TorontoBudget/wiki"
         },
         {
             "title":"dev-frontend",
             "description":"Github code repository",
             "section":"REPOSITORIES",
-            "link":"https://www.google.com/url?q=https://github.com/CivicTechTO/budgetpedia-dev-frontend&amp;sa=D&amp;ust=1479072832091000&amp;usg=AFQjCNH1wcPZVconjNcGcVoaXfDH07xhUw"
+            "link":"https://github.com/CivicTechTO/budgetpedia-dev-frontend"
         },
         {
             "title":"dev-backend",
             "description":"Github code repository",
             "section":"REPOSITORIES",
-            "link":"https://www.google.com/url?q=https://github.com/CivicTechTO/budgetpedia-dev-backend&amp;sa=D&amp;ust=1479072832093000&amp;usg=AFQjCNGgl0OKXeI9PstQZ1haGROgDt0dLw"
+            "link":"https://github.com/CivicTechTO/budgetpedia-dev-backend"
         },
         {
             "title":"staging-frontend",
             "description":"Github code repository",
             "section":"REPOSITORIES",
-            "link":"https://www.google.com/url?q=https://github.com/CivicTechTO/budgetpedia-staging-frontend&amp;sa=D&amp;ust=1479072832093000&amp;usg=AFQjCNEcy0eYzF2KvGy9Z7KTabF70DRv0A"
+            "link":"https://github.com/CivicTechTO/budgetpedia-staging-frontend"
         },
         {
             "title":"staging-backend",
             "description":"Github code repository",
             "section":"REPOSITORIES",
-            "link":"https://www.google.com/url?q=https://github.com/CivicTechTO/budgetpedia-staging-backend&amp;sa=D&amp;ust=1479072832094000&amp;usg=AFQjCNG3wvpnGrRaGlY5HSK4FHFVbWCrpA"
+            "link":"https://github.com/CivicTechTO/budgetpedia-staging-backend"
         },
         {
             "title":"production-front-end",
             "description":"Github code repository",
             "section":"REPOSITORIES",
-            "link":"https://www.google.com/url?q=https://github.com/CivicTechTO/budgetpedia-frontend&amp;sa=D&amp;ust=1479072832095000&amp;usg=AFQjCNF0dG4qewQipyXwcvUpJ2PeDJoSJg"
+            "link":"https://github.com/CivicTechTO/budgetpedia-frontend"
         },
         {
             "title":"Data preparation - javascript",
@@ -324,19 +324,19 @@
             "title":"data preparation (Jupyter - now obsolete)",
             "description":"Data preparation",
             "section":"REPOSITORIES",
-            "link":"https://www.google.com/url?q=https://github.com/derekhoward/TObudget_cleaning&amp;sa=D&amp;ust=1479072832096000&amp;usg=AFQjCNFk_zZEIJXTIzltp3Ay1YdEaGWo9g"
+            "link":"https://github.com/derekhoward/TObudget_cleaning"
         },
         {
             "title":"FIR processing",
             "description":"(fir) for ontario municipal financial information return processing (main routine in FIR_DATA/create_input_file.py)",
             "section":"REPOSITORIES",
-            "link":"https://www.google.com/url?q=https://github.com/asterix135/Budgetpedia_data&amp;sa=D&amp;ust=1479072832097000&amp;usg=AFQjCNHiaJ0PRPIbsCNnR9XWKLK6s-focg"
+            "link":"https://github.com/asterix135/Budgetpedia_data"
         },
         {
             "title":"task management",
             "description":"TRELLO",
             "section":"REPOSITORIES",
-            "link":"https://www.google.com/url?q=https://trello.com/b/vyHbx4XE/civictechto-budget-project&amp;sa=D&amp;ust=1479072832098000&amp;usg=AFQjCNFnmdqFhKzZjxucytTmBFUabVZwkw"
+            "link":"https://trello.com/b/vyHbx4XE/civictechto-budget-project"
         },
         {
             "title":"Toronto's open data portal",
@@ -393,7 +393,7 @@
             "link":"https://www.ontario.ca/page/open-government"
         },
         {
-            "title":"Ontario, sharing open government",
+            "title":"Ontario, sharing government data",
             "description":"",
             "section":"OPENDATA",
             "link":"https://www.ontario.ca/page/sharing-government-data"
