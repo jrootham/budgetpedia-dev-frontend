@@ -47,6 +47,14 @@
             "title":"Open Data sites",
             "note":"",
             "links":[]
+        },
+        "OTHER":{
+            "description":"Other budget links",
+            "link":"",
+            "index":6,
+            "title":"Other budget sites of interest",
+            "note":"",
+            "links":[]
         }
     },
     "Data":[
@@ -529,6 +537,12 @@
             "description":"",
             "section":"CIVILSOCIETY",
             "link":"http://www.tpac.ca/index.cfm"
+        },
+        {
+            "title":"Ontario's budget talk portal",
+            "description":"including a proposal and voting mechanism for up to $1M (participatory budgeting)",
+            "section":"OTHER",
+            "link":"https://talks.ontario.ca/"
         }
     ]
 }

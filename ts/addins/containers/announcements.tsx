@@ -23,14 +23,14 @@ class Announcements extends Component<any, any> {
         Civic Tech's weekly meetup. See Budgetpedia in action, gain insights
         into the city budget and generally celebrate our going live.</p>
     </li>
-    <li><p><strong>Regular Meetups: First and Third Tuesday of each month 6:30-9:00 pm </strong><br />
+    <li><p><strong>Regular Meetups: First Tuesday of each month 6:30-9:00 pm </strong><br />
         <em> Location:</em> <a target = "_blank"
         href="http://www.meetup.com/Civic-Tech-Toronto/">
             Varies - Check the Meetup page for the next meeting
         </a>
         </p>
         <p>
-        This is where Budgetpedia was born and raised to its current early state.
+        Additional meetings may be scheduled. This is where Budgetpedia was born and raised to its current early state.
         It's also where a lot of the brainstorming, development and creative
         processes happen.
         Anyone with an interest in this project is welcome.  No coding or

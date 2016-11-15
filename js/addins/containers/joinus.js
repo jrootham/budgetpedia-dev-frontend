@@ -11,7 +11,7 @@ class JoinUs extends Component {
                 React.createElement(Card_1.CardTitle, {title: "Getting Involved"}), 
                 React.createElement(Card_1.CardText, null, 
                     React.createElement("h3", null, "Where and when"), 
-                    "We have regular meetings at Civic Tech Toronto Hacknights. We'll be there first and third" + ' ' + "Tuesdays of the month (and possibly other Tuesdays as well). Never hurts to check at ", 
+                    "We have regular meetings at Civic Tech Toronto Hacknights. We'll be there the first" + ' ' + "Tuesday of the month (and possibly other Tuesdays as well). Never hurts to check at ", 
                     React.createElement("a", {target: "_blank", href: "mailto:mail@budgetpedia.ca"}, "mail@budgetpedia.ca"), 
                     " though" + ' ' + "just to make sure. Check with Civic Tech TO ", 
                     React.createElement("a", {target: "_blank", href: "http://www.meetup.com/Civic-Tech-Toronto/"}, "meetup"), 

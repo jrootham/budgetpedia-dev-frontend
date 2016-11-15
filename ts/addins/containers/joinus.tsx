@@ -21,8 +21,8 @@ class JoinUs extends Component<any, any> {
 
 <CardText>
 <h3>Where and when</h3>
-We have regular meetings at Civic Tech Toronto Hacknights. We'll be there first and third
-Tuesdays of the month (and possibly other Tuesdays as well). Never hurts to check at <a
+We have regular meetings at Civic Tech Toronto Hacknights. We'll be there the first 
+Tuesday of the month (and possibly other Tuesdays as well). Never hurts to check at <a
  target= "_blank" href="mailto:mail@budgetpedia.ca">mail@budgetpedia.ca</a> though
 just to make sure. Check with Civic Tech TO <a target="_blank" href="http://www.meetup.com/Civic-Tech-Toronto/">meetup</a> for locations. 
 Or just email us your interests and we'll take it from there.

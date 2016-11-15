@@ -58,7 +58,6 @@ let hometiles = [
             subtitle: `How to make change`,
             image: '../../public/icons/ic_directions_walk_48px.svg',
             category: 'support',
-            disabled: true,
         },
         index: 3,
         tier: 'primary',
