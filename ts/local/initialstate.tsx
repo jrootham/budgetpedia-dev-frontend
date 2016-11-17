@@ -127,7 +127,6 @@ let hometiles: [Object] = [
             subtitle: `History, people, resources`,
             image: '../../public/icons/ic_info_48px.svg',
             category: 'information',
-            disabled: true,
         },
         index: 4,
         tier:'secondary',
