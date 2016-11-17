@@ -1621,6 +1621,8 @@ exports.branchMoveDown = redux_actions_1.createAction(types.BRANCH_MOVE_DOWN, fu
 },{"node-uuid":579,"redux-actions":887}],18:[function(require,module,exports){
 "use strict";
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -1654,12 +1656,12 @@ var BudgetBranch = function () {
                     firstYear: null,
                     lastYear: null
                 },
-                yearSelections: Object.assign({}, defaults.yearSelections),
+                yearSelections: _extends({}, defaults.yearSelections),
                 dataPath: [],
                 nodeIndex: 0,
                 cellIndex: 0
             };
-            budgetNodeParms = Object.assign(defaults, budgetNodeParms);
+            budgetNodeParms = _extends(defaults, budgetNodeParms);
             return budgetNodeParms;
         };
         this.addNode = function (budgetNodeUid, nodeIndex, budgetNodeParms) {
@@ -1906,7 +1908,7 @@ var BudgetBranch = function () {
             return promise;
         };
         this._doProRataCalc = function (viewpointdata, proratadata) {
-            var proratayearlist = Object.assign({}, proratadata.years);
+            var proratayearlist = _extends({}, proratadata.years);
             var branchDeclaration = _this.branchDeclaration;
             var prorataindex = branchDeclaration.prorata;
             var datasetConfig = viewpointdata.Meta.datasetConfig;
@@ -2090,14 +2092,14 @@ var BudgetBranch = function () {
                 return;
             }
             workingStatus(true);
-            var newrange = Object.assign({}, budgetNode.yearsRange);
+            var newrange = _extends({}, budgetNode.yearsRange);
             var newselections = void 0;
             var newCellIndex = cellIndex;
             if (priorNodeSettings) {
                 newselections = priorNodeSettings.yearSelections;
                 newCellIndex = priorNodeSettings.cellIndex;
             } else {
-                newselections = Object.assign({}, budgetNode.yearSelections);
+                newselections = _extends({}, budgetNode.yearSelections);
             }
             var newdatanode = getbudgetnode_1.default(viewpointData, childdatapath);
             var newnodeconfigparms = {
@@ -2149,6 +2151,8 @@ exports.default = BudgetBranch;
 
 },{"../constants":26,"../modules/getbudgetnode":29,"./databaseapi":20,"./node.class":22}],19:[function(require,module,exports){
 "use strict";
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -2477,7 +2481,7 @@ var BudgetCell = function () {
                 pieSliceText: null
             };
             var options_extension = budgetCell._chartTypeOptions(budgetCell.googleChartType, treeNodeData);
-            options = Object.assign(options, options_extension);
+            options = _extends(options, options_extension);
             return options;
         };
         this._chartTypeOptions = function (googleChartType, treeNodeData) {
@@ -3289,6 +3293,8 @@ exports.default = setViewpointData;
 },{}],22:[function(require,module,exports){
 "use strict";
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -3336,7 +3342,7 @@ var BudgetNode = function () {
                     var parentCell = parent.cells[cellIndex];
                     if (parentCell) {
                         var callingCellDeclaration = budgetNode.props.declarationData.cellsById[parentCell.uid];
-                        var chartConfigs = Object.assign({}, callingCellDeclaration.chartConfigs);
+                        var chartConfigs = _extends({}, callingCellDeclaration.chartConfigs);
                         cellDeclarationData = {
                             yearScope: callingCellDeclaration.yearScope,
                             chartConfigs: chartConfigs
@@ -3356,7 +3362,7 @@ var BudgetNode = function () {
                 for (var _iterator = chartSpecs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var chartSpec = _step.value;
 
-                    var cellDeclaration = Object.assign({}, cellDeclarationData);
+                    var cellDeclaration = _extends({}, cellDeclarationData);
                     if (node[chartSpec.Type]) {
                         cellDeclaration.nodeDataseriesName = chartSpec.Type;
                         parmsList.push(cellDeclaration);
@@ -3517,6 +3523,8 @@ exports.default = BudgetNode;
 },{"../constants":26,"./cell.class":19}],23:[function(require,module,exports){
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3631,7 +3639,7 @@ var ExplorerBranch = function (_Component) {
                 displayCallbacks = _branch$props.displayCallbacks,
                 declarationData = _branch$props.declarationData;
 
-            branch._stateActions = Object.assign({}, actions);
+            branch._stateActions = _extends({}, actions);
             branch._stateActions.addNodeDeclaration = branch.addNodeDeclaration(budgetBranch.uid);
             branch._stateActions.addNodeDeclarations = branch.addNodeDeclarations(budgetBranch.uid);
             branch._stateActions.removeNodeDeclarations = branch.removeNodeDeclarations(budgetBranch.uid);
@@ -3764,7 +3772,7 @@ var ExplorerBranch = function (_Component) {
                     var message = switchResults.message;
                     var snackbar = _this.state.snackbar;
 
-                    snackbar = Object.assign({}, snackbar);
+                    snackbar = _extends({}, snackbar);
                     snackbar.message = message;
                     snackbar.open = true;
                     _this.setState({
@@ -3780,7 +3788,7 @@ var ExplorerBranch = function (_Component) {
                     }
                     var _snackbar = _this.state.snackbar;
 
-                    _snackbar = Object.assign({}, _snackbar);
+                    _snackbar = _extends({}, _snackbar);
                     _snackbar.message = _message;
                     _snackbar.open = true;
                     _this.setState({
@@ -3900,7 +3908,7 @@ var ExplorerBranch = function (_Component) {
             var refnode = declarationData.nodesById[nodeUid];
             var refcell = declarationData.cellsById[cellUid];
             nodeProperties.cellIndex = refnode.cellIndex;
-            nodeProperties.yearSelections = Object.assign({}, refnode.yearSelections);
+            nodeProperties.yearSelections = _extends({}, refnode.yearSelections);
             cellProperties.yearScope = refcell.yearScope;
             cellProperties.chartCode = refcell.chartConfigs[refcell.yearScope].explorerChartCode;
             cellProperties.nodeDataseriesName = refcell.nodeDataseriesName;
@@ -3999,7 +4007,7 @@ var ExplorerBranch = function (_Component) {
                 budgetNode.viewpointConfigPack = viewpointConfigPack;
                 budgetNode.branchSettings = branch.props.budgetBranch.branchDeclaration;
                 budgetNode.onChartComponentSelection = onchartcomponentselection_1.onChartComponentSelection(branch.props.budgetBranch);
-                var actions = Object.assign({}, branch._stateActions);
+                var actions = _extends({}, branch._stateActions);
                 actions.updateCellTimeScope = branch._stateActions.updateCellTimeScope(budgetNode.uid);
                 actions.updateCellChartSelection = branch._stateActions.updateCellChartSelection(budgetNode.uid);
                 actions.updateCellChartCode = branch._stateActions.updateCellChartCode(budgetNode.uid);
@@ -4957,6 +4965,8 @@ exports.default = ExplorerCell;
 },{"../../../../forked/react-google-charts/Chart.js":1,"../actions":17,"../constants":26,"../modules/utilities":31,"material-ui/DropDownMenu":466,"material-ui/FontIcon":473,"material-ui/IconButton":478,"material-ui/MenuItem":487,"material-ui/SvgIcon":501,"react":859}],25:[function(require,module,exports){
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -5017,7 +5027,7 @@ var ExplorerNode = function (_Component) {
                         var currentYearSelections = currentControlData.nodesById[budgetNode.uid].yearSelections;
                         var previousYearSelections = previousControlData.nodesById[budgetNode.uid].yearSelections;
                         if (currentYearSelections.leftYear !== previousYearSelections.leftYear || currentYearSelections.rightYear !== previousYearSelections.rightYear) {
-                            budgetNode.switchYearSelections(Object.assign({}, currentYearSelections));
+                            budgetNode.switchYearSelections(_extends({}, currentYearSelections));
                             _this.forceUpdate();
                         }
                         break;
@@ -5161,7 +5171,7 @@ var ExplorerNode = function (_Component) {
             if (urlparms) {
                 this.urlparms = urlparms;
             }
-            this._stateActions = Object.assign({}, this.props.globalStateActions);
+            this._stateActions = _extends({}, this.props.globalStateActions);
             budgetNode.getState = this.getState;
             budgetNode.getProps = this.getProps;
             budgetNode.setState = this.setState.bind(this);
@@ -5553,6 +5563,8 @@ exports.default = content;
 
 },{"material-ui/Card":458,"material-ui/FontIcon":473,"material-ui/SvgIcon":501,"react":859}],28:[function(require,module,exports){
 'use strict';
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -5949,7 +5961,7 @@ var Explorer = function (_Component) {
                         viewpoint: branchdata.vi,
                         showOptions: true
                     };
-                    var settings = Object.assign(defaultSettings, querysettings);
+                    var settings = _extends(defaultSettings, querysettings);
                     this.props.addBranchDeclaration(null, settings);
                     return;
                 } else {
@@ -6173,6 +6185,8 @@ exports.default = getBudgetNode;
 },{}],30:[function(require,module,exports){
 "use strict";
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var applyChartComponentSelection = function applyChartComponentSelection(budgetBranch, nodeIndex, cellIndex, chartSelectionData) {
     var branchNodes = budgetBranch.nodes,
         branchuid = budgetBranch.uid;
@@ -6222,14 +6236,14 @@ var applyChartComponentSelection = function applyChartComponentSelection(budgetB
         var removednode = removed[removeditems[0].index];
         var priorCell = removednode.cells[removednode.nodeDeclaration.cellIndex];
         if (priorCell) {
-            var chartConfigs = Object.assign({}, priorCell.cellDeclaration.chartConfigs);
+            var chartConfigs = _extends({}, priorCell.cellDeclaration.chartConfigs);
             var yearScope = priorCell.cellDeclaration.yearScope;
             priorCellSettings = {
                 chartConfigs: chartConfigs,
                 yearScope: yearScope
             };
             priorNodeSettings = {
-                yearSelections: Object.assign({}, removednode.nodeDeclaration.yearSelections),
+                yearSelections: _extends({}, removednode.nodeDeclaration.yearSelections),
                 cellIndex: removednode.nodeDeclaration.cellIndex
             };
         } else {
@@ -6383,6 +6397,8 @@ exports.hashCode = function (string) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -6504,18 +6520,18 @@ var branchesById = function branchesById() {
     switch (type) {
         case actions_1.types.ADD_BRANCH:
             {
-                newstate = Object.assign({}, state, _defineProperty({}, action.payload.branchuid, action.payload.settings));
+                newstate = _extends({}, state, _defineProperty({}, action.payload.branchuid, action.payload.settings));
                 return newstate;
             }
         case actions_1.types.CLONE_BRANCH:
             {
                 var newbranchid = action.payload.settings.newbranchid;
-                newstate = Object.assign({}, state, _defineProperty({}, newbranchid, action.payload.settings.branch[newbranchid]));
+                newstate = _extends({}, state, _defineProperty({}, newbranchid, action.payload.settings.branch[newbranchid]));
                 return newstate;
             }
         case actions_1.types.REMOVE_BRANCH:
             {
-                newstate = Object.assign({}, state);
+                newstate = _extends({}, state);
                 delete newstate[action.payload.branchuid];
                 return newstate;
             }
@@ -6523,8 +6539,8 @@ var branchesById = function branchesById() {
             {
                 var branchuid = action.payload.branchuid;
 
-                newstate = Object.assign({}, state);
-                newstate[branchuid] = Object.assign({}, newstate[branchuid]);
+                newstate = _extends({}, state);
+                newstate[branchuid] = _extends({}, newstate[branchuid]);
                 newstate[branchuid].nodeList = [].concat(_toConsumableArray(state[branchuid].nodeList), [action.payload.nodeuid]);
                 return newstate;
             }
@@ -6532,8 +6548,8 @@ var branchesById = function branchesById() {
             {
                 var _branchuid3 = action.payload.branchuid;
 
-                newstate = Object.assign({}, state);
-                newstate[_branchuid3] = Object.assign({}, newstate[_branchuid3]);
+                newstate = _extends({}, state);
+                newstate[_branchuid3] = _extends({}, newstate[_branchuid3]);
                 var settingslist = action.payload.settingslist;
 
                 var newnodelist = [];
@@ -6570,7 +6586,7 @@ var branchesById = function branchesById() {
                 var _ret = function () {
                     var branchuid = action.payload.branchuid;
 
-                    newstate = Object.assign({}, state);
+                    newstate = _extends({}, state);
                     var removelist = action.payload.items;
                     var newList = newstate[branchuid].nodeList.filter(function (nodeuid) {
                         var foundlist = removelist.filter(function (item) {
@@ -6590,8 +6606,8 @@ var branchesById = function branchesById() {
             {
                 var _branchuid4 = action.payload.branchuid;
 
-                newstate = Object.assign({}, state);
-                var newbranchstate = Object.assign({}, newstate[_branchuid4]);
+                newstate = _extends({}, state);
+                var newbranchstate = _extends({}, newstate[_branchuid4]);
                 newbranchstate.viewpoint = action.payload.viewpointname;
                 newbranchstate.version = newbranchstate.defaultVersions[newbranchstate.viewpoint];
                 newbranchstate.aspect = newbranchstate.defaultAspects[newbranchstate.version];
@@ -6602,8 +6618,8 @@ var branchesById = function branchesById() {
             {
                 var _branchuid5 = action.payload.branchuid;
 
-                newstate = Object.assign({}, state);
-                var _newbranchstate = Object.assign({}, newstate[_branchuid5]);
+                newstate = _extends({}, state);
+                var _newbranchstate = _extends({}, newstate[_branchuid5]);
                 _newbranchstate.version = action.payload.versionname;
                 _newbranchstate.aspect = _newbranchstate.defaultAspects[_newbranchstate.version];
                 newstate[_branchuid5] = _newbranchstate;
@@ -6613,8 +6629,8 @@ var branchesById = function branchesById() {
             {
                 var _branchuid6 = action.payload.branchuid;
 
-                newstate = Object.assign({}, state);
-                newstate[_branchuid6] = Object.assign({}, newstate[_branchuid6]);
+                newstate = _extends({}, state);
+                newstate[_branchuid6] = _extends({}, newstate[_branchuid6]);
                 newstate[_branchuid6].aspect = action.payload.aspectname;
                 return newstate;
             }
@@ -6622,8 +6638,8 @@ var branchesById = function branchesById() {
             {
                 var _branchuid7 = action.payload.branchuid;
 
-                newstate = Object.assign({}, state);
-                newstate[_branchuid7] = Object.assign({}, newstate[_branchuid7]);
+                newstate = _extends({}, state);
+                newstate[_branchuid7] = _extends({}, newstate[_branchuid7]);
                 newstate[_branchuid7].inflationAdjusted = action.payload.value;
                 return newstate;
             }
@@ -6631,8 +6647,8 @@ var branchesById = function branchesById() {
             {
                 var _branchuid8 = action.payload.branchuid;
 
-                newstate = Object.assign({}, state);
-                newstate[_branchuid8] = Object.assign({}, newstate[_branchuid8]);
+                newstate = _extends({}, state);
+                newstate[_branchuid8] = _extends({}, newstate[_branchuid8]);
                 newstate[_branchuid8].prorata = action.payload.value;
                 return newstate;
             }
@@ -6640,8 +6656,8 @@ var branchesById = function branchesById() {
             {
                 var _branchuid9 = action.payload.branchuid;
 
-                newstate = Object.assign({}, state);
-                newstate[_branchuid9] = Object.assign({}, newstate[_branchuid9]);
+                newstate = _extends({}, state);
+                newstate[_branchuid9] = _extends({}, newstate[_branchuid9]);
                 newstate[_branchuid9].showOptions = action.payload.value;
                 return newstate;
             }
@@ -6649,8 +6665,8 @@ var branchesById = function branchesById() {
             {
                 var _branchuid10 = action.payload.branchuid;
 
-                newstate = Object.assign({}, state);
-                newstate[_branchuid10] = Object.assign({}, newstate[_branchuid10]);
+                newstate = _extends({}, state);
+                newstate[_branchuid10] = _extends({}, newstate[_branchuid10]);
                 newstate[_branchuid10].branchDataGeneration++;
                 return newstate;
             }
@@ -6668,15 +6684,15 @@ var nodesById = function nodesById() {
         case actions_1.types.ADD_NODE:
             {
                 var node = state[action.payload.nodeuid] || {};
-                node = Object.assign(node, action.payload.settings);
-                newstate = Object.assign({}, state, _defineProperty({}, action.payload.nodeuid, node));
+                node = _extends(node, action.payload.settings);
+                newstate = _extends({}, state, _defineProperty({}, action.payload.nodeuid, node));
                 return newstate;
             }
         case actions_1.types.ADD_NODES:
             {
                 var settingslist = action.payload.settingslist;
 
-                var _newstate = Object.assign({}, state);
+                var _newstate = _extends({}, state);
                 var _iteratorNormalCompletion2 = true;
                 var _didIteratorError2 = false;
                 var _iteratorError2 = undefined;
@@ -6686,7 +6702,7 @@ var nodesById = function nodesById() {
                         var settingsdata = _step2.value;
 
                         var _node = _newstate[settingsdata.nodeuid] || {};
-                        _node = Object.assign(_node, settingsdata.settings);
+                        _node = _extends(_node, settingsdata.settings);
                         _newstate[settingsdata.nodeuid] = _node;
                     }
                 } catch (err) {
@@ -6709,7 +6725,7 @@ var nodesById = function nodesById() {
         case actions_1.types.CLONE_BRANCH:
             {
                 var newnodes = action.payload.settings.nodes;
-                newstate = Object.assign({}, state);
+                newstate = _extends({}, state);
                 for (var nodeid in newnodes) {
                     newstate[nodeid] = newnodes[nodeid];
                 }
@@ -6717,7 +6733,7 @@ var nodesById = function nodesById() {
             }
         case actions_1.types.REMOVE_NODES:
             {
-                newstate = Object.assign({}, state);
+                newstate = _extends({}, state);
                 var removelist = action.payload.items;
                 var _iteratorNormalCompletion3 = true;
                 var _didIteratorError3 = false;
@@ -6748,9 +6764,9 @@ var nodesById = function nodesById() {
             }
         case actions_1.types.ADD_CELLS:
             {
-                var _newstate2 = Object.assign({}, state);
+                var _newstate2 = _extends({}, state);
                 var nodeuid = action.payload.nodeuid;
-                var newnode = Object.assign({}, _newstate2[nodeuid]);
+                var newnode = _extends({}, _newstate2[nodeuid]);
                 newnode.cellList = newnode.cellList || [];
                 var newcellList = action.payload.settings.map(function (setting) {
                     return setting.celluid;
@@ -6761,24 +6777,24 @@ var nodesById = function nodesById() {
             }
         case actions_1.types.CHANGE_TAB:
             {
-                var _newstate3 = Object.assign({}, state);
+                var _newstate3 = _extends({}, state);
                 var _nodeuid = action.payload.nodeuid;
 
-                var _newnode = Object.assign({}, _newstate3[action.payload.nodeuid]);
+                var _newnode = _extends({}, _newstate3[action.payload.nodeuid]);
                 _newnode.cellIndex = action.payload.tabvalue;
                 _newstate3[_nodeuid] = _newnode;
                 return _newstate3;
             }
         case actions_1.types.UPDATE_NODE_YEAR_SELECTIONS:
             {
-                newstate = Object.assign({}, state);
+                newstate = _extends({}, state);
                 var _action$payload3 = action.payload,
                     _nodeuid2 = _action$payload3.nodeuid,
                     leftyear = _action$payload3.leftyear,
                     rightyear = _action$payload3.rightyear;
 
-                var _newnode2 = Object.assign({}, newstate[_nodeuid2]);
-                var newYearSelections = Object.assign({}, _newnode2.yearSelections);
+                var _newnode2 = _extends({}, newstate[_nodeuid2]);
+                var newYearSelections = _extends({}, _newnode2.yearSelections);
                 if (leftyear > rightyear) {
                     leftyear = rightyear;
                 }
@@ -6790,16 +6806,16 @@ var nodesById = function nodesById() {
             }
         case actions_1.types.NORMALIZE_CELL_YEAR_DEPENDENCIES:
             {
-                newstate = Object.assign({}, state);
+                newstate = _extends({}, state);
                 var _action$payload4 = action.payload,
                     _nodeuid3 = _action$payload4.nodeuid,
                     yearsRange = _action$payload4.yearsRange;
                 var startYear = yearsRange.start,
                     endYear = yearsRange.end;
 
-                var _newnode3 = Object.assign({}, newstate[_nodeuid3]);
+                var _newnode3 = _extends({}, newstate[_nodeuid3]);
                 var yearSpan = endYear - startYear;
-                var range = Object.assign({}, _newnode3.yearSelections);
+                var range = _extends({}, _newnode3.yearSelections);
                 if (range.leftYear < startYear || range.leftYear > endYear) {
                     range.leftYear = startYear;
                 }
@@ -6812,7 +6828,7 @@ var nodesById = function nodesById() {
             }
         case actions_1.types.HARMONIZE_CELLS:
             {
-                newstate = Object.assign({}, state);
+                newstate = _extends({}, state);
                 var _action$payload5 = action.payload,
                     nodeProperties = _action$payload5.nodeProperties,
                     nodeList = _action$payload5.nodeList;
@@ -6824,12 +6840,12 @@ var nodesById = function nodesById() {
                     for (var _iterator4 = nodeList[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
                         var _nodeuid4 = _step4.value;
 
-                        var _newnode4 = Object.assign({}, newstate[_nodeuid4]);
+                        var _newnode4 = _extends({}, newstate[_nodeuid4]);
                         if (nodeProperties.cellIndex < _newnode4.cellList.length) {
                             _newnode4.cellIndex = nodeProperties.cellIndex;
                         }
                         var yearSelections = nodeProperties.yearSelections;
-                        _newnode4.yearSelections = Object.assign({}, yearSelections);
+                        _newnode4.yearSelections = _extends({}, yearSelections);
                         newstate[_nodeuid4] = _newnode4;
                     }
                 } catch (err) {
@@ -6858,7 +6874,7 @@ var cellsById = function cellsById() {
     var action = arguments[1];
     var type = action.type;
 
-    var newstate = Object.assign({}, state);
+    var newstate = _extends({}, state);
     switch (type) {
         case actions_1.types.ADD_CELLS:
             {
@@ -6892,7 +6908,7 @@ var cellsById = function cellsById() {
         case actions_1.types.CLONE_BRANCH:
             {
                 var newcells = action.payload.settings.cells;
-                newstate = Object.assign({}, state);
+                newstate = _extends({}, state);
                 for (var cellid in newcells) {
                     newstate[cellid] = newcells[cellid];
                 }
@@ -6953,7 +6969,7 @@ var cellsById = function cellsById() {
             {
                 var _celluid = action.payload.celluid;
 
-                var newcell = Object.assign({}, newstate[_celluid]);
+                var newcell = _extends({}, newstate[_celluid]);
                 var chartSelection = action.payload.selection;
                 newcell.chartSelection = chartSelection;
                 newstate[_celluid] = newcell;
@@ -6965,7 +6981,7 @@ var cellsById = function cellsById() {
                     _celluid2 = _action$payload6.celluid,
                     explorerTimeCode = _action$payload6.explorerTimeCode;
 
-                var _newcell = Object.assign({}, newstate[_celluid2]);
+                var _newcell = _extends({}, newstate[_celluid2]);
                 _newcell.yearScope = explorerTimeCode;
                 newstate[_celluid2] = _newcell;
                 return newstate;
@@ -6976,9 +6992,9 @@ var cellsById = function cellsById() {
                     _celluid3 = _action$payload7.celluid,
                     explorerChartCode = _action$payload7.explorerChartCode;
 
-                var _newcell2 = Object.assign({}, newstate[_celluid3]);
-                var newChartConfigs = Object.assign({}, _newcell2.chartConfigs);
-                var yearSettings = Object.assign({}, newChartConfigs[_newcell2.yearScope]);
+                var _newcell2 = _extends({}, newstate[_celluid3]);
+                var newChartConfigs = _extends({}, _newcell2.chartConfigs);
+                var yearSettings = _extends({}, newChartConfigs[_newcell2.yearScope]);
                 yearSettings.explorerChartCode = explorerChartCode;
                 newChartConfigs[_newcell2.yearScope] = yearSettings;
                 _newcell2.chartConfigs = newChartConfigs;
@@ -7002,7 +7018,7 @@ var cellsById = function cellsById() {
                     for (var _iterator8 = cellList[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
                         var _celluid4 = _step8.value;
 
-                        var _newcell3 = Object.assign({}, newstate[_celluid4]);
+                        var _newcell3 = _extends({}, newstate[_celluid4]);
                         if (yearSpan == 0) {
                             _newcell3.yearScope = constants_1.TimeScope[constants_1.TimeScope.OneYear];
                         }
@@ -7027,7 +7043,7 @@ var cellsById = function cellsById() {
             }
         case actions_1.types.HARMONIZE_CELLS:
             {
-                newstate = Object.assign({}, state);
+                newstate = _extends({}, state);
                 var _action$payload9 = action.payload,
                     cellProperties = _action$payload9.cellProperties,
                     _cellList = _action$payload9.cellList;
@@ -7039,7 +7055,7 @@ var cellsById = function cellsById() {
                     for (var _iterator9 = _cellList[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
                         var _celluid5 = _step9.value;
 
-                        var _newcell4 = Object.assign({}, newstate[_celluid5]);
+                        var _newcell4 = _extends({}, newstate[_celluid5]);
                         _newcell4.yearScope = cellProperties.yearScope;
                         var chartconfigs = JSON.parse(JSON.stringify(_newcell4.chartConfigs));
                         chartconfigs[_newcell4.yearScope].explorerChartCode = cellProperties.chartCode;
@@ -7075,9 +7091,9 @@ var lastAction = function lastAction() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : lastActionDefaultState;
     var action = arguments[1];
 
-    var newstate = Object.assign({}, state);
+    var newstate = _extends({}, state);
     if (!action.payload && !(action.type == actions_1.types.RESET_LAST_ACTION)) {
-        var _newstate4 = Object.assign({}, lastActionDefaultState);
+        var _newstate4 = _extends({}, lastActionDefaultState);
         _newstate4.type = action.type;
         return _newstate4;
     }
@@ -7086,7 +7102,7 @@ var lastAction = function lastAction() {
     switch (type) {
         case actions_1.types.RESET_LAST_ACTION:
             {
-                var _newstate5 = Object.assign({}, lastActionDefaultState);
+                var _newstate5 = _extends({}, lastActionDefaultState);
                 _newstate5.type = action.type;
                 _newstate5.explorer = action.meta.explorer;
                 _newstate5.generation = generationcounter;
@@ -7120,7 +7136,7 @@ var lastTargetedAction = function lastTargetedAction() {
     if (!payload.branchuid && !payload.nodeuid && !payload.celluid) {
         return state;
     }
-    var newstate = Object.assign({}, state);
+    var newstate = _extends({}, state);
     switch (action.type) {
         case actions_1.types.REMOVE_BRANCH:
             delete newstate[payload.branchuid];
@@ -8632,6 +8648,8 @@ exports.default = UserProfile;
 },{"react":859}],51:[function(require,module,exports){
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var redux_1 = require('redux');
@@ -8748,7 +8766,7 @@ function auth() {
     switch (action.type) {
         case LOGIN_REQUEST:
         case AUTO_LOGIN_REQUEST:
-            return Object.assign({}, state, {
+            return _extends({}, state, {
                 isFetching: true,
                 isAuthenticated: false,
                 user: action.payload.creds,
@@ -8759,7 +8777,7 @@ function auth() {
             });
         case LOGIN_SUCCESS:
         case AUTO_LOGIN_SUCCESS:
-            return Object.assign({}, state, {
+            return _extends({}, state, {
                 user: null,
                 token: action.payload.token,
                 profile: action.payload.profile,
@@ -8779,7 +8797,7 @@ function auth() {
             if (action.payload.data) {
                 action.payload.message = null;
             }
-            return Object.assign({}, state, {
+            return _extends({}, state, {
                 isFetching: false,
                 fieldMessages: fieldMessages,
                 errorMessage: action.payload.message,
@@ -8787,7 +8805,7 @@ function auth() {
                 token: null
             });
         case LOGOUT_SUCCESS:
-            return Object.assign({}, state, {
+            return _extends({}, state, {
                 isFetching: false,
                 isAuthenticated: false,
                 profile: null,
@@ -8810,7 +8828,7 @@ function register() {
 
     switch (action.type) {
         case REGISTER_REQUEST:
-            return Object.assign({}, state, {
+            return _extends({}, state, {
                 isFetching: true,
                 isRegistered: false,
                 user: action.payload.profile,
@@ -8818,7 +8836,7 @@ function register() {
                 fieldMessages: null
             });
         case REGISTER_SUCCESS:
-            return Object.assign({}, state, {
+            return _extends({}, state, {
                 isFetching: false,
                 isRegistered: true,
                 user: action.payload.profile
@@ -8834,7 +8852,7 @@ function register() {
             if (action.payload.data) {
                 action.payload.message = null;
             }
-            return Object.assign({}, state, {
+            return _extends({}, state, {
                 isFetching: false,
                 fieldMessages: fieldMessages,
                 errorMessage: action.payload.message,
@@ -8857,7 +8875,7 @@ function registerconfirm() {
 
     switch (action.type) {
         case REGISTER_CONFIRM_REQUEST:
-            return Object.assign({}, state, {
+            return _extends({}, state, {
                 isFetching: true,
                 isConfirmed: false,
                 confirmtoken: action.payload.confirmtoken,
@@ -8865,13 +8883,13 @@ function registerconfirm() {
                 user: null
             });
         case REGISTER_CONFIRM_SUCCESS:
-            return Object.assign({}, state, {
+            return _extends({}, state, {
                 isFetching: false,
                 isConfirmed: true,
                 user: action.payload.data
             });
         case REGISTER_CONFIRM_FAILURE:
-            return Object.assign({}, state, {
+            return _extends({}, state, {
                 isFetching: false,
                 errorMessage: action.payload.message || action.payload
             });
