@@ -96,7 +96,8 @@ class Roadmap extends Component<any, State> {
             <ul>
                 <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022">
                     Budget Committee</a>
-                    : <a target = "_blank" href = "http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&meetingId=11968">November 4</a>
+                    : <a target = "_blank" href = "http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&meetingId=11968">November 4</a> (<a 
+                            target="_blank" href="http://app.toronto.ca/tmmis/video.do?id=11968"> video</a>)
                     , <a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&meetingId=11065">November 18</a>, [wrapup TBD], <a
                      target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&meetingId=11970">November 28</a></li>
                 <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=966">Executive Committee</a
