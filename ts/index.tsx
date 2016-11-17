@@ -20,8 +20,13 @@ let globalmessage = null
 //     <div>THIS IS THE SOFTWARE DEVELOPER'S COPY OF BUDGETPEDIA.
 //     </div>
 // )
-
+try {
 render(
 	<Main globalmessage = {globalmessage} version={"DEVELOPMENT"}/>,
 	document.getElementById('main')
 )
+} catch (e) {
+    <div>
+        This application requires a modern browser, like Chrome, Firefox, Safari or MS Edge.
+    </div>
+}

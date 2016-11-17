@@ -21,7 +21,10 @@ class Announcements extends Component<any, any> {
         <p>
         Join us for the official launch of Budgetpedia version 0.1 at
         Civic Tech's weekly meetup. See Budgetpedia in action, gain insights
-        into the city budget and generally celebrate our going live.</p>
+        into the city budget and generally celebrate our going live. See the <a
+        target="_blank"
+        href="https://drive.google.com/open?id=1xZyJ6_wk4M6XP8DgrzyNi8oBvzvmzQyV6K23J0OwvZY"
+        >slide deck</a> for the meetup.</p>
     </li>
     <li><p><strong>Regular Meetups: First Tuesday of each month 6:30-9:00 pm </strong><br />
         <em> Location:</em> <a target = "_blank"
