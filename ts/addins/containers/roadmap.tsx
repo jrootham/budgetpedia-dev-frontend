@@ -91,7 +91,7 @@ class Roadmap extends Component<any, State> {
             <p>Toronto's 2017 public budget process schedule is published <a 
                 target="_blank" href="http://bit.ly/2eKcrfK">here.</a></p>
             <p>Follow events in these committees using the City's <a target = "_blank" href="http://app.toronto.ca/tmmis/index.do">TMMIS</a> (Toronto Meeting Management Information System).
-            Each committee's agendas, minutes, and background documents can be found through these links:</p>
+            Live streams can be seen <a target="_blank" href="https://www.youtube.com/channel/UCfe2rzOnQzgEDvNzRRPUJsA">here</a>. Each committee's agendas, minutes, and background documents can be found through these links:</p>
             <h3>Rate supported budgets (waste, water, parking)</h3>
             <ul>
                 <li><a target = "_blank" href="http://app.toronto.ca/tmmis/decisionBodyProfile.do?function=doPrepare&decisionBodyId=1022">
