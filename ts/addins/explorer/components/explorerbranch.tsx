@@ -861,9 +861,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 throw new Error(errmessage)
             }
             let url = json.data.url
-            let toastrOptions = {
-                component: (
-                    <div style={{width:"300px"}}>
+
+            let toastrComponent = ( <div style={{width:"300px"}}>
                     <p style={{width:"290px"}}>To share the selected row of charts, copy the url below, and send it to a friend.</p>
                     <input 
                         ref = {node => {
@@ -871,9 +870,20 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                         }}
                         onFocus= {this._inputonfocus}
                         style={{width:"290px"}} value = {url} readOnly />
-                    </div>
-                )
+                    </div> )
+
+            let toastrOptions = {
+                icon: (<FontIcon
+                    className="material-icons"
+                    >
+
+                    share
+
+                </FontIcon>),
+
+                component: toastrComponent
             }
+            console.log('toastroptions',toastrOptions,toastr)
             toastr.message('Share charts',toastrOptions)
         }).catch(error => {
             console.log('error getting bitly',error)

@@ -404,13 +404,16 @@ class ExplorerBranch extends Component {
                     throw new Error(errmessage);
                 }
                 let url = json.data.url;
+                let toastrComponent = (React.createElement("div", {style: { width: "300px" }}, 
+                    React.createElement("p", {style: { width: "290px" }}, "To share the selected row of charts, copy the url below, and send it to a friend."), 
+                    React.createElement("input", {ref: node => {
+                        this._inputfieldref = node;
+                    }, onFocus: this._inputonfocus, style: { width: "290px" }, value: url, readOnly: true})));
                 let toastrOptions = {
-                    component: (React.createElement("div", {style: { width: "300px" }}, 
-                        React.createElement("p", {style: { width: "290px" }}, "To share the selected row of charts, copy the url below, and send it to a friend."), 
-                        React.createElement("input", {ref: node => {
-                            this._inputfieldref = node;
-                        }, onFocus: this._inputonfocus, style: { width: "290px" }, value: url, readOnly: true})))
+                    icon: (React.createElement(FontIcon_1.default, {className: "material-icons"}, "share")),
+                    component: toastrComponent
                 };
+                console.log('toastroptions', toastrOptions, react_redux_toastr_1.toastr);
                 react_redux_toastr_1.toastr.message('Share charts', toastrOptions);
             }).catch(error => {
                 console.log('error getting bitly', error);
