@@ -86,6 +86,7 @@ interface ExplorerBranchProps {
     },
     clearUrlParms: Function,
     setToast: Function,
+    handleFindDialogOpen: Function,
 }
 
 interface ExplorerBranchState {
@@ -703,8 +704,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     }
 
-    handleSearch = () => {
-
+    handleSearch = (e) => {
+        this.props.handleFindDialogOpen(e,this.props.budgetBranch.uid)
     }
 
     // ---------------------------[ callbacks ]------------------------------
@@ -1079,6 +1080,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         this.props.handleDialogOpen(e)
     }
 
+    handleFindDialogOpen = (e) => {
+        this.props.handleFindDialogOpen(e)
+    }
 
     render() {
 
@@ -1345,7 +1349,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         :null
 
     let search = (branchDeclaration.showOptions)?
-        <RaisedButton disabled
+        <RaisedButton 
             label = "Find"
             style={{margin:'3px 6px 0 0'}}
             type="button"
@@ -1373,7 +1377,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         </div>
 
         <div>
-        <div
+        {(branchDeclaration.showOptions)?<div
             style = {
                 {
                     display:"inline-block",
@@ -1394,7 +1398,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         { search }
 
         { shareurl }
-        </div>
+        </div>:null}
 
         { governmentselection }
 
@@ -1413,7 +1417,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
         </div>
 
-        <div
+        {(branchDeclaration.showOptions)?<div
             style = {
                 {
                     display:"inline-block",
@@ -1428,7 +1432,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         { byunitselection }
 
         { inflationadjustment }
-        </div>
+        </div>:null}
 
     </div>
 

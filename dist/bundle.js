@@ -3896,7 +3896,9 @@ var ExplorerBranch = function (_Component) {
 
             _this.props.globalStateActions.toggleShowOptions(budgetBranch.uid, value);
         };
-        _this.handleSearch = function () {};
+        _this.handleSearch = function (e) {
+            _this.props.handleFindDialogOpen(e, _this.props.budgetBranch.uid);
+        };
         _this.harmonizeCells = function (nodeUid, cellUid) {
             var budgetBranch = _this.props.budgetBranch;
 
@@ -4253,6 +4255,9 @@ var ExplorerBranch = function (_Component) {
         _this.handleDialogOpen = function (e) {
             _this.props.handleDialogOpen(e);
         };
+        _this.handleFindDialogOpen = function (e) {
+            _this.props.handleFindDialogOpen(e);
+        };
         return _this;
     }
 
@@ -4422,9 +4427,9 @@ var ExplorerBranch = function (_Component) {
                 }, onTouchTap: branch.handleTechDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement("div", null, "Please report" + ' ' + "any problems to ", React.createElement("a", { target: "_blank", href: "mailto:mail@budgetpedia.ca" }, "mail@budgetpedia.ca"), " "), branch.state.techDialogOpen ? branch.getTechNotesDisplay() : null, React.createElement("div", null, "Note: some historical numbers have been allocated to contemporary categories" + ' ' + "for continuity -- to make the numbers more easily comparable. We plan to disclose" + ' ' + "continuity details here."));
             var technotes = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { style: { margin: '3px 6px 0 0' }, type: "button", label: "Sources", onTouchTap: branch.handleTechDialogOpen }) : null;
             var showhelp = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { label: "Help", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleDialogOpen, labelPosition: "before", icon: React.createElement(FontIcon_1.default, { style: { color: 'rgba(0,0,0,0.5' }, className: "material-icons" }, "help_outline") }) : null;
-            var search = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { disabled: true, label: "Find", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleSearch, labelPosition: "before", icon: React.createElement(FontIcon_1.default, { style: { color: 'rgba(0,0,0,0.5)' }, className: "material-icons" }, "search") }) : null;
+            var search = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { label: "Find", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleSearch, labelPosition: "before", icon: React.createElement(FontIcon_1.default, { style: { color: 'rgba(0,0,0,0.5)' }, className: "material-icons" }, "search") }) : null;
             var shareurl = branchDeclaration.showOptions ? React.createElement(RaisedButton_1.default, { type: "button", style: { margin: '3px 6px 0 0' }, label: "Share", onTouchTap: this.shareBranch }) : null;
-            return React.createElement("div", null, React.createElement("div", null, React.createElement("div", null, this.getBranchDataMessages()), React.createElement("div", null, React.createElement("div", { style: {
+            return React.createElement("div", null, React.createElement("div", null, React.createElement("div", null, this.getBranchDataMessages()), React.createElement("div", null, branchDeclaration.showOptions ? React.createElement("div", { style: {
                     display: "inline-block",
                     backgroundColor: "cornsilk",
                     border: "1px solid silver",
@@ -4432,14 +4437,14 @@ var ExplorerBranch = function (_Component) {
                     margin: "3px",
                     paddingLeft: "6px",
                     paddingBottom: "3px"
-                } }, technotes, showhelp, search, shareurl), governmentselection, showcontrols), React.createElement("div", null, technotesdialog, viewpointselection, versionselection, aspectselection), React.createElement("div", { style: {
+                } }, technotes, showhelp, search, shareurl) : null, governmentselection, showcontrols), React.createElement("div", null, technotesdialog, viewpointselection, versionselection, aspectselection), branchDeclaration.showOptions ? React.createElement("div", { style: {
                     display: "inline-block",
                     backgroundColor: "#ebfaf9",
                     border: "1px solid silver",
                     borderRadius: "8px",
                     margin: "3px",
                     paddingLeft: "6px"
-                } }, byunitselection, inflationadjustment)), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
+                } }, byunitselection, inflationadjustment) : null), React.createElement("div", { style: { whiteSpace: "nowrap" } }, React.createElement("div", { ref: function ref(node) {
                     branch.branchScrollBlock = node;
                 }, style: { overflow: "scroll" } }, drilldownportals, React.createElement("div", { style: { display: "inline-block", width: "500px" } }))), React.createElement(Snackbar_1.default, { open: this.state.snackbar.open, message: this.state.snackbar.message, autoHideDuration: 4000, onRequestClose: this.handleSnackbarRequestClose }));
         }
@@ -5611,7 +5616,8 @@ var Explorer = function (_Component) {
         _this.state = {
             budgetBranches: [],
             dialogOpen: false,
-            showdashboard: false
+            showdashboard: false,
+            findDialogOpen: false
         };
         _this.toastrmessages = {
             error: null,
@@ -5930,6 +5936,88 @@ var Explorer = function (_Component) {
         _this.removeBranch = function (branchuid) {
             _this.props.removeBranchDeclaration(branchuid);
         };
+        _this.findChart = function (refbranchuid) {
+            var findParms = {};
+        };
+        _this.findcontent = React.createElement("div", null, "pending");
+        _this.finderLookupPromise = function (path) {
+            var root = './db/repositories/toronto/';
+            var filespec = root + path;
+            var promise = new Promise(function (resolve, reject) {
+                fetch(filespec).then(function (response) {
+                    if (response.ok) {
+                        try {
+                            var json = response.json().then(function (json) {
+                                resolve(json);
+                            }).catch(function (reason) {
+                                var msg = 'failure to resolve ' + path + ' ' + reason;
+                                console.log(msg);
+                                reject(msg);
+                            });
+                        } catch (e) {
+                            console.log('error ' + path, e.message);
+                            reject('failure to load ' + path);
+                        }
+                    } else {
+                        reject('could not load file ' + path);
+                    }
+                }).catch(function (reason) {
+                    reject(reason + ' ' + path);
+                });
+            });
+            return promise;
+        };
+        _this.getAllFindLookups = function () {
+            var summaryPromise = _this.finderLookupPromise('datasets/summary/lookups/lookups.json');
+            var pbftPromise = _this.finderLookupPromise('datasets/pbft/lookups/lookups.json');
+            var actualExpensesPromise = _this.finderLookupPromise('datasets/actualexpenses/lookups/lookups.json');
+            var actualRevenuesPromise = _this.finderLookupPromise('datasets/actualrevenues/lookups/lookups.json');
+            var expensesByObjectPromise = _this.finderLookupPromise('datasets/expenditures/lookups/lookups.json');
+            var functionalViewpointPromise = _this.finderLookupPromise('viewpoints/functional.json');
+            var structuralViewpointPromise = _this.finderLookupPromise('viewpoints/structural.json');
+            var actualExpensesViewpointPromise = _this.finderLookupPromise('viewpoints/actualexpenses.json');
+            var actualRevenuesViewpointPromise = _this.finderLookupPromise('viewpoints/actualrevenues.json');
+            var expendituresViewpointPromise = _this.finderLookupPromise('viewpoints/expenditures.json');
+            var promise = new Promise(function (resolve, reject) {
+                Promise.all([summaryPromise, pbftPromise, actualExpensesPromise, actualRevenuesPromise, expensesByObjectPromise, functionalViewpointPromise, structuralViewpointPromise, actualExpensesViewpointPromise, actualRevenuesViewpointPromise, expendituresViewpointPromise]).then(function (values) {
+                    for (var i = 5; i < 10; i++) {
+                        values[i] = values[i]['Meta'].Lookups;
+                    }
+                    resolve(values);
+                }).catch(function (reason) {
+                    reject(reason);
+                });
+            });
+            return promise;
+        };
+        _this.handleFindDialogOpen = function (e, branchuid) {
+            e.stopPropagation();
+            e.preventDefault();
+            _this.getAllFindLookups().then(function (data) {
+                console.log('lookupdata', data);
+                _this.setState({
+                    findDialogOpen: true
+                });
+            }).catch(function (reason) {
+                react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
+            });
+        };
+        _this.handleFindDialogClose = function () {
+            _this.setState({
+                findDialogOpen: false
+            });
+        };
+        _this.findDialog = function () {
+            return React.createElement(Dialog_1.default, { title: "Find a Chart", modal: false, open: _this.state.findDialogOpen, onRequestClose: _this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' } }, React.createElement(IconButton_1.default, { style: {
+                    top: 0,
+                    right: 0,
+                    padding: 0,
+                    height: "36px",
+                    width: "36px",
+                    position: "absolute",
+                    zIndex: 2
+                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), _this.findcontent);
+        };
         return _this;
     }
 
@@ -6079,7 +6167,7 @@ var Explorer = function (_Component) {
                                 ev.stopPropagation();
                                 _this2.branchMoveUp(uid);
                             };
-                        }(budgetBranch.uid), tooltip: "Move up" }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "arrow_upward"))), React.createElement(Card_1.CardText, { expandable: false }, React.createElement(explorerbranch_1.default, { budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: _this2.handleDialogOpen, urlparms: urlparms, clearUrlParms: _this2.clearUrlParms, setToast: _this2.setToast })), React.createElement(Card_1.CardActions, { expandable: false }, React.createElement(FloatingActionButton_1.default, { onTouchTap: function (uid) {
+                        }(budgetBranch.uid), tooltip: "Move up" }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "arrow_upward"))), React.createElement(Card_1.CardText, { expandable: false }, React.createElement(explorerbranch_1.default, { budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: _this2.handleDialogOpen, urlparms: urlparms, clearUrlParms: _this2.clearUrlParms, setToast: _this2.setToast, handleFindDialogOpen: _this2.handleFindDialogOpen })), React.createElement(Card_1.CardActions, { expandable: false }, React.createElement(FloatingActionButton_1.default, { onTouchTap: function (uid) {
                             return function () {
                                 _this2.addBranch(uid);
                             };
@@ -6099,7 +6187,7 @@ var Explorer = function (_Component) {
                     borderRadius: "8px",
                     fontFamily: "Roboto,sans-serif",
                     fontSize: "12px"
-                } }, "Caution: This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality and continuity issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), React.createElement(Card_1.Card, { expanded: this.state.showdashboard }, React.createElement(Card_1.CardTitle, null, "Budget Explorer"), React.createElement(Card_1.CardText, { expandable: true }, React.createElement("span", { style: { fontStyle: 'italic' } }, "[content to be determined]"))), dialogbox, branches);
+                } }, "Caution: This is a very early version of the Budgetpedia Explorer. The data presented in these charts should be treated as approximations." + ' ' + "There are numerous data source quality and continuity issues, the intake process has not been" + ' ' + "validated, and the data presented has not been rigorously verified against source data."), React.createElement(Card_1.Card, { expanded: this.state.showdashboard }, React.createElement(Card_1.CardTitle, null, "Budget Explorer"), React.createElement(Card_1.CardText, { expandable: true }, React.createElement("span", { style: { fontStyle: 'italic' } }, "[content to be determined]"))), dialogbox, this.findDialog(), branches);
         }
     }]);
 

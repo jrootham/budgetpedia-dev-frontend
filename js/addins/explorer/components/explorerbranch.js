@@ -316,7 +316,8 @@ class ExplorerBranch extends Component {
             let { budgetBranch } = this.props;
             this.props.globalStateActions.toggleShowOptions(budgetBranch.uid, value);
         };
-        this.handleSearch = () => {
+        this.handleSearch = (e) => {
+            this.props.handleFindDialogOpen(e, this.props.budgetBranch.uid);
         };
         this.harmonizeCells = (nodeUid, cellUid) => {
             let { budgetBranch } = this.props;
@@ -559,6 +560,9 @@ class ExplorerBranch extends Component {
         this.handleDialogOpen = (e) => {
             this.props.handleDialogOpen(e);
         };
+        this.handleFindDialogOpen = (e) => {
+            this.props.handleFindDialogOpen(e);
+        };
     }
     componentWillMount() {
         this._initialize();
@@ -760,7 +764,7 @@ class ExplorerBranch extends Component {
             ? React.createElement(RaisedButton_1.default, {label: "Help", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleDialogOpen, labelPosition: "before", icon: React.createElement(FontIcon_1.default, {style: { color: 'rgba(0,0,0,0.5' }, className: "material-icons"}, "help_outline")})
             : null;
         let search = (branchDeclaration.showOptions) ?
-            React.createElement(RaisedButton_1.default, {disabled: true, label: "Find", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleSearch, labelPosition: "before", icon: React.createElement(FontIcon_1.default, {style: { color: 'rgba(0,0,0,0.5)' }, className: "material-icons"}, "search")})
+            React.createElement(RaisedButton_1.default, {label: "Find", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleSearch, labelPosition: "before", icon: React.createElement(FontIcon_1.default, {style: { color: 'rgba(0,0,0,0.5)' }, className: "material-icons"}, "search")})
             : null;
         let shareurl = (branchDeclaration.showOptions)
             ? React.createElement(RaisedButton_1.default, {type: "button", style: { margin: '3px 6px 0 0' }, label: "Share", onTouchTap: this.shareBranch}) : null;
@@ -768,7 +772,7 @@ class ExplorerBranch extends Component {
             React.createElement("div", null, 
                 React.createElement("div", null, this.getBranchDataMessages()), 
                 React.createElement("div", null, 
-                    React.createElement("div", {style: {
+                    (branchDeclaration.showOptions) ? React.createElement("div", {style: {
                         display: "inline-block",
                         backgroundColor: "cornsilk",
                         border: "1px solid silver",
@@ -780,7 +784,7 @@ class ExplorerBranch extends Component {
                         technotes, 
                         showhelp, 
                         search, 
-                        shareurl), 
+                        shareurl) : null, 
                     governmentselection, 
                     showcontrols), 
                 React.createElement("div", null, 
@@ -788,7 +792,7 @@ class ExplorerBranch extends Component {
                     viewpointselection, 
                     versionselection, 
                     aspectselection), 
-                React.createElement("div", {style: {
+                (branchDeclaration.showOptions) ? React.createElement("div", {style: {
                     display: "inline-block",
                     backgroundColor: "#ebfaf9",
                     border: "1px solid silver",
@@ -797,7 +801,7 @@ class ExplorerBranch extends Component {
                     paddingLeft: "6px",
                 }}, 
                     byunitselection, 
-                    inflationadjustment)), 
+                    inflationadjustment) : null), 
             React.createElement("div", {style: { whiteSpace: "nowrap" }}, 
                 React.createElement("div", {ref: node => {
                     branch.branchScrollBlock = node;

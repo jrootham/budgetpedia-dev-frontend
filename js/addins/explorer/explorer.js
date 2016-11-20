@@ -25,7 +25,8 @@ let Explorer = class extends Component {
         this.state = {
             budgetBranches: [],
             dialogOpen: false,
-            showdashboard: false
+            showdashboard: false,
+            findDialogOpen: false,
         };
         this.toastrmessages = {
             error: null,
@@ -211,6 +212,103 @@ let Explorer = class extends Component {
         this.removeBranch = branchuid => {
             this.props.removeBranchDeclaration(branchuid);
         };
+        this.findChart = refbranchuid => {
+            let findParms = {};
+        };
+        this.findcontent = React.createElement("div", null, "pending");
+        this.finderLookupPromise = path => {
+            let root = './db/repositories/toronto/';
+            let filespec = root + path;
+            let promise = new Promise((resolve, reject) => {
+                fetch(filespec).then(response => {
+                    if (response.ok) {
+                        try {
+                            let json = response.json().then(json => {
+                                resolve(json);
+                            }).catch(reason => {
+                                let msg = 'failure to resolve ' + path + ' ' + reason;
+                                console.log(msg);
+                                reject(msg);
+                            });
+                        }
+                        catch (e) {
+                            console.log('error ' + path, e.message);
+                            reject('failure to load ' + path);
+                        }
+                    }
+                    else {
+                        reject('could not load file ' + path);
+                    }
+                }).catch(reason => {
+                    reject(reason + ' ' + path);
+                });
+            });
+            return promise;
+        };
+        this.getAllFindLookups = () => {
+            let summaryPromise = this.finderLookupPromise('datasets/summary/lookups/lookups.json');
+            let pbftPromise = this.finderLookupPromise('datasets/pbft/lookups/lookups.json');
+            let actualExpensesPromise = this.finderLookupPromise('datasets/actualexpenses/lookups/lookups.json');
+            let actualRevenuesPromise = this.finderLookupPromise('datasets/actualrevenues/lookups/lookups.json');
+            let expensesByObjectPromise = this.finderLookupPromise('datasets/expenditures/lookups/lookups.json');
+            let functionalViewpointPromise = this.finderLookupPromise('viewpoints/functional.json');
+            let structuralViewpointPromise = this.finderLookupPromise('viewpoints/structural.json');
+            let actualExpensesViewpointPromise = this.finderLookupPromise('viewpoints/actualexpenses.json');
+            let actualRevenuesViewpointPromise = this.finderLookupPromise('viewpoints/actualrevenues.json');
+            let expendituresViewpointPromise = this.finderLookupPromise('viewpoints/expenditures.json');
+            let promise = new Promise((resolve, reject) => {
+                Promise.all([
+                    summaryPromise,
+                    pbftPromise,
+                    actualExpensesPromise,
+                    actualRevenuesPromise,
+                    expensesByObjectPromise,
+                    functionalViewpointPromise,
+                    structuralViewpointPromise,
+                    actualExpensesViewpointPromise,
+                    actualRevenuesViewpointPromise,
+                    expendituresViewpointPromise,
+                ]).then(values => {
+                    for (let i = 5; i < 10; i++) {
+                        values[i] = values[i]['Meta'].Lookups;
+                    }
+                    resolve(values);
+                }).catch(reason => {
+                    reject(reason);
+                });
+            });
+            return promise;
+        };
+        this.handleFindDialogOpen = (e, branchuid) => {
+            e.stopPropagation();
+            e.preventDefault();
+            this.getAllFindLookups().then(data => {
+                console.log('lookupdata', data);
+                this.setState({
+                    findDialogOpen: true
+                });
+            }).catch(reason => {
+                react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
+            });
+        };
+        this.handleFindDialogClose = () => {
+            this.setState({
+                findDialogOpen: false
+            });
+        };
+        this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' }}, 
+            React.createElement(IconButton_1.default, {style: {
+                top: 0,
+                right: 0,
+                padding: 0,
+                height: "36px",
+                width: "36px",
+                position: "absolute",
+                zIndex: 2,
+            }, onTouchTap: this.handleFindDialogClose}, 
+                React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")
+            ), 
+            this.findcontent));
     }
     componentWillMount() {
         if (!this.props.declarationData.onetimenotification) {
@@ -346,7 +444,7 @@ let Explorer = class extends Component {
                             React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "arrow_upward")
                         )), 
                     React.createElement(Card_1.CardText, {expandable: false}, 
-                        React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: this.handleDialogOpen, urlparms: urlparms, clearUrlParms: this.clearUrlParms, setToast: this.setToast})
+                        React.createElement(explorerbranch_1.default, {budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: this.handleDialogOpen, urlparms: urlparms, clearUrlParms: this.clearUrlParms, setToast: this.setToast, handleFindDialogOpen: this.handleFindDialogOpen})
                     ), 
                     React.createElement(Card_1.CardActions, {expandable: false}, 
                         React.createElement(FloatingActionButton_1.default, {onTouchTap: (uid => () => {
@@ -378,6 +476,7 @@ let Explorer = class extends Component {
                     React.createElement("span", {style: { fontStyle: 'italic' }}, "[content to be determined]")
                 )), 
             dialogbox, 
+            this.findDialog(), 
             branches);
     }
 }

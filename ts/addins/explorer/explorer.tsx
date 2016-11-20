@@ -123,6 +123,7 @@ interface ExplorerProps extends MappedActions {
 interface ExplorerState {
     budgetBranches?:BudgetBranch[],
     dialogOpen?: boolean,
+    findDialogOpen?:boolean,
     showdashboard?: boolean
 }
 
@@ -134,7 +135,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     state = {
         budgetBranches:[],
         dialogOpen: false,
-        showdashboard:false
+        showdashboard:false,
+        findDialogOpen: false,
     }
 
     toastrmessages = {
@@ -499,6 +501,148 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         this.props.removeBranchDeclaration(branchuid)
     }
 
+    // ==================[ FIND CHART ]=======================
+
+    findChart = refbranchuid => {
+        let findParms:{} = {}
+
+    }
+
+    findcontent = <div>pending</div>
+
+    private finderLookupPromise = path => {
+        let root = './db/repositories/toronto/'
+        let filespec = root + path
+        let promise = new Promise((resolve,reject) => {
+            fetch(filespec).then( response => {
+                if (response.ok) {
+                    // console.log('response for ' + path,response)
+                    try {
+                        let json = response.json().then(json => {
+                            resolve(json)
+                        }).catch(reason => {
+                            let msg = 'failure to resolve ' + path + ' ' + reason
+                            console.log(msg)
+                            reject(msg)
+                        })
+                    } catch (e) {
+                        console.log('error ' + path, e.message)
+                        reject('failure to load ' + path)
+                    }
+                } else {
+                    reject('could not load file ' + path)
+                }
+
+            }).catch(reason => {
+                reject(reason + ' ' + path)
+            })
+        })
+        return promise
+    }
+
+    getAllFindLookups = () => {
+        let summaryPromise = this.finderLookupPromise('datasets/summary/lookups/lookups.json')
+        let pbftPromise = this.finderLookupPromise('datasets/pbft/lookups/lookups.json')
+        let actualExpensesPromise = this.finderLookupPromise('datasets/actualexpenses/lookups/lookups.json')
+        let actualRevenuesPromise = this.finderLookupPromise('datasets/actualrevenues/lookups/lookups.json')
+        let expensesByObjectPromise = this.finderLookupPromise('datasets/expenditures/lookups/lookups.json')
+
+        let functionalViewpointPromise = this.finderLookupPromise('viewpoints/functional.json')
+        let structuralViewpointPromise = this.finderLookupPromise('viewpoints/structural.json')
+        let actualExpensesViewpointPromise = this.finderLookupPromise('viewpoints/actualexpenses.json')
+        let actualRevenuesViewpointPromise = this.finderLookupPromise('viewpoints/actualrevenues.json')
+        let expendituresViewpointPromise = this.finderLookupPromise('viewpoints/expenditures.json')
+        let promise = new Promise((resolve,reject) => {
+            Promise.all(
+                [
+                    summaryPromise,
+                    pbftPromise,
+                    actualExpensesPromise,
+                    actualRevenuesPromise,
+                    expensesByObjectPromise,
+
+                    functionalViewpointPromise,
+                    structuralViewpointPromise,
+                    actualExpensesViewpointPromise,
+                    actualRevenuesViewpointPromise,
+                    expendituresViewpointPromise,
+                ]
+            ).then( values => {
+
+                for (let i = 5; i < 10; i++) {
+                    values[i] = values[i]['Meta'].Lookups
+                }
+
+                resolve(values)
+
+            }).catch(reason => {
+
+                reject(reason)
+
+            })
+        })
+
+        return promise
+
+    }
+
+    handleFindDialogOpen = (e,branchuid) => {
+        e.stopPropagation()
+        e.preventDefault()
+        this.getAllFindLookups().then(data => {
+            console.log('lookupdata',data)
+            this.setState({
+                findDialogOpen: true
+            })
+        }).catch(reason => {
+            toastr.error('Error loading finder lookups: ' + reason)
+        })
+    }
+
+    handleFindDialogClose = () => {
+        this.setState({
+            findDialogOpen: false
+        })
+    }
+
+
+    findDialog = () => (
+        <Dialog
+            title = "Find a Chart"
+            modal = { false }
+            open = { this.state.findDialogOpen }
+            onRequestClose = { this.handleFindDialogClose }
+            bodyStyle={{padding:'12px'}}
+            autoScrollBodyContent
+            contentStyle = {{width:'95%',maxWidth:'600px'}}
+        >
+            <IconButton
+                style={{
+                    top: 0,
+                    right: 0,
+                    padding: 0,
+                    height: "36px",
+                    width: "36px",
+                    position: "absolute",
+                    zIndex: 2,
+                }}
+                onTouchTap={ this.handleFindDialogClose } >
+
+                <FontIcon
+                    className="material-icons"
+                    style = {{ cursor: "pointer" }} >
+
+                    close
+
+                </FontIcon>
+
+            </IconButton>
+
+            { this.findcontent }
+
+        </Dialog >)
+
+
     // ===================================================================
     // ---------------------------[ Render ]------------------------------ 
 
@@ -675,6 +819,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         urlparms = { urlparms }
                         clearUrlParms = {this.clearUrlParms}
                         setToast = {this.setToast}
+                        handleFindDialogOpen = {this.handleFindDialogOpen}
                     />
                     </CardText>
                     <CardActions expandable = {false}>
@@ -755,6 +900,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         </Card>
         
             { dialogbox }
+
+            { this.findDialog() }
 
             { branches }
 
