@@ -474,6 +474,9 @@ declare namespace __MaterialUI {
         anchorOrigin?: Origin;
         animated?: boolean;
         dataSource?: AutoCompleteDataSource;
+        dataSourceConfig?:any;
+        maxSearchResults?:number;
+        openOnFocus?:boolean;
         disableFocusRipple?: boolean;
         errorStyle?: React.CSSProperties;
         errorText?: string;
@@ -1915,7 +1918,7 @@ declare module 'material-ui/AppBar' {
     export default AppBar;
 }
 
-declare module 'material-ui/lib/auto-complete' {
+declare module 'material-ui/AutoComplete' {
     export import AutoComplete = __MaterialUI.AutoComplete;
     export default AutoComplete;
 }

@@ -7,6 +7,8 @@ const FontIcon_1 = require('material-ui/FontIcon');
 const IconButton_1 = require('material-ui/IconButton');
 const Dialog_1 = require('material-ui/Dialog');
 const FloatingActionButton_1 = require('material-ui/FloatingActionButton');
+const AutoComplete_1 = require('material-ui/AutoComplete');
+const MenuItem_1 = require('material-ui/MenuItem');
 const add_1 = require('material-ui/svg-icons/content/add');
 const remove_1 = require('material-ui/svg-icons/content/remove');
 const react_redux_toastr_1 = require('react-redux-toastr');
@@ -346,6 +348,18 @@ let Explorer = class extends Component {
                             dimension: dimensionname,
                             code,
                             name,
+                            value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic" }}, 
+                                "source: ", 
+                                sourceviewpoints[datasetname]), secondaryText: React.createElement("span", {style: { fontStyle: "italic" }}, 
+                                "dimension: ", 
+                                dimensionname)}, 
+                                React.createElement("div", {style: { borderTop: "single 1px silver" }}, 
+                                    name, 
+                                    " ", 
+                                    React.createElement("span", {style: { float: "right", fontStyle: "italic" }}, 
+                                        "source: ", 
+                                        datasetname))
+                            ))
                         };
                         lookups.push(selection);
                     }
@@ -378,6 +392,18 @@ let Explorer = class extends Component {
                             dimension: dimensionname,
                             code,
                             name,
+                            value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic" }}, 
+                                "viewpoint: ", 
+                                viewpointname), secondaryText: React.createElement("span", {style: { fontStyle: "italic" }}, 
+                                "dimension: ", 
+                                dimensionname)}, 
+                                React.createElement("div", {style: { borderTop: "single 1px silver" }}, 
+                                    name, 
+                                    " ", 
+                                    React.createElement("span", {style: { float: "right", fontStyle: "italic" }}, 
+                                        "source: ", 
+                                        viewpointsources[viewpointname]))
+                            ))
                         };
                         lookups.push(selection);
                     }
@@ -413,7 +439,7 @@ let Explorer = class extends Component {
                 findDialogOpen: false
             });
         };
-        this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' }}, 
+        this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
             React.createElement(IconButton_1.default, {style: {
                 top: 0,
                 right: 0,
@@ -425,7 +451,7 @@ let Explorer = class extends Component {
             }, onTouchTap: this.handleFindDialogClose}, 
                 React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")
             ), 
-            this.findcontent));
+            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, floatingLabelText: "Type any characters", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: true})));
     }
     componentWillMount() {
         if (!this.props.declarationData.onetimenotification) {

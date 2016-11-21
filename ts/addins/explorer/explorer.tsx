@@ -40,6 +40,8 @@ import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
+import AutoComplete from 'material-ui/AutoComplete'
+import MenuItem from 'material-ui/MenuItem'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import ContentRemove from 'material-ui/svg-icons/content/remove'
 // import Popover from 'material-ui/Popover'
@@ -662,6 +664,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         dimension:dimensionname,
                         code,
                         name,
+                        value:(
+                            <MenuItem primaryText={<span style={{fontStyle:"italic"}}>source: {sourceviewpoints[datasetname]}</span>}
+                                secondaryText={<span style={{fontStyle:"italic"}}>dimension: {dimensionname}</span>}>
+                                <div style={{borderTop:"single 1px silver"}} >
+                                {name} <span style={{float:"right",fontStyle:"italic"}} >source: {datasetname}</span>
+                                </div>
+                            </MenuItem>
+                            )
                     }
                     lookups.push(selection)
                 }
@@ -696,6 +706,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         dimension:dimensionname,
                         code,
                         name,
+                        value:(
+                            <MenuItem primaryText={<span style={{fontStyle:"italic"}}>viewpoint: {viewpointname}</span>}
+                                secondaryText={<span style={{fontStyle:"italic"}}>dimension: {dimensionname}</span>}>
+                                <div style={{borderTop:"single 1px silver"}} >
+                                {name} <span style={{float:"right",fontStyle:"italic"}} >source: {viewpointsources[viewpointname]}</span>
+                                </div>
+                            </MenuItem>
+                            )
                     }
                     lookups.push(selection)
                 }
@@ -745,7 +763,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             onRequestClose = { this.handleFindDialogClose }
             bodyStyle={{padding:'12px'}}
             autoScrollBodyContent
-            contentStyle = {{width:'95%',maxWidth:'600px'}}
+            contentStyle = {{maxWidth:'600px',transform: "translate(0px, -60px)"}}
         >
             <IconButton
                 style={{
@@ -769,7 +787,16 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             </IconButton>
 
-            { this.findcontent }
+    <AutoComplete
+      style = {{width:'100%'}}
+      floatingLabelText="Type any characters"
+      filter={AutoComplete.caseInsensitiveFilter}
+      dataSource={this.findChartLookups || []}
+      dataSourceConfig = {{text:'name',value:'value'}}
+      fullWidth = {true}
+      menuStyle = {{maxHeight:"300px"}}
+      openOnFocus = {true}
+    />
 
         </Dialog >)
 
