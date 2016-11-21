@@ -271,7 +271,7 @@ let Explorer = class extends Component {
                     }
                     let lookups;
                     lookups = {
-                        dataseries: {
+                        datasets: {
                             summary: values[0],
                             pbft: values[1],
                             actualexpenses: values[2],
@@ -295,7 +295,95 @@ let Explorer = class extends Component {
         };
         this.findChartLookups = null;
         this.processFindChartLookups = data => {
-            return data;
+            let lookups = [];
+            let { viewpoints, datasets } = data;
+            let sourceviewpoints = {
+                actualexpenses: 'actualexpenses',
+                actualrevenues: 'actualrevenues',
+                expenditures: 'expenditures',
+                pbft: 'functional',
+                summary: 'functional',
+            };
+            let sourceaspects = {
+                actualexpenses: { expenses: true },
+                actualrevenues: { revenues: true },
+                expenditures: { expenses: true },
+                pbft: { expenses: true, revenues: true, staffing: true },
+                summary: { expenses: true, revenues: true, staffing: true },
+            };
+            for (let datasetname in datasets) {
+                let dataset = datasets[datasetname];
+                for (let dimensionname in dataset) {
+                    let dimension = dataset[dimensionname];
+                    if (datasetname == 'pbft') {
+                        switch (dimension) {
+                            case 'activity':
+                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: false };
+                                break;
+                            case 'expense':
+                                sourceaspects.pbft = { expenses: true, revenues: false, staffing: false };
+                                break;
+                            case 'permanence':
+                                sourceaspects.pbft = { expenses: false, revenues: false, staffing: true };
+                                break;
+                            case 'program':
+                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: true };
+                                break;
+                            case 'revenue':
+                                sourceaspects.pbft = { expenses: false, revenues: true, staffing: false };
+                                break;
+                            case 'service':
+                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: false };
+                                break;
+                        }
+                    }
+                    for (let code in dimension) {
+                        let name = dimension[code];
+                        let selection = {
+                            viewpoint: sourceviewpoints[datasetname],
+                            datasource: datasetname,
+                            aspects: sourceaspects[datasetname],
+                            dimension: dimensionname,
+                            code,
+                            name,
+                        };
+                        lookups.push(selection);
+                    }
+                }
+            }
+            let viewpointsources = {
+                actualexpenses: 'actualexpenses',
+                actualrevenues: 'actualrevenues',
+                expenditures: 'expenditures',
+                functional: 'summary',
+                structural: 'summary',
+            };
+            let viewpointaspects = {
+                actualexpenses: { expenses: true },
+                actualrevenues: { revenues: true },
+                expenditures: { expenses: true },
+                functional: { expenses: true, revenues: true, staffing: true },
+                structural: { expenses: true, revenues: true, staffing: true },
+            };
+            for (let viewpointname in viewpoints) {
+                let viewpoint = viewpoints[viewpointname];
+                for (let dimensionname in viewpoint) {
+                    let dimension = viewpoint[dimensionname];
+                    for (let code in dimension) {
+                        let name = dimension[code];
+                        let selection = {
+                            viewpoint: viewpointname,
+                            datasource: viewpointsources[viewpointname],
+                            aspects: viewpointaspects[viewpointname],
+                            dimension: dimensionname,
+                            code,
+                            name,
+                        };
+                        lookups.push(selection);
+                    }
+                }
+            }
+            return lookups;
         };
         this.findChart = refbranchuid => {
             let findParms = {};
@@ -311,8 +399,9 @@ let Explorer = class extends Component {
             }
             else {
                 this.getAllFindLookups().then(data => {
-                    console.log('lookupdata', data);
+                    console.log('sourcedata', data);
                     this.findChartLookups = this.processFindChartLookups(data);
+                    console.log('lookupdata', this.findChartLookups);
                     this.findChart(branchuid);
                 }).catch(reason => {
                     react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);

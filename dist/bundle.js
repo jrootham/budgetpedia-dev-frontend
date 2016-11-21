@@ -5982,7 +5982,7 @@ var Explorer = function (_Component) {
                     }
                     var lookups = void 0;
                     lookups = {
-                        dataseries: {
+                        datasets: {
                             summary: values[0],
                             pbft: values[1],
                             actualexpenses: values[2],
@@ -6006,7 +6006,97 @@ var Explorer = function (_Component) {
         };
         _this.findChartLookups = null;
         _this.processFindChartLookups = function (data) {
-            return data;
+            var lookups = [];
+            var viewpoints = data.viewpoints,
+                datasets = data.datasets;
+
+            var sourceviewpoints = {
+                actualexpenses: 'actualexpenses',
+                actualrevenues: 'actualrevenues',
+                expenditures: 'expenditures',
+                pbft: 'functional',
+                summary: 'functional'
+            };
+            var sourceaspects = {
+                actualexpenses: { expenses: true },
+                actualrevenues: { revenues: true },
+                expenditures: { expenses: true },
+                pbft: { expenses: true, revenues: true, staffing: true },
+                summary: { expenses: true, revenues: true, staffing: true }
+            };
+            for (var datasetname in datasets) {
+                var dataset = datasets[datasetname];
+                for (var dimensionname in dataset) {
+                    var dimension = dataset[dimensionname];
+                    if (datasetname == 'pbft') {
+                        switch (dimension) {
+                            case 'activity':
+                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: false };
+                                break;
+                            case 'expense':
+                                sourceaspects.pbft = { expenses: true, revenues: false, staffing: false };
+                                break;
+                            case 'permanence':
+                                sourceaspects.pbft = { expenses: false, revenues: false, staffing: true };
+                                break;
+                            case 'program':
+                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: true };
+                                break;
+                            case 'revenue':
+                                sourceaspects.pbft = { expenses: false, revenues: true, staffing: false };
+                                break;
+                            case 'service':
+                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: false };
+                                break;
+                        }
+                    }
+                    for (var code in dimension) {
+                        var name = dimension[code];
+                        var selection = {
+                            viewpoint: sourceviewpoints[datasetname],
+                            datasource: datasetname,
+                            aspects: sourceaspects[datasetname],
+                            dimension: dimensionname,
+                            code: code,
+                            name: name
+                        };
+                        lookups.push(selection);
+                    }
+                }
+            }
+            var viewpointsources = {
+                actualexpenses: 'actualexpenses',
+                actualrevenues: 'actualrevenues',
+                expenditures: 'expenditures',
+                functional: 'summary',
+                structural: 'summary'
+            };
+            var viewpointaspects = {
+                actualexpenses: { expenses: true },
+                actualrevenues: { revenues: true },
+                expenditures: { expenses: true },
+                functional: { expenses: true, revenues: true, staffing: true },
+                structural: { expenses: true, revenues: true, staffing: true }
+            };
+            for (var viewpointname in viewpoints) {
+                var viewpoint = viewpoints[viewpointname];
+                for (var _dimensionname in viewpoint) {
+                    var _dimension = viewpoint[_dimensionname];
+                    for (var _code in _dimension) {
+                        var _name = _dimension[_code];
+                        var _selection = {
+                            viewpoint: viewpointname,
+                            datasource: viewpointsources[viewpointname],
+                            aspects: viewpointaspects[viewpointname],
+                            dimension: _dimensionname,
+                            code: _code,
+                            name: _name
+                        };
+                        lookups.push(_selection);
+                    }
+                }
+            }
+            return lookups;
         };
         _this.findChart = function (refbranchuid) {
             var findParms = {};
@@ -6021,8 +6111,9 @@ var Explorer = function (_Component) {
                 _this.findChart(branchuid);
             } else {
                 _this.getAllFindLookups().then(function (data) {
-                    console.log('lookupdata', data);
+                    console.log('sourcedata', data);
                     _this.findChartLookups = _this.processFindChartLookups(data);
+                    console.log('lookupdata', _this.findChartLookups);
                     _this.findChart(branchuid);
                 }).catch(function (reason) {
                     react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
