@@ -503,11 +503,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     // ==================[ FIND CHART ]=======================
 
-    findChart = refbranchuid => {
-        let findParms:{} = {}
-
-    }
-
     findcontent = <div>pending</div>
 
     private finderLookupPromise = path => {
@@ -569,11 +564,30 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 ]
             ).then( values => {
 
+                // pick out viewpint lookups from viewpoint structures
                 for (let i = 5; i < 10; i++) {
                     values[i] = values[i]['Meta'].Lookups
                 }
 
-                resolve(values)
+                let lookups:{dataseries:any,viewpoints:any}
+                lookups = {
+                    dataseries:{
+                        summary:values[0],
+                        pbft:values[1],
+                        actualexpenses:values[2],
+                        actualrevenues:values[3],
+                        expenditures:values[4],
+                    },
+                    viewpoints: {
+                        functional:values[5],
+                        structural:values[6],
+                        actualexpenses:values[7],
+                        actualrevenues:values[8],
+                        expenditures:values[9],
+                    }
+                }
+
+                resolve(lookups)
 
             }).catch(reason => {
 
@@ -586,17 +600,43 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     }
 
+    findChartLookups: any = null
+
+    // coerce raw lookup data into form suitable for autofill field
+    /*
+        viewpoint
+        dataset
+        aspects:{}
+        dimension
+        dimensiontype
+        code
+        name
+    */
+    processFindChartLookups = data => {
+        return data
+    }
+
+    findChart = refbranchuid => {
+        let findParms:{} = {}
+        this.setState({
+            findDialogOpen: true
+        })
+    }    
+
     handleFindDialogOpen = (e,branchuid) => {
         e.stopPropagation()
         e.preventDefault()
-        this.getAllFindLookups().then(data => {
-            console.log('lookupdata',data)
-            this.setState({
-                findDialogOpen: true
+        if (this.findChartLookups) {
+            this.findChart(branchuid)
+        } else {
+            this.getAllFindLookups().then(data => {
+                console.log('lookupdata',data)
+                this.findChartLookups = this.processFindChartLookups(data)
+                this.findChart(branchuid)
+            }).catch(reason => {
+                toastr.error('Error loading finder lookups: ' + reason)
             })
-        }).catch(reason => {
-            toastr.error('Error loading finder lookups: ' + reason)
-        })
+        }
     }
 
     handleFindDialogClose = () => {

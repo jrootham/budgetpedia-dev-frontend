@@ -5936,9 +5936,6 @@ var Explorer = function (_Component) {
         _this.removeBranch = function (branchuid) {
             _this.props.removeBranchDeclaration(branchuid);
         };
-        _this.findChart = function (refbranchuid) {
-            var findParms = {};
-        };
         _this.findcontent = React.createElement("div", null, "pending");
         _this.finderLookupPromise = function (path) {
             var root = './db/repositories/toronto/';
@@ -5983,24 +5980,54 @@ var Explorer = function (_Component) {
                     for (var i = 5; i < 10; i++) {
                         values[i] = values[i]['Meta'].Lookups;
                     }
-                    resolve(values);
+                    var lookups = void 0;
+                    lookups = {
+                        dataseries: {
+                            summary: values[0],
+                            pbft: values[1],
+                            actualexpenses: values[2],
+                            actualrevenues: values[3],
+                            expenditures: values[4]
+                        },
+                        viewpoints: {
+                            functional: values[5],
+                            structural: values[6],
+                            actualexpenses: values[7],
+                            actualrevenues: values[8],
+                            expenditures: values[9]
+                        }
+                    };
+                    resolve(lookups);
                 }).catch(function (reason) {
                     reject(reason);
                 });
             });
             return promise;
         };
+        _this.findChartLookups = null;
+        _this.processFindChartLookups = function (data) {
+            return data;
+        };
+        _this.findChart = function (refbranchuid) {
+            var findParms = {};
+            _this.setState({
+                findDialogOpen: true
+            });
+        };
         _this.handleFindDialogOpen = function (e, branchuid) {
             e.stopPropagation();
             e.preventDefault();
-            _this.getAllFindLookups().then(function (data) {
-                console.log('lookupdata', data);
-                _this.setState({
-                    findDialogOpen: true
+            if (_this.findChartLookups) {
+                _this.findChart(branchuid);
+            } else {
+                _this.getAllFindLookups().then(function (data) {
+                    console.log('lookupdata', data);
+                    _this.findChartLookups = _this.processFindChartLookups(data);
+                    _this.findChart(branchuid);
+                }).catch(function (reason) {
+                    react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
                 });
-            }).catch(function (reason) {
-                react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
-            });
+            }
         };
         _this.handleFindDialogClose = function () {
             _this.setState({

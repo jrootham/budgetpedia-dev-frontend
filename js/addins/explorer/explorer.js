@@ -212,9 +212,6 @@ let Explorer = class extends Component {
         this.removeBranch = branchuid => {
             this.props.removeBranchDeclaration(branchuid);
         };
-        this.findChart = refbranchuid => {
-            let findParms = {};
-        };
         this.findcontent = React.createElement("div", null, "pending");
         this.finderLookupPromise = path => {
             let root = './db/repositories/toronto/';
@@ -272,24 +269,55 @@ let Explorer = class extends Component {
                     for (let i = 5; i < 10; i++) {
                         values[i] = values[i]['Meta'].Lookups;
                     }
-                    resolve(values);
+                    let lookups;
+                    lookups = {
+                        dataseries: {
+                            summary: values[0],
+                            pbft: values[1],
+                            actualexpenses: values[2],
+                            actualrevenues: values[3],
+                            expenditures: values[4],
+                        },
+                        viewpoints: {
+                            functional: values[5],
+                            structural: values[6],
+                            actualexpenses: values[7],
+                            actualrevenues: values[8],
+                            expenditures: values[9],
+                        }
+                    };
+                    resolve(lookups);
                 }).catch(reason => {
                     reject(reason);
                 });
             });
             return promise;
         };
+        this.findChartLookups = null;
+        this.processFindChartLookups = data => {
+            return data;
+        };
+        this.findChart = refbranchuid => {
+            let findParms = {};
+            this.setState({
+                findDialogOpen: true
+            });
+        };
         this.handleFindDialogOpen = (e, branchuid) => {
             e.stopPropagation();
             e.preventDefault();
-            this.getAllFindLookups().then(data => {
-                console.log('lookupdata', data);
-                this.setState({
-                    findDialogOpen: true
+            if (this.findChartLookups) {
+                this.findChart(branchuid);
+            }
+            else {
+                this.getAllFindLookups().then(data => {
+                    console.log('lookupdata', data);
+                    this.findChartLookups = this.processFindChartLookups(data);
+                    this.findChart(branchuid);
+                }).catch(reason => {
+                    react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
                 });
-            }).catch(reason => {
-                react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
-            });
+            }
         };
         this.handleFindDialogClose = () => {
             this.setState({
