@@ -547,6 +547,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         let actualExpensesViewpointPromise = this.finderLookupPromise('viewpoints/actualexpenses.json')
         let actualRevenuesViewpointPromise = this.finderLookupPromise('viewpoints/actualrevenues.json')
         let expendituresViewpointPromise = this.finderLookupPromise('viewpoints/expenditures.json')
+
         let promise = new Promise((resolve,reject) => {
             Promise.all(
                 [
@@ -609,11 +610,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         aspects:{}
         dimension
         dimensiontype
+        commondimension
         code
         name
     */
     processFindChartLookups = data => {
+
         return data
+        
     }
 
     findChart = refbranchuid => {
