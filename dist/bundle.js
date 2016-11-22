@@ -6100,18 +6100,6 @@ var Explorer = function (_Component) {
                             value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[sourceviewpoints[datasetname]]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[dimensionlookupname], " ") }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[datasetname])))
                         };
                         lookups.push(selection);
-                        if (datasetname == 'detailedbudgets' || datasetname == 'summarybudgets') {
-                            var _selection = {
-                                viewpoint: alternatesourceviewpoints[datasetname],
-                                datasource: datasetname,
-                                aspects: sourceaspects[datasetname],
-                                dimension: dimensionname,
-                                code: code,
-                                name: name,
-                                value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[alternatesourceviewpoints[datasetname]]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[dimensionname], " ") }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[datasetname])))
-                            };
-                            lookups.push(_selection);
-                        }
                     }
                 }
             }
@@ -6135,7 +6123,7 @@ var Explorer = function (_Component) {
                     var _dimension = viewpoint[_dimensionname];
                     for (var _code in _dimension) {
                         var _name = _dimension[_code];
-                        var _selection2 = {
+                        var _selection = {
                             viewpoint: viewpointname,
                             datasource: viewpointsources[viewpointname],
                             aspects: viewpointaspects[viewpointname],
@@ -6144,7 +6132,7 @@ var Explorer = function (_Component) {
                             name: _name,
                             value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[viewpointname]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[_dimensionname], " ") }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, _name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[viewpointsources[viewpointname]])))
                         };
-                        lookups.push(_selection2);
+                        lookups.push(_selection);
                     }
                 }
             }

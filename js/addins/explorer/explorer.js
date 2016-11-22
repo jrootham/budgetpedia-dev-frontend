@@ -401,30 +401,6 @@ let Explorer = class extends Component {
                             ))
                         };
                         lookups.push(selection);
-                        if (datasetname == 'detailedbudgets' || datasetname == 'summarybudgets') {
-                            let selection = {
-                                viewpoint: alternatesourceviewpoints[datasetname],
-                                datasource: datasetname,
-                                aspects: sourceaspects[datasetname],
-                                dimension: dimensionname,
-                                code,
-                                name,
-                                value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
-                                    "viewpoint: ", 
-                                    dictionary[alternatesourceviewpoints[datasetname]]), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
-                                    "level: ", 
-                                    dictionary[dimensionname], 
-                                    " ")}, 
-                                    React.createElement("div", null, 
-                                        React.createElement("span", {style: { fontWeight: "bold" }}, name), 
-                                        " ", 
-                                        React.createElement("span", {style: { float: "right", fontStyle: "italic", color: "gray" }}, 
-                                            "source: ", 
-                                            dictionary[datasetname]))
-                                ))
-                            };
-                            lookups.push(selection);
-                        }
                     }
                 }
             }

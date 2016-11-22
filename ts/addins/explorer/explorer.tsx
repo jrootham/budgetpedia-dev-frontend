@@ -722,27 +722,27 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                             )
                     }
                     lookups.push(selection)
-                    if (datasetname == 'detailedbudgets' || datasetname == 'summarybudgets') {
+                    // if (datasetname == 'detailedbudgets' || datasetname == 'summarybudgets') {
 
-                        let selection = {
-                            viewpoint:alternatesourceviewpoints[datasetname],
-                            datasource:datasetname,
-                            aspects:sourceaspects[datasetname],
-                            dimension:dimensionname,
-                            code,
-                            name,
-                            value:(
-                                <MenuItem primaryText={<span style={{fontStyle:"italic",color:"gray"}}>viewpoint: {dictionary[alternatesourceviewpoints[datasetname]]}</span>}
-                                    secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionname]} </span>}>
-                                    <div>
-                                    <span style={{fontWeight:"bold"}}>{name}</span> <span style={{float:"right",fontStyle:"italic",color:"gray"}} >source: {dictionary[datasetname]}</span>
-                                    </div>
-                                </MenuItem>
-                                )
-                        }
-                        lookups.push(selection)
+                    //     let selection = {
+                    //         viewpoint:alternatesourceviewpoints[datasetname],
+                    //         datasource:datasetname,
+                    //         aspects:sourceaspects[datasetname],
+                    //         dimension:dimensionname,
+                    //         code,
+                    //         name,
+                    //         value:(
+                    //             <MenuItem primaryText={<span style={{fontStyle:"italic",color:"gray"}}>viewpoint: {dictionary[alternatesourceviewpoints[datasetname]]}</span>}
+                    //                 secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionname]} </span>}>
+                    //                 <div>
+                    //                 <span style={{fontWeight:"bold"}}>{name}</span> <span style={{float:"right",fontStyle:"italic",color:"gray"}} >source: {dictionary[datasetname]}</span>
+                    //                 </div>
+                    //             </MenuItem>
+                    //             )
+                    //     }
+                    //     lookups.push(selection)
 
-                    }
+                    // }
                 }
             }
         }
