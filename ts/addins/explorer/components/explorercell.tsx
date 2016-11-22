@@ -656,7 +656,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                     display:"inline-block",
                 }
             }>
-                <div style={{paddingLeft: '3px', position:"absolute",top:"0", left:"0",fontSize:"8px",textAlign:"left"}}>data<br />[pending]</div>
+                <div style={{paddingLeft: '3px', position:"absolute",top:"0", left:"0",fontSize:"8px",textAlign:"left"}}>data<br />[deferred]</div>
                 <IconButton 
                     disabled
                     tooltip="Data Table"
@@ -728,7 +728,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         position:"relative",
                     }
                 }>
-                <div style={{paddingLeft:"3px",position:"absolute",top:"0", left:"0",fontSize:"8px"}}>social [pending]</div>
+                <div style={{paddingLeft:"3px",position:"absolute",top:"0", left:"0",fontSize:"8px"}}>social [deferred]</div>
                 <IconButton tooltip="Shared stories"
                     tooltipPosition="top-center"
                     style = {
@@ -769,7 +769,7 @@ class ExplorerCell extends Component<ExplorerCellProps, any> {
                         position:"relative",
                     }
                 }>
-                <div style={{paddingLeft:"3px",position:"absolute",top:"0", left:"0",fontSize:"8px"}}>information [pending]</div>
+                <div style={{paddingLeft:"3px",position:"absolute",top:"0", left:"0",fontSize:"8px"}}>information [deferred]</div>
                 <IconButton tooltip="Information"
                     tooltipPosition="top-center"
                     style = {

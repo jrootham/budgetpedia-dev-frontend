@@ -4848,7 +4848,7 @@ var ExplorerCell = function (_Component) {
                     marginRight: "3px",
                     position: "relative",
                     display: "inline-block"
-                } }, React.createElement("div", { style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px", textAlign: "left" } }, "data", React.createElement("br", null), "[pending]"), React.createElement(IconButton_1.default, { disabled: true, tooltip: "Data Table", tooltipPosition: "top-center", style: {
+                } }, React.createElement("div", { style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px", textAlign: "left" } }, "data", React.createElement("br", null), "[deferred]"), React.createElement(IconButton_1.default, { disabled: true, tooltip: "Data Table", tooltipPosition: "top-center", style: {
                     backgroundColor: explorerChartCode == "DataTable" ? "rgba(144,238,144,0.5)" : "transparent",
                     borderRadius: "50%",
                     padding: "0",
@@ -4884,7 +4884,7 @@ var ExplorerCell = function (_Component) {
                     paddingTop: "10px",
                     display: "inline-block",
                     position: "relative"
-                } }, React.createElement("div", { style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" } }, "social [pending]"), React.createElement(IconButton_1.default, { tooltip: "Shared stories", tooltipPosition: "top-center", style: {
+                } }, React.createElement("div", { style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" } }, "social [deferred]"), React.createElement(IconButton_1.default, { tooltip: "Shared stories", tooltipPosition: "top-center", style: {
                     padding: "0",
                     height: "36px",
                     width: "36px",
@@ -4902,7 +4902,7 @@ var ExplorerCell = function (_Component) {
                     borderLeft: "1px solid silver",
                     borderRight: "1px solid silver",
                     position: "relative"
-                } }, React.createElement("div", { style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" } }, "information [pending]"), React.createElement(IconButton_1.default, { tooltip: "Information", tooltipPosition: "top-center", style: {
+                } }, React.createElement("div", { style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" } }, "information [deferred]"), React.createElement(IconButton_1.default, { tooltip: "Information", tooltipPosition: "top-center", style: {
                     padding: "0",
                     height: "36px",
                     width: "36px",
@@ -5987,9 +5987,9 @@ var Explorer = function (_Component) {
                         datasets: {
                             summarybudgets: values[0],
                             detailedbudgets: values[1],
-                            actualexpenses: values[2],
-                            actualrevenues: values[3],
-                            expenditures: values[4]
+                            auditedexpenses: values[2],
+                            auditedrevenues: values[3],
+                            auditedexpenditures: values[4]
                         },
                         viewpoints: {
                             functionalbudget: values[5],
@@ -6013,18 +6013,41 @@ var Explorer = function (_Component) {
                 datasets = data.datasets;
 
             var sourceviewpoints = {
-                actualexpenses: 'actualexpenses',
-                actualrevenues: 'actualrevenues',
-                expenditures: 'expenditures',
+                auditedexpenses: 'actualexpenses',
+                auditedrevenues: 'actualrevenues',
+                auditedexpenditures: 'expenditures',
                 detailedbudgets: 'functionalbudget',
                 summarybudgets: 'functionalbudget'
             };
+            var alternatesourceviewpoints = {
+                detailedbudgets: 'structuralbudget',
+                summarybudgets: 'structuralbudget'
+            };
             var sourceaspects = {
-                actualexpenses: { expenses: true },
-                actualrevenues: { revenues: true },
-                expenditures: { expenses: true },
+                auditedexpenses: { expenses: true },
+                auditedrevenues: { revenues: true },
+                auditedexpenditures: { expenses: true },
                 detailedbudgets: { expenses: true, revenues: true, staffing: true },
                 summarybudgets: { expenses: true, revenues: true, staffing: true }
+            };
+            var dictionary = {
+                structuralbudget: 'Structural Budget',
+                functionalbudget: 'Functional Budget',
+                actualexpenses: 'Actual Expenses',
+                actualrevenues: 'Actual Revenues',
+                expenditures: 'Expenses by Object',
+                auditedrevenues: 'Audited Statements',
+                auditedexpenses: 'Audited Statements',
+                auditedexpenditures: 'Audited Statements',
+                detailedbudgets: 'Detailed Budgets',
+                summarybudgets: 'Summary Budgets',
+                activity: 'Activities',
+                expense: 'Expenditures',
+                permanence: 'Permanence',
+                program: 'Programs',
+                revenue: 'Receipts',
+                service: 'Services',
+                Taxonomy: 'Taxonomy'
             };
             for (var datasetname in datasets) {
                 var dataset = datasets[datasetname];
@@ -6061,23 +6084,35 @@ var Explorer = function (_Component) {
                             dimension: dimensionname,
                             code: code,
                             name: name,
-                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", sourceviewpoints[datasetname]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "depth: ", dimensionname) }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", datasetname)))
+                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[sourceviewpoints[datasetname]]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[dimensionname]) }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[datasetname])))
                         };
                         lookups.push(selection);
+                        if (datasetname == 'detailedbudgets' || datasetname == 'summarybudgets') {
+                            var _selection = {
+                                viewpoint: alternatesourceviewpoints[datasetname],
+                                datasource: datasetname,
+                                aspects: sourceaspects[datasetname],
+                                dimension: dimensionname,
+                                code: code,
+                                name: name,
+                                value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[alternatesourceviewpoints[datasetname]]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[dimensionname]) }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[datasetname])))
+                            };
+                            lookups.push(_selection);
+                        }
                     }
                 }
             }
             var viewpointsources = {
-                actualexpenses: 'actualexpenses',
-                actualrevenues: 'actualrevenues',
-                expenditures: 'expenditures',
+                actualexpenses: 'auditedexpenses',
+                actualrevenues: 'auditedrevenues',
+                expenditures: 'auditedexpenditures',
                 functionalbudget: 'summarybudgets',
                 structuralbudget: 'summarybudgets'
             };
             var viewpointaspects = {
-                actualexpenses: { expenses: true },
-                actualrevenues: { revenues: true },
-                expenditures: { expenses: true },
+                auditedexpenses: { expenses: true },
+                auditedrevenues: { revenues: true },
+                auditedexpenditures: { expenses: true },
                 functionalbudget: { expenses: true, revenues: true, staffing: true },
                 structuralbudget: { expenses: true, revenues: true, staffing: true }
             };
@@ -6087,16 +6122,16 @@ var Explorer = function (_Component) {
                     var _dimension = viewpoint[_dimensionname];
                     for (var _code in _dimension) {
                         var _name = _dimension[_code];
-                        var _selection = {
+                        var _selection2 = {
                             viewpoint: viewpointname,
                             datasource: viewpointsources[viewpointname],
                             aspects: viewpointaspects[viewpointname],
                             dimension: _dimensionname,
                             code: _code,
                             name: _name,
-                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", viewpointname), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "depth: ", _dimensionname) }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, _name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", viewpointsources[viewpointname])))
+                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[viewpointname]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[_dimensionname]) }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, _name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[viewpointsources[viewpointname]])))
                         };
-                        lookups.push(_selection);
+                        lookups.push(_selection2);
                     }
                 }
             }
@@ -6138,7 +6173,7 @@ var Explorer = function (_Component) {
                     width: "36px",
                     position: "absolute",
                     zIndex: 2
-                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement(AutoComplete_1.default, { style: { width: '100%' }, floatingLabelText: "select chart metric (tap here, then give the list a sec to load)", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: _this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: true }));
+                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement(AutoComplete_1.default, { style: { width: '100%' }, floatingLabelText: "type in a key word of an account name", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: _this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 50 }));
         };
         return _this;
     }
@@ -6156,7 +6191,7 @@ var Explorer = function (_Component) {
             this.getAllFindLookups().then(function (data) {
                 console.log('sourcedata', data);
                 _this2.findChartLookups = _this2.processFindChartLookups(data);
-                console.log('findChartLookups set');
+                console.log('lookupdata set', _this2.findChartLookups);
             }).catch(function (reason) {
                 react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
             });

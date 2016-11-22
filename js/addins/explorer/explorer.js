@@ -276,9 +276,9 @@ let Explorer = class extends Component {
                         datasets: {
                             summarybudgets: values[0],
                             detailedbudgets: values[1],
-                            actualexpenses: values[2],
-                            actualrevenues: values[3],
-                            expenditures: values[4],
+                            auditedexpenses: values[2],
+                            auditedrevenues: values[3],
+                            auditedexpenditures: values[4],
                         },
                         viewpoints: {
                             functionalbudget: values[5],
@@ -300,18 +300,41 @@ let Explorer = class extends Component {
             let lookups = [];
             let { viewpoints, datasets } = data;
             let sourceviewpoints = {
-                actualexpenses: 'actualexpenses',
-                actualrevenues: 'actualrevenues',
-                expenditures: 'expenditures',
+                auditedexpenses: 'actualexpenses',
+                auditedrevenues: 'actualrevenues',
+                auditedexpenditures: 'expenditures',
                 detailedbudgets: 'functionalbudget',
                 summarybudgets: 'functionalbudget',
             };
+            let alternatesourceviewpoints = {
+                detailedbudgets: 'structuralbudget',
+                summarybudgets: 'structuralbudget',
+            };
             let sourceaspects = {
-                actualexpenses: { expenses: true },
-                actualrevenues: { revenues: true },
-                expenditures: { expenses: true },
+                auditedexpenses: { expenses: true },
+                auditedrevenues: { revenues: true },
+                auditedexpenditures: { expenses: true },
                 detailedbudgets: { expenses: true, revenues: true, staffing: true },
                 summarybudgets: { expenses: true, revenues: true, staffing: true },
+            };
+            let dictionary = {
+                structuralbudget: 'Structural Budget',
+                functionalbudget: 'Functional Budget',
+                actualexpenses: 'Actual Expenses',
+                actualrevenues: 'Actual Revenues',
+                expenditures: 'Expenses by Object',
+                auditedrevenues: 'Audited Statements',
+                auditedexpenses: 'Audited Statements',
+                auditedexpenditures: 'Audited Statements',
+                detailedbudgets: 'Detailed Budgets',
+                summarybudgets: 'Summary Budgets',
+                activity: 'Activities',
+                expense: 'Expenditures',
+                permanence: 'Permanence',
+                program: 'Programs',
+                revenue: 'Receipts',
+                service: 'Services',
+                Taxonomy: 'Taxonomy',
             };
             for (let datasetname in datasets) {
                 let dataset = datasets[datasetname];
@@ -350,32 +373,55 @@ let Explorer = class extends Component {
                             name,
                             value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
                                 "viewpoint: ", 
-                                sourceviewpoints[datasetname]), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
-                                "depth: ", 
-                                dimensionname)}, 
+                                dictionary[sourceviewpoints[datasetname]]), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
+                                "level: ", 
+                                dictionary[dimensionname])}, 
                                 React.createElement("div", null, 
                                     React.createElement("span", {style: { fontWeight: "bold" }}, name), 
                                     " ", 
                                     React.createElement("span", {style: { float: "right", fontStyle: "italic", color: "gray" }}, 
                                         "source: ", 
-                                        datasetname))
+                                        dictionary[datasetname]))
                             ))
                         };
                         lookups.push(selection);
+                        if (datasetname == 'detailedbudgets' || datasetname == 'summarybudgets') {
+                            let selection = {
+                                viewpoint: alternatesourceviewpoints[datasetname],
+                                datasource: datasetname,
+                                aspects: sourceaspects[datasetname],
+                                dimension: dimensionname,
+                                code,
+                                name,
+                                value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
+                                    "viewpoint: ", 
+                                    dictionary[alternatesourceviewpoints[datasetname]]), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
+                                    "level: ", 
+                                    dictionary[dimensionname])}, 
+                                    React.createElement("div", null, 
+                                        React.createElement("span", {style: { fontWeight: "bold" }}, name), 
+                                        " ", 
+                                        React.createElement("span", {style: { float: "right", fontStyle: "italic", color: "gray" }}, 
+                                            "source: ", 
+                                            dictionary[datasetname]))
+                                ))
+                            };
+                            lookups.push(selection);
+                        }
                     }
                 }
             }
             let viewpointsources = {
-                actualexpenses: 'actualexpenses',
-                actualrevenues: 'actualrevenues',
-                expenditures: 'expenditures',
+                actualexpenses: 'auditedexpenses',
+                actualrevenues: 'auditedrevenues',
+                expenditures: 'auditedexpenditures',
                 functionalbudget: 'summarybudgets',
                 structuralbudget: 'summarybudgets',
             };
             let viewpointaspects = {
-                actualexpenses: { expenses: true },
-                actualrevenues: { revenues: true },
-                expenditures: { expenses: true },
+                auditedexpenses: { expenses: true },
+                auditedrevenues: { revenues: true },
+                auditedexpenditures: { expenses: true },
                 functionalbudget: { expenses: true, revenues: true, staffing: true },
                 structuralbudget: { expenses: true, revenues: true, staffing: true },
             };
@@ -394,15 +440,15 @@ let Explorer = class extends Component {
                             name,
                             value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
                                 "viewpoint: ", 
-                                viewpointname), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
-                                "depth: ", 
-                                dimensionname)}, 
+                                dictionary[viewpointname]), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
+                                "level: ", 
+                                dictionary[dimensionname])}, 
                                 React.createElement("div", null, 
                                     React.createElement("span", {style: { fontWeight: "bold" }}, name), 
                                     " ", 
                                     React.createElement("span", {style: { float: "right", fontStyle: "italic", color: "gray" }}, 
                                         "source: ", 
-                                        viewpointsources[viewpointname]))
+                                        dictionary[viewpointsources[viewpointname]]))
                             ))
                         };
                         lookups.push(selection);
@@ -451,7 +497,7 @@ let Explorer = class extends Component {
             }, onTouchTap: this.handleFindDialogClose}, 
                 React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")
             ), 
-            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, floatingLabelText: "select chart metric (tap here, then give the list a sec to load)", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: true})));
+            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, floatingLabelText: "type in a key word of an account name", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 50})));
     }
     componentWillMount() {
         if (!this.props.declarationData.onetimenotification) {
@@ -462,7 +508,7 @@ let Explorer = class extends Component {
         this.getAllFindLookups().then(data => {
             console.log('sourcedata', data);
             this.findChartLookups = this.processFindChartLookups(data);
-            console.log('findChartLookups set');
+            console.log('lookupdata set', this.findChartLookups);
         }).catch(reason => {
             react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
         });

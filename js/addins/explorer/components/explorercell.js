@@ -432,7 +432,7 @@ class ExplorerCell extends Component {
             React.createElement("div", {style: { paddingLeft: '3px', position: "absolute", top: "0", left: "0", fontSize: "8px", textAlign: "left" }}, 
                 "data", 
                 React.createElement("br", null), 
-                "[pending]"), 
+                "[deferred]"), 
             React.createElement(IconButton_1.default, {disabled: true, tooltip: "Data Table", tooltipPosition: "top-center", style: {
                 backgroundColor: (explorerChartCode == "DataTable")
                     ? "rgba(144,238,144,0.5)"
@@ -478,7 +478,7 @@ class ExplorerCell extends Component {
             display: "inline-block",
             position: "relative",
         }}, 
-            React.createElement("div", {style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "social [pending]"), 
+            React.createElement("div", {style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "social [deferred]"), 
             React.createElement(IconButton_1.default, {tooltip: "Shared stories", tooltipPosition: "top-center", style: {
                 padding: "0",
                 height: "36px",
@@ -503,7 +503,7 @@ class ExplorerCell extends Component {
             borderRight: "1px solid silver",
             position: "relative",
         }}, 
-            React.createElement("div", {style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "information [pending]"), 
+            React.createElement("div", {style: { paddingLeft: "3px", position: "absolute", top: "0", left: "0", fontSize: "8px" }}, "information [deferred]"), 
             React.createElement(IconButton_1.default, {tooltip: "Information", tooltipPosition: "top-center", style: {
                 padding: "0",
                 height: "36px",
