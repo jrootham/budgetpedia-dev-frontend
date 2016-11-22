@@ -2138,15 +2138,16 @@ declare module 'material-ui/lib/popover/popover-animation-from-top' {
     export default PopoverAnimationFromTop;
 }
 
-declare module 'material-ui/lib/radio-button' {
+declare module 'material-ui/RadioButton' {
     export import RadioButton = __MaterialUI.RadioButton;
-    export default RadioButton;
+    export import RadioButtonGroup = __MaterialUI.RadioButtonGroup;
+    // export default RadioButton;
 }
 
-declare module 'material-ui/lib/radio-button-group' {
-    export import RadioButtonGroup = __MaterialUI.RadioButtonGroup;
-    export default RadioButtonGroup;
-}
+// declare module 'material-ui/lib/radio-button-group' {
+//     export import RadioButtonGroup = __MaterialUI.RadioButtonGroup;
+//     export default RadioButtonGroup;
+// }
 
 declare module 'material-ui/RaisedButton' {
     export import RaisedButton = __MaterialUI.RaisedButton;

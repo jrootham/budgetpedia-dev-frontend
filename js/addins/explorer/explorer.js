@@ -9,6 +9,8 @@ const Dialog_1 = require('material-ui/Dialog');
 const FloatingActionButton_1 = require('material-ui/FloatingActionButton');
 const AutoComplete_1 = require('material-ui/AutoComplete');
 const MenuItem_1 = require('material-ui/MenuItem');
+const RadioButton_1 = require('material-ui/RadioButton');
+const RaisedButton_1 = require('material-ui/RaisedButton');
 const add_1 = require('material-ui/svg-icons/content/add');
 const remove_1 = require('material-ui/svg-icons/content/remove');
 const react_redux_toastr_1 = require('react-redux-toastr');
@@ -501,9 +503,15 @@ let Explorer = class extends Component {
                 findDialogOpen: false
             });
         };
-        this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
+        this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart Instance", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
             React.createElement("p", null, 
                 React.createElement("em", null, "[this is under construction, not functional]")
+            ), 
+            React.createElement("div", null, 
+                React.createElement(RadioButton_1.RadioButtonGroup, {name: "shipSpeed", defaultSelected: "expenses"}, 
+                    React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "expenses", label: "expenses"}), 
+                    React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "revenues", label: "revenues"}), 
+                    React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "staffing", label: "staffing"}))
             ), 
             React.createElement(IconButton_1.default, {style: {
                 top: 0,
@@ -516,7 +524,10 @@ let Explorer = class extends Component {
             }, onTouchTap: this.handleFindDialogClose}, 
                 React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")
             ), 
-            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, floatingLabelText: "type in a key word of an account name", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60})));
+            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60}), 
+            React.createElement("div", null, 
+                React.createElement(RaisedButton_1.default, {disabled: true, label: "Apply", primary: true, style: { marginRight: "50px" }}), 
+                React.createElement(RaisedButton_1.default, {disabled: true, label: "Cancel", secondary: true}))));
     }
     componentWillMount() {
         if (!this.props.declarationData.onetimenotification) {

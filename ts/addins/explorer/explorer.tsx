@@ -42,6 +42,8 @@ import Dialog from 'material-ui/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import AutoComplete from 'material-ui/AutoComplete'
 import MenuItem from 'material-ui/MenuItem'
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
+import RaisedButton from 'material-ui/RaisedButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import ContentRemove from 'material-ui/svg-icons/content/remove'
 // import Popover from 'material-ui/Popover'
@@ -824,7 +826,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     findDialog = () => (
         <Dialog
-            title = "Find a Chart"
+            title = "Find a Chart Instance"
             modal = { false }
             open = { this.state.findDialogOpen }
             onRequestClose = { this.handleFindDialogClose }
@@ -833,6 +835,25 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             contentStyle = {{maxWidth:'600px',transform: "translate(0px, -60px)"}}
         >
             <p><em>[this is under construction, not functional]</em></p>
+            <div>
+                <RadioButtonGroup name="shipSpeed" defaultSelected="expenses">
+                  <RadioButton
+                    style={{display:'inline-block',width:'auto',marginRight:'50px'}}
+                    value="expenses"
+                    label="expenses"
+                  />
+                  <RadioButton
+                    style={{display:'inline-block',width:'auto',marginRight:'50px'}}
+                    value="revenues"
+                    label="revenues"
+                  />
+                  <RadioButton
+                    style={{display:'inline-block',width:'auto',marginRight:'50px'}}
+                    value="staffing"
+                    label="staffing"
+                  />
+                </RadioButtonGroup>
+            </div>
             <IconButton
                 style={{
                     top: 0,
@@ -857,7 +878,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             <AutoComplete
               style = {{width:'100%'}}
-              floatingLabelText="type in a key word of an account name"
+              floatingLabelText="type in a key word, then select an item from the list"
               filter={AutoComplete.caseInsensitiveFilter}
               dataSource={this.findChartLookups || []}
               dataSourceConfig = {{text:'name',value:'value'}}
@@ -866,6 +887,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
               openOnFocus = {false}
               maxSearchResults = {60}
             />
+
+            <div>
+                <RaisedButton disabled label="Apply" primary={true} style={{marginRight:"50px"}} />
+                <RaisedButton disabled label="Cancel" secondary={true} />
+            </div>
 
         </Dialog >)
 
