@@ -169,6 +169,16 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             this.props.onetimeNotification()
         }
 
+        console.log('calling get lookups from will mount')
+        this.getAllFindLookups().then(data => {
+            console.log('sourcedata', data)
+            this.findChartLookups = this.processFindChartLookups(data)
+            console.log('findChartLookups set')
+        }).catch(reason => {
+            toastr.error('Error loading finder lookups: ' + reason)
+        })
+
+
         let {query} = this.props.location
 
         // console.log('query',query)
@@ -575,15 +585,15 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 let lookups:{datasets:any,viewpoints:any}
                 lookups = {
                     datasets:{
-                        summary:values[0],
-                        pbft:values[1],
+                        summarybudgets:values[0],
+                        detailedbudgets:values[1],
                         actualexpenses:values[2],
                         actualrevenues:values[3],
                         expenditures:values[4],
                     },
                     viewpoints: {
-                        functional:values[5],
-                        structural:values[6],
+                        functionalbudget:values[5],
+                        structuralbudget:values[6],
                         actualexpenses:values[7],
                         actualrevenues:values[8],
                         expenditures:values[9],
@@ -625,33 +635,33 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             actualexpenses:'actualexpenses',
             actualrevenues:'actualrevenues',
             expenditures:'expenditures',
-            pbft:'functional',
-            summary:'functional',
+            detailedbudgets:'functionalbudget',
+            summarybudgets:'functionalbudget',
         }
         let sourceaspects = {
             actualexpenses:{expenses:true},
             actualrevenues:{revenues:true},
             expenditures:{expenses:true},
-            pbft:{expenses:true,revenues:true,staffing:true},
-            summary:{expenses:true,revenues:true,staffing:true},
+            detailedbudgets:{expenses:true,revenues:true,staffing:true},
+            summarybudgets:{expenses:true,revenues:true,staffing:true},
         }
         for (let datasetname in datasets) {
             let dataset = datasets[datasetname]
             for (let dimensionname in dataset) {
                 let dimension = dataset[dimensionname]
-                if (datasetname == 'pbft') {
+                if (datasetname == 'detailed') {
                     switch (dimension) {
-                        case 'activity':sourceaspects.pbft = {expenses:true,revenues:true,staffing:false}
+                        case 'activity':sourceaspects.detailedbudgets = {expenses:true,revenues:true,staffing:false}
                             break
-                        case 'expense':sourceaspects.pbft = {expenses:true,revenues:false,staffing:false}
+                        case 'expense':sourceaspects.detailedbudgets = {expenses:true,revenues:false,staffing:false}
                             break
-                        case 'permanence':sourceaspects.pbft = {expenses:false,revenues:false,staffing:true}
+                        case 'permanence':sourceaspects.detailedbudgets = {expenses:false,revenues:false,staffing:true}
                             break
-                        case 'program':sourceaspects.pbft = {expenses:true,revenues:true,staffing:true}
+                        case 'program':sourceaspects.detailedbudgets = {expenses:true,revenues:true,staffing:true}
                             break
-                        case 'revenue':sourceaspects.pbft = {expenses:false,revenues:true,staffing:false}
+                        case 'revenue':sourceaspects.detailedbudgets = {expenses:false,revenues:true,staffing:false}
                             break
-                        case 'service':sourceaspects.pbft = {expenses:true,revenues:true,staffing:false}
+                        case 'service':sourceaspects.detailedbudgets = {expenses:true,revenues:true,staffing:false}
                             break
                     }
                 }
@@ -665,10 +675,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         code,
                         name,
                         value:(
-                            <MenuItem primaryText={<span style={{fontStyle:"italic"}}>source: {sourceviewpoints[datasetname]}</span>}
-                                secondaryText={<span style={{fontStyle:"italic"}}>dimension: {dimensionname}</span>}>
-                                <div style={{borderTop:"single 1px silver"}} >
-                                {name} <span style={{float:"right",fontStyle:"italic"}} >source: {datasetname}</span>
+                            <MenuItem primaryText={<span style={{fontStyle:"italic",color:"gray"}}>viewpoint: {sourceviewpoints[datasetname]}</span>}
+                                secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>depth: {dimensionname}</span>}>
+                                <div>
+                                <span style={{fontWeight:"bold"}}>{name}</span> <span style={{float:"right",fontStyle:"italic",color:"gray"}} >source: {datasetname}</span>
                                 </div>
                             </MenuItem>
                             )
@@ -683,15 +693,15 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             actualexpenses:'actualexpenses',
             actualrevenues:'actualrevenues',
             expenditures:'expenditures',
-            functional:'summary',
-            structural:'summary',
+            functionalbudget:'summarybudgets',
+            structuralbudget:'summarybudgets',
         }
         let viewpointaspects = {
             actualexpenses:{expenses:true},
             actualrevenues:{revenues:true},
             expenditures:{expenses:true},
-            functional:{expenses:true,revenues:true,staffing:true},
-            structural:{expenses:true,revenues:true,staffing:true},
+            functionalbudget:{expenses:true,revenues:true,staffing:true},
+            structuralbudget:{expenses:true,revenues:true,staffing:true},
         }
         for (let viewpointname in viewpoints) {
             let viewpoint = viewpoints[viewpointname]
@@ -707,10 +717,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         code,
                         name,
                         value:(
-                            <MenuItem primaryText={<span style={{fontStyle:"italic"}}>viewpoint: {viewpointname}</span>}
-                                secondaryText={<span style={{fontStyle:"italic"}}>dimension: {dimensionname}</span>}>
-                                <div style={{borderTop:"single 1px silver"}} >
-                                {name} <span style={{float:"right",fontStyle:"italic"}} >source: {viewpointsources[viewpointname]}</span>
+                            <MenuItem primaryText={<span style={{fontStyle:"italic",color:"gray"}}>viewpoint: {viewpointname}</span>}
+                                secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>depth: {dimensionname}</span>}>
+                                <div>
+                                <span style={{fontWeight:"bold"}}>{name}</span> <span style={{float:"right",fontStyle:"italic",color:"gray"}} >source: {viewpointsources[viewpointname]}</span>
                                 </div>
                             </MenuItem>
                             )
@@ -789,7 +799,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     <AutoComplete
       style = {{width:'100%'}}
-      floatingLabelText="Type any characters"
+      floatingLabelText="select chart metric (tap here, then give the list a sec to load)"
       filter={AutoComplete.caseInsensitiveFilter}
       dataSource={this.findChartLookups || []}
       dataSourceConfig = {{text:'name',value:'value'}}

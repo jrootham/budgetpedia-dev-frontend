@@ -274,15 +274,15 @@ let Explorer = class extends Component {
                     let lookups;
                     lookups = {
                         datasets: {
-                            summary: values[0],
-                            pbft: values[1],
+                            summarybudgets: values[0],
+                            detailedbudgets: values[1],
                             actualexpenses: values[2],
                             actualrevenues: values[3],
                             expenditures: values[4],
                         },
                         viewpoints: {
-                            functional: values[5],
-                            structural: values[6],
+                            functionalbudget: values[5],
+                            structuralbudget: values[6],
                             actualexpenses: values[7],
                             actualrevenues: values[8],
                             expenditures: values[9],
@@ -303,39 +303,39 @@ let Explorer = class extends Component {
                 actualexpenses: 'actualexpenses',
                 actualrevenues: 'actualrevenues',
                 expenditures: 'expenditures',
-                pbft: 'functional',
-                summary: 'functional',
+                detailedbudgets: 'functionalbudget',
+                summarybudgets: 'functionalbudget',
             };
             let sourceaspects = {
                 actualexpenses: { expenses: true },
                 actualrevenues: { revenues: true },
                 expenditures: { expenses: true },
-                pbft: { expenses: true, revenues: true, staffing: true },
-                summary: { expenses: true, revenues: true, staffing: true },
+                detailedbudgets: { expenses: true, revenues: true, staffing: true },
+                summarybudgets: { expenses: true, revenues: true, staffing: true },
             };
             for (let datasetname in datasets) {
                 let dataset = datasets[datasetname];
                 for (let dimensionname in dataset) {
                     let dimension = dataset[dimensionname];
-                    if (datasetname == 'pbft') {
+                    if (datasetname == 'detailed') {
                         switch (dimension) {
                             case 'activity':
-                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: false };
+                                sourceaspects.detailedbudgets = { expenses: true, revenues: true, staffing: false };
                                 break;
                             case 'expense':
-                                sourceaspects.pbft = { expenses: true, revenues: false, staffing: false };
+                                sourceaspects.detailedbudgets = { expenses: true, revenues: false, staffing: false };
                                 break;
                             case 'permanence':
-                                sourceaspects.pbft = { expenses: false, revenues: false, staffing: true };
+                                sourceaspects.detailedbudgets = { expenses: false, revenues: false, staffing: true };
                                 break;
                             case 'program':
-                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: true };
+                                sourceaspects.detailedbudgets = { expenses: true, revenues: true, staffing: true };
                                 break;
                             case 'revenue':
-                                sourceaspects.pbft = { expenses: false, revenues: true, staffing: false };
+                                sourceaspects.detailedbudgets = { expenses: false, revenues: true, staffing: false };
                                 break;
                             case 'service':
-                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: false };
+                                sourceaspects.detailedbudgets = { expenses: true, revenues: true, staffing: false };
                                 break;
                         }
                     }
@@ -348,15 +348,15 @@ let Explorer = class extends Component {
                             dimension: dimensionname,
                             code,
                             name,
-                            value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic" }}, 
-                                "source: ", 
-                                sourceviewpoints[datasetname]), secondaryText: React.createElement("span", {style: { fontStyle: "italic" }}, 
-                                "dimension: ", 
+                            value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
+                                "viewpoint: ", 
+                                sourceviewpoints[datasetname]), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
+                                "depth: ", 
                                 dimensionname)}, 
-                                React.createElement("div", {style: { borderTop: "single 1px silver" }}, 
-                                    name, 
+                                React.createElement("div", null, 
+                                    React.createElement("span", {style: { fontWeight: "bold" }}, name), 
                                     " ", 
-                                    React.createElement("span", {style: { float: "right", fontStyle: "italic" }}, 
+                                    React.createElement("span", {style: { float: "right", fontStyle: "italic", color: "gray" }}, 
                                         "source: ", 
                                         datasetname))
                             ))
@@ -369,15 +369,15 @@ let Explorer = class extends Component {
                 actualexpenses: 'actualexpenses',
                 actualrevenues: 'actualrevenues',
                 expenditures: 'expenditures',
-                functional: 'summary',
-                structural: 'summary',
+                functionalbudget: 'summarybudgets',
+                structuralbudget: 'summarybudgets',
             };
             let viewpointaspects = {
                 actualexpenses: { expenses: true },
                 actualrevenues: { revenues: true },
                 expenditures: { expenses: true },
-                functional: { expenses: true, revenues: true, staffing: true },
-                structural: { expenses: true, revenues: true, staffing: true },
+                functionalbudget: { expenses: true, revenues: true, staffing: true },
+                structuralbudget: { expenses: true, revenues: true, staffing: true },
             };
             for (let viewpointname in viewpoints) {
                 let viewpoint = viewpoints[viewpointname];
@@ -392,15 +392,15 @@ let Explorer = class extends Component {
                             dimension: dimensionname,
                             code,
                             name,
-                            value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic" }}, 
+                            value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
                                 "viewpoint: ", 
-                                viewpointname), secondaryText: React.createElement("span", {style: { fontStyle: "italic" }}, 
-                                "dimension: ", 
+                                viewpointname), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
+                                "depth: ", 
                                 dimensionname)}, 
-                                React.createElement("div", {style: { borderTop: "single 1px silver" }}, 
-                                    name, 
+                                React.createElement("div", null, 
+                                    React.createElement("span", {style: { fontWeight: "bold" }}, name), 
                                     " ", 
-                                    React.createElement("span", {style: { float: "right", fontStyle: "italic" }}, 
+                                    React.createElement("span", {style: { float: "right", fontStyle: "italic", color: "gray" }}, 
                                         "source: ", 
                                         viewpointsources[viewpointname]))
                             ))
@@ -439,7 +439,7 @@ let Explorer = class extends Component {
                 findDialogOpen: false
             });
         };
-        this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
+        this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
             React.createElement(IconButton_1.default, {style: {
                 top: 0,
                 right: 0,
@@ -451,13 +451,21 @@ let Explorer = class extends Component {
             }, onTouchTap: this.handleFindDialogClose}, 
                 React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")
             ), 
-            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, floatingLabelText: "Type any characters", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: true})));
+            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, floatingLabelText: "select chart metric (tap here, then give the list a sec to load)", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: true})));
     }
     componentWillMount() {
         if (!this.props.declarationData.onetimenotification) {
             this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted).";
             this.props.onetimeNotification();
         }
+        console.log('calling get lookups from will mount');
+        this.getAllFindLookups().then(data => {
+            console.log('sourcedata', data);
+            this.findChartLookups = this.processFindChartLookups(data);
+            console.log('findChartLookups set');
+        }).catch(reason => {
+            react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
+        });
         let { query } = this.props.location;
         let branchdata, settingsdata, hash;
         if (query.branch && query.settings && query.hash) {

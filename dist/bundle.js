@@ -5985,15 +5985,15 @@ var Explorer = function (_Component) {
                     var lookups = void 0;
                     lookups = {
                         datasets: {
-                            summary: values[0],
-                            pbft: values[1],
+                            summarybudgets: values[0],
+                            detailedbudgets: values[1],
                             actualexpenses: values[2],
                             actualrevenues: values[3],
                             expenditures: values[4]
                         },
                         viewpoints: {
-                            functional: values[5],
-                            structural: values[6],
+                            functionalbudget: values[5],
+                            structuralbudget: values[6],
                             actualexpenses: values[7],
                             actualrevenues: values[8],
                             expenditures: values[9]
@@ -6016,39 +6016,39 @@ var Explorer = function (_Component) {
                 actualexpenses: 'actualexpenses',
                 actualrevenues: 'actualrevenues',
                 expenditures: 'expenditures',
-                pbft: 'functional',
-                summary: 'functional'
+                detailedbudgets: 'functionalbudget',
+                summarybudgets: 'functionalbudget'
             };
             var sourceaspects = {
                 actualexpenses: { expenses: true },
                 actualrevenues: { revenues: true },
                 expenditures: { expenses: true },
-                pbft: { expenses: true, revenues: true, staffing: true },
-                summary: { expenses: true, revenues: true, staffing: true }
+                detailedbudgets: { expenses: true, revenues: true, staffing: true },
+                summarybudgets: { expenses: true, revenues: true, staffing: true }
             };
             for (var datasetname in datasets) {
                 var dataset = datasets[datasetname];
                 for (var dimensionname in dataset) {
                     var dimension = dataset[dimensionname];
-                    if (datasetname == 'pbft') {
+                    if (datasetname == 'detailed') {
                         switch (dimension) {
                             case 'activity':
-                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: false };
+                                sourceaspects.detailedbudgets = { expenses: true, revenues: true, staffing: false };
                                 break;
                             case 'expense':
-                                sourceaspects.pbft = { expenses: true, revenues: false, staffing: false };
+                                sourceaspects.detailedbudgets = { expenses: true, revenues: false, staffing: false };
                                 break;
                             case 'permanence':
-                                sourceaspects.pbft = { expenses: false, revenues: false, staffing: true };
+                                sourceaspects.detailedbudgets = { expenses: false, revenues: false, staffing: true };
                                 break;
                             case 'program':
-                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: true };
+                                sourceaspects.detailedbudgets = { expenses: true, revenues: true, staffing: true };
                                 break;
                             case 'revenue':
-                                sourceaspects.pbft = { expenses: false, revenues: true, staffing: false };
+                                sourceaspects.detailedbudgets = { expenses: false, revenues: true, staffing: false };
                                 break;
                             case 'service':
-                                sourceaspects.pbft = { expenses: true, revenues: true, staffing: false };
+                                sourceaspects.detailedbudgets = { expenses: true, revenues: true, staffing: false };
                                 break;
                         }
                     }
@@ -6061,7 +6061,7 @@ var Explorer = function (_Component) {
                             dimension: dimensionname,
                             code: code,
                             name: name,
-                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic" } }, "source: ", sourceviewpoints[datasetname]), secondaryText: React.createElement("span", { style: { fontStyle: "italic" } }, "dimension: ", dimensionname) }, React.createElement("div", { style: { borderTop: "single 1px silver" } }, name, " ", React.createElement("span", { style: { float: "right", fontStyle: "italic" } }, "source: ", datasetname)))
+                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", sourceviewpoints[datasetname]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "depth: ", dimensionname) }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", datasetname)))
                         };
                         lookups.push(selection);
                     }
@@ -6071,15 +6071,15 @@ var Explorer = function (_Component) {
                 actualexpenses: 'actualexpenses',
                 actualrevenues: 'actualrevenues',
                 expenditures: 'expenditures',
-                functional: 'summary',
-                structural: 'summary'
+                functionalbudget: 'summarybudgets',
+                structuralbudget: 'summarybudgets'
             };
             var viewpointaspects = {
                 actualexpenses: { expenses: true },
                 actualrevenues: { revenues: true },
                 expenditures: { expenses: true },
-                functional: { expenses: true, revenues: true, staffing: true },
-                structural: { expenses: true, revenues: true, staffing: true }
+                functionalbudget: { expenses: true, revenues: true, staffing: true },
+                structuralbudget: { expenses: true, revenues: true, staffing: true }
             };
             for (var viewpointname in viewpoints) {
                 var viewpoint = viewpoints[viewpointname];
@@ -6094,7 +6094,7 @@ var Explorer = function (_Component) {
                             dimension: _dimensionname,
                             code: _code,
                             name: _name,
-                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic" } }, "viewpoint: ", viewpointname), secondaryText: React.createElement("span", { style: { fontStyle: "italic" } }, "dimension: ", _dimensionname) }, React.createElement("div", { style: { borderTop: "single 1px silver" } }, _name, " ", React.createElement("span", { style: { float: "right", fontStyle: "italic" } }, "source: ", viewpointsources[viewpointname])))
+                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", viewpointname), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "depth: ", _dimensionname) }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, _name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", viewpointsources[viewpointname])))
                         };
                         lookups.push(_selection);
                     }
@@ -6130,7 +6130,7 @@ var Explorer = function (_Component) {
             });
         };
         _this.findDialog = function () {
-            return React.createElement(Dialog_1.default, { title: "Find a Chart", modal: false, open: _this.state.findDialogOpen, onRequestClose: _this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px', transform: "translate(0px, -60px)" } }, React.createElement(IconButton_1.default, { style: {
+            return React.createElement(Dialog_1.default, { title: "Find a Chart", modal: false, open: _this.state.findDialogOpen, onRequestClose: _this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" } }, React.createElement(IconButton_1.default, { style: {
                     top: 0,
                     right: 0,
                     padding: 0,
@@ -6138,7 +6138,7 @@ var Explorer = function (_Component) {
                     width: "36px",
                     position: "absolute",
                     zIndex: 2
-                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement(AutoComplete_1.default, { style: { width: '100%' }, floatingLabelText: "Type any characters", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: _this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: true }));
+                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement(AutoComplete_1.default, { style: { width: '100%' }, floatingLabelText: "select chart metric (tap here, then give the list a sec to load)", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: _this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: true }));
         };
         return _this;
     }
@@ -6146,10 +6146,20 @@ var Explorer = function (_Component) {
     _createClass(Explorer, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
+            var _this2 = this;
+
             if (!this.props.declarationData.onetimenotification) {
                 this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted).";
                 this.props.onetimeNotification();
             }
+            console.log('calling get lookups from will mount');
+            this.getAllFindLookups().then(function (data) {
+                console.log('sourcedata', data);
+                _this2.findChartLookups = _this2.processFindChartLookups(data);
+                console.log('findChartLookups set');
+            }).catch(function (reason) {
+                react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
+            });
             var query = this.props.location.query;
 
             var branchdata = void 0,
@@ -6225,7 +6235,7 @@ var Explorer = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             var explorer = this;
             var dialogbox = React.createElement(Dialog_1.default, { title: "Budget Explorer Options", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' } }, React.createElement(IconButton_1.default, { style: {
@@ -6241,37 +6251,37 @@ var Explorer = function (_Component) {
                 var budgetBranches = explorer.state.budgetBranches;
                 var segments = budgetBranches.map(function (budgetBranch, branchIndex) {
                     var urlparms = null;
-                    if (branchIndex == 0 && _this2.urlparms) {
-                        urlparms = _this2.urlparms;
+                    if (branchIndex == 0 && _this3.urlparms) {
+                        urlparms = _this3.urlparms;
                     }
                     var actionFunctions = {
-                        addCellDeclarations: _this2.addCellDeclarations(budgetBranch.uid),
-                        normalizeCellYearDependencies: _this2.normalizeCellYearDependencies(budgetBranch.uid),
-                        updateCellTimeScope: _this2.updateCellTimeScope(budgetBranch.uid),
-                        updateCellChartSelection: _this2.updateCellChartSelection(budgetBranch.uid),
-                        updateCellYearSelections: _this2.updateCellYearSelections(budgetBranch.uid),
-                        changeTab: _this2.changeTab(budgetBranch.uid),
-                        updateCellChartCode: _this2.updateCellChartCode(budgetBranch.uid),
-                        updateNode: _this2.updateNode(budgetBranch.uid),
-                        addNodeDeclaration: _this2.props.addNodeDeclaration,
-                        addNodeDeclarations: _this2.props.addNodeDeclarations,
-                        removeNodeDeclarations: _this2.props.removeNodeDeclarations,
-                        changeViewpoint: _this2.props.changeViewpoint,
-                        changeVersion: _this2.props.changeVersion,
-                        toggleInflationAdjusted: _this2.props.toggleInflationAdjusted,
-                        updateProrata: _this2.props.updateProrata,
-                        changeAspect: _this2.props.changeAspect,
-                        incrementBranchDataVersion: _this2.props.incrementBranchDataVersion,
-                        toggleShowOptions: _this2.props.toggleShowOptions,
-                        updateCellsDataseriesName: _this2.props.updateCellsDataseriesName,
-                        resetLastAction: _this2.props.resetLastAction,
-                        harmonizeCells: _this2.props.harmonizeCells
+                        addCellDeclarations: _this3.addCellDeclarations(budgetBranch.uid),
+                        normalizeCellYearDependencies: _this3.normalizeCellYearDependencies(budgetBranch.uid),
+                        updateCellTimeScope: _this3.updateCellTimeScope(budgetBranch.uid),
+                        updateCellChartSelection: _this3.updateCellChartSelection(budgetBranch.uid),
+                        updateCellYearSelections: _this3.updateCellYearSelections(budgetBranch.uid),
+                        changeTab: _this3.changeTab(budgetBranch.uid),
+                        updateCellChartCode: _this3.updateCellChartCode(budgetBranch.uid),
+                        updateNode: _this3.updateNode(budgetBranch.uid),
+                        addNodeDeclaration: _this3.props.addNodeDeclaration,
+                        addNodeDeclarations: _this3.props.addNodeDeclarations,
+                        removeNodeDeclarations: _this3.props.removeNodeDeclarations,
+                        changeViewpoint: _this3.props.changeViewpoint,
+                        changeVersion: _this3.props.changeVersion,
+                        toggleInflationAdjusted: _this3.props.toggleInflationAdjusted,
+                        updateProrata: _this3.props.updateProrata,
+                        changeAspect: _this3.props.changeAspect,
+                        incrementBranchDataVersion: _this3.props.incrementBranchDataVersion,
+                        toggleShowOptions: _this3.props.toggleShowOptions,
+                        updateCellsDataseriesName: _this3.props.updateCellsDataseriesName,
+                        resetLastAction: _this3.props.resetLastAction,
+                        harmonizeCells: _this3.props.harmonizeCells
                     };
                     var displayCallbackFunctions = {
                         workingStatus: explorer.workingStatus
                     };
                     return React.createElement(Card_1.Card, { initiallyExpanded: true, key: budgetBranch.uid, onExpandChange: function onExpandChange(expanded) {
-                            _this2.onExpandChange(expanded);
+                            _this3.onExpandChange(expanded);
                         } }, React.createElement(Card_1.CardTitle, { actAsExpander: false, showExpandableButton: false }, "Row " + (branchIndex + 1) + " ", React.createElement("input", { type: "text", onTouchTap: function onTouchTap(ev) {
                             ev.stopPropagation();
                         } }), React.createElement(IconButton_1.default, { style: {
@@ -6280,22 +6290,22 @@ var Explorer = function (_Component) {
                         }, disabled: branchIndex == budgetBranches.length - 1, onTouchTap: function (uid) {
                             return function (ev) {
                                 ev.stopPropagation();
-                                _this2.branchMoveDown(uid);
+                                _this3.branchMoveDown(uid);
                             };
                         }(budgetBranch.uid), tooltip: "Move down" }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "arrow_downward")), React.createElement(IconButton_1.default, { style: {
                             float: "right"
                         }, disabled: branchIndex == 0, onTouchTap: function (uid) {
                             return function (ev) {
                                 ev.stopPropagation();
-                                _this2.branchMoveUp(uid);
+                                _this3.branchMoveUp(uid);
                             };
-                        }(budgetBranch.uid), tooltip: "Move up" }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "arrow_upward"))), React.createElement(Card_1.CardText, { expandable: false }, React.createElement(explorerbranch_1.default, { budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: _this2.handleDialogOpen, urlparms: urlparms, clearUrlParms: _this2.clearUrlParms, setToast: _this2.setToast, handleFindDialogOpen: _this2.handleFindDialogOpen })), React.createElement(Card_1.CardActions, { expandable: false }, React.createElement(FloatingActionButton_1.default, { onTouchTap: function (uid) {
+                        }(budgetBranch.uid), tooltip: "Move up" }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "arrow_upward"))), React.createElement(Card_1.CardText, { expandable: false }, React.createElement(explorerbranch_1.default, { budgetBranch: budgetBranch, declarationData: explorer.props.declarationData, globalStateActions: actionFunctions, displayCallbacks: displayCallbackFunctions, handleDialogOpen: _this3.handleDialogOpen, urlparms: urlparms, clearUrlParms: _this3.clearUrlParms, setToast: _this3.setToast, handleFindDialogOpen: _this3.handleFindDialogOpen })), React.createElement(Card_1.CardActions, { expandable: false }, React.createElement(FloatingActionButton_1.default, { onTouchTap: function (uid) {
                             return function () {
-                                _this2.addBranch(uid);
+                                _this3.addBranch(uid);
                             };
                         }(budgetBranch.uid) }, React.createElement(add_1.default, null)), budgetBranches.length > 1 ? React.createElement(FloatingActionButton_1.default, { onTouchTap: function (uid) {
                             return function () {
-                                _this2.removeBranch(uid);
+                                _this3.removeBranch(uid);
                             };
                         }(budgetBranch.uid), secondary: true }, React.createElement(remove_1.default, null)) : null));
                 });
