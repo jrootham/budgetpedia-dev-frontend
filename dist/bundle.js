@@ -6043,17 +6043,20 @@ var Explorer = function (_Component) {
                 summarybudgets: 'Summary Budgets',
                 activity: 'Activities',
                 expense: 'Expenditures',
+                auditedexpense: "Expenses",
                 permanence: 'Permanence',
                 program: 'Programs',
                 revenue: 'Receipts',
+                auditedrevenue: "Revenues",
                 service: 'Services',
-                Taxonomy: 'Taxonomy'
+                Taxonomy: 'Taxonomy',
+                expenditure: "Expenses"
             };
             for (var datasetname in datasets) {
                 var dataset = datasets[datasetname];
                 for (var dimensionname in dataset) {
                     var dimension = dataset[dimensionname];
-                    if (datasetname == 'detailed') {
+                    if (datasetname == 'detailedbudgets') {
                         switch (dimension) {
                             case 'activity':
                                 sourceaspects.detailedbudgets = { expenses: true, revenues: true, staffing: false };
@@ -6075,6 +6078,14 @@ var Explorer = function (_Component) {
                                 break;
                         }
                     }
+                    var dimensionlookupname = void 0;
+                    if (datasetname == 'auditedrevenues') {
+                        dimensionlookupname = 'auditedrevenue';
+                    } else if (datasetname == 'auditedexpenses') {
+                        dimensionlookupname = 'auditedexpense';
+                    } else {
+                        dimensionlookupname = dimensionname;
+                    }
                     for (var code in dimension) {
                         var name = dimension[code];
                         var selection = {
@@ -6084,7 +6095,7 @@ var Explorer = function (_Component) {
                             dimension: dimensionname,
                             code: code,
                             name: name,
-                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[sourceviewpoints[datasetname]]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[dimensionname]) }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[datasetname])))
+                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[sourceviewpoints[datasetname]]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[dimensionlookupname], " ") }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[datasetname])))
                         };
                         lookups.push(selection);
                         if (datasetname == 'detailedbudgets' || datasetname == 'summarybudgets') {
@@ -6095,7 +6106,7 @@ var Explorer = function (_Component) {
                                 dimension: dimensionname,
                                 code: code,
                                 name: name,
-                                value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[alternatesourceviewpoints[datasetname]]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[dimensionname]) }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[datasetname])))
+                                value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[alternatesourceviewpoints[datasetname]]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[dimensionname], " ") }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[datasetname])))
                             };
                             lookups.push(_selection);
                         }
@@ -6129,7 +6140,7 @@ var Explorer = function (_Component) {
                             dimension: _dimensionname,
                             code: _code,
                             name: _name,
-                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[viewpointname]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[_dimensionname]) }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, _name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[viewpointsources[viewpointname]])))
+                            value: React.createElement(MenuItem_1.default, { primaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "viewpoint: ", dictionary[viewpointname]), secondaryText: React.createElement("span", { style: { fontStyle: "italic", color: "gray" } }, "level: ", dictionary[_dimensionname], " ") }, React.createElement("div", null, React.createElement("span", { style: { fontWeight: "bold" } }, _name), " ", React.createElement("span", { style: { float: "right", fontStyle: "italic", color: "gray" } }, "source: ", dictionary[viewpointsources[viewpointname]])))
                         };
                         lookups.push(_selection2);
                     }
@@ -6165,7 +6176,7 @@ var Explorer = function (_Component) {
             });
         };
         _this.findDialog = function () {
-            return React.createElement(Dialog_1.default, { title: "Find a Chart", modal: false, open: _this.state.findDialogOpen, onRequestClose: _this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" } }, React.createElement(IconButton_1.default, { style: {
+            return React.createElement(Dialog_1.default, { title: "Find a Chart", modal: false, open: _this.state.findDialogOpen, onRequestClose: _this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" } }, React.createElement("p", null, React.createElement("em", null, "[this is under construction, not funcional]")), React.createElement(IconButton_1.default, { style: {
                     top: 0,
                     right: 0,
                     padding: 0,
@@ -6173,7 +6184,7 @@ var Explorer = function (_Component) {
                     width: "36px",
                     position: "absolute",
                     zIndex: 2
-                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement(AutoComplete_1.default, { style: { width: '100%' }, floatingLabelText: "type in a key word of an account name", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: _this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 50 }));
+                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement(AutoComplete_1.default, { style: { width: '100%' }, floatingLabelText: "type in a key word of an account name", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: _this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60 }));
         };
         return _this;
     }
@@ -6187,11 +6198,8 @@ var Explorer = function (_Component) {
                 this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted).";
                 this.props.onetimeNotification();
             }
-            console.log('calling get lookups from will mount');
             this.getAllFindLookups().then(function (data) {
-                console.log('sourcedata', data);
                 _this2.findChartLookups = _this2.processFindChartLookups(data);
-                console.log('lookupdata set', _this2.findChartLookups);
             }).catch(function (reason) {
                 react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
             });

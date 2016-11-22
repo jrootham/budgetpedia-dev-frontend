@@ -169,11 +169,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             this.props.onetimeNotification()
         }
 
-        console.log('calling get lookups from will mount')
         this.getAllFindLookups().then(data => {
-            console.log('sourcedata', data)
+            // console.log('sourcedata', data)
             this.findChartLookups = this.processFindChartLookups(data)
-            console.log('lookupdata set',this.findChartLookups)
+            // console.log('lookupdata set',this.findChartLookups)
         }).catch(reason => {
             toastr.error('Error loading finder lookups: ' + reason)
         })
@@ -665,17 +664,20 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             // levels
             activity:'Activities',
             expense:'Expenditures',
+            auditedexpense:"Expenses",
             permanence:'Permanence',
             program:'Programs',
             revenue:'Receipts',
+            auditedrevenue:"Revenues",
             service:'Services',
             Taxonomy:'Taxonomy',
+            expenditure:"Expenses",
         }
         for (let datasetname in datasets) {
             let dataset = datasets[datasetname]
             for (let dimensionname in dataset) {
                 let dimension = dataset[dimensionname]
-                if (datasetname == 'detailed') {
+                if (datasetname == 'detailedbudgets') {
                     switch (dimension) {
                         case 'activity':sourceaspects.detailedbudgets = {expenses:true,revenues:true,staffing:false}
                             break
@@ -691,6 +693,14 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                             break
                     }
                 }
+                let dimensionlookupname
+                if (datasetname == 'auditedrevenues') {
+                    dimensionlookupname = 'auditedrevenue'
+                } else if (datasetname == 'auditedexpenses') {
+                    dimensionlookupname = 'auditedexpense'
+                } else {
+                    dimensionlookupname = dimensionname
+                }
                 for (let code in dimension) {
                     let name = dimension[code]
                     let selection = {
@@ -702,7 +712,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         name,
                         value:(
                             <MenuItem primaryText={<span style={{fontStyle:"italic",color:"gray"}}>viewpoint: {dictionary[sourceviewpoints[datasetname]]}</span>}
-                                secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionname]}</span>}>
+                                secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionlookupname]} </span>}>
                                 <div>
                                 <span style={{fontWeight:"bold"}}>{name}</span> <span style={{float:"right",fontStyle:"italic",color:"gray"}} >source: {dictionary[datasetname]}</span>
                                 </div>
@@ -721,7 +731,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                             name,
                             value:(
                                 <MenuItem primaryText={<span style={{fontStyle:"italic",color:"gray"}}>viewpoint: {dictionary[alternatesourceviewpoints[datasetname]]}</span>}
-                                    secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionname]}</span>}>
+                                    secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionname]} </span>}>
                                     <div>
                                     <span style={{fontWeight:"bold"}}>{name}</span> <span style={{float:"right",fontStyle:"italic",color:"gray"}} >source: {dictionary[datasetname]}</span>
                                     </div>
@@ -765,7 +775,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         name,
                         value:(
                             <MenuItem primaryText={<span style={{fontStyle:"italic",color:"gray"}}>viewpoint: {dictionary[viewpointname]}</span>}
-                                secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionname]}</span>}>
+                                secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionname]} </span>}>
                                 <div>
                                 <span style={{fontWeight:"bold"}}>{name}</span> <span style={{float:"right",fontStyle:"italic",color:"gray"}} >source: {dictionary[viewpointsources[viewpointname]]}</span>
                                 </div>
@@ -822,6 +832,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             autoScrollBodyContent
             contentStyle = {{maxWidth:'600px',transform: "translate(0px, -60px)"}}
         >
+            <p><em>[this is under construction, not funcional]</em></p>
             <IconButton
                 style={{
                     top: 0,

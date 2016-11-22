@@ -330,17 +330,20 @@ let Explorer = class extends Component {
                 summarybudgets: 'Summary Budgets',
                 activity: 'Activities',
                 expense: 'Expenditures',
+                auditedexpense: "Expenses",
                 permanence: 'Permanence',
                 program: 'Programs',
                 revenue: 'Receipts',
+                auditedrevenue: "Revenues",
                 service: 'Services',
                 Taxonomy: 'Taxonomy',
+                expenditure: "Expenses",
             };
             for (let datasetname in datasets) {
                 let dataset = datasets[datasetname];
                 for (let dimensionname in dataset) {
                     let dimension = dataset[dimensionname];
-                    if (datasetname == 'detailed') {
+                    if (datasetname == 'detailedbudgets') {
                         switch (dimension) {
                             case 'activity':
                                 sourceaspects.detailedbudgets = { expenses: true, revenues: true, staffing: false };
@@ -362,6 +365,16 @@ let Explorer = class extends Component {
                                 break;
                         }
                     }
+                    let dimensionlookupname;
+                    if (datasetname == 'auditedrevenues') {
+                        dimensionlookupname = 'auditedrevenue';
+                    }
+                    else if (datasetname == 'auditedexpenses') {
+                        dimensionlookupname = 'auditedexpense';
+                    }
+                    else {
+                        dimensionlookupname = dimensionname;
+                    }
                     for (let code in dimension) {
                         let name = dimension[code];
                         let selection = {
@@ -375,7 +388,8 @@ let Explorer = class extends Component {
                                 "viewpoint: ", 
                                 dictionary[sourceviewpoints[datasetname]]), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
                                 "level: ", 
-                                dictionary[dimensionname])}, 
+                                dictionary[dimensionlookupname], 
+                                " ")}, 
                                 React.createElement("div", null, 
                                     React.createElement("span", {style: { fontWeight: "bold" }}, name), 
                                     " ", 
@@ -397,7 +411,8 @@ let Explorer = class extends Component {
                                     "viewpoint: ", 
                                     dictionary[alternatesourceviewpoints[datasetname]]), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
                                     "level: ", 
-                                    dictionary[dimensionname])}, 
+                                    dictionary[dimensionname], 
+                                    " ")}, 
                                     React.createElement("div", null, 
                                         React.createElement("span", {style: { fontWeight: "bold" }}, name), 
                                         " ", 
@@ -442,7 +457,8 @@ let Explorer = class extends Component {
                                 "viewpoint: ", 
                                 dictionary[viewpointname]), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
                                 "level: ", 
-                                dictionary[dimensionname])}, 
+                                dictionary[dimensionname], 
+                                " ")}, 
                                 React.createElement("div", null, 
                                     React.createElement("span", {style: { fontWeight: "bold" }}, name), 
                                     " ", 
@@ -486,6 +502,9 @@ let Explorer = class extends Component {
             });
         };
         this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
+            React.createElement("p", null, 
+                React.createElement("em", null, "[this is under construction, not funcional]")
+            ), 
             React.createElement(IconButton_1.default, {style: {
                 top: 0,
                 right: 0,
@@ -497,18 +516,15 @@ let Explorer = class extends Component {
             }, onTouchTap: this.handleFindDialogClose}, 
                 React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")
             ), 
-            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, floatingLabelText: "type in a key word of an account name", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 50})));
+            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, floatingLabelText: "type in a key word of an account name", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60})));
     }
     componentWillMount() {
         if (!this.props.declarationData.onetimenotification) {
             this.toastrmessages.info = "Click or tap on any chart column to drill down (except as noted).";
             this.props.onetimeNotification();
         }
-        console.log('calling get lookups from will mount');
         this.getAllFindLookups().then(data => {
-            console.log('sourcedata', data);
             this.findChartLookups = this.processFindChartLookups(data);
-            console.log('lookupdata set', this.findChartLookups);
         }).catch(reason => {
             react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
         });
