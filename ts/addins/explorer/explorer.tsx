@@ -832,7 +832,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             autoScrollBodyContent
             contentStyle = {{maxWidth:'600px',transform: "translate(0px, -60px)"}}
         >
-            <p><em>[this is under construction, not funcional]</em></p>
+            <p><em>[this is under construction, not functional]</em></p>
             <IconButton
                 style={{
                     top: 0,

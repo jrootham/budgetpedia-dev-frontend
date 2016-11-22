@@ -503,7 +503,7 @@ let Explorer = class extends Component {
         };
         this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
             React.createElement("p", null, 
-                React.createElement("em", null, "[this is under construction, not funcional]")
+                React.createElement("em", null, "[this is under construction, not functional]")
             ), 
             React.createElement(IconButton_1.default, {style: {
                 top: 0,
