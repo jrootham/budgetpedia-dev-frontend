@@ -5621,7 +5621,8 @@ var Explorer = function (_Component) {
             budgetBranches: [],
             dialogOpen: false,
             showdashboard: false,
-            findDialogOpen: false
+            findDialogOpen: false,
+            findDialogAspect: 'expenses'
         };
         _this.toastrmessages = {
             error: null,
@@ -5940,7 +5941,6 @@ var Explorer = function (_Component) {
         _this.removeBranch = function (branchuid) {
             _this.props.removeBranchDeclaration(branchuid);
         };
-        _this.findcontent = React.createElement("div", null, "pending");
         _this.finderLookupPromise = function (path) {
             var root = './db/repositories/toronto/';
             var filespec = root + path;
@@ -6008,7 +6008,46 @@ var Explorer = function (_Component) {
             });
             return promise;
         };
+        _this.getFindAspectLookups = function () {
+            var explorer = _this;
+            if (!explorer.findChartLookups) {
+                explorer.findAspectChartLookups = null;
+                return;
+            }
+            var sourcelist = explorer.findChartLookups;
+            var targetlist = [];
+            var aspect = explorer.state.findDialogAspect;
+            var _iteratorNormalCompletion5 = true;
+            var _didIteratorError5 = false;
+            var _iteratorError5 = undefined;
+
+            try {
+                for (var _iterator5 = sourcelist[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                    var item = _step5.value;
+
+                    if (item.aspects[aspect]) {
+                        targetlist.push(item);
+                    }
+                }
+            } catch (err) {
+                _didIteratorError5 = true;
+                _iteratorError5 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                        _iterator5.return();
+                    }
+                } finally {
+                    if (_didIteratorError5) {
+                        throw _iteratorError5;
+                    }
+                }
+            }
+
+            explorer.findAspectChartLookups = targetlist;
+        };
         _this.findChartLookups = null;
+        _this.findAspectChartLookups = null;
         _this.processFindChartLookups = function (data) {
             var lookups = [];
             var viewpoints = data.viewpoints,
@@ -6059,7 +6098,7 @@ var Explorer = function (_Component) {
                 for (var dimensionname in dataset) {
                     var dimension = dataset[dimensionname];
                     if (datasetname == 'detailedbudgets') {
-                        switch (dimension) {
+                        switch (dimensionname) {
                             case 'activity':
                                 sourceaspects.detailedbudgets = { expenses: true, revenues: true, staffing: false };
                                 break;
@@ -6111,9 +6150,9 @@ var Explorer = function (_Component) {
                 structuralbudget: 'summarybudgets'
             };
             var viewpointaspects = {
-                auditedexpenses: { expenses: true },
-                auditedrevenues: { revenues: true },
-                auditedexpenditures: { expenses: true },
+                actualexpenses: { expenses: true },
+                actualrevenues: { revenues: true },
+                expenditures: { expenses: true },
                 functionalbudget: { expenses: true, revenues: true, staffing: true },
                 structuralbudget: { expenses: true, revenues: true, staffing: true }
             };
@@ -6147,26 +6186,30 @@ var Explorer = function (_Component) {
         _this.handleFindDialogOpen = function (e, branchuid) {
             e.stopPropagation();
             e.preventDefault();
-            if (_this.findChartLookups) {
-                _this.findChart(branchuid);
-            } else {
-                _this.getAllFindLookups().then(function (data) {
-                    console.log('sourcedata', data);
-                    _this.findChartLookups = _this.processFindChartLookups(data);
-                    console.log('lookupdata', _this.findChartLookups);
-                    _this.findChart(branchuid);
-                }).catch(function (reason) {
-                    react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
-                });
-            }
+            _this.findChart(branchuid);
         };
         _this.handleFindDialogClose = function () {
             _this.setState({
                 findDialogOpen: false
             });
         };
+        _this.onChangeFindAspect = function (e, value) {
+            _this.findAspectChartLookups = null;
+            _this.findClearSearchText();
+            _this.setState({
+                findDialogAspect: value
+            });
+        };
+        _this.findOnNewRequest = function (chosenRequest, index) {
+            if (index == -1) {}
+        };
+        _this.findClearSearchText = function () {
+            var instance = _this.refs['autocomplete'];
+            instance.setState({ searchText: '' });
+            instance.focus();
+        };
         _this.findDialog = function () {
-            return React.createElement(Dialog_1.default, { title: "Find a Chart Instance", modal: false, open: _this.state.findDialogOpen, onRequestClose: _this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" } }, React.createElement("p", null, React.createElement("em", null, "[this is under construction, not functional]")), React.createElement("div", null, React.createElement(RadioButton_1.RadioButtonGroup, { name: "shipSpeed", defaultSelected: "expenses" }, React.createElement(RadioButton_1.RadioButton, { style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "expenses", label: "expenses" }), React.createElement(RadioButton_1.RadioButton, { style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "revenues", label: "revenues" }), React.createElement(RadioButton_1.RadioButton, { style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "staffing", label: "staffing" }))), React.createElement(IconButton_1.default, { style: {
+            return React.createElement(Dialog_1.default, { title: "Find a Chart Instance", modal: false, open: _this.state.findDialogOpen, onRequestClose: _this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" } }, React.createElement("p", null, React.createElement("em", null, "[this is under construction, not functional]")), React.createElement("div", null, React.createElement(RadioButton_1.RadioButtonGroup, { valueSelected: _this.state.findDialogAspect, name: "findchart", onChange: _this.onChangeFindAspect }, React.createElement(RadioButton_1.RadioButton, { style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "expenses", label: "expenses" }), React.createElement(RadioButton_1.RadioButton, { style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "revenues", label: "revenues" }), React.createElement(RadioButton_1.RadioButton, { style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "staffing", label: "staffing" }))), React.createElement(IconButton_1.default, { style: {
                     top: 0,
                     right: 0,
                     padding: 0,
@@ -6174,7 +6217,7 @@ var Explorer = function (_Component) {
                     width: "36px",
                     position: "absolute",
                     zIndex: 2
-                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement(AutoComplete_1.default, { style: { width: '100%' }, floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: _this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60 }), React.createElement("div", null, React.createElement(RaisedButton_1.default, { disabled: true, label: "Apply", primary: true, style: { marginRight: "50px" } }), React.createElement(RaisedButton_1.default, { disabled: true, label: "Cancel", secondary: true })));
+                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement(AutoComplete_1.default, { style: { width: '100%' }, ref: 'autocomplete', floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: _this.findAspectChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60, onNewRequest: _this.findOnNewRequest }), React.createElement("div", null, React.createElement(RaisedButton_1.default, { disabled: true, label: "Apply", primary: true, style: { marginRight: "50px" } }), React.createElement(RaisedButton_1.default, { disabled: true, label: "Cancel", secondary: true })));
         };
         return _this;
     }
@@ -6271,6 +6314,9 @@ var Explorer = function (_Component) {
             var _this3 = this;
 
             var explorer = this;
+            if (this.state.findDialogOpen && !this.findAspectChartLookups) {
+                this.getFindAspectLookups();
+            }
             var dialogbox = React.createElement(Dialog_1.default, { title: "Budget Explorer Options", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' } }, React.createElement(IconButton_1.default, { style: {
                     top: 0,
                     right: 0,

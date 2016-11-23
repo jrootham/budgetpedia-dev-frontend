@@ -31,6 +31,7 @@ let Explorer = class extends Component {
             dialogOpen: false,
             showdashboard: false,
             findDialogOpen: false,
+            findDialogAspect: 'expenses',
         };
         this.toastrmessages = {
             error: null,
@@ -216,7 +217,6 @@ let Explorer = class extends Component {
         this.removeBranch = branchuid => {
             this.props.removeBranchDeclaration(branchuid);
         };
-        this.findcontent = React.createElement("div", null, "pending");
         this.finderLookupPromise = path => {
             let root = './db/repositories/toronto/';
             let filespec = root + path;
@@ -297,7 +297,24 @@ let Explorer = class extends Component {
             });
             return promise;
         };
+        this.getFindAspectLookups = () => {
+            let explorer = this;
+            if (!explorer.findChartLookups) {
+                explorer.findAspectChartLookups = null;
+                return;
+            }
+            let sourcelist = explorer.findChartLookups;
+            let targetlist = [];
+            let aspect = explorer.state.findDialogAspect;
+            for (let item of sourcelist) {
+                if (item.aspects[aspect]) {
+                    targetlist.push(item);
+                }
+            }
+            explorer.findAspectChartLookups = targetlist;
+        };
         this.findChartLookups = null;
+        this.findAspectChartLookups = null;
         this.processFindChartLookups = data => {
             let lookups = [];
             let { viewpoints, datasets } = data;
@@ -346,7 +363,7 @@ let Explorer = class extends Component {
                 for (let dimensionname in dataset) {
                     let dimension = dataset[dimensionname];
                     if (datasetname == 'detailedbudgets') {
-                        switch (dimension) {
+                        switch (dimensionname) {
                             case 'activity':
                                 sourceaspects.detailedbudgets = { expenses: true, revenues: true, staffing: false };
                                 break;
@@ -412,9 +429,9 @@ let Explorer = class extends Component {
                 structuralbudget: 'summarybudgets',
             };
             let viewpointaspects = {
-                auditedexpenses: { expenses: true },
-                auditedrevenues: { revenues: true },
-                auditedexpenditures: { expenses: true },
+                actualexpenses: { expenses: true },
+                actualrevenues: { revenues: true },
+                expenditures: { expenses: true },
                 functionalbudget: { expenses: true, revenues: true, staffing: true },
                 structuralbudget: { expenses: true, revenues: true, staffing: true },
             };
@@ -460,31 +477,35 @@ let Explorer = class extends Component {
         this.handleFindDialogOpen = (e, branchuid) => {
             e.stopPropagation();
             e.preventDefault();
-            if (this.findChartLookups) {
-                this.findChart(branchuid);
-            }
-            else {
-                this.getAllFindLookups().then(data => {
-                    console.log('sourcedata', data);
-                    this.findChartLookups = this.processFindChartLookups(data);
-                    console.log('lookupdata', this.findChartLookups);
-                    this.findChart(branchuid);
-                }).catch(reason => {
-                    react_redux_toastr_1.toastr.error('Error loading finder lookups: ' + reason);
-                });
-            }
+            this.findChart(branchuid);
         };
         this.handleFindDialogClose = () => {
             this.setState({
                 findDialogOpen: false
             });
         };
+        this.onChangeFindAspect = (e, value) => {
+            this.findAspectChartLookups = null;
+            this.findClearSearchText();
+            this.setState({
+                findDialogAspect: value
+            });
+        };
+        this.findOnNewRequest = (chosenRequest, index) => {
+            if (index == -1) {
+            }
+        };
+        this.findClearSearchText = () => {
+            let instance = this.refs['autocomplete'];
+            instance.setState({ searchText: '' });
+            instance.focus();
+        };
         this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart Instance", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
             React.createElement("p", null, 
                 React.createElement("em", null, "[this is under construction, not functional]")
             ), 
             React.createElement("div", null, 
-                React.createElement(RadioButton_1.RadioButtonGroup, {name: "shipSpeed", defaultSelected: "expenses"}, 
+                React.createElement(RadioButton_1.RadioButtonGroup, {valueSelected: this.state.findDialogAspect, name: "findchart", onChange: this.onChangeFindAspect}, 
                     React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "expenses", label: "expenses"}), 
                     React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "revenues", label: "revenues"}), 
                     React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "staffing", label: "staffing"}))
@@ -500,7 +521,7 @@ let Explorer = class extends Component {
             }, onTouchTap: this.handleFindDialogClose}, 
                 React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")
             ), 
-            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60}), 
+            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, ref: 'autocomplete', floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findAspectChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60, onNewRequest: this.findOnNewRequest}), 
             React.createElement("div", null, 
                 React.createElement(RaisedButton_1.default, {disabled: true, label: "Apply", primary: true, style: { marginRight: "50px" }}), 
                 React.createElement(RaisedButton_1.default, {disabled: true, label: "Cancel", secondary: true}))));
@@ -574,6 +595,9 @@ let Explorer = class extends Component {
     }
     render() {
         let explorer = this;
+        if (this.state.findDialogOpen && !this.findAspectChartLookups) {
+            this.getFindAspectLookups();
+        }
         let dialogbox = React.createElement(Dialog_1.default, {title: "Budget Explorer Options", modal: false, open: explorer.state.dialogOpen, onRequestClose: explorer.handleDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { width: '95%', maxWidth: '600px' }}, 
             React.createElement(IconButton_1.default, {style: {
                 top: 0,

@@ -128,6 +128,7 @@ interface ExplorerState {
     budgetBranches?:BudgetBranch[],
     dialogOpen?: boolean,
     findDialogOpen?:boolean,
+    findDialogAspect?:string,
     showdashboard?: boolean
 }
 
@@ -141,6 +142,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         dialogOpen: false,
         showdashboard:false,
         findDialogOpen: false,
+        findDialogAspect:'expenses',
     }
 
     toastrmessages = {
@@ -516,8 +518,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     // ==================[ FIND CHART ]=======================
 
-    findcontent = <div>pending</div>
-
     private finderLookupPromise = path => {
         let root = './db/repositories/toronto/'
         let filespec = root + path
@@ -614,7 +614,28 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     }
 
+    getFindAspectLookups = () => {
+        let explorer = this
+        if (!explorer.findChartLookups) {
+            explorer.findAspectChartLookups = null
+            return
+        }
+        let sourcelist = explorer.findChartLookups
+        // console.log('sourcelist',sourcelist)
+        let targetlist = []
+        let aspect = explorer.state.findDialogAspect
+        for (let item of sourcelist) {
+            // console.log('item',item)
+            if (item.aspects[aspect]) {
+                targetlist.push(item)
+            }
+        }
+        explorer.findAspectChartLookups = targetlist
+    }
+
     findChartLookups: any = null
+
+    findAspectChartLookups: any = null
 
     // coerce raw lookup data into form suitable for autofill field
     /*
@@ -680,7 +701,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             for (let dimensionname in dataset) {
                 let dimension = dataset[dimensionname]
                 if (datasetname == 'detailedbudgets') {
-                    switch (dimension) {
+                    // console.log('processing detailed budgets for dimension',dimensionname)
+                    switch (dimensionname) {
                         case 'activity':sourceaspects.detailedbudgets = {expenses:true,revenues:true,staffing:false}
                             break
                         case 'expense':sourceaspects.detailedbudgets = {expenses:true,revenues:false,staffing:false}
@@ -722,6 +744,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                             )
                     }
                     lookups.push(selection)
+                    // including structuralviewpoint for all relevant choices is annoying (duplicates)
+                    //  suppress for now
                     // if (datasetname == 'detailedbudgets' || datasetname == 'summarybudgets') {
 
                     //     let selection = {
@@ -756,9 +780,9 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             structuralbudget:'summarybudgets',
         }
         let viewpointaspects = {
-            auditedexpenses:{expenses:true},
-            auditedrevenues:{revenues:true},
-            auditedexpenditures:{expenses:true},
+            actualexpenses:{expenses:true},
+            actualrevenues:{revenues:true},
+            expenditures:{expenses:true},
             functionalbudget:{expenses:true,revenues:true,staffing:true},
             structuralbudget:{expenses:true,revenues:true,staffing:true},
         }
@@ -803,18 +827,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     handleFindDialogOpen = (e,branchuid) => {
         e.stopPropagation()
         e.preventDefault()
-        if (this.findChartLookups) {
-            this.findChart(branchuid)
-        } else {
-            this.getAllFindLookups().then(data => {
-                console.log('sourcedata', data)
-                this.findChartLookups = this.processFindChartLookups(data)
-                console.log('lookupdata',this.findChartLookups)
-                this.findChart(branchuid)
-            }).catch(reason => {
-                toastr.error('Error loading finder lookups: ' + reason)
-            })
-        }
+        this.findChart(branchuid)
     }
 
     handleFindDialogClose = () => {
@@ -823,6 +836,24 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         })
     }
 
+    onChangeFindAspect = (e,value) => {
+        this.findAspectChartLookups = null
+        this.findClearSearchText()
+        this.setState({
+            findDialogAspect:value
+        })
+    }
+
+    findOnNewRequest = (chosenRequest, index) => {
+        if (index == -1) {
+        }
+    }
+
+    findClearSearchText = () => {
+        let instance:any = this.refs['autocomplete']
+        instance.setState({searchText:''});
+        instance.focus();
+    }
 
     findDialog = () => (
         <Dialog
@@ -836,7 +867,11 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         >
             <p><em>[this is under construction, not functional]</em></p>
             <div>
-                <RadioButtonGroup name="shipSpeed" defaultSelected="expenses">
+                <RadioButtonGroup 
+                    valueSelected= {this.state.findDialogAspect} 
+                    name="findchart"
+                    onChange = { this.onChangeFindAspect }
+                >
                   <RadioButton
                     style={{display:'inline-block',width:'auto',marginRight:'50px'}}
                     value="expenses"
@@ -878,14 +913,16 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             <AutoComplete
               style = {{width:'100%'}}
+              ref={'autocomplete'}
               floatingLabelText="type in a key word, then select an item from the list"
               filter={AutoComplete.caseInsensitiveFilter}
-              dataSource={this.findChartLookups || []}
+              dataSource={this.findAspectChartLookups || []}
               dataSourceConfig = {{text:'name',value:'value'}}
               fullWidth = {true}
               menuStyle = {{maxHeight:"300px"}}
               openOnFocus = {false}
               maxSearchResults = {60}
+              onNewRequest = {this.findOnNewRequest}
             />
 
             <div>
@@ -902,6 +939,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     render() {
 
         let explorer = this
+
+        if (this.state.findDialogOpen && !this.findAspectChartLookups) {
+            this.getFindAspectLookups()
+        }
 
         let dialogbox =  
             <Dialog
