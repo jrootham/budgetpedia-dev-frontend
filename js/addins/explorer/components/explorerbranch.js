@@ -317,7 +317,10 @@ class ExplorerBranch extends Component {
             this.props.globalStateActions.toggleShowOptions(budgetBranch.uid, value);
         };
         this.handleSearch = (e) => {
-            this.props.handleFindDialogOpen(e, this.props.budgetBranch.uid);
+            this.props.handleFindDialogOpen(e, this.applySearch);
+        };
+        this.applySearch = parms => {
+            console.log('received find parms', parms);
         };
         this.harmonizeCells = (nodeUid, cellUid) => {
             let { budgetBranch } = this.props;

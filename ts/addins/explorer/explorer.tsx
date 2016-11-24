@@ -834,18 +834,38 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         
     }
 
-    findChart = refbranchuid => {
+    findChart = () => {
         let findParms:{} = {}
         this.setState({
             findDialogOpen: true
         })
-    }    
+    }
 
-    handleFindDialogOpen = (e,branchuid) => {
+    findApplyChart = () => {
+        let explorer = this
+        explorer.handleFindDialogClose()
+        let selection = explorer.findSelection
+        let parms = {
+            viewpoint:selection.viewpoint,
+            source:selection.source,
+            level:selection.level,
+            aspect:explorer.state.findDialogAspect
+        }
+        explorer.findParameters.parms = parms
+        explorer.findParameters.callback(parms)
+    }
+
+    findParameters = {
+        callback:null,
+        parms:null,
+    }   
+
+    handleFindDialogOpen = (e,callback) => {
         e.stopPropagation()
         e.preventDefault()
+        this.findParameters.callback = callback
         this.findResetSelection()
-        this.findChart(branchuid)
+        this.findChart()
     }
 
     handleFindDialogClose = () => {
@@ -882,7 +902,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         } else {
             let item = this.findAspectChartLookups[index]
             let dictionary = this.findDictionary
-            console.log('selected item',item)
+            // console.log('selected item',item)
             this.findSelection = {
                 known:true,
                 level:item.dimension,
@@ -1006,8 +1026,10 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             </div>
 
             <div>
-                <RaisedButton disabled = { true // !this.findSelection.known
-                }
+                <RaisedButton disabled = { !this.findSelection.known }
+                    onTouchTap = {() => {
+                        this.findApplyChart()
+                    }}
                     label="Apply" primary={ true } style={{marginRight:"50px"}} />
                 <RaisedButton disabled = { false }
                     onTouchTap = {() => (this.handleFindDialogClose())}

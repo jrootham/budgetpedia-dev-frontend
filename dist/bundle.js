@@ -3897,7 +3897,10 @@ var ExplorerBranch = function (_Component) {
             _this.props.globalStateActions.toggleShowOptions(budgetBranch.uid, value);
         };
         _this.handleSearch = function (e) {
-            _this.props.handleFindDialogOpen(e, _this.props.budgetBranch.uid);
+            _this.props.handleFindDialogOpen(e, _this.applySearch);
+        };
+        _this.applySearch = function (parms) {
+            console.log('received find parms', parms);
         };
         _this.harmonizeCells = function (nodeUid, cellUid) {
             var budgetBranch = _this.props.budgetBranch;
@@ -6178,17 +6181,35 @@ var Explorer = function (_Component) {
             }
             return lookups;
         };
-        _this.findChart = function (refbranchuid) {
+        _this.findChart = function () {
             var findParms = {};
             _this.setState({
                 findDialogOpen: true
             });
         };
-        _this.handleFindDialogOpen = function (e, branchuid) {
+        _this.findApplyChart = function () {
+            var explorer = _this;
+            explorer.handleFindDialogClose();
+            var selection = explorer.findSelection;
+            var parms = {
+                viewpoint: selection.viewpoint,
+                source: selection.source,
+                level: selection.level,
+                aspect: explorer.state.findDialogAspect
+            };
+            explorer.findParameters.parms = parms;
+            explorer.findParameters.callback(parms);
+        };
+        _this.findParameters = {
+            callback: null,
+            parms: null
+        };
+        _this.handleFindDialogOpen = function (e, callback) {
             e.stopPropagation();
             e.preventDefault();
+            _this.findParameters.callback = callback;
             _this.findResetSelection();
-            _this.findChart(branchuid);
+            _this.findChart();
         };
         _this.handleFindDialogClose = function () {
             _this.setState({
@@ -6221,7 +6242,6 @@ var Explorer = function (_Component) {
             } else {
                 var item = _this.findAspectChartLookups[index];
                 var dictionary = _this.findDictionary;
-                console.log('selected item', item);
                 _this.findSelection = {
                     known: true,
                     level: item.dimension,
@@ -6265,7 +6285,9 @@ var Explorer = function (_Component) {
                     width: "36px",
                     position: "absolute",
                     zIndex: 2
-                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement("div", { style: { padding: "8px" } }, React.createElement("div", { style: { whiteSpace: 'nowrap', display: 'inline-block' } }, React.createElement("span", { style: { color: 'silver', fontStyle: 'italic' } }, "viewpoint: "), React.createElement("span", { style: { color: _this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' } }, _this.findSelection.viewpointdisplay)), React.createElement("div", { style: { whiteSpace: 'nowrap', display: 'inline-block' } }, React.createElement("span", { style: { color: 'silver', fontStyle: 'italic' } }, "level: "), React.createElement("span", { style: { color: _this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' } }, _this.findSelection.leveldisplay)), React.createElement("div", { style: { whiteSpace: 'nowrap', display: 'inline-block' } }, React.createElement("span", { style: { color: 'silver', fontStyle: 'italic' } }, "source: "), React.createElement("span", { style: { color: _this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' } }, _this.findSelection.sourcedisplay))), React.createElement("div", null, React.createElement(RaisedButton_1.default, { disabled: true, label: "Apply", primary: true, style: { marginRight: "50px" } }), React.createElement(RaisedButton_1.default, { disabled: false, onTouchTap: function onTouchTap() {
+                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement("div", { style: { padding: "8px" } }, React.createElement("div", { style: { whiteSpace: 'nowrap', display: 'inline-block' } }, React.createElement("span", { style: { color: 'silver', fontStyle: 'italic' } }, "viewpoint: "), React.createElement("span", { style: { color: _this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' } }, _this.findSelection.viewpointdisplay)), React.createElement("div", { style: { whiteSpace: 'nowrap', display: 'inline-block' } }, React.createElement("span", { style: { color: 'silver', fontStyle: 'italic' } }, "level: "), React.createElement("span", { style: { color: _this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' } }, _this.findSelection.leveldisplay)), React.createElement("div", { style: { whiteSpace: 'nowrap', display: 'inline-block' } }, React.createElement("span", { style: { color: 'silver', fontStyle: 'italic' } }, "source: "), React.createElement("span", { style: { color: _this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' } }, _this.findSelection.sourcedisplay))), React.createElement("div", null, React.createElement(RaisedButton_1.default, { disabled: !_this.findSelection.known, onTouchTap: function onTouchTap() {
+                    _this.findApplyChart();
+                }, label: "Apply", primary: true, style: { marginRight: "50px" } }), React.createElement(RaisedButton_1.default, { disabled: false, onTouchTap: function onTouchTap() {
                     return _this.handleFindDialogClose();
                 }, label: "Cancel", secondary: true })), React.createElement("div", { style: { height: '200px' } }));
         };

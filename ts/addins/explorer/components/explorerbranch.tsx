@@ -705,7 +705,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     handleSearch = (e) => {
-        this.props.handleFindDialogOpen(e,this.props.budgetBranch.uid)
+        this.props.handleFindDialogOpen(e,this.applySearch)
+    }
+
+    applySearch = parms => {
+        console.log('received find parms',parms)
     }
 
     // ---------------------------[ callbacks ]------------------------------

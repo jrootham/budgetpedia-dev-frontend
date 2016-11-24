@@ -483,17 +483,35 @@ let Explorer = class extends Component {
             }
             return lookups;
         };
-        this.findChart = refbranchuid => {
+        this.findChart = () => {
             let findParms = {};
             this.setState({
                 findDialogOpen: true
             });
         };
-        this.handleFindDialogOpen = (e, branchuid) => {
+        this.findApplyChart = () => {
+            let explorer = this;
+            explorer.handleFindDialogClose();
+            let selection = explorer.findSelection;
+            let parms = {
+                viewpoint: selection.viewpoint,
+                source: selection.source,
+                level: selection.level,
+                aspect: explorer.state.findDialogAspect
+            };
+            explorer.findParameters.parms = parms;
+            explorer.findParameters.callback(parms);
+        };
+        this.findParameters = {
+            callback: null,
+            parms: null,
+        };
+        this.handleFindDialogOpen = (e, callback) => {
             e.stopPropagation();
             e.preventDefault();
+            this.findParameters.callback = callback;
             this.findResetSelection();
-            this.findChart(branchuid);
+            this.findChart();
         };
         this.handleFindDialogClose = () => {
             this.setState({
@@ -527,7 +545,6 @@ let Explorer = class extends Component {
             else {
                 let item = this.findAspectChartLookups[index];
                 let dictionary = this.findDictionary;
-                console.log('selected item', item);
                 this.findSelection = {
                     known: true,
                     level: item.dimension,
@@ -591,7 +608,9 @@ let Explorer = class extends Component {
                     React.createElement("span", {style: { color: 'silver', fontStyle: 'italic' }}, "source: "), 
                     React.createElement("span", {style: { color: this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' }}, this.findSelection.sourcedisplay))), 
             React.createElement("div", null, 
-                React.createElement(RaisedButton_1.default, {disabled: true, label: "Apply", primary: true, style: { marginRight: "50px" }}), 
+                React.createElement(RaisedButton_1.default, {disabled: !this.findSelection.known, onTouchTap: () => {
+                    this.findApplyChart();
+                }, label: "Apply", primary: true, style: { marginRight: "50px" }}), 
                 React.createElement(RaisedButton_1.default, {disabled: false, onTouchTap: () => (this.handleFindDialogClose()), label: "Cancel", secondary: true})), 
             React.createElement("div", {style: { height: '200px' }})));
     }
