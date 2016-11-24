@@ -548,16 +548,13 @@ let Explorer = class extends Component {
                 this.forceUpdate();
             }
         };
-        this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
-            React.createElement("p", null, 
-                React.createElement("em", null, "[this is under construction, not functional]")
-            ), 
+        this.findDialog = () => (React.createElement(Dialog_1.default, {title: React.createElement("div", {style: { padding: '12px 0 0 12px' }}, "Find a Chart"), modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, autoScrollBodyContent: false, contentStyle: { maxWidth: '600px' }, autoDetectWindowHeight: false}, 
             React.createElement("div", null, 
+                React.createElement(AutoComplete_1.default, {style: { width: '100%' }, ref: 'autocomplete', floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findAspectChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60, onNewRequest: this.findOnNewRequest, onUpdateInput: this.findOnUpdateInput}), 
                 React.createElement(RadioButton_1.RadioButtonGroup, {valueSelected: this.state.findDialogAspect, name: "findchart", onChange: this.onChangeFindAspect}, 
                     React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "expenses", label: "expenses"}), 
                     React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "revenues", label: "revenues"}), 
-                    React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "staffing", label: "staffing"}))
-            ), 
+                    React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "staffing", label: "staffing"}))), 
             React.createElement(IconButton_1.default, {style: {
                 top: 0,
                 right: 0,
@@ -569,7 +566,6 @@ let Explorer = class extends Component {
             }, onTouchTap: this.handleFindDialogClose}, 
                 React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")
             ), 
-            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, ref: 'autocomplete', floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findAspectChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60, onNewRequest: this.findOnNewRequest, onUpdateInput: this.findOnUpdateInput}), 
             React.createElement("div", {style: { padding: "8px" }}, 
                 React.createElement("div", {style: { whiteSpace: 'nowrap', display: 'inline-block' }}, 
                     React.createElement("span", {style: { color: 'silver', fontStyle: 'italic' }}, "viewpoint: "), 
@@ -582,7 +578,8 @@ let Explorer = class extends Component {
                     React.createElement("span", {style: { color: this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' }}, this.findSelection.leveldisplay))), 
             React.createElement("div", null, 
                 React.createElement(RaisedButton_1.default, {disabled: true, label: "Apply", primary: true, style: { marginRight: "50px" }}), 
-                React.createElement(RaisedButton_1.default, {disabled: !this.findSelection.known, onTouchTap: () => (this.handleFindDialogClose()), label: "Cancel", secondary: true}))));
+                React.createElement(RaisedButton_1.default, {disabled: !this.findSelection.known, onTouchTap: () => (this.handleFindDialogClose()), label: "Cancel", secondary: true})), 
+            React.createElement("div", {style: { height: '200px' }})));
     }
     componentWillMount() {
         if (!this.props.declarationData.onetimenotification) {

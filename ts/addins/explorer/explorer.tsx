@@ -906,16 +906,29 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     findDialog = () => (
         <Dialog
-            title = "Find a Chart"
+            title = {<div style = {{padding:'12px 0 0 12px'}} >Find a Chart</div>}
             modal = { false }
             open = { this.state.findDialogOpen }
             onRequestClose = { this.handleFindDialogClose }
-            bodyStyle={{padding:'12px'}}
-            autoScrollBodyContent
-            contentStyle = {{maxWidth:'600px',transform: "translate(0px, -60px)"}}
+            autoScrollBodyContent = {false}
+            contentStyle = {{maxWidth:'600px'}}
+            autoDetectWindowHeight = {false}
         >
-            <p><em>[this is under construction, not functional]</em></p>
             <div>
+                <AutoComplete
+                  style = {{width:'100%'}}
+                  ref={'autocomplete'}
+                  floatingLabelText="type in a key word, then select an item from the list"
+                  filter={AutoComplete.caseInsensitiveFilter}
+                  dataSource={this.findAspectChartLookups || []}
+                  dataSourceConfig = {{text:'name',value:'value'}}
+                  fullWidth = {true}
+                  menuStyle = {{maxHeight:"300px"}}
+                  openOnFocus = {false}
+                  maxSearchResults = {60}
+                  onNewRequest = {this.findOnNewRequest}
+                  onUpdateInput = {this.findOnUpdateInput}
+                />
                 <RadioButtonGroup 
                     valueSelected= {this.state.findDialogAspect} 
                     name="findchart"
@@ -960,21 +973,6 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
             </IconButton>
 
-            <AutoComplete
-              style = {{width:'100%'}}
-              ref={'autocomplete'}
-              floatingLabelText="type in a key word, then select an item from the list"
-              filter={AutoComplete.caseInsensitiveFilter}
-              dataSource={this.findAspectChartLookups || []}
-              dataSourceConfig = {{text:'name',value:'value'}}
-              fullWidth = {true}
-              menuStyle = {{maxHeight:"300px"}}
-              openOnFocus = {false}
-              maxSearchResults = {60}
-              onNewRequest = {this.findOnNewRequest}
-              onUpdateInput = {this.findOnUpdateInput}
-            />
-
             <div style={{padding:"8px"}} >
                 <div style={{whiteSpace:'nowrap',display:'inline-block'}}>
                     <span style={{color:'silver',fontStyle:'italic'}}>viewpoint: </span> 
@@ -998,7 +996,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     onTouchTap = {() => (this.handleFindDialogClose())}
                     label="Cancel" secondary={true} />
             </div>
-
+            <div style={{height:'200px'}}></div>
         </Dialog >)
 
 
