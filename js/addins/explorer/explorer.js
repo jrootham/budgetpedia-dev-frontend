@@ -548,7 +548,7 @@ let Explorer = class extends Component {
                 this.forceUpdate();
             }
         };
-        this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart Instance", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
+        this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
             React.createElement("p", null, 
                 React.createElement("em", null, "[this is under construction, not functional]")
             ), 
@@ -581,7 +581,7 @@ let Explorer = class extends Component {
                     React.createElement("span", {style: { color: 'silver', fontStyle: 'italic' }}, "level: "), 
                     React.createElement("span", {style: { color: this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' }}, this.findSelection.leveldisplay))), 
             React.createElement("div", null, 
-                React.createElement(RaisedButton_1.default, {disabled: !this.findSelection.known, label: "Apply", primary: true, style: { marginRight: "50px" }}), 
+                React.createElement(RaisedButton_1.default, {disabled: true, label: "Apply", primary: true, style: { marginRight: "50px" }}), 
                 React.createElement(RaisedButton_1.default, {disabled: !this.findSelection.known, onTouchTap: () => (this.handleFindDialogClose()), label: "Cancel", secondary: true}))));
     }
     componentWillMount() {

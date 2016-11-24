@@ -906,7 +906,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
 
     findDialog = () => (
         <Dialog
-            title = "Find a Chart Instance"
+            title = "Find a Chart"
             modal = { false }
             open = { this.state.findDialogOpen }
             onRequestClose = { this.handleFindDialogClose }
@@ -991,7 +991,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             </div>
 
             <div>
-                <RaisedButton disabled = {!this.findSelection.known}
+                <RaisedButton disabled = { true // !this.findSelection.known
+                }
                     label="Apply" primary={true} style={{marginRight:"50px"}} />
                 <RaisedButton disabled = {!this.findSelection.known}
                     onTouchTap = {() => (this.handleFindDialogClose())}
