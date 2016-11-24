@@ -643,11 +643,35 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         dataset
         aspects:{}
         dimension
-        dimensiontype
-        commondimension
         code
         name
+        value
     */
+    findDictionary = {
+        // viewpoints
+        structuralbudget:'Structural Budget',
+        functionalbudget:'Functional Budget',
+        actualexpenses:'Actual Expenses',
+        actualrevenues:'Actual Revenues',
+        expenditures:'Expenses by Object',
+        // sources
+        auditedrevenues:'Audited Statements',
+        auditedexpenses:'Audited Statements',
+        auditedexpenditures:'Audited Statements',
+        detailedbudgets:'Detailed Budgets',
+        summarybudgets:'Summary Budgets',
+        // levels
+        activity:'Activities',
+        expense:'Expenditures',
+        auditedexpense:"Expenses",
+        permanence:'Permanence',
+        program:'Programs',
+        revenue:'Receipts',
+        auditedrevenue:"Revenues",
+        service:'Services',
+        Taxonomy:'Taxonomy',
+        expenditure:"Expenses",        
+    }
     processFindChartLookups = data => {
 
         let lookups = []
@@ -671,31 +695,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             detailedbudgets:{expenses:true,revenues:true,staffing:true},
             summarybudgets:{expenses:true,revenues:true,staffing:true},
         }
-        let dictionary = {
-            // viewpoints
-            structuralbudget:'Structural Budget',
-            functionalbudget:'Functional Budget',
-            actualexpenses:'Actual Expenses',
-            actualrevenues:'Actual Revenues',
-            expenditures:'Expenses by Object',
-            // sources
-            auditedrevenues:'Audited Statements',
-            auditedexpenses:'Audited Statements',
-            auditedexpenditures:'Audited Statements',
-            detailedbudgets:'Detailed Budgets',
-            summarybudgets:'Summary Budgets',
-            // levels
-            activity:'Activities',
-            expense:'Expenditures',
-            auditedexpense:"Expenses",
-            permanence:'Permanence',
-            program:'Programs',
-            revenue:'Receipts',
-            auditedrevenue:"Revenues",
-            service:'Services',
-            Taxonomy:'Taxonomy',
-            expenditure:"Expenses",
-        }
+        let dictionary = this.findDictionary
         for (let datasetname in datasets) {
             let dataset = datasets[datasetname]
             for (let dimensionname in dataset) {
@@ -827,6 +827,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     handleFindDialogOpen = (e,branchuid) => {
         e.stopPropagation()
         e.preventDefault()
+        this.findResetSelection()
         this.findChart(branchuid)
     }
 
@@ -839,13 +840,43 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
     onChangeFindAspect = (e,value) => {
         this.findAspectChartLookups = null
         this.findClearSearchText()
+        this.findResetSelection()
         this.setState({
             findDialogAspect:value
         })
     }
 
+    findResetSelection = () => {
+        this.findSelection = {
+            known:false,
+            viewpoint:null,
+            viewpointdisplay:'?',
+            source:null,
+            sourcedisplay:'?',
+            level:null,
+            leveldisplay:'?',
+            code:null,
+        }
+    }
+
     findOnNewRequest = (chosenRequest, index) => {
         if (index == -1) {
+            this.findResetSelection()
+        } else {
+            let item = this.findAspectChartLookups[index]
+            let dictionary = this.findDictionary
+            console.log('selected item',item)
+            this.findSelection = {
+                known:true,
+                level:item.dimension,
+                leveldisplay:dictionary[item.dimension],
+                source:item.datasource,
+                sourcedisplay:dictionary[item.datasource],
+                viewpoint: item.viewpoint,
+                viewpointdisplay:dictionary[item.viewpoint],
+                code:item.code,
+            }
+            this.forceUpdate()
         }
     }
 
@@ -853,6 +884,24 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         let instance:any = this.refs['autocomplete']
         instance.setState({searchText:''});
         instance.focus();
+    }
+
+    findSelection = {
+        known:false,
+        viewpoint:null,
+        viewpointdisplay:'?',
+        source:null,
+        sourcedisplay:'?',
+        level:null,
+        leveldisplay:'?',
+        code:null,
+    }
+
+    findOnUpdateInput = () => {
+        if (this.findSelection.known) {
+            this.findResetSelection()
+            this.forceUpdate()
+        }
     }
 
     findDialog = () => (
@@ -923,11 +972,30 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
               openOnFocus = {false}
               maxSearchResults = {60}
               onNewRequest = {this.findOnNewRequest}
+              onUpdateInput = {this.findOnUpdateInput}
             />
 
+            <div style={{padding:"8px"}} >
+                <div style={{whiteSpace:'nowrap',display:'inline-block'}}>
+                    <span style={{color:'silver',fontStyle:'italic'}}>viewpoint: </span> 
+                    <span style={{color:this.findSelection.known?'black':'silver',marginRight:'50px',fontStyle:'italic'}}>{this.findSelection.viewpointdisplay }</span>
+                </div>
+                <div style={{whiteSpace:'nowrap',display:'inline-block'}}>
+                    <span style={{color:'silver',fontStyle:'italic'}}>source: </span> 
+                    <span style={{color:this.findSelection.known?'black':'silver',marginRight:'50px',fontStyle:'italic'}}>{this.findSelection.sourcedisplay}</span>
+                </div> 
+                <div style={{whiteSpace:'nowrap',display:'inline-block'}}>
+                    <span style={{color:'silver',fontStyle:'italic'}}>level: </span> 
+                    <span style={{color:this.findSelection.known?'black':'silver',marginRight:'50px',fontStyle:'italic'}}>{this.findSelection.leveldisplay}</span>
+                </div>
+            </div>
+
             <div>
-                <RaisedButton disabled label="Apply" primary={true} style={{marginRight:"50px"}} />
-                <RaisedButton disabled label="Cancel" secondary={true} />
+                <RaisedButton disabled = {!this.findSelection.known}
+                    label="Apply" primary={true} style={{marginRight:"50px"}} />
+                <RaisedButton disabled = {!this.findSelection.known}
+                    onTouchTap = {() => (this.handleFindDialogClose())}
+                    label="Cancel" secondary={true} />
             </div>
 
         </Dialog >)

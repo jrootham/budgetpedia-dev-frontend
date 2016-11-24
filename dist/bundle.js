@@ -6048,6 +6048,28 @@ var Explorer = function (_Component) {
         };
         _this.findChartLookups = null;
         _this.findAspectChartLookups = null;
+        _this.findDictionary = {
+            structuralbudget: 'Structural Budget',
+            functionalbudget: 'Functional Budget',
+            actualexpenses: 'Actual Expenses',
+            actualrevenues: 'Actual Revenues',
+            expenditures: 'Expenses by Object',
+            auditedrevenues: 'Audited Statements',
+            auditedexpenses: 'Audited Statements',
+            auditedexpenditures: 'Audited Statements',
+            detailedbudgets: 'Detailed Budgets',
+            summarybudgets: 'Summary Budgets',
+            activity: 'Activities',
+            expense: 'Expenditures',
+            auditedexpense: "Expenses",
+            permanence: 'Permanence',
+            program: 'Programs',
+            revenue: 'Receipts',
+            auditedrevenue: "Revenues",
+            service: 'Services',
+            Taxonomy: 'Taxonomy',
+            expenditure: "Expenses"
+        };
         _this.processFindChartLookups = function (data) {
             var lookups = [];
             var viewpoints = data.viewpoints,
@@ -6071,28 +6093,7 @@ var Explorer = function (_Component) {
                 detailedbudgets: { expenses: true, revenues: true, staffing: true },
                 summarybudgets: { expenses: true, revenues: true, staffing: true }
             };
-            var dictionary = {
-                structuralbudget: 'Structural Budget',
-                functionalbudget: 'Functional Budget',
-                actualexpenses: 'Actual Expenses',
-                actualrevenues: 'Actual Revenues',
-                expenditures: 'Expenses by Object',
-                auditedrevenues: 'Audited Statements',
-                auditedexpenses: 'Audited Statements',
-                auditedexpenditures: 'Audited Statements',
-                detailedbudgets: 'Detailed Budgets',
-                summarybudgets: 'Summary Budgets',
-                activity: 'Activities',
-                expense: 'Expenditures',
-                auditedexpense: "Expenses",
-                permanence: 'Permanence',
-                program: 'Programs',
-                revenue: 'Receipts',
-                auditedrevenue: "Revenues",
-                service: 'Services',
-                Taxonomy: 'Taxonomy',
-                expenditure: "Expenses"
-            };
+            var dictionary = _this.findDictionary;
             for (var datasetname in datasets) {
                 var dataset = datasets[datasetname];
                 for (var dimensionname in dataset) {
@@ -6186,6 +6187,7 @@ var Explorer = function (_Component) {
         _this.handleFindDialogOpen = function (e, branchuid) {
             e.stopPropagation();
             e.preventDefault();
+            _this.findResetSelection();
             _this.findChart(branchuid);
         };
         _this.handleFindDialogClose = function () {
@@ -6196,17 +6198,63 @@ var Explorer = function (_Component) {
         _this.onChangeFindAspect = function (e, value) {
             _this.findAspectChartLookups = null;
             _this.findClearSearchText();
+            _this.findResetSelection();
             _this.setState({
                 findDialogAspect: value
             });
         };
+        _this.findResetSelection = function () {
+            _this.findSelection = {
+                known: false,
+                viewpoint: null,
+                viewpointdisplay: '?',
+                source: null,
+                sourcedisplay: '?',
+                level: null,
+                leveldisplay: '?',
+                code: null
+            };
+        };
         _this.findOnNewRequest = function (chosenRequest, index) {
-            if (index == -1) {}
+            if (index == -1) {
+                _this.findResetSelection();
+            } else {
+                var item = _this.findAspectChartLookups[index];
+                var dictionary = _this.findDictionary;
+                console.log('selected item', item);
+                _this.findSelection = {
+                    known: true,
+                    level: item.dimension,
+                    leveldisplay: dictionary[item.dimension],
+                    source: item.datasource,
+                    sourcedisplay: dictionary[item.datasource],
+                    viewpoint: item.viewpoint,
+                    viewpointdisplay: dictionary[item.viewpoint],
+                    code: item.code
+                };
+                _this.forceUpdate();
+            }
         };
         _this.findClearSearchText = function () {
             var instance = _this.refs['autocomplete'];
             instance.setState({ searchText: '' });
             instance.focus();
+        };
+        _this.findSelection = {
+            known: false,
+            viewpoint: null,
+            viewpointdisplay: '?',
+            source: null,
+            sourcedisplay: '?',
+            level: null,
+            leveldisplay: '?',
+            code: null
+        };
+        _this.findOnUpdateInput = function () {
+            if (_this.findSelection.known) {
+                _this.findResetSelection();
+                _this.forceUpdate();
+            }
         };
         _this.findDialog = function () {
             return React.createElement(Dialog_1.default, { title: "Find a Chart Instance", modal: false, open: _this.state.findDialogOpen, onRequestClose: _this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" } }, React.createElement("p", null, React.createElement("em", null, "[this is under construction, not functional]")), React.createElement("div", null, React.createElement(RadioButton_1.RadioButtonGroup, { valueSelected: _this.state.findDialogAspect, name: "findchart", onChange: _this.onChangeFindAspect }, React.createElement(RadioButton_1.RadioButton, { style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "expenses", label: "expenses" }), React.createElement(RadioButton_1.RadioButton, { style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "revenues", label: "revenues" }), React.createElement(RadioButton_1.RadioButton, { style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "staffing", label: "staffing" }))), React.createElement(IconButton_1.default, { style: {
@@ -6217,7 +6265,9 @@ var Explorer = function (_Component) {
                     width: "36px",
                     position: "absolute",
                     zIndex: 2
-                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement(AutoComplete_1.default, { style: { width: '100%' }, ref: 'autocomplete', floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: _this.findAspectChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60, onNewRequest: _this.findOnNewRequest }), React.createElement("div", null, React.createElement(RaisedButton_1.default, { disabled: true, label: "Apply", primary: true, style: { marginRight: "50px" } }), React.createElement(RaisedButton_1.default, { disabled: true, label: "Cancel", secondary: true })));
+                }, onTouchTap: _this.handleFindDialogClose }, React.createElement(FontIcon_1.default, { className: "material-icons", style: { cursor: "pointer" } }, "close")), React.createElement(AutoComplete_1.default, { style: { width: '100%' }, ref: 'autocomplete', floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: _this.findAspectChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60, onNewRequest: _this.findOnNewRequest, onUpdateInput: _this.findOnUpdateInput }), React.createElement("div", { style: { padding: "8px" } }, React.createElement("div", { style: { whiteSpace: 'nowrap', display: 'inline-block' } }, React.createElement("span", { style: { color: 'silver', fontStyle: 'italic' } }, "viewpoint: "), React.createElement("span", { style: { color: _this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' } }, _this.findSelection.viewpointdisplay)), React.createElement("div", { style: { whiteSpace: 'nowrap', display: 'inline-block' } }, React.createElement("span", { style: { color: 'silver', fontStyle: 'italic' } }, "source: "), React.createElement("span", { style: { color: _this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' } }, _this.findSelection.sourcedisplay)), React.createElement("div", { style: { whiteSpace: 'nowrap', display: 'inline-block' } }, React.createElement("span", { style: { color: 'silver', fontStyle: 'italic' } }, "level: "), React.createElement("span", { style: { color: _this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' } }, _this.findSelection.leveldisplay))), React.createElement("div", null, React.createElement(RaisedButton_1.default, { disabled: !_this.findSelection.known, label: "Apply", primary: true, style: { marginRight: "50px" } }), React.createElement(RaisedButton_1.default, { disabled: !_this.findSelection.known, onTouchTap: function onTouchTap() {
+                    return _this.handleFindDialogClose();
+                }, label: "Cancel", secondary: true })));
         };
         return _this;
     }

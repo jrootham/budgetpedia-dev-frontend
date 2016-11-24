@@ -315,6 +315,28 @@ let Explorer = class extends Component {
         };
         this.findChartLookups = null;
         this.findAspectChartLookups = null;
+        this.findDictionary = {
+            structuralbudget: 'Structural Budget',
+            functionalbudget: 'Functional Budget',
+            actualexpenses: 'Actual Expenses',
+            actualrevenues: 'Actual Revenues',
+            expenditures: 'Expenses by Object',
+            auditedrevenues: 'Audited Statements',
+            auditedexpenses: 'Audited Statements',
+            auditedexpenditures: 'Audited Statements',
+            detailedbudgets: 'Detailed Budgets',
+            summarybudgets: 'Summary Budgets',
+            activity: 'Activities',
+            expense: 'Expenditures',
+            auditedexpense: "Expenses",
+            permanence: 'Permanence',
+            program: 'Programs',
+            revenue: 'Receipts',
+            auditedrevenue: "Revenues",
+            service: 'Services',
+            Taxonomy: 'Taxonomy',
+            expenditure: "Expenses",
+        };
         this.processFindChartLookups = data => {
             let lookups = [];
             let { viewpoints, datasets } = data;
@@ -336,28 +358,7 @@ let Explorer = class extends Component {
                 detailedbudgets: { expenses: true, revenues: true, staffing: true },
                 summarybudgets: { expenses: true, revenues: true, staffing: true },
             };
-            let dictionary = {
-                structuralbudget: 'Structural Budget',
-                functionalbudget: 'Functional Budget',
-                actualexpenses: 'Actual Expenses',
-                actualrevenues: 'Actual Revenues',
-                expenditures: 'Expenses by Object',
-                auditedrevenues: 'Audited Statements',
-                auditedexpenses: 'Audited Statements',
-                auditedexpenditures: 'Audited Statements',
-                detailedbudgets: 'Detailed Budgets',
-                summarybudgets: 'Summary Budgets',
-                activity: 'Activities',
-                expense: 'Expenditures',
-                auditedexpense: "Expenses",
-                permanence: 'Permanence',
-                program: 'Programs',
-                revenue: 'Receipts',
-                auditedrevenue: "Revenues",
-                service: 'Services',
-                Taxonomy: 'Taxonomy',
-                expenditure: "Expenses",
-            };
+            let dictionary = this.findDictionary;
             for (let datasetname in datasets) {
                 let dataset = datasets[datasetname];
                 for (let dimensionname in dataset) {
@@ -477,6 +478,7 @@ let Explorer = class extends Component {
         this.handleFindDialogOpen = (e, branchuid) => {
             e.stopPropagation();
             e.preventDefault();
+            this.findResetSelection();
             this.findChart(branchuid);
         };
         this.handleFindDialogClose = () => {
@@ -487,18 +489,64 @@ let Explorer = class extends Component {
         this.onChangeFindAspect = (e, value) => {
             this.findAspectChartLookups = null;
             this.findClearSearchText();
+            this.findResetSelection();
             this.setState({
                 findDialogAspect: value
             });
         };
+        this.findResetSelection = () => {
+            this.findSelection = {
+                known: false,
+                viewpoint: null,
+                viewpointdisplay: '?',
+                source: null,
+                sourcedisplay: '?',
+                level: null,
+                leveldisplay: '?',
+                code: null,
+            };
+        };
         this.findOnNewRequest = (chosenRequest, index) => {
             if (index == -1) {
+                this.findResetSelection();
+            }
+            else {
+                let item = this.findAspectChartLookups[index];
+                let dictionary = this.findDictionary;
+                console.log('selected item', item);
+                this.findSelection = {
+                    known: true,
+                    level: item.dimension,
+                    leveldisplay: dictionary[item.dimension],
+                    source: item.datasource,
+                    sourcedisplay: dictionary[item.datasource],
+                    viewpoint: item.viewpoint,
+                    viewpointdisplay: dictionary[item.viewpoint],
+                    code: item.code,
+                };
+                this.forceUpdate();
             }
         };
         this.findClearSearchText = () => {
             let instance = this.refs['autocomplete'];
             instance.setState({ searchText: '' });
             instance.focus();
+        };
+        this.findSelection = {
+            known: false,
+            viewpoint: null,
+            viewpointdisplay: '?',
+            source: null,
+            sourcedisplay: '?',
+            level: null,
+            leveldisplay: '?',
+            code: null,
+        };
+        this.findOnUpdateInput = () => {
+            if (this.findSelection.known) {
+                this.findResetSelection();
+                this.forceUpdate();
+            }
         };
         this.findDialog = () => (React.createElement(Dialog_1.default, {title: "Find a Chart Instance", modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, bodyStyle: { padding: '12px' }, autoScrollBodyContent: true, contentStyle: { maxWidth: '600px', transform: "translate(0px, -60px)" }}, 
             React.createElement("p", null, 
@@ -521,10 +569,20 @@ let Explorer = class extends Component {
             }, onTouchTap: this.handleFindDialogClose}, 
                 React.createElement(FontIcon_1.default, {className: "material-icons", style: { cursor: "pointer" }}, "close")
             ), 
-            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, ref: 'autocomplete', floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findAspectChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60, onNewRequest: this.findOnNewRequest}), 
+            React.createElement(AutoComplete_1.default, {style: { width: '100%' }, ref: 'autocomplete', floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findAspectChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60, onNewRequest: this.findOnNewRequest, onUpdateInput: this.findOnUpdateInput}), 
+            React.createElement("div", {style: { padding: "8px" }}, 
+                React.createElement("div", {style: { whiteSpace: 'nowrap', display: 'inline-block' }}, 
+                    React.createElement("span", {style: { color: 'silver', fontStyle: 'italic' }}, "viewpoint: "), 
+                    React.createElement("span", {style: { color: this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' }}, this.findSelection.viewpointdisplay)), 
+                React.createElement("div", {style: { whiteSpace: 'nowrap', display: 'inline-block' }}, 
+                    React.createElement("span", {style: { color: 'silver', fontStyle: 'italic' }}, "source: "), 
+                    React.createElement("span", {style: { color: this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' }}, this.findSelection.sourcedisplay)), 
+                React.createElement("div", {style: { whiteSpace: 'nowrap', display: 'inline-block' }}, 
+                    React.createElement("span", {style: { color: 'silver', fontStyle: 'italic' }}, "level: "), 
+                    React.createElement("span", {style: { color: this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' }}, this.findSelection.leveldisplay))), 
             React.createElement("div", null, 
-                React.createElement(RaisedButton_1.default, {disabled: true, label: "Apply", primary: true, style: { marginRight: "50px" }}), 
-                React.createElement(RaisedButton_1.default, {disabled: true, label: "Cancel", secondary: true}))));
+                React.createElement(RaisedButton_1.default, {disabled: !this.findSelection.known, label: "Apply", primary: true, style: { marginRight: "50px" }}), 
+                React.createElement(RaisedButton_1.default, {disabled: !this.findSelection.known, onTouchTap: () => (this.handleFindDialogClose()), label: "Cancel", secondary: true}))));
     }
     componentWillMount() {
         if (!this.props.declarationData.onetimenotification) {
