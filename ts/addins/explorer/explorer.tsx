@@ -735,10 +735,17 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         code,
                         name,
                         value:(
-                            <MenuItem primaryText={<span style={{fontStyle:"italic",color:"gray"}}>viewpoint: {dictionary[sourceviewpoints[datasetname]]}</span>}
-                                secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionlookupname]} </span>}>
-                                <div>
-                                <span style={{fontWeight:"bold"}}>{name}</span> <span style={{float:"right",fontStyle:"italic",color:"gray"}} >source: {dictionary[datasetname]}</span>
+                            <MenuItem style={{whiteSpace:'normal',lineHeight:'150%'}}
+                                >
+                                <div><span style={{fontWeight:"bold"}}>{name}</span></div>
+                                <div style={{display:'inline-block',whiteSpace:'nowrap',paddingRight:'20px'}} >
+                                <span style={{fontStyle:"italic",color:"gray"}}>viewpoint: {dictionary[sourceviewpoints[datasetname]]}</span>
+                                </div>
+                                <div style={{display:'inline-block',whiteSpace:'nowrap',paddingRight:'20px'}} >
+                                <span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionlookupname]} </span>
+                                </div>
+                                <div style={{display:'inline-block',whiteSpace:'nowrap',paddingRight:'20px'}} >
+                                <span style={{fontStyle:"italic",color:"gray"}} >source: {dictionary[datasetname]}</span>
                                 </div>
                             </MenuItem>
                             )
@@ -800,10 +807,19 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                         code,
                         name,
                         value:(
-                            <MenuItem primaryText={<span style={{fontStyle:"italic",color:"gray"}}>viewpoint: {dictionary[viewpointname]}</span>}
-                                secondaryText={<span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionname]} </span>}>
+                            <MenuItem style={{whiteSpace:'normal',lineHeight:'150%'}}
+                                >
                                 <div>
-                                <span style={{fontWeight:"bold"}}>{name}</span> <span style={{float:"right",fontStyle:"italic",color:"gray"}} >source: {dictionary[viewpointsources[viewpointname]]}</span>
+                                <span style={{fontWeight:"bold"}}>{name}</span> 
+                                </div>
+                                <div style={{display:'inline-block',whiteSpace:'nowrap',paddingRight:'20px'}} >
+                                <span style={{fontStyle:"italic",color:"gray"}}>viewpoint: {dictionary[viewpointname]}</span>
+                                </div>
+                                <div style={{display:'inline-block',whiteSpace:'nowrap',paddingRight:'20px'}} >
+                                <span style={{fontStyle:"italic",color:"gray"}}>level: {dictionary[dimensionname]} </span>
+                                </div>
+                                <div style={{display:'inline-block',whiteSpace:'nowrap',paddingRight:'20px'}} >
+                                <span style={{fontStyle:"italic",color:"gray"}} >source: {dictionary[viewpointsources[viewpointname]]}</span>
                                 </div>
                             </MenuItem>
                             )
@@ -918,7 +934,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 <AutoComplete
                   style = {{width:'100%'}}
                   ref={'autocomplete'}
-                  floatingLabelText="type in a key word, then select an item from the list"
+                  floatingLabelText="type in a key word, then select a list item"
                   filter={AutoComplete.caseInsensitiveFilter}
                   dataSource={this.findAspectChartLookups || []}
                   dataSourceConfig = {{text:'name',value:'value'}}

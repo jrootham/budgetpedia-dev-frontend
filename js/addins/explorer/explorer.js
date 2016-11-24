@@ -404,19 +404,26 @@ let Explorer = class extends Component {
                             dimension: dimensionname,
                             code,
                             name,
-                            value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
-                                "viewpoint: ", 
-                                dictionary[sourceviewpoints[datasetname]]), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
-                                "level: ", 
-                                dictionary[dimensionlookupname], 
-                                " ")}, 
+                            value: (React.createElement(MenuItem_1.default, {style: { whiteSpace: 'normal', lineHeight: '150%' }}, 
                                 React.createElement("div", null, 
-                                    React.createElement("span", {style: { fontWeight: "bold" }}, name), 
-                                    " ", 
-                                    React.createElement("span", {style: { float: "right", fontStyle: "italic", color: "gray" }}, 
+                                    React.createElement("span", {style: { fontWeight: "bold" }}, name)
+                                ), 
+                                React.createElement("div", {style: { display: 'inline-block', whiteSpace: 'nowrap', paddingRight: '20px' }}, 
+                                    React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
+                                        "viewpoint: ", 
+                                        dictionary[sourceviewpoints[datasetname]])
+                                ), 
+                                React.createElement("div", {style: { display: 'inline-block', whiteSpace: 'nowrap', paddingRight: '20px' }}, 
+                                    React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
+                                        "level: ", 
+                                        dictionary[dimensionlookupname], 
+                                        " ")
+                                ), 
+                                React.createElement("div", {style: { display: 'inline-block', whiteSpace: 'nowrap', paddingRight: '20px' }}, 
+                                    React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
                                         "source: ", 
-                                        dictionary[datasetname]))
-                            ))
+                                        dictionary[datasetname])
+                                )))
                         };
                         lookups.push(selection);
                     }
@@ -449,19 +456,26 @@ let Explorer = class extends Component {
                             dimension: dimensionname,
                             code,
                             name,
-                            value: (React.createElement(MenuItem_1.default, {primaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
-                                "viewpoint: ", 
-                                dictionary[viewpointname]), secondaryText: React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
-                                "level: ", 
-                                dictionary[dimensionname], 
-                                " ")}, 
+                            value: (React.createElement(MenuItem_1.default, {style: { whiteSpace: 'normal', lineHeight: '150%' }}, 
                                 React.createElement("div", null, 
-                                    React.createElement("span", {style: { fontWeight: "bold" }}, name), 
-                                    " ", 
-                                    React.createElement("span", {style: { float: "right", fontStyle: "italic", color: "gray" }}, 
+                                    React.createElement("span", {style: { fontWeight: "bold" }}, name)
+                                ), 
+                                React.createElement("div", {style: { display: 'inline-block', whiteSpace: 'nowrap', paddingRight: '20px' }}, 
+                                    React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
+                                        "viewpoint: ", 
+                                        dictionary[viewpointname])
+                                ), 
+                                React.createElement("div", {style: { display: 'inline-block', whiteSpace: 'nowrap', paddingRight: '20px' }}, 
+                                    React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
+                                        "level: ", 
+                                        dictionary[dimensionname], 
+                                        " ")
+                                ), 
+                                React.createElement("div", {style: { display: 'inline-block', whiteSpace: 'nowrap', paddingRight: '20px' }}, 
+                                    React.createElement("span", {style: { fontStyle: "italic", color: "gray" }}, 
                                         "source: ", 
-                                        dictionary[viewpointsources[viewpointname]]))
-                            ))
+                                        dictionary[viewpointsources[viewpointname]])
+                                )))
                         };
                         lookups.push(selection);
                     }
@@ -550,7 +564,7 @@ let Explorer = class extends Component {
         };
         this.findDialog = () => (React.createElement(Dialog_1.default, {title: React.createElement("div", {style: { padding: '12px 0 0 12px' }}, "Find a Chart"), modal: false, open: this.state.findDialogOpen, onRequestClose: this.handleFindDialogClose, autoScrollBodyContent: false, contentStyle: { maxWidth: '600px' }, autoDetectWindowHeight: false}, 
             React.createElement("div", null, 
-                React.createElement(AutoComplete_1.default, {style: { width: '100%' }, ref: 'autocomplete', floatingLabelText: "type in a key word, then select an item from the list", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findAspectChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60, onNewRequest: this.findOnNewRequest, onUpdateInput: this.findOnUpdateInput}), 
+                React.createElement(AutoComplete_1.default, {style: { width: '100%' }, ref: 'autocomplete', floatingLabelText: "type in a key word, then select a list item", filter: AutoComplete_1.default.caseInsensitiveFilter, dataSource: this.findAspectChartLookups || [], dataSourceConfig: { text: 'name', value: 'value' }, fullWidth: true, menuStyle: { maxHeight: "300px" }, openOnFocus: false, maxSearchResults: 60, onNewRequest: this.findOnNewRequest, onUpdateInput: this.findOnUpdateInput}), 
                 React.createElement(RadioButton_1.RadioButtonGroup, {valueSelected: this.state.findDialogAspect, name: "findchart", onChange: this.onChangeFindAspect}, 
                     React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "expenses", label: "expenses"}), 
                     React.createElement(RadioButton_1.RadioButton, {style: { display: 'inline-block', width: 'auto', marginRight: '50px' }, value: "revenues", label: "revenues"}), 
