@@ -482,18 +482,24 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             this._stateActions.incrementBranchDataVersion(budgetBranch.uid)
 
+            let settingslist = this._getFinderNodeSettingsList()
+            // this._stateActions.addNodeDeclarations(settingslist)
+
             // *** REPLACE THE FOLLOWING TWO LINES
             let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
             this._stateActions.addNodeDeclaration(budgetNodeParms)
-
-            // let settingslist = this._getfindersettingslist(parms)
-            // this._stateActions.addNodeDeclarations(settingslist)
 
         }).catch(reason => {
 
             console.error('error in data fetch, update branch', reason)
 
         })
+    }
+
+    private _getFinderNodeSettingsList = () => {
+        let viewpointdata = this.state.viewpointData
+        let parms = this.finderParms
+        console.log('viewpointdata and parms in get node settings list',viewpointdata, parms)
     }
 
     private _processChangeVersionStateChange = (budgetBranch:BudgetBranch) => {
@@ -760,7 +766,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     }
 
     applySearch = parms => {
-        console.log('received find parms',parms)
+        // console.log('received find parms',parms)
         if (parms.viewpoint == 'expenditures') {
             parms.aspect = 'expenditures'
         }

@@ -172,11 +172,17 @@ class ExplorerBranch extends Component {
         this._processUpdateBranchStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
                 this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
+                let settingslist = this._getFinderNodeSettingsList();
                 let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(reason => {
                 console.error('error in data fetch, update branch', reason);
             });
+        };
+        this._getFinderNodeSettingsList = () => {
+            let viewpointdata = this.state.viewpointData;
+            let parms = this.finderParms;
+            console.log('viewpointdata and parms in get node settings list', viewpointdata, parms);
         };
         this._processChangeVersionStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
@@ -356,7 +362,6 @@ class ExplorerBranch extends Component {
             }
         };
         this.applySearch = parms => {
-            console.log('received find parms', parms);
             if (parms.viewpoint == 'expenditures') {
                 parms.aspect = 'expenditures';
             }

@@ -3755,11 +3755,17 @@ var ExplorerBranch = function (_Component) {
         _this._processUpdateBranchStateChange = function (budgetBranch) {
             budgetBranch.getViewpointData().then(function () {
                 _this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
+                var settingslist = _this._getFinderNodeSettingsList();
                 var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
                 _this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(function (reason) {
                 console.error('error in data fetch, update branch', reason);
             });
+        };
+        _this._getFinderNodeSettingsList = function () {
+            var viewpointdata = _this.state.viewpointData;
+            var parms = _this.finderParms;
+            console.log('viewpointdata and parms in get node settings list', viewpointdata, parms);
         };
         _this._processChangeVersionStateChange = function (budgetBranch) {
             budgetBranch.getViewpointData().then(function () {
@@ -3949,7 +3955,6 @@ var ExplorerBranch = function (_Component) {
             }
         };
         _this.applySearch = function (parms) {
-            console.log('received find parms', parms);
             if (parms.viewpoint == 'expenditures') {
                 parms.aspect = 'expenditures';
             }
