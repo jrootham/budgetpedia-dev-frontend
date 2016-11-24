@@ -221,7 +221,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         })
     }
 
-    private _geturlsettingslist = (urlparms) => {
+    private _geturlsettingslist = urlparms => {
         let nodesettings = urlparms.settingsdata
         let branch = urlparms.branchdata
         let settingslist = []
@@ -470,6 +470,26 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         })
     }
 
+    private _processUpdateBranchStateChange = (budgetBranch:BudgetBranch) => {
+
+        budgetBranch.getViewpointData().then(()=>{
+
+            this._stateActions.incrementBranchDataVersion(budgetBranch.uid)
+
+            // *** REPLACE THE FOLLOWING TWO LINES
+            let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
+            this._stateActions.addNodeDeclarations(budgetNodeParms)
+
+            // let settingslist = this._getfindersettingslist(parms)
+            // this._stateActions.addNodeDeclarations(settingslist)
+
+        }).catch(reason => {
+
+            console.error('error in data fetch, update branch', reason)
+
+        })
+    }
+
     private _processChangeVersionStateChange = (budgetBranch:BudgetBranch) => {
 
         budgetBranch.getViewpointData().then(()=>{
@@ -708,8 +728,25 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         this.props.handleFindDialogOpen(e,this.applySearch)
     }
 
+    finderParms:any = null
+
     applySearch = parms => {
         console.log('received find parms',parms)
+        this.finderParms = parms
+        // let { budgetBranch } = this.props
+        // let { nodes:branchNodes } = budgetBranch
+
+        // // branchNodes is just a copy of the component state's BranchNodes
+        // let removed = branchNodes.splice(0) // identify nodes to remove
+        // let removeditems = removed.map((item:BudgetNode) => {
+        //     return {nodeuid:item.uid, cellList:item.cellDeclarationList}
+        // })
+        // // this will trigger render cycle that will delete the component state's stored nodes
+        // let globalStateActions = this._stateActions
+        // globalStateActions.removeNodeDeclarations(removeditems)
+
+        // globalStateActions.updateBranch(budgetBranch.uid, settings)
+
     }
 
     // ---------------------------[ callbacks ]------------------------------
