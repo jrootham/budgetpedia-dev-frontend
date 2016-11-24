@@ -871,7 +871,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                         }}
                         onFocus= {this._inputonfocus}
                         style={{width:"290px"}} value = {url} readOnly />
-                    </div> )
+            </div> )
 
             let toastrOptions = {
                 icon: (<FontIcon
@@ -1333,6 +1333,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             type="button"
             label="Sources"
             onTouchTap={branch.handleTechDialogOpen} 
+            labelPosition="before"
+            icon = {<FontIcon 
+                style={{color:'rgba(0,0,0,0.5'}}
+                className="material-icons">cloud</FontIcon>}
         />:null
 
     let showhelp = (branchDeclaration.showOptions)
@@ -1367,6 +1371,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             style={{margin:'3px 6px 0 0'}}
             label="Share"
             onTouchTap={this.shareBranch} 
+            labelPosition="before"
+            icon = {<FontIcon 
+                style={{color:'rgba(0,0,0,0.5)'}}
+                className="material-icons">share</FontIcon>}
         />:null
 
 

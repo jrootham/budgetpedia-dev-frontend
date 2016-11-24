@@ -1008,8 +1008,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             <div>
                 <RaisedButton disabled = { true // !this.findSelection.known
                 }
-                    label="Apply" primary={true} style={{marginRight:"50px"}} />
-                <RaisedButton disabled = {!this.findSelection.known}
+                    label="Apply" primary={ true } style={{marginRight:"50px"}} />
+                <RaisedButton disabled = { false }
                     onTouchTap = {() => (this.handleFindDialogClose())}
                     label="Cancel" secondary={true} />
             </div>

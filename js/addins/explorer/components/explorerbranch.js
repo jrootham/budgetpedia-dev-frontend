@@ -759,7 +759,7 @@ class ExplorerBranch extends Component {
             branch.state.techDialogOpen ? branch.getTechNotesDisplay() : null, 
             React.createElement("div", null, "Note: some historical numbers have been allocated to contemporary categories" + ' ' + "for continuity -- to make the numbers more easily comparable. We plan to disclose" + ' ' + "continuity details here."));
         let technotes = (branchDeclaration.showOptions)
-            ? React.createElement(RaisedButton_1.default, {style: { margin: '3px 6px 0 0' }, type: "button", label: "Sources", onTouchTap: branch.handleTechDialogOpen}) : null;
+            ? React.createElement(RaisedButton_1.default, {style: { margin: '3px 6px 0 0' }, type: "button", label: "Sources", onTouchTap: branch.handleTechDialogOpen, labelPosition: "before", icon: React.createElement(FontIcon_1.default, {style: { color: 'rgba(0,0,0,0.5' }, className: "material-icons"}, "cloud")}) : null;
         let showhelp = (branchDeclaration.showOptions)
             ? React.createElement(RaisedButton_1.default, {label: "Help", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleDialogOpen, labelPosition: "before", icon: React.createElement(FontIcon_1.default, {style: { color: 'rgba(0,0,0,0.5' }, className: "material-icons"}, "help_outline")})
             : null;
@@ -767,7 +767,7 @@ class ExplorerBranch extends Component {
             React.createElement(RaisedButton_1.default, {label: "Find", style: { margin: '3px 6px 0 0' }, type: "button", onTouchTap: this.handleSearch, labelPosition: "before", icon: React.createElement(FontIcon_1.default, {style: { color: 'rgba(0,0,0,0.5)' }, className: "material-icons"}, "search")})
             : null;
         let shareurl = (branchDeclaration.showOptions)
-            ? React.createElement(RaisedButton_1.default, {type: "button", style: { margin: '3px 6px 0 0' }, label: "Share", onTouchTap: this.shareBranch}) : null;
+            ? React.createElement(RaisedButton_1.default, {type: "button", style: { margin: '3px 6px 0 0' }, label: "Share", onTouchTap: this.shareBranch, labelPosition: "before", icon: React.createElement(FontIcon_1.default, {style: { color: 'rgba(0,0,0,0.5)' }, className: "material-icons"}, "share")}) : null;
         return React.createElement("div", null, 
             React.createElement("div", null, 
                 React.createElement("div", null, this.getBranchDataMessages()), 

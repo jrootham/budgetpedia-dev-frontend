@@ -585,14 +585,14 @@ let Explorer = class extends Component {
                     React.createElement("span", {style: { color: 'silver', fontStyle: 'italic' }}, "viewpoint: "), 
                     React.createElement("span", {style: { color: this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' }}, this.findSelection.viewpointdisplay)), 
                 React.createElement("div", {style: { whiteSpace: 'nowrap', display: 'inline-block' }}, 
-                    React.createElement("span", {style: { color: 'silver', fontStyle: 'italic' }}, "source: "), 
-                    React.createElement("span", {style: { color: this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' }}, this.findSelection.sourcedisplay)), 
-                React.createElement("div", {style: { whiteSpace: 'nowrap', display: 'inline-block' }}, 
                     React.createElement("span", {style: { color: 'silver', fontStyle: 'italic' }}, "level: "), 
-                    React.createElement("span", {style: { color: this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' }}, this.findSelection.leveldisplay))), 
+                    React.createElement("span", {style: { color: this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' }}, this.findSelection.leveldisplay)), 
+                React.createElement("div", {style: { whiteSpace: 'nowrap', display: 'inline-block' }}, 
+                    React.createElement("span", {style: { color: 'silver', fontStyle: 'italic' }}, "source: "), 
+                    React.createElement("span", {style: { color: this.findSelection.known ? 'black' : 'silver', marginRight: '50px', fontStyle: 'italic' }}, this.findSelection.sourcedisplay))), 
             React.createElement("div", null, 
                 React.createElement(RaisedButton_1.default, {disabled: true, label: "Apply", primary: true, style: { marginRight: "50px" }}), 
-                React.createElement(RaisedButton_1.default, {disabled: !this.findSelection.known, onTouchTap: () => (this.handleFindDialogClose()), label: "Cancel", secondary: true})), 
+                React.createElement(RaisedButton_1.default, {disabled: false, onTouchTap: () => (this.handleFindDialogClose()), label: "Cancel", secondary: true})), 
             React.createElement("div", {style: { height: '200px' }})));
     }
     componentWillMount() {
