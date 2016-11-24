@@ -672,6 +672,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         Taxonomy:'Taxonomy',
         expenditure:"Expenses",        
     }
+    
     processFindChartLookups = data => {
 
         let lookups = []
@@ -995,13 +996,13 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     <span style={{color:this.findSelection.known?'black':'silver',marginRight:'50px',fontStyle:'italic'}}>{this.findSelection.viewpointdisplay }</span>
                 </div>
                 <div style={{whiteSpace:'nowrap',display:'inline-block'}}>
-                    <span style={{color:'silver',fontStyle:'italic'}}>source: </span> 
-                    <span style={{color:this.findSelection.known?'black':'silver',marginRight:'50px',fontStyle:'italic'}}>{this.findSelection.sourcedisplay}</span>
-                </div> 
-                <div style={{whiteSpace:'nowrap',display:'inline-block'}}>
                     <span style={{color:'silver',fontStyle:'italic'}}>level: </span> 
                     <span style={{color:this.findSelection.known?'black':'silver',marginRight:'50px',fontStyle:'italic'}}>{this.findSelection.leveldisplay}</span>
                 </div>
+                <div style={{whiteSpace:'nowrap',display:'inline-block'}}>
+                    <span style={{color:'silver',fontStyle:'italic'}}>source: </span> 
+                    <span style={{color:this.findSelection.known?'black':'silver',marginRight:'50px',fontStyle:'italic'}}>{this.findSelection.sourcedisplay}</span>
+                </div> 
             </div>
 
             <div>
