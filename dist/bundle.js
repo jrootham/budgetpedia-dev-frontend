@@ -1241,6 +1241,7 @@ var types;
     types.ONETIME_NOTIFICATION = 'ONETIME_NOTIFICATION';
     types.ADD_BRANCH = 'ADD_BRANCH';
     types.CLONE_BRANCH = 'CLONE_BRANCH';
+    types.UPDATE_BRANCH = 'UPDATE_BRANCH';
     types.REMOVE_BRANCH = 'REMOVE_BRANCH';
     types.CHANGE_VIEWPOINT = 'CHANGE_VIEWPOINT';
     types.CHANGE_VERSION = 'CHANGE_VERSION';
@@ -1272,6 +1273,7 @@ var branchTypes;
     branchTypes.ADD_NODES = types.ADD_NODES;
     branchTypes.REMOVE_NODES = types.REMOVE_NODES;
     branchTypes.CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT;
+    branchTypes.UPDATE_BRANCH = types.UPDATE_BRANCH;
     branchTypes.CHANGE_VERSION = types.CHANGE_VERSION;
     branchTypes.CHANGE_ASPECT = types.CHANGE_ASPECT;
     branchTypes.TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED;
@@ -1331,6 +1333,16 @@ exports.changeViewpoint = redux_actions_1.createAction(types.CHANGE_VIEWPOINT, f
     return {
         branchuid: branchuid,
         viewpointname: viewpointname
+    };
+}, function () {
+    return {
+        explorer: true
+    };
+});
+exports.updateBranch = redux_actions_1.createAction(types.UPDATE_BRANCH, function (branchuid, settings) {
+    return {
+        branchuid: branchuid,
+        settings: settings
     };
 }, function () {
     return {
@@ -3695,6 +3707,11 @@ var ExplorerBranch = function (_Component) {
                         _this._processChangeViewpointStateChange(budgetBranch);
                         break;
                     }
+                case actions_1.branchTypes.UPDATE_BRANCH:
+                    {
+                        _this._processUpdateBranchStateChange(budgetBranch);
+                        break;
+                    }
                 case actions_1.branchTypes.CHANGE_VERSION:
                     {
                         _this._processChangeVersionStateChange(budgetBranch);
@@ -3733,6 +3750,15 @@ var ExplorerBranch = function (_Component) {
                 _this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(function (reason) {
                 console.error('error in data fetch, changeviewpoint', reason);
+            });
+        };
+        _this._processUpdateBranchStateChange = function (budgetBranch) {
+            budgetBranch.getViewpointData().then(function () {
+                _this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
+                var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
+                _this._stateActions.addNodeDeclaration(budgetNodeParms);
+            }).catch(function (reason) {
+                console.error('error in data fetch, update branch', reason);
             });
         };
         _this._processChangeVersionStateChange = function (budgetBranch) {
@@ -3899,8 +3925,55 @@ var ExplorerBranch = function (_Component) {
         _this.handleSearch = function (e) {
             _this.props.handleFindDialogOpen(e, _this.applySearch);
         };
+        _this.finderParms = null;
+        _this.findParmsToStateDictionary = {
+            viewpoint: {
+                functionalbudget: 'FUNCTIONAL',
+                structuralbudget: 'STRUCTURAL',
+                actualexpenses: 'ACTUALEXPENSES',
+                actualrevenues: 'ACTUALREVENUES',
+                expenditures: 'EXPENDITURES'
+            },
+            source: {
+                summarybudgets: 'SUMMARY',
+                detailedbudgets: 'PBFT',
+                auditedexpenses: 'ACTUALEXPENSES',
+                auditedrevenues: 'ACTUALREVENUES',
+                auditedexpenditures: 'EXPENDITURES'
+            },
+            aspect: {
+                expenses: 'Expenses',
+                revenues: 'Revenues',
+                staffing: 'Staffing',
+                expenditures: 'Expenditure'
+            }
+        };
         _this.applySearch = function (parms) {
             console.log('received find parms', parms);
+            if (parms.viewpoint == 'expenditures') {
+                parms.aspect = 'expenditures';
+            }
+            _this.finderParms = parms;
+            var budgetBranch = _this.props.budgetBranch;
+            var branchNodes = budgetBranch.nodes;
+
+            var removed = branchNodes.splice(0);
+            var removeditems = removed.map(function (item) {
+                return { nodeuid: item.uid, cellList: item.cellDeclarationList };
+            });
+            var globalStateActions = _this._stateActions;
+            globalStateActions.removeNodeDeclarations(removeditems);
+            var settings = _this._getNewBranchSettings(parms);
+            globalStateActions.updateBranch(budgetBranch.uid, settings);
+        };
+        _this._getNewBranchSettings = function (parms) {
+            var dictionary = _this.findParmsToStateDictionary;
+            var settings = {
+                viewpoint: dictionary.viewpoint[parms.viewpoint],
+                aspect: dictionary.aspect[parms.aspect],
+                version: dictionary.source[parms.source]
+            };
+            return settings;
         };
         _this.harmonizeCells = function (nodeUid, cellUid) {
             var budgetBranch = _this.props.budgetBranch;
@@ -6195,6 +6268,7 @@ var Explorer = function (_Component) {
                 viewpoint: selection.viewpoint,
                 source: selection.source,
                 level: selection.level,
+                code: selection.code,
                 aspect: explorer.state.findDialogAspect
             };
             explorer.findParameters.parms = parms;
@@ -6418,6 +6492,7 @@ var Explorer = function (_Component) {
                         addNodeDeclarations: _this3.props.addNodeDeclarations,
                         removeNodeDeclarations: _this3.props.removeNodeDeclarations,
                         changeViewpoint: _this3.props.changeViewpoint,
+                        updateBranch: _this3.props.updateBranch,
                         changeVersion: _this3.props.changeVersion,
                         toggleInflationAdjusted: _this3.props.toggleInflationAdjusted,
                         updateProrata: _this3.props.updateProrata,
@@ -6495,6 +6570,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     normalizeCellYearDependencies: ExplorerActions.normalizeCellYearDependencies,
     harmonizeCells: ExplorerActions.harmonizeCells,
     changeViewpoint: ExplorerActions.changeViewpoint,
+    updateBranch: ExplorerActions.updateBranch,
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
     toggleInflationAdjusted: ExplorerActions.toggleInflationAdjusted,
@@ -6897,6 +6973,16 @@ var branchesById = function branchesById() {
                 newstate = _extends({}, state, _defineProperty({}, action.payload.branchuid, action.payload.settings));
                 return newstate;
             }
+        case actions_1.types.UPDATE_BRANCH:
+            {
+                var branchuid = action.payload.branchuid;
+
+                newstate = _extends({}, state);
+                var newbranchstate = _extends({}, newstate[branchuid]);
+                newbranchstate = _extends(newbranchstate, action.payload.settings);
+                newstate[branchuid] = newbranchstate;
+                return newstate;
+            }
         case actions_1.types.CLONE_BRANCH:
             {
                 var newbranchid = action.payload.settings.newbranchid;
@@ -6911,19 +6997,19 @@ var branchesById = function branchesById() {
             }
         case actions_1.types.ADD_NODE:
             {
-                var branchuid = action.payload.branchuid;
-
-                newstate = _extends({}, state);
-                newstate[branchuid] = _extends({}, newstate[branchuid]);
-                newstate[branchuid].nodeList = [].concat(_toConsumableArray(state[branchuid].nodeList), [action.payload.nodeuid]);
-                return newstate;
-            }
-        case actions_1.types.ADD_NODES:
-            {
                 var _branchuid3 = action.payload.branchuid;
 
                 newstate = _extends({}, state);
                 newstate[_branchuid3] = _extends({}, newstate[_branchuid3]);
+                newstate[_branchuid3].nodeList = [].concat(_toConsumableArray(state[_branchuid3].nodeList), [action.payload.nodeuid]);
+                return newstate;
+            }
+        case actions_1.types.ADD_NODES:
+            {
+                var _branchuid4 = action.payload.branchuid;
+
+                newstate = _extends({}, state);
+                newstate[_branchuid4] = _extends({}, newstate[_branchuid4]);
                 var settingslist = action.payload.settingslist;
 
                 var newnodelist = [];
@@ -6952,7 +7038,7 @@ var branchesById = function branchesById() {
                     }
                 }
 
-                newstate[_branchuid3].nodeList = [].concat(_toConsumableArray(state[_branchuid3].nodeList), newnodelist);
+                newstate[_branchuid4].nodeList = [].concat(_toConsumableArray(state[_branchuid4].nodeList), newnodelist);
                 return newstate;
             }
         case actions_1.types.REMOVE_NODES:
@@ -6978,70 +7064,70 @@ var branchesById = function branchesById() {
             }
         case actions_1.types.CHANGE_VIEWPOINT:
             {
-                var _branchuid4 = action.payload.branchuid;
-
-                newstate = _extends({}, state);
-                var newbranchstate = _extends({}, newstate[_branchuid4]);
-                newbranchstate.viewpoint = action.payload.viewpointname;
-                newbranchstate.version = newbranchstate.defaultVersions[newbranchstate.viewpoint];
-                newbranchstate.aspect = newbranchstate.defaultAspects[newbranchstate.version];
-                newstate[_branchuid4] = newbranchstate;
-                return newstate;
-            }
-        case actions_1.types.CHANGE_VERSION:
-            {
                 var _branchuid5 = action.payload.branchuid;
 
                 newstate = _extends({}, state);
                 var _newbranchstate = _extends({}, newstate[_branchuid5]);
-                _newbranchstate.version = action.payload.versionname;
+                _newbranchstate.viewpoint = action.payload.viewpointname;
+                _newbranchstate.version = _newbranchstate.defaultVersions[_newbranchstate.viewpoint];
                 _newbranchstate.aspect = _newbranchstate.defaultAspects[_newbranchstate.version];
                 newstate[_branchuid5] = _newbranchstate;
                 return newstate;
             }
-        case actions_1.types.CHANGE_ASPECT:
+        case actions_1.types.CHANGE_VERSION:
             {
                 var _branchuid6 = action.payload.branchuid;
 
                 newstate = _extends({}, state);
-                newstate[_branchuid6] = _extends({}, newstate[_branchuid6]);
-                newstate[_branchuid6].aspect = action.payload.aspectname;
+                var _newbranchstate2 = _extends({}, newstate[_branchuid6]);
+                _newbranchstate2.version = action.payload.versionname;
+                _newbranchstate2.aspect = _newbranchstate2.defaultAspects[_newbranchstate2.version];
+                newstate[_branchuid6] = _newbranchstate2;
                 return newstate;
             }
-        case actions_1.types.TOGGLE_INFLATION_ADJUSTED:
+        case actions_1.types.CHANGE_ASPECT:
             {
                 var _branchuid7 = action.payload.branchuid;
 
                 newstate = _extends({}, state);
                 newstate[_branchuid7] = _extends({}, newstate[_branchuid7]);
-                newstate[_branchuid7].inflationAdjusted = action.payload.value;
+                newstate[_branchuid7].aspect = action.payload.aspectname;
                 return newstate;
             }
-        case actions_1.types.UPDATE_PRORATA:
+        case actions_1.types.TOGGLE_INFLATION_ADJUSTED:
             {
                 var _branchuid8 = action.payload.branchuid;
 
                 newstate = _extends({}, state);
                 newstate[_branchuid8] = _extends({}, newstate[_branchuid8]);
-                newstate[_branchuid8].prorata = action.payload.value;
+                newstate[_branchuid8].inflationAdjusted = action.payload.value;
                 return newstate;
             }
-        case actions_1.types.TOGGLE_SHOW_OPTIONS:
+        case actions_1.types.UPDATE_PRORATA:
             {
                 var _branchuid9 = action.payload.branchuid;
 
                 newstate = _extends({}, state);
                 newstate[_branchuid9] = _extends({}, newstate[_branchuid9]);
-                newstate[_branchuid9].showOptions = action.payload.value;
+                newstate[_branchuid9].prorata = action.payload.value;
                 return newstate;
             }
-        case actions_1.types.CHANGE_BRANCH_DATA:
+        case actions_1.types.TOGGLE_SHOW_OPTIONS:
             {
                 var _branchuid10 = action.payload.branchuid;
 
                 newstate = _extends({}, state);
                 newstate[_branchuid10] = _extends({}, newstate[_branchuid10]);
-                newstate[_branchuid10].branchDataGeneration++;
+                newstate[_branchuid10].showOptions = action.payload.value;
+                return newstate;
+            }
+        case actions_1.types.CHANGE_BRANCH_DATA:
+            {
+                var _branchuid11 = action.payload.branchuid;
+
+                newstate = _extends({}, state);
+                newstate[_branchuid11] = _extends({}, newstate[_branchuid11]);
+                newstate[_branchuid11].branchDataGeneration++;
                 return newstate;
             }
         default:

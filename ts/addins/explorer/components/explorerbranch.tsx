@@ -419,6 +419,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 break
 
             }
+            case branchActionTypes.UPDATE_BRANCH: {
+
+                this._processUpdateBranchStateChange(budgetBranch)
+                break
+
+            }
             case branchActionTypes.CHANGE_VERSION: {
 
                 this._processChangeVersionStateChange(budgetBranch)
@@ -478,7 +484,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             // *** REPLACE THE FOLLOWING TWO LINES
             let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
-            this._stateActions.addNodeDeclarations(budgetNodeParms)
+            this._stateActions.addNodeDeclaration(budgetNodeParms)
 
             // let settingslist = this._getfindersettingslist(parms)
             // this._stateActions.addNodeDeclarations(settingslist)
@@ -730,23 +736,61 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     finderParms:any = null
 
+    findParmsToStateDictionary = {
+        viewpoint:{
+            functionalbudget:'FUNCTIONAL',
+            structuralbudget:'STRUCTURAL',
+            actualexpenses:'ACTUALEXPENSES',
+            actualrevenues:'ACTUALREVENUES',
+            expenditures:'EXPENDITURES',
+        },
+        source: {
+            summarybudgets:'SUMMARY',
+            detailedbudgets:'PBFT',
+            auditedexpenses:'ACTUALEXPENSES',
+            auditedrevenues:'ACTUALREVENUES',
+            auditedexpenditures:'EXPENDITURES',
+        },
+        aspect: {
+            expenses:'Expenses',
+            revenues:'Revenues',
+            staffing:'Staffing',
+            expenditures:'Expenditure',
+        }
+    }
+
     applySearch = parms => {
         console.log('received find parms',parms)
+        if (parms.viewpoint == 'expenditures') {
+            parms.aspect = 'expenditures'
+        }
         this.finderParms = parms
-        // let { budgetBranch } = this.props
-        // let { nodes:branchNodes } = budgetBranch
+        let { budgetBranch } = this.props
+        let { nodes:branchNodes } = budgetBranch
 
-        // // branchNodes is just a copy of the component state's BranchNodes
-        // let removed = branchNodes.splice(0) // identify nodes to remove
-        // let removeditems = removed.map((item:BudgetNode) => {
-        //     return {nodeuid:item.uid, cellList:item.cellDeclarationList}
-        // })
-        // // this will trigger render cycle that will delete the component state's stored nodes
-        // let globalStateActions = this._stateActions
-        // globalStateActions.removeNodeDeclarations(removeditems)
+        // branchNodes is just a copy of the component state's BranchNodes
+        let removed = branchNodes.splice(0) // identify nodes to remove
+        let removeditems = removed.map((item:BudgetNode) => {
+            return {nodeuid:item.uid, cellList:item.cellDeclarationList}
+        })
+        // this will trigger render cycle that will delete the component state's stored nodes
+        let globalStateActions = this._stateActions
+        globalStateActions.removeNodeDeclarations(removeditems)
 
-        // globalStateActions.updateBranch(budgetBranch.uid, settings)
+        let settings = this._getNewBranchSettings(parms)
 
+        globalStateActions.updateBranch(budgetBranch.uid, settings)
+
+    }
+
+    private _getNewBranchSettings = parms => {
+        let dictionary = this.findParmsToStateDictionary
+        let settings = {
+            viewpoint:dictionary.viewpoint[parms.viewpoint],
+            aspect:dictionary.aspect[parms.aspect],
+            version:dictionary.source[parms.source],
+        }
+        return settings
     }
 
     // ---------------------------[ callbacks ]------------------------------

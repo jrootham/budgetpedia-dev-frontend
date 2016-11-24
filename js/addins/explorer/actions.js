@@ -6,6 +6,7 @@ var types;
     types.ONETIME_NOTIFICATION = 'ONETIME_NOTIFICATION';
     types.ADD_BRANCH = 'ADD_BRANCH';
     types.CLONE_BRANCH = 'CLONE_BRANCH';
+    types.UPDATE_BRANCH = 'UPDATE_BRANCH';
     types.REMOVE_BRANCH = 'REMOVE_BRANCH';
     types.CHANGE_VIEWPOINT = 'CHANGE_VIEWPOINT';
     types.CHANGE_VERSION = 'CHANGE_VERSION';
@@ -37,6 +38,7 @@ var branchTypes;
     branchTypes.ADD_NODES = types.ADD_NODES;
     branchTypes.REMOVE_NODES = types.REMOVE_NODES;
     branchTypes.CHANGE_VIEWPOINT = types.CHANGE_VIEWPOINT;
+    branchTypes.UPDATE_BRANCH = types.UPDATE_BRANCH;
     branchTypes.CHANGE_VERSION = types.CHANGE_VERSION;
     branchTypes.CHANGE_ASPECT = types.CHANGE_ASPECT;
     branchTypes.TOGGLE_INFLATION_ADJUSTED = types.TOGGLE_INFLATION_ADJUSTED;
@@ -83,6 +85,12 @@ exports.removeBranchDeclaration = redux_actions_1.createAction(types.REMOVE_BRAN
 exports.changeViewpoint = redux_actions_1.createAction(types.CHANGE_VIEWPOINT, (branchuid, viewpointname) => ({
     branchuid,
     viewpointname,
+}), () => ({
+    explorer: true
+}));
+exports.updateBranch = redux_actions_1.createAction(types.UPDATE_BRANCH, (branchuid, settings) => ({
+    branchuid,
+    settings,
 }), () => ({
     explorer: true
 }));

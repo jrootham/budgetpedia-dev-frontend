@@ -497,6 +497,7 @@ let Explorer = class extends Component {
                 viewpoint: selection.viewpoint,
                 source: selection.source,
                 level: selection.level,
+                code: selection.code,
                 aspect: explorer.state.findDialogAspect
             };
             explorer.findParameters.parms = parms;
@@ -719,6 +720,7 @@ let Explorer = class extends Component {
                     addNodeDeclarations: this.props.addNodeDeclarations,
                     removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
+                    updateBranch: this.props.updateBranch,
                     changeVersion: this.props.changeVersion,
                     toggleInflationAdjusted: this.props.toggleInflationAdjusted,
                     updateProrata: this.props.updateProrata,
@@ -810,6 +812,7 @@ Explorer = react_redux_1.connect(mapStateToProps, {
     normalizeCellYearDependencies: ExplorerActions.normalizeCellYearDependencies,
     harmonizeCells: ExplorerActions.harmonizeCells,
     changeViewpoint: ExplorerActions.changeViewpoint,
+    updateBranch: ExplorerActions.updateBranch,
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
     toggleInflationAdjusted: ExplorerActions.toggleInflationAdjusted,

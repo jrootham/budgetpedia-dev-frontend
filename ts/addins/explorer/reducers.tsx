@@ -110,6 +110,15 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             return newstate
         }
 
+        case actiontypes.UPDATE_BRANCH: {
+            let { branchuid } = action.payload
+            newstate = Object.assign({},state)
+            let newbranchstate:BranchSettings = Object.assign({},newstate[branchuid])
+            newbranchstate = Object.assign(newbranchstate,action.payload.settings)
+            newstate[branchuid] = newbranchstate
+            return newstate
+        }
+
         case actiontypes.CLONE_BRANCH: {
             let newbranchid = action.payload.settings.newbranchid
             newstate = Object.assign({},state,{[newbranchid]:
@@ -166,7 +175,7 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             let newbranchstate:BranchSettings = Object.assign({},newstate[branchuid])
             newbranchstate.viewpoint = action.payload.viewpointname
             newbranchstate.version = newbranchstate.defaultVersions[newbranchstate.viewpoint]
-            newbranchstate.aspect = newbranchstate.defaultAspects[newbranchstate.version]          
+            newbranchstate.aspect = newbranchstate.defaultAspects[newbranchstate.version]
             newstate[branchuid] = newbranchstate
             return newstate
         }

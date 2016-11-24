@@ -85,6 +85,7 @@ export interface MappedBranchActions extends MappedNodeActions {
     addNodeDeclarations:Function,
     removeNodeDeclarations: Function,
     changeViewpoint: Function,
+    updateBranch: Function,
     changeVersion: Function,
     changeAspect: Function,
     toggleInflationAdjusted: Function,
@@ -849,6 +850,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             viewpoint:selection.viewpoint,
             source:selection.source,
             level:selection.level,
+            code:selection.code,
             aspect:explorer.state.findDialogAspect
         }
         explorer.findParameters.parms = parms
@@ -1120,6 +1122,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                     addNodeDeclarations: this.props.addNodeDeclarations,
                     removeNodeDeclarations: this.props.removeNodeDeclarations,
                     changeViewpoint: this.props.changeViewpoint,
+                    updateBranch: this.props.updateBranch,
                     changeVersion: this.props.changeVersion,
                     toggleInflationAdjusted: this.props.toggleInflationAdjusted,
                     updateProrata:this.props.updateProrata,
@@ -1339,6 +1342,7 @@ Explorer = connect(mapStateToProps, {
 
     // branch actions - variations
     changeViewpoint: ExplorerActions.changeViewpoint,
+    updateBranch: ExplorerActions.updateBranch,
     changeVersion: ExplorerActions.changeVersion,
     changeAspect: ExplorerActions.changeAspect,
     toggleInflationAdjusted: ExplorerActions.toggleInflationAdjusted,

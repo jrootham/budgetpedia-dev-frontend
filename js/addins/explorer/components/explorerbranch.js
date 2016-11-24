@@ -46,7 +46,7 @@ class ExplorerBranch extends Component {
                 this.urlparmscleared = [];
             }
         };
-        this._geturlsettingslist = (urlparms) => {
+        this._geturlsettingslist = urlparms => {
             let nodesettings = urlparms.settingsdata;
             let branch = urlparms.branchdata;
             let settingslist = [];
@@ -130,6 +130,10 @@ class ExplorerBranch extends Component {
                     this._processChangeViewpointStateChange(budgetBranch);
                     break;
                 }
+                case actions_1.branchTypes.UPDATE_BRANCH: {
+                    this._processUpdateBranchStateChange(budgetBranch);
+                    break;
+                }
                 case actions_1.branchTypes.CHANGE_VERSION: {
                     this._processChangeVersionStateChange(budgetBranch);
                     break;
@@ -163,6 +167,15 @@ class ExplorerBranch extends Component {
                 this._stateActions.addNodeDeclaration(budgetNodeParms);
             }).catch(reason => {
                 console.error('error in data fetch, changeviewpoint', reason);
+            });
+        };
+        this._processUpdateBranchStateChange = (budgetBranch) => {
+            budgetBranch.getViewpointData().then(() => {
+                this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
+                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
+                this._stateActions.addNodeDeclaration(budgetNodeParms);
+            }).catch(reason => {
+                console.error('error in data fetch, update branch', reason);
             });
         };
         this._processChangeVersionStateChange = (budgetBranch) => {
@@ -319,8 +332,54 @@ class ExplorerBranch extends Component {
         this.handleSearch = (e) => {
             this.props.handleFindDialogOpen(e, this.applySearch);
         };
+        this.finderParms = null;
+        this.findParmsToStateDictionary = {
+            viewpoint: {
+                functionalbudget: 'FUNCTIONAL',
+                structuralbudget: 'STRUCTURAL',
+                actualexpenses: 'ACTUALEXPENSES',
+                actualrevenues: 'ACTUALREVENUES',
+                expenditures: 'EXPENDITURES',
+            },
+            source: {
+                summarybudgets: 'SUMMARY',
+                detailedbudgets: 'PBFT',
+                auditedexpenses: 'ACTUALEXPENSES',
+                auditedrevenues: 'ACTUALREVENUES',
+                auditedexpenditures: 'EXPENDITURES',
+            },
+            aspect: {
+                expenses: 'Expenses',
+                revenues: 'Revenues',
+                staffing: 'Staffing',
+                expenditures: 'Expenditure',
+            }
+        };
         this.applySearch = parms => {
             console.log('received find parms', parms);
+            if (parms.viewpoint == 'expenditures') {
+                parms.aspect = 'expenditures';
+            }
+            this.finderParms = parms;
+            let { budgetBranch } = this.props;
+            let { nodes: branchNodes } = budgetBranch;
+            let removed = branchNodes.splice(0);
+            let removeditems = removed.map((item) => {
+                return { nodeuid: item.uid, cellList: item.cellDeclarationList };
+            });
+            let globalStateActions = this._stateActions;
+            globalStateActions.removeNodeDeclarations(removeditems);
+            let settings = this._getNewBranchSettings(parms);
+            globalStateActions.updateBranch(budgetBranch.uid, settings);
+        };
+        this._getNewBranchSettings = parms => {
+            let dictionary = this.findParmsToStateDictionary;
+            let settings = {
+                viewpoint: dictionary.viewpoint[parms.viewpoint],
+                aspect: dictionary.aspect[parms.aspect],
+                version: dictionary.source[parms.source],
+            };
+            return settings;
         };
         this.harmonizeCells = (nodeUid, cellUid) => {
             let { budgetBranch } = this.props;

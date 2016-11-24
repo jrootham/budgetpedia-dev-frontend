@@ -98,6 +98,14 @@ let branchesById = (state = {}, action) => {
             newstate = Object.assign({}, state, { [action.payload.branchuid]: action.payload.settings });
             return newstate;
         }
+        case actions_1.types.UPDATE_BRANCH: {
+            let { branchuid } = action.payload;
+            newstate = Object.assign({}, state);
+            let newbranchstate = Object.assign({}, newstate[branchuid]);
+            newbranchstate = Object.assign(newbranchstate, action.payload.settings);
+            newstate[branchuid] = newbranchstate;
+            return newstate;
+        }
         case actions_1.types.CLONE_BRANCH: {
             let newbranchid = action.payload.settings.newbranchid;
             newstate = Object.assign({}, state, { [newbranchid]: action.payload.settings.branch[newbranchid] });
