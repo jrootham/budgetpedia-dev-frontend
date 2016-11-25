@@ -183,7 +183,6 @@ class ExplorerBranch extends Component {
             let parms = this.finderParms;
             let dictionary = this.findParmsToStateDictionary;
             let settingslist = [];
-            console.log('viewpointdata', viewpointdata);
             if (parms.source == 'detailedbudgets' &&
                 (['expense', 'revenue', 'permanence'].indexOf(parms.level) > -1)) {
                 let settings = {
@@ -209,9 +208,6 @@ class ExplorerBranch extends Component {
             }
             else {
                 let leafpath = this._getLeafPath(parms, viewpointdata);
-                if (parms.source != 'detailedbudgets') {
-                    leafpath.pop();
-                }
                 let settings = {
                     aspectName: dictionary.aspect[parms.aspect],
                     cellIndex: 0,
@@ -253,7 +249,6 @@ class ExplorerBranch extends Component {
                     });
                 }
             }
-            console.log('viewpointdata and parms in get node settings list', viewpointdata, parms, settingslist);
             return settingslist;
         };
         this._getLeafPath = (parms, viewpointdata) => {
@@ -264,13 +259,22 @@ class ExplorerBranch extends Component {
             if (!result) {
                 react_redux_toastr_1.toastr.warning(this.findParmsToStateDictionary.aspect[parms.aspect] + ' chart not available for that selection (' + parms.name + ')');
             }
-            console.log('leaf path', path, selections);
+            let isLeaf = !path.pop();
+            if (isLeaf)
+                path.pop();
             return path;
         };
         this._searchComponents = (code, path, selections, components) => {
             for (let component_name in components) {
                 path.push(component_name);
                 if (component_name == code) {
+                    let node = components[component_name];
+                    if (node.Components || node.CommonDimension) {
+                        path.push(true);
+                    }
+                    else {
+                        path.push(false);
+                    }
                     return true;
                 }
                 else {

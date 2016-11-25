@@ -3766,7 +3766,6 @@ var ExplorerBranch = function (_Component) {
             var parms = _this.finderParms;
             var dictionary = _this.findParmsToStateDictionary;
             var settingslist = [];
-            console.log('viewpointdata', viewpointdata);
             if (parms.source == 'detailedbudgets' && ['expense', 'revenue', 'permanence'].indexOf(parms.level) > -1) {
                 var settings = {
                     aspectName: dictionary.aspect[parms.aspect],
@@ -3790,9 +3789,6 @@ var ExplorerBranch = function (_Component) {
                 react_redux_toastr_1.toastr.info('Find ' + dictionary.level[parms.level].toUpperCase() + ' tabs at any program drilldown level');
             } else {
                 var leafpath = _this._getLeafPath(parms, viewpointdata);
-                if (parms.source != 'detailedbudgets') {
-                    leafpath.pop();
-                }
                 var _settings = {
                     aspectName: dictionary.aspect[parms.aspect],
                     cellIndex: 0,
@@ -3834,7 +3830,6 @@ var ExplorerBranch = function (_Component) {
                     });
                 }
             }
-            console.log('viewpointdata and parms in get node settings list', viewpointdata, parms, settingslist);
             return settingslist;
         };
         _this._getLeafPath = function (parms, viewpointdata) {
@@ -3845,13 +3840,20 @@ var ExplorerBranch = function (_Component) {
             if (!result) {
                 react_redux_toastr_1.toastr.warning(_this.findParmsToStateDictionary.aspect[parms.aspect] + ' chart not available for that selection (' + parms.name + ')');
             }
-            console.log('leaf path', path, selections);
+            var isLeaf = !path.pop();
+            if (isLeaf) path.pop();
             return path;
         };
         _this._searchComponents = function (code, path, selections, components) {
             for (var component_name in components) {
                 path.push(component_name);
                 if (component_name == code) {
+                    var node = components[component_name];
+                    if (node.Components || node.CommonDimension) {
+                        path.push(true);
+                    } else {
+                        path.push(false);
+                    }
                     return true;
                 } else {
                     var subcomponents = components[component_name].Components;

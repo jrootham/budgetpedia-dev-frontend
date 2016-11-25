@@ -499,7 +499,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let dictionary = this.findParmsToStateDictionary
         let settingslist = []
         // let defaults = this.props.declarationData.defaults.node
-        console.log('viewpointdata',viewpointdata)
+        // console.log('viewpointdata',viewpointdata)
         // if this is a common dimension request, return first portal only
         if (parms.source == 'detailedbudgets' && 
             (['expense','revenue','permanence'].indexOf(parms.level) > -1)) {
@@ -528,10 +528,10 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         } else {
 
             let leafpath = this._getLeafPath(parms, viewpointdata)
-            if (parms.source != 'detailedbudgets') {
-                // TODO check if it's a leaf before popping
-                leafpath.pop()
-            }
+            // if (parms.source != 'detailedbudgets') {
+            //     // TODO check if it's a leaf before popping
+            //     leafpath.pop()
+            // }
 
             let settings = {
                 aspectName:dictionary.aspect[parms.aspect],
@@ -578,7 +578,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             }
 
         }
-        console.log('viewpointdata and parms in get node settings list',viewpointdata, parms, settingslist)
+        // console.log('viewpointdata and parms in get node settings list',viewpointdata, parms, settingslist)
         return settingslist
     }
 
@@ -590,14 +590,21 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         if (!result) {
             toastr.warning(this.findParmsToStateDictionary.aspect[parms.aspect] + ' chart not available for that selection (' + parms.name + ')')
         }
-        console.log('leaf path',path, selections)
+        let isLeaf = !path.pop()
+        if (isLeaf) path.pop()
         return path
     }
 
     private _searchComponents = (code, path, selections, components) => {
         for (let component_name in components) {
             path.push(component_name)
-            if (component_name == code) {
+            if (component_name == code) { // leaf
+                let node = components[component_name]
+                if (node.Components || node.CommonDimension) {
+                    path.push(true)
+                } else {
+                    path.push(false)
+                }
                 return true
             } else {
                 let subcomponents = components[component_name].Components
