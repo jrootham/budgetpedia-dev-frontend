@@ -3757,6 +3757,10 @@ var ExplorerBranch = function (_Component) {
                 _this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 var settingslist = _this._getFinderNodeSettingsList();
                 _this._stateActions.addNodeDeclarations(settingslist);
+                var explorer = _this;
+                setTimeout(function () {
+                    explorer.onPortalCreation();
+                });
             }).catch(function (reason) {
                 console.error('error in data fetch, update branch', reason);
             });

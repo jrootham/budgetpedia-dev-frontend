@@ -174,6 +174,10 @@ class ExplorerBranch extends Component {
                 this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 let settingslist = this._getFinderNodeSettingsList();
                 this._stateActions.addNodeDeclarations(settingslist);
+                let explorer = this;
+                setTimeout(() => {
+                    explorer.onPortalCreation();
+                });
             }).catch(reason => {
                 console.error('error in data fetch, update branch', reason);
             });

@@ -486,6 +486,12 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let settingslist = this._getFinderNodeSettingsList()
             this._stateActions.addNodeDeclarations(settingslist)
 
+            let explorer = this
+
+            setTimeout(()=>{
+                explorer.onPortalCreation()
+            })
+
         }).catch(reason => {
 
             console.error('error in data fetch, update branch', reason)
