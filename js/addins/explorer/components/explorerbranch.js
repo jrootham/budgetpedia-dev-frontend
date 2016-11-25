@@ -258,15 +258,16 @@ class ExplorerBranch extends Component {
         };
         this._getLeafPath = (parms, viewpointdata) => {
             let path = [];
+            let selections = [];
             let code = parms.code;
-            let result = this._searchComponents(code, path, viewpointdata.Components);
+            let result = this._searchComponents(code, path, selections, viewpointdata.Components);
             if (!result) {
-                react_redux_toastr_1.toastr.warning('Chart not available for the given parameters');
+                react_redux_toastr_1.toastr.warning(this.findParmsToStateDictionary.aspect[parms.aspect] + ' chart not available for that selection (' + parms.name + ')');
             }
-            console.log('leaf path', path);
+            console.log('leaf path', path, selections);
             return path;
         };
-        this._searchComponents = (code, path, components) => {
+        this._searchComponents = (code, path, selections, components) => {
             for (let component_name in components) {
                 path.push(component_name);
                 if (component_name == code) {
@@ -275,7 +276,7 @@ class ExplorerBranch extends Component {
                 else {
                     let subcomponents = components[component_name].Components;
                     if (subcomponents) {
-                        if (this._searchComponents(code, path, subcomponents)) {
+                        if (this._searchComponents(code, path, selections, subcomponents)) {
                             return true;
                         }
                     }

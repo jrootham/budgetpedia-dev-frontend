@@ -498,7 +498,8 @@ let Explorer = class extends Component {
                 source: selection.source,
                 level: selection.level,
                 code: selection.code,
-                aspect: explorer.state.findDialogAspect
+                aspect: explorer.state.findDialogAspect,
+                name: selection.name,
             };
             explorer.findParameters.parms = parms;
             explorer.findParameters.callback(parms);
@@ -537,6 +538,7 @@ let Explorer = class extends Component {
                 level: null,
                 leveldisplay: '?',
                 code: null,
+                name: null,
             };
         };
         this.findOnNewRequest = (chosenRequest, index) => {
@@ -555,6 +557,7 @@ let Explorer = class extends Component {
                     viewpoint: item.viewpoint,
                     viewpointdisplay: dictionary[item.viewpoint],
                     code: item.code,
+                    name: item.name,
                 };
                 this.forceUpdate();
             }
@@ -573,6 +576,7 @@ let Explorer = class extends Component {
             level: null,
             leveldisplay: '?',
             code: null,
+            name: null,
         };
         this.findOnUpdateInput = () => {
             if (this.findSelection.known) {

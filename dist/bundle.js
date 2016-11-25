@@ -3839,15 +3839,16 @@ var ExplorerBranch = function (_Component) {
         };
         _this._getLeafPath = function (parms, viewpointdata) {
             var path = [];
+            var selections = [];
             var code = parms.code;
-            var result = _this._searchComponents(code, path, viewpointdata.Components);
+            var result = _this._searchComponents(code, path, selections, viewpointdata.Components);
             if (!result) {
-                react_redux_toastr_1.toastr.warning('Chart not available for the given parameters');
+                react_redux_toastr_1.toastr.warning(_this.findParmsToStateDictionary.aspect[parms.aspect] + ' chart not available for that selection (' + parms.name + ')');
             }
-            console.log('leaf path', path);
+            console.log('leaf path', path, selections);
             return path;
         };
-        _this._searchComponents = function (code, path, components) {
+        _this._searchComponents = function (code, path, selections, components) {
             for (var component_name in components) {
                 path.push(component_name);
                 if (component_name == code) {
@@ -3855,7 +3856,7 @@ var ExplorerBranch = function (_Component) {
                 } else {
                     var subcomponents = components[component_name].Components;
                     if (subcomponents) {
-                        if (_this._searchComponents(code, path, subcomponents)) {
+                        if (_this._searchComponents(code, path, selections, subcomponents)) {
                             return true;
                         }
                     }
@@ -6377,7 +6378,8 @@ var Explorer = function (_Component) {
                 source: selection.source,
                 level: selection.level,
                 code: selection.code,
-                aspect: explorer.state.findDialogAspect
+                aspect: explorer.state.findDialogAspect,
+                name: selection.name
             };
             explorer.findParameters.parms = parms;
             explorer.findParameters.callback(parms);
@@ -6415,7 +6417,8 @@ var Explorer = function (_Component) {
                 sourcedisplay: '?',
                 level: null,
                 leveldisplay: '?',
-                code: null
+                code: null,
+                name: null
             };
         };
         _this.findOnNewRequest = function (chosenRequest, index) {
@@ -6432,7 +6435,8 @@ var Explorer = function (_Component) {
                     sourcedisplay: dictionary[item.datasource],
                     viewpoint: item.viewpoint,
                     viewpointdisplay: dictionary[item.viewpoint],
-                    code: item.code
+                    code: item.code,
+                    name: item.name
                 };
                 _this.forceUpdate();
             }
@@ -6450,7 +6454,8 @@ var Explorer = function (_Component) {
             sourcedisplay: '?',
             level: null,
             leveldisplay: '?',
-            code: null
+            code: null,
+            name: null
         };
         _this.findOnUpdateInput = function () {
             if (_this.findSelection.known) {

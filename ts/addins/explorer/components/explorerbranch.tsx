@@ -587,16 +587,17 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
     private _getLeafPath = (parms, viewpointdata) => {
         let path = []
+        let selections = []
         let code = parms.code
-        let result = this._searchComponents(code,path,viewpointdata.Components)
+        let result = this._searchComponents(code, path, selections, viewpointdata.Components)
         if (!result) {
-            toastr.warning('Chart not available for the given parameters')
+            toastr.warning(this.findParmsToStateDictionary.aspect[parms.aspect] + ' chart not available for that selection (' + parms.name + ')')
         }
-        console.log('leaf path',path)
+        console.log('leaf path',path, selections)
         return path
     }
 
-    private _searchComponents = (code, path, components) => {
+    private _searchComponents = (code, path, selections, components) => {
         for (let component_name in components) {
             path.push(component_name)
             if (component_name == code) {
@@ -604,7 +605,8 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             } else {
                 let subcomponents = components[component_name].Components
                 if (subcomponents) {
-                    if (this._searchComponents(code,path,subcomponents)) {
+                    if (this._searchComponents(code, path, selections, subcomponents)) {
+                        // *** add selection
                         return true
                     }
                 }

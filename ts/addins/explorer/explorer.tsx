@@ -851,7 +851,8 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             source:selection.source,
             level:selection.level,
             code:selection.code,
-            aspect:explorer.state.findDialogAspect
+            aspect:explorer.state.findDialogAspect,
+            name:selection.name,
         }
         explorer.findParameters.parms = parms
         explorer.findParameters.callback(parms)
@@ -895,6 +896,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
             level:null,
             leveldisplay:'?',
             code:null,
+            name:null,
         }
     }
 
@@ -914,6 +916,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
                 viewpoint: item.viewpoint,
                 viewpointdisplay:dictionary[item.viewpoint],
                 code:item.code,
+                name:item.name,
             }
             this.forceUpdate()
         }
@@ -934,6 +937,7 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         level:null,
         leveldisplay:'?',
         code:null,
+        name:null,
     }
 
     findOnUpdateInput = () => {
