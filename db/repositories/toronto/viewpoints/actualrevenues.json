@@ -76,8 +76,7 @@
             "Taxonomy": {
                 "OTHERGOV": "Other government",
                 "GENERAL": "General revenue",
-                "LOCAL": "Local revenue",
-                "AUDITED": "Audited revenues"
+                "LOCAL": "Local revenue"
             }
         },
         "NamingConfigurations": {

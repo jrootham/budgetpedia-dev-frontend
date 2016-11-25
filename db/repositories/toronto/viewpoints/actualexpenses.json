@@ -71,8 +71,7 @@
             "Taxonomy": {
                 "MUNICIPAL": "Municipal operations",
                 "SHARED": "Shared operations",
-                "SUPPORT": "Support operations",
-                "AUDITED": "Audited expenses"
+                "SUPPORT": "Support operations"
             }
         },
         "NamingConfigurations": {

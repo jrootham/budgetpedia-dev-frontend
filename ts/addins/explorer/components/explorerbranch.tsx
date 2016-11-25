@@ -486,10 +486,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let settingslist = this._getFinderNodeSettingsList()
             this._stateActions.addNodeDeclarations(settingslist)
 
-            // *** REPLACE THE FOLLOWING TWO LINES
-            // let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
-            // this._stateActions.addNodeDeclaration(budgetNodeParms)
-
         }).catch(reason => {
 
             console.error('error in data fetch, update branch', reason)
@@ -533,6 +529,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
 
             let leafpath = this._getLeafPath(parms, viewpointdata)
             if (parms.source != 'detailedbudgets') {
+                // TODO check if it's a leaf before popping
                 leafpath.pop()
             }
 
@@ -606,7 +603,7 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 let subcomponents = components[component_name].Components
                 if (subcomponents) {
                     if (this._searchComponents(code, path, selections, subcomponents)) {
-                        // *** add selection
+                        // TODO add selection
                         return true
                     }
                 }
