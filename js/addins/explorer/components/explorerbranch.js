@@ -173,8 +173,7 @@ class ExplorerBranch extends Component {
             budgetBranch.getViewpointData().then(() => {
                 this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 let settingslist = this._getFinderNodeSettingsList();
-                let budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
-                this._stateActions.addNodeDeclaration(budgetNodeParms);
+                this._stateActions.addNodeDeclarations(settingslist);
             }).catch(reason => {
                 console.error('error in data fetch, update branch', reason);
             });
@@ -182,7 +181,48 @@ class ExplorerBranch extends Component {
         this._getFinderNodeSettingsList = () => {
             let viewpointdata = this.state.viewpointData;
             let parms = this.finderParms;
-            console.log('viewpointdata and parms in get node settings list', viewpointdata, parms);
+            let dictionary = this.findParmsToStateDictionary;
+            let settingslist = [];
+            let defaults = this.props.declarationData.defaults.node;
+            if (parms.source == 'detailedbudgets' &&
+                (['expense', 'revenue', 'permanence'].indexOf(parms.level) > -1)) {
+                let settings = {
+                    aspectName: dictionary.aspect[parms.aspect],
+                    cellIndex: 1,
+                    cellList: null,
+                    dataPath: [],
+                    nodeIndex: 0,
+                    viewpointName: dictionary.viewpoint[parms.viewpoint],
+                    yearSelections: Object.assign({}, defaults.yearSelections),
+                    yearsRange: {
+                        firstYear: null,
+                        lastYear: null,
+                    },
+                };
+                settingslist.push({
+                    settings,
+                });
+                react_redux_toastr_1.toastr.info('Find ' + dictionary.level[parms.level].toUpperCase() + ' tabs at any program drilldown level');
+            }
+            else {
+                let settings = {
+                    aspectName: null,
+                    cellIndex: null,
+                    cellList: null,
+                    dataPath: null,
+                    nodeIndex: null,
+                    viewpointName: null,
+                    yearSelections: {
+                        leftYear: null,
+                        rightYear: null,
+                    },
+                    yearsRange: {
+                        firstYear: null,
+                        lastYear: null,
+                    },
+                };
+            }
+            return settingslist;
         };
         this._processChangeVersionStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
@@ -359,6 +399,11 @@ class ExplorerBranch extends Component {
                 revenues: 'Revenues',
                 staffing: 'Staffing',
                 expenditures: 'Expenditure',
+            },
+            level: {
+                expense: 'Expenditures',
+                revenue: 'Receipts',
+                permanence: 'Permanence',
             }
         };
         this.applySearch = parms => {

@@ -152,6 +152,7 @@ let branchesById:{[index:string]:any} = (state = { }, action) => {
             }
             newstate[branchuid].nodeList = 
                 [...state[branchuid].nodeList,...newnodelist]
+            // console.log('add nodes',newstate, newnodelist)
             return newstate
         }
 
@@ -256,7 +257,7 @@ let nodesById = (state = { }, action) => {
                 node = Object.assign(node,settingsdata.settings)
                 newstate[settingsdata.nodeuid] = node
             }
-            // console.log('ADD_NODES',newstate)
+            // console.log('ADD_NODES in nodesById',newstate)
             return newstate
         }
 

@@ -3756,8 +3756,7 @@ var ExplorerBranch = function (_Component) {
             budgetBranch.getViewpointData().then(function () {
                 _this._stateActions.incrementBranchDataVersion(budgetBranch.uid);
                 var settingslist = _this._getFinderNodeSettingsList();
-                var budgetNodeParms = budgetBranch.getInitialBranchNodeParms();
-                _this._stateActions.addNodeDeclaration(budgetNodeParms);
+                _this._stateActions.addNodeDeclarations(settingslist);
             }).catch(function (reason) {
                 console.error('error in data fetch, update branch', reason);
             });
@@ -3765,7 +3764,46 @@ var ExplorerBranch = function (_Component) {
         _this._getFinderNodeSettingsList = function () {
             var viewpointdata = _this.state.viewpointData;
             var parms = _this.finderParms;
-            console.log('viewpointdata and parms in get node settings list', viewpointdata, parms);
+            var dictionary = _this.findParmsToStateDictionary;
+            var settingslist = [];
+            var defaults = _this.props.declarationData.defaults.node;
+            if (parms.source == 'detailedbudgets' && ['expense', 'revenue', 'permanence'].indexOf(parms.level) > -1) {
+                var settings = {
+                    aspectName: dictionary.aspect[parms.aspect],
+                    cellIndex: 1,
+                    cellList: null,
+                    dataPath: [],
+                    nodeIndex: 0,
+                    viewpointName: dictionary.viewpoint[parms.viewpoint],
+                    yearSelections: _extends({}, defaults.yearSelections),
+                    yearsRange: {
+                        firstYear: null,
+                        lastYear: null
+                    }
+                };
+                settingslist.push({
+                    settings: settings
+                });
+                react_redux_toastr_1.toastr.info('Find ' + dictionary.level[parms.level].toUpperCase() + ' tabs at any program drilldown level');
+            } else {
+                var _settings = {
+                    aspectName: null,
+                    cellIndex: null,
+                    cellList: null,
+                    dataPath: null,
+                    nodeIndex: null,
+                    viewpointName: null,
+                    yearSelections: {
+                        leftYear: null,
+                        rightYear: null
+                    },
+                    yearsRange: {
+                        firstYear: null,
+                        lastYear: null
+                    }
+                };
+            }
+            return settingslist;
         };
         _this._processChangeVersionStateChange = function (budgetBranch) {
             budgetBranch.getViewpointData().then(function () {
@@ -3952,6 +3990,11 @@ var ExplorerBranch = function (_Component) {
                 revenues: 'Revenues',
                 staffing: 'Staffing',
                 expenditures: 'Expenditure'
+            },
+            level: {
+                expense: 'Expenditures',
+                revenue: 'Receipts',
+                permanence: 'Permanence'
             }
         };
         _this.applySearch = function (parms) {
@@ -6140,15 +6183,15 @@ var Explorer = function (_Component) {
             auditedexpenditures: 'Audited Statements',
             detailedbudgets: 'Detailed Budgets',
             summarybudgets: 'Summary Budgets',
+            Taxonomy: 'Taxonomy',
+            auditedexpense: "Expenses",
+            auditedrevenue: "Revenues",
+            program: 'Programs',
+            service: 'Services',
             activity: 'Activities',
             expense: 'Expenditures',
-            auditedexpense: "Expenses",
-            permanence: 'Permanence',
-            program: 'Programs',
             revenue: 'Receipts',
-            auditedrevenue: "Revenues",
-            service: 'Services',
-            Taxonomy: 'Taxonomy',
+            permanence: 'Permanence',
             expenditure: "Expenses"
         };
         _this.processFindChartLookups = function (data) {

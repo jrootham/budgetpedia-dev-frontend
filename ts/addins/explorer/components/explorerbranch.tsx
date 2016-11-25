@@ -65,6 +65,7 @@ interface DeclarationData {
     cellsById: Object,
     lastAction: any,
     lastTargetedAction: any,
+    defaults:any,
 }
 
 interface SnackbarProps {
@@ -483,11 +484,11 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             this._stateActions.incrementBranchDataVersion(budgetBranch.uid)
 
             let settingslist = this._getFinderNodeSettingsList()
-            // this._stateActions.addNodeDeclarations(settingslist)
+            this._stateActions.addNodeDeclarations(settingslist)
 
             // *** REPLACE THE FOLLOWING TWO LINES
-            let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
-            this._stateActions.addNodeDeclaration(budgetNodeParms)
+            // let budgetNodeParms:BudgetNodeDeclarationParms = budgetBranch.getInitialBranchNodeParms()
+            // this._stateActions.addNodeDeclaration(budgetNodeParms)
 
         }).catch(reason => {
 
@@ -499,7 +500,55 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
     private _getFinderNodeSettingsList = () => {
         let viewpointdata = this.state.viewpointData
         let parms = this.finderParms
-        console.log('viewpointdata and parms in get node settings list',viewpointdata, parms)
+        let dictionary = this.findParmsToStateDictionary
+        let settingslist = []
+        let defaults = this.props.declarationData.defaults.node
+
+        // if this is a common dimension request, return first portal only
+        if (parms.source == 'detailedbudgets' && 
+            (['expense','revenue','permanence'].indexOf(parms.level) > -1)) {
+            // console.log('found common dimension')
+            let settings = {
+                aspectName:dictionary.aspect[parms.aspect],
+                cellIndex:1,
+                cellList:null,
+                dataPath: [],
+                nodeIndex:0,
+                viewpointName:dictionary.viewpoint[parms.viewpoint],
+                yearSelections: Object.assign({},defaults.yearSelections),
+                yearsRange:{
+                    firstYear:null,
+                    lastYear:null,
+                },
+            }
+            settingslist.push({
+                settings,
+            })
+            toastr.info('Find ' + dictionary.level[parms.level].toUpperCase() + ' tabs at any program drilldown level')
+
+        } else {
+
+
+            let settings = {
+                aspectName:null,
+                cellIndex:null,
+                cellList:null,
+                dataPath: null,
+                nodeIndex:null,
+                viewpointName:null,
+                yearSelections:{
+                    leftYear:null,
+                    rightYear:null,
+                },
+                yearsRange:{
+                    firstYear:null,
+                    lastYear:null,
+                },
+            }
+
+        }
+        // console.log('viewpointdata and parms in get node settings list',viewpointdata, parms, settingslist)
+        return settingslist
     }
 
     private _processChangeVersionStateChange = (budgetBranch:BudgetBranch) => {
@@ -762,11 +811,15 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             revenues:'Revenues',
             staffing:'Staffing',
             expenditures:'Expenditure',
+        },
+        level: {
+            expense:'Expenditures',
+            revenue:'Receipts',
+            permanence:'Permanence',
         }
     }
 
     applySearch = parms => {
-        // console.log('received find parms',parms)
         if (parms.viewpoint == 'expenditures') {
             parms.aspect = 'expenditures'
         }

@@ -662,15 +662,15 @@ let Explorer = class extends Component< ExplorerProps, ExplorerState >
         detailedbudgets:'Detailed Budgets',
         summarybudgets:'Summary Budgets',
         // levels
+        Taxonomy:'Taxonomy',
+        auditedexpense:"Expenses",
+        auditedrevenue:"Revenues",
+        program:'Programs',
+        service:'Services',
         activity:'Activities',
         expense:'Expenditures',
-        auditedexpense:"Expenses",
-        permanence:'Permanence',
-        program:'Programs',
         revenue:'Receipts',
-        auditedrevenue:"Revenues",
-        service:'Services',
-        Taxonomy:'Taxonomy',
+        permanence:'Permanence',
         expenditure:"Expenses",        
     }
     
