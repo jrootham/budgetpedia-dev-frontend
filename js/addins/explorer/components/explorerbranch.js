@@ -183,7 +183,7 @@ class ExplorerBranch extends Component {
             let parms = this.finderParms;
             let dictionary = this.findParmsToStateDictionary;
             let settingslist = [];
-            let defaults = this.props.declarationData.defaults.node;
+            console.log('viewpointdata', viewpointdata);
             if (parms.source == 'detailedbudgets' &&
                 (['expense', 'revenue', 'permanence'].indexOf(parms.level) > -1)) {
                 let settings = {
@@ -193,10 +193,13 @@ class ExplorerBranch extends Component {
                     dataPath: [],
                     nodeIndex: 0,
                     viewpointName: dictionary.viewpoint[parms.viewpoint],
-                    yearSelections: Object.assign({}, defaults.yearSelections),
+                    yearSelections: {
+                        leftYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                        rightYear: viewpointdata.Meta.datasetConfig.YearsRange.end,
+                    },
                     yearsRange: {
-                        firstYear: null,
-                        lastYear: null,
+                        firstYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                        lastYear: viewpointdata.Meta.datasetConfig.YearsRange.end,
                     },
                 };
                 settingslist.push({
@@ -205,24 +208,81 @@ class ExplorerBranch extends Component {
                 react_redux_toastr_1.toastr.info('Find ' + dictionary.level[parms.level].toUpperCase() + ' tabs at any program drilldown level');
             }
             else {
+                let leafpath = this._getLeafPath(parms, viewpointdata);
+                if (parms.source != 'detailedbudgets') {
+                    leafpath.pop();
+                }
                 let settings = {
-                    aspectName: null,
-                    cellIndex: null,
+                    aspectName: dictionary.aspect[parms.aspect],
+                    cellIndex: 0,
                     cellList: null,
-                    dataPath: null,
-                    nodeIndex: null,
-                    viewpointName: null,
+                    dataPath: [],
+                    nodeIndex: 0,
+                    viewpointName: dictionary.viewpoint[parms.viewpoint],
                     yearSelections: {
-                        leftYear: null,
-                        rightYear: null,
+                        leftYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                        rightYear: viewpointdata.Meta.datasetConfig.YearsRange.end,
                     },
                     yearsRange: {
-                        firstYear: null,
-                        lastYear: null,
+                        firstYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                        lastYear: viewpointdata.Meta.datasetConfig.YearsRange.end,
                     },
                 };
+                settingslist.push({
+                    settings,
+                });
+                for (let nodeindex in leafpath) {
+                    let settings = {
+                        aspectName: dictionary.aspect[parms.aspect],
+                        cellIndex: 0,
+                        cellList: null,
+                        dataPath: leafpath.slice(0, parseInt(nodeindex) + 1),
+                        nodeIndex: parseInt(nodeindex) + 1,
+                        viewpointName: dictionary.viewpoint[parms.viewpoint],
+                        yearSelections: {
+                            leftYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                            rightYear: viewpointdata.Meta.datasetConfig.YearsRange.end,
+                        },
+                        yearsRange: {
+                            firstYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                            lastYear: viewpointdata.Meta.datasetConfig.YearsRange.end,
+                        },
+                    };
+                    settingslist.push({
+                        settings,
+                    });
+                }
             }
+            console.log('viewpointdata and parms in get node settings list', viewpointdata, parms, settingslist);
             return settingslist;
+        };
+        this._getLeafPath = (parms, viewpointdata) => {
+            let path = [];
+            let code = parms.code;
+            let result = this._searchComponents(code, path, viewpointdata.Components);
+            if (!result) {
+                react_redux_toastr_1.toastr.warning('Chart not available for the given parameters');
+            }
+            console.log('leaf path', path);
+            return path;
+        };
+        this._searchComponents = (code, path, components) => {
+            for (let component_name in components) {
+                path.push(component_name);
+                if (component_name == code) {
+                    return true;
+                }
+                else {
+                    let subcomponents = components[component_name].Components;
+                    if (subcomponents) {
+                        if (this._searchComponents(code, path, subcomponents)) {
+                            return true;
+                        }
+                    }
+                }
+                path.pop();
+            }
+            return false;
         };
         this._processChangeVersionStateChange = (budgetBranch) => {
             budgetBranch.getViewpointData().then(() => {
@@ -407,19 +467,20 @@ class ExplorerBranch extends Component {
             }
         };
         this.applySearch = parms => {
+            let explorer = this;
             if (parms.viewpoint == 'expenditures') {
                 parms.aspect = 'expenditures';
             }
-            this.finderParms = parms;
-            let { budgetBranch } = this.props;
+            explorer.finderParms = parms;
+            let { budgetBranch } = explorer.props;
             let { nodes: branchNodes } = budgetBranch;
             let removed = branchNodes.splice(0);
             let removeditems = removed.map((item) => {
                 return { nodeuid: item.uid, cellList: item.cellDeclarationList };
             });
-            let globalStateActions = this._stateActions;
+            let globalStateActions = explorer._stateActions;
             globalStateActions.removeNodeDeclarations(removeditems);
-            let settings = this._getNewBranchSettings(parms);
+            let settings = explorer._getNewBranchSettings(parms);
             globalStateActions.updateBranch(budgetBranch.uid, settings);
         };
         this._getNewBranchSettings = parms => {

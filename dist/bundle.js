@@ -3766,7 +3766,7 @@ var ExplorerBranch = function (_Component) {
             var parms = _this.finderParms;
             var dictionary = _this.findParmsToStateDictionary;
             var settingslist = [];
-            var defaults = _this.props.declarationData.defaults.node;
+            console.log('viewpointdata', viewpointdata);
             if (parms.source == 'detailedbudgets' && ['expense', 'revenue', 'permanence'].indexOf(parms.level) > -1) {
                 var settings = {
                     aspectName: dictionary.aspect[parms.aspect],
@@ -3775,10 +3775,13 @@ var ExplorerBranch = function (_Component) {
                     dataPath: [],
                     nodeIndex: 0,
                     viewpointName: dictionary.viewpoint[parms.viewpoint],
-                    yearSelections: _extends({}, defaults.yearSelections),
+                    yearSelections: {
+                        leftYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                        rightYear: viewpointdata.Meta.datasetConfig.YearsRange.end
+                    },
                     yearsRange: {
-                        firstYear: null,
-                        lastYear: null
+                        firstYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                        lastYear: viewpointdata.Meta.datasetConfig.YearsRange.end
                     }
                 };
                 settingslist.push({
@@ -3786,24 +3789,80 @@ var ExplorerBranch = function (_Component) {
                 });
                 react_redux_toastr_1.toastr.info('Find ' + dictionary.level[parms.level].toUpperCase() + ' tabs at any program drilldown level');
             } else {
+                var leafpath = _this._getLeafPath(parms, viewpointdata);
+                if (parms.source != 'detailedbudgets') {
+                    leafpath.pop();
+                }
                 var _settings = {
-                    aspectName: null,
-                    cellIndex: null,
+                    aspectName: dictionary.aspect[parms.aspect],
+                    cellIndex: 0,
                     cellList: null,
-                    dataPath: null,
-                    nodeIndex: null,
-                    viewpointName: null,
+                    dataPath: [],
+                    nodeIndex: 0,
+                    viewpointName: dictionary.viewpoint[parms.viewpoint],
                     yearSelections: {
-                        leftYear: null,
-                        rightYear: null
+                        leftYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                        rightYear: viewpointdata.Meta.datasetConfig.YearsRange.end
                     },
                     yearsRange: {
-                        firstYear: null,
-                        lastYear: null
+                        firstYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                        lastYear: viewpointdata.Meta.datasetConfig.YearsRange.end
                     }
                 };
+                settingslist.push({
+                    settings: _settings
+                });
+                for (var nodeindex in leafpath) {
+                    var _settings2 = {
+                        aspectName: dictionary.aspect[parms.aspect],
+                        cellIndex: 0,
+                        cellList: null,
+                        dataPath: leafpath.slice(0, parseInt(nodeindex) + 1),
+                        nodeIndex: parseInt(nodeindex) + 1,
+                        viewpointName: dictionary.viewpoint[parms.viewpoint],
+                        yearSelections: {
+                            leftYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                            rightYear: viewpointdata.Meta.datasetConfig.YearsRange.end
+                        },
+                        yearsRange: {
+                            firstYear: viewpointdata.Meta.datasetConfig.YearsRange.start,
+                            lastYear: viewpointdata.Meta.datasetConfig.YearsRange.end
+                        }
+                    };
+                    settingslist.push({
+                        settings: _settings2
+                    });
+                }
             }
+            console.log('viewpointdata and parms in get node settings list', viewpointdata, parms, settingslist);
             return settingslist;
+        };
+        _this._getLeafPath = function (parms, viewpointdata) {
+            var path = [];
+            var code = parms.code;
+            var result = _this._searchComponents(code, path, viewpointdata.Components);
+            if (!result) {
+                react_redux_toastr_1.toastr.warning('Chart not available for the given parameters');
+            }
+            console.log('leaf path', path);
+            return path;
+        };
+        _this._searchComponents = function (code, path, components) {
+            for (var component_name in components) {
+                path.push(component_name);
+                if (component_name == code) {
+                    return true;
+                } else {
+                    var subcomponents = components[component_name].Components;
+                    if (subcomponents) {
+                        if (_this._searchComponents(code, path, subcomponents)) {
+                            return true;
+                        }
+                    }
+                }
+                path.pop();
+            }
+            return false;
         };
         _this._processChangeVersionStateChange = function (budgetBranch) {
             budgetBranch.getViewpointData().then(function () {
@@ -3998,20 +4057,21 @@ var ExplorerBranch = function (_Component) {
             }
         };
         _this.applySearch = function (parms) {
+            var explorer = _this;
             if (parms.viewpoint == 'expenditures') {
                 parms.aspect = 'expenditures';
             }
-            _this.finderParms = parms;
-            var budgetBranch = _this.props.budgetBranch;
+            explorer.finderParms = parms;
+            var budgetBranch = explorer.props.budgetBranch;
             var branchNodes = budgetBranch.nodes;
 
             var removed = branchNodes.splice(0);
             var removeditems = removed.map(function (item) {
                 return { nodeuid: item.uid, cellList: item.cellDeclarationList };
             });
-            var globalStateActions = _this._stateActions;
+            var globalStateActions = explorer._stateActions;
             globalStateActions.removeNodeDeclarations(removeditems);
-            var settings = _this._getNewBranchSettings(parms);
+            var settings = explorer._getNewBranchSettings(parms);
             globalStateActions.updateBranch(budgetBranch.uid, settings);
         };
         _this._getNewBranchSettings = function (parms) {
