@@ -259,19 +259,30 @@ class ExplorerBranch extends Component {
             let path = [];
             let selections = [];
             let code = parms.code;
-            let result = this._searchComponents(code, path, selections, viewpointdata.Components);
+            let result = this._searchComponents(code, path, selections, viewpointdata.Components, viewpointdata.SortedComponents);
             if (!result) {
                 react_redux_toastr_1.toastr.warning(this.findParmsToStateDictionary.aspect[parms.aspect] + ' chart not available for that selection (' + parms.name + ')');
             }
             let isLeaf = !path.pop();
-            if (isLeaf)
+            if (isLeaf) {
                 path.pop();
+                selections.pop();
+            }
             return path;
         };
-        this._searchComponents = (code, path, selections, components) => {
+        this._searchComponents = (code, path, selections, components, sortedcomponents) => {
             for (let component_name in components) {
                 path.push(component_name);
                 if (component_name == code) {
+                    let depth = path.length;
+                    let selection;
+                    for (let index = 0; index < sortedcomponents.length; index++) {
+                        if (sortedcomponents[index].Code == component_name) {
+                            selection = index;
+                            break;
+                        }
+                    }
+                    selections[depth - 1] = selection;
                     let node = components[component_name];
                     if (node.Components || node.CommonDimension) {
                         path.push(true);
@@ -283,8 +294,18 @@ class ExplorerBranch extends Component {
                 }
                 else {
                     let subcomponents = components[component_name].Components;
+                    let depth = path.length;
                     if (subcomponents) {
-                        if (this._searchComponents(code, path, selections, subcomponents)) {
+                        let sortedsubcomponents = components[component_name].SortedComponents;
+                        if (this._searchComponents(code, path, selections, subcomponents, sortedsubcomponents)) {
+                            let selection;
+                            for (let index = 0; index < sortedcomponents.length; index++) {
+                                if (sortedcomponents[index].Code == component_name) {
+                                    selection = index;
+                                    break;
+                                }
+                            }
+                            selections[depth - 1] = selection;
                             return true;
                         }
                     }

@@ -3840,18 +3840,30 @@ var ExplorerBranch = function (_Component) {
             var path = [];
             var selections = [];
             var code = parms.code;
-            var result = _this._searchComponents(code, path, selections, viewpointdata.Components);
+            var result = _this._searchComponents(code, path, selections, viewpointdata.Components, viewpointdata.SortedComponents);
             if (!result) {
                 react_redux_toastr_1.toastr.warning(_this.findParmsToStateDictionary.aspect[parms.aspect] + ' chart not available for that selection (' + parms.name + ')');
             }
             var isLeaf = !path.pop();
-            if (isLeaf) path.pop();
+            if (isLeaf) {
+                path.pop();
+                selections.pop();
+            }
             return path;
         };
-        _this._searchComponents = function (code, path, selections, components) {
+        _this._searchComponents = function (code, path, selections, components, sortedcomponents) {
             for (var component_name in components) {
                 path.push(component_name);
                 if (component_name == code) {
+                    var depth = path.length;
+                    var selection = void 0;
+                    for (var index = 0; index < sortedcomponents.length; index++) {
+                        if (sortedcomponents[index].Code == component_name) {
+                            selection = index;
+                            break;
+                        }
+                    }
+                    selections[depth - 1] = selection;
                     var node = components[component_name];
                     if (node.Components || node.CommonDimension) {
                         path.push(true);
@@ -3861,8 +3873,18 @@ var ExplorerBranch = function (_Component) {
                     return true;
                 } else {
                     var subcomponents = components[component_name].Components;
+                    var _depth = path.length;
                     if (subcomponents) {
-                        if (_this._searchComponents(code, path, selections, subcomponents)) {
+                        var sortedsubcomponents = components[component_name].SortedComponents;
+                        if (_this._searchComponents(code, path, selections, subcomponents, sortedsubcomponents)) {
+                            var _selection = void 0;
+                            for (var _index = 0; _index < sortedcomponents.length; _index++) {
+                                if (sortedcomponents[_index].Code == component_name) {
+                                    _selection = _index;
+                                    break;
+                                }
+                            }
+                            selections[_depth - 1] = _selection;
                             return true;
                         }
                     }

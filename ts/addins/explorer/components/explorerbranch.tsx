@@ -592,19 +592,32 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         let path = []
         let selections = []
         let code = parms.code
-        let result = this._searchComponents(code, path, selections, viewpointdata.Components)
+        let result = this._searchComponents(code, path, selections, viewpointdata.Components, viewpointdata.SortedComponents)
         if (!result) {
             toastr.warning(this.findParmsToStateDictionary.aspect[parms.aspect] + ' chart not available for that selection (' + parms.name + ')')
         }
         let isLeaf = !path.pop()
-        if (isLeaf) path.pop()
+        if (isLeaf) {
+            path.pop()
+            selections.pop()
+        }
+        // console.log('leafpath, selections',path,selections)
         return path
     }
 
-    private _searchComponents = (code, path, selections, components) => {
+    private _searchComponents = (code, path, selections, components, sortedcomponents) => {
         for (let component_name in components) {
             path.push(component_name)
             if (component_name == code) { // leaf
+                let depth = path.length
+                let selection
+                for (let index = 0; index < sortedcomponents.length; index++ ) {
+                    if (sortedcomponents[index].Code == component_name) {
+                        selection = index
+                        break
+                    }
+                }
+                selections[depth-1] = selection
                 let node = components[component_name]
                 if (node.Components || node.CommonDimension) {
                     path.push(true)
@@ -614,8 +627,19 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
                 return true
             } else {
                 let subcomponents = components[component_name].Components
+                let depth = path.length
                 if (subcomponents) {
-                    if (this._searchComponents(code, path, selections, subcomponents)) {
+                    let sortedsubcomponents = components[component_name].SortedComponents
+                    if (this._searchComponents(code, path, selections, subcomponents, sortedsubcomponents)) {
+                        // console.log('returning from depth',depth,code,component_name,components,sortedcomponents)
+                        let selection
+                        for (let index = 0; index < sortedcomponents.length; index++ ) {
+                            if (sortedcomponents[index].Code == component_name) {
+                                selection = index
+                                break
+                            }
+                        }
+                        selections[depth-1] = selection
                         // TODO add selection
                         return true
                     }
@@ -913,12 +937,9 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         globalStateActions.removeNodeDeclarations(removeditems)
 
 
-        // setTimeout(() =>{
         let settings = explorer._getNewBranchSettings(parms)
 
         globalStateActions.updateBranch(budgetBranch.uid, settings)
-
-        // })
 
     }
 
