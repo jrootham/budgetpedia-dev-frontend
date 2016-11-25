@@ -3759,11 +3759,26 @@ var ExplorerBranch = function (_Component) {
                 _this._stateActions.addNodeDeclarations(settingslist);
                 var explorer = _this;
                 setTimeout(function () {
-                    explorer.onPortalCreation();
+                    explorer._updateCellChartSelections();
                 });
+                setTimeout(function () {
+                    explorer.onPortalCreation();
+                }, 1000);
             }).catch(function (reason) {
                 console.error('error in data fetch, update branch', reason);
             });
+        };
+        _this._updateCellChartSelections = function () {
+            var nodes = _this.state.branchNodes;
+            var selections = _this.finderSelections;
+            for (var index in selections) {
+                var node = nodes[index];
+                var cell = node.cells[0];
+                var selection = selections[index];
+                _this._stateActions.updateCellChartSelection(node.uid)(cell.uid, selection);
+                cell.chartSelection = selection;
+                cell.refreshSelection();
+            }
         };
         _this._getFinderNodeSettingsList = function () {
             var viewpointdata = _this.state.viewpointData;
@@ -3849,6 +3864,7 @@ var ExplorerBranch = function (_Component) {
                 path.pop();
                 selections.pop();
             }
+            _this.finderSelections = selections;
             return path;
         };
         _this._searchComponents = function (code, path, selections, components, sortedcomponents) {

@@ -176,11 +176,26 @@ class ExplorerBranch extends Component {
                 this._stateActions.addNodeDeclarations(settingslist);
                 let explorer = this;
                 setTimeout(() => {
-                    explorer.onPortalCreation();
+                    explorer._updateCellChartSelections();
                 });
+                setTimeout(() => {
+                    explorer.onPortalCreation();
+                }, 1000);
             }).catch(reason => {
                 console.error('error in data fetch, update branch', reason);
             });
+        };
+        this._updateCellChartSelections = () => {
+            let nodes = this.state.branchNodes;
+            let selections = this.finderSelections;
+            for (let index in selections) {
+                let node = nodes[index];
+                let cell = node.cells[0];
+                let selection = selections[index];
+                this._stateActions.updateCellChartSelection(node.uid)(cell.uid, selection);
+                cell.chartSelection = selection;
+                cell.refreshSelection();
+            }
         };
         this._getFinderNodeSettingsList = () => {
             let viewpointdata = this.state.viewpointData;
@@ -268,6 +283,7 @@ class ExplorerBranch extends Component {
                 path.pop();
                 selections.pop();
             }
+            this.finderSelections = selections;
             return path;
         };
         this._searchComponents = (code, path, selections, components, sortedcomponents) => {

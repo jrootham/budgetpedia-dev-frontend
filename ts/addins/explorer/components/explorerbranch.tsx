@@ -489,14 +489,31 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             let explorer = this
 
             setTimeout(()=>{
-                explorer.onPortalCreation()
+                explorer._updateCellChartSelections()
             })
+            setTimeout(()=>{
+                explorer.onPortalCreation()
+            },1000)
 
         }).catch(reason => {
 
             console.error('error in data fetch, update branch', reason)
 
         })
+    }
+
+    private _updateCellChartSelections = () => {
+
+        let nodes = this.state.branchNodes
+        let selections = this.finderSelections
+        for (let index in selections) {
+            let node = nodes[index]
+            let cell = node.cells[0]
+            let selection = selections[index]
+            this._stateActions.updateCellChartSelection(node.uid)(cell.uid,selection)
+            cell.chartSelection = selection
+            cell.refreshSelection()
+        }
     }
 
     private _getFinderNodeSettingsList = () => {
@@ -534,10 +551,6 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
         } else {
 
             let leafpath = this._getLeafPath(parms, viewpointdata)
-            // if (parms.source != 'detailedbudgets') {
-            //     // TODO check if it's a leaf before popping
-            //     leafpath.pop()
-            // }
 
             let settings = {
                 aspectName:dictionary.aspect[parms.aspect],
@@ -601,9 +614,13 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             path.pop()
             selections.pop()
         }
+
+        this.finderSelections = selections
         // console.log('leafpath, selections',path,selections)
         return path
     }
+
+    finderSelections: any
 
     private _searchComponents = (code, path, selections, components, sortedcomponents) => {
         for (let component_name in components) {
