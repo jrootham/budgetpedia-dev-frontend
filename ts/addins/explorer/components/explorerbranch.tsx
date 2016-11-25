@@ -1661,13 +1661,14 @@ class ExplorerBranch extends Component<ExplorerBranchProps, ExplorerBranchState>
             }
         >
 
+        { search }
+
+        { shareurl }
+
         { technotes }
 
         { showhelp }
 
-        { search }
-
-        { shareurl }
         </div>:null}
 
         { governmentselection }
